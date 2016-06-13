@@ -5,6 +5,6 @@ object AdminPage {
     id = "admin-" + title,
     webTitle = title,
     analyticsName = "admin-page",
-    section = "admin"
+    section = Some(SectionSummary.fromId("admin"))
   ))
 }

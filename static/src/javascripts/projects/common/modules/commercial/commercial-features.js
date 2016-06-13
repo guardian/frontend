@@ -57,6 +57,7 @@ define([
 
         this.topBannerAd =
             this.dfpAdvertising &&
+            !userFeatures.isAdfree() &&
             !isMinuteArticle;
 
         this.articleBodyAdverts =
@@ -64,6 +65,7 @@ define([
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
+            !userFeatures.isAdfree() &&
             switches.standardAdverts;
 
         this.articleAsideAdverts =
@@ -71,20 +73,24 @@ define([
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
+            !userFeatures.isAdfree() &&
             switches.standardAdverts;
 
         this.sliceAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
+            !userFeatures.isAdfree() &&
             switches.standardAdverts;
 
         this.popularContentMPU =
             this.dfpAdvertising &&
+            !userFeatures.isAdfree() &&
             !isMinuteArticle;
 
         this.videoPreRolls =
             externalAdvertising &&
             !sensitiveContent &&
+            !userFeatures.isAdfree() &&
             switches.videoAdverts;
 
         this.frontCommercialComponents =
@@ -111,10 +117,10 @@ define([
             this.dfpAdvertising &&
             switches.standardAdverts &&
             !isMinuteArticle &&
-            config.switches.viewability &&
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
+            !userFeatures.isAdfree() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
@@ -139,4 +145,3 @@ define([
     }
 
 });
-

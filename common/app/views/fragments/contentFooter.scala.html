@@ -1,4 +1,5 @@
 @(content: model.ContentType, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
+@import common.Edition
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
@@ -15,11 +16,13 @@
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {
-        @fragments.mostPopularPlaceholder(content.metadata.section)
+        @fragments.mostPopularPlaceholder(content.metadata.sectionId)
     } {
         <div class="js-fronts-network-2" data-link-name="fronts-on-articles | network-front | block-2"></div>
     } {
-        <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+        @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
+            <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+        }
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
     } {

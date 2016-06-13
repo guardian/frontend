@@ -18,21 +18,17 @@
 .tonal--tone-feature {
     // Interactives need help because their headers are not tonal
     &.content--interactive {
-        .commentcount i {
-            @extend %i-comment--tone-feature;
-
-            @if $svg-support {
-                .svg & {
-                    @extend %svg-i-comment--tone-feature;
-                }
-            }
+        .content__headline {
+            font-weight: normal;
+            color: $neutral-1;
         }
-
         .tone-colour,
         .content__section-label__link {
             color: $feature-default;
         }
-
+        .content__series-label__link {
+            color: $neutral-2;
+        }
         .u-underline {
             color: $feature-default;
             border-bottom-color: rgba($feature-default, .3);

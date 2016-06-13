@@ -2,33 +2,41 @@
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import templates.inlineJS.blocking.polyfills.js._
 
+<!--[if lt IE 8]>
+    <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
+<![endif]-->
 <!--[if lt IE 9]>
-    <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
+    <script src="@Static("javascripts/es5-html5.js")"></script>
 <![endif]-->
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+
+
+    // ************* POLYFILLS *************
+    // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
+
+    // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
+    // Used by RAF polyfill.
+    @Html(setTimeout().body)
+
+    // Pollyfill requestAnimationFrame
+    @InlineJs(raf().body, "raf.js")
+
+    // Polyfill classList
+    @InlineJs(classlist().body, "classlist.js")
+
+
+    // ************* CONFIG *************
+
+
     @Html(curlConfig().body)
 
-    @if(play.Play.isDev()) {
-        @Html(Static.js.curl);
 
-        require(['boot']);
-    } else {
-        // Polyfill for async script
-        (function (document) {
-            var script = document.createElement('script');
-            script.src = '@Static("javascripts/app.js")';
-            var ref = document.getElementsByTagName('script')[0];
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-    }
+    // ************* RENDER-CRITICAL BLOCKING JS *************
 
-    // render-critical blocking JS
-
-    // polyfills
-    @Html(polyfills().body)
 
     // determine whether to run enhanced JS
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
@@ -50,6 +58,26 @@
         @InlineJs(enableStylesheets().body, "enableStylesheets.js")
     }
 
-    // cloudwatch beacons
+
+    // ************* LOAD THE MAIN APP ASYNC *************
+
+
+    @if(conf.Configuration.assets.useHashedBundles) {
+        // Polyfill for async script
+        (function (document) {
+            var script = document.createElement('script');
+            script.src = '@Static("javascripts/app.js")';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
+    } else {
+        @Html(common.Assets.js.curl);
+        require(['boot']);
+    }
+
+
+    // ************* CLOUDWATCH BEACONS *************
+
+
     @InlineJs(cloudwatchBeacons(page.metadata).body, "cloudwatchBeacons.js")
 </script>

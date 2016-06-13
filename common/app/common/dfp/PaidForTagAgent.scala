@@ -9,7 +9,7 @@ import model.pressed.CollectionConfig
 
 trait PaidForTagAgent {
 
-  protected def isPreview: Boolean
+  protected def environmentIsPreview: Boolean
 
   protected def currentPaidForTags: Seq[PaidForTag]
   protected def tagToSponsorsMap: Map[String, Set[String]]
@@ -26,11 +26,11 @@ trait PaidForTagAgent {
 
     def sectionMatches(maybeSectionId: Option[String], dfpTag: PaidForTag): Boolean = {
       maybeSectionId.isEmpty || maybeSectionId.exists { sectionId =>
-        val tagAdUnitPaths = dfpTag.lineItems flatMap { lineItem =>
-          lineItem.targeting.adUnits map (_.path)
+        val tagAdUnitPaths: Seq[Seq[String]] = dfpTag.lineItems flatMap { lineItem =>
+          lineItem.targeting.adUnitsIncluded map (_.path)
         }
         tagAdUnitPaths.isEmpty || tagAdUnitPaths.exists { path =>
-          path.tail.isEmpty || sectionId.startsWith(path.tail.head)
+          path.isEmpty || path.tail.isEmpty || sectionId.startsWith(path.tail.head)
         }
       }
     }

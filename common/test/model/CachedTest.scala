@@ -1,10 +1,9 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
-import conf.switches.Switches
-import conf.switches.Switches.DoubleCacheTimesSwitch
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
+import conf.switches.Switches.LongCacheSwitch
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import org.scalatest.{FlatSpec, Matchers}
@@ -13,7 +12,8 @@ import play.api.mvc.Results
 class CachedTest extends FlatSpec with Matchers with Results with implicits.Dates {
 
   "Cached" should "cache live content for 5 seconds" in {
-    Switches.DoubleCacheTimesSwitch.switchOff()
+    LongCacheSwitch.switchOff()
+
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
@@ -26,22 +26,22 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
   }
 
-  it should "cache content less than 1 hour old for 10 seconds" in {
-    Switches.DoubleCacheTimesSwitch.switchOff()
+  it should "cache content less than 1 hour old for 60 seconds" in {
+    LongCacheSwitch.switchOff()
 
     val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
     val liveContent = content(lastModified = modifiedAlmost1HourAgo, live = false)
 
-    liveContent.metadata.cacheTime.cacheSeconds should be(10)
+    liveContent.metadata.cacheTime.cacheSeconds should be(60)
 
-    val result = Cached(10, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(60, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=10, stale-while-revalidate=1, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
   }
 
   it should "cache older content for 5 minutes" in {
-    Switches.DoubleCacheTimesSwitch.switchOff()
+    LongCacheSwitch.switchOff()
 
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
@@ -55,11 +55,11 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   it should "cache other things for 1 minute" in {
-    Switches.DoubleCacheTimesSwitch.switchOff()
+    LongCacheSwitch.switchOff()
 
     val page = SimplePage(MetaData.make(
       id = "",
-      section = "",
+      section = None,
       webTitle = "",
       analyticsName = ""))
 
@@ -71,18 +71,8 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
   }
 
-  it should "double the cache time if DoubleCacheTimesSwitch is switched on" in {
-
-    DoubleCacheTimesSwitch.switchOn()
-
-    val result = Cached(10, WithoutRevalidationResult(Ok("foo")), None)
-    val headers = result.header.headers
-
-    headers("Cache-Control") should be("max-age=20, stale-while-revalidate=2, stale-if-error=864000")
-  }
-
   it should "have at least 1 second stale-while-revalidate" in {
-    DoubleCacheTimesSwitch.switchOff()
+    LongCacheSwitch.switchOff()
 
     val result = Cached(5, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
@@ -91,7 +81,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   it should "set Surrogate-Control the same as Cache-Control" in {
-    Switches.DoubleCacheTimesSwitch.switchOff()
+    LongCacheSwitch.switchOff()
 
     val result = Cached(60, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
@@ -100,9 +90,35 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should equal (headers("Surrogate-Control"))
   }
 
-  it should "etag should be added" in {
-    DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
+  "Longer cache control" should "be applied to SurrogateControl if enabled" in {
+    LongCacheSwitch.switchOn()
+
+    val modifiedLongAgo = DateTime.now - 25.hours
+    val liveContent = content(lastModified = modifiedLongAgo, live = false)
+
+    liveContent.metadata.cacheTime.cacheSeconds should be(3800)
+
+    val result = Cached(3800, WithoutRevalidationResult(Ok("foo")), None)
+    val headers = result.header.headers
+
+    headers("Surrogate-Control") should be("max-age=3800, stale-while-revalidate=380, stale-if-error=864000")
+  }
+
+  it should "limit the max-age to 60" in {
+    LongCacheSwitch.switchOn()
+
+    val modifiedLongAgo = DateTime.now - 25.hours
+    val liveContent = content(lastModified = modifiedLongAgo, live = false)
+
+    liveContent.metadata.cacheTime.cacheSeconds should be(3800)
+
+    val result = Cached(3800, WithoutRevalidationResult(Ok("foo")), None)
+    val headers = result.header.headers
+
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+  }
+
+  "ETags" should "should be added" in {
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), None)
     val headers = result.header.headers
@@ -113,8 +129,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   it should "wrong etag should be ignored" in {
-    DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
+    LongCacheSwitch.switchOff()
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hasheroo""""))
     val headers = result.header.headers
@@ -125,8 +140,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   it should "correct etag should not be ignored" in {
-    DoubleCacheTimesSwitch.switchOff()
-    Switches.CheckETagsSwitch.switchOn()
+    LongCacheSwitch.switchOff()
 
     val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hash96""""))
     val headers = result.header.headers

@@ -1,0 +1,91 @@
+.participation-low-fric {
+    padding-top: $gs-gutter / 4;
+    border-top: 1px dotted $neutral-4;
+}
+
+// When we hover our content, we tell the browser
+// that a change may happen soon so it can optimise
+// the paint area
+.participation-low-friction__contents:hover,
+.participation-low-friction__contents:focus {
+    will-change: transform;
+}
+
+.participation-low-fric__desc,
+.participation-low-fric__after {
+    @include fs-textSans(1);
+    color: $neutral-2;
+}
+
+/* The Rating Buttons */
+
+.participation-low-fric--button {
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+/* Confirm Button */
+
+.participation-low-fric__confirm {
+    @include button-colour($neutral-1, #ffffff, $neutral-1);
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+/* Star Ratings */
+
+.participation-low-fric--button__star {
+
+    .inline-icon__inactive {
+        fill: #000000;
+        opacity: .15;
+    }
+
+    svg {
+        height: 40px;
+        width: 40px;
+    }
+}
+
+.participation-low-fric--button__is-active:hover .inline-star,
+.participation-low-fric--button__is-active:focus .inline-star,
+.participation-low-fric--button__is-active:active .inline-star,
+.participation-low-fric--button__is-highlighted .inline-star {
+    fill: $comment-support-3;
+    opacity: 1;
+}
+
+/* Football */
+
+$buttonSize: 32px;
+
+// TODO: When moving out of this test, using emoticons is more of a pain that it's worth
+// We need icons here, even if they're duplicates of emojis or something
+.participation-low-fric--button__football {
+    display: inline-block;
+    font-size: $buttonSize/2;
+    margin-left: $buttonSize/8;
+    margin-bottom: $buttonSize/4;
+    opacity: .5;
+    position: relative;
+    height: $buttonSize;
+    width: $buttonSize;
+
+    .participation-low-fric--inner-icon {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        // iOS 7 doesn't let us have icons bigger than 16px so we'll
+        // scale them instead and adjust the position
+        transform: scale(2) translateX($buttonSize/8) translateY($buttonSize/8)
+    }
+
+    &.participation-low-fric--button__is-active:hover,
+    &.participation-low-fric--button__is-active:focus,
+    &.participation-low-fric--button__is-active:active,
+    &.participation-low-fric--button__is-highlighted {
+        opacity: 1;
+    }
+}

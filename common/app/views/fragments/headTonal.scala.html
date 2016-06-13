@@ -15,16 +15,22 @@
                 }
 
                 <h1 class="content__headline js-score" itemprop="headline">
-                    @item match {
-                        case v: model.Video => {
-                            @fragments.inlineSvg("video-icon", "icon")
-                            @Html(item.trail.headline)
+                    @if(item.tags.isMedia) {
+                        @defining(
+                            item match {
+                                case video: model.Video => "video-icon"
+                                case audio: model.Audio => "volume-high"
+                                // The only other 2 media types: gallery and picture both use camera icon
+                                case _ => "camera"
+                            }
+                        ) { mediaIcon =>
+                            @fragments.inlineSvg(mediaIcon, "icon", List("inline-tone-fill", "inline-icon--media"))
                         }
-                        case _ => { @Html(item.trail.headline) }
                     }
+                    @Html(item.trail.headline)
                 </h1>
 
-                @if(amp && item.tags.isMatchReport && item.metadata.section == "football") {
+                @if(amp && item.tags.isMatchReport && item.metadata.sectionId == "football") {
                     @defining({
                         val date = item.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
                         val teams = item.content.paFootballTeams.mkString("/")

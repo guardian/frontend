@@ -35,7 +35,9 @@ define([
         var prefs               = userPrefs.get('container-states') || {};
         var isMobile            = detect.getBreakpoint() === 'mobile';
         var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        var hasFabricMobileAd   = (config.page.isFront && config.switches.fabricAdverts && detect.isBreakpoint({max : 'phablet'}));
+        // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s)
+        // that take the top slot in responsive takeovers.
+        var replaceTopSlot      = (config.page.isFront && detect.isBreakpoint({max : 'phablet'}));
         // We must keep a small bit of state in the filtering logic
         var lastIndex           = -1;
 
@@ -54,8 +56,10 @@ define([
                     return true;
                 }
 
-                if (hasFabricMobileAd && index === 0) {
+                var isThrasher = bonzo(item.container).hasClass('fc-container--thrasher');
+                if (replaceTopSlot && index === 0 && !isThrasher) {
                     // it's mobile, so we needn't check for an adSlice
+                    lastIndex = index;
                     return true;
                 }
 
@@ -76,9 +80,7 @@ define([
             // create ad slots for the selected slices
             .map(function (item, index) {
                 var adName = 'inline' + (index + 1);
-                var adSlot = hasFabricMobileAd && index === 0 ?
-                    createAdSlot('fabric', 'container-inline') :
-                    createAdSlot(adName, 'container-inline');
+                var adSlot = createAdSlot(adName, 'container-inline');
 
                 adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
 
@@ -93,7 +95,7 @@ define([
 
             function insertOnMobile(item) {
                 // add a mobile advert after the container
-                item.anchor.parentNode.insertBefore(item.adSlot, item.anchor.nextSibling);
+                item.anchor.lastElementChild.appendChild(item.adSlot);
             }
 
             function insertOnTabletPlus(item) {

@@ -2,7 +2,7 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import common.Logging
-import conf.switches.Switches.ImageServerSwitch
+import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay}
 import conf.Configuration
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
@@ -37,24 +37,26 @@ sealed trait ElementProfile {
     elementFor(image).flatMap(_.altText)
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
-  lazy val resizeString = {
-    val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
-    val autoParam = "auto=format"
-    val sharpParam = "usm=12"
-    val fitParam = "fit=max"
-    val dprParam = if (hidpi) {
-      if (isPng) {
-        "dpr=1.3"
-      } else {
-        "dpr=2"
-      }
-    } else {""}
-    val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
-    val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
+  val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
+  val autoParam = "auto=format"
+  val sharpParam = "usm=12"
+  val fitParam = "fit=max"
+  val dprParam = if (hidpi) {
+    if (isPng) {
+      "dpr=1.3"
+    } else {
+      "dpr=2"
+    }
+  } else {""}
+  val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
+  val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
+  def resizeString = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
+
+
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
@@ -94,7 +96,25 @@ object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
-object FacebookOpenGraphImage extends Profile(width = Some(1200))
+object TwitterImage extends Profile(width = Some(1200))
+object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
+
+  override val heightParam = "h=632"
+  val blendModeParam = "bm=normal"
+  val blendOffsetParam = "ba=bottom%2Cleft"
+  val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+  override val fitParam = "fit=crop"
+
+
+  override def resizeString = {
+    if(FacebookShareImageLogoOverlay.isSwitchedOn) {
+      val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+      s"?$params"
+    } else {
+      super.resizeString
+    }
+  }
+}
 object EmailArticleImage extends Profile(width = Some(640))
 
 // The imager/images.js base image.
@@ -123,7 +143,6 @@ object ImgSrc extends Logging with implicits.Strings {
   def apply(url: String, imageType: ElementProfile): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
-
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
       hostPrefixMapping.get(uri.getHost)
@@ -190,7 +209,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
-      findNearestSrc(ImageElement, Item620)
+    findNearestSrc(ImageElement, Item620)
   }
 
   def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {

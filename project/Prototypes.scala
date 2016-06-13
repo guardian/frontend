@@ -23,7 +23,7 @@ trait Prototypes {
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.7",
+    scalaVersion := "2.11.8",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
@@ -60,8 +60,6 @@ trait Prototypes {
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
-
-    updateOptions := updateOptions.value.withCachedResolution(true),
 
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)

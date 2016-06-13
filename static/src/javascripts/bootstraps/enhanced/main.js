@@ -10,7 +10,6 @@ define([
     'common/utils/user-timing',
     './common',
     './sport',
-    'common/modules/experiments/ab',
     'enhanced-common'
 ], function (
     fastdom,
@@ -23,8 +22,7 @@ define([
     mediator,
     userTiming,
     common,
-    sport,
-    ab
+    sport
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -44,10 +42,6 @@ define([
             require(['bootstraps/enhanced/facia'], function (facia) {
                 bootstrapContext('facia', facia);
             });
-
-            if (ab.isInVariant('Minute', 'on')) {
-                require('bootstraps/enhanced/minute', function() {});
-            }
         }
 
         if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
@@ -61,13 +55,9 @@ define([
                 bootstrapContext('article', article);
                 bootstrapContext('article : image-content', imageContent);
             });
-
-            if (ab.isInVariant('Minute', 'on')) {
-                require('bootstraps/enhanced/minute', function() {});
-            }
         }
 
-        if (config.page.contentType === 'Crossword' || config.page.pageId === 'offline-crossword') {
+        if (config.page.contentType === 'Crossword') {
             require(['bootstraps/enhanced/crosswords'], function (crosswords) {
                 bootstrapContext('crosswords', crosswords);
             });
@@ -146,16 +136,6 @@ define([
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js');
             }
-        }
-
-        if (config.page.pageId === 'offline-crossword') {
-            var $button = $('.js-open-crossword-btn');
-            bean.on($button[0], 'click', function () {
-                fastdom.write(function () {
-                    $('.js-crossword-container').removeClass('is-hidden');
-                    $button.remove();
-                });
-            });
         }
 
         if (config.page.pageId === 'help/accessibility-help') {

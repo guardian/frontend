@@ -2,11 +2,11 @@ package views
 
 import common.Edition
 import layout.ContentWidths
-import layout.ContentWidths.{Inline, Showcase, MainMedia, LiveBlogMedia}
+import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner.{AmpAdCleaner, AmpEmbedCleaner, CmpParamCleaner, VideoEmbedCleaner}
 
 object MainMediaWidths {
 
@@ -28,6 +28,7 @@ object MainCleaner {
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
+        ImmersiveMainEmbed(article.isImmersive, article.isSixtyDaysModified),
         MainFigCaptionCleaner
       )
   }
@@ -37,7 +38,7 @@ object BodyCleaner {
   def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
     implicit val edition = Edition(request)
 
-    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.section != "childrens-books-site"
+    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
 
     val cleaners = List(

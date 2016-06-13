@@ -2,7 +2,7 @@ package test
 
 import java.io.File
 
-import controllers.{front, FaciaController}
+import controllers.{HealthCheck, front, FaciaController}
 import controllers.front.FrontJsonFapi
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
@@ -51,5 +51,5 @@ class FaciaTestSuite extends Suites (
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
 ) with SingleServerSuite {
-  override lazy val port: Int = conf.HealthCheckController.testPort
+  override lazy val port: Int = HealthCheck.testPort
 }

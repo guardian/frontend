@@ -30,6 +30,7 @@ define([
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/commercial/sticky-top-banner',
+    'common/modules/commercial/hosted-about',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -84,6 +85,7 @@ define([
     CookieRefresh,
     navigation,
     stickyAdBanner,
+    hostedAbout,
     Profile,
     Search,
     history,
@@ -132,15 +134,14 @@ define([
             },
 
             initialiseStickyAdBanner: function () {
-                if (config.switches.viewability
-                    && !(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.pageId !== 'offline-crossword'
+                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
                     && !config.tests.abNewHeaderVariant
                     && (config.page.hasSuperStickyBanner
                         || config.page.contentType !== 'Interactive'
                         && config.page.contentType !== 'Crossword'
+                        && config.page.contentType !== 'Hosted'
                         && !config.page.isImmersive
                         && !config.page.isUsMinute
                         && !config.page.isAdvertisementFeature
@@ -184,10 +185,8 @@ define([
 
             loadAnalytics: function () {
                 omniture.go();
-
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
-
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
 
@@ -200,7 +199,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
             },
 
             cleanupLocalStorage : function () {
@@ -364,8 +363,15 @@ define([
                     });
                 });
             },
+
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
+            },
+
+            initHostedAboutLightbox: function () {
+                if (config.page.contentType === 'Hosted') {
+                    hostedAbout.init();
+                }
             }
         };
 
@@ -415,7 +421,8 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
+                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();
             });

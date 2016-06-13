@@ -23,6 +23,7 @@
 @import '_capi';
 @import '_paidfor';
 @import '_brandbadge';
+@import '_hostedbadge';
 
 /* Creative styles */
 @import '_creatives';
@@ -50,3 +51,9 @@
 @import 'gimbap/_gimbap-wrap';
 @import 'gimbap/_gimbap-richmedia';
 @import 'gimbap/_gimbap';
+
+/* Guardian frame */
+@import '_frame';
+
+/* Glabs Awesome component */
+@import 'glabs/_hosted.scss';

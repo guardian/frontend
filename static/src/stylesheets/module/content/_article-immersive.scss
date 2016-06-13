@@ -96,22 +96,15 @@
 }
 
 .content__headline--immersive {
-    @include fs-headline(9);
     font-weight: 200;
-    line-height: 1;
     padding-bottom: 1.5rem;
+}
+
+.content__headline--immersive-article {
+    @include fs-headline(9);
 
     @include mq(desktop) {
         font-size: 4rem;
-    }
-}
-
-.content__headline--immersive--with-main-media {
-    @include fs-headline(7, true);
-    line-height: 1;
-
-    @include mq(desktop) {
-        font-size: 3.25rem;
     }
 }
 
@@ -121,7 +114,7 @@
     }
 
     .content__standfirst {
-        a {
+        .u-underline {
             color: $neutral-6;
             border-bottom: 1px solid rgba($neutral-6, .4);
 
@@ -150,6 +143,12 @@
 
     .content__series-label + .content__headline {
         padding-top: 0;
+    }
+
+    .content__headline--immersive--with-main-media {
+        @include mq(desktop) {
+            font-size: 3.25rem;
+        }
     }
 
     .content__standfirst {

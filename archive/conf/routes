@@ -3,7 +3,7 @@
 # ~~~~
 
 
-GET        /_healthcheck   conf.HealthCheck.healthcheck()
+GET        /_healthcheck   controllers.HealthCheck.healthCheck()
 
-# 404 
-GET        /404/$path<.*>  controllers.ArchiveController.lookup(path) 
+# 404
+GET        /404/$path<.*>  controllers.ArchiveController.lookup(path)

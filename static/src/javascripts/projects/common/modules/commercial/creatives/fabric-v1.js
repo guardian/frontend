@@ -23,9 +23,9 @@ define([
     scrollBgStr,
     merge
 ) {
-    var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    var hasBackgroundFixedSupport = !detect.isAndroid();
     var isEnhanced = detect.isEnhanced();
-    var isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
+    var isIE10OrLess = detect.getUserAgent.browser === 'MSIE' && (parseInt(detect.getUserAgent.version) <= 10);
 
     var fabricV1Tpl;
     var iframeVideoTpl;
@@ -76,17 +76,17 @@ define([
 
             // layer two animations must not have a background position, otherwise the background will
             // be visible before the animation has been initiated.
-            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+            if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
                 bonzo(this.layer2).css('background-position', '');
             }
 
-            if (this.scrollType === 'fixed' && hasScrollEnabled) {
+            if (this.scrollType === 'fixed' && hasBackgroundFixedSupport) {
                 bonzo(this.scrollingBg).css('background-attachment', 'fixed');
             }
 
         }, this);
 
-        if (templateOptions.scrollbg && hasScrollEnabled) {
+        if (templateOptions.scrollbg) {
             // update bg position
             fastdom.read(this.updateBgPosition, this);
             mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
@@ -107,13 +107,19 @@ define([
                     .addClass('ad-scrolling-bg-parallax')
                     .css('background-position', '50% ' + scrollAmount + '%');
             }, this);
+        } else if (this.scrollType === 'fixed' && !hasBackgroundFixedSupport) {
+            var adRect = this.$adSlot[0].getBoundingClientRect();
+            var vPos = (window.innerHeight - adRect.bottom + adRect.height / 2) / window.innerHeight * 100;
+            fastdom.write(function () {
+                bonzo(this.scrollingBg).css('background-position', '50% ' + vPos + '%');
+            }, this);
         }
         this.layer2Animation();
     };
 
     FabricV1.prototype.layer2Animation = function () {
         var inViewB;
-        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE9OrLess) {
+        if (this.params.layerTwoAnimation === 'enabled' && isEnhanced && !isIE10OrLess) {
             inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
             fastdom.write(function () {
                 bonzo(this.layer2).addClass('ad-scrolling-text-hide' + (this.params.layerTwoAnimationPosition ? '-' + this.params.layerTwoAnimationPosition : ''));

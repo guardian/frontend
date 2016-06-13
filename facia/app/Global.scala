@@ -1,26 +1,31 @@
-import common.Logback.Logstash
+import common.Logback.LogstashLifecycle
 import common._
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.{FaciaHealthCheckLifeCycle, Filters, SwitchboardLifecycle}
+import conf.CachedHealthCheckLifeCycle
+import conf.switches.SwitchboardLifecycle
+import controllers.HealthCheck
 import crosswords.TodaysCrosswordGridLifecycle
-import dev.DevParametersLifecycle
 import headlines.ABHeadlinesLifecycle
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.WithFilters
+import play.api.inject.ApplicationLifecycle
+import play.api.GlobalSettings
 import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
-object Global extends WithFilters(Filters.common: _*)
-  with ConfigAgentLifecycle
-  with DevParametersLifecycle
-  with CloudWatchApplicationMetrics
-  with FaciaDfpAgentLifecycle
-  with SurgingContentAgentLifecycle
-  with IndexListingsLifecycle
-  with TodaysCrosswordGridLifecycle
-  with SwitchboardLifecycle
-  with ABHeadlinesLifecycle
-  with Logstash
-  with FaciaHealthCheckLifeCycle {
+import scala.concurrent.ExecutionContext
 
-  override lazy val applicationName = "frontend-facia"
+object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents {
+
+  override def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent] = List(
+    new ConfigAgentLifecycle(appLifecycle),
+    new CloudWatchMetricsLifecycle(appLifecycle, ApplicationIdentity("frontend-facia")),
+    new FaciaDfpAgentLifecycle(appLifecycle),
+    new SurgingContentAgentLifecycle(appLifecycle),
+    IndexListingsLifecycle,
+    new TodaysCrosswordGridLifecycle(appLifecycle),
+    new SwitchboardLifecycle(appLifecycle),
+    new ABHeadlinesLifecycle(appLifecycle),
+    LogstashLifecycle,
+    new CachedHealthCheckLifeCycle(HealthCheck)
+  )
 }

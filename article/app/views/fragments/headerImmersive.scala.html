@@ -1,6 +1,7 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches.immersiveMainEmbedSwitch
 
 <header class="content__head tonal__head tonal__head--@toneClass(article) @if(article.isUSMinute) { content__head--minute-article }">
     @* Hidden because we visually show this data in the head, but needed

@@ -1,10 +1,10 @@
 package controllers
 
 import _root_.liveblog.LiveBlogCurrentPage
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
-import contentapi.ContentApiClient
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.{BodyBlock, KeyEventData}
@@ -180,18 +180,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
       (content, page) match {
         case (minute: Article, None) if minute.isUSMinute =>
-          Left(MinutePage(minute, RelatedContent(minute, response)))
+          Left(MinutePage(minute, StoryPackages(minute, response)))
         case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, None)
         case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
           createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
-        case (article: Article, None) =>
-          if(mvt.ABIntersperseMultipleStoryPackagesStories.isParticipating) {
-            Left(ArticlePage(article, StoryPackages(article, response)))
-          }
-          else {
-            Left(ArticlePage(article, RelatedContent(article, response)))
-          }
+        case (article: Article, None) => Left(ArticlePage(article, StoryPackages(article, response)))
         case _ =>
           Right(NotFound)
       }
@@ -201,7 +195,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
   def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
-    import conf.switches.Switches.LongCacheSwitch
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
     val liveBlogPageModel = LiveBlogCurrentPage(
@@ -213,24 +206,20 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
       case Some(pageModel) =>
 
         val cacheTime =
-          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive) liveBlog.metadata.cacheTime
-          else {
-            if (LongCacheSwitch.isSwitchedOn) {
-              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdatedPurgable
-              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdatedPurgable
-              else CacheTime.NotRecentlyUpdatedPurgable
-            } else {
-              if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
-              else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
-              else CacheTime.NotRecentlyUpdated
-            }
-          }
+          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive)
+            liveBlog.metadata.cacheTime
+          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour)
+            CacheTime.RecentlyUpdated
+          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours)
+            CacheTime.LastDayUpdated
+          else
+            CacheTime.NotRecentlyUpdated
 
         val liveBlogCache = liveBlog.copy(
           content = liveBlog.content.copy(
             metadata = liveBlog.content.metadata.copy(
               cacheTime = cacheTime)))
-        Left(LiveBlogPage(liveBlogCache, pageModel, RelatedContent(liveBlog, response)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
       case None => Right(NotFound)
     }
 

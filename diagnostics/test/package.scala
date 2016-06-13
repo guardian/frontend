@@ -1,10 +1,11 @@
 package test
 
+import controllers.HealthCheck
 import org.scalatest.Suites
 
 class DiagnosticsTestSuite extends Suites (
-  new services.DiagnosticsHealthcheckTest
-  ) with SingleServerSuite {
+  // Add you test classes here
+) with SingleServerSuite {
 
-  override lazy val port: Int = conf.HealthCheck.testPort
+  override lazy val port: Int = HealthCheck.testPort
 }

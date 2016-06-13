@@ -33,9 +33,9 @@ define([
         bestbuy:        defaultUrlBuilder('money/bestbuys'),
         soulmates:      defaultUrlBuilder('soulmates/mixed'),
         soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
-        capiSingle:     defaultUrlBuilder('capi-single'),
-        capi:           defaultUrlBuilder('capi'),
-        paidforCard:    defaultUrlBuilder('paid'),
+        capiSingle:     complexUrlBuilder('capi-single', false, false, true),
+        capi:           complexUrlBuilder('capi', false, false, true),
+        paidforCard:    complexUrlBuilder('paid', '', false, true),
         books:          complexUrlBuilder('books/books', 'isbns'),
         jobs:           complexUrlBuilder('jobs', 'jobIds', true),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
@@ -69,12 +69,13 @@ define([
         };
     }
 
-    function complexUrlBuilder(url, withSpecificId, withKeywords) {
+    function complexUrlBuilder(url, withSpecificId, withKeywords, withSection) {
         return function (params) {
             return buildComponentUrl(url, merge(
                 params,
                 withSpecificId && params[withSpecificId] ? { t: params[withSpecificId].split(',') } : {},
-                withKeywords ? getKeywords() : {}
+                withKeywords ? getKeywords() : {},
+                withSection ? { s: config.page.section } : {}
             ));
         };
     }
@@ -102,6 +103,12 @@ define([
                     });
                 }
             });
+        }
+    }
+
+    function setFluid(el) {
+        if (el.classList.contains('ad-slot--container-inline')) {
+            el.classList.add('ad-slot--fluid');
         }
     }
 
@@ -147,7 +154,7 @@ define([
      *
      * @constructor
      * @extends Component
-     * @param (Object=) adSlot
+     * @param {Object=} adSlot
      * @param {Object=} params
      */
     function CommercialComponent(adSlot, params) {
@@ -195,6 +202,7 @@ define([
         capi: createToggle,
         capiSingle: createToggle,
         paidforCard: function (el) {
+            setFluid(el);
             adjustMostPopHeight(el);
             createToggle(el);
         }

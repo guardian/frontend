@@ -4,7 +4,7 @@ module.exports = function (grunt, options) {
             assetMap: options.staticHashDir + 'assets/assets.map',
             srcBasePath: 'static/target/',
             destBasePath: 'static/hash/',
-            hashLength: options.isDev ? 0 : 32
+            hashLength: 32
         },
         all: {
             options: {

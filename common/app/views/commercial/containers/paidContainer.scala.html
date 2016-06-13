@@ -3,17 +3,19 @@
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
+@import conf.switches.Switches.staticBadgesSwitch
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
+@import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 
 <div data-id="@containerModel.id" class="fc-container@if(containerModel.isSingleSponsorContainer){ js-sponsored-container}"
-    @for(branding <- containerModel.branding){
-        data-sponsorship="@branding.sponsorshipType"
-        @for(sponsor <- branding.sponsor){ data-sponsor="@sponsor" }
-        @for(keywordId <- branding.keywordId){ data-keywords="@keywordId" }
-        @for(seriesId <- branding.seriesId){ data-series="@seriesId"}
+    @for(brandingAttributes <- containerModel.brandingAttributes){
+        data-sponsorship="@brandingAttributes.sponsorshipType"
+        @for(sponsor <- brandingAttributes.sponsor){ data-sponsor="@sponsor" }
+        @for(keywordId <- brandingAttributes.keywordId){ data-keywords="@keywordId" }
+        @for(seriesId <- brandingAttributes.seriesId){ data-series="@seriesId"}
     }
     >
     @containerWrapper(
@@ -77,4 +79,12 @@
 
 }
 
-@logoSlot = {<div class="js-badge-placeholder"></div>}
+@logoSlot = {
+    @if(staticBadgesSwitch.isSwitchedOn) {
+        @for(branding <- containerModel.branding) {
+            @contentLogo(branding)
+        }
+    } else {
+        <div class="js-badge-placeholder"></div>
+    }
+}

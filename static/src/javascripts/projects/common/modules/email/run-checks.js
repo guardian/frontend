@@ -11,6 +11,7 @@ define([
     'lodash/collections/contains',
     'common/modules/user-prefs',
     'common/modules/identity/api',
+    'common/modules/experiments/ab',
     'Promise'
 ], function (
     $,
@@ -25,18 +26,30 @@ define([
     contains,
     userPrefs,
     Id,
+    ab,
     Promise
 ) {
-    var emailInserted = false,
-        emailShown,
-        userListSubsChecked = false,
-        userListSubs = [];
+    var emailInserted = false;
+    var emailShown;
+    var userListSubsChecked = false;
+    var userListSubs = [];
 
     function pageHasBlanketBlacklist() {
         // Prevent the blanket emails from ever showing on certain keywords or sections
         return page.keywordExists(['US elections 2016', 'Football']) ||
             config.page.section === 'film' ||
             config.page.seriesId === 'world/series/guardian-morning-briefing';
+    }
+
+    function userIsInAClashingAbTest() {
+        var clashingTests = [
+            ['ParticipationLowFricSportV2', 'variant-1'],
+            ['ParticipationLowFricSportV2', 'variant-2']
+        ];
+
+        return some(clashingTests, function(test) {
+            return ab.isInVariant(test[0], test[1]);
+        });
     }
 
     function userHasRemoved(id, formType) {
@@ -80,7 +93,7 @@ define([
 
         if ($articleBody.length) {
             var allArticleEls = $('> *', $articleBody);
-            return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+            return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
         } else {
             return false;
         }
@@ -88,13 +101,35 @@ define([
 
     var canRunList = {
         theCampaignMinute: function () {
-            return config.page.isMinuteArticle && page.keywordExists(['US elections 2016']);
+            return (page.keywordExists(['US elections 2016']) || config.page.isMinuteArticle)
+                && config.page.series != 'Guardian US briefing';
         },
         theFilmToday: function () {
             return config.page.section === 'film';
         },
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
+        },
+        labNotes: function () {
+            return config.page.section === 'science' && config.switches.emailSignupLabNotes;
+        },
+        euRef: function () {
+            return config.switches.emailSignupEuRef &&
+                    page.keywordExists(['EU referendum']) &&
+                    allowedArticleStructure();
+        },
+        usBriefing: function () {
+            return (config.page.section === 'us-news' && allowedArticleStructure()) ||
+                config.page.series === 'Guardian US briefing';
+        },
+        ausCampaignCatchup: function () {
+            return page.keywordExists([
+                'Australia news',
+                'Australian politics',
+                'Australian election 2016',
+                'Guardian Australia\'s Morning Mail',
+                'Australian election briefing'
+            ]);
         },
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
@@ -131,6 +166,7 @@ define([
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&
+            !userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));

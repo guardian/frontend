@@ -357,8 +357,8 @@ import collection.JavaConversions._
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90")
-        adPlaceholder.getAttribute("data-desktop") should be("1,1|88,70|728,90|940,230|900,250|970,250")
+        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90|88,71")
+        adPlaceholder.getAttribute("data-desktop") should be("1,1|88,70|728,90|940,230|900,250|970,250|88,71")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("js-ad-slot ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
@@ -431,7 +431,7 @@ import collection.JavaConversions._
 
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
-      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
+      goTo("/music/2016/may/19/rage-against-the-machine-chuck-d-b-real-supergroup-prophets-of-rage") { browser =>
         import browser._
         Then("The main picture should be show")
         $("[itemprop='contentUrl']") should have size 1
@@ -546,10 +546,7 @@ import collection.JavaConversions._
         $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
         $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
-
-        // at the time of writing, Twitter does not like i.guim.co.uk
-        // will see if I can get that fixed, but in the meantime this must be static.guim.co.uk
-        $("meta[name='twitter:image']").getAttributes("content").head should be("https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+        $("meta[name='twitter:image']").getAttributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 

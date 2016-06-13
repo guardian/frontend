@@ -1,10 +1,11 @@
 package common.Logback
 
 import com.amazonaws.auth.AWSCredentialsProvider
-import common.ManifestData
+import com.amazonaws.util.EC2MetadataUtils
+import common.{LifecycleComponent, ManifestData}
 import conf.switches.Switches
 import conf.Configuration
-import play.api.{Logger => PlayLogger, Application => PlayApp, GlobalSettings}
+import play.api.{Logger => PlayLogger}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 
@@ -14,10 +15,8 @@ case class LogStashConf(enabled: Boolean,
                         awsCredentialsProvider: AWSCredentialsProvider,
                         customFields: Map[String, String])
 
-trait Logstash extends GlobalSettings {
-
-  override def onStart(app: PlayApp) = {
-    super.onStart(app)
+object LogstashLifecycle extends LifecycleComponent {
+  override def start() = {
     Logstash.init
   }
 }
@@ -29,7 +28,8 @@ object Logstash {
     "app" -> Configuration.environment.projectName,
     "stage" -> Configuration.environment.stage.toUpperCase,
     "build" -> ManifestData.build,
-    "revision" -> ManifestData.revision
+    "revision" -> ManifestData.revision,
+    "ec2_instance" -> Option(EC2MetadataUtils.getInstanceId).getOrElse("Not running on ec2")
   )
 
   val config = for {

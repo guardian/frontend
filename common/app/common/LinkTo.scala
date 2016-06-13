@@ -1,6 +1,7 @@
 package common
 
 import common.editions.{Au, Us, International}
+import common.Edition.{editionRegex}
 import conf.Configuration
 import conf.switches.Switches
 import implicits.Requests
@@ -27,7 +28,10 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science", "crosswords", "technology", "business")
+  val httpsEnabledSections: Seq[String] =
+    Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football",
+      "culture", "film", "tv-and-radio", "music", "books", "artanddesign", "stage",
+      "membership")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -60,18 +64,25 @@ trait LinkTo extends Logging {
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() if (isHttpsEnabled(editionalisedPath, edition) || secure) =>  url.replace("http://", "https://")
+      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
       case _ => url
     }
   }
 
-  private def isHttpsEnabled(editionalisedPath: String, edition: Edition) = {
-    val noEdPath = if(editionalisedPath.startsWith(edition.id.toLowerCase + "/")) {
-      editionalisedPath.split(s"${edition.id.toLowerCase}/")(1)
-    } else {
-      editionalisedPath
+  private def isHttpsEnabled(path: String) = {
+
+    // check if the url has _any_ edition prefix (/au/, /us/ ... )
+    // as users can have au edition cookie but be on a us edition url
+
+    val hasEditionPrefix = Edition.all.exists{ edition =>
+      path.startsWith(edition.id.toLowerCase + "/")
     }
-    httpsEnabledSections.exists(noEdPath.startsWith)
+
+    def sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
+
+    val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
+
+    httpsEnabledSections.exists(pathWithoutEdition.startsWith)
   }
 
   private def clean(path: String) = path match {

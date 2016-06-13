@@ -1,5 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.{SaveForLaterSwitch, galleryRedesign}
+@import conf.switches.Switches.{SaveForLaterSwitch, staticBadgesSwitch}
 @import model._
 @import views.support.ContentOldAgeDescriber
 
@@ -11,7 +11,7 @@
 }
 
 @metaBody() = {
-    @if(!item.content.showNewGalleryDesign) {
+    @if(!item.content.isImmersiveGallery) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -33,7 +33,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", isGallery = item.content.showNewGalleryDesign)
+                @fragments.social(item.sharelinks.pageShares, "top", isGallery = item.content.isImmersiveGallery)
                 @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
@@ -42,12 +42,12 @@
             <div class="meta__numbers modern-visible">
                 <div class="u-h meta__number js-sharecount">
                 </div>
-                <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                <div class="u-h meta__number js-commentcount" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
                     !item.trail.isCommentable
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !item.content.showNewGalleryDesign) {
+            @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>
@@ -64,7 +64,10 @@
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
 
-    @if(showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) {
+    @if(
+        (showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) ||
+            (staticBadgesSwitch.isSwitchedOn && (item.tags.isVideo || item.tags.isAudio))
+    ) {
         @fragments.commercial.badge(item, page)
     }
 

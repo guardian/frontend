@@ -1,23 +1,21 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, LineItemReport}
-import common.{Edition, ExecutionContexts, Logging}
-import conf.Configuration.environment
-import contentapi.ContentApiClient
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
+import conf.Configuration.environment
 import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
 import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
 import play.api.mvc.Controller
-import services.FaciaContentConvert
 import tools._
 
 case class CommercialPage() extends StandalonePage {
   override val metadata = MetaData.make(
     id = "commercial-templates",
-    section = "admin",
+    section = Some(SectionSummary.fromId("admin")),
     webTitle = "Commercial Templates",
     analyticsName = "Commercial Templates",
     javascriptConfigOverrides = Map(
@@ -31,16 +29,12 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
   }
 
-  def renderCommercialRenderTimes = AuthActions.AuthActionTest { implicit request =>
-    NoCache(Ok(views.html.commercial.commercialRenderTimes(environment.stage)))
-  }
-
   def renderFluidAds = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.fluidAds(environment.stage)))
   }
 
   def renderSpecialAdUnits = AuthActions.AuthActionTest { implicit request =>
-    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitRoot)
+    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
@@ -78,21 +72,6 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
   }
 
-  def sponsoredContainers = AuthActions.AuthActionTest.async { implicit request =>
-    // get some example trails
-    lazy val trailsFuture = ContentApiClient.getResponse(
-      ContentApiClient.search(Edition(request))
-        .pageSize(2)
-    ).map { response  =>
-      response.results.map { item =>
-        FaciaContentConvert.contentToFaciaContent(item)
-      }
-    }
-    trailsFuture map { trails =>
-      NoCache(Ok(views.html.commercial.sponsoredContainers(environment.stage, CommercialPage(), trails)))
-    }
-  }
-
   def renderAdTests = AuthActions.AuthActionTest { implicit request =>
     val report = Store.getDfpLineItemsReport() flatMap (Json.parse(_).asOpt[LineItemReport])
 
@@ -121,5 +100,20 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
       Ok(views.html.commercial.commercialRadiator("PROD", adResponseConfidenceGraph))
     }
+  }
+
+  def renderKeyValues() = AuthActions.AuthActionTest { implicit request =>
+    Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
+  }
+
+  def renderKeyValuesCsv(key: String) = AuthActions.AuthActionTest { implicit request =>
+    val csv: Option[String] = Store.getDfpCustomTargetingKeyValues.find(_.name == key).map { selectedKey =>
+
+      selectedKey.values.map( targetValue => {
+        s"${targetValue.id}, ${targetValue.name}, ${targetValue.displayName}"
+      }).mkString("\n")
+    }
+
+    Ok(csv.getOrElse(s"No targeting found for key: $key"))
   }
 }

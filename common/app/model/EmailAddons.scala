@@ -76,6 +76,18 @@ case object AusBriefing extends EmailContent {
   def test(c: ContentType) = c.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
 }
 
+case object EuReferendum extends EmailContent {
+  val name = "EU Referendum Morning Briefing"
+  val banner = "eu-referendum.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
+}
+
+case object LabNotes extends EmailContent {
+  val name = "Lab Notes"
+  val banner = "lab-notes.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "science/series/lab-notes")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -90,7 +102,9 @@ object EmailAddons {
     MorningBriefing,
     TheUSMinute,
     USBriefing,
-    AusBriefing)
+    AusBriefing,
+    EuReferendum,
+    LabNotes)
 
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))
@@ -99,7 +113,7 @@ object EmailAddons {
 
     lazy val banner = {
       val banner = email map (_.banner) getOrElse defaultBanner
-      Static(s"images/email/banners/$banner").path
+      Static(s"images/email/banners/$banner")
     }
 
     lazy val address = email flatMap (_.address) getOrElse defaultAddress

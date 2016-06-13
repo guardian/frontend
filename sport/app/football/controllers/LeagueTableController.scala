@@ -20,6 +20,7 @@ case class TablesPage(
 object LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
     val tableOrder = Seq(
+        "Euro 2016",
         "Premier League",
         "La Liga",
         "Bundesliga",

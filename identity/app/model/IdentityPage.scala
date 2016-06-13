@@ -11,7 +11,6 @@ case class IdentityPage(
   omnitureEvent: Option[String] = None) extends StandalonePage {
 
   private val javascriptConfig = Seq(
-    Some("contentType" -> JsString("userid")), // For the no js omniture tracking
     returnUrl.map("returnUrl" -> JsString(_)),
     registrationType.map("registrationType" -> JsString(_)),
     omnitureEvent.map("omnitureEvent" -> JsString(_))
@@ -19,8 +18,9 @@ case class IdentityPage(
 
   override val metadata = MetaData.make(
     id = id,
-    section = "identity",
+    section = Some(SectionSummary.fromId("identity")),
     webTitle = webTitle,
     analyticsName = analyticsName,
+    contentType = "userid", // For the no js omniture tracking
     javascriptConfigOverrides = javascriptConfig)
 }

@@ -60,7 +60,6 @@ object CustomTarget {
 
 }
 
-
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
   def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
@@ -136,29 +135,26 @@ object GeoTarget {
 
 }
 
+case class GuAdUnit(id: String, path: Seq[String], status: String) {
+  val fullPath = path.mkString("/")
 
-case class GuAdUnit(id: String, path: Seq[String])
+  val isActive = status == "ACTIVE"
+  val isInactive = status == "INACTIVE"
+  val isArchived = status == "ARCHIVED"
 
-object GuAdUnit {
-
-  implicit val adUnitWrites = new Writes[GuAdUnit] {
-    def writes(adUnit: GuAdUnit): JsValue = {
-      Json.obj(
-        "id" -> adUnit.id,
-        "path" -> adUnit.path
-      )
-    }
-  }
-
-  implicit val adUnitReads: Reads[GuAdUnit] = (
-    (JsPath \ "id").read[String] and
-      (JsPath \ "path").read[Seq[String]]
-    )(GuAdUnit.apply _)
-
+  val isRunOfNetwork = path.isEmpty
 }
 
+object GuAdUnit {
+  implicit val adUnitFormat = Json.format[GuAdUnit]
 
-case class GuTargeting(adUnits: Seq[GuAdUnit],
+  val ACTIVE = "ACTIVE"
+  val INACTIVE = "INACTIVE"
+  val ARCHIVED = "ARCHIVED"
+}
+
+case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
+                       adUnitsExcluded: Seq[GuAdUnit],
                        geoTargetsIncluded: Seq[GeoTarget],
                        geoTargetsExcluded: Seq[GeoTarget],
                        customTargetSets: Seq[CustomTargetSet]) {
@@ -184,7 +180,7 @@ case class GuTargeting(adUnits: Seq[GuAdUnit],
   val targetsR2Only: Boolean = customTargetSets exists (_.targetsR2Only)
 
   def targetsSectionFrontDirectly(sectionId: String): Boolean = {
-    adUnits.exists { adUnit =>
+    adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
       path.length == 3 &&
         path(1) == sectionId &&
@@ -194,27 +190,8 @@ case class GuTargeting(adUnits: Seq[GuAdUnit],
 }
 
 object GuTargeting {
-
-  implicit val targetingWrites = new Writes[GuTargeting] {
-    def writes(targeting: GuTargeting): JsValue = {
-      Json.obj(
-        "adUnits" -> targeting.adUnits,
-        "geoTargetsIncluded" -> targeting.geoTargetsIncluded,
-        "geoTargetsExcluded" -> targeting.geoTargetsExcluded,
-        "customTargetSets" -> targeting.customTargetSets
-      )
-    }
-  }
-
-  implicit val targetingReads: Reads[GuTargeting] = (
-    (JsPath \ "adUnits").read[Seq[GuAdUnit]] and
-      (JsPath \ "geoTargetsIncluded").read[Seq[GeoTarget]] and
-      (JsPath \ "geoTargetsExcluded").read[Seq[GeoTarget]] and
-      (JsPath \ "customTargetSets").read[Seq[CustomTargetSet]]
-    )(GuTargeting.apply _)
-
+  implicit val targetingFormat = Json.format[GuTargeting]
 }
-
 
 case class GuLineItem(id: Long,
                       name: String,
@@ -275,8 +252,17 @@ case class GuLineItem(id: Long,
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
+  val targetsHighMerchandising: Boolean = {
+    val targetSlotIsHighMerch = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" && target.values.contains("merchandising-high")
+    } yield target
+    targetSlotIsHighMerch.nonEmpty
+  }
+
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
-    targeting.adUnits.exists { adUnit =>
+    targeting.adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
       (path.length == 3 || path.length == 4) && path(2) == "front"
     }

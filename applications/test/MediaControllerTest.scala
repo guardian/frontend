@@ -45,7 +45,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   it should("strip newline characters out of src urls for videos") in {
      val result = controllers.MediaController.render(videoUrlWithDodgyOctpusUrl)(TestRequest(videoUrlWithDodgyOctpusUrl))
      status(result) should be (200)
-     contentAsString(result) should include ("http://multimedia.guardianapis.com/interactivevideos/video.php?octopusid=10040285&amp;format=video/m3u8")
+     contentAsString(result) should include ("https://multimedia.guardianapis.com/interactivevideos/video.php?octopusid=10040285&amp;format=video/m3u8")
 
   }
 }

@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import common.commercial._
-import common.{ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging, Edition}
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
 import play.api.mvc._
@@ -57,6 +57,8 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
       case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
+        val edition = Edition(request)
+        val optSection = request.getParameter("s")
         val optLogo = request.getParameter("l")
         val optCapiTitle = request.getParameter("ct")
         val optCapiLink = request.getParameter("cl")
@@ -73,7 +75,8 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
 
         if (isMulti) {
           format.result(views.html.contentapi.items(
-            contents map (CardContent.fromContentItem(_, optClickMacro, withDescription = false)),
+            contents map (CardContent.fromContentItem(_, edition, optClickMacro, withDescription = false)),
+            optSection,
             optLogo,
             optCapiTitle,
             optCapiLink,
@@ -86,7 +89,8 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
           )
         } else {
           format.result(views.html.contentapi.item(
-            CardContent.fromContentItem(contents.head, optClickMacro, withDescription = true),
+            CardContent.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
+            optSection,
             optLogo,
             optCapiTitle,
             optCapiLink,

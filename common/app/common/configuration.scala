@@ -60,6 +60,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
+    lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
@@ -77,6 +78,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val urls = properties map { property =>
       configuration.getStringProperty(property).get
     }
+    lazy val updateIntervalInSecs: Int = configuration.getIntegerProperty("healthcheck.updateIntervalInSecs").getOrElse(5)
   }
 
   object debug {
@@ -213,7 +215,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    val fallbackLogo = Static("images/fallback-logo.png").path
+    val fallbackLogo = Static("images/fallback-logo.png")
     object backends {
       lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
       lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
@@ -227,6 +229,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
+
+    // This configuration value determines if this server will load and resolve assets using the asset map.
+    // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.
+    // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
+    lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
+      .map(_.toBoolean)
+      .getOrElse(environment.isProd || environment.isCode)
   }
 
   object staticSport {
@@ -268,7 +277,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       if (environment.isProd) "http://m.code.dev-theguardian.com"
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
-    lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
+    lazy val dfpAdUnitGuRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpFacebookIaAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
@@ -297,6 +306,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
+    lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
     lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
     lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"

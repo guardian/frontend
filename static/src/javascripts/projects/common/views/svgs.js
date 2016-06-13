@@ -25,6 +25,7 @@ define([
     'inlineSvg!svgs/commercial/icon-clock',
     'inlineSvg!svgs/commercial/icon-location',
     'inlineSvg!svgs/commercial/icon-basket',
+    'inlineSvg!svgs/commercial/paid-content',
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
@@ -52,6 +53,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-desktop',
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/commercial/adblock-coins-us',
+    'inlineSvg!svgs/icon/star',
     'lodash/objects/isArray'
 ], function (
     commentCount16icon,
@@ -76,6 +78,7 @@ define([
     iconClock,
     iconLocation,
     iconBasket,
+    paidContent,
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
@@ -103,6 +106,7 @@ define([
     notificationsExplainerDesktop,
     notificationsExplainerMobile,
     adblockCoinsUS,
+    star,
     isArray
 ) {
     var svgs = {
@@ -128,6 +132,7 @@ define([
         iconClock: iconClock,
         iconLocation: iconLocation,
         iconBasket: iconBasket,
+        paidContent: paidContent,
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
@@ -154,6 +159,7 @@ define([
         logomembership: membershipLogo,
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
+        star: star,
         logomembershipwhite: membershipLogoWhite
     };
 

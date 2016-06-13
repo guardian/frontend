@@ -1,5 +1,6 @@
 @(gallery: model.GalleryPage)(implicit request: RequestHeader)
 
+@import conf.switches.Switches.staticBadgesSwitch
 @import views.support.TrailCssClasses.toneClass
 
 <header class="content__head tonal__head tonal__head--@toneClass(gallery.item)">
@@ -8,17 +9,19 @@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
-        @if(gallery.showBadge && !gallery.item.commercial.isAdvertisementFeature) {
+        @if(gallery.showBadge || staticBadgesSwitch.isSwitchedOn) {
             @fragments.commercial.badge(gallery.item, gallery)
         }
 
         @fragments.contentMeta(gallery.item, gallery)
 
         @if(gallery.item.fields.standfirst.isDefined) {
-            @fragments.standfirst(gallery.item)
+            <div class="content__wrapper--standfirst tonal__standfirst">
+                @fragments.standfirst(gallery.item)
+            </div>
         }
 
-            <div class="content__meta-container new-gallery__meta-container">
+            <div class="content__meta-container gallery__meta-container">
 
                 @if(!gallery.item.content.hasTonalHeaderByline) {
                     @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)

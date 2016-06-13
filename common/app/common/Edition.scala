@@ -25,7 +25,8 @@ abstract class Edition(
       "media",
       "environment",
       "film",
-      "lifeandstyle"
+      "lifeandstyle",
+      "travel"
     )
 
   ) extends Navigation {
@@ -99,7 +100,7 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  private lazy val editionRegex = Edition.all.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex = Edition.all.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
   private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r
@@ -164,10 +165,4 @@ object InternationalEdition {
         .filter(variants.contains(_) && editionIsIntl)
     }
   }
-}
-
-object InternationalEditionVariant {
-
-  def apply(request: RequestHeader): Option[String] = request.headers.get("X-GU-International")
-
 }

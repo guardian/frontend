@@ -1,8 +1,9 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
-@import common.{Edition, Navigation}
-@import conf.switches.Switches._
+
+@import common.{Edition, Navigation, commercial}
+@import conf.switches.Switches.{BreakingNewsSwitch, ForceOneByOnePxSlotSwitch}
 @import views.support.Commercial.topBelowNavSlot
-@import views.support.{Commercial, RenderClasses}
+@import views.support.{Commercial, ContributorLinks, RenderClasses}
 @import model.Page.getContent
 @import layout.ContentWidths.MainMedia
 @import model.{Gallery,Article,ContentPage,GalleryPage}
@@ -79,10 +80,14 @@
 
                     @fragments.meta.metaInline(page.item)
 
-                    <h1 class="content__headline content__headline--immersive @if(page.item.content.tags.isGallery || page.item.fields.main.nonEmpty) { content__headline--immersive--with-main-media }">
+                    <h1 class="content__headline content__headline--immersive
+                        @if(page.item.content.isImmersiveGallery) {content__headline--gallery}
+                        @if(page.item.content.tags.isArticle) {content__headline--immersive-article}
+                        @if(page.item.fields.main.nonEmpty || page.item.content.isImmersiveGallery) { content__headline--immersive--with-main-media }
+                    ">
                         @page.item match {
                             case _: Gallery => {
-                                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill"))
+                                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
                             }
                             case article: Article => {
                                 @if(article.isUSMinute) {
@@ -154,7 +159,7 @@
             ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-            ("childrens-books-site", page.metadata.section == "childrens-books-site"),
+            ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
@@ -165,14 +170,14 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.ContentPage if page.item.content.isImmersive || page.item.content.showNewGalleryDesign => {
-                @* When the new galleries go live, they will have the immersive flag *@
+            case page: model.ContentPage if page.item.content.isImmersive => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
                     @immersiveMainMedia(page)
                 </div>
             }
+            case _: commercial.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
@@ -209,7 +214,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(ForceOneByOnePxSlotSwitch.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

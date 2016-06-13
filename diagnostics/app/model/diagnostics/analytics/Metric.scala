@@ -13,11 +13,15 @@ object Metric extends Logging {
     ("pv", CountMetric("kpis-page-views", "raw page views - simple <img> in body, no javascript involved")),
     ("pva", CountMetric("kpis-analytics-page-views", "page view fires after analytics")),
     ("omniture-pageview-error", CountMetric("omniture-pageview-error", "omniture-pageview-error")),
-    ("offline-page-view", CountMetric("offline-page-view", "offline views after returning")),
 
     ("ads-blocked", CountMetric("ads-blocked", "ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered", "first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad", "dfp-served-ad")),
+
+    // Commercial audit
+    ("comm-audit-alpha", CountMetric("comm-audit-alpha", "Variant Alpha of ad serve audit")),
+    ("comm-audit-beta", CountMetric("comm-audit-beta", "Variant Beta of ad serve audit")),
+    ("comm-audit-delta", CountMetric("comm-audit-delta", "Variant Delta of ad serve audit")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x", "beacon on the 50x page that tells us that real users are getting 500 errors")),

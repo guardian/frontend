@@ -7,17 +7,15 @@ define([
     'common/utils/chain'
 ], function (qwery, config, omniture, values, chain) {
 
-    function OmnitureMedia(player) {
+    function OmnitureMedia(player, mediaId) {
 
         function getAttribute(attributeName) {
             return player.el().getAttribute(attributeName);
         }
 
-        var lastDurationEvent, durationEventTimer,
-            mediaId = getAttribute('data-embed-path') || config.page.pageId,
+        var pageId = config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
-            contentStarted = false,
             prerollPlayed = false,
             isEmbed = !!guardian.isEmbed,
             events = {
@@ -33,19 +31,19 @@ define([
                 'video:75': 'event23',
                 'video:end': 'event18',
                 'audio:end': 'event20',
-                'video:fullscreen': 'event96',
-                // extra events with no set ordering
-                duration: 'event57'
+                'video:fullscreen': 'event96'
             },
             trackingVars = [
                 // these tracking vars are specific to media events.
                 'eVar11',   // embedded or on platform
                 'prop41',   // preroll milestone
                 'prop43',   // media type
-                'prop44',   // media id
-                'eVar44',   // media id
+                'prop44',   // page id
+                'eVar44',   // page id
                 'eVar74',   // ad or content
-                'eVar61'];  // restricted
+                'eVar61',   // restricted
+                'prop39'    // media id
+            ];
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -55,25 +53,15 @@ define([
             return player.currentTime();
         };
 
-        this.play = function () {
-            if (mediaType === 'video' && contentStarted) {
-                this.startDurationEventTimer();
-            }
-        };
-
-        this.pause = function () {
-            if (mediaType === 'video') {
-                this.stopDurationEventTimer();
-            }
-        };
-
         this.sendEvent = function (event, eventName, ad) {
             omniture.populateEventProperties(eventName || event);
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
             // Set these each time because they are shared global variables, but OmnitureMedia is instanced.
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
-            s.eVar44 = s.prop44 = mediaId;
+            s.eVar44 = s.prop44 = pageId;
+            s.prop39 = mediaId;
+            
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
@@ -101,60 +89,11 @@ define([
             s.eVar11 = isEmbed ? 'Embedded' : config.page.sectionName || '';
             s.eVar7 = s.pageName;
 
-            s.Media.open(mediaId, this.getDuration(), 'HTML5 Video');
-        };
-
-        this.getDurationWatched = function () { // get the duration watched since this function was last called
-            var durationWatched = 0,
-                now = new Date(),
-                delta = (now - lastDurationEvent) / 1000.0;
-            if (durationEventTimer && contentStarted && delta > 1) {
-                durationWatched = Math.round(delta);
-            }
-            lastDurationEvent = now;
-            return durationWatched;
-        };
-
-        this.baseDurationEvent = function () {
-            var evts = [],
-                durationWatched = this.getDurationWatched();
-            if (durationWatched) {
-                evts.push(events.duration + '=' + durationWatched);
-            }
-            return evts;
-        };
-
-        this.sendSegment = function (segment) {
-            var evts = this.baseDurationEvent();
-            evts.push(segment); // custom quartile completed event
-            this.sendEvent(evts.join(','));
-        };
-
-        this.sendDurationEvent = function () {
-            var evts = this.baseDurationEvent();
-            if (evts && evts.length > 0) {
-                this.sendEvent(evts.join(','));
-            }
-        };
-
-        this.startDurationEventTimer = function () {
-            this.stopDurationEventTimer();
-            lastDurationEvent = new Date();
-            durationEventTimer = window.setInterval(this.sendDurationEvent.bind(this), 10000);
-        };
-
-        this.stopDurationEventTimer = function () {
-            this.sendDurationEvent(); // send any partial duration before stopping
-            if (durationEventTimer) {
-                window.clearInterval(durationEventTimer);
-            }
-            durationEventTimer = false;
+            s.Media.open(pageId, this.getDuration(), 'HTML5 Video');
         };
 
         this.onContentPlay = function () {
-            contentStarted = true;
             this.sendNamedEvent('video:play');
-            this.startDurationEventTimer();
         };
 
         this.onPrerollPlay = function () {
@@ -165,9 +104,6 @@ define([
         this.init = function () {
 
             this.omnitureInit();
-
-            player.on('play', this.play.bind(this));
-            player.on('pause', this.pause.bind(this));
 
             player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.onPrerollPlay.bind(this));

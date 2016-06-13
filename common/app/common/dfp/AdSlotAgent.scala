@@ -5,17 +5,17 @@ import java.net.URI
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.editions.{Au, Uk, Us}
-import conf.Configuration.commercial.dfpAdUnitRoot
+import conf.Configuration.commercial.dfpAdUnitGuRoot
 
 trait AdSlotAgent {
 
-  protected def isProd: Boolean
+  protected def environmentIsProd: Boolean
 
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]]
 
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs]
 
-  private def fullAdUnit(adUnitWithoutRoot: String) = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+  private def fullAdUnit(adUnitWithoutRoot: String) = s"$dfpAdUnitGuRoot/$adUnitWithoutRoot"
 
   private def isCurrent(lineItem: GuLineItem) = {
     lineItem.startTime.isBeforeNow && (
@@ -24,7 +24,7 @@ trait AdSlotAgent {
   }
 
   private def targetsAdUnit(lineItem: GuLineItem, adUnitWithoutRoot: String) = {
-    val adUnits = for (adUnit <- lineItem.targeting.adUnits) yield {
+    val adUnits = for (adUnit <- lineItem.targeting.adUnitsIncluded) yield {
       adUnit.path.mkString("/").stripSuffix("/ng")
     }
     adUnits.contains(fullAdUnit(adUnitWithoutRoot))
@@ -56,7 +56,7 @@ trait AdSlotAgent {
         targetsRelevantSizes(lineItem) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
         deriveEditionFromGeotargeting(lineItem).contains(edition) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
 
     lineItems flatMap (_.creativeSizes)
@@ -82,7 +82,7 @@ trait AdSlotAgent {
         targetsTopBelowNavSlot(lineItem) &&
         targetsEdition(lineItem, edition) &&
         targetsAdUnit(lineItem, adUnitWithoutRoot) &&
-        !(isProd && targetsAdTest(lineItem))
+        !(environmentIsProd && targetsAdTest(lineItem))
     }
   }
 

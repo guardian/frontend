@@ -1,9 +1,10 @@
 package views.support
 
-import model._
-import play.twirl.api.Html
-import play.api.mvc.RequestHeader
 import common.Localisation
+import common.commercial.HostedPage
+import model._
+import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 
 object Title {
   val SectionsToIgnore = Set(
@@ -22,9 +23,11 @@ object Title {
         s"${Localisation(t.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.metadata.webTitle, Option(t.properties.sectionName))}"
       case s: Section =>
         s"${Localisation(s.metadata.webTitle)}${pagination(page)}"
+      case hostedPage: HostedPage =>
+        s"${Localisation(hostedPage.pageTitle)}"
       case _          =>
         page.metadata.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
-          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.section))}"
+          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.sectionId))}"
         )
     }
     s"${title.trim} | The Guardian"

@@ -5,7 +5,7 @@ import java.lang.System._
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
-import org.joda.time.DateTime.now
+import play.api.data.validation.ValidationError
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -18,6 +18,7 @@ object Eventbrite extends ExecutionContexts with Logging {
   case class EBResponse(pagination: EBPagination, events: Seq[EBEvent])
 
   object EBResponse {
+
     implicit val ebResponseReads: Reads[EBResponse] = (
       (JsPath \ "pagination").read[EBPagination] and
         (JsPath \ "events").read[Seq[EBEvent]]
@@ -87,6 +88,15 @@ object Eventbrite extends ExecutionContexts with Logging {
         (JsPath \ "capacity").read[Int]
       ) (EBEvent.apply(_: String, _: String, _: DateTime, _: String, _: String, _: String, _: EBVenue, _: Seq[Option[EBTicket]], _: Int))
 
+    implicit val eventsReads: Reads[Seq[EBEvent]] = new Reads[Seq[EBEvent]] {
+      override def reads(json: JsValue): JsResult[Seq[EBEvent]] = {
+        json match {
+          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[EBEvent]))
+          case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
+        }
+      }
+    }
+
     def buildEventWithImageSrc(event: EBEvent, src: String) = {
       new EBEvent(
         event.id,
@@ -122,6 +132,15 @@ object Eventbrite extends ExecutionContexts with Logging {
         (JsPath \ "quantity_total").read[Int] and
         (JsPath \ "quantity_sold").read[Int]
       ) (EBTicket.buildTicket _)
+
+    implicit val ticketsReads: Reads[Seq[EBTicket]] = new Reads[Seq[EBTicket]] {
+      override def reads(json: JsValue): JsResult[Seq[EBTicket]] = {
+        json match {
+          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.as[Option[EBTicket]]))
+          case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
+        }
+      }
+    }
   }
 
   case class EBVenue(name: Option[String],
@@ -159,7 +178,7 @@ object Eventbrite extends ExecutionContexts with Logging {
         val start = currentTimeMillis
         feedContent map { body =>
           val responses = Json.parse(body).as[Seq[EBResponse]]
-          val events = responses flatMap {_.events} filter {_.startDate.isAfter(now.plusWeeks(2))}
+          val events = responses flatMap {_.events}
 
           Future(ParsedFeed(
             events,

@@ -17,7 +17,6 @@ requirejs.config({
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
         react:        '/base/static/public/javascripts/components/react/react',
-        enhancer:     'components/enhancer/enhancer',
         EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',
         fastdom:      'components/fastdom/index',
@@ -28,6 +27,7 @@ requirejs.config({
         qwery:        'components/qwery/qwery',
         raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
+        analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
         omniture:     'vendor/omniture',
         stripe:       'vendor/stripe/stripe.min',

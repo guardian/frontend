@@ -53,7 +53,7 @@
 
     .ad-slot--dark & {
         color: $neutral-3;
-        border-top-color: $neutral-2;
+        border-top-color: $media-mute;
         background-color: transparent;
     }
 }
@@ -115,22 +115,17 @@
         z-index: $zindex-popover;
     }
 }
-.top-banner-ad-container--small {
-    min-height: ($gs-row-height * 3) + 18;
-}
-.top-banner-ad-container--responsive {
-    min-height: ($gs-row-height * 7) + 16;
-}
+
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on & {
+        .js-on:not(.is-adfree) & {
             display: block;
         }
     }
@@ -159,6 +154,13 @@
         padding-bottom: $gs-row-height / 2;
         padding-top: $gs-row-height / 2;
 
+        /* Oh horrible code, I'm looking at you. One day, you'll disappear.
+           One day, I'll fucking rip you apart.
+         */
+        &.ad-slot--h250 {
+            height: 250px;
+        }
+
         .ad-slot__label {
             margin-top: (-1) * $gs-row-height / 2;
         }
@@ -180,9 +182,7 @@
             text-align: left;
         }
     }
-    .top-banner-ad-container--large & {
-        min-height: 250px;
-    }
+
     .has-page-skin & {
         @include mq(wide) {
             width: auto !important;
@@ -224,11 +224,19 @@
     }
 }
 .ad-slot--gallery-inline {
+    background-color: $media-background;
+
     @include mq(mobileLandscape) {
         width: 300px;
     }
     @include mq(tablet) {
         width: auto;
+    }
+    @include mq(desktop) {
+        &,
+        .ad-slot__label {
+            text-align: left;
+        }
     }
 }
 .ad-slot--inline,
@@ -284,7 +292,6 @@
         }
     }
 }
-.ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
@@ -313,50 +320,6 @@
     @include mq(desktop) {
         display: block;
     }
-}
-.ad-slot--sponsored {
-    min-height: 250px;
-    box-sizing: border-box;
-    background-color: $neutral-8;
-    overflow: hidden;
-    border-top: 1px solid $neutral-5;
-    padding-top: $gs-baseline/2;
-}
-.ad-slot--sponsored__article {
-    text-align: left;
-    display: block;
-    position: relative;
-    min-height: gs-height(2);
-    padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
-    margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid $neutral-5;
-}
-.ad-slot--sponsored__image {
-    position: absolute;
-    top: 0;
-    left: $gs-gutter/2;
-}
-.ad-slot--sponsored__article,
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__help {
-    color: $neutral-2;
-}
-.ad-slot--sponsored__article {
-    @include f-headlineSans;
-    @include font-size(16, 20);
-}
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__help {
-    @include fs-textSans(3);
-    float: left;
-    clear: left;
-    padding-left: $gs-gutter/2;
-}
-.ad-slot--sponsored__label {
-    margin-bottom: $gs-baseline/3;
-}
-.ad-slot--sponsored__link {
-    float: right;
 }
 
 /**
@@ -491,35 +454,38 @@
         }
     }
 }
-.ad-slot--paid-for-badge--gallery {
-    border-top: 1px dotted $neutral-1;
-    border-bottom: 0;
-    padding-top: $gs-baseline / 3;
 
-    @include mq(desktop) {
-        width: gs-span(3);
-        position: absolute;
-    }
+.content--media:not(.paid-content--advertisement-feature) {
+    .ad-slot--paid-for-badge--gallery {
+        border-top: 1px dotted $media-mute;
+        border-bottom: 0;
+        padding-top: $gs-baseline / 3;
 
-    .content__main-column > & {
         @include mq(desktop) {
-            top: 100%;
+            width: gs-span(3);
+            position: absolute;
         }
 
-        @include mq(leftCol) {
-            left: -160px;
+        .content__main-column > & {
+            @include mq(desktop) {
+                top: 100%;
+            }
+
+            @include mq(leftCol) {
+                left: -160px;
+            }
+
+            @include mq(wide) {
+                left: -240px;
+            }
         }
 
-        @include mq(wide) {
-            left: -240px;
+        .ad-slot--paid-for-badge__header {
+            font-weight: normal;
         }
-    }
-
-
-    .ad-slot--paid-for-badge__header {
-        font-weight: normal;
     }
 }
+
 .ad-slot--paid-for-badge--interactive {
     width: 140px;
     min-height: 135px;
@@ -680,4 +646,11 @@
             }
         }
     }
+}
+
+/**
+ * Fluid ad slots don't have widths
+ */
+.ad-slot--fluid {
+    width: auto;
 }

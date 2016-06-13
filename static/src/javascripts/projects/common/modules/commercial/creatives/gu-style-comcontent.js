@@ -1,12 +1,14 @@
 define([
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
     'common/modules/commercial/gustyle/gustyle',
     'text!common/views/commercial/creatives/gu-style-comcontent.html',
+    'text!common/views/commercial/creatives/gu-style-hosted.html',
     'lodash/objects/merge',
     'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
@@ -14,10 +16,12 @@ define([
     $,
     detect,
     mediator,
+    config,
     template,
     svgs,
     GuStyle,
     gustyleComcontentTpl,
+    gustyleHostedTpl,
     merge,
     addTrackingPixel
 ) {
@@ -35,16 +39,29 @@ define([
                 articleHeaderFontSize: 'gu-display__content-size--' + this.params.articleHeaderFontSize,
                 articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
                 brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
-                externalLinkIcon: externalLinkIcon
+                externalLinkIcon: externalLinkIcon,
+                isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
+        var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
 
-        $.create(template(gustyleComcontentTpl, { data: merge(this.params, templateOptions) })).appendTo(this.$adSlot);
-        new GuStyle(this.$adSlot, this.params).addLabel();
+        var title = this.params.articleHeaderText || 'unknown';
+        var sponsor = 'Renault';
+        this.params.linkTracking = 'Labs hosted native traffic card' +
+            ' | ' + config.page.edition +
+            ' | ' + config.page.section +
+            ' | ' + title +
+            ' | ' + sponsor;
 
-        if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-        }
+        var markup = template(templateToLoad, { data: merge(this.params, templateOptions) });
+        var gustyle = new GuStyle(this.$adSlot, this.params);
 
+        return fastdom.write(function () {
+            this.$adSlot[0].insertAdjacentHTML('beforeend', markup);
+
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+        }, this).then(gustyle.addLabel.bind(gustyle));
     };
 
     return GustyleComcontent;

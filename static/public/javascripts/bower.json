@@ -5,7 +5,8 @@
     "html5shiv": "~3.7.0",
     "zxcvbn": "dropbox/zxcvbn",
     "react": "0.13.2",
-    "JSON-js": "*"
+    "JSON-js": "*",
+    "es5-shim": "~4.5.8"
   },
   "install": {
     "path": "components",

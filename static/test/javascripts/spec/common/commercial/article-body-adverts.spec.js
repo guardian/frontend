@@ -15,41 +15,44 @@ define([
 ) {
     describe('Article Body Adverts', function () {
         var injector = new Injector(),
+            ads = {
+               'dfp-ad--im': true
+            },
             articleBodyAdverts,
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
-            mediator,
             config,
-            detect,
-            dfp;
+            detect;
 
         beforeEach(function (done) {
-
+            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
+                return Promise.resolve(ads[id]);
+            });
+            injector.mock('common/modules/commercial/dfp/dfp-api', function() {
+                return {
+                    addSlot: function () { /* noop */ }
+                };
+            });
             injector.require([
+                /* load mocks */
+                'common/modules/commercial/dfp/track-ad-load',
+                'common/modules/commercial/dfp/dfp-api',
+
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
-                'common/modules/commercial/dfp/dfp-api',
                 'common/modules/article/space-filler',
-                'common/utils/mediator',
                 'common/utils/config',
                 'common/utils/detect'
             ], function () {
-                articleBodyAdverts = arguments[0];
+                articleBodyAdverts = arguments[2];
 
-                commercialFeatures = arguments[1];
+                commercialFeatures = arguments[3];
                 commercialFeatures.articleBodyAdverts = true;
 
-                dfp = arguments[2];
-                spyOn(dfp, 'addSlot').and.callFake(function () {
-                    // nothing to see here, move along bro.
-                });
-
-                spaceFiller = arguments[3];
+                spaceFiller = arguments[4];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
-
-                mediator = arguments[4];
 
                 config = arguments[5];
                 config.page = {};
@@ -128,39 +131,17 @@ define([
 
             it('inserts up to ten adverts when DFP returns empty merchandising components', function (done) {
                 spaceFillerStub.onCall(0).returns(Promise.resolve(false));
-                spaceFillerStub.onCall(1).returns(Promise.resolve(false));
-                spaceFillerStub.returns(Promise.resolve(true));
+                spaceFillerStub.onCall(1).returns(Promise.resolve(0));
+                spaceFillerStub.onCall(2).returns(Promise.resolve(2));
+                spaceFillerStub.onCall(3).returns(Promise.resolve(8));
 
-                var oldOn = mediator.on;
-                var fn;
-                mediator.on = function (eventName, fn2) {
-                    fn = fn2;
-                };
-                var oldEmit = mediator.emit;
-                mediator.emit = function (eventName, arg) {
-                    return fn(arg);
-                };
-
-                config.switches.viewability = true;
                 detect.getBreakpoint = function () {return 'tablet';};
-
-                articleBodyAdverts.init().then(function () {
-                    var fakeEvent = {
-                        slot: {
-                            getSlotElementId: function () {
-                                return 'dfp-ad--im';
-                            }
-                        },
-                        isEmpty: true
-                    };
-
-                    mediator.emit('modules:commercial:dfp:rendered', fakeEvent).then(function () {
-                        mediator.on = oldOn;
-                        mediator.emit = oldEmit;
-                        expect(spaceFillerStub.callCount).toBe(12);
-                        done();
-                    });
-                });
+                ads['dfp-ad--im'] = false;
+                articleBodyAdverts.init()
+                    .then(articleBodyAdverts['@@tests'].waitForMerch)
+                    .then(function (countAdded) {
+                        expect(countAdded).toEqual(10);
+                    }).then(done);
             });
         });
 
@@ -169,45 +150,30 @@ define([
                 config.page.hasInlineMerchandise = false; // exclude IM components from count
             });
 
-            describe('When viewability enabled', function () {
-                beforeEach(function () {
-                    config.switches.viewability = true;
+            describe('On mobiles and desktops', function () {
+                it('inserts up to ten adverts', function (done) {
+                    spaceFillerStub.onCall(0).returns(Promise.resolve(2));
+                    spaceFillerStub.onCall(1).returns(Promise.resolve(8));
+                    articleBodyAdverts.init()
+                        .then(articleBodyAdverts['@@tests'].insertLongAds)
+                        .then(function (countAdded) {
+                            expect(countAdded).toEqual(10);
+                        })
+                        .then(done);
                 });
 
-                describe('On mobiles and desktops', function () {
-                    it('inserts up to ten adverts', function (done) {
-                        articleBodyAdverts.init().then(function () {
-                            expect(spaceFillerStub.callCount).toBe(10);
-                            done();
-                        });
-                    });
-
-                    it('inserts the third+ adverts with greater vertical spacing', function (done) {
-                        // We do not want the same ad-density on long-read
-                        // articles that we have on shorter pieces
-                        articleBodyAdverts.init().then(function () {
-                            var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
-                            var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
-                                return call[0];
-                            });
-                            longArticleInsertionRules.forEach(function (ruleset) {
-                                var adSlotSpacing = ruleset.selectors[' .ad-slot'];
-                                expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
-                            });
-                            done();
-                        });
-                    });
-                });
-            });
-
-            describe('When viewability disabled', function () {
-                beforeEach(function () {
-                    config.switches.viewability = false;
-                });
-
-                it('tries to add two', function (done) {
+                it('inserts the third+ adverts with greater vertical spacing', function (done) {
+                    // We do not want the same ad-density on long-read
+                    // articles that we have on shorter pieces
                     articleBodyAdverts.init().then(function () {
-                        expect(spaceFillerStub.callCount).toBe(2);
+                        var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
+                        var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
+                            return call[0];
+                        });
+                        longArticleInsertionRules.forEach(function (ruleset) {
+                            var adSlotSpacing = ruleset.selectors[' .ad-slot'];
+                            expect(adSlotSpacing).toEqual({minAbove: 1300, minBelow: 1300});
+                        });
                         done();
                     });
                 });

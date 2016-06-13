@@ -3,7 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.BrandHunter
+import common.commercial.{BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -15,13 +15,12 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.galleryRedesign
 
 object Commercial {
 
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
 
-    val section = Some(metadata.section)
+    val section = Some(metadata.sectionId)
 
     val isInappropriateForSponsorship =
       maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
@@ -101,11 +100,17 @@ final case class Commercial(
   }
 
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
-    DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
+    DfpAgent.isSponsored(tags.tags, Some(metadata.sectionId), maybeEdition)
+
+  def needsHighMerchandisingSlot(edition:Edition): Boolean = {
+    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
+  }
+
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
   )
+
 }
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -143,14 +148,21 @@ final case class Fields(
   sensitive: Option[Boolean],
   legallySensitive: Option[Boolean]
 ){
-  def javascriptConfig: Map[String, JsValue] = Map(("shortUrl", JsString(shortUrl)))
+  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def javascriptConfig: Map[String, JsValue] = {
+    Map(
+      "shortUrl" -> JsString(shortUrl),
+      "shortUrlId" -> JsString(shortUrlId)
+    )
+  }
 }
 
 object MetaData {
 
   def make(
     id: String,
-    section: String,
+    section: Option[SectionSummary],
     webTitle: String,
     analyticsName: String,
     url: Option[String] = None,
@@ -171,7 +183,6 @@ object MetaData {
     ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
-
     MetaData(
       id = id,
       url = resolvedUrl,
@@ -179,7 +190,7 @@ object MetaData {
       webTitle = webTitle,
       section = section,
       analyticsName = analyticsName,
-      adUnitSuffix = adUnitSuffix getOrElse section,
+      adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -197,17 +208,18 @@ object MetaData {
   def make(fields: Fields, apiContent: contentapi.Content) = {
     val id = apiContent.id
     val url = s"/$id"
-    val section = apiContent.sectionId.getOrElse("")
+    val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
+    val sectionId = sectionSummary map (_.id) getOrElse ""
 
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
-      section = section,
+      sectionSummary,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section,
+      analyticsName = s"GFE:$sectionId:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = sectionId,
       description = apiContent.fields.flatMap(_.trailText),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
@@ -223,7 +235,7 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  section: String,
+  section: Option[SectionSummary],
   webTitle: String,
   analyticsName: String,
   adUnitSuffix: String,
@@ -248,6 +260,7 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
+  val sectionId = section map (_.id) getOrElse ""
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -268,10 +281,10 @@ final case class MetaData (
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || (galleryRedesign.isSwitchedOn && contentType.toLowerCase == "gallery")
+  val hasSlimHeader: Boolean = contentType == "Interactive" || sectionId == "identity" || contentType.toLowerCase == "gallery"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -284,15 +297,16 @@ final case class MetaData (
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("pageId", JsString(id)),
-    ("section", JsString(section)),
+    ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path))
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf"))),
+    ("contentType", JsString(contentType))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -380,14 +394,7 @@ trait ContentPage extends Page {
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
 
-  override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findContentBranding(
-      section = None,
-      item.tags,
-      publicationDate = Some(item.trail.webPublicationDate),
-      edition
-    )
-  }
+  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
 }
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
@@ -412,13 +419,14 @@ trait StandalonePage extends Page {
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
-case class CommercialExpiryPage(
-  id: String,
-  section: String = "global",
-  webTitle: String = "This page has been removed",
-  analyticsName: String = "GFE:Gone") extends StandalonePage {
-
-  override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+case class CommercialExpiryPage(id: String) extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id,
+    section = Some(SectionSummary.fromId("global")),
+    webTitle = "This page has been removed",
+    analyticsName = "GFE:Gone",
+    shouldGoogleIndex = false
+  )
 }
 
 case class GalleryPage(
@@ -441,7 +449,7 @@ case class TagCombiner(
     id,
     leftTag.metadata.section,
     s"${leftTag.name} + ${rightTag.name}",
-    s"GFE:${leftTag.metadata.section}:${leftTag.name} + ${rightTag.name}",
+    s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex)
   )
@@ -611,6 +619,10 @@ final case class Tags(
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
+
+  lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
+  lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
+  lazy val isElection = isUSElection || isAusElection
 
   lazy val keywordIds = keywords.map { _.id }
 

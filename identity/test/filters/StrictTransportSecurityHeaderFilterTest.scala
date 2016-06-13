@@ -14,7 +14,7 @@ class StrictTransportSecurityHeaderFilterTest extends FunSuite with Matchers {
     val request = FakeRequest()
     def action(req: RequestHeader): Future[Result] = Future.successful(Ok)
 
-    val result = StrictTransportSecurityHeaderFilter(action _)(request)
+    val result = new StrictTransportSecurityHeaderFilter().apply(action _)(request)
 
     Await.result(result, 1.second).header.headers("Strict-Transport-Security") should equal("max-age=31536000; preload")
   }

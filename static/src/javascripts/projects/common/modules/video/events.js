@@ -29,7 +29,7 @@ define([
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
         QUARTILES = [25, 50, 75],
-    // Advert and content events used by analytics. The expected order of bean events is:
+        // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
             'preroll:request',
             'preroll:ready',
@@ -76,8 +76,8 @@ define([
         });
     }
 
-    function initOmnitureTracking(player) {
-        new OmnitureMedia(player).init();
+    function initOmnitureTracking(player, mediaId) {
+        new OmnitureMedia(player, mediaId).init();
     }
 
     function bindPrerollEvents(player) {
@@ -233,10 +233,15 @@ define([
                     this.ima.getAdsManager().stop();
                 },
                 init: function () {
-                    var skipButton = template(adsSkipOverlayTmpl, { skipTimeout: skipTimeout });
+                    var adDuration = this.ima.getAdsManager().getCurrentAd().getDuration();
+
+                    var skipButton = template(adsSkipOverlayTmpl, {
+                        adDuration: adDuration,
+                        skipTimeout: skipTimeout
+                    });
 
                     $(this.el()).append(skipButton);
-                    intervalId = setInterval(events.update.bind(this), 250);
+                    intervalId = setInterval(events.update.bind(this), 500);
 
                 },
                 end: function () {

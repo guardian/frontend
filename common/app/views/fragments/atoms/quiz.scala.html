@@ -6,9 +6,6 @@
 
 @(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
 
-@if(showResults) {
-    <h2>@quiz.title</h2>
-}
 <form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
     ("atom-quiz", true),
     ("atom-quiz--personality", quiz.quizType == "personality"),
@@ -18,6 +15,7 @@
     ("atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge"),
     ("js-atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge")
 ))">
+    @renderHeader(maybeResults)
     @quiz.content.questions.zipWithIndex.map { case (question, index) =>
         @renderQuestion(question,
             playForm(s"answers[$index]"),
@@ -105,8 +103,26 @@
     }
 }
 
+@renderHeader(maybeResults: Option[QuizResults]) = {
+    @maybeResults.map { results =>
+        @if(results.isPersonality) {
+        <div class="atom-quiz__message atom-quiz__message--top">
+            <div class="atom-quiz__score-message">
+                <div class="atom-quiz__personality-title">@results.resultBucket.map(_.title)</div>
+                <div class="atom-quiz__personality-description">@results.resultBucket.map(_.description)</div>
+            </div>
+
+            <div class="atom-quiz__share">
+                <div class="atom-quiz__cta">Challenge your friends</div>
+                @fragments.social(sharelinks)
+            </div>
+        </div>
+        }
+    }
+}
+
 @renderFooter(maybeResults: Option[QuizResults]) = {
-    <div class="atom-quiz__end-message">
+    <div class="atom-quiz__message">
         @maybeResults.map { results =>
             <div class="atom-quiz__score-message">
                 @if(results.isKnowledge) {

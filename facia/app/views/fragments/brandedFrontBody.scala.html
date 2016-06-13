@@ -1,7 +1,6 @@
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 @import common.Edition
-@import common.commercial.ContainerModel
-@import model.{PaidContent, Sponsored}
+@import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
 
 @faciaPage.branding(Edition(request)) match {
@@ -28,7 +27,7 @@
                                 faciaPage.collections.find {
                                     _.id == containerDefinition.dataId
                                 }.map {
-                                    ContainerModel.fromPressedCollection
+                                    ContainerModel.fromPressedCollection(Edition(request))
                                 }
                             )
                         }

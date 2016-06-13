@@ -18,111 +18,102 @@
     </head>
     <body>
 
-        @if(page.isExpired) {
-            <div class="gu-video-embed gu-video-embed--expired">
-                <h1>Sorry - this page has been removed.</h1>
+    @defining( page.item ) { video =>
 
-                <div class="gu-video-embed__message">
-                    <p>This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.</p>
-                </div>
-            </div>
-
-        } else {
-
-            @page.model.map{ video: Video =>
-
-                <figure class="gu-video-embed" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-                    <meta itemprop="name" content="@Html(video.trail.headline)"/>
-                    <meta itemprop="headline" content="@Html(video.trail.headline)"/>
-                    <meta itemprop="url" content="@video.metadata.url"/>
-                    @video.fields.trailText.map{ t =>
-                        <meta itemprop="description" content="@StripHtmlTags(t)" />
-                        <meta itemprop="about" content="@StripHtmlTags(t)" />
-                    }
-
-                    <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
-                    <meta itemprop="name" content="@video.metadata.webTitle" />
-                    <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
-                    @video.elements.mainVideo.map { mv =>
-                        <meta itemprop="duration" content="@mv.videos.ISOduration" />
-                        <meta itemprop="height" content="@mv.videos.height" />
-                        <meta itemprop="width" content="@mv.videos.width" />
-                    }
-                    <meta itemprop="requiresSubscription" content="no" />
-                    <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
-                    @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
-                    @video.elements.mainVideo.map { videoElement =>
-                        @fragments.media.video(VideoPlayer(
-                            videoElement,
-                            Video640,
-                            video.trail.headline,
-                            autoPlay = true,
-                            showControlsAtStart = true,
-                            endSlatePath = video.endSlatePath,
-                            overrideIsRatioHd = None
-                        ), true)
-                    }
-                </figure>
-
-                <script>
-                    var guardian = {
-                        isEmbed: true,
-                        isModernBrowser: (
-                            'querySelector' in document
-                            && 'addEventListener' in window
-                            && 'localStorage' in window
-                            && 'sessionStorage' in window
-                            && 'bind' in Function
-                            && (
-                                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
-                                || 'XDomainRequest' in window
-                            )
-                        ),
-                        config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body),
-                        adBlockers: {}
-                    };
-                    var docClass = document.documentElement.className;
-
-                    @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
-                    var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
-
-                    @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
-                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
-
-                    window.s_account = sAccount;
-
-                    function hasSvgSupport() {
-                        var ns = {'svg': 'http://www.w3.org/2000/svg'};
-                        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-                    }
-
-                    if (hasSvgSupport()) {
-                        docClass += 'svg';
-                    }
-
-                    document.documentElement.className = docClass;
-                    @Html(Static.js.omnitureJs)
-                </script>
-
-                <script>
-                    var curl = {
-                        baseUrl: '@{Configuration.assets.path}javascripts',
-                        apiName: 'require',
-                        paths: {
-                            text: 'text', // noop
-                            inlineSvg: 'inlineSvg', // noop
-                            'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
-                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-                        }
-                    };
-
-                    @Html(Static.js.curl)
-
-                    require(['bootstraps/video-embed'], function(bootstrap) {
-                        bootstrap.init();
-                    });
-                </script>
+        <figure class="gu-video-embed" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+            <meta itemprop="name" content="@Html(video.trail.headline)"/>
+            <meta itemprop="headline" content="@Html(video.trail.headline)"/>
+            <meta itemprop="url" content="@video.metadata.url"/>
+            @video.fields.trailText.map { t =>
+                <meta itemprop="description" content="@StripHtmlTags(t)" />
+                <meta itemprop="about" content="@StripHtmlTags(t)" />
             }
+
+            <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+            <meta itemprop="name" content="@video.metadata.webTitle" />
+            <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+            @video.elements.mainVideo.map { mv =>
+                <meta itemprop="duration" content="@mv.videos.ISOduration" />
+                <meta itemprop="height" content="@mv.videos.height" />
+                <meta itemprop="width" content="@mv.videos.width" />
+            }
+            <meta itemprop="requiresSubscription" content="no" />
+            <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
+            @video.elements.thumbnail.map { img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
+            @video.elements.mainVideo.map { videoElement =>
+                @fragments.media.video(VideoPlayer(
+                    videoElement,
+                    Video640,
+                    video.trail.headline,
+                    autoPlay = true,
+                    showControlsAtStart = true,
+                    endSlatePath = video.endSlatePath,
+                    overrideIsRatioHd = None
+                ), true)
+            }
+        </figure>
+
+        <script>
+        var guardian = {
+            isEmbed: true,
+            isModernBrowser: (
+                'querySelector' in document
+                && 'addEventListener' in window
+                && 'localStorage' in window
+                && 'sessionStorage' in window
+                && 'bind' in Function
+                && (
+                    ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                    || 'XDomainRequest' in window
+                )
+            ),
+            config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body),
+            adBlockers: {}
+        };
+        var docClass = document.documentElement.className;
+
+        @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
+        var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
+
+        @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
+        var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
+
+        window.s_account = sAccount;
+
+        function hasSvgSupport() {
+            var ns = {'svg': 'http://www.w3.org/2000/svg'};
+            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
         }
+
+        if (hasSvgSupport()) {
+            docClass += 'svg';
+        }
+
+        document.documentElement.className = docClass;
+        @Html(common.Assets.js.omnitureJs)
+        </script>
+
+        <script>
+            var curl = {
+                baseUrl: '@{Configuration.assets.path}javascripts',
+                apiName: 'require',
+                paths: {
+                    text: 'text', // noop
+                    inlineSvg: 'inlineSvg', // noop
+                    'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
+                    'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
+                }
+            };
+
+            @Html(common.Assets.js.curl)
+
+            require(['bootstraps/video-embed'], function(bootstrap) {
+                bootstrap.init();
+            });
+        </script>
+
+        @fragments.analytics.base(page)
+
+    }
     </body>
 </html>

@@ -28,7 +28,7 @@ define([
                     <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                     <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
                     <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>\
-                    <div id="dfp-ad-gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
+                    <div id="dfp-ad-gu-style" class="gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
                 ]
             },
             makeFakeEvent = function (id, isEmpty) {
@@ -212,6 +212,10 @@ define([
         });
 
         it('should display ads', function (done) {
+            config.page.hasPageSkin = true;
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -257,28 +261,11 @@ define([
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = false;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
 
-            it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-                config.switches.viewability = true;
-                config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(true);
-            });
-
-            it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
+            it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(false);
             });

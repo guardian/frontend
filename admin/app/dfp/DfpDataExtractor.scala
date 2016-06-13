@@ -15,16 +15,21 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }
   }
 
-  val highMerchandisingTargetedTags: HighMerchandisingLineItems = {
-
-    lineItems.foldLeft(HighMerchandisingLineItems(items = List.empty)) { (soFar, lineItem) =>
-      if (lineItem.highMerchandisingTargets.isEmpty) {
-        soFar
-      } else {
-        soFar.copy(items = soFar.items :+ HighMerchandisingLineItem(
-          lineItem.name, lineItem.id, lineItem.highMerchandisingTargets))
+  val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
+    val highMerchLineItems = lineItems
+      .filter(_.targetsHighMerchandising)
+      .foldLeft(Seq.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
+        soFar :+ HighMerchandisingLineItem(
+          name = lineItem.name,
+          id = lineItem.id,
+          tags = lineItem.highMerchandisingTargets,
+          adUnitsIncluded = lineItem.targeting.adUnitsIncluded,
+          adUnitsExcluded = lineItem.targeting.adUnitsExcluded,
+          customTargetSet = lineItem.targeting.customTargetSets
+        )
       }
-    }
+
+    HighMerchandisingLineItems(items = highMerchLineItems)
   }
 
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
@@ -34,7 +39,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
       PageSkinSponsorship(
         lineItemName = lineItem.name,
         lineItemId = lineItem.id,
-        adUnits = lineItem.targeting.adUnits map (_.path mkString "/"),
+        adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
         editions = editionsTargeted(lineItem),
         countries = countriesTargeted(lineItem),
         isR2Only = lineItem.targeting.targetsR2Only,

@@ -30,6 +30,14 @@
         border-bottom: 1px dotted $neutral-5;
     }
 
+    .commentcount2 {
+        display: block;
+    }
+
+    .commentcount2--hidden {
+        display: none;
+    }
+
     .commentcount2__heading,
     .sharecount__heading {
         @include fs-textSans(1);
