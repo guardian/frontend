@@ -363,7 +363,6 @@
 }
 
 .adverts--legacy-inline {
-    flex-direction: column;
     width: $gs-gutter * 6.5;
 
     @include mq(mobileLandscape) {
@@ -379,6 +378,7 @@
     }
 
     .adverts__logo {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
 
@@ -391,7 +391,7 @@
         @include fs-header(1);
     }
 
-    .advert > *:not(.advert__image-container) {
+    .advert > :not(.advert__image-container) {
         @include mq($until: mobileLandscape) {
             margin-left: $gs-gutter / 4;
             margin-right: $gs-gutter / 4;
@@ -403,6 +403,12 @@
 
     .advert__image-container {
         height: auto;
+    }
+
+    .has-no-flex & {
+        .adverts__logo > * {
+            display: block;
+        }
     }
 }
 
@@ -670,6 +676,14 @@
 
     .button {
         margin-right: 0;
+    }
+}
+
+.adverts--legacy-inline {
+    background: #eaeaea;
+
+    .adverts__logo {
+        color: #ffffff;
     }
 }
 

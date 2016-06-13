@@ -83,7 +83,7 @@ define([
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.type = 'inline';
-                this.params.classNames = ['legacy', 'legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+                this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             } else if (this.params.creative === 'logo-ad-feature') {
                 this.params.creative = 'logo';
                 this.params.type = 'ad-feature';
