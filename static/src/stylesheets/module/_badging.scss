@@ -16,12 +16,43 @@
     width: 100%;
 }
 
+/* Container Rules
+   ========================================================================== */
+.fc-container__header--voices-of-america {
+    .badge-slot {
+        width: gs-span(1.5);
+        float: left;
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+
+        @include mq(wide) {
+            width: gs-span(2.5);
+        }
+    }
+
+    ~ .fc-container__header__description {
+        float: none;
+    }
+
+    .fc-container__title__text {
+        display: none;
+    }
+}
+
 /* Content Rules
    ========================================================================== */
 .content__head--is-badged {
     .content__section-label,
     .content__series-label {
         float: none;
+    }
+}
+
+.content__head--voices-of-america {
+    .badge-slot {
+        display: none;
     }
 }
 
