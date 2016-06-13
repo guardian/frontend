@@ -49,11 +49,12 @@ trait Initializable[T] extends ExecutionContexts with Logging {
   def onInitialized: Future[T] = initialized.future
 }
 
-case class Owner(name: Option[String], github: Option[String])
+case class Owner(name: Option[String], github: Option[String], email: Option[String])
 object Owner {
-  def apply(name: String, github: String) = new Owner(Some(name), Some(github))
-  def withGithub(githubAccount: String) = new Owner(None, Some(githubAccount))
-  def withName(name: String) = new Owner(Some(name), None)
+  def apply(name: String, github: String) = new Owner(Some(name), Some(github), None)
+  def withGithub(githubAccount: String) = new Owner(None, Some(githubAccount), None)
+  def withName(name: String) = new Owner(Some(name), None, None)
+  def withEmail(email: String) = new Owner(None, None, Some(email))
 }
 
 case class Switch(

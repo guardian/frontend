@@ -27,12 +27,15 @@
     Owners: @for(owner <- owners) { @showOwner(owner) }
 }
 @showOwner(owner: conf.switches.Owner) = {
-    @if(owner.github.isEmpty) {
-       @owner.name
+    @if(!owner.github.isEmpty) {
+       <a href="https://github.com/@{owner.github.get}">@{owner.name.getOrElse(owner.github)}</a>
     } else {
-        <a href="https://github.com/@{owner.github.get}">@{owner.name.getOrElse(owner.github)}</a>
+        @if(!owner.email.isEmpty) {
+            <a href="mailto:@{owner.email.get}">@{owner.name.getOrElse(owner.email)}</a>
+        } else {
+            @owner.name
+        }
     }
-
 }
 
 <html>
