@@ -86,6 +86,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABVisitorFrequencyQuickSurvey = Switch(
+    SwitchGroup.ABTests,
+    "ab-visitor-frequency-quick-survey",
+    "Add a single question survey to the submeta section of article pages",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 18),
+    exposeClientSide = true
+  )
+
   val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
     "ab-new-user-adverts-disabled",

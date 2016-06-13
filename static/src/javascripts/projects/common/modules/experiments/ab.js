@@ -22,7 +22,8 @@ define([
     'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-nav',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/visitor-frequency-quick-survey'
 ], function (
     reportError,
     config,
@@ -47,7 +48,8 @@ define([
     VideoShowcaseMainMedia,
     VideoFootballThrasher,
     VideoNav,
-    VideoYellowPlayButton
+    VideoYellowPlayButton,
+    VisitorFrequencyQuickSurvey
 ) {
 
     var TESTS = [
@@ -66,7 +68,8 @@ define([
         new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
         new VideoNav(),
-        new VideoYellowPlayButton()
+        new VideoYellowPlayButton(),
+        new VisitorFrequencyQuickSurvey()
     ];
 
     var participationsKey = 'gu.ab.participations';
