@@ -6,7 +6,6 @@
 @import model.Badges.badgeFor
 
 <div class="content__labels
-            @badgeFor(item).map { badge => content__labels--@badge.classModifier}
             @if(item.content.isImmersiveGallery) {content__labels--gallery}">
     @if(ArticleBadgesSwitch.isSwitchedOn) {
         @badgeFor(item).map { badge =>

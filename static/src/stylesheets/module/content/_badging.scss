@@ -16,27 +16,19 @@
     width: 100%;
 }
 
-/* Elections Tag Badge
+/* Content Rules
    ========================================================================== */
-.content__labels--us-election {
+.content__head--is-badged {
     .content__section-label,
     .content__series-label {
         float: none;
     }
 }
 
-.content__labels--aus-election {
-    .content__section-label,
-    .content__series-label {
-        float: none;
-    }
-}
-
-/* AUS Election Liveblog Image
+/* Liveblog Rules
    ========================================================================== */
-.content__head--election {
-
-    &.aus-election {
+.content--liveblog {
+    .content__head--aus-election {
         .content__header .gs-container {
             background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog.jpg');
         }
@@ -48,7 +40,7 @@
         }
     }
 
-    &.us-election {
+    .content__head--us-election {
         .content__header .gs-container {
             background-image: url('https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454339615039/uselectionliveblogon.jpg');
         }
@@ -85,4 +77,3 @@
         }
     }
 }
-
