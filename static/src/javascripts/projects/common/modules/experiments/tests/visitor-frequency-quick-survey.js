@@ -29,7 +29,13 @@ define([
             var submeta = document.getElementsByClassName('submeta')[0];
             var quickSurvey = document.createElement('div');
             var surveyQuestion = "<p>How often do you read the Guardian in a digital format?</p>";
-            var surveyOptions = '<form><input type="radio" class="fi-survey__button" name="frequency" value="frequency_5">Every day/most days<br><input type="radio" class="fi-survey__button" name="frequency" value="frequency_4">Weekly<br><input type="radio" class="fi-survey__button" name="frequency" value="frequency_3">Fortnightly<br><input type="radio" class="fi-survey__button" name="frequency" value="frequency_2">Monthly or less<br><input type="radio" class="fi-survey__button" name="frequency" value="frequency_1">This is my first visit</form>';
+            var surveyOptions = `<form id="impressions-survey__select">
+  <label><input type="radio" class="fi-survey__button" name="frequency_5" value="frequency_5">Every day/most days</label><br>
+  <label><input type="radio" class="fi-survey__button" name="frequency_4" value="frequency_4">Weekly</label><br>
+  <label><input type="radio" class="fi-survey__button" name="frequency_3" value="frequency_3">Fortnightly</label><br>
+  <label><input type="radio" class="fi-survey__button" name="frequency_2" value="frequency_2">Monthly or less</label><br>
+  <label><input type="radio" class="fi-survey__button" name="frequency_1" value="frequency_1">This is my first visit</label><br>
+</form>`;
 
             quickSurvey.id = 'impressions-survey';
             quickSurvey.innerHTML = surveyQuestion + surveyOptions;
@@ -40,16 +46,22 @@ define([
             submeta.appendChild(quickSurvey);
         }
 
-        function disableAfterClick(buttonClassName) {
+        function disableRadioButtons(buttonClassName) {
             var radioButtons = document.getElementsByClassName(buttonClassName);
-            bean.on(document.getElementById('impressions-survey'), 'click', function () {
+            fastdom.write(function () {
+                for (var i = 0; i < radioButtons.length; i++) {
+                    radioButtons[i].disabled=true;
+                }
+            });
+        }
+
+        function handleSurveyResponse(element) {
+            var optionSelect = document.getElementById('impressions-survey__select');
+            bean.on(optionSelect, 'click', function () {
                 // disable all the radio buttons
                 fastdom.write(function () {
-                    for (var i = 0; i < radioButtons.length; i++) {
-                        radioButtons[i].disabled=true;
-                    }
+                    disableRadioButtons(element);
                 });
-                // TODO: say thank you
             });
         }
 
@@ -68,7 +80,7 @@ define([
                 test: function () {
                     console.log("INVARIANT");
                     createQuickSurvey();
-                    disableAfterClick('fi-survey__button');
+                    handleSurveyResponse('fi-survey__button');
                 }
             },
             {
