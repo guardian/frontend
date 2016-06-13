@@ -133,6 +133,10 @@
     }
 }
 
+.content__wrapper--standfirst--immersive-article {
+    background-color: rgba(0, 0, 0, .5);
+}
+
 .content--immersive-article {
     &.content {
         border-top: 0;
@@ -168,15 +172,15 @@
 
         @include mq(desktop) {
             padding-bottom: 1rem;
-        }
 
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            height: 2px;
-            width: gs-span(2);
-            background-color: rgba(255, 255, 255, .2);
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                height: 2px;
+                width: gs-span(2);
+                background-color: rgba(255, 255, 255, .2);
+            }
         }
     }
 

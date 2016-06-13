@@ -63,8 +63,9 @@
             }
 
             <h1 class="content__headline content__headline--immersive
-                    @if(page.item.content.isImmersiveGallery) {content__headline--gallery}
+                @if(page.item.content.isImmersiveGallery) {content__headline--gallery}
                 @if(page.item.content.tags.isArticle) {content__headline--immersive-article}
+                @if(page.item.content.tags.isUSMinuteSeries) {content__headline--minute}
                 @if(page.item.fields.main.nonEmpty || page.item.content.isImmersiveGallery) { content__headline--immersive--with-main-media }
             ">
                 @page.item match {
@@ -111,7 +112,9 @@
                             }
 
                             @if(!article.isUSMinute && article.fields.standfirst.isDefined) {
-                                @fragments.standfirst(article)
+                                <div class="hide-on-mobile">
+                                    @fragments.standfirst(article)
+                                </div>
                             }
                         }
                         case _ => {}
