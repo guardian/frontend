@@ -7,6 +7,7 @@ GET            /commercial/test-page                                            
 
 GET            /survey                                                                                                           controllers.SurveyPageController.renderSimpleSurveyPage()
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
+GET            /survey/quicksurvey                                                                                               controllers.SurveyPageController.quickSurvey()
 GET            /survey/:formName                                                                                                 controllers.SurveyPageController.renderFormStackSurvey(formName)
 
 # For dev machines
