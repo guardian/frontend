@@ -316,6 +316,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val DiscussionOrderByOldest = Switch(
+    SwitchGroup.Feature,
+    "discussion-order-by-oldest",
+    "If on, comments default sort ordering will be oldest first. If off, then the default is newest first",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val MissingVideoEndcodingsJobSwitch = Switch(
     SwitchGroup.Feature,
     "check-for-missing-video-encodings",
