@@ -35,6 +35,18 @@
                 @fragments.syndication(content)
 
             </div>
+        }
+        @if(true) {
+            <div class="submeta__survey" data-link-name="frequency survey">
+                <p>How often do you read the Guardian in a digital format?</p>
+                <form>
+                    <input type="radio" name="frequency" value="frequency_5"> Every day/most days<br>
+                    <input type="radio" name="frequency" value="frequency_4"> Weekly<br>
+                    <input type="radio" name="frequency" value="frequency_3"> Fortnightly<br>
+                    <input type="radio" name="frequency" value="frequency_2"> Monthly or less<br>
+                    <input type="radio" name="frequency" value="frequency_1"> This is my first visit
+                </form>
+            </div>
         } else {
             @fragments.syndication(content)
         }
