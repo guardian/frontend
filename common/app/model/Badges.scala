@@ -11,7 +11,7 @@ object Badges {
 
   val usElection = Badge("us-news/us-elections-2016", Static("images/USElectionlogooffset.png"), "us-election")
   val ausElection = Badge("australia-news/australian-election-2016", Static("images/AUSElectionBadge.png"), "aus-election")
-  val voicesOfAmerica = Badge("technology/series/the-web-we-want", Static("images/voices-of-america.svg"), "voices-of-america")
+  val voicesOfAmerica = Badge("us-news/series/voices-of-america", Static("images/voices-of-america.svg"), "voices-of-america")
 
   val euElection = Badge("politics/eu-referendum", euSvg, "eu-ref")
   val euRealityCheck = Badge("politics/series/eu-referendum-reality-check", euSvg, "eu-ref")
