@@ -28,4 +28,8 @@ object SurveyPageController extends Controller with ExecutionContexts {
   def thankYou() = Action { implicit request =>
     Ok(views.html.survey.thankyou())
   }
+
+  def quickSurvey() = Action { implicit request =>
+    Ok(views.html.survey.quickSurvey())
+  }
 }
