@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-nav',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/test-audience'
 ], function (
     reportError,
     config,
@@ -43,7 +44,8 @@ define([
     VideoShowcaseMainMedia,
     VideoFootballThrasher,
     VideoNav,
-    VideoYellowPlayButton
+    VideoYellowPlayButton,
+    TestAudience
 ) {
 
     var TESTS = [
@@ -60,7 +62,8 @@ define([
         new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
         new VideoNav(),
-        new VideoYellowPlayButton()
+        new VideoYellowPlayButton(),
+        new TestAudience()
     ];
 
     var participationsKey = 'gu.ab.participations';

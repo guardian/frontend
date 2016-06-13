@@ -131,4 +131,13 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 14),
     exposeClientSide = true
   )
+
+  val ABTestAudience = Switch(
+    SwitchGroup.ABTests,
+    "ab-test-audience",
+    "Test the A/B test samples against page views",
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 21),
+    exposeClientSide = true
+  )
 }
