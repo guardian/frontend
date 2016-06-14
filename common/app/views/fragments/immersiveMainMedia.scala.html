@@ -64,7 +64,7 @@
 
         <div class="immersive-main-media__headline-container @if(!isMinuteSeries){immersive-main-media__headline-container--dark}">
             <div class="gs-container">
-                @if(!isGallery) { <div class="content__main-column"> }
+                @if(!isGallery && !isMinuteSeries) { <div class="content__main-column"> }
 
                 @if(!isMinuteSeries) {
                     @fragments.meta.metaInline(page.item)
@@ -130,7 +130,7 @@
                     }
                 }
 
-                @if(!isGallery) { </div> }
+                @if(!isGallery && !isMinuteSeries) { </div> }
             </div>
         </div>
     </div>
