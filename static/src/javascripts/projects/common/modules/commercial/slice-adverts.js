@@ -49,8 +49,11 @@ define([
                     adSlice: container.querySelector(sliceSelector)
                 };
             })
-            // pull out closed, empty (no slice) or first on front containers,
-            // keeping containers only if they are $containerGap nodes apart
+            // filter out any container candidates where:
+            // - the container is closed (collapsed) through user preferences, or
+            // - the container is first on a network front, or
+            // - the container does not contain an adslice candidate, or
+            // - the minimum number of containers (check the containerGap) from the last viable advert container has not been satisfied.
             .filter(function (item, index) {
                 if (config.page.showMpuInAllContainers) {
                     return true;
