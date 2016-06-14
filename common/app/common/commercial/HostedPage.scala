@@ -61,6 +61,7 @@ case class HostedVideoPage(
 case class HostedGalleryPage(
                        pageUrl: String,
                        pageName: String,
+                       images: List[String],
                        logoUrl: String
                      ) extends HostedPage {
 
@@ -161,9 +162,10 @@ object HostedPage {
   )
 
   private val gallery: HostedGalleryPage = HostedGalleryPage(
+    images = (1 to 6).map(n => s"http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb$n.jpg").toList,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
-    logoUrl = Static("images/commercial/logo_renault.jpg")
+    logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
   )
 
   lazy val defaultPage = teaser

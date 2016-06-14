@@ -1,6 +1,12 @@
-@()
-    <div class="hosted__header">
+@(pageCssClass: String, logoUrl: Option[String] = None)
+    <div class="hosted__header @pageCssClass">
         <div class="hosted__headerwrap">
+            <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
+                <p class="hostedbadge__info">Advertiser content</p>
+                @for(url <- logoUrl) {
+                    <img class="hostedbadge__logo" src="@{url}"/>
+                }
+            </div>
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
                 <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
             </div>

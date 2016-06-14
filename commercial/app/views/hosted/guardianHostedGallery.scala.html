@@ -3,15 +3,18 @@
 @import views.html.hosted.guardianHostedHeader
 
 @main(page, Some("commercial"))  { }  {
-    @guardianHostedHeader()
-    <div class="l-side-margins hosted__side">
+    @guardianHostedHeader("hosted-gallery-page", Some(page.logoUrl))
+    <div class="l-side-margins hosted__side hosted-gallery-page">
         <section class="hosted-tone--dark">
-            <div class="adverts hosted__container--full">
-                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
-                    <p class="hostedbadge__info">Advertiser content</p>
-                </div>
+            <div class="adverts hosted-gallery__container">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-
+                    <div class="hosted-gallery__gallery-container">
+                        @for(image <- page.images) {
+                            <div class="hosted-gallery__image">
+                                <img src="@image" alt=""/>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </section>
@@ -49,23 +52,19 @@
                                 @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
                             </a>
                         </li>
+                        <li class="social__item social__item--pinterest" data-link-name="pinterest">
+                            <a  class="social__action social-icon-wrapper"
+                            data-link-name="Pinterest-social-share-1"
+                            href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.images.head}"
+                            target="_blank"
+                            title="pinterest">
+                                <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                                @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </header>
-
-        </section>
-        <section class="adverts hosted__container--full">
-            <div class="hosted__banner">
-                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@page.logoUrl">
-                </div>
-                <div class="hosted__cta-wrapper">
-                    <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">
-                        <span class="hosted__cta-text">Discover Zoe</span>
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta"))
-                    </a>
-                </div>
-            </div>
         </section>
     </div>
 

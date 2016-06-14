@@ -3,13 +3,10 @@
 @import views.html.hosted.guardianHostedHeader
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader()
-    <div class="l-side-margins hosted__side">
+    @guardianHostedHeader("hosted-video-page")
+    <div class="l-side-margins hosted__side hosted-video-page">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
-                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
-                    <p class="hostedbadge__info">Advertiser content</p>
-                </div>
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <video
                     data-duration="@page.video.duration"

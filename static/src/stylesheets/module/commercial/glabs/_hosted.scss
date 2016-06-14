@@ -4,6 +4,9 @@ $hosted-video-height: 540px;
 $renaultColor: #ffc421;
 $renaultLight: #fff9e9;
 
+@import '_hosted-video.scss';
+@import '_hosted-header.scss';
+
 @mixin hosted-fade-in {
     visibility: visible;
     opacity: 1;
@@ -28,42 +31,12 @@ $renaultLight: #fff9e9;
     background-color: #3e3e3e;
 }
 
-.hosted__header {
-    width: 100%;
-    background-color: $neutral-1;
-
-    @include mq(mobile) {
-        height: 48px;
-    }
-
-    @include mq(tablet) {
-        height: 58px;
-    }
-}
-
 .hosted__side {
     @include mq($until: desktop) {
         &:before,
         &:after {
             display: none;
         }
-    }
-}
-
-.hosted__headerwrap {
-    margin: 0 auto;
-    text-align: right;
-
-    @include mq(desktop) {
-        max-width: gs-span(12) + $gs-gutter * 2;
-    }
-
-    @include mq(leftCol) {
-        max-width: gs-span(14) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
     }
 }
 
@@ -380,7 +353,6 @@ $renaultLight: #fff9e9;
     }
 
     .hostedbadge__logo {
-        margin-top: 27px;
         position: relative;
     }
 }
@@ -718,14 +690,6 @@ $renaultLight: #fff9e9;
 
     @include mq(desktop) {
         margin-left: 170px;
-    }
-
-    @include mq(leftCol) {
-        margin-left: 250px;
-    }
-
-    @include mq(wide) {
-        margin-left: 180px;
     }
 }
 

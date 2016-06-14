@@ -1,0 +1,26 @@
+
+.hosted-video-page {
+    .hosted__headerwrap,
+    .hosted-fading {
+        // badge should sit nicely with the video width
+        .hostedbadge--shouldscale {
+            @include mq(desktop) {
+                left: calc(50% - 490px + #{$gs-gutter});
+            }
+
+            @include mq(wide) {
+                left: calc(50% - 630px);
+            }
+        }
+    }
+
+    .hosted__label.paidfor-label {
+        @include mq(leftCol) {
+            margin-left: 250px;
+        }
+
+        @include mq(wide) {
+            margin-left: 180px;
+        }
+    }
+}
