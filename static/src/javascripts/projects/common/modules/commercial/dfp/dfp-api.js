@@ -315,7 +315,7 @@ define([
             if (shouldLazyLoad()) {
                 enableLazyLoad();
             } else {
-                renderAdvert(advert);
+                loadAdvert(advert);
             }
         }
 
