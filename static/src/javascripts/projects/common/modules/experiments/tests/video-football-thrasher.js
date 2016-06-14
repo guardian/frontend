@@ -29,8 +29,8 @@ define([
             {
                 id: 'thrasher2',
                 test: function () {
-                    var thrasher1 = document.querySelector('guardian__video--wrapper');
-                    var thrasher2 = document.querySelector('leicester__video--wrapper');
+                    var thrasher1 = document.querySelector('.guardian__video--wrapper');
+                    var thrasher2 = document.querySelector('.leicester__video--wrapper');   
 
                     if (thrasher1 && thrasher2) {
                         thrasher1.style.display = 'none';

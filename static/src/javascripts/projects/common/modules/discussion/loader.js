@@ -9,6 +9,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
+    'common/utils/fastdom-promise',
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
@@ -29,6 +30,7 @@ define([
     detect,
     mediator,
     scroller,
+    fastdom,
     DiscussionAnalytics,
     register,
     Component,
@@ -55,9 +57,8 @@ Loader.prototype.initTopComments = function() {
 
     this.on('click', '.js-jump-to-comment', function(e) {
         e.preventDefault();
-        scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
         var commentId = bonzo(e.currentTarget).data('comment-id');
-        this.loadComments({comment: commentId});
+        this.gotoComment(commentId);
     });
 
     return ajaxPromise({
@@ -276,13 +277,6 @@ Loader.prototype.ready = function() {
 
     DiscussionAnalytics.init();
 
-    bean.on(window, 'hashchange', function() {
-        var commentId = this.getCommentIdFromHash();
-        if (commentId) {
-            this.gotoComment(commentId);
-        }
-    }.bind(this));
-
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         mediator.emit('discussion:seen:comments-anchor');
@@ -394,6 +388,10 @@ Loader.prototype.getCommentIdFromHash = function() {
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
+Loader.prototype.setCommentHash = function(id) {
+    window.location.replace('#comment-' + id);
+};
+
 Loader.prototype.initPagination = function() {
     this.on('click', '.js-discussion-change-page', function(e) {
         e.preventDefault();
@@ -405,15 +403,28 @@ Loader.prototype.initPagination = function() {
 
 Loader.prototype.gotoComment = function(id) {
     var comment = $('#comment-' + id, this.elem);
+    var thisLoader = this;
 
     if (comment.length > 0) {
-        window.location.replace('#comment-' + id);
-        return;
+        var commentsAreHidden = $('.js-discussion-main-comments').css('display') === 'none';
+        // If comments are hidden, lets show them
+        if (commentsAreHidden) {
+            fastdom.write(function(){
+                thisLoader.comments.showHiddenComments();
+                thisLoader.removeState('truncated');
+                var $showAllButton = $('.d-discussion__show-all-comments');
+                $showAllButton.length && $showAllButton.addClass('u-h');
+            }).then(function(){
+                thisLoader.setCommentHash(id);
+            });
+        } else {
+            // If comments aren't hidden we can go straight to the comment
+            thisLoader.setCommentHash(id);
+        }
+    } else {
+        // If the comment isn't on the page, then we need to load the comment thread
+        thisLoader.loadComments({comment: id});
     }
-
-    this.loadComments({comment: id}).then(function() {
-        window.location.replace('#comment-' + id);
-    });
 };
 
 Loader.prototype.gotoPage = function(page) {
@@ -444,6 +455,9 @@ Loader.prototype.loadComments = function(options) {
             this.setState('pagesize-msg-show');
         } else {
             this.removeState('pagesize-msg-show');
+        }
+        if (options.comment) {
+            this.gotoComment(options.comment);
         }
     }.bind(this));
 };

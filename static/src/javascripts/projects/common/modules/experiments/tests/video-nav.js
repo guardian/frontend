@@ -26,10 +26,10 @@ define(['common/utils/$'], function ($) {
     return function () {
         this.id = 'VideoNav';
         this.start = '2016-06-06';
-        this.expiry = '2016-06-15';
+        this.expiry = '2016-06-17';
         this.author = 'James Gorrie';
         this.description = 'Use video carousel as video nav';
-        this.audience = .2;
+        this.audience = .02;
         this.audienceOffset = .1;
         this.audienceCriteria = 'On a front with the carousel';
         this.idealOutcome = 'People love it.';

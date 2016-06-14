@@ -14,7 +14,7 @@ body {
     background-color: #ffffff;
 }
 .is-modern .has-membership-access-requirement {
-    @include u-h;
+    visibility: hidden !important;
 }
 
 
