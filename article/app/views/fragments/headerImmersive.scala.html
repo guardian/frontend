@@ -9,7 +9,7 @@
     <h1 class="is-hidden" itemprop="headline">@Html(article.trail.headline)</h1>
 
     @if(article.fields.standfirst.isDefined && !article.isUSMinute) {
-        <div class="gs-container content__wrapper--standfirst--immersive-article mobile-only">
+        <div class="gs-container content__wrapper--standfirst mobile-only">
             <div class="content__main-column">
                 @fragments.standfirst(article)
             </div>
