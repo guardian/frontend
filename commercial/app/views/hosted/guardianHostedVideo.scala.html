@@ -33,6 +33,16 @@
                     <img class="hostedbadge__logo" src="@page.logoUrl">
                 </div>
             </div>
+            <div class="hosted-next-autoplay">
+                <div class="hosted-next-autoplay--header">
+                    <h4 class="hosted-next-autoplay--subheader">Playing next</h4>
+                    <h2 class="hosted-next-autoplay--header-title hosted-tone--renault">@page.nextPage.video.title</h2>
+                </div>
+                <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay--poster" data-link-name="Next Hosted Video: @page.nextPage.video.title">
+                    <img class="hosted-next-autoplay--poster-img" src="@page.nextPage.video.posterUrl">
+                    <div class="hosted-next-autoplay--poster-timer js-autoplay-timer">10</div>
+                </a>
+            </div>
         </div>
     </div>
 </section>
