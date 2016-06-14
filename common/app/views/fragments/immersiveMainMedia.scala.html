@@ -3,7 +3,7 @@
 @import layout.ContentWidths.MainMedia
 @import model.{Gallery,Article,ContentPage,GalleryPage}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.ContributorLinks
+@import views.support.{ContributorLinks, RenderClasses}
 
 @defining((
     page.item.tags.isGallery,
@@ -11,10 +11,12 @@
     page.item.tags.isUSMinuteSeries
 )) { case (isGallery, isArticle, isMinuteSeries) =>
 
-    <div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media
-        @if(isGallery) { new-gallery }
-        @if(isArticle) { content--immersive-article }
-        @if(isMinuteSeries) { content--minute-article}
+    <div class="@RenderClasses(Map(
+            "new-gallery" -> isGallery,
+            "content--immersive-article" -> isArticle,
+            "content--minute-article" -> isMinuteSeries
+        ),
+        "content", "content--immersive tonal", s"tonal--${toneClass(page.item)}", "immersive-main-media")
     ">
         @if(!isGallery) {
             <div class="gs-container immersive-main-media__logo">
