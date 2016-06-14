@@ -3,10 +3,12 @@ define('js', [], function () { return function () {}; });
 define('js!//widgets.outbrain.com/outbrain.js', [], function () { return function () {}; });
 
 define([
+    'Promise',
     'fastdom',
     'helpers/injector',
     'helpers/fixtures'
 ], function (
+    Promise,
     fastdom,
     Injector,
     fixtures
@@ -26,7 +28,6 @@ define([
         detect,
         dfp,
         sut,
-        eventStub,
         commercialFeatures,
         injector = new Injector();
 
