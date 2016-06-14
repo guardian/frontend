@@ -489,7 +489,7 @@ define([
                 $parent.addClass('fc-slice__item--no-mpu');
             }
         }
-    }
+    };
     callbacks[adSizes.portrait] = function () {
         // remove geo most popular
         geoMostPopular.whenRendered.then(function (geoMostPopular) {
@@ -497,7 +497,7 @@ define([
                 bonzo(geoMostPopular.elem).remove();
             });
         });
-    }
+    };
     callbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
     callbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
     callbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');

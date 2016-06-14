@@ -1,13 +1,11 @@
 define([
     'common/utils/config',
     'common/utils/assign',
-    'common/modules/commercial/ad-sizes',
-    'lodash/objects/transform'
+    'common/modules/commercial/ad-sizes'
 ], function (
     config,
     assign,
-    adSizes,
-    transform
+    adSizes
 ) {
     var adSlotDefinitions = {
         right: {

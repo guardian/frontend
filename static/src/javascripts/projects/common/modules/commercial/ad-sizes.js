@@ -30,9 +30,9 @@ define(function () {
         }
 
         return Object.freeze({
-            width,
-            height,
-            toString
+            width: width,
+            height: height,
+            toString: toString
         });
     }
-})
+});
