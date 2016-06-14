@@ -1,6 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.staticBadgesSwitch
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
 @import model.Badges.badgeFor
@@ -35,7 +34,7 @@
                     @Html(item.trail.headline)
                 </h1>
 
-                @if(amp && item.tags.isMatchReport && item.metadata.section == "football") {
+                @if(amp && item.tags.isMatchReport && item.metadata.sectionId == "football") {
                     @defining({
                         val date = item.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
                         val teams = item.content.paFootballTeams.mkString("/")
@@ -89,10 +88,7 @@
                     </div>
                 }
 
-                @if(
-                    (showBadge && !item.commercial.isAdvertisementFeature) ||
-                        (staticBadgesSwitch.isSwitchedOn && !item.tags.isVideo && !item.tags.isAudio)
-                ) {
+                @if(showBadge && !item.commercial.isAdvertisementFeature) {
                     @fragments.commercial.badge(item, page)
                 }
 

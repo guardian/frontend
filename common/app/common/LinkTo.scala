@@ -1,7 +1,7 @@
 package common
 
 import common.editions.{Au, Us, International}
-import common.Edition.{editionRegex}
+import common.Edition.editionRegex
 import conf.Configuration
 import conf.switches.Switches
 import implicits.Requests
@@ -31,7 +31,7 @@ trait LinkTo extends Logging {
   val httpsEnabledSections: Seq[String] =
     Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football",
       "culture", "film", "tv-and-radio", "music", "books", "artanddesign", "stage",
-      "membership")
+      "membership", "uk-news", "world", "cities", "environment", "money", "society")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))

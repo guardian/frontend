@@ -1,20 +1,19 @@
 package controllers
 
-import model.Cached.RevalidatableResult
-import model.{MetaData, SimplePage, Cached, TinyResponse}
-import play.api.data.Forms._
-import play.api.libs.ws.{WS, WSResponse}
-import play.filters.csrf.{CSRFCheck, CSRFAddToken}
-import scala.concurrent.{Future}
 import common.{ExecutionContexts, JsonComponent}
-import play.api.mvc.{Cookie, Action, RequestHeader, Result}
-import discussion.{UnthreadedCommentPage, ThreadedCommentPage, DiscussionParams}
-import discussion.model.{BlankComment, DiscussionKey, DiscussionAbuseReport}
-import play.api.data._
-import model.NoCache
+import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
+import discussion.{DiscussionParams, ThreadedCommentPage, UnthreadedCommentPage}
+import model.Cached.RevalidatableResult
+import model.{Cached, MetaData, NoCache, SectionSummary, SimplePage, TinyResponse}
 import play.api.Play.current
+import play.api.data.Forms._
+import play.api.data._
 import play.api.data.validation._
+import play.api.libs.ws.{WS, WSResponse}
+import play.api.mvc.{Action, Cookie, RequestHeader, Result}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
+import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 object CommentsController extends DiscussionController with ExecutionContexts {
@@ -65,7 +64,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
   def topCommentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
 
 
-  val reportAbusePage = SimplePage(MetaData.make("/reportAbuse", "Discussion", "Report Abuse", "GFE: Report Abuse"))
+  val reportAbusePage = SimplePage(MetaData.make(
+    "/reportAbuse",
+    Some(SectionSummary.fromId("Discussion")),
+    "Report Abuse",
+    "GFE: Report Abuse"
+  ))
   def reportAbuseForm(commentId: Int) = CSRFAddToken {
     Action {
       implicit request =>
@@ -76,7 +80,12 @@ object CommentsController extends DiscussionController with ExecutionContexts {
     }
   }
 
-  val reportAbuseThankYouPage = SimplePage(MetaData.make("/reportAbuseThankYou", "Discussion", "Report Abuse Thank You", "GFE: Report Abuse Thank You"))
+  val reportAbuseThankYouPage = SimplePage(MetaData.make(
+    "/reportAbuseThankYou",
+    Some(SectionSummary.fromId("Discussion")),
+    "Report Abuse Thank You",
+    "GFE: Report Abuse Thank You"
+  ))
 
 
   def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>

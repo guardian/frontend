@@ -11,9 +11,7 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/facebook-share-params',
-    'common/modules/experiments/tests/participation-low-fric-recipes',
-    'common/modules/experiments/tests/participation-low-fric-fashion',
-    'common/modules/experiments/tests/participation-low-fric-sport',
+    'common/modules/experiments/tests/participation-low-fric-sport-v2',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
@@ -22,7 +20,8 @@ define([
     'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-nav',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/test-audience'
 ], function (
     reportError,
     config,
@@ -36,9 +35,7 @@ define([
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     FacebookShareParams,
-    ParticipationLowFricRecipes,
-    ParticipationLowFricFashion,
-    ParticipationLowFricSport,
+    ParticipationLowFricSportV2,
     CleverFriendBrexit,
     WelcomeHeader,
     ParticipationDiscussionTest,
@@ -47,7 +44,8 @@ define([
     VideoShowcaseMainMedia,
     VideoFootballThrasher,
     VideoNav,
-    VideoYellowPlayButton
+    VideoYellowPlayButton,
+    TestAudience
 ) {
 
     var TESTS = [
@@ -55,9 +53,7 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new FacebookShareParams(),
-        new ParticipationLowFricRecipes(),
-        new ParticipationLowFricFashion(),
-        new ParticipationLowFricSport(),
+        new ParticipationLowFricSportV2(),
         new CleverFriendBrexit(),
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
@@ -66,7 +62,8 @@ define([
         new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
         new VideoNav(),
-        new VideoYellowPlayButton()
+        new VideoYellowPlayButton(),
+        new TestAudience()
     ];
 
     var participationsKey = 'gu.ab.participations';

@@ -4,7 +4,6 @@
 .adverts--tone-masterclasses {
     > .adverts__header {
         background: $multimedia-main-1;
-
         .button {
             color: $multimedia-main-2;
             border-color: fade-out($multimedia-main-2, .7);
@@ -15,6 +14,10 @@
                 border-color: $multimedia-main-2;
             }
         }
+    }
+
+    .adverts__logo {
+        color: $multimedia-main-2;
     }
 
     .inline-commercial-brand svg {

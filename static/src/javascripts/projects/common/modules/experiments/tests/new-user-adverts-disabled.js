@@ -30,12 +30,12 @@ define([
         };
 
         this.variants = [{
-            id: 'variant',
+            id: 'posttest-variant',
             test: function () {
                 cookies.add('gu_adfree_test', 'variant');
             }
         }, {
-            id: 'control',
+            id: 'posttest-control',
             test: function () {
                 cookies.add('gu_adfree_test', 'control');
             }

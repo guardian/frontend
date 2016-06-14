@@ -5,55 +5,35 @@
 .new-header__inner {
     display: flex;
     justify-content: space-between;
-
-    @include mq($until: phablet) {
-        align-items: flex-start;
-
-        // On mobile we want the nav to appear on a new line.
-        // This is achieved by allowing flex items to wrap, and placing a full
-        // width item after the logo.
-        // In the future this will be better achieved using display: contents
-        // http://stackoverflow.com/questions/29732575/line-break-in-multi-line-flexbox
-        flex-wrap: wrap;
-
-        &::after {
-            content: '';
-            width: 100%;
-        }
-    }
-
-    @include mq(phablet) {
-        align-items: center;
-        box-sizing: border-box;
-        padding-right: ($gs-gutter / 2);
-        padding-left: ($gs-gutter / 2);
-    }
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .new-header__logo {
-    padding: ($gs-baseline / 2) ($gs-gutter / 2);
-
-    @include mq(phablet) {
-        order: 1;
-    }
 
     svg {
         // Removes extra spacing
         display: block;
 
         // Aspect ratio: 16:3
-        @include mq($until: phablet) {
+        @include mq($until: mobileLandscape) {
             width: 50vw;
             // height: auto doesn't work in Safari
             height: calc(3/16 * 46vw);
+            padding: ($gs-baseline / 2) 0;
             min-width: 147px;
             min-height: 28px;
         }
 
-        @include mq(tablet) {
-            width: 200px;
+        @include mq(mobileLandscape) {
+            width: 240px;
             // height: auto doesn't work in Safari
-            height: calc(3/16 * 200px);
+            height: calc(3/16 * 240px);
+            padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        }
+
+        @include mq(phablet) {
+            padding-bottom: 0;
         }
     }
 }
@@ -72,7 +52,7 @@
     // Override button from user agent stylesheet
     padding: ($gs-gutter / 2);
 
-    @include mq($from: mobile, $until: phablet) {
+    @include mq($until: mobileLandscape) {
         font-size: 3.8vw;
     }
 
@@ -81,20 +61,11 @@
         // Spacing also due to inline elements
         margin-right: 1px;
         vertical-align: middle;
+        margin-top: -2px;
+        min-width: 14px;
+        min-height: 14px;
 
-        @include mq($until: mobile) {
-            // Align with cap height instead of x height
-            margin-top: -2px;
-        }
-
-        @include mq($from: mobile, $until: phablet) {
-            // Align with cap height instead of x height
-            margin-top: -.7vw;
-        }
-
-        @include mq($until: phablet) {
-            min-width: 14px;
-            min-height: 14px;
+        @include mq($until: mobileLandscape) {
             width: 4vw;
             height: 4vw;
         }
@@ -102,40 +73,19 @@
 }
 
 .new-header__nav {
-    @include fs-textSans(5);
+    @include fs-textSans(6);
     display: flex;
     align-items: center;
-    line-height: 1.3;
+    width: 100%;
 
-    @include mq($from: mobile, $until: phablet) {
+    @include mq($until: mobileLandscape) {
         font-size: 5vw;
-    }
-
-    @include mq($until: phablet) {
         padding-left: ($gs-gutter / 2);
         padding-right: ($gs-gutter / 2);
         // Position after pseudo element which forces line break
         order: 1;
         flex: 1;
         justify-content: space-between;
-    }
-
-    // TODO: Line heights?
-    @include mq(tablet) {
-        font-size: 19px;
-    }
-
-    @include mq(desktop) {
-        font-size: 22px;
-    }
-}
-
-.new-header__nav__menu-button-and-user-button {
-    display: flex;
-    align-items: center;
-
-    @include mq($until: phablet) {
-        margin-left: 4px;
     }
 }
 
@@ -151,25 +101,12 @@
     z-index: $zindex-modal;
     height: 42px;
     width: 42px;
+    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
 
-    @include mq($until: mobile) {
-        padding: 12px;
-        margin-right: 15px;
-        // Overlap
-        margin-top: -6px;
-        margin-bottom: -6px;
-        width: 38px;
-        height: 38px;
-    }
-
-    @include mq($from: mobile, $until: phablet) {
-        padding: 3vw;
-        margin-right: 4.7vw;
-        // Overlap
+    @include mq($until: mobileLandscape) {
+        margin-right: 4vw;
         margin-top: -2vw;
         margin-bottom: -2vw;
-        width: 12vw;
-        height: 12vw;
     }
 }
 
@@ -183,7 +120,7 @@
     @extend %new-header__burger-icon__line;
     display: inline-block;
     vertical-align: top;
-    margin-top: 2px;
+    margin-top: 3px;
     position: relative;
 
     &:before,
@@ -202,32 +139,6 @@
         @extend %new-header__burger-icon__line;
         top: 10px;
     }
-
-    @include mq($from: phablet, $until: tablet) {
-        padding: $gs-gutter * .7;
-        // Overlap
-        margin-top: -5px;
-        margin-bottom: -5px;
-        width: 45px;
-        height: 45px;
-    }
-
-    @include mq(tablet) {
-        padding: $gs-gutter * .9;
-        // Overlap
-        margin-top: -5px;
-        margin-bottom: -5px;
-        width: 60px;
-        height: 60px;
-    }
-
-    svg {
-        // Removes extra spacing
-        display: block;
-        fill: #ffffff;
-        width: 100%;
-        height: 100%;
-    }
 }
 
 .new-header__nav__list {
@@ -238,14 +149,10 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 0;
+    margin-bottom: 3px;
 
-    @include mq($until: phablet) {
+    @include mq($until: mobileLandscape) {
         order: -1;
-    }
-
-    @include mq(phablet) {
-        margin-left: $gs-gutter / 2;
     }
 }
 

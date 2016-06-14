@@ -1,6 +1,6 @@
 package mvt
 
-import conf.switches.{SwitchGroup, Switch}
+import conf.switches._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -19,6 +19,7 @@ import conf.switches.Switches.ServerSideTests
 object ABHeadlinesTestVariant extends TestDefinition(
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
+  owners = Seq(Owner.withGithub("dominickendrick")),
   new LocalDate(2016, 7, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
@@ -29,7 +30,8 @@ object ABHeadlinesTestVariant extends TestDefinition(
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
   description = "Feature switch (0% test) for the new header",
-  sellByDate = new LocalDate(2016, 6, 14)
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2016, 7, 27) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variant")
@@ -39,6 +41,7 @@ object ABNewHeaderVariant extends TestDefinition(
 object ABHeadlinesTestControl extends TestDefinition(
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
+  owners = Seq(Owner.withGithub("dominickendrick")),
   new LocalDate(2016, 7, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
@@ -68,12 +71,14 @@ object ActiveTests extends ServerSideABTests {
 abstract case class TestDefinition (
   name: String,
   description: String,
+  owners: Seq[Owner],
   sellByDate: LocalDate
 ) {
   val switch: Switch = Switch(
     SwitchGroup.ServerSideABTests,
     name,
     description,
+    owners,
     conf.switches.Off,
     sellByDate,
     exposeClientSide = true
