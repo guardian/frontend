@@ -6,20 +6,21 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
+class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler = Jobs, akkaAsync: AkkaAsync = AkkaAsync)
+  (implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
 
   appLifecycle.addStopHook { () => Future {
-    Jobs.deschedule("SwitchBoardRefreshJob")
+    jobs.deschedule("SwitchBoardRefreshJob")
   }}
 
   override def start(): Unit = {
-    Jobs.deschedule("SwitchBoardRefreshJob")
+    jobs.deschedule("SwitchBoardRefreshJob")
     //run every minute, 47 seconds after the minute
-    Jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
+    jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
       refresh()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       refresh()
     }
   }

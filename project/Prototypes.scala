@@ -160,7 +160,7 @@ trait Prototypes {
     .settings(frontendClientSideSettings)
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
-    .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(libraryDependencies ++= Seq(macwire, commonsIo))
     .settings(frontendDistSettings(applicationName))
     .settingSets(settingSetsOrder)
   }
