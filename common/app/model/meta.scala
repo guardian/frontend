@@ -608,7 +608,7 @@ final case class Tags(
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
@@ -626,6 +626,8 @@ final case class Tags(
 
   lazy val keywordIds = keywords.map { _.id }
 
+  lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
@@ -638,7 +640,8 @@ final case class Tags(
     ("tones", JsString(tones.map(_.name).mkString(","))),
     ("toneIds", JsString(tones.map(_.id).mkString(","))),
     ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-    ("blogIds", JsString(blogs.map(_.id).mkString(",")))
+    ("blogIds", JsString(blogs.map(_.id).mkString(","))),
+    ("commissioningDesk", JsString(commissioningDesk.getOrElse("")))
   )
 }
 
@@ -689,6 +692,8 @@ object Tags {
   val reviewMappings = Seq(
     "tone/reviews"
   )
+
+  val CommissioningDesk = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content) = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
