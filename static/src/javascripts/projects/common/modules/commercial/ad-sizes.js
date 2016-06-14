@@ -19,10 +19,7 @@ define(function () {
         inlineMerchandising:    AdSize(88, 85),
         fabric:                 AdSize(88, 71),
         fluid250:               AdSize(88, 70),
-        outOfPage:              AdSize(1, 1),
-
-        // api
-        find: find
+        outOfPage:              AdSize(1, 1)
     };
 
     return adSizes;
