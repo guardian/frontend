@@ -249,4 +249,21 @@
         margin-bottom: $gs-baseline;
     }
 
+    .fsError:before {
+        content: "";
+        display: block;
+        background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48Y2lyY2xlIGZpbGw9IiNkNjFkMDAiIGN4PSI5IiBjeT0iOSIgcj0iOSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik05LjcgMTEuM0g4LjNMNi45IDMuNmwuNy0uN2gyLjhsLjcuOC0xLjQgNy42ek05IDE1LjRjLS44IDAtMS40LS42LTEuNC0xLjQgMC0uOC42LTEuNCAxLjQtMS40czEuNC42IDEuNCAxLjRjMCAuOC0uNiAxLjQtMS40IDEuNHoiLz48L3N2Zz4=) no-repeat;
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin: 0 0.5em 0 0;
+    }
+
+    .fsError {
+        color: $error;
+        background-color: unset;
+        border: none;
+        text-align: left;
+        padding-left: 0;
+    }
 }
