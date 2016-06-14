@@ -200,6 +200,7 @@ object MetaData {
       isPressedPage = isPressedPage,
       contentType = contentType,
       customSignPosting = customSignPosting,
+      iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
