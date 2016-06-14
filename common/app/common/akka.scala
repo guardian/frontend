@@ -22,7 +22,9 @@ object AkkaAgent extends ExecutionContexts {
 class AkkaAsync(env: Environment, actorSystem: ActorSystem) {
   implicit val ec: ExecutionContext = actorSystem.dispatcher
 
-  def apply(body: => Unit): Unit = after(1.second){ body }
+  // "apply" isn't expressive and doesn't explain what it does.
+  // If you were considering using that function, use after1s instead as it doesn't leave any ambiguity.
+  def apply(body: => Unit): Unit = after1s(body)
 
   def after1s(body: => Unit): Unit = after(1.second){ body }
 
