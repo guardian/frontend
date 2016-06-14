@@ -8,9 +8,7 @@
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
     @badgeFor(item).map { badge => content__head--is-badged
-        @if(badge.classModifier) {
-            content__head--@badge.classModifier
-        }
+        @badge.classModifier.map(modifier => s"content__head--$modifier")
     }">
 
     <div class="content__header tonal__header">
