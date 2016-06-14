@@ -57,30 +57,26 @@ define([
             });
         }
 
-        function handleSurveyResponse(element) {
-            var optionSelect = document.getElementById('impressions-survey__select');
-            bean.on(optionSelect, 'click', function () {
-                // disable all the radio buttons
+        function handleSurveyResponse(buttonClassName) {
+            var surveyQuestion = document.getElementById('impressions-survey__select');
+            bean.on(surveyQuestion, 'click', function () {
                 fastdom.write(function () {
-                    disableRadioButtons(element);
+                    disableRadioButtons(buttonClassName);
+                    thankyouFadeIn(surveyQuestion);
                 });
             });
         }
 
-        function thankyouFadeIn() {
-            // say thank you when the user responds to the survey
-        }
-
-        function setCookieForSurvey() {
-            // give user a cookie to say that they have responded
-            // if user has this cookie then do not show the survey again
+        function thankyouFadeIn(domElement) {
+            fastdom.write(function () {
+                domElement.style.cssText += 'visibility:hidden;opacity:0;transition:opacity 0.5s linear;';
+            });
         }
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    console.log("INVARIANT");
                     createQuickSurvey();
                     handleSurveyResponse('fi-survey__button');
                 }
@@ -88,7 +84,6 @@ define([
             {
                 id: 'control',
                 test: function () {
-                    console.log("INCONTROL");
                 }
             }
         ];
