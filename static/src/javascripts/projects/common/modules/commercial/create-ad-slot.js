@@ -13,7 +13,7 @@ define([
     isArray,
     transform
 ) {
-    var fabricTopSlot = '88,71';
+    var fabricTopSlot = '|88,71';
     var fluidSlot = config.switches.fluidAdverts ? '|fluid' : '';
     var adSlotDefinitions = {
         right: {
@@ -38,13 +38,6 @@ define([
             refresh: false,
             sizeMappings: {
                 mobile: '1,1|88,85'
-            }
-        },
-        inline1: {
-            sizeMappings: {
-                mobile:             '1,1|300,250|' + fabricTopSlot + fluidSlot,
-                'mobile-landscape': '1,1|300,250|' + fabricTopSlot + fluidSlot,
-                tablet:             '1,1|300,250' + fluidSlot
             }
         },
         inline: {
@@ -96,7 +89,10 @@ define([
         },
         'top-above-nav': {
             sizeMappings: {
-                desktop: '1,1|88,70|728,90|940,230|900,250|970,250|' + fabricTopSlot
+                mobile:             '1,1|300,250' + fabricTopSlot + fluidSlot,
+                'mobile-landscape': '1,1|300,250' + fabricTopSlot + fluidSlot,
+                tablet:             '1,1|300,250' + fluidSlot,
+                desktop: '1,1|88,70|728,90|940,230|900,250|970,250' + fabricTopSlot
             }
         }
     };
