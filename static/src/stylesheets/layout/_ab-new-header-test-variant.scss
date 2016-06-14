@@ -99,8 +99,8 @@
     padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
-    height: 42px;
-    width: 42px;
+    height: 18px;
+    width: 18px;
     margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
 
     @include mq($until: mobileLandscape) {
