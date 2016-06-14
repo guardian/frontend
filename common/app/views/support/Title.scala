@@ -27,7 +27,7 @@ object Title {
         s"${Localisation(hostedPage.pageTitle)}"
       case _          =>
         page.metadata.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
-          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.section))}"
+          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.sectionId))}"
         )
     }
     s"${title.trim} | The Guardian"

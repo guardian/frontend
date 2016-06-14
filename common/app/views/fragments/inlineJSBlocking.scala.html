@@ -2,6 +2,7 @@
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import templates.inlineJS.blocking.polyfills.js._
 
 <!--[if lt IE 8]>
     <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
@@ -9,17 +10,33 @@
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/es5-html5.js")"></script>
 <![endif]-->
-<!--[if lte IE 9]>
-    <script src="@Static("javascripts/polyfills/classlist.js")"></script>
-<![endif]-->
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @Html(polyfills().body)
+
+
+    // ************* POLYFILLS *************
+    // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
+
+    // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
+    // Used by RAF polyfill.
+    @Html(setTimeout().body)
+
+    // Pollyfill requestAnimationFrame
+    @InlineJs(raf().body, "raf.js")
+
+    // Polyfill classList
+    @InlineJs(classlist().body, "classlist.js")
+
+
+    // ************* CONFIG *************
+
 
     @Html(curlConfig().body)
 
-    // render-critical blocking JS
+
+    // ************* RENDER-CRITICAL BLOCKING JS *************
+
 
     // determine whether to run enhanced JS
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
@@ -41,6 +58,10 @@
         @InlineJs(enableStylesheets().body, "enableStylesheets.js")
     }
 
+
+    // ************* LOAD THE MAIN APP ASYNC *************
+
+
     @if(conf.Configuration.assets.useHashedBundles) {
         // Polyfill for async script
         (function (document) {
@@ -51,10 +72,12 @@
         })(document);
     } else {
         @Html(common.Assets.js.curl);
-
         require(['boot']);
     }
 
-    // cloudwatch beacons
+
+    // ************* CLOUDWATCH BEACONS *************
+
+
     @InlineJs(cloudwatchBeacons(page.metadata).body, "cloudwatchBeacons.js")
 </script>

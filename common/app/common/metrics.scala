@@ -170,15 +170,16 @@ object ApplicationMetrics {
 class CloudWatchMetricsLifecycle(
   appLifecycle: ApplicationLifecycle,
   appIdentity: ApplicationIdentity,
-  appMetrics: ApplicationMetrics = ApplicationMetrics(Nil))
+  appMetrics: ApplicationMetrics = ApplicationMetrics(Nil),
+  jobs: JobScheduler = Jobs)
   (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
 
   appLifecycle.addStopHook { () => Future {
-    Jobs.deschedule("ApplicationSystemMetricsJob")
+    jobs.deschedule("ApplicationSystemMetricsJob")
     if (Configuration.environment.isProd) {
-      Jobs.deschedule("LogMetricsJob")
+      jobs.deschedule("LogMetricsJob")
     }
   }}
 
@@ -213,15 +214,15 @@ class CloudWatchMetricsLifecycle(
   }
 
   override def start() = {
-    Jobs.deschedule("ApplicationSystemMetricsJob")
+    jobs.deschedule("ApplicationSystemMetricsJob")
     //run every minute, 36 seconds after the minute
-    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {
+    jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {
       report()
     }
 
     // Log heap usage every 5 seconds.
     if (Configuration.environment.isProd) {
-      Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
+      jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
         log.info(s"heap used: ${heapUsed}Mb")
         Future.successful(())

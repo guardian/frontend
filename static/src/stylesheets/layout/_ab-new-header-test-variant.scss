@@ -5,45 +5,35 @@
 .new-header__inner {
     display: flex;
     justify-content: space-between;
-
-    @include mq($until: phablet) {
-        align-items: flex-start;
-
-        // On mobile we want the nav to appear on a new line.
-        // This is achieved by allowing flex items to wrap, and placing a full
-        // width item after the logo.
-        // In the future this will be better achieved using display: contents
-        // http://stackoverflow.com/questions/29732575/line-break-in-multi-line-flexbox
-        flex-wrap: wrap;
-
-        &::after {
-            content: '';
-            width: 100%;
-        }
-    }
-
-    @include mq(phablet) {
-        align-items: center;
-        box-sizing: border-box;
-        padding-right: ($gs-gutter / 2);
-        padding-left: ($gs-gutter / 2);
-    }
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .new-header__logo {
-    padding: ($gs-baseline / 2) ($gs-gutter / 2);
-
-    @include mq(phablet) {
-        order: 1;
-    }
 
     svg {
         // Removes extra spacing
         display: block;
 
-        @include mq(tablet) {
-            width: 200px;
-            height: auto;
+        // Aspect ratio: 16:3
+        @include mq($until: mobileLandscape) {
+            width: 50vw;
+            // height: auto doesn't work in Safari
+            height: calc(3/16 * 46vw);
+            padding: ($gs-baseline / 2) 0;
+            min-width: 147px;
+            min-height: 28px;
+        }
+
+        @include mq(mobileLandscape) {
+            width: 240px;
+            // height: auto doesn't work in Safari
+            height: calc(3/16 * 240px);
+            padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        }
+
+        @include mq(phablet) {
+            padding-bottom: 0;
         }
     }
 }
@@ -62,45 +52,40 @@
     // Override button from user agent stylesheet
     padding: ($gs-gutter / 2);
 
+    @include mq($until: mobileLandscape) {
+        font-size: 3.8vw;
+    }
+
     svg {
         fill: currentColor;
-        margin-right: 4px;
+        // Spacing also due to inline elements
+        margin-right: 1px;
         vertical-align: middle;
-        // Align with cap height instead of x height
-        margin-top: -3px;
+        margin-top: -2px;
+        min-width: 14px;
+        min-height: 14px;
+
+        @include mq($until: mobileLandscape) {
+            width: 4vw;
+            height: 4vw;
+        }
     }
 }
 
 .new-header__nav {
-    @include fs-textSans(5);
+    @include fs-textSans(6);
     display: flex;
     align-items: center;
+    width: 100%;
 
-    @include mq($until: phablet) {
+    @include mq($until: mobileLandscape) {
+        font-size: 5vw;
         padding-left: ($gs-gutter / 2);
         padding-right: ($gs-gutter / 2);
         // Position after pseudo element which forces line break
         order: 1;
         flex: 1;
         justify-content: space-between;
-    }
-
-    // TODO: Line heights?
-    @include mq(tablet) {
-        font-size: 19px;
-    }
-
-    @include mq(desktop) {
-        font-size: 22px;
-    }
-}
-
-.new-header__nav__menu-button-and-user-button {
-    display: flex;
-    align-items: center;
-
-    @include mq($until: phablet) {
-        margin-left: 4px;
     }
 }
 
@@ -114,56 +99,45 @@
     padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
+    height: 42px;
+    width: 42px;
+    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
 
-    @include mq($until: phablet) {
-        // Overlap
-        margin-top: -5px;
-        margin-bottom: -5px;
-    }
-
-    @include mq(phablet) {
-        margin-left: 6px;
-    }
-
-    svg {
-        height: 18px;
-        // Removes extra spacing
-        display: block;
-        fill: #ffffff;
+    @include mq($until: mobileLandscape) {
+        margin-right: 4vw;
+        margin-top: -2vw;
+        margin-bottom: -2vw;
     }
 }
 
-.new-header__nav__profile-button {
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Unset button from user agent stylesheet
-    padding: 0;
-    // Override button from user agent stylesheet
-    background-color: $guardian-brand-dark;
-    border-radius: 100%;
-    // Mask contents to keep them in the circle
-    overflow: hidden;
+%new-header__burger-icon__line {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+}
 
-    @include mq($until: phablet) {
-        margin-left: 3px;
-    }
+.new-header__nav__menu-button__burger-icon {
+    @extend %new-header__burger-icon__line;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 3px;
+    position: relative;
 
-    @include mq(phablet) {
-        order: -1;
-    }
-
-    svg {
-        // Removes extra spacing
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
         display: block;
-        box-sizing: border-box;
-        // Spacing above icon
-        padding-top: 3px;
-        width: 20px;
-        height: 20px;
+    }
 
-        path {
-            fill: $news-support-1;
-        }
+    &:before {
+        @extend %new-header__burger-icon__line;
+        top: 5px;
+    }
+
+    &:after {
+        @extend %new-header__burger-icon__line;
+        top: 10px;
     }
 }
 
@@ -175,14 +149,10 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 0;
+    margin-bottom: 3px;
 
-    @include mq($until: phablet) {
+    @include mq($until: mobileLandscape) {
         order: -1;
-    }
-
-    @include mq(phablet) {
-        margin-left: $gs-gutter / 2;
     }
 }
 

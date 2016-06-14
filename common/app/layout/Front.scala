@@ -135,7 +135,7 @@ object ContainerCommercialOptions {
       def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
         DfpAgent.winningTagPair(
           capiTags = content.tags.tags,
-          sectionId = Some(content.metadata.section),
+          sectionId = Some(content.metadata.sectionId),
           edition = None
         )
       }

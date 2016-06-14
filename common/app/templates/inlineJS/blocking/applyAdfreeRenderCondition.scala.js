@@ -56,12 +56,12 @@
             && mvtCookieId <= largestTestId
             && !isIOS() && !isSafari()) {
             variants = [{
-                id: 'variant',
+                id: 'posttest-variant',
                 test: function () {
                     writeCookie(AD_FREE_COOKIE, 'variant');
                 }
             }, {
-                id: 'control',
+                id: 'posttest-control',
                 test: function () {
                     writeCookie(AD_FREE_COOKIE, 'control');
                 }

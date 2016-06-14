@@ -76,7 +76,7 @@
             ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-            ("childrens-books-site", page.metadata.section == "childrens-books-site"),
+            ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"

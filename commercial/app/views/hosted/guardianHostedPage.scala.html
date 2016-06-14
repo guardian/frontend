@@ -1,11 +1,11 @@
 @import common.commercial.HostedPage
-@(page: HostedPage)(implicit request: RequestHeader)
+@(page: HostedPage)(content: Html)(implicit request: RequestHeader)
 
 @main(page, Some("commercial")) { } {
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About @fragments.inlineSvg("arrow-down", "icon")</button>
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
             </div>
             <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
                 <p class="hosted__glogotext">Hosted by</p>
@@ -14,121 +14,6 @@
         </div>
     </div>
     <div class="l-side-margins hosted__side">
-        <section class="hosted-tone--dark">
-            <div class="adverts hosted__container--full">
-                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
-                    <p class="hostedbadge__info">Advertiser content</p>
-                </div>
-                <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    <video
-                      data-duration="@page.video.duration"
-                      data-media-id="@page.video.mediaId"
-                      controls="controls"
-                      preload="auto"
-                      style="width: 100%;"
-                      data-block-video-ads="true"
-                      poster="@page.video.posterUrl"
-                      class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@page.video.srcUrl&format=video/mp4&maxbitrate=2048">
-                        <source type="video/webm" src="@page.video.srcUrl&format=video/webm&maxbitrate=2048">
-                        <source type="video/ogg" src="@page.video.srcUrl&format=video/ogg&maxbitrate=2048">
-                        <source type="video/m3u8" src="@page.video.srcUrl&format=video/m3u8&maxbitrate=2048">
-                    </video>
-                    <div class="hosted-fading">
-                        <div class="hosted__video-overlay"></div>
-                        <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
-                        </div>
-                        <div class="hostedbadge hostedbadge--shouldscale">
-                            <img class="hostedbadge__logo" src="@page.logoUrl">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="adverts adverts--legacy hosted__container hosted__container--content">
-            <header class="adverts__header hosted__social">
-                <div class="meta__social hosted__social-wrapper" data-component="share">
-                    <ul class="social social--top u-unstyled u-cf" data-component="social">
-                        <li class="social__item social__item--facebook" data-link-name="facebook">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="facebook-social-share-1"
-                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
-                            target="_blank"
-                            title="facebook">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
-                                @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--twitter" data-link-name="twitter">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="twitter-social-share-1"
-                            href="https://twitter.com/intent/tweet?text=@{page.pageTitle}&url=@{page.pageUrl}"
-                            target="_blank"
-                            title="twitter">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
-                                @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--email" data-link-name="email">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="email-social-share-1"
-                            href="mailto:?subject=@{page.pageTitle}&body=@{page.pageUrl}"
-                            target="_blank"
-                            title="email">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
-                                @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--pinterest" data-link-name="pinterest">
-                            <a  class="social__action social-icon-wrapper"
-                            data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/find/?url=@{page.pageUrl}"
-                            target="_blank"
-                            title="pinterest">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
-                                @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </header>
-            <div class="adverts__body">
-                <div class="hosted__meta">
-                    <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
-                </div>
-                <div class="hosted__standfirst">
-                    <p class="hosted__text">@page.standfirst</p>
-                    <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
-                        <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hosted__next-video">
-                <div class="hosted__next-video--header">
-                    <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                    <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
-                </div>
-                <a href="@page.nextVideo.link" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextVideo.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextVideo.imageUrl">
-                    <p class="hosted__next-video-title">@page.nextVideo.title</p>
-                </a>
-            </div>
-        </section>
-        <section class="adverts hosted__container--full">
-            <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">
-                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@page.logoUrl">
-                </div>
-                <div class="hosted__cta-wrapper">
-                    <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">
-                        <span class="hosted__cta-text">Discover Zoe</span>
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta"))
-                    </a>
-                </div>
-            </div>
-        </section>
+        @content
     </div>
 }
