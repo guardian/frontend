@@ -44,7 +44,7 @@ category: Common
 
 .social__item {
     float: left;
-    min-width: 36px;
+    min-width: 32px;
     padding: 0 3px $gs-baseline/2 0;
 
     @include mq(leftCol) {

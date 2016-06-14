@@ -39,7 +39,7 @@ define([
     var $body = bonzo(document.body),
         wikiIcon = svgs('searchWiki', ['icon']),
         commentIcon = svgs('commentInline', ['icon']),
-        shareIcon = svgs('share', ['icon']),
+        shareIcon = svgs('shareSmall', ['icon']),
         searchIcon = svgs('search', ['icon']),
         flagIcon = svgs('flag', ['icon']),
         googleIcon = svgs('searchGoogle', ['icon']),
