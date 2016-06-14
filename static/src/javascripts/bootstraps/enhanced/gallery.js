@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/component',
+    'common/modules/ui/objectfit-polyfill',
     'bootstraps/enhanced/trail',
     'lodash/functions/debounce'
 ], function (
@@ -16,6 +17,7 @@ define([
     config,
     mediator,
     Component,
+    objectFitPolyfill,
     trail,
     debounce
 ) {
@@ -41,6 +43,7 @@ define([
                 'ui:images:vh': setHeight
             });
         },
+
         transcludeMostPopular = function () {
             var mostViewed = new Component(),
                 container = qwery('.js-gallery-most-popular')[0];
@@ -55,6 +58,7 @@ define([
         ready = function () {
             trail();
             verticallyResponsiveImages();
+            objectFitPolyfill();
 
             mediator.emit('ui:images:upgradePictures');
 
