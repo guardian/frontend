@@ -9,8 +9,6 @@ define([
     adSizes,
     transform
 ) {
-    var fabricTopSlot = '88,71';
-    var fluidSlot = config.switches.fluidAdverts ? '|fluid' : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
