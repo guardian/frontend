@@ -4,8 +4,8 @@ import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
 import common.Edition
-import common.commercial.BrandHunter
-import model.{Branding, ContentType, SupportedUrl}
+import common.commercial.{BrandHunter, Branding}
+import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object CollectionConfig {

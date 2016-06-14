@@ -11,7 +11,7 @@ define([
 
         this.id = 'LiveBlogChromeNotificationsInternal';
         this.start = '2016-03-03';
-        this.expiry = '2016-06-01';
+        this.expiry = '2016-08-31';
         this.author = 'Nathaniel Bennett';
         this.description = 'Allows users to to subscribe to live blogs on chrome - internal users only';
         this.audience = 0.0;

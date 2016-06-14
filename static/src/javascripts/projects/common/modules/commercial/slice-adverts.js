@@ -17,7 +17,7 @@ define([
     userPrefs,
     commercialFeatures
 ) {
-    var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3;
+    var maxAdsToShow = 3;
     var containerSelector = '.fc-container';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
     var containerGap = 1;
@@ -56,9 +56,6 @@ define([
             // - the container does not contain an adslice candidate, or
             // - the minimum number of containers (check the containerGap) from the last viable advert container has not been satisfied.
             .filter(function (item, index) {
-                if (config.page.showMpuInAllContainers) {
-                    return true;
-                }
 
                 var isThrasher = bonzo(item.container).hasClass('fc-container--thrasher');
                 if (replaceTopSlot && index === 0 && !isThrasher) {

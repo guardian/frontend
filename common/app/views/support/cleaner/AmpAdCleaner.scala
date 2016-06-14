@@ -1,7 +1,7 @@
 package views.support.cleaner
 
 import common.Edition
-import model.{Tag, Article}
+import model.{Article, Tag}
 import org.jsoup.nodes.{Document, Element}
 import play.api.libs.json.Json
 import views.support.HtmlCleaner
@@ -99,7 +99,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
   }
 
   def adAfter(element: Element) = {
-    val section = article.metadata.section
+    val section = article.metadata.sectionId
     val contentType = article.metadata.contentType.toLowerCase
     val dataSlot = s"/59666047/theguardian.com/$section/$contentType/amp"
 
@@ -115,7 +115,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
         "co" -> grabLastFragmentOfId(article.trail.tags.contributors).mkString(","),
         "bl" -> grabLastFragmentOfId(article.trail.tags.blogs).mkString(","),
         "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
-        "section" -> article.metadata.section
+        "section" -> article.metadata.sectionId
       )
     )
 

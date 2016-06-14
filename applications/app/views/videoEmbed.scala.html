@@ -4,6 +4,7 @@
 @import views.support.Video640
 @import conf.Static
 @import conf.Configuration
+@import templates.inlineJS.blocking.js.curlConfig
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">
@@ -94,16 +95,10 @@
         </script>
 
         <script>
-            var curl = {
-                baseUrl: '@{Configuration.assets.path}javascripts',
-                apiName: 'require',
-                paths: {
-                    text: 'text', // noop
-                    inlineSvg: 'inlineSvg', // noop
-                    'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
-                    'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-                }
-            };
+            @Html(curlConfig().body)
+
+            window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
+            window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
 
             @Html(common.Assets.js.curl)
 

@@ -1,11 +1,7 @@
 package views.support
 
-import common.Edition
 import common.Edition.defaultEdition
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
-import common.dfp.{AdSize, AdSlot}
-import conf.switches.Switches._
-import model.MetaData
+import model.{MetaData, SectionSummary}
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot
 
@@ -13,7 +9,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
 
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
-    section = "section",
+    section = Some(SectionSummary.fromId("section")),
     analyticsName = "analyticsName",
     webTitle = "webTitle")
 

@@ -154,20 +154,25 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
 object ConfigAgent extends ConfigAgentTrait
 
-class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class ConfigAgentLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)
+  (implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
-    Jobs.deschedule("ConfigAgentJob")
+    jobs.deschedule("ConfigAgentJob")
   }}
 
   override def start() = {
-    Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
+    jobs.deschedule("ConfigAgentJob")
+    jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       ConfigAgent.refresh()
     }
   }
 }
+

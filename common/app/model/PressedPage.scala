@@ -3,9 +3,9 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.facia.api.models._
 import common.Edition
+import common.commercial.Branding
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.Configuration.commercial.showMpuInAllContainersPageId
 import contentapi.Paths
 import model.facia.PressedCollection
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
@@ -21,7 +21,6 @@ object PressedPage {
       o.map(value => Map(key -> value)).getOrElse(Map())
 
     val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
-    val showMpuInAllContainers: Boolean = showMpuInAllContainersPageId contains id
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
@@ -36,7 +35,7 @@ object PressedPage {
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
       "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
-    ) ++ (if (showMpuInAllContainers) Map("showMpuInAllContainers" -> JsBoolean(true)) else Nil)
+    )
 
     val openGraph: Map[String, String] = Map(
       "og:image" -> Configuration.images.fallbackLogo) ++
@@ -47,7 +46,7 @@ object PressedPage {
 
     MetaData.make(
       id = id,
-      section = seoData.navSection,
+      section = Some(SectionSummary.fromId(seoData.navSection)),
       webTitle = seoData.webTitle,
       //For network fronts we want the string "Network Front"
       //This allows us to change webTitle in tool easily on fronts
@@ -112,7 +111,7 @@ case class PressedPage (
     ).headOption
   }
 
-  val navSection: String = metadata.section
+  val navSection: String = metadata.sectionId
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
@@ -131,13 +130,13 @@ case class PressedPage (
   }
 
   def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.section), maybeEdition))
+    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.sectionId), maybeEdition))
   def hasMultipleSponsors = false // Todo: need to think about this
   lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
-      Some(metadata.section)))
+      Some(metadata.sectionId)))
   def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
   lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
-      Some(metadata.section)))
+      Some(metadata.sectionId)))
   lazy val sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct

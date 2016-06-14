@@ -37,7 +37,7 @@
         <ul id="sell-by-date">
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
-                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}">" title="@switch.name - expires in @days days">
+                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}" title="@switch.name - expires in @days days">
                         @switch.name
                     </li>
                 }

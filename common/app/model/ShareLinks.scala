@@ -167,23 +167,14 @@ final case class ShareLinks(
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  import play.api.mvc.RequestHeader
+  val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
+    val contentTitle = sharePlatform match {
+      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
+      case _ => metadata.webTitle
+    }
 
-  def pageShares(implicit request: RequestHeader): Seq[ShareLink] = {
-    
-    /* AMP does not support yet fb-messenger protocol */
-    val platforms = if (request.isAmp) pageShareOrder.filter(p => p != Messenger) else pageShareOrder
+    val href = createShortUrlWithCampaign(sharePlatform)
 
-    platforms.map( sharePlatform => {
-      val contentTitle = sharePlatform match {
-        case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
-        case _ => metadata.webTitle
-      }
-
-      val href = createShortUrlWithCampaign(sharePlatform)
-
-      ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
-    })
-
-  }
+    ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+  })
 }
