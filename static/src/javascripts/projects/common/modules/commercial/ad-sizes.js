@@ -15,6 +15,7 @@ define(function () {
         superHeader:            AdSize(900, 250),
         stickyMpu:              AdSize(300, 251),
         badge:                  AdSize(140, 90),
+        merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),
         inlineMerchandising:    AdSize(88, 85),
         fabric:                 AdSize(88, 71),

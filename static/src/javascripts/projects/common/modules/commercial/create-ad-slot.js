@@ -10,7 +10,7 @@ define([
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
-                mobile:  compile(
+                mobile: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
                     adSizes.halfPage,
@@ -21,7 +21,7 @@ define([
         'right-sticky': {
             name: 'right',
             sizeMappings: {
-                mobile:  compile(
+                mobile: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
                     adSizes.stickyMpu,
@@ -33,7 +33,7 @@ define([
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile:  compile(adSizes.outOfPage, adSizes.mpu)
+                mobile: compile(adSizes.outOfPage, adSizes.mpu)
             }
         },
         im: {
@@ -72,7 +72,7 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.merchandising)
+                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
             }
         },
         spbadge: {
@@ -98,7 +98,7 @@ define([
         },
         comments: {
             sizeMappings: {
-                mobile:  compile(adSizes.outOfPage, adSizes.badge)
+                mobile: compile(adSizes.outOfPage, adSizes.badge)
             }
         },
         'top-above-nav': {
@@ -118,7 +118,7 @@ define([
 
     function compile(size1) {
         var result = size1;
-        for (var i = 1, ii = arguments.length; i < ii; i++) {
+        for (var i = 1; i < arguments.length; i++) {
             if (arguments[i]) {
                 result += '|' + arguments[i];
             }
