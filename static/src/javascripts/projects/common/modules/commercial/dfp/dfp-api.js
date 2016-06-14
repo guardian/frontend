@@ -475,7 +475,7 @@ define([
     callbacks[adSizes.mpu] = function (event, $adSlot) {
         if ($adSlot.hasClass('ad-slot--right')) {
             var mobileAdSizes = $adSlot.attr('data-mobile');
-            if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
+            if (mobileAdSizes && mobileAdSizes.indexOf(adSizes.stickyMpu) > -1) {
                 stickyMpu($adSlot);
             }
         }
