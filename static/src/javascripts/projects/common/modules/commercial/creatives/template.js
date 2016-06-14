@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
@@ -14,6 +15,7 @@ define([
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
+    config,
     template,
     fastdom,
     svgs,
@@ -69,6 +71,19 @@ define([
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            } else if (this.params.creative === 'manual-inline' && config.switches.refactorInlineComponent) {
+                this.params.omnitureId = this.params.omniture_id;
+                this.params.toneClass = this.params.Toneclass;
+                this.params.baseUrl = this.params.base_url;
+                this.params.offerTitle = this.params.offer_title;
+                this.params.offerUrl = this.params.offer_url;
+                this.params.offerImage = this.params.offer_image;
+                this.params.offerText = this.params.offer_meta;
+
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card';
+                this.params.type = 'inline';
+                this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             } else if (this.params.creative === 'logo-ad-feature') {
                 this.params.creative = 'logo';
                 this.params.type = 'ad-feature';
