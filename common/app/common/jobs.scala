@@ -1,43 +1,48 @@
 package common
 
 import java.util.TimeZone
-import java.util.concurrent.atomic.AtomicInteger
 
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
+import play.api.Mode.Test
 import scala.collection.mutable
-import play.api.Play
-import Play.current
+import play.api.{Environment, Play}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-object Jobs extends Logging {
+object JobsState {
   implicit val global = scala.concurrent.ExecutionContext.global
-  private val scheduler = StdSchedulerFactory.getDefaultScheduler()
-  private val jobs = mutable.Map[String, () => Future[Unit]]()
-  private val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
+  val jobs = mutable.Map[String, () => Future[Unit]]()
+  val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
+}
 
-  class FunctionJob extends Job {
-    def execute(context: JobExecutionContext) {
-      val name = context.getJobDetail.getKey.getName
-      val f = jobs(name)
-      if (outstanding.get()(name) > 0) {
-        log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
-      } else {
-        log.info(s"Running job: $name")
-        outstanding.send(map => map.updated(name, map(name) + 1))
-        f().onComplete {
-          case Success(_) =>
-            outstanding.send(map => map.updated(name, map(name) - 1))
-            log.info(s"Finished job: $name")
-          case Failure(t) =>
-            outstanding.send(map => map.updated(name, map(name) - 1))
-            log.error(s"An error has occured during job $name", t)
-        }
+class FunctionJob extends Job with Logging {
+  import JobsState._
+  def execute(context: JobExecutionContext) {
+    val name = context.getJobDetail.getKey.getName
+    val f = jobs(name)
+    if (outstanding.get()(name) > 0) {
+      log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
+    } else {
+      log.info(s"Running job: $name")
+      outstanding.send(map => map.updated(name, map(name) + 1))
+      f().onComplete {
+        case Success(_) =>
+          outstanding.send(map => map.updated(name, map(name) - 1))
+          log.info(s"Finished job: $name")
+        case Failure(t) =>
+          outstanding.send(map => map.updated(name, map(name) - 1))
+          log.error(s"An error has occured during job $name", t)
       }
     }
   }
+}
+
+class JobScheduler(env: Environment) extends Logging {
+  import JobsState._
+
+  val scheduler = StdSchedulerFactory.getDefaultScheduler()
 
   scheduler.start()
 
@@ -55,7 +60,7 @@ object Jobs extends Logging {
     // running cron scheduled jobs in tests is useless
     // it just results in unexpected data files when you
     // want to check in
-    if (!Play.isTest) {
+    if (env.mode != Test) {
       log.info(s"Scheduling $name")
       jobs.put(name, () => block)
 
@@ -67,7 +72,7 @@ object Jobs extends Logging {
   }
 
   def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[Unit]): Unit = {
-    if (!Play.isTest) {
+    if (env.mode != Test) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
       jobs.put(name, () => block)
@@ -80,7 +85,7 @@ object Jobs extends Logging {
   }
 
   def scheduleEveryNSeconds(name: String, intervalInSeconds: Int)(block: => Future[Unit]): Unit = {
-    if (!Play.isTest) {
+    if (env.mode != Test) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
       log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
       jobs.put(name, () => block)
@@ -97,3 +102,5 @@ object Jobs extends Logging {
     scheduler.deleteJob(new JobKey(name))
   }
 }
+
+object Jobs extends JobScheduler(Environment(Play.current.path, Play.current.classloader, Play.current.mode))
