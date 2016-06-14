@@ -1,0 +1,244 @@
+.creative--hosted-thrasher {
+    .hosted-thrasher__body {
+        position: relative;
+        height: 100%;
+        padding-top: 0;
+        display: block;
+
+        @include mq(tablet) {
+            .has-flex & {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: stretch;
+            }
+        }
+
+        &.hosted-thrasher__body--1-elems > .hosted-thrasher--element {
+            &:nth-child(2),
+            &:nth-child(3),
+            &:nth-child(4) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(100% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--2-elems > .hosted-thrasher--element {
+            &:nth-child(1) {
+                @include mq(tablet) {
+                    margin-right: 10px;
+                }
+            }
+            &:nth-child(2) {
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
+            &:nth-child(3),
+            &:nth-child(4) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(50% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--3-elems > .hosted-thrasher--element {
+            &:nth-child(2) {
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
+            &:nth-child(3) {
+                margin-left: 10px;
+                @include mq($until: tablet) {
+                    display: none;
+                }
+            }
+            &:nth-child(4) {
+                display: none;
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(33% - 20px);
+                }
+            }
+        }
+        &.hosted-thrasher__body--4-elems > .hosted-thrasher--element {
+            @include mq(tablet) {
+                margin-right: 10px;
+            }
+            &:nth-child(2),
+            &:nth-child(3) {
+                margin-top: 10px;
+                @include mq(tablet) {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
+            &:nth-child(4) {
+                @include mq(tablet) {
+                    margin-left: 10px;
+                    margin-right: 0;
+                }
+            }
+            &:nth-child(3),
+            &:nth-child(4) {
+                @include mq($until: tablet) {
+                    display: none;
+                }
+            }
+            @include mq(tablet) {
+                .has-flex & {
+                    flex: calc(25% - 20px);
+                }
+            }
+        }
+    }
+
+    .hosted-thrasher__heading {
+        @include f-headlineSans;
+        margin: 0;
+        font-size: 22px;
+        line-height: 24px;
+
+        @include mq(tablet) {
+            font-size: 26px;
+            line-height: 26px;
+        }
+
+        @include mq(desktop) {
+            font-size: 32px;
+            line-height: 34px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .hosted-thrasher__heading--small {
+        @include f-headlineSans;
+
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 0;
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
+
+        @include mq(tablet) {
+            font-size: 24px;
+        }
+    }
+
+    .hosted-thrasher__meta {
+        position: absolute;
+        left: $gs-gutter/2;
+        bottom: 18%;
+        width: 100%;
+        color: #ffffff;
+    }
+
+    .hosted-thrasher__image-container {
+        height: 339px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hosted-thrasher__body--2-elems,
+    .hosted-thrasher__body--3-elems,
+    .hosted-thrasher__body--4-elems {
+        .hosted-thrasher__meta {
+            width: $gs-column-width * 4;
+            @include mq(tablet) {
+                bottom: 15%;
+                font-size: 24px;
+            }
+        }
+        .hosted-thrasher__heading--small {
+            font-size: 22px;
+            @include mq(tablet) {
+                font-size: 24px;
+            }
+        }
+        .hosted-thrasher__heading {
+            font-size: 22px;
+            line-height: 22px;
+            @include mq(tablet) {
+                font-size: 28px;
+                line-height: 30px;
+            }
+        }
+        .hosted-thrasher__image-container {
+            @include mq($until: tablet) {
+                height: 230px;
+            }
+        }
+    }
+
+    .hosted-thrasher__body--4-elems {
+        .hosted-thrasher__meta {
+            width: $gs-column-width * 3;
+        }
+    }
+
+    .hostedbadge {
+        top: 0;
+        left: $gs-gutter/2;
+        @include mq(leftCol) {
+            top: 210px;
+            left: - $left-column - $gs-gutter;
+            width: 112px;
+        }
+        @include mq(wide) {
+            left: - $left-column-wide - $gs-gutter;
+        }
+    }
+
+    .hosted-banner {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+        border-top: 1px solid transparent;
+    }
+
+    .hosted-thrasher__faux-controls {
+        @include f-headlineSans;
+        position: absolute;
+        bottom: 0;
+        font-size: 16px;
+        font-weight: bold;
+
+        .hosted-thrasher__timer {
+            color: #ffffff;
+            @include mq(desktop) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .hosted-thrasher__play-button {
+        @include icon(play-32--tone-media);
+        @include mq(desktop) {
+            padding: 9px;
+        }
+        margin: 10px;
+    }
+
+    .hosted-thrasher__play-button, .hosted-thrasher__timer {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+}

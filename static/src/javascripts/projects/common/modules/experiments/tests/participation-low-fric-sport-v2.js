@@ -17,7 +17,7 @@ define([
 
         this.id = 'ParticipationLowFricSportV2';
         this.start = '2016-06-06';
-        this.expiry = '2016-06-15';
+        this.expiry = '2016-06-21';
         this.author = 'Gareth Trufitt - Participation';
         this.description = 'Participation - Low friction test for football vs star ratings on Football';
         this.audience = 0.1;

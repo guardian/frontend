@@ -18,6 +18,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     testSwitchGroup,
     "test-switch",
     "exciting switch",
+    owners = Seq(Owner.withGithub("FakeOwner")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = true
@@ -27,6 +28,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     testSwitchGroup,
     "forever-switch",
     "exciting switch",
+    owners = Seq(Owner.withGithub("FakeOwner")),
     safeState = Off,
     sellByDate = None,
     exposeClientSide = true
@@ -63,6 +65,10 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
   they should "be deleted once expired" in {
     forAllSwitches(Switch.expiry(_).hasExpired shouldBe false)
+  }
+
+  they should "all have at least one owner" in {
+    forAllSwitches(_.owners.nonEmpty shouldBe true)
   }
 
   they should "have weekday expiry dates" in {
