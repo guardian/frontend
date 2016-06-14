@@ -19,7 +19,11 @@
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
                       @if(ArticleBadgesSwitch.isSwitchedOn) {
-                          @badgeFor(article).map { badge => content__head--is-badged content__head--@badge.classModifier}
+                          @badgeFor(article).map { badge => content__head--is-badged
+                              @if(badge.classModifier) {
+                                  content__head--@badge.classModifier
+                              }
+                          }
                       }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">

@@ -9,7 +9,11 @@
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
     <div class="fc-container__header
                 @if(containerDefinition.customHeader.isEmpty) {js-container__header}
-                @badgeFor(containerDefinition).map { badge => fc-container__header--@badge.classModifier}">
+                @badgeFor(containerDefinition).map { badge => fc-container__header--is-badged
+                    @if(badge.classModifier) {
+                        fc-container__header--@badge.classModifier
+                    }
+                }">
         @title.map { title =>
             @defining(frontProperties.editorialType.contains("Contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(

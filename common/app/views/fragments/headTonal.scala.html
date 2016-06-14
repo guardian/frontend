@@ -7,7 +7,11 @@
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
-    @badgeFor(item).map { badge => content__head--is-badged content__head--@badge.classModifier}">
+    @badgeFor(item).map { badge => content__head--is-badged
+        @if(badge.classModifier) {
+            content__head--@badge.classModifier
+        }
+    }">
 
     <div class="content__header tonal__header">
         <div class="gs-container">
