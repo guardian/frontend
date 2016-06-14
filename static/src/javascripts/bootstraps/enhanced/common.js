@@ -14,6 +14,7 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
+    'common/modules/experiments/ab',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
@@ -45,6 +46,7 @@ define([
     'common/modules/ui/cookiesBanner',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/ios-smart-banner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
@@ -391,6 +393,7 @@ define([
 
     return {
         init: function () {
+            var smartBanner = if (ab.isInVariant('SmartBanner', 'banner'))
             forEach(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
