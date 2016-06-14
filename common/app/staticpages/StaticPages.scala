@@ -8,5 +8,6 @@ object StaticPages {
       id = "simple-survey-page",
       section = Option(SectionSummary(id="global", activeBrandings=None)),
       webTitle = "Simple Survey Page",
-      analyticsName = "global"))
+      analyticsName = "global",
+      contentType = "survey"))
 }

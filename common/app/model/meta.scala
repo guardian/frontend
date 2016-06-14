@@ -284,7 +284,11 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || sectionId == "identity" || contentType.toLowerCase == "gallery"
+  val hasSlimHeader: Boolean =
+    contentType == "Interactive" ||
+      sectionId == "identity" ||
+      contentType.toLowerCase == "gallery" ||
+      contentType.toLowerCase == "survey"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
