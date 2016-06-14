@@ -219,9 +219,18 @@
         padding: $gs-gutter;
     }
 
-    @include mq($from: tablet) {
-        .wrapper-inner {
-            padding: $gs-gutter;
+    .formstack-survey-wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter/2 $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(8);
+            margin-left: gs-span(3) + $gs-gutter;
         }
     }
 
