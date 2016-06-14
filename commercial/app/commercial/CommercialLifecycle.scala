@@ -12,16 +12,6 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 import scala.util.control.NonFatal
 
-private [commercial] object CommercialLifecycleMetrics {
-
-  val metricMap = Map(
-    "fetch-failure" -> AkkaAgent(0.0),
-    "fetch-success" -> AkkaAgent(0.0),
-    "parse-failure" -> AkkaAgent(0.0),
-    "parse-success" -> AkkaAgent(0.0)
-  )
-}
-
 class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
@@ -29,37 +19,18 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
   }}
 
   private val refreshJobs: List[RefreshJob] = List(
+    CommercialMetricsUpdate,
     MasterClassTagsRefresh,
     CountriesRefresh,
     IndustriesRefresh,
     MoneyBestBuysRefresh
   )
 
-  private def recordEvent(eventName:String, outcome:String): Unit = {
-    val keyName = s"$eventName-$outcome"
-    CommercialLifecycleMetrics.metricMap
-      .get(keyName)
-      .foreach(agent => agent.send(_ +1.0))
-  }
-
-  private def updateMetrics(): Unit = {
-    CommercialLifecycleMetrics.metricMap.foreach{
-      case (metricName, agent) => {
-        agent send {currentCount =>
-          log.info(s"uploading $metricName with count of : $currentCount")
-          CommercialMetrics.metrics.put(Map(metricName -> currentCount))
-          0
-        }
-      }
-    }
-  }
-
   override def start(): Unit = {
 
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
 
     def fetchFeed(fetcher: FeedFetcher): Future[Unit] = {
-
       val feedName = fetcher.feedMetaData.name
 
       val msgPrefix = s"Fetching $feedName feed"
@@ -69,13 +40,13 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("fetch","failure")
+          CommercialLifecycleMetrics.logMetric(CommercialFeedEvent(feedName, FeedAction.Fetch, false))
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordEvent("fetch","success")
+          CommercialLifecycleMetrics.logMetric(CommercialFeedEvent(feedName, FeedAction.Fetch, true))
           log.info(s"$msgPrefix succeeded in ${response.duration}")
       }
       eventualResponse.map(_ => ())
@@ -92,12 +63,12 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("parse","failure")
+          CommercialLifecycleMetrics.logMetric(CommercialFeedEvent(feedName, FeedAction.Parse, false))
           log.error(s"$msgPrefix failed: ${e.getMessage}", e)
       }
       parsedFeed onSuccess {
         case feed =>
-          recordEvent("parse","success")
+          CommercialLifecycleMetrics.logMetric(CommercialFeedEvent(feedName, FeedAction.Parse, true))
           log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
       }
       parsedFeed.map(_ => ())
@@ -123,19 +94,6 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
       }
     }
 
-    val jobName = "update-metrics"
-    Jobs.deschedule(jobName)
-    Jobs.scheduleEveryNMinutes(jobName, 15){
-      updateMetrics
-      Future.successful(())
-    }
-
-    Jobs.deschedule("cloudwatchUpload")
-    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
-      CommercialMetrics.metrics.upload()
-      Future.successful(())
-    }
-
     refreshJobs.zipWithIndex foreach {
       case (job, i) => job.start(randomStartSchedule(minsLater = i))
     }
@@ -155,6 +113,8 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
       }
 
       BestBuysAgent.refresh()
+
+      CommercialMetricsUpdate.refresh()
 
       for (fetcher <- FeedFetcher.all) {
         fetchFeed(fetcher)
@@ -176,7 +136,5 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
     for (parser <- FeedParser.all) {
       Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
-
-    Jobs.deschedule("cloudwatchUpload")
   }
 }
