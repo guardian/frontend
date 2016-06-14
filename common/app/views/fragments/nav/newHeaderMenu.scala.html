@@ -1,0 +1,58 @@
+@import common.NewNavigation
+
+@import common.TopLevelSection
+
+@sectionList(topLevelSection: TopLevelSection) = {
+    <li class="main-navigation__item navigation-border">
+            <!-- TODO: Firefox -->
+        <details>
+            <summary class="main-navigation__item__button">
+                @fragments.inlineSvg("arrow-down", "icon")
+                @topLevelSection.name
+            </summary>
+            <ul class="main-navigation__secondary navigation-group">
+                @NewNavigation.sectionItems(topLevelSection).map { sectionItem =>
+                    <li class = "navigation-group__item" ><a href="@sectionItem.url" tabindex="0">@sectionItem.name</a></li>
+                }
+            </ul>
+        </details>
+    </li>
+}
+
+<div class="main-menu-container" id="main-menu">
+        <!-- TODO: Provide tabbable alternative -->
+    <a href="#" class="main-menu-container__overlay"></a>
+    <div class="main-menu-container__menu">
+        <div class="ma
+        in-menu-container__profile-container">
+            @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "main-menu-container__profile-icon"))
+            Sign in/up
+        </div>
+
+        <ul class="main-navigation">
+            @NewNavigation.topLevelSections.map { section =>
+                @sectionList(section)
+            }
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="#" tabindex="0">Jobs</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Dating</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Masterclasses</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Courses</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="#" tabindex="0">Crosswords</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="#" tabindex="0">The Observer</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Today’s Paper</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Sunday’s Paper</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="#" tabindex="0">Facebook</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Twitter</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Snapchat</a></li>
+            <li class="navigation-group__item"><a href="#" tabindex="0">Instagram</a></li>
+        </ul>
+    </div>
+</div>
