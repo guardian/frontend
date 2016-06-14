@@ -90,6 +90,49 @@ define([
             });
         }
 
+        function checkPrivateBrowsingMode() {
+
+            function addBrowserData(boolValue) {
+                var dataLinkName = 'private-browsing-' + boolValue;
+                var surveySelect = document.getElementById('impressions-survey__select');
+                surveySelect.setAttribute('data-link-name', dataLinkName);
+            }
+
+            new Promise(resolve => {
+                var db;
+                var on = () => resolve(true);
+                var off = () => resolve(false);
+                var tryls = () => {
+                    try {
+                        localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem("x"), off());
+                    } catch (e) {
+                        on();
+                    }
+                };
+
+                // Blink
+                window.webkitRequestFileSystem ?
+                    webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
+
+                // FF
+                : "MozAppearance" in document.documentElement.style ?
+                    (db = indexedDB.open("test"), db.onerror = on, db.onsuccess = off)
+
+                // Safari
+                : /constructor/i.test(window.HTMLElement) ? tryls()
+
+                // IE10+ & edge
+                : !window.indexedDB && (window.PointerEvent || window.MSPointerEvent) ? on()
+
+                // Rest
+                : off();
+            }).then(function (success) {
+                addBrowserData(success);
+            }, function (failure) {
+                console.log('unable to determine browser mode');
+            });
+        }
+
         function checkVisible(domElement) {
             var rect = domElement.getBoundingClientRect();
             var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
@@ -110,9 +153,10 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    setCookieForSurvey();
                     renderQuickSurvey();
+                    setCookieForSurvey();
                     handleSurveyResponse('fi-survey__button');
+                    checkPrivateBrowsingMode();
                 }
             },
             {
