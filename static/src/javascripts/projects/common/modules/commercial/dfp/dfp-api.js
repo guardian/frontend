@@ -155,7 +155,7 @@ define([
             advert.isRendering = true;
             advert.whenLoadedResolver(true);
             renderAdvert(advert, event).then(function (isRendered) {
-                advert.isRenering = false;
+                advert.isRendering = false;
                 advert.whenRenderedResolver(isRendered);
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 allAdsRendered();

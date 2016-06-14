@@ -37,12 +37,13 @@ define([
         var breakoutEl = iFrameBody.querySelector('.breakout__html, .breakout__script');
 
         if (!breakoutEl) {
-            return Promise.resolve();
+            return Promise.resolve(true);
         } else if (breakoutEl.classList.contains('breakout__html')) {
             return fastdom.write(function () {
                 iFrame.setAttribute('hidden', 'hidden');
                 breakoutEl.parentNode.removeChild(breakoutEl);
                 slot.insertAdjacentHTML('beforeend', breakoutEl.innerHTML);
+                return true;
             });
         } else if (breakoutEl.classList.contains('breakout__script')) {
             return fastdom.write(function () {
@@ -59,6 +60,7 @@ define([
                 } else {
                     // evil, but we own the returning js snippet
                     eval(breakoutContent);
+                    return true;
                 }
             });
         }
