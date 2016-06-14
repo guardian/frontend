@@ -62,7 +62,7 @@ create_aws_config() {
       mkdir "$path"
     fi
 
-    echo "[profile nextgen]
+    echo "[profile frontend]
 region = eu-west-1" > "$path/$filename"
   fi
 }
