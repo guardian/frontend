@@ -40,6 +40,7 @@ define([
                 'prop43',   // media type
                 'prop44',   // page id
                 'eVar44',   // page id
+                'prop71',   // previous site section
                 'eVar74',   // ad or content
                 'eVar61',   // restricted
                 'prop39'    // media id
