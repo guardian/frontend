@@ -22,13 +22,13 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/breakout-iframe',
     'common/modules/commercial/dfp/PrebidService',
-    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/onward/geo-most-popular',
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
     'lodash/functions/once',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
+    'lodash/functions/memoize',
     'lodash/arrays/uniq',
     'lodash/arrays/flatten'
 ], function (
@@ -52,13 +52,13 @@ define([
     ophanTracking,
     breakoutIFrame,
     PrebidService,
-    trackAdLoad,
     geoMostPopular,
     beacon,
     id,
     once,
     debounce,
     throttle,
+    memoize,
     uniq,
     flatten
 ) {
@@ -152,9 +152,10 @@ define([
 
             var advert = getAdvertById(event.slot.getSlotElementId());
             advert.isLoading = false;
-            advert.isLoaded = true;
+            advert.isRendering = true;
+            advert.whenLoadedResolver(true);
             renderAdvert(advert, event).then(function (isRendered) {
-                // resolve the whenRendered promise of the ad slot
+                advert.isRenering = false;
                 advert.whenRenderedResolver(isRendered);
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 allAdsRendered();
@@ -341,6 +342,9 @@ define([
         } else {
             advert.sizes = getAdBreakpointSizes(advert);
             advert.slot = defineSlot(advert.node, advert.sizes);
+            advert.whenLoaded = new Promise(function (resolve) {
+                advert.whenLoadedResolver = resolve;
+            });
             advert.whenRendered = new Promise(function (resolve) {
                 advert.whenRenderedResolver = resolve;
             });
@@ -619,7 +623,34 @@ define([
      */
 
     function getAdvertById(id) {
-        return adverts[advertIds[id]];
+        return id in advertIds ? adverts[advertIds[id]] : null;
+    }
+
+    var waitForAdvert = memoize(function (id) {
+        return new Promise(function (resolve, reject) {
+            var failedAttempts = 5;
+            checkAdvert();
+            function checkAdvert() {
+                var advert = getAdvertById(id);
+                if (!advert) {
+                    failedAttempts -= 1;
+                    if (failedAttempts === 0) {
+                        reject(new Error('Ad ' + id + ' failed to load'));
+                    }
+                    window.setTimeout(checkAdvert, 100);
+                } else {
+                    resolve(advert);
+                }
+            }
+        });
+    });
+
+    function trackAdLoad(id) {
+        return waitForAdvert(id).then(function (_) { return _.whenLoaded; });
+    }
+
+    function trackAdRender(id) {
+        return waitForAdvert(id).then(function (_) { return _.whenRendered; });
     }
 
     function getAdverts(withHidden) {
@@ -637,7 +668,9 @@ define([
             id: adSlotNode.id,
             isHidden: false,
             isLoading: false,
-            isLoaded: false,
+            isRendering: false,
+            whenLoaded: null,
+            whenLoadedResolver: null,
             whenRendered: null,
             whenRenderedResolver: null,
             node: adSlotNode,
@@ -751,6 +784,7 @@ define([
         addSlot:        addSlot,
         getCreativeIDs: getCreativeIDs,
         trackAdLoad:    trackAdLoad,
+        trackAdRender:  trackAdRender,
 
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,
