@@ -65,26 +65,6 @@ define([
                 }
         }
 
-        function handleSurveyResponse(buttonClassName) {
-            var surveyQuestion = document.getElementById('impressions-survey__select');
-            bean.on(surveyQuestion, 'click', function () {
-                fastdom.write(function () {
-                    disableRadioButtons(buttonClassName);
-                    surveyFadeOut();
-                    thankyouFadeIn();
-                });
-            });
-        }
-
-        function isInPrivateBrowsingMode() {
-            // return a boolean; true is
-        }
-
-        function setCookieForSurvey() {
-            // give user a cookie to say that they have responded
-            // if user has this cookie then do not show the survey again
-        }
-
         function surveyFadeOut() {
             var surveyTextbox = document.getElementById('surveyTextbox');
             fastdom.write(function () {
@@ -99,10 +79,38 @@ define([
             });
         }
 
+        function handleSurveyResponse(buttonClassName) {
+            var surveyQuestion = document.getElementById('impressions-survey__select');
+            bean.on(surveyQuestion, 'click', function () {
+                fastdom.write(function () {
+                    disableRadioButtons(buttonClassName);
+                    surveyFadeOut();
+                    thankyouFadeIn();
+                });
+            });
+        }
+
+        function checkVisible(domElement) {
+            var rect = domElement.getBoundingClientRect();
+            var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+            return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+        }
+
+        function setCookieForSurvey() {
+            // give user a cookie to say that they have seen the survey
+            // if user has this cookie then do not show the survey again
+            window.onscroll = function () {
+                if (checkVisible(document.getElementById('surveyTextbox'))) {
+                    document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
+                }
+            };
+        }
+
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
+                    setCookieForSurvey();
                     renderQuickSurvey();
                     handleSurveyResponse('fi-survey__button');
                 }
