@@ -5,6 +5,7 @@
 
 @if(GoogleAnalyticsSwitch.isSwitchedOn) {
     <script id='google_analytics'>
+
         @***************************************************************************************
         * Standard copy 'n paste Google Analytics code                                         *
         ***************************************************************************************@
@@ -22,10 +23,29 @@
 
         ga('set', 'forceSSL', true);
 
-        ga('send', {
-            hitType: 'pageview',
-            title: '@Html(page.metadata.webTitle.javascriptEscaped)'
-        });
+        ga('set', 'title', guardian.config.page.webTitle);
+
+        @***************************************************************************************
+        * Custom dimensions common to all platforms across the whole Guardian estate           *
+        ***************************************************************************************@
+        ga('set', 'dimension1', guardian.config.ophan.pageViewId);
+        ga('set', 'dimension2', guardian.config.ophan.browserId);
+        ga('set', 'dimension3', 'theguardian.com'); @* Platform *@
+
+        @***************************************************************************************
+        * Custom dimensions for 'editorial' platforms (this site, the mobile apps, etc.)       *
+        * Some of these will be undefined for non-content pages, but that's fine.              *
+        ***************************************************************************************@
+        ga('set', 'dimension4', guardian.config.page.section);
+        ga('set', 'dimension5', guardian.config.page.contentType);
+        ga('set', 'dimension6', guardian.config.page.commissioningDesk);
+        ga('set', 'dimension7', guardian.config.page.contentId);
+        ga('set', 'dimension8', guardian.config.page.author);
+        ga('set', 'dimension9', guardian.config.page.keywordIds);
+        ga('set', 'dimension10', guardian.config.page.toneIds);
+        ga('set', 'dimension11', guardian.config.page.seriesId);
+
+        ga('send', 'pageview');
     </script>
 
     @*
