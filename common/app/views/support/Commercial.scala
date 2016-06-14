@@ -4,7 +4,7 @@ import common.Edition
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
-import conf.switches.Switches._
+import conf.switches.Switches.{FixedTechTopSlot, FluidAdverts, containerBrandingFromCapi}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag}
@@ -91,11 +91,11 @@ object Commercial {
         def isPaidBranding(branding: Option[Branding]): Boolean =
           branding.exists(_.sponsorshipType == PaidContent)
 
-        def isPaid(card: CardContent): Boolean = if (staticBadgesSwitch.isSwitchedOn) {
+        def isPaid(card: CardContent): Boolean = if (containerBrandingFromCapi.isSwitchedOn) {
           isPaidBranding(card.branding)
         } else false
 
-        val isPaidContainer = if (staticBadgesSwitch.isSwitchedOn) {
+        val isPaidContainer = if (containerBrandingFromCapi.isSwitchedOn) {
           isPaidBranding(containerModel.branding)
         } else {
           isPaidBrandingAttributes(containerModel.brandingAttributes)
@@ -110,8 +110,10 @@ object Commercial {
         isPaidContainer || isAllPaidContent
       }
 
-      !isPaidFront &&
-        (container.commercialOptions.isPaidContainer || optContainerModel.exists(isPaid))
+      !isPaidFront && (
+        (containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer)
+          || optContainerModel.exists(isPaid)
+        )
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
