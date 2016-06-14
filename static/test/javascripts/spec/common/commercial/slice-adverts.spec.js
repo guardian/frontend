@@ -131,15 +131,12 @@ define([
                     var $adSlot = bonzo(adSlot);
 
                     expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,71');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250|88,71');
                     expect($adSlot.data('tablet')).toEqual('1,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
                     expect($adSlot.data('mobile')).toEqual('1,1|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
                 });
 
                 done();
