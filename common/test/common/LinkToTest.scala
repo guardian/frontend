@@ -69,11 +69,8 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   it should "be https on https-enabled sections whether editionalised or not" in {
     for (ed <- editions) {
       for (secureSection <- LinkTo.httpsEnabledSections) {
-        if (ed.editionalisedSections.contains(secureSection)) {
-          TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/${ed.id.toLowerCase}/$secureSection")
-        } else {
-          TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/$secureSection")
-        }
+        val expectedPath = if(ed.editionalisedSections.contains(secureSection)) s"${ed.id.toLowerCase}/$secureSection" else secureSection
+        TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/$expectedPath")
         TheGuardianLinkTo(s"/$secureSection/foo", ed) should be (s"https://www.theguardian.com/$secureSection/foo")
       }
     }
@@ -90,14 +87,9 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   it should "correctly link editionalised sections" in {
     for (edition <- editions) {
       for (section <- edition.editionalisedSections) {
-        val testLink = TheGuardianLinkTo(s"/$section", edition)
-        if (section.isEmpty) {
-          // network front
-          testLink should endWith (s"www.theguardian.com/${edition.networkFrontId}")
-        } else {
-          // not network front
-          testLink should endWith (s"www.theguardian.com/${edition.networkFrontId}/$section")
-        }
+        val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", edition)
+        val expectedPath = if(section.isEmpty) edition.networkFrontId else s"${edition.networkFrontId}/$section"
+        testLink should endWith (s"www.theguardian.com/$expectedPath")
       }
     }
   }
