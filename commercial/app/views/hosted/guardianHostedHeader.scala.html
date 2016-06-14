@@ -1,7 +1,4 @@
-@import common.commercial.HostedPage
-@(page: HostedPage)(content: Html)(implicit request: RequestHeader)
-
-@main(page, Some("commercial")) { } {
+@()
     <div class="hosted__header">
         <div class="hosted__headerwrap">
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
@@ -13,7 +10,4 @@
             </a>
         </div>
     </div>
-    <div class="l-side-margins hosted__side">
-        @content
-    </div>
-}
+

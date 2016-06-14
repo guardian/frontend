@@ -345,10 +345,10 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val hostedEpisode2Content = Switch(
+  val hostedGalleryTest = Switch(
     SwitchGroup.Commercial,
-    "hosted-episode2-content",
-    "If on, third page of hosted content is available",
+    "hosted-gallery-test",
+    "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
