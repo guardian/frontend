@@ -174,10 +174,12 @@
             }
 
             .fsValidationError {
-                background-color: unset;
+                padding: 1em;
+                background-color: #fae9e9;
+                box-shadow: 0 0 0 calc(5px - 1px) #fae9e9, 0 0 0 5px #ce5f6d;
 
                 .fsLabel {
-                    color: #333333;
+                    color: #ce5f6d;
                     background-image: none;
                     padding: 0;
                 }
