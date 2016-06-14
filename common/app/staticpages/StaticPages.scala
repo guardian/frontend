@@ -1,12 +1,12 @@
 package staticpages
 
-import model.{MetaData, SimplePage}
+import model.{SectionSummary, MetaData, SimplePage}
 
 object StaticPages {
   val simpleSurveyStaticPage: SimplePage = SimplePage(
     MetaData.make(
       id = "simple-survey-page",
-      section = "global",
+      section = Option(SectionSummary(id="global", activeBrandings=None)),
       webTitle = "Simple Survey Page",
       analyticsName = "global"))
 }
