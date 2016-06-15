@@ -360,50 +360,5 @@ define([
                 });
             });
         });
-
-        describe('breakout', function () {
-
-            var slotId = 'dfp-ad-html-slot',
-                createTestIframe = function (id, html) {
-                    var $frame = $.create('<iframe></iframe>')
-                        .attr({
-                            id: 'mock_frame',
-                            /*eslint-disable no-script-url*/
-                            src: 'javascript:"<html><body style="background:transparent"></body></html>"'
-                            /*eslint-enable no-script-url*/
-                        });
-                    $frame[0].onload = function () {
-                        this.contentDocument.body.innerHTML = html;
-                    };
-                    $frame.appendTo(qwery('#' + id)[0]);
-                };
-
-            it('should insert html', function (done) {
-                var html = '<div class="dfp-iframe-content">Some content</div>';
-                $('#' + slotId).attr('data-label', false);
-                createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent(slotId));
-
-                    fastdom.defer(function () {
-                        expect($('iframe', '#' + slotId).css('display')).toBe('none');
-                        done();
-                    });
-                });
-            });
-
-            // TODO: find a nice way to test this
-            xit('should run javascript', function () {
-                var str = 'This came from an iframe';
-                createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                window.googletag.pubads().listener(makeFakeEvent(slotId));
-                expect(window.dfpModuleTestVar).toBe(str);
-            });
-        });
     });
 });
