@@ -2,14 +2,13 @@ package commercial
 
 import commercial.feeds._
 import common._
-import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
+import model.commercial.jobs.Industries
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Random
 import scala.util.control.NonFatal
 
 class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
@@ -28,7 +27,7 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
 
   override def start(): Unit = {
 
-    def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
+    def delayedStartSchedule(delayedStart: Int = 0, refreshStep: Int = 15) = s"0 $delayedStart/$refreshStep * * * ?"
 
     def fetchFeed(fetcher: FeedFetcher): Future[Unit] = {
       val feedName = fetcher.feedMetaData.name
@@ -76,11 +75,13 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
 
+    val jobRefreshStep = 15
+
     for (fetcher <- FeedFetcher.all) {
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         fetchFeed(fetcher)
       }
     }
@@ -89,13 +90,14 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      Jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         parseFeed(parser)
       }
     }
 
+    val refreshJobDelay = jobRefreshStep / refreshJobs.size
     refreshJobs.zipWithIndex foreach {
-      case (job, i) => job.start(randomStartSchedule(minsLater = i))
+      case (job, i) => job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
     }
 
     AkkaAsync {
