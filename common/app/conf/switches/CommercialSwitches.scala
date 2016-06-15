@@ -5,6 +5,16 @@ import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
+  val WimbledonTopAd = Switch(
+    SwitchGroup.Commercial,
+    "wimbledon-top-ad",
+    "Commands the appearance of the Rolex/Wimbledon super funky ads",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 11),
+    exposeClientSide = false
+  )
+
   val DfpCachingSwitch = Switch(
     SwitchGroup.Commercial,
     "dfp-caching",
@@ -332,6 +342,16 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2016,7,8),
+    exposeClientSide = true
+  )
+
+  val refactorInlineComponent = Switch(
+    SwitchGroup.Commercial,
+    "refactor-inline-component",
+    "Use new code and styles for inline components",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016,6,22),
     exposeClientSide = true
   )
 
