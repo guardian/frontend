@@ -194,7 +194,7 @@ define([
             function onError() {
                 resolve(false);
             }
-        });
+        }.bind(this));
     };
 
     CommercialComponent.prototype.postLoadEvents = {

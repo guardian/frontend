@@ -60,7 +60,7 @@ define([
 
                 loadScript({ id: scriptId, src: scriptSrc + '&appId=' + config.page.fbAppId});
             }, this);
-        });
+        }.bind(this));
     };
 
 
