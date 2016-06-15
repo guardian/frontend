@@ -9,5 +9,5 @@ class AdminJobsTestSuite extends Suites (
   new controllers.NewsAlertControllerTest
 )
 with SingleServerSuite {
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck().testPort
 }
