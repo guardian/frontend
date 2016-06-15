@@ -10,9 +10,13 @@
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <div class="hosted-gallery__gallery-container">
                         @for(image <- page.images) {
-                            <div class="hosted-gallery__image">
-                                <img src="@image" alt=""/>
-                            </div>
+                            <img class="hosted-gallery__image" src="@image" alt=""/>
+                        }
+                    </div>
+                    <div class="hosted-gallery__scroll-container">
+                        <div class="hosted-gallery__image--placeholder"></div>
+                        @for(image <- page.images) {
+                            <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
                 </div>
