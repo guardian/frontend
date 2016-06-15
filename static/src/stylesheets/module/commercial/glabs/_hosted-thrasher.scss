@@ -194,6 +194,8 @@
     .hostedbadge {
         top: 0;
         left: $gs-gutter/2;
+        position: absolute;
+        margin: 0;
         @include mq(leftCol) {
             top: 210px;
             left: - $left-column - $gs-gutter;
