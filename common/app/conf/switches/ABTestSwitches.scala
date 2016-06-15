@@ -78,6 +78,7 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-visitor-frequency-quick-survey",
     "Add a single question survey to the submeta section of article pages",
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 18),
     exposeClientSide = true

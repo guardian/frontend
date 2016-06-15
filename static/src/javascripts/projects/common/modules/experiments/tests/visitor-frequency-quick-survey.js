@@ -31,21 +31,21 @@ define([
 
         function renderQuickSurvey() {
             // this cannot be wrapped in a fastdom function; the disable function breaks
-            var submeta = document.getElementsByClassName('submeta')[0];
+            var insertionPoint = document.getElementById('img-1');
             var surveyHeading = document.createElement('div');
             var surveyBody = document.createElement('div');
             var surveyThanks = document.createElement('div');
             mutateSurveyHeading(surveyHeading);
             mutateSurveyBody(surveyBody);
             mutateSurveyThanks(surveyThanks);
-            submeta.appendChild(surveyHeading);
-            submeta.appendChild(surveyBody);
+            insertionPoint.appendChild(surveyHeading);
+            insertionPoint.appendChild(surveyBody);
             surveyBody.appendChild(surveyThanks);
         }
 
         function mutateSurveyHeading(domElement) {
             domElement.className += 'impressions-survey__heading';
-            domElement.style.cssText += 'color:#fff;margin-top:20px;padding: 1em 1em 1em 3em;font-size:0.8em;background-color:#AAD7E4;';
+            domElement.style.cssText += 'color:#fff;margin-top:0;padding: 1em 1em 1em 3em;font-size:0.8em;background-color:#AAD7E4;';
             domElement.innerHTML = '<h2 style="color:#333;font-family:Guardian Text Sans Web,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:bold;margin-left:-1em;">Quick Survey</h2>';
         }
 
@@ -54,14 +54,14 @@ define([
             var options = '<label><input type="radio" class="fi-survey__button" data-link-name="frequency_5" value="frequency_5">Every day/most days</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_4" value="frequency_4">Weekly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_3" value="frequency_3">Fortnightly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_2" value="frequency_2">Monthly or less</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_1" value="frequency_1">This is my first visit</label>';
             domElement.className += 'impressions-survey__body';
             domElement.setAttribute('data-link-name', 'impressions-frequency-survey');
-            domElement.style.cssText += 'color:#fff;padding: 1em 1em 1em 3em;font-size:0.8em;background-color:#005689;opacity:1;position:relative';
+            domElement.style.cssText += 'color:#fff;margin-bottom:1em;padding: 1em 1em 1em 3em;font-size:0.8em;background-color:#005689;opacity:1;position:relative';
             domElement.innerHTML = '<div id="surveyTextbox">' + heading + '<div id="impressions-survey__select">' + options + '</div></div>';
         }
 
         function mutateSurveyThanks(domElement) {
             domElement.className += 'impressions-survey__thanks';
-            domElement.style.cssText += 'color:#fff;font-size:2em;font-weight:bold;position:absolute;top:20%;opacity:0';
-            domElement.innerHTML = '<h1>Thank you</h1>';
+            domElement.style.cssText += 'color:#fff;font-size:2em;font-weight:bold;position:absolute;top:20%;opacity:0;visibility:collapse;';
+            domElement.innerHTML = 'Thank you for helping us<br>improve The Guardian';
         }
 
         function disableRadioButtons(buttonClassName) {
