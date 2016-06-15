@@ -1,0 +1,131 @@
+
+
+#survey-laboratory {
+
+    .illustration-container {
+        @include gs-container;
+        background-color: darken($news-main-2, 20%);
+        min-height: 240px;
+
+    }
+
+    .illustration-mobile {
+        border: 1px solid #ffffff;
+        display: block;
+        float: left;
+        width: auto;
+        height: 200px;
+        margin-top: $gs-baseline;
+        margin-left: $gs-gutter;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+    }
+
+    .illustration-tablet {
+        border: 1px solid #ffffff;
+        display: block;
+        float: left;
+        width: auto;
+        height: 200px;
+        margin-top: $gs-baseline;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq($until: tablet) {
+            display: none;
+        }
+
+    }
+}
+
+.wrapper {
+    @include gs-container;
+    border: 1px solid #0000ff;
+
+    .wrapper-inner {
+        border: 1px solid #ff0000;
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter/2 $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(8);
+            margin-left: gs-span(3) + $gs-gutter;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        color: $guardian-brand;
+        font-weight: bold;
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include fs-header(4);
+        color: $guardian-brand;
+        margin-bottom: $gs-baseline/2;
+    }
+
+
+    p {
+        @include fs-bodyCopy(2);
+        margin-bottom: $gs-baseline;
+    }
+
+    .inline-survey_clipboard,
+    .inline-email_register {
+        padding-top: $gs-baseline;
+        display: block;
+
+        svg {
+            width: 100%;
+            height: auto;
+
+            @include mq(mobileLandscape) {
+                width: gs-span(6);
+            }
+        }
+    }
+
+
+    // Survey Styles
+    .adfreesurvey-wrapper-inner {
+        width: auto;
+        padding: $gs-gutter;
+        margin: 0 auto;
+
+        @include mq(tablet) {
+            width: $gs-column-width*10;
+            padding: $gs-gutter*2 0;
+        }
+    }
+
+    img {
+        display: block;
+    }
+
+    .l-row__item:last-child {
+        margin-top: $gs-gutter;
+
+        @include mq(tablet) {
+            margin-top: 0;
+        }
+    }
+}

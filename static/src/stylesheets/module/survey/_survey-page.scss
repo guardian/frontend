@@ -1,0 +1,66 @@
+//Styles to be used on pages that contain full formstack surveys
+
+.formstack-survey-wrapper {
+    @include gs-container;
+
+    @include mq($until: tablet) {
+        padding: $gs-gutter;
+    }
+
+    .formstack-survey-wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter/2 $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(8);
+            margin-left: gs-span(3) + $gs-gutter;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        color: $guardian-brand;
+        font-weight: bold;
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    h2 {
+        @include fs-header(4);
+        color: $guardian-brand;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    p {
+        @include fs-bodyCopy(2);
+        margin-bottom: $gs-baseline;
+    }
+
+    .fsError:before {
+        content: '';
+        display: block;
+        background: $error-icon;
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin: 0 .5em 0 0;
+    }
+
+    .fsError {
+        color: $error;
+        background-color: unset;
+        border: 0;
+        text-align: left;
+        padding-left: 0;
+    }
+}
