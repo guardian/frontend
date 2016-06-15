@@ -1,4 +1,5 @@
 define([
+    'bean',
     'qwery',
     'Promise',
     'common/utils/fastdom-promise',
@@ -24,6 +25,7 @@ define([
     'common/modules/commercial/creatives/scrollable-mpu-v2',
     'common/modules/commercial/creatives/template'
 ], function (
+    bean,
     qwery,
     Promise,
     fastdom
