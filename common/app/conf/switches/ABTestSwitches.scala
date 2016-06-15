@@ -121,7 +121,7 @@ trait ABTestSwitches {
     "Make video main media always showcase",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 14),
+    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
     exposeClientSide = true
   )
 
@@ -131,7 +131,7 @@ trait ABTestSwitches {
     "Swap video thrashers on football front",
     owners = Seq(Owner.withGithub("jamesgorrie")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 14),
+    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
     exposeClientSide = true
   )
 
@@ -141,7 +141,7 @@ trait ABTestSwitches {
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 14),
+    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
     exposeClientSide = true
   )
 
