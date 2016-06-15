@@ -10,7 +10,7 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
 
   case class RequestLogger(rh: RequestHeader)(implicit internalLogger: Logger, stopWatch: StopWatch) {
     private lazy val pseudoId = Random.nextInt(Integer.MAX_VALUE)
-    private val headersFields: List[LogField] = {
+    private lazy val headersFields: List[LogField] = {
       val whitelistedHeaderNames = Set(
         "Host",
         "From",
@@ -32,13 +32,13 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
       val guardianSpecificHeaders = allHeadersFields.filterKeys(_.startsWith("X-GU-"))
       (whitelistedHeaders ++ guardianSpecificHeaders).toList.map(t => LogFieldString(s"req.header.${t._1}", t._2))
     }
-    private val customFields: List[LogField] = List(
+    private lazy val customFields: List[LogField] = List(
       "req.method" -> rh.method,
       "req.url" -> rh.uri,
       "req.id" -> pseudoId.toString,
       "req.latency_millis" -> stopWatch.elapsed
     )
-    private val allFields = customFields ++ headersFields
+    private lazy val allFields = customFields ++ headersFields
 
     def info(message: String): Unit = {
       logInfoWithCustomFields(message, allFields)
