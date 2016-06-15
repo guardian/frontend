@@ -80,7 +80,7 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {

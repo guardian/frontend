@@ -13,7 +13,8 @@ trait Http extends Logging with ExecutionContexts {
       response =>
         response.status match {
           case 200 =>
-            log.info(s"DAPI responded successfully in ${stopWatch.elapsed} ms for url: ${url}")
+            val dapiLatency = stopWatch.elapsed
+            logInfoWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", Map("dapi.response.latency.millis" -> dapiLatency.toInt))
             Json.parse(response.body)
           case _ =>
             log.error(onError(response))

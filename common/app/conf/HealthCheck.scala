@@ -133,19 +133,22 @@ case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
 case class AnyGoodCachedHealthCheck(testPort: Int, paths: String*)
   extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, paths:_*)
 
-class CachedHealthCheckLifeCycle(healthCheckController: CachedHealthCheck) extends LifecycleComponent {
+class CachedHealthCheckLifeCycle(
+  healthCheckController: CachedHealthCheck,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync) extends LifecycleComponent {
 
   private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
   override def start() = {
-    Jobs.deschedule("HealthCheckFetch")
+    jobs.deschedule("HealthCheckFetch")
     if (healthCheckRequestFrequencyInSec > 0) {
-      Jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
+      jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
         healthCheckController.runChecks
       }
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       healthCheckController.runChecks
     }
   }
