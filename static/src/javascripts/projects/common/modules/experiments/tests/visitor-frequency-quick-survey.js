@@ -1,10 +1,12 @@
 define([
     'bean',
     'fastdom',
+    'lodash/functions/debounce',
     'common/utils/config'
 ], function (
     bean,
     fastdom,
+    debounce,
     config
 ) {
     return function () {
@@ -21,8 +23,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.contentType == 'Article';
-            // check for the cookie related to this survey
+            return config.page.contentType == 'Article' && !checkCookieCriteria();
         };
 
         function renderQuickSurvey() {
@@ -145,29 +146,36 @@ define([
             return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
         }
 
+        function checkCookieCriteria() {
+            // if user has this cookie then do not show the survey again
+            // check if the user has a recent cookie from the Guardian?
+            var surveyCookieExists = document.cookie.indexOf('GU_FI') > -1;
+            var ageOfGuardianCookie = document.cookie.indexOf('s_fid');
+            return surveyCookieExists;
+        }
+
         function setCookieForSurvey() {
             // give user a cookie to say that they have seen the survey
-            // if user has this cookie then do not show the survey again
-            window.onscroll = function () {
+            // alternatively, only set the cookie on click or interaction (show until answered)?
+            window.onscroll = debounce(function () {
                 if (checkVisible(document.getElementById('surveyTextbox'))) {
                     document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
+                    console.log("COOKIE");
                 }
-            };
+            }, 100);
         }
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
+                    console.log(checkCookieCriteria());
+                    console.log("starting");
                     renderQuickSurvey();
+                    console.log("rendering");
                     setCookieForSurvey();
                     handleSurveyResponse('fi-survey__button');
                     checkPrivateBrowsingMode();
-                }
-            },
-            {
-                id: 'control',
-                test: function () {
                 }
             }
         ];
