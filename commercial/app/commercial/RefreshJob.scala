@@ -54,3 +54,9 @@ object MoneyBestBuysRefresh extends RefreshJob {
 
   def refresh() = BestBuysAgent.refresh()
 }
+
+object CommercialMetricsUpdate extends RefreshJob {
+  val name: String = "Update Metrics"
+
+  def refresh() = CommercialLifecycleMetrics.updateMetrics()
+}
