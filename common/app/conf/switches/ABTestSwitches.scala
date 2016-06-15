@@ -129,7 +129,7 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-video-football-thrasher",
     "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("jamesgorrie")),
+    owners = Seq(Owner.withGithub("blongden73")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 21), // Tuesday
     exposeClientSide = true
