@@ -1,34 +1,22 @@
-@import common.commercial.HostedPage
-@(page: HostedPage)(implicit request: RequestHeader)
+@import common.commercial.HostedVideoPage
+@(page: HostedVideoPage)(implicit request: RequestHeader)
+@import views.html.hosted.guardianHostedHeader
 
 @main(page, Some("commercial")) { } {
-    <div class="hosted__header">
-        <div class="hosted__headerwrap">
-            <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
-            </div>
-            <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
-                <p class="hosted__glogotext">Hosted by</p>
-                @fragments.inlineSvg("guardian-logo-320", "logo")
-            </a>
-        </div>
-    </div>
-    <div class="l-side-margins hosted__side">
+    @guardianHostedHeader("hosted-video-page", page.logoUrl)
+    <div class="l-side-margins hosted__side hosted-video-page">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
-                <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
-                    <p class="hostedbadge__info">Advertiser content</p>
-                </div>
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <video
-                      data-duration="@page.video.duration"
-                      data-media-id="@page.video.mediaId"
-                      controls="controls"
-                      preload="auto"
-                      style="width: 100%;"
-                      data-block-video-ads="true"
-                      poster="@page.video.posterUrl"
-                      class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                    data-duration="@page.video.duration"
+                    data-media-id="@page.video.mediaId"
+                    controls="controls"
+                    preload="auto"
+                    style="width: 100%;"
+                    data-block-video-ads="true"
+                    poster="@page.video.posterUrl"
+                    class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
                         <source type="video/mp4" src="@page.video.srcUrl&format=video/mp4&maxbitrate=2048">
                         <source type="video/webm" src="@page.video.srcUrl&format=video/webm&maxbitrate=2048">
                         <source type="video/ogg" src="@page.video.srcUrl&format=video/ogg&maxbitrate=2048">
@@ -40,7 +28,7 @@
                             <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <img class="hostedbadge__logo" src="@page.logoUrl">
+                            <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
                         </div>
                     </div>
                 </div>
@@ -112,7 +100,7 @@
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                 </div>
                 <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextPage.video.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl">
+                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl" alt="Next Video: @page.nextPage.video.title">
                     <p class="hosted__next-video-title">@page.nextPage.video.title</p>
                 </a>
             </div>
@@ -120,7 +108,7 @@
         <section class="adverts hosted__container--full">
             <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">
                 <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@page.logoUrl">
+                    <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
                 </div>
                 <div class="hosted__cta-wrapper">
                     <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">
@@ -131,4 +119,5 @@
             </div>
         </section>
     </div>
+
 }
