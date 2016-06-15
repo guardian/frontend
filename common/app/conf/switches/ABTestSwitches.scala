@@ -149,7 +149,6 @@ trait ABTestSwitches {
     "ab-video-yellow-button",
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
-<<<<<<< HEAD
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 21), // Tuesday
     exposeClientSide = true
@@ -161,19 +160,6 @@ trait ABTestSwitches {
     "Test the A/B test samples against page views",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-=======
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
-  val ABTestAudience = Switch(
-    SwitchGroup.ABTests,
-    "ab-test-audience",
-    "Test the A/B test samples against page views",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
->>>>>>> origin/master
     sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
