@@ -62,7 +62,7 @@ define([
             message = messages[config.page.edition];
 
         if (message) {
-            new Message('adblock-message', {
+            new Message('adblock-message-2016-06-15', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock',
                 siteMessageCloseBtn: 'hide'
