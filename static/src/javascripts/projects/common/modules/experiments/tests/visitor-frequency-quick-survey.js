@@ -1,11 +1,13 @@
 define([
     'bean',
     'fastdom',
+    'Promise',
     'lodash/functions/debounce',
     'common/utils/config'
 ], function (
     bean,
     fastdom,
+    Promise,
     debounce,
     config
 ) {
@@ -119,7 +121,7 @@ define([
 
                 // Blink
                 window.webkitRequestFileSystem ?
-                    webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
+                    window.webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
 
                 // Firefox
                 : 'MozAppearance' in document.documentElement.style ?
