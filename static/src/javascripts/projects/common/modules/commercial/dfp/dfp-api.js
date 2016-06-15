@@ -737,7 +737,6 @@ define([
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,
         shouldLazyLoad: shouldLazyLoad,
-        checkForBreakout: checkForBreakout,
 
         // testing
         reset: function () {

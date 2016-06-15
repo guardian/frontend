@@ -51,6 +51,10 @@ define([
                 // No implementation
             });
 
+            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
             injector.require([
                 'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',
@@ -299,13 +303,8 @@ define([
         describe('labelling', function () {
             var slotId = 'dfp-ad-html-slot';
 
-            afterEach(function () {
-                dfp.checkForBreakout.restore();
-            });
-
             it('should be added', function (done) {
                 var $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -320,7 +319,6 @@ define([
 
             it('should not be added if data-label attribute is false', function () {
                 var $slot = $('#' + slotId).attr('data-label', false);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -330,7 +328,6 @@ define([
             it('should be added only once', function (done) {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -347,7 +344,6 @@ define([
 
             it('should not be added when ad is gu style type', function (done) {
                 var $slot = $('#dfp-ad-gu-style');
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
                 dfp.init();
 
                 fastdom.defer(function () {
