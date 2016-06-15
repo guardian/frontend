@@ -7,9 +7,9 @@
         @include fs-textSans(2);
         @include button-height($base-size * 5);
         @include button-colour(
-                $guardian-brand,
-                #ffffff,
-                $guardian-brand
+            $guardian-brand,
+            #ffffff,
+            $guardian-brand
         );
         display: inline-block;
         vertical-align: top;
