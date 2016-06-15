@@ -93,14 +93,6 @@ define([
         }
 
         function renderCreative(config) {
-            if (config.name === 'fluid250-v4' || config.name === 'fluid250-v3') {
-                config.name = 'fluid250';
-            } else if (config.name === 'foundation-funded-logo') {
-                config.name = 'template';
-                config.params.creative = 'logo';
-                config.params.type = 'funded';
-            }
-
             return new Promise(function(resolve) {
                 require(['common/modules/commercial/creatives/' + config.name], function (Creative) {
                     resolve(new Creative($adSlot, config.params, config.opts).create());
