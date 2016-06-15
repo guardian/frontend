@@ -46,10 +46,12 @@ define([
         }
 
         function mutateSurveyBody(domElement) {
+            var heading = '<h3 style="font-weight:bold;margin-left:-1em;">How often do you read the Guardian in a digital format?</h3>';
+            var options = '<label><input type="radio" class="fi-survey__button" data-link-name="frequency_5" value="frequency_5">Every day/most days</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_4" value="frequency_4">Weekly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_3" value="frequency_3">Fortnightly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_2" value="frequency_2">Monthly or less</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_1" value="frequency_1">This is my first visit</label>';
             domElement.className += 'impressions-survey__body';
             domElement.setAttribute('data-link-name', 'impressions-frequency-survey');
             domElement.style.cssText += 'color:#fff;padding: 1em 1em 1em 3em;font-size:0.8em;background-color:#005689;opacity:1;position:relative';
-            domElement.innerHTML = '<div id="surveyTextbox"><h3 style="font-weight:bold;margin-left:-1em;">How often do you read the Guardian in a digital format?</h3><div id="impressions-survey__select"><label><input type="radio" class="fi-survey__button" data-link-name="frequency_5" value="frequency_5">Every day/most days</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_4" value="frequency_4">Weekly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_3" value="frequency_3">Fortnightly</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_2" value="frequency_2">Monthly or less</label><br><label><input type="radio" class="fi-survey__button" data-link-name="frequency_1" value="frequency_1">This is my first visit</label><br></div></div>';
+            domElement.innerHTML = '<div id="surveyTextbox">' + heading + '<div id="impressions-survey__select">' + options + '</div></div>';
         }
 
         function mutateSurveyThanks(domElement) {
@@ -98,11 +100,15 @@ define([
                 surveySelect.setAttribute('data-link-name', dataLinkName);
             }
 
-            new Promise(resolve => {
+            new Promise(function (resolve) {
                 var db;
-                var on = () => resolve(true);
-                var off = () => resolve(false);
-                var tryls = () => {
+                var on = function () {
+                    resolve(true);
+                };
+                var off = function () {
+                     resolve(false);
+                };
+                var tryLocalStorage = function () {
                     try {
                         localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem("x"), off());
                     } catch (e) {
@@ -114,14 +120,14 @@ define([
                 window.webkitRequestFileSystem ?
                     webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
 
-                // FF
+                // Firefox
                 : "MozAppearance" in document.documentElement.style ?
                     (db = indexedDB.open("test"), db.onerror = on, db.onsuccess = off)
 
                 // Safari
-                : /constructor/i.test(window.HTMLElement) ? tryls()
+                : /constructor/i.test(window.HTMLElement) ? tryLocalStorage()
 
-                // IE10+ & edge
+                // IE10+ and edge
                 : !window.indexedDB && (window.PointerEvent || window.MSPointerEvent) ? on()
 
                 // Rest
