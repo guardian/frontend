@@ -220,18 +220,6 @@ define([
         qwery(adSlotSelector)
             // convert them to bonzo objects
             .map(bonzo)
-            // remove the ones which should not be there
-            .filter(function ($adSlot) {
-                // filter out (and remove) hidden ads
-                if (shouldFilterAdSlot($adSlot)) {
-                    fastdom.write(function () {
-                        $adSlot.remove();
-                    });
-                    return false;
-                } else {
-                    return true;
-                }
-            })
             // convert to Advert ADT
             .map(function ($adSlot) {
                 return new Advert($adSlot);
@@ -240,18 +228,6 @@ define([
             .forEach(function (advert) {
                 adverts[advert.adSlotId] = advert;
             });
-    }
-
-    function shouldFilterAdSlot($adSlot) {
-        return isVisuallyHidden() || isDisabledCommercialFeature();
-
-        function isVisuallyHidden() {
-            return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledCommercialFeature() {
-            return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
-        }
     }
 
     function setPublisherProvidedId() {

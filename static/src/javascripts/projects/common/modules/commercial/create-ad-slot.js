@@ -43,21 +43,6 @@ define([
                 mobile: compile(adSizes.outOfPage, adSizes.inlineMerchandising)
             }
         },
-        inline1: {
-            sizeMappings: {
-                mobile: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
-                    adSizes.fabric,
-                    config.switches.fluidAdverts ? adSizes.fluid : null
-                ),
-                tablet: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
-                    config.switches.fluidAdverts ? adSizes.fluid : null
-                )
-            }
-        },
         inline: {
             sizeMappings: {
                 mobile: compile(adSizes.outOfPage, adSizes.mpu)
@@ -103,6 +88,17 @@ define([
         },
         'top-above-nav': {
             sizeMappings: {
+                mobile: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    adSizes.fabric,
+                    config.switches.fluidAdverts ? adSizes.fluid : null
+                ),
+                tablet: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    config.switches.fluidAdverts ? adSizes.fluid : null
+                ),
                 desktop: compile(
                     adSizes.outOfPage,
                     adSizes.fluid250,

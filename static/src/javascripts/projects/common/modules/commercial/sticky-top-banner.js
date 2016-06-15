@@ -211,30 +211,32 @@ define([
     };
 
     var initialise = function () {
-        getInitialState().then(function (initialState) {
-            var store = createStore(reducer, initialState);
+        if (detect.isBreakpoint({ min: 'desktop' })) {
+            getInitialState().then(function (initialState) {
+                var store = createStore(reducer, initialState);
 
-            setupDispatchers(store.dispatch);
+                setupDispatchers(store.dispatch);
 
-            var elements = {
-                $document: $(document.body),
-                $adBanner: $adBanner,
-                $adBannerInner: $adBannerInner,
-                $header: $header,
-                window: window
-            };
-            var update = function () {
-                return fastdom.write(function () {
-                    render(elements, store.getState());
+                var elements = {
+                    $document: $(document.body),
+                    $adBanner: $adBanner,
+                    $adBannerInner: $adBannerInner,
+                    $header: $header,
+                    window: window
+                };
+                var update = function () {
+                    return fastdom.write(function () {
+                        render(elements, store.getState());
+                    });
+                };
+                // Initial update
+                // Ensure we only start listening after the first update
+                update().then(function () {
+                    // Update when actions occur
+                    store.subscribe(update);
                 });
-            };
-            // Initial update
-            // Ensure we only start listening after the first update
-            update().then(function () {
-                // Update when actions occur
-                store.subscribe(update);
             });
-        });
+        }
     };
 
     return {
