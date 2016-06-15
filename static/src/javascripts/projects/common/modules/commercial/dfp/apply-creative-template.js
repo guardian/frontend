@@ -44,7 +44,7 @@ define([
         return new Promise(function (resolve, reject) {
             // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
             // We need to be sure only to select the ad content frame.
-            var contentFrame = $adSlot[0].querySelector('iframe:not[id*="__hidden__"]');
+            var contentFrame = $adSlot[0].querySelector('iframe:not([id*="__hidden__"])');
 
             if (!contentFrame) {
                 reject();
