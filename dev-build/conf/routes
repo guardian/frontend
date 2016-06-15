@@ -296,7 +296,7 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/advertiser-content/renault-car-of-the-future/:pageName                                                controllers.commercial.HostedContentController.renderHostedPage(pageName)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin
