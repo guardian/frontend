@@ -1,23 +1,23 @@
-@()(implicit request: RequestHeader)
+@(surveyPage: Page)(implicit request: RequestHeader)
 
-@import staticpages.StaticPages.simpleSurveyStaticPage
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import model.Page
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
     <head>
         <meta charset="utf-8" />
-        <title>@views.support.Title(simpleSurveyStaticPage)</title>
+        <title>@views.support.Title(surveyPage)</title>
 
-        @fragments.metaData(simpleSurveyStaticPage)
+        @fragments.metaData(surveyPage)
 
         @* get the stylesheets downloading ASAP *@
         @fragments.stylesheets(None)
 
         @* polyfill, feature detect etc before we try and use the stylesheets *@
-        @fragments.inlineJSBlocking(simpleSurveyStaticPage)
+        @fragments.inlineJSBlocking(surveyPage)
 
         @* start trying to use the stylesheets *@
         <script>
@@ -29,7 +29,7 @@
     id="survey-laboratory"
     itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.header(simpleSurveyStaticPage)
+        @fragments.header(surveyPage)
 
         <div class="content">
 
@@ -47,7 +47,7 @@
 
         </div>
 
-        @fragments.footer(simpleSurveyStaticPage)
+        @fragments.footer(surveyPage)
 
         @fragments.inlineJSNonBlocking()
 
