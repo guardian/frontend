@@ -35,7 +35,10 @@ window.guardian = {
         }
     },
     css: {},
-    adBlockers: {}
+    adBlockers: {
+        active: undefined,
+        onDetect: []
+    }
 };
 
 // Omniture variables expected on the page
