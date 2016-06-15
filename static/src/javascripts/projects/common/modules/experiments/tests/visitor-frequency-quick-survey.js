@@ -23,7 +23,8 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.contentType == 'Article' && !checkCookieCriteria();
+            // only run on articles, for users that have not seen the survey before
+            return config.page.contentType == 'Article' && document.cookie.indexOf('GU_FI') == -1;
         };
 
         function renderQuickSurvey() {
@@ -94,14 +95,13 @@ define([
         }
 
         function checkPrivateBrowsingMode() {
-
             function addBrowserData(boolValue) {
                 var dataLinkName = 'private-browsing-' + boolValue;
                 var surveySelect = document.getElementById('impressions-survey__select');
                 surveySelect.setAttribute('data-link-name', dataLinkName);
             }
 
-            new Promise(function (resolve) {
+            var browserCheck = new Promise(function (resolve) {
                 var db;
                 var on = function () {
                     resolve(true);
@@ -111,7 +111,7 @@ define([
                 };
                 var tryLocalStorage = function () {
                     try {
-                        localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem("x"), off());
+                        localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem('x'), off());
                     } catch (e) {
                         on();
                     }
@@ -122,8 +122,8 @@ define([
                     webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
 
                 // Firefox
-                : "MozAppearance" in document.documentElement.style ?
-                    (db = indexedDB.open("test"), db.onerror = on, db.onsuccess = off)
+                : 'MozAppearance' in document.documentElement.style ?
+                    (db = indexedDB.open('test'), db.onerror = on, db.onsuccess = off)
 
                 // Safari
                 : /constructor/i.test(window.HTMLElement) ? tryLocalStorage()
@@ -133,10 +133,10 @@ define([
 
                 // Rest
                 : off();
-            }).then(function (success) {
+            });
+
+            browserCheck.then(function (success) {
                 addBrowserData(success);
-            }, function (failure) {
-                console.log('unable to determine browser mode');
             });
         }
 
@@ -146,21 +146,12 @@ define([
             return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
         }
 
-        function checkCookieCriteria() {
-            // if user has this cookie then do not show the survey again
-            // check if the user has a recent cookie from the Guardian?
-            var surveyCookieExists = document.cookie.indexOf('GU_FI') > -1;
-            var ageOfGuardianCookie = document.cookie.indexOf('s_fid');
-            return surveyCookieExists;
-        }
-
         function setCookieForSurvey() {
             // give user a cookie to say that they have seen the survey
             // alternatively, only set the cookie on click or interaction (show until answered)?
             window.onscroll = debounce(function () {
                 if (checkVisible(document.getElementById('surveyTextbox'))) {
                     document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
-                    console.log("COOKIE");
                 }
             }, 100);
         }
@@ -169,10 +160,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    console.log(checkCookieCriteria());
-                    console.log("starting");
                     renderQuickSurvey();
-                    console.log("rendering");
                     setCookieForSurvey();
                     handleSurveyResponse('fi-survey__button');
                     checkPrivateBrowsingMode();
