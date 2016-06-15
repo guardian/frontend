@@ -367,6 +367,12 @@ $renaultLight: #fff9e9;
     }
 }
 
+.vjs-ended + .hosted-fading {
+    .hosted__meta {
+        width: 60%;
+    }
+}
+
 .hosted__video .vjs-fullscreen-clickbox {
     display: block;
 }
@@ -854,6 +860,7 @@ $renaultLight: #fff9e9;
 
 .hosted-next-autoplay {
     @include f-textSans;
+    @include hosted-fade-out;
     position: absolute;
     bottom: 12px;
     right: 12px;
@@ -897,5 +904,12 @@ $renaultLight: #fff9e9;
         background-color: $renaultColor;
         font-weight: bold;
         line-height: 20px;
+        text-align: center;
+    }
+}
+
+.vjs-ended ~ .hosted-next-autoplay {
+    @include mq(desktop) {
+        @include hosted-fade-in;
     }
 }

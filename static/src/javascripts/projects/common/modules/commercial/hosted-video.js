@@ -20,6 +20,7 @@ define([
     loadingTmpl
 ) {
     var player;
+    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -42,6 +43,17 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
+    function nextVideoTimer(duration, $timer, nextVideoLink) {
+        return setInterval(function () {
+            duration = parseInt(duration % 60, 10); //make sure we have seconds
+            if (duration === 0) {
+                window.location = nextVideoLink;
+            }
+            $timer.text(duration + 's');
+            duration = duration - 1;
+        }, 1000);
+    }
+
     function init() {
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
@@ -55,13 +67,12 @@ define([
                 player.guMediaType = 'video';
                 videojs.plugin('fullscreener', fullscreener);
 
-                // unglitching the volume on first load
-
                 player.ready(function () {
                     var vol;
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
 
+                    // unglitching the volume on first load
                     vol = player.volume();
                     if (vol) {
                         player.volume(0);
@@ -80,9 +91,20 @@ define([
                     });
 
                     player.one('ended', function() {
-                        console.log('ended');
+                        var $timer = $('.js-autoplay-timer');
+                        var time = 10; //duration in seconds
+                        var nextVideoPage;
+
+                        if ($timer.length) {
+                            nextVideoPage = $timer.data('next-page');
+                            nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                        }
                     });
 
+                    bean.on($('.vjs-fullscreen-clickbox')[0], 'click', function() {
+                        console.log(nextVideoInterval);
+                        clearInterval(nextVideoInterval);
+                    });
                 });
             });
         });
