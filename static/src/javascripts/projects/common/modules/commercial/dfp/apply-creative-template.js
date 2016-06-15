@@ -42,13 +42,9 @@ define([
 
     function getAdvertIframe($adSlot) {
         return new Promise(function (resolve, reject) {
-            var iframes = qwery('iframe', $adSlot);
-            var nonEmptyFrames = iframes.filter(function (iframe) {
-                // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
-                // These never reach 'complete' state in IE, so we filter them.
-                return iframe.id.match('__hidden__') === null;
-            });
-            var contentFrame = nonEmptyFrames[0];
+            // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
+            // We need to be sure only to select the ad content frame.
+            var contentFrame = $adSlot[0].querySelector('iframe:not[id*="__hidden__"]');
 
             if (!contentFrame) {
                 reject();
