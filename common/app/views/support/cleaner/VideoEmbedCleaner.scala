@@ -40,6 +40,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document.getElementsByClass("element-video").foreach { figure: Element =>
       val canonicalUrl = figure.attr("data-canonical-url")
+      figure.attr("data-component", "video-inbody-embed")
       figure.getElementsByClass("gu-video").foreach { element: Element =>
         element
           .removeClass("gu-video")
