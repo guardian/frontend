@@ -12,7 +12,7 @@
         .hostedbadge__logo {
             @include mq($until: tablet) {
                 // use fading one
-                display:none;
+                display: none;
             }
         }
     }
