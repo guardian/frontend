@@ -79,6 +79,10 @@ define([
                         events.bindContentEvents(player);
                     });
 
+                    player.one('ended', function() {
+                        console.log('ended');
+                    });
+
                 });
             });
         });
