@@ -126,17 +126,20 @@
 .content__labels {
     box-sizing: border-box;
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted $neutral-5;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+}
+
+.content__labels--not-immersive {
+    border-bottom: 1px dotted $neutral-5;
 
     @include mq(leftCol) {
-        border: 0;
-        margin-left: -($left-column + $gs-gutter);
-        margin-bottom: $gs-baseline;
+        border-bottom: 0;
         width: $left-column;
         float: left;
+        margin-left: -($left-column + $gs-gutter);
+        margin-bottom: $gs-baseline;
     }
 
     @include mq(wide) {
@@ -162,6 +165,10 @@
     }
 }
 
+.content__section-label--gallery {
+    margin-right: $gs-gutter / 4;
+}
+
 .content__series-label {
     @include fs-headline(2);
     float: left;
@@ -171,6 +178,10 @@
         float: none;
     }
 
+}
+
+.content__series-label--immersive-article {
+    font-weight: bold;
 }
 
 .content__series-label__link {

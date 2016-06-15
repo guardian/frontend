@@ -43,7 +43,7 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, config, detect, commercialFeatures;
+            dfp, config, detect, commercialFeatures, closeDisabledSlots;
 
         beforeEach(function (done) {
 
@@ -56,13 +56,15 @@ define([
                 'common/utils/config',
                 'common/modules/commercial/dfp/ophan-tracking',
                 'common/modules/commercial/commercial-features',
-                'common/utils/detect'
+                'common/utils/detect',
+                'common/modules/commercial/close-disabled-slots'
             ], function () {
                 dfp = arguments[0];
                 config = arguments[1];
                 var ophanTracking = arguments[2];
                 commercialFeatures = arguments[3];
                 detect = arguments[4];
+                closeDisabledSlots = arguments[5];
 
                 config.switches = {
                     commercialComponents: true,
@@ -167,15 +169,18 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
-                var slots = dfp.getAdverts();
-                expect(Object.keys(slots).length).toBe(4);
-                for (var slotId in slots) {
-                    expect(slotId).not.toBe('dfp-ad-html-slot');
-                }
-                done();
-            });
+            closeDisabledSlots.init()
+                .then(dfp.init)
+                .then(dfp.loadAds)
+                .then(function () {
+                    window.googletag.cmd.forEach(function (func) { func(); });
+                    var slots = dfp.getAdverts();
+                    expect(Object.keys(slots).length).toBe(4);
+                    for (var slotId in slots) {
+                        expect(slotId).not.toBe('dfp-ad-html-slot');
+                    }
+                    done();
+                });
             window.googletag.cmd.forEach(function (func) { func(); });
         });
 

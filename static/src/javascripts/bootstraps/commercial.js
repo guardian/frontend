@@ -7,6 +7,7 @@ define([
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
+    'common/modules/commercial/close-disabled-slots',
     'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
@@ -24,6 +25,7 @@ define([
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
+    closeDisabledSlots,
     dfp,
     sponsorships,
     frontCommercialComponents,
@@ -38,7 +40,8 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init]
+        ['cm-frontCommercialComponents', frontCommercialComponents.init],
+        ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {

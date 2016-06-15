@@ -3,7 +3,7 @@
 @import conf.switches.Switches.staticBadgesSwitch
 @import views.support.TrailCssClasses.toneClass
 
-<header class="content__head is-fixed-height tonal__head tonal__head--@toneClass(gallery.item)">
+<header class="content__head tonal__head tonal__head--@toneClass(gallery.item)">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
@@ -16,7 +16,7 @@
         @fragments.contentMeta(gallery.item, gallery)
 
         @if(gallery.item.fields.standfirst.isDefined) {
-            <div class="content__wrapper--standfirst tonal__standfirst">
+            <div class="tonal__standfirst">
                 @fragments.standfirst(gallery.item)
             </div>
         }

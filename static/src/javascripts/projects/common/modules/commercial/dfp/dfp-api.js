@@ -16,6 +16,7 @@ define([
     'common/utils/sha1',
     'common/utils/url',
     'common/utils/user-timing',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -46,6 +47,7 @@ define([
     sha1,
     urlUtils,
     userTiming,
+    adSizes,
     stickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -440,41 +442,40 @@ define([
      * PARSE RETURNED ADVERTS
      */
 
-    var callbacks = {
-        '0,0': isFluid250('ad-slot--top-banner-ad'),
-        '300,251': function (_, advert) {
-            stickyMpu(bonzo(advert.node));
-        },
-        '300,250': function (_, advert) {
-            if (advert.node.classList.contains('ad-slot--right')) {
-                var mobileAdSizes = advert.sizes('data-mobile');
-                if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
-                    stickyMpu(bonzo(advert.node));
-                }
-            }
-        },
-        '1,1': function (event, advert) {
-            if (!event.slot.getOutOfPage()) {
-                advert.node.classList.add('u-h');
-                var parent = advert.node.parentNode;
-                // if in a slice, add the 'no mpu' class
-                if (parent.classList.contains('js-fc-slice-mpu-candidate')) {
-                    parent.classList.add('fc-slice__item--no-mpu');
-                }
-            }
-        },
-        '300,1050': function () {
-            // remove geo most popular
-            geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                fastdom.write(function () {
-                    bonzo(geoMostPopular.elem).remove();
-                });
-            });
-        },
-        '88,70': isFluid250('ad-slot--top-banner-ad'),
-        '88,71': isFluid('ad-slot--mobile'),
-        '88,88': isFluid250('ad-slot--commercial-component')
+    var callbacks = {};
+    callbacks[adSizes.fluid] = isFluid250('ad-slot--top-banner-ad');
+    callbacks[adSizes.stickyMpu] = function (_, advert) {
+        stickyMpu(bonzo(advert.node));
     };
+    callbacks[adSizes.mpu] = function (_, advert) {
+        if (advert.node.classList.contains('ad-slot--right')) {
+            var mobileAdSizes = advert.sizes('data-mobile');
+            if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
+                stickyMpu(bonzo(advert.node));
+            }
+        }
+    };
+    callbacks[adSizes.outOfPage] = function (event, advert) {
+        if (!event.slot.getOutOfPage()) {
+            advert.node.classList.add('u-h');
+            var parent = advert.node.parentNode;
+            // if in a slice, add the 'no mpu' class
+            if (parent.classList.contains('js-fc-slice-mpu-candidate')) {
+                parent.classList.add('fc-slice__item--no-mpu');
+            }
+        }
+    };
+    callbacks[adSizes.portrait] = function () {
+        // remove geo most popular
+        geoMostPopular.whenRendered.then(function (geoMostPopular) {
+            fastdom.write(function () {
+                bonzo(geoMostPopular.elem).remove();
+            });
+        });
+    };
+    callbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
+    callbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
+    callbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');
 
     function isFluid250(className) {
         return function (_, advert) {

@@ -2,6 +2,7 @@ define([
     'common/utils/fastdom-promise',
     'Promise',
     'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',
     'common/utils/mediator',
@@ -12,6 +13,7 @@ define([
     fastdom,
     Promise,
     dfp,
+    adSizes,
     $,
     createStore,
     mediator,
@@ -72,10 +74,10 @@ define([
         var $iframe = getAdIframe();
         var slotWidth = $iframe.attr('width');
         var slotHeight = $iframe.attr('height');
-        var slotSize = [slotWidth, slotHeight].join(',');
+        var slotSize = slotWidth + ',' + slotHeight;
         // iframe may not have been injected at this point
-        var isFluid250 = slotSize === '88,70';
-        var isFabricV1 = slotSize === '88,71';
+        var isFluid250 = adSizes.fluid250.toString() === slotSize;
+        var isFabricV1 = adSizes.fabric.toString() === slotSize;
         var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
         // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
         // injected asynchronously, so we can't be sure when they will be in the dom
@@ -209,30 +211,32 @@ define([
     };
 
     var initialise = function () {
-        getInitialState().then(function (initialState) {
-            var store = createStore(reducer, initialState);
+        if (detect.isBreakpoint({ min: 'desktop' })) {
+            getInitialState().then(function (initialState) {
+                var store = createStore(reducer, initialState);
 
-            setupDispatchers(store.dispatch);
+                setupDispatchers(store.dispatch);
 
-            var elements = {
-                $document: $(document.body),
-                $adBanner: $adBanner,
-                $adBannerInner: $adBannerInner,
-                $header: $header,
-                window: window
-            };
-            var update = function () {
-                return fastdom.write(function () {
-                    render(elements, store.getState());
+                var elements = {
+                    $document: $(document.body),
+                    $adBanner: $adBanner,
+                    $adBannerInner: $adBannerInner,
+                    $header: $header,
+                    window: window
+                };
+                var update = function () {
+                    return fastdom.write(function () {
+                        render(elements, store.getState());
+                    });
+                };
+                // Initial update
+                // Ensure we only start listening after the first update
+                update().then(function () {
+                    // Update when actions occur
+                    store.subscribe(update);
                 });
-            };
-            // Initial update
-            // Ensure we only start listening after the first update
-            update().then(function () {
-                // Update when actions occur
-                store.subscribe(update);
             });
-        });
+        }
     };
 
     return {
