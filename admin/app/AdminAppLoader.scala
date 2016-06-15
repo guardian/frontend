@@ -33,8 +33,9 @@ trait AppComponents extends BuiltInComponents with NingWSComponents {
   lazy val appIdentity = ApplicationIdentity("frontend-admin")
   lazy val appMetrics = ApplicationMetrics()
   implicit lazy val executionContext: ExecutionContext = actorSystem.dispatcher
-  // this is a workaround to make wsapi available to the injector
-  override lazy val injector: Injector = new SimpleInjector(NewInstanceInjector) + router + crypto + httpConfiguration + wsApi
+  // this is a workaround to make wsapi and the actorsystem available to the injector.
+  // I'm forced to do that as we still use Ws.url and Akka.system(app) *everywhere*, and both directly get the reference from the injector
+  override lazy val injector: Injector = new SimpleInjector(NewInstanceInjector) + router + crypto + httpConfiguration + wsApi + actorSystem
 }
 
 trait Controllers {
