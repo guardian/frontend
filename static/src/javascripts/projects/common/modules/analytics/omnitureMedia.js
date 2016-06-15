@@ -40,11 +40,14 @@ define([
                 'prop43',   // media type
                 'prop44',   // page id
                 'eVar44',   // page id
-                'prop71',   // previous site section
                 'eVar74',   // ad or content
                 'eVar61',   // restricted
                 'prop39'    // media id
             ];
+
+        if (config.switches.hostedContentTracking && config.page.toneIds == 'tone/hosted-content') {
+            trackingVars.push('prop71');    // previous site section
+        }
 
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
@@ -62,7 +65,7 @@ define([
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
             s.eVar44 = s.prop44 = pageId;
             s.prop39 = mediaId;
-            
+
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
