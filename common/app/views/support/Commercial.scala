@@ -4,7 +4,7 @@ import common.Edition
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
-import conf.switches.Switches._
+import conf.switches.Switches.{FixedTechTopSlot, FluidAdverts, containerBrandingFromCapi, WimbledonTopAd}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag}
@@ -37,9 +37,12 @@ object Commercial {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = if (FluidAdverts.isSwitchedOn) Some("fluid") else None
       val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
+      val wimbledonAdvertTopTablet = if (WimbledonTopAd.isSwitchedOn) Some("720,320") else None
+      val wimbledonAdvertTopDesktop = if (WimbledonTopAd.isSwitchedOn) Some("970,375") else None
       Map(
         "mobile" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250")  ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "tablet" -> (Seq("1,1", "88,70") ++ wimbledonAdvertTopTablet ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ wimbledonAdvertTopDesktop)
       )
     }
 
@@ -91,11 +94,11 @@ object Commercial {
         def isPaidBranding(branding: Option[Branding]): Boolean =
           branding.exists(_.sponsorshipType == PaidContent)
 
-        def isPaid(card: CardContent): Boolean = if (staticBadgesSwitch.isSwitchedOn) {
+        def isPaid(card: CardContent): Boolean = if (containerBrandingFromCapi.isSwitchedOn) {
           isPaidBranding(card.branding)
         } else false
 
-        val isPaidContainer = if (staticBadgesSwitch.isSwitchedOn) {
+        val isPaidContainer = if (containerBrandingFromCapi.isSwitchedOn) {
           isPaidBranding(containerModel.branding)
         } else {
           isPaidBrandingAttributes(containerModel.brandingAttributes)
@@ -110,8 +113,10 @@ object Commercial {
         isPaidContainer || isAllPaidContent
       }
 
-      !isPaidFront &&
-        (container.commercialOptions.isPaidContainer || optContainerModel.exists(isPaid))
+      !isPaidFront && (
+        (containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer)
+          || optContainerModel.exists(isPaid)
+        )
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {

@@ -39,7 +39,7 @@ define([
         ['cm-frontCommercialComponents', frontCommercialComponents.init]
     ];
 
-    if (!config.switches.staticBadges) {
+    if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
         modules.push(['cm-badges', badges.init]);
     }
 

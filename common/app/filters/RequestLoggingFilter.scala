@@ -15,13 +15,15 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
   case class RequestLogger(rh: RequestHeader)(implicit internalLogger: Logger, stopWatch: StopWatch) {
     private lazy val pseudoId = Random.nextInt(Integer.MAX_VALUE)
     private def customFieldsMarkers(): LogstashMarker = {
+      val headersFields = rh.headers.toMap.map {
+        case (headerName, headerValues) => (s"req.header.$headerName", headerValues.mkString(","))
+      }
       val fields = Map(
         "req.method" -> rh.method,
         "req.url" -> rh.uri,
         "req.id" -> pseudoId.toString,
         "req.latency_millis" -> stopWatch.elapsed
-      )
-      //TODO: add all/some request headers fields
+      ) ++ headersFields
       appendEntries(fields.asJava)
     }
 

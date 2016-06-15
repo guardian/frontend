@@ -1,16 +1,19 @@
 package dfp
 
 import common.dfp.{GuAdUnit, GuCreativeTemplate}
-import common.{LifecycleComponent, AkkaAsync, ExecutionContexts, Jobs}
+import common._
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
+class DfpDataCacheLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobScheduler: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
 
   appLifecycle.addStopHook { () => Future {
     jobs foreach { job =>
-      Jobs.deschedule(job.name)
+      jobScheduler.deschedule(job.name)
     }
   }}
 
@@ -98,13 +101,13 @@ class DfpDataCacheLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Exe
 
   override def start() = {
     jobs foreach { job =>
-      Jobs.deschedule(job.name)
-      Jobs.scheduleEveryNMinutes(job.name, job.interval) {
+      jobScheduler.deschedule(job.name)
+      jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {
         job.run().map(_ => ())
       }
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()

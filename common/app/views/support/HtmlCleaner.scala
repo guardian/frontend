@@ -209,7 +209,6 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
-        link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
       }
       if (amp && link.hasAttr("style")) {

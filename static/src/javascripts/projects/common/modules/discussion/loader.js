@@ -401,7 +401,7 @@ Loader.prototype.initPagination = function() {
     });
 };
 
-Loader.prototype.gotoComment = function(id) {
+Loader.prototype.gotoComment = function(id, fromRequest) {
     var comment = $('#comment-' + id, this.elem);
     var thisLoader = this;
 
@@ -421,9 +421,25 @@ Loader.prototype.gotoComment = function(id) {
             // If comments aren't hidden we can go straight to the comment
             thisLoader.setCommentHash(id);
         }
-    } else {
+    } else if (!fromRequest) {
         // If the comment isn't on the page, then we need to load the comment thread
         thisLoader.loadComments({comment: id});
+    } else {
+        // The comment didn't exist in the response
+
+        // Scroll to toolbar and show message
+        scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+        fastdom.write(function(){
+            $('.js-discussion-main-comments').prepend('<div class="d-discussion__message d-discussion__message--error">The comment you requested could not be found.</div>');
+        });
+
+        // Capture in sentry
+        raven.captureMessage('Comment doesn\'t exist in response', {
+            level: 'error',
+            extra: {
+                commentId: id
+            }
+        });
     }
 };
 
@@ -457,7 +473,7 @@ Loader.prototype.loadComments = function(options) {
             this.removeState('pagesize-msg-show');
         }
         if (options.comment) {
-            this.gotoComment(options.comment);
+            this.gotoComment(options.comment, true);
         }
     }.bind(this));
 };
