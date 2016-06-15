@@ -4,37 +4,50 @@ import common.{ExecutionContexts, Logging, StopWatch}
 import play.api.mvc.{Filter, RequestHeader, Result}
 import scala.concurrent.Future
 import scala.util.{Failure, Random, Success}
-import net.logstash.logback.marker.LogstashMarker
-import net.logstash.logback.marker.Markers._
 import play.api.Logger
-
-import scala.collection.JavaConverters._
 
 class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
 
   case class RequestLogger(rh: RequestHeader)(implicit internalLogger: Logger, stopWatch: StopWatch) {
     private lazy val pseudoId = Random.nextInt(Integer.MAX_VALUE)
-    private def customFieldsMarkers(): LogstashMarker = {
-      val headersFields = rh.headers.toMap.map {
-        case (headerName, headerValues) => (s"req.header.$headerName", headerValues.mkString(","))
+    private val headersFields: List[LogField] = {
+      val whitelistedHeaderNames = Set(
+        "Host",
+        "From",
+        "Origin",
+        "Referer",
+        "User-Agent",
+        "Cache-Control",
+        "If-None-Match",
+        "ETag",
+        "Fastly-Client",
+        "Fastly-Client-IP",
+        "Fastly-FF",
+        "Fastly-SSL"
+      )
+      val allHeadersFields = rh.headers.toMap.map {
+        case (headerName, headerValues) => (headerName, headerValues.mkString(","))
       }
-      val fields = Map(
-        "req.method" -> rh.method,
-        "req.url" -> rh.uri,
-        "req.id" -> pseudoId.toString,
-        "req.latency_millis" -> stopWatch.elapsed
-      ) ++ headersFields
-      appendEntries(fields.asJava)
+      val whitelistedHeaders = allHeadersFields.filterKeys(whitelistedHeaderNames.contains(_))
+      val guardianSpecificHeaders = allHeadersFields.filterKeys(_.startsWith("X-GU-"))
+      (whitelistedHeaders ++ guardianSpecificHeaders).toList.map(t => LogFieldString(s"req.header.${t._1}", t._2))
     }
+    private val customFields: List[LogField] = List(
+      "req.method" -> rh.method,
+      "req.url" -> rh.uri,
+      "req.id" -> pseudoId.toString,
+      "req.latency_millis" -> stopWatch.elapsed
+    )
+    private val allFields = customFields ++ headersFields
 
     def info(message: String): Unit = {
-      internalLogger.logger.info(customFieldsMarkers, message)
+      logInfoWithCustomFields(message, allFields)
     }
     def warn(message: String, error: Throwable): Unit = {
-      internalLogger.logger.warn(customFieldsMarkers, message, error)
+      logWarningWithCustomFields(message, error, allFields)
     }
     def error(message: String, error: Throwable): Unit = {
-      internalLogger.logger.error(customFieldsMarkers, message, error)
+      logErrorWithCustomFields(message, error, allFields)
     }
   }
 
