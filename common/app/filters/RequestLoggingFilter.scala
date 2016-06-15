@@ -14,27 +14,26 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
 
   case class RequestLogger(rh: RequestHeader)(implicit internalLogger: Logger, stopWatch: StopWatch) {
     private lazy val pseudoId = Random.nextInt(Integer.MAX_VALUE)
-    private def customFieldsMarkers(): LogstashMarker = {
+    private lazy val customFields: Map[String, Any] = {
       val headersFields = rh.headers.toMap.map {
         case (headerName, headerValues) => (s"req.header.$headerName", headerValues.mkString(","))
       }
-      val fields = Map(
+      Map(
         "req.method" -> rh.method,
         "req.url" -> rh.uri,
         "req.id" -> pseudoId.toString,
         "req.latency_millis" -> stopWatch.elapsed
       ) ++ headersFields
-      appendEntries(fields.asJava)
     }
 
     def info(message: String): Unit = {
-      internalLogger.logger.info(customFieldsMarkers, message)
+      logInfoWithCustomFields(message, customFields)
     }
     def warn(message: String, error: Throwable): Unit = {
-      internalLogger.logger.warn(customFieldsMarkers, message, error)
+      logWarningWithCustomFields(message, error, customFields)
     }
     def error(message: String, error: Throwable): Unit = {
-      internalLogger.logger.error(customFieldsMarkers, message, error)
+      logErrorWithCustomFields(message, error, customFields)
     }
   }
 
