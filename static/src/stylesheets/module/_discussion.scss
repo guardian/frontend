@@ -114,7 +114,8 @@ $avatarPadding: $gs-gutter / 2;
     margin: 0;
 }
 
-.d-discussion__size-message {
+.d-discussion__size-message,
+.d-discussion__message {
     @include fs-textSans(2);
     margin-bottom: $gs-baseline * 2 / 3;
     border-top: 1px solid $neutral-4;
@@ -124,6 +125,10 @@ $avatarPadding: $gs-gutter / 2;
     & + .d-comment {
         border-top: 0;
     }
+}
+
+.d-discussion__message--error {
+    color: $status-negative;
 }
 
 .discussion__heading {

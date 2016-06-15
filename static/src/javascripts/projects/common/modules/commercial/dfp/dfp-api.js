@@ -18,6 +18,7 @@ define([
     'common/utils/sha1',
     'common/utils/url',
     'common/utils/user-timing',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
@@ -61,6 +62,7 @@ define([
     sha1,
     urlUtils,
     userTiming,
+    adSizes,
     stickyMpu,
     buildPageTargeting,
     commercialFeatures,
@@ -218,18 +220,6 @@ define([
         qwery(adSlotSelector)
             // convert them to bonzo objects
             .map(bonzo)
-            // remove the ones which should not be there
-            .filter(function ($adSlot) {
-                // filter out (and remove) hidden ads
-                if (shouldFilterAdSlot($adSlot)) {
-                    fastdom.write(function () {
-                        $adSlot.remove();
-                    });
-                    return false;
-                } else {
-                    return true;
-                }
-            })
             // convert to Advert ADT
             .map(function ($adSlot) {
                 return new Advert($adSlot);
@@ -238,18 +228,6 @@ define([
             .forEach(function (advert) {
                 adverts[advert.adSlotId] = advert;
             });
-    }
-
-    function shouldFilterAdSlot($adSlot) {
-        return isVisuallyHidden() || isDisabledCommercialFeature();
-
-        function isVisuallyHidden() {
-            return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledCommercialFeature() {
-            return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
-        }
     }
 
     function setPublisherProvidedId() {
@@ -465,41 +443,40 @@ define([
      * PARSE RETURNED ADVERTS
      */
 
-    var callbacks = {
-        '0,0': isFluid250('ad-slot--top-banner-ad'),
-        '300,251': function (event, $adSlot) {
-            stickyMpu($adSlot);
-        },
-        '300,250': function (event, $adSlot) {
-            if ($adSlot.hasClass('ad-slot--right')) {
-                var mobileAdSizes = $adSlot.attr('data-mobile');
-                if (mobileAdSizes && mobileAdSizes.indexOf('300,251') > -1) {
-                    stickyMpu($adSlot);
-                }
-            }
-        },
-        '1,1': function (event, $adSlot) {
-            if (!event.slot.getOutOfPage()) {
-                $adSlot.addClass('u-h');
-                var $parent = $adSlot.parent();
-                // if in a slice, add the 'no mpu' class
-                if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
-                    $parent.addClass('fc-slice__item--no-mpu');
-                }
-            }
-        },
-        '300,1050': function () {
-            // remove geo most popular
-            geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                fastdom.write(function () {
-                    bonzo(geoMostPopular.elem).remove();
-                });
-            });
-        },
-        '88,70': isFluid250('ad-slot--top-banner-ad'),
-        '88,71': isFluid('ad-slot--mobile'),
-        '88,88': isFluid250('ad-slot--commercial-component')
+    var callbacks = {};
+    callbacks[adSizes.fluid] = isFluid250('ad-slot--top-banner-ad');
+    callbacks[adSizes.stickyMpu] = function (event, $adSlot) {
+        stickyMpu($adSlot);
     };
+    callbacks[adSizes.mpu] = function (event, $adSlot) {
+        if ($adSlot.hasClass('ad-slot--right')) {
+            var mobileAdSizes = $adSlot.attr('data-mobile');
+            if (mobileAdSizes && mobileAdSizes.indexOf(adSizes.stickyMpu) > -1) {
+                stickyMpu($adSlot);
+            }
+        }
+    };
+    callbacks[adSizes.outOfPage] = function (event, $adSlot) {
+        if (!event.slot.getOutOfPage()) {
+            $adSlot.addClass('u-h');
+            var $parent = $adSlot.parent();
+            // if in a slice, add the 'no mpu' class
+            if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
+                $parent.addClass('fc-slice__item--no-mpu');
+            }
+        }
+    };
+    callbacks[adSizes.portrait] = function () {
+        // remove geo most popular
+        geoMostPopular.whenRendered.then(function (geoMostPopular) {
+            fastdom.write(function () {
+                bonzo(geoMostPopular.elem).remove();
+            });
+        });
+    };
+    callbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
+    callbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
+    callbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');
 
     function isFluid250(className) {
         return function (_, $adSlot) {
