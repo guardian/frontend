@@ -74,22 +74,20 @@ define([
     }
 
     function renderCreativeTemplate($adSlot, iFrame) {
-        var breakoutScripts = qwery('.breakout__script', iFrame.contentDocument.body);
+        var creativeConfig = fetchCreativeConfig();
 
-        var jsonBlobs = breakoutScripts.filter(function (script) {
-            return script.getAttribute('type') === 'application/json';
-        });
-
-        if (jsonBlobs.length) {
-            var creativeJson = jsonBlobs[0].innerHTML;
-            var creativeConfig = JSON.parse(creativeJson);
-
+        if (creativeConfig) {
             return Promise.all([
                 renderCreative(creativeConfig),
-                hideIframe
+                hideIframe()
             ]);
         } else {
             return Promise.resolve();
+        }
+
+        function fetchCreativeConfig() {
+            var breakoutScript = iFrame.contentDocument.body.querySelector('.breakout__script[type="application/json"]');
+            return breakoutScript ? JSON.parse(breakoutScript.innerHTML) : null;
         }
 
         function renderCreative(config) {
