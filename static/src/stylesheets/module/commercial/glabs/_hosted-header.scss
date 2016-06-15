@@ -11,11 +11,6 @@
     @include mq(tablet) {
         height: 58px;
     }
-
-    .hostedbadge {
-        top: auto;
-        bottom: 0;
-    }
 }
 
 .hosted__headerwrap {
@@ -23,6 +18,7 @@
     text-align: right;
     height: 100%;
     position: relative;
+    display:flex;
 
     @include mq(desktop) {
         max-width: gs-span(12) + $gs-gutter * 2;
@@ -35,4 +31,12 @@
     @include mq(wide) {
         max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
     }
+
+    .hostedbadge {
+        align-self: flex-end;
+    }
+}
+
+.hosted-header__spacer {
+    flex :1;
 }

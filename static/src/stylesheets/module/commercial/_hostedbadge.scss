@@ -1,6 +1,6 @@
 .hostedbadge {
-    position: absolute;
-    left: $gs-gutter;
+§    position: relative;
+    margin-left: $gs-gutter;
     width: 80px;
     z-index: $zindex-content;
 
@@ -12,12 +12,7 @@
 
 .hostedbadge--shouldscale {
     @include mq(desktop) {
-        left: calc(50% - 490px + #{$gs-gutter});
         width: 132px;
-    }
-
-    @include mq(leftCol) {
-        left: calc(50% - 570px + #{$gs-gutter});
     }
 }
 

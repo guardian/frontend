@@ -1,26 +1,19 @@
 
 .hosted-video-page {
-    .hosted__headerwrap,
-    .hosted-fading {
-        // badge should sit nicely with the video width
-        .hostedbadge--shouldscale {
-            @include mq(desktop) {
-                left: calc(50% - 490px + #{$gs-gutter});
+    .hosted__headerwrap {
+        .hostedbadge {
+            @include mq(leftCol) {
+                margin-left: 100px;
             }
-
             @include mq(wide) {
-                left: calc(50% - 630px);
+                margin-left: 20px;
             }
         }
-    }
-
-    .hosted__label.paidfor-label {
-        @include mq(leftCol) {
-            margin-left: 250px;
-        }
-
-        @include mq(wide) {
-            margin-left: 180px;
+        .hostedbadge__logo {
+            @include mq($until: tablet) {
+                // use fading one
+                display:none;
+            }
         }
     }
 }
