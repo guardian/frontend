@@ -130,6 +130,13 @@
         }
     }
 }
+.top-banner-ad-container--wimbledon {
+    @include mq(desktop) {
+        > .ad-slot--top-banner-ad {
+            height: 375px;
+        }
+    }
+}
 
 .ad-slot--top-banner-ad {
     text-align: center;
