@@ -8,7 +8,14 @@
     left: 0;
 }
 
+.hosted-gallery__gallery-section {
+    position: relative;
+}
+
 .hosted-gallery__image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     &:first-child {
         opacity: 1;
@@ -28,4 +35,26 @@
 .hosted-gallery-page .hostedbadge__info {
     background: #dd0000;
     color: #ffffff;
+}
+
+.hosted-gallery-page--container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.hosted-gallery-page .hosted__side {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.hosted-gallery__gallery-section {
+    flex: 1
 }
