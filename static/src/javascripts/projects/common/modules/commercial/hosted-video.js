@@ -45,7 +45,6 @@ define([
 
     function nextVideoTimer(duration, $timer, nextVideoLink) {
         return setInterval(function () {
-            duration = parseInt(duration % 60, 10); //make sure we have seconds
             if (duration === 0) {
                 window.location = nextVideoLink;
             }
@@ -69,6 +68,7 @@ define([
 
                 player.ready(function () {
                     var vol;
+                    var duration = parseInt(this.duration(), 10);
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
 
@@ -90,20 +90,22 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    player.one('ended', function() {
-                        var $timer = $('.js-autoplay-timer');
-                        var time = 10; //duration in seconds
-                        var nextVideoPage;
+                    player.on('timeupdate', function() {
+                        var currentTime = parseInt(this.currentTime(), 10);
+                        var time = 10; //seconds before the end when to show the timer
 
-                        if ($timer.length) {
-                            nextVideoPage = $timer.data('next-page');
-                            nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                        if (duration - currentTime <= time) {
+                            player.off('timeupdate');
+                            var $hostedNext = $('.js-hosted-next-autoplay');
+                            var $timer = $('.js-autoplay-timer');
+                            var nextVideoPage;
+
+                            if ($timer.length) {
+                                nextVideoPage = $timer.data('next-page');
+                                //nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                                $hostedNext.addClass('js-autoplay-start');
+                            }
                         }
-                    });
-
-                    bean.on($('.vjs-fullscreen-clickbox')[0], 'click', function() {
-                        console.log(nextVideoInterval);
-                        clearInterval(nextVideoInterval);
                     });
                 });
             });

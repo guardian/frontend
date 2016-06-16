@@ -862,10 +862,13 @@ $renaultLight: #fff9e9;
     @include f-textSans;
     @include hosted-fade-out;
     position: absolute;
-    bottom: 12px;
-    right: 12px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
     height: 280px;
     width: 300px;
+    padding: 12px;
+    background-color: #333;
 
     .hosted-next-autoplay--subheader {
         color: #ffffff;
@@ -880,23 +883,24 @@ $renaultLight: #fff9e9;
     }
 
     .hosted-next-autoplay--poster {
-        width: 100%;
+        width: 300px;
         height: 170px;
         display: block;
-        position: absolute;
-        bottom: 0;
-        right: 0;
+        margin: 12px auto;
     }
 
     .hosted-next-autoplay--poster-img {
-        width: 100%;
-        height: 100%;
+        width: 300px;
+        height: 170px;
+        bottom: 12px;
+        left: 12px;
+        top: initial;
     }
 
     .hosted-next-autoplay--poster-timer {
         position: absolute;
-        bottom: 14px;
-        left: 14px;
+        bottom: 22px;
+        left: 22px;
         width: 22px;
         padding: 10px;
         color: #000000;
@@ -906,10 +910,10 @@ $renaultLight: #fff9e9;
         line-height: 20px;
         text-align: center;
     }
-}
 
-.vjs-ended ~ .hosted-next-autoplay {
-    @include mq(desktop) {
-        @include hosted-fade-in;
+    &.js-autoplay-start {
+        @include mq(desktop) {
+            @include hosted-fade-in;
+        }
     }
 }
