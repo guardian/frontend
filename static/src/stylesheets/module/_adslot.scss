@@ -131,7 +131,7 @@
     }
 }
 .top-banner-ad-container--wimbledon {
-    @include mq(desktop) {
+    @include mq(leftCol) {
         > .ad-slot--top-banner-ad {
             height: 375px;
         }
