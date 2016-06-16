@@ -41,7 +41,7 @@ class PanicSheddingFilter extends Filter with Logging {
     val surgeFactor = surgeFactorCounter.get.ratio
     lazy val loadAverage = ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
 
-    def logIt(message: Option[String]) = {
+    def logWithStats(message: Option[String]) = {
       val debugMessage = s"$requestsInProgress requests in progress, averageLatency = ${latency}ms, surgeFactor = $surgeFactor (range is -$RANGE,$RANGE, over $WORST_ALLOWABLE_SURGE is a spike), loadAverage = $loadAverage"
       logInfoWithCustomFields(
         message.map(message => s"$message $debugMessage").getOrElse(debugMessage),
@@ -54,7 +54,7 @@ class PanicSheddingFilter extends Filter with Logging {
     }
 
     if (Switches.PanicLoggingSwitch.isSwitchedOn) {
-      logIt(None)
+      logWithStats(None)
     }
 
     if (latency > NORMAL_LATENCY_LIMIT) {
@@ -65,27 +65,27 @@ class PanicSheddingFilter extends Filter with Logging {
     if (request.isHealthcheck) {
       true
     } else if (surgeFactor > WORST_ALLOWABLE_SURGE) {
-      logIt(Some("Request spike detected, won't serve this request."))
+      logWithStats(Some("Request spike detected, won't serve this request."))
       RequestMetrics.PanicRequestsSurgeMetric.increment()
       false
     } else if (latency <= NORMAL_LATENCY_LIMIT) {
       true
     } else if (latency > CRITICAL_LATENCY_LIMIT) {
       if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
-        logIt(Some(
+        logWithStats(Some(
           s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
              | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
              | """.stripMargin))
         true
       } else {
-        logIt(Some("Excessive previous latency detected, won't serve this request."))
+        logWithStats(Some("Excessive previous latency detected, won't serve this request."))
         false
       }
     } else {
       val openingRange = CRITICAL_LATENCY_LIMIT - NORMAL_LATENCY_LIMIT
       val msAwayFromFullyOff = CRITICAL_LATENCY_LIMIT - latency
       val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
-      logIt(Some(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests."))
+      logWithStats(Some(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests."))
       scala.util.Random.nextInt(100) < percentageOfRequestsToServe
     }
   }

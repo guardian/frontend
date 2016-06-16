@@ -101,7 +101,7 @@ trait PerformanceSwitches {
     "panic-shedding",
     "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
     owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 7, 27),
     exposeClientSide = false
   )
