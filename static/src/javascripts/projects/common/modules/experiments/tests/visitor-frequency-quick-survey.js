@@ -3,13 +3,15 @@ define([
     'fastdom',
     'Promise',
     'lodash/functions/debounce',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/private-browsing'
 ], function (
     bean,
     fastdom,
     Promise,
     debounce,
-    config
+    config,
+    privateBrowsing
 ) {
     return function () {
         this.id = 'VisitorFrequencyQuickSurvey';
@@ -96,49 +98,11 @@ define([
             });
         }
 
-        function checkPrivateBrowsingMode() {
-            function addBrowserData(boolValue) {
-                var dataLinkName = 'private-browsing-' + boolValue;
+        function checkBrowsingMode() {
+            privateBrowsing.then(function (success) {
+                var dataLinkName = 'private-browsing-' + success;
                 var surveySelect = document.getElementById('impressions-survey__select');
                 surveySelect.setAttribute('data-link-name', dataLinkName);
-            }
-
-            var browserCheck = new Promise(function (resolve) {
-                var db;
-                var on = function () {
-                    resolve(true);
-                };
-                var off = function () {
-                     resolve(false);
-                };
-                var tryLocalStorage = function () {
-                    try {
-                        localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem('x'), off());
-                    } catch (e) {
-                        on();
-                    }
-                };
-
-                // Blink
-                window.webkitRequestFileSystem ?
-                    window.webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
-
-                // Firefox
-                : 'MozAppearance' in document.documentElement.style ?
-                    (db = indexedDB.open('test'), db.onerror = on, db.onsuccess = off)
-
-                // Safari
-                : /constructor/i.test(window.HTMLElement) ? tryLocalStorage()
-
-                // IE10+ and edge
-                : !window.indexedDB && (window.PointerEvent || window.MSPointerEvent) ? on()
-
-                // Rest
-                : off();
-            });
-
-            browserCheck.then(function (success) {
-                addBrowserData(success);
             });
         }
 
@@ -165,7 +129,7 @@ define([
                     renderQuickSurvey();
                     setCookieForSurvey();
                     handleSurveyResponse('fi-survey__button');
-                    checkPrivateBrowsingMode();
+                    checkBrowsingMode();
                 }
             }
         ];
