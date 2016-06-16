@@ -18,7 +18,7 @@ define([
     return function () {
         this.id = 'VisitorFrequencyQuickSurvey';
         this.start = '2016-06-13';
-        this.expiry = '2016-06-18';
+        this.expiry = '2016-06-21';
         this.author = 'Kate Whalen';
         this.description = 'Add a single question survey to the submeta section of article pages';
         this.audience = 1;
@@ -29,16 +29,17 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            // only run on articles, for users that have not seen the survey before
+            // only run on articles, for users that have not interacted with the survey before
             return config.page.contentType == 'Article' && document.cookie.indexOf('GU_FI') == -1;
         };
 
-        function renderQuickSurvey(elementID) {
+        function renderQuickSurvey() {
             // this cannot be wrapped in a fastdom function; the disable function breaks
-            var insertionPoint = document.getElementById(elementID);
+            var article = document.getElementsByClassName('content__article-body')[0];
+            var firstChild = article.firstChild;
             var survey = document.createElement('div');
             survey.innerHTML = quickSurvey;
-            insertionPoint.appendChild(survey);
+            article.insertBefore(survey, firstChild);
         }
 
         function disableRadioButtons(buttonClassName) {
@@ -62,12 +63,12 @@ define([
             });
         }
 
-        function handleSurveyResponse(buttonClassName) {
+        function handleSurveyResponse() {
             var surveyQuestion = document.getElementById('impressions-survey__select');
             bean.on(surveyQuestion, 'click', function () {
                 fastdom.write(function () {
                     document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
-                    disableRadioButtons(buttonClassName);
+                    disableRadioButtons('fi-survey__button');
                     surveyFadeOut();
                     thankyouFadeIn();
                 });
@@ -86,8 +87,8 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    renderQuickSurvey('img-1');
-                    handleSurveyResponse('fi-survey__button');
+                    renderQuickSurvey();
+                    handleSurveyResponse();
                     checkBrowsingMode();
                 }
             }

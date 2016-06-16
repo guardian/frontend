@@ -1,7 +1,7 @@
 define([
 ], function (
 ) {
-    return new Promise(function (resolve) {
+    browserCheck = new Promise(function (resolve) {
         var db;
         var on = function () {
             resolve(true);
@@ -34,4 +34,6 @@ define([
         // Rest
         : off();
     });
+
+    return browserCheck;
 });
