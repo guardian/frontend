@@ -20,3 +20,12 @@
     width: 100%;
     height: 100%;
 }
+
+.hosted-gallery-page + footer {
+    display: none;
+}
+
+.hosted-gallery-page .hostedbadge__info {
+    background: #dd0000;
+    color: #ffffff;
+}
