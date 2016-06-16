@@ -68,17 +68,17 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
 
-case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean, tone: Option[VideoTone] = None)
+case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean, tone: Option[VideoType] = None)
 object MediaInfo {
   implicit val jsonWrites: Writes[MediaInfo] = Json.writes[MediaInfo]
 }
 
-sealed trait VideoTone {
+sealed trait VideoType {
   val tag: String
   def name = tag.replace("tone/", "")
 }
-object VideoTone {
-  implicit val jsonWrites: Writes[VideoTone] = Writes(a => JsString(a.name))
+object VideoType {
+  implicit val jsonWrites: Writes[VideoType] = Writes(videoType => JsString(videoType.name))
 
   def fromString(s: String) =
     Seq(VideoExplainer, VideoBreaking, VideoDocumentary, VideoNewsFeature).find(_.tag == s)
@@ -87,7 +87,7 @@ object VideoTone {
     tags.map(tag => fromString(tag.id)).find(tone => tone.nonEmpty).flatten
 }
 
-case object VideoBreaking    extends VideoTone { val tag = "tone/news" }
-case object VideoExplainer   extends VideoTone { val tag = "tone/explainers" }
-case object VideoDocumentary extends VideoTone { val tag = "tone/documentaries" }
-case object VideoNewsFeature extends VideoTone { val tag = "tone/features" }
+case object VideoBreaking    extends VideoType { val tag = "tone/news" }
+case object VideoExplainer   extends VideoType { val tag = "tone/explainers" }
+case object VideoDocumentary extends VideoType { val tag = "tone/documentaries" }
+case object VideoNewsFeature extends VideoType { val tag = "tone/features" }
