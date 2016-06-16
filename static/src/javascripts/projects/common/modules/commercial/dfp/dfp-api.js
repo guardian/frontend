@@ -183,7 +183,7 @@ define([
             } else {
                 creativeIDs.push(event.creativeId);
                 renderAdvert(adSlotId, event)
-                .then(emitRenderEvents)
+                .then(emitRenderEvents);
             }
 
             function emitRenderEvents() {
