@@ -1,19 +1,18 @@
-@import common.commercial.HostedPage
-@(page: HostedPage)(content: Html)(implicit request: RequestHeader)
-
-@main(page, Some("commercial")) { } {
-    <div class="hosted__header">
+@(pageCssClass: String, logoUrl: String)
+    <div class="hosted__header @pageCssClass">
         <div class="hosted__headerwrap">
+            <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--renault">
+                <p class="hostedbadge__info">Advertiser content</p>
+                 <img class="hostedbadge__logo" src="@{logoUrl}"/>
+            </div>
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
                 <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
             </div>
+            <div class="hosted-header__spacer"></div>
             <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
                 <p class="hosted__glogotext">Hosted by</p>
                 @fragments.inlineSvg("guardian-logo-320", "logo")
             </a>
         </div>
     </div>
-    <div class="l-side-margins hosted__side">
-        @content
-    </div>
-}
+

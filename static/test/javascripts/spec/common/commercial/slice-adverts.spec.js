@@ -51,9 +51,7 @@ define([
                     isFront: true
                 };
 
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
+                detect.isBreakpoint = mockIsBreakpoint('desktop');
 
                 commercialFeatures.sliceAdverts = true;
 
@@ -81,6 +79,10 @@ define([
         });
 
         it('should remove the "fc-slice__item--no-mpu" class', function (done) {
+            detect.getBreakpoint = function () {
+                return 'desktop';
+            };
+
             sliceAdverts.init();
 
             fastdom.defer(function () {
@@ -92,7 +94,7 @@ define([
             });
         });
 
-        it('should have the correct ad names', function (done) {
+        it('should have the correct ad names', function (done){
             sliceAdverts.init();
 
             fastdom.defer(function () {
@@ -107,17 +109,15 @@ define([
         });
 
         it('should have the correct ad names on mobile', function (done) {
-            detect.getBreakpoint = function () {
-                return 'mobile';
-            };
+            detect.isBreakpoint = mockIsBreakpoint('mobile');
             sliceAdverts.init();
 
             fastdom.defer(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
-                expect($adSlots[0].data('name')).toEqual('inline1');
-                expect($adSlots[1].data('name')).toEqual('inline2');
-                expect($adSlots[2].data('name')).toEqual('inline3');
+                expect($adSlots[0].data('name')).toEqual('top-above-nav');
+                expect($adSlots[1].data('name')).toEqual('inline1');
+                expect($adSlots[2].data('name')).toEqual('inline2');
 
                 done();
             });
@@ -130,16 +130,33 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,71');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250|88,71');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
                     expect($adSlot.data('mobile')).toEqual('1,1|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250');
+                });
+
+                done();
+            });
+        });
+
+        it('should have the correct size mappings on mobile', function (done) {
+            detect.isBreakpoint = mockIsBreakpoint('mobile');
+            sliceAdverts.init();
+
+            fastdom.defer(function () {
+                $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,71');
                     expect($adSlot.data('tablet')).toEqual('1,1|300,250');
+                });
+                $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250');
                 });
 
                 done();
@@ -263,5 +280,4 @@ define([
             }
         }
     });
-
 });
