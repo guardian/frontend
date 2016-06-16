@@ -13,10 +13,15 @@
                         ></div>
                 }
                 <div class="hosted-gallery__scroll-container">
-                    <div class="hosted-gallery__image--placeholder"></div>
                     @for(i <- page.images.indices) {
                         <div class="hosted-gallery__image--placeholder"></div>
                     }
+                </div>
+                <div class="hosted-gallery__progress">
+                    <div class="hosted-gallery__progress--border">
+                        <div class="hosted-gallery__progress--border-1"></div>
+                        <div class="hosted-gallery__progress--border-2"></div>
+                    </div>
                 </div>
             </section>
             <section class="adverts adverts--legacy hosted__container hosted__container--content hosted-tone--dark">
