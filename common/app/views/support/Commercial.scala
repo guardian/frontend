@@ -4,7 +4,7 @@ import common.Edition
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
-import conf.switches.Switches.{FixedTechTopSlot, FluidAdverts, containerBrandingFromCapi, WimbledonTopAd}
+import conf.switches.Switches.{FixedTechTopSlot, containerBrandingFromCapi, WimbledonTopAd}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag}
@@ -35,7 +35,7 @@ object Commercial {
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
-      val fluidAdvertsTop = if (FluidAdverts.isSwitchedOn) Some("fluid") else None
+      val fluidAdvertsTop = Seq("fluid")
       val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
       val wimbledonAdvertTopTablet = if (WimbledonTopAd.isSwitchedOn) Some("720,320") else None
       val wimbledonAdvertTopDesktop = if (WimbledonTopAd.isSwitchedOn) Some("970,375") else None
