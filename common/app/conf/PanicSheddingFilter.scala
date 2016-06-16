@@ -41,8 +41,20 @@ class PanicSheddingFilter extends Filter with Logging {
     val surgeFactor = surgeFactorCounter.get.ratio
     lazy val loadAverage = ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
 
+    def logIt(message: Option[String]) = {
+      val debugMessage = s"$requestsInProgress requests in progress, averageLatency = ${latency}ms, surgeFactor = $surgeFactor (range is -$RANGE,$RANGE, over $WORST_ALLOWABLE_SURGE is a spike), loadAverage = $loadAverage"
+      logInfoWithCustomFields(
+        message.map(message => s"$message $debugMessage").getOrElse(debugMessage),
+        List(
+          "panic.averageLatency.millis" -> latency,
+          "panic.requestsInProgress" -> requestsInProgress,
+          "panic.surgeFactor" -> surgeFactor
+        )
+      )
+    }
+
     if (Switches.PanicLoggingSwitch.isSwitchedOn) {
-      log.info(s"$requestsInProgress requests in progress, averageLatency = ${latency}ms, surgeFactor (range is -$RANGE,$RANGE) = $surgeFactor, loadAverage = $loadAverage")
+      logIt(None)
     }
 
     if (latency > NORMAL_LATENCY_LIMIT) {
@@ -50,31 +62,30 @@ class PanicSheddingFilter extends Filter with Logging {
       RequestMetrics.HighLatencyMetric.increment()
     }
 
-    if (surgeFactor > WORST_ALLOWABLE_SURGE) {
-      log.warn(s"Request spike detected, won't serve this request.  surgeFactor = $surgeFactor (range is -$RANGE,$RANGE, over $WORST_ALLOWABLE_SURGE is a spike), loadAverage = $loadAverage")
+    if (request.isHealthcheck) {
+      true
+    } else if (surgeFactor > WORST_ALLOWABLE_SURGE) {
+      logIt(Some("Request spike detected, won't serve this request."))
       RequestMetrics.PanicRequestsSurgeMetric.increment()
       false
     } else if (latency <= NORMAL_LATENCY_LIMIT) {
       true
     } else if (latency > CRITICAL_LATENCY_LIMIT) {
       if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
-        log.warn(
+        logIt(Some(
           s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
              | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
-             | latency = ${latency}ms, loadAverage = $loadAverage""".stripMargin)
+             | """.stripMargin))
         true
       } else {
-        log.warn(s"Excessive previous latency detected, won't serve this request. latency = ${latency}ms, loadAverage = $loadAverage")
-        false // even health checks fail
+        logIt(Some("Excessive previous latency detected, won't serve this request."))
+        false
       }
-    } else if (request.isHealthcheck) {
-      log.warn(s"Moderately high latency, allowing health checks through. latency = ${latency}ms, loadAverage = $loadAverage")
-      true
     } else {
       val openingRange = CRITICAL_LATENCY_LIMIT - NORMAL_LATENCY_LIMIT
       val msAwayFromFullyOff = CRITICAL_LATENCY_LIMIT - latency
       val percentageOfRequestsToServe = msAwayFromFullyOff * 100 / openingRange
-      log.warn(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests.  latency = ${latency}ms, loadAverage = $loadAverage")
+      logIt(Some(s"Moderately high latency, only serving $percentageOfRequestsToServe% of requests."))
       scala.util.Random.nextInt(100) < percentageOfRequestsToServe
     }
   }
@@ -148,19 +159,20 @@ object RequestsInProgressMonitor extends ExecutionContexts {
 
 object LatencyMonitor extends ExecutionContexts {
 
-  case class AverageLatency(total: Long) {
-    def latency = total / LIMIT_SUM_DECAY
+  case class AverageLatency(total: Long, upperBound: Long) {
+    def latency = if (upperBound == 0) 0L else (total * SAMPLE_MULTIPLE) / upperBound
   }
 
-  val initialLatency = AverageLatency(0)
+  val initialLatency = AverageLatency(0, 0)
 
-  val DECAY_PERCENT = 99
-  val LIMIT_SUM_DECAY = 100 // 1 + 0.99 + (0.99**2) + (0.99**3) ...
+  val DECAY_PERCENT = 90 // this will cause it to converge at 10x latency as samples are added 1 + 0.9 + (0.9**2) + (0.9**3) ...
+  val SAMPLE_MULTIPLE = 10000 // just a big enough number so we don't get rounding errors
 
   def updateLatency(thisRequestLatencyMs: Long)(averageLatency: AverageLatency): AverageLatency = {
-    val AverageLatency(total) = averageLatency
+    val AverageLatency(total, upperBound) = averageLatency
     val newTotal = ((total * DECAY_PERCENT) / 100) + thisRequestLatencyMs
-    AverageLatency(newTotal)
+    val newUpperBound = ((upperBound * DECAY_PERCENT) / 100) + SAMPLE_MULTIPLE
+    AverageLatency(newTotal, newUpperBound)
   }
 
 }
