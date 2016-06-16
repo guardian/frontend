@@ -7,6 +7,7 @@ define([
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/dfp/apply-creative-template',
+    'common/modules/commercial/dfp/render-advert-label',
     'common/modules/onward/geo-most-popular'
 ], function (
     bonzo,
@@ -17,6 +18,7 @@ define([
     adSizes,
     stickyMpu,
     applyCreativeTemplate,
+    renderAdvertLabel,
     geoMostPopular
 ) {
     /**
@@ -27,7 +29,6 @@ define([
      * Guardian styles, for example, or behaviours like sticky-scrolling. This module helps 'finish' rendering any advert, and
      * decorating them with these behaviours.
      *
-     * This module is also responsible for adding advert labels.
      */
 
     var sizeCallbacks = {};
@@ -140,7 +141,7 @@ define([
 
         // Check if creative is a new gu style creative and place labels accordingly.
         return applyCreativeTemplate($adSlot).then(function () {
-            addLabel($adSlot);
+            renderAdvertLabel($adSlot);
 
             size = slotRenderEvent.size.join(',');
             // is there a callback for this size?
@@ -154,20 +155,6 @@ define([
                 });
             }
         }).catch(raven.captureException);
-    }
-
-    function addLabel($adSlot) {
-        fastdom.write(function () {
-            if (shouldRenderLabel($adSlot)) {
-                $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
-        });
-    }
-
-    function shouldRenderLabel($adSlot) {
-        return !$adSlot.hasClass('ad-slot--frame') &&
-            !$adSlot.hasClass('gu-style') &&
-            ($adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0);
     }
 
     return renderAdvert;
