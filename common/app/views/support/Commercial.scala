@@ -33,8 +33,8 @@ object Commercial {
       metaData.id == "uk/technology"
     }
 
-    private def isWimbledonEnabled(metaData: MetaData) = {
-      metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon"
+    private def isWimbledonEnabled(metaData: MetaData, edition: Edition) = {
+      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition.id == "UK"
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
@@ -46,7 +46,7 @@ object Commercial {
         "mobile" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
         "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
-      if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData)) {
+      if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) {
           topSlotAdSizes + wimbledonLeftCol
       } else {
           topSlotAdSizes
@@ -55,7 +55,7 @@ object Commercial {
 
     // The sizesOverride parameter is for testing only.
     def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
-      var wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData)) Seq("top-banner-ad-container--wimbledon") else Nil
+      var wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) Seq("top-banner-ad-container--wimbledon") else Nil
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
