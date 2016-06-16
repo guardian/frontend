@@ -26,10 +26,10 @@ define([
             var opacity = $images.length * (scrollTop/scrollHeight) + 1;
             fastdom.write(function () {
                 $images.each(function (image, index) {
-                    bonzo(image).css('opacity', opacity - index);
+                    bonzo(image).css('opacity', Math.min(Math.max(opacity - index, 0), 1));
                 });
             });
-        }));
+        }, 10));
 
     }
 
