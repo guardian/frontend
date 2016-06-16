@@ -451,8 +451,8 @@ define([
             if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
                 stickyMpu(bonzo(advert.node));
             }
-        } else if ($adSlot.hasClass('ad-slot--facebook')) {
-            $adSlot.addClass('ad-slot--fluid');
+        } else if (advert.node.classList.contains('ad-slot--facebook')) {
+            advert.node.classList.add('ad-slot--fluid');
         }
     };
     callbacks[adSizes.outOfPage] = function (event, advert) {
