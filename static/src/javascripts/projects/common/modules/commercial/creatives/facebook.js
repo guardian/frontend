@@ -28,7 +28,7 @@ define([
     }
 
     Facebook.prototype.create = function () {
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             window.fbAsyncInit || (window.fbAsyncInit = function() {
                 FB.Event.subscribe(
                     'ad.loaded',
@@ -52,7 +52,7 @@ define([
                             placementID: placementID,
                             errorMessage: errorMessage
                         }, false);
-                        resolve();
+                        reject();
                     }
                 );
             });
