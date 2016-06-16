@@ -46,7 +46,7 @@ define([
     'common/modules/ui/cookiesBanner',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
-    'common/modules/ui/ios-smart-banner',
+    'common/modules/ui/smart-banner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
@@ -73,6 +73,7 @@ define([
     url,
     robust,
     storage,
+    ab,
     Foresee,
     mediaListener,
     omniture,
@@ -103,7 +104,8 @@ define([
     Message,
     cookiesBanner,
     RelativeDates,
-    smartAppBanner,
+    customSmartAppBanner,
+    smartBanner,
     Tabs,
     Toggles,
     userPrefs,
@@ -393,9 +395,14 @@ define([
 
     return {
         init: function () {
-            var smartBanner = if (ab.isInVariant('SmartBanner', 'banner'))
-            forEach(robust.makeBlocks([
+            var appBanner = null;
+            if (ab.isInVariant('SmartBanner', 'smart-banner')) {
+                appBanner = smartBanner.init;
+            } else {
+                appBanner = customSmartAppBanner.init;
+            }
 
+            forEach(robust.makeBlocks([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
@@ -422,7 +429,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner.init],
+                ['c-smart-banner', appBanner],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
