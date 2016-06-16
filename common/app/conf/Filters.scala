@@ -76,11 +76,11 @@ object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   def common: List[EssentialFilter] = List(
+    new RequestLoggingFilter,
     new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new Gzipper,
     new BackendHeaderFilter,
-    new RequestLoggingFilter,
     new SurrogateKeyFilter,
     new AmpFilter
   )
