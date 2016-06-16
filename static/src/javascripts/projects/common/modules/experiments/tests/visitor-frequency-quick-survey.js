@@ -4,6 +4,8 @@ define([
     'Promise',
     'lodash/functions/debounce',
     'common/utils/config',
+    'common/utils/cookies',
+    'common/utils/storage',
     'common/utils/private-browsing',
     'text!common/views/experiments/quick-survey.html'
 ], function (
@@ -12,6 +14,8 @@ define([
     Promise,
     debounce,
     config,
+    cookies,
+    storage,
     privateBrowsing,
     quickSurvey
 ) {
@@ -67,12 +71,21 @@ define([
             var surveyQuestion = document.getElementById('impressions-survey__select');
             bean.on(surveyQuestion, 'click', function () {
                 fastdom.write(function () {
-                    document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
                     disableRadioButtons('fi-survey__button');
                     surveyFadeOut();
                     thankyouFadeIn();
                 });
             });
+        }
+
+        function checkCookies(cookieName) {
+            var surveyCookie = cookies.get(cookieName);
+            if (!(surveyCookie) && storage.local.isStorageAvailable()) {
+                var alreadyVisited = storage.local.get('gu.alreadyVisited');
+                if (!alreadyVisited || alreadyVisited < 3) {
+                    return true;
+                }
+            }
         }
 
         function checkBrowsingMode() {
@@ -90,6 +103,7 @@ define([
                     renderQuickSurvey();
                     handleSurveyResponse();
                     checkBrowsingMode();
+                    cookies.add('GU_FI', 1, 5);
                 }
             }
         ];
