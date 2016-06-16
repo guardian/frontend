@@ -335,7 +335,6 @@ define([
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(fakeEvent);
-                    window.googletag.pubads().listener(fakeEvent);
                     fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).length).toBe(1);
                         done();
