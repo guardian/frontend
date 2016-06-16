@@ -21,6 +21,10 @@ object SwitchGroup {
   val Commercial = SwitchGroup("Commercial")
   val CommercialFeeds = SwitchGroup("Commercial: Feeds",
                             Some("These switches enable the fetching and parsing of the commercial merchandising components."))
+  val CommercialLabs = SwitchGroup(
+    name = "Commercial: Labs",
+    description = Some("Features of, and experiments with, branded content.")
+  )
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
@@ -55,6 +59,7 @@ object Owner {
   def withGithub(githubAccount: String) = new Owner(None, Some(githubAccount), None)
   def withName(name: String) = new Owner(Some(name), None, None)
   def withEmail(email: String) = new Owner(None, None, Some(email))
+  def group(switchGroup: SwitchGroup): Seq[Owner] = Seq(withName(switchGroup.name))
 }
 
 case class Switch(
