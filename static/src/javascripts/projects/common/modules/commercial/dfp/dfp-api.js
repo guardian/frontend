@@ -450,6 +450,8 @@ define([
             if (mobileAdSizes && mobileAdSizes.indexOf(adSizes.stickyMpu) > -1) {
                 stickyMpu($adSlot);
             }
+        } else if ($adSlot.hasClass('ad-slot--facebook')) {
+            $adSlot.addClass('ad-slot--fluid');
         }
     };
     callbacks[adSizes.outOfPage] = function (event, $adSlot) {
@@ -575,6 +577,7 @@ define([
     function shouldRenderLabel($adSlot) {
         return !$adSlot.hasClass('ad-slot--frame') &&
             !$adSlot.hasClass('gu-style') &&
+            !$adSlot.hasClass('ad-slot--facebook') &&
             ($adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0);
     }
 
