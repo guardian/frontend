@@ -181,6 +181,7 @@ define([
                 reportEmptyResponse(adSlotId, event);
                 emitRenderEvents();
             } else {
+                creativeIDs.push(event.creativeId);
                 renderAdvert(adSlotId, event)
                 .then(emitRenderEvents)
             }

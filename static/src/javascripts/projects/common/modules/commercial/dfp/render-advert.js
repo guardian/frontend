@@ -119,7 +119,6 @@ define([
     }
 
     /**
-     *
      * @param adSlotId - DOM ID of the rendered slot
      * @param slotRenderEvent - GPT slotRenderEndedEvent
      * @returns {Promise} - resolves once all necessary rendering is queued up
