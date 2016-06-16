@@ -104,10 +104,6 @@
                                     <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
                                 }
                             }
-
-                            @if(galleryPage.showBadge && !page.item.commercial.isAdvertisementFeature) {
-                                @fragments.commercial.badge(page.item, page)
-                            }
                         }
                         case _ => {
                             @page.item match {
