@@ -1,5 +1,6 @@
 /* global FB */
 define([
+    'Promise',
     'fastdom',
     'common/utils/config',
     'common/views/svgs',
@@ -10,7 +11,7 @@ define([
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/facebook.html',
     'text!common/views/commercial/gustyle/label.html'
-], function(fastdom, config, svgs, template, loadScript, reportError, Toggles, addTrackingPixel, facebookStr, labelStr) {
+], function(Promise, fastdom, config, svgs, template, loadScript, reportError, Toggles, addTrackingPixel, facebookStr, labelStr) {
     var scriptId = 'facebook-jssdk';
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
     var adUnits = {
