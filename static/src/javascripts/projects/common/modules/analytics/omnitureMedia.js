@@ -13,6 +13,12 @@ define([
             return player.el().getAttribute(attributeName);
         }
 
+        function resetProp71Cookie() {
+            if (config.switches.hostedContentTracking && config.page.toneIds == 'tone/hosted-content') {
+                s.getPreviousValue(s.prop71, 's_prev_ch');
+            }
+        }
+
         var pageId = config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
@@ -58,6 +64,9 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
+             
+            resetProp71Cookie();
+
             omniture.populateEventProperties(eventName || event);
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
@@ -82,6 +91,9 @@ define([
         };
 
         this.omnitureInit = function () {
+
+            resetProp71Cookie();
+
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
