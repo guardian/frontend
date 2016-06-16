@@ -357,7 +357,7 @@ import collection.JavaConversions._
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90|88,71")
+        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90|88,71|fluid")
         adPlaceholder.getAttribute("data-desktop") should be("1,1|88,70|728,90|940,230|900,250|970,250|88,71|fluid")
 
         And("the placeholder has the correct class name")
