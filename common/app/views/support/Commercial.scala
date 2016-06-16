@@ -33,6 +33,10 @@ object Commercial {
       metaData.id == "uk/technology"
     }
 
+    private def isWimbledonEnabled(metaData: MetaData) = {
+      metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon"
+    }
+
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
@@ -48,13 +52,14 @@ object Commercial {
 
     // The sizesOverride parameter is for testing only.
     def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
+      var wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData)) Seq("top-banner-ad-container--wimbledon") else Nil
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
         "top-banner-ad-container--above-nav",
         "js-top-banner-above-nav",
         "top-banner-ad-container--reveal"
-      )
+      ) ++ wimbledonClasses
 
       classes mkString " "
     }
