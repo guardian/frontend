@@ -20,7 +20,6 @@ define([
     loadingTmpl
 ) {
     var player;
-    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -44,7 +43,7 @@ define([
     }
 
     function nextVideoTimer(duration, $timer, nextVideoLink) {
-        return setInterval(function () {
+        setInterval(function () {
             if (duration === 0) {
                 window.location = nextVideoLink;
             }
@@ -102,7 +101,7 @@ define([
 
                             if ($timer.length) {
                                 nextVideoPage = $timer.data('next-page');
-                                nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                                nextVideoTimer(time, $timer, nextVideoPage);
                                 $hostedNext.addClass('js-autoplay-start');
                             }
                         }
