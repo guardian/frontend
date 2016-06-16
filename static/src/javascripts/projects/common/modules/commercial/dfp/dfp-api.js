@@ -24,6 +24,7 @@ define([
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/apply-creative-template',
     'common/modules/commercial/dfp/PrebidService',
+    'common/modules/commercial/dfp/render-advert',
     'common/modules/commercial/dfp/track-ad-load',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
@@ -66,6 +67,7 @@ define([
     ophanTracking,
     applyCreativeTemplate,
     PrebidService,
+    renderAdvert,
     trackAdLoad,
     geoMostPopular,
     ab,
@@ -171,10 +173,22 @@ define([
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
             rendered = true;
             recordFirstAdRendered();
-            parseAd(event).then(function (adSlotId) {
+
+            var adSlotId = event.slot.getSlotElementId();
+
+            if (event.isEmpty) {
+                removeSlot(adSlotId);
+                reportEmptyResponse(adSlotId, event);
+                emitRenderEvents();
+            } else {
+                renderAdvert(adSlotId, event)
+                .then(emitRenderEvents)
+            }
+
+            function emitRenderEvents() {
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 allAdsRendered(adSlotId);
-            });
+            }
         }));
     }
 
@@ -439,121 +453,22 @@ define([
      * PARSE RETURNED ADVERTS
      */
 
-    var callbacks = {};
-    callbacks[adSizes.fluid] = isFluid250('ad-slot--top-banner-ad');
-    callbacks[adSizes.stickyMpu] = function (event, $adSlot) {
-        stickyMpu($adSlot);
-    };
-    callbacks[adSizes.mpu] = function (event, $adSlot) {
-        if ($adSlot.hasClass('ad-slot--right')) {
-            var mobileAdSizes = $adSlot.attr('data-mobile');
-            if (mobileAdSizes && mobileAdSizes.indexOf(adSizes.stickyMpu) > -1) {
-                stickyMpu($adSlot);
-            }
-        }
-    };
-    callbacks[adSizes.outOfPage] = function (event, $adSlot) {
-        if (!event.slot.getOutOfPage()) {
-            $adSlot.addClass('u-h');
-            var $parent = $adSlot.parent();
-            // if in a slice, add the 'no mpu' class
-            if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
-                $parent.addClass('fc-slice__item--no-mpu');
-            }
-        }
-    };
-    callbacks[adSizes.portrait] = function () {
-        // remove geo most popular
-        geoMostPopular.whenRendered.then(function (geoMostPopular) {
-            fastdom.write(function () {
-                bonzo(geoMostPopular.elem).remove();
-            });
-        });
-    };
-    callbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
-    callbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
-    callbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');
+    function reportEmptyResponse(adSlotId, event) {
+        // This empty slot could be caused by a targeting problem,
+        // let's report these and diagnose the problem in sentry.
+        // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
+        if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
+            var adUnitPath = event.slot.getAdUnitPath();
+            var adTargetingMap = event.slot.getTargetingMap();
+            var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
+            var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
 
-    function isFluid250(className) {
-        return function (_, $adSlot) {
-            if ($adSlot.hasClass(className)) {
-                fastdom.write(function () {
-                    $adSlot.addClass('ad-slot__fluid250');
-                });
-            }
-        };
-    }
-
-    function isFluid(className) {
-        return function (_, $adSlot) {
-            if ($adSlot.hasClass(className)) {
-                fastdom.write(function () {
-                    $adSlot.addClass('ad-slot--fluid');
-                });
-            }
-        };
-    }
-
-    function parseAd(event) {
-        var size;
-        var adSlotId = event.slot.getSlotElementId();
-        var $adSlot;
-        var $placeholder;
-        var $adSlotContent;
-
-        if (event.isEmpty) {
-            removeSlot(adSlotId);
-
-            // This empty slot could be caused by a targeting problem,
-            // let's report these and diagnose the problem in sentry.
-            // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
-            if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
-                var adUnitPath = event.slot.getAdUnitPath();
-                var adTargetingMap = event.slot.getTargetingMap();
-                var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
-                var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
-
-                reportError(new Error('dfp returned an empty ad response'), {
-                    feature: 'commercial',
-                    adUnit: adUnitPath,
-                    adSlot: adSlotId,
-                    adKeywords: adKeywords
-                }, false);
-            }
-
-            return Promise.resolve(adSlotId);
-        } else {
-            $adSlot = $('#' + adSlotId);
-
-            // Store ads IDs for technical feedback
-            creativeIDs.push(event.creativeId);
-
-            // remove any placeholder ad content
-            $placeholder = $('.ad-slot__content--placeholder', $adSlot);
-            $adSlotContent = $('div', $adSlot);
-            fastdom.write(function () {
-                $placeholder.remove();
-                $adSlotContent.addClass('ad-slot__content');
-            });
-
-            // Check if creative is a new gu style creative and place labels accordingly.
-            return applyCreativeTemplate($adSlot).then(function () {
-                addLabel($adSlot);
-
-                size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, $adSlot);
-                }
-
-                if ($adSlot.hasClass('ad-slot--container-inline') && $adSlot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $adSlot.parent().css('display', 'flex');
-                    });
-                }
-
-                return adSlotId;
-            }).catch(raven.captureException);
+            reportError(new Error('dfp returned an empty ad response'), {
+                feature: 'commercial',
+                adUnit: adUnitPath,
+                adSlot: adSlotId,
+                adKeywords: adKeywords
+            }, false);
         }
     }
 
@@ -562,20 +477,6 @@ define([
         fastdom.write(function () {
             $('#' + adSlotId).remove();
         });
-    }
-
-    function addLabel($adSlot) {
-        fastdom.write(function () {
-            if (shouldRenderLabel($adSlot)) {
-                $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
-        });
-    }
-
-    function shouldRenderLabel($adSlot) {
-        return !$adSlot.hasClass('ad-slot--frame') &&
-            !$adSlot.hasClass('gu-style') &&
-            ($adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0);
     }
 
     function allAdsRendered(adSlotId) {
