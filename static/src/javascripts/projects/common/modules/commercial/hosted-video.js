@@ -102,7 +102,7 @@ define([
 
                             if ($timer.length) {
                                 nextVideoPage = $timer.data('next-page');
-                                //nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                                nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
                                 $hostedNext.addClass('js-autoplay-start');
                             }
                         }
