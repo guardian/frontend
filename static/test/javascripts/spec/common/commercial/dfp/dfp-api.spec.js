@@ -51,6 +51,10 @@ define([
                 // No implementation
             });
 
+            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
             injector.require([
                 'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',
@@ -299,13 +303,8 @@ define([
         describe('labelling', function () {
             var slotId = 'dfp-ad-html-slot';
 
-            afterEach(function () {
-                dfp.checkForBreakout.restore();
-            });
-
             it('should be added', function (done) {
                 var $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -319,7 +318,6 @@ define([
 
             it('should not be added if data-label attribute is false', function (done) {
                 var $slot = $('#' + slotId).attr('data-label', false);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -334,7 +332,6 @@ define([
             it('should be added only once', function (done) {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(fakeEvent);
@@ -349,47 +346,12 @@ define([
 
             it('should not be added when ad is gu style type', function (done) {
                 var $slot = $('#dfp-ad-gu-style');
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(true));
                 dfp.init().then(dfp.loadAds).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     window.googletag.pubads().listener(makeFakeEvent('dfp-ad-gu-style'));
 
                     fastdom.defer(10, function () {
                         expect($('.ad-slot__label', $slot[0]).length).toBe(0);
-                        done();
-                    });
-                });
-                window.googletag.cmd.forEach(function (func) { func(); });
-            });
-        });
-
-        describe('breakout', function () {
-
-            var slotId = 'dfp-ad-html-slot',
-                createTestIframe = function (id, html) {
-                    var $frame = $.create('<iframe></iframe>')
-                        .attr({
-                            id: 'mock_frame',
-                            /*eslint-disable no-script-url*/
-                            src: 'javascript:"<html><body style="background:transparent"></body></html>"'
-                            /*eslint-enable no-script-url*/
-                        });
-                    $frame[0].onload = function () {
-                        this.contentDocument.body.innerHTML = html;
-                    };
-                    $frame.appendTo(qwery('#' + id)[0]);
-                };
-
-            it('should insert html', function (done) {
-                var html = '<div class="dfp-iframe-content">Some content</div>';
-                $('#' + slotId).attr('data-label', false);
-                createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
-                dfp.init().then(dfp.loadAds).then(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent(slotId));
-
-                    fastdom.defer(function () {
-                        expect($('iframe', '#' + slotId).css('display')).toBe('none');
                         done();
                     });
                 });

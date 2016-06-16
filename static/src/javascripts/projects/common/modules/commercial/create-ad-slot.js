@@ -45,7 +45,7 @@ define([
         },
         inline: {
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu)
+                mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
             }
         },
         mostpop: {
@@ -92,12 +92,12 @@ define([
                     adSizes.outOfPage,
                     adSizes.mpu,
                     adSizes.fabric,
-                    config.switches.fluidAdverts ? adSizes.fluid : null
+                    adSizes.fluid
                 ),
                 tablet: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
-                    config.switches.fluidAdverts ? adSizes.fluid : null
+                    adSizes.fluid
                 ),
                 desktop: compile(
                     adSizes.outOfPage,
@@ -106,7 +106,8 @@ define([
                     adSizes.cascase,
                     adSizes.superHeader,
                     adSizes.billboard,
-                    adSizes.fabric
+                    adSizes.fabric,
+                    adSizes.fluid
                 )
             }
         }

@@ -2,7 +2,6 @@
 // can trigger adblocker rules, and make the module fail to load in dev.
 
 define([
-    'bean',
     'bonzo',
     'qwery',
     'Promise',
@@ -21,7 +20,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
-    'common/modules/commercial/dfp/breakout-iframe',
+    'common/modules/commercial/dfp/apply-creative-template',
     'common/modules/commercial/dfp/PrebidService',
     'common/modules/onward/geo-most-popular',
     'common/modules/analytics/beacon',
@@ -33,7 +32,6 @@ define([
     'lodash/arrays/uniq',
     'lodash/arrays/flatten'
 ], function (
-    bean,
     bonzo,
     qwery,
     Promise,
@@ -52,7 +50,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     ophanTracking,
-    breakoutIFrame,
+    applyCreativeTemplate,
     PrebidService,
     geoMostPopular,
     beacon,
@@ -453,6 +451,8 @@ define([
             if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
                 stickyMpu(bonzo(advert.node));
             }
+        } else if ($adSlot.hasClass('ad-slot--facebook')) {
+            $adSlot.addClass('ad-slot--fluid');
         }
     };
     callbacks[adSizes.outOfPage] = function (event, advert) {
@@ -533,8 +533,7 @@ define([
             });
 
             // Check if creative is a new gu style creative and place labels accordingly.
-            // Use public method so that tests can stub it out.
-            return dfp.checkForBreakout(advert.node).then(function (isRendered) {
+            return applyCreativeTemplate(advert.node).then(function (isRendered) {
                 addLabel(advert.node);
 
                 var size = event.size.join(',');
@@ -548,58 +547,18 @@ define([
         }
     }
 
-    /**
-     * Checks the contents of the ad for special breakout classes.
-     *
-     * If one of these classes is detected, then the contents of that iframe is retrieved
-     * and written onto the parent page.
-     *
-     * Currently this is being used for sponsored logos and commercial components so they
-     * can inherit fonts.
-     */
-    function checkForBreakout(adSlotNode) {
-        return new Promise(function (resolve, reject) {
-            // DFP sometimes sends back two iframes, one with actual ad and one with 0,0 sizes and __hidden__ 'paramter'
-            // The later one will never go to 'complete' state on IE so lets avoid it.
-            var iFrame = adSlotNode.querySelector('iframe:not([id*="__hidden__"])');
-
-            // No iFrame, no work to do
-            if (iFrame === null) {
-                reject();
-            }
-            // IE needs the iFrame to have loaded before we can interact with it
-            else if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                bean.on(iFrame, 'readystatechange', function (e) {
-                    var updatedIFrame = e.srcElement;
-
-                    if (
-                        /*eslint-disable valid-typeof*/
-                        updatedIFrame &&
-                        typeof updatedIFrame.readyState !== 'unknown' &&
-                        updatedIFrame.readyState === 'complete'
-                        /*eslint-enable valid-typeof*/
-                    ) {
-                        bean.off(updatedIFrame, 'readystatechange');
-                        resolve(breakoutIFrame(updatedIFrame, adSlotNode));
-                    }
-                });
-            } else {
-                resolve(breakoutIFrame(iFrame, adSlotNode));
-            }
-        });
-    }
-
     function addLabel(adSlotNode) {
-        fastdom.write(function () {
-            if (shouldRenderLabel(adSlotNode)) {
+        if (shouldRenderLabel(adSlotNode)) {
+            fastdom.write(function () {
                 adSlotNode.insertAdjacentHTML('afterbegin', '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
-        });
+            });
+        }
     }
 
     function shouldRenderLabel(adSlotNode) {
         return !adSlotNode.classList.contains('ad-slot--frame') &&
             !adSlotNode.classList.contains('gu-style') &&
+            !adSlotNode.classList.contains('ad-slot--facebook') &&
             !adSlotNode.querySelector('.ad-slot__label') &&
             adSlotNode.getAttribute('data-label') !== 'false';
     }
@@ -790,7 +749,6 @@ define([
         // Used privately but exposed only for unit testing
         getAdverts:     getAdverts,
         shouldLazyLoad: shouldLazyLoad,
-        checkForBreakout: checkForBreakout,
 
         // testing
         reset: function () {
