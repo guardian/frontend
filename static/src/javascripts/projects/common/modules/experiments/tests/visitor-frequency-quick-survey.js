@@ -33,9 +33,9 @@ define([
             return config.page.contentType == 'Article' && document.cookie.indexOf('GU_FI') == -1;
         };
 
-        function renderQuickSurvey() {
+        function renderQuickSurvey(elementID) {
             // this cannot be wrapped in a fastdom function; the disable function breaks
-            var insertionPoint = document.getElementById('img-1');
+            var insertionPoint = document.getElementById(elementID);
             var survey = document.createElement('div');
             survey.innerHTML = quickSurvey;
             insertionPoint.appendChild(survey);
@@ -66,6 +66,7 @@ define([
             var surveyQuestion = document.getElementById('impressions-survey__select');
             bean.on(surveyQuestion, 'click', function () {
                 fastdom.write(function () {
+                    document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
                     disableRadioButtons(buttonClassName);
                     surveyFadeOut();
                     thankyouFadeIn();
@@ -81,28 +82,11 @@ define([
             });
         }
 
-        function checkVisible(domElement) {
-            var rect = domElement.getBoundingClientRect();
-            var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-            return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-        }
-
-        function setCookieForSurvey() {
-            // give user a cookie to say that they have seen the survey
-            // alternatively, only set the cookie on click or interaction (show until answered)?
-            window.onscroll = debounce(function () {
-                if (checkVisible(document.getElementById('surveyTextbox'))) {
-                    document.cookie = 'GU_FI=quick question seen; expires=Fri, 24 Jun 2016 10:30:00 UTC; path=/';
-                }
-            }, 100);
-        }
-
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    renderQuickSurvey();
-                    setCookieForSurvey();
+                    renderQuickSurvey('img-1');
                     handleSurveyResponse('fi-survey__button');
                     checkBrowsingMode();
                 }
