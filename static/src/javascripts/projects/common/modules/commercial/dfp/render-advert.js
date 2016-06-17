@@ -139,7 +139,6 @@ define([
             });
         }
 
-        // Check if creative is a new gu style creative and place labels accordingly.
         return applyCreativeTemplate($adSlot).then(function () {
             renderAdvertLabel($adSlot);
 
