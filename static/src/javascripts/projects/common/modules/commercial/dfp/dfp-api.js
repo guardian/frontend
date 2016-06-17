@@ -381,7 +381,7 @@ define([
             'dfp-ad--pageskin-inread',
             'dfp-ad--merchandising-high'
         ];
-        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) > -1;
+        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) === -1;
     }
 
     /**
