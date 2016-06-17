@@ -404,7 +404,7 @@ define([
 
     function refresh(currentBreakpoint, previousBreakpoint) {
         // only refresh if the slot needs to
-        googletag.pubads().refresh(advertsToRefresh.filter(shouldRefresh));
+        googletag.pubads().refresh(advertsToRefresh.filter(shouldRefresh).map(function (_) { return _.slot; }));
 
         function shouldRefresh(advert) {
             // get the slot breakpoints
