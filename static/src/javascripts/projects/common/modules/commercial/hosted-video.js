@@ -5,18 +5,22 @@
 define([
     'bean',
     'common/utils/$',
+    'common/utils/detect',
     'common/utils/defer-to-analytics',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/video/fullscreener',
+    'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     $,
+    detect,
     deferToAnalytics,
     events,
     videojsOptions,
     fullscreener,
+    contains,
     loadingTmpl
 ) {
     var player;
@@ -89,23 +93,25 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    player.on('timeupdate', function() {
-                        var currentTime = parseInt(this.currentTime(), 10);
-                        var time = 10; //seconds before the end when to show the timer
+                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                        player.on('timeupdate', function() {
+                            var currentTime = parseInt(this.currentTime(), 10);
+                            var time = 10; //seconds before the end when to show the timer
 
-                        if (duration - currentTime <= time) {
-                            player.off('timeupdate');
-                            var $hostedNext = $('.js-hosted-next-autoplay');
-                            var $timer = $('.js-autoplay-timer');
-                            var nextVideoPage;
+                            if (duration - currentTime <= time) {
+                                player.off('timeupdate');
+                                var $hostedNext = $('.js-hosted-next-autoplay');
+                                var $timer = $('.js-autoplay-timer');
+                                var nextVideoPage;
 
-                            if ($timer.length) {
-                                nextVideoPage = $timer.data('next-page');
-                                nextVideoTimer(time, $timer, nextVideoPage);
-                                $hostedNext.addClass('js-autoplay-start');
+                                if ($timer.length) {
+                                    nextVideoPage = $timer.data('next-page');
+                                    nextVideoTimer(time, $timer, nextVideoPage);
+                                    $hostedNext.addClass('js-autoplay-start');
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
             });
         });
