@@ -93,13 +93,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 27), // Tuesday
     exposeClientSide = true
   )
-
-  val ABSmartBanner = Switch(
-    SwitchGroup.ABTests,
-    "ab-smart-banner",
-    "Test the Apple smart banner",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
-    exposeClientSide = true
-  )
 }
