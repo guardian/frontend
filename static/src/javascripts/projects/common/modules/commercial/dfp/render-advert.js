@@ -125,7 +125,6 @@ define([
      * @returns {Promise} - resolves once all necessary rendering is queued up
      */
     function renderAdvert(adSlotId, slotRenderEvent) {
-        var size;
         var $adSlot = $('#' + adSlotId);
 
         // remove any placeholder ad content
@@ -142,7 +141,7 @@ define([
         return applyCreativeTemplate($adSlot).then(function () {
             renderAdvertLabel($adSlot);
 
-            size = slotRenderEvent.size.join(',');
+            var size = slotRenderEvent.size.join(',');
             // is there a callback for this size?
             if (sizeCallbacks[size]) {
                 sizeCallbacks[size](slotRenderEvent, $adSlot);
