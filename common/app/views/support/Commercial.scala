@@ -1,6 +1,7 @@
 package views.support
 
 import common.Edition
+import common.editions.Uk
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
@@ -34,7 +35,7 @@ object Commercial {
     }
 
     private def isWimbledonEnabled(metaData: MetaData, edition: Edition) = {
-      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition.id == "UK"
+      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition == Uk
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
@@ -55,7 +56,7 @@ object Commercial {
 
     // The sizesOverride parameter is for testing only.
     def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
-      var wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) Seq("top-banner-ad-container--wimbledon") else Nil
+      val wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) Some("top-banner-ad-container--wimbledon") else None
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
