@@ -140,7 +140,7 @@ define([
     }
 
     function removePlaceholders(adSlotNode) {
-        var placeholder = adSlotNode.querySelector('.ad-slot__content--placeholder');
+        var placeholder = qwery('.ad-slot__content--placeholder', adSlotNode);
         var adSlotContent = qwery('div', adSlotNode);
 
         if (adSlotContent.length) {
