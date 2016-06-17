@@ -451,7 +451,7 @@ define([
     }
 
     /**
-     * PARSE RETURNED ADVERTS
+     * HANDLE RETURNED ADVERTS
      */
 
     function reportEmptyResponse(adSlotId, event) {
