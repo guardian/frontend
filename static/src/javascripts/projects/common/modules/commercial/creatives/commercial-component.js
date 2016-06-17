@@ -181,8 +181,6 @@ define([
                 resolve(false);
             }
 
-            return this;
-
             function onSuccess() {
                 if (this.postLoadEvents[this.type]) {
                     this.postLoadEvents[this.type](this.adSlot);

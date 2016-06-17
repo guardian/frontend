@@ -549,15 +549,20 @@ define([
     function initAdvert(advert) {
         advert.sizes = getAdBreakpointSizes(advert);
         advert.slot = defineSlot(advert.node, advert.sizes);
-    }
-
-    function startLoadingAdvert(advert) {
-        advert.isLoading = true;
         advert.whenLoaded = new Promise(function (resolve) {
             advert.whenLoadedResolver = resolve;
         }).then(function (isLoaded) {
             advert.isLoaded = isLoaded;
         });
+        advert.whenRendered = new Promise(function (resolve) {
+            advert.whenRenderedResolver = resolve;
+        }).then(function (isRendered) {
+            advert.isRendered = isRendered;
+        });
+    }
+
+    function startLoadingAdvert(advert) {
+        advert.isLoading = true;
     }
 
     function stopLoadingAdvert(advert, isLoaded) {
@@ -567,11 +572,6 @@ define([
 
     function startRenderingAdvert(advert) {
         advert.isRendering = true;
-        advert.whenRendered = new Promise(function (resolve) {
-            advert.whenRenderedResolver = resolve;
-        }).then(function (isRendered) {
-            advert.isRendered = isRendered;
-        });
     }
 
     function stopRenderingAdvert(advert, isRendered) {

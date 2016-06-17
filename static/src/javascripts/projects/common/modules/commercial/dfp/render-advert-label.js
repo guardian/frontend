@@ -16,11 +16,13 @@ define([
     }
 
     function shouldRenderLabel(adSlotNode) {
-        return !adSlotNode.classList.contains('ad-slot--frame') &&
-            !adSlotNode.classList.contains('gu-style') &&
-            !adSlotNode.classList.contains('ad-slot--facebook') &&
-            !adSlotNode.querySelector('.ad-slot__label') &&
-            adSlotNode.getAttribute('data-label') !== 'false';
+        return !(
+            adSlotNode.classList.contains('ad-slot--frame') ||
+            adSlotNode.classList.contains('gu-style') ||
+            adSlotNode.classList.contains('ad-slot--facebook') ||
+            adSlotNode.getAttribute('data-label') === 'false' ||
+            adSlotNode.getElementsByClassName('ad-slot__label').length
+        );
     }
 
     return renderAdvertLabel;

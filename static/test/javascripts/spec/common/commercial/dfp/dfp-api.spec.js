@@ -162,7 +162,7 @@ define([
         it('should get the slots', function (done) {
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
-                expect(Object.keys(dfp.getAdverts()).length).toBe(5);
+                expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
             });
             window.googletag.cmd.forEach(function (func) { func(); });
@@ -176,7 +176,7 @@ define([
                 .then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     var slots = dfp.getAdverts();
-                    expect(Object.keys(slots).length).toBe(4);
+                    expect(Object.keys(slots).length).toBe(3);
                     for (var slotId in slots) {
                         expect(slotId).not.toBe('dfp-ad-html-slot');
                     }

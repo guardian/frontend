@@ -35,7 +35,7 @@ define([
         });
 
         it('Can add a label', function (done) {
-            renderAdvertLabel(adverts.withLabel).then(function () {
+            renderAdvertLabel(adverts.withLabel[0]).then(function () {
                 var label = adverts.withLabel[0].querySelector(labelSelector);
                 expect(label).not.toBe(null);
                 done();
@@ -43,7 +43,7 @@ define([
         });
 
         it('The label has a message', function (done) {
-            renderAdvertLabel(adverts.withLabel).then(function () {
+            renderAdvertLabel(adverts.withLabel[0]).then(function () {
                 var label = adverts.withLabel[0].querySelector(labelSelector);
                 expect(label.textContent).toBe('Advertisement');
                 done();
@@ -51,32 +51,32 @@ define([
         });
 
         it('Won`t add a label if it has an attribute data-label=`false`', function (done) {
-            renderAdvertLabel(adverts.labelDisabled).then(function () {
-                var label = adverts.withLabel[0].querySelector(labelSelector);
+            renderAdvertLabel(adverts.labelDisabled[0]).then(function () {
+                var label = adverts.labelDisabled[0].querySelector(labelSelector);
                 expect(label).toBe(null);
                 done();
             });
         });
 
         it('Won`t add a label if the adSlot already has one', function (done) {
-            renderAdvertLabel(adverts.alreadyLabelled).then(function () {
-                var label = adverts.withLabel[0].querySelector(labelSelector);
-                expect(label).toBe(null);
+            renderAdvertLabel(adverts.alreadyLabelled[0]).then(function () {
+                var label = adverts.alreadyLabelled[0].querySelectorAll(labelSelector);
+                expect(label.length).toBe(1);
                 done();
             });
         });
 
         it('Won`t add a label to guStyle ads', function (done) {
-            renderAdvertLabel(adverts.guStyle).then(function () {
-                var label = adverts.withLabel[0].querySelector(labelSelector);
+            renderAdvertLabel(adverts.guStyle[0]).then(function () {
+                var label = adverts.guStyle[0].querySelector(labelSelector);
                 expect(label).toBe(null);
                 done();
             });
         });
 
         it('Won`t add a label to frame ads', function (done) {
-            renderAdvertLabel(adverts.frame).then(function () {
-                var label = adverts.withLabel[0].querySelector(labelSelector);
+            renderAdvertLabel(adverts.frame[0]).then(function () {
+                var label = adverts.frame[0].querySelector(labelSelector);
                 expect(label).toBe(null);
                 done();
             });
