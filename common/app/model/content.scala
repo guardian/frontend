@@ -103,6 +103,10 @@ final case class Content(
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
+  lazy val twitterCardImage: String = {
+    ImgSrc(rawOpenGraphImage, TwitterImage)
+  }
+
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
     ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
@@ -239,7 +243,7 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> ImgSrc(rawOpenGraphImage, TwitterImage)
+    "twitter:image" -> twitterCardImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
