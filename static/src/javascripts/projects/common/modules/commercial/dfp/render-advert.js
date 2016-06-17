@@ -127,22 +127,12 @@ define([
     function renderAdvert(adSlotId, slotRenderEvent) {
         var $adSlot = $('#' + adSlotId);
 
-        // remove any placeholder ad content
-        var $placeholder = $('.ad-slot__content--placeholder', $adSlot);
-        var $adSlotContent = $('div', $adSlot);
-
-        if ($adSlotContent[0]) {
-            fastdom.write(function () {
-                $placeholder.remove();
-                $adSlotContent.addClass('ad-slot__content');
-            });
-        }
+        removePlaceholders($adSlot);
 
         return applyCreativeTemplate($adSlot).then(function () {
             renderAdvertLabel($adSlot);
 
             var size = slotRenderEvent.size.join(',');
-            // is there a callback for this size?
             if (sizeCallbacks[size]) {
                 sizeCallbacks[size](slotRenderEvent, $adSlot);
             }
@@ -153,6 +143,18 @@ define([
                 });
             }
         }).catch(raven.captureException);
+    }
+
+    function removePlaceholders($adSlot) {
+        var $placeholder = $('.ad-slot__content--placeholder', $adSlot);
+        var $adSlotContent = $('div', $adSlot);
+
+        if ($adSlotContent[0]) {
+            fastdom.write(function () {
+                $placeholder.remove();
+                $adSlotContent.addClass('ad-slot__content');
+            });
+        }
     }
 
     return renderAdvert;
