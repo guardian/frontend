@@ -16,7 +16,8 @@ define([
     'text!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
-    'lodash/arrays/without'
+    'lodash/arrays/without',
+    'common/modules/analytics/omniture'
 ], function (
     bonzo,
     qwery,
@@ -35,7 +36,8 @@ define([
     permissionsTemplate,
     some,
     uniq,
-    without
+    without,
+    omniture
 ) {
     var explainerDismissed = 'gu.notificationsExplainerDismissed',
         modules = {
@@ -106,9 +108,14 @@ define([
 
         subscribeHandler: function () {
             modules.subscribe().then(modules.follow)
-                .catch( function () {
+                .then(function() {
+                    if (Notification.permission === 'granted') {
+                        omniture.trackLinkImmediate('browser-notifications-granted');
+                    }
+                }) .catch( function () {
                     if (Notification.permission === 'denied') {
                         modules.notificationsDeniedMessage();
+                        omniture.trackLinkImmediate('browser-notifications-denied');
                     }
                 });
         },
