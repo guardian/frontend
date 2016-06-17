@@ -363,6 +363,7 @@
 }
 
 .adverts--legacy-inline {
+    padding: 0;
     width: $gs-gutter * 6.5;
 
     @include mq(mobileLandscape) {

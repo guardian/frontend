@@ -25,11 +25,11 @@ class DiscussionFilters extends HttpFilters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   lazy val filters: List[EssentialFilter] = List(
+    new RequestLoggingFilter,
     new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new Gzipper,
     new BackendHeaderFilter,
-    new RequestLoggingFilter,
     new SurrogateKeyFilter,
     new AmpFilter
   )

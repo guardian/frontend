@@ -110,6 +110,7 @@
 .content__headline--immersive-article {
     @include fs-headline(7, true);
     line-height: 1;
+    color: #ffffff;
 
     @include mq(desktop) {
         font-size: 4rem;
