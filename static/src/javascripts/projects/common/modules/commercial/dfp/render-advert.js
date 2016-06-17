@@ -27,7 +27,7 @@ define([
      *
      * Most adverts come back from DFP ready to display as-is. But sometimes we need more: embedded components that can share
      * Guardian styles, for example, or behaviours like sticky-scrolling. This module helps 'finish' rendering any advert, and
-     * decorating them with these behaviours.
+     * decorates them with these behaviours.
      *
      */
 
