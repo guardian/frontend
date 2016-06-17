@@ -1,131 +1,149 @@
 define([
-    'bonzo',
     'common/utils/config',
-    'lodash/collections/map',
-    'lodash/objects/assign',
-    'lodash/objects/isArray',
-    'lodash/objects/transform'
+    'common/utils/assign',
+    'common/modules/commercial/ad-sizes'
 ], function (
-    $,
     config,
-    map,
     assign,
-    isArray,
-    transform
+    adSizes
 ) {
-    var fabricTopSlot = '88,71';
-    var fluidSlot = config.switches.fluidAdverts ? '|fluid' : '';
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
-                mobile:  '1,1|300,250|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
+                mobile: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    adSizes.halfPage,
+                    config.page.edition === 'US' ? adSizes.portrait : null
+                )
             }
         },
         'right-sticky': {
             name: 'right',
             sizeMappings: {
-                mobile:  '1,1|300,250|300,251|300,600' + (config.page.edition === 'US' ? '|300,1050' : '')
+                mobile: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    adSizes.stickyMpu,
+                    adSizes.halfPage,
+                    config.page.edition === 'US' ? adSizes.portrait : null
+                )
             }
         },
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile:  '1,1|300,250'
+                mobile: compile(adSizes.outOfPage, adSizes.mpu)
             }
         },
         im: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|88,85'
-            }
-        },
-        inline1: {
-            sizeMappings: {
-                mobile:             '1,1|300,250|' + fabricTopSlot + fluidSlot,
-                'mobile-landscape': '1,1|300,250|' + fabricTopSlot + fluidSlot,
-                tablet:             '1,1|300,250' + fluidSlot
+                mobile: compile(adSizes.outOfPage, adSizes.inlineMerchandising)
             }
         },
         inline: {
             sizeMappings: {
-                mobile:             '1,1|300,250',
-                'mobile-landscape': '1,1|300,250',
-                tablet:             '1,1|300,250'
+                mobile: compile(adSizes.outOfPage, adSizes.mpu)
             }
         },
         mostpop: {
             sizeMappings: {
-                mobile:             '1,1|300,250',
-                'mobile-landscape': '1,1|300,250',
-                tablet:             '1,1|300,250'
+                mobile: compile(adSizes.outOfPage, adSizes.mpu)
             }
         },
         'merchandising-high': {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|88,87'
+                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
             }
         },
         spbadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|140,90'
+                mobile: compile(adSizes.outOfPage, adSizes.badge)
             }
         },
         adbadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|140,90'
+                mobile: compile(adSizes.outOfPage, adSizes.badge)
             }
         },
         fobadge: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: '1,1|140,90'
+                mobile: compile(adSizes.outOfPage, adSizes.badge)
             }
         },
         comments: {
             sizeMappings: {
-                mobile:  '1,1|300,250'
+                mobile: compile(adSizes.outOfPage, adSizes.badge)
             }
         },
         'top-above-nav': {
             sizeMappings: {
-                desktop: '1,1|88,70|728,90|940,230|900,250|970,250|' + fabricTopSlot
+                mobile: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    adSizes.fabric,
+                    config.switches.fluidAdverts ? adSizes.fluid : null
+                ),
+                tablet: compile(
+                    adSizes.outOfPage,
+                    adSizes.mpu,
+                    config.switches.fluidAdverts ? adSizes.fluid : null
+                ),
+                desktop: compile(
+                    adSizes.outOfPage,
+                    adSizes.fluid250,
+                    adSizes.leaderboard,
+                    adSizes.cascase,
+                    adSizes.superHeader,
+                    adSizes.billboard,
+                    adSizes.fabric
+                )
             }
         }
     };
 
-    function createAdSlotElement(name, attrs, classes) {
-        return $(document.createElement('div'))
-            .attr({
-                'id': 'dfp-ad--' + name,
-                'data-link-name': 'ad slot ' + name,
-                'data-test-id': 'ad-slot-' + name,
-                'data-name': name
-            })
-            .attr(attrs)
-            .addClass('js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' '));
+    function compile(size1) {
+        var result = size1;
+        for (var i = 1; i < arguments.length; i++) {
+            if (arguments[i]) {
+                result += '|' + arguments[i];
+            }
+        }
+        return result;
+    }
 
+    function createAdSlotElement(name, attrs, classes) {
+        var adSlot = document.createElement('div');
+        adSlot.id = 'dfp-ad--' + name;
+        adSlot.className = 'js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' ');
+        adSlot.setAttribute('data-link-name', 'ad slot ' + name);
+        adSlot.setAttribute('data-test-id', 'ad-slot-' + name);
+        adSlot.setAttribute('data-name', name);
+        Object.keys(attrs).forEach(function (attr) { adSlot.setAttribute(attr, attrs[attr]); });
+        return adSlot;
     }
 
     return function (name, slotTypes, series, keywords, slotTarget) {
         var slotName = slotTarget ? slotTarget : name,
             attributes = {},
             definition,
-            classes = [],
-            $adSlot;
+            classes = [];
 
         definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
         name = definition.name || name;
 
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
-            definition.sizeMappings.wide = '1,1';
+            definition.sizeMappings.wide = adSizes.outOfPage;
         }
 
         assign(attributes, definition.sizeMappings);
@@ -151,22 +169,21 @@ define([
         }
 
         if (slotTypes) {
-            classes = map((isArray(slotTypes) ? slotTypes : [slotTypes]), function (type) {
+            classes = (Array.isArray(slotTypes) ? slotTypes : [slotTypes]).map(function (type) {
                 return 'ad-slot--' + type;
             });
         }
 
         classes.push('ad-slot--' + name.replace(/((?:ad|fo|sp)badge).*/, '$1'));
 
-        $adSlot = createAdSlotElement(
+        return createAdSlotElement(
             name,
-            transform(attributes, function (result, size, key) {
-                result['data-' + key] = size;
+            Object.keys(attributes).reduce(function (result, key) {
+                result['data-' + key] = attributes[key];
+                return result;
             }, {}),
             classes
         );
-
-        return $adSlot[0];
     };
 
 });

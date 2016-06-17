@@ -8,34 +8,6 @@
     left: 0;
 }
 
-// Overriding the default for media tones
-.tonal--tone-media .content__headline--gallery {
-    font-weight: 200;
-    padding-top: 0;
-}
-
-.content__labels--gallery {
-    border: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    width: auto;
-    float: none;
-
-    .content__section-label {
-        margin-right: $gs-gutter / 4;
-    }
-
-    .content__series-label {
-        font-weight: normal;
-    }
-
-    .content__series-label,
-    .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
-    }
-}
-
 .gallery__meta-container {
     &:before {
         content: '';
@@ -208,16 +180,6 @@
 .gallery__img-container,
 .gallery__img {
     width: 100%;
-}
-
-.content__labels--gallery,
-.l-side-margins--gallery .content__meta-container,
-.content__headline--gallery,
-.content__standfirst--gallery {
-    @include mq(desktop) {
-        margin-left: gs-span(3) + $gs-gutter;
-        max-width: gs-span(8);
-    }
 }
 
 .gallery__meta-container {
