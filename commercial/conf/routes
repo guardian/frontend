@@ -48,4 +48,4 @@ GET        /commercial/paid.json                                                
 GET        /commercial/paid                                                     controllers.commercial.PaidContentCardController.cardHtml
 
 # Static pages
-GET        /commercial/advertiser-content/renault-car-of-the-future/:pageName   controllers.commercial.HostedContentController.renderHostedPage(pageName)
+GET        /commercial/advertiser-content/:campaignName/:pageName   controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)

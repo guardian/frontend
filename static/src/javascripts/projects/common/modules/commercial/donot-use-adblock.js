@@ -62,10 +62,11 @@ define([
             message = messages[config.page.edition];
 
         if (message) {
-            new Message('adblock-message', {
+            new Message('adblock-message-2016-06-15', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock',
-                siteMessageCloseBtn: 'hide'
+                siteMessageCloseBtn: 'hide',
+                cssModifierClass: 'adblock-message'
             }).show(template(messageTemplate, {
                 linkHref: adblockLink + '?INTCMP=' + message.campaign,
                 messageText: message.messageText,

@@ -22,43 +22,39 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
+            dfp,
             config,
             detect;
 
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
-                return Promise.resolve(ads[id]);
-            });
-            injector.mock('common/modules/commercial/dfp/dfp-api', function() {
-                return {
-                    addSlot: function () { /* noop */ }
-                };
-            });
             injector.require([
-                /* load mocks */
-                'common/modules/commercial/dfp/track-ad-load',
                 'common/modules/commercial/dfp/dfp-api',
-
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
             ], function () {
-                articleBodyAdverts = arguments[2];
+                dfp = arguments[0];
+                dfp.addSlot = function () { /* noop */ };
+                dfp.trackAdRender = function (id) {
+                    return Promise.resolve(ads[id]);
+                };
 
-                commercialFeatures = arguments[3];
+                articleBodyAdverts = arguments[1];
+
+                commercialFeatures = arguments[2];
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[4];
+                spaceFiller = arguments[3];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                config = arguments[5];
+                config = arguments[4];
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[6];
+                detect = arguments[5];
 
                 done();
             });

@@ -16,10 +16,8 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-teaser',
     'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
-    'common/modules/experiments/tests/video-nav',
     'common/modules/experiments/tests/video-yellow-button',
     'common/modules/experiments/tests/test-audience'
 ], function (
@@ -40,10 +38,8 @@ define([
     WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VideoTeaser,
     VideoShowcaseMainMedia,
     VideoFootballThrasher,
-    VideoNav,
     VideoYellowPlayButton,
     TestAudience
 ) {
@@ -58,10 +54,8 @@ define([
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VideoTeaser(),
         new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
-        new VideoNav(),
         new VideoYellowPlayButton(),
         new TestAudience()
     ];
