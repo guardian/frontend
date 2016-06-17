@@ -840,7 +840,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__actions {
     position: absolute;
     bottom: $gs-baseline;
-    opacity: 0.7;
+    opacity: .7;
     .discussion--closed & {
         .d-comment__action--reply, .d-comment__action-separator, .d-comment__action-pick {
             display: none;
@@ -925,7 +925,7 @@ $comment-recommend-button-size: 19px;
     .sharing-buttons {
         opacity: 0;
         cursor: pointer;
-        transition: opacity .0s ease-in-out;
+        transition: opacity 0s ease-in-out;
         display: inline-block;
 
         .inline-icon {
