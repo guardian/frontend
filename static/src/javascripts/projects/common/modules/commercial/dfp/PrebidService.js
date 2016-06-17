@@ -98,8 +98,8 @@ define([
     function getMatchingSizes(advert) {
         var advertSizes = concatAll(values(advert.sizes));
 
-        return supportedAdvertSizes.filter(function (size) {
-            return advertSizes.some(sizesMatch.bind(undefined, size));
+        return advertSizes.filter(function (size) {
+            return supportedAdvertSizes.some(sizesMatch.bind(undefined, size));
         });
 
         function concatAll(arrays) {
