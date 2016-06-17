@@ -12,7 +12,7 @@ import services.Redirects
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
-object RedirectController  extends Controller with Logging {
+class RedirectController  extends Controller with Logging {
 
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))

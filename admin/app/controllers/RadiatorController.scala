@@ -15,7 +15,7 @@ import conf.switches.{Switch, Switches}
 import org.joda.time.LocalDate
 import play.api.Play.current
 
-object RadiatorController extends Controller with Logging with AuthLogging with Requests{
+class RadiatorController extends Controller with Logging with AuthLogging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
