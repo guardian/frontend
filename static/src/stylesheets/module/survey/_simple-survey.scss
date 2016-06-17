@@ -5,18 +5,19 @@ $error-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vc
     .illustration-container {
         @include gs-container;
         background-color: darken($news-main-2, 20%);
-        min-height: 240px;
-
+        min-height: 220px;
+        white-space: nowrap;
     }
 
     .illustration-mobile {
         border: 1px solid #ffffff;
-        display: block;
-        float: left;
+        display: inline-block;
         width: auto;
         height: 200px;
         margin-top: $gs-baseline;
         margin-left: $gs-gutter;
+        position: relative;
+        z-index: 2;
 
         svg {
             width: auto;
@@ -26,11 +27,13 @@ $error-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vc
 
     .illustration-tablet {
         border: 1px solid #ffffff;
-        display: block;
-        float: left;
+        display: inline-block;
+        margin-left: -60px;
         width: auto;
-        height: 200px;
+        height: 242px;
         margin-top: $gs-baseline;
+        position: relative;
+        z-index: 1;
 
         svg {
             width: auto;
