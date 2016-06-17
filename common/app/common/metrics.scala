@@ -7,11 +7,12 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
 import conf.Configuration
 import metrics._
+import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
-import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.inject.ApplicationLifecycle
 
 import scala.collection.JavaConversions._
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object SystemMetrics extends implicits.Numbers {
 
@@ -99,6 +100,21 @@ object SystemMetrics extends implicits.Numbers {
     get = () => buildNumber,
     metricUnit = StandardUnit.None
   )
+
+}
+
+object RequestMetrics {
+
+  val PanicRequestsSurgeMetric = CountMetric(
+    name = "panic-requests-surge",
+    description = "Number of requests we returned 503 because we received a sudden surge"
+  )
+
+  val HighLatencyMetric = CountMetric(
+    name = "high-latency",
+    description = "Number of requests made when the recent latency was too high"
+  )
+
 }
 
 object ContentApiMetrics {
@@ -145,12 +161,32 @@ object EmailSubsciptionMetrics {
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
 }
 
-trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
-  val applicationMetricsNamespace: String = "Application"
-  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(applicationName))
+case class ApplicationMetrics(metrics: List[FrontendMetric])
 
-  def applicationName: String
-  def applicationMetrics: List[FrontendMetric] = Nil
+object ApplicationMetrics {
+  def apply(metrics: FrontendMetric*): ApplicationMetrics = ApplicationMetrics(metrics.toList)
+}
+
+class CloudWatchMetricsLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  appIdentity: ApplicationIdentity,
+  appMetrics: ApplicationMetrics = ApplicationMetrics(Nil),
+  jobs: JobScheduler = Jobs)
+  (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  val applicationMetricsNamespace: String = "Application"
+  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
+
+  appLifecycle.addStopHook { () => Future {
+    jobs.deschedule("ApplicationSystemMetricsJob")
+    if (Configuration.environment.isProd) {
+      jobs.deschedule("LogMetricsJob")
+    }
+  }}
+
+  def applicationMetrics: List[FrontendMetric] = List(
+    RequestMetrics.PanicRequestsSurgeMetric,
+    RequestMetrics.HighLatencyMetric
+  ) ++ appMetrics.metrics
 
   def systemMetrics: List[FrontendMetric] = List(
     SystemMetrics.MaxHeapMemoryMetric,
@@ -177,17 +213,16 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 
-  override def onStart(app: PlayApp) {
-    Jobs.deschedule("ApplicationSystemMetricsJob")
-    super.onStart(app)
+  override def start() = {
+    jobs.deschedule("ApplicationSystemMetricsJob")
     //run every minute, 36 seconds after the minute
-    Jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?"){
+    jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {
       report()
     }
 
     // Log heap usage every 5 seconds.
     if (Configuration.environment.isProd) {
-      Jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
+      jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
         log.info(s"heap used: ${heapUsed}Mb")
         Future.successful(())
@@ -197,15 +232,6 @@ trait CloudWatchApplicationMetrics extends GlobalSettings with Logging {
     // Log the build number and revision number on startup.
     log.info(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
   }
-
-  override def onStop(app: PlayApp) {
-    Jobs.deschedule("ApplicationSystemMetricsJob")
-    if (Configuration.environment.isProd) {
-      Jobs.deschedule("LogMetricsJob")
-    }
-    super.onStop(app)
-  }
-
 }
 
 object bytesAsMb {

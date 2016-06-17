@@ -1,13 +1,16 @@
 package views.support.cleaner
 
-import java.net.URL
+import java.net.{URL, URLEncoder}
 
-import model.{Article, VideoAsset, VideoElement, ShareLinks}
+import model.{Article, ShareLinks, VideoAsset, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
+
 import scala.collection.JavaConversions._
 
 case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
+  val facebookVideoEmbedUrl = "https://www.facebook.com/v2.3/plugins/video.php?href="
+  def facebookVideoEmbedUrlFor(url: String) = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
   def addShareButtons(document: Document): Unit = {
     document.getElementsByClass("element-video").foreach(element => {
@@ -37,6 +40,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document.getElementsByClass("element-video").foreach { figure: Element =>
       val canonicalUrl = figure.attr("data-canonical-url")
+      figure.attr("data-component", "video-inbody-embed")
       figure.getElementsByClass("gu-video").foreach { element: Element =>
         element
           .removeClass("gu-video")
@@ -45,7 +49,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
-        val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
+        val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf")
 
         val mediaId = element.attr("data-media-id")
 
@@ -93,8 +97,18 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").filter { element: Element =>
-      element.getElementsByClass("gu-video").length == 0
+      element.getElementsByClass("gu-video").isEmpty
     }.foreach { element: Element =>
+      val canonicalUrl = element.attr("data-canonical-url")
+
+      // As Facebook have declared that you have to use their video JS plugin, which in turn pulls in their whole JS API
+      // We've decided to use the canonical URL, and create the video element here rather that CAPI, as, if it changes
+      // again, we can change it here and it will also fix things retrospectively.
+      if (canonicalUrl.startsWith("https://www.facebook.com")) {
+        val facebookUrl = facebookVideoEmbedUrlFor(element.attr("data-canonical-url"))
+        element.child(0).attr("src", facebookUrl)
+      }
+
       element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 

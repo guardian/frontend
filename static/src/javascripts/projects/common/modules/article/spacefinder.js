@@ -1,20 +1,24 @@
 define([
-    'common/utils/fastdom-promise',
     'qwery',
     'bean',
     'Promise',
+    'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
-    'lodash/functions/curry'
+    'common/modules/commercial/dfp/track-ad-load',
+    'lodash/functions/memoize'
 ], function (
-    fastdom,
     qwery,
     bean,
     Promise,
+    fastdom,
     config,
     mediator,
-    curry
+    trackAdLoaded,
+    memoize
 ) {
+    // total_hours_spent_maintaining_this = 64
+    //
     // maximum time (in ms) to wait for images to be loaded and rich links
     // to be upgraded
     var LOADING_TIMEOUT = 5000;
@@ -53,12 +57,23 @@ define([
         fromBottom: false
     };
 
+    var defaultOptions = {
+        waitForImages: true,
+        waitForLinks: true,
+        waitForInteractives: false,
+        waitForAds: false
+    };
+
     function expire(resolve) {
         window.setTimeout(resolve, LOADING_TIMEOUT);
     }
 
-    function onImagesLoaded(body) {
-        var notLoaded = qwery('img', body).filter(function (img) {
+    function getFuncId(rules) {
+        return rules.bodySelector || 'document';
+    }
+
+    var onImagesLoaded = memoize(function (rules) {
+        var notLoaded = qwery('img', rules.body).filter(function (img) {
             return !img.complete;
         });
 
@@ -66,27 +81,27 @@ define([
             true :
             new Promise(function (resolve) {
                 var loadedCount = 0;
-                bean.on(body, 'load', notLoaded, function onImgLoaded() {
+                bean.on(rules.body, 'load', notLoaded, function onImgLoaded() {
                     loadedCount += 1;
                     if (loadedCount === notLoaded.length) {
-                        bean.off(body, 'load', onImgLoaded);
+                        bean.off(rules.body, 'load', onImgLoaded);
                         notLoaded = null;
                         resolve();
                     }
                 });
             });
-    }
+    }, getFuncId);
 
-    function onRichLinksUpgraded(body) {
-        return qwery('.element-rich-link--not-upgraded', body).length === 0 ?
+    var onRichLinksUpgraded = memoize(function (rules) {
+        return qwery('.element-rich-link--not-upgraded', rules.body).length === 0 ?
             true :
             new Promise(function (resolve) {
                 mediator.once('rich-link:loaded', resolve);
             });
-    }
+    }, getFuncId);
 
-    function onInteractivesLoaded(body) {
-        var notLoaded = qwery('.element-interactive', body).filter(function (interactive) {
+    var onInteractivesLoaded = memoize(function (rules) {
+        var notLoaded = qwery('.element-interactive', rules.body).filter(function (interactive) {
             var iframe = qwery(interactive.children).filter(isIframe);
             return !(iframe.length && isIframeLoaded(iframe[0]));
         });
@@ -125,7 +140,14 @@ define([
                 iframe.contentWindow.document &&
                 iframe.contentWindow.document.readyState === 'complete';
         }
-    }
+    }, getFuncId);
+
+    var onAdsLoaded = memoize(function (rules) {
+        return Promise.all(qwery('.js-ad-slot', rules.body)
+            .map(function (ad) { return ad.id; })
+            .map(trackAdLoaded)
+        );
+    }, getFuncId);
 
     // test one element vs another for the given rules
     function _testCandidate(rules, challenger, opponent) {
@@ -137,7 +159,7 @@ define([
 
     // test one element vs an array of other elements for the given rules
     function _testCandidates(rules, challenger, opponents) {
-        return opponents.every(curry(_testCandidate)(rules, challenger));
+        return opponents.every(_testCandidate.bind(undefined, rules, challenger));
     }
 
     function _mapElementToComputedDimensions(el) {
@@ -191,37 +213,45 @@ define([
         }
 
         if (rules.filter) {
-            candidates = candidates.filter(rules.filter);
+            candidates = candidates.filter(rules.filter, rules);
         }
 
         return candidates;
     }
 
-    function getReady(body) {
-        if (config.switches.viewability) {
-            return Promise.race([
-                new Promise(expire),
-                Promise.all([onImagesLoaded(body), onRichLinksUpgraded(body), onInteractivesLoaded(body)])
-            ]);
-        }
-
-        return Promise.resolve(true);
+    function SpaceError(rules) {
+        this.name = 'SpaceError';
+        this.message = 'There is no space left matching rules ' + JSON.stringify(rules);
+        this.stack = (new Error()).stack;
     }
 
     // Rather than calling this directly, use spaceFiller to inject content into the page.
     // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
-    function findSpace(rules) {
-        var body, getDimensions;
+    function findSpace(rules, options) {
+        var getDimensions;
 
         rules || (rules = defaultRules);
-        body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
+        options || (options = defaultOptions);
+        rules.body = rules.bodySelector ? document.querySelector(rules.bodySelector) : document;
         getDimensions = rules.absoluteMinAbove ? _mapElementToComputedDimensions : _mapElementToDimensions;
 
-        return getReady(body)
+        return getReady()
         .then(getCandidates)
         .then(getMeasurements)
         .then(enforceRules)
         .then(returnCandidates);
+
+        function getReady() {
+            return Promise.race([
+                new Promise(expire),
+                Promise.all([
+                    options.waitForImages ? onImagesLoaded(rules) : true,
+                    options.waitForLinks ? onRichLinksUpgraded(rules) : true,
+                    options.waitForInteractives ? onInteractivesLoaded(rules) : true,
+                    options.waitForAds ? onAdsLoaded(rules) : true
+                ])
+            ]);
+        }
 
         function getCandidates() {
             var candidates = qwery(rules.bodySelector + rules.slotSelector);
@@ -260,7 +290,7 @@ define([
                 null;
 
             return fastdom.read(function () {
-                var bodyDims = body.getBoundingClientRect();
+                var bodyDims = rules.body.getBoundingClientRect();
                 var candidatesWithDims = candidates.map(getDimensions);
                 var contentMetaWithDims = rules.clearContentMeta ?
                     getDimensions(contentMeta) :
@@ -293,13 +323,15 @@ define([
             if (candidates.length) {
                 return candidates.map(function (candidate) { return candidate.element; });
             } else {
-                throw new Error('There is no space left matching rules ' + JSON.stringify(rules));
+                throw new SpaceError(rules);
             }
         }
     }
 
     return {
         findSpace: findSpace,
+        SpaceError: SpaceError,
+
         _testCandidate: _testCandidate, // exposed for unit testing
         _testCandidates: _testCandidates // exposed for unit testing
     };

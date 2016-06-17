@@ -1,16 +1,16 @@
 package com.gu
 
-import com.gu.versioninfo.VersionInfo
-import com.typesafe.sbt.packager.universal.UniversalPlugin
-import sbt._
-import sbt.Keys._
-import com.typesafe.sbt.web.SbtWeb.autoImport._
-import com.typesafe.sbt.SbtNativePackager._
-import com.typesafe.sbt.packager.Keys._
+import com.gu.Dependencies._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
+import com.gu.versioninfo.VersionInfo
+import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.packager.Keys._
+import com.typesafe.sbt.packager.universal.UniversalPlugin
+import play.sbt.PlayScala
 import play.twirl.sbt.Import._
-import Dependencies._
+import sbt.Keys._
+import sbt._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -23,7 +23,7 @@ trait Prototypes {
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.7",
+    scalaVersion := "2.11.8",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
@@ -60,8 +60,6 @@ trait Prototypes {
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
-
-    updateOptions := updateOptions.value.withCachedResolution(true),
 
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
@@ -151,24 +149,24 @@ trait Prototypes {
     }
   )
 
-  def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
+  def root() = Project("root", base = file(".")).enablePlugins(PlayScala)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
 
   def application(applicationName: String) = {
-    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala, RiffRaffArtifact, UniversalPlugin)
+    Project(applicationName, file(applicationName)).enablePlugins(PlayScala, RiffRaffArtifact, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
     .settings(frontendClientSideSettings)
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
-    .settings(libraryDependencies ++= Seq(commonsIo))
+    .settings(libraryDependencies ++= Seq(macwire, commonsIo))
     .settings(frontendDistSettings(applicationName))
     .settingSets(settingSetsOrder)
   }
 
   def library(applicationName: String) = {
-    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
+    Project(applicationName, file(applicationName)).enablePlugins(PlayScala)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
     .settings(frontendClientSideSettings)

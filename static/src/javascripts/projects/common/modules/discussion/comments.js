@@ -192,16 +192,10 @@ Comments.prototype.fetchComments = function(options) {
         }
         promise = ajaxPromise(ajaxParams);
     }
-    return promise.then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
+    return promise.then(this.renderComments.bind(this));
 };
 
-Comments.prototype.goToPermalink = function(commentId) {
-    if (commentId) {
-        this.showHiddenComments();
-        $('.d-discussion__show-all-comments').addClass('u-h');
-        window.location.replace('#comment-' + commentId);
-    }
-};
+
 
 Comments.prototype.renderComments = function(resp) {
 
@@ -229,6 +223,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.emit('first-load');
+    $('.js-discussion-main-comments').css('display', 'block');
     if (shouldMakeTimestampsRelative()) {
         this.relativeDates();
     }

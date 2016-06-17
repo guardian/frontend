@@ -21,7 +21,8 @@
 }{
 
     <div class="adverts__row">
-        @events.map { event => @masterclassCard(event, clickMacro) }
+        @events.take(2).map { event => @masterclassCard(event, clickMacro) }
+        @events.slice(2, 4).map { event => @masterclassCard(event, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
     </div>
 
 }

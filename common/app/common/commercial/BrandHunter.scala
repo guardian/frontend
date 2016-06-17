@@ -1,28 +1,30 @@
 package common.commercial
 
 import common.Edition
-import model.{Branding, Section, Tag, Tags}
+import model.ContentType
 import org.joda.time.DateTime
 
 object BrandHunter {
 
-  def findSectionBranding(section: Section, publicationDate: Option[DateTime], edition: Edition): Option[Branding] = {
-    section.activeBrandings flatMap { brandings =>
-      brandings find (_.isTargeting(publicationDate, edition))
+  def findBranding(
+    activeBrandings: Option[Seq[Branding]],
+    edition: Edition,
+    publicationDate: Option[DateTime]
+  ): Option[Branding] = {
+    activeBrandings flatMap (_ find (_.isTargeting(publicationDate, edition)))
+  }
+
+  def findContentBranding(content: ContentType, edition: Edition): Option[Branding] = {
+    val publicationDate = Some(content.trail.webPublicationDate)
+
+    val brandingBySection = content.metadata.section.flatMap { section =>
+      findBranding(section.activeBrandings, edition, publicationDate)
     }
-  }
 
-  def findTagBranding(tag: Tag, publicationDate: Option[DateTime], edition: Edition): Option[Branding] = {
-    tag.properties.activeBrandings flatMap (_ find (_.isTargeting(publicationDate, edition)))
-  }
+    val brandingByTags = content.tags.tags.flatMap { tag =>
+      findBranding(tag.properties.activeBrandings, edition, publicationDate)
+    }.headOption
 
-  // difficult to find content's section at the moment so this param is temporarily optional
-  def findBranding(section: Option[Section],
-                   tags: Tags,
-                   publicationDate: Option[DateTime],
-                   edition: Edition): Option[Branding] = {
-    lazy val brandingBySection = section flatMap (findSectionBranding(_, publicationDate, edition))
-    lazy val brandingByTags = tags.tags.flatMap(findTagBranding(_, publicationDate, edition)).headOption
     brandingBySection orElse brandingByTags
   }
 }

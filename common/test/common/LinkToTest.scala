@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.Play
-import common.editions.{International, Uk}
+import common.editions.{Au, Us, International, Uk}
 import play.api.mvc.RequestHeader
 import test._
 import play.api.test.FakeRequest
@@ -12,6 +12,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   Play.unsafeApplication
 
   implicit val edition = Uk
+  implicit val editions = Seq(Uk,Us,Au)
   implicit val request = FakeRequest("GET", "/")
 
   object TestLinkTo extends LinkTo {
@@ -65,10 +66,14 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
-  it should "be https on https enabled sections" in {
-    TheGuardianLinkTo("/info/hello", edition) should be ("https://www.theguardian.com/info/hello")
-    TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("https://www.theguardian.com/info")
-    TheGuardianLinkTo("/info/foo", edition) should be ("https://www.theguardian.com/info/foo")
+  it should "be https on https-enabled sections whether editionalised or not" in {
+    for (ed <- editions) {
+      for (secureSection <- LinkTo.httpsEnabledSections) {
+        val expectedPath = if(ed.editionalisedSections.contains(secureSection)) s"${ed.id.toLowerCase}/$secureSection" else secureSection
+        TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/$expectedPath")
+        TheGuardianLinkTo(s"/$secureSection/foo", ed) should be (s"https://www.theguardian.com/$secureSection/foo")
+      }
+    }
   }
 
   it should "be https to amp" in {
@@ -79,13 +84,22 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("/", International) should be ("http://www.theguardian.com/international")
   }
 
-  it should "correctly link editionalised sections to the UK version for the International edition" in {
-    // Only the front page is different in the international edition, the others go to UK...
-    TheGuardianLinkTo("/culture", International) should be ("http://www.theguardian.com/uk/culture")
-    TheGuardianLinkTo("/sport", International) should be ("http://www.theguardian.com/uk/sport")
+  it should "correctly link editionalised sections" in {
+    for (edition <- editions) {
+      for (section <- edition.editionalisedSections) {
+        val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", edition)
+        val expectedPath = if(section.isEmpty) edition.networkFrontId else s"${edition.networkFrontId}/$section"
+        testLink should endWith (s"www.theguardian.com/$expectedPath")
+      }
+    }
   }
 
-
+  it should "correctly link editionalised sections to the UK version for the International edition" in {
+    // Only the front page is different in the international edition, the others go to UK...
+    for (section <- International.editionalisedSections.filterNot(_.isEmpty)) {
+      TheGuardianLinkTo(s"/$section", International) should endWith (s"www.theguardian.com/uk/$section")
+    }
+  }
 
   object TestCanonicalLink extends CanonicalLink
 
@@ -135,6 +149,12 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   it should "link to http explicitly for amp articles" in {
     val result = TestCanonicalLink(TestRequest("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen/amp").withHost("www.theguardian.com"), "http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
     result should be("http://www.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
+  }
+
+
+  it should "link to https for all paths and editions" in {
+    val result = TestCanonicalLink(TestRequest("/uk/technology").withHost("http://www.theguardian.com").withHeaders("X-Gu-Edition" -> Us.id), "https://www.theguardian.com/uk/technology")
+    result should be("https://www.theguardian.com/uk/technology")
   }
 
 }

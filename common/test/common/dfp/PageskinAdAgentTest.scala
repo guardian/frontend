@@ -2,7 +2,7 @@ package common.dfp
 
 import common.Edition.defaultEdition
 import common.editions.{Au, Uk, Us}
-import conf.Configuration.commercial.dfpAdUnitRoot
+import conf.Configuration.commercial.dfpAdUnitGuRoot
 import org.scalatest.{FlatSpec, Matchers}
 
 class PageskinAdAgentTest extends FlatSpec with Matchers {
@@ -10,7 +10,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   val examplePageSponsorships = Seq(
     PageSkinSponsorship("lineItemName",
       1234L,
-      Seq(s"$dfpAdUnitRoot/business/front"),
+      Seq(s"$dfpAdUnitGuRoot/business/front"),
       Seq(Uk),
       Seq("United Kingdom"),
       isR2Only = false,
@@ -18,7 +18,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       None),
     PageSkinSponsorship("lineItemName2",
       12345L,
-      Seq(s"$dfpAdUnitRoot/music/front"),
+      Seq(s"$dfpAdUnitGuRoot/music/front"),
       Nil,
       Nil,
       isR2Only = false,
@@ -26,7 +26,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       None),
     PageSkinSponsorship("lineItemName3",
       123456L,
-      Seq(s"$dfpAdUnitRoot/sport"),
+      Seq(s"$dfpAdUnitGuRoot/sport"),
       Nil,
       Nil,
       isR2Only = false,
@@ -34,7 +34,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       None),
     PageSkinSponsorship("lineItemName4",
       1234567L,
-      Seq(s"$dfpAdUnitRoot/testSport/front"),
+      Seq(s"$dfpAdUnitGuRoot/testSport/front"),
       Seq(Uk),
       Seq("United Kingdom"),
       isR2Only = false,
@@ -43,12 +43,12 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   )
 
   private object TestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = true
+    override protected val environmentIsProd: Boolean = true
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 
   private object NotProductionTestPageskinAdAgent extends PageskinAdAgent {
-    override protected val isProd: Boolean = false
+    override protected val environmentIsProd: Boolean = false
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
   }
 

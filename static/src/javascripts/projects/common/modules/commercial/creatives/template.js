@@ -1,16 +1,13 @@
 define([
     'Promise',
+    'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
     'common/modules/commercial/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
-    'text!common/views/commercial/creatives/logo-ad-feature.html',
-    'text!common/views/commercial/creatives/logo-sponsored.html',
+    'text!common/views/commercial/creatives/logo.html',
     'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
@@ -18,6 +15,7 @@ define([
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
+    config,
     template,
     fastdom,
     svgs,
@@ -54,28 +52,44 @@ define([
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
-        this.params.logoFeatureLabel = 'Paid for by';
     };
 
     Template.prototype.create = function () {
         return new Promise(function (resolve) {
-            if( this.params.creative === 'manual-single' ) {
-                this.params.originalCreative = 'manual-single';
+            if( this.params.creative === 'manual-single') {
+                this.params.type = 'single';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
-            }
-
-            if (this.params.creative === 'manual-multiple' ) {
+            } else if (this.params.creative === 'manual-multiple') {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
                 this.params.offerLinkText = this.params.offerlinktext;
 
-                this.params.originalCreative = 'manual-multiple';
+                this.params.type = 'multiple';
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            } else if (this.params.creative === 'manual-inline' && config.switches.refactorInlineComponent) {
+                this.params.omnitureId = this.params.omniture_id;
+                this.params.toneClass = this.params.Toneclass;
+                this.params.baseUrl = this.params.base_url;
+                this.params.offerTitle = this.params.offer_title;
+                this.params.offerUrl = this.params.offer_url;
+                this.params.offerImage = this.params.offer_image;
+                this.params.offerText = this.params.offer_meta;
+
+                this.params.creative = 'manual-container';
+                this.params.creativeCard = 'manual-card';
+                this.params.type = 'inline';
+                this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            } else if (this.params.creative === 'logo-ad-feature') {
+                this.params.creative = 'logo';
+                this.params.type = 'ad-feature';
+            } else if (this.params.creative === 'logo-sponsored') {
+                this.params.creative = 'logo';
+                this.params.type = 'sponsored';
             }
 
             require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {

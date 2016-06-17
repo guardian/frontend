@@ -1,6 +1,7 @@
 package common.commercial
 
-import conf.switches.Switches
+import common.Edition
+import conf.switches.Switches.containerBrandingFromCapi
 import model.facia.PressedCollection
 import views.support.{Commercial, SponsorDataAttributes}
 
@@ -8,9 +9,14 @@ case class ContainerModel(
                            id: String,
                            layoutName: String,
                            content: ContainerContent,
-                           branding: Option[SponsorDataAttributes]
-                         ){
-  val isSingleSponsorContainer: Boolean = branding.isDefined
+                           brandingAttributes: Option[SponsorDataAttributes],
+                           branding: Option[Branding]
+                         ) {
+  val isSingleSponsorContainer: Boolean = {
+    if (containerBrandingFromCapi.isSwitchedOn) {
+      branding.isDefined
+    } else brandingAttributes.isDefined
+  }
 }
 
 case class ContainerContent(
@@ -23,9 +29,9 @@ case class ContainerContent(
 
 object ContainerModel {
 
-  def fromPressedCollection(collection: PressedCollection): ContainerModel = {
+  def fromPressedCollection(edition: Edition)(collection: PressedCollection): ContainerModel = {
 
-    val cards = collection.curatedPlusBackfillDeduplicated map CardContent.fromPressedContent
+    val cards = collection.curatedPlusBackfillDeduplicated map CardContent.fromPressedContent(edition)
     val layoutName = collection.collectionType
 
     val content = {
@@ -61,22 +67,12 @@ object ContainerModel {
       )
     }
 
-    val branding = {
-      if (Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        val singleSponsorContainer = {
-          cards.nonEmpty && cards.forall(card => card.branding == cards.head.branding)
-        }
-        if (singleSponsorContainer) cards.head.branding else None
-      } else {
-        Commercial.container.mkSponsorDataAttributes(collection.config)
-      }
-    }
-
     ContainerModel(
       id = collection.id,
       layoutName,
       content,
-      branding
+      brandingAttributes = Commercial.container.mkSponsorDataAttributes(collection.config),
+      branding = collection.branding(edition)
     )
   }
 }

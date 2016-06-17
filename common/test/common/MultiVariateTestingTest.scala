@@ -1,62 +1,84 @@
-package common
+package mvt
 
-import conf.switches.{Expiry, Switches}
-import mvt.MultiVariateTesting._
-import mvt.{TestDefinition, MultiVariateTesting, Tests}
+import conf.switches.Owner
 import org.joda.time.LocalDate
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
+import play.api.mvc.RequestHeader
 import test.TestRequest
 
 class MultiVariateTestingTest extends FlatSpec with Matchers {
 
   conf.switches.Switches.ServerSideTests.switchOn
 
-  "active mvt tests" should "not have duplicate variants" in {
-    val variantsInUse = mvt.ActiveTests.tests.flatMap(_.variants)
-    variantsInUse.size should equal (variantsInUse.distinct.size)
-  }
-
-  "a request with a valid test header" should "be assigned to the appropriate test" in {
-    TestCases.test1.switch.switchOn
-    val testRequest = TestRequest("/uk")
-      .withHeaders(
-        "X-GU-mvt-variant" -> "variant-9"
-      )
-    MultiVariateTesting.getVariant(testRequest) should be (Some(Variant9))
-    TestCases.isParticipatingInATest(testRequest) should be (true)
-    TestCases.getParticipatingTest(testRequest) should be (Some(TestCases.test1))
-    TestCases.test1.switch.switchOff
-  }
-
-  "a request with an invalid test header" should "be ignored" in {
-    val testRequest = TestRequest("/uk")
-      .withHeaders(
-        "X-GU-mvt-variant" -> "variant-invalid"
-      )
-    MultiVariateTesting.getVariant(testRequest) should be (None)
-    TestCases.isParticipatingInATest(testRequest) should be (false)
-    TestCases.getParticipatingTest(testRequest) should be (None)
-  }
-
   "a test definition" should "have a default switch state to off" in {
     TestCases.test0.switch.isSwitchedOff should be (true)
   }
 
-  object TestCases extends Tests {
+  "A test definition" should "know if a given request is participating" in EnabledTests {
+    val testRequest = TestRequest("/uk")
+      .withHeaders(
+        "X-GU-Test1" -> "test1variant"
+      )
+    TestCases.test0.isParticipating(testRequest) should be (true)
+    TestCases.test1.isParticipating(testRequest) should be (true)
+    TestCases.test2.isParticipating(testRequest) should be (false)
+  }
+
+  "ActiveTests" should "returns proper javascript config" in EnabledTests {
+    object AllAbTests extends ServerSideABTests {
+      val tests: Seq[TestDefinition] = TestCases.tests
+    }
+    val testRequest = TestRequest("/myPage")
+      .withHeaders(
+        "X-GU-Test2" -> "test2variant"
+      )
+    val jsConfig = AllAbTests.getJavascriptConfig(testRequest)
+    jsConfig should be("\"test0\" : true,\"test2\" : true")
+
+  }
+
+  object TestCases {
     object test0 extends TestDefinition(
-      List(Variant8),
       "test0",
       "an experiment test",
+      Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1)
-
-    )
+    ) {
+      def canRun(implicit request: RequestHeader): Boolean = true
+    }
     object test1 extends TestDefinition(
-      List(Variant8, Variant9),
       "test1",
-      "an experiment test",
+      "another experiment test",
+      Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1)
-    )
+    ) {
+      def canRun(implicit request: RequestHeader): Boolean = {
+        request.headers.get("X-GU-Test1").contains("test1variant")
+      }
+    }
+    object test2 extends TestDefinition(
+      "test2",
+      "still another experiment test",
+      Seq(Owner.withName("Fake owner")),
+      new LocalDate(2100, 1, 1)
+    ) {
+      def canRun(implicit request: RequestHeader): Boolean = {
+        request.headers.get("X-GU-Test2").contains("test2variant")
+      }
+    }
 
-    val tests = List(test0, test1)
+    val tests = List(test0, test1, test2)
   }
+
+  trait EnabledTests {
+
+    def apply[T](block: => T): T = {
+      TestCases.tests.foreach(_.switch.switchOn)
+      val result = block
+      TestCases.tests.foreach(_.switch.switchOff)
+      result
+    }
+  }
+
+  object EnabledTests extends EnabledTests
 }

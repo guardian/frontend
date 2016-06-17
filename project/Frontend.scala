@@ -1,15 +1,12 @@
 package com.gu
 
-import sbt._
-import sbt.Keys._
-import play.Play.autoImport._
-import PlayKeys._
-import play._
-import play.sbt._
+import com.gu.Dependencies._
+import com.typesafe.sbt.web.Import._
+import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
-import com.typesafe.sbt.web.Import._
-import Dependencies._
+import sbt.Keys._
+import sbt._
 
 object Frontend extends Build with Prototypes {
 
@@ -25,12 +22,8 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
-      faciaScalaClient,
       filters,
-      googleSheetsApi,
       guardianConfiguration,
-      jacksonCore,
-      jacksonMapper,
       jodaConvert,
       jodaTime,
       jSoup,
@@ -42,7 +35,6 @@ object Frontend extends Build with Prototypes {
       scalaCheck,
       scalajTime,
       scalaz,
-      snappyJava,
       ws,
       faciaFapiScalaClient,
       dispatchTest,
@@ -102,8 +94,7 @@ object Frontend extends Build with Prototypes {
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources,
-      openCsv
+      uaDetectorResources
     )
   )
 
@@ -111,7 +102,6 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       paClient,
       dfpAxis,
-      anormModule,
       bootstrap,
       jquery,
       jqueryui,

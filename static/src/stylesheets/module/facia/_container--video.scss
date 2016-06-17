@@ -15,6 +15,10 @@ $video-width-desktop: 700px;
 
         @include mq(leftCol) {
             display: none;
+
+            .has-page-skin & {
+                display: block;
+            }
         }
     }
 
@@ -91,6 +95,10 @@ $video-width-desktop: 700px;
     }
 }
 
+.fc-container--video-no-fill-sides {
+    background-color: transparent;
+}
+
 .video-title {
     color: $media-default;
     display: block;
@@ -107,7 +115,11 @@ $video-width-desktop: 700px;
     overflow: hidden;
 
     @include mq(desktop, leftCol) {
-        background-color: darken($media-background, 5%); 
+        background-color: darken($media-background, 5%);
+
+        .has-page-skin & {
+            background-color: transparent;
+        }
     }
 }
 
@@ -171,10 +183,18 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         width: gs-span(2) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2);
+        }
     }
 
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2);
+        }
     }
 
     .video-playlist__icon {
@@ -191,10 +211,18 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         width: gs-span(3) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2);
+        }
     }
 
     @include mq(wide) {
         width: gs-span(4) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2);
+        }
     }
 
     .video-playlist__icon {
@@ -246,10 +274,18 @@ $video-width-desktop: 700px;
 .video-playlist__item--first {
     @include mq(desktop, leftCol) {
         margin-left: gs-span(2);
+
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
 
     @include mq(leftCol) {
         margin-left: 0;
+
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
 }
 
@@ -281,6 +317,10 @@ $video-width-desktop: 700px;
 
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2) + $gs-gutter * 2;
+        }
     }
 
     .inline-guardian-video-logo svg {
@@ -291,6 +331,10 @@ $video-width-desktop: 700px;
             fill: #ffffff;
         }
     }
+
+    .has-page-skin & {
+        display: none;
+    }
 }
 
 .video-playlist__item--first {
@@ -300,6 +344,10 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         margin-left: 0;
+
+        .has-page-skin & {
+            margin-left: gs-span(2);
+        }
     }
 }
 
@@ -350,8 +398,8 @@ $video-width-desktop: 700px;
         }
     }
 
-    .inline-video-icon {
-        display: none;
+    .inline-icon svg {
+        position: relative;
     }
 
     .fc-item__title--quoted .inline-quote {

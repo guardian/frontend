@@ -6,7 +6,7 @@ import org.scalatestplus.play.OneAppPerSuite
 
 class RelativePathEscaperTest extends FlatSpec with Matchers with OneAppPerSuite {
   "RelativePathEscaper" should "escape javascript paths in Static.js.curl" in {
-    val curlJs = Static.js.curl
+    val curlJs = common.Assets.js.curl
     val escapedCurlJs = RelativePathEscaper.escapeLeadingDotPaths(curlJs)
     escapedCurlJs should include ("[\"..\" + \"/\" + \"domReady\"]")
   }

@@ -1,0 +1,15 @@
+<%if (complete) { %>
+    <div aria-hidden="true">
+        <%=buttons%>
+    </div>
+<%} else {%>
+    <%=buttons%>
+<% } %>
+
+<%if (confirming) { %>
+    <button class="button participation-low-fric__confirm js-participation-low-fric__confirm" data-link-name="participation: low-friction: confirm"><%=confirmButton%></button>
+<% } %>
+
+<%if (complete) { %>
+    <p class="participation-low-fric__after"><%=testMessage%></p>
+<% } %>

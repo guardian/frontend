@@ -3,6 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
@@ -12,6 +13,7 @@ define([
     fastdom,
     qwery,
     $,
+    createAdSlot,
     userPrefs,
     fixtures,
     Injector,
@@ -27,7 +29,12 @@ define([
             injector = new Injector(),
             sliceAdverts, config, detect, commercialFeatures;
 
+        var createSlotSpy = jasmine.createSpy('create-ad-slot').and.callFake(createAdSlot);
+
         beforeEach(function (done) {
+            createSlotSpy.calls.reset();
+            injector.mock('common/modules/commercial/create-ad-slot', createSlotSpy);
+
             injector.require([
                 'common/modules/commercial/slice-adverts',
                 'common/modules/commercial/commercial-features',
@@ -44,13 +51,7 @@ define([
                     isFront: true
                 };
 
-                config.switches = {
-                    fabricAdverts : false
-                };
-
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
+                detect.isBreakpoint = mockIsBreakpoint('desktop');
 
                 commercialFeatures.sliceAdverts = true;
 
@@ -78,6 +79,10 @@ define([
         });
 
         it('should remove the "fc-slice__item--no-mpu" class', function (done) {
+            detect.getBreakpoint = function () {
+                return 'desktop';
+            };
+
             sliceAdverts.init();
 
             fastdom.defer(function () {
@@ -89,7 +94,7 @@ define([
             });
         });
 
-        it('should have the correct ad names', function (done) {
+        it('should have the correct ad names', function (done){
             sliceAdverts.init();
 
             fastdom.defer(function () {
@@ -104,17 +109,15 @@ define([
         });
 
         it('should have the correct ad names on mobile', function (done) {
-            detect.getBreakpoint = function () {
-                return 'mobile';
-            };
+            detect.isBreakpoint = mockIsBreakpoint('mobile');
             sliceAdverts.init();
 
             fastdom.defer(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
-                expect($adSlots[0].data('name')).toEqual('inline1');
-                expect($adSlots[1].data('name')).toEqual('inline2');
-                expect($adSlots[2].data('name')).toEqual('inline3');
+                expect($adSlots[0].data('name')).toEqual('top-above-nav');
+                expect($adSlots[1].data('name')).toEqual('inline1');
+                expect($adSlots[2].data('name')).toEqual('inline2');
 
                 done();
             });
@@ -127,16 +130,33 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250');
-                    expect($adSlot.data('mobile-landscape')).toEqual('1,1|300,250');
-                    expect($adSlot.data('tablet')).toEqual('1,1|300,250');
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
+                });
+
+                done();
+            });
+        });
+
+        it('should have the correct size mappings on mobile', function (done) {
+            detect.isBreakpoint = mockIsBreakpoint('mobile');
+            sliceAdverts.init();
+
+            fastdom.defer(function () {
+                $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,71|fluid');
+                    expect($adSlot.data('tablet')).toEqual('1,1|300,250|fluid');
+                });
+                $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
+                    var $adSlot = bonzo(adSlot);
+
+                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
                 });
 
                 done();
@@ -162,12 +182,17 @@ define([
 
         it('should not add ad to first container if network front', function (done) {
             config.page.pageId = 'uk';
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return false;
+            };
             sliceAdverts.init();
 
             fastdom.defer(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
+                detect.isBreakpoint = oldis;
                 done();
             });
         });
@@ -187,34 +212,35 @@ define([
             });
         });
 
-        describe('Fabric ads', function () {
+        describe('Top slot replacement', function () {
             beforeEach(function () {
-                config.switches.fabricAdverts = true;
+                // To be sure that any slots added are top slot replacements, we set the page to a network front,
+                // where adverts will normally never appear on the first container.
+                config.page.pageId = 'uk';
             });
 
-            it('can be added on mobile', function (done) {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return true;
-                };
+            it('is added on mobile', function (done) {
+                detect.isBreakpoint = mockIsBreakpoint('mobile');
                 sliceAdverts.init();
+
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
                     done();
                 });
             });
 
             it('is not added on desktop', function (done) {
-                detect.isBreakpoint = function () {
-                    // expecting check for breakpoint <= phablet
-                    return false;
-                };
+                detect.isBreakpoint = mockIsBreakpoint('desktop');
+
                 sliceAdverts.init();
+
                 fastdom.defer(function () {
-                    expect(qwery('.fc-container-first .ad-slot--fabric', $fixtureContainer).length).toBe(0);
+                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                     done();
                 });
             });
+
+
         });
 
         //TODO: get data if we need to reintroduce this again
@@ -229,5 +255,29 @@ define([
                 done();
             });
         });
+
+        function mockIsBreakpoint(current) {
+
+            return function (query) {
+                var maxBreakpoint = getBreakpoint(query.max);
+                var maxSize = maxBreakpoint ? maxBreakpoint.width : Infinity;
+
+                var minBreakpoint = getBreakpoint(query.min);
+                var minSize = minBreakpoint ? minBreakpoint.width : 0;
+
+                var mockSize = getBreakpoint(current).width;
+                return minSize <= mockSize && mockSize <= maxSize;
+            };
+
+            function getBreakpoint(name) {
+                var breakpoints = detect.breakpoints;
+                for (var i = 0; i < breakpoints.length; i++) {
+                    if (breakpoints[i].name === name) {
+                        return breakpoints[i];
+                    }
+                }
+                return undefined;
+            }
+        }
     });
 });

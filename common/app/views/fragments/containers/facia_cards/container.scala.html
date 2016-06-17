@@ -1,8 +1,7 @@
 @import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
-@import conf.switches.Switches
 @import layout.MetaDataHeader
-@import slices.{CommercialContainerType, Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
 @import views.html.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
@@ -14,33 +13,16 @@
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
 
-@renderCommercialContainer(containerType: CommercialContainerType) = {
-    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
-    @commercialContainer(containerType, containerDefinition, frontProperties)
-    </div>
-}
-
 @renderBrandingDataAttributes() = {
-    @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn) {
-        @for(container <- maybeContainerModel) {
-            @for(branding <- container.branding) {
-                @for(sponsor <- branding.sponsor){data-sponsor="@sponsor"}
-                @for(seriesId <- branding.seriesId) { data-series="@seriesId" }
-                @for(keywordId <- branding.keywordId) { data-keywords="@keywordId" }
-                data-sponsorship="@branding.sponsorshipType"
-            }
+    @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
+    @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+        @tag.tagType match {
+            case Series => { data-series="@{ tag.tagId}"}
+            case Keyword => { data-keywords="@{ tag.tagId}"}
         }
-    } else {
-        @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
-        @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-            @tag.tagType match {
-                case Series => { data-series="@{ tag.tagId}"}
-                case Keyword => { data-keywords="@{ tag.tagId}"}
-            }
-        }
-        @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-        data-sponsorship="@sponsorshipType"
-        }
+    }
+    @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
+    data-sponsorship="@sponsorshipType"
     }
 }
 
@@ -55,7 +37,7 @@
     @containerDefinition.container match {
         case _: model.MostPopular if isPaidFront => {}
 
-        case _: Fixed if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+        case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)
@@ -64,37 +46,42 @@
             }
         }
 
+        case slices.Commercial(SingleCampaign(_)) => {
+            @maybeContainerModel match {
+                case Some(containerModel) => {
+                    @paidContainer(
+                        frontId.getOrElse(""),
+                        containerDefinition.index,
+                        containerModel.copy(
+                            layoutName = "fixed/small/slow-IV",
+                            content = containerModel.content.copy(showMoreCards = Nil)
+                        )
+                    )
+                }
+                case None => {}
+            }
+        }
+
         case _ => {
         <section id="@componentName"
-        class="@GetClasses.forContainerDefinition(containerDefinition)
-        @if(Switches.cardsDecidePaidContainerBranding.isSwitchedOn){
-            @for(container <- maybeContainerModel){
-                @if(container.isSingleSponsorContainer){ js-sponsored-container }
-            }
-        }"
-        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-        data-id="@containerDefinition.dataId"
-        @renderBrandingDataAttributes()
-        data-component="@componentName"
-        aria-expanded="true">
+                 class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
+                 data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                 data-id="@containerDefinition.dataId"
+                 @renderBrandingDataAttributes()
+                 data-component="@componentName"
+                 aria-expanded="true">
 
             @if(containerDefinition.isStoryPackage){
-                @conf.Static.css.inline("story-package").map { css =>
-                    <style>
-                        @Html(css)
-                    </style>
-                }
+                <style>
+                @Html(common.Assets.css.inlineStoryPackage)
+                </style>
             }
 
             @containerDefinition.container match {
 
-                case Fixed(definition) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, None) => {
-                    @renderCommercialContainer(SingleCampaign(definition))
-                }
-
                 case _: Dynamic | _: Fixed => {
                     <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties)
+                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
                     </div>
                 }
 
@@ -123,7 +110,9 @@
                 }
 
                 case slices.Commercial(container) => {
-                    @renderCommercialContainer(container)
+                    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
+                        @commercialContainer(container, containerDefinition, frontProperties)
+                    </div>
                 }
             }
         </section>

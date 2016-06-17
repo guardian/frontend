@@ -1,8 +1,12 @@
 define([
     'common/views/svgs',
+    'common/utils/config',
     'common/utils/template',
     'lodash/objects/assign',
     'lodash/utilities/identity',
+    'text!common/views/commercial/creatives/logo-header.html',
+    'text!common/views/commercial/creatives/logo-link.html',
+    'text!common/views/commercial/creatives/logo-about.html',
     'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
@@ -15,9 +19,13 @@ define([
     'text!common/views/commercial/creatives/manual-container-cta-membership.html'
 ], function (
     svgs,
+    config,
     template,
     assign,
     identity,
+    logoHeaderStr,
+    logoLinkStr,
+    logoAboutStr,
     manualInlineButtonStr,
     gimbapSimpleStr,
     gimbapRichmediaStr,
@@ -29,6 +37,9 @@ define([
     manualContainerCtaSoulmatesStr,
     manualContainerCtaMembershipStr
 ) {
+    var logoAboutTpl;
+    var logoLinkTpl;
+    var logoHeaderTpl;
     var manualInlineButtonTpl;
     var gimbapSimpleTpl;
     var gimbapRichmediaTpl;
@@ -42,6 +53,41 @@ define([
     var manualContainerCtaTpl;
     var manualContainerCtaSoulmatesTpl;
     var manualContainerCtaMembershipTpl;
+
+    function preprocessLogo(tpl) {
+        logoHeaderTpl || (logoHeaderTpl = template(logoHeaderStr));
+        logoLinkTpl || (logoLinkTpl = template(logoLinkStr));
+        logoAboutTpl || (logoAboutTpl = template(logoAboutStr));
+        if (tpl.params.type === 'ad-feature') {
+            tpl.params.header = logoHeaderTpl({ header: 'Paid for by' });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = '';
+            tpl.params.aboutLink = '';
+        } else if (tpl.params.type === 'sponsored') {
+            tpl.params.header = logoHeaderTpl({ header: 'Supported by' });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = '';
+            tpl.params.aboutLink = logoAboutTpl(tpl.params);
+        } else if (tpl.params.type === 'funded'){
+            tpl.params.header = logoHeaderTpl({
+                header: !config.page.isFront && config.page.sponsorshipTag ?
+                    config.page.sponsorshipTag + ' is supported by' :
+                    'Supported by'
+            });
+            tpl.params.logo = logoLinkTpl(tpl.params);
+            tpl.params.partners = !tpl.params.hasPartners ? '' :
+                logoHeaderTpl({ header: 'In partnership with:' }) +
+                logoLinkTpl({
+                    clickMacro: tpl.params.clickMacro,
+                    logoUrl: tpl.params.partnerOneLogoUrl,
+                    logoImage: tpl.params.partnerOneLogoImage }) +
+                logoLinkTpl({
+                    clickMacro: tpl.params.clickMacro,
+                    logoUrl: tpl.params.partnerTwoLogoUrl,
+                    logoImage: tpl.params.partnerTwoLogoImage });
+            tpl.params.aboutLink = logoAboutTpl(tpl.params);
+        }
+    }
 
     function preprocessManualInline(tpl) {
         if (!manualInlineButtonTpl) {
@@ -131,14 +177,19 @@ define([
             tpl.params.title = tpl.params.logomembership + '<span class="u-h">The Guardian Membership</span>';
             tpl.params.ctas = manualContainerCtaMembershipTpl(tpl.params);
 
-        } else {
+        } else if (tpl.params.type !== 'inline'){
             manualContainerCtaTpl || (manualContainerCtaTpl = template(manualContainerCtaStr));
             tpl.params.title = tpl.params.marque54icon + tpl.params.logoguardian + '<span class="u-h">The Guardian</span>' + tpl.params.title;
             tpl.params.blurb = tpl.params.explainer || '';
             tpl.params.ctas = tpl.params.viewalltext ? manualContainerCtaTpl(tpl.params) : '';
+
+        } else {
+            tpl.params.title = tpl.params.marque36icon + tpl.params.component_title;
+            tpl.params.blurb = tpl.params.ctas = '';
         }
 
-        if (tpl.params.originalCreative === 'manual-multiple') {
+        if (tpl.params.type === 'multiple') {
+            tpl.params.row = true;
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
                 return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.creativeCard]({
                     clickMacro:          tpl.params.clickMacro,
@@ -146,26 +197,49 @@ define([
                     offerImage:          tpl.params['offer' + index + 'image'],
                     offerTitle:          tpl.params['offer' + index + 'title'],
                     offerText:           tpl.params['offer' + index + 'meta'],
-                    cta:                 tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText ? manualCardCtaTpl({
+                    cta:                 tpl.params.showCtaLink !== 'hide-cta-link' && (tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText) ? manualCardCtaTpl({
                         offerLinkText:       tpl.params['offer' + index + 'linktext'] || tpl.params.offerLinkText,
-                        arrowRight:          tpl.params.arrowRight
+                        arrowRight:          tpl.params.arrowRight,
+                        classNames:          ''
                     }) : '',
-                    classNames:          [tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                    classNames:          [index > 2 ? 'hide-until-tablet' : ''].concat(['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); })).join(' ')
                 }) : null;
             }).filter(identity).join('');
-        } else {
+        } else if (tpl.params.type === 'single') {
+            tpl.params.row = true;
             tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
                 clickMacro:          tpl.params.clickMacro,
                 offerUrl:            tpl.params.offerUrl,
                 offerImage:          tpl.params.offerImage,
                 offerTitle:          tpl.params.offerTitle,
                 offerText:           tpl.params.offerText,
-                cta:                 tpl.params.offerlinktext ? manualCardCtaTpl({
-                    offerLinkText:       tpl.params.offerlinktext,
-                    arrowRight:          tpl.params.arrowRight
+                cta:                 tpl.params.showCtaLink !== 'hide-cta-link' && tpl.params.viewAllText ? manualCardCtaTpl({
+                    offerLinkText:       tpl.params.viewAllText,
+                    arrowRight:          tpl.params.arrowRight,
+                    classNames:          'button--tertiary'
                 }) : '',
-                classNames:          ['landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
-            }) + manualContainerButtonTpl(tpl.params);
+                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+            }) + manualContainerButtonTpl({
+                baseUrl:             tpl.params.baseUrl,
+                clickMacro:          tpl.params.clickMacro,
+                offerLinkText:       tpl.params.offerLinkText,
+                arrowRight:          tpl.params.arrowRight
+            });
+        } else {
+            tpl.params.row = false;
+            tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
+                clickMacro:          tpl.params.clickMacro,
+                offerUrl:            tpl.params.offerUrl,
+                offerImage:          tpl.params.offerImage,
+                offerTitle:          tpl.params.offerTitle,
+                offerText:           tpl.params.offerText,
+                cta:                 tpl.params.show_button === 'no' ? '' : manualCardCtaTpl({
+                    offerLinkText:       'Click here',
+                    arrowRight:          tpl.params.arrowRight,
+                    classNames:          'button--primary'
+                }),
+                classNames:          ['inline', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+            });
         }
     }
 
@@ -200,6 +274,7 @@ define([
     }
 
     return {
+        'logo': preprocessLogo,
         'manual-inline': preprocessManualInline,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,

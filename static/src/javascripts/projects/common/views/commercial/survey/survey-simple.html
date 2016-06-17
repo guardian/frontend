@@ -1,35 +1,29 @@
-<div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="loyal adblocking survey overlay" role="dialog" aria-label="take part in our survey">
+<div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
     <div class="survey-container">
-        <% if (showCloseBtn) { %>
-        <div class="survey-close js-survey-close">
-            <button class="site-message__close-btn js-site-message-close" data-link-name="hide survey message">
-                <span class="u-h">Close</span>
-                <%=crossIcon%>
-            </button>
-        </div>
-        <% } %>
-        <% if (marque36icon) { %>
-        <div class="survey-logo">
-            <%=marque36icon%>
-        </div>
-        <% } %>
-        <div class="survey-icon">
-            <%=surveyOverlaySimple%>
-        </div>
         <h3 class="survey-text__header">
-            <%=surveyHeader%>
-        </h3>
-        <div class="survey-content">
-            <div class="survey-text">
-                <p class="survey-text__info">
-                    <%=surveyText%>
-                </p>
-                <div class="survey-links">
-                    <div class="survey-link">
-                        <a class="survey-link__takepart js-survey-link__takepart" href="<%=buttonLink%>" target="_blank" data-link-name="<%=buttonDataLink%>"><%=buttonText%><%=arrowWhiteRight%></a>
-                    </div>
-                </div>
+            <%=header%>
+            <% if (showCloseBtn) { %>
+            <div class="survey-close js-survey-close">
+                <button class="site-message__close-btn js-site-message-close" data-link-name="hide about hosted message">
+                    <span class="u-h">Close</span>
+                    <%=crossIcon%>
+                </button>
             </div>
+            <% } %>
+        </h3>
+        <div class="survey-icon">
+            <%=paidContent%>
+        </div>
+        <div class="survey-text">
+            <p class="survey-text__paragraph">
+                <%=paragraph1%>
+            </p>
+            <p class="survey-text__paragraph">
+                <%=paragraph2%>
+            </p>
+            <p class="survey-text__paragraph">
+                <%=paragraph3%>
+            </p>
         </div>
     </div>
 </div>

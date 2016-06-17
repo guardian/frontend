@@ -1,0 +1,47 @@
+.hostedbadge {
+    position: relative;
+    margin-left: $gs-gutter;
+    width: 80px;
+    z-index: $zindex-content;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.hostedbadge--shouldscale {
+    @include mq(desktop) {
+        width: 132px;
+    }
+}
+
+.hostedbadge--pushdown {
+    top: 0;
+}
+
+.hostedbadge__info {
+    @include f-headlineSans;
+    @include font-size(13, 11);
+
+    height: auto;
+    padding: 3px 0 2px;
+    color: $neutral-1;
+    margin: 0;
+    text-align: center;
+
+    @include mq(desktop) {
+        .hostedbadge--shouldscale & {
+            padding: 0;
+            font-size: 16px;
+            line-height: 28px;
+        }
+    }
+}
+
+.hostedbadge__logo {
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 100%;
+}

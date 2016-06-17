@@ -13,6 +13,11 @@ define([
 ) {
 
     function init() {
+
+        if (config.page.hasHighMerchandisingTarget) {
+         return false;
+        }
+
         if (!commercialFeatures.frontCommercialComponents) {
             return false;
         }

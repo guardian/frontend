@@ -3,13 +3,9 @@
     For example "comments throwing an exception should not stop auto refresh"
  */
 define([
-    'common/utils/report-error',
-    'lodash/collections/forEach',
-    'lodash/collections/map'
+    'common/utils/report-error'
 ], function (
-    reportError,
-    forEach,
-    map
+    reportError
 ) {
     var catchErrors = function (fn) {
         var error;
@@ -39,7 +35,7 @@ define([
     };
 
     var catchErrorsAndLogAll = function (modules) {
-        forEach(modules, function (pair) {
+        modules.forEach(function (pair) {
             var name = pair[0];
             var fn = pair[1];
             catchErrorsAndLog(name, fn);
@@ -47,7 +43,7 @@ define([
     };
 
     function makeBlocks(codeBlocks) {
-        return map(codeBlocks, function (record) {
+        return codeBlocks.map(function (record) {
             return catchErrorsAndLog.bind(this, record[0], record[1]);
         });
     }

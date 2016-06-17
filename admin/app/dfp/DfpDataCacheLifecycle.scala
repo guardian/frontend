@@ -1,12 +1,21 @@
 package dfp
 
 import common.dfp.{GuAdUnit, GuCreativeTemplate}
-import common.{AkkaAsync, ExecutionContexts, Jobs}
-import play.api.{Application, GlobalSettings}
+import common._
+import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
+class DfpDataCacheLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobScheduler: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
+
+  appLifecycle.addStopHook { () => Future {
+    jobs foreach { job =>
+      jobScheduler.deschedule(job.name)
+    }
+  }}
 
   trait Job[T] {
     val name: String
@@ -38,6 +47,12 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
       val name = "DFP-TargetingValues-Update"
       val interval = 30
       def run() = CustomTargetingValueAgent.refresh()
+    },
+
+    new Job[Unit] {
+      val name: String = "DFP-CustomTargeting-Store"
+      val interval: Int = 15
+      def run() = CustomTargetingKeyValueJob.run()
     },
 
     new Job[DataCache[Long, Seq[String]]] {
@@ -84,27 +99,19 @@ trait DfpDataCacheLifecycle extends GlobalSettings with ExecutionContexts {
 
   )
 
-  override def onStart(app: Application) {
-    super.onStart(app)
-
+  override def start() = {
     jobs foreach { job =>
-      Jobs.deschedule(job.name)
-      Jobs.scheduleEveryNMinutes(job.name, job.interval) {
+      jobScheduler.deschedule(job.name)
+      jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {
         job.run().map(_ => ())
       }
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()
+      CustomTargetingKeyValueJob.run()
     }
-  }
-
-  override def onStop(app: Application) {
-    jobs foreach { job =>
-      Jobs.deschedule(job.name)
-    }
-    super.onStop(app)
   }
 }

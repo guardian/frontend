@@ -22,3 +22,13 @@
 .media-body {
     position: relative;
 }
+
+.inline-icon--media {
+    // Sizes in ems to keep scale proportionate as the text size grows or shrinks
+    margin-right: .1em;
+
+    svg {
+        width: .86em;
+        height: 100%;
+    }
+}

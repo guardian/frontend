@@ -1,11 +1,10 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
-@import common.{Edition, Navigation}
-@import conf.switches.Switches._
+
+@import common.{Edition, Navigation, commercial}
+@import conf.switches.Switches.{BreakingNewsSwitch, ForceOneByOnePxSlotSwitch}
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
 @import model.Page.getContent
-@import model.GalleryPage
-@import layout.ContentWidths.MainMedia
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
@@ -27,39 +26,6 @@
     }
 }
 
-@immersiveMainMedia(page: GalleryPage) = {
-    <div class="new-gallery content tonal--tone-media immersive-main-media">
-        @defining(
-            page.item.content.trail.trailPicture.head
-        ) { picture =>
-            @fragments.image(
-                picture = picture,
-                classes = Seq("immersive-main-media__img"),
-                widths = MainMedia.immersive,
-                imageAltText = "",
-                isImmersiveMainMedia = true
-            )
-        }
-        <div class="immersive-main-media__headline-container">
-            <div class="gs-container">
-
-                @fragments.meta.metaInline(page.item)
-
-                <h1 class="content__headline content__headline--immersive content__headline--immersive--with-main-media">
-                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill")) @Html(page.item.trail.headline)
-                </h1>
-
-                @if(page.item.content.hasTonalHeaderByline) {
-                    @page.item.trail.byline.map { text =>
-                        <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
-                    }
-                }
-
-            </div>
-        </div>
-    </div>
-}
-
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 <head>
@@ -76,7 +42,7 @@
             ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-            ("childrens-books-site", page.metadata.section == "childrens-books-site"),
+            ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
@@ -87,13 +53,14 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.GalleryPage if mvt.ABGalleryRedesignVariant.isParticipating => {
+            case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {
                 <div class="immersive-header-container">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
-                    @immersiveMainMedia(page)
+                    @fragments.immersiveMainMedia(page)
                 </div>
             }
+            case _: commercial.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }
@@ -130,7 +97,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(requestOutOfPageSlotAlways.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(ForceOneByOnePxSlotSwitch.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

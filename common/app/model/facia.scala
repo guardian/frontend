@@ -1,5 +1,6 @@
 package model
 
+import common.commercial.{BrandHunter, Branding}
 import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json
 
@@ -54,13 +55,16 @@ case class FrontProperties(
   imageHeight: Option[String],
   isImageDisplayed: Boolean,
   editorialType: Option[String],
-  branding: Option[Branding]
-)
+  activeBrandings: Option[Seq[Branding]]
+) {
+  def branding(edition: Edition): Option[Branding] =
+    BrandHunter.findBranding(activeBrandings, edition, publicationDate = None)
+}
 
 object FrontProperties {
   implicit val jsonFormat = Json.format[FrontProperties]
 
   val empty = FrontProperties(None, None, None, None, false, None, None)
 
-  def fromBranding(branding: Branding): FrontProperties = empty.copy(branding = Some(branding))
+  def fromBranding(branding: Branding): FrontProperties = empty.copy(activeBrandings = Some(Seq(branding)))
 }

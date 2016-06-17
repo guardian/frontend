@@ -2,9 +2,11 @@ package ophan
 
 import common.{AkkaAsync, Jobs, _}
 import org.joda.time.DateTime
+import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.{JsArray, JsValue}
-import play.api.{GlobalSettings, Application => PlayApp}
 import services.OphanApi
+
+import scala.concurrent.{ExecutionContext, Future}
 
 object SurgingContentAgent extends Logging with ExecutionContexts {
 
@@ -57,24 +59,25 @@ object SurgeUtils {
   }
 }
 
-trait SurgingContentAgentLifecycle extends GlobalSettings {
-  override def onStart(app: PlayApp) {
-    super.onStart(app)
+class SurgingContentAgentLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
-    Jobs.deschedule("SurgingContentAgentRefreshJob")
+  appLifecycle.addStopHook { () => Future {
+    jobs.deschedule("SurgingContentAgentRefreshJob")
+  }}
+
+  override def start() = {
+    jobs.deschedule("SurgingContentAgentRefreshJob")
 
     // update every 30 min, on the 51st second past the minute (e.g 13:09:51, 13:39:51)
-    Jobs.schedule("SurgingContentAgentRefreshJob",  "51 9/30 * * * ?") {
+    jobs.schedule("SurgingContentAgentRefreshJob", "51 9/30 * * * ?") {
       SurgingContentAgent.update()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       SurgingContentAgent.update()
     }
-  }
-
-  override def onStop(app: PlayApp) {
-    Jobs.deschedule("SurgingContentAgentRefreshJob")
-    super.onStop(app)
   }
 }

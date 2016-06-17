@@ -1,6 +1,8 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
+    'common/modules/commercial/ad-sizes',
+    'common/modules/commercial/dfp/track-ad-load',
     'common/utils/$',
     'common/utils/create-store',
     'common/utils/mediator',
@@ -10,6 +12,8 @@ define([
 ], function (
     fastdom,
     Promise,
+    adSizes,
+    trackAd,
     $,
     createStore,
     mediator,
@@ -35,13 +39,7 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = new Promise(function (resolve) {
-        mediator.on('modules:commercial:dfp:rendered', function (event) {
-            var dfpAdSlotId = 'dfp-ad--top-above-nav';
-            var isEventForTopAdBanner = event.slot.getSlotElementId() === dfpAdSlotId;
-            if (isEventForTopAdBanner) { resolve(); }
-        });
-    });
+    var topAdRenderedPromise = trackAd('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
@@ -76,10 +74,10 @@ define([
         var $iframe = getAdIframe();
         var slotWidth = $iframe.attr('width');
         var slotHeight = $iframe.attr('height');
-        var slotSize = [slotWidth, slotHeight].join(',');
+        var slotSize = slotWidth + ',' + slotHeight;
         // iframe may not have been injected at this point
-        var isFluid250 = slotSize === '88,70';
-        var isFabricV1 = slotSize === '88,71';
+        var isFluid250 = adSizes.fluid250.toString() === slotSize;
+        var isFabricV1 = adSizes.fabric.toString() === slotSize;
         var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
         // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
         // injected asynchronously, so we can't be sure when they will be in the dom
@@ -213,30 +211,32 @@ define([
     };
 
     var initialise = function () {
-        getInitialState().then(function (initialState) {
-            var store = createStore(reducer, initialState);
+        if (detect.isBreakpoint({ min: 'desktop' })) {
+            getInitialState().then(function (initialState) {
+                var store = createStore(reducer, initialState);
 
-            setupDispatchers(store.dispatch);
+                setupDispatchers(store.dispatch);
 
-            var elements = {
-                $document: $(document.body),
-                $adBanner: $adBanner,
-                $adBannerInner: $adBannerInner,
-                $header: $header,
-                window: window
-            };
-            var update = function () {
-                return fastdom.write(function () {
-                    render(elements, store.getState());
+                var elements = {
+                    $document: $(document.body),
+                    $adBanner: $adBanner,
+                    $adBannerInner: $adBannerInner,
+                    $header: $header,
+                    window: window
+                };
+                var update = function () {
+                    return fastdom.write(function () {
+                        render(elements, store.getState());
+                    });
+                };
+                // Initial update
+                // Ensure we only start listening after the first update
+                update().then(function () {
+                    // Update when actions occur
+                    store.subscribe(update);
                 });
-            };
-            // Initial update
-            // Ensure we only start listening after the first update
-            update().then(function () {
-                // Update when actions occur
-                store.subscribe(update);
             });
-        });
+        }
     };
 
     return {

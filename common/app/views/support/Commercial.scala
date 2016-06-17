@@ -1,10 +1,11 @@
 package views.support
 
 import common.Edition
-import common.commercial.ContainerModel
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.editions.Uk
+import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
+import common.dfp.AdSize.responsiveSize
 import common.dfp._
-import conf.switches.Switches._
+import conf.switches.Switches.{FixedTechTopSlot, containerBrandingFromCapi, WimbledonTopAd}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag}
@@ -13,7 +14,7 @@ object Commercial {
 
   def shouldShowAds(page: Page): Boolean = page match {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
-    case p: model.Page if p.metadata.section == "identity" => false
+    case p: model.Page if p.metadata.sectionId == "identity" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -29,41 +30,48 @@ object Commercial {
 
   object topAboveNavSlot {
 
-    private def isBusinessFront(metaData: MetaData) = {
-      metaData.id == "uk/business" || metaData.id == "us/business" || metaData.id == "au/business"
+    private def isUKTechFront(metaData: MetaData) = {
+      metaData.id == "uk/technology"
+    }
+
+    private def isWimbledonEnabled(metaData: MetaData, edition: Edition) = {
+      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition == Uk
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
-      val fabricAdvertsTop = if (FabricAdverts.isSwitchedOn) Some("88,71") else None
-      Map(
-        "mobile" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop)
+      val fabricAdvertsTop = Seq("88,71")
+      val fluidAdvertsTop = Seq("fluid")
+      val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
+      val wimbledonLeftCol = ("left-col" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ Seq("970,375")))
+      val topSlotAdSizes = Map(
+        "mobile" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
+      if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) {
+          topSlotAdSizes + wimbledonLeftCol
+      } else {
+          topSlotAdSizes
+      }
     }
 
     // The sizesOverride parameter is for testing only.
     def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
+      val wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) Some("top-banner-ad-container--wimbledon") else None
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
         "top-banner-ad-container--above-nav",
-        "js-top-banner-above-nav")
+        "js-top-banner-above-nav",
+        "top-banner-ad-container--reveal"
+      ) ++ wimbledonClasses
 
-      val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isBusinessFront(metaData)) {
-          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--small"
-          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition, sizesOverride)) {
-            "top-banner-ad-container--responsive"
-          } else {
-            "top-banner-ad-container--large"
-          }
-        } else {
-          "top-banner-ad-container--reveal"
-        }
-      }
+      classes mkString " "
+    }
 
-      (classes :+ sizeSpecificClass) mkString " "
+    def slotCssClasses(metaData: MetaData): Seq[String] = {
+        val classes = Seq("top-banner-ad")
+        val fixedTechSlotClass = if(FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) Some("h250") else None
+        classes ++ fixedTechSlotClass
     }
   }
 
@@ -83,21 +91,41 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsPaidContainer(isPaidFront: Boolean, container: FaciaContainer, containerModel: Option[ContainerModel]): Boolean = {
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean,
+                                    container: FaciaContainer,
+                                    optContainerModel: Option[ContainerModel]): Boolean = {
 
-      def containerHasPaidContent(container: ContainerModel): Boolean = {
+      def isPaid(containerModel: ContainerModel): Boolean = {
 
-        def isPaid(branding: Option[SponsorDataAttributes]): Boolean =
-          branding.exists(_.sponsorshipType == "advertisement-features")
+        def isPaidBrandingAttributes(brandingAttributes: Option[SponsorDataAttributes]): Boolean =
+          brandingAttributes.exists(_.sponsorshipType == "advertisement-features")
 
-        val content = container.content
-        val paidCards = content.initialCards.filter(card => isPaid(card.branding))
+        def isPaidBranding(branding: Option[Branding]): Boolean =
+          branding.exists(_.sponsorshipType == PaidContent)
 
-        isPaid(container.branding) || paidCards.nonEmpty
+        def isPaid(card: CardContent): Boolean = if (containerBrandingFromCapi.isSwitchedOn) {
+          isPaidBranding(card.branding)
+        } else false
+
+        val isPaidContainer = if (containerBrandingFromCapi.isSwitchedOn) {
+          isPaidBranding(containerModel.branding)
+        } else {
+          isPaidBrandingAttributes(containerModel.brandingAttributes)
+        }
+
+        val isAllPaidContent = {
+          val content = containerModel.content
+          val cards = content.initialCards ++ content.showMoreCards
+          cards.nonEmpty && cards.forall(isPaid)
+        }
+
+        isPaidContainer || isAllPaidContent
       }
 
-      !isPaidFront &&
-        ( container.commercialOptions.isPaidContainer || containerModel.exists(containerHasPaidContent) )
+      !isPaidFront && (
+        (containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer)
+          || optContainerModel.exists(isPaid)
+        )
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
@@ -179,7 +207,7 @@ object CardWithSponsorDataAttributes {
     def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
       DfpAgent.winningTagPair(
         capiTags = content.tags.tags,
-        sectionId = Some(content.metadata.section),
+        sectionId = Some(content.metadata.sectionId),
         edition = None
       )
     }

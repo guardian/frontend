@@ -8,6 +8,7 @@ import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import common._
+import common.commercial.Branding
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
@@ -217,7 +218,19 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
-        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`.name))
+        .copy(
+          editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
+          activeBrandings = itemResp.flatMap { response =>
+            val sectionBrandings = response.section.flatMap { section =>
+              section.activeSponsorships.map(_.map(Branding.make(section.webTitle)))
+            }
+            val tagBrandings = response.tag.flatMap { tag =>
+              tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
+            }
+            val brandings = sectionBrandings.toList.flatten ++ tagBrandings.toList.flatten
+            if (brandings.isEmpty) None else Some(brandings)
+          }
+        )
 
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
       (seoData, frontProperties)

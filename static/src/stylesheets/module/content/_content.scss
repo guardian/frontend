@@ -126,17 +126,20 @@
 .content__labels {
     box-sizing: border-box;
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted $neutral-5;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+}
+
+.content__labels--not-immersive {
+    border-bottom: 1px dotted $neutral-5;
 
     @include mq(leftCol) {
-        border: 0;
-        margin-left: -($left-column + $gs-gutter);
-        margin-bottom: $gs-baseline;
+        border-bottom: 0;
         width: $left-column;
         float: left;
+        margin-left: -($left-column + $gs-gutter);
+        margin-bottom: $gs-baseline;
     }
 
     @include mq(wide) {
@@ -162,6 +165,10 @@
     }
 }
 
+.content__section-label--gallery {
+    margin-right: $gs-gutter / 4;
+}
+
 .content__series-label {
     @include fs-headline(2);
     float: left;
@@ -173,18 +180,22 @@
 
 }
 
+.content__series-label--immersive-article {
+    font-weight: bold;
+}
+
 .content__series-label__link {
     color: $neutral-2;
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label__link,
+    .content__section-label,
     .container__meta__title {
-        font-size: 20px !important;
-        line-height: 24px !important;
+        font-size: 20px;
+        line-height: 24px;
     }
 
-    .content__series-label__link {
+    .content__series-label {
         @include font-size(18, 22);
         display: block;
 
@@ -669,6 +680,8 @@
 }
 
 .paid-content--advertisement-feature {
+    color: $neutral-1;
+
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
@@ -747,14 +760,14 @@
             color: $neutral-1;
 
             .inline-icon {
-                fill: $neutral-1;
+                fill: $neutral-2;
             }
         }
 
         .most-viewed-container--media,
         .meta__number {
             .inline-icon {
-                fill: $neutral-1;
+                fill: $neutral-2;
             }
         }
 
@@ -771,16 +784,26 @@
         .byline,
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,
-        .tonal__main--tone-media .sharecount__value,
-        .tonal__main--tone-media .commentcount2__value,
         .content__dateline,
         .submeta__head,
         .content__series-label__link {
             color: $neutral-2-contrasted;
+        }
 
-            .i {
-                @include icon(share-android);
-            }
+        .tonal__main--tone-media .sharecount__value,
+        .tonal__main--tone-media .commentcount2__value {
+            color: $neutral-1;
+        }
+
+        .byline,
+        .content__dateline,
+        .submeta hr,
+        .commentcount,
+        .meta__numbers,
+        .meta__social,
+        .meta__save-for-later,
+        .meta__number:not(u-h) + .meta__number {
+            border-color: $neutral-3;
         }
 
         .byline {
@@ -789,6 +812,17 @@
                 &:hover {
                     color: $neutral-1;
                 }
+            }
+        }
+
+        .button--tone-media {
+            color: $neutral-1;
+            background-color: $neutral-6;
+            border-color: $neutral-6;
+
+            &:hover {
+                background-color: $neutral-3;
+                border-color: $neutral-3;
             }
         }
 
@@ -856,15 +890,15 @@
         .save-for-later__button--save,
         .save-for-later__button--saved {
             .inline-icon {
-                fill: #ffffff;
-                border-color: #ffffff;
-                background-color: $neutral-2-contrasted;
+                fill: $neutral-2-contrasted;
+                border-color: $neutral-2-contrasted;
+                background-color: $paid-article;
             }
             &:hover {
                 .inline-icon {
-                    background-color: #ffffff;
-                    fill: $neutral-2-contrasted;
+                    fill: $paid-article;
                     border-color: $neutral-2-contrasted;
+                    background-color: $neutral-2-contrasted;
                 }
             }
         }
@@ -990,10 +1024,16 @@
 
         .tonal--tone-media & {
             border: 0;
-            background-color: $multimedia-support-4;
+            color: $neutral-3;
+            background-color: $media-mute;
+
+            .inline-tone-fill {
+                fill: $neutral-3;
+            }
 
             &:hover {
-                background-color: $neutral-2;
+                color: $neutral-3;
+                background-color: darken($media-mute, 5%);
             }
         }
 

@@ -28,6 +28,14 @@ object Facebook extends SharePlatform {
   override val css = "facebook"
   override val userMessage = "Share on Facebook"
 }
+
+object Messenger extends SharePlatform {
+  override val campaign = Some("sme")
+  override val text = "Messenger"
+  override val css = "messenger"
+  override val userMessage = "Share on Messenger"
+}
+
 object GooglePlus extends SharePlatform {
   override val campaign = Some("sgp")
   override val text = "Google plus"
@@ -98,6 +106,7 @@ object ShareLinks {
       case LinkedIn => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
       case Facebook => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
       case Twitter => s"https://twitter.com/intent/tweet?text=${title.encodeURIComponent}&url=$encodedHref"
+      case Messenger => s"fb-messenger://share?link=$encodedHref&app_id=180444840287"
     }
 
     ShareLink(platform, fullLink)
@@ -123,10 +132,10 @@ final case class ShareLinks(
   metadata: MetaData
 ) {
 
-  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery) {
-    List(Facebook, Twitter, Email, PinterestPage, GooglePlus, WhatsApp)
+  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery || tags.isImageContent) {
+    List(Facebook, Twitter, Email, PinterestPage, GooglePlus, WhatsApp, Messenger)
   } else {
-    List(Facebook, Twitter, Email, PinterestPage, LinkedIn, GooglePlus, WhatsApp)
+    List(Facebook, Twitter, Email, LinkedIn, GooglePlus, WhatsApp, Messenger)
   }
 
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {

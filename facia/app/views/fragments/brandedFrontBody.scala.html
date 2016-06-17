@@ -1,0 +1,60 @@
+@(faciaPage: model.PressedPage)(implicit request: RequestHeader)
+@import common.Edition
+@import common.commercial.{ContainerModel, PaidContent, Sponsored}
+@import views.support.RenderClasses
+
+@faciaPage.branding(Edition(request)) match {
+
+    case Some(branding) => {
+        @if(faciaPage.collections.nonEmpty) {
+            <div class="l-side-margins">
+                <div class="@RenderClasses(Map(
+                    "fc-container--sponsored" -> (branding.sponsorshipType == Sponsored),
+                    "fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)
+                ), "facia-page")"
+                data-link-name="Front | @request.path"
+                role="main">
+
+                    @if(branding.sponsorshipType == PaidContent){ @fragments.guBand() }
+
+                    @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
+                        @collections.map { containerDefinition =>
+                            @fragments.containers.facia_cards.container(
+                                containerDefinition,
+                                faciaPage.frontProperties,
+                                Some(faciaPage.id),
+                                branding.sponsorshipType == PaidContent,
+                                faciaPage.collections.find {
+                                    _.id == containerDefinition.dataId
+                                }.map {
+                                    ContainerModel.fromPressedCollection(Edition(request))
+                                }
+                            )
+                        }
+
+                        @defining(layout.Front.makeLinkedData(faciaPage.metadata.url, collections)) { linkedData =>
+                            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                                @Html(model.meta.LinkedData.toJson(linkedData))
+                            </script>
+                        }
+
+                    }
+
+                    <div class="js-front-bottom"></div>
+
+                    @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
+
+                    @if(branding.sponsorshipType != PaidContent) {
+                        <div class="fc-container fc-container--commercial">
+                        @fragments.commercial.commercialComponent()
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+    case None => {
+        @fragments.frontBody(faciaPage)
+    }
+}

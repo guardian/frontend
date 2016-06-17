@@ -28,7 +28,7 @@ define([
                     <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                     <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
                     <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>\
-                    <div id="dfp-ad-gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
+                    <div id="dfp-ad-gu-style" class="gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
                 ]
             },
             makeFakeEvent = function (id, isEmpty) {
@@ -43,7 +43,7 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, config, detect, commercialFeatures;
+            dfp, config, detect, commercialFeatures, closeDisabledSlots;
 
         beforeEach(function (done) {
 
@@ -51,18 +51,24 @@ define([
                 // No implementation
             });
 
+            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
             injector.require([
                 'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',
                 'common/modules/commercial/dfp/ophan-tracking',
                 'common/modules/commercial/commercial-features',
-                'common/utils/detect'
+                'common/utils/detect',
+                'common/modules/commercial/close-disabled-slots'
             ], function () {
                 dfp = arguments[0];
                 config = arguments[1];
                 var ophanTracking = arguments[2];
                 commercialFeatures = arguments[3];
                 detect = arguments[4];
+                closeDisabledSlots = arguments[5];
 
                 config.switches = {
                     commercialComponents: true,
@@ -167,15 +173,18 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
-                var slots = dfp.getAdverts();
-                expect(Object.keys(slots).length).toBe(3);
-                for (var slotId in slots) {
-                    expect(slotId).not.toBe('dfp-ad-html-slot');
-                }
-                done();
-            });
+            closeDisabledSlots.init()
+                .then(dfp.init)
+                .then(dfp.loadAds)
+                .then(function () {
+                    window.googletag.cmd.forEach(function (func) { func(); });
+                    var slots = dfp.getAdverts();
+                    expect(Object.keys(slots).length).toBe(3);
+                    for (var slotId in slots) {
+                        expect(slotId).not.toBe('dfp-ad-html-slot');
+                    }
+                    done();
+                });
             window.googletag.cmd.forEach(function (func) { func(); });
         });
 
@@ -212,6 +221,10 @@ define([
         });
 
         it('should display ads', function (done) {
+            config.page.hasPageSkin = true;
+            detect.getBreakpoint = function () {
+                return 'wide';
+            };
             dfp.init().then(dfp.loadAds).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -257,28 +270,11 @@ define([
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
                 config.page.hasPageSkin = false;
                 expect(dfp.shouldLazyLoad()).toBe(true);
             });
 
-            it('should lazy load ads when there is a pageskin and breakpoint is lower than wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'desktop';
-                };
-                config.switches.viewability = true;
-                config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(true);
-            });
-
-            it('should not lazy load ads when there is a pageskin and breakpoint is wide', function () {
-                detect.getBreakpoint = function () {
-                    return 'wide';
-                };
-                config.switches.viewability = true;
+            it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
                 expect(dfp.shouldLazyLoad()).toBe(false);
             });
@@ -307,13 +303,8 @@ define([
         describe('labelling', function () {
             var slotId = 'dfp-ad-html-slot';
 
-            afterEach(function () {
-                dfp.checkForBreakout.restore();
-            });
-
             it('should be added', function (done) {
                 var $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -328,7 +319,6 @@ define([
 
             it('should not be added if data-label attribute is false', function () {
                 var $slot = $('#' + slotId).attr('data-label', false);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
@@ -338,7 +328,6 @@ define([
             it('should be added only once', function (done) {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -355,7 +344,6 @@ define([
 
             it('should not be added when ad is gu style type', function (done) {
                 var $slot = $('#dfp-ad-gu-style');
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
                 dfp.init();
 
                 fastdom.defer(function () {
@@ -366,51 +354,6 @@ define([
                         done();
                     });
                 });
-            });
-        });
-
-        describe('breakout', function () {
-
-            var slotId = 'dfp-ad-html-slot',
-                createTestIframe = function (id, html) {
-                    var $frame = $.create('<iframe></iframe>')
-                        .attr({
-                            id: 'mock_frame',
-                            /*eslint-disable no-script-url*/
-                            src: 'javascript:"<html><body style="background:transparent"></body></html>"'
-                            /*eslint-enable no-script-url*/
-                        });
-                    $frame[0].onload = function () {
-                        this.contentDocument.body.innerHTML = html;
-                    };
-                    $frame.appendTo(qwery('#' + id)[0]);
-                };
-
-            it('should insert html', function (done) {
-                var html = '<div class="dfp-iframe-content">Some content</div>';
-                $('#' + slotId).attr('data-label', false);
-                createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent(slotId));
-
-                    fastdom.defer(function () {
-                        expect($('iframe', '#' + slotId).css('display')).toBe('none');
-                        done();
-                    });
-                });
-            });
-
-            // TODO: find a nice way to test this
-            xit('should run javascript', function () {
-                var str = 'This came from an iframe';
-                createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                window.googletag.pubads().listener(makeFakeEvent(slotId));
-                expect(window.dfpModuleTestVar).toBe(str);
             });
         });
     });

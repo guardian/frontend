@@ -10,10 +10,10 @@ import conf.switches.Switches
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}
+import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
-import play.api.{Application, GlobalSettings}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
@@ -131,7 +131,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
-      branding = None // value found in Content API
+      activeBrandings = None // value found in Content API
     )
   }
 
@@ -154,23 +154,25 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
 object ConfigAgent extends ConfigAgentTrait
 
-trait ConfigAgentLifecycle extends GlobalSettings {
+class ConfigAgentLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)
+  (implicit ec: ExecutionContext) extends LifecycleComponent {
 
-  override def onStart(app: Application) {
-    super.onStart(app)
+  appLifecycle.addStopHook { () => Future {
+    jobs.deschedule("ConfigAgentJob")
+  }}
 
-    Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
+  override def start() = {
+    jobs.deschedule("ConfigAgentJob")
+    jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       ConfigAgent.refresh()
     }
-  }
-
-  override def onStop(app: Application) {
-    Jobs.deschedule("ConfigAgentJob")
-    super.onStop(app)
   }
 }
+

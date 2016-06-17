@@ -1,6 +1,7 @@
 /* global pbjs */
 define([
     'Promise',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/QueueAsync',
     'common/utils/config',
     'common/utils/robust',
@@ -8,6 +9,7 @@ define([
     'lodash/objects/values'
 ], function (
     Promise,
+    adSizes,
     QueueAsync,
     config,
     robust,
@@ -15,6 +17,12 @@ define([
     values
 ) {
     var PREBID_TIMEOUT = 2000;
+    var supportedAdvertSizes = [
+        adSizes.leaderboard,
+        adSizes.mpu,
+        adSizes.halfPage,
+        adSizes.billboard
+    ];
 
     return function PrebidService() {
         // We create a stub interface to use while Prebid.js is loading, passing commands it will run when it
@@ -88,13 +96,10 @@ define([
     }
 
     function getMatchingSizes(advert) {
-        var sizes = [[728,90], [300,250], [300,600], [970,250]];
         var advertSizes = concatAll(values(advert.sizes));
 
-        return sizes.filter(function (size) {
-            return advertSizes.some(function (advertSize) {
-                return sizesMatch(size, advertSize);
-            });
+        return supportedAdvertSizes.filter(function (size) {
+            return advertSizes.some(sizesMatch.bind(undefined, size));
         });
 
         function concatAll(arrays) {

@@ -9,10 +9,12 @@ object SimpleHtmlCleaner extends HtmlCleaner {
     document.getElementById("interactive-content") == null
   }
 
-  override def clean(document: Document) = {
+  override def clean(document: Document, convertToHttps: Boolean) = {
     universalClean(document)
     removeScripts(document)
     createSimplePageTracking(document)
     removeByTagName(document, "noscript")
+    if (convertToHttps) secureDocument(document)
+    document
   }
 }

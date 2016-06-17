@@ -16,11 +16,14 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
-    'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'common/modules/video/video-container',
+    'common/modules/video/onward-container',
+    'common/modules/video/more-in-series-container',
+    'common/modules/video/videojs-options',
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
@@ -43,11 +46,14 @@ define([
     buildPageTargeting,
     commercialFeatures,
     Component,
+    ab,
     events,
     fullscreener,
-    supportedBrowsers,
     techOrder,
     videoContainer,
+    onwardContainer,
+    moreInSeriesContainer,
+    videojsOptions,
     videojs,
     loadingTmpl
 ) {
@@ -66,7 +72,7 @@ define([
             unviewed_position_start: 1
         };
 
-        return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
+        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
     }
 
     function initLoadingSpinner(player) {
@@ -166,61 +172,114 @@ define([
             });
         });
 
+        if(ab.isInVariant('VideoTeaser', 'variant')) {
+            initVideoTeaser();
+        }
+
         initPlayButtons(document.body);
 
         mediator.on('modules:related:loaded', initPlayButtons);
         mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
-    function enhanceVideo(el, autoplay, shouldPreroll) {
+    function initVideoTeaser() {
+        fastdom.read(function () {
+            $('.js-video-player:not(.video-playlist__item__player)', document.body).each(function (el) {
+                var $el = bonzo(el);
+                var clone = el.cloneNode(true);
+                var $clone = bonzo(clone);
+                var teaserVideo = $('video', $clone).get(0);
+                var teaserLength = 5; //seconds
 
+                $clone.removeClass('media__container--hidden').addClass('media__container--active');
+                $('.js-video-placeholder', $el.parent()).addClass('media__container--hidden');
+
+                // teaser should be muted with no chrome
+                teaserVideo.muted = true;
+                teaserVideo.controls = false;
+
+                el.parentNode.insertBefore(clone, el);
+
+                teaserVideo.addEventListener('timeupdate', function () {
+                    if (teaserVideo.currentTime >= teaserLength) {
+                        teaserVideo.pause();
+
+                        // HACK around https://bugs.chromium.org/p/chromium/issues/detail?id=593273
+                        setTimeout(function () {
+                            teaserVideo.currentTime = 0;
+                            teaserVideo.play();
+                        }, 100);
+                    }
+                });
+
+                clone.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    teaserVideo.pause();
+                    $el.removeClass('media__container--hidden').addClass('media__container--active');
+                    enhanceVideo($('video', $el).get(0), true, false);
+                    $clone.remove();
+                });
+
+                teaserVideo.play();
+            });
+        });
+    }
+
+    function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
-            blockVideoAds = $el.attr('data-block-video-ads') === 'true',
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
+            shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
             techPriority = techOrder(el),
-            withPreroll = shouldPreroll && !blockVideoAds,
             player,
             mouseMoveIdle,
             playerSetupComplete,
-            isPlayerExpired;
+            withPreroll,
+            blockVideoAds;
 
-        isPlayerExpired = new Promise(function(resolve) {
+        var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
+            // These are set to the safest defaults that will always play video.
+            var defaultVideoInfo = {
+                expired: false,
+                shouldHideAdverts: shouldHideAdverts
+            };
+
             if (!canonicalUrl) {
-                resolve(false);
+                resolve(defaultVideoInfo);
             } else {
+                var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
+
                 ajax({
-                    url: canonicalUrl + '/info.json'
+                    url: ajaxInfoUrl + '/info.json',
+                    type: 'json',
+                    crossOrigin: true
                 }).then(function(videoInfo) {
-                    resolve(videoInfo.expired);
+                    resolve(videoInfo);
+                }, function() {
+                    // if this fails, don't stop, keep going.
+                    resolve(defaultVideoInfo);
                 });
             }
         });
 
-        player = createVideoPlayer(el, {
+        player = createVideoPlayer(el, videojsOptions({
             techOrder: techPriority,
-            controls: true,
-            // `autoplay` is always set to false.
-            // If you are going to set autoplay to any other value, note it breaks
-            // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
-            autoplay: false,
-            preload: 'metadata',
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
                     location: config.page.externalEmbedHost + '/embed/video/' + (embedPath ? embedPath : config.page.pageId)
                 }
             }
-        });
+        }));
 
-        isPlayerExpired.then(function(expired) {
-            if (expired) {
+        videoInfo.then(function(videoInfo) {
+            if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
                         code: 0,
@@ -232,6 +291,9 @@ define([
                     player.errorDisplay.open();
                 });
             } else {
+                blockVideoAds = videoInfo.shouldHideAdverts;
+                withPreroll = shouldPreroll && !blockVideoAds;
+
                 // Location of this is important.
                 events.bindErrorHandler(player);
                 player.guMediaType = mediaType;
@@ -241,7 +303,7 @@ define([
                         var vol;
 
                         deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
+                            events.initOmnitureTracking(player, mediaId);
                             events.initOphanTracking(player, mediaId);
 
                             events.bindGlobalEvents(player);
@@ -253,7 +315,6 @@ define([
 
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
-                        supportedBrowsers(player);
 
                         player.one('playing', function (e) {
                             if (isFlash(e)) {
@@ -284,11 +345,17 @@ define([
                                 raven.wrap(
                                     { tags: { feature: 'media' } },
                                     function () {
-                                        player.adSkipCountdown(15);
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
+                                            prerollTimeout: 1000,
+                                            // We set this sightly higher so contrib-ads never timeouts before ima.
+                                            contribAdsSettings: {
+                                                timeout: 1200
+                                            }
+                                        });
+                                        player.on('adstart', function() {
+                                            player.adSkipCountdown(15);
                                         });
                                         player.ima.requestAds();
 
@@ -300,10 +367,6 @@ define([
                             } else {
                                 resolve();
                             }
-
-
-
-
                         } else {
                             player.playlist({
                                 mediaType: 'audio',
@@ -318,7 +381,6 @@ define([
                             fastdom.write(function () {
                                 player.addClass('vjs-mousemoved');
                             });
-
 
                             mouseMoveIdle = setTimeout(function () {
                                 fastdom.write(function () {
@@ -336,6 +398,8 @@ define([
                 });
             }
         });
+
+        return player;
     }
 
     function initEndSlate(player, endSlatePath) {
@@ -355,51 +419,32 @@ define([
         });
     }
 
+    function getMediaType() {
+        return config.page.contentType.toLowerCase();
+    }
+
     function initMoreInSection() {
         if (!config.isMedia || !config.page.showRelatedContent) {
             return;
         }
 
-        var mediaType = config.page.contentType.toLowerCase(),
-            section   = new Component(),
-            attachTo  = $('.js-onward')[0],
-            endpoint  = '/' + mediaType + '/section/' + config.page.section;
-
-        if ('seriesId' in config.page) {
-            endpoint += '/' + config.page.seriesId;
-        }
-
-        endpoint += '.json?shortUrl=' + config.page.shortUrl;
-
-        // exclude professional network content from video pages
-        if (mediaType === 'video') {
-            endpoint += '&exclude-tag=guardian-professional/guardian-professional';
-        }
-
-        section.endpoint = endpoint;
-
-        section.fetch(attachTo).then(function () {
-            mediator.emit('page:media:moreinloaded', attachTo);
-            mediator.emit('page:new-content', attachTo);
-        });
+        var el  = $('.js-more-in-section')[0];
+        moreInSeriesContainer.init(
+            el, getMediaType(),
+            config.page.section,
+            config.page.shortUrl,
+            config.page.seriesId
+        );
     }
 
-    function initMostViewedMedia() {
+    function initOnwardContainer() {
         if (!config.isMedia) {
             return;
         }
 
-        var mediaType  = config.page.contentType.toLowerCase(),
-            mostViewed = new Component(),
-            attachTo   = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0],
-            endpoint   = '/' + (config.page.isPodcast ? 'podcast' : mediaType) + '/most-viewed.json';
-
-        mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'html';
-        mostViewed.endpoint = endpoint;
-
-        mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:new-content');
-        });
+        var mediaType = getMediaType();
+        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
+        onwardContainer.init(el, mediaType);
     }
 
     function initWithRaven(withPreroll) {
@@ -411,7 +456,20 @@ define([
 
     function initFacia() {
         if (config.page.isFront) {
-            videoContainer();
+            $('.js-video-playlist').each(function(el) {
+                videoContainer.init(el);
+            });
+        }
+    }
+
+    function showcaseMainMedia() {
+        $('.content__meta-container').addClass('content__meta-container--showcase');
+        $('.media-primary').addClass('media-primary--showcase');
+    }
+
+    function initTests() {
+        if(ab.isInVariant('VideoMainMediaAlwaysShowcase', 'variant')) {
+            showcaseMainMedia();
         }
     }
 
@@ -419,7 +477,8 @@ define([
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
-            !config.page.isAdvertisementFeature;
+            !config.page.isAdvertisementFeature &&
+            !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
@@ -435,7 +494,8 @@ define([
         }
         initFacia();
         initMoreInSection();
-        initMostViewedMedia();
+        initOnwardContainer();
+        initTests();
     }
 
     return {

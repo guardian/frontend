@@ -1,9 +1,9 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader)
 
 @main(page){ }{
-    @if(mvt.ABGalleryRedesignVariant.shouldShow(page.gallery.metadata.contentType)) {
-        @fragments.newGalleryBody(page)
-    } else {
+    @if(page.gallery.content.isImmersiveGallery) {
         @fragments.galleryBody(page)
+    } else {
+        @fragments.paidAdvertisementGalleryBody(page)
     }
 }

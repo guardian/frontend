@@ -5,7 +5,7 @@
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
+GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
@@ -54,7 +54,6 @@ GET        /new-header/optout                                                   
 GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
 
 # Web App paths
-GET        /offline-crossword.json                                              controllers.WebAppController.offlineCrossword()
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 

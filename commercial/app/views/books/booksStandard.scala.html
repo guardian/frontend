@@ -4,7 +4,7 @@
   isProminent: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.Configuration
-@import views.html.books.{bookCard, searchFormV2}
+@import views.html.books.{bookCard, searchForm}
 @import views.html.commercial.containerWrapper
 
 @containerWrapper(Seq("legacy", "books", "tone-books"),
@@ -27,19 +27,16 @@
         </div>
     } else {
         <div class="adverts__row">
-        @books.map { book => @bookCard(book, clickMacro) }
+        @books.take(2).map { book => @bookCard(book, clickMacro) }
+        @books.slice(2, 4).map { book => @bookCard(book, clickMacro, optClassNames = Some(Seq("hide-until-tablet"))) }
         </div>
     }
-
-    <div class="adverts__row">
-
-    </div>
 
 }
 
 @actions = {
 
-    @searchFormV2()
+    @searchForm()
 
     <a class="button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="merchandising-bookshop-v2_0_2014-10-15-medium-visit-shop">
         @fragments.inlineSvg("arrow-right", "icon", List("i-right"))

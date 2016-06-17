@@ -1,0 +1,51 @@
+.creative--facebook {
+    display: none;
+    font-size: .75rem;
+    line-height: 1rem;
+    min-height: 250px;
+    position: relative;
+    text-align: left;
+}
+
+.advert--facebook {
+    @include f-headlineSans;
+    background: $neutral-6;
+    padding-bottom: $gs-baseline;
+
+    .advert__image-container {
+        height: 157px;
+    }
+
+    .advert__title {
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin-bottom: .25em;
+    }
+
+    .advert__meta {
+        font-size: 1rem;
+        margin-bottom: 1em;
+    }
+
+    .advert__meta,
+    .advert__title {
+        line-height: 1.2;
+    }
+
+    .advert__more svg {
+        width: 14px;
+        height: 10px;
+    }
+
+    .advert__title,
+    .advert__meta,
+    .advert__more {
+        color: $neutral-1;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    .inline-icon {
+        fill: $neutral-1;
+    }
+}

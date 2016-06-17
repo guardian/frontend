@@ -1,6 +1,7 @@
 package common
 
 import common.editions.{Au, Us, International}
+import common.Edition.editionRegex
 import conf.Configuration
 import conf.switches.Switches
 import implicits.Requests
@@ -27,7 +28,10 @@ trait LinkTo extends Logging {
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] = Seq("info", "email", "science", "crosswords")
+  val httpsEnabledSections: Seq[String] =
+    Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football",
+      "culture", "film", "tv-and-radio", "music", "books", "artanddesign", "stage",
+      "membership", "uk-news", "world", "cities", "environment", "money", "society")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -65,8 +69,21 @@ trait LinkTo extends Logging {
     }
   }
 
-  private def isHttpsEnabled(editionalisedPath: String) =
-    httpsEnabledSections.exists(editionalisedPath.startsWith)
+  private def isHttpsEnabled(path: String) = {
+
+    // check if the url has _any_ edition prefix (/au/, /us/ ... )
+    // as users can have au edition cookie but be on a us edition url
+
+    val hasEditionPrefix = Edition.all.exists{ edition =>
+      path.startsWith(edition.id.toLowerCase + "/")
+    }
+
+    def sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
+
+    val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
+
+    httpsEnabledSections.exists(pathWithoutEdition.startsWith)
+  }
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books

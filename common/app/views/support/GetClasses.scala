@@ -29,7 +29,9 @@ object GetClasses {
       ("fc-item--has-metadata",
         item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable || SaveForLaterSwitch.isSwitchedOn),
       ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
-      ("fc-item--is-commentable", item.discussionSettings.isCommentable)
+      ("fc-item--is-commentable", item.discussionSettings.isCommentable),
+      ("fc-item--is-media-link", item.isMediaLink),
+      ("fc-item--has-video-main-media", item.hasVideoMainMedia)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
     )
@@ -119,4 +121,8 @@ object GetClasses {
       case (kls, true) => kls
     }) ++ extraClasses: _*)
   }
+
+  def forFrontId(frontId: Option[String]) = RenderClasses(Seq(
+    "fc-container--video-no-fill-sides" -> frontId.contains("video")
+  ) collect { case (kls, true) => kls }: _*)
 }

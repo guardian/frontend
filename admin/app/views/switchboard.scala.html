@@ -34,8 +34,11 @@
                     @switches.map { switch =>
                         @defining(Switch.expiry(switch)) { expiry =>
                             <div class="checkbox">
-                                <label for="switch-@switch.name" @if(Switch.expiry(switch).expiresSoon) {
-                                    class="Expiring expiry-days-@expiry.daysToExpiry"}>
+                                <label for="switch-@switch.name"
+                                    @if(Switch.expiry(switch).expiresSoon) {
+                                        class="Expiring @if(expiry.hasExpired){expired} else {expiry-days-@expiry.daysToExpiry}"
+                                    }
+                                >
                                     <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
                                         checked="checked" }/>
                                     <strong>@switch.name</strong>

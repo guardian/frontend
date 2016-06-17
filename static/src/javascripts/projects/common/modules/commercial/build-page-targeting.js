@@ -57,8 +57,20 @@ define([
                 return parseId(page.seriesId);
             }
             var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
+            if (seriesIdFromUrl) {
+                return seriesIdFromUrl[1];
+            }
 
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
+            if (page.keywordIds) {
+                var seriesIdFromKeywords = page.keywordIds.split(',').filter(function (keyword) {
+                    return keyword.indexOf('series/') === 0;
+                }).slice(0, 1);
+                if (seriesIdFromKeywords.length) {
+                    return seriesIdFromKeywords[0].split('/')[1];
+                }
+            }
+
+            return null;
         },
         parseIds = function (ids) {
             if (!ids) {
@@ -158,7 +170,7 @@ define([
                 fr:      getVisitedValue(),
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
-                vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
+                vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments());
 
         // filter out empty values

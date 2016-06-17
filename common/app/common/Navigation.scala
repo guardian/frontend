@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 
 case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
   def currentFor(page: Page): Boolean = page.metadata.url == href ||
-    s"/${page.metadata.section}" == href ||
+    s"/${page.metadata.sectionId}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.metadata.id.toLowerCase) && href == "/")
 
   def currentForIncludingAllTags(tags: Tags): Boolean = tags.tags.exists(t => s"/${t.metadata.id}" == href)
@@ -33,8 +33,8 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
 
   def exactFor(page: Page): Boolean = {
     Set(
-      contentapi.Paths.withoutEdition(page.metadata.section),
-      Some(page.metadata.section)
+      contentapi.Paths.withoutEdition(page.metadata.sectionId),
+      Some(page.metadata.sectionId)
     ).flatten.contains(name.href.stripPrefix("/")) || page.metadata.url == name.href
   }
 }
@@ -47,6 +47,7 @@ trait Navigation {
   val uk = SectionLink("uk-news", "UK", "UK News", "/uk-news")
   val us = SectionLink("us-news", "US", "US News", "/us-news")
   val usElection2016 = SectionLink("us-elections-2016", "election 2016", "Election 2016", "/us-news/us-elections-2016")
+  val auElection2016 = SectionLink("au-elections-2016", "election 2016", "Election 2016", "/australia-news/australian-election-2016")
   val politics = SectionLink("politics", "politics", "Politics", "/politics")
   val technology = SectionLink("technology", "tech", "Technology", "/technology")
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
@@ -143,7 +144,7 @@ trait Navigation {
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
   val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
   val ausustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/au/sustainable-business")
-  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/the-power-of-small")
+  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/us-small-business")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
@@ -237,6 +238,7 @@ trait Navigation {
   val membership = SectionLink("membership", "membership", "Membership", "/membership")
 
   val footballNav = Seq(
+    SectionLink("football", "euro 2016", "Euro 2016", "/football/euro-2016"),
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
@@ -251,7 +253,7 @@ case class BreadcrumbItem(href: String, title: String)
 object Breadcrumbs {
   def items(navigation: Seq[NavItem], page: ContentPage): Seq[BreadcrumbItem] = {
     val primaryKeywod = page.item.content.keywordTags.headOption.map(k => BreadcrumbItem(k.metadata.url, k.metadata.webTitle))
-    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcrumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.metadata.section}", page.item.content.trail.sectionName)))
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcrumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.metadata.sectionId}", page.item.content.trail.sectionName)))
     val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcrumbTitle)).orElse(primaryKeywod)
     Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
@@ -290,7 +292,7 @@ object Navigation {
     topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
   def rotatedLocalNav(topSection: Option[NavItem], page: Page)(implicit request: RequestHeader): Seq[SectionLink] =
-    sectionSpecificSublinks.get(page.metadata.section)
+    sectionSpecificSublinks.get(page.metadata.sectionId)
       .orElse(topSection.map{ section =>
         section.searchForCurrentSublink(page) match {
           case Some(currentSection) =>
@@ -327,7 +329,7 @@ object Navigation {
     )
   ).withDefault( _ => Nil)
 
-  def localLinks(navigation: Seq[NavItem], page: Page): Seq[SectionLink] = sectionSpecificSublinks.get(page.metadata.section)
+  def localLinks(navigation: Seq[NavItem], page: Page): Seq[SectionLink] = sectionSpecificSublinks.get(page.metadata.sectionId)
     .orElse(Navigation.topLevelItem(navigation, page).map(_.links).filter(_.nonEmpty))
     .getOrElse(Nil)
 
