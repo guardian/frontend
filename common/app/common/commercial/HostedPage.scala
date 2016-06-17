@@ -61,7 +61,7 @@ case class HostedVideoPage(
 case class HostedGalleryPage(
                        pageUrl: String,
                        pageName: String,
-                       images: List[String],
+                       images: List[HostedGalleryImage],
                        logoUrl: String
                      ) extends HostedPage {
 
@@ -104,6 +104,12 @@ case class HostedVideo(
                         duration: Int,
                         posterUrl: String,
                         srcUrl: String
+                      )
+
+case class HostedGalleryImage(
+                        url: String,
+                        title: String,
+                        caption: String
                       )
 
 object HostedPage {
@@ -161,8 +167,46 @@ object HostedPage {
     nextPageName = episode1PageName
   )
 
+  private val omgbImages : List[HostedGalleryImage] = List(
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb1.jpg",
+      title = "Finding the giants of Heligan",
+      caption = "The Lost Gardens of Heligan, Cornwall, England. These gardens, along with their giants, were lost for 25 years under a tangle of weeds before being restored to take their place among the finest gardens in Great Britain."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb2.jpg",
+      title = "Rolling hills and rugged moorland",
+      caption = "Malham Tarn Estate, Yorkshire Dales, England. Get your boots on and start exploring this popular Yorkshire Dales beauty spot."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb3.jpg",
+      title = "A walker’s paradise",
+      caption = "Isle of Skye, Scotland. From family walks on the spectacular coastline to dramatic scrambles in the Cuillin mountains, the island provides fantastic walking for everyone. Photo by Lars Scheider"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb4.jpg",
+      title = "Walking on water",
+      caption = "Loch Lomond & The Trossachs National Park, Scotland. The National Park stretches from the incredible mountains and glens of the Trossachs to the vast tranquil beauty of Loch Lomond. Photo by Bestjobers"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb5.jpg",
+      title = "Running across the plains",
+      caption = "Isle of Harris, Scotland. The Isle of Harris isn’t actually an island, it’s the southern and more mountainous part of Lewis and Harris, the largest island in the Outer Hebrides. Photo by Lars Scheider"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb6.jpg",
+      title = "Relaxing at Loch Maree",
+      caption = "Loch Maree, Scotland. More than 60 islands dot Loch Maree and the area is perfect for bird watching and walking."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb7.jpg",
+      title = "The ruins of Tintern Abbey",
+      caption = "Monmouthshire, Wales. The ruins of this 12th-century abbey are famous for inspiring the works of notable English artists, including Romantic poet William Wordsworth and painter Thomas Gainsborough."
+    )
+  )
+
   private val gallery: HostedGalleryPage = HostedGalleryPage(
-    images = (1 to 7).map(n => s"http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb$n.jpg").toList,
+    images = omgbImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
