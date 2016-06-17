@@ -1,7 +1,6 @@
 define([
     'bean',
     'fastdom',
-    'Promise',
     'lodash/functions/debounce',
     'common/utils/config',
     'common/utils/cookies',
@@ -11,7 +10,6 @@ define([
 ], function (
     bean,
     fastdom,
-    Promise,
     debounce,
     config,
     cookies,

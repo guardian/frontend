@@ -1,7 +1,9 @@
 define([
+    'Promise'
 ], function (
+    Promise
 ) {
-    browserCheck = new Promise(function (resolve) {
+    var browserCheck = new Promise(function (resolve) {
         var db;
         var on = function () {
             resolve(true);
