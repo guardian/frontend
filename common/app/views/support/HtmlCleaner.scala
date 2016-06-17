@@ -107,8 +107,8 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isImmersive) ImmersiveMedia
         else if (article.isUSMinute) MinuteMedia
+        else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
 
