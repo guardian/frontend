@@ -134,6 +134,8 @@ define([
             if (sizeCallbacks[size]) {
                 sizeCallbacks[size](slotRenderEvent, advert);
             }
+
+            return isRendered;
         }).catch(raven.captureException);
     }
 

@@ -146,7 +146,7 @@ define([
 
             var advert = getAdvertById(event.slot.getSlotElementId());
             stopLoadingAdvert(advert, true);
-            startRenderingAdvert(advert)
+            startRenderingAdvert(advert);
 
             if (event.isEmpty) {
                 emptyAdvert(advert);
