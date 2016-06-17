@@ -13,6 +13,11 @@ define([
             return player.el().getAttribute(attributeName);
         }
 
+        /*
+         * prop71 tracks referring section.  It's kept in cookie 's_prev_ch'.
+         * Page load event sets the cookie value to the current section, so this sets it back again.
+         * It's safe for the next page load though.
+         */
         function resetProp71Cookie() {
             if (config.switches.hostedContentTracking && config.page.toneIds == 'tone/hosted-content') {
                 s.getPreviousValue(s.prop71, 's_prev_ch');
