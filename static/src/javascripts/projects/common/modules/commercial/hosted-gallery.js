@@ -27,14 +27,18 @@ define([
             var scrollTop = $scrollEl[0].scrollTop;
             var scrollHeight = $scrollEl[0].scrollHeight;
             var progress = $images.length * (scrollTop/scrollHeight);
-            $scrollEl.scrollTop(Math.floor(progress - 0.01) * scrollHeight / $images.length);
+            fastdom.write(function () {
+                $scrollEl.scrollTop(Math.floor(progress - 0.01) * scrollHeight / $images.length);
+            });
         });
 
         bean.on($downArrow[0], 'click', function () {
             var scrollTop = $scrollEl[0].scrollTop;
             var scrollHeight = $scrollEl[0].scrollHeight;
             var progress = $images.length * (scrollTop/scrollHeight);
-            $scrollEl.scrollTop(Math.ceil(progress + 0.01) * scrollHeight / $images.length);
+            fastdom.write(function () {
+                $scrollEl.scrollTop(Math.ceil(progress + 0.01) * scrollHeight / $images.length);
+            });
         });
 
         bean.on($scrollEl[0], 'scroll', debounce(function (e) {
