@@ -1,6 +1,6 @@
 define([
     'bean',
-    'qwery',
+    'bonzo',
     'Promise',
     'common/utils/fastdom-promise',
 
@@ -26,7 +26,7 @@ define([
     'common/modules/commercial/creatives/template'
 ], function (
     bean,
-    qwery,
+    bonzo,
     Promise,
     fastdom
 ) {
@@ -91,7 +91,7 @@ define([
         function renderCreative(config) {
             return new Promise(function(resolve) {
                 require(['common/modules/commercial/creatives/' + config.name], function (Creative) {
-                    resolve(new Creative(adSlot, config.params, config.opts).create());
+                    resolve(new Creative(bonzo(adSlot), config.params, config.opts).create());
                 });
             });
         }
