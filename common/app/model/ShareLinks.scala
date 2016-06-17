@@ -121,6 +121,7 @@ object ShareLinks {
     create(platform, campaignHref, title, mediaPath)
   }
 
+  // TODO: Use campaign codes
   def createShareLinkForComment(platform: SharePlatform, href: String, text: String, quote: Option[String] = None): ShareLink = {
     create(platform, href, text, None, quote)
   }
