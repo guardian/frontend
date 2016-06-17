@@ -25,7 +25,7 @@ define([
         this.expiry = '2016-06-21';
         this.author = 'Kate Whalen';
         this.description = 'Add a single question survey to the submeta section of article pages';
-        this.audience = 1;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Obtain a data-set on how often users visit the Guardian';
         this.audienceCriteria = 'All users';
@@ -33,8 +33,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            // only run on articles, for users that have not interacted with the survey before
-            return config.page.contentType == 'Article' && document.cookie.indexOf('GU_FI') == -1;
+            return config.page.contentType == 'Article' && checkCookies('GU_FI');
         };
 
         function renderQuickSurvey() {
@@ -82,7 +81,7 @@ define([
             var surveyCookie = cookies.get(cookieName);
             if (!(surveyCookie) && storage.local.isStorageAvailable()) {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited');
-                if (!alreadyVisited || alreadyVisited < 3) {
+                if (!alreadyVisited || alreadyVisited < 1) {
                     return true;
                 }
             }
