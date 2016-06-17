@@ -462,6 +462,17 @@ define([
         }
     }
 
+    function showcaseMainMedia() {
+        $('.content__meta-container').addClass('content__meta-container--showcase');
+        $('.media-primary').addClass('media-primary--showcase');
+    }
+
+    function initTests() {
+        if(ab.isInVariant('VideoMainMediaAlwaysShowcase', 'variant')) {
+            showcaseMainMedia();
+        }
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -484,6 +495,7 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+        initTests();
     }
 
     return {

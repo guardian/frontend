@@ -1,0 +1,19 @@
+
+.hosted-video-page {
+    .hosted__headerwrap {
+        .hostedbadge {
+            @include mq(leftCol) {
+                margin-left: 100px;
+            }
+            @include mq(wide) {
+                margin-left: 20px;
+            }
+        }
+        .hostedbadge__logo {
+            @include mq($until: tablet) {
+                // use fading one
+                display: none;
+            }
+        }
+    }
+}
