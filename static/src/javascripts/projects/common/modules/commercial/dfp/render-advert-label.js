@@ -1,26 +1,28 @@
 define([
-    'qwery',
     'Promise',
     'common/utils/fastdom-promise'
 ], function (
-    qwery,
     Promise,
     fastdom
 ) {
-    function renderAdvertLabel($adSlot) {
-        if (shouldRenderLabel($adSlot)) {
+    function renderAdvertLabel(adSlotNode) {
+        if (shouldRenderLabel(adSlotNode)) {
             return fastdom.write(function () {
-                $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                adSlotNode.insertAdjacentHTML('afterbegin', '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             });
         } else {
             return Promise.resolve(null);
         }
     }
 
-    function shouldRenderLabel($adSlot) {
-        return !$adSlot.hasClass('ad-slot--frame') &&
-            !$adSlot.hasClass('gu-style') &&
-            ($adSlot.data('label') !== false && qwery('.ad-slot__label', $adSlot[0]).length === 0);
+    function shouldRenderLabel(adSlotNode) {
+        return !(
+            adSlotNode.classList.contains('ad-slot--frame') ||
+            adSlotNode.classList.contains('gu-style') ||
+            adSlotNode.classList.contains('ad-slot--facebook') ||
+            adSlotNode.getAttribute('data-label') === 'false' ||
+            adSlotNode.getElementsByClassName('ad-slot__label').length
+        );
     }
 
     return renderAdvertLabel;
