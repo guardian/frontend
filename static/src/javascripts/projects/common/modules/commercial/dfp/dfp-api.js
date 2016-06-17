@@ -7,7 +7,6 @@ define([
     'Promise',
     'raven',
     'common/utils/config',
-    'common/utils/cookies',
     'common/utils/detect',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
@@ -15,14 +14,12 @@ define([
     'common/utils/sha1',
     'common/utils/url',
     'common/utils/user-timing',
-    'common/modules/commercial/ad-sizes',
-    'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/ophan-tracking',
     'common/modules/commercial/dfp/apply-creative-template',
     'common/modules/commercial/dfp/PrebidService',
-    'common/modules/onward/geo-most-popular',
+    'common/modules/commercial/dfp/render-advert',
     'common/modules/analytics/beacon',
     'common/modules/identity/api',
     'lodash/functions/once',
@@ -37,7 +34,6 @@ define([
     Promise,
     raven,
     config,
-    cookies,
     detect,
     fastdom,
     mediator,
@@ -45,14 +41,12 @@ define([
     sha1,
     urlUtils,
     userTiming,
-    adSizes,
-    stickyMpu,
     buildPageTargeting,
     commercialFeatures,
     ophanTracking,
     applyCreativeTemplate,
     PrebidService,
-    geoMostPopular,
+    renderAdvert,
     beacon,
     id,
     once,
@@ -151,16 +145,24 @@ define([
             recordFirstAdRendered();
 
             var advert = getAdvertById(event.slot.getSlotElementId());
-            advert.isLoading = false;
-            advert.isRendering = true;
-            advert.whenLoadedResolver(true);
-            renderAdvert(advert, event).then(function (isRendered) {
-                advert.isRendering = false;
-                advert.whenRenderedResolver(isRendered);
+            stopLoadingAdvert(advert, true);
+            startRenderingAdvert(advert)
+
+            if (event.isEmpty) {
+                emptyAdvert(advert);
+                reportEmptyResponse(advert.id, event);
+                emitRenderEvents(false);
+            } else {
+                creativeIDs.push(event.creativeId);
+                renderAdvert(advert, event)
+                .then(emitRenderEvents);
+            }
+
+            function emitRenderEvents(isRendered) {
+                stopRenderingAdvert(advert, isRendered);
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 allAdsRendered();
-                return isRendered;
-            });
+            }
         }));
     }
 
@@ -198,7 +200,7 @@ define([
      */
     function defineAdverts() {
         // Get all ad slots
-        adverts = qwery(adSlotSelector).map(initAdvert);
+        adverts = qwery(adSlotSelector).map(createAdvert);
 
         // queue ads for load
         adverts.forEach(queueAdvert);
@@ -309,7 +311,7 @@ define([
     function addSlot(adSlot) {
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         function displayAd (adSlot) {
-            var advert = initAdvert(adSlot);
+            var advert = createAdvert(adSlot);
             adverts.push(advert);
             queueAdvert(advert);
             if (shouldLazyLoad()) {
@@ -334,20 +336,9 @@ define([
     function queueAdvert(advert, index) {
         // filter out (and remove) hidden ads
         if (shouldFilterAdSlot(advert.node)) {
-            fastdom.write(function () {
-                bonzo(advert.node).remove();
-                advert.node = null;
-            });
-            advert.isHidden = true;
+            hideAdvert(advert);
         } else {
-            advert.sizes = getAdBreakpointSizes(advert);
-            advert.slot = defineSlot(advert.node, advert.sizes);
-            advert.whenLoaded = new Promise(function (resolve) {
-                advert.whenLoadedResolver = resolve;
-            });
-            advert.whenRendered = new Promise(function (resolve) {
-                advert.whenRenderedResolver = resolve;
-            });
+            initAdvert(advert);
             advertsToLoad.push(advert);
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if its `data-refresh` attribute isn't set to false.
@@ -372,7 +363,7 @@ define([
     }
 
     function loadAdvert(advert) {
-        advert.isLoading = true;
+        startLoadingAdvert(advert);
         advertsToLoad.splice(advertsToLoad.indexOf(advert), 1);
 
         if (shouldPrebidAdvert(advert)) {
@@ -437,134 +428,30 @@ define([
     }
 
     /**
-     * PARSE RETURNED ADVERTS
+     * HANDLE RETURNED ADVERTS
      */
 
-    var callbacks = {};
-    callbacks[adSizes.fluid] = isFluid250('ad-slot--top-banner-ad');
-    callbacks[adSizes.stickyMpu] = function (_, advert) {
-        stickyMpu(bonzo(advert.node));
-    };
-    callbacks[adSizes.mpu] = function (_, advert) {
-        if (advert.node.classList.contains('ad-slot--right')) {
-            var mobileAdSizes = advert.sizes('data-mobile');
-            if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
-                stickyMpu(bonzo(advert.node));
-            }
-        } else if (advert.node.classList.contains('ad-slot--facebook')) {
-            advert.node.classList.add('ad-slot--fluid');
+    function reportEmptyResponse(adSlotId, event) {
+        // This empty slot could be caused by a targeting problem,
+        // let's report these and diagnose the problem in sentry.
+        // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
+        if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
+            var adUnitPath = event.slot.getAdUnitPath();
+            var adTargetingMap = event.slot.getTargetingMap();
+            var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
+            var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
+
+            reportError(new Error('dfp returned an empty ad response'), {
+                feature: 'commercial',
+                adUnit: adUnitPath,
+                adSlot: adSlotId,
+                adKeywords: adKeywords
+            }, false);
         }
-    };
-    callbacks[adSizes.outOfPage] = function (event, advert) {
-        if (!event.slot.getOutOfPage()) {
-            advert.node.classList.add('u-h');
-            var parent = advert.node.parentNode;
-            // if in a slice, add the 'no mpu' class
-            if (parent.classList.contains('js-fc-slice-mpu-candidate')) {
-                parent.classList.add('fc-slice__item--no-mpu');
-            }
-        }
-    };
-    callbacks[adSizes.portrait] = function () {
-        // remove geo most popular
-        geoMostPopular.whenRendered.then(function (geoMostPopular) {
-            fastdom.write(function () {
-                bonzo(geoMostPopular.elem).remove();
-            });
-        });
-    };
-    callbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
-    callbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
-    callbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');
-
-    function isFluid250(className) {
-        return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
-                fastdom.write(function () {
-                    advert.node.classList.add('ad-slot__fluid250');
-                });
-            }
-        };
-    }
-
-    function isFluid(className) {
-        return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
-                fastdom.write(function () {
-                    advert.node.classList.add('ad-slot--fluid');
-                });
-            }
-        };
-    }
-
-    function renderAdvert(advert, event) {
-        if (event.isEmpty) {
-            // This empty slot could be caused by a targeting problem,
-            // let's report these and diagnose the problem in sentry.
-            // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
-            if (config.switches.reportEmptyDfpResponses && Math.random() < 0.001) {
-                var adUnitPath = event.slot.getAdUnitPath();
-                var adTargetingMap = event.slot.getTargetingMap();
-                var adTargetingKValues = adTargetingMap ? adTargetingMap['k'] : [];
-                var adKeywords = adTargetingKValues ? adTargetingKValues.join(', ') : '';
-
-                reportError(new Error('dfp returned an empty ad response'), {
-                    feature: 'commercial',
-                    adUnit: adUnitPath,
-                    adSlot: advert.id,
-                    adKeywords: adKeywords
-                }, false);
-            }
-
-            return fastdom.write(function () {
-                googletag.destroySlots([advert.slot]);
-                bonzo(advert.node).remove();
-                advert.node = advert.slot = null;
-                return false;
-            });
-        } else {
-            // Store ads IDs for technical feedback
-            creativeIDs.push(event.creativeId);
-
-            // remove any placeholder ad content
-            fastdom.write(function () {
-                bonzo(qwery('.ad-slot__content--placeholder', advert.node)).remove();
-                bonzo(qwery('div', advert.node)).addClass('ad-slot__content');
-            });
-
-            // Check if creative is a new gu style creative and place labels accordingly.
-            return applyCreativeTemplate(advert.node).then(function (isRendered) {
-                addLabel(advert.node);
-
-                var size = event.size.join(',');
-                // is there a callback for this size
-                if (callbacks[size]) {
-                    callbacks[size](event, advert);
-                }
-
-                return isRendered;
-            }).catch(raven.captureException);
-        }
-    }
-
-    function addLabel(adSlotNode) {
-        if (shouldRenderLabel(adSlotNode)) {
-            fastdom.write(function () {
-                adSlotNode.insertAdjacentHTML('afterbegin', '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            });
-        }
-    }
-
-    function shouldRenderLabel(adSlotNode) {
-        return !adSlotNode.classList.contains('ad-slot--frame') &&
-            !adSlotNode.classList.contains('gu-style') &&
-            !adSlotNode.classList.contains('ad-slot--facebook') &&
-            !adSlotNode.querySelector('.ad-slot__label') &&
-            adSlotNode.getAttribute('data-label') !== 'false';
     }
 
     function allAdsRendered() {
-        if (adverts.every(function (_) { return _.isRendered || _.isHidden; })) {
+        if (adverts.every(function (_) { return _.isRendered || _.isEmpty || _.isHidden; })) {
             userTiming.mark('All ads are rendered');
             mediator.emit('modules:commercial:dfp:alladsrendered');
         }
@@ -613,22 +500,25 @@ define([
         return waitForAdvert(id).then(function (_) { return _.whenRendered; });
     }
 
-    function getAdverts(withHidden) {
+    function getAdverts(isWithAllAds) {
         return Object.keys(advertIds).reduce(function (advertsById, id) {
             var advert = getAdvertById(id);
-            if (withHidden || !advert.isHidden) {
+            if (isWithAllAds || (!advert.isHidden && !advert.isEmpty)) {
                 advertsById[id] = advert;
             }
             return advertsById;
         }, {});
     }
 
-    function initAdvert(adSlotNode) {
+    function createAdvert(adSlotNode) {
         return Object.seal({
             id: adSlotNode.id,
             isHidden: false,
+            isEmpty: false,
             isLoading: false,
             isRendering: false,
+            isLoaded: false,
+            isRendered: false,
             whenLoaded: null,
             whenLoadedResolver: null,
             whenRendered: null,
@@ -637,6 +527,56 @@ define([
             sizes: null,
             slot: null
         });
+    }
+
+    function emptyAdvert(advert) {
+        advert.isEmpty = true;
+        fastdom.write(function () {
+            googletag.destroySlots([advert.slot]);
+            bonzo(advert.node).remove();
+            advert.node = advert.slot = null;
+        });
+    }
+
+    function hideAdvert(advert) {
+        advert.isHidden = true;
+        fastdom.write(function () {
+            bonzo(advert.node).remove();
+            advert.node = null;
+        });
+    }
+
+    function initAdvert(advert) {
+        advert.sizes = getAdBreakpointSizes(advert);
+        advert.slot = defineSlot(advert.node, advert.sizes);
+    }
+
+    function startLoadingAdvert(advert) {
+        advert.isLoading = true;
+        advert.whenLoaded = new Promise(function (resolve) {
+            advert.whenLoadedResolver = resolve;
+        }).then(function (isLoaded) {
+            advert.isLoaded = isLoaded;
+        });
+    }
+
+    function stopLoadingAdvert(advert, isLoaded) {
+        advert.isLoading = false;
+        advert.whenLoadedResolver(isLoaded);
+    }
+
+    function startRenderingAdvert(advert) {
+        advert.isRendering = true;
+        advert.whenRendered = new Promise(function (resolve) {
+            advert.whenRenderedResolver = resolve;
+        }).then(function (isRendered) {
+            advert.isRendered = isRendered;
+        });
+    }
+
+    function stopRenderingAdvert(advert, isRendered) {
+        advert.isRendering = false;
+        advert.whenRenderedResolver(isRendered);
     }
 
     /** A breakpoint can have various sizes assigned to it. You can assign either on

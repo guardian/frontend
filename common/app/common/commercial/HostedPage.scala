@@ -162,7 +162,7 @@ object HostedPage {
   )
 
   private val gallery: HostedGalleryPage = HostedGalleryPage(
-    images = (1 to 6).map(n => s"http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb$n.jpg").toList,
+    images = (1 to 7).map(n => s"http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb$n.jpg").toList,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
