@@ -518,12 +518,6 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.d-comment__inner:hover {
-    .inactive-share-buttons {
-        display: block;
-    }
-}
-
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
     @include fs-textSans(4);
@@ -846,13 +840,27 @@ $comment-recommend-button-size: 19px;
 .d-comment__actions {
     position: absolute;
     bottom: $gs-baseline;
+    opacity: 0.7;
     .discussion--closed & {
-        display: none;
+        .d-comment__action--reply, .d-comment__action-separator, .d-comment__action-pick {
+            display: none;
+        }
+        .sharing-component {
+            margin: 0 !important;
+
+            .sharing-text .inline-icon {
+                padding-left: 0 !important;
+            }
+        }
     }
 }
 
+.d-comment__actions:hover {
+    opacity: 1;
+}
+
 .d-comment__action {
-    @include fs-textSans(1);
+    @include fs-textSans(3);
     display: inline-block;
     color: $news-default;
     font-weight: bold;
@@ -909,8 +917,52 @@ $comment-recommend-button-size: 19px;
     }
 }
 
-.inactive-share-buttons {
-    display: none;
+.sharing-component {
+    height: 1.2rem;
+    vertical-align: middle;
+    margin-left: 5px;
+
+    .sharing-buttons {
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity .0s ease-in-out;
+        display: inline-block;
+
+        .inline-icon {
+            height: 0rem;
+            min-width: 0rem;
+            transition: all .3s ease-in-out;
+        }
+    }
+
+    .sharing-text, .inline-icon {
+        cursor: default;
+        display: inline-block;
+        float: left;
+    }
+
+    .sharing-text {
+        .inline-icon {
+            padding: 1px 5px;
+            fill: #005689;
+        }
+    }
+
+    a:first-child {
+        margin-left: 5px;
+    }
+}
+
+.sharing-component:hover {
+    .sharing-buttons {
+        opacity: 1;
+
+        .inline-icon {
+            height: 1.2rem;
+            min-width: 1.2rem;
+            cursor: pointer;
+        }
+    }
 }
 
 /* Report
