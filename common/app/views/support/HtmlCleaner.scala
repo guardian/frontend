@@ -593,3 +593,14 @@ case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeade
     document
   }
 }
+
+object setSvgClasses {
+  def apply(svg: String, classes: Seq[String] = List()) = {
+    val document = Jsoup.parse(svg)
+    val svgHtml = document.getElementsByTag("svg")
+    val modifiedClasses = classes.map(_.concat("__svg")).mkString(" ")
+
+    svgHtml.addClass(modifiedClasses)
+    svgHtml.toString
+  }
+}
