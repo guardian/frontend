@@ -1,16 +1,20 @@
 define([
     'qwery',
+    'Promise',
     'common/utils/fastdom-promise'
 ], function (
     qwery,
+    Promise,
     fastdom
 ) {
     function renderAdvertLabel($adSlot) {
-        return fastdom.write(function () {
-            if (shouldRenderLabel($adSlot)) {
+        if (shouldRenderLabel($adSlot)) {
+            return fastdom.write(function () {
                 $adSlot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
-        });
+            });
+        } else {
+            return Promise.resolve(null);
+        }
     }
 
     function shouldRenderLabel($adSlot) {
