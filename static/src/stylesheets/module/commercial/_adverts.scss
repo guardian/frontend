@@ -363,10 +363,13 @@
 }
 
 .adverts--legacy-inline {
+    margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
     padding: 0;
     width: $gs-gutter * 6.5;
 
     @include mq(mobileLandscape) {
+        margin-bottom: $gs-baseline;
+        margin-right: $gs-gutter;
         width: gs-span(3);
     }
 
