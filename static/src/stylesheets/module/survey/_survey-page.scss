@@ -51,14 +51,13 @@
 
     .fsSubmitButton {
         @include fs-textSans(2);
-        font-size: 0.8125rem !important;
-
         @include button-height($base-size * 5);
         @include button-colour(
-                $guardian-brand,
-                #ffffff,
-                $guardian-brand
+            $guardian-brand,
+            #ffffff,
+            $guardian-brand
         );
+        font-size: .8125rem !important;
         display: inline-block;
         vertical-align: top;
         width: auto;
