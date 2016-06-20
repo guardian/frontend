@@ -134,20 +134,20 @@ define([
                 .then(function () {
                     return isRendered;
                 });
-        }).catch(raven.captureException);
 
-        function callSizeCallback() {
-            var size = slotRenderEvent.size.join(',');
-            if (sizeCallbacks[size]) {
-                sizeCallbacks[size](slotRenderEvent, advert);
+            function callSizeCallback() {
+                var size = slotRenderEvent.size.join(',');
+                if (sizeCallbacks[size]) {
+                    sizeCallbacks[size](slotRenderEvent, advert);
+                }
             }
-        }
 
-        function addRenderedClass() {
-            return isRendered ? fastdom.write(function () {
-                advert.node.classList.add('ad-slot--rendered');
-            }) : Promise.resolve();
-        }
+            function addRenderedClass() {
+                return isRendered ? fastdom.write(function () {
+                    advert.node.classList.add('ad-slot--rendered');
+                }) : Promise.resolve();
+            }
+        }).catch(raven.captureException);
     }
 
     function removePlaceholders(adSlotNode) {

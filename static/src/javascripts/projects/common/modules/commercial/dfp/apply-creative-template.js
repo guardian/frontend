@@ -75,10 +75,8 @@ define([
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
-            return Promise.all([
-                renderCreative(creativeConfig),
-                hideIframe()
-            ]);
+            hideIframe();
+            return renderCreative(creativeConfig);
         } else {
             return Promise.resolve(true);
         }
@@ -97,7 +95,7 @@ define([
         }
 
         function hideIframe() {
-            return fastdom.write(function () {
+            fastdom.write(function () {
                 iFrame.style.display = 'none';
             });
         }
