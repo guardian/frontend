@@ -475,16 +475,16 @@ define([
 
     var waitForAdvert = memoize(function (id) {
         return new Promise(function (resolve, reject) {
-            var failedAttempts = 5;
+            var failedAttempts = 50;
             checkAdvert();
             function checkAdvert() {
                 var advert = getAdvertById(id);
                 if (!advert) {
                     failedAttempts -= 1;
                     if (failedAttempts === 0) {
-                        reject(new Error('Ad ' + id + ' failed to load'));
+                        reject(new Error('Ad ' + id + ' failed to load in time'));
                     }
-                    window.setTimeout(checkAdvert, 100);
+                    window.setTimeout(checkAdvert, 200);
                 } else {
                     resolve(advert);
                 }
