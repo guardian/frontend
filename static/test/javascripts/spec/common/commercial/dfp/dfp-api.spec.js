@@ -244,8 +244,8 @@ define([
         });
 
         it('should expose ads IDs', function (done) {
-            var fakeEventOne = makeFakeEvent('dfp-ad-slot1'),
-                fakeEventTwo = makeFakeEvent('dfp-ad-slot2');
+            var fakeEventOne = makeFakeEvent('dfp-ad-html-slot'),
+                fakeEventTwo = makeFakeEvent('dfp-ad-script-slot');
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
@@ -296,6 +296,5 @@ define([
             });
 
         });
-
     });
 });

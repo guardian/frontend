@@ -94,16 +94,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoTeaser = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-teaser",
-    "Show video teaser",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 17),
-    exposeClientSide = true
-  )
-
   val ABVideoMainMediaAlwaysShowcase = Switch(
     SwitchGroup.ABTests,
     "ab-video-main-media-always-showcase",

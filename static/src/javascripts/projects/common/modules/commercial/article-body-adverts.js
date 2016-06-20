@@ -5,7 +5,6 @@ define([
     'common/utils/detect',
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'lodash/functions/memoize'
@@ -16,7 +15,6 @@ define([
     detect,
     spaceFiller,
     dfp,
-    trackAd,
     createAdSlot,
     commercialFeatures,
     memoize
@@ -121,7 +119,7 @@ define([
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     var waitForMerch = memoize(function () {
-        return trackAd('dfp-ad--im').then(function (isLoaded) {
+        return dfp.trackAdRender('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?
