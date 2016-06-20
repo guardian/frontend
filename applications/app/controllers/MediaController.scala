@@ -23,7 +23,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   def renderInfoJson(path: String) = Action.async { implicit request =>
     lookup(path) map {
       case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
-      case Right(other) => MediaInfo(expired = true, shouldHideAdverts = true)
+      case Right(other) => MediaInfo(expired = other.header.status == 410, shouldHideAdverts = true)
     } map { mediaInfo =>
       Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
     }
