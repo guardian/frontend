@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'fastdom',
     'common/utils/$',
     'common/utils/detect',
@@ -8,6 +9,7 @@ define([
     'text!common/views/commercial/tracking-pixel.html',
     'lodash/functions/bindAll'
 ], function (
+    Promise,
     fastdom,
     $,
     detect,
@@ -60,6 +62,8 @@ define([
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition);
         }
+
+        return Promise.resolve(true);
     };
 
     return ScrollableMpu;

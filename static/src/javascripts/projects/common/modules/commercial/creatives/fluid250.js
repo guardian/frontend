@@ -1,6 +1,7 @@
 define([
     'qwery',
     'bonzo',
+    'Promise',
     'fastdom',
     'common/utils/detect',
     'common/utils/template',
@@ -13,6 +14,7 @@ define([
 ], function (
     $,
     bonzo,
+    Promise,
     fastdom,
     detect,
     template,
@@ -84,6 +86,8 @@ define([
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
         }
+
+        return Promise.resolve(true);
     };
 
     Fluid250.prototype.updateBgPosition = function () {

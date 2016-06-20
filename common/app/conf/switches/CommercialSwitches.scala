@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import conf.switches.SwitchGroup.CommercialLabs
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -69,16 +70,6 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "video-adverts",
     "Show adverts on videos.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val SponsoredSwitch = Switch(
-    SwitchGroup.Commercial,
-    "sponsored",
-    "Show sponsored badges, logos, etc.",
     owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
@@ -285,16 +276,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FluidAdverts = Switch(
-    SwitchGroup.Commercial,
-    "fluid-adverts",
-    "Request fluid adverts from DFP",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val FixedTechTopSlot = Switch(
     SwitchGroup.Commercial,
     "fixed-tech-top-slot",
@@ -303,26 +284,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 6, 30),
     exposeClientSide = false
-  )
-
-  val staticBadgesSwitch = Switch(
-    SwitchGroup.Commercial,
-    "static-badges",
-    "If on, all badges are served server side",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
-    exposeClientSide = true
-  )
-
-  val containerBrandingFromCapi = Switch(
-    SwitchGroup.Commercial,
-    "static-container-badges",
-    "Serve container branding from capi",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
-    exposeClientSide = true
   )
 
   val highMerchandisingComponentSwitch = Switch(
@@ -355,13 +316,54 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+
+  val SponsoredSwitch = Switch(
+    group = CommercialLabs,
+    "sponsored",
+    "Show sponsored badges, logos, etc.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val staticBadgesSwitch = Switch(
+    group = CommercialLabs,
+    "static-badges",
+    "If on, all badges are served server side",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 13),
+    exposeClientSide = true
+  )
+
+  val containerBrandingFromCapi = Switch(
+    group = CommercialLabs,
+    "static-container-badges",
+    "Serve container branding from capi",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 13),
+    exposeClientSide = true
+  )
+
   val hostedGalleryTest = Switch(
-    SwitchGroup.Commercial,
+    group = CommercialLabs,
     "hosted-gallery-test",
     "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 12),
     exposeClientSide = false
+  )
+
+  val hostedContentTracking = Switch(
+    group = CommercialLabs,
+    name = "hosted-content-tracking",
+    description = "Use special extra tracking parameters for hosted content",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 12),
+    exposeClientSide = true
   )
 }

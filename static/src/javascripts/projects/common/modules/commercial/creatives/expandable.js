@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -60,15 +60,6 @@ define([
         this.$ad     = $('.ad-exp--expand', $expandable);
         this.$button = $('.ad-exp__close-button', $expandable);
 
-        fastdom.write(function () {
-            this.$ad.css('height', this.closedHeight);
-            $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
-            if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-            }
-            $expandable.appendTo(this.$adSlot);
-        }.bind(this));
-
         if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
             mediator.on('window:throttledScroll', this.listener);
         }
@@ -79,6 +70,16 @@ define([
             this.isClosed = !this.isClosed;
         }.bind(this));
 
+
+        return fastdom.write(function () {
+            this.$ad.css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+            $expandable.appendTo(this.$adSlot);
+            return true;
+        }, this);
     };
 
     return Expandable;

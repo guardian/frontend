@@ -43,6 +43,7 @@ define([
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
             new Toggles(this.$adSlot[0]).init();
+            return true;
         }, this);
     };
 

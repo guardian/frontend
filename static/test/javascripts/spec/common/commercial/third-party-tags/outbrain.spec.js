@@ -28,6 +28,7 @@ define([
         },
         $fixtureContainer,
         config,
+        dfp,
         identity,
         detect,
         sut, // System under test
@@ -37,14 +38,11 @@ define([
 
     describe('Outbrain', function () {
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
-                return Promise.resolve(ads[id]);
-            });
             injector.mock('common/modules/email/run-checks', function() {
                 return Promise.resolve(false);
             });
             injector.require([
-                'common/modules/commercial/dfp/track-ad-load',
+                'common/modules/commercial/dfp/dfp-api',
                 'common/modules/email/run-checks',
                 'common/modules/commercial/third-party-tags/outbrain',
                 'common/modules/commercial/third-party-tags/outbrain-sections',
@@ -53,6 +51,10 @@ define([
                 'common/utils/detect',
                 'common/modules/commercial/commercial-features'
             ], function () {
+                dfp      = arguments[0];
+                dfp.trackAdRender = function (id) {
+                    return Promise.resolve(ads[id]);
+                };
                 sut      = arguments[2];
                 getSection = arguments[3];
                 config   = arguments[4];
