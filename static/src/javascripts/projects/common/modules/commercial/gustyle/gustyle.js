@@ -43,6 +43,8 @@ define([
 
             toggles = new Toggles(this.$slot[0]);
             toggles.init();
+
+            return true;
         }, this);
     };
 

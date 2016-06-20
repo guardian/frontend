@@ -23,7 +23,7 @@ define([
     HostedThrasher.prototype.create = function () {
         hostedThrasherTemplate = hostedThrasherTemplate || template(hostedThrasherStr);
 
-        fastdom.write(function () {
+        return fastdom.write(function () {
             var title = this.params.header2 || 'unknown';
             var sponsor = 'Renault';
             var videoLength = this.params.videoLength;
@@ -42,7 +42,9 @@ define([
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
-        }, this).then(hostedVideo.init);
+        }, this).then(hostedVideo.init).then(function () {
+            return true;
+        });
     };
 
     return HostedThrasher;
