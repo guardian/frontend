@@ -541,9 +541,11 @@ $minute-layout-margin-nudge: gs-span(1);
             }
 
             .element--inline {
-                bottom: 0;
                 position: absolute;
+                top: 0;
+                bottom: 0;
                 z-index: 1;
+                margin-top: 0;
 
                 // Background overlay
                 &:after {
@@ -558,11 +560,11 @@ $minute-layout-margin-nudge: gs-span(1);
                 }
 
                 .element--inline__image-wrapper {
-                    height: 100vh;
+                    height: 100%;
                 }
 
                 .gu-image {
-                    height: 100%;
+                    height: 100vh;
                     width: 100vw;
                     object-fit: cover;
                 }
@@ -571,7 +573,8 @@ $minute-layout-margin-nudge: gs-span(1);
             .caption__minute-article {
                 background-color: transparent;
                 min-height: $gs-baseline*2;
-                position: relative;
+                position: absolute;
+                bottom: 0;
                 z-index: 2;
             }
         }

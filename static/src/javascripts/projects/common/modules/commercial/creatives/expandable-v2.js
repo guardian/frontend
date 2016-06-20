@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -11,8 +11,7 @@ define([
     'text!common/views/commercial/creatives/expandable-v2.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -26,8 +25,7 @@ define([
     expandableV2Tpl,
     bindAll,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
 
     /**
@@ -142,24 +140,6 @@ define([
             },
             $expandablev2 = $.create(template(expandableV2Tpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
-        var domPromise = new Promise(function (resolve) {
-            fastdom.write(function () {
-
-                this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-                this.$button = $('.ad-exp__open', $expandablev2);
-
-                $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
-
-                if (this.params.trackingPixel) {
-                    addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-                }
-
-                $expandablev2.appendTo(this.$adSlot);
-
-                resolve();
-            }.bind(this));
-        }.bind(this));
-
         if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
             mediator.on('window:throttledScroll', this.listener);
         }
@@ -182,7 +162,21 @@ define([
             mediator.on('window:resize', this.updateBgPosition);
         }
 
-        return domPromise;
+        return fastdom.write(function () {
+
+            this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
+            this.$button = $('.ad-exp__open', $expandablev2);
+
+            $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+
+            $expandablev2.appendTo(this.$adSlot);
+
+            return true;
+        }, this);
     };
 
     return ExpandableV2;
