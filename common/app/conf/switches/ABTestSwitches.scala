@@ -80,7 +80,7 @@ trait ABTestSwitches {
     "Add a single question survey to the submeta section of article pages",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 18),
+    sellByDate = new LocalDate(2016, 6, 24),
     exposeClientSide = true
   )
 

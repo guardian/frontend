@@ -19,8 +19,8 @@ define([
 ) {
     return function () {
         this.id = 'VisitorFrequencyQuickSurvey';
-        this.start = '2016-06-13';
-        this.expiry = '2016-06-21';
+        this.start = '2016-06-20';
+        this.expiry = '2016-06-24';
         this.author = 'Kate Whalen';
         this.description = 'Add a single question survey to the submeta section of article pages';
         this.audience = 0;
@@ -31,7 +31,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.contentType == 'Article' && checkCookies('GU_FI');
+            return config.page.contentType === 'Article' && isFirstTimeUser('GU_FI');
         };
 
         function renderQuickSurvey() {
@@ -75,13 +75,15 @@ define([
             });
         }
 
-        function checkCookies(cookieName) {
+        function isFirstTimeUser(cookieName) {
             var surveyCookie = cookies.get(cookieName);
             if (!(surveyCookie) && storage.local.isStorageAvailable()) {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited');
                 if (!alreadyVisited || alreadyVisited < 1) {
                     return true;
                 }
+            }  else {
+                return false;
             }
         }
 
