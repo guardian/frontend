@@ -1,10 +1,10 @@
 define([
-    'common/utils/$',
+    'qwery',
     'common/utils/config',
     'common/modules/experiments/tests/utils/comment-blocker',
     'common/modules/identity/api'
 ], function (
-    $,
+    qwery,
     config,
     CommentBlocker,
     identity
@@ -74,8 +74,12 @@ define([
                             hide = CommentBlocker.hideComments(shortUrlSlug);
 
                         if(config.page.isContent && hide) {
-                            $('.js-comments').addClass('discussion--hidden');
-                            $('.js-commentcount').addClass('commentcount2--hidden');
+                            qwery('.js-comments').forEach(function(c) {
+                                c.classList.add('discussion--hidden');
+                            });
+                            qwery('.js-commentcount').forEach(function(c) {
+                                c.classList.add('commentcount2--hidden');
+                            });
                         }
                     }
                 },
