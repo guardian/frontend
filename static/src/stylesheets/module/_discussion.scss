@@ -848,11 +848,7 @@ $comment-recommend-button-size: 19px;
             display: none;
         }
         .sharing-component {
-            margin: 0 !important;
-
-            .sharing-text .inline-icon {
-                padding-left: 0 !important;
-            }
+            margin: 0;
         }
     }
 }
@@ -924,50 +920,48 @@ $comment-recommend-button-size: 19px;
     vertical-align: middle;
     margin-left: 5px;
 
-    .sharing-buttons {
-        opacity: 0;
-        cursor: pointer;
-        transition: opacity 0s ease-in-out;
-        display: inline-block;
-
-        .inline-icon {
-            height: 0;
-            min-width: 0;
-            transition: all .3s ease-in-out;
-        }
-    }
-
-    .sharing-text, .inline-icon {
-        cursor: default;
-        display: inline-block;
-        float: left;
-    }
-
-    .sharing-text {
-        .inline-icon {
-            padding: 1px 5px;
-            fill: #005689;
-        }
-    }
-
-    a:first-child {
-        margin-left: 5px;
-    }
-
     &:hover {
         .sharing-buttons {
             opacity: 1;
+            margin-left: 5px;
+        }
 
-            .inline-icon {
-                height: 1.2rem;
-                min-width: 1.2rem;
-                cursor: pointer;
-            }
+        .comment-facebook-icon,
+        .comment-twitter-icon {
+            height: 1.2rem;
+            min-width: 1.2rem;
+            cursor: pointer;
         }
     }
 }
 
+.sharing-text {
+    cursor: default;
+    display: inline-block;
+    float: left;
+}
 
+.comment-share-icon {
+    fill: $guardian-brand;
+}
+
+.comment-share-icon svg {
+    vertical-align: text-top;
+}
+
+.sharing-buttons {
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0s ease-in-out;
+    display: inline-block;
+}
+
+.comment-facebook-icon,
+.comment-twitter-icon {
+    height: 0;
+    min-width: 0;
+    transition: all .3s ease-in-out;
+}
 
 /* Report
    ======================================================= */

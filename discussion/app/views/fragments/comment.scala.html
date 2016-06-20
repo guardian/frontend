@@ -1,5 +1,6 @@
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
+@import conf.switches.Switches.SharingComments
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment
@@ -106,7 +107,9 @@
                             Reply
                         </a>
 
-                        @commentShare(comment)
+                        @if(SharingComments.isSwitchedOn) {
+                            @commentShare(comment)
+                        }
 
                         <span class="d-comment__action-separator d-staff-required">|</span>
 
