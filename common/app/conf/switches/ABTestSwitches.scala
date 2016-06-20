@@ -44,16 +44,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABWelcomeHeader = Switch(
-    SwitchGroup.ABTests,
-    "ab-welcome-header",
-    "Welcome header for first time users test",
-    owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val ABParticipationDiscussionTest = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-test",
