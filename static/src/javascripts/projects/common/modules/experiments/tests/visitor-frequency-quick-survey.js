@@ -53,20 +53,20 @@ define([
         function surveyFadeOut() {
             var surveyTextbox = document.getElementById('surveyTextbox');
             fastdom.write(function () {
-                surveyTextbox.style.cssText += 'visibility:hidden;opacity:0;transition:visibility 0s ease-in 0.5s,opacity 0.5s linear';
+                surveyTextbox.classList.add('js-impressions-survey__fadeout');
             });
         }
 
         function thankyouFadeIn() {
             var surveyThanks = document.getElementsByClassName('impressions-survey__thanks');
             fastdom.write(function () {
-                surveyThanks[0].style.cssText += 'visibility:visible;opacity:1;transition:visibility 0s ease-in 0.5s,opacity 0.8s linear';
+                surveyThanks[0].classList.add('js-impressions-survey__fadein');
             });
         }
 
         function handleSurveyResponse() {
-            var surveyQuestion = document.getElementById('impressions-survey__select');
-            bean.on(surveyQuestion, 'click', function () {
+            var surveyQuestion = document.getElementsByClassName('impressions-survey__select');
+            bean.on(surveyQuestion[0], 'click', function () {
                 fastdom.write(function () {
                     disableRadioButtons('fi-survey__button');
                     surveyFadeOut();
@@ -89,9 +89,9 @@ define([
 
         function checkBrowsingMode() {
             privateBrowsing.then(function (success) {
-                var dataLinkName = 'private-browsing-' + success;
-                var surveySelect = document.getElementById('impressions-survey__select');
-                surveySelect.setAttribute('data-link-name', dataLinkName);
+                var browsingMode = 'private-browsing-' + success;
+                var surveySelect = document.getElementsByClassName('impressions-survey__select');
+                surveySelect[0].setAttribute('data-link-name', browsingMode);
             });
         }
 
