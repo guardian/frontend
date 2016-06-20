@@ -31,6 +31,7 @@
                         ) { player =>
                             @fragments.media.video(player, true, amp = amp)
                             <meta itemprop="name" content="@player.title">
+                            <meta itemprop="thumbnail" content="@player.poster">
                             <meta itemprop="thumbnailUrl" content="@player.poster">
                             <meta itemprop="image" content="@player.poster">
                             <meta itemprop="uploadDate" content="@article.trail.webPublicationDate"> @*This should ideally be the video publication date (and not the article one) but at the moment this info is not exposed via the article capi endpoint*@
