@@ -135,4 +135,9 @@
             </div>
         </div>
     </div>
+    @if(isArticle && page.item.fields.standfirst.isDefined && !isMinuteSeries) {
+        <div class="content__wrapper--standfirst mobile-only">
+            @fragments.standfirst(page.item)
+        </div>
+    }
 }
