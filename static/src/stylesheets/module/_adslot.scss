@@ -412,11 +412,12 @@
 }
 .ad-slot--im {
     float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
+    width: 0;
+    height: 0;
 
-    @include mq($until: mobileLandscape) {
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
+    &.ad-slot--rendered {
+        width: auto;
+        height: auto;
     }
 }
 .ad-slot--fobadge.ad-slot--im {
