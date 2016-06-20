@@ -5,7 +5,8 @@ define([
     'common/utils/config',
     'common/utils/$',
     'common/utils/fastdom-promise',
-    'common/views/svgs',
+    'common/views/svg',
+    'inlineSvg!svgs/icon/star',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
     'text!common/views/experiments/participation/low-friction-contents.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
@@ -19,7 +20,8 @@ define([
     config,
     $,
     fastdomPromise,
-    svgs,
+    svg,
+    star,
     lowFrictionWrapper,
     lowFrictionContents,
     lowFrictionButtons,
@@ -39,7 +41,6 @@ define([
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
         itemIconUnicode: [], // Add a list of unicode icons
-        itemIconId: 'star', // SVG icon ID
         inactiveIconClass: 'inline-icon__inactive', // The inactive class added to the icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
@@ -78,7 +79,7 @@ define([
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: thisUniIcon || svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svg(star, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };

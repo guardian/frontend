@@ -5,7 +5,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/utils/load-css-promise',
-    'common/views/svgs'
+    'inlineSvg!svgs/icon/close-central'
 ], function (
     bean,
     fastdom,
@@ -13,7 +13,7 @@ define([
     storage,
     template,
     loadCssPromise,
-    svgs
+    closeCentralIcon
 ) {
     /**
      * Rules:
@@ -37,7 +37,7 @@ define([
     function createAndSetHeader(messageName) {
         var newHeader = document.createElement('button'),
             msg = template(message1, data[messageName]),
-            closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + svgs('closeCentralIcon') + '</button></div>';
+            closeBtn = '<div class="banner-close-icon"><button class="js-welcome-message__item__close button button--tertiary u-faux-block-link__promote" aria-label="Dismiss" data-link-name="close button">' + closeCentralIcon + '</button></div>';
 
         newHeader.id = 'welcome-banner';
         newHeader.style.height = header.offsetHeight + 'px';
