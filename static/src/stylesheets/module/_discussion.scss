@@ -842,7 +842,9 @@ $comment-recommend-button-size: 19px;
     bottom: $gs-baseline;
     opacity: .7;
     .discussion--closed & {
-        .d-comment__action--reply, .d-comment__action-separator, .d-comment__action-pick {
+        .d-comment__action--reply,
+        .d-comment__action-separator,
+        .d-comment__action-pick {
             display: none;
         }
         .sharing-component {
@@ -929,8 +931,8 @@ $comment-recommend-button-size: 19px;
         display: inline-block;
 
         .inline-icon {
-            height: 0rem;
-            min-width: 0rem;
+            height: 0;
+            min-width: 0;
             transition: all .3s ease-in-out;
         }
     }
@@ -951,19 +953,21 @@ $comment-recommend-button-size: 19px;
     a:first-child {
         margin-left: 5px;
     }
-}
 
-.sharing-component:hover {
-    .sharing-buttons {
-        opacity: 1;
+    &:hover {
+        .sharing-buttons {
+            opacity: 1;
 
-        .inline-icon {
-            height: 1.2rem;
-            min-width: 1.2rem;
-            cursor: pointer;
+            .inline-icon {
+                height: 1.2rem;
+                min-width: 1.2rem;
+                cursor: pointer;
+            }
         }
     }
 }
+
+
 
 /* Report
    ======================================================= */
