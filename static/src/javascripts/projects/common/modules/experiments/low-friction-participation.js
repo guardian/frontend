@@ -40,7 +40,7 @@ define([
         itemCount: 5, // Amount of items
         itemIconUnicode: [], // Add a list of unicode icons
         inactiveIconClass: 'inline-icon__inactive', // The inactive class added to the icon
-        itemIcon: starIcon, // SVG icon
+        itemIcon: star, // SVG icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
             title: 'Do you agree? Rate this film now',
