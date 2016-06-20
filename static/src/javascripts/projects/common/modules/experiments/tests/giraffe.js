@@ -7,6 +7,7 @@ define(['common/modules/article/space-filler',    'common/utils/$',    'common/u
         this.expiry = '2016-08-13';
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
+        this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = '';
