@@ -9,9 +9,24 @@
     left: 0;
 }
 
+@mixin gallery-side-margins($container-width) {
+    width: $container-width + $gs-gutter * 2;
+    margin: 0 auto;
+}
+
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
+
+    @include mq(desktop) {
+        @include gallery-side-margins(gs-span(12));
+    }
+    @include mq(leftCol) {
+        @include gallery-side-margins(gs-span(14));
+    }
+    @include mq(wide) {
+        @include gallery-side-margins(gs-span(16));
+    }
 }
 
 .hosted-gallery__image {
@@ -113,7 +128,19 @@ $progressColor: #ffffff;
 .hosted-gallery__progress {
     position: absolute;
     top: 50%;
-    right: 50px;
+    margin-top: $progressHeight / -2;
+    right: 0;
+
+    .hosted-gallery__image-count {
+        @include f-headlineSans;
+        position: absolute;
+        top: 13px;
+        left: -18px;
+        width: 37px;
+        color: $progressColor;
+        text-align: center;
+        text-shadow: 1px 1px 1px $neutral-2;
+    }
 
     .hosted-gallery__progress--wrapper {
         position: relative;

@@ -21,6 +21,7 @@ define([
         var $border = $('.hosted-gallery__progress--border-2', $progress);
         var $upArrow = $('.inline-arrow-up', $progress);
         var $downArrow = $('.inline-arrow-down', $progress);
+        var $counter = $('.hosted-gallery__image-count', $progress);
 
 
         bean.on($upArrow[0], 'click', function () {
@@ -68,6 +69,7 @@ define([
                         bonzo($progress).removeClass(cssClass);
                     }
                 });
+                bonzo($counter).html(Math.round(progress + 0.75) + '/' + $images.length);
             });
         }, 10));
 
