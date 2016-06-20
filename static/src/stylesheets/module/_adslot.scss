@@ -337,7 +337,8 @@
 /**
  * Commercial Components
  */
-.ad-slot--commercial-component {
+.ad-slot--commercial-component,
+.ad-slot--commercial-component-high {
     .has-page-skin & {
         @include mq(wide) {
             margin-left: auto;
