@@ -10,6 +10,7 @@ trait HostedPage extends StandalonePage  {
   def pageUrl: String
   def pageName: String
   def pageTitle: String
+  def standfirst: String
   def logoUrl: String
 }
 
@@ -61,11 +62,13 @@ case class HostedVideoPage(
 case class HostedGalleryPage(
                        pageUrl: String,
                        pageName: String,
+                       title: String,
+                       standfirst: String,
                        images: List[HostedGalleryImage],
                        logoUrl: String
                      ) extends HostedPage {
 
-  val pageTitle: String  = s"Advertiser content hosted by the Guardian: $pageName - gallery"
+  val pageTitle: String  = s"Advertiser content hosted by the Guardian: $title - gallery"
 
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
@@ -90,7 +93,7 @@ case class HostedGalleryPage(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $pageName",
+          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $title",
         "og:image" -> logoUrl,
         "fb:app_id" -> "180444840287"
       )
@@ -209,6 +212,8 @@ object HostedPage {
     images = omgbImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
+    title = "Great Britain - Home of Amazing Moments #OMGB",
+    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
   )
 

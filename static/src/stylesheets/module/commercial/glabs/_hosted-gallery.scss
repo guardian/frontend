@@ -51,8 +51,19 @@
 }
 
 .hosted-gallery-page .hostedbadge__info {
-    background: #dd0000;
+    background: $omgbColor;
     color: #ffffff;
+}
+
+.hosted-gallery__meta {
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+    padding: 10px 10%;
+}
+
+.hosted-gallery__heading {
+    @include f-headlineSans;
 }
 
 .hosted-gallery-page--container {

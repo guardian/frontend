@@ -7,10 +7,14 @@
         @guardianHostedHeader("hosted-gallery-page", page.logoUrl)
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
-                @for(i <- page.images.indices) {
-                    <div class="hosted-gallery__image hosted-tone--dark"
-                        style="opacity: @{if(i == 0) 1 else 0 }; background-image: url(@{page.images(i).url});"
-                        ></div>
+                <div class="hosted-gallery__image hosted-tone--dark" style="opacity: 1; background-image: url(@{page.images.head.url});">
+                    <div class="hosted-gallery__meta">
+                        <h1 class="hosted-gallery__heading">@{page.title}</h1>
+                        <h3 class="hosted-gallery__heading">@{page.standfirst}</h3>
+                    </div>
+                </div>
+                @for(i <- page.images.indices.tail) {
+                    <div class="hosted-gallery__image hosted-tone--dark" style="opacity: 0; background-image: url(@{page.images(i).url});"></div>
                 }
                 <div class="hosted-gallery__scroll-container">
                     @for(i <- page.images.indices) {
