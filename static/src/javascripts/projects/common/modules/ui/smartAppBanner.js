@@ -83,7 +83,7 @@ define([
     }
 
     function init() {
-        if (isDevice() && canShow() && !canUseSmartBanner()) {
+        if (!canUseSmartBanner() && isDevice() && canShow()) {
             showMessage();
         }
     }
