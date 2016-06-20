@@ -45,6 +45,7 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
                           maybeSize: Option[Int] = None) = {
 
     val prefix = "commercial-feed"
+    
     val defaultFields: List[LogField] = List(
       prefix -> feed,
       s"$prefix-action" -> action,
