@@ -31,16 +31,18 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.contentType === 'Article' && isFirstTimeUser('GU_FI');
+            return !(config.page.isAdvertisementFeature) &&
+                config.page.contentType === 'Article' &&
+                isFirstTimeUser('GU_FI');
         };
 
         function renderQuickSurvey() {
             // this cannot be wrapped in a fastdom function; the disable function breaks
             var article = document.getElementsByClassName('content__article-body')[0];
-            var firstChild = article.firstChild;
-            var survey = document.createElement('div');
-            survey.innerHTML = quickSurvey;
-            article.insertBefore(survey, firstChild);
+            var insertionPoint = article.getElementsByTagName('p')[1];
+            var surveyDiv = document.createElement('div');
+            surveyDiv.innerHTML = quickSurvey;
+            article.insertBefore(surveyDiv, insertionPoint);
         }
 
         function disableRadioButtons(buttonClassName) {
