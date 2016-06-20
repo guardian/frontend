@@ -1,6 +1,7 @@
 @(comment: Comment)
 @import org.jsoup.Jsoup
 @import org.jsoup.safety.Whitelist
+@import org.apache.commons.lang.StringEscapeUtils
 
 <div class="sharing-component d-comment__action">
 
@@ -8,24 +9,29 @@
 
     <div class="sharing-buttons" data-link-name="comment social">
     @defining(s"https://gu.com${comment.discussion.key}#comment-${comment.id}") { permalink =>
-        @defining(Jsoup.clean(comment.body, Whitelist.none())) { commentBody =>
-            <a href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"${comment.profile.displayName} commented: '$commentBody'")).href"
+        @defining(StringEscapeUtils.unescapeHtml(Jsoup.clean(comment.body, Whitelist.none()))) { commentBody =>
+            <a href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"""${comment.profile.displayName} commented: "$commentBody"""")).href"
             target="_blank"
             class="social__action social-icon-wrapper"
             data-link-name="social-comment : facebook">
-                <span class="inline-icon__fallback button share-modal__item share-modal__item--facebook">Share on Facebook</span>
+                <span class="inline-icon__fallback button share-modal__item share-modal__item--facebook">
+                    Share on Facebook</span>
                 @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook comment-facebook-icon"))
                 <span class="u-h">Facebook</span>
             </a>
 
-            <a href="@ShareLinks.createShareLinkForComment(platform = Twitter, href = comment.webUrl, text = s"'${commentBody.take(111)}...'").href"
-            target="_blank"
-            class="social__action social-icon-wrapper"
-            data-link-name="social-comment : twitter">
-                <span class="inline-icon__fallback button share-modal__item share-modal__item--twitter">Share on Facebook</span>
-                @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter comment-twitter-icon"))
-                <span class="u-h">Twitter</span>
-            </a>
+            @* Twitter allows 140 characters. We need 2 for the quotes and 24 for the URL. *@
+            @defining(if(commentBody.length <= 114) s""""$commentBody"""" else s""""${commentBody.take(111)}..."""") { commentText =>
+                <a href="@ShareLinks.createShareLinkForComment(platform = Twitter, href = comment.webUrl, text = commentText).href"
+                target="_blank"
+                class="social__action social-icon-wrapper"
+                data-link-name="social-comment : twitter">
+                    <span class="inline-icon__fallback button share-modal__item share-modal__item--twitter">
+                        Share on Facebook</span>
+                    @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter comment-twitter-icon"))
+                    <span class="u-h">Twitter</span>
+                </a>
+            }
         }
     }
     </div>
