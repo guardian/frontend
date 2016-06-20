@@ -27,7 +27,7 @@
     }
 
     p {
-        @include fs-bodyCopy(2);
+        @include fs-bodyCopy(2, size-only = true);
         margin-bottom: $gs-baseline;
     }
 
@@ -47,5 +47,25 @@
         border: 0;
         text-align: left;
         padding-left: 0;
+    }
+
+    .fsSubmitButton {
+        @include fs-textSans(2);
+        @include button-height($base-size * 5);
+        @include button-colour(
+            $guardian-brand,
+            #ffffff,
+            $guardian-brand
+        );
+        font-size: .8125rem !important;
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 1000px !important;
+        border-width: 1px;
+        border-style: solid;
+        box-sizing: border-box;
     }
 }
