@@ -21,4 +21,4 @@ define(function () {
 
         return markup;
     }
-})
+});

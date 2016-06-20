@@ -1,8 +1,4 @@
-define([
-    'common/utils/config'
-], function(
-    config
-) {
+define(function() {
 
     var CommentBlocker = {};
 
