@@ -1,0 +1,75 @@
+.impressions-survey__heading {
+    margin-top: 0;
+    padding: 0.5em 1em 0.5em 1em;
+    font-size: 0.8em;
+    background-color: #AAD7E4;
+}
+
+.impressions-survey__title {
+    display: inline-block;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif";
+    font-weight: bold;
+    font-size: 1.8em;
+    margin-right: 1em;
+}
+
+.impressions-survey__about {
+    font-weight: normal;
+    color: inherit;
+    text-decoration: none;
+    padding-left: 1em;
+    border-left: solid #fff;
+}
+
+.impressions-survey__about:hover,
+.impressions-survey__about:link,
+.impressions-survey__about:active,
+.impressions-survey__about:visited {
+    text-decoration: none;
+}
+
+.impressions-survey__body {
+    color: #fff;
+    margin-bottom: 1em;
+    padding: 1em 1em 1em 3em;
+    font-size: 0.8em;
+    background-color: #005689;
+    opacity: 1;
+    position: relative;
+}
+
+.impressions-survey__question {
+    font-weight: bold;
+    padding-bottom: 0.5em;
+    margin-left: -1em!important;
+}
+
+.impressions-survey__select {
+
+}
+
+.fi-survey__button, .fi-survey__label {
+    display: block;
+}
+
+.impressions-survey__thanks {
+    color: #fff;
+    font-size: 2em;
+    font-weight:bold;
+    position:absolute;
+    top:20%;
+    opacity:0;
+    visibility:collapse;
+}
+
+.js-impressions-survey__fadein {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 2s ease-in 0.5s, opacity 0.5s linear;
+}
+
+.js-impressions-survey__fadeout {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s ease-in 0.5s, opacity 0.5s linear;
+}

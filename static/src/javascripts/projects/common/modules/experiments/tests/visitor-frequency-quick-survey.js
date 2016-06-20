@@ -51,9 +51,9 @@ define([
         }
 
         function surveyFadeOut() {
-            var surveyTextbox = document.getElementById('surveyTextbox');
+            var surveyContent = document.getElementsByClassName('impressions-survey__content');
             fastdom.write(function () {
-                surveyTextbox.classList.add('js-impressions-survey__fadeout');
+                surveyContent[0].classList.add('js-impressions-survey__fadeout');
             });
         }
 
