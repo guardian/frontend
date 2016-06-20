@@ -128,15 +128,26 @@ define([
         removePlaceholders(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
-            renderAdvertLabel(advert.node);
+            return renderAdvertLabel(advert.node)
+                .then(callSizeCallback)
+                .then(addRenderedClass)
+                .then(function () {
+                    return isRendered;
+                });
+        }).catch(raven.captureException);
 
+        function callSizeCallback() {
             var size = slotRenderEvent.size.join(',');
             if (sizeCallbacks[size]) {
                 sizeCallbacks[size](slotRenderEvent, advert);
             }
+        }
 
-            return isRendered;
-        }).catch(raven.captureException);
+        function addRenderedClass() {
+            return isRendered ? fastdom.write(function () {
+                advert.node.classList.add('ad-slot--rendered');
+            }) : Promise.resolve();
+        }
     }
 
     function removePlaceholders(adSlotNode) {
