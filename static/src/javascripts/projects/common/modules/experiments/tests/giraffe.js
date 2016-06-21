@@ -1,7 +1,14 @@
-define(['common/modules/article/space-filler',    'common/utils/$',    'common/utils/template',
-    'text!common/views/giraffe-message.html',    'common/views/svgs'
-], function (spaceFiller,$,template,giraffeMessage, svgs) {
+define([
+    'common/utils/$',
+    'common/utils/template',
+    'text!common/views/giraffe-message.html',
+    'common/views/svgs',
+    'common/modules/article/space-filler'
+], function ($,template,giraffeMessage, svgs, spaceFiller) {
     return function () {
+
+        console.log("Running Giraffe");
+
         this.id = 'Giraffe';
         this.start = '2016-06-13';
         this.expiry = '2016-08-13';
