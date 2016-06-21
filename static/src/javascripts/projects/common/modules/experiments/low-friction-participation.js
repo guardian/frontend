@@ -1,7 +1,7 @@
 define([
-    'qwery',
     'bean',
-    'common/utils/assign',
+    'lodash/objects/merge',
+    'lodash/functions/memoize',
     'common/utils/storage',
     'common/utils/config',
     'common/utils/fastdom-promise',
@@ -13,9 +13,9 @@ define([
     'common/utils/template',
     'common/utils/mediator'
 ], function (
-    qwery,
     bean,
-    assign,
+    merge,
+    memoize,
     storage,
     config,
     fastdomPromise,
@@ -83,7 +83,7 @@ define([
                 state: state
             };
 
-            buttonString += template(lowFrictionButtons, assign({}, settings.templateVars, templateVars));
+            buttonString += template(lowFrictionButtons, merge(settings.templateVars, templateVars));
         }
 
         return buttonString;
@@ -93,7 +93,7 @@ define([
 
     function render (state) {
 
-        var view = template(lowFrictionContents, assign({}, settings.templateVars, {
+        var view = template(lowFrictionContents, merge(settings.templateVars, {
                 buttons: createButtons(state),
                 confirming: state.confirming,
                 complete: state.complete
@@ -104,7 +104,7 @@ define([
         }
 
         if (state.initialRender) {
-            var fullView = template(lowFrictionWrapper, assign({}, settings.templateVars, {
+            var fullView = template(lowFrictionWrapper, merge(settings.templateVars, {
                 contents: view
             }));
 
@@ -130,7 +130,7 @@ define([
 
     function updateState (state) {
         // Render with merged state
-        render(assign({}, currentState, state));
+        render(merge(currentState, state));
     }
 
     // Getters
@@ -237,7 +237,7 @@ define([
         }
 
         // Create instance options
-        assign(settings, options);
+        settings = merge(settings, options);
 
         els.lowFricContainer = document.querySelector('.js-participation-low-fric');
 
