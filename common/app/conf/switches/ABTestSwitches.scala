@@ -83,16 +83,6 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = true
   )
-  
-  val ABVideoMainMediaAlwaysShowcase = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-main-media-always-showcase",
-    "Make video main media always showcase",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
 
   val ABVideoFootballThrasher = Switch(
     SwitchGroup.ABTests,
