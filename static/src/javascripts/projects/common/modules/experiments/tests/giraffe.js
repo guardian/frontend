@@ -7,8 +7,6 @@ define([
 ], function ($,template,giraffeMessage, svgs, spaceFiller) {
     return function () {
 
-        console.log("Running Giraffe");
-
         this.id = 'Giraffe';
         this.start = '2016-06-13';
         this.expiry = '2016-08-13';
