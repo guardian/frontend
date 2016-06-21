@@ -495,11 +495,6 @@ define([
         });
     }
 
-    function initAdvert(advert) {
-        advert.sizes = getAdBreakpointSizes(advert);
-        advert.slot = defineSlot(advert.node, advert.sizes);
-    }
-
     function startLoadingAdvert(advert) {
         advert.isLoading = true;
     }
