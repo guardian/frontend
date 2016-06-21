@@ -403,7 +403,10 @@ define([
     function initWithRaven(withPreroll) {
         raven.wrap(
             { tags: { feature: 'media' } },
-            function () { initPlayer(withPreroll); }
+            function () {
+                initPlayer(withPreroll);
+                initTests();
+            }
         )();
     }
 
@@ -465,7 +468,6 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
-        initTests();
     }
 
     return {
