@@ -4,6 +4,7 @@ define([
     'lodash/functions/memoize',
     'common/utils/storage',
     'common/utils/config',
+    'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svg',
     'inlineSvg!svgs/icon/star',
@@ -18,6 +19,7 @@ define([
     memoize,
     storage,
     config,
+    $,
     fastdomPromise,
     svg,
     star,
@@ -52,9 +54,9 @@ define([
     };
 
     var els = {
-        articleBody: document.querySelector('.js-article__body'),
-        lowFricContainer: null,
-        lowFricContents: null
+        $articleBody: $('.js-article__body'),
+        $lowFricContainer: null,
+        $lowFricContents: null
     };
 
     var prefs = 'gu.lowFricParticipation';
@@ -109,17 +111,17 @@ define([
             }));
 
             fastdomPromise.write(function() {
-                els.articleBody.insertAdjacentHTML('beforeend', fullView);
-                els.lowFricContents = document.querySelector('.js-participation-low-friction__contents');
+                els.$articleBody.append(fullView);
+                els.$lowFricContents = $('.js-participation-low-friction__contents');
             });
 
         } else {
             fastdomPromise.write(function() {
-                els.lowFricContents.innerHTML = view;
+                els.$lowFricContents.html(view);
 
                 if (state.confirming) {
                     // Move focus to the confirm button
-                    document.querySelector('.js-participation-low-fric__confirm').focus();
+                    $('.js-participation-low-fric__confirm').focus();
                 }
             });
         }
@@ -169,7 +171,7 @@ define([
     function itemClicked (event) {
         updateState({
             confirming: true,
-            selectedItem: event.currentTarget.getAttribute('data-item-id'),
+            selectedItem: $(event.currentTarget).data().itemId,
             initialRender: false
         });
     }
@@ -187,22 +189,21 @@ define([
 
     function itemHovered (e) {
         var itemLength;
-        var lowFricButtons;
+        var $lowFricButtons;
 
         fastdomPromise.read(function() {
             itemLength = e.currentTarget.getAttribute('data-item-id');
-            lowFricButtons = qwery('.js-participation-low-fric--button');
+            $lowFricButtons = $('.js-participation-low-fric--button');
         }).then(updateIcons);
 
         function updateIcons () {
             fastdomPromise.write(function() {
-                lowFricButtons.forEach(function (btn) {
-                    btn.classList.remove('participation-low-fric--button__is-highlighted');
-                });
+                $lowFricButtons.removeClass('participation-low-fric--button__is-highlighted');
 
                 if (itemLength > -1) {
                     for(var i = itemLength; i >= 0; i--) {
-                        lowFricButtons[i].classList.add('participation-low-fric--button__is-highlighted');
+
+                        $($lowFricButtons[i]).addClass('participation-low-fric--button__is-highlighted');
                     }
                 }
             });
@@ -212,9 +213,7 @@ define([
     function blockUnHovered () {
         if (!currentState.confirming && !currentState.complete) {
             fastdomPromise.write(function() {
-                qwery('.js-participation-low-fric--button').forEach(function (btn) {
-                    btn.classList.remove('participation-low-fric--button__is-highlighted');
-                });
+                $('.js-participation-low-fric--button').removeClass('participation-low-fric--button__is-highlighted');
             });
         }
     }
@@ -239,7 +238,7 @@ define([
         // Create instance options
         settings = merge(settings, options);
 
-        els.lowFricContainer = document.querySelector('.js-participation-low-fric');
+        els.$lowFricContainer = $('.js-participation-low-fric');
 
         if (userVote) {
             // Render with selected item
