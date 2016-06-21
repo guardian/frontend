@@ -48,7 +48,7 @@ define([
 
             this.id = 'ParticipationDiscussionTest';
             this.start = '2016-05-26';
-            this.expiry = '2016-07-24';
+            this.expiry = '2016-07-25';
             this.author = 'Nathaniel Bennett';
             this.description = 'Hide comments for a percentage of users to determine what effect it has on their dwell time and loyalty ';
             this.audience = 0.1;
