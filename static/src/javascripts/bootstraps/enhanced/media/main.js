@@ -415,11 +415,6 @@ define([
         }
     }
 
-    function showcaseMainMedia() {
-        $('.content__meta-container').addClass('content__meta-container--showcase');
-        $('.media-primary').addClass('media-primary--showcase');
-    }
-
     function initYellowPlayButton() {
         var selector = '.fc-item__video';
         var hoverStateClassName = 'u-faux-block-link--hover';
@@ -441,12 +436,8 @@ define([
         bean.on(document.body, 'mouseenter', selector, showIntentToPlay);
         bean.on(document.body, 'mouseleave', selector, removeIntentToPlay);
     }
-    
-    function initTests() {
-        if(ab.isInVariant('VideoMainMediaAlwaysShowcase', 'variant')) {
-            showcaseMainMedia();
-        }
 
+    function initTests() {
         if(ab.isInVariant('VideoYellowButton', 'variant')) {
             initYellowPlayButton();
         }
