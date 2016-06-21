@@ -84,6 +84,9 @@ define([
                 config.images = {
                     commercial: {}
                 };
+                config.ophan = {
+                    pageViewId: 'dummyOphanPageViewId'
+                };
 
                 fixtures.render(fixturesConfig);
                 $style = $.create('<style type="text/css"></style>')
