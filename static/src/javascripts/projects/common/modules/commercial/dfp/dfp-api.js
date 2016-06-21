@@ -185,25 +185,14 @@ define([
     }
 
     function loadAdvertising() {
+        createAdverts();
         googletag.cmd.push(
-            defineAdverts,
+            queueAdverts,
             setPublisherProvidedId,
             shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize
         );
-    }
-
-    /**
-     * Loop through each slot detected on the page and define it based on the data
-     * attributes on the element.
-     */
-    function defineAdverts() {
-        // Get all ad slots
-        adverts = qwery(adSlotSelector).map(createAdvert);
-
-        // queue ads for load
-        adverts.forEach(queueAdvert);
     }
 
     function setPublisherProvidedId() {
@@ -333,57 +322,6 @@ define([
         }
     }
 
-    function queueAdvert(advert, index) {
-        // filter out (and remove) hidden ads
-        if (shouldFilterAdSlot(advert.node)) {
-            hideAdvert(advert);
-        } else {
-            initAdvert(advert);
-            advertsToLoad.push(advert);
-            // Add to the array of ads to be refreshed (when the breakpoint changes)
-            // only if its `data-refresh` attribute isn't set to false.
-            if (advert.node.getAttribute('data-refresh') !== 'false') {
-                advertsToRefresh.push(advert);
-            }
-        }
-        advertIds[advert.id] = index === undefined ? adverts.length - 1 : index;
-
-        function shouldFilterAdSlot(adSlotNode) {
-            return isVisuallyHidden(adSlotNode) || isDisabledCommercialFeature(adSlotNode);
-        }
-
-        function isVisuallyHidden(adSlotNode) {
-            return getComputedStyle(adSlotNode).display === 'none';
-        }
-
-        function isDisabledCommercialFeature(adSlotNode) {
-            return !commercialFeatures.topBannerAd &&
-                adSlotNode.getAttribute('data-name') === 'top-above-nav';
-        }
-    }
-
-    function loadAdvert(advert) {
-        startLoadingAdvert(advert);
-        advertsToLoad.splice(advertsToLoad.indexOf(advert), 1);
-
-        if (shouldPrebidAdvert(advert)) {
-            prebidService.loadAdvert(advert).then(function onDisplay() {
-                displayed = true;
-            });
-        } else {
-            googletag.display(advert.id);
-            displayed = true;
-        }
-    }
-
-    function shouldPrebidAdvert(advert) {
-        var excludedadvertIds = [
-            'dfp-ad--pageskin-inread',
-            'dfp-ad--merchandising-high'
-        ];
-        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) === -1;
-    }
-
     /**
      * REFRESH ON WINDOW RESIZE
      */
@@ -474,16 +412,11 @@ define([
     }
 
     var waitForAdvert = memoize(function (id) {
-        return new Promise(function (resolve, reject) {
-            var failedAttempts = 50;
+        return new Promise(function (resolve) {
             checkAdvert();
             function checkAdvert() {
                 var advert = getAdvertById(id);
                 if (!advert) {
-                    failedAttempts -= 1;
-                    if (failedAttempts === 0) {
-                        reject(new Error('Ad ' + id + ' failed to load in time'));
-                    }
                     window.setTimeout(checkAdvert, 200);
                 } else {
                     resolve(advert);
@@ -500,6 +433,11 @@ define([
         return waitForAdvert(id).then(function (_) { return _.whenRendered; });
     }
 
+    function createAdverts() {
+        // Get all ad slots
+        adverts = qwery(adSlotSelector).map(createAdvert);
+    }
+
     function getAdverts(isWithAllAds) {
         return Object.keys(advertIds).reduce(function (advertsById, id) {
             var advert = getAdvertById(id);
@@ -511,7 +449,7 @@ define([
     }
 
     function createAdvert(adSlotNode) {
-        return Object.seal({
+        var advert = {
             id: adSlotNode.id,
             isHidden: false,
             isEmpty: false,
@@ -526,7 +464,18 @@ define([
             node: adSlotNode,
             sizes: null,
             slot: null
+        };
+        advert.whenLoaded = new Promise(function (resolve) {
+            advert.whenLoadedResolver = resolve;
+        }).then(function (isLoaded) {
+            advert.isLoaded = isLoaded;
         });
+        advert.whenRendered = new Promise(function (resolve) {
+            advert.whenRenderedResolver = resolve;
+        }).then(function (isRendered) {
+            advert.isRendered = isRendered;
+        });
+        return Object.seal(advert);
     }
 
     function emptyAdvert(advert) {
@@ -546,21 +495,6 @@ define([
         });
     }
 
-    function initAdvert(advert) {
-        advert.sizes = getAdBreakpointSizes(advert);
-        advert.slot = defineSlot(advert.node, advert.sizes);
-        advert.whenLoaded = new Promise(function (resolve) {
-            advert.whenLoadedResolver = resolve;
-        }).then(function (isLoaded) {
-            advert.isLoaded = isLoaded;
-        });
-        advert.whenRendered = new Promise(function (resolve) {
-            advert.whenRenderedResolver = resolve;
-        }).then(function (isRendered) {
-            advert.isRendered = isRendered;
-        });
-    }
-
     function startLoadingAdvert(advert) {
         advert.isLoading = true;
     }
@@ -577,6 +511,67 @@ define([
     function stopRenderingAdvert(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
+    }
+
+    /**
+     * Loop through each slot detected on the page and define it based on the data
+     * attributes on the element.
+     */
+    function queueAdverts() {
+        // queue ads for load
+        adverts.forEach(queueAdvert);
+    }
+
+    function queueAdvert(advert, index) {
+        // filter out (and remove) hidden ads
+        if (shouldFilterAdSlot(advert.node)) {
+            hideAdvert(advert);
+        } else {
+            advert.sizes = getAdBreakpointSizes(advert);
+            advert.slot = defineSlot(advert.node, advert.sizes);
+            advertsToLoad.push(advert);
+            // Add to the array of ads to be refreshed (when the breakpoint changes)
+            // only if its `data-refresh` attribute isn't set to false.
+            if (advert.node.getAttribute('data-refresh') !== 'false') {
+                advertsToRefresh.push(advert);
+            }
+        }
+        advertIds[advert.id] = index === undefined ? adverts.length - 1 : index;
+
+        function shouldFilterAdSlot(adSlotNode) {
+            return isVisuallyHidden(adSlotNode) || isDisabledCommercialFeature(adSlotNode);
+        }
+
+        function isVisuallyHidden(adSlotNode) {
+            return getComputedStyle(adSlotNode).display === 'none';
+        }
+
+        function isDisabledCommercialFeature(adSlotNode) {
+            return !commercialFeatures.topBannerAd &&
+                adSlotNode.getAttribute('data-name') === 'top-above-nav';
+        }
+    }
+
+    function loadAdvert(advert) {
+        startLoadingAdvert(advert);
+        advertsToLoad.splice(advertsToLoad.indexOf(advert), 1);
+
+        if (shouldPrebidAdvert(advert)) {
+            prebidService.loadAdvert(advert).then(function onDisplay() {
+                displayed = true;
+            });
+        } else {
+            googletag.display(advert.id);
+            displayed = true;
+        }
+    }
+
+    function shouldPrebidAdvert(advert) {
+        var excludedadvertIds = [
+            'dfp-ad--pageskin-inread',
+            'dfp-ad--merchandising-high'
+        ];
+        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) === -1;
     }
 
     /** A breakpoint can have various sizes assigned to it. You can assign either on
