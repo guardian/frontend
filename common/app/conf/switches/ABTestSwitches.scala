@@ -84,16 +84,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSportV2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport-v2",
-    "AB test switch to insert low friction participation into sport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
-    exposeClientSide = true
-  )
-
   val ABVideoMainMediaAlwaysShowcase = Switch(
     SwitchGroup.ABTests,
     "ab-video-main-media-always-showcase",
