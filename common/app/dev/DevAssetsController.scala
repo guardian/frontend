@@ -20,6 +20,7 @@ object DevAssetsController extends Controller with ExecutionContexts {
     case path if new File(s"static/src/$path").exists() => s"static/src/$path"
     case path if new File(s"static/public/$path").exists() => s"static/public/$path"
     case path if new File(s"static/target/$path").exists() => s"static/target/$path"
+    case path if new File(s"node_modules/$path").exists() => s"node_modules/$path"
   }
 
   // All compiled assets will be loaded from the hash output folder.
