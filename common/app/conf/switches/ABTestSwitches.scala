@@ -113,4 +113,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 21),
     exposeClientSide = true
   )
+
+  val ABParticipationLowFricEmotion = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-emotion",
+    "Add emotional responses to articles",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 5),
+    exposeClientSide = true
+  )
 }

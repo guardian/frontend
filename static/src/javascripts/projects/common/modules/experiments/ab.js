@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-yellow-button',
-    'common/modules/experiments/tests/test-audience'
+    'common/modules/experiments/tests/test-audience',
+    'common/modules/experiments/tests/participation-low-fric-emotion'
 ], function (
     reportError,
     config,
@@ -37,7 +38,8 @@ define([
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
     VideoYellowPlayButton,
-    TestAudience
+    TestAudience,
+    ParticipationLowFricEmotion
 ) {
 
     var TESTS = [
@@ -51,7 +53,8 @@ define([
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
         new VideoYellowPlayButton(),
-        new TestAudience()
+        new TestAudience(),
+        new ParticipationLowFricEmotion()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -268,11 +271,9 @@ define([
      */
     function registerCompleteEvent(test) {
         var variantId = variantIdFor(test);
-
         if (variantId !== 'notintest') {
             var variant = getVariant(test, variantId);
             var onTestComplete = variant.success || noop;
-
             onTestComplete(recordTestComplete(test, variantId));
         }
     }
