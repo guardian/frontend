@@ -58,6 +58,7 @@
 
 /* Liveblog Rules
    ========================================================================== */
+
 .content--liveblog {
     .content__head--aus-election {
         .content__header .gs-container {
@@ -83,7 +84,8 @@
         }
     }
 
-    .content__header .gs-container {
+    .content__head--aus-election .content__header .gs-container,
+    .content__head--us-election .content__header .gs-container {
         background-position: right bottom;
         background-repeat: no-repeat;
         background-size: gs-span(4);

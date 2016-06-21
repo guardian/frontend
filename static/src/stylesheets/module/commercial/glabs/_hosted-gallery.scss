@@ -9,23 +9,35 @@
     left: 0;
 }
 
+@mixin gallery-side-margins($container-width) {
+    width: $container-width + $gs-gutter * 2;
+    margin: 0 auto;
+}
+
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
+
+    @include mq(desktop) {
+        @include gallery-side-margins(gs-span(12));
+    }
+    @include mq(leftCol) {
+        @include gallery-side-margins(gs-span(14));
+    }
+    @include mq(wide) {
+        @include gallery-side-margins(gs-span(16));
+    }
 }
 
 .hosted-gallery__image {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0;
     background-size: contain;
     background-color: #444444;
     background-repeat: no-repeat;
     background-position: center;
-    &:first-child {
-        opacity: 1;
-    }
+    transition: opacity 300ms ease;
 }
 
 .hosted-gallery__image--placeholder {
@@ -39,8 +51,19 @@
 }
 
 .hosted-gallery-page .hostedbadge__info {
-    background: #dd0000;
+    background: $omgbColor;
     color: #ffffff;
+}
+
+.hosted-gallery__meta {
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+    padding: 10px 10%;
+}
+
+.hosted-gallery__heading {
+    @include f-headlineSans;
 }
 
 .hosted-gallery-page--container {
@@ -78,22 +101,80 @@
             padding: 0;
         }
     }
+    .hosted__container--content {
+        display: flex;
+    }
 }
+
+
+.hosted-gallery__captions {
+    color: $neutral-7;
+    height: 40px;
+    flex: 1;
+    position: relative;
+}
+
+.hosted-gallery__caption {
+    @include f-headlineSans;
+    font-size: 13px;
+    line-height: 39px;
+    color: $neutral-7;
+    position: absolute;
+    right: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 500ms ease, visibility 500ms ease;
+
+    &.current-caption {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 
 $progressHeight: 50px;
 $progressThickness: 5px;
 $progressColor: #ffffff;
 
 .hosted-gallery__progress {
-    height: $progressHeight;
-    width: $progressHeight;
     position: absolute;
     top: 50%;
-    right: 50px;
-    overflow: hidden;
+    margin-top: $progressHeight / -2;
+    right: 0;
 
-    &.quarter-3, &.quarter-4 {
+    .hosted-gallery__image-count {
+        @include f-headlineSans;
+        position: absolute;
+        top: 13px;
+        left: -18px;
+        width: 37px;
+        color: $progressColor;
+        text-align: center;
+        text-shadow: 1px 1px 1px $neutral-2;
+    }
+
+    .hosted-gallery__progress--wrapper {
+        position: relative;
+        height: $progressHeight;
+        width: $progressHeight;
+        overflow: hidden;
+    }
+
+    &.quarter-3 .hosted-gallery__progress--wrapper,
+    &.quarter-4 .hosted-gallery__progress--wrapper {
         overflow: visible;
+    }
+
+    .inline-arrow-up {
+        position: absolute;
+        top: -30px;
+        left: -12px;
+    }
+
+    .inline-arrow-down {
+        position: absolute;
+        bottom: -33px;
+        left: -12px;
     }
 
     .hosted-gallery__progress--border {

@@ -12,12 +12,10 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/facebook-share-params',
     'common/modules/experiments/tests/clever-friend-brexit',
-    'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-yellow-button',
-    'common/modules/experiments/tests/test-audience',
     'common/modules/experiments/tests/participation-low-fric-emotion'
 ], function (
     reportError,
@@ -33,12 +31,10 @@ define([
     LiveBlogChromeNotificationsProd,
     FacebookShareParams,
     CleverFriendBrexit,
-    WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
     VideoYellowPlayButton,
-    TestAudience,
     ParticipationLowFricEmotion
 ) {
 
@@ -48,12 +44,10 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new FacebookShareParams(),
         new CleverFriendBrexit(),
-        new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
         new VideoYellowPlayButton(),
-        new TestAudience(),
         new ParticipationLowFricEmotion()
     ];
 
