@@ -3,13 +3,14 @@ package test
 import java.io.File
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.typesafe.config.ConfigFactory
 import common.ExecutionContexts
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatestplus.play._
-import play.api.GlobalSettings
+import play.api._
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 
@@ -99,17 +100,34 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  implicit override lazy val app = FakeApplication(
-      withGlobal = globalSettingsOverride,
-      additionalConfiguration = Map(
-        ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
-        ("guardian.projectName", "test-project"),
-        ("ws.compressionEnabled", true),
-        ("ws.timeout.connection", "10000"),// when running healthchecks on a cold app it can time out
-        ("ws.timeout.idle", "10000"),
-        ("ws.timeout.request", "10000")
+  lazy val initialSettings: Map[String, AnyRef] = Map(
+    ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
+    ("guardian.projectName", "test-project"),
+    ("ws.compressionEnabled", Boolean.box(true)),
+    ("ws.timeout.connection", "10000"), // when running healthchecks on a cold app it can time out
+    ("ws.timeout.idle", "10000"),
+    ("ws.timeout.request", "10000"))
+
+  // depending on which project we're testing:
+  // we either want the GuiceAppLoader (default fake app) or the actual compile time injected app
+  implicit override lazy val app: Application = {
+    val initialConfig = ConfigFactory.load()
+    val appLoader = Option(initialConfig.getString("play.application.loader"))
+
+    if (appLoader.contains("play.api.inject.guice.GuiceApplicationLoader")) {
+      FakeApplication(
+        withGlobal = globalSettingsOverride,
+        additionalConfiguration = initialSettings
       )
-  )
+    } else {
+      val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+      val context = ApplicationLoader.createContext(
+        environment = environment,
+        initialSettings = initialSettings
+      )
+      ApplicationLoader.apply(context).load(context)
+    }
+  }
 }
 
 object TestRequest {

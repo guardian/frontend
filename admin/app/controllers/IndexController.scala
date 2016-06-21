@@ -24,7 +24,7 @@ object AuthActions extends Actions {
   )
 }
 
-object AdminIndexController extends Controller {
+class AdminIndexController extends Controller {
 
   def index() = Action { Redirect("/admin") }
 

@@ -11,7 +11,8 @@ import play.api.mvc._
 import play.api.libs.iteratee.Enumerator
 import play.api.Play.current
 
-object DevAssetsController extends Controller with ExecutionContexts {
+object DevAssetsController extends DevAssetsController
+class DevAssetsController extends Controller with ExecutionContexts {
 
   // This allows:
   //  - unbuilt javascript to be loaded from src or public folders.

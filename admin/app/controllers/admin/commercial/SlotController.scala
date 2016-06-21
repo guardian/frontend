@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Controller
 import tools.Store
 
-object SlotController extends Controller {
+class SlotController extends Controller {
 
   def viewSlot(slotName: String) = AuthActions.AuthActionTest { implicit request =>
     val maybeResult = for {

@@ -28,7 +28,7 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
 
 }
 
-object DeploysRadiatorController extends DeploysRadiatorController {
+class DeploysRadiatorControllerImpl extends DeploysRadiatorController {
   override val riffRaff = RiffRaffService
   override val teamcity = TeamcityService
 }
