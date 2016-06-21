@@ -129,6 +129,10 @@ define([
                         });
                     });
                 });
+
+                require(['ophan/ng'], function(ophan) {
+                   ophan.trackComponentAttention(el.querySelector('a').href, el);
+                });
             });
         }
 
