@@ -45,7 +45,7 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
                           maybeSize: Option[Int] = None) = {
 
     val prefix = "commercial-feed"
-    
+
     val defaultFields: List[LogField] = List(
       prefix -> feed,
       s"$prefix-action" -> action,
@@ -100,7 +100,7 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
           S3FeedStore.put(feedName, response.feed)
           recordEvent("fetch","success")
           logInfoWithCustomFields(s"$msgPrefix succeeded in ${response.duration}",
-                                  toLogFields(feedName, "fetch", false, Some(response.duration.toSeconds)))
+                                  toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)))
       }
       eventualResponse.map(_ => ())
     }
