@@ -14,7 +14,7 @@
     @fragments.metaData(surveyPage)
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheets(None)
+    @fragments.stylesheets(projectName=Option("survey"))
 
     @* polyfill, feature detect etc before we try and use the stylesheets *@
     @fragments.inlineJSBlocking(surveyPage)
