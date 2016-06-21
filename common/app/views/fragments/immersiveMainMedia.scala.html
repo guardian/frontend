@@ -9,15 +9,18 @@
     page.item.tags.isGallery,
     page.item.tags.isArticle,
     page.item.tags.isUSMinuteSeries,
-    page.item.tags.isArticle && (page.item.elements.hasMainEmbed || page.item.elements.elements("main").isEmpty)
-)) { case (isGallery, isArticle, isMinuteSeries, hasEmbed) =>
+    page.item.tags.isArticle && page.item.elements.hasMainEmbed,
+    page.item.fields.main.nonEmpty || page.item.tags.isGallery
+)) { case (isGallery, isArticle, isMinuteSeries, hasEmbed, hasMainMedia) =>
 
     <div class="@RenderClasses(Map(
             "new-gallery" -> isGallery,
             "content--immersive-article" -> isArticle,
-            "content--minute-article" -> isMinuteSeries
+            "content--minute-article" -> isMinuteSeries,
+            "content--immersive-article-without-main-media" -> !hasMainMedia,
+            "immersive-main-media" -> hasMainMedia
         ),
-        "content", "content--immersive tonal", s"tonal--${toneClass(page.item)}", "immersive-main-media")
+        "content", "content--immersive tonal", s"tonal--${toneClass(page.item)}")
     ">
         @if(!isGallery) {
             <div class="gs-container immersive-main-media__logo">
@@ -48,14 +51,16 @@
                 @Html(page.item.fields.main)
             </div>
         } else {
-            @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
-                @fragments.image(
-                    picture = picture,
-                    classes = Seq("immersive-main-media__media"),
-                    widths = MainMedia.immersive,
-                    imageAltText = "",
-                    isImmersiveMainMedia = true
-                )
+            @if(hasMainMedia) {
+                @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                    @fragments.image(
+                        picture = picture,
+                        classes = Seq("immersive-main-media__media"),
+                        widths = MainMedia.immersive,
+                        imageAltText = "",
+                        isImmersiveMainMedia = true
+                    )
+                }
             }
         }
 
@@ -64,8 +69,9 @@
         }
 
         <div class="@RenderClasses(Map(
-            "immersive-main-media__headline-container--dark" -> !isMinuteSeries
-        ), "immersive-main-media__headline-container")
+                "immersive-main-media__headline-container--dark" -> (!isMinuteSeries && hasMainMedia),
+                "immersive-main-media__headline-container" -> hasMainMedia
+            ))
         ">
             <div class="gs-container">
                 @if(!isGallery && !isMinuteSeries) { <div class="content__main-column"> }
@@ -78,7 +84,7 @@
                         "content__headline--gallery" -> isGallery,
                         "content__headline--immersive-article" -> isArticle,
                         "content__headline--minute" -> isMinuteSeries,
-                        "content__headline--immersive--with-main-media" -> (page.item.fields.main.nonEmpty || isGallery)
+                        "content__headline--immersive--with-main-media" -> (hasMainMedia || isGallery)
                     ), "content__headline", "content__headline--immersive")
                 ">
                     @page.item match {

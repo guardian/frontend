@@ -54,7 +54,7 @@
 
         @page match {
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {
-                <div class="immersive-header-container">
+                <div class="@if(page.item.fields.main.nonEmpty || page.item.content.isImmersiveGallery) { immersive-header-container }">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
                     @fragments.immersiveMainMedia(page)
