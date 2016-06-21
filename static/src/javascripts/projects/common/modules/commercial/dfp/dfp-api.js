@@ -472,7 +472,7 @@ define([
     }
 
     var waitForAdvert = memoize(function (id) {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             checkAdvert();
             function checkAdvert() {
                 var advert = getAdvertById(id);
