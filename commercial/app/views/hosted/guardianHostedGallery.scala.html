@@ -7,10 +7,14 @@
         @guardianHostedHeader("hosted-gallery-page", page.logoUrl)
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
-                @for(i <- page.images.indices) {
-                    <div class="hosted-gallery__image hosted-tone--dark"
-                        style="opacity: @{if(i == 0) 1 else 0 }; background-image: url(@{page.images(i)});"
-                        ></div>
+                <div class="hosted-gallery__image hosted-tone--dark" style="opacity: 1; background-image: url(@{page.images.head.url});">
+                    <div class="hosted-gallery__meta">
+                        <h1 class="hosted-gallery__heading">@{page.title}</h1>
+                        <h3 class="hosted-gallery__heading">@{page.standfirst}</h3>
+                    </div>
+                </div>
+                @for(i <- page.images.indices.tail) {
+                    <div class="hosted-gallery__image hosted-tone--dark" style="opacity: 0; background-image: url(@{page.images(i).url});"></div>
                 }
                 <div class="hosted-gallery__scroll-container">
                     @for(i <- page.images.indices) {
@@ -18,10 +22,17 @@
                     }
                 </div>
                 <div class="hosted-gallery__progress">
-                    <div class="hosted-gallery__progress--border">
-                        <div class="hosted-gallery__progress--border-1"></div>
-                        <div class="hosted-gallery__progress--border-2"></div>
+                    @fragments.inlineSvg("arrow-up", "icon")
+                    <div class="hosted-gallery__progress--wrapper">
+                        <div class="hosted-gallery__progress--border">
+                            <div class="hosted-gallery__progress--border-1"></div>
+                            <div class="hosted-gallery__progress--border-2"></div>
+                        </div>
                     </div>
+                    <div class="hosted-gallery__image-count">
+                        1/@page.images.length
+                    </div>
+                    @fragments.inlineSvg("arrow-down", "icon")
                 </div>
             </section>
             <section class="adverts adverts--legacy hosted__container hosted__container--content hosted-tone--dark">
@@ -61,7 +72,7 @@
                             <li class="social__item social__item--pinterest" data-link-name="pinterest">
                                 <a  class="social__action social-icon-wrapper"
                                 data-link-name="Pinterest-social-share-1"
-                                href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.images.head}"
+                                href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.images.head.url}"
                                 target="_blank"
                                 title="pinterest">
                                     <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
@@ -71,7 +82,15 @@
                         </ul>
                     </div>
                 </header>
-            </section>
+                <div class="hosted-gallery__captions">
+                    @for(i <- page.images.indices) {
+                        <div class="hosted-gallery__caption @{if (i == 0) "current-caption" else ""}">
+                            @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
+                            <span>@page.images(i).title</span>
+                        </div>
+                    }
+                </div>
+                </section>
         </div>
     </div>
 

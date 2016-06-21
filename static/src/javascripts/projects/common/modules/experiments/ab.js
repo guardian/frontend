@@ -11,16 +11,12 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/facebook-share-params',
-    'common/modules/experiments/tests/participation-low-fric-sport-v2',
     'common/modules/experiments/tests/clever-friend-brexit',
-    'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
-    'common/modules/experiments/tests/video-yellow-button',
     'common/modules/experiments/tests/visitor-frequency-quick-survey',
-    'common/modules/experiments/tests/test-audience'
+    'common/modules/experiments/tests/video-yellow-button'
 ], function (
     reportError,
     config,
@@ -34,16 +30,12 @@ define([
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     FacebookShareParams,
-    ParticipationLowFricSportV2,
     CleverFriendBrexit,
-    WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VideoShowcaseMainMedia,
     VideoFootballThrasher,
-    VideoYellowPlayButton,
     VisitorFrequencyQuickSurvey,
-    TestAudience
+    VideoYellowPlayButton
 ) {
 
     var TESTS = [
@@ -51,16 +43,12 @@ define([
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new FacebookShareParams(),
-        new ParticipationLowFricSportV2(),
         new CleverFriendBrexit(),
-        new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
-        new VideoYellowPlayButton(),
         new VisitorFrequencyQuickSurvey(),
-        new TestAudience()
+        new VideoYellowPlayButton()
     ];
 
     var participationsKey = 'gu.ab.participations';

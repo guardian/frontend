@@ -1,4 +1,5 @@
 @import model.liveblog.KeyEventData
+@import model.Badges.badgeFor
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
@@ -18,9 +19,9 @@
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
                       @if(ArticleBadgesSwitch.isSwitchedOn) {
-                          @if(article.content.tags.isElection) { content__head--election }
-                          @if(article.content.tags.isUSElection) { us-election }
-                          @if(article.content.tags.isAusElection) { aus-election }
+                          @badgeFor(article).map { badge => content__head--is-badged
+                              @badge.classModifier.map(modifier => s"content__head--$modifier")
+                          }
                       }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">

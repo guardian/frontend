@@ -54,7 +54,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile',
     'inlineSvg!svgs/commercial/adblock-coins-us',
     'inlineSvg!svgs/icon/star',
-    'lodash/objects/isArray'
+    'common/views/svg'
 ], function (
     commentCount16icon,
     marque36icon,
@@ -107,7 +107,7 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
-    isArray
+    svg
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -164,25 +164,6 @@ define([
     };
 
     return function (name, classes, title) {
-        var svg = svgs[name];
-
-        // Only mess with classes if we actually need to.
-        if (classes) {
-            if (isArray(classes)) {
-                svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
-            } else {
-                // Some environments don't support or don't always expose the console object
-                if (window.console && window.console.error) {
-                    window.console.error('Classes for inlineSvg must be an array: ', classes);
-                }
-            }
-        }
-
-        // Only mess with title if we actually need to.
-        if (title) {
-            svg = svg.replace(/<span /, '<span title="' + title + '" ');
-        }
-
-        return svg;
+        return svg(svgs[name], classes, title);
     };
 });

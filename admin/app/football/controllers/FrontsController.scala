@@ -21,7 +21,7 @@ import pa.LiveMatch
 import play.api.libs.json.JsResultException
 
 
-object FrontsController extends Controller with ExecutionContexts with GetPaClient with Logging {
+class FrontsController extends Controller with ExecutionContexts with GetPaClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
