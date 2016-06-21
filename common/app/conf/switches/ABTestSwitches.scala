@@ -120,7 +120,7 @@ trait ABTestSwitches {
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 27), // Tuesday
     exposeClientSide = true
   )
 
