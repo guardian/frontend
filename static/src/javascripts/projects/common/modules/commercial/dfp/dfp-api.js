@@ -187,21 +187,12 @@ define([
     function loadAdvertising() {
         createAdverts();
         googletag.cmd.push(
-            defineAdverts,
+            queueAdverts,
             setPublisherProvidedId,
             shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize
         );
-    }
-
-    /**
-     * Loop through each slot detected on the page and define it based on the data
-     * attributes on the element.
-     */
-    function defineAdverts() {
-        // queue ads for load
-        adverts.forEach(queueAdvert);
     }
 
     function setPublisherProvidedId() {
@@ -329,57 +320,6 @@ define([
                 });
             }
         }
-    }
-
-    function queueAdvert(advert, index) {
-        // filter out (and remove) hidden ads
-        if (shouldFilterAdSlot(advert.node)) {
-            hideAdvert(advert);
-        } else {
-            initAdvert(advert);
-            advertsToLoad.push(advert);
-            // Add to the array of ads to be refreshed (when the breakpoint changes)
-            // only if its `data-refresh` attribute isn't set to false.
-            if (advert.node.getAttribute('data-refresh') !== 'false') {
-                advertsToRefresh.push(advert);
-            }
-        }
-        advertIds[advert.id] = index === undefined ? adverts.length - 1 : index;
-
-        function shouldFilterAdSlot(adSlotNode) {
-            return isVisuallyHidden(adSlotNode) || isDisabledCommercialFeature(adSlotNode);
-        }
-
-        function isVisuallyHidden(adSlotNode) {
-            return getComputedStyle(adSlotNode).display === 'none';
-        }
-
-        function isDisabledCommercialFeature(adSlotNode) {
-            return !commercialFeatures.topBannerAd &&
-                adSlotNode.getAttribute('data-name') === 'top-above-nav';
-        }
-    }
-
-    function loadAdvert(advert) {
-        startLoadingAdvert(advert);
-        advertsToLoad.splice(advertsToLoad.indexOf(advert), 1);
-
-        if (shouldPrebidAdvert(advert)) {
-            prebidService.loadAdvert(advert).then(function onDisplay() {
-                displayed = true;
-            });
-        } else {
-            googletag.display(advert.id);
-            displayed = true;
-        }
-    }
-
-    function shouldPrebidAdvert(advert) {
-        var excludedadvertIds = [
-            'dfp-ad--pageskin-inread',
-            'dfp-ad--merchandising-high'
-        ];
-        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) === -1;
     }
 
     /**
@@ -576,6 +516,67 @@ define([
     function stopRenderingAdvert(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
+    }
+
+    /**
+     * Loop through each slot detected on the page and define it based on the data
+     * attributes on the element.
+     */
+    function queueAdverts() {
+        // queue ads for load
+        adverts.forEach(queueAdvert);
+    }
+
+    function queueAdvert(advert, index) {
+        // filter out (and remove) hidden ads
+        if (shouldFilterAdSlot(advert.node)) {
+            hideAdvert(advert);
+        } else {
+            advert.sizes = getAdBreakpointSizes(advert);
+            advert.slot = defineSlot(advert.node, advert.sizes);
+            advertsToLoad.push(advert);
+            // Add to the array of ads to be refreshed (when the breakpoint changes)
+            // only if its `data-refresh` attribute isn't set to false.
+            if (advert.node.getAttribute('data-refresh') !== 'false') {
+                advertsToRefresh.push(advert);
+            }
+        }
+        advertIds[advert.id] = index === undefined ? adverts.length - 1 : index;
+
+        function shouldFilterAdSlot(adSlotNode) {
+            return isVisuallyHidden(adSlotNode) || isDisabledCommercialFeature(adSlotNode);
+        }
+
+        function isVisuallyHidden(adSlotNode) {
+            return getComputedStyle(adSlotNode).display === 'none';
+        }
+
+        function isDisabledCommercialFeature(adSlotNode) {
+            return !commercialFeatures.topBannerAd &&
+                adSlotNode.getAttribute('data-name') === 'top-above-nav';
+        }
+    }
+
+    function loadAdvert(advert) {
+        startLoadingAdvert(advert);
+        advertsToLoad.splice(advertsToLoad.indexOf(advert), 1);
+
+        if (shouldPrebidAdvert(advert)) {
+            prebidService.loadAdvert(advert).then(function onDisplay() {
+                displayed = true;
+            });
+        } else {
+            googletag.display(advert.id);
+            displayed = true;
+        }
+    }
+
+    function shouldPrebidAdvert(advert) {
+        var excludedadvertIds = [
+            'dfp-ad--pageskin-inread',
+            'dfp-ad--merchandising-high'
+        ];
+        return prebidEnabled && shouldLazyLoad() && excludedadvertIds.indexOf(advert.id) === -1;
     }
 
     /** A breakpoint can have various sizes assigned to it. You can assign either on
