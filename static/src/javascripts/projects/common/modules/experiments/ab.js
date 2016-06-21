@@ -15,7 +15,6 @@ define([
     'common/modules/experiments/tests/welcome-header',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-showcase-main-media',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-yellow-button',
     'common/modules/experiments/tests/test-audience'
@@ -36,7 +35,6 @@ define([
     WelcomeHeader,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VideoShowcaseMainMedia,
     VideoFootballThrasher,
     VideoYellowPlayButton,
     TestAudience
@@ -51,7 +49,6 @@ define([
         new WelcomeHeader(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VideoShowcaseMainMedia(),
         new VideoFootballThrasher(),
         new VideoYellowPlayButton(),
         new TestAudience()
