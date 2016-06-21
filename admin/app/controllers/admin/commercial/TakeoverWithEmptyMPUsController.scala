@@ -7,7 +7,7 @@ import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc.Controller
 
-object TakeoverWithEmptyMPUsController extends Controller {
+class TakeoverWithEmptyMPUsController extends Controller {
 
   def viewList() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUs(

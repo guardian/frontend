@@ -23,7 +23,7 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def renderCommercialMenu() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))

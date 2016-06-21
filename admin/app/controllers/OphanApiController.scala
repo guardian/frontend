@@ -6,7 +6,7 @@ import services.OphanApi
 import model.NoCache
 
 
-object OphanApiController extends Controller with ExecutionContexts {
+class OphanApiController extends Controller with ExecutionContexts {
 
   def pageViews(path: String) = AuthActions.AuthActionTest.async { request =>
     OphanApi.getBreakdown(path) map (body => NoCache(Ok(body) as "application/json"))

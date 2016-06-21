@@ -10,7 +10,7 @@ import services.Notification
 import tools.Store
 import model.NoCache
 
-object SwitchboardPlistaController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardPlistaController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
     log("loaded plista Switchboard", request)

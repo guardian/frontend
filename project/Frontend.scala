@@ -2,6 +2,7 @@ package com.gu
 
 import com.gu.Dependencies._
 import com.typesafe.sbt.web.Import._
+import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
@@ -111,6 +112,7 @@ object Frontend extends Build with Prototypes {
       awsSes,
       scalaUri
     ),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )

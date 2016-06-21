@@ -84,26 +84,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSportV2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport-v2",
-    "AB test switch to insert low friction participation into sport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
-    exposeClientSide = true
-  )
-
-  val ABVideoMainMediaAlwaysShowcase = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-main-media-always-showcase",
-    "Make video main media always showcase",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
   val ABVideoFootballThrasher = Switch(
     SwitchGroup.ABTests,
     "ab-video-football-thrasher",
@@ -120,7 +100,7 @@ trait ABTestSwitches {
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 27), // Tuesday
     exposeClientSide = true
   )
 

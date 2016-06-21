@@ -1,30 +1,32 @@
 define([
+    'bean',
     'lodash/objects/merge',
     'lodash/functions/memoize',
     'common/utils/storage',
     'common/utils/config',
     'common/utils/$',
     'common/utils/fastdom-promise',
-    'common/views/svgs',
+    'common/views/svg',
+    'inlineSvg!svgs/icon/star',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
     'text!common/views/experiments/participation/low-friction-contents.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',
     'common/utils/template',
-    'bean',
     'common/utils/mediator'
 ], function (
+    bean,
     merge,
     memoize,
     storage,
     config,
     $,
     fastdomPromise,
-    svgs,
+    svg,
+    star,
     lowFrictionWrapper,
     lowFrictionContents,
     lowFrictionButtons,
     template,
-    bean,
     mediator
 ) {
 
@@ -39,8 +41,8 @@ define([
         prevItemsHighlight: true, // Add the highlight class the items before the selected one
         itemCount: 5, // Amount of items
         itemIconUnicode: [], // Add a list of unicode icons
-        itemIconId: 'star', // SVG icon ID
         inactiveIconClass: 'inline-icon__inactive', // The inactive class added to the icon
+        itemIcon: star, // SVG icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
             title: 'Do you agree? Rate this film now',
@@ -78,7 +80,7 @@ define([
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: thisUniIcon || svgs(settings.itemIconId, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svg(settings.itemIcon, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };

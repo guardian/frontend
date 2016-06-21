@@ -1,22 +1,18 @@
 @(item: model.ContentType, isAmp: Boolean = false)(implicit request: RequestHeader)
 
-
 @import common.{LinkTo, Localisation}
 @import conf.switches.Switches.ArticleBadgesSwitch
 @import model.Badges.badgeFor
 @import views.support.RenderClasses
 
 <div class="@RenderClasses(Map(
-        "content__labels--us-election" -> item.content.tags.isUSElection,
-        "content__labels--aus-election" -> item.content.tags.isAusElection,
         "content__labels--gallery" -> item.content.isImmersiveGallery,
         "content__labels--not-immersive" -> !item.content.isImmersive
     ), "content__labels")
 ">
     @if(ArticleBadgesSwitch.isSwitchedOn) {
-
         @badgeFor(item).map { badge =>
-            <div class="badge-slot badge-slot--election">
+            <div class="badge-slot">
                 @if(isAmp) {
                     <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
                 } else {

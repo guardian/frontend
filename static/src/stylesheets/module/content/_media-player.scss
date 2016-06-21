@@ -157,6 +157,10 @@ $ima-controls-height: 70px;
     }
 }
 
+.vjs-big-play-button--yellow .vjs-big-play-button .vjs-control-text:before {
+    background-color: $media-default;
+}
+
 .vjs-fullscreen-clickbox {
     box-sizing: border-box;
     width: 100%;
