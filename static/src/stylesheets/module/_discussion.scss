@@ -930,6 +930,7 @@ $comment-recommend-button-size: 19px;
         .comment-twitter-icon {
             height: 1.2rem;
             min-width: 1.2rem;
+            margin: 0;
             cursor: pointer;
         }
     }
@@ -952,7 +953,6 @@ $comment-recommend-button-size: 19px;
 .sharing-buttons {
     opacity: 0;
     cursor: pointer;
-    transition: opacity 0s ease-in-out;
     display: inline-block;
 }
 
@@ -960,7 +960,8 @@ $comment-recommend-button-size: 19px;
 .comment-twitter-icon {
     height: 0;
     min-width: 0;
-    transition: all .3s ease-in-out;
+    margin: .6rem;
+    transition: all .5s ease-in-out;
 }
 
 /* Report
