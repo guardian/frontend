@@ -3,79 +3,375 @@ define([
     'lodash/functions/debounce',
     'bonzo',
     'fastdom',
-    'common/utils/$'
+    'common/utils/$',
+    'qwery',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/fsm',
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/utils/url',
+    'common/modules/component',
+    'common/modules/ui/blockSharing',
+    'common/modules/ui/images',
+    'common/views/svgs',
+    'text!common/views/content/block-sharing.html',
+    'text!common/views/content/button.html',
+    'text!common/views/content/endslate.html',
+    'text!common/views/content/loader.html',
+    'text!common/views/content/share-button.html',
+    'text!common/views/content/share-button-mobile.html',
+    'lodash/collections/map',
+    'lodash/functions/throttle',
+    'lodash/collections/forEach',
+    'common/utils/chain',
+    'common/utils/load-css-promise'
 ], function (
     bean,
     debounce,
     bonzo,
     fastdom,
-    $
+    $,
+    qwery,
+    ajax,
+    config,
+    detect,
+    FiniteStateMachine,
+    mediator,
+    template,
+    url,
+    Component,
+    blockSharing,
+    imagesModule,
+    svgs,
+    blockSharingTpl,
+    buttonTpl,
+    endslateTpl,
+    loaderTpl,
+    shareButtonTpl,
+    shareButtonMobileTpl,
+    map,
+    throttle,
+    forEach,
+    chain,
+    loadCssPromise
 ) {
 
 
-    function init() {
-        var $scrollEl = $('.hosted-gallery__scroll-container');
-        var $images = $('.hosted-gallery__image');
-        var $captions = $('.hosted-gallery__caption');
-        var $progress = $('.hosted-gallery__progress');
-        var $border = $('.hosted-gallery__progress--border-2', $progress);
-        var $upArrow = $('.inline-arrow-up', $progress);
-        var $downArrow = $('.inline-arrow-down', $progress);
-        var $counter = $('.hosted-gallery__image-count', $progress);
+    function HostedGallery() {
+
+        // CONFIG
+        this.useSwipe = detect.hasTouchScreen();
+        this.swipeThreshold = 0.05;
 
 
-        bean.on($upArrow[0], 'click', function () {
-            var scrollTop = $scrollEl[0].scrollTop;
-            var scrollHeight = $scrollEl[0].scrollHeight;
-            var progress = $images.length * (scrollTop/scrollHeight);
+        // ELEMENT BINDINGS
+        this.$galleryEl = $('.js-hosted-gallery-container');
+        this.$imagesContainer = $('.js-hosted-gallery-images');
+        this.$captionContainer = $('.hosted-gallery__captions');
+        this.$captions = $('.hosted-gallery__caption', this.$captionContainer);
+        this.$scrollEl = $('.hosted-gallery__scroll-container', this.$galleryEl);
+        this.$images = $('.hosted-gallery__image', this.$galleryEl);
+        this.$progress = $('.hosted-gallery__progress', this.$galleryEl);
+        this.$border = $('.hosted-gallery__progress--border-2', this.$progress);
+        this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
+        this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
+        this.infoBtn = qwery('.hosted-gallery__info-btn', this.$captionContainer)[0];
+        this.$counter = $('.hosted-gallery__image-count', this.$captionContainer);
+
+        // FSM CONFIG
+        this.fsm = new FiniteStateMachine({
+            initial: 'image',
+            onChangeState: function (oldState, newState) {
+                this.$galleryEl
+                    .removeClass('hosted-gallery--' + oldState)
+                    .addClass('hosted-gallery--' + newState);
+            },
+            context: this,
+            states: this.states
+        });
+
+
+        if (this.useSwipe) {
+            this.$galleryEl.addClass('use-swipe');
+            this.$imagesContainer.css('width', this.$images.length + '00%');
+            // todo: do we need different buttons here? left-right instead of up/down
+            bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next'));
+            bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
+            this.initSwipe();
+        } else {
+            this.initScroll();
+        }
+    }
+
+    HostedGallery.prototype.initScroll = function () {
+        var length = this.$images.length;
+        var scrollEl = this.$scrollEl;
+
+        bean.on(this.prevBtn, 'click', function () {
+            var scrollTop = scrollEl[0].scrollTop;
+            var scrollHeight = scrollEl[0].scrollHeight;
+            var progress = length * (scrollTop/scrollHeight);
             fastdom.write(function () {
-                $scrollEl.scrollTop(Math.floor(progress - 0.01) * scrollHeight / $images.length);
+                scrollEl.scrollTop(Math.floor(progress - 0.01) * scrollHeight / length);
             });
         });
 
-        bean.on($downArrow[0], 'click', function () {
-            var scrollTop = $scrollEl[0].scrollTop;
-            var scrollHeight = $scrollEl[0].scrollHeight;
-            var progress = $images.length * (scrollTop/scrollHeight);
+        bean.on(this.nextBtn, 'click', function () {
+            var scrollTop = scrollEl[0].scrollTop;
+            var scrollHeight = scrollEl[0].scrollHeight;
+            var progress = length * (scrollTop/scrollHeight);
             fastdom.write(function () {
-                $scrollEl.scrollTop(Math.ceil(progress + 0.01) * scrollHeight / $images.length);
+                scrollEl.scrollTop(Math.ceil(progress + 0.01) * scrollHeight / length);
             });
         });
 
-        bean.on($scrollEl[0], 'scroll', debounce(function (e) {
+        bean.on(scrollEl[0], 'scroll', debounce(function (e) {
             var scrollTop = e.target.scrollTop;
             var scrollHeight = e.target.scrollHeight;
-            var progress = Math.round($images.length * (scrollTop/scrollHeight) * 100) / 100;
+            var progress = Math.round(length * (scrollTop/scrollHeight) * 100) / 100;
             var fractionProgress = progress % 1;
             var deg = Math.ceil(fractionProgress * 360);
             fastdom.write(function () {
-                $images.each(function (image, index) {
+                this.$images.each(function (image, index) {
                     var opacity = (progress - index + 1) * 4 / 3;
                     bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
                 });
-                $captions.each(function (caption, index) {
+                this.$captions.each(function (caption, index) {
                     if(Math.abs(progress - index + 0.125) < 0.225){
                         bonzo(caption).addClass('current-caption');
                     } else {
                         bonzo(caption).removeClass('current-caption');
                     }
                 });
-                bonzo($border).css('transform', 'rotate('+deg+'deg)');
-                bonzo($border).css('-webkit-transform', 'rotate('+deg+'deg)');
+                bonzo(this.$border).css('transform', 'rotate('+deg+'deg)');
+                bonzo(this.$border).css('-webkit-transform', 'rotate('+deg+'deg)');
                 ['quarter-2', 'quarter-3', 'quarter-4'].forEach(function (cssClass, index) {
                     if(4 * fractionProgress > index + 1){
-                        bonzo($progress).addClass(cssClass);
+                        bonzo(this.$progress).addClass(cssClass);
                     } else {
-                        bonzo($progress).removeClass(cssClass);
+                        bonzo(this.$progress).removeClass(cssClass);
                     }
-                });
-                bonzo($counter).html(Math.round(progress + 0.75) + '/' + $images.length);
-            });
-        }, 10));
+                }.bind(this));
+                bonzo(this.$counter).html(Math.round(progress + 0.75) + '/' + length);
+            }.bind(this));
+        }, 10).bind(this));
 
+    };
+
+    HostedGallery.prototype.initSwipe = function () {
+
+        var threshold, ox, dx, touchMove,
+            updateTime = 20; // time in ms
+
+        bean.on(this.$galleryEl[0], 'touchstart', function (e) {
+            threshold = this.swipeContainerWidth * this.swipeThreshold;
+            ox = e.touches[0].pageX;
+            dx = 0;
+        }.bind(this));
+
+        touchMove = function (e) {
+            e.preventDefault();
+            if (e.touches.length > 1 || e.scale && e.scale !== 1) {
+                return;
+            }
+            dx = e.touches[0].pageX - ox;
+            this.translateContent(this.index, dx, updateTime);
+        }.bind(this);
+
+        bean.on(this.$galleryEl[0], 'touchmove', throttle(touchMove, updateTime, {trailing: false}));
+
+        bean.on(this.$galleryEl[0], 'touchend', function () {
+            var direction;
+            if (Math.abs(dx) > threshold) {
+                direction = dx > threshold ? 1 : -1;
+            } else {
+                direction = 0;
+            }
+            dx = 0;
+
+            if (direction === 1) {
+                if (this.index > 1) {
+                    this.trigger('prev');
+                } else {
+                    this.trigger('reload');
+                }
+            } else if (direction === -1) {
+                if (this.index < this.$images.length) {
+                    this.trigger('next');
+                } else {
+                    this.trigger('reload');
+                }
+            } else {
+                this.trigger('reload');
+            }
+
+        }.bind(this));
+    };
+
+    HostedGallery.prototype.trigger = function (event, data) {
+        this.fsm.trigger(event, data);
+    };
+
+    HostedGallery.prototype.loadSurroundingImages = function () {
+        // todo
+    };
+
+    HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
+        var px = -1 * (imgIndex - 1) * this.swipeContainerWidth,
+            galleryEl = this.$imagesContainer[0];
+        galleryEl.style.webkitTransitionDuration = duration + 'ms';
+        galleryEl.style.mozTransitionDuration = duration + 'ms';
+        galleryEl.style.msTransitionDuration = duration + 'ms';
+        galleryEl.style.transitionDuration = duration + 'ms';
+        galleryEl.style.webkitTransform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        galleryEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
+        galleryEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
+        galleryEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+
+        this.$captions.each(function (caption, index) {
+            if(index === imgIndex - 1){
+                bonzo(caption).addClass('current-caption');
+            } else {
+                bonzo(caption).removeClass('current-caption');
+            }
+        });
+    };
+
+    HostedGallery.prototype.states = {
+        'image': {
+            enter: function () {
+
+                this.index = this.index || 1;
+                this.swipeContainerWidth = this.$galleryEl.dim().width;
+
+                this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
+
+                // event bindings
+                mediator.on('window:resize', this.resize);
+            },
+            leave: function () {
+                mediator.off('window:resize', this.resize);
+            },
+            events: {
+                'next': function () {
+                    if (this.index === this.$images.length) { // last img
+                        if (this.showEndslate) {
+                            this.state = 'endslate';
+                        } else {
+                            this.index = 1;
+                            this.reloadState = true;
+                        }
+                    } else {
+                        this.index += 1;
+                        this.reloadState = true;
+                    }
+                },
+                'prev': function () {
+                    if (this.index === 1) { // first img
+                        if (this.showEndslate) {
+                            this.state = 'endslate';
+                        } else {
+                            this.index = this.$images.length;
+                            this.reloadState = true;
+                        }
+                    } else {
+                        this.index -= 1;
+                        this.reloadState = true;
+                    }
+                },
+                'reload': function () {
+                    this.reloadState = true;
+                },
+                'toggle-info': function () {
+                    this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
+                },
+                'hide-info': function () {
+                    this.$lightboxEl.removeClass('gallery-lightbox--show-info');
+                },
+                'show-info': function () {
+                    this.$lightboxEl.addClass('gallery-lightbox--show-info');
+                },
+                'resize': function () {
+                    this.swipeContainerWidth = this.$galleryEl.dim().width;
+                    this.loadSurroundingImages(this.index, this.$images.length); // regenerate src
+                    this.translateContent(this.index, 0, 0);
+                }
+            }
+        },
+
+        'endslate': {
+            enter: function () {
+                this.translateContent(this.$images.length, 0, 0);
+                this.index = this.$images.length + 1;
+                mediator.on('window:resize', this.resize);
+            },
+            leave: function () {
+                mediator.off('window:resize', this.resize);
+            },
+            events: {
+                'next': function () {
+                    this.index = 1;
+                    this.state = 'image';
+                },
+                'prev': function () {
+                    this.index = this.$images.length;
+                    this.state = 'image';
+                },
+                'reload': function () {
+                    this.reloadState = true;
+                },
+                'resize': function () {
+                    this.swipeContainerWidth = this.$galleryEl.dim().width;
+                    this.translateContent(this.$images.length, 0, 0);
+                }
+            }
+        }
+    };
+
+    HostedGallery.prototype.handleKeyEvents = function (e) {
+        if (e.keyCode === 37) { // left
+            this.trigger('prev');
+        } else if (e.keyCode === 39) { // right
+            this.trigger('next');
+        } else if (e.keyCode === 38) { // up
+            this.trigger('show-info');
+        } else if (e.keyCode === 40) { // down
+            this.trigger('hide-info');
+        } else if (e.keyCode === 73) { // 'i'
+            this.trigger('toggle-info');
+        }
+    };
+
+    HostedGallery.prototype.endslate = new Component();
+
+    HostedGallery.prototype.loadEndslate = function () {
+        // todo
+    };
+
+    function bootstrap() {
+        loadCssPromise.then(function () {
+            var gallery,
+                match,
+                galleryHash = window.location.hash,
+                res;
+
+            gallery = new HostedGallery();
+            match = /\?index=(\d+)/.exec(document.location.href);
+            if (match) { // index specified so launch gallery at that index
+                gallery.index = parseInt(match[1], 10);
+            } else {
+                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                if (res) {
+                    gallery.index = parseInt(res[1], 10);
+                }
+            }
+        });
     }
 
     return {
-        init: init
+        init: bootstrap,
+        HostedGallery: HostedGallery
     };
 });

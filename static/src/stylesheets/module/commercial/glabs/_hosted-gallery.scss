@@ -1,4 +1,3 @@
-
 .hosted-gallery__scroll-container {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -7,6 +6,13 @@
     bottom: 0;
     right: -20px;
     left: 0;
+}
+
+.use-swipe {
+    .hosted-gallery__scroll-container,
+    .hosted-gallery__progress {
+        display: none;
+    }
 }
 
 @mixin gallery-side-margins($container-width) {
@@ -38,6 +44,15 @@
     background-repeat: no-repeat;
     background-position: center;
     transition: opacity 300ms ease;
+    opacity: 0;
+    &:first-child {
+        opacity: 1;
+    }
+}
+
+.use-swipe .hosted-gallery__image {
+    position: relative;
+    opacity: 1;
 }
 
 .hosted-gallery__image--placeholder {
@@ -76,6 +91,13 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+}
+
+.js-hosted-gallery-images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
 }
 
 .hosted-gallery-page .hosted__side {
