@@ -81,12 +81,9 @@ define([
             var surveyCookie = cookies.get(cookieName);
             if (!(surveyCookie) && storage.local.isStorageAvailable()) {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited');
-                if (!alreadyVisited || alreadyVisited < 1) {
-                    return true;
-                }
-            }  else {
-                return false;
+                return !alreadyVisited || alreadyVisited < 1;
             }
+            return false;
         }
 
         function checkBrowsingMode() {
