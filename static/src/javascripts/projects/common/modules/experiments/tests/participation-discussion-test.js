@@ -1,15 +1,13 @@
 define([
-    'common/utils/$',
+    'qwery',
     'common/utils/config',
     'common/modules/experiments/tests/utils/comment-blocker',
-    'common/modules/identity/api',
-    'lodash/collections/some'
-    ], function (
-    $,
+    'common/modules/identity/api'
+], function (
+    qwery,
     config,
     CommentBlocker,
-    identity,
-    some
+    identity
 ) {
     var seriesIds = [
         'fashion/series/sali-hughes-beauty',
@@ -43,10 +41,7 @@ define([
     var dontRunOnAuthor = 'First Dog on the Moon';
 
     function doesNotContain(values, toTest) {
-        var contains = some(values, function(value){
-            return value === toTest;
-        });
-        return !contains;
+        return values.indexOf(toTest) === -1;
     }
 
     return function () {
@@ -79,8 +74,12 @@ define([
                             hide = CommentBlocker.hideComments(shortUrlSlug);
 
                         if(config.page.isContent && hide) {
-                            $('.js-comments').addClass('discussion--hidden');
-                            $('.js-commentcount').addClass('commentcount2--hidden');
+                            qwery('.js-comments').forEach(function(c) {
+                                c.classList.add('discussion--hidden');
+                            });
+                            qwery('.js-commentcount').forEach(function(c) {
+                                c.classList.add('commentcount2--hidden');
+                            });
                         }
                     }
                 },
@@ -92,4 +91,3 @@ define([
         };
     }
 );
-
