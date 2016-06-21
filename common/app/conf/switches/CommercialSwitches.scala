@@ -276,16 +276,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FluidAdverts = Switch(
-    SwitchGroup.Commercial,
-    "fluid-adverts",
-    "Request fluid adverts from DFP",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val FixedTechTopSlot = Switch(
     SwitchGroup.Commercial,
     "fixed-tech-top-slot",

@@ -3,10 +3,12 @@ define('js', [], function () { return function () {}; });
 define('js!//widgets.outbrain.com/outbrain.js', [], function () { return function () {}; });
 
 define([
+    'Promise',
     'fastdom',
     'helpers/injector',
     'helpers/fixtures'
 ], function (
+    Promise,
     fastdom,
     Injector,
     fixtures
@@ -18,28 +20,31 @@ define([
                 '<div class="js-plista"><div class="js-plista-container"></div></div>'
             ]
         },
-        mediator,
+        ads = {
+            'dfp-ad--merchandising-high': false
+        },
         config,
         identity,
         detect,
+        dfp,
         sut,
-        eventStub,
         commercialFeatures,
         injector = new Injector();
 
     describe('Plista', function () {
         beforeEach(function (done) {
-
             injector.require([
-                'common/utils/mediator',
+                'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',
                 'common/modules/commercial/third-party-tags/plista',
                 'common/modules/commercial/commercial-features'
-
             ], function () {
-                mediator = arguments[0];
+                dfp      = arguments[0];
+                dfp.trackAdRender = function (id) {
+                    return Promise.resolve(ads[id]);
+                };
                 config = arguments[1];
                 identity = arguments[2];
                 detect = arguments[3];
@@ -65,15 +70,6 @@ define([
                     return false;
                 };
 
-                eventStub = {
-                    slot: {
-                        getSlotElementId: function () {
-                                return 'dfp-ad--merchandising-high';
-                            }
-                    },
-                    isEmpty: true
-                };
-
                 fixtures.render(fixturesConfig);
                 done();
             });
@@ -81,7 +77,6 @@ define([
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
-            mediator.removeEvent('modules:commercial:dfp:rendered');
         });
 
         describe('Init', function () {
@@ -105,7 +100,7 @@ define([
                 var fixturesMerch = {
                     id: 'merch',
                     fixtures: [
-                        '<div id="dfp-ad--merchandising-high" /div>'
+                        '<div id="dfp-ad--merchandising-high"></div>'
                     ]
                 };
                 fixtures.render(fixturesMerch);
@@ -116,7 +111,6 @@ define([
                     done();
                 });
                 expect(sut.load).not.toHaveBeenCalled();
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
 
                 fixtures.clean(fixturesMerch.id);
             });
@@ -152,7 +146,6 @@ define([
                 config.page.commentable = false;
                 spyOn(sut, 'load');
                 sut.init();
-                mediator.emit('modules:commercial:dfp:rendered', eventStub);
                 expect(sut.load).toHaveBeenCalled();
             });
 

@@ -2,9 +2,13 @@
 
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import model.Badges.badgeFor
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
-    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
+    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
+    @badgeFor(item).map { badge => content__head--is-badged
+        @badge.classModifier.map(modifier => s"content__head--$modifier")
+    }">
 
     <div class="content__header tonal__header">
         <div class="gs-container">

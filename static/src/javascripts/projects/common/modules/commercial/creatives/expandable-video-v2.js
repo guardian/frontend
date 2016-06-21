@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -10,8 +10,7 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-video-v2.html',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -24,8 +23,7 @@ define([
     svgs,
     ExpandableVideoTpl,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
 
     var ExpandableVideo = function ($adSlot, params) {
@@ -57,21 +55,7 @@ define([
                 videoEmbed: (this.params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>' : ''
             },
-            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) })),
-            domPromise = new Promise(function (resolve) {
-                fastdom.write(function () {
-
-                    this.$ad = $('.ad-exp--expand', $ExpandableVideo).css('height', this.closedHeight);
-
-                    $('.ad-exp-collapse__slide', $ExpandableVideo).css('height', this.closedHeight);
-
-                    if (this.params.trackingPixel) {
-                        addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-                    }
-                    $ExpandableVideo.appendTo(this.$adSlot);
-                    resolve();
-                }.bind(this));
-            }.bind(this));
+            $ExpandableVideo = $.create(template(ExpandableVideoTpl, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
@@ -93,7 +77,18 @@ define([
             }.bind(this));
         }.bind(this));
 
-        return domPromise;
+        return fastdom.write(function () {
+
+            this.$ad = $('.ad-exp--expand', $ExpandableVideo).css('height', this.closedHeight);
+
+            $('.ad-exp-collapse__slide', $ExpandableVideo).css('height', this.closedHeight);
+
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+            $ExpandableVideo.appendTo(this.$adSlot);
+            return true;
+        }, this);
     };
 
     return ExpandableVideo;

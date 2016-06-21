@@ -63,80 +63,81 @@
             <div class="content--minute-article--overlay"></div>
         }
 
-        @if(!hasEmbed) {
-            <div class="immersive-main-media__headline-container @if(!isMinuteSeries){immersive-main-media__headline-container--dark}">
-                <div class="gs-container">
-                    @if(!isGallery && !isMinuteSeries) { <div class="content__main-column"> }
+        <div class="@RenderClasses(Map(
+            "immersive-main-media__headline-container--dark" -> !isMinuteSeries
+        ), "immersive-main-media__headline-container")
+        ">
+            <div class="gs-container">
+                @if(!isGallery && !isMinuteSeries) { <div class="content__main-column"> }
 
-                    @if(!isMinuteSeries) {
-                        @fragments.meta.metaInline(page.item)
-                    }
+                @if(!isMinuteSeries) {
+                    @fragments.meta.metaInline(page.item)
+                }
 
-                    <h1 class="@RenderClasses(Map(
+                <h1 class="@RenderClasses(Map(
                         "content__headline--gallery" -> isGallery,
                         "content__headline--immersive-article" -> isArticle,
                         "content__headline--minute" -> isMinuteSeries,
                         "content__headline--immersive--with-main-media" -> (page.item.fields.main.nonEmpty || isGallery)
-                    ),
-                        "content__headline", "content__headline--immersive")
-                    ">
-                        @page.item match {
-                            case _: Gallery => {
-                                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
+                    ), "content__headline", "content__headline--immersive")
+                ">
+                    @page.item match {
+                        case _: Gallery => {
+                            @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
+                        }
+                        case article: Article => {
+                            @if(isMinuteSeries) {
+                                <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
+                                    <span class="u-h">The Minute - </span>
+                                    @fragments.inlineSvg("minute-logo", "logo")
+                                </a>
                             }
+                        }
+                        case _ => {}
+                    }
+                    @Html(page.item.trail.headline)
+                </h1>
+
+                @page match {
+                    case galleryPage: GalleryPage => {
+                        @if(page.item.content.hasTonalHeaderByline) {
+                            @page.item.trail.byline.map { text =>
+                                <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                            }
+                        }
+                    }
+                    case _ => {
+                        @page.item match {
                             case article: Article => {
                                 @if(isMinuteSeries) {
-                                    <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
-                                        <span class="u-h">The Minute - </span>
-                                        @fragments.inlineSvg("minute-logo", "logo")
-                                    </a>
+
+                                    @if(!article.trail.shouldHidePublicationDate) {
+                                        @fragments.meta.dateline(article.trail.webPublicationDate, article.fields.lastModified, article.content.hasBeenModified, article.tags.isLiveBlog, article.fields.isLive, article.tags.isUSMinuteSeries)
+                                    }
+
+                                    @if(article.fields.standfirst.isDefined) {
+                                        @fragments.standfirst(article)
+                                    }
+                                }
+
+                                @if(!article.isUSMinute && article.fields.standfirst.isDefined) {
+                                    <div class="hide-on-mobile">
+                                        @fragments.standfirst(article)
+                                    </div>
                                 }
                             }
                             case _ => {}
                         }
-                        @Html(page.item.trail.headline)
-                    </h1>
-
-                    @page match {
-                        case galleryPage: GalleryPage => {
-                            @if(page.item.content.hasTonalHeaderByline) {
-                                @page.item.trail.byline.map { text =>
-                                    <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
-                                }
-                            }
-
-                            @if(galleryPage.showBadge && !page.item.commercial.isAdvertisementFeature) {
-                                @fragments.commercial.badge(page.item, page)
-                            }
-                        }
-                        case _ => {
-                            @page.item match {
-                                case article: Article => {
-                                    @if(isMinuteSeries) {
-
-                                        @if(!article.trail.shouldHidePublicationDate) {
-                                            @fragments.meta.dateline(article.trail.webPublicationDate, article.fields.lastModified, article.content.hasBeenModified, article.tags.isLiveBlog, article.fields.isLive, article.tags.isUSMinuteSeries)
-                                        }
-
-                                        @if(article.fields.standfirst.isDefined) {
-                                            @fragments.standfirst(article)
-                                        }
-                                    }
-
-                                    @if(!article.isUSMinute && article.fields.standfirst.isDefined) {
-                                        <div class="hide-on-mobile">
-                                            @fragments.standfirst(article)
-                                        </div>
-                                    }
-                                }
-                                case _ => {}
-                            }
-                        }
                     }
+                }
 
-                    @if(!isGallery && !isMinuteSeries) { </div> }
-                </div>
+                @if(!isGallery && !isMinuteSeries) { </div> }
             </div>
-        }
+        </div>
     </div>
+    @if(isArticle && page.item.fields.standfirst.isDefined && !isMinuteSeries) {
+        <div class="content__wrapper--standfirst mobile-only">
+            @fragments.standfirst(page.item)
+        </div>
+    }
 }

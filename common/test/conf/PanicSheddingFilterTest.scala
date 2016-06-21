@@ -7,8 +7,15 @@ class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
   import LatencyMonitor._
 
   "LatencyMonitor" should "have no latency after no request" in {
-    initialLatency should be(AverageLatency(0))
     initialLatency.latency should be(0)
+  }
+
+  "LatencyMonitor" should "weight the latency of initial requests up on startup" in {
+    // if we only had one request but it was slow, we should respect that to give us time to warm up
+    val TEST_LATENCY = 12345L
+    val result = updateLatency(TEST_LATENCY)(initialLatency)
+
+    result.latency should be (TEST_LATENCY)
   }
 
   "LatencyMonitor" should "approach the actual latency over time" in {

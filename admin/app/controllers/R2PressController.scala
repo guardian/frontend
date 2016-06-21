@@ -8,7 +8,7 @@ import model.R2PressMessage
 import play.api.mvc.{AnyContent, Controller}
 import services.{R2PressedPageTakedownNotifier, R2PagePressNotifier}
 
-object R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))
