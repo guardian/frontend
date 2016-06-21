@@ -509,7 +509,7 @@ define([
     }
 
     function createAdvert(adSlotNode) {
-        return Object.seal({
+        var advert = {
             id: adSlotNode.id,
             isHidden: false,
             isEmpty: false,
@@ -524,7 +524,18 @@ define([
             node: adSlotNode,
             sizes: null,
             slot: null
+        };
+        advert.whenLoaded = new Promise(function (resolve) {
+            advert.whenLoadedResolver = resolve;
+        }).then(function (isLoaded) {
+            advert.isLoaded = isLoaded;
         });
+        advert.whenRendered = new Promise(function (resolve) {
+            advert.whenRenderedResolver = resolve;
+        }).then(function (isRendered) {
+            advert.isRendered = isRendered;
+        });
+        return Object.seal(advert);
     }
 
     function emptyAdvert(advert) {
@@ -547,16 +558,6 @@ define([
     function initAdvert(advert) {
         advert.sizes = getAdBreakpointSizes(advert);
         advert.slot = defineSlot(advert.node, advert.sizes);
-        advert.whenLoaded = new Promise(function (resolve) {
-            advert.whenLoadedResolver = resolve;
-        }).then(function (isLoaded) {
-            advert.isLoaded = isLoaded;
-        });
-        advert.whenRendered = new Promise(function (resolve) {
-            advert.whenRenderedResolver = resolve;
-        }).then(function (isRendered) {
-            advert.isRendered = isRendered;
-        });
     }
 
     function startLoadingAdvert(advert) {
