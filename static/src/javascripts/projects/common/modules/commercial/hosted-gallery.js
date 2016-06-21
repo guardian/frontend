@@ -78,7 +78,7 @@ define([
         this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
         this.infoBtn = qwery('.hosted-gallery__info-btn', this.$captionContainer)[0];
-        this.$counter = $('.hosted-gallery__image-count', this.$captionContainer);
+        this.$counter = $('.hosted-gallery__image-count', this.$progress);
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -101,6 +101,7 @@ define([
             bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
             this.initSwipe();
         } else {
+            this.$galleryEl.addClass('use-scroll');
             this.initScroll();
         }
     }
@@ -108,6 +109,7 @@ define([
     HostedGallery.prototype.initScroll = function () {
         var length = this.$images.length;
         var scrollEl = this.$scrollEl;
+        this.loadSurroundingImages(1, length);
 
         bean.on(this.prevBtn, 'click', function () {
             var scrollTop = scrollEl[0].scrollTop;
@@ -133,6 +135,7 @@ define([
             var progress = Math.round(length * (scrollTop/scrollHeight) * 100) / 100;
             var fractionProgress = progress % 1;
             var deg = Math.ceil(fractionProgress * 360);
+            this.loadSurroundingImages(Math.ceil(progress + 1), length);
             fastdom.write(function () {
                 this.$images.each(function (image, index) {
                     var opacity = (progress - index + 1) * 4 / 3;
@@ -154,7 +157,7 @@ define([
                         bonzo(this.$progress).removeClass(cssClass);
                     }
                 }.bind(this));
-                bonzo(this.$counter).html(Math.round(progress + 0.75) + '/' + length);
+                bonzo(this.$counter).html(Math.ceil(progress + 0.25) + '/' + length);
             }.bind(this));
         }, 10).bind(this));
 
@@ -214,8 +217,16 @@ define([
         this.fsm.trigger(event, data);
     };
 
-    HostedGallery.prototype.loadSurroundingImages = function () {
-        // todo
+    HostedGallery.prototype.loadSurroundingImages = function (index, count) {
+        var imageContent = config.page.images, $img;
+        chain([-1, 0, 1]).and(
+            map,
+            function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
+        ).and(forEach, function (i) {
+            $img = bonzo(this.$images[i]);
+            $img.css('background-image', 'url(' + imageContent[i] + ')');
+        }.bind(this));
+
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -245,6 +256,9 @@ define([
 
                 this.index = this.index || 1;
                 this.swipeContainerWidth = this.$galleryEl.dim().width;
+
+                // load prev/current/next
+                this.loadSurroundingImages(this.index, this.$images.length);
 
                 this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
 
@@ -342,12 +356,6 @@ define([
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
         }
-    };
-
-    HostedGallery.prototype.endslate = new Component();
-
-    HostedGallery.prototype.loadEndslate = function () {
-        // todo
     };
 
     function bootstrap() {

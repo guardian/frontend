@@ -4,7 +4,7 @@ import conf.Static
 import conf.switches.Switches
 import model.GuardianContentTypes.Hosted
 import model.{MetaData, SectionSummary, StandalonePage}
-import play.api.libs.json.JsString
+import play.api.libs.json.{JsArray, JsString}
 
 trait HostedPage extends StandalonePage  {
   def pageUrl: String
@@ -73,7 +73,7 @@ case class HostedGalleryPage(
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
     val toneName = "Hosted content"
-    val sectionId = "renault-car-of-the-future"
+    val sectionId = "hosted-gallery"
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
     MetaData.make(
@@ -87,13 +87,14 @@ case class HostedGalleryPage(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
-        "tones" -> JsString(toneName)
+        "tones" -> JsString(toneName),
+        "images" -> JsArray(images.map((image) => JsString(image.url)))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $title",
+          s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
         "og:image" -> logoUrl,
         "fb:app_id" -> "180444840287"
       )

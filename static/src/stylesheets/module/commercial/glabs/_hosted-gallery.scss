@@ -8,11 +8,8 @@
     left: 0;
 }
 
-.use-swipe {
-    .hosted-gallery__scroll-container,
-    .hosted-gallery__progress {
-        display: none;
-    }
+.use-swipe .hosted-gallery__scroll-container {
+    display: none;
 }
 
 @mixin gallery-side-margins($container-width) {
@@ -158,7 +155,12 @@ $progressHeight: 50px;
 $progressThickness: 5px;
 $progressColor: #ffffff;
 
+.use-scroll .hosted-gallery__progress {
+    display: block;
+}
+
 .hosted-gallery__progress {
+    display: none;
     position: absolute;
     top: 50%;
     margin-top: $progressHeight / -2;
