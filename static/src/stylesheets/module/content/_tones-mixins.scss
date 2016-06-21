@@ -4,11 +4,11 @@
     .tonal__head--tone-#{$tone} {
         .commentcount i,
         .commentcount2 i {
-            @extend %i-comment--tone-#{$tonal__head-icon};
+            // @extend %i-comment--tone-#{$tonal__head-icon};
 
             @if $svg-support {
                 .svg & {
-                    @extend %svg-i-comment--tone-#{$tonal__head-icon};
+                    @extend %svg-i-comment--tone-#{$tonal__head-icon} !optional;
                 }
             }
         }
@@ -17,11 +17,11 @@
     .tonal__main--tone-#{$tone} {
         .commentcount i,
         .commentcount2 i {
-            @extend %i-comment--tone-#{$tone};
+            @extend %i-comment--tone-#{$tone} !optional;
 
             @if $svg-support {
                 .svg & {
-                    @extend %svg-i-comment--tone-#{$tone};
+                    @extend %svg-i-comment--tone-#{$tone} !optional;
                 }
             }
         }
