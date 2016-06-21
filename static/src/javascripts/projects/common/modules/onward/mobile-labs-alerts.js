@@ -55,9 +55,7 @@ define([
     }
 
     return function () {
-         console.log("++ BANNDE");
         if (canShowPromo()) {
-            console.log("++ YUP");
             new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
         }
     };
