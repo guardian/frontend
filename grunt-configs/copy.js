@@ -20,6 +20,16 @@ module.exports = function (grunt, options) {
                 },
                 {
                     expand: true,
+                    cwd: 'node_modules',
+                    src: [
+                        'react/dist/react-with-addons.js',
+                        'JSON/json2.js'
+                    ],
+                    dest: options.staticTargetDir + 'javascripts/vendor',
+                    flatten: true
+                },
+                {
+                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'foresee/**/*'
@@ -54,11 +64,12 @@ module.exports = function (grunt, options) {
             }]
         },
         headJs: {
+            // used in dev, to inline to the head
             files: [
                 {
                     expand: true,
-                    cwd: 'static/src/javascripts/components/curl',
-                    src: ['curl-domReady.js'],
+                    cwd: 'node_modules/curl-amd/dist/curl-with-js-and-domReady',
+                    src: ['curl.js'],
                     dest: 'common/conf/assets'
                 }
             ]
