@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "We are going to hide comments on a random half of articles",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 7, 25),
     exposeClientSide = true
   )
 
