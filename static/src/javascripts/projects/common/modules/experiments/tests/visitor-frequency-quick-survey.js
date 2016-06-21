@@ -1,19 +1,23 @@
 define([
     'bean',
     'fastdom',
+    'Promise',
     'lodash/functions/debounce',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/storage',
+    'common/utils/fastdom-promise',
     'common/utils/private-browsing',
     'text!common/views/experiments/quick-survey.html'
 ], function (
     bean,
     fastdom,
+    Promise,
     debounce,
     config,
     cookies,
     storage,
+    fastdomPromise,
     privateBrowsing,
     quickSurvey
 ) {
@@ -37,12 +41,13 @@ define([
         };
 
         function renderQuickSurvey() {
-            // this cannot be wrapped in a fastdom function; the disable function breaks
-            var article = document.getElementsByClassName('content__article-body')[0];
-            var insertionPoint = article.getElementsByTagName('p')[1];
-            var surveyDiv = document.createElement('div');
-            surveyDiv.innerHTML = quickSurvey;
-            article.insertBefore(surveyDiv, insertionPoint);
+            return fastdomPromise.write(function () {
+                var article = document.getElementsByClassName('content__article-body')[0];
+                var insertionPoint = article.getElementsByTagName('p')[1];
+                var surveyDiv = document.createElement('div');
+                surveyDiv.innerHTML = quickSurvey;
+                article.insertBefore(surveyDiv, insertionPoint);
+            });
         }
 
         function disableRadioButtons(buttonClassName) {
@@ -86,22 +91,21 @@ define([
             return false;
         }
 
-        function checkBrowsingMode() {
-            privateBrowsing.then(function (success) {
-                var browsingMode = 'private-browsing-' + success;
-                var surveySelect = document.getElementsByClassName('impressions-survey__select');
-                surveySelect[0].setAttribute('data-link-name', browsingMode);
-            });
+        function reportBrowserMode(browserCheck) {
+            var browsingMode = 'private-browsing-' + browserCheck;
+            var surveySelect = document.getElementsByClassName('impressions-survey__select');
+            surveySelect[0].setAttribute('data-link-name', browsingMode);
         }
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    renderQuickSurvey();
-                    handleSurveyResponse();
-                    checkBrowsingMode();
-                    cookies.add('GU_FI', 1, 5);
+                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (success) {
+                        handleSurveyResponse();
+                        reportBrowserMode(success[1]);
+                        cookies.add('GU_FI', 1, 5);
+                    });
                 }
             }
         ];
