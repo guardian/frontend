@@ -9,7 +9,7 @@ import play.api.libs.ws.WS
 import play.api.Play.current
 import model.quality.QualityData
 
-object AnalyticsController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class AnalyticsController extends Controller with Logging with AuthLogging with ExecutionContexts {
   def abtests() = AuthActions.AuthActionTest.async { implicit request =>
     Future(NoCache(Ok(views.html.abtests("PROD"))))
   }

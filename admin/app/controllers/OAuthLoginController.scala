@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
 
-object OAuthLoginController extends Controller with ExecutionContexts {
+class OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"

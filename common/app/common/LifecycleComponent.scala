@@ -9,11 +9,6 @@ trait LifecycleComponent {
   def start(): Unit
 }
 
-trait LifecycleComponents {
-  def lifecycleComponents: List[LifecycleComponent]
-  def startLifecycleComponents(): Unit = lifecycleComponents.foreach(_.start())
-}
-
 trait BackwardCompatibleLifecycleComponents extends GlobalSettings {
   def lifecycleComponents(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext): List[LifecycleComponent]
   override def onStart(app: Application): Unit = {
