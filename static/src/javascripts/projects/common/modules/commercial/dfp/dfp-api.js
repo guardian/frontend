@@ -185,6 +185,7 @@ define([
     }
 
     function loadAdvertising() {
+        createAdverts();
         googletag.cmd.push(
             defineAdverts,
             setPublisherProvidedId,
@@ -199,9 +200,6 @@ define([
      * attributes on the element.
      */
     function defineAdverts() {
-        // Get all ad slots
-        adverts = qwery(adSlotSelector).map(createAdvert);
-
         // queue ads for load
         adverts.forEach(queueAdvert);
     }
@@ -498,6 +496,11 @@ define([
 
     function trackAdRender(id) {
         return waitForAdvert(id).then(function (_) { return _.whenRendered; });
+    }
+
+    function createAdverts() {
+        // Get all ad slots
+        adverts = qwery(adSlotSelector).map(createAdvert);
     }
 
     function getAdverts(isWithAllAds) {
