@@ -95,6 +95,8 @@ define([
         // Show messages only if adblock is used by non paying member
         if (adblockMsg.showAdblockMsg()) {
             showAdblockMessage();
+        }
+        if (adblockMsg.showAdblockBanner()) {
             showAdblockBanner();
         }
     }
