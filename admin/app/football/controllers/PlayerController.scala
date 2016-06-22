@@ -15,7 +15,7 @@ import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 
 
-object PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
+class PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
 
   def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {

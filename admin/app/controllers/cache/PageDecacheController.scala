@@ -14,7 +14,7 @@ import purge.CdnPurge
 
 import scala.concurrent.Future.successful
 
-object PageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class PageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def renderPageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.cache.pageDecacheForm()))

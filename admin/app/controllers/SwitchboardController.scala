@@ -11,7 +11,7 @@ import services.Notification
 import tools.Store
 import model.NoCache
 
-object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 

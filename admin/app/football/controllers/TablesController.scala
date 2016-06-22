@@ -12,7 +12,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 
 
-object TablesController extends Controller with ExecutionContexts with GetPaClient {
+class TablesController extends Controller with ExecutionContexts with GetPaClient {
 
   def tablesIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {

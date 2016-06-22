@@ -74,7 +74,7 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
 
 }
 
-object DeploysNotifyController extends DeploysNotifyController {
+class DeploysNotifyControllerImpl extends DeploysNotifyController {
   override val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
     throw new RuntimeException("Deploys-notify API Key not set")
   )

@@ -172,57 +172,10 @@ define([
             });
         });
 
-        if(ab.isInVariant('VideoTeaser', 'variant')) {
-            initVideoTeaser();
-        }
-
         initPlayButtons(document.body);
 
         mediator.on('modules:related:loaded', initPlayButtons);
         mediator.on('page:media:moreinloaded', initPlayButtons);
-    }
-
-    function initVideoTeaser() {
-        fastdom.read(function () {
-            $('.js-video-player:not(.video-playlist__item__player)', document.body).each(function (el) {
-                var $el = bonzo(el);
-                var clone = el.cloneNode(true);
-                var $clone = bonzo(clone);
-                var teaserVideo = $('video', $clone).get(0);
-                var teaserLength = 5; //seconds
-
-                $clone.removeClass('media__container--hidden').addClass('media__container--active');
-                $('.js-video-placeholder', $el.parent()).addClass('media__container--hidden');
-
-                // teaser should be muted with no chrome
-                teaserVideo.muted = true;
-                teaserVideo.controls = false;
-
-                el.parentNode.insertBefore(clone, el);
-
-                teaserVideo.addEventListener('timeupdate', function () {
-                    if (teaserVideo.currentTime >= teaserLength) {
-                        teaserVideo.pause();
-
-                        // HACK around https://bugs.chromium.org/p/chromium/issues/detail?id=593273
-                        setTimeout(function () {
-                            teaserVideo.currentTime = 0;
-                            teaserVideo.play();
-                        }, 100);
-                    }
-                });
-
-                clone.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    teaserVideo.pause();
-                    $el.removeClass('media__container--hidden').addClass('media__container--active');
-                    enhanceVideo($('video', $el).get(0), true, false);
-                    $clone.remove();
-                });
-
-                teaserVideo.play();
-            });
-        });
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
@@ -462,14 +415,31 @@ define([
         }
     }
 
-    function showcaseMainMedia() {
-        $('.content__meta-container').addClass('content__meta-container--showcase');
-        $('.media-primary').addClass('media-primary--showcase');
+    function initYellowPlayButton() {
+        var selector = '.fc-item__video';
+        var hoverStateClassName = 'u-faux-block-link--hover';
+
+        $(selector).each(function (el) {
+            bonzo(el).parent().addClass('vjs-big-play-button--yellow');
+        });
+
+        var showIntentToPlay = function (e) {
+            fastdom.write(function () {
+                $(e.currentTarget).parent().addClass(hoverStateClassName);
+            });
+        };
+
+        var removeIntentToPlay = function (e) {
+            $(e.currentTarget).parent().removeClass(hoverStateClassName);
+        };
+
+        bean.on(document.body, 'mouseenter', selector, showIntentToPlay);
+        bean.on(document.body, 'mouseleave', selector, removeIntentToPlay);
     }
 
     function initTests() {
-        if(ab.isInVariant('VideoMainMediaAlwaysShowcase', 'variant')) {
-            showcaseMainMedia();
+        if(ab.isInVariant('VideoYellowButton', 'variant')) {
+            initYellowPlayButton();
         }
     }
 

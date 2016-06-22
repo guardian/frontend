@@ -71,8 +71,8 @@ trait FaciaSwitches {
     "facia-press-cross-account-storage",
     "If this is switched on, facia press will access the bucket in cmsFronts account",
     owners = Seq(Owner.withGithub("piuccio")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 8, 3),
     exposeClientSide = false
   )
 

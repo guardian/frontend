@@ -133,7 +133,7 @@
 .top-banner-ad-container--wimbledon {
     @include mq(leftCol) {
         > .ad-slot--top-banner-ad {
-            height: 375px;
+            height: 385px;
         }
     }
 }
@@ -267,6 +267,11 @@
     }
 }
 .ad-slot--container-inline {
+    /* I don't know wtf that is but it has no place in JS, so I moved it here */
+    &.ad-slot--not-mobile {
+        display: flex;
+    }
+
     .ad-slot__content {
         margin: 0 auto;
     }

@@ -8,7 +8,7 @@ import play.api.mvc._
 import play.api.libs.ws.WS
 import model.NoCache
 
-object Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
+class Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
   import play.api.Play.current
 

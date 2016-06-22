@@ -1,6 +1,6 @@
 define([
     'bean',
-    'qwery',
+    'bonzo',
     'Promise',
     'common/utils/fastdom-promise',
 
@@ -26,7 +26,7 @@ define([
     'common/modules/commercial/creatives/template'
 ], function (
     bean,
-    qwery,
+    bonzo,
     Promise,
     fastdom
 ) {
@@ -34,17 +34,17 @@ define([
      * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
      * This looks for any such data and, if we find it, renders the appropriate component.
      */
-    return function applyCreativeTemplate($adSlot) {
-        return getAdvertIframe($adSlot).then(function (iframe) {
-            return renderCreativeTemplate($adSlot, iframe);
+    return function applyCreativeTemplate(adSlot) {
+        return getAdvertIframe(adSlot).then(function (iframe) {
+            return renderCreativeTemplate(adSlot, iframe);
         });
     };
 
-    function getAdvertIframe($adSlot) {
+    function getAdvertIframe(adSlot) {
         return new Promise(function (resolve, reject) {
             // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
             // We need to be sure only to select the ad content frame.
-            var contentFrame = $adSlot[0].querySelector('iframe:not([id*="__hidden__"])');
+            var contentFrame = adSlot.querySelector('iframe:not([id*="__hidden__"])');
 
             if (!contentFrame) {
                 reject();
@@ -71,7 +71,7 @@ define([
         });
     }
 
-    function renderCreativeTemplate($adSlot, iFrame) {
+    function renderCreativeTemplate(adSlot, iFrame) {
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
@@ -80,7 +80,7 @@ define([
                 hideIframe()
             ]);
         } else {
-            return Promise.resolve();
+            return Promise.resolve(true);
         }
 
         function fetchCreativeConfig() {
@@ -91,7 +91,7 @@ define([
         function renderCreative(config) {
             return new Promise(function(resolve) {
                 require(['common/modules/commercial/creatives/' + config.name], function (Creative) {
-                    resolve(new Creative($adSlot, config.params, config.opts).create());
+                    resolve(new Creative(bonzo(adSlot), config.params, config.opts).create());
                 });
             });
         }
