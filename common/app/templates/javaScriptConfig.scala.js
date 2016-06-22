@@ -1,7 +1,7 @@
 @(item: model.Page)(implicit request: RequestHeader)
 @import common.{Edition, StringEncodings}
 @import conf.Static
-@import play.api.libs.json.{Json, JsString, JsNull}
+@import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage}
 
 @defining(Edition(request)) { edition =>
@@ -27,10 +27,6 @@
         },
         "commercial": {
             "showingAdfree" : null
-        },
-        "ophan": {
-            "pageViewId": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JsString(model.Ophan.generatePageViewId)))),
-            "browserId": @JavaScript(StringEncodings.jsonToJS(Json.stringify(request.cookies.get("bwid").map(cookie => JsString(cookie.value)).getOrElse(JsNull))))
         }
     }
 }
