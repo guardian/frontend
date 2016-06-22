@@ -207,7 +207,7 @@ define([
             spyOn(sut, 'renderList');
 
             sut.fetchData().then(function () {
-                expect(sut.renderList).toHaveBeenCalledWith([{'localizedName': 'London'}], 5);
+                expect(sut.renderList).toHaveBeenCalledWith([{'localizedName': 'London'}], 10);
                 done();
             });
 

@@ -148,7 +148,7 @@ define([
                     type: 'json',
                     crossOrigin: true
                 }).then(function (positions) {
-                    this.renderList(positions, 5);
+                    this.renderList(positions, 10);
                     oldQuery = newQuery;
                 }.bind(this));
             },
