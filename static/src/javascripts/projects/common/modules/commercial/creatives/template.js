@@ -8,7 +8,6 @@ define([
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/logo.html',
-    'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
     'text!common/views/commercial/creatives/gimbap-richmedia.html',
@@ -71,7 +70,7 @@ define([
                 this.params.creative = 'manual-container';
                 this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
-            } else if (this.params.creative === 'manual-inline' && config.switches.refactorInlineComponent) {
+            } else if (this.params.creative === 'manual-inline') {
                 this.params.omnitureId = this.params.omniture_id;
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base_url;
