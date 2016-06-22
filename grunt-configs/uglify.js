@@ -19,7 +19,6 @@ module.exports = function (grunt, options) {
                         'es5-html5.js',
                         '{components,vendor}/**/*.js',
                         '!components/curl/**/*.js',
-                        '!components/zxcvbn/**/*.js',
                         '!vendor/stripe/*.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'

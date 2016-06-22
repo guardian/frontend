@@ -54,16 +54,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFacebookShareParams = Switch(
-    SwitchGroup.ABTests,
-    "ab-facebook-share-params",
-    "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
     "ab-new-user-adverts-disabled",
@@ -80,7 +70,7 @@ trait ABTestSwitches {
     "Swap video thrashers on football front",
     owners = Seq(Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
     exposeClientSide = true
   )
 
