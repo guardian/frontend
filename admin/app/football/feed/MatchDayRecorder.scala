@@ -21,7 +21,7 @@ object MatchDayRecorder extends ExecutionContexts with Logging {
   def record(): Unit = if (Switches.FootballFeedRecorderSwitch.isSwitchedOn) {
 
     val now = DateTime.now
-    val feedUrl = s"${pa.footballHost}/api/football/competitions/matchDay/${pa.footballApiKey}/${now.toString(feedDateFormat)}"
+    val feedUrl = s"${pa.footballHost}/competitions/matchDay/${pa.footballApiKey}/${now.toString(feedDateFormat)}"
     val fileName = s"football-feeds/match-day/${now.toString(fileDateFormat)}.xml"
     val result = WS.url(feedUrl).get()
 
