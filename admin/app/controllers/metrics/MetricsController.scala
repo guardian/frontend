@@ -12,7 +12,7 @@ import play.api.Play.current
 
 import scala.concurrent.Future
 
-object MetricsController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class MetricsController extends Controller with Logging with AuthLogging with ExecutionContexts {
   // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase

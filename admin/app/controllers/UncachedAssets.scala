@@ -1,4 +1,4 @@
 package controllers.admin
 
-object UncachedAssets extends controllers.PublicAssets
-object UncachedWebAssets extends controllers.PublicAssets
+class UncachedAssets extends controllers.PublicAssets
+class UncachedWebAssets extends controllers.PublicAssets

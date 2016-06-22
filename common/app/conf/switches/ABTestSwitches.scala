@@ -44,23 +44,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABWelcomeHeader = Switch(
-    SwitchGroup.ABTests,
-    "ab-welcome-header",
-    "Welcome header for first time users test",
-    owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val ABParticipationDiscussionTest = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-test",
     "We are going to hide comments on a random half of articles",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 7, 25),
     exposeClientSide = true
   )
 
@@ -84,33 +74,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSportV2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport-v2",
-    "AB test switch to insert low friction participation into sport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
-    exposeClientSide = true
-  )
-
-  val ABVideoMainMediaAlwaysShowcase = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-main-media-always-showcase",
-    "Make video main media always showcase",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
   val ABVideoFootballThrasher = Switch(
     SwitchGroup.ABTests,
     "ab-video-football-thrasher",
     "Swap video thrashers on football front",
     owners = Seq(Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
     exposeClientSide = true
   )
 
@@ -120,17 +90,8 @@ trait ABTestSwitches {
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 27), // Tuesday
     exposeClientSide = true
   )
 
-  val ABTestAudience = Switch(
-    SwitchGroup.ABTests,
-    "ab-test-audience",
-    "Test the A/B test samples against page views",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
-    exposeClientSide = true
-  )
 }

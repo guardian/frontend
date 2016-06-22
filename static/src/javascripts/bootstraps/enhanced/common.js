@@ -55,6 +55,7 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
+    'common/modules/onward/mobile-labs-alerts',
     'lodash/collections/forEach'
 ], function (
     fastdom,
@@ -111,6 +112,7 @@ define([
     email,
     emailArticle,
     identity,
+    mobileLabsAlerts,
     forEach
 ) {
     var modules = {
@@ -375,11 +377,15 @@ define([
                     hostedAbout.init();
                 }
             },
-        
+
             initHostedGallery: function () {
                 if (config.page.contentType === 'Hosted') {
                     hostedGallery.init();
                 }
+            },
+
+            mobileLabsAlertBanner: function () {
+                mobileLabsAlerts();
             }
         };
 
@@ -431,7 +437,8 @@ define([
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
                 ['c-hosted-gallery', modules.initHostedGallery],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
+                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox],
+                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
             ]), function (fn) {
                 fn();
             });

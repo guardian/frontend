@@ -441,4 +441,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  //Owener Dotcom participation
+  val MobileLabBrexitBanner = Switch(
+    SwitchGroup.Feature,
+    "mobile-lab-brexit-banner",
+    "When ON, we present a promo banner to android, in the the UK pollitics or EU referendum sections",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 28),
+    exposeClientSide = true
+  )
 }

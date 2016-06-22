@@ -5,7 +5,7 @@ import controllers.admin.AuthActions
 import jobs.{LowFrequency, StandardFrequency, HighFrequency, RefreshFrontsJob}
 import play.api.mvc.Controller
 
-object FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class FrontPressController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def press() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.press())

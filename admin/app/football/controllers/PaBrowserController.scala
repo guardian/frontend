@@ -13,7 +13,7 @@ import scala.language.postfixOps
 import model.{NoCache, Cached}
 
 
-object PaBrowserController extends Controller with ExecutionContexts with GetPaClient {
+class PaBrowserController extends Controller with ExecutionContexts with GetPaClient {
 
   def browserSubstitution() =AuthActions.AuthActionTest { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
