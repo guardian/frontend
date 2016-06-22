@@ -96,7 +96,7 @@ define([
                 test: function () {
                     lowFrictionParticipation.init({
                         templateVars: {
-                            title: 'How would you rate this?',
+                            title: 'Did you watch this?',
                             description: 'Is your rating the same as ' + possessive(config.page.author) + ' on "' + config.page.headline + '"?'
                         }
                     });
