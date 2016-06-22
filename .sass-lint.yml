@@ -14,7 +14,6 @@ files:
     - 'static/src/stylesheets/module/content/_article-minute.scss'
     - 'static/src/stylesheets/module/email/_form.scss'
     - 'static/src/stylesheets/module/facia/_item.scss'
-    - 'static/src/stylesheets/pasteup/fonts/_src.scss'
 options:
   formatter: compact
   merge-default-rules: false
@@ -35,10 +34,13 @@ rules:
     - ignore-single-line-rulesets: true
 
   # Disallows
-  no-color-keyword: 1
+  no-color-keywords: 1
   no-css-comments: 0
   no-debug: 1
-  no-duplicate-properties: 1
+  no-duplicate-properties:
+      - 1
+      - exclude:
+          - src
   no-empty-rulesets: 0
   no-invalid-hex: 1
   no-mergeable-selectors: 0
@@ -79,7 +81,10 @@ rules:
   quotes:
     - 1
     - style: single
-  shorthand-values: 1
+  # `shorthand-values` has a bug in 1.8
+  # https://github.com/sasstools/sass-lint/issues/748
+  # disabling till it's fixed
+  # shorthand-values: 1
   space-after-colon: 1
   space-after-comma: 1
   space-before-brace: 1
