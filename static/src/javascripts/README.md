@@ -3,7 +3,11 @@ JavaScript
 
 ## Library dependencies
 
-We use [NPM](https://www.npmjs.com) to handle our JS dependencies. Install them as a main dependency (`npm i -S module_name`), then add a ref to the requirejs config in `grunt-configs/requirejs.js` and `common/app/templates/inlineJS/blocking/curlConfig.scala.js`.
+We use [NPM](https://www.npmjs.com) to handle our JS dependencies. Install them as a main dependency (`npm i -S module_name`), then add a ref to the configs in
+- `grunt-configs/requirejs.js`
+- `common/app/templates/inlineJS/blocking/curlConfig.scala.js`
+- `static/test/javascripts/main.js`
+- `static/test/javascripts/conf/settings.js`
 
 ## Analaytics and ad tags
 
