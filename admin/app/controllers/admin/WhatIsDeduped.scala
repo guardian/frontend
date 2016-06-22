@@ -11,7 +11,7 @@ import play.api.libs.ws.WS
 import play.api.mvc.Controller
 import services.ConfigAgent
 
-object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
+class WhatIsDeduped extends Controller with Logging with ExecutionContexts {
 
  import play.api.Play.current
 

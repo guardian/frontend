@@ -7,7 +7,11 @@
 @import model.Badges.badgeFor
 
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-    <div class="fc-container__header  @if(containerDefinition.customHeader.isEmpty) {js-container__header}">
+    <div class="fc-container__header
+                @if(containerDefinition.customHeader.isEmpty) {js-container__header}
+                @badgeFor(containerDefinition).map { badge => fc-container__header--is-badged
+	                @badge.classModifier.map(modifier => s"content__head--$modifier")
+                }">
         @title.map { title =>
             @defining(frontProperties.editorialType.contains("Contributor")) { isContributor =>
                 <div class="@RenderClasses(Map(
@@ -18,12 +22,12 @@
                     <a data-link-name="section heading" href="@LinkTo {/@href}">
                     @if(ArticleBadgesSwitch.isSwitchedOn){
                         @badgeFor(containerDefinition).map { badge => 
-                            <div class="badge-slot badge-slot--election">
+                            <div class="badge-slot">
                                 <img class="badge-slot__img" src="@badge.imageUrl"/>
                             </div>
                         }
                     }
-                        @Localisation(title)
+                        <span class="fc-container__title__text">@Localisation(title)</span>
                     </a>
                     }.getOrElse {
                         <span tabindex="0">@Localisation(title)</span>

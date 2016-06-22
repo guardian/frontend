@@ -9,6 +9,7 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/close-disabled-slots',
     'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/slice-adverts',
@@ -26,6 +27,7 @@ define([
     badges,
     closeDisabledSlots,
     dfp,
+    sponsorships,
     frontCommercialComponents,
     hostedVideo,
     sliceAdverts,
@@ -66,6 +68,7 @@ define([
                 robust.catchErrorsAndLogAll([
                     ['cm-adverts', dfp.loadAds],
                     ['cm-thirdPartyTags', thirdPartyTags.init],
+                    ['cm-sponsorships', sponsorships.init],
                     ['cm-hostedVideo', hostedVideo.init],
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-new-adverts', paidContainers.init],

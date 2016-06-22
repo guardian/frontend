@@ -1,4 +1,5 @@
 import commercial.CommercialLifecycle
+import common.Logback.LogstashLifecycle
 import dfp.DfpDataCacheLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common._
@@ -34,6 +35,7 @@ object Global extends GlobalSettings with BackwardCompatibleLifecycleComponents 
     new FootballLifecycle(appLifecycle),
     new CricketLifecycle(appLifecycle),
     new RugbyLifecycle(appLifecycle),
-    new ABHeadlinesLifecycle(appLifecycle)
+    new ABHeadlinesLifecycle(appLifecycle),
+    LogstashLifecycle
   )
 }

@@ -7,7 +7,6 @@ define([
     'text!common/views/commercial/creatives/logo-header.html',
     'text!common/views/commercial/creatives/logo-link.html',
     'text!common/views/commercial/creatives/logo-about.html',
-    'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
     'text!common/views/commercial/creatives/manual-card.html',
@@ -26,7 +25,6 @@ define([
     logoHeaderStr,
     logoLinkStr,
     logoAboutStr,
-    manualInlineButtonStr,
     gimbapSimpleStr,
     gimbapRichmediaStr,
     manualCardStr,
@@ -40,7 +38,6 @@ define([
     var logoAboutTpl;
     var logoLinkTpl;
     var logoHeaderTpl;
-    var manualInlineButtonTpl;
     var gimbapSimpleTpl;
     var gimbapRichmediaTpl;
     var manualCardStrs = {
@@ -87,17 +84,6 @@ define([
                     logoImage: tpl.params.partnerTwoLogoImage });
             tpl.params.aboutLink = logoAboutTpl(tpl.params);
         }
-    }
-
-    function preprocessManualInline(tpl) {
-        if (!manualInlineButtonTpl) {
-            manualInlineButtonTpl = template(manualInlineButtonStr);
-        }
-        // having a button is the default state, that is why we expressely
-        // test for when *not* to display one
-        tpl.params.offerButton = tpl.params.show_button === 'no' ?
-            '' :
-            manualInlineButtonTpl(tpl.params);
     }
 
     function preprocessGimbap(tpl) {
@@ -275,7 +261,6 @@ define([
 
     return {
         'logo': preprocessLogo,
-        'manual-inline': preprocessManualInline,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,
         'gimbap-richmedia': preprocessGimbapRichmedia,

@@ -39,8 +39,10 @@ define([
                         if (ad) {
                             fastdom.write(function () {
                                 ad.style.display = 'block';
-                                resolve();
+                                resolve(true);
                             });
+                        } else {
+                            resolve(false);
                         }
                     }
                 );

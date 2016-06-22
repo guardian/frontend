@@ -1,6 +1,4 @@
-/* Elections Tag Badge
-   ========================================================================== */
-.badge-slot--election {
+.badge-slot {
     width: 33px;
     margin-top: 2px;
 
@@ -18,25 +16,51 @@
     width: 100%;
 }
 
-.content__labels--us-election {
-    .content__section-label,
-    .content__series-label {
-        float: none;
-    }
-}
-
-.content__labels--aus-election {
-    .content__section-label,
-    .content__series-label {
-        float: none;
-    }
-}
-
-/* AUS Election Liveblog Image
+/* Container Rules
    ========================================================================== */
-.content__head--election {
+.fc-container__header--voices-of-america {
+    .badge-slot {
+        width: gs-span(1.5);
+        float: left;
 
-    &.aus-election {
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+
+        @include mq(wide) {
+            width: gs-span(2.5);
+        }
+    }
+
+    ~ .fc-container__header__description {
+        float: none;
+    }
+
+    .fc-container__title__text {
+        display: none;
+    }
+}
+
+/* Content Rules
+   ========================================================================== */
+.content__head--is-badged {
+    .content__section-label,
+    .content__series-label {
+        float: none;
+    }
+}
+
+.content__head--voices-of-america {
+    .badge-slot {
+        display: none;
+    }
+}
+
+/* Liveblog Rules
+   ========================================================================== */
+
+.content--liveblog {
+    .content__head--aus-election {
         .content__header .gs-container {
             background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog.jpg');
         }
@@ -45,10 +69,10 @@
             .content__header .gs-container {
                 background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog_dead.jpg');
             }
-        }      
+        }
     }
 
-    &.us-election {
+    .content__head--us-election {
         .content__header .gs-container {
             background-image: url('https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454339615039/uselectionliveblogon.jpg');
         }
@@ -60,7 +84,8 @@
         }
     }
 
-    .content__header .gs-container {
+    .content__head--aus-election .content__header .gs-container,
+    .content__head--us-election .content__header .gs-container {
         background-position: right bottom;
         background-repeat: no-repeat;
         background-size: gs-span(4);
@@ -85,4 +110,3 @@
         }
     }
 }
-

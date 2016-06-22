@@ -61,7 +61,9 @@ define([
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
             }
-        }, this).then(gustyle.addLabel.bind(gustyle));
+        }, this).then(gustyle.addLabel.bind(gustyle)).then(function () {
+            return true;
+        });
     };
 
     return GustyleComcontent;

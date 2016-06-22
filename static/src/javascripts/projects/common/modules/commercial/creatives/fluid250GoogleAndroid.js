@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'Promise',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -10,6 +11,7 @@ define([
 ], function (
     bean,
     bonzo,
+    Promise,
     $,
     mediator,
     storage,
@@ -29,6 +31,8 @@ define([
         if (this.params.trackingPixel) {
             addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
         }
+
+        return Promise.resolve(true);
     };
 
     return Fluid250GoogleAndroid;
