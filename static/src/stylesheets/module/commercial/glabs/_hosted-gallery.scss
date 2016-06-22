@@ -6,10 +6,11 @@
     bottom: 0;
     right: -20px;
     left: 0;
+    display: none;
 }
 
-.use-swipe .hosted-gallery__scroll-container {
-    display: none;
+.use-scroll .hosted-gallery__scroll-container {
+    display: block;
 }
 
 @mixin gallery-side-margins($container-width) {

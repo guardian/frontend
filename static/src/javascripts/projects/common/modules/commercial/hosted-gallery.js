@@ -64,6 +64,8 @@ define([
         // CONFIG
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
+        this.resize = this.trigger.bind(this, 'resize');
+        this.index = this.index || 1;
 
 
         // ELEMENT BINDINGS
@@ -95,10 +97,6 @@ define([
 
         if (this.useSwipe) {
             this.$galleryEl.addClass('use-swipe');
-            this.$imagesContainer.css('width', this.$images.length + '00%');
-            // todo: do we need different buttons here? left-right instead of up/down
-            bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next'));
-            bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
             this.initSwipe();
         } else {
             this.$galleryEl.addClass('use-scroll');
@@ -110,63 +108,20 @@ define([
         var length = this.$images.length;
         var scrollEl = this.$scrollEl;
         this.loadSurroundingImages(1, length);
+        bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
 
-        bean.on(this.prevBtn, 'click', function () {
-            var scrollTop = scrollEl[0].scrollTop;
-            var scrollHeight = scrollEl[0].scrollHeight;
-            var progress = length * (scrollTop/scrollHeight);
-            fastdom.write(function () {
-                scrollEl.scrollTop(Math.floor(progress - 0.01) * scrollHeight / length);
-            });
-        });
+        bean.on(this.nextBtn, 'click', this.scrollTo.bind(this, 1));
+        bean.on(this.prevBtn, 'click', this.scrollTo.bind(this, -1));
 
-        bean.on(this.nextBtn, 'click', function () {
-            var scrollTop = scrollEl[0].scrollTop;
-            var scrollHeight = scrollEl[0].scrollHeight;
-            var progress = length * (scrollTop/scrollHeight);
-            fastdom.write(function () {
-                scrollEl.scrollTop(Math.ceil(progress + 0.01) * scrollHeight / length);
-            });
-        });
-
-        bean.on(scrollEl[0], 'scroll', debounce(function (e) {
-            var scrollTop = e.target.scrollTop;
-            var scrollHeight = e.target.scrollHeight;
-            var progress = Math.round(length * (scrollTop/scrollHeight) * 100) / 100;
-            var fractionProgress = progress % 1;
-            var deg = Math.ceil(fractionProgress * 360);
-            this.loadSurroundingImages(Math.ceil(progress + 1), length);
-            fastdom.write(function () {
-                this.$images.each(function (image, index) {
-                    var opacity = (progress - index + 1) * 4 / 3;
-                    bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
-                });
-                this.$captions.each(function (caption, index) {
-                    if(Math.abs(progress - index + 0.125) < 0.225){
-                        bonzo(caption).addClass('current-caption');
-                    } else {
-                        bonzo(caption).removeClass('current-caption');
-                    }
-                });
-                bonzo(this.$border).css('transform', 'rotate('+deg+'deg)');
-                bonzo(this.$border).css('-webkit-transform', 'rotate('+deg+'deg)');
-                ['quarter-2', 'quarter-3', 'quarter-4'].forEach(function (cssClass, index) {
-                    if(4 * fractionProgress > index + 1){
-                        bonzo(this.$progress).addClass(cssClass);
-                    } else {
-                        bonzo(this.$progress).removeClass(cssClass);
-                    }
-                }.bind(this));
-                bonzo(this.$counter).html(Math.ceil(progress + 0.25) + '/' + length);
-            }.bind(this));
-        }, 10).bind(this));
-
+        bean.on(scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
     };
 
     HostedGallery.prototype.initSwipe = function () {
 
         var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
+        this.swipeContainerWidth = this.$galleryEl.dim().width;
+        this.$imagesContainer.css('width', this.$images.length + '00%');
 
         bean.on(this.$galleryEl[0], 'touchstart', function (e) {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
@@ -240,27 +195,71 @@ define([
         galleryEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
         galleryEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
         galleryEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+    };
 
-        this.$captions.each(function (caption, index) {
-            if(index === imgIndex - 1){
-                bonzo(caption).addClass('current-caption');
-            } else {
-                bonzo(caption).removeClass('current-caption');
-            }
+    HostedGallery.prototype.fadeContent = function (e) {
+        var length = this.$images.length;
+        var scrollTop = e.target.scrollTop;
+        var scrollHeight = e.target.scrollHeight;
+        var progress = Math.round(length * (scrollTop/scrollHeight) * 100) / 100;
+        var fractionProgress = progress % 1;
+        var deg = Math.ceil(fractionProgress * 360);
+        var newIndex = Math.round(progress + 0.75);
+        fastdom.write(function () {
+            this.$images.each(function (image, index) {
+                var opacity = (progress - index + 1) * 4 / 3;
+                bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
+            });
+
+            bonzo(this.$border).css('transform', 'rotate(' + deg + 'deg)');
+            bonzo(this.$border).css('-webkit-transform', 'rotate(' + deg + 'deg)');
+            ['quarter-2', 'quarter-3', 'quarter-4'].forEach(function (cssClass, index) {
+                if (4 * fractionProgress > index + 1) {
+                    bonzo(this.$progress).addClass(cssClass);
+                } else {
+                    bonzo(this.$progress).removeClass(cssClass);
+                }
+            }.bind(this));
+        }.bind(this));
+
+        if(newIndex && newIndex !== this.index){
+            this.index = newIndex;
+            this.trigger('reload');
+        }
+    };
+
+    HostedGallery.prototype.scrollTo = function (direction) {
+        var scrollEl = this.$scrollEl;
+        var length = this.$images.length;
+        var scrollTop = scrollEl[0].scrollTop;
+        var scrollHeight = scrollEl[0].scrollHeight;
+        var progress = length * (scrollTop/scrollHeight);
+        var newIndex = Math.round(progress + (direction * 0.51));
+        fastdom.write(function () {
+            scrollEl.scrollTop(newIndex * scrollHeight / length);
         });
     };
+
 
     HostedGallery.prototype.states = {
         'image': {
             enter: function () {
-
-                this.index = this.index || 1;
+                var that = this;
                 this.swipeContainerWidth = this.$galleryEl.dim().width;
 
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
-
-                this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
+                this.$captions.each(function (caption, index) {
+                    if (that.index === index + 1) {
+                        bonzo(caption).addClass('current-caption');
+                    } else {
+                        bonzo(caption).removeClass('current-caption');
+                    }
+                });
+                bonzo(this.$counter).html(this.index + '/' + this.$images.length);
+                if(this.useSwipe){
+                    this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
+                }
 
                 // event bindings
                 mediator.on('window:resize', this.resize);
@@ -317,7 +316,9 @@ define([
 
         'endslate': {
             enter: function () {
-                this.translateContent(this.$images.length, 0, 0);
+                if(this.useSwipe){
+                    this.translateContent(this.$images.length, 0, 0);
+                }
                 this.index = this.$images.length + 1;
                 mediator.on('window:resize', this.resize);
             },
@@ -338,21 +339,23 @@ define([
                 },
                 'resize': function () {
                     this.swipeContainerWidth = this.$galleryEl.dim().width;
-                    this.translateContent(this.$images.length, 0, 0);
+                    if(this.useSwipe){
+                        this.translateContent(this.$images.length, 0, 0);
+                    }
                 }
             }
         }
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {
-        if (e.keyCode === 37) { // left
-            this.trigger('prev');
-        } else if (e.keyCode === 39) { // right
-            this.trigger('next');
-        } else if (e.keyCode === 38) { // up
-            this.trigger('show-info');
+        if (e.keyCode === 38) { // up
+            e.preventDefault();
+            this.scrollTo(-1);
+            return false;
         } else if (e.keyCode === 40) { // down
-            this.trigger('hide-info');
+            e.preventDefault();
+            this.scrollTo(1);
+            return false;
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
         }
