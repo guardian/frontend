@@ -458,6 +458,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "smart-app-banner",
     "When ON, show the Apple smart app banner by adding a meta tag",
+    owners = Seq(Owner.withGithub("marialivia16")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
