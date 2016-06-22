@@ -73,8 +73,23 @@
             return config;
         }
 
+        function isLocalStorageReallyAvailable () {
+            var testKey = 'local-storage-module-test';
+            var data = 'test';
+
+            try {
+                // to fully test, need to set item
+                // http://stackoverflow.com/questions/9077101/iphone-localstorage-quota-exceeded-err-issue#answer-12976988
+                localStorage.setItem(testKey, data);
+                localStorage.removeItem(testKey);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
         function attachKruxSegments(config) {
-            if (localStorage.getItem('kxsegs') !== null) {
+            if (localStorage && isLocalStorageReallyAvailable() && localStorage.getItem('kxsegs') !== null) {
                 var kxSegList = localStorage.getItem('kxsegs').split(',');
 
                 if (kxSegList.length > 0) {
