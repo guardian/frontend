@@ -32,13 +32,19 @@
                         </div>
                     </div>
                     <div class="hosted-next-autoplay js-hosted-next-autoplay">
-                        <div class="hosted-next-autoplay--header">
-                            <h4 class="hosted-next-autoplay--subheader">Playing next</h4>
-                            <h2 class="hosted-next-autoplay--header-title hosted-tone--renault">@page.nextPage.video.title</h2>
+                        <div class="hosted-next-autoplay__cancel">
+                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="cancel autoplay of the next video">
+                                <span class="u-h">Close</span>
+                                @fragments.inlineSvg("cross", "icon", List("rss"))
+                            </button>
                         </div>
-                        <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay--poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
-                            <img class="hosted-next-autoplay--poster-img" src="@page.nextPage.video.posterUrl">
-                            <div class="hosted-next-autoplay--poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
+                        <div class="hosted-next-autoplay__header">
+                            <div class="hosted-next-autoplay__subheader">Playing next</div>
+                            <h2 class="hosted-next-autoplay__header-title hosted-tone--renault">@page.nextPage.video.title</h2>
+                        </div>
+                        <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
+                            <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
+                            <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
                         </a>
                     </div>
                 </div>

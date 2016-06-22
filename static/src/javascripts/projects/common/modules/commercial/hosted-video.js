@@ -4,6 +4,7 @@
 
 define([
     'bean',
+    'fastdom',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/defer-to-analytics',
@@ -14,6 +15,7 @@ define([
     'text!common/views/ui/loading.html'
 ], function (
     bean,
+    fastdom,
     $,
     detect,
     deferToAnalytics,
@@ -24,6 +26,7 @@ define([
     loadingTmpl
 ) {
     var player;
+    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -46,14 +49,24 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function nextVideoTimer(duration, $timer, nextVideoLink) {
-        setInterval(function () {
+    function nextVideoTimer(player, duration, $timer, nextVideoLink) {
+        return setInterval(function () {
             if (duration === 0) {
+                player.trigger(player.guMediaType + ' : next video redirect');
                 window.location = nextVideoLink;
             }
-            $timer.text(duration + 's');
-            duration = duration - 1;
+            fastdom.write(function () {
+                $timer.text(duration + 's');
+                duration = duration - 1;
+            });
         }, 1000);
+    }
+
+    function cancelAutoplay($hostedNext) {
+        fastdom.write(function () {
+            $hostedNext.addClass('u-h');
+        });
+        clearInterval(nextVideoInterval);
     }
 
     function init() {
@@ -72,6 +85,7 @@ define([
                 player.ready(function () {
                     var vol;
                     var duration = parseInt(this.duration(), 10);
+                    var $hostedNext = $('.js-hosted-next-autoplay');
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
 
@@ -93,21 +107,26 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length) {
                         player.on('timeupdate', function() {
                             var currentTime = parseInt(this.currentTime(), 10);
                             var time = 10; //seconds before the end when to show the timer
 
                             if (duration - currentTime <= time) {
                                 player.off('timeupdate');
-                                var $hostedNext = $('.js-hosted-next-autoplay');
+
                                 var $timer = $('.js-autoplay-timer');
                                 var nextVideoPage;
 
                                 if ($timer.length) {
                                     nextVideoPage = $timer.data('next-page');
-                                    nextVideoTimer(time, $timer, nextVideoPage);
-                                    $hostedNext.addClass('js-autoplay-start');
+                                    nextVideoInterval = nextVideoTimer(player, time, $timer, nextVideoPage);
+                                    fastdom.write(function () {
+                                        $hostedNext.addClass('js-autoplay-start');
+                                    });
+                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+                                        cancelAutoplay($hostedNext);
+                                    });
                                 }
                             }
                         });

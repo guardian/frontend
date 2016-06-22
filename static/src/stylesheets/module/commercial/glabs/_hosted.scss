@@ -845,26 +845,40 @@ $omgbColor: #dd0000;
     padding: 12px;
     background-color: #333333;
 
-    .hosted-next-autoplay--subheader {
+    .hosted-next-autoplay__cancel {
+        position: absolute;
+        cursor: pointer;
+        top: 4px;
+        right: 8px;
+
+        svg {
+            position: static;
+            margin-top: 5px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .hosted-next-autoplay__subheader {
         color: #ffffff;
         font-size: 18px;
         font-weight: normal;
         line-height: 18px;
     }
 
-    .hosted-next-autoplay--header-title {
-        font-size: 36px;
-        line-height: 38px;
+    .hosted-next-autoplay__header-title {
+        font-size: 30px;
+        line-height: 34px;
     }
 
-    .hosted-next-autoplay--poster {
+    .hosted-next-autoplay__poster {
         width: 300px;
         height: 170px;
         display: block;
         margin: 12px auto;
     }
 
-    .hosted-next-autoplay--poster-img {
+    .hosted-next-autoplay__poster-img {
         width: 300px;
         height: 170px;
         bottom: 12px;
@@ -872,7 +886,7 @@ $omgbColor: #dd0000;
         top: initial;
     }
 
-    .hosted-next-autoplay--poster-timer {
+    .hosted-next-autoplay__poster-timer {
         position: absolute;
         bottom: 22px;
         left: 22px;
