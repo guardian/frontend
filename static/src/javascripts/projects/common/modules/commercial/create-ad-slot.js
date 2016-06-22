@@ -91,12 +91,8 @@ define([
                 mobile: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
+                    adSizes.fluid250,
                     adSizes.fabric,
-                    adSizes.fluid
-                ),
-                tablet: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
                     adSizes.fluid
                 ),
                 desktop: compile(

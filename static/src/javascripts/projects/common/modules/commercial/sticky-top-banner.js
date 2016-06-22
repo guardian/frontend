@@ -82,7 +82,7 @@ define([
         // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
         // injected asynchronously, so we can't be sure when they will be in the dom
         var fluidAdInnerHeight = 250;
-        var fluidAdPadding = 18;
+        var fluidAdPadding = $('.ad-slot__label', $adBannerInner[0]).height();
         var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
         if (isFluidAd) {
