@@ -89,3 +89,17 @@ $buttonSize: 32px;
         opacity: 1;
     }
 }
+
+/* Emotions */
+
+.participation-low-fric--button__emotion {
+    margin-right: $gs-gutter / 4;
+    opacity: .5;
+
+    &.participation-low-fric--button__is-active:hover,
+    &.participation-low-fric--button__is-active:focus,
+    &.participation-low-fric--button__is-active:active,
+    &.participation-low-fric--button__is-highlighted {
+        opacity: 1;
+    }
+}

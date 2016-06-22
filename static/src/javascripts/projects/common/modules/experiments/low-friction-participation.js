@@ -42,9 +42,11 @@ define([
         itemCount: 5, // Amount of items
         itemIconUnicode: [], // Add a list of unicode icons
         inactiveIconClass: 'inline-icon__inactive', // The inactive class added to the icon
-        itemIcon: star, // SVG icon
+        itemIcon: star, // SVG icon - Use when every SVG icon is the same
+        itemIconArray: [], // An array of inlineSvg icons - Use when ever SVG icon is different
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
+            typeId: 'stars',
             title: 'Do you agree? Rate this film now',
             description: 'Let us know what you think!',
             itemClassSuffix: 'star',
@@ -75,12 +77,13 @@ define([
         // Build our participation buttons
         for (var i = 0; i < settings.itemCount; i++) {
             var thisUniIcon = settings.itemIconUnicode[i] || settings.itemIconUnicode[0]; // Use icon at current iteration or default to first
+            var thisSvgIcon = settings.itemIconArray[i] || settings.iconItemArray[0];
             var templateVars = {
-                buttonText: 'Choose' +  (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1,
+                buttonText: 'Choose ' +  (settings.buttonTextArray.length > 0 && settings.buttonTextArray[i]) || i + 1,
                 shouldBeActive: !state.confirming && !state.complete,
                 shouldBeHighlighted: (state.confirming || state.complete) &&
                     ((settings.prevItemsHighlight && state.selectedItem >= i) || state.selectedItem === i),
-                itemIcon: thisUniIcon || svg(settings.itemIcon, [settings.inactiveIconClass]),
+                itemIcon: thisUniIcon || svg(thisSvgIcon) || svg(settings.itemIcon, [settings.inactiveIconClass]),
                 itemId: i,
                 state: state
             };
@@ -97,6 +100,7 @@ define([
 
         var view = template(lowFrictionContents, merge(settings.templateVars, {
                 buttons: createButtons(state),
+                selectedItem: state.selectedItem,
                 confirming: state.confirming,
                 complete: state.complete
             }));
@@ -221,8 +225,10 @@ define([
     function bindEvents () {
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric--button', itemClicked);
         bean.on(document, 'click.particpation-low-fric', '.js-participation-low-fric__confirm', confirmClicked);
-        bean.on(document, 'mouseover.particpation-low-fric', '.js-participation-low-fric--button', itemHovered);
-        bean.on(document, 'mouseleave.particpation-low-fric', '.js-participation-low-friction__contents', blockUnHovered);
+        if (settings.prevItemsHighlight) {
+            bean.on(document, 'mouseover.particpation-low-fric', '.js-participation-low-fric--button', itemHovered);
+            bean.on(document, 'mouseleave.particpation-low-fric', '.js-participation-low-friction__contents', blockUnHovered);
+        }
     }
 
     // Initalise it.
