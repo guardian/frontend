@@ -9,7 +9,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-object BookOffersController
+class BookOffersController
   extends Controller
   with ExecutionContexts
   with Logging
@@ -73,3 +73,5 @@ object BookOffersController
     }
   }
 }
+
+object BookOffersController extends BookOffersController
