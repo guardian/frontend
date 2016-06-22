@@ -93,5 +93,5 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 6, 27), // Tuesday
     exposeClientSide = true
   )
-  
+
 }
