@@ -170,6 +170,7 @@ final case class Content(
   val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
 
   def javascriptConfig: Map[String, JsValue] = Map(
+    ("contentId", JsString(metadata.id)),
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
     ("hasStoryPackage", JsBoolean(hasStoryPackage)),

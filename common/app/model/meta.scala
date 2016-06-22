@@ -16,6 +16,8 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 
+import scala.util.Random
+
 object Commercial {
 
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
@@ -362,6 +364,23 @@ object Page {
   }
 }
 
+object Ophan {
+
+  private val randomChars = Stream.continually(Integer.toString(Math.floor(Random.nextDouble() * 36).toInt, 36))
+
+  /*
+   * This logic is duplicated from
+   * https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+   * Please do not change this without talking to the Ophan project first.
+   */
+  def generatePageViewId: String = {
+    val timestamp = java.lang.Long.toString(new java.util.Date().getTime(), 36)
+    val randomness = randomChars.take(12).mkString
+    s"$timestamp$randomness"
+  }
+
+}
+
 // A Page is something that has metadata, and anything with Metadata can be rendered.
 trait Page {
   def metadata: MetaData
@@ -608,7 +627,7 @@ final case class Tags(
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
@@ -626,6 +645,8 @@ final case class Tags(
 
   lazy val keywordIds = keywords.map { _.id }
 
+  lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
+
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
@@ -638,7 +659,8 @@ final case class Tags(
     ("tones", JsString(tones.map(_.name).mkString(","))),
     ("toneIds", JsString(tones.map(_.id).mkString(","))),
     ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-    ("blogIds", JsString(blogs.map(_.id).mkString(",")))
+    ("blogIds", JsString(blogs.map(_.id).mkString(","))),
+    ("commissioningDesk", JsString(commissioningDesk.getOrElse("")))
   )
 }
 
@@ -689,6 +711,8 @@ object Tags {
   val reviewMappings = Seq(
     "tone/reviews"
   )
+
+  val CommissioningDesk = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content) = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
