@@ -98,7 +98,6 @@
     "postcss-pxtorem": "^2.3.0",
     "q": "1.0.1",
     "require-dir": "^0.3.0",
-    "sass-lint": "^1.5.1",
     "shoe": "0.0.11",
     "sorted-object": "^1.0.0",
     "svgo": "0.4.5",
