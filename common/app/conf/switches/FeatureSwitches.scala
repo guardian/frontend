@@ -452,4 +452,16 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 6, 28),
     exposeClientSide = true
   )
+
+  // Owner: Maria Livia Chiorean
+  val SmartAppBanner = Switch(
+    SwitchGroup.Feature,
+    "smart-app-banner",
+    "When ON, show the Apple smart app banner by adding a meta tag",
+    owners = Seq(Owner.withGithub("marialivia16")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
