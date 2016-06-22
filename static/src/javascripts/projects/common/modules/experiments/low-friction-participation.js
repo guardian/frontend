@@ -45,6 +45,7 @@ define([
         itemIcon: star, // SVG icon
         buttonTextArray: [], // An array of strings to use as the button text, if array is empty will use current iteration value+1
         templateVars: { // Variables that will be passed through to all views
+            typeId: 'stars',
             title: 'Do you agree? Rate this film now',
             description: 'Let us know what you think!',
             itemClassSuffix: 'star',
@@ -97,6 +98,7 @@ define([
 
         var view = template(lowFrictionContents, merge(settings.templateVars, {
                 buttons: createButtons(state),
+                selectedItem: state.selectedItem,
                 confirming: state.confirming,
                 complete: state.complete
             }));

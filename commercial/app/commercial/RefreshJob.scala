@@ -26,7 +26,7 @@ trait RefreshJob extends Logging {
   }
 }
 
-object MasterClassTagsRefresh extends RefreshJob {
+object MasterclassTagsRefresh extends RefreshJob {
 
   val name: String = "MasterClassTags"
 
@@ -54,3 +54,11 @@ object MoneyBestBuysRefresh extends RefreshJob {
 
   def refresh() = BestBuysAgent.refresh()
 }
+
+object CommercialMetricsRefresh extends RefreshJob {
+  val name: String = "Update Metrics"
+
+  def refresh() = CommercialLifecycleMetrics.update()
+}
+
+

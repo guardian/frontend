@@ -541,8 +541,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }
 
-  object Kibana {
-    lazy val url = configuration.getStringProperty("kibana.url")
+  object Elk {
+    lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
+    lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
   }
 }
 

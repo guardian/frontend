@@ -17,7 +17,7 @@
 
     <p><strong>If in doubt raise a support ticket.</strong> (it&apos;s what we pay them for)</p>
 
-    <p>The PA API explorer is <a href="http://pads.pa-sport.com/api/football/">here</a>.</p>
+    <p>The PA API explorer is <a href="@pa.apiExplorer">here</a>. Select 'Football API v1.5' from the drop-down menu, and enter the key supplied above into the key text box.</p>
 
     <h2>Matchday Feed</h2>
 
@@ -30,14 +30,14 @@
 
     <p>Here is the API call for today&apos;s live matches:</p>
 
-    <a href="@pa.footballHost/api/football/competitions/matchDay/@pa.footballApiKey/@today">@pa.footballHost/api/football/competitions/matchDay/@pa.footballApiKey/<strong>@today</strong></a>
+    <a href="@pa.footballHost/competitions/matchDay/@pa.footballApiKey/@today">@pa.footballHost/competitions/matchDay/@pa.footballApiKey/<strong>@today</strong></a>
 
     <h2>Competitions feed</h2>
 
     <p>This shows us all the competitions we have access to. You can use it to find the ID of a competition
     that we can use to access other feeds.</p>
 
-    <a href="@pa.footballHost/api/football/competitions/competitions/@pa.footballApiKey">@pa.footballHost/api/football/competitions/competitions/@pa.footballApiKey</a>
+    <a href="@pa.footballHost/competitions/competitions/@pa.footballApiKey">@pa.footballHost/competitions/competitions/@pa.footballApiKey</a>
 
     <h2>Fixtures feed</h2>
 
@@ -46,7 +46,7 @@
     <p>Here is the API call for all upcoming fixtures in the <strong>@competition</strong> (id @competitionId). You can get other competition IDs
         from the Competitions feed above.</p>
 
-    <a href="@pa.footballHost/api/football/competition/fixtures/@pa.footballApiKey/@competitionId">@pa.footballHost/api/football/competition/fixtures/@pa.footballApiKey/<strong>@competitionId</strong></a>
+    <a href="@pa.footballHost/competition/fixtures/@pa.footballApiKey/@competitionId">@pa.footballHost/competition/fixtures/@pa.footballApiKey/<strong>@competitionId</strong></a>
 
     <h2>Results feed</h2>
 
@@ -55,7 +55,7 @@
     <p>Here is the API call for results in the <strong>@competition</strong> (id @competitionId). You can get other competition IDs
         from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
 
-    <a href="@pa.footballHost/api/football/competition/results/@pa.footballApiKey/@competitionId/@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.footballHost/api/football/competition/results/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
+    <a href="@pa.footballHost/competition/results/@pa.footballApiKey/@competitionId/@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.footballHost/competition/results/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
 
     <h2>League table</h2>
 
@@ -64,19 +64,19 @@
     <p>Here is the API call for the league table for <strong>@competition</strong> (id @competitionId). You can get other competition IDs
         from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
 
-    <a href="@pa.footballHost/api/football/competition/leagueTable/@pa.footballApiKey/@competitionId/@today">@pa.footballHost/api/football/competition/leagueTable/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@today</strong></a>
+    <a href="@pa.footballHost/competition/leagueTable/@pa.footballApiKey/@competitionId/@today">@pa.footballHost/competition/leagueTable/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@today</strong></a>
 
     <h2>Match stats</h2>
 
     <p>Detailed match stats for a specific match. You would get the match ID from either the fixtures or matchday or results feed.</p>
 
-    <a href="@pa.footballHost/api/football/match/stats/@pa.footballApiKey/3630511">@pa.footballHost/api/football/match/stats/@pa.footballApiKey/<strong>3630511</strong></a>
+    <a href="@pa.footballHost/match/stats/@pa.footballApiKey/3834729">@pa.footballHost/match/stats/@pa.footballApiKey/<strong>3834729</strong></a>
 
     <h2>Line ups</h2>
 
     <p>Team line ups for a specific match, containing team colours (before we apply darkening, and missing colours default to #eeeeee).</p>
 
-    <a href="@pa.footballHost/api/football/match/lineUps/@pa.footballApiKey/3630511">@pa.footballHost/api/football/match/lineUps/@pa.footballApiKey/<strong>3630511</strong></a>
+    <a href="@pa.footballHost/match/lineUps/@pa.footballApiKey/3834729">@pa.footballHost/match/lineUps/@pa.footballApiKey/<strong>3834729</strong></a>
 
     <link href="@controllers.admin.routes.UncachedAssets.at("css/football.css")" rel="stylesheet">
 }
