@@ -20,6 +20,21 @@
     background-color: $status-neutral;
 }
 
+.site-message--mobile-labs {
+    background-color: $mobile-labs-banner;
+    display: block;
+
+    .site-message__close-btn {
+        top: $gs-baseline * 6;
+    }
+
+    @include fs-textSans(2);
+
+    .site-message__header-item-headline {
+        font-weight: bold;
+    }
+}
+
 .site-message__inner {
     padding: 0 $gs-gutter/2;
 
@@ -75,6 +90,10 @@
     // Magic number based on a minimum viewport of 320px, padding, and
     // showing the close button
     max-width: 269px;
+
+    .site-message--mobile-labs & {
+        max-width: 411px;
+    }
 
     a {
         color: inherit;
@@ -152,6 +171,9 @@
         vertical-align: middle;
         min-width: 135px;
         margin-top: 0;
+    }
+    .site-message--mobile-labs & {
+        margin-bottom: 0;
     }
 }
 
