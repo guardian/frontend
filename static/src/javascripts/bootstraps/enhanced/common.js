@@ -392,6 +392,7 @@ define([
     return {
         init: function () {
             forEach(robust.makeBlocks([
+                
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
