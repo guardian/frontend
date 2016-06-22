@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/participation-low-fric-music-v2'
 ], function (
     reportError,
     config,
@@ -31,7 +32,8 @@ define([
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
-    VideoYellowPlayButton
+    VideoYellowPlayButton,
+    ParticipationLowFricMusicV2
 ) {
 
     var TESTS = [
@@ -42,7 +44,8 @@ define([
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
-        new VideoYellowPlayButton()
+        new VideoYellowPlayButton(),
+        new ParticipationLowFricMusicV2()
     ];
 
     var participationsKey = 'gu.ab.participations';
