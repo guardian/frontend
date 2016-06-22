@@ -1,0 +1,37 @@
+@(page: ContentPage)(implicit request: RequestHeader)
+
+@import layout.ContentWidths.MainMedia
+@import model.ContentPage
+@import views.support.TrailCssClasses.toneClass
+@import views.support.ContributorLinks
+
+<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
+
+    @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+        @fragments.image(
+            picture = picture,
+            classes = Seq("immersive-main-media__media"),
+            widths = MainMedia.immersive,
+            imageAltText = "",
+            isImmersiveMainMedia = true
+        )
+    }
+
+    <div class="immersive-main-media__headline-container--dark immersive-main-media__headline-container">
+        <div class="gs-container">
+            @fragments.meta.metaInline(page.item)
+
+            <h1 class="content__headline content__headline--immersive content__headline--gallery content__headline--immersive--with-main-media">
+                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
+                @Html(page.item.trail.headline)
+            </h1>
+
+            @if(page.item.content.hasTonalHeaderByline) {
+                @page.item.trail.byline.map { text =>
+                    <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                }
+            }
+
+        </div>
+    </div>
+</div>
