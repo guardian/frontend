@@ -2,19 +2,15 @@ package model.commercial.events
 
 import model.commercial.events.Eventbrite._
 import org.joda.time.DateTime
-import play.api.libs.functional.syntax._
-import play.api.libs.json.{JsPath, Reads}
+import play.api.libs.json.Json
 
-case class LiveEventImage(eventId: String, mainImageUrl: String)
-object LiveEventImage{
+case class LiveEventMembershipInfo(id: String,
+                                   url: String,
+                                   mainImageUrl: String)
 
-  implicit val liveEventImageReads: Reads[LiveEventImage] = (
-    (JsPath \ "id").read[String] and
-      (JsPath \ "mainImageUrl").read[String]
-    )(LiveEventImage.apply _)
-
+object LiveEventMembershipInfo {
+  implicit val format = Json.format[LiveEventMembershipInfo]
 }
-
 
 case class LiveEvent(eventId: String,
                      name: String,
@@ -28,24 +24,16 @@ case class LiveEvent(eventId: String,
 
 object LiveEvent {
 
-  def apply(event: EBEvent, maybeEventImage: Option[LiveEventImage] = None): LiveEvent = {
-
-    val maybeImageUrl =
-      maybeEventImage match {
-        case Some(eventImage) => Some(eventImage.mainImageUrl)
-        case None => None
-      }
-
+  def apply(event: EBEvent, maybeEventInternalFeed: Option[LiveEventMembershipInfo] = None): LiveEvent =
     new LiveEvent(
       eventId = event.id,
       name = event.name,
       date = event.startDate,
-      eventUrl = event.url,
+      eventUrl = maybeEventInternalFeed map {_.url} getOrElse event.url,
       description = event.description,
       status = event.status,
       venue = event.venue,
       tickets = event.tickets,
-      imageUrl = maybeImageUrl
+      imageUrl = maybeEventInternalFeed map {_.mainImageUrl}
     )
-  }
 }
