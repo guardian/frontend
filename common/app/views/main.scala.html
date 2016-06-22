@@ -53,8 +53,15 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @page match {
-            case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {
+            case page: model.ContentPage if (page.item.content.isImmersiveGallery && !page.item.content.tags.isInteractive) => {
                 <div class="immersive-header-container">
+                    @headerAndTopAds(showAdverts, edition, adBelowNav)
+
+                    @fragments.immersiveGalleryMainMedia(page)
+                </div>
+            }
+            case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {
+                <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
                     @headerAndTopAds(showAdverts, edition, adBelowNav)
 
                     @fragments.immersiveMainMedia(page)

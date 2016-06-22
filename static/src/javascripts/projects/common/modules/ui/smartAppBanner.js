@@ -7,7 +7,8 @@ define([
     'common/utils/template',
     'common/utils/load-css-promise',
     'common/modules/user-prefs',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/utils/config'
 ], function (
     fastdom,
     $,
@@ -17,7 +18,8 @@ define([
     template,
     loadCssPromise,
     userPrefs,
-    Message
+    Message,
+    config
 ) {
     /**
      * Rules:
@@ -56,6 +58,10 @@ define([
         return impressions < 4;
     }
 
+    function canUseSmartBanner() {
+        return config.switches.smartAppBanner && detect.getUserAgent.browser === 'Safari' && detect.isIOS();
+    }
+
     function showMessage() {
         loadCssPromise.then(function () {
             var platform = (detect.isIOS()) ? 'ios' : 'android',
@@ -77,7 +83,7 @@ define([
     }
 
     function init() {
-        if (isDevice() && canShow()) {
+        if (!canUseSmartBanner() && isDevice() && canShow()) {
             showMessage();
         }
     }
