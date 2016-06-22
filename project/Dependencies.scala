@@ -45,7 +45,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.2.3" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
-  val paClient = "com.gu" %% "pa-client" % "6.0.0"
+  val paClient = "com.gu" %% "pa-client" % "6.0.2"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.7"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"

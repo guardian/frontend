@@ -27,7 +27,7 @@ import org.joda.time.LocalDate
     TestCompetitions.competitionAgents.foreach(_.refreshFixtures())
 
     eventually(
-      TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3519484")
+      TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3925232")
     )
   }
 
@@ -73,7 +73,7 @@ import org.joda.time.LocalDate
 
     TestCompetitions.competitionAgents.foreach(_.refresh())
 
-    eventually(TestCompetitions.competitions(0).leagueTable(0).team.id should be ("4"))
+    eventually(TestCompetitions.competitions(0).leagueTable(0).team.id should be ("23"))
   }
 
 }

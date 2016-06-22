@@ -23,7 +23,6 @@ trait Client extends PaClient with Http with ExecutionContexts {
 private object Client extends Client {
 
   override def apiKey: String = AdminConfiguration.pa.footballApiKey
-  override lazy val base = AdminConfiguration.pa.footballHost
 
   override def GET(urlString: String): Future[pa.Response] = {
     import play.api.Play.current
@@ -70,7 +69,9 @@ private object TestClient extends Client {
   }
 
   def writeToFile(path: String, contents: String): Unit = {
-    val writer = new java.io.PrintWriter(new File(path))
+    val file = new File(path)
+    file.getParentFile().mkdirs()
+    val writer = new java.io.PrintWriter(file)
     try writer.write(contents) finally writer.close()
   }
 
