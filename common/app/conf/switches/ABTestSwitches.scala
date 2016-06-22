@@ -94,4 +94,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABParticipationLowFricMusicV2 = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-music-v2",
+    "AB test switch to insert low friction participation into music",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 29),
+    exposeClientSide = true
+  )
+
 }
