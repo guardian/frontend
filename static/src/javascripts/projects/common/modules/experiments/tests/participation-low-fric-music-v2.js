@@ -12,34 +12,6 @@ define([
     lowFrictionParticipation
 ) {
 
-    var omniture;
-
-    /**
-     * The omniture module depends on common/modules/experiments/ab, so trying to
-     * require omniture directly inside an AB test gives you a circular dependency.
-     *
-     * This is a workaround to load omniture without making it a dependency of
-     * this module, which is required by an AB test.
-     */
-    function getOmniture() {
-        return new Promise(function (resolve) {
-            if (omniture) {
-                return resolve(omniture);
-            }
-
-            require('common/modules/analytics/omniture', function (omnitureM) {
-                omniture = omnitureM;
-                resolve(omniture);
-            });
-        });
-    }
-
-    function trackIntoOmniture(trackStr) {
-        getOmniture().then(function (omniture) {
-            omniture.trackLinkImmediate(trackStr);
-        });
-    }
-
     function possessive(name) {
         var lastChar = name.substr(-1);
         var postfix = (lastChar === 's') ? '\'' : '\'s';
@@ -75,19 +47,10 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    // Omniture
-                    trackIntoOmniture('ab | ParticipationLowFricMusicV2 | control | setup');
-                },
+                test: function () {},
                 success: function (complete) {
                     if (module.canRun()) {
-                        mediator.on('discussion:commentbox:post:success', function () {
-                            // Data lake
-                            complete();
-
-                            // Omniture
-                            trackIntoOmniture('ab | ParticipationLowFricMusicV2 | control | complete');
-                        });
+                        mediator.on('discussion:commentbox:post:success', complete);
                     }
                 }
             },
@@ -100,19 +63,10 @@ define([
                             description: 'Is your rating the same as ' + possessive(config.page.author) + ' on "' + config.page.headline + '"?'
                         }
                     });
-
-                    // Omniture
-                    trackIntoOmniture('ab | ParticipationLowFricMusicV2 | variant-1 | setup');
                 },
                 success: function (complete) {
                     if (module.canRun()) {
-                        mediator.on('modules:participation:clicked', function (){
-                            // Data lake
-                            complete();
-
-                            // Omniture
-                            trackIntoOmniture('ab | ParticipationLowFricMusicV2 | variant-1 | success');
-                        });
+                        mediator.on('modules:participation:clicked', complete);
                     }
                 }
             }
