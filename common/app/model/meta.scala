@@ -16,6 +16,8 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 
+import scala.util.Random
+
 object Commercial {
 
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
@@ -360,6 +362,23 @@ object Page {
   def getContent(page: Page): Option[ContentType] = {
     getContentPage(page).map(_.item)
   }
+}
+
+object Ophan {
+
+  private val randomChars = Stream.continually(Integer.toString(Math.floor(Random.nextDouble() * 36).toInt, 36))
+
+  /*
+   * This logic is duplicated from
+   * https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+   * Please do not change this without talking to the Ophan project first.
+   */
+  def generatePageViewId: String = {
+    val timestamp = java.lang.Long.toString(new java.util.Date().getTime(), 36)
+    val randomness = randomChars.take(12).mkString
+    s"$timestamp$randomness"
+  }
+
 }
 
 // A Page is something that has metadata, and anything with Metadata can be rendered.
