@@ -91,8 +91,12 @@
                         <div class="hosted-gallery__caption @{if (i == 0) "current-caption" else ""}">
                             @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
                             <span>@page.images(i).title</span>
+                            <div class="hosted-gallery__caption-text">
+                                @page.images(i).caption
+                            </div>
                         </div>
                     }
+                    <div class="hosted-gallery__info-button js-gallery-caption-button">i</div>
                 </div>
                 </section>
         </div>

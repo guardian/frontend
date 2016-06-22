@@ -79,7 +79,7 @@ define([
         this.$border = $('.hosted-gallery__progress--border-2', this.$progress);
         this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
-        this.infoBtn = qwery('.hosted-gallery__info-btn', this.$captionContainer)[0];
+        this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
         this.$counter = $('.hosted-gallery__image-count', this.$progress);
 
         // FSM CONFIG
@@ -94,6 +94,8 @@ define([
             states: this.states
         });
 
+        bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+        this.loadSurroundingImages(1, this.$images.length);
 
         if (this.useSwipe) {
             this.$galleryEl.addClass('use-swipe');
@@ -105,15 +107,12 @@ define([
     }
 
     HostedGallery.prototype.initScroll = function () {
-        var length = this.$images.length;
-        var scrollEl = this.$scrollEl;
-        this.loadSurroundingImages(1, length);
         bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
 
         bean.on(this.nextBtn, 'click', this.scrollTo.bind(this, 1));
         bean.on(this.prevBtn, 'click', this.scrollTo.bind(this, -1));
 
-        bean.on(scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
+        bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
     };
 
     HostedGallery.prototype.initSwipe = function () {
@@ -265,6 +264,7 @@ define([
                 mediator.on('window:resize', this.resize);
             },
             leave: function () {
+                this.trigger('hide-info');
                 mediator.off('window:resize', this.resize);
             },
             events: {
@@ -298,13 +298,13 @@ define([
                     this.reloadState = true;
                 },
                 'toggle-info': function () {
-                    this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
+                    this.$captionContainer.toggleClass('hosted-gallery--show-caption');
                 },
                 'hide-info': function () {
-                    this.$lightboxEl.removeClass('gallery-lightbox--show-info');
+                    this.$captionContainer.removeClass('hosted-gallery--show-caption');
                 },
                 'show-info': function () {
-                    this.$lightboxEl.addClass('gallery-lightbox--show-info');
+                    this.$captionContainer.addClass('hosted-gallery--show-caption');
                 },
                 'resize': function () {
                     this.swipeContainerWidth = this.$galleryEl.dim().width;
