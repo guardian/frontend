@@ -8,6 +8,7 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/defer-to-analytics',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/video/fullscreener',
@@ -19,6 +20,7 @@ define([
     $,
     detect,
     deferToAnalytics,
+    ab,
     events,
     videojsOptions,
     fullscreener,
@@ -107,7 +109,8 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length) {
+                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length && ab.getParticipations().HostedAutoplay &&
+                        (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
                         player.on('timeupdate', function() {
                             var currentTime = parseInt(this.currentTime(), 10);
                             var time = 10; //seconds before the end when to show the timer

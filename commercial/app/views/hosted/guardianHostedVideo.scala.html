@@ -31,7 +31,7 @@
                             <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
                         </div>
                     </div>
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay">
+                    <div class="hosted-next-autoplay js-hosted-next-autoplay hosted-next-autoplay--variant2" data-link-name="Next video autoplay">
                         <div class="hosted-next-autoplay__cancel">
                             <button class="site-message__close-btn js-autoplay-cancel" data-link-name="cancel autoplay of the next video">
                                 <span class="u-h">Close</span>
@@ -46,6 +46,12 @@
                             <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
                             <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
                         </a>
+                        <div class="hosted__next-video hosted-next-autoplay__next-in-series">
+                            <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="More from Renault: @page.nextPage.video.title">
+                                <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl" alt="Next Video: @page.nextPage.video.title">
+                                <p class="hosted__next-video-title">@page.nextPage.video.title</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

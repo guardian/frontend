@@ -84,4 +84,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHostedAutoplay = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-autoplay",
+    "An autoplay overlay with the next video on a hosted page",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 14),
+    exposeClientSide = true
+  )
+
 }

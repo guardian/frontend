@@ -833,9 +833,10 @@ $omgbColor: #dd0000;
     }
 }
 
+//Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
-    @include hosted-fade-out;
+    //@include hosted-fade-out;
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -903,6 +904,28 @@ $omgbColor: #dd0000;
     &.js-autoplay-start {
         @include mq(desktop) {
             @include hosted-fade-in;
+        }
+    }
+
+    .hosted-next-autoplay__next-in-series {
+        display: none;
+    }
+
+    //Variant 2 of AB test
+    &.hosted-next-autoplay--variant2 {
+        .hosted-next-autoplay__next-in-series {
+            display: block;
+        }
+
+        .hosted__next-video--tile {
+            margin: 0;
+        }
+
+        .hosted__next-video-thumb {
+            position: static;
+            width: 120px;
+            height: 72px;
+            align-self: flex-start;
         }
     }
 }
