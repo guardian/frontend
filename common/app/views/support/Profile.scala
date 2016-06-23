@@ -2,7 +2,7 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import common.Logging
-import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay}
+import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
 import conf.Configuration
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
@@ -96,7 +96,24 @@ object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
-object TwitterImage extends Profile(width = Some(1200))
+
+object TwitterImage extends Profile(width = Some(1200)) {
+
+  override val heightParam = "h=630"
+  val blendModeParam = "bm=normal"
+  val blendOffsetParam = "ba=bottom%2Cleft"
+  val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+  override val fitParam = "fit=crop"
+
+  override def resizeString = {
+    if(TwitterShareImageLogoOverlay.isSwitchedOn) {
+      val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+      s"?$params"
+    } else {
+      super.resizeString
+    }
+  }
+}
 object FacebookOpenGraphImage extends Profile(width = Some(1200)) {
 
   override val heightParam = "h=632"
