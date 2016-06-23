@@ -67,9 +67,26 @@
 }
 
 .advert--single {
+    @include mq(375px, $until: mobileLandscape) {
+        flex-direction: row;
+
+        > .advert__text,
+        > .advert__image-container {
+            flex: 1;
+        }
+
+        > .advert__text {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+
     .advert__standfirst {
         margin-top: $gs-baseline / 2;
         opacity: .7;
+    }
+
+    .advert__image {
+        width: 100%;
     }
 
     &:hover,
@@ -101,12 +118,15 @@
 /* [1] Prevents IE11 bug where the image container's height would go ballooney */
 .advert__image-container {
     order: -1;
-    overflow: auto; /* [1] */
     margin-bottom: $gs-baseline / 2;
     width: 100%;
 
     @include mq(tablet) {
         height: 11 * $gs-baseline;
+    }
+
+    @include mq(desktop) {
+        overflow: auto; /* [1] */
     }
 
     .has-no-flex & {

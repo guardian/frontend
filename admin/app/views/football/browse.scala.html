@@ -1,7 +1,7 @@
 @views.html.football.main("PA API browser") {
     <div class="page-header">
       <h1>PA API browser</h1>
-      <p>Copy queries from <a href="http://pads6.pa-sport.com/api/football/">the PA Football documentation</a> into the query box below.</p>
+      <p>Copy queries from <a href="@{conf.AdminConfiguration.pa.apiExplorer}">the PA Football documentation</a> into the query box below.</p>
     </div>
 
     <form action="/admin/football/browserRedirect" method="POST" class="browser-form">
