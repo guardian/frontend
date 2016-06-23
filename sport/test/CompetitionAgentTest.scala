@@ -2,13 +2,22 @@ package test
 
 import feed.{CompetitionSupport, Competitions, CompetitionAgent}
 import model.Competition
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
-import org.joda.time.LocalDate
+import org.joda.time.{LocalDate, DateTime, DateTimeUtils}
 
 
-@DoNotDiscover class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually with ConfiguredTestSuite {
+@DoNotDiscover class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually with ConfiguredTestSuite with BeforeAndAfterAll {
+
+  override def beforeAll() = {
+    // Tests in this suite are time dependent:
+    // => Force date to the day the test files have been generated (Note: time doesn't matter)
+    val fixedDate = new DateTime(2016, 6, 22, 15, 0).getMillis
+    DateTimeUtils.setCurrentMillisFixed(fixedDate)
+  }
+
+  override def afterAll() = DateTimeUtils.setCurrentMillisSystem()
 
   override implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
