@@ -4,7 +4,7 @@ import conf.Static
 import conf.switches.Switches
 import model.GuardianContentTypes.Hosted
 import model.{MetaData, SectionSummary, StandalonePage}
-import play.api.libs.json.{JsArray, JsString}
+import play.api.libs.json.{JsArray, JsNumber, JsString}
 
 trait HostedPage extends StandalonePage  {
   def pageUrl: String
@@ -64,6 +64,8 @@ case class HostedGalleryPage(
                        pageName: String,
                        title: String,
                        standfirst: String,
+                       ctaText: String,
+                       ctaIndex: BigDecimal,
                        images: List[HostedGalleryImage],
                        logoUrl: String
                      ) extends HostedPage {
@@ -88,7 +90,8 @@ case class HostedGalleryPage(
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
-        "images" -> JsArray(images.map((image) => JsString(image.url)))
+        "images" -> JsArray(images.map((image) => JsString(image.url))),
+        "ctaIndex" -> JsNumber(ctaIndex)
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
@@ -206,6 +209,11 @@ object HostedPage {
       url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb7.jpg",
       title = "The ruins of Tintern Abbey",
       caption = "Monmouthshire, Wales. The ruins of this 12th-century abbey are famous for inspiring the works of notable English artists, including Romantic poet William Wordsworth and painter Thomas Gainsborough."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb8.png",
+      title = "Ride the Hogwarts Express!",
+      caption = "Glenfinnan Viaduct, Scotland. The Jacobite steam train is a great way to experience the stunning scenery and special atmosphere of Glenfinnan. You may even recognise it from Harry Potter! Photo by Colin Roberts."
     )
   )
 
@@ -214,6 +222,8 @@ object HostedPage {
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaIndex = 5,
     standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
   )

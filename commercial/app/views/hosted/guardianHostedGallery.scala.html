@@ -16,7 +16,13 @@
                             </div>
                         </div>
                         @for(i <- page.images.indices.tail) {
-                            <div class="hosted-gallery__image hosted-tone--dark"></div>
+                            <div class="hosted-gallery__image hosted-tone--dark">
+                                @{if(i == page.ctaIndex){
+                                    <a class="hosted-gallery__cta-title" href="http://en.omgb.com/map/" target="_blank">
+                                        {page.ctaText}
+                                    </a>
+                                }}
+                            </div>
                         }
                     </div>
                     <div class="hosted-gallery__scroll-container">
@@ -24,6 +30,9 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
+                    <a class="hosted-gallery__cta-title" href="http://en.omgb.com/map/" target="_blank">
+                        @{page.ctaText}
+                    </a>
                     <div class="hosted-gallery__progress">
                         @fragments.inlineSvg("arrow-up", "icon")
                         <div class="hosted-gallery__progress--wrapper">

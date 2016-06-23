@@ -60,13 +60,11 @@ define([
 
 
     function HostedGallery() {
-
         // CONFIG
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
         this.resize = this.trigger.bind(this, 'resize');
         this.index = this.index || 1;
-
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
@@ -116,7 +114,6 @@ define([
     };
 
     HostedGallery.prototype.initSwipe = function () {
-
         var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
         this.swipeContainerWidth = this.$galleryEl.dim().width;
@@ -178,7 +175,9 @@ define([
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
             $img = bonzo(this.$images[i]);
-            $img.css('background-image', 'url(' + imageContent[i] + ')');
+            if(imageContent[i]){
+                $img.css('background-image', 'url(' + imageContent[i] + ')');
+            }
         }.bind(this));
 
     };
@@ -204,6 +203,7 @@ define([
         var fractionProgress = progress % 1;
         var deg = Math.ceil(fractionProgress * 360);
         var newIndex = Math.round(progress + 0.75);
+        var ctaIndex = config.page.ctaIndex;
         fastdom.write(function () {
             this.$images.each(function (image, index) {
                 var opacity = (progress - index + 1) * 4 / 3;
@@ -212,12 +212,11 @@ define([
 
             bonzo(this.$border).css('transform', 'rotate(' + deg + 'deg)');
             bonzo(this.$border).css('-webkit-transform', 'rotate(' + deg + 'deg)');
+
+            bonzo(this.$galleryEl).toggleClass('show-cta', progress <= ctaIndex && progress >= ctaIndex - 0.25);
+
             ['quarter-2', 'quarter-3', 'quarter-4'].forEach(function (cssClass, index) {
-                if (4 * fractionProgress > index + 1) {
-                    bonzo(this.$progress).addClass(cssClass);
-                } else {
-                    bonzo(this.$progress).removeClass(cssClass);
-                }
+                bonzo(this.$progress).toggleClass(cssClass, 4 * fractionProgress > index + 1);
             }.bind(this));
         }.bind(this));
 
@@ -249,15 +248,11 @@ define([
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
                 this.$captions.each(function (caption, index) {
-                    if (that.index === index + 1) {
-                        bonzo(caption).addClass('current-caption');
-                    } else {
-                        bonzo(caption).removeClass('current-caption');
-                    }
+                    bonzo(caption).toggleClass('current-caption', that.index === index + 1);
                 });
                 bonzo(this.$counter).html(this.index + '/' + this.$images.length);
                 if(this.useSwipe){
-                    this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
+                    this.translateContent(this.index, 0, 100);
                 }
 
                 // event bindings
@@ -309,7 +304,9 @@ define([
                 'resize': function () {
                     this.swipeContainerWidth = this.$galleryEl.dim().width;
                     this.loadSurroundingImages(this.index, this.$images.length); // regenerate src
-                    this.translateContent(this.index, 0, 0);
+                    if(this.useSwipe){
+                        this.translateContent(this.index, 0, 0);
+                    }
                 }
             }
         },
