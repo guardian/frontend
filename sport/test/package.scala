@@ -15,7 +15,6 @@ import play.api.libs.ws.{WS, WSResponse}
 import conf.FootballClient
 import pa.{Http, Response => PaResponse}
 import play.api.Play.current
-import org.joda.time.LocalDate
 
 import scala.concurrent.Future
 
@@ -87,13 +86,8 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
 object TestHttp extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
-
-    //Force date to the day the test files has been generated
-    val today = new LocalDate()
-    val urlWithTestDate = url.replace(today.toString("yyyyMMdd"), "20160622")
-
-    FootballHttpRecorder.load(urlWithTestDate) {
-      WS.url(urlWithTestDate)
+    FootballHttpRecorder.load(url) {
+      WS.url(url)
         .withRequestTimeout(10000)
         .get()
         .map { wsResponse =>
