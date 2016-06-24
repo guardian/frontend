@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
     'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/participation-low-fric-music-v2',
     'common/modules/experiments/tests/hosted-autoplay'
 ], function (
     reportError,
@@ -33,6 +34,7 @@ define([
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
     VideoYellowPlayButton,
+    ParticipationLowFricMusicV2,
     HostedAutoplay
 ) {
 
@@ -45,6 +47,7 @@ define([
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
         new VideoYellowPlayButton(),
+        new ParticipationLowFricMusicV2(),
         new HostedAutoplay()
     ];
 
