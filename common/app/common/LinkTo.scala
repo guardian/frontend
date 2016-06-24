@@ -20,19 +20,16 @@ trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
 
-  private val ProdURL = "^http://www.theguardian.com/.*$".r
-  private val GuardianUrl = "^(http://www.theguardian.com)?(/.*)?$".r
+  private val ProdURL = "^http[s]?://www.theguardian.com/.*$".r
+  private val GuardianUrl = "^(http[s]?://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   /**
     * email is here to allow secure POSTs from the footer signup form
     */
-  val httpsEnabledSections: Seq[String] =
-    Seq("info", "email", "science", "crosswords", "technology", "business", "sport", "football",
-      "culture", "film", "tv-and-radio", "music", "books", "artanddesign", "stage",
-      "membership", "uk-news", "world", "cities", "environment", "money", "society",
-      "us-news", "commentisfree", "australia-news")
+  val httpSections: Seq[String] =
+    Seq("politics")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -48,30 +45,31 @@ trait LinkTo extends Logging {
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
   def processUrl(url: String, edition: Edition) = url match {
-    case url if url.startsWith("//") =>
-      ProcessedUrl(url)
-    case RssPath(path, format) =>
-      ProcessedUrl(urlFor(path, edition) + format)
-    case GuardianUrl(_, path) =>
-      ProcessedUrl(urlFor(path, edition))
-    case otherUrl =>
-      ProcessedUrl(otherUrl, true)
+    case url if url.startsWith("//") => ProcessedUrl(url)
+    case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + format)
+    case GuardianUrl(_, path) => ProcessedUrl(urlFor(path, edition))
+    case otherUrl => ProcessedUrl(otherUrl, true)
   }
 
-  private def urlFor(path: String, edition: Edition, secure: Boolean = false): String = {
+  private def urlFor(path: String, edition: Edition): String = {
     val pathString = Option(path).getOrElse("")
     val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
     val editionalisedPath = Editionalise(clean(id), edition)
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() if (isHttpsEnabled(editionalisedPath) || secure) =>  url.replace("http://", "https://")
+      case ProdURL() =>
+        if (isHttpOnly(editionalisedPath)) {
+          url.replace("https://", "http://")
+        } else {
+          url.replace("http://", "https://")
+        }
+
       case _ => url
     }
   }
 
-  private def isHttpsEnabled(path: String) = {
-
+  private def isHttpOnly(path: String) = {
     // check if the url has _any_ edition prefix (/au/, /us/ ... )
     // as users can have au edition cookie but be on a us edition url
 
@@ -83,7 +81,7 @@ trait LinkTo extends Logging {
 
     val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
 
-    httpsEnabledSections.exists(pathWithoutEdition.startsWith)
+    httpSections.exists(pathWithoutEdition.startsWith)
   }
 
   private def clean(path: String) = path match {
