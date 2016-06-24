@@ -86,6 +86,6 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
   private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "series", "More from this series")
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 }
