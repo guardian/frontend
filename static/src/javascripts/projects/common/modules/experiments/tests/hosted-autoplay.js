@@ -1,4 +1,8 @@
-define([], function () {
+define([
+    'common/utils/detect'
+], function (
+    detect
+) {
     return function () {
         this.id = 'HostedAutoplay';
         this.start = '2016-23-06';
@@ -13,7 +17,7 @@ define([], function () {
         this.idealOutcome = 'People will either more often click on the next hosted video or wait until end of the current video to be redirected into the next video page url.';
 
         this.canRun = function () {
-            return true;
+            return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
         };
 
         this.variants = [

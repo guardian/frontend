@@ -6,7 +6,6 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
-    'common/utils/detect',
     'common/utils/defer-to-analytics',
     'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
@@ -19,7 +18,6 @@ define([
     bean,
     fastdom,
     $,
-    detect,
     deferToAnalytics,
     omniture,
     ab,
@@ -111,7 +109,7 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length && ab.getParticipations().HostedAutoplay
+                    if ($hostedNext.length && ab.getParticipations().HostedAutoplay
                         && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
                         if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
                             fastdom.write(function () {
