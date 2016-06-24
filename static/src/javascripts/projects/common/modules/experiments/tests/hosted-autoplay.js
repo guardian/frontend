@@ -1,7 +1,9 @@
 define([
-    'common/utils/detect'
+    'common/utils/detect',
+    'lodash/collections/contains'
 ], function (
-    detect
+    detect,
+    contains
 ) {
     return function () {
         this.id = 'HostedAutoplay';
