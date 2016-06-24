@@ -8,6 +8,7 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'common/utils/defer-to-analytics',
+    'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
@@ -20,6 +21,7 @@ define([
     $,
     detect,
     deferToAnalytics,
+    omniture,
     ab,
     events,
     videojsOptions,
@@ -51,10 +53,10 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function nextVideoTimer(player, duration, $timer, nextVideoLink) {
+    function nextVideoTimer(duration, $timer, nextVideoLink) {
         return setInterval(function () {
             if (duration === 0) {
-                player.trigger(player.guMediaType + ' : next video redirect');
+                omniture.trackLinkImmediate('autoplay the next video');
                 window.location = nextVideoLink;
             }
             fastdom.write(function () {
@@ -109,8 +111,17 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length && ab.getParticipations().HostedAutoplay &&
-                        (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
+                    if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) && $hostedNext.length && ab.getParticipations().HostedAutoplay
+                        && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
+                        if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
+                            fastdom.write(function () {
+                                $hostedNext.addClass('hosted-next-autoplay--variant2');
+                            });
+                        }
+                        fastdom.write(function () {
+                            $('.js-hosted-fading').addClass('hosted-autoplay-ab');
+                        });
+
                         player.on('timeupdate', function() {
                             var currentTime = parseInt(this.currentTime(), 10);
                             var time = 10; //seconds before the end when to show the timer
@@ -123,7 +134,7 @@ define([
 
                                 if ($timer.length) {
                                     nextVideoPage = $timer.data('next-page');
-                                    nextVideoInterval = nextVideoTimer(player, time, $timer, nextVideoPage);
+                                    nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
                                     fastdom.write(function () {
                                         $hostedNext.addClass('js-autoplay-start');
                                     });

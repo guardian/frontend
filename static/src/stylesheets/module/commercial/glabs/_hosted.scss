@@ -338,12 +338,6 @@ $omgbColor: #dd0000;
     }
 }
 
-.vjs-ended + .hosted-fading {
-    .hosted__meta {
-        width: 60%;
-    }
-}
-
 .hosted__video .vjs-fullscreen-clickbox {
     display: block;
 }
@@ -833,10 +827,16 @@ $omgbColor: #dd0000;
     }
 }
 
+.vjs-ended + .hosted-fading.hosted-autoplay-ab {
+    .hosted__meta {
+        width: 60%;
+    }
+}
+
 //Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
-    //@include hosted-fade-out;
+    @include hosted-fade-out;
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -913,8 +913,19 @@ $omgbColor: #dd0000;
 
     //Variant 2 of AB test
     &.hosted-next-autoplay--variant2 {
+        height: 354px;
+
+        .hosted-next-autoplay__poster-img {
+            bottom: 100px;
+        }
+
+        .hosted-next-autoplay__poster-timer {
+            bottom: 112px;
+        }
+
         .hosted-next-autoplay__next-in-series {
             display: block;
+            width: 100%;
         }
 
         .hosted__next-video--tile {
