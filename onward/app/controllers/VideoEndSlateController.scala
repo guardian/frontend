@@ -49,7 +49,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
   private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.trail.sectionName).getOrElse("")
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 
   def renderSeries(seriesId: String) = Action.async { implicit request =>
