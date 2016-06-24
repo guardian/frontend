@@ -66,7 +66,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
-  it should "be http on http-only sections whether editionalised or not" in {
+  it should "always write http-only section links as http whether editionalised or not" in {
     for (ed <- editions) {
       for (httpSection <- LinkTo.httpSections) {
         val expectedPath = if(ed.editionalisedSections.contains(httpSection)) s"${ed.id.toLowerCase}/$httpSection" else httpSection
@@ -77,6 +77,18 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
           TheGuardianLinkTo(s"/$httpSection/foo", ed) should be (s"http://www.theguardian.com/$httpSection/foo")
         }
       }
+    }
+  }
+
+  it should "always write interactives as http links" in {
+    val interactives = Seq(
+      "www.theguardian.com/women-in-leadership/ng-interactive/2014/feb/28/star-women-leading-ladies-behind-scenes-film-interactive",
+      "www.theguardian.com/observer-food-monthly-awards/ng-interactive/2016/may/15/observer-food-monthly-awards-your-chance-to-vote",
+      "www.theguardian.com/lifeandstyle/ng-interactive/2016/jun/22/will-brexit-take-the-nhs-to-breaking-point-cartoon"
+    )
+    for (interactive <- interactives) {
+      TheGuardianLinkTo("https://" + interactive) should be ("http://" + interactive)
+      TheGuardianLinkTo("http://" + interactive) should be ("http://" + interactive)
     }
   }
 

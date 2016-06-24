@@ -24,6 +24,7 @@ trait LinkTo extends Logging {
   private val GuardianUrl = "^(http[s]?://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
+  private val InteractiveUrl = """(/(ng-)?interactive/.*)$""".r
 
   /**
     * email is here to allow secure POSTs from the footer signup form
@@ -81,7 +82,7 @@ trait LinkTo extends Logging {
 
     val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
 
-    httpSections.exists(pathWithoutEdition.startsWith)
+    httpSections.exists(pathWithoutEdition.startsWith) || InteractiveUrl.findFirstIn(path).nonEmpty
   }
 
   private def clean(path: String) = path match {
