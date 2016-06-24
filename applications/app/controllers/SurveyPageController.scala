@@ -28,10 +28,10 @@ object SurveyPageController extends Controller with ExecutionContexts {
               NoCache(NotFound)}}}
 
   def thankYou() = Action { implicit request =>
-    Ok(views.html.survey.thankyou(StaticPages.simpleSurveyStaticPageForId(request.path)))
+    Cached(60)(RevalidatableResult.Ok(views.html.survey.thankyou(StaticPages.simpleSurveyStaticPageForId(request.path))))
   }
 
   def quickSurvey() = Action { implicit request =>
-    Ok(views.html.survey.quickSurvey(StaticPages.simpleSurveyStaticPageForId(request.path)))
+    Cached(60)(RevalidatableResult.Ok(views.html.survey.quickSurvey(StaticPages.simpleSurveyStaticPageForId(request.path))))
   }
 }
