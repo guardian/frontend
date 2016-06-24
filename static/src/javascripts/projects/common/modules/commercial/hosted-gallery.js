@@ -68,17 +68,17 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
-        this.$imagesContainer = $('.js-hosted-gallery-images');
-        this.$captionContainer = $('.hosted-gallery__captions');
-        this.$captions = $('.hosted-gallery__caption', this.$captionContainer);
-        this.$scrollEl = $('.hosted-gallery__scroll-container', this.$galleryEl);
-        this.$images = $('.hosted-gallery__image', this.$galleryEl);
-        this.$progress = $('.hosted-gallery__progress', this.$galleryEl);
-        this.$border = $('.hosted-gallery__progress--border-2', this.$progress);
+        this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
+        this.$captionContainer = $('.js-hosted-gallery-captions');
+        this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
+        this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
+        this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
+        this.$progress = $('.js-hosted-gallery-progress', this.$galleryEl);
+        this.$border = $('.js-hosted-gallery-rotating-border', this.$progress);
         this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
         this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
-        this.$counter = $('.hosted-gallery__image-count', this.$progress);
+        this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({

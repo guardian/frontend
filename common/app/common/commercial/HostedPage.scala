@@ -65,6 +65,7 @@ case class HostedGalleryPage(
                        title: String,
                        standfirst: String,
                        ctaText: String,
+                       ctaLink: String,
                        ctaIndex: BigDecimal,
                        images: List[HostedGalleryImage],
                        logoUrl: String
@@ -223,6 +224,7 @@ object HostedPage {
     pageName = galleryPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
     standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"

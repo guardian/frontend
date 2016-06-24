@@ -8,40 +8,42 @@
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
                 <div class="js-hosted-gallery-container">
-                    <div class="js-hosted-gallery-images">
-                        <div class="hosted-gallery__image hosted-tone--dark" style="background-image: url(@{page.images.head.url});">
+                    <div class="js-hosted-gallery-images hosted-gallery__images-container">
+                        <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark" style="background-image: url(@{page.images.head.url});">
                             <div class="hosted-gallery__meta">
                                 <h1 class="hosted-gallery__heading">@{page.title}</h1>
                                 <h3 class="hosted-gallery__heading">@{page.standfirst}</h3>
                             </div>
                         </div>
-                        @for(i <- page.images.indices.tail) {
-                            <div class="hosted-gallery__image hosted-tone--dark">
-                                @{if(i == page.ctaIndex){
-                                    <a class="hosted-gallery__cta-title" href="http://en.omgb.com/map/" target="_blank">
-                                        {page.ctaText}
-                                    </a>
-                                }}
-                            </div>
+                        @for(i <- page.images.indices.tail; if i < page.ctaIndex) {
+                            <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark"></div>
+                        }
+                        <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark">
+                            <a class="hosted-gallery__cta-title" href="@{page.ctaLink}" target="_blank">
+                                @{page.ctaText}
+                            </a>
+                        </div>
+                        @for(i <- page.images.indices.tail; if i > page.ctaIndex) {
+                            <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark"></div>
                         }
                     </div>
-                    <div class="hosted-gallery__scroll-container">
+                    <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
                         @for(i <- page.images.indices) {
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    <a class="hosted-gallery__cta-title" href="http://en.omgb.com/map/" target="_blank">
+                    <a class="hosted-gallery__cta-title" href="@{page.ctaLink}" target="_blank">
                         @{page.ctaText}
                     </a>
-                    <div class="hosted-gallery__progress">
+                    <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-up", "icon")
                         <div class="hosted-gallery__progress--wrapper">
                             <div class="hosted-gallery__progress--border">
                                 <div class="hosted-gallery__progress--border-1"></div>
-                                <div class="hosted-gallery__progress--border-2"></div>
+                                <div class="hosted-gallery__progress--border-2 js-hosted-gallery-rotating-border"></div>
                             </div>
                         </div>
-                        <div class="hosted-gallery__image-count">
+                        <div class="hosted-gallery__image-count js-hosted-gallery-image-count">
                             1/@page.images.length
                         </div>
                         @fragments.inlineSvg("arrow-down", "icon")
@@ -95,9 +97,9 @@
                         </ul>
                     </div>
                 </header>
-                <div class="hosted-gallery__captions">
+                <div class="hosted-gallery__captions js-hosted-gallery-captions">
                     @for(i <- page.images.indices) {
-                        <div class="hosted-gallery__caption @{if (i == 0) "current-caption" else ""}">
+                        <div class="hosted-gallery__caption js-hosted-gallery-caption @{if (i == 0) "current-caption" else ""}">
                             @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
                             <span>@page.images(i).title</span>
                             <div class="hosted-gallery__caption-text">
