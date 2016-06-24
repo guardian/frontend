@@ -10,10 +10,9 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /survey                                                              controllers.SurveyPageController.renderSimpleSurveyPage()
+GET        /survey/emaildigest                                                  controllers.SurveyPageController.renderEmailDigest404Page()
+GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
-GET        /survey/quicksurvey                                                  controllers.SurveyPageController.quickSurvey()
-GET        /survey/:formName                                                    controllers.SurveyPageController.renderFormStackSurvey(formName)
 
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 

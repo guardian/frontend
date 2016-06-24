@@ -5,10 +5,9 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
-GET            /survey                                                                                                           controllers.SurveyPageController.renderSimpleSurveyPage()
+GET            /survey/emaildigest                                                                                               controllers.SurveyPageController.renderEmailDigest404Page()
+GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
-GET            /survey/quicksurvey                                                                                               controllers.SurveyPageController.quickSurvey()
-GET            /survey/:formName                                                                                                 controllers.SurveyPageController.renderFormStackSurvey(formName)
 
 # For dev machines
 GET            /assets/admin/lib/*file                                                                                           @controllers.admin.UncachedWebAssets.at(file)
