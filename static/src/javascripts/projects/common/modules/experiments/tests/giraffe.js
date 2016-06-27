@@ -21,13 +21,13 @@ define([
         this.canRun = function () {
              return window.guardian.config.page.edition == 'UK';
         };
-        
-        var writer = function (a) {
+
+        var writer = function (a, linkText, linkHref, copy) {
             var $newThing = $.create(template(giraffeMessage, {
-                linkText: 'Can\'t live without us? The feeling\'s mutual',
+                linkText:linkText,
                 linkName: 'idk',
-                linkHref: 'http://gu.com',
-                copy: 'Please support the Guardian and independent journalism',
+                linkHref: linkHref,
+                copy: copy,
                 svg: svgs('arrowWhiteRight', ['button--giraffe__icon'])
             }));
             $newThing.insertBefore(a[0]);
@@ -44,7 +44,7 @@ define([
                 id: 'someMessage',
                 test: function () {
                     var submeta = $('.submeta');
-                    writer(submeta);
+                    writer(submeta, 'Can\'t live without us? The feeling\'s mutual', 'http://gu.com', 'Please support the Guardian and independent journalism');
                 }
             }
         ];
