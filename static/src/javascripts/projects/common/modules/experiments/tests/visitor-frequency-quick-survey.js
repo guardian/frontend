@@ -24,7 +24,7 @@ define([
     return function () {
         this.id = 'VisitorFrequencyQuickSurvey';
         this.start = '2016-06-20';
-        this.expiry = '2016-06-24';
+        this.expiry = '2016-06-30';
         this.author = 'Kate Whalen';
         this.description = 'Add a single question survey to the submeta section of article pages';
         this.audience = 0;
@@ -86,7 +86,7 @@ define([
             var surveyCookie = cookies.get(cookieName);
             if (!(surveyCookie) && storage.local.isStorageAvailable()) {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited');
-                return !alreadyVisited || alreadyVisited < 1;
+                return !alreadyVisited || alreadyVisited < 3;
             }
             return false;
         }
