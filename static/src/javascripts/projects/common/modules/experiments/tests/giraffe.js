@@ -2,9 +2,8 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!common/views/giraffe-message.html',
-    'common/views/svgs',
-    'common/modules/article/space-filler'
-], function ($,template,giraffeMessage, svgs, spaceFiller) {
+    'common/views/svgs'
+], function ($,template,giraffeMessage, svgs) {
     return function () {
 
         this.id = 'Giraffe';
@@ -76,8 +75,8 @@ define([
             {
                 id: 'someMessage',
                 test: function () {
-                    spaceFiller.fillSpace(defaultRules,writer);
-
+                    var submeta = $('.submeta');
+                    writer(submeta);
                 }
             }
         ];
