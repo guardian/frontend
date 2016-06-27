@@ -2,7 +2,8 @@ package model.commercial.events
 
 import model.commercial.events.Eventbrite._
 import org.joda.time.DateTime
-import play.api.libs.json.Json
+import play.api.data.validation.ValidationError
+import play.api.libs.json._
 
 case class LiveEventMembershipInfo(id: String,
                                    url: String,
@@ -10,6 +11,16 @@ case class LiveEventMembershipInfo(id: String,
 
 object LiveEventMembershipInfo {
   implicit val format = Json.format[LiveEventMembershipInfo]
+
+  // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
+  implicit val formats = new Reads[Seq[LiveEventMembershipInfo]] {
+    override def reads(json: JsValue): JsResult[Seq[LiveEventMembershipInfo]] = {
+      json match {
+        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]))
+        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
+      }
+    }
+  }
 }
 
 case class LiveEvent(eventId: String,
