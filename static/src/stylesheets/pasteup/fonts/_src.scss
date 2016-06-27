@@ -1,3 +1,23 @@
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+    @while $index {
+        $string: str-slice($string, 1, $index - 1) + $replace + str-slice($string, $index + 1);
+        $index: str-index($string, $search);
+    }
+    @return $string;
+}
+
+@function str-capitalise($string) {
+    $string: $string + unquote(''); // coerce argument into definite String
+    @return to-upper-case(str-slice($string, 0, 1)) + str-slice($string, 2);
+}
+
+@function filename($typeface, $weight, $style) {
+    $style: if($style == normal, '', str-capitalise($style));
+    $weight: str-capitalise($weight);
+    @return '#{$typeface}-#{$weight}#{$style}';
+}
+
 @mixin font-face($font-family, $kerning: 'on', $hinting: 'off') {
 
     // increment this when releasing a new version of the fonts
@@ -38,26 +58,6 @@
         'black':      800,
         'ultrablack': 900
     );
-
-    @function str-replace($string, $search, $replace: '') {
-        $index: str-index($string, $search);
-        @while $index {
-            $string: str-slice($string, 1, $index - 1) + $replace + str-slice($string, $index + 1);
-            $index: str-index($string, $search);
-        }
-        @return $string;
-    }
-
-    @function str-capitalise($string) {
-        $string: $string + unquote(''); // coerce argument into definite String
-        @return to-upper-case(str-slice($string, 0, 1)) + str-slice($string, 2);
-    }
-
-    @function filename($typeface, $weight, $style) {
-        $style: if($style == normal, '', str-capitalise($style));
-        $weight: str-capitalise($weight);
-        @return '#{$typeface}-#{$weight}#{$style}';
-    }
 
     $typeface: str-replace($font-family, ' ', '');
 
