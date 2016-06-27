@@ -28,7 +28,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -226,6 +226,8 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
 }
+
+object ArticleController extends ArticleController
 
 object ParseBlockId extends RegexParsers {
   def apply(input: String): Option[String] = {

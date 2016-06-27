@@ -10,7 +10,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
@@ -77,3 +77,5 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     renderFormat(response, response, 900)
   }
 }
+
+object TopStoriesController extends TopStoriesController
