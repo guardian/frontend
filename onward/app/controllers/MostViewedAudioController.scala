@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-object MostViewedAudioController extends Controller with Logging with ExecutionContexts {
+class MostViewedAudioController extends Controller with Logging with ExecutionContexts {
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }
@@ -54,3 +54,5 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
     )
   }
 }
+
+object MostViewedAudioController extends MostViewedAudioController

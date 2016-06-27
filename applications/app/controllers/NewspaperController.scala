@@ -7,7 +7,7 @@ import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
-object NewspaperController extends Controller with Logging with ExecutionContexts {
+class NewspaperController extends Controller with Logging with ExecutionContexts {
 
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
@@ -71,5 +71,7 @@ object NewspaperController extends Controller with Logging with ExecutionContext
     Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }
+
+object NewspaperController extends NewspaperController
 
 case class TodayNewspaper(page: SimplePage, bookSections: Seq[FaciaContainer])

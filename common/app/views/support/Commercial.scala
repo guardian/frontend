@@ -35,7 +35,12 @@ object Commercial {
     }
 
     private def isWimbledonEnabled(metaData: MetaData, edition: Edition) = {
-      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition == Uk
+      edition == Uk &&
+      ( metaData.id == "sport/tennis" ||
+        metaData.id == "sport/wimbledon" ||
+        metaData.id == "sport/wimbledon-2016" ||
+        (metaData.adUnitSuffix == "sport/liveblog" && metaData.id.contains("wimbledon-2016")) // so that liveblogs relating to wimbledon-2016 are captured
+      )
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {

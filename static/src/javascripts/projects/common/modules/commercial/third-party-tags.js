@@ -82,7 +82,10 @@ define([
     function loadOther() {
         imrWorldwide.load();
         remarketing.load();
-        krux.load();
+
+        if(!config.page.isFront){
+            krux.load();
+        }
     }
 
     return {
