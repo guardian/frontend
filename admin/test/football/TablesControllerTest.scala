@@ -55,7 +55,7 @@ import scala.language.postfixOps
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables/league/100"))
     status(result) should equal(OK)
     val content = contentAsString(result)
-    content should include("Spurs")
+    content should include("Tottenham Hotspur")
     countSubstring(content, "<tr") should equal(21)
   }
 

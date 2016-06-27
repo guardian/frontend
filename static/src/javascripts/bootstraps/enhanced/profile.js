@@ -5,7 +5,6 @@ define([
     'common/modules/identity/formstack', // oldskool inside
     'common/modules/identity/formstack-iframe', // oldskool outside
     'common/modules/identity/formstack-iframe-embed', // newskool inside
-    'common/modules/identity/password-strength',
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
@@ -21,7 +20,6 @@ define([
     Formstack,
     FormstackIframe,
     FormstackEmbedIframe,
-    PasswordStrength,
     ValidationEmail,
     Id,
     AccountProfile,
@@ -61,13 +59,6 @@ define([
         forgottenPassword: function () {
             mediator.on('page:identity:ready', function (config) {
                 Identity.forgottenPassword(config);
-            });
-        },
-        passwordStrength: function () {
-            mediator.on('page:identity:ready', function (config) {
-                $('.js-password-strength').each(function (el) {
-                    new PasswordStrength(el, config).init();
-                });
             });
         },
         passwordToggle: function () {
@@ -113,7 +104,6 @@ define([
             modules.initFormstack();
             modules.forgottenEmail();
             modules.forgottenPassword();
-            modules.passwordStrength();
             modules.passwordToggle();
             modules.userAvatars();
             modules.validationEmail();

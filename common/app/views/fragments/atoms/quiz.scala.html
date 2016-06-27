@@ -42,15 +42,16 @@
             ("atom-quiz__answers", true),
             ("atom-quiz__answers--images", hasImages(question))
         ))">
-            @question.answers.map( answer => {
-                val hasImage = answer.imageMedia.isDefined
-                renderAnswer(question, answer, field, hasImage, maybeUserAnswer, showResults)
-            })
+            @question.answers.zipWithIndex.map { case(answer, index) =>
+                @defining(answer.imageMedia.isDefined) { hasImage =>
+                    @renderAnswer(question, answer, index + 1, field, hasImage, maybeUserAnswer, showResults)
+                }
+            }
         </div>
     </fieldset>
 }
 
-@renderAnswer(question: Question, answer: Answer, field: play.api.data.Field, hasImage: Boolean, maybeUserAnswer: Option[Answer], showResults: Boolean) = {
+@renderAnswer(question: Question, answer: Answer, index: Int, field: play.api.data.Field, hasImage: Boolean, maybeUserAnswer: Option[Answer], showResults: Boolean) = {
     <div class="@RenderClasses(Map(
         ("atom-quiz__answer", true),
         ("atom-quiz__answer--image", hasImage),
@@ -61,6 +62,7 @@
             id="answer-@{answer.id}"
             value="@{answer.id}"
             class="atom-quiz__answer__input"
+            data-link-name="quiz-answer-number-@index"
             @{if (maybeUserAnswer.exists(_.equals(answer))) "checked=checked" }
             @{if (showResults) "disabled=disabled"}
             required

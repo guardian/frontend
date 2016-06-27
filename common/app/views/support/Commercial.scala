@@ -42,7 +42,7 @@ object Commercial {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
-      val wimbledonLeftCol = ("left-col" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ Seq("970,375")))
+      val wimbledonLeftCol = ("left-col" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ Seq("970,385")))
       val topSlotAdSizes = Map(
         "mobile" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
         "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)

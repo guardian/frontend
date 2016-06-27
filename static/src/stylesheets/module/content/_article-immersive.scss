@@ -5,7 +5,12 @@
         flex-direction: column;
         min-height: 100vh;
     }
+}
 
+.content--immersive-article-without-main-media {
+    background-color: rgba(0, 0, 0, .5);
+    // Overriding padding coming from the content class
+    padding-bottom: 0;
 }
 
 .immersive-main-media {

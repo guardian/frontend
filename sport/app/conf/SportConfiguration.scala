@@ -2,6 +2,7 @@ package conf
 
 import com.gu.conf.ConfigurationFactory
 import common.BadConfigurationException
+import pa.PaClientConfig
 
 object SportConfiguration {
 
@@ -13,10 +14,9 @@ object SportConfiguration {
   }
 
   object pa {
-    lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val footballHost = PaClientConfig.baseUrl
+    lazy val footballKey = configuration.getMandatoryStringProperty("pa.api.key")
     lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
-
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
   object optaRugby {
