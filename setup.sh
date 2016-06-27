@@ -83,17 +83,16 @@ install_jdk() {
   fi
 }
 
-install_node() {
+install_nvm() {
   if ! installed node || ! installed npm; then
     if ! installed curl; then
       sudo apt-get install -y curl
     fi
 
     if linux; then
-      curl -sL https://deb.nodesource.com/setup | sudo bash -
-      sudo apt-get install -y nodejs
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
     elif mac && installed brew; then
-      brew install node
+      brew install nvm
     fi
   fi
 }
@@ -147,7 +146,7 @@ main() {
   install_awscli
   create_frontend_properties
   install_jdk
-  install_node
+  install_nvm
   install_gcc
   install_grunt
   install_libpng
