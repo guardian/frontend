@@ -47,6 +47,8 @@ define([
         },
 
         getSub: function () {
+            //This function can change Notification.permission
+            //by asking the user if it is in 'default' state.
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
