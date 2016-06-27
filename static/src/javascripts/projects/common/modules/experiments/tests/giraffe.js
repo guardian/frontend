@@ -44,7 +44,7 @@ define([
                 id: 'someMessage',
                 test: function () {
                     var submeta = $('.submeta');
-                    writer(submeta, 'Can\'t live without us? The feeling\'s mutual', 'http://gu.com', 'Please support the Guardian and independent journalism');
+                    writer(submeta, 'Can\'t live without us? The feeling\'s mutual', 'https://membership.theguardian.com/contribute?mcopy=everyone-article', 'Please support the Guardian and independent journalism');
                 }
             }
         ];
