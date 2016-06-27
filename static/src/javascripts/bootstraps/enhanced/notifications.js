@@ -109,10 +109,11 @@ define([
         },
 
         subscribeHandler: function () {
-            var alreadyGranted = Notification.permission === 'granted';
+            var wasNotGranted = Notification.permission !== 'granted';
             modules.subscribe().then(modules.follow)
                 .then(function() {
-                    if (!alreadyGranted && Notification.permission === 'granted') {
+                    var isNowGranted = Notification.permission === 'granted';
+                    if (wasNotGranted && isNowGranted) {
                         omniture.trackLinkImmediate('browser-notifications-granted');
                     }
                 }) .catch( function () {
