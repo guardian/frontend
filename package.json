@@ -80,6 +80,9 @@
     "svgo": "0.4.5",
     "time-grunt": "1.2.0"
   },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "scripts": {
     "postinstall": "grunt hookmeup"
   }
