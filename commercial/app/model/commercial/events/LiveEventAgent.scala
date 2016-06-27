@@ -64,9 +64,10 @@ object LiveEventAgent extends ExecutionContexts with Logging {
       for{
         eventMembershipInfo <- fetchAndParseLiveEventsMembershipInfo
         ParsedFeed(events, _) <- Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
-      } yield events.map ( event =>
-        LiveEvent(event, eventMembershipInfo find (_.id == event.id))
-      )
+      } yield events flatMap { event =>
+        val matchingMembershipInfo = eventMembershipInfo find (_.id == event.id)
+        matchingMembershipInfo map (LiveEvent(event, _) )
+      }
 
     liveEvents map updateAvailableMerchandise
     liveEvents map { ParsedFeed(_, Duration(currentTimeMillis- start, MILLISECONDS)) }

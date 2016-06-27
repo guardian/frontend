@@ -12,7 +12,7 @@
         </div>
         <div class="commercial--v-high__body">
             <a href="@clickMacro@event.eventUrl" class="lineitem__link" data-link-name="merchandising-liveEvents-superHigh-@{event.eventId}-@{event.name}">
-                @event.imageUrl.map { url => <img class="lineitem__image" itemprop="image" src="@ImgSrc(url, Item140)" alt=""/> }
+                <img class="lineitem__image" itemprop="image" src="@ImgSrc(event.imageUrl, Item140)" alt=""/>
                 <h4 class="lineitem__title" itemprop="name">@event.name</h4>
                 <p class="lineitem__meta">
                     <span class="lineitem__startdate" itemprop="startDate">@event.date.toString("dd MMM yyyy")</span>,

@@ -20,20 +20,20 @@ case class LiveEvent(eventId: String,
                      status: String,
                      venue: EBVenue,
                      tickets: Seq[EBTicket],
-                     imageUrl: Option[String]) extends EBTicketHandler with EBEventHandler
+                     imageUrl: String) extends EBTicketHandler with EBEventHandler
 
 object LiveEvent {
 
-  def apply(event: EBEvent, maybeEventInternalFeed: Option[LiveEventMembershipInfo] = None): LiveEvent =
+  def apply(event: EBEvent, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
     new LiveEvent(
       eventId = event.id,
       name = event.name,
       date = event.startDate,
-      eventUrl = maybeEventInternalFeed map {_.url} getOrElse event.url,
+      eventUrl = eventMembershipInformation.url,
       description = event.description,
       status = event.status,
       venue = event.venue,
       tickets = event.tickets,
-      imageUrl = maybeEventInternalFeed map {_.mainImageUrl}
+      imageUrl = eventMembershipInformation.mainImageUrl
     )
 }
