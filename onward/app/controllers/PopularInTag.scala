@@ -6,7 +6,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
 
-object PopularInTag extends Controller with Related with Containers with Logging with ExecutionContexts {
+class PopularInTag extends Controller with Related with Containers with Logging with ExecutionContexts {
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
@@ -27,3 +27,5 @@ object PopularInTag extends Controller with Related with Containers with Logging
     )
   }
 }
+
+object PopularInTag extends PopularInTag

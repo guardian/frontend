@@ -15,12 +15,12 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
-      seriesItems map { trail => renderSectionTrails(trail) }
+      renderSectionTrails(seriesItems)
     }
-    response map { _ getOrElse NotFound }
+    response
   }
 
-  private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
+  private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Seq[Video]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching video content in section: $sectionId" )
 
@@ -33,36 +33,34 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .showFields("all")
     ).map {
         response =>
-          response.results.toList filter { content => !isCurrentStory(content) } map { result =>
+          response.results filter { content => !isCurrentStory(content) } map { result =>
             Content(result)
           } collect {
             case v: Video => v
-          } match {
-            case Nil => None
-            case results => Some(results)
           }
       }
 
       promiseOrResponse.recover{ case GuardianContentApiError(404, message, _) =>
          log.info(s"Got a 404 calling content api: $message" )
-         None
+         Nil
       }
   }
 
   private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.trail.sectionName).getOrElse("")
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 
   def renderSeries(seriesId: String) = Action.async { implicit request =>
     val response = lookupSeries(Edition(request), seriesId) map { seriesItems =>
-      seriesItems map { trail => renderSeriesTrails(trail) }
+      renderSeriesTrails(seriesItems)
     }
-    response map { _ getOrElse NotFound }
+
+    response
   }
 
-  private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
+  private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Seq[Video]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
 
@@ -77,20 +75,17 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
         Content(result)
       } collect {
         case v: Video => v
-      } match {
-        case Nil => None
-        case results => Some(results)
       }
     }
 
     promiseOrResponse.recover{ case GuardianContentApiError(404, message, _) =>
       log.info(s"Got a 404 calling content api: $message" )
-      None
+      Nil
     }
   }
 
   private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "series", "More from this series")
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 }

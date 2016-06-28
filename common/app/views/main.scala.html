@@ -9,7 +9,14 @@
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
     @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
         @if(showAdverts) {
-            @fragments.commercial.topBanner(page.metadata, edition)
+            @defining(
+                page match {
+                    case c: model.ContentPage => Some(c.item.tags)
+                    case _ => None
+                }
+            ) { maybeTags =>
+                @fragments.commercial.topBanner(page.metadata, edition, maybeTags)
+            }
         }
 
         @fragments.header(page)

@@ -54,13 +54,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABFacebookShareParams = Switch(
+  val ABVisitorFrequencyQuickSurvey = Switch(
     SwitchGroup.ABTests,
-    "ab-facebook-share-params",
-    "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
+    "ab-visitor-frequency-quick-survey",
+    "Add a single question survey to the submeta section of article pages",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = true
   )
 
@@ -90,8 +90,27 @@ trait ABTestSwitches {
     "Make big play button yellow",
     owners = Seq(Owner.withGithub("akash1810")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 27), // Tuesday
+    sellByDate = new LocalDate(2016, 6, 29),
     exposeClientSide = true
   )
 
+  val ABParticipationLowFricMusicV2 = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-low-fric-music-v2",
+    "AB test switch to insert low friction participation into music",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 6, 29),
+    exposeClientSide = true
+  )
+
+  val ABSamplingTest = Switch(
+    SwitchGroup.ABTests,
+    "ab-sampling-test",
+    "Tests the sampling",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 22),
+    exposeClientSide = true
+  )
 }

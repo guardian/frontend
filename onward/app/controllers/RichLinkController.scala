@@ -10,7 +10,7 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
 import ContentApiClient.getResponse
 
-object RichLinkController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
+class RichLinkController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
   def renderHtml(path: String) = render(path)
 
@@ -45,3 +45,5 @@ object RichLinkController extends Controller with Paging with Logging with Execu
     }
   }
 }
+
+object RichLinkController extends RichLinkController

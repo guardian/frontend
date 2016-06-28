@@ -11,7 +11,7 @@ object FrontJsonFapiDraft extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
-object FaciaDraftController extends FaciaController with RendersItemResponse {
+class FaciaDraftController extends FaciaController with RendersItemResponse {
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiDraft
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
@@ -28,3 +28,5 @@ object FaciaDraftController extends FaciaController with RendersItemResponse {
   override def canRender(item: ItemResponse): Boolean = controllers.IndexController.canRender(item)
 
 }
+
+object FaciaDraftController extends FaciaDraftController

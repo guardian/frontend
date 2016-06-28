@@ -10,12 +10,13 @@ define([
     'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/facebook-share-params',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/visitor-frequency-quick-survey',
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/participation-low-fric-music-v2'
 ], function (
     reportError,
     config,
@@ -28,24 +29,26 @@ define([
     FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
-    FacebookShareParams,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
-    VideoYellowPlayButton
+    VisitorFrequencyQuickSurvey,
+    VideoYellowPlayButton,
+    ParticipationLowFricMusicV2
 ) {
 
     var TESTS = [
         new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
-        new FacebookShareParams(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
-        new VideoYellowPlayButton()
+        new VisitorFrequencyQuickSurvey(),
+        new VideoYellowPlayButton(),
+        new ParticipationLowFricMusicV2()
     ];
 
     var participationsKey = 'gu.ab.participations';

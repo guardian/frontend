@@ -1,4 +1,3 @@
-
 .hosted-gallery__scroll-container {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -7,6 +6,11 @@
     bottom: 0;
     right: -20px;
     left: 0;
+    display: none;
+}
+
+.use-scroll .hosted-gallery__scroll-container {
+    display: block;
 }
 
 @mixin gallery-side-margins($container-width) {
@@ -38,6 +42,43 @@
     background-repeat: no-repeat;
     background-position: center;
     transition: opacity 300ms ease;
+    opacity: 0;
+    &:first-child {
+        opacity: 1;
+    }
+}
+
+.hosted-gallery__cta-title {
+    @include f-headlineSans;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    color: #ffffff;
+    top: 50%;
+    left: 15px;
+    right: 85px;
+    font-size: 30px;
+    position: absolute;
+    transition: opacity 300ms ease, visibility 300ms ease, left 300ms ease, right 300ms ease;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.use-swipe .hosted-gallery__image,
+.use-scroll.show-cta {
+    .hosted-gallery__cta-title {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        left: 10px;
+        right: 90px;
+    }
+}
+
+.use-swipe .hosted-gallery__image {
+    position: relative;
+    opacity: 1;
 }
 
 .hosted-gallery__image--placeholder {
@@ -78,6 +119,13 @@
     align-items: stretch;
 }
 
+.hosted-gallery__images-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
 .hosted-gallery-page .hosted__side {
     display: flex;
     flex-direction: column;
@@ -106,7 +154,6 @@
     }
 }
 
-
 .hosted-gallery__captions {
     color: $neutral-7;
     height: 40px;
@@ -120,7 +167,9 @@
     line-height: 39px;
     color: $neutral-7;
     position: absolute;
-    right: 10px;
+    right: 50px;
+    left: 10px;
+    text-align: right;
     opacity: 0;
     visibility: hidden;
     transition: opacity 500ms ease, visibility 500ms ease;
@@ -131,12 +180,52 @@
     }
 }
 
+.hosted-gallery--show-caption .hosted-gallery__caption-text {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.hosted-gallery__caption-text {
+    background: $neutral-1;
+    color: #ffffff;
+    position: absolute;
+    bottom: 100%;
+    right: -40px;
+    line-height: 16px;
+    padding: 10px;
+    width: 500px;
+    text-align: center;
+    max-width: calc(100% + 20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 300ms ease, visibility 300ms ease;
+}
+
+.hosted-gallery__info-button {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    padding: 14px;
+    line-height: 4px;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+}
 
 $progressHeight: 50px;
 $progressThickness: 5px;
 $progressColor: #ffffff;
 
+.use-scroll .hosted-gallery__progress {
+    display: block;
+}
+
 .hosted-gallery__progress {
+    display: none;
     position: absolute;
     top: 50%;
     margin-top: $progressHeight / -2;
@@ -151,6 +240,7 @@ $progressColor: #ffffff;
         color: $progressColor;
         text-align: center;
         text-shadow: 1px 1px 1px $neutral-2;
+        pointer-events: none;
     }
 
     .hosted-gallery__progress--wrapper {
@@ -158,6 +248,7 @@ $progressColor: #ffffff;
         height: $progressHeight;
         width: $progressHeight;
         overflow: hidden;
+        pointer-events: none;
     }
 
     &.quarter-3 .hosted-gallery__progress--wrapper,
@@ -165,16 +256,19 @@ $progressColor: #ffffff;
         overflow: visible;
     }
 
-    .inline-arrow-up {
+    .inline-arrow-up,
+    .inline-arrow-down {
         position: absolute;
-        top: -30px;
         left: -12px;
+        cursor: pointer;
+    }
+
+    .inline-arrow-up {
+        top: -30px;
     }
 
     .inline-arrow-down {
-        position: absolute;
         bottom: -33px;
-        left: -12px;
     }
 
     .hosted-gallery__progress--border {
