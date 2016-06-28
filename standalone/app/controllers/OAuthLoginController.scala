@@ -10,7 +10,7 @@ import play.api.mvc.{Cookie, RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.Configuration.environment.projectName
 
-object OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
+class OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
   import play.api.Play.current
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"

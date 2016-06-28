@@ -17,7 +17,7 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-object LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
+class LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
     val tableOrder = Seq(
         "Euro 2016",
@@ -152,3 +152,5 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     }
   }
 }
+
+object LeagueTableController extends LeagueTableController

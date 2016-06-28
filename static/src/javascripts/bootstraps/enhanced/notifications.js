@@ -47,6 +47,8 @@ define([
         },
 
         getSub: function () {
+            //This function can change Notification.permission
+            //by asking the user if it is in 'default' state.
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
@@ -107,9 +109,11 @@ define([
         },
 
         subscribeHandler: function () {
+            var wasNotGranted = Notification.permission !== 'granted';
             modules.subscribe().then(modules.follow)
                 .then(function() {
-                    if (Notification.permission === 'granted') {
+                    var isNowGranted = Notification.permission === 'granted';
+                    if (wasNotGranted && isNowGranted) {
                         omniture.trackLinkImmediate('browser-notifications-granted');
                     }
                 }) .catch( function () {

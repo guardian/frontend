@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'VideoYellowButton';
         this.start = '2016-06-22';
-        this.expiry = '2016-06-27';
+        this.expiry = '2016-06-29';
         this.author = 'Akash Askoolum';
         this.description = 'Test if a yellow play button increases starts';
         this.showForSensitive = true;

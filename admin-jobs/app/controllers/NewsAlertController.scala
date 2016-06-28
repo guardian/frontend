@@ -53,10 +53,12 @@ trait NewsAlertController extends Controller with AuthenticationSupport with Exe
   }
 }
 
-object NewsAlertController extends NewsAlertController {
+class NewsAlertControllerImpl extends NewsAlertController {
   lazy val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props())
   lazy val apiKey = Configuration.NewsAlert.apiKey.getOrElse(
     throw new RuntimeException("News Alert API Key not set")
   )
 }
+
+object NewsAlertController extends NewsAlertControllerImpl
 
