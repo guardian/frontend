@@ -16,7 +16,6 @@ var path = require('path');
 
 
 function cleanModule(module, name) {
-
   // keep `resolve` properties for git dependencies, delete otherwise
   delete module.from;
   if (!(module.resolved
@@ -29,12 +28,21 @@ function cleanModule(module, name) {
   });
 }
 
+function cleanOptional() {
+    var optionalDeps = Object.keys(require(path.join(__dirname, '..', 'package.json')).optionalDependencies);
+    optionalDeps.forEach(function(optionalDep) {
+        console.log(optionalDep);
+        delete shrinkwrap.dependencies[optionalDep];
+    });
+}
+
 
 console.log('- reading npm-shrinkwrap.json');
 var shrinkwrapPath = path.join(__dirname, '..', 'npm-shrinkwrap.json');
 var shrinkwrap = require(shrinkwrapPath);
 
 console.log('- cleaning it');
+cleanOptional();
 cleanModule(shrinkwrap, shrinkwrap.name);
 
 console.log('- saving it to', shrinkwrapPath);

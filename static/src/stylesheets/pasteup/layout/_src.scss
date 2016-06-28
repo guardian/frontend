@@ -131,7 +131,7 @@
                 clear: none;
             }
 
-            &:nth-child(#{$columns-fallback-columns}n+1) {
+            &:nth-child(#{$columns-fallback-columns + 'n+1'}) {
                 clear: both;
             }
         }

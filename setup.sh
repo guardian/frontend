@@ -84,17 +84,19 @@ install_jdk() {
 }
 
 install_node() {
-  if ! installed node || ! installed npm; then
+  if ! installed nvm; then
     if ! installed curl; then
       sudo apt-get install -y curl
     fi
 
     if linux; then
-      curl -sL https://deb.nodesource.com/setup | sudo bash -
-      sudo apt-get install -y nodejs
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
     elif mac && installed brew; then
-      brew install node
+      brew install nvm
     fi
+
+    nvm install 5
+    EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
   fi
 }
 
