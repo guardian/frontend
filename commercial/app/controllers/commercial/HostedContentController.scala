@@ -6,7 +6,7 @@ import model.{Cached, NoCache}
 import play.api.mvc.{Action, Controller}
 import views.html.hosted.{guardianHostedGallery, guardianHostedVideo}
 
-object HostedContentController extends Controller {
+class HostedContentController extends Controller {
 
   def renderHostedPage(campaignName: String, pageName: String) = Action { implicit request =>
     HostedPage.fromPageName(pageName) match {
@@ -16,3 +16,5 @@ object HostedContentController extends Controller {
     }
   }
 }
+
+object HostedContentController extends HostedContentController

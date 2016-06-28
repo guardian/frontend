@@ -11,7 +11,7 @@ import conf.Configuration
 import scala.concurrent.Future
 import conf.switches.Switches
 
-object CtaController extends Controller with ExecutionContexts with Http with implicits.Requests {
+class CtaController extends Controller with ExecutionContexts with Http with implicits.Requests {
   private lazy val ctaApiRoot: String = Configuration.open.ctaApiRoot
 
   private def getTopComments(key: DiscussionKey): Future[List[Comment]] = {
@@ -40,3 +40,5 @@ object CtaController extends Controller with ExecutionContexts with Http with im
     }
   }
 }
+
+object CtaController extends CtaController
