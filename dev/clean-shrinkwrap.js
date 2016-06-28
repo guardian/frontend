@@ -16,26 +16,23 @@ var path = require('path');
 
 
 function cleanModule(module, name) {
-  // keep `resolve` properties for git dependencies, delete otherwise
-  delete module.from;
-  if (!(module.resolved
-        && (module.resolved.match(/^git(\+[a-z]+)?:\/\//) || module.resolved.match(/^https?:\/\/github.com\//)))) {
-    delete module.resolved;
-  }
+    // keep `resolve` properties for git dependencies, delete otherwise
+    delete module.from;
+    if (!(module.resolved && (module.resolved.match(/^git(\+[a-z]+)?:\/\//) || module.resolved.match(/^https?:\/\/github.com\//)))) {
+        delete module.resolved;
+    }
 
-  _.forEach(module.dependencies, function(mod, name) {
-    cleanModule(mod, name);
-  });
+    _.forEach(module.dependencies, function(mod, name) {
+        cleanModule(mod, name);
+    });
 }
 
 function cleanOptional() {
     var optionalDeps = Object.keys(require(path.join(__dirname, '..', 'package.json')).optionalDependencies);
     optionalDeps.forEach(function(optionalDep) {
-        console.log(optionalDep);
         delete shrinkwrap.dependencies[optionalDep];
     });
 }
-
 
 console.log('- reading npm-shrinkwrap.json');
 var shrinkwrapPath = path.join(__dirname, '..', 'npm-shrinkwrap.json');
