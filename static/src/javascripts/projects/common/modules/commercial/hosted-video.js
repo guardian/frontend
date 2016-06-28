@@ -85,7 +85,7 @@ define([
                         var err = player.error();
                         if (err && 'message' in err && 'code' in err) {
                             reportError(new Error(err.message), {
-                                feature: 'player',
+                                feature: 'hosted-player',
                                 vjsCode: err.code
                             }, false);
                         }
