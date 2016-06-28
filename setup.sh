@@ -95,7 +95,7 @@ install_node() {
       brew install nvm
     fi
 
-    nvm install 5
+    nvm install
     EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
   fi
 }
