@@ -8,7 +8,7 @@
     @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)
     } {
-        @fragments.onwardPlaceholder()
+        @fragments.onwardPlaceholder(content.commercial.isAdvertisementFeature)
     } {
         <div class="js-fronts-section" data-link-name="fronts-on-articles | section-front"></div>
     } {

@@ -23,7 +23,7 @@ object ContentFooterContainersLayout {
     val htmlBlocks = if (isAdvertisementFeature) {
 
       // majority of footer components we don't want to appear on advertisement feature articles
-      Seq(storyPackagePlaceholder)
+      Seq(storyPackagePlaceholder, onwardPlaceholder)
 
     } else {
 
