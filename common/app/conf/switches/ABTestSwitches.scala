@@ -104,4 +104,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABSamplingTest = Switch(
+    SwitchGroup.ABTests,
+    "ab-sampling-test",
+    "Tests the sampling",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 22),
+    exposeClientSide = true
+  )
 }
