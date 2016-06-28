@@ -235,6 +235,26 @@
     }
 }
 
+.main-menu-container__profile-container {
+    @include fs-textSans(5);
+    margin-bottom: $gs-row-height;
+}
+
+.main-menu-container__profile-icon {
+    background-color: darken($guardian-brand, 3%);
+    text-align: center;
+    fill: $news-support-1;
+    height: 23px;
+    width: 23px;
+    overflow: hidden;
+    margin-left: $gs-gutter/2;
+
+    svg {
+        height: 23px;
+        width: 23px;
+    }
+}
+
 .main-navigation {
     // Unset ul from _lists.scss
     margin-left: 0;
@@ -243,6 +263,7 @@
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     padding-bottom: 16px;
+    text-transform: lowercase;
 }
 
 .main-navigation__item {
