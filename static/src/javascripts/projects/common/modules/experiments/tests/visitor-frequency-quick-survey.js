@@ -27,12 +27,12 @@ define([
         this.expiry = '2016-06-30';
         this.author = 'Kate Whalen';
         this.description = 'Add a single question survey to the submeta section of article pages';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.25;
+        this.audienceOffset = 0.5;
         this.successMeasure = 'Obtain a data-set on how often users visit the Guardian';
-        this.audienceCriteria = 'All users';
+        this.audienceCriteria = 'Any user with fewer than 3 previous visits, who has not seen the survey before';
         this.dataLinkNames = 'impressions frequency survey';
-        this.idealOutcome = '';
+        this.idealOutcome = 'over 1000 responses, through a 24hr period, will give us more information on our users';
 
         this.canRun = function () {
             return !(config.page.isAdvertisementFeature) &&
