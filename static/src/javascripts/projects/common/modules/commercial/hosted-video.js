@@ -6,6 +6,7 @@ define([
     'bean',
     'common/utils/$',
     'common/utils/defer-to-analytics',
+    'common/utils/report-error',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/video/fullscreener',
@@ -14,6 +15,7 @@ define([
     bean,
     $,
     deferToAnalytics,
+    reportError,
     events,
     videojsOptions,
     fullscreener,
@@ -79,6 +81,15 @@ define([
                         events.bindContentEvents(player);
                     });
 
+                    player.on('error', function () {
+                        var err = player.error();
+                        if (err && 'message' in err && 'code' in err) {
+                            reportError(new Error(err.message), {
+                                feature: 'player',
+                                vjsCode: err.code
+                            }, false);
+                        }
+                    });
                 });
             });
         });
