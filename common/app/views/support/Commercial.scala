@@ -39,7 +39,7 @@ object Commercial {
       ( metaData.id == "sport/tennis" ||
         metaData.id == "sport/wimbledon" ||
         metaData.id == "sport/wimbledon-2016" ||
-        (metaData.adUnitSuffix == "sport/liveblog" && maybeTags.map(_.keywordIds contains "sport/wimbledon-2016").getOrElse(false)) // so that liveblogs relating to wimbledon-2016 are captured
+        (metaData.adUnitSuffix == "sport/liveblog" && maybeTags.exists(_.keywordIds contains "sport/wimbledon-2016")) // so that liveblogs relating to wimbledon-2016 are captured
       )
     }
 
