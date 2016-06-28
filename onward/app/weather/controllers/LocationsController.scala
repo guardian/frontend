@@ -13,7 +13,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 import scalaz.std.option.optionInstance.tuple3
 
-object LocationsController extends Controller with ExecutionContexts with Logging {
+class LocationsController extends Controller with ExecutionContexts with Logging {
   def findCity(query: String) = Action.async { implicit request =>
     WeatherApi.searchForLocations(query) map { locations =>
       Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
@@ -73,3 +73,5 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     }
   }
 }
+
+object LocationsController extends LocationsController

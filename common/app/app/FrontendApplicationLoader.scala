@@ -30,6 +30,7 @@ trait FrontendComponents
   with HttpFiltersComponent
   with BuiltInComponents
   with NingWSComponents {
+  self: BuiltInComponents =>
 
   lazy val prefix = "/"
 

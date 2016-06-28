@@ -8,7 +8,7 @@ import football.model._
 import common.{Edition, JsonComponent}
 
 
-object MatchDayController extends MatchListController with CompetitionLiveFilters {
+class MatchDayController extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -55,3 +55,5 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
     }
   }
 }
+
+object MatchDayController extends MatchDayController

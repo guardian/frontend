@@ -16,7 +16,7 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
   override lazy val item = media
 }
 
-object MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
@@ -63,6 +63,8 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
+
+object MediaController extends MediaController
 
 case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
 object MediaInfo {

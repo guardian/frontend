@@ -6,7 +6,7 @@ import model._
 import play.api.mvc.{Result, RequestHeader}
 import services.IndexPage
 
-object IndexController extends IndexControllerCommon {
+class IndexController extends IndexControllerCommon {
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = {
     Cached(model.page) {
       if (request.isRss) {
@@ -21,3 +21,5 @@ object IndexController extends IndexControllerCommon {
     }
   }
 }
+
+object IndexController extends IndexController

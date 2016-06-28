@@ -4,7 +4,7 @@ import conf.Static
 import conf.switches.Switches
 import model.GuardianContentTypes.Hosted
 import model.{MetaData, SectionSummary, StandalonePage}
-import play.api.libs.json.JsString
+import play.api.libs.json.{JsArray, JsNumber, JsString}
 
 trait HostedPage extends StandalonePage  {
   def pageUrl: String
@@ -64,6 +64,9 @@ case class HostedGalleryPage(
                        pageName: String,
                        title: String,
                        standfirst: String,
+                       ctaText: String,
+                       ctaLink: String,
+                       ctaIndex: BigDecimal,
                        images: List[HostedGalleryImage],
                        logoUrl: String
                      ) extends HostedPage {
@@ -73,7 +76,7 @@ case class HostedGalleryPage(
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
     val toneName = "Hosted content"
-    val sectionId = "renault-car-of-the-future"
+    val sectionId = "hosted-gallery"
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
     MetaData.make(
@@ -87,13 +90,15 @@ case class HostedGalleryPage(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
-        "tones" -> JsString(toneName)
+        "tones" -> JsString(toneName),
+        "images" -> JsArray(images.map((image) => JsString(image.url))),
+        "ctaIndex" -> JsNumber(ctaIndex)
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $title",
+          s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
         "og:image" -> logoUrl,
         "fb:app_id" -> "180444840287"
       )
@@ -205,6 +210,11 @@ object HostedPage {
       url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb7.jpg",
       title = "The ruins of Tintern Abbey",
       caption = "Monmouthshire, Wales. The ruins of this 12th-century abbey are famous for inspiring the works of notable English artists, including Romantic poet William Wordsworth and painter Thomas Gainsborough."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb8.png",
+      title = "Ride the Hogwarts Express!",
+      caption = "Glenfinnan Viaduct, Scotland. The Jacobite steam train is a great way to experience the stunning scenery and special atmosphere of Glenfinnan. You may even recognise it from Harry Potter! Photo by Colin Roberts."
     )
   )
 
@@ -213,6 +223,9 @@ object HostedPage {
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
+    ctaIndex = 5,
     standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
   )
