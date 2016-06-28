@@ -11,7 +11,7 @@ import services._
 
 import scala.concurrent.Future
 
-object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
+class TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
 
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>
@@ -56,3 +56,5 @@ object TaggedContentController extends Controller with Related with Logging with
     }
   }
 }
+
+object TaggedContentController extends TaggedContentController

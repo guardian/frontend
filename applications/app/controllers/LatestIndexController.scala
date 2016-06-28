@@ -12,7 +12,7 @@ import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 
-object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
+class LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
   def latest(path: String) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
@@ -64,3 +64,5 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
     }
   }
 }
+
+object LatestIndexController extends LatestIndexController

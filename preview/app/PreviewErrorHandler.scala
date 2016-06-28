@@ -1,20 +1,17 @@
-import javax.inject._
-
 import com.gu.contentapi.client.GuardianContentApiError
 import play.api._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.Results._
 import play.api.mvc._
-import play.api.routing.Router
+import play.core.SourceMapper
 
 import scala.concurrent._
 
-class PreviewErrorHandler @Inject() (
+class PreviewErrorHandler(
     env: Environment,
     config: Configuration,
-    sourceMapper: OptionalSourceMapper,
-    router: Provider[Router]
-  ) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) {
+    sourceMapper: Option[SourceMapper]
+  ) extends DefaultHttpErrorHandler(env, config, sourceMapper, None) {
 
   override def onServerError(request: RequestHeader, exception: Throwable) = {
     exception match  {

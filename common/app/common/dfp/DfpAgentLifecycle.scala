@@ -29,7 +29,10 @@ class DfpAgentLifecycle(
   }
 }
 
-class FaciaDfpAgentLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle) {
+class FaciaDfpAgentLifecycle(
+  appLifeCycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
 
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()

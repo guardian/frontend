@@ -291,6 +291,8 @@ object Int {
   }
 }
 
-object FaciaController extends FaciaController {
+class FaciaControllerImpl extends FaciaController {
   val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
 }
+
+object FaciaController extends FaciaControllerImpl
