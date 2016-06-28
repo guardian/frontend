@@ -6,7 +6,7 @@ import commercial.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import play.api.Play.current
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WS, WSResponse}
 
 import scala.concurrent.Future
@@ -43,14 +43,12 @@ object LiveEventAgent extends ExecutionContexts with Logging {
           .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
           .get()
 
-      def parseLiveEventsMembershipInfo(feed: String): Seq[LiveEventMembershipInfo] = {
-        val json = Json.parse(feed)
-        (json \ "events").as[Seq[LiveEventMembershipInfo]]
-      }
+      def parseLiveEventsMembershipInfo(feed: JsValue): Seq[LiveEventMembershipInfo] =
+        (feed \ "events").as[Seq[LiveEventMembershipInfo]]
 
       requestLiveEventsMembershipInfo map { response =>
         if (response.status == 200)
-          parseLiveEventsMembershipInfo(response.body)
+          parseLiveEventsMembershipInfo(response.json)
         else
           throw FetchException(response.status, response.statusText)
       } recoverWith {
