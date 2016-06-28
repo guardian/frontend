@@ -195,7 +195,9 @@
     line-height: 16px;
     padding: 10px;
     width: 500px;
+    text-align: left;
     max-width: calc(100% + 20px);
+    border-radius: 3px;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
