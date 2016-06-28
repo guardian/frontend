@@ -215,9 +215,8 @@ define([
 
             bonzo(this.$galleryEl).toggleClass('show-cta', progress <= ctaIndex && progress >= ctaIndex - 0.25);
 
-            ['quarter-2', 'quarter-3', 'quarter-4'].forEach(function (cssClass, index) {
-                bonzo(this.$progress).toggleClass(cssClass, 4 * fractionProgress > index + 1);
-            }.bind(this));
+            bonzo(this.$progress).toggleClass('first-half', fractionProgress && fractionProgress < 0.5);
+
         }.bind(this));
 
         if(newIndex && newIndex !== this.index){
