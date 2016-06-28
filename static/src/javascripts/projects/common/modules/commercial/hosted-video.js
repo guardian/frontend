@@ -7,6 +7,7 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/defer-to-analytics',
+    'common/utils/report-error',
     'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -18,12 +19,12 @@ define([
     fastdom,
     $,
     deferToAnalytics,
+    reportError,
     omniture,
     ab,
     events,
     videojsOptions,
     fullscreener,
-    contains,
     loadingTmpl
 ) {
     var player;
@@ -83,6 +84,8 @@ define([
                 player.guMediaType = 'video';
                 videojs.plugin('fullscreener', fullscreener);
 
+                // unglitching the volume on first load
+
                 player.ready(function () {
                     var vol;
                     var duration = parseInt(this.duration(), 10);
@@ -106,6 +109,16 @@ define([
 
                         events.bindGlobalEvents(player);
                         events.bindContentEvents(player);
+                    });
+
+                    player.on('error', function () {
+                        var err = player.error();
+                        if (err && 'message' in err && 'code' in err) {
+                            reportError(new Error(err.message), {
+                                feature: 'hosted-player',
+                                vjsCode: err.code
+                            }, false);
+                        }
                     });
 
                     if ($hostedNext.length && ab.getParticipations().HostedAutoplay

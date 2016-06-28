@@ -11,7 +11,7 @@ import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 
-object MostPopularController extends Controller with Logging with ExecutionContexts {
+class MostPopularController extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
@@ -112,3 +112,5 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 }
+
+object MostPopularController extends MostPopularController

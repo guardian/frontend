@@ -15,7 +15,7 @@ case class ImageContentPage(image: ImageContent, related: RelatedContent) extend
   override lazy val item = image
 }
 
-object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
+class ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
 
@@ -35,3 +35,5 @@ object ImageContentController extends Controller with RendersItemResponse with I
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
+
+object ImageContentController extends ImageContentController

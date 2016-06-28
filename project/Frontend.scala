@@ -180,14 +180,18 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     adminJobs
+  ).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))

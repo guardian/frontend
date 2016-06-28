@@ -11,7 +11,7 @@ import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-object GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class GalleryController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
@@ -61,3 +61,5 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
   private def isSupported(c: ApiContent) = c.isGallery
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
+
+object GalleryController extends GalleryController
