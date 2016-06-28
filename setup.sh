@@ -83,8 +83,8 @@ install_jdk() {
   fi
 }
 
-install_nvm() {
-  if ! installed node || ! installed npm; then
+install_node() {
+  if ! installed nvm; then
     if ! installed curl; then
       sudo apt-get install -y curl
     fi
@@ -94,6 +94,9 @@ install_nvm() {
     elif mac && installed brew; then
       brew install nvm
     fi
+
+    nvm install 5
+    EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
   fi
 }
 
@@ -146,7 +149,7 @@ main() {
   install_awscli
   create_frontend_properties
   install_jdk
-  install_nvm
+  install_node
   install_gcc
   install_grunt
   install_libpng
