@@ -6,26 +6,24 @@ import play.api.mvc.{Action, Controller, Cookie, DiscardingCookie}
 
 import scala.concurrent.duration._
 
-trait OptInOutFeature extends Controller {
+trait OptFeature extends Controller {
   val cookieName: String
-  val lifetime: Int
+  val lifetime: Int = 90.days.toSeconds.toInt
   def opt(choice: String) = choice match {
     case "in" => optIn()
-    case _ => optOut()
+    case "out" => optOut()
+    case _ => optDelete()
   }
   def optIn() = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
   def optOut() = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
+  def optDelete() = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
 }
 
-case class OptInFeature(cookieName: String, lifetime: Int = 90.days.toSeconds.toInt) extends OptInOutFeature
-
-class HttpsOptOutFeature extends OptInOutFeature {
-  // replaces previous opt-in feature with opt-out (we're https by default now)
-  val cookieName = "https_opt_out"
-  val lifetime: Int = 365.days.toSeconds.toInt
-  override def optIn() = SeeOther("/").discardingCookies(DiscardingCookie(cookieName),DiscardingCookie("https_opt_in"))
-  override def optOut() = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
+case class HttpsOptFeature(cookieName: String) extends OptFeature {
+  override def optOut() = SeeOther("/").withCookies(Cookie(cookieName, "false", maxAge = Some(lifetime)))
 }
+
+case class OptInFeature(cookieName: String) extends OptFeature
 
 object OptInController extends Controller {
 
@@ -38,7 +36,7 @@ object OptInController extends Controller {
     }))
   }
 
-  val HTTPS = new HttpsOptOutFeature
+  val HTTPS = HttpsOptFeature("https_opt_in")
   val Header = OptInFeature("new_header_opt_in")
   val gallery = OptInFeature("gallery_redesign_opt_in")
 }
