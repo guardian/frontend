@@ -130,7 +130,6 @@ define([
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
                 return !adblockUsed &&
-                    detect.getBreakpoint() !== 'mobile' &&
                     isArticle &&
                     !userFeatures.isPayingMember();
             })
