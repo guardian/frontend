@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -81,6 +81,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
+  lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -109,7 +110,11 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
+    if (isAdvertisementFeature && FacebookShareImageLogoOverlay.isSwitchedOn) {
+      ImgSrc(rawOpenGraphImage, Item700)
+    } else {
+      ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
+    }
   }
 
   lazy val syndicationType = {
