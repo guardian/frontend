@@ -103,6 +103,10 @@ final case class Content(
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
+  lazy val signedArticleImage: String = {
+    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+  }
+
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
     ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
