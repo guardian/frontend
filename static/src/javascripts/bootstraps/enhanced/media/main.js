@@ -242,6 +242,7 @@ define([
                     });
                     player.bigPlayButton.dispose();
                     player.errorDisplay.open();
+                    player.controlBar.dispose();
                 });
             } else {
                 blockVideoAds = videoInfo.shouldHideAdverts;
