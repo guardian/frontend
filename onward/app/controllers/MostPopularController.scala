@@ -1,20 +1,20 @@
 package controllers
 
 import common._
-import conf._
-import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
+import contentapi.ContentApiClient
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
-import views.support.FaciaToMicroFormat2Helpers._
-import scala.concurrent.Future
 import play.api.libs.json._
-import contentapi.ContentApiClient
+import play.api.mvc.{Action, Controller, RequestHeader}
+import views.support.FaciaToMicroFormat2Helpers._
 
-object MostPopularController extends Controller with Logging with ExecutionContexts {
+import scala.concurrent.Future
+
+class MostPopularController extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
-    "most-read",
+    Some(SectionSummary.fromId("most-read")),
     "Most read",
     "GFE:Most Read"
   ))
@@ -112,3 +112,5 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 }
+
+object MostPopularController extends MostPopularController

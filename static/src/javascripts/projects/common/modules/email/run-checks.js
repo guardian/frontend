@@ -43,9 +43,7 @@ define([
 
     function userIsInAClashingAbTest() {
         var clashingTests = [
-            ['ParticipationLowFricFilm','variant-1'],
-            ['ParticipationLowFricMusicV1', 'variant-1'],
-            ['ParticipationLowFricSport', 'variant-1']
+            ['ParticipationLowFricMusicV2','variant-1']
         ];
 
         return some(clashingTests, function(test) {
@@ -94,7 +92,7 @@ define([
 
         if ($articleBody.length) {
             var allArticleEls = $('> *', $articleBody);
-            return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+            return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
         } else {
             return false;
         }
@@ -110,6 +108,14 @@ define([
         },
         theFiver: function () {
             return page.keywordExists(['Football']) && allowedArticleStructure();
+        },
+        labNotes: function () {
+            return config.page.section === 'science' && config.switches.emailSignupLabNotes;
+        },
+        euRef: function () {
+            return config.switches.emailSignupEuRef &&
+                    page.keywordExists(['EU referendum']) &&
+                    allowedArticleStructure();
         },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||

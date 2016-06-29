@@ -1,19 +1,18 @@
 package controllers
 
-import common.{LinkTo, Logging, ExecutionContexts}
+import common.EmailSubsciptionMetrics._
+import common.{ExecutionContexts, LinkTo, Logging}
 import conf.Configuration
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.Play.current
-import play.api.data._
-import play.api.data.validation.Constraints.emailAddress
 import play.api.data.Forms._
-import play.api.libs.ws.{WSResponse, WS}
-import play.api.libs.json._
-import play.api.mvc.Results._
+import play.api.data._
 import play.api.data.format.Formats.stringFormat
-import play.api.mvc.{Result, Action, Controller}
-import common.EmailSubsciptionMetrics._
+import play.api.data.validation.Constraints.emailAddress
+import play.api.libs.json._
+import play.api.libs.ws.{WS, WSResponse}
+import play.api.mvc.{Action, Controller, Result}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -22,7 +21,7 @@ object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
   override val metadata = MetaData.make(
     id = id,
-    section = "",
+    section = None,
     analyticsName = id,
     webTitle = "Email Landing Page")
 }
@@ -141,7 +140,7 @@ object EmailForm {
   }
 }
 
-object EmailSignupController extends Controller with ExecutionContexts with Logging {
+class EmailSignupController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -218,3 +217,5 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
     TinyResponse.noContent(Some("GET, POST, OPTIONS"))
   }
 }
+
+object EmailSignupController extends EmailSignupController

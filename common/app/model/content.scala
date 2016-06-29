@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -19,7 +19,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ChaptersLinksCleaner, FacebookOpenGraphImage, ImgSrc, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -80,8 +80,7 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery
-  lazy val isFoodAndDrink: Boolean = tags.isFoodAndDrink
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -106,7 +105,7 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage, isFoodAndDrink)
+    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
   }
 
   lazy val syndicationType = {
@@ -130,8 +129,8 @@ final case class Content(
   lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
-      metadata.section
+    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+      metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
@@ -240,7 +239,7 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> rawOpenGraphImage
+    "twitter:image" -> ImgSrc(rawOpenGraphImage, TwitterImage)
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
@@ -346,7 +345,7 @@ object Article {
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
@@ -475,7 +474,7 @@ object Audio {
     val contentType = GuardianContentTypes.Audio
     val fields = content.fields
     val id = content.metadata.id
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
@@ -511,7 +510,7 @@ object Video {
     val contentType = GuardianContentTypes.Video
     val fields = content.fields
     val elements = content.elements
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
@@ -579,7 +578,7 @@ object Gallery {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GalleryLightboxProperties(
       id = id,
@@ -774,7 +773,7 @@ object Interactive {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val twitterProperties: Map[String, String] = Map(
       "twitter:title" -> fields.linkText,
@@ -799,7 +798,7 @@ object ImageContent {
   def make(content: Content): ImageContent = {
     val contentType = GuardianContentTypes.ImageContent
     val fields = content.fields
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 940,
@@ -842,7 +841,7 @@ object CrosswordContent {
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      section = "crosswords",
+      section = Some(SectionSummary.fromId("crosswords")),
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,

@@ -10,7 +10,7 @@
         <div class="comment__body u-text-hyphenate" itemprop="text">
             @defining(Edition(request)) { edition =>
                 @withJsoup(BulletCleaner(comment.body))(
-                    InBodyLinkCleaner("in body link")
+                    InBodyLinkCleaner("in comment link")
                 )
             }
         </div>

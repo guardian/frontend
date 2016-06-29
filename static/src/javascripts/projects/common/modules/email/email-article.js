@@ -75,6 +75,28 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
+            labNotes: {
+                listId: '3701',
+                listName: 'labNotes',
+                campaignCode: 'lab_notes_article_signup',
+                headline: 'Sign up to Lab notes',
+                description: 'Get a weekly round-up of the biggest stories in science, insider knowledge from our network of bloggers, and a healthy dose of fun.',
+                successHeadline: 'Thank you for signing up for Lab notes',
+                successDescription: 'You\'ll receive an email every week.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
+            euRef: {
+                listId: '3698',
+                listName: 'euRef',
+                campaignCode: 'eu_ref_article_signup',
+                headline: 'EU referendum morning briefing',
+                description: 'Sign up for a round-up of the most recent EU referendum developments, the biggest talking points, and what to look out for each day.',
+                successHeadline: 'Thank you for signing up for the EU referendum morning briefing',
+                successDescription: 'You\'ll receive an email every morning.',
+                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
             ausCampaignCatchup: {
                 listId: '3689',
                 listName: 'ausCampaignCatchup',

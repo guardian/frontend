@@ -1,6 +1,7 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import common.commercial.Branding
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -219,7 +220,7 @@ case class IndexPage(
   }
 
   def forcesDayView = page match {
-    case tag: Tag if tag.metadata.section == "crosswords" => false
+    case tag: Tag if tag.metadata.sectionId == "crosswords" => false
     case tag: Tag => Set("Series", "Blog").contains(tag.properties.tagType)
     case _ => false
   }

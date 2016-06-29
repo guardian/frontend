@@ -4,6 +4,7 @@
  */
 define([
     'fastdom',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -17,6 +18,7 @@ define([
     'lodash/collections/reduce'
 ], function (
     fastdom,
+    Promise,
     $,
     config,
     mediator,
@@ -106,6 +108,12 @@ define([
         }
     }
 
+    function setFluid(el) {
+        if (el.classList.contains('ad-slot--container-inline')) {
+            el.classList.add('ad-slot--fluid');
+        }
+    }
+
     function constructQuery(params) {
         return reduce(params, function (result, value, key) {
             var buildParam = function (value) {
@@ -161,32 +169,30 @@ define([
     }
 
     CommercialComponent.prototype.create = function () {
-        if (this.url) {
-            lazyload({
-                url: this.url,
-                container: this.adSlot,
-                success: onSuccess.bind(this),
-                error: onError.bind(this)
-            });
-        } else {
-            this.adSlot.style.display = 'none';
-        }
-
-        return this;
-
-        function onSuccess() {
-            if (this.postLoadEvents[this.type]) {
-                this.postLoadEvents[this.type](this.adSlot);
+        return new Promise(function (resolve) {
+            if (this.url) {
+                lazyload({
+                    url: this.url,
+                    container: this.adSlot,
+                    success: onSuccess.bind(this),
+                    error: onError.bind(this)
+                });
+            } else {
+                resolve(false);
             }
 
-            mediator.emit('modules:commercial:creatives:commercial-component:loaded');
-        }
+            function onSuccess() {
+                if (this.postLoadEvents[this.type]) {
+                    this.postLoadEvents[this.type](this.adSlot);
+                }
 
-        function onError() {
-            fastdom.write(function () {
-                this.adSlot.style.display = 'none';
-            }, this);
-        }
+                resolve(true);
+            }
+
+            function onError() {
+                resolve(false);
+            }
+        }.bind(this));
     };
 
     CommercialComponent.prototype.postLoadEvents = {
@@ -196,6 +202,7 @@ define([
         capi: createToggle,
         capiSingle: createToggle,
         paidforCard: function (el) {
+            setFluid(el);
             adjustMostPopHeight(el);
             createToggle(el);
         }

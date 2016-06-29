@@ -1,11 +1,14 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.staticBadgesSwitch
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import model.Badges.badgeFor
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
-    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}">
+    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
+    @badgeFor(item).map { badge => content__head--is-badged
+        @badge.classModifier.map(modifier => s"content__head--$modifier")
+    }">
 
     <div class="content__header tonal__header">
         <div class="gs-container">
@@ -31,7 +34,7 @@
                     @Html(item.trail.headline)
                 </h1>
 
-                @if(amp && item.tags.isMatchReport && item.metadata.section == "football") {
+                @if(amp && item.tags.isMatchReport && item.metadata.sectionId == "football") {
                     @defining({
                         val date = item.trail.webPublicationDate.minusDays(1).toLocalDate.toString("yyyy/MM/dd")
                         val teams = item.content.paFootballTeams.mkString("/")
@@ -85,10 +88,7 @@
                     </div>
                 }
 
-                @if(
-                    (showBadge && !item.commercial.isAdvertisementFeature) ||
-                        (staticBadgesSwitch.isSwitchedOn && !item.tags.isVideo && !item.tags.isAudio)
-                ) {
+                @if(showBadge && !item.commercial.isAdvertisementFeature) {
                     @fragments.commercial.badge(item, page)
                 }
 

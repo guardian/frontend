@@ -6,7 +6,7 @@ import model.{Cached, NoCache}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 
-object SoulmatesController extends Controller with implicits.Requests {
+class SoulmatesController extends Controller with implicits.Requests {
 
   private def result(groupName: String,
                      view: (Seq[Member], Option[String], Option[String]) => HtmlFormat.Appendable)
@@ -41,3 +41,5 @@ object SoulmatesController extends Controller with implicits.Requests {
     result(groupName, views.html.soulmates.soulmatesTest(_, _, _))
   }
 }
+
+object SoulmatesController extends SoulmatesController

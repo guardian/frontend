@@ -1,0 +1,115 @@
+@(page: ContentPage)(implicit request: RequestHeader)
+
+@import layout.ContentWidths.MainMedia
+@import model.ContentPage
+@import views.support.TrailCssClasses.toneClass
+@import views.support.RenderClasses
+
+@defining((
+    page.item.tags.isUSMinuteSeries,
+    page.item.elements.hasMainEmbed,
+    page.item.fields.main.nonEmpty
+)) { case (isMinuteSeries, hasEmbed, hasMainMedia) =>
+
+    <div class="@RenderClasses(Map(
+            "content--minute-article" -> isMinuteSeries,
+            "content--immersive-article-without-main-media" -> !hasMainMedia,
+            "immersive-main-media" -> hasMainMedia
+        ),
+        "content", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
+    ">
+        <div class="gs-container immersive-main-media__logo">
+            <a href="@LinkTo{/}">
+                <span class="u-h">The Guardian</span>
+                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
+            </a>
+
+            @if(isMinuteSeries) {
+                <a class="logo--us-election" href="@LinkTo{/us-news/us-elections-2016}">
+                    <span class="u-h">The US Election 2016</span>
+                    @fragments.inlineSvg("us-election-logo", "logo")
+                </a>
+            }
+
+        </div>
+
+        <div class="immersive-main-media__media">
+            @if(page.item.elements.hasMainPicture) {
+                @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                    @fragments.image(
+                        picture = picture,
+                        classes = Seq("immersive-main-media__media"),
+                        widths = MainMedia.immersive,
+                        imageAltText = "",
+                        isImmersiveMainMedia = true
+                    )
+                }
+            } else {
+                @if(hasMainMedia) {
+                    <div class="immersive-main-media__media__loading">
+                        <div class="immersive-main-media__loading-animation is-updating"></div>
+                        <span class="u-h">Loading header</span>
+                    </div>
+                    @Html(page.item.fields.main)
+                }
+            }
+        </div>
+
+
+        @if(isMinuteSeries) {
+            <div class="content--minute-article--overlay"></div>
+        }
+
+        <div class="@RenderClasses(Map(
+                "immersive-main-media__headline-container--dark" -> (!isMinuteSeries && hasMainMedia),
+                "immersive-main-media__headline-container" -> hasMainMedia
+            ))
+        ">
+            <div class="gs-container">
+                @if(!isMinuteSeries) { <div class="content__main-column"> }
+
+                @if(!isMinuteSeries) {
+                    @fragments.meta.metaInline(page.item)
+                }
+
+                <h1 class="@RenderClasses(Map(
+                        "content__headline--minute" -> isMinuteSeries,
+                        "content__headline--immersive--with-main-media" -> hasMainMedia
+                    ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
+                ">
+                    @if(isMinuteSeries) {
+                        <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
+                            <span class="u-h">The Minute - </span>
+                            @fragments.inlineSvg("minute-logo", "logo")
+                        </a>
+                    }
+                    @Html(page.item.trail.headline)
+                </h1>
+
+                @if(isMinuteSeries) {
+
+                    @if(page.item.trail.shouldHidePublicationDate) {
+                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.tags.isLiveBlog, page.item.fields.isLive, isMinuteSeries)
+                    }
+
+                    @if(page.item.fields.standfirst.isDefined) {
+                        @fragments.standfirst(page.item)
+                    }
+                }
+
+                @if(!isMinuteSeries && page.item.fields.standfirst.isDefined) {
+                    <div class="hide-on-mobile">
+                        @fragments.standfirst(page.item)
+                    </div>
+                }
+
+                @if(!isMinuteSeries) { </div> }
+            </div>
+        </div>
+    </div>
+    @if(page.item.fields.standfirst.isDefined && !isMinuteSeries) {
+        <div class="content__wrapper--standfirst mobile-only">
+            @fragments.standfirst(page.item)
+        </div>
+    }
+}

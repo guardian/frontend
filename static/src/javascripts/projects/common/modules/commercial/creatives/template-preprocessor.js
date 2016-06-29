@@ -7,7 +7,6 @@ define([
     'text!common/views/commercial/creatives/logo-header.html',
     'text!common/views/commercial/creatives/logo-link.html',
     'text!common/views/commercial/creatives/logo-about.html',
-    'text!common/views/commercial/creatives/manual-inline-button.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-simple-blob.html',
     'text!common/views/commercial/creatives/gimbap/gimbap-richmedia-blob.html',
     'text!common/views/commercial/creatives/manual-card.html',
@@ -26,7 +25,6 @@ define([
     logoHeaderStr,
     logoLinkStr,
     logoAboutStr,
-    manualInlineButtonStr,
     gimbapSimpleStr,
     gimbapRichmediaStr,
     manualCardStr,
@@ -40,7 +38,6 @@ define([
     var logoAboutTpl;
     var logoLinkTpl;
     var logoHeaderTpl;
-    var manualInlineButtonTpl;
     var gimbapSimpleTpl;
     var gimbapRichmediaTpl;
     var manualCardStrs = {
@@ -87,17 +84,6 @@ define([
                     logoImage: tpl.params.partnerTwoLogoImage });
             tpl.params.aboutLink = logoAboutTpl(tpl.params);
         }
-    }
-
-    function preprocessManualInline(tpl) {
-        if (!manualInlineButtonTpl) {
-            manualInlineButtonTpl = template(manualInlineButtonStr);
-        }
-        // having a button is the default state, that is why we expressely
-        // test for when *not* to display one
-        tpl.params.offerButton = tpl.params.show_button === 'no' ?
-            '' :
-            manualInlineButtonTpl(tpl.params);
     }
 
     function preprocessGimbap(tpl) {
@@ -177,14 +163,19 @@ define([
             tpl.params.title = tpl.params.logomembership + '<span class="u-h">The Guardian Membership</span>';
             tpl.params.ctas = manualContainerCtaMembershipTpl(tpl.params);
 
-        } else {
+        } else if (tpl.params.type !== 'inline'){
             manualContainerCtaTpl || (manualContainerCtaTpl = template(manualContainerCtaStr));
             tpl.params.title = tpl.params.marque54icon + tpl.params.logoguardian + '<span class="u-h">The Guardian</span>' + tpl.params.title;
             tpl.params.blurb = tpl.params.explainer || '';
             tpl.params.ctas = tpl.params.viewalltext ? manualContainerCtaTpl(tpl.params) : '';
+
+        } else {
+            tpl.params.title = tpl.params.marque36icon + tpl.params.component_title;
+            tpl.params.blurb = tpl.params.ctas = '';
         }
 
         if (tpl.params.type === 'multiple') {
+            tpl.params.row = true;
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
                 return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.creativeCard]({
                     clickMacro:          tpl.params.clickMacro,
@@ -200,7 +191,8 @@ define([
                     classNames:          [index > 2 ? 'hide-until-tablet' : ''].concat(['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); })).join(' ')
                 }) : null;
             }).filter(identity).join('');
-        } else {
+        } else if (tpl.params.type === 'single') {
+            tpl.params.row = true;
             tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
                 clickMacro:          tpl.params.clickMacro,
                 offerUrl:            tpl.params.offerUrl,
@@ -212,12 +204,27 @@ define([
                     arrowRight:          tpl.params.arrowRight,
                     classNames:          'button--tertiary'
                 }) : '',
-                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
             }) + manualContainerButtonTpl({
                 baseUrl:             tpl.params.baseUrl,
                 clickMacro:          tpl.params.clickMacro,
                 offerLinkText:       tpl.params.offerLinkText,
                 arrowRight:          tpl.params.arrowRight
+            });
+        } else {
+            tpl.params.row = false;
+            tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
+                clickMacro:          tpl.params.clickMacro,
+                offerUrl:            tpl.params.offerUrl,
+                offerImage:          tpl.params.offerImage,
+                offerTitle:          tpl.params.offerTitle,
+                offerText:           tpl.params.offerText,
+                cta:                 tpl.params.show_button === 'no' ? '' : manualCardCtaTpl({
+                    offerLinkText:       'Click here',
+                    arrowRight:          tpl.params.arrowRight,
+                    classNames:          'button--primary'
+                }),
+                classNames:          ['inline', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
             });
         }
     }
@@ -254,7 +261,6 @@ define([
 
     return {
         'logo': preprocessLogo,
-        'manual-inline': preprocessManualInline,
         'gimbap': preprocessGimbap,
         'gimbap-simple': preprocessGimbapSimple,
         'gimbap-richmedia': preprocessGimbapRichmedia,

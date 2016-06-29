@@ -5,6 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
+import play.api.http.Status._
 import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
@@ -15,7 +16,7 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
   override lazy val item = media
 }
 
-object MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
@@ -23,7 +24,7 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   def renderInfoJson(path: String) = Action.async { implicit request =>
     lookup(path) map {
       case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
-      case Right(other) => MediaInfo(expired = true, shouldHideAdverts = true)
+      case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
     } map { mediaInfo =>
       Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
     }
@@ -62,6 +63,8 @@ object MediaController extends Controller with RendersItemResponse with Logging 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
+
+object MediaController extends MediaController
 
 case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
 object MediaInfo {

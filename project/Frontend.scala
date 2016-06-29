@@ -1,15 +1,13 @@
 package com.gu
 
-import sbt._
-import sbt.Keys._
-import play.Play.autoImport._
-import PlayKeys._
-import play._
-import play.sbt._
+import com.gu.Dependencies._
+import com.typesafe.sbt.web.Import._
+import play.routes.compiler.InjectedRoutesGenerator
+import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
-import com.typesafe.sbt.web.Import._
-import Dependencies._
+import sbt.Keys._
+import sbt._
 
 object Frontend extends Build with Prototypes {
 
@@ -114,6 +112,7 @@ object Frontend extends Build with Prototypes {
       awsSes,
       scalaUri
     ),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
@@ -181,14 +180,18 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     adminJobs
+  ).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))

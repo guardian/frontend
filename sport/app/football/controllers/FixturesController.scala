@@ -9,7 +9,7 @@ import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent}
 
 
-object FixturesController extends MatchListController with CompetitionFixtureFilters {
+class FixturesController extends MatchListController with CompetitionFixtureFilters {
 
   private def fixtures(date: LocalDate) = new FixturesList(date, Competitions())
   private val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
@@ -79,3 +79,5 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
     }.getOrElse(NotFound)
   }
 }
+
+object FixturesController extends FixturesController

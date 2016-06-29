@@ -30,6 +30,8 @@ define([
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/commercial/sticky-top-banner',
+    'common/modules/commercial/hosted-about',
+    'common/modules/commercial/hosted-gallery',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -52,7 +54,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'common/modules/onward/mobile-labs-alerts',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -85,6 +86,8 @@ define([
     CookieRefresh,
     navigation,
     stickyAdBanner,
+    hostedAbout,
+    hostedGallery,
     Profile,
     Search,
     history,
@@ -97,7 +100,7 @@ define([
     Message,
     cookiesBanner,
     RelativeDates,
-    smartAppBanner,
+    customSmartAppBanner,
     Tabs,
     Toggles,
     userPrefs,
@@ -107,7 +110,6 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    mobileLabAlerts,
     identity,
     forEach
 ) {
@@ -135,7 +137,6 @@ define([
 
             initialiseStickyAdBanner: function () {
                 if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && config.page.pageId !== 'offline-crossword'
                     && !config.page.shouldHideAdverts
                     && config.page.section !== 'childrens-books-site'
                     && !config.tests.abNewHeaderVariant
@@ -364,12 +365,21 @@ define([
                     });
                 });
             },
+
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
             },
 
-            mobileLabsAlertBanner: function () {
-                mobileLabAlerts();
+            initHostedAboutLightbox: function () {
+                if (config.page.contentType === 'Hosted') {
+                    hostedAbout.init();
+                }
+            },
+
+            initHostedGallery: function () {
+                if (config.page.contentType === 'Hosted') {
+                    hostedGallery.init();
+                }
             }
         };
 
@@ -403,7 +413,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner.init],
+                ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
@@ -418,9 +428,10 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh],
+                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
+                ['c-hosted-gallery', modules.initHostedGallery],
+                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();
             });

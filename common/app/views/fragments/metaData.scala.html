@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch}
+@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, CommercialSwitch, SmartAppBanner}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -40,6 +40,10 @@
 
         @if(GoogleAnalyticsSwitch.isSwitchedOn) {
             <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
+        }
+
+        @if(CommercialSwitch.isSwitchedOn) {
+            <link rel="preconnect" crossorigin href="@Configuration.googletag.jsLocation" />
         }
     }
 
@@ -93,6 +97,10 @@
 <meta name="msapplication-TileColor" content="#005689" />
 <meta name="theme-color" content="#005689">
 <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+
+@if(SmartAppBanner.isSwitchedOn) {
+    <meta name="apple-itunes-app" content="app-id=@Configuration.ios.ukAppId, app-argument=@page.metadata.webUrl">
+}
 
 @*
  * This referrer policy preserves URLs in the Referrer header when navigating

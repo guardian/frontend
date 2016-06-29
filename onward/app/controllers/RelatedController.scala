@@ -5,16 +5,17 @@ import containers.Containers
 import model.Cached.RevalidatableResult
 import model._
 import play.api.libs.json._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{Action, Controller, RequestHeader}
 import services._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
+
 import scala.concurrent.duration._
 
-object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
+class RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "related-content",
-    "related-content",
+    Some(SectionSummary.fromId("related-content")),
     "Related content",
     "GFE:Related content")
   )
@@ -60,3 +61,5 @@ object RelatedController extends Controller with Related with Containers with Lo
     )
   }
 }
+
+object RelatedController extends RelatedController

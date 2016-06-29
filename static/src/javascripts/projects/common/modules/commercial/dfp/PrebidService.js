@@ -1,6 +1,7 @@
 /* global pbjs */
 define([
     'Promise',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/QueueAsync',
     'common/utils/config',
     'common/utils/robust',
@@ -8,6 +9,7 @@ define([
     'lodash/objects/values'
 ], function (
     Promise,
+    adSizes,
     QueueAsync,
     config,
     robust,
@@ -15,7 +17,12 @@ define([
     values
 ) {
     var PREBID_TIMEOUT = 2000;
-    var supportedAdvertSizes = [[728,90], [300,250], [300,600], [970,250]];
+    var supportedAdvertSizes = [
+        adSizes.leaderboard,
+        adSizes.mpu,
+        adSizes.halfPage,
+        adSizes.billboard
+    ];
 
     return function PrebidService() {
         // We create a stub interface to use while Prebid.js is loading, passing commands it will run when it
@@ -41,7 +48,7 @@ define([
         };
 
         function runAuction(advert) {
-            var adSlotId = advert.adSlotId;
+            var adSlotId = advert.id;
             var isNewAdvert = !adUnits[adSlotId];
             adUnits[adSlotId] =  adUnits[adSlotId] || new PrebidAdUnit(advert);
 
@@ -69,7 +76,7 @@ define([
     };
 
     function PrebidAdUnit(advert) {
-        this.code = advert.adSlotId;
+        this.code = advert.id;
         this.sizes = getMatchingSizes(advert);
         this.bids = [{
             bidder : 'rubicon',
@@ -91,8 +98,8 @@ define([
     function getMatchingSizes(advert) {
         var advertSizes = concatAll(values(advert.sizes));
 
-        return supportedAdvertSizes.filter(function (size) {
-            return advertSizes.some(sizesMatch.bind(undefined, size));
+        return advertSizes.filter(function (size) {
+            return supportedAdvertSizes.some(sizesMatch.bind(undefined, size));
         });
 
         function concatAll(arrays) {

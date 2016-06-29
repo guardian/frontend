@@ -6,7 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-load',
+    'common/modules/commercial/dfp/dfp-api',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'text!common/views/commercial/outbrain.html',
@@ -19,7 +19,7 @@ define([
     detect,
     template,
     identity,
-    trackAd,
+    dfp,
     commercialFeatures,
     getCode,
     outbrainStr,
@@ -151,14 +151,14 @@ define([
                 });
             }
 
-            return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+            return dfp.trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
                 // if the high-priority merch component has loaded, we wait until
                 // the low-priority one has loaded to decide if an outbrain widget is loaded
                 // if it hasn't loaded, the outbrain widget is loaded at its default
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? dfp.trackAdRender('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];

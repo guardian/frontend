@@ -5,7 +5,6 @@ define([
     'common/utils/detect',
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/dfp/track-ad-load',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'lodash/functions/memoize'
@@ -16,7 +15,6 @@ define([
     detect,
     spaceFiller,
     dfp,
-    trackAd,
     createAdSlot,
     commercialFeatures,
     memoize
@@ -25,11 +23,13 @@ define([
     /* bodyAds is a counter that keeps track of the number of inline MPUs
      * inserted dynamically. It is used to give each MPU its own ID. */
     var bodyAds;
+    var replaceTopSlot;
     var inlineMerchRules;
     var longArticleRules;
 
     function boot() {
         bodyAds = 0;
+        replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
     }
 
     function getRules() {
@@ -98,7 +98,7 @@ define([
                 countAdded += 1;
                 var para = paras.shift();
                 var adDefinition = 'inline' + bodyAds;
-                insertAdAtPara(para, adDefinition, 'inline');
+                insertAdAtPara(para, replaceTopSlot && countAdded === 1 ? 'top-above-nav' : adDefinition, 'inline');
             }
             return countAdded;
         }
@@ -121,7 +121,7 @@ define([
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     var waitForMerch = memoize(function () {
-        return trackAd('dfp-ad--im').then(function (isLoaded) {
+        return dfp.trackAdRender('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?

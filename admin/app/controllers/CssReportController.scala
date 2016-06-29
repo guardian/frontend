@@ -36,7 +36,7 @@ case class CssReportResponse(
   selectors: Map[String, UsedAndUnused]
 )
 
-object CssReportController extends Controller with ExecutionContexts {
+class CssReportController extends Controller with ExecutionContexts {
   def entry = Action { implicit request =>
     Ok(views.html.cssReport(Configuration.environment.stage))
   }

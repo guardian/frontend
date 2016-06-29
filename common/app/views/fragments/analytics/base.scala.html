@@ -2,6 +2,7 @@
 @import conf.Configuration
 @import conf.Static
 @import conf.switches.Switches.BritishCouncilBeacon
+@import views.support.FBPixel
 
 
 @******************************************************************************
@@ -41,6 +42,7 @@
 </noscript>
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+<img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
 
 @if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
     <img alt="DCSIMG" id="DCSIMG" width="1" height="1"

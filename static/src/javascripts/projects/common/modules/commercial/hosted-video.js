@@ -6,6 +6,7 @@ define([
     'bean',
     'common/utils/$',
     'common/utils/defer-to-analytics',
+    'common/utils/report-error',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/video/fullscreener',
@@ -14,6 +15,7 @@ define([
     bean,
     $,
     deferToAnalytics,
+    reportError,
     events,
     videojsOptions,
     fullscreener,
@@ -43,30 +45,34 @@ define([
     }
 
     function init() {
-        var $videoEl = $('.vjs-hosted__video');
-
-        if (!$videoEl.length) {
-            return;
-        }
-
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
-                var mediaId = $videoEl.attr('data-media-id');
+                var $videoEl = $('.vjs-hosted__video');
+
+                if (!$videoEl.length) {
+                    return;
+                }
 
                 player = videojs($videoEl.get(0), videojsOptions());
                 player.guMediaType = 'video';
                 videojs.plugin('fullscreener', fullscreener);
 
                 // unglitching the volume on first load
-                var vol = player.volume();
-                if (vol) {
-                    player.volume(0);
-                    player.volume(vol);
-                }
 
                 player.ready(function () {
+                    var vol;
+                    initLoadingSpinner(player);
+                    upgradeVideoPlayerAccessibility(player);
+
+                    vol = player.volume();
+                    if (vol) {
+                        player.volume(0);
+                        player.volume(vol);
+                    }
+
                     player.fullscreener();
 
+                    var mediaId = $videoEl.attr('data-media-id');
                     deferToAnalytics(function () {
                         events.initOmnitureTracking(player);
                         events.initOphanTracking(player, mediaId);
@@ -75,8 +81,15 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    initLoadingSpinner(player);
-                    upgradeVideoPlayerAccessibility(player);
+                    player.on('error', function () {
+                        var err = player.error();
+                        if (err && 'message' in err && 'code' in err) {
+                            reportError(new Error(err.message), {
+                                feature: 'hosted-player',
+                                vjsCode: err.code
+                            }, false);
+                        }
+                    });
                 });
             });
         });

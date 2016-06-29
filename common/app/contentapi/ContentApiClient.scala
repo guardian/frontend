@@ -1,24 +1,23 @@
 package contentapi
 
 import akka.actor.ActorSystem
+import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common._
 import conf.Configuration
+import conf.Configuration.contentApi
 import conf.switches.Switches.{CircuitBreakerSwitch, ContentApiUseThrift}
 import metrics.{CountMetric, TimingMetric}
-import scala.concurrent.{ExecutionContext, Future}
-import common._
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import conf.Configuration.contentApi
-import com.gu.contentapi.client.model.{SearchQuery, ItemQuery, TagsQuery, SectionsQuery, EditionsQuery}
-import com.gu.contentapi.client.model.v1.ItemResponse
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
-import akka.pattern.CircuitBreaker
-
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
 object QueryDefaults extends implicits.Collections {
@@ -94,6 +93,7 @@ trait ApiQueryDefaults extends Logging {
   //common fields that we use across most queries.
   def item(id: String, edition: String): ItemQuery = item(id)
     .edition(edition)
+    .showSection(true)
     .showTags("all")
     .showFields(QueryDefaults.trailFields)
     .showElements("all")

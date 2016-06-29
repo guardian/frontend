@@ -27,7 +27,7 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "8.10"
+  val contentApiClient = "com.gu" %% "content-api-client" % "8.12"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
@@ -42,9 +42,10 @@ object Dependencies {
   val jodaConvert = "org.joda" % "joda-convert" % "1.2"
   val jSoup = "org.jsoup" % "jsoup" % "1.8.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
+  val macwire = "com.softwaremill.macwire" %% "macros" % "2.2.3" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
-  val paClient = "com.gu" %% "pa-client" % "6.0.0"
+  val paClient = "com.gu" %% "pa-client" % "6.0.2"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.7"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"

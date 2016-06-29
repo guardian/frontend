@@ -1,8 +1,7 @@
 package common.commercial
 
 import common.Edition
-import conf.switches.Switches
-import model.Branding
+import conf.switches.Switches.containerBrandingFromCapi
 import model.facia.PressedCollection
 import views.support.{Commercial, SponsorDataAttributes}
 
@@ -14,7 +13,7 @@ case class ContainerModel(
                            branding: Option[Branding]
                          ) {
   val isSingleSponsorContainer: Boolean = {
-    if (Switches.staticBadgesSwitch.isSwitchedOn) {
+    if (containerBrandingFromCapi.isSwitchedOn) {
       branding.isDefined
     } else brandingAttributes.isDefined
   }

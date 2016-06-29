@@ -1,0 +1,112 @@
+.badge-slot {
+    width: 33px;
+    margin-top: 2px;
+
+    @include mq($until: desktop) {
+        float: left;
+        margin-right: $gs-gutter / 4;
+    }
+
+    @include mq(desktop) {
+        width: gs-span(1);
+    }
+}
+
+.badge-slot__img {
+    width: 100%;
+}
+
+/* Container Rules
+   ========================================================================== */
+.fc-container__header--voices-of-america {
+    .badge-slot {
+        width: gs-span(1.5);
+        float: left;
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+
+        @include mq(wide) {
+            width: gs-span(2.5);
+        }
+    }
+
+    ~ .fc-container__header__description {
+        float: none;
+    }
+
+    .fc-container__title__text {
+        display: none;
+    }
+}
+
+/* Content Rules
+   ========================================================================== */
+.content__head--is-badged {
+    .content__section-label,
+    .content__series-label {
+        float: none;
+    }
+}
+
+.content__head--voices-of-america {
+    .badge-slot {
+        display: none;
+    }
+}
+
+/* Liveblog Rules
+   ========================================================================== */
+
+.content--liveblog {
+    .content__head--aus-election {
+        .content__header .gs-container {
+            background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog.jpg');
+        }
+
+        &.tonal__head--tone-dead {
+            .content__header .gs-container {
+                background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog_dead.jpg');
+            }
+        }
+    }
+
+    .content__head--us-election {
+        .content__header .gs-container {
+            background-image: url('https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454339615039/uselectionliveblogon.jpg');
+        }
+
+        &.tonal__head--tone-dead {
+            .content__header .gs-container {
+                background-image: url('https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454339615570/uselectionliveblogoff.jpg');
+            }
+        }
+    }
+
+    .content__head--aus-election .content__header .gs-container,
+    .content__head--us-election .content__header .gs-container {
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        background-size: gs-span(4);
+        padding-bottom: gs-height(2) + $gs-baseline * 2;
+
+        @include mq(tablet) {
+            padding-bottom: gs-height(3);
+            background-size: gs-span(5);
+        }
+
+        @include mq(desktop) {
+            padding-bottom: gs-height(4);
+        }
+
+        @include mq(leftCol) {
+            padding-bottom: gs-height(3);
+        }
+
+        @include mq(wide) {
+            padding-bottom: gs-height(2) + $gs-baseline * 2;
+            background-size: gs-span(6);
+        }
+    }
+}

@@ -279,7 +279,7 @@
     }
 }
 
-.atom-quiz__end-message {
+.atom-quiz__message {
     display: none;
     border-top: 1px solid $neutral-4;
     background-color: $neutral-8;
@@ -288,6 +288,11 @@
     .atom-quiz--is-results & {
         display: block;
     }
+}
+
+.atom-quiz__message--top {
+    border-top: $gs-baseline solid #ffffff;
+    margin-bottom: $gs-baseline;
 }
 
 .atom-quiz__score-message,
@@ -369,7 +374,7 @@
 
 // when the whole form is valid (i.e all fields have an answer),
 // show the results
-.atom-quiz--instant-reveal:valid .atom-quiz__end-message {
+.atom-quiz--instant-reveal:valid .atom-quiz__message {
     display: block;
 }
 

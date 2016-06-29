@@ -16,13 +16,8 @@ import play.api.mvc.{AnyContent, Controller}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-object ImageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
-
-  sealed trait MessageType
-  case object ImageStillOnOrigin extends MessageType
-  case object DefaultMessage extends MessageType
-  case object Cleared extends MessageType
-  case object Error extends MessageType
+class ImageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
+  import ImageDecacheController._
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
@@ -78,4 +73,12 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
     .flatMap(_.headOption)
     .map(_.trim)
 
+}
+
+object ImageDecacheController {
+  sealed trait MessageType
+  case object ImageStillOnOrigin extends MessageType
+  case object DefaultMessage extends MessageType
+  case object Cleared extends MessageType
+  case object Error extends MessageType
 }

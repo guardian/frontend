@@ -16,6 +16,7 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/tech-order',
@@ -45,6 +46,7 @@ define([
     buildPageTargeting,
     commercialFeatures,
     Component,
+    ab,
     events,
     fullscreener,
     techOrder,
@@ -240,6 +242,7 @@ define([
                     });
                     player.bigPlayButton.dispose();
                     player.errorDisplay.open();
+                    player.controlBar.dispose();
                 });
             } else {
                 blockVideoAds = videoInfo.shouldHideAdverts;
@@ -299,7 +302,11 @@ define([
                                         player.ima({
                                             id: mediaId,
                                             adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
+                                            prerollTimeout: 1000,
+                                            // We set this sightly higher so contrib-ads never timeouts before ima.
+                                            contribAdsSettings: {
+                                                timeout: 1200
+                                            }
                                         });
                                         player.on('adstart', function() {
                                             player.adSkipCountdown(15);
@@ -403,7 +410,37 @@ define([
 
     function initFacia() {
         if (config.page.isFront) {
-            videoContainer();
+            $('.js-video-playlist').each(function(el) {
+                videoContainer.init(el);
+            });
+        }
+    }
+
+    function initYellowPlayButton() {
+        var selector = '.fc-item__video';
+        var hoverStateClassName = 'u-faux-block-link--hover';
+
+        $(selector).each(function (el) {
+            bonzo(el).parent().addClass('vjs-big-play-button--yellow');
+        });
+
+        var showIntentToPlay = function (e) {
+            fastdom.write(function () {
+                $(e.currentTarget).parent().addClass(hoverStateClassName);
+            });
+        };
+
+        var removeIntentToPlay = function (e) {
+            $(e.currentTarget).parent().removeClass(hoverStateClassName);
+        };
+
+        bean.on(document.body, 'mouseenter', selector, showIntentToPlay);
+        bean.on(document.body, 'mouseleave', selector, removeIntentToPlay);
+    }
+
+    function initTests() {
+        if(ab.isInVariant('VideoYellowButton', 'variant')) {
+            initYellowPlayButton();
         }
     }
 
@@ -429,6 +466,7 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+        initTests();
     }
 
     return {
