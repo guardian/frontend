@@ -19,7 +19,8 @@ define([
         this.idealOutcome = 'People will either more often click on the next hosted video or wait until end of the current video to be redirected into the next video page url.';
 
         this.canRun = function () {
-            return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+            //return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+            return true;
         };
 
         this.variants = [

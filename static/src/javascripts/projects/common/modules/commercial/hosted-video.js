@@ -84,8 +84,6 @@ define([
                 player.guMediaType = 'video';
                 videojs.plugin('fullscreener', fullscreener);
 
-                // unglitching the volume on first load
-
                 player.ready(function () {
                     var vol;
                     var duration = parseInt(this.duration(), 10);
