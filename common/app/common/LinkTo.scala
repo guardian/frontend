@@ -26,9 +26,6 @@ trait LinkTo extends Logging {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
   private val InteractiveUrl = """(/(ng-)?interactive/.*)$""".r
 
-  /**
-    * email is here to allow secure POSTs from the footer signup form
-    */
   val httpSections: Seq[String] =
     Seq("politics")
 
