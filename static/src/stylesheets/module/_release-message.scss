@@ -197,7 +197,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message__close {
     display: table-cell;
-    vertical-align: middle;
+    vertical-align: top;
+    padding-bottom: $gs-gutter/4;
+    padding-top: $gs-gutter/4;
     padding-right: $gs-gutter;
 
     @include mq(tablet) {
