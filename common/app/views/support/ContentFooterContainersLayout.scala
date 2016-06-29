@@ -1,6 +1,6 @@
 package views.support
 
-import conf.switches.Switches.OutbrainSwitch
+import conf.switches.Switches.{OutbrainSwitch, showPaidSeriesContainer}
 import model.{Content, RelatedContent}
 import play.twirl.api.{Html, HtmlFormat}
 
@@ -23,7 +23,8 @@ object ContentFooterContainersLayout {
     val htmlBlocks = if (isAdvertisementFeature) {
 
       // majority of footer components we don't want to appear on advertisement feature articles
-      Seq(storyPackagePlaceholder, onwardPlaceholder)
+      if (showPaidSeriesContainer.isSwitchedOn) Seq(storyPackagePlaceholder, onwardPlaceholder)
+      else Seq(storyPackagePlaceholder)
 
     } else {
 

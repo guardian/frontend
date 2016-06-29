@@ -1,7 +1,7 @@
 package views.support
 
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
-import conf.switches.Switches.OutbrainSwitch
+import conf.switches.Switches.{OutbrainSwitch, showPaidSeriesContainer}
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContent, RelatedContentItem}
 import org.scalatest.{FlatSpec, Matchers}
@@ -10,6 +10,7 @@ import play.twirl.api.Html
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   OutbrainSwitch.switchOn()
+  showPaidSeriesContainer.switchOn()
 
   private def contentItem(showInRelatedContent: Boolean = true,
                           shouldHideAdverts: Boolean = false,
