@@ -131,7 +131,12 @@ define([
                 });
 
                 require(['ophan/ng'], function(ophan) {
-                   ophan.trackComponentAttention(el.querySelector('a').href, el);
+                    var a = el.querySelector('a');
+                    var href = a && a.href;
+
+                    if (href) {
+                        ophan.trackComponentAttention(href, el);
+                    }
                 });
             });
         }

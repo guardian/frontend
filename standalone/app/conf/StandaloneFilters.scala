@@ -57,11 +57,13 @@ object PreviewAuthFilters {
   }
 }
 
-class StandaloneFilters @Inject() (
-    implicit environment: Environment
+class StandaloneFilters(
+    environment: Environment
 ) extends HttpFilters {
 
-  val filters = new PreviewAuthFilters.AuthFilterWithExemptions(
+  val previewAuthFilter = new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions) :: new NoCacheFilter() ::Filters.common
+    FilterExemptions.exemptions)(environment)
+
+  val filters = previewAuthFilter :: new NoCacheFilter() :: Filters.common
 }

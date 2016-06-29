@@ -40,7 +40,7 @@ case class QuizAnswersPage(
   val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
 }
 
-object QuizController extends Controller with ExecutionContexts with Logging {
+class QuizController extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
@@ -75,3 +75,5 @@ object QuizController extends Controller with ExecutionContexts with Logging {
   }
 
 }
+
+object QuizController extends QuizController

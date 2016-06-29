@@ -38,7 +38,7 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
   }
 }
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck extends AllGoodCachedHealthCheck(
  9016,
  "/info/developer-blog/2016/apr/14/training-preview-healthcheck"
 ) {

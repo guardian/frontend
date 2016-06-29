@@ -44,6 +44,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val TwitterShareImageLogoOverlay = Switch(
+    SwitchGroup.Feature,
+    "twitter-share-image-logo-overlay",
+    "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on twitter",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 11, 7),
+    exposeClientSide = false
+  )
+
   val OutbrainSwitch = Switch(
     SwitchGroup.Feature,
     "outbrain",
@@ -442,14 +452,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  //Owener Dotcom participation
-  val MobileLabBrexitBanner = Switch(
+  // Owner: Maria Livia Chiorean
+  val SmartAppBanner = Switch(
     SwitchGroup.Feature,
-    "mobile-lab-brexit-banner",
-    "When ON, we present a promo banner to android, in the the UK pollitics or EU referendum sections",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
+    "smart-app-banner",
+    "When ON, show the Apple smart app banner by adding a meta tag",
+    owners = Seq(Owner.withGithub("marialivia16")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 28),
+    sellByDate = never,
     exposeClientSide = true
   )
+
 }

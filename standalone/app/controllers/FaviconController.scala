@@ -10,6 +10,6 @@ import play.api.mvc.Controller
  * - patterns after a variable pattern cannot match (SLS 8.1.1)
  * - unreachable code due to variable pattern 'file'
  */
-object FaviconController extends Controller {
+class FaviconController extends Controller {
   def favicon = Assets.at(path="/public", file="favicon.ico")
 }

@@ -55,7 +55,6 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'common/modules/onward/mobile-labs-alerts',
     'lodash/collections/forEach'
 ], function (
     fastdom,
@@ -101,7 +100,7 @@ define([
     Message,
     cookiesBanner,
     RelativeDates,
-    smartAppBanner,
+    customSmartAppBanner,
     Tabs,
     Toggles,
     userPrefs,
@@ -112,7 +111,6 @@ define([
     email,
     emailArticle,
     identity,
-    mobileLabsAlerts,
     forEach
 ) {
     var modules = {
@@ -382,10 +380,6 @@ define([
                 if (config.page.contentType === 'Hosted') {
                     hostedGallery.init();
                 }
-            },
-
-            mobileLabsAlertBanner: function () {
-                mobileLabsAlerts();
             }
         };
 
@@ -419,7 +413,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner.init],
+                ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
@@ -437,8 +431,7 @@ define([
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
                 ['c-hosted-gallery', modules.initHostedGallery],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox],
-                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
+                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();
             });
