@@ -21,6 +21,16 @@ $omgbColor: #dd0000;
     transition: opacity 1s linear, visibility 1s;
 }
 
+@mixin hosted-slide-in {
+    right: 0;
+    transition: right 2s linear;
+}
+
+@mixin hosted-slide-out {
+    right: -242px;
+    transition: right 2s linear;
+}
+
 .hosted-tone--renault {
     color: $renaultColor;
 }
@@ -115,6 +125,7 @@ $omgbColor: #dd0000;
             width: $hosted-video-width;
             padding-bottom: $hosted-video-height;
             margin: 0 auto;
+            overflow: hidden;
         }
     }
 }
@@ -836,10 +847,9 @@ $omgbColor: #dd0000;
 //Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
-    //@include hosted-fade-out;
     position: absolute;
     bottom: 0px;
-    right: 0px;
+    right: -242px;
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -909,7 +919,7 @@ $omgbColor: #dd0000;
 
     &.js-autoplay-start {
         @include mq(desktop) {
-            @include hosted-fade-in;
+            @include hosted-slide-in;
         }
     }
 
