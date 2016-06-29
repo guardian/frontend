@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/visitor-frequency-quick-survey',
     'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/participation-low-fric-music-v2'
 ], function (
     reportError,
@@ -33,6 +34,7 @@ define([
     NewUserAdvertsDisabled,
     VisitorFrequencyQuickSurvey,
     VideoYellowPlayButton,
+    JoinDiscussionAfterPoll,
     ParticipationLowFricMusicV2
 ) {
 
@@ -45,6 +47,7 @@ define([
         new NewUserAdvertsDisabled(),
         new VisitorFrequencyQuickSurvey(),
         new VideoYellowPlayButton(),
+        new JoinDiscussionAfterPoll(),
         new ParticipationLowFricMusicV2()
     ];
 
@@ -118,6 +121,7 @@ define([
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
             isSensitive = config.page.shouldHideAdverts;
+
         return ((isSensitive ? test.showForSensitive : true)
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }
