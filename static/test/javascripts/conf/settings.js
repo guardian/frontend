@@ -16,9 +16,22 @@ module.exports = function (config) {
             { pattern: 'static/test/javascripts/fixtures/**/*', included: false },
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
             { pattern: 'static/src/inline-svgs/**/*.svg', included: false },
-            { pattern: 'static/src/javascripts/{projects,components,vendor,bootstraps}/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/{projects,vendor,bootstraps}/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
-            { pattern: 'static/public/javascripts/**/*.js', included: false }
+            { pattern: 'static/public/javascripts/**/*.js', included: false },
+
+            { pattern: 'node_modules/bean/**/*.js', included: false},
+            { pattern: 'node_modules/bonzo/**/*.js', included: false},
+            { pattern: 'node_modules/react/dist/**/*.js', included: false},
+            { pattern: 'node_modules/wolfy87-eventemitter/**/*.js', included: false},
+            { pattern: 'node_modules/fastdom/**/*.js', included: false},
+            { pattern: 'node_modules/fence/**/*.js', included: false},
+            { pattern: 'node_modules/lodash-amd/**/*.js', included: false},
+            { pattern: 'node_modules/when/es6-shim/**/*.js', included: false},
+            { pattern: 'node_modules/qwery/**/*.js', included: false},
+            { pattern: 'node_modules/raven-js/dist/**/*.js', included: false},
+            { pattern: 'node_modules/reqwest/**/*.js', included: false},
+            { pattern: 'node_modules/requirejs-text/**/*.js', included: false}
         ],
 
         exclude: [],
