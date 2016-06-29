@@ -15,8 +15,7 @@ define([
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/visitor-frequency-quick-survey',
     'common/modules/experiments/tests/video-yellow-button',
-    'common/modules/experiments/tests/join-discussion-after-poll',
-    'common/modules/experiments/tests/participation-low-fric-music-v2'
+    'common/modules/experiments/tests/join-discussion-after-poll'
 ], function (
     reportError,
     config,
@@ -34,8 +33,7 @@ define([
     NewUserAdvertsDisabled,
     VisitorFrequencyQuickSurvey,
     VideoYellowPlayButton,
-    JoinDiscussionAfterPoll,
-    ParticipationLowFricMusicV2
+    JoinDiscussionAfterPoll
 ) {
 
     var TESTS = [
@@ -47,8 +45,7 @@ define([
         new NewUserAdvertsDisabled(),
         new VisitorFrequencyQuickSurvey(),
         new VideoYellowPlayButton(),
-        new JoinDiscussionAfterPoll(),
-        new ParticipationLowFricMusicV2()
+        new JoinDiscussionAfterPoll()
     ];
 
     var participationsKey = 'gu.ab.participations';
