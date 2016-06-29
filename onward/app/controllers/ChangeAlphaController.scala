@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 
-object ChangeAlphaController extends Controller with PreferenceController {
+class ChangeAlphaController extends Controller with PreferenceController {
 
   def render(optAction: String, redirectUrl: String) = Action { implicit request =>
     val abCookieName: String = "GU_FRONT_ALPHAS"
@@ -14,3 +14,5 @@ object ChangeAlphaController extends Controller with PreferenceController {
   }
 
 }
+
+object ChangeAlphaController extends ChangeAlphaController

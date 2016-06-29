@@ -17,7 +17,7 @@ case class MatchPage(liveScore: Match) extends StandalonePage {
     analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 
-object MatchesController extends Controller with Logging with ExecutionContexts {
+class MatchesController extends Controller with Logging with ExecutionContexts {
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 
@@ -54,3 +54,5 @@ object MatchesController extends Controller with Logging with ExecutionContexts 
     }.getOrElse(NotFound)
   }
 }
+
+object MatchesController extends MatchesController

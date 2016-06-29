@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/video-football-thrasher',
+    'common/modules/experiments/tests/visitor-frequency-quick-survey',
     'common/modules/experiments/tests/video-yellow-button',
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/participation-low-fric-music-v2'
@@ -33,6 +34,7 @@ define([
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VideoFootballThrasher,
+    VisitorFrequencyQuickSurvey,
     VideoYellowPlayButton,
     JoinDiscussionAfterPoll,
     ParticipationLowFricMusicV2
@@ -46,6 +48,7 @@ define([
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VideoFootballThrasher(),
+        new VisitorFrequencyQuickSurvey(),
         new VideoYellowPlayButton(),
         new JoinDiscussionAfterPoll(),
         new ParticipationLowFricMusicV2()

@@ -16,7 +16,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
     analyticsName = s"GFE:Cricket:automatic:match:${dateFormat.print(theMatch.gameDate)}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}")
 }
 
-object CricketMatchController extends Controller with Logging with ExecutionContexts {
+class CricketMatchController extends Controller with Logging with ExecutionContexts {
 
   def renderMatchIdJson(date: String, teamId: String) = renderMatchId(date, teamId)
 
@@ -37,3 +37,5 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
   }
 
 }
+
+object CricketMatchController extends CricketMatchController

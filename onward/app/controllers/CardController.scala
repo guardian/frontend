@@ -9,7 +9,7 @@ import play.api.libs.ws.WS
 import play.api.libs.json.{ JsObject, Json }
 import scala.concurrent.Future
 
-object CardController extends Controller with Logging with ExecutionContexts {
+class CardController extends Controller with Logging with ExecutionContexts {
 
   import play.api.Play.current
 
@@ -85,3 +85,5 @@ object CardController extends Controller with Logging with ExecutionContexts {
     }
   }
 }
+
+object CardController extends CardController
