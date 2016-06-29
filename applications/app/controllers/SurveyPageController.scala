@@ -1,6 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
+import conf.Configuration
 import model.{NoCache, Cached}
 import model.Cached.RevalidatableResult
 import play.api.libs.ws.WS
@@ -17,7 +18,7 @@ object SurveyPageController extends Controller with ExecutionContexts {
    }
 
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
-      WS.url(s"https://guardiannewsampampmedia.formstack.com/forms/$formName")
+      WS.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
         .head
         .map { headResponse =>
           headResponse.status match {

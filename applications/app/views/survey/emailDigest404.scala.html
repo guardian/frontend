@@ -3,6 +3,8 @@
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
 @import model.Page
+@import conf.Configuration.Survey.formStackAccountName
+
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
@@ -64,7 +66,7 @@
                     <p>This feature is not yet available as we are still testing demand for it. Tell us your email address and we'll let you know when it is available (we won't use it for any other purposes).</p>
 
                     <div class="inline-email-form">
-                        <script type="text/javascript" src="https://guardiannewsampampmedia.formstack.com/forms/js.php/email_digest_email?no_style_strict=1"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/email_digest_email" title="Online Form">Online Form - Email digest email</a></noscript>
+                        <script type="text/javascript" src="https://@{formStackAccountName}.formstack.com/forms/js.php/email_digest_email?no_style_strict=1"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/email_digest_email" title="Online Form">Online Form - Email digest email</a></noscript>
                     </div>
 
                 </div>
