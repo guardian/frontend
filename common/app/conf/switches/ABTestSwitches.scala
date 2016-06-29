@@ -74,33 +74,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoFootballThrasher = Switch(
+  val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
-    "ab-video-football-thrasher",
-    "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("blongden73")),
+    "ab-join-discussion-after-poll",
+    "Does 'join discussion' message after poll participation increase comments",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
-    exposeClientSide = true
-  )
-
-  val ABVideoYellowButton = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-yellow-button",
-    "Make big play button yellow",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 29),
-    exposeClientSide = true
-  )
-
-  val ABParticipationLowFricMusicV2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-music-v2",
-    "AB test switch to insert low friction participation into music",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 29),
+    sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
   )
 

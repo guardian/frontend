@@ -1,4 +1,12 @@
 @(file: String, path: String = "", classes: Seq[String] = List(), title: Option[String] = None)
+
+@import views.support.setSvgClasses
+
 <span @title.map{ t => title="@t" } class="inline-@file @if(path){inline-@path} @classes.mkString(" ")">
-    @Html(common.Assets.inlineSvg(path + "/" + file + ".svg"))
+    @defining((
+        path + "/" + file + ".svg",
+        classes ++ Seq("inline-" + file, "inline-" + path)
+    )) { case (pathToSvg, classNames) =>
+        @Html(setSvgClasses(common.Assets.inlineSvg(pathToSvg), classNames))
+    }
 </span>
