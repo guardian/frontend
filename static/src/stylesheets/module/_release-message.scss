@@ -4,7 +4,7 @@
     display: block;
     color: #ffffff;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         @include fs-headline(2, true);
     }
 }
@@ -21,21 +21,13 @@
 }
 
 .site-message__inner {
+    display: table;
     padding: 0 $gs-gutter/2;
+    width: 100%;
 
     @include mq(tablet) {
-        display: table;
-        width: 100%;
         padding: 0;
-        min-height: gs-height(2) - $gs-baseline;
-    }
-
-    @include mq(desktop) {
-        min-height: gs-height(2) - $gs-baseline*2;
-    }
-
-    @include mq(wide) {
-        min-height: gs-height(1) + $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline/2;
     }
 }
 
@@ -56,18 +48,21 @@
 }
 
 .site-message__copy {
-    padding-top: $gs-baseline;
-    padding-bottom: $gs-baseline;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
 
     @include mq(tablet) {
+        padding-top: 0;
+        padding-bottom: 0;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
     }
 
     @include mq(desktop) {
         padding: 0;
-        display: table-cell;
-        vertical-align: middle;
     }
 }
 
@@ -111,6 +106,10 @@
     @include mq(wide) {
         max-width: none;
     }
+}
+
+.site-message__message--membership {
+    max-width: none;
 }
 
 .site-message__message--tall {
@@ -199,10 +198,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message__close {
     display: table-cell;
     vertical-align: middle;
-    padding-right: $gs-gutter/2;
+    padding-right: $gs-gutter;
 
-    @include mq(desktop) {
-        padding-right: $gs-gutter;
+    @include mq(tablet) {
+        padding-right: $gs-gutter/2;
     }
 }
 
@@ -216,17 +215,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
     color: #ffffff;
+    float: right;
 
     &:hover,
     &:focus,
     &:active {
         border-color: #ffffff;
-    }
-
-    @include mq($until: tablet) {
-        position: absolute;
-        right: $gs-gutter;
-        top: $gs-baseline;
     }
 }
 
@@ -287,7 +281,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: $gs-gutter;
         height: $gs-gutter;
         background-color: $neutral-1;
-        box-shadow: 0px 1px 0px $neutral-3;
+        box-shadow: 0 1px 0 $neutral-3;
 
         &:before {
             @include font(arial, bold, 14px);
