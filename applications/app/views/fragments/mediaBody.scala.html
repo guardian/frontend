@@ -69,7 +69,7 @@
                                             <meta itemprop="width" content="@mv.videos.width" />
                                         }
                                         <meta itemprop="requiresSubscription" content="false" />
-                                        <meta itemprop="image" content="@Html(video.content.twitterCardImage)" />
+                                        <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
                                         @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
                                         @video.elements.mainVideo.map { videoElement =>
                                             @fragments.media.video(VideoPlayer(
