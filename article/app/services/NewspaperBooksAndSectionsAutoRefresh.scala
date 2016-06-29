@@ -1,7 +1,9 @@
 package services
 
+import akka.actor.ActorSystem
 import common.{LifecycleComponent, AutoRefresh}
 import model.{TagDefinition, TagIndexListings}
+import play.libs.Akka
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -25,7 +27,7 @@ trait NewspaperTags {
   }
 }
 
-class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+class NewspaperBookTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
   override val source = "newspaper_books"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -34,9 +36,9 @@ class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 m
   }
 }
 
-object NewspaperBookTagAgent extends NewspaperBookTagAgent
+object NewspaperBookTagAgent extends NewspaperBookTagAgent(Akka.system())
 
-class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+class NewspaperBookSectionTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
   override val source = "newspaper_book_sections"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -45,4 +47,4 @@ class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 secon
   }
 }
 
-object NewspaperBookSectionTagAgent extends NewspaperBookSectionTagAgent
+object NewspaperBookSectionTagAgent extends NewspaperBookSectionTagAgent(Akka.system())
