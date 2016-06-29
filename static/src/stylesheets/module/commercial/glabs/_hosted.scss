@@ -848,15 +848,21 @@ $omgbColor: #dd0000;
 .hosted-next-autoplay {
     @include f-textSans;
     position: absolute;
-    bottom: 0px;
-    right: -242px;
+    top: 0;
+    right: 0;
     z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 100%;
-    width: 242px;
-    background-color: rgba(#333333, .4);
+    height: 440px;
+    width: 100%;
+    background-color: #333333;
+    @include mq(desktop) {
+        width: 242px;
+        background-color: rgba(#333333, .4);
+        right: -242px;
+        height: 100%;
+    }
 
     .hosted-next-autoplay__cancel {
         position: absolute;
@@ -868,6 +874,7 @@ $omgbColor: #dd0000;
             border: none;
             font-size: 16px;
             color: #999999;
+            position: static;
         }
 
         svg {
@@ -891,10 +898,13 @@ $omgbColor: #dd0000;
     }
 
     .hosted-next-autoplay__poster {
-        display: block;
+        display: none;
         position: relative;
         height: 130px;
         margin-top: 20px;
+        @include mq(desktop) {
+            display: block;
+        }
     }
 
     .hosted-next-autoplay__poster-img {
@@ -915,6 +925,17 @@ $omgbColor: #dd0000;
         font-weight: bold;
         line-height: 20px;
         text-align: center;
+    }
+
+    .hosted__next-video--mobile {
+        @include circular;
+        display: block;
+        padding: 4px 6px 4px 16px;
+        border: 1px solid $renaultColor;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 
     &.js-autoplay-start {
@@ -945,9 +966,13 @@ $omgbColor: #dd0000;
             color: #333333;
             line-height: 30px;
             background-color: $renaultColor;
-            margin: 24px 0;
+            margin: 12px 0;
             font-weight: 600;
             padding: 4px 6px 4px 16px;
+
+            @include mq(desktop) {
+                margin: 24px 0;
+            }
 
             .inline-arrow-right {
                 display: block;

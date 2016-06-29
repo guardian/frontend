@@ -54,7 +54,7 @@ define([
     function nextVideoTimer(duration, $timer, nextVideoLink) {
         return setInterval(function () {
             if (duration === 0) {
-                omniture.trackLinkImmediate('autoplay the next video');
+                omniture.trackLinkImmediate('Immediately play the next video');
                 window.location = nextVideoLink;
             }
             fastdom.write(function () {

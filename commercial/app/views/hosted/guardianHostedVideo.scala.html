@@ -31,32 +31,35 @@
                             <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
                         </div>
                     </div>
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">Discover your Renault Zoe</div>
-                            <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__next-video--tile" data-link-name="Discover Zoe from Renault" target="_blank">
-                                Visit Renault now @fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone--renault">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@page.nextPage.video.title</h2>
-                            </div>
-                            <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
-                                <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
+        <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
+            <div class="hosted-next-autoplay__cancel">
+                <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
+                    <span>Hide</span>
+                </button>
+            </div>
+            <div class="hosted-next-autoplay__next-in-series">
+                <div class="hosted-next-autoplay__subheader">Discover your Renault Zoe</div>
+                <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__next-video--tile" data-link-name="Discover Zoe from Renault" target="_blank">
+                    Visit Renault now @fragments.inlineSvg("arrow-right", "icon", List(""))
+                </a>
+            </div>
+            <div class="hosted-next-autoplay__video">
+                <div class="hosted-next-autoplay__header">
+                    <div class="hosted-next-autoplay__continue hosted-tone--renault">Continue watching</div>
+                    <h2 class="hosted-next-autoplay__subheader">@page.nextPage.video.title</h2>
+                </div>
+                <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
+                    <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
+                    <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
+                </a>
+                <a href="@page.nextPage.pageUrl" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @page.nextPage.video.title" target="_blank">
+                    Watch now
+                </a>
+            </div>
+        </div>
         <section class="adverts adverts--legacy hosted__container hosted__container--content">
             <header class="adverts__header hosted__social">
                 <div class="meta__social hosted__social-wrapper" data-component="share">
