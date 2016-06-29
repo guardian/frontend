@@ -74,16 +74,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoFootballThrasher = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-football-thrasher",
-    "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
-    exposeClientSide = true
-  )
-
   val ABVideoYellowButton = Switch(
     SwitchGroup.ABTests,
     "ab-video-yellow-button",
