@@ -142,7 +142,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   
 
 # Facia
 GET        /                                                                                   controllers.FaciaDraftController.rootEditionRedirect()
-GET        /rss                                                                                controllers.FaciaController.renderRootFrontRss()
+GET        /rss                                                                                controllers.FaciaControllerImpl.renderRootFrontRss()
 GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.renderFront(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)

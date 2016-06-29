@@ -11,7 +11,7 @@ import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 
 import scala.concurrent.duration._
 
-object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
+class RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "related-content",
@@ -61,3 +61,5 @@ object RelatedController extends Controller with Related with Containers with Lo
     )
   }
 }
+
+object RelatedController extends RelatedController

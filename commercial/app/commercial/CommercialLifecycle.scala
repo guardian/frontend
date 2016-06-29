@@ -32,7 +32,10 @@ private [commercial] object CommercialLifecycleMetrics extends Logging {
   }
 }
 
-class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class CommercialLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -61,11 +64,11 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
   }
 
   private val refreshJobs: List[RefreshJob] = List(
-    MasterclassTagsRefresh,
-    CountriesRefresh,
-    IndustriesRefresh,
-    MoneyBestBuysRefresh,
-    CommercialMetricsRefresh
+    new MasterclassTagsRefresh(jobs),
+    new CountriesRefresh(jobs),
+    new IndustriesRefresh(jobs),
+    new MoneyBestBuysRefresh(jobs),
+    new CommercialMetricsRefresh(jobs)
   )
 
   private def recordEvent(eventName:String, outcome:String): Unit = {
@@ -137,8 +140,8 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
     for (fetcher <- FeedFetcher.all) {
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
-      Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
+      jobs.deschedule(jobName)
+      jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         fetchFeed(fetcher)
       }
     }
@@ -146,8 +149,8 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
     for (parser <- FeedParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
-      Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
+      jobs.deschedule(jobName)
+      jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         parseFeed(parser)
       }
     }
@@ -158,7 +161,7 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
       case (job, i) => job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
 
       MasterclassTagsAgent.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
@@ -190,11 +193,11 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
     refreshJobs foreach (_.stop())
 
     for (fetcher <- FeedFetcher.all) {
-      Jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
+      jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
     }
 
     for (parser <- FeedParser.all) {
-      Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
+      jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
   }
 }

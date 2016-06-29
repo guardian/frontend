@@ -16,7 +16,7 @@ import views.support.PreviousAndNext
 
 import scala.concurrent.Future
 
-object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+class AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -133,3 +133,5 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }
+
+object AllIndexController extends AllIndexController

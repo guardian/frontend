@@ -8,7 +8,7 @@ import weather.WeatherApi
 import common.Seqs._
 import scala.concurrent.duration._
 
-object WeatherController extends Controller with ExecutionContexts {
+class WeatherController extends Controller with ExecutionContexts {
   val MaximumForecastDays = 10
 
   def forCity(cityId: String) = Action.async{ implicit request =>
@@ -25,3 +25,5 @@ object WeatherController extends Controller with ExecutionContexts {
     })
   }
 }
+
+object WeatherController extends WeatherController
