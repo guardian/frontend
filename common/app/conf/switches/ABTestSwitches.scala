@@ -84,6 +84,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABJoinDiscussionAfterPoll = Switch(
+    SwitchGroup.ABTests,
+    "ab-join-discussion-after-poll",
+    "Does 'join discussion' message after poll participation increase comments",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 13),
+    exposeClientSide = true
+  )
+
   val ABSamplingTest = Switch(
     SwitchGroup.ABTests,
     "ab-sampling-test",

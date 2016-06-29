@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/visitor-frequency-quick-survey',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/video-yellow-button',
+    'common/modules/experiments/tests/join-discussion-after-poll'
 ], function (
     reportError,
     config,
@@ -31,7 +32,8 @@ define([
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VisitorFrequencyQuickSurvey,
-    VideoYellowPlayButton
+    VideoYellowPlayButton,
+    JoinDiscussionAfterPoll
 ) {
 
     var TESTS = [
@@ -42,7 +44,8 @@ define([
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VisitorFrequencyQuickSurvey(),
-        new VideoYellowPlayButton()
+        new VideoYellowPlayButton(),
+        new JoinDiscussionAfterPoll()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -115,6 +118,7 @@ define([
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
             isSensitive = config.page.shouldHideAdverts;
+
         return ((isSensitive ? test.showForSensitive : true)
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }
