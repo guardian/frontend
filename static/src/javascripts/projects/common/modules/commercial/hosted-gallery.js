@@ -65,6 +65,8 @@ define([
         this.swipeThreshold = 0.05;
         this.resize = this.trigger.bind(this, 'resize');
         this.index = this.index || 1;
+        this.imageRatios = [];
+        mediator.on('window:resize', this.resize);
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
@@ -79,6 +81,7 @@ define([
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
         this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
+        this.$ctaFloat = $('.js-hosted-gallery-cta-float', this.$galleryEl)[0];
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -169,17 +172,59 @@ define([
     };
 
     HostedGallery.prototype.loadSurroundingImages = function (index, count) {
-        var imageContent = config.page.images, $img;
-        chain([-1, 0, 1]).and(
+        var imageContent = config.page.images, $img, that = this;
+        chain([0, 1, 2]).and(
             map,
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
-            $img = bonzo(this.$images[i]);
-            if(imageContent[i]){
-                $img.css('background-image', 'url(' + imageContent[i] + ')');
+            $img = $('img', this.$images[i]);
+            if (!$img.attr('src')) {
+                $img.attr('src', imageContent[i]);
+
+                bean.one($img[0], 'load', function () {
+                    that.imageRatios[i] = this.naturalWidth/this.naturalHeight;
+                    that.resizeImage.call(that, i);
+                });
+            } else {
+                that.resizeImage.call(that, i);
             }
         }.bind(this));
 
+    };
+
+    HostedGallery.prototype.resizeImage = function (imgIndex) {
+        var $imageDiv = this.$images[imgIndex],
+            $imagesContainer = this.$imagesContainer[0],
+            $gallery = this.$galleryEl[0],
+            width = $gallery.clientWidth,
+            height = $imagesContainer.clientHeight,
+            $sizer = $('.hosted-gallery__image-sizer', $imageDiv),
+            $img = $('img', $sizer),
+            imgRatio = this.imageRatios[imgIndex],
+            imageHeight = height,
+            imageWidth = width,
+            topBottom = 0,
+            leftRight = 0;
+        if ($img.attr('src') && imgRatio) {
+            if(imgRatio > width/height) {
+                // landscape image
+                imageHeight = width / imgRatio;
+                topBottom = (height - imageHeight) / 2 + 'px';
+            } else {
+                // portrait image
+                imageWidth = height * imgRatio;
+                leftRight = (width - imageWidth) / 2 + 'px';
+            }
+            $sizer.css('width', imageWidth);
+            $sizer.css('height', imageHeight);
+            $sizer.css('top', topBottom);
+            $sizer.css('left', leftRight);
+            if(!this.useSwipe && imgIndex === config.page.ctaIndex){
+                bonzo(this.$ctaFloat).css('bottom', topBottom);
+                bonzo(this.$ctaFloat).css('left', leftRight);
+                bonzo(this.$ctaFloat).css('right', leftRight);
+            }
+        }
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -335,6 +380,7 @@ define([
                 },
                 'resize': function () {
                     this.swipeContainerWidth = this.$galleryEl.dim().width;
+                    this.loadSurroundingImages(this.index, this.$images.length);
                     if(this.useSwipe){
                         this.translateContent(this.$images.length, 0, 0);
                     }
@@ -357,7 +403,7 @@ define([
         }
     };
 
-    function bootstrap() {
+    function init() {
         loadCssPromise.then(function () {
             var gallery,
                 match,
@@ -378,7 +424,7 @@ define([
     }
 
     return {
-        init: bootstrap,
+        init: init,
         HostedGallery: HostedGallery
     };
 });
