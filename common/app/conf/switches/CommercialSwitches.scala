@@ -336,6 +336,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val showPaidSeriesContainer = Switch(
+    group = CommercialLabs,
+    "show-paid-series-containers",
+    "Show series containers on paid content pages.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
+  )
+
   val hostedGalleryTest = Switch(
     group = CommercialLabs,
     "hosted-gallery-test",
