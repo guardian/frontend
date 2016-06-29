@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/visitor-frequency-quick-survey',
-    'common/modules/experiments/tests/video-yellow-button',
     'common/modules/experiments/tests/join-discussion-after-poll'
 ], function (
     reportError,
@@ -32,7 +31,6 @@ define([
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
     VisitorFrequencyQuickSurvey,
-    VideoYellowPlayButton,
     JoinDiscussionAfterPoll
 ) {
 
@@ -44,7 +42,6 @@ define([
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
         new VisitorFrequencyQuickSurvey(),
-        new VideoYellowPlayButton(),
         new JoinDiscussionAfterPoll()
     ];
 

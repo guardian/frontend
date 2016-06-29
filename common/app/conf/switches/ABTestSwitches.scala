@@ -74,16 +74,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoYellowButton = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-yellow-button",
-    "Make big play button yellow",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 29),
-    exposeClientSide = true
-  )
-
   val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
     "ab-join-discussion-after-poll",
