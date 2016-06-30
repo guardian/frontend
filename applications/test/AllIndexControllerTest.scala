@@ -46,7 +46,7 @@ import play.api.test.Helpers._
     }
   }
 
-  lazy val allIndexController = new AllIndexController(new IndexController)
+  lazy val allIndexController = new AllIndexController
 
   it should "redirect dated tag pages to the equivalent /all page" in {
     val result = allIndexController.on("football/series/thefiver/2014/jan/23")(TestRequest())
