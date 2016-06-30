@@ -110,34 +110,51 @@
     }
 }
 
-%new-header__burger-icon__line {
-    width: 100%;
-    height: 2px;
-    background-color: #ffffff;
+.new-header__burger-icon {
+    position: relative;
+    margin-top: 3px;
+    cursor: pointer;
+
+    transform: rotate(0deg);
+    transition: .4s ease-in-out;
+
+    span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: #ffffff;
+
+        opacity: 1;
+        transform: rotate(0deg);
+        transition: .2s ease-in-out;
+
+        &:nth-child(1) {
+            top: 0;
+        }
+        &:nth-child(2), &:nth-child(3) {
+            top: 5px;
+        }
+        &:nth-child(4) {
+            top: 10px;
+        }
+    }
 }
 
-.new-header__nav__menu-button__burger-icon {
-    @extend %new-header__burger-icon__line;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 3px;
-    position: relative;
-
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        display: block;
-    }
-
-    &:before {
-        @extend %new-header__burger-icon__line;
-        top: 5px;
-    }
-
-    &:after {
-        @extend %new-header__burger-icon__line;
-        top: 10px;
+.new-header__burger-icon--open {
+    span {
+        &:nth-child(1) {
+            opacity: 0;
+        }
+        &:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        &:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        &:nth-child(4) {
+            opacity: 0;
+        }
     }
 }
 
@@ -221,14 +238,15 @@
     background-color: $guardian-brand;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
-    will-change: transform;
-    transition: transform .2s ease-out;
     font-family: $f-sans-serif-text;
     font-size: 20px;
     text-transform: lowercase;
     // TODO: Remove
     padding-top: 10px;
     overflow: auto;
+
+    will-change: transform;
+    transition: transform .2s ease-out;
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
