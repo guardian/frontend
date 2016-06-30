@@ -48,7 +48,7 @@ define([
             $(documentAnchorClass).append(externalTpl({widgetType: widgetType}));
         }
 
-        var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false).name) >= 0;
+        var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false)) >= 0;
         var shouldIgnoreSwitch =  isMobileOrTablet || config.page.section === 'world' || config.page.edition.toLowerCase() !== 'au';
         var shouldServePlista = config.switches.plistaForOutbrainAu && !shouldIgnoreSwitch;
 
