@@ -105,7 +105,6 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
       for (section <- edition.editionalisedSections) {
         val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", edition)
         val expectedPath = if(section.isEmpty) edition.networkFrontId else s"${edition.networkFrontId}/$section"
-        val expectedProtocol = if(TheGuardianLinkTo.httpSections.contains(section))
         testLink should startWith("https://")
         testLink should endWith (s"www.theguardian.com/$expectedPath")
       }
