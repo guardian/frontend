@@ -413,12 +413,10 @@
 }
 .ad-slot--im {
     float: left;
-    width: 0;
-    height: 0;
 
-    &.ad-slot--rendered {
-        width: auto;
-        height: auto;
+    &:not(.ad-slot--rendered) {
+        width: 0;
+        height: 0;
     }
 }
 .ad-slot--fobadge.ad-slot--im {
