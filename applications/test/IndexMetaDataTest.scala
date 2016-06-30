@@ -1,5 +1,6 @@
 package test
 
+import controllers.IndexController
 import metadata.MetaDataMatcher
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
@@ -10,34 +11,35 @@ import play.api.test.Helpers._
 
   val articleUrl = "money/pensions"
   val crosswordsUrl = "crosswords"
+  val indexController = new IndexController
 
   it should "Include organisation metadata" in {
-    val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureOrganisation(result)
   }
 
   it should "Include webpage metadata" in {
-    val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
   }
 
   it should "Include app deep link" in {
-    val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureDeepLink(result)
   }
 
   it should "Not include app deep link on the crosswords index" in {
-    val result = controllers.IndexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
+    val result = indexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
     MetaDataMatcher.ensureNoDeepLink(result)
   }
 
   it should "not include webpage metadata on the crossword index" in {
-    val result = controllers.IndexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
+    val result = indexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
     MetaDataMatcher.ensureNoIosUrl(result)
   }
 
   it should "Include item list metadata" in {
-    val result = controllers.IndexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
