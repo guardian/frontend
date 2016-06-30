@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Height of the top banner is fixed at 250px in the Tech section",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = false
   )
 
