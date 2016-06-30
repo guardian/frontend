@@ -847,21 +847,27 @@ $omgbColor: #dd0000;
 //Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
+    @include hosted-fade-out;
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    height: 440px;
+    height: 394px;
     width: 100%;
     background-color: #333333;
-    @include mq(desktop) {
+    padding-top: 94px;
+
+    @include mq(desktop) { //on desktop it's visible just hidden on the right
+        visibility: visible;
+        opacity: 1;
         width: 242px;
         background-color: rgba(#333333, .4);
         right: -242px;
         height: 100%;
+        justify-content: flex-end;
+        padding-top: 0;
     }
 
     .hosted-next-autoplay__cancel {
@@ -871,7 +877,7 @@ $omgbColor: #dd0000;
         right: 8px;
 
         .site-message__close-btn {
-            border: none;
+            border: 0;
             font-size: 16px;
             color: #999999;
             position: static;
@@ -929,9 +935,25 @@ $omgbColor: #dd0000;
 
     .hosted__next-video--mobile {
         @include circular;
+        position: relative;
         display: block;
-        padding: 4px 6px 4px 16px;
-        border: 1px solid $renaultColor;
+        padding: 4px 6px 4px 40px;
+        margin: 16px 0;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        width: 30%;
+        font-weight: bold;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent $neutral-7;
+            border-width: .5rem .5rem .5rem 1.125rem;
+            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+        }
 
         @include mq(desktop) {
             display: none;
@@ -939,8 +961,15 @@ $omgbColor: #dd0000;
     }
 
     &.js-autoplay-start {
+        @include hosted-fade-in;
         @include mq(desktop) {
             @include hosted-slide-in;
+        }
+    }
+
+    &.hosted-slide-out {
+        @include mq(desktop) {
+            @include hosted-slide-out;
         }
     }
 
