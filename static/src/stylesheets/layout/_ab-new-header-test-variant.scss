@@ -353,6 +353,22 @@ $navigation-horizontal-padding: 38px;
     }
 }
 
+.navigation-group__social-icon {
+    fill: hsla(0, 0%, 100%, .3);
+    position: absolute;
+    left: 0;
+
+    svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    &.inline-instagram svg {
+        width: 17px;
+        height: 17px;
+    }
+}
+
 .no-text-transform {
     text-transform: none;
 }
