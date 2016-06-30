@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
+class MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "more galleries",
@@ -60,3 +60,5 @@ object MostViewedGalleryController extends Controller with Logging with Executio
     renderFormat(htmlResponse, jsonResponse, 900)
   }
 }
+
+object MostViewedGalleryController extends MostViewedGalleryController

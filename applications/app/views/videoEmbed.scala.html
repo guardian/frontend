@@ -69,7 +69,7 @@
                 )
             ),
             config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body),
-            adBlockers: {}
+            adBlockers: { onDetect: [] }
         };
         var docClass = document.documentElement.className;
 
@@ -97,11 +97,14 @@
         <script>
             @Html(curlConfig().body)
 
-            window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
-            window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
-
+            @if(Configuration.assets.useHashedBundles) {
+                window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            } else {
+                window.curl.paths['bootstraps/video-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/video-embed.js';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            }
             @Html(common.Assets.js.curl)
-
             require(['bootstraps/video-embed'], function(bootstrap) {
                 bootstrap.init();
             });

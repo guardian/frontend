@@ -54,16 +54,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVisitorFrequencyQuickSurvey = Switch(
-    SwitchGroup.ABTests,
-    "ab-visitor-frequency-quick-survey",
-    "Add a single question survey to the submeta section of article pages",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
-    exposeClientSide = true
-  )
-
   val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
     "ab-new-user-adverts-disabled",
@@ -74,34 +64,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVideoFootballThrasher = Switch(
+  val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
-    "ab-video-football-thrasher",
-    "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("blongden73")),
+    "ab-join-discussion-after-poll",
+    "Does 'join discussion' message after poll participation increase comments",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
+    sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
   )
 
-  val ABVideoYellowButton = Switch(
+  val ABSamplingTest = Switch(
     SwitchGroup.ABTests,
-    "ab-video-yellow-button",
-    "Make big play button yellow",
-    owners = Seq(Owner.withGithub("akash1810")),
+    "ab-sampling-test",
+    "Tests the sampling",
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 29),
+    sellByDate = new LocalDate(2016, 7, 22),
     exposeClientSide = true
   )
-
-  val ABParticipationLowFricMusicV2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-low-fric-music-v2",
-    "AB test switch to insert low friction participation into music",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 29),
-    exposeClientSide = true
-  )
-
 }

@@ -16,7 +16,7 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-object CommentsController extends DiscussionController with ExecutionContexts {
+class CommentsController extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(
@@ -186,3 +186,5 @@ object CommentsController extends DiscussionController with ExecutionContexts {
     }
   }
 }
+
+object CommentsController extends CommentsController
