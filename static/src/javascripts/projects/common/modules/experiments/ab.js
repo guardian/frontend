@@ -13,7 +13,6 @@ define([
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/visitor-frequency-quick-survey',
     'common/modules/experiments/tests/join-discussion-after-poll'
 ], function (
     reportError,
@@ -30,7 +29,6 @@ define([
     CleverFriendBrexit,
     ParticipationDiscussionTest,
     NewUserAdvertsDisabled,
-    VisitorFrequencyQuickSurvey,
     JoinDiscussionAfterPoll
 ) {
 
@@ -41,7 +39,6 @@ define([
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
         new NewUserAdvertsDisabled(),
-        new VisitorFrequencyQuickSurvey(),
         new JoinDiscussionAfterPoll()
     ];
 
