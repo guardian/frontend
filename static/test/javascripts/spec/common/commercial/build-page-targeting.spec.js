@@ -58,7 +58,9 @@ define([
                         audienceScienceGateway: true
                     };
 
-                    config.ophan.pageViewId = 'presetOphanPageViewId';
+                    config.ophan = {
+                        pageViewId: 'presetOphanPageViewId'
+                    };
 
                     cookies.get = function () {
                         return 'ng101';

@@ -13,7 +13,7 @@ sealed abstract class SponsorType(val className: String)
 case object PaidFor extends SponsorType("paidfor")
 case object Supported extends SponsorType("supported")
 
-object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private val sponsorTypeToClassRefactor = Map(
     "sponsored" -> Supported,
@@ -114,3 +114,5 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
   def itemHtml = renderItems(htmlFormat, isMulti = false)
   def itemJson = renderItems(jsonFormat, isMulti = false)
 }
+
+object ContentApiOffersController extends ContentApiOffersController

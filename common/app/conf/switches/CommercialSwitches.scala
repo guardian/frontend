@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Height of the top banner is fixed at 250px in the Tech section",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = false
   )
 
@@ -334,6 +334,16 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
+  )
+
+  val showPaidSeriesContainer = Switch(
+    group = CommercialLabs,
+    "show-paid-series-containers",
+    "Show series containers on paid content pages.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
   )
 
   val hostedGalleryTest = Switch(

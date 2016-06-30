@@ -8,7 +8,7 @@ import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
 import model.TinyResponse
 
-object DiagnosticsController extends Controller with Logging {
+class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
 
   def acceptBeaconOptions = postOptions
@@ -54,3 +54,5 @@ object DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }
+
+object DiagnosticsController extends DiagnosticsController

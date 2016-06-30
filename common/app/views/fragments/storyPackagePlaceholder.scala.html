@@ -9,7 +9,7 @@
     )(request)
 }
 
-@defining(Seq("related") ++ (if(content.commercial.isAdvertisementFeature) Seq("fc-container--advertisement-feature") else Nil)) { classes =>
+@defining(Seq("related") ++ (if(content.commercial.isAdvertisementFeature) Seq("paid-content--advertisement-feature") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
         <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
             @container("more on this story", "more-on-this-story", href = None)
