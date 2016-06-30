@@ -15,7 +15,7 @@ import play.api.mvc.{Action, Controller}
  * http://www.magentocommerce.com/api/rest/Resources/resources.html
  * http://www.magentocommerce.com/api/rest/get_filters.html
  */
-object ApiSandbox extends Controller with ExecutionContexts {
+class ApiSandbox extends Controller with ExecutionContexts {
 
   private val domain = magento.domain.get
   private val oauth = {
@@ -40,3 +40,5 @@ object ApiSandbox extends Controller with ExecutionContexts {
   }
 
 }
+
+object ApiSandbox extends ApiSandbox

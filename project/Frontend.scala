@@ -167,6 +167,7 @@ object Frontend extends Build with Prototypes {
       adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator,
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
