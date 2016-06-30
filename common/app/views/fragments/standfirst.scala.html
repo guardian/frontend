@@ -1,6 +1,6 @@
 @(item: model.ContentType)(implicit request: RequestHeader)
 
-<div class="content__standfirst @if(item.content.isImmersiveGallery) {content__standfirst--gallery}" data-link-name="standfirst" data-component="standfirst">
+<div class="content__standfirst @if(item.content.isImmersiveGallery) {content__standfirst--gallery} @if(item.content.isImmersive && item.tags.isArticle) {content__standfirst--immersive-article}" data-link-name="standfirst" data-component="standfirst">
     @item.fields.trailText.map{ t =>
 
         @defining({

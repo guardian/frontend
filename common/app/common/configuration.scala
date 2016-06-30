@@ -318,7 +318,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
-    lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
+    lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl= configuration.getStringProperty("jobs.api.url")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
     lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
@@ -541,8 +541,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }
 
-  object Kibana {
-    lazy val url = configuration.getStringProperty("kibana.url")
+  object Elk {
+    lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
+    lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
   }
 }
 

@@ -5,10 +5,10 @@ import common.editions.Uk
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp.AdSize.responsiveSize
 import common.dfp._
-import conf.switches.Switches.{FixedTechTopSlot, containerBrandingFromCapi, WimbledonTopAd}
+import conf.switches.Switches.{FixedTechTopSlot, WimbledonTopAd, containerBrandingFromCapi}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
-import model.{ContentType, MetaData, Page, Tag}
+import model.{ContentType, MetaData, Page, Tag, Tags}
 
 object Commercial {
 
@@ -34,20 +34,25 @@ object Commercial {
       metaData.id == "uk/technology"
     }
 
-    private def isWimbledonEnabled(metaData: MetaData, edition: Edition) = {
-      (metaData.id == "sport/tennis" || metaData.id == "sport/wimbledon") && edition == Uk
+    private def isWimbledonEnabled(metaData: MetaData, edition: Edition, maybeTags: Option[Tags]) = {
+      edition == Uk &&
+      ( metaData.id == "sport/tennis" ||
+        metaData.id == "sport/wimbledon" ||
+        metaData.id == "sport/wimbledon-2016" ||
+        (metaData.adUnitSuffix == "sport/liveblog" && maybeTags.exists(_.keywordIds contains "sport/wimbledon-2016")) // so that liveblogs relating to wimbledon-2016 are captured
+      )
     }
 
-    def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
+    def adSizes(metaData: MetaData, edition: Edition, maybeTags: Option[Tags]): Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
-      val wimbledonLeftCol = ("left-col" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ Seq("970,375")))
+      val wimbledonLeftCol = ("left-col" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop ++ Seq("970,385")))
       val topSlotAdSizes = Map(
         "mobile" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
         "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
-      if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) {
+      if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition, maybeTags)) {
           topSlotAdSizes + wimbledonLeftCol
       } else {
           topSlotAdSizes
@@ -55,8 +60,8 @@ object Commercial {
     }
 
     // The sizesOverride parameter is for testing only.
-    def cssClasses(metaData: MetaData, edition: Edition, sizesOverride: Seq[AdSize] = Nil): String = {
-      val wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition)) Some("top-banner-ad-container--wimbledon") else None
+    def cssClasses(metaData: MetaData, edition: Edition, maybeTags: Option[Tags], sizesOverride: Seq[AdSize] = Nil): String = {
+      val wimbledonClasses = if (WimbledonTopAd.isSwitchedOn && isWimbledonEnabled(metaData, edition, maybeTags)) Some("top-banner-ad-container--wimbledon") else None
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",

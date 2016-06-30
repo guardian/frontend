@@ -18,7 +18,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def index() = AuthActions.AuthActionTest{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))

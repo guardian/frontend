@@ -15,7 +15,7 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-object InteractiveController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -54,3 +54,5 @@ object InteractiveController extends Controller with RendersItemResponse with Lo
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 }
+
+object InteractiveController extends InteractiveController

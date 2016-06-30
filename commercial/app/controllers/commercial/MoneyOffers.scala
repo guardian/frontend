@@ -7,7 +7,7 @@ import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
 
-object MoneyOffers extends Controller with implicits.Requests {
+class MoneyOffers extends Controller with implicits.Requests {
 
   def renderBestBuys = Action.async { implicit request =>
     Future.successful {
@@ -61,6 +61,8 @@ object MoneyOffers extends Controller with implicits.Requests {
   }
 
 }
+
+object MoneyOffers extends MoneyOffers
 
 sealed trait BestBuysRelevance {
   def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html

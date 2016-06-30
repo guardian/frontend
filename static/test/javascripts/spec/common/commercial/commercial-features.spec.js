@@ -343,11 +343,11 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 });
             });
 
-            it('Does not display messages on mobile', function (done) {
+            it('Does display messages on mobile', function (done) {
                 detect.getBreakpoint = function () { return 'mobile'; };
                 features = new CommercialFeatures;
                 features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(false);
+                    expect(flag).toBe(true);
                     done();
                 });
             });

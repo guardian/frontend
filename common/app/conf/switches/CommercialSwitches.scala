@@ -306,17 +306,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val refactorInlineComponent = Switch(
-    SwitchGroup.Commercial,
-    "refactor-inline-component",
-    "Use new code and styles for inline components",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016,6,22),
-    exposeClientSide = true
-  )
-
-
   val SponsoredSwitch = Switch(
     group = CommercialLabs,
     "sponsored",
@@ -345,6 +334,16 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
+  )
+
+  val showPaidSeriesContainer = Switch(
+    group = CommercialLabs,
+    "show-paid-series-containers",
+    "Show series containers on paid content pages.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
   )
 
   val hostedGalleryTest = Switch(

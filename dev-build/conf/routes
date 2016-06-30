@@ -6,8 +6,8 @@ GET            /surveys/*file                                                   
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 # For dev machines
-GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
-GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
+GET            /assets/admin/lib/*file                                                                                           @controllers.admin.UncachedWebAssets.at(file)
+GET            /assets/admin/*file                                                                                               @controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
@@ -53,12 +53,12 @@ GET            /weatherapi/locations                                            
 GET            /weatherapi/forecast/:id.json                                                                                     weather.controllers.WeatherController.forecastForCityId(id)
 
 # Analytics
-GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
-GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
-GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
-GET            /analytics/headlines-test                                                                                         controllers.admin.MetricsController.renderHeadlinesTest()
-GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
+GET            /analytics/abtests                                                                                                @controllers.admin.AnalyticsController.abtests()
+GET            /analytics/confidence                                                                                             @controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET            /analytics/content/video                                                                                          @controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
+GET            /analytics/quality                                                                                                @controllers.admin.AnalyticsController.renderQuality()
+GET            /analytics/headlines-test                                                                                         @controllers.admin.MetricsController.renderHeadlinesTest()
+GET            /analytics/quality                                                                                                @controllers.admin.AnalyticsController.renderQuality()
 
 # Commercial admin
 
@@ -189,88 +189,88 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json  
 GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                                                        rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
 
 # Admin
-GET            /login                                                                                                            controllers.admin.OAuthLoginController.login
-POST           /login                                                                                                            controllers.admin.OAuthLoginController.loginAction
-GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginController.oauth2Callback
-GET            /logout                                                                                                           controllers.admin.OAuthLoginController.logout
-GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
-GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
-GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)
-GET            /api/item/*path                                                                                                   controllers.admin.Api.item(path, callback)
-GET            /json/proxy/*absUrl                                                                                               controllers.admin.Api.json(absUrl)
-GET            /ophan/pageviews/*path                                                                                            controllers.admin.OphanApiController.pageViews(path)
-GET            /ophan/pageviews                                                                                                  controllers.admin.OphanApiController.platformPageViews()
-GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
-POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
-GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
-POST           /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.save()
-GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
-GET            /metrics/googlebot/404                                                                                            controllers.admin.MetricsController.renderGooglebot404s()
-GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()
-GET            /metrics/errors                                                                                                   controllers.admin.MetricsController.renderErrors()
-GET            /metrics/errors/4xx                                                                                               controllers.admin.MetricsController.render4XX()
-GET            /metrics/errors/5xx                                                                                               controllers.admin.MetricsController.render5XX()
-GET            /metrics/memory                                                                                                   controllers.admin.MetricsController.renderMemory()
-GET            /metrics/assets                                                                                                   controllers.admin.MetricsController.renderAssets()
-GET            /metrics/afg                                                                                                      controllers.admin.MetricsController.renderAfg()
-GET            /deduped                                                                                                          controllers.admin.WhatIsDeduped.index()
-GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
-GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
-GET            /radiator/pingdom                                                                                                 controllers.admin.RadiatorController.pingdom()
-GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
-GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
-GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)
-GET            /deploys-radiator                                                                                                 controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
-GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
-GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
-GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
-GET            /troubleshoot/test                                                                                                controllers.admin.TroubleshooterController.test(id, testPath)
-GET            /redirects                                                                                                        controllers.admin.RedirectController.redirect()
-POST           /redirect-post                                                                                                    controllers.admin.RedirectController.redirectPost()
-GET            /press/r2                                                                                                         controllers.admin.R2PressController.pressForm()
-POST           /press/r2                                                                                                         controllers.admin.R2PressController.press()
-GET            /press/r2/batchupload                                                                                             controllers.admin.R2PressController.pressForm()
-POST           /press/r2/batchupload                                                                                             controllers.admin.R2PressController.batchUpload()
+GET            /login                                                                                                            @controllers.admin.OAuthLoginController.login
+POST           /login                                                                                                            @controllers.admin.OAuthLoginController.loginAction
+GET            /oauth2callback                                                                                                   @controllers.admin.OAuthLoginController.oauth2Callback
+GET            /logout                                                                                                           @controllers.admin.OAuthLoginController.logout
+GET            /admin                                                                                                            @controllers.admin.AdminIndexController.admin()
+GET            /api/proxy/*path                                                                                                  @controllers.admin.Api.proxy(path, callback)
+GET            /api/tag                                                                                                          @controllers.admin.Api.tag(q, callback)
+GET            /api/item/*path                                                                                                   @controllers.admin.Api.item(path, callback)
+GET            /json/proxy/*absUrl                                                                                               @controllers.admin.Api.json(absUrl)
+GET            /ophan/pageviews/*path                                                                                            @controllers.admin.OphanApiController.pageViews(path)
+GET            /ophan/pageviews                                                                                                  @controllers.admin.OphanApiController.platformPageViews()
+GET            /dev/switchboard                                                                                                  @controllers.admin.SwitchboardController.renderSwitchboard()
+POST           /dev/switchboard                                                                                                  @controllers.admin.SwitchboardController.save()
+GET            /dev/switchboard-plista                                                                                           @controllers.admin.SwitchboardPlistaController.renderSwitchboard()
+POST           /dev/switchboard-plista                                                                                           @controllers.admin.SwitchboardPlistaController.save()
+GET            /metrics/loadbalancers                                                                                            @controllers.admin.MetricsController.renderLoadBalancers()
+GET            /metrics/googlebot/404                                                                                            @controllers.admin.MetricsController.renderGooglebot404s()
+GET            /metrics/fastly                                                                                                   @controllers.admin.FastlyController.renderFastly()
+GET            /metrics/errors                                                                                                   @controllers.admin.MetricsController.renderErrors()
+GET            /metrics/errors/4xx                                                                                               @controllers.admin.MetricsController.render4XX()
+GET            /metrics/errors/5xx                                                                                               @controllers.admin.MetricsController.render5XX()
+GET            /metrics/memory                                                                                                   @controllers.admin.MetricsController.renderMemory()
+GET            /metrics/assets                                                                                                   @controllers.admin.MetricsController.renderAssets()
+GET            /metrics/afg                                                                                                      @controllers.admin.MetricsController.renderAfg()
+GET            /deduped                                                                                                          @controllers.admin.WhatIsDeduped.index()
+GET            /deduped/*path                                                                                                    @controllers.admin.WhatIsDeduped.dedupedFor(path)
+GET            /radiator                                                                                                         @controllers.admin.RadiatorController.renderRadiator()
+GET            /radiator/pingdom                                                                                                 @controllers.admin.RadiatorController.pingdom()
+GET            /radiator/commit/*hash                                                                                            @controllers.admin.RadiatorController.commitDetail(hash)
+GET            /deploys-radiator/api/deploys                                                                                     @controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET            /deploys-radiator/api/builds/:number                                                                              @controllers.admin.DeploysRadiatorController.getBuild(number)
+GET            /deploys-radiator                                                                                                 @controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
+GET            /troubleshoot/football                                                                                            @controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
+GET            /troubleshoot/cricket                                                                                             @controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
+GET            /troubleshoot/pages                                                                                               @controllers.admin.TroubleshooterController.index()
+GET            /troubleshoot/test                                                                                                @controllers.admin.TroubleshooterController.test(id, testPath)
+GET            /redirects                                                                                                        @controllers.admin.RedirectController.redirect()
+POST           /redirect-post                                                                                                    @controllers.admin.RedirectController.redirectPost()
+GET            /press/r2                                                                                                         @controllers.admin.R2PressController.pressForm()
+POST           /press/r2                                                                                                         @controllers.admin.R2PressController.press()
+GET            /press/r2/batchupload                                                                                             @controllers.admin.R2PressController.pressForm()
+POST           /press/r2/batchupload                                                                                             @controllers.admin.R2PressController.batchUpload()
 
 # css reports
-GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry
-GET            /css-reports.json                                                                                                 controllers.admin.CssReportController.index
-GET            /css-reports/:date.json                                                                                           controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
+GET            /css-reports                                                                                                      @controllers.admin.CssReportController.entry
+GET            /css-reports.json                                                                                                 @controllers.admin.CssReportController.index
+GET            /css-reports/:date.json                                                                                           @controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
 
 
 # Football admin
 
-GET            /admin/football                                                                                                   controllers.admin.SiteController.index
-GET            /admin/football/browse                                                                                            controllers.admin.PaBrowserController.browse
-POST           /admin/football/browserRedirect                                                                                   controllers.admin.PaBrowserController.browserSubstitution
-GET            /admin/football/browser/*query                                                                                    controllers.admin.PaBrowserController.browser(query)
-GET            /admin/football/player                                                                                            controllers.admin.PlayerController.playerIndex
-POST           /admin/football/player/card                                                                                       controllers.admin.PlayerController.redirectToCard
-GET            /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId.json                                  controllers.admin.PlayerController.playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, compId: String)
-GET            /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                                       controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
-GET            /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate.json                                      controllers.admin.PlayerController.playerCardDateJson(cardType: String, playerId: String, teamId: String, startDate: String)
-GET            /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                           controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
-GET            /admin/football/tables                                                                                            controllers.admin.TablesController.tablesIndex
-POST           /admin/football/tables/league                                                                                     controllers.admin.TablesController.redirectToTable
-GET            /admin/football/tables/league/:competitionId                                                                      controllers.admin.TablesController.leagueTable(competitionId: String)
-GET            /admin/football/tables/league/:competitionId/:focus                                                               controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
-GET            /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                                    controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
-GET            /admin/football/fronts                                                                                            controllers.admin.FrontsController.index
-GET            /admin/football/fronts/live                                                                                       controllers.admin.FrontsController.matchDay
-POST           /admin/football/fronts/results/redirect                                                                           controllers.admin.FrontsController.resultsRedirect
-GET            /admin/football/fronts/results/:competition                                                                       controllers.admin.FrontsController.results(competition: String)
-POST           /admin/football/fronts/fixtures/redirect                                                                          controllers.admin.FrontsController.fixturesRedirect
-GET            /admin/football/fronts/fixtures/:competition                                                                      controllers.admin.FrontsController.fixtures(competition: String)
-POST           /admin/football/fronts/tables/redirect                                                                            controllers.admin.FrontsController.tablesRedirect
-GET            /admin/football/fronts/tables/:competition                                                                        controllers.admin.FrontsController.tables(competition: String)
-GET            /admin/football/fronts/tables/:competition/:group                                                                 controllers.admin.FrontsController.groupTables(competition, group)
-POST           /admin/football/fronts/matches/redirect                                                                           controllers.admin.FrontsController.matchesRedirect
-GET            /admin/football/fronts/matches/:competitionId                                                                     controllers.admin.FrontsController.chooseMatchForComp(competitionId)
-GET            /admin/football/fronts/matches/:competitionId/:teamId                                                             controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
-GET            /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                                   controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET            /admin/football/fronts/match/:matchId                                                                             controllers.admin.FrontsController.bigMatchSpecial(matchId)
+GET            /admin/football                                                                                                   @controllers.admin.SiteController.index
+GET            /admin/football/browse                                                                                            @controllers.admin.PaBrowserController.browse
+POST           /admin/football/browserRedirect                                                                                   @controllers.admin.PaBrowserController.browserSubstitution
+GET            /admin/football/browser/*query                                                                                    @controllers.admin.PaBrowserController.browser(query)
+GET            /admin/football/player                                                                                            @controllers.admin.PlayerController.playerIndex
+POST           /admin/football/player/card                                                                                       @controllers.admin.PlayerController.redirectToCard
+GET            /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId.json                                  @controllers.admin.PlayerController.playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, compId: String)
+GET            /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                                       @controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
+GET            /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate.json                                      @controllers.admin.PlayerController.playerCardDateJson(cardType: String, playerId: String, teamId: String, startDate: String)
+GET            /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                           @controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
+GET            /admin/football/tables                                                                                            @controllers.admin.TablesController.tablesIndex
+POST           /admin/football/tables/league                                                                                     @controllers.admin.TablesController.redirectToTable
+GET            /admin/football/tables/league/:competitionId                                                                      @controllers.admin.TablesController.leagueTable(competitionId: String)
+GET            /admin/football/tables/league/:competitionId/:focus                                                               @controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
+GET            /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                                    @controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
+GET            /admin/football/fronts                                                                                            @controllers.admin.FrontsController.index
+GET            /admin/football/fronts/live                                                                                       @controllers.admin.FrontsController.matchDay
+POST           /admin/football/fronts/results/redirect                                                                           @controllers.admin.FrontsController.resultsRedirect
+GET            /admin/football/fronts/results/:competition                                                                       @controllers.admin.FrontsController.results(competition: String)
+POST           /admin/football/fronts/fixtures/redirect                                                                          @controllers.admin.FrontsController.fixturesRedirect
+GET            /admin/football/fronts/fixtures/:competition                                                                      @controllers.admin.FrontsController.fixtures(competition: String)
+POST           /admin/football/fronts/tables/redirect                                                                            @controllers.admin.FrontsController.tablesRedirect
+GET            /admin/football/fronts/tables/:competition                                                                        @controllers.admin.FrontsController.tables(competition: String)
+GET            /admin/football/fronts/tables/:competition/:group                                                                 @controllers.admin.FrontsController.groupTables(competition, group)
+POST           /admin/football/fronts/matches/redirect                                                                           @controllers.admin.FrontsController.matchesRedirect
+GET            /admin/football/fronts/matches/:competitionId                                                                     @controllers.admin.FrontsController.chooseMatchForComp(competitionId)
+GET            /admin/football/fronts/matches/:competitionId/:teamId                                                             @controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
+GET            /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                                   @controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
+GET            /admin/football/fronts/match/:matchId                                                                             @controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
-GET            /admin/football/api/squad/:teamId                                                                                 controllers.admin.PlayerController.squad(teamId: String)
+GET            /admin/football/api/squad/:teamId                                                                                 @controllers.admin.PlayerController.squad(teamId: String)
 
 
 # Commercial
@@ -300,24 +300,24 @@ GET            /commercial/advertiser-content/:campaignName/:pageName           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 
 # Commercial Admin
-GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
-GET            /commercial/specialadunits                                                                                        controllers.admin.CommercialController.renderSpecialAdUnits()
-GET            /commercial/sponsorships                                                                                          controllers.admin.CommercialController.renderPaidForTags()
-GET            /commercial/pageskins                                                                                             controllers.admin.CommercialController.renderPageskins()
-GET            /commercial/surging                                                                                               controllers.admin.CommercialController.renderSurgingContent()
-GET            /commercial/inline-merchandising                                                                                  controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
-GET            /commercial/high-merchandising                                                                                    controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
-GET            /commercial/templates                                                                                             controllers.admin.CommercialController.renderCreativeTemplates()
-GET            /commercial/fluid250                                                                                              controllers.admin.CommercialController.renderFluidAds()
-GET            /commercial/adtests                                                                                               controllers.admin.CommercialController.renderAdTests()
-GET            /commercial/dfp/flush/view                                                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
-GET            /commercial/dfp/flush                                                                                             controllers.admin.commercial.DfpDataController.flushCache()
-GET            /commercial/radiator                                                                                              controllers.admin.CommercialController.renderCommercialRadiator()
-GET            /commercial/slot/:slotName                                                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
-GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
-GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
-POST           /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
-POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
+GET            /commercial                                                                                                       @controllers.admin.CommercialController.renderCommercialMenu()
+GET            /commercial/specialadunits                                                                                        @controllers.admin.CommercialController.renderSpecialAdUnits()
+GET            /commercial/sponsorships                                                                                          @controllers.admin.CommercialController.renderPaidForTags()
+GET            /commercial/pageskins                                                                                             @controllers.admin.CommercialController.renderPageskins()
+GET            /commercial/surging                                                                                               @controllers.admin.CommercialController.renderSurgingContent()
+GET            /commercial/inline-merchandising                                                                                  @controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET            /commercial/high-merchandising                                                                                    @controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
+GET            /commercial/templates                                                                                             @controllers.admin.CommercialController.renderCreativeTemplates()
+GET            /commercial/fluid250                                                                                              @controllers.admin.CommercialController.renderFluidAds()
+GET            /commercial/adtests                                                                                               @controllers.admin.CommercialController.renderAdTests()
+GET            /commercial/dfp/flush/view                                                                                        @controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
+GET            /commercial/dfp/flush                                                                                             @controllers.admin.commercial.DfpDataController.flushCache()
+GET            /commercial/radiator                                                                                              @controllers.admin.CommercialController.renderCommercialRadiator()
+GET            /commercial/slot/:slotName                                                                                        @controllers.admin.commercial.SlotController.viewSlot(slotName)
+GET            /commercial/adops/takeovers-empty-mpus                                                                            @controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
+GET            /commercial/adops/takeovers-empty-mpus/create                                                                     @controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
+POST           /commercial/adops/takeovers-empty-mpus/create                                                                     @controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
+POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     @controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
 
 # Breaking News
 GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()

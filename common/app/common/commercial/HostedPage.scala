@@ -4,12 +4,13 @@ import conf.Static
 import conf.switches.Switches
 import model.GuardianContentTypes.Hosted
 import model.{MetaData, SectionSummary, StandalonePage}
-import play.api.libs.json.JsString
+import play.api.libs.json.{JsArray, JsNumber, JsString}
 
 trait HostedPage extends StandalonePage  {
   def pageUrl: String
   def pageName: String
   def pageTitle: String
+  def standfirst: String
   def logoUrl: String
 }
 
@@ -61,16 +62,21 @@ case class HostedVideoPage(
 case class HostedGalleryPage(
                        pageUrl: String,
                        pageName: String,
-                       images: List[String],
+                       title: String,
+                       standfirst: String,
+                       ctaText: String,
+                       ctaLink: String,
+                       ctaIndex: Integer,
+                       images: List[HostedGalleryImage],
                        logoUrl: String
                      ) extends HostedPage {
 
-  val pageTitle: String  = s"Advertiser content hosted by the Guardian: $pageName - gallery"
+  val pageTitle: String  = s"Advertiser content hosted by the Guardian: $title - gallery"
 
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
     val toneName = "Hosted content"
-    val sectionId = "renault-car-of-the-future"
+    val sectionId = "hosted-gallery"
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
     MetaData.make(
@@ -84,13 +90,15 @@ case class HostedGalleryPage(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
-        "tones" -> JsString(toneName)
+        "tones" -> JsString(toneName),
+        "images" -> JsArray(images.map((image) => JsString(image.url))),
+        "ctaIndex" -> JsNumber(BigDecimal(ctaIndex))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-          s"ADVERTISER CONTENT FROM RENAULT HOSTED BY THE GUARDIAN | $pageName",
+          s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
         "og:image" -> logoUrl,
         "fb:app_id" -> "180444840287"
       )
@@ -104,6 +112,12 @@ case class HostedVideo(
                         duration: Int,
                         posterUrl: String,
                         srcUrl: String
+                      )
+
+case class HostedGalleryImage(
+                        url: String,
+                        title: String,
+                        caption: String
                       )
 
 object HostedPage {
@@ -161,10 +175,58 @@ object HostedPage {
     nextPageName = episode1PageName
   )
 
+  private val omgbImages : List[HostedGalleryImage] = List(
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb1.jpg",
+      title = "Finding the giants of Heligan",
+      caption = "The Lost Gardens of Heligan, Cornwall, England. These gardens, along with their giants, were lost for 25 years under a tangle of weeds before being restored to take their place among the finest gardens in Great Britain."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb2.jpg",
+      title = "Rolling hills and rugged moorland",
+      caption = "Malham Tarn Estate, Yorkshire Dales, England. Get your boots on and start exploring this popular Yorkshire Dales beauty spot."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb3.jpg",
+      title = "A walker’s paradise",
+      caption = "Isle of Skye, Scotland. From family walks on the spectacular coastline to dramatic scrambles in the Cuillin mountains, the island provides fantastic walking for everyone. Photo by Lars Scheider"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb4.jpg",
+      title = "Walking on water",
+      caption = "Loch Lomond & The Trossachs National Park, Scotland. The National Park stretches from the incredible mountains and glens of the Trossachs to the vast tranquil beauty of Loch Lomond. Photo by Bestjobers"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb5.jpg",
+      title = "Running across the plains",
+      caption = "Isle of Harris, Scotland. The Isle of Harris isn’t actually an island, it’s the southern and more mountainous part of Lewis and Harris, the largest island in the Outer Hebrides. Photo by Lars Scheider"
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb6.jpg",
+      title = "Relaxing at Loch Maree",
+      caption = "Loch Maree, Scotland. More than 60 islands dot Loch Maree and the area is perfect for bird watching and walking."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb7.jpg",
+      title = "The ruins of Tintern Abbey",
+      caption = "Monmouthshire, Wales. The ruins of this 12th-century abbey are famous for inspiring the works of notable English artists, including Romantic poet William Wordsworth and painter Thomas Gainsborough."
+    ),
+    HostedGalleryImage (
+      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb8.png",
+      title = "Ride the Hogwarts Express!",
+      caption = "Glenfinnan Viaduct, Scotland. The Jacobite steam train is a great way to experience the stunning scenery and special atmosphere of Glenfinnan. You may even recognise it from Harry Potter! Photo by Colin Roberts."
+    )
+  )
+
   private val gallery: HostedGalleryPage = HostedGalleryPage(
-    images = (1 to 7).map(n => s"http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb$n.jpg").toList,
+    images = omgbImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryPageName,
+    title = "Great Britain - Home of Amazing Moments #OMGB",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
+    ctaIndex = 5,
+    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
   )
 

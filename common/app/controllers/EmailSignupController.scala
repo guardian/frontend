@@ -140,7 +140,7 @@ object EmailForm {
   }
 }
 
-object EmailSignupController extends Controller with ExecutionContexts with Logging {
+class EmailSignupController extends Controller with ExecutionContexts with Logging {
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -217,3 +217,5 @@ object EmailSignupController extends Controller with ExecutionContexts with Logg
     TinyResponse.noContent(Some("GET, POST, OPTIONS"))
   }
 }
+
+object EmailSignupController extends EmailSignupController

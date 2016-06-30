@@ -100,7 +100,7 @@ define([
     Message,
     cookiesBanner,
     RelativeDates,
-    smartAppBanner,
+    customSmartAppBanner,
     Tabs,
     Toggles,
     userPrefs,
@@ -375,7 +375,7 @@ define([
                     hostedAbout.init();
                 }
             },
-        
+
             initHostedGallery: function () {
                 if (config.page.contentType === 'Hosted') {
                     hostedGallery.init();
@@ -413,7 +413,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner.init],
+                ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],

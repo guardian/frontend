@@ -44,33 +44,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABWelcomeHeader = Switch(
-    SwitchGroup.ABTests,
-    "ab-welcome-header",
-    "Welcome header for first time users test",
-    owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
   val ABParticipationDiscussionTest = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-test",
     "We are going to hide comments on a random half of articles",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 7, 25),
     exposeClientSide = true
   )
 
-  val ABFacebookShareParams = Switch(
+  val ABVisitorFrequencyQuickSurvey = Switch(
     SwitchGroup.ABTests,
-    "ab-facebook-share-params",
-    "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
+    "ab-visitor-frequency-quick-survey",
+    "Add a single question survey to the submeta section of article pages",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = true
   )
 
@@ -84,53 +74,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSportV2 = Switch(
+  val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport-v2",
-    "AB test switch to insert low friction participation into sport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
+    "ab-join-discussion-after-poll",
+    "Does 'join discussion' message after poll participation increase comments",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 7, 13),
     exposeClientSide = true
   )
 
-  val ABVideoMainMediaAlwaysShowcase = Switch(
+  val ABSamplingTest = Switch(
     SwitchGroup.ABTests,
-    "ab-video-main-media-always-showcase",
-    "Make video main media always showcase",
-    owners = Seq(Owner.withGithub("akash1810")),
+    "ab-sampling-test",
+    "Tests the sampling",
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
-  val ABVideoFootballThrasher = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-football-thrasher",
-    "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
-  val ABVideoYellowButton = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-yellow-button",
-    "Make big play button yellow",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21), // Tuesday
-    exposeClientSide = true
-  )
-
-  val ABTestAudience = Switch(
-    SwitchGroup.ABTests,
-    "ab-test-audience",
-    "Test the A/B test samples against page views",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 7, 22),
     exposeClientSide = true
   )
 }

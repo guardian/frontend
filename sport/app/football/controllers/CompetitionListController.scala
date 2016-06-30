@@ -7,7 +7,7 @@ import conf._
 import play.api.mvc.{ Controller, Action }
 
 
-object CompetitionListController extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
+class CompetitionListController extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
@@ -27,3 +27,5 @@ object CompetitionListController extends Controller with CompetitionListFilters 
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 }
+
+object CompetitionListController extends CompetitionListController

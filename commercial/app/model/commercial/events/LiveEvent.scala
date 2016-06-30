@@ -2,19 +2,26 @@ package model.commercial.events
 
 import model.commercial.events.Eventbrite._
 import org.joda.time.DateTime
-import play.api.libs.functional.syntax._
-import play.api.libs.json.{JsPath, Reads}
+import play.api.data.validation.ValidationError
+import play.api.libs.json._
 
-case class LiveEventImage(eventId: String, mainImageUrl: String)
-object LiveEventImage{
+case class LiveEventMembershipInfo(id: String,
+                                   url: String,
+                                   mainImageUrl: String)
 
-  implicit val liveEventImageReads: Reads[LiveEventImage] = (
-    (JsPath \ "id").read[String] and
-      (JsPath \ "mainImageUrl").read[String]
-    )(LiveEventImage.apply _)
+object LiveEventMembershipInfo {
+  implicit val format = Json.format[LiveEventMembershipInfo]
 
+  // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
+  implicit val formats = new Reads[Seq[LiveEventMembershipInfo]] {
+    override def reads(json: JsValue): JsResult[Seq[LiveEventMembershipInfo]] = {
+      json match {
+        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]))
+        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))))
+      }
+    }
+  }
 }
-
 
 case class LiveEvent(eventId: String,
                      name: String,
@@ -24,28 +31,20 @@ case class LiveEvent(eventId: String,
                      status: String,
                      venue: EBVenue,
                      tickets: Seq[EBTicket],
-                     imageUrl: Option[String]) extends EBTicketHandler with EBEventHandler
+                     imageUrl: String) extends EBTicketHandler with EBEventHandler
 
 object LiveEvent {
 
-  def apply(event: EBEvent, maybeEventImage: Option[LiveEventImage] = None): LiveEvent = {
-
-    val maybeImageUrl =
-      maybeEventImage match {
-        case Some(eventImage) => Some(eventImage.mainImageUrl)
-        case None => None
-      }
-
+  def apply(event: EBEvent, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
     new LiveEvent(
       eventId = event.id,
       name = event.name,
       date = event.startDate,
-      eventUrl = event.url,
+      eventUrl = eventMembershipInformation.url,
       description = event.description,
       status = event.status,
       venue = event.venue,
       tickets = event.tickets,
-      imageUrl = maybeImageUrl
+      imageUrl = eventMembershipInformation.mainImageUrl
     )
-  }
 }

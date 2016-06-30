@@ -50,8 +50,8 @@ define([
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
         if (advert.node.classList.contains('ad-slot--right')) {
-            var mobileAdSizes = advert.sizes('data-mobile');
-            if (mobileAdSizes && mobileAdSizes.indexOf([300, 251]) > -1) {
+            var mobileAdSizes = advert.sizes.mobile;
+            if (mobileAdSizes && mobileAdSizes.some(function (size) { return size[0] === 300 && size[1] === 251; })) {
                 stickyMpu(bonzo(advert.node));
             }
         } else if (advert.node.classList.contains('ad-slot--facebook')) {
