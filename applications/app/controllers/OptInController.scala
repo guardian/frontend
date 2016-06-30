@@ -29,14 +29,14 @@ object OptInController extends Controller {
 
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
-      case "https" => HTTPS.opt(choice)
-      case "header" => Header.opt(choice)
+      case "https" => https.opt(choice)
+      case "header" => header.opt(choice)
       case "gallery" => gallery.opt(choice)
       case _ => NotFound
     }))
   }
 
-  val HTTPS = HttpsOptFeature("https_opt_in")
-  val Header = OptInFeature("new_header_opt_in")
+  val https = HttpsOptFeature("https_opt_in")
+  val header = OptInFeature("new_header_opt_in")
   val gallery = OptInFeature("gallery_redesign_opt_in")
 }
