@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, Controller}
 
 // This controller may return 5xx to allow fastly to serve stale when the agent has no data.
-object SiteMapController extends Controller {
+class SiteMapController extends Controller {
 
   def renderNewsSiteMap() = Action { implicit request =>
     jobs.SiteMapJob.siteMaps().map { sitemap =>
@@ -23,3 +23,5 @@ object SiteMapController extends Controller {
     } getOrElse ServiceUnavailable
   }
 }
+
+object SiteMapController extends SiteMapController

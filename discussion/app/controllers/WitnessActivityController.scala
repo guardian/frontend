@@ -17,6 +17,8 @@ trait WitnessActivityController extends WitnessApi with Controller with Executio
   }
 }
 
-object WitnessActivityController extends WitnessActivityController {
+class WitnessActivityControllerImpl extends WitnessActivityController {
   protected val witnessApiRoot: String = Configuration.witness.witnessApiRoot
 }
+
+object WitnessActivityController extends WitnessActivityControllerImpl
