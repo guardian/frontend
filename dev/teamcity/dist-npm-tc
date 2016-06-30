@@ -4,6 +4,9 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+echo "Use project Node version"
+nvm use
+
 echo "Install dependencies"
 make install
 
