@@ -18,4 +18,10 @@
     // Insert username in top bar on page load
     @InlineJs(showUserName().body, "showUserName.js")
 }
+
+// ************* ANALYTICS *************
+
+// Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
+@InlineJs(ophanConfig().body, "ophanConfig.js")
+
 </script>

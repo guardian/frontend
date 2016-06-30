@@ -15,13 +15,6 @@ define([
         config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
     }
 
-    // This is duplicated from
-    // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
-    // Please do not change this without talking to the Ophan project first.
-    config.ophan = {pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
-        return Math.floor(Math.random() * 36).toString(36);
-    })};
-
     return assign({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
