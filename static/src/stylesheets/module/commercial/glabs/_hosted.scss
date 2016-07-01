@@ -987,7 +987,7 @@ $omgbColor: #dd0000;
             padding-top: 6px;
             border-top: 1px solid $renaultColor;
         }
-        .hosted__next-video--tile {
+        .hosted-next-autoplay__tile {
             @include clearfix;
             @include circular;
             display: block;
