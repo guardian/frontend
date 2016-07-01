@@ -358,7 +358,7 @@ trait CommercialSwitches {
 
   val hostedGalleryVisitBritain = Switch(
     group = CommercialLabs,
-    "hosted-gallery-test",
+    "hosted-gallery-visit-britain",
     "If on, gallery pages for Visit Britain are available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
