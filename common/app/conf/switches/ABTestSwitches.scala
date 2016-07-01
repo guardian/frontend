@@ -80,7 +80,7 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 7, 1),
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
 }
