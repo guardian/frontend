@@ -37,37 +37,35 @@
             @treats(containerDefinition, frontProperties)
         </li>
 
-        @containerDefinition.collectionEssentials.items.zipWithIndex.map { case (item, index) =>
-            @if(item.header.isVideo) {
-                <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
-                    @item.properties.maybeContent.map { content =>
-                        @defining(VideoPlayer(
-                            content.elements.mainVideo.get,
-                            Video640,
-                            item,
-                            autoPlay = false,
-                            showControlsAtStart = false
-                        )) { player =>
-                            <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player video-playlist__item__player">
-                                <div class="fc-item__video-container">
-                                    @video(player, false, false, showOverlay = true, showPoster = false)
+        @containerDefinition.collectionEssentials.items.filter(_.header.isVideo).zipWithIndex.map { case (item, index) =>
+            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
+                @item.properties.maybeContent.map { content =>
+                    @defining(VideoPlayer(
+                        content.elements.mainVideo.get,
+                        Video640,
+                        item,
+                        autoPlay = false,
+                        showControlsAtStart = false
+                    )) { player =>
+                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player video-playlist__item__player">
+                            <div class="fc-item__video-container">
+                                @video(player, false, false, showOverlay = true, showPoster = false)
+                            </div>
+                        </div>
+                        <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                            <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
+                            <div class="fc-item__media-wrapper">
+                                <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                @InlineImage.fromFaciaContent(item).map { fallbackImage =>
+                                    <img
+                                        @if(index > 1){data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{index}" />
+                                }
                                 </div>
                             </div>
-                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
-                                <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text"></span></div>
-                                <div class="fc-item__media-wrapper">
-                                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                                    @InlineImage.fromFaciaContent(item).map { fallbackImage =>
-                                        <img
-                                            @if(index > 1){data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{index}" />
-                                    }
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        </div>
                     }
-                </li>
-            }
+                }
+            </li>
         }
     </ul>
 </div>
