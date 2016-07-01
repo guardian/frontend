@@ -20,7 +20,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   object TheGuardianLinkTo extends LinkTo {
-    override lazy val host = "http://www.theguardian.com"
+    override lazy val host = "https://www.theguardian.com"
   }
 
   object TestAmpLinkTo extends AmpLinkTo {
@@ -58,7 +58,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/books-23-f/books-23-f", edition) should be ("http://www.foo.com/books-23-f")
   }
 
-  it should "general a editionalised RSS path" in {
+  it should "generate an editionalised RSS path" in {
     // editionalised
     TestLinkTo("/commentisfree/rss", edition) should be ("http://www.foo.com/uk/commentisfree/rss")
     TestLinkTo("/rss", edition) should be ("http://www.foo.com/uk/rss")
@@ -66,13 +66,29 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
-  it should "be https on https-enabled sections whether editionalised or not" in {
+  it should "always write http-only section links as http whether editionalised or not" in {
     for (ed <- editions) {
-      for (secureSection <- LinkTo.httpsEnabledSections) {
-        val expectedPath = if(ed.editionalisedSections.contains(secureSection)) s"${ed.id.toLowerCase}/$secureSection" else secureSection
-        TheGuardianLinkTo(s"http://www.theguardian.com/$secureSection", ed) should be (s"https://www.theguardian.com/$expectedPath")
-        TheGuardianLinkTo(s"/$secureSection/foo", ed) should be (s"https://www.theguardian.com/$secureSection/foo")
+      for (httpSection <- LinkTo.httpSections) {
+        val expectedPath = if(ed.editionalisedSections.contains(httpSection)) s"${ed.id.toLowerCase}/$httpSection" else httpSection
+        withClue(s"http://www.theguardian.com/$httpSection -> http://www.theguardian.com/$expectedPath") {
+          TheGuardianLinkTo(s"http://www.theguardian.com/$httpSection", ed) should be (s"http://www.theguardian.com/$expectedPath")
+        }
+        withClue(s"/$httpSection/foo -> http://www.theguardian.com/$httpSection/foo") {
+          TheGuardianLinkTo(s"/$httpSection/foo", ed) should be (s"http://www.theguardian.com/$httpSection/foo")
+        }
       }
+    }
+  }
+
+  it should "always write interactives as http links" in {
+    val interactives = Seq(
+      "www.theguardian.com/women-in-leadership/ng-interactive/2014/feb/28/star-women-leading-ladies-behind-scenes-film-interactive",
+      "www.theguardian.com/observer-food-monthly-awards/ng-interactive/2016/may/15/observer-food-monthly-awards-your-chance-to-vote",
+      "www.theguardian.com/lifeandstyle/ng-interactive/2016/jun/22/will-brexit-take-the-nhs-to-breaking-point-cartoon"
+    )
+    for (interactive <- interactives) {
+      TheGuardianLinkTo("https://" + interactive) should be ("http://" + interactive)
+      TheGuardianLinkTo("http://" + interactive) should be ("http://" + interactive)
     }
   }
 
@@ -81,7 +97,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   it should "correctly editionalise the International front" in {
-    TheGuardianLinkTo("/", International) should be ("http://www.theguardian.com/international")
+    TheGuardianLinkTo("/", International) should be ("https://www.theguardian.com/international")
   }
 
   it should "correctly link editionalised sections" in {
@@ -89,6 +105,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
       for (section <- edition.editionalisedSections) {
         val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", edition)
         val expectedPath = if(section.isEmpty) edition.networkFrontId else s"${edition.networkFrontId}/$section"
+        testLink should startWith("https://")
         testLink should endWith (s"www.theguardian.com/$expectedPath")
       }
     }

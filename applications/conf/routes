@@ -55,7 +55,7 @@ GET        /https/optout                                                        
 GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
 GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
 
-GET        /opt/$choice<in|out>/:feature                                        controllers.OptInController.handle(feature, choice)
+GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
 
 # Web App paths
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()

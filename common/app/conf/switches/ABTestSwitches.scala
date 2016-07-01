@@ -54,16 +54,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABVisitorFrequencyQuickSurvey = Switch(
-    SwitchGroup.ABTests,
-    "ab-visitor-frequency-quick-survey",
-    "Add a single question survey to the submeta section of article pages",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
-    exposeClientSide = true
-  )
-
   val ABNewUserAdvertsDisabled = Switch(
     SwitchGroup.ABTests,
     "ab-new-user-adverts-disabled",
@@ -91,6 +81,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 22),
+    exposeClientSide = true
+  )
+
+  val ABHostedAutoplay = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-autoplay",
+    "An autoplay overlay with the next video on a hosted page",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 14),
     exposeClientSide = true
   )
 }

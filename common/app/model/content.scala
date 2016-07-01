@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -117,6 +117,15 @@ final case class Content(
     }
   }
 
+  // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
+  lazy val twitterCardImage: String = {
+    if (isAdvertisementFeature && TwitterShareImageLogoOverlay.isSwitchedOn) {
+      ImgSrc(rawOpenGraphImage, Item700)
+    } else {
+      ImgSrc(rawOpenGraphImage, TwitterImage)
+    }
+  }
+
   lazy val syndicationType = {
     if(isBlog){
       "blog"
@@ -179,6 +188,7 @@ final case class Content(
   val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
 
   def javascriptConfig: Map[String, JsValue] = Map(
+    ("contentId", JsString(metadata.id)),
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
     ("hasStoryPackage", JsBoolean(hasStoryPackage)),
@@ -248,7 +258,7 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> ImgSrc(rawOpenGraphImage, TwitterImage)
+    "twitter:image" -> twitterCardImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)

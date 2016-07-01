@@ -9,7 +9,7 @@ import play.api.libs.json.{JsArray, JsString, JsObject}
 
 import scala.concurrent.Future
 
-object WebAppController extends Controller with ExecutionContexts with Logging {
+class WebAppController extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
     Cached(60) { RevalidatableResult.Ok(templates.js.serviceWorker()) }
@@ -19,3 +19,5 @@ object WebAppController extends Controller with ExecutionContexts with Logging {
     Cached(3600) { RevalidatableResult.Ok(templates.js.webAppManifest()) }
   }
 }
+
+object WebAppController extends WebAppController
