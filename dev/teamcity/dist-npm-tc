@@ -5,7 +5,9 @@ set -o nounset
 set -o errexit
 
 echo "Use project Node version"
-nvm use
+nvm install
+
+npm -g install grunt-cli
 
 echo "Install dependencies"
 make install
