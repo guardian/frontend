@@ -39,7 +39,11 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
-    val allPagesJson = Seq("timeline" -> timelineHtml, "numNewBlocks" -> newBlocks.size)
+    val allPagesJson = Seq(
+      "timeline" -> timelineHtml,
+      "numNewBlocks" -> newBlocks.size,
+      "mostRecentBlockId" -> page.article.fields.blocks.headOption.map(block => s"block-${block.id}").getOrElse("block-9")
+    )
     val livePageJson = isLivePage.filter(_ == true).map { _ =>
       "html" -> blocksHtml
     }
