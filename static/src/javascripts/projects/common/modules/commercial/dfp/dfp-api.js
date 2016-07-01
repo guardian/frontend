@@ -61,17 +61,18 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="js-ad-slot AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
-     *      data-desktop="300,250" data-refresh="false" data-label="false">
-     *     <div id="SLOT_ID" class="ad-container"></div>
+     * <div id="SLOT_ID" class="js-ad-slot AD_SLOT_CLASS" data-name="AD_SLOT_NAME"
+     *      data-mobile="300,50|320,50"
+     *      data-desktop="300,250"
+     *      data-refresh="false"
+     *      data-label="false">
      * </div>
      *
      * You can set the set which size ad(s) should be loaded at which breakpoint by using the
-     * data attribute. The available breakpoints and their sizes are listed in the config below.
-     * You do not need to specify all of these. If you set a mobile size, then that size will be used
-     * for all ads in that slot until another breakpoint is detected, in the above case, that's desktop.
+     * data-[breakpoint] attributes (see detect). It works like a min-width media query.
      *
-     * Labels are automatically prepended to an ad that was successfully loaded.
+     * Labels are automatically prepended to an ad that was successfully loaded, unless the
+     * data-label attribute is equal to "false".
      *
      */
     /**
