@@ -20,7 +20,10 @@ object RenaultHostedPages {
       title = "Designing the car of the future",
       duration = 86,
       posterUrl = Static("images/commercial/renault-video-poster.jpg"),
-      srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD"
+      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/05/17/160516GlabsTestSD_2M_H264.mp4",
+      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/05/17/160516GlabsTestSD_2M_vp8.webm",
+      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/05/17/160516GlabsTestSD-3_hi.ogv",
+      srcM3u8 = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160516GlabsTestSD&format=video/m3u8&maxbitrate=2048"
     ),
     nextPageName = episode1PageName
   )
@@ -37,7 +40,10 @@ object RenaultHostedPages {
       title = "Renault shortlists 'car of the future' designs",
       duration = 160,
       posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg"),
-      srcUrl = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD"
+      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/05/23/160523GlabsRenaultTestHD_2M_H264.mp4",
+      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/05/23/160523GlabsRenaultTestHD_2M_vp8.webm",
+      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/05/23/160523GlabsRenaultTestHD-3_hi.ogv",
+      srcM3u8 = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160523GlabsRenaultTestHD&format=video/m3u8&maxbitrate=2048"
     ),
     nextPageName = episode2PageName
   )
@@ -54,7 +60,10 @@ object RenaultHostedPages {
       title = "Is this the car of the future?",
       duration = 158,
       posterUrl = Static("images/commercial/renault-video-poster-ep2.jpg"),
-      srcUrl = "http://multimedia.guardianapis.com/interactivevideos/video.php?file=160603GlabsRenaultTest3"
+      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/03/160603GlabsRenaultTest3_2M_H264.mp4",
+      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/03/160603GlabsRenaultTest3_2M_vp8.webm",
+      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/03/160603GlabsRenaultTest3-3_hi.ogv",
+      srcM3u8 = "https://multimedia.guardianapis.com/interactivevideos/video.php?file=160603GlabsRenaultTest3&format=video/m3u8&maxbitrate=2048"
     ),
     nextPageName = episode1PageName
   )
