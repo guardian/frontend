@@ -5,52 +5,51 @@ import conf.switches.Switches
 object VisitBritainHostedPages {
 
   private val activitiesPageName = "activities"
+  private val cityPageName = "city"
+  private val coastPageName = "coast"
+  private val countrysidePageName = "countryside"
+  private val imageUrlPrefix = "http://static.theguardian.com/commercial/hosted/visit-britain/"
 
-  private val demoImages : List[HostedGalleryImage] = List(
+  private val activityImages : List[HostedGalleryImage] = List(
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb3.jpg",
-      title = "A walker’s paradise",
-      caption = "Isle of Skye, Scotland. From family walks on the spectacular coastline to dramatic scrambles in the Cuillin mountains, the island provides fantastic walking for everyone. Photo by Lars Scheider"
+      url = imageUrlPrefix + "activities/505635_6004330_OMGB_48sh_Images_Surf snowdonia.jpg",
+      title = "Surf Snowdonia, Wales",
+      caption = "© VisitBritain"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb4.jpg",
-      title = "Walking on water",
-      caption = "Loch Lomond & The Trossachs National Park, Scotland. The National Park stretches from the incredible mountains and glens of the Trossachs to the vast tranquil beauty of Loch Lomond. Photo by Bestjobers"
+      url = imageUrlPrefix + "activities/England_Cumbria_Cycling_VE23598.jpg",
+      title = "Eden Valley, Cumbria, England",
+      caption = "© VisitEngland / Tony West Photography / Nurture Eden"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb5.jpg",
-      title = "Running across the plains",
-      caption = "Isle of Harris, Scotland. The Isle of Harris isn’t actually an island, it’s the southern and more mountainous part of Lewis and Harris, the largest island in the Outer Hebrides. Photo by Lars Scheider"
+      url = imageUrlPrefix + "activities/England_Yorkshire_Goathland, home to Harry Potter's Hogsmeade Credit Alan Pratt_NYMR.jpg",
+      title = "Goathland, North York Moors, Yorkshire, England",
+      caption = "© Alan Pratt_NYMR"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb6.jpg",
-      title = "Relaxing at Loch Maree",
-      caption = "Loch Maree, Scotland. More than 60 islands dot Loch Maree and the area is perfect for bird watching and walking."
+      url = imageUrlPrefix + "activities/England_Cumbria_Swim_pm-5-103-final.jpg",
+      title = "Lake District, Cumbria, England",
+      caption = "© VisitEngland / Blacks"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb7.jpg",
-      title = "The ruins of Tintern Abbey",
-      caption = "Monmouthshire, Wales. The ruins of this 12th-century abbey are famous for inspiring the works of notable English artists, including Romantic poet William Wordsworth and painter Thomas Gainsborough."
+      url = imageUrlPrefix + "activities/England_IsleofWight_Paddleboard_VE18617.jpg",
+      title = "Alum Bay, Isle of Wight, England",
+      caption = "© VisitEngland / Jeremy Congialosi"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb8.png",
-      title = "Ride the Hogwarts Express!",
-      caption = "Glenfinnan Viaduct, Scotland. The Jacobite steam train is a great way to experience the stunning scenery and special atmosphere of Glenfinnan. You may even recognise it from Harry Potter! Photo by Colin Roberts."
+      url = imageUrlPrefix + "activities/England_Dorset_Coasteering_VB34139944.jpg",
+      title = "Stair Hole, Jurassic Coast, Dorset, England",
+      caption = "© VisitBritain / Ben Selway"
     ),
     HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb2.jpg",
-      title = "Rolling hills and rugged moorland",
-      caption = "Malham Tarn Estate, Yorkshire Dales, England. Get your boots on and start exploring this popular Yorkshire Dales beauty spot."
-    ),
-    HostedGalleryImage (
-      url = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb1.jpg",
-      title = "Finding the giants of Heligan",
-      caption = "The Lost Gardens of Heligan, Cornwall, England. These gardens, along with their giants, were lost for 25 years under a tangle of weeds before being restored to take their place among the finest gardens in Great Britain."
+      url = imageUrlPrefix + "activities/505635_6004330_OMGB_720x480_Images5_SurfSnowdonia.jpg",
+      title = "Surf Snowdonia, Wales",
+      caption = "© VisitBritain / Ben Selway"
     )
   )
 
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
-    images = demoImages,
+    images = activityImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
     title = "Activities",
@@ -58,7 +57,7 @@ object VisitBritainHostedPages {
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
     standfirst = "",
-    logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
+    logoUrl = imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
