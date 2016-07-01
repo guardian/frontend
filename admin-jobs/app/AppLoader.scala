@@ -5,7 +5,7 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CommonFilters, CachedHealthCheckLifeCycle}
 import contentapi.SectionsLookUpLifecycle
-import controllers.{NewsAlertControllerImpl, HealthCheck}
+import controllers.{AdminJobsControllers, HealthCheck}
 import dev.DevParametersHttpRequestHandler
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
@@ -21,9 +21,8 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers {
+trait Controllers extends AdminJobsControllers {
   lazy val healthCheck = wire[HealthCheck]
-  lazy val newsAlertController = wire[NewsAlertControllerImpl]
 }
 
 trait AppLifecycleComponents {
