@@ -6,13 +6,15 @@ import model.{Cached, NoCache}
 import play.api.mvc.{Action, Controller}
 import views.html.hosted.{guardianHostedGallery, guardianHostedVideo}
 
-object HostedContentController extends Controller {
+class HostedContentController extends Controller {
 
   def renderHostedPage(campaignName: String, pageName: String) = Action { implicit request =>
-    HostedPage.fromPageName(pageName) match {
+    HostedPage.fromPageName(campaignName, pageName) match {
       case Some(page: HostedVideoPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedVideo(page)))
       case Some(page: HostedGalleryPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedGallery(page)))
       case _ => NoCache(NotFound)
     }
   }
 }
+
+object HostedContentController extends HostedContentController

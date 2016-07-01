@@ -112,10 +112,15 @@
     font-weight: 200;
 }
 
+.immersive-main-media__headline-container--dark {
+    .content__headline--immersive-article {
+        color: #ffffff;
+    }
+}
+
 .content__headline--immersive-article {
     @include fs-headline(7, true);
     line-height: 1;
-    color: #ffffff;
 
     @include mq(desktop) {
         font-size: 4rem;

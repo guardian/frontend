@@ -5,7 +5,7 @@ import discussion.model.Profile
 import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.Action
 
-object ProfileActivityController extends DiscussionController {
+class ProfileActivityController extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = SimplePage(
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",
@@ -63,3 +63,5 @@ object ProfileActivityController extends DiscussionController {
     }
   }
 }
+
+object ProfileActivityController extends ProfileActivityController

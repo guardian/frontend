@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Height of the top banner is fixed at 250px in the Tech section",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = false
   )
 
@@ -352,7 +352,17 @@ trait CommercialSwitches {
     "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 12),
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = false
+  )
+
+  val hostedGalleryVisitBritain = Switch(
+    group = CommercialLabs,
+    "hosted-gallery-visit-britain",
+    "If on, gallery pages for Visit Britain are available",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = false
   )
 
@@ -362,7 +372,7 @@ trait CommercialSwitches {
     description = "Use special extra tracking parameters for hosted content",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 12),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
 }
