@@ -1,0 +1,9 @@
+@import common.commercial.HostedGalleryImage
+@(image: HostedGalleryImage, content: String)
+    <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark">
+        <div class="hosted-gallery__image-sizer">
+            <img alt="@{image.title}"/>
+            @Html(content)
+        </div>
+    </div>
+

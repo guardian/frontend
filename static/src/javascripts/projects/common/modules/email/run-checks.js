@@ -42,9 +42,7 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [
-            ['ParticipationLowFricMusicV2','variant-1']
-        ];
+        var clashingTests = [];
 
         return some(clashingTests, function(test) {
             return ab.isInVariant(test[0], test[1]);

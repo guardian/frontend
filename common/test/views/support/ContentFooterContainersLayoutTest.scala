@@ -1,15 +1,16 @@
 package views.support
 
-import conf.switches.Switches.OutbrainSwitch
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
+import conf.switches.Switches.{OutbrainSwitch, showPaidSeriesContainer}
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
-import model.{RelatedContentItem, RelatedContent}
+import model.{RelatedContent, RelatedContentItem}
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html
-import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
 
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   OutbrainSwitch.switchOn()
+  showPaidSeriesContainer.switchOn()
 
   private def contentItem(showInRelatedContent: Boolean = true,
                           shouldHideAdverts: Boolean = false,
@@ -73,9 +74,9 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
     html.toString shouldBe "storyPackageHtml onwardHtml sectionFrontHtml networkFrontHtml1 commentsHtml mostPopularHtml networkFrontHtml2 "
   }
 
-  it should "just show the story package on ad features" in {
+  it should "just show the story package and onward placeholder on ad features" in {
     val html = buildHtml(contentItem(), isAdFeature = true)
-    html.toString shouldBe "storyPackageHtml "
+    html.toString shouldBe "storyPackageHtml onwardHtml "
   }
 
   it should "omit comments when article won't allow them" in {

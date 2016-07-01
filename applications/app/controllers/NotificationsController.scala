@@ -13,7 +13,7 @@ import scala.concurrent.Future
 
 case class Subscription(notificationTopicId: String, browserEndpoint: String)
 
-object NotificationsController extends Controller with ExecutionContexts with Logging {
+class NotificationsController extends Controller with ExecutionContexts with Logging {
 
   val form = Form(mapping(
     "notificationTopicId" -> nonEmptyText,
@@ -46,3 +46,5 @@ object NotificationsController extends Controller with ExecutionContexts with Lo
     )
   }
 }
+
+object NotificationsController extends NotificationsController

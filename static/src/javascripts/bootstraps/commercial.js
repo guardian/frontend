@@ -12,6 +12,7 @@ define([
     'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/hosted-video',
+    'common/modules/commercial/hosted-gallery',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
@@ -30,6 +31,7 @@ define([
     sponsorships,
     frontCommercialComponents,
     hostedVideo,
+    hostedGallery,
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
@@ -70,6 +72,7 @@ define([
                     ['cm-thirdPartyTags', thirdPartyTags.init],
                     ['cm-sponsorships', sponsorships.init],
                     ['cm-hostedVideo', hostedVideo.init],
+                    ['cm-hostedGallery', hostedGallery.init],
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-new-adverts', paidContainers.init],
                     ['cm-ready', function () {

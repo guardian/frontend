@@ -1,31 +1,35 @@
 package contentapi
 
-import common.{LifecycleComponent, AkkaAsync, Logging, Jobs}
+import common._
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class SectionsLookUpLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class SectionsLookUpLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync
+)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
   }}
 
   private def scheduleJobs() {
-    Jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
+    jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
       SectionsLookUp.refresh()
     }
   }
 
   private def descheduleJobs() {
-    Jobs.deschedule("SectionsLookUpJob")
+    jobs.deschedule("SectionsLookUpJob")
   }
 
   override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
-    AkkaAsync {
+    akkaAsync.after1s {
       SectionsLookUp.refresh()
     }
   }

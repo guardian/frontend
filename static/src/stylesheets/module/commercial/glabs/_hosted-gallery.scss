@@ -33,18 +33,28 @@
     }
 }
 
+.hosted-gallery__gallery-container {
+    opacity: 0;
+    &.use-swipe, &.use-scroll {
+        opacity: 1;
+    }
+}
+
 .hosted-gallery__image {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-size: contain;
-    background-color: #444444;
-    background-repeat: no-repeat;
-    background-position: center;
     transition: opacity 300ms ease;
     opacity: 0;
     &:first-child {
         opacity: 1;
+    }
+    .hosted-gallery__image-sizer {
+        position: absolute;
+    }
+    img {
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -54,26 +64,24 @@
     pointer-events: none;
     visibility: hidden;
     color: #ffffff;
-    top: 50%;
-    left: 15px;
-    right: 85px;
+    bottom: 0;
+    left: 0;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    margin-right: 90px;
     font-size: 30px;
     position: absolute;
-    transition: opacity 300ms ease, visibility 300ms ease, left 300ms ease, right 300ms ease;
+    transition: opacity 300ms ease, visibility 300ms ease;
     &:hover {
         text-decoration: none;
     }
 }
 
-.use-swipe .hosted-gallery__image,
-.use-scroll.show-cta {
-    .hosted-gallery__cta-title {
-        opacity: 1;
-        pointer-events: auto;
-        visibility: visible;
-        left: 10px;
-        right: 90px;
-    }
+.use-swipe .hosted-gallery__image .hosted-gallery__cta-title,
+.use-scroll.show-cta > .hosted-gallery__cta-title {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
 }
 
 .use-swipe .hosted-gallery__image {
@@ -135,6 +143,8 @@
 .hosted-gallery-page {
     .hosted__social.adverts__header {
         padding: 0;
+        width: 170px;
+        order: 0;
     }
     .hosted__social-wrapper {
         padding: 7px;
@@ -151,6 +161,7 @@
     }
     .hosted__container--content {
         display: flex;
+        flex-direction: row;
     }
 }
 
@@ -159,6 +170,8 @@
     height: 40px;
     flex: 1;
     position: relative;
+    align-self: flex-end;
+    padding-bottom: 3px;
 }
 
 .hosted-gallery__caption {
@@ -195,8 +208,9 @@
     line-height: 16px;
     padding: 10px;
     width: 500px;
-    text-align: center;
+    text-align: left;
     max-width: calc(100% + 20px);
+    border-radius: 3px;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -217,7 +231,7 @@
 }
 
 $progressHeight: 50px;
-$progressThickness: 5px;
+$progressThickness: 2px;
 $progressColor: #ffffff;
 
 .use-scroll .hosted-gallery__progress {
@@ -247,63 +261,63 @@ $progressColor: #ffffff;
         position: relative;
         height: $progressHeight;
         width: $progressHeight;
-        overflow: hidden;
+        overflow: visible;
         pointer-events: none;
     }
 
-    &.quarter-3 .hosted-gallery__progress--wrapper,
-    &.quarter-4 .hosted-gallery__progress--wrapper {
-        overflow: visible;
+    &.first-half .hosted-gallery__progress--wrapper {
+        overflow: hidden;
     }
 
     .inline-arrow-up,
     .inline-arrow-down {
         position: absolute;
-        left: -12px;
+        left: -18px;
         cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, .6);
+        border-radius: 50%;
+        padding: 5px;
+        svg {
+            transform: scale(.8);
+        }
     }
 
     .inline-arrow-up {
-        top: -30px;
+        top: -31px;
     }
 
     .inline-arrow-down {
-        bottom: -33px;
+        bottom: -31px;
+        padding-top: 10px;
+        padding-bottom: 0;
     }
 
-    .hosted-gallery__progress--border {
+    .hosted-gallery__progress-border {
         height: $progressHeight;
         width: $progressHeight;
         position: absolute;
         left: $progressHeight / -2;
-        transform: rotate(-45deg);
+        transform: rotate(45deg);
     }
 
-    .hosted-gallery__progress--border-1,
-    .hosted-gallery__progress--border-2 {
-        border: $progressThickness solid transparent;
+    .hosted-gallery__progress-border-static,
+    .hosted-gallery__progress-border-rotate {
+        border: $progressThickness solid;
         border-radius: 50%;
         height: $progressHeight - (2 * $progressThickness);
         width: $progressHeight - (2 * $progressThickness);
         position: absolute;
     }
 
-    .hosted-gallery__progress--border-2 {
-        border-top-color: $progressColor;
+    .hosted-gallery__progress-border-rotate {
+        border-color: transparent transparent $progressColor $progressColor;
     }
 
-    &.quarter-2 .hosted-gallery__progress--border-1 {
-        border-right-color: $progressColor;
+    .hosted-gallery__progress-border-static {
+        border-color: $progressColor $progressColor transparent transparent;
     }
 
-    &.quarter-3 .hosted-gallery__progress--border-1 {
-        border-right-color: $progressColor;
-        border-bottom-color: $progressColor;
-    }
-
-    &.quarter-4 .hosted-gallery__progress--border-1 {
-        border-right-color: $progressColor;
-        border-bottom-color: $progressColor;
-        border-left-color: $progressColor;
+    &.first-half .hosted-gallery__progress-border-static {
+        border-color: transparent;
     }
 }

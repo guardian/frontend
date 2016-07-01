@@ -91,7 +91,7 @@ class CrosswordPageController extends CrosswordController {
 
 object CrosswordPageController extends CrosswordPageController
 
-object CrosswordSearchController extends CrosswordController {
+class CrosswordSearchController extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
@@ -162,3 +162,5 @@ object CrosswordSearchController extends CrosswordController {
 
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
+
+object CrosswordSearchController extends CrosswordSearchController
