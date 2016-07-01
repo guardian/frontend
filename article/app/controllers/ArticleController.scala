@@ -107,6 +107,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       val htmlResponse = () => {
         if (request.isEmail) views.html.articleEmail(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
+        else if (article.article.isHeroic) views.html.articleHeroic(article)
         else if (request.isAmp) views.html.articleAMP(article)
         else views.html.article(article)
       }

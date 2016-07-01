@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay, HeroicTemplateSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -81,6 +81,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
+  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
@@ -403,6 +404,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isHeroic", JsBoolean(content.isHeroic)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       ("videoDuration" -> videoDuration)
     ) ++ bookReviewIsbn
@@ -432,7 +434,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
+      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle || content.isHeroic
     )
   }
 
@@ -476,6 +478,7 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
   val isImmersive: Boolean = content.isImmersive
+  val isHeroic: Boolean = content.tags.isLabourLiverpoolSeries
   val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")

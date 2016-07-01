@@ -1,0 +1,77 @@
+@(page: ContentPage)(implicit request: RequestHeader)
+
+@import layout.ContentWidths.MainMedia
+@import model.ContentPage
+@import views.support.TrailCssClasses.toneClass
+@import views.support.RenderClasses
+
+@defining((
+    page.item.tags.isUSMinuteSeries,
+    page.item.elements.hasMainEmbed,
+    page.item.fields.main.nonEmpty,
+    page.item.tags.isLabourLiverpoolSeries
+)) { case (isMinuteSeries, hasEmbed, hasMainMedia, isLabourLiverpoolSeries) =>
+
+    <div class="@RenderClasses(Map(
+            "content--minute-article" -> isMinuteSeries,
+            "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
+            "content--heroic-article-without-main-media" -> !hasMainMedia,
+            "heroic-main-media" -> hasMainMedia
+        ),
+        "content", "content--heroic", "content--heroic-article", "tonal", s"tonal--${toneClass(page.item)}")
+    ">
+        <div class="gs-container heroic-main-media__logo">
+            <a href="@LinkTo{/}">
+                <span class="u-h">The Guardian</span>
+                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("heroic-main-media__logo__svg"))
+            </a>
+        </div>
+        <div class="heroic-main-media__media">
+            @if(page.item.elements.hasMainPicture) {
+                @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                    @fragments.image(
+                        picture = picture,
+                        classes = Seq("heroic-main-media__media"),
+                        widths = MainMedia.immersive,
+                        imageAltText = "",
+                        isImmersiveMainMedia = true
+                    )
+                }
+            } else {
+                @if(hasMainMedia) {
+                    <div class="heroic-main-media__media__loading">
+                        <div class="heroic-main-media__loading-animation is-updating"></div>
+                        <span class="u-h">Loading header</span>
+                    </div>
+                    @Html(page.item.fields.main)
+                }
+            }
+        </div>
+        <div class="@RenderClasses(Map("heroic-main-media__headline-container" -> hasMainMedia))">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <a class="series-identity" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
+                        <div class="series-identity__title">Labour &amp; Liverpool</div>
+                        <div class="series-identity__byline">with Ewen MacAskill</div>
+                    </a>
+                    <div class="headline">
+                        <div class="header-background"></div>
+                        <h1 class="@RenderClasses(Map("content__headline--heroic--with-main-media" -> hasMainMedia),
+                            "content__headline", "content__headline--heroic", "content__headline--heroic-article")">
+                            @Html(page.item.trail.headline)
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="l-side-margins">
+        <div class="gs-container">
+            <div class="content__main-column">
+                <div class="content__wrapper--standfirst">
+                    @fragments.labourLiverpoolStandfirst(page.item)
+                </div>
+            </div>
+        </div>
+    </div>
+}

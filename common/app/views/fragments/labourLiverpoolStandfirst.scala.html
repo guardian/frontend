@@ -1,0 +1,23 @@
+@(item: model.ContentType)(implicit request: RequestHeader)
+
+<div class="content__standfirst content__standfirst--labour-liverpool-article" data-link-name="standfirst" data-component="standfirst">
+    @item.fields.trailText.map{ t =>
+
+        @defining({
+            val trailText = views.support.StripHtmlTags(t)
+            // description has to end in a full stop in the metadata to match google linked data standards, but
+            // editorial style doesn't allow it in trail text.
+            s"$trailText${if (item.tags.isReview) "." else ""}"
+        }){ trailText =>
+            <meta itemprop="description" content="@trailText" />
+        }
+    }
+    
+    <div class="membership-cutout"></div>
+
+    @item.fields.standfirst.map { standfirst =>
+        @defining(Edition(request)) { edition =>
+            @withJsoup(BulletCleaner(standfirst))(InBodyLinkCleaner("in standfirst link"))
+        }
+    }
+</div>

@@ -10,6 +10,16 @@ trait FeatureSwitches {
     "If this switch is on, main media embeds won't be iframed",
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 29),
+    exposeClientSide = false
+  )
+
+  val HeroicTemplateSwitch = Switch(
+    SwitchGroup.Feature,
+    "heroic-main-media",
+    "If this switch is on, Heroic template will be applied to heroic articles",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = Off,
     sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = false
   )

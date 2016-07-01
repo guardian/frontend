@@ -1,0 +1,59 @@
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import views.BodyCleaner
+@import views.support.TrailCssClasses.toneClass
+
+@defining(model.article) { article =>
+    <div class="l-side-margins">
+        <article id="article" data-test-id="article-root"
+            class="content content--article content--heroic content--heroic-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+            @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
+            itemscope itemtype="@article.metadata.schemaType" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                <link itemprop="sameAs" href="http://www.theguardian.com">
+            </div>
+
+            @fragments.headerHeroic(article)
+
+            <div class="content__main tonal__main tonal__main--@toneClass(article)">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
+
+                        @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
+                            <hr class="content__hr hide-until-leftcol" />
+                        }
+
+                        @fragments.chapterHeadings(article)
+
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                            data-test-id="article-review-body">
+
+                            @if(article.commercial.isAdvertisementFeature || article.commercial.isSponsored(None) || article.commercial.isFoundationSupported) {
+                                @fragments.commercial.badge(article, model)
+                            }
+
+                            @BodyCleaner(article, article.fields.body, amp = amp)
+                        </div>
+
+                        @fragments.witnessCallToAction(article.content)
+
+                        @fragments.submeta(article)
+
+                        <div class="after-article js-after-article"></div>
+                    </div>
+
+                    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+                        <div class="ad-slot-container js-ad-slot-container"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        @fragments.contentFooter(article, model.related)
+
+    </div>
+}

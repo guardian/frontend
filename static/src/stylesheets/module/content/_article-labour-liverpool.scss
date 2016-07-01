@@ -1,0 +1,138 @@
+$labour-liverpool-header-font-colour: #ffffff;
+$labour-liverpool-standfirst-font-colour: #6fa19a;
+$labour-liverpool-standfirst-background-colour: #ffffff;
+
+.heroic-header-container--labour-liverpool {
+    min-height: 20vh;
+
+    .heroic-main-media__media {
+        @supports not (object-fit: cover) {
+            position: relative;
+            top: -42px;
+            max-height: 70vh;
+        }
+    }
+
+    .l-side-margins {
+        height: auto;
+    }
+
+    .content__wrapper--standfirst {
+        background-color: $labour-liverpool-standfirst-background-colour;
+
+        .membership-cutout {
+            display: none;
+
+            @include mq($from: tablet) {
+                display: block;
+                float: left;
+                height: 116px;
+                width: 156px;
+                background-image: url('https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=55&auto=format&usm=12&fit=max&s=2c8dc813795a8c11dd98e28377a5893f');
+                background-position: bottom;
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin-left: -20px;
+                margin-right: -15px;
+            }
+        }
+
+        .content__standfirst--labour-liverpool-article {
+            @include fs-headline(3);
+            color: $labour-liverpool-standfirst-font-colour;
+            margin-top: 10px;
+
+            p::before {
+                float: left;
+                content: url('https://s3.amazonaws.com/gdn-cdn/membership-article-two/img/quote_marks.svg');
+                height: 22px;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.content--labour-liverpool-article {
+    .heroic-main-media__headline-container {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-image: url('https://s3.amazonaws.com/gdn-cdn/membership-article-two/img/membership-background-two-simple.png');
+        background-repeat: no-repeat;
+        background-size: 170%;
+
+        @include mq($from: tablet) {
+            background-position: 0 -7vw;
+            background-size: 100%;
+        }
+    }
+
+    .headline {
+        position: relative;
+        top: 25vh;
+        max-width: 600px;
+
+        h1 {
+            @include fs-headline(6);
+            position: absolute;
+            font-weight: 200;
+            color: $labour-liverpool-header-font-colour;
+            margin: 10px;
+
+            @include mq($from: tablet) {
+                @include fs-headline(8);
+                font-weight: 200;
+                margin: 20px;
+            }
+        }
+
+        .header-background {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 130px;
+            background-image: url('https://s3.amazonaws.com/gdn-cdn/membership-article-two/img/header_background.svg');
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+        }
+    }
+
+    .series-identity {
+        display: block;
+        position: relative;
+        top: 40px;
+        padding: 5px 0 30px 20px;
+        height: 35px;
+        max-width: 250px;
+        z-index: 2;
+        background-image: url('https://s3.amazonaws.com/gdn-cdn/membership-article-two/img/membership-background-two.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 0 -8px;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        .series-identity__title, .series-identity__byline {
+            @include fs-header(2);
+            line-height: 19px;
+        }
+
+        .series-identity__title {
+            color: #ffffff;
+        }
+
+        .series-identity__byline {
+            color: #6fa19a;
+        }
+
+        @include mq($from: tablet) {
+            top: 0;
+        }
+
+        @include mq($from: desktop) {
+            left: -30%;
+        }
+    }
+}
