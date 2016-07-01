@@ -41,10 +41,10 @@ define([
                 }
             },
             {
-                id: 'someMessage',
+                id: 'everyone',
                 test: function () {
                     var submeta = $('.submeta');
-                    writer(submeta, 'Can\'t live without us? The feeling\'s mutual', 'https://membership.theguardian.com/contribute?mcopy=everyone-article', 'Please support the Guardian and independent journalism');
+                    writer(submeta, 'If everyone who sees this chipped in the Guardian\'s future would be more secure.', 'https://membership.theguardian.com/contribute?mcopy=everyone-article', 'Please support the Guardian and independent journalism');
                 }
             }
         ];
