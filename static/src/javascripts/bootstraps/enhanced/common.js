@@ -31,7 +31,6 @@ define([
     'common/modules/navigation/navigation',
     'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/hosted-about',
-    'common/modules/commercial/hosted-gallery',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -87,7 +86,6 @@ define([
     navigation,
     stickyAdBanner,
     hostedAbout,
-    hostedGallery,
     Profile,
     Search,
     history,
@@ -374,12 +372,6 @@ define([
                 if (config.page.contentType === 'Hosted') {
                     hostedAbout.init();
                 }
-            },
-
-            initHostedGallery: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedGallery.init();
-                }
             }
         };
 
@@ -430,7 +422,6 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-gallery', modules.initHostedGallery],
                 ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();

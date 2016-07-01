@@ -83,27 +83,29 @@ define([
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
         this.$ctaFloat = $('.js-hosted-gallery-cta-float', this.$galleryEl)[0];
 
-        // FSM CONFIG
-        this.fsm = new FiniteStateMachine({
-            initial: 'image',
-            onChangeState: function (oldState, newState) {
-                this.$galleryEl
-                    .removeClass('hosted-gallery--' + oldState)
-                    .addClass('hosted-gallery--' + newState);
-            },
-            context: this,
-            states: this.states
-        });
+        if(this.$galleryEl.length){
+            // FSM CONFIG
+            this.fsm = new FiniteStateMachine({
+                initial: 'image',
+                onChangeState: function (oldState, newState) {
+                    this.$galleryEl
+                        .removeClass('hosted-gallery--' + oldState)
+                        .addClass('hosted-gallery--' + newState);
+                },
+                context: this,
+                states: this.states
+            });
 
-        bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-        this.loadSurroundingImages(1, this.$images.length);
+            bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+            this.loadSurroundingImages(1, this.$images.length);
 
-        if (this.useSwipe) {
-            this.$galleryEl.addClass('use-swipe');
-            this.initSwipe();
-        } else {
-            this.$galleryEl.addClass('use-scroll');
-            this.initScroll();
+            if (this.useSwipe) {
+                this.$galleryEl.addClass('use-swipe');
+                this.initSwipe();
+            } else {
+                this.$galleryEl.addClass('use-scroll');
+                this.initScroll();
+            }
         }
     }
 
