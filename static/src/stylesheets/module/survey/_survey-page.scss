@@ -7,9 +7,12 @@
         padding: $gs-gutter;
     }
 
-    h1 {
+    h1, h2 {
         @include fs-headline(4);
         color: $guardian-brand;
+    }
+
+    h1 {
         font-weight: bold;
         margin-top: $gs-baseline/2;
         margin-bottom: $gs-baseline;
@@ -21,8 +24,6 @@
     }
 
     h2 {
-        @include fs-header(4);
-        color: $guardian-brand;
         margin-bottom: $gs-baseline/2;
     }
 
