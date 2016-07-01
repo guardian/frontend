@@ -31,7 +31,7 @@
         margin-bottom: $gs-baseline;
     }
 
-    .fsError:before {
+    .fsError::before {
         content: '';
         display: block;
         background: $error-icon;
