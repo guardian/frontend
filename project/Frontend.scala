@@ -72,7 +72,10 @@ object Frontend extends Build with Prototypes {
     .aggregate(common)
     .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+  )
+
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
