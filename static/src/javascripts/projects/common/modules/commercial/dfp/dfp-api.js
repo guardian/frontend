@@ -13,11 +13,7 @@ define([
     'common/modules/commercial/dfp/get-creative-ids',
     'common/modules/commercial/dfp/track-ad-load',
     'common/modules/commercial/dfp/track-ad-render'
-], function (
-    mediator,
-    dfpEnv,
-    dfp
-) {
+], function (mediator, dfpEnv, dfp) {
     /**
      * Right, so an explanation as to how this works...
      *
