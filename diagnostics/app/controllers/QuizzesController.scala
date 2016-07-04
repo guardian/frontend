@@ -9,7 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits
 import scala.concurrent.Future
 
 // Deprecated service, we won't support quiz results soon.
-object QuizzesController extends Controller with Logging {
+class QuizzesController extends Controller with Logging {
 
   implicit val ec = Implicits.global
 
