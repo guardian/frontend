@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay'
 ], function (
@@ -29,7 +28,6 @@ define([
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
-    NewUserAdvertsDisabled,
     JoinDiscussionAfterPoll,
     HostedAutoplay
 ) {
@@ -40,7 +38,6 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
-        new NewUserAdvertsDisabled(),
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay()
     ];

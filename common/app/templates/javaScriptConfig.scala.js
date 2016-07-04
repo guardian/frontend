@@ -24,9 +24,6 @@
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
             }
-        },
-        "commercial": {
-            "showingAdfree" : null
         }
     }
 }

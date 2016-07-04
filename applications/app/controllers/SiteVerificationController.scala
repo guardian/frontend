@@ -4,7 +4,7 @@ import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.duration._
 
-object SiteVerificationController extends Controller {
+class SiteVerificationController extends Controller {
 
   // A list of accepted accounts.
   private val acceptedGoogleAccounts = List(
