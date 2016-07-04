@@ -1,8 +1,6 @@
 define([
-    'common/modules/commercial/dfp/dfp-obj',
     'common/modules/commercial/dfp/private/dfp-env'
-], function (dfp, dfpEnv) {
-    dfp.getCreativeIDs = getCreativeIDs;
+], function (dfpEnv) {
     return getCreativeIDs;
 
     function getCreativeIDs() {

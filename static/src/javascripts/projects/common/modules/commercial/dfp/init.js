@@ -6,16 +6,13 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/commercial/dfp/dfp-obj',
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/on-slot-render',
     'common/modules/commercial/dfp/private/PrebidService',
     'common/modules/commercial/dfp/private/ophan-tracking'
-], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfp, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
+], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     var renderStartTime = -1;
-
-    dfp.init = init;
     return init;
 
     function init() {

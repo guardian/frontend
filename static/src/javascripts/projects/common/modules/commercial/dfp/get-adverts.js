@@ -1,9 +1,7 @@
 define([
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/get-advert-by-id',
-    'common/modules/commercial/dfp/dfp-obj'
-], function (dfpEnv, getAdvertById, dfp) {
-    dfp.getAdverts = getAdverts;
+    'common/modules/commercial/dfp/private/get-advert-by-id'
+], function (dfpEnv, getAdvertById) {
     return getAdverts;
 
     function getAdverts(withEmpty) {

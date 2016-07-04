@@ -1,6 +1,7 @@
 define([
-    'common/modules/commercial/dfp/private/dfp-env'
-], function (dfpEnv) {
+    'common/modules/commercial/dfp/private/dfp-env',
+    'common/modules/commercial/dfp/private/lazy-load'
+], function (dfpEnv, lazyLoad) {
     var excludedAdvertIds = [
         'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high'

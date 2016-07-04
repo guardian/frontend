@@ -3,7 +3,6 @@ define([
     'common/utils/sha1',
     'common/modules/identity/api',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp/dfp-obj',
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/lazy-load',
     'common/modules/commercial/dfp/private/create-advert',
@@ -11,8 +10,7 @@ define([
     'common/modules/commercial/dfp/private/display-lazy-ads',
     'common/modules/commercial/dfp/private/display-ads',
     'common/modules/commercial/dfp/private/refresh-on-resize'
-], function (qwery, sha1, identity, commercialFeatures, dfp, dfpEnv, lazyLoad, createAdvert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
-    dfp.loadAds = load;
+], function (qwery, sha1, identity, commercialFeatures, dfpEnv, lazyLoad, createAdvert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
     return load;
 
     function load() {

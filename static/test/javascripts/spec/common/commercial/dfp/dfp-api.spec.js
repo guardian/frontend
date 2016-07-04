@@ -40,7 +40,15 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, lazyLoad, config, detect, commercialFeatures, closeDisabledSlots;
+            dfp, dfpEnv, lazyLoad, config, detect, commercialFeatures, closeDisabledSlots;
+
+        function reset() {
+            dfpEnv.firstAdDisplayed = false;
+            dfpEnv.firstAdRendered = false;
+            dfpEnv.advertIds = {};
+            dfpEnv.adverts = [];
+            dfpEnv.advertsToRefresh = [];
+        }
 
         beforeEach(function (done) {
 
@@ -53,21 +61,31 @@ define([
             });
 
             injector.require([
-                'common/modules/commercial/dfp/dfp-api',
+                'common/modules/commercial/dfp/init',
+                'common/modules/commercial/dfp/load',
+                'common/modules/commercial/dfp/get-adverts',
+                'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
                 'common/modules/commercial/dfp/private/ophan-tracking',
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
                 'common/modules/commercial/close-disabled-slots',
-                'common/modules/commercial/dfp/private/lazy-load'
+                'common/modules/commercial/dfp/private/lazy-load',
+                'common/modules/commercial/dfp/private/dfp-env'
             ], function () {
-                dfp = arguments[0];
-                config = arguments[1];
-                var ophanTracking = arguments[2];
-                commercialFeatures = arguments[3];
-                detect = arguments[4];
-                closeDisabledSlots = arguments[5];
-                lazyLoad = arguments[6];
+                dfp = {
+                    init: arguments[0],
+                    load: arguments[1],
+                    getAdverts: arguments[2],
+                    getCreativeIDs: arguments[3]
+                };
+                config = arguments[4];
+                var ophanTracking = arguments[5];
+                commercialFeatures = arguments[6];
+                detect = arguments[7];
+                closeDisabledSlots = arguments[8];
+                lazyLoad = arguments[9];
+                dfpEnv = arguments[10];
 
                 config.switches = {
                     commercialComponents: true,
@@ -140,7 +158,7 @@ define([
         });
 
         afterEach(function () {
-            dfp.reset();
+            reset();
             fixtures.clean(fixturesConfig.id);
             $style.remove();
             // window.googletag = null;
@@ -165,7 +183,7 @@ define([
         });
 
         it('should get the slots', function (done) {
-            dfp.init().then(dfp.loadAds).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
@@ -177,7 +195,7 @@ define([
             $('.js-ad-slot').first().css('display', 'none');
             closeDisabledSlots.init()
                 .then(dfp.init)
-                .then(dfp.loadAds)
+                .then(dfp.load)
                 .then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     var slots = dfp.getAdverts();
@@ -199,7 +217,7 @@ define([
         });
 
         it('should define slots', function (done) {
-            dfp.init().then(dfp.loadAds).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
 
                 [
@@ -227,7 +245,7 @@ define([
             detect.getBreakpoint = function () {
                 return 'wide';
             };
-            dfp.init().then(dfp.loadAds).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
@@ -240,7 +258,7 @@ define([
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.init().then(dfp.loadAds).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
                 done();
@@ -254,7 +272,7 @@ define([
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
-            dfp.init().then(dfp.loadAds).then(function () {
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(fakeEventOne);
                 window.googletag.pubads().listener(fakeEventTwo);
@@ -293,7 +311,7 @@ define([
 
             it('should send container level keywords', function (done) {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.init().then(dfp.loadAds).then(function () {
+                dfp.init().then(dfp.load).then(function () {
                     window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 }).then(done).catch(done.fail);
