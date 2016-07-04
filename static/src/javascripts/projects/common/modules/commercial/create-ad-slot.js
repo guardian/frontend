@@ -99,7 +99,7 @@ define([
                     adSizes.outOfPage,
                     adSizes.fluid250,
                     adSizes.leaderboard,
-                    adSizes.cascase,
+                    adSizes.cascade,
                     adSizes.superHeader,
                     adSizes.billboard,
                     adSizes.fabric,
