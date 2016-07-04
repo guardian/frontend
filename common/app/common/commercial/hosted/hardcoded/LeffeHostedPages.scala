@@ -9,14 +9,6 @@ object LeffeHostedPages {
 
 
   /*
-    Pete Lawrence
-    http://multimedia.guardianapis.com/interactivevideos/video
-    .php?file=160629GLPeteLawrence_h264_mezzanine&format=video/webm&maxbitrate=2048
-
-    Susan Derges
-    http://multimedia.guardianapis.com/interactivevideos/video
-    .php?file=160629GLSusanDerges_h264_mezzanine&format=video/webm&maxbitrate=2048
-
     Quay Brothers
     http://multimedia.guardianapis.com/interactivevideos/video
     .php?file=160629GLQuayBrothers_h264_mezzanine&format=video/webm&maxbitrate=2048
@@ -26,6 +18,7 @@ object LeffeHostedPages {
   private val willardWiganPageName = "willard-wigan"
   private val adrienneTreebyPageName = "adrienne-treeby"
   private val peteLawrencePageName = "pete-lawrence"
+  private val susanDergesPageName = "susan-derges"
 
   private val campaign = HostedCampaign(
     id = "leffe-rediscover-time",
@@ -111,6 +104,31 @@ object LeffeHostedPages {
     nextPage = None
   )
 
+  private val susanDergesPageWithoutNextPage: HostedVideoPage = HostedVideoPage(
+    campaign,
+    pageUrl = s"$host/advertiser-content/${campaign.id}/$susanDergesPageName",
+    pageName = susanDergesPageName,
+    standfirst = "TODO",
+    bannerUrl = Static("TODO"),
+    video = HostedVideo(
+      mediaId = susanDergesPageName,
+      title = "Susan Derges",
+      duration = 146,
+      posterUrl = Static("TODO"),
+      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
+      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm",
+      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo" +
+                  ".ogv",
+      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
+    ),
+    cta = HostedCallToAction(
+      url = "TODO",
+      label = "TODO",
+      trackingCode = "TODO"
+    ),
+    nextPage = None
+  )
+
   private val willardWiganPage = willardWiganPageWithoutNextPage
                                  .copy(nextPage = Some(adrienneTreebyPageWithoutNextPage))
 
@@ -118,6 +136,9 @@ object LeffeHostedPages {
                                    .copy(nextPage = Some(peteLawrencePageWithoutNextPage))
 
   private val peteLawrencePage = peteLawrencePageWithoutNextPage
+                                 .copy(nextPage = Some(susanDergesPageWithoutNextPage))
+
+  private val susanDergesPage = susanDergesPageWithoutNextPage
                                    .copy(nextPage = Some(willardWiganPageWithoutNextPage))
 
   def fromPageName(pageName: String): Option[HostedPage] = {
@@ -125,6 +146,7 @@ object LeffeHostedPages {
       case `willardWiganPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(willardWiganPage)
       case `adrienneTreebyPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(adrienneTreebyPage)
       case `peteLawrencePageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(peteLawrencePage)
+      case `susanDergesPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(susanDergesPage)
       case _ => None
     }
   }
