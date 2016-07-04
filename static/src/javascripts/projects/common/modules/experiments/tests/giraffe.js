@@ -57,7 +57,7 @@ define([
                 test: function () {
                     writer('By the time you\'ve had your morning tea, reporters in Rio, Beijing, Dakar and Paris, have already filed their stories. Covering the world\'s news isn\'t cheap. Please chip in a few pounds', 'https://membership.theguardian.com/contribute', 'Please support the Guardian and independent journalism');
                 }
-            },
+            }
         ];
     };
 });
