@@ -2,7 +2,7 @@
 define([
     'Promise',
     'common/modules/commercial/ad-sizes',
-    'common/modules/commercial/dfp/QueueAsync',
+    'common/utils/QueueAsync',
     'common/utils/config',
     'common/utils/robust',
     'lodash/arrays/uniq',
