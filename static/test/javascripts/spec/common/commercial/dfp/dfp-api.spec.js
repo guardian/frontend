@@ -40,7 +40,7 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, config, detect, commercialFeatures, closeDisabledSlots;
+            dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
 
         beforeEach(function (done) {
 
@@ -58,7 +58,8 @@ define([
                 'common/modules/commercial/dfp/private/ophan-tracking',
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
-                'common/modules/commercial/close-disabled-slots'
+                'common/modules/commercial/close-disabled-slots',
+                'common/modules/commercial/dfp/private/dfp-env'
             ], function () {
                 dfp = arguments[0];
                 config = arguments[1];
@@ -66,6 +67,7 @@ define([
                 commercialFeatures = arguments[3];
                 detect = arguments[4];
                 closeDisabledSlots = arguments[5];
+                dfpEnv = arguments[6];
 
                 config.switches = {
                     commercialComponents: true,
@@ -141,7 +143,7 @@ define([
             dfp.reset();
             fixtures.clean(fixturesConfig.id);
             $style.remove();
-            window.googletag = null;
+            // window.googletag = null;
         });
 
         it('should exist', function () {
@@ -271,12 +273,12 @@ define([
 
             it('should lazy load ads when there is no pageskin', function () {
                 config.page.hasPageSkin = false;
-                expect(dfp.shouldLazyLoad()).toBe(true);
+                expect(dfpEnv.fn.shouldLazyLoad()).toBe(true);
             });
 
             it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(false);
+                expect(dfpEnv.fn.shouldLazyLoad()).toBe(false);
             });
 
         });
