@@ -923,7 +923,6 @@ $comment-recommend-button-size: 19px;
     &:hover {
         .sharing-buttons {
             opacity: 1;
-            margin-left: 5px;
         }
 
         .comment-facebook-icon,
@@ -940,6 +939,7 @@ $comment-recommend-button-size: 19px;
     cursor: pointer;
     display: inline-block;
     float: left;
+    margin-right: 5px;
 }
 
 .comment-share-icon {
@@ -951,7 +951,6 @@ $comment-recommend-button-size: 19px;
 }
 
 .sharing-buttons {
-    opacity: 0;
     cursor: pointer;
     display: inline-block;
 }
@@ -961,7 +960,7 @@ $comment-recommend-button-size: 19px;
     height: 0;
     min-width: 0;
     margin: .6rem;
-    transition: all .5s ease-in-out;
+    transition: all .4s ease-in-out;
 }
 
 /* Report

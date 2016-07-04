@@ -8,13 +8,13 @@
     <div class="sharing-text">@fragments.inlineSvg("share", "icon", List("comment-share-icon")) Share</div>
 
     <div class="sharing-buttons" data-link-name="comment social">
-    @defining(s"https://gu.com${comment.discussion.key}#comment-${comment.id}") { permalink =>
+    @defining(s"${comment.discussion.webUrl}") { permalink =>
         @defining(StringEscapeUtils.unescapeHtml(Jsoup.clean(comment.body, Whitelist.none()))) { commentBody =>
             <a href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"""${comment.profile.displayName} commented: "$commentBody"""")).href"
             target="_blank"
             class="social__action social-icon-wrapper"
             data-link-name="social-comment : facebook">
-                <span class="inline-icon__fallback button share-modal__item share-modal__item--facebook">
+                <span class="inline-icon__fallback button">
                     Share on Facebook</span>
                 @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook comment-facebook-icon"))
                 <span class="u-h">Facebook</span>
@@ -26,7 +26,7 @@
                 target="_blank"
                 class="social__action social-icon-wrapper"
                 data-link-name="social-comment : twitter">
-                    <span class="inline-icon__fallback button share-modal__item share-modal__item--twitter">
+                    <span class="inline-icon__fallback button">
                         Share on Facebook</span>
                     @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter comment-twitter-icon"))
                     <span class="u-h">Twitter</span>
