@@ -9,7 +9,7 @@ object LeffeHostedPages {
   private val vid1PageName = "vid1"
 
   private val campaign = HostedCampaign(
-    id = "TODO",
+    id = "leffe-rediscover-time",
     name = "TODO",
     owner = "Leffe",
     logo = HostedLogo(Static("images/commercial/TODO.jpg"))

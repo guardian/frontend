@@ -7,7 +7,7 @@ object HostedPages {
   private val renaultCampaignName = "renault-car-of-the-future"
   private val galleryTestCampaignName = "hosted-gallery"
   private val visitBritainCampaignName = "visit-britain"
-  private val leffeCampaignName = "TODO"
+  private val leffeCampaignName = "leffe-rediscover-time"
 
   def fromPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {
