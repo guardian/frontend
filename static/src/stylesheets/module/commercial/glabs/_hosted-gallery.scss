@@ -143,6 +143,8 @@
 .hosted-gallery-page {
     .hosted__social.adverts__header {
         padding: 0;
+        width: 170px;
+        order: 0;
     }
     .hosted__social-wrapper {
         padding: 7px;
@@ -159,6 +161,7 @@
     }
     .hosted__container--content {
         display: flex;
+        flex-direction: row;
     }
 }
 
@@ -167,6 +170,8 @@
     height: 40px;
     flex: 1;
     position: relative;
+    align-self: flex-end;
+    padding-bottom: 3px;
 }
 
 .hosted-gallery__caption {

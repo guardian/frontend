@@ -12,7 +12,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.Random
 
-object Multi
+class Multi
   extends Controller
   with ExecutionContexts
   with implicits.Collections
@@ -110,3 +110,5 @@ object Multi
     }
   }
 }
+
+object Multi extends Multi

@@ -17,18 +17,44 @@
                     data-block-video-ads="true"
                     poster="@page.video.posterUrl"
                     class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@page.video.srcUrl&format=video/mp4&maxbitrate=2048">
-                        <source type="video/webm" src="@page.video.srcUrl&format=video/webm&maxbitrate=2048">
-                        <source type="video/ogg" src="@page.video.srcUrl&format=video/ogg&maxbitrate=2048">
-                        <source type="video/m3u8" src="@page.video.srcUrl&format=video/m3u8&maxbitrate=2048">
+                        <source type="video/mp4" src="@page.video.srcUrlMp4">
+                        <source type="video/webm" src="@page.video.srcUrlWebm">
+                        <source type="video/ogg" src="@page.video.srcUrlOgg">
+                        <source type="video/m3u8" src="@page.video.srcM3u8">
                     </video>
-                    <div class="hosted-fading">
+                    <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
                             <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                             <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
+                        </div>
+                    </div>
+                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
+                        <div class="hosted-next-autoplay__cancel">
+                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
+                                <span>Hide</span>
+                            </button>
+                        </div>
+                        <div class="hosted-next-autoplay__next-in-series">
+                            <div class="hosted-next-autoplay__subheader">Discover your Renault Zoe</div>
+                            <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="Discover Zoe from Renault" target="_blank">
+                                Visit Renault now @fragments.inlineSvg("arrow-right", "icon", List(""))
+                            </a>
+                        </div>
+                        <div class="hosted-next-autoplay__video">
+                            <div class="hosted-next-autoplay__header">
+                                <div class="hosted-next-autoplay__continue hosted-tone--renault">Continue watching</div>
+                                <h2 class="hosted-next-autoplay__subheader">@page.nextPage.video.title</h2>
+                            </div>
+                            <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
+                                <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
+                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
+                            </a>
+                            <a href="@page.nextPage.pageUrl" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @page.nextPage.video.title" target="_blank">
+                                Watch now
+                            </a>
                         </div>
                     </div>
                 </div>

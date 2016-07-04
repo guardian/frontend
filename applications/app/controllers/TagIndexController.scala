@@ -6,7 +6,7 @@ import model._
 import play.api.mvc.{Action, Controller}
 import services._
 
-object TagIndexController extends Controller with ExecutionContexts with Logging {
+class TagIndexController extends Controller with ExecutionContexts with Logging {
   private val TagIndexCacheTime = 600
 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
@@ -55,3 +55,5 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
 
   def contributor(page: String) = forTagType("contributors", "contributors", page, ContributorsIndexPageMetaData.make(page))
 }
+
+object TagIndexController extends TagIndexController
