@@ -39,8 +39,8 @@ define([
      */
 
     dfp.reset = function () {
-        dfpEnv.displayed = false;
-        dfpEnv.rendered = false;
+        dfpEnv.firstAdDisplayed = false;
+        dfpEnv.firstAdRendered = false;
         dfpEnv.advertIds = {};
         dfpEnv.adverts = [];
         dfpEnv.advertsToRefresh = [];

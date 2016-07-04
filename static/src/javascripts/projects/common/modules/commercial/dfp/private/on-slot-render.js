@@ -18,7 +18,7 @@ define([
     return onSlotRender;
 
     function onSlotRender(event) {
-        dfpEnv.rendered = true;
+        dfpEnv.firstAdRendered = true;
         recordFirstAdRendered();
 
         var advert = getAdvertById(event.slot.getSlotElementId());

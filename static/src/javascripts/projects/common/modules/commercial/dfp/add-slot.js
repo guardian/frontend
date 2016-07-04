@@ -12,9 +12,9 @@ define([
     function addSlot(adSlot) {
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
 
-        if (dfpEnv.displayed && !(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
+        if (dfpEnv.firstAdDisplayed && !(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
             // this is horrible, but if we do this before the initial ads have loaded things go awry
-            if (dfpEnv.rendered) {
+            if (dfpEnv.firstAdRendered) {
                 displayAd(adSlot);
             } else {
                 mediator.once('modules:commercial:dfp:rendered', function () {

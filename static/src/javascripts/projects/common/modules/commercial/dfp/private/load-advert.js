@@ -11,11 +11,11 @@ define([
 
         if (shouldPrebidAdvert(advert)) {
             dfpEnv.prebidService.loadAdvert(advert).then(function onDisplay() {
-                dfpEnv.displayed = true;
+                dfpEnv.firstAdDisplayed = true;
             });
         } else {
             window.googletag.display(advert.id);
-            dfpEnv.displayed = true;
+            dfpEnv.firstAdDisplayed = true;
         }
     }
 });
