@@ -1,7 +1,6 @@
 define([
-    'Promise',
-    'common/modules/commercial/dfp/private/dfp-env'
-], function (Promise, dfpEnv) {
+    'Promise'
+], function (Promise) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;
