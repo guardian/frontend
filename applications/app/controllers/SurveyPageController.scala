@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller}
 import staticpages.StaticPages
 
 
-object SurveyPageController extends Controller with ExecutionContexts {
+class SurveyPageController extends Controller with ExecutionContexts {
 
   import play.api.Play.current
 

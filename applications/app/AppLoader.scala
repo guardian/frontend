@@ -51,6 +51,7 @@ trait Controllers {
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
+  lazy val surveyPageController = wire[SurveyPageController]
 }
 
 trait AppLifecycleComponents {
