@@ -5,12 +5,12 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/lazy-load',
-    'common/modules/commercial/dfp/private/create-advert',
+    'common/modules/commercial/dfp/private/Advert',
     'common/modules/commercial/dfp/private/queue-advert',
     'common/modules/commercial/dfp/private/display-lazy-ads',
     'common/modules/commercial/dfp/private/display-ads',
     'common/modules/commercial/dfp/private/refresh-on-resize'
-], function (qwery, sha1, identity, commercialFeatures, dfpEnv, lazyLoad, createAdvert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
+], function (qwery, sha1, identity, commercialFeatures, dfpEnv, lazyLoad, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
     return load;
 
     function load() {
@@ -32,7 +32,7 @@ define([
 
     function createAdverts() {
         // Get all ad slots
-        dfpEnv.adverts = qwery(dfpEnv.adSlotSelector).map(createAdvert);
+        dfpEnv.adverts = qwery(dfpEnv.adSlotSelector).map(Advert);
     }
 
     /**

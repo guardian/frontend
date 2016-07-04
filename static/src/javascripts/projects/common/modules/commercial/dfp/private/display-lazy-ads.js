@@ -1,9 +1,8 @@
 define([
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/create-advert',
     'common/modules/commercial/dfp/private/load-advert',
     'common/modules/commercial/dfp/private/lazy-load'
-], function (dfpEnv, createAdvert, loadAdvert, lazyLoad) {
+], function (dfpEnv, loadAdvert, lazyLoad) {
     var advertsToInstantlyLoad = [
         'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high',

@@ -2,13 +2,13 @@ define([
     'Promise',
     'common/modules/commercial/dfp/private/dfp-env'
 ], function (Promise, dfpEnv) {
-    dfpEnv.fn.startLoadingAdvert = startLoadingAdvert;
-    dfpEnv.fn.stopLoadingAdvert = stopLoadingAdvert;
-    dfpEnv.fn.startRenderingAdvert = startRenderingAdvert;
-    dfpEnv.fn.stopRenderingAdvert = stopRenderingAdvert;
-    return createAdvert;
+    Advert.startLoading = startLoading;
+    Advert.stopLoading = stopLoading;
+    Advert.startRendering = startRendering;
+    Advert.stopRendering = stopRendering;
+    return Advert;
 
-    function createAdvert(adSlotNode) {
+    function Advert(adSlotNode) {
         var advert = {
             id: adSlotNode.id,
             node: adSlotNode,
@@ -37,20 +37,20 @@ define([
         return Object.seal(advert);
     }
 
-    function startLoadingAdvert(advert) {
+    function startLoading(advert) {
         advert.isLoading = true;
     }
 
-    function stopLoadingAdvert(advert, isLoaded) {
+    function stopLoading(advert, isLoaded) {
         advert.isLoading = false;
         advert.whenLoadedResolver(isLoaded);
     }
 
-    function startRenderingAdvert(advert) {
+    function startRendering(advert) {
         advert.isRendering = true;
     }
 
-    function stopRenderingAdvert(advert, isRendered) {
+    function stopRendering(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
     }

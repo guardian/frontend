@@ -1,10 +1,10 @@
 define([
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/create-advert',
+    'common/modules/commercial/dfp/private/Advert',
     'common/modules/commercial/dfp/private/queue-advert',
     'common/modules/commercial/dfp/private/lazy-load',
     'common/utils/mediator'
-], function (dfpEnv, createAdvert, queueAdvert, lazyLoad, mediator) {
+], function (dfpEnv, Advert, queueAdvert, lazyLoad, mediator) {
     return addSlot;
 
     function addSlot(adSlot) {
@@ -23,7 +23,7 @@ define([
     }
 
     function displayAd(adSlot) {
-        var advert = createAdvert(adSlot);
+        var advert = Advert(adSlot);
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
         if (lazyLoad.shouldLazyLoad()) {

@@ -6,11 +6,11 @@ define([
     'common/utils/user-timing',
     'common/modules/analytics/beacon',
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/create-advert',
+    'common/modules/commercial/dfp/private/Advert',
     'common/modules/commercial/dfp/private/render-advert',
     'common/modules/commercial/dfp/private/empty-advert',
     'common/modules/commercial/dfp/private/get-advert-by-id'
-], function (once, config, mediator, reportError, userTiming, beacon, dfpEnv, createAdvert, renderAdvert, emptyAdvert, getAdvertById) {
+], function (once, config, mediator, reportError, userTiming, beacon, dfpEnv, Advert, renderAdvert, emptyAdvert, getAdvertById) {
     var recordFirstAdRendered = once(function () {
         beacon.beaconCounts('ad-render');
     });
@@ -22,8 +22,8 @@ define([
         recordFirstAdRendered();
 
         var advert = getAdvertById(event.slot.getSlotElementId());
-        dfpEnv.fn.stopLoadingAdvert(advert, true);
-        dfpEnv.fn.startRenderingAdvert(advert);
+        Advert.stopLoading(advert, true);
+        Advert.startRendering(advert);
 
         if (event.isEmpty) {
             emptyAdvert(advert);
@@ -36,7 +36,7 @@ define([
         }
 
         function emitRenderEvents(isRendered) {
-            dfpEnv.fn.stopRenderingAdvert(advert, isRendered);
+            Advert.stopRendering(advert, isRendered);
             mediator.emit('modules:commercial:dfp:rendered', event);
             allAdsRendered();
         }

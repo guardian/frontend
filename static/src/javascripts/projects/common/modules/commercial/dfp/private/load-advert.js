@@ -1,12 +1,12 @@
 define([
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/create-advert',
+    'common/modules/commercial/dfp/private/Advert',
     'common/modules/commercial/dfp/private/should-prebid-advert'
-], function (dfpEnv, createAdvert, shouldPrebidAdvert) {
+], function (dfpEnv, Advert, shouldPrebidAdvert) {
     return loadAdvert;
 
     function loadAdvert(advert) {
-        dfpEnv.fn.startLoadingAdvert(advert);
+        Advert.startLoading(advert);
         dfpEnv.advertsToLoad.splice(dfpEnv.advertsToLoad.indexOf(advert), 1);
 
         if (shouldPrebidAdvert(advert)) {
