@@ -1,11 +1,14 @@
 package test
 
+import controllers.ArchiveController
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.concurrent.Future
 
 @DoNotDiscover class ArchiveControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+
+  lazy val archiveController = new ArchiveController
 
   it should "return a normalised r1 path" in {
     val tests = List(
@@ -15,7 +18,7 @@ import scala.concurrent.Future
       "www.theguardian.com/books/reviews/travel/foo" -> "http://www.theguardian.com/books/reviews/travel/foo"
     )
     tests foreach {
-      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+      case (key, value) => archiveController.normalise(key) should be (value)
     }
   }
 
@@ -23,7 +26,7 @@ import scala.concurrent.Future
   it should "return a normalised r1 path with suffixed zeros" in {
     val path = "www.theguardian.com/books/reviews/travel/0,,343395,.html"
     val expectedPath = "http://www.theguardian.com/books/reviews/travel/0,,343395,00.html"
-    controllers.ArchiveController.normalise(path , zeros = "00") should be (expectedPath)
+    archiveController.normalise(path , zeros = "00") should be (expectedPath)
   }
 
   it should "return a normalised short url path" in {
@@ -32,26 +35,26 @@ import scala.concurrent.Future
       "www.theguardian.com/p/dfas" -> "http://www.theguardian.com/p/dfas"
     )
     tests foreach {
-      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+      case (key, value) => archiveController.normalise(key) should be (value)
     }
   }
 
   it should "not decode encoded urls" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/foo/%2Cfoo")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/foo/%2Cfoo")(TestRequest())
     status(result) should be (404)
 
-    val combinerPattern = controllers.ArchiveController.lookup("www.theguardian.com/foo+foo+foo")(TestRequest())
+    val combinerPattern = archiveController.lookup("www.theguardian.com/foo+foo+foo")(TestRequest())
     status(combinerPattern) should be (404)
   }
 
   it should "decode encoded spaces as + for tag combiners" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/foo%20foo")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/foo%20foo")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/foo+foo")
   }
 
   it should "redirect old style galleries" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/arts/gallery/0,")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/arts/gallery/0,")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/arts/pictures/0,")
   }
@@ -59,86 +62,86 @@ import scala.concurrent.Future
   it should "test a redirect doesn't link to itself" in {
     val path = "www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
     val dest = "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
-    controllers.ArchiveController.linksToItself(path, dest) should be (true)
+    archiveController.linksToItself(path, dest) should be (true)
   }
 
   it should "lowercase the section of the url" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/Football/News_Story/0,1563,1655638,00.html")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/Football/News_Story/0,1563,1655638,00.html")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/football/News_Story/0,1563,1655638,00.html")
   }
 
   it should "redirect century urls correctly" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/century")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/century")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
   }
 
   it should "redirect century decade urls correctly" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/1899-1909")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/1899-1909")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
   }
 
   it should "redirect an R1 century article to a corrected decade story endpoint" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/1899-1909/Story/0,,126404,00.html")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/1899-1909/Story/0,,126404,00.html")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/century/1899-1909/Story/0,,126404,00.html")
   }
 
   it should "not redirect a random URL that contains the word century" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now")(TestRequest())
     status(result) should be (404)
   }
 
   it should "redirect failed combiners to the section" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/tv-and-radio/tvandradioblog+media/chris-evans")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/tv-and-radio/tvandradioblog+media/chris-evans")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/tv-and-radio")
 
-    val result2 = controllers.ArchiveController.lookup("www.theguardian.com/tv-and-radio+media/chris-evans")(TestRequest())
+    val result2 = archiveController.lookup("www.theguardian.com/tv-and-radio+media/chris-evans")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("http://www.theguardian.com/tv-and-radio")
   }
 
   it should "redirect paths that start with /Guardian/" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/Guardian/world/2005/jun/21/hearafrica05.development3")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/Guardian/world/2005/jun/21/hearafrica05.development3")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/world/2005/jun/21/hearafrica05.development3")
   }
 
   it should "redirect failed combiners RSS to the section RSS" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/tv-and-radio/tvandradioblog+media/chris-evans/rss")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/tv-and-radio/tvandradioblog+media/chris-evans/rss")(TestRequest())
     status(result) should be (301)
     location(result) should be ("http://www.theguardian.com/tv-and-radio/rss")
 
-    val result2 = controllers.ArchiveController.lookup("www.theguardian.com/tv-and-radio+media/chris-evans/rss")(TestRequest())
+    val result2 = archiveController.lookup("www.theguardian.com/tv-and-radio+media/chris-evans/rss")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("http://www.theguardian.com/tv-and-radio/rss")
   }
 
   it should "redirect /week pages" in {
 
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/news/datablog/2013/jun/19/week")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/news/datablog/2013/jun/19/week")(TestRequest())
     status(result) should be (301)
 
     println(location(result))
 
     location(result) should be ("/news/datablog/2013/jun/19/all")
 
-    val result2 = controllers.ArchiveController.lookup("www.theguardian.com/news/2013/jun/19/week")(TestRequest())
+    val result2 = archiveController.lookup("www.theguardian.com/news/2013/jun/19/week")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("/news/2013/jun/19/all")
   }
 
   it should "handle /week pages for editionalised sections" in {
 
-    val ukResult = controllers.ArchiveController.lookup("www.theguardian.com/sport/2015/jun/01/week")(TestRequest())
+    val ukResult = archiveController.lookup("www.theguardian.com/sport/2015/jun/01/week")(TestRequest())
     status(ukResult) should be (301)
     location(ukResult) should be ("/uk/sport/2015/jun/01/all")
 
     val australiaRequest = TestRequest().withHeaders("X-GU-Edition" -> "AU")
-    val auResult = controllers.ArchiveController.lookup("www.theguardian.com/sport/2015/jun/01/week")(australiaRequest)
+    val auResult = archiveController.lookup("www.theguardian.com/sport/2015/jun/01/week")(australiaRequest)
     status(auResult) should be (301)
     location(auResult) should be ("/au/sport/2015/jun/01/all")
 
@@ -146,62 +149,62 @@ import scala.concurrent.Future
 
   it should "redirect /lead pages" in {
 
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/news/datablog/2013/jun/19/lead")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/news/datablog/2013/jun/19/lead")(TestRequest())
     status(result) should be (301)
     location(result) should be ("/news/datablog/2013/jun/19/all")
 
-    val result2 = controllers.ArchiveController.lookup("www.theguardian.com/news/2013/jun/19/lead")(TestRequest())
+    val result2 = archiveController.lookup("www.theguardian.com/news/2013/jun/19/lead")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("/news/2013/jun/19/all")
 
-    val result3 = controllers.ArchiveController.lookup("www.theguardian.com/commentisfree/lead")(TestRequest())
+    val result3 = archiveController.lookup("www.theguardian.com/commentisfree/lead")(TestRequest())
     status(result3) should be (301)
     location(result3) should be ("/uk/commentisfree/all")
   }
 
   it should "handle /lead pages for editionalised sections" in {
 
-    val ukResult = controllers.ArchiveController.lookup("www.theguardian.com/sport/2015/jun/01/lead")(TestRequest())
+    val ukResult = archiveController.lookup("www.theguardian.com/sport/2015/jun/01/lead")(TestRequest())
     status(ukResult) should be (301)
     location(ukResult) should be ("/uk/sport/2015/jun/01/all")
 
     val australiaRequest = TestRequest().withHeaders("X-GU-Edition" -> "AU")
-    val auResult = controllers.ArchiveController.lookup("www.theguardian.com/sport/2015/jun/01/lead")(australiaRequest)
+    val auResult = archiveController.lookup("www.theguardian.com/sport/2015/jun/01/lead")(australiaRequest)
     status(auResult) should be (301)
     location(auResult) should be ("/au/sport/2015/jun/01/all")
 
   }
 
   it should "handle dated newspaper pages" in {
-    val result = controllers.ArchiveController.lookup("www.theguardian.com/theguardian/2015/jun/18/sport/news")(TestRequest())
+    val result = archiveController.lookup("www.theguardian.com/theguardian/2015/jun/18/sport/news")(TestRequest())
     status(result) should be (301)
     location(result) should be ("/theguardian/sport/news/2015/jun/18/all")
 
-    val result2 = controllers.ArchiveController.lookup("www.theguardian.com/theobserver/2015/jun/14/sport/news")(TestRequest())
+    val result2 = archiveController.lookup("www.theguardian.com/theobserver/2015/jun/14/sport/news")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("/theobserver/sport/news/2015/jun/14/all")
 
-    val result3 = controllers.ArchiveController.lookup("www.theguardian.com/theobserver/2015/jun/14/news")(TestRequest())
+    val result3 = archiveController.lookup("www.theguardian.com/theobserver/2015/jun/14/news")(TestRequest())
     status(result3) should be (301)
     location(result3) should be ("/theobserver/news/2015/jun/14/all")
   }
 
   it should "redirect short urls with campaign codes" in {
 
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new")
+    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new")
     result should be("http://www.theguardian.com/p/new?CMP=share_btn_tw")
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = controllers.ArchiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
     result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
   }
 
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
     val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
-    val result = controllers.ArchiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
+    val result = archiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
     result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }
 
