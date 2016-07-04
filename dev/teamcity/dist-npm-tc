@@ -1,12 +1,12 @@
 #!/bin/bash
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-echo "Use project Node version"
-nvm install
+. .profile
 
 set -o xtrace
 set -o errexit
 set -o nounset
+
+echo "Use project Node version"
+nvm install
 
 npm -g install grunt-cli
 
