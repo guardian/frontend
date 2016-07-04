@@ -10,7 +10,8 @@ define([
     return Fluid250VideoBg;
 
     function Fluid250VideoBg(adSlot, params) {
-        var hasVideo, video, layer2;
+        var isUpdating = false;
+        var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fluid250VideoBgTpl || (fluid250VideoBgTpl = template(fluid250VideoBgStr));
@@ -57,7 +58,6 @@ define([
             video = null;
         }
 
-        var isUpdating = false;
         function onScroll() {
             var viewportHeight = detect.getViewport().height;
             var rect = adSlot.getBoundingClientRect();
@@ -68,7 +68,6 @@ define([
             }
         }
 
-        var videoPlayed = false;
         function updateView() {
             isUpdating = false;
             if (video) {

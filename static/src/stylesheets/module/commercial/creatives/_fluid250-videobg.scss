@@ -70,48 +70,48 @@
     }
 
     .click_button {
-      position: absolute;
-      top: 62%;
-      left: 50%;
-      margin-left: -85px;
+        position: absolute;
+        top: 62%;
+        left: 50%;
+        margin-left: -85px;
     }
 
     @keyframes fade-in-out {
-      0%    { opacity: 0; }
-      50%   { opacity: 1; }
-      100%  { opacity: 0; }
+        0%    { opacity: 0; }
+        50%   { opacity: 1; }
+        100%  { opacity: 0; }
     }
 
     @keyframes fade-in {
-      0%    { opacity: 0; }
-      100%  { opacity: 1; }
+        0%    { opacity: 0; }
+        100%  { opacity: 1; }
     }
 
     #mp4Video {
-      height: 250px;
-      overflow: hidden;
-      clear: both;
-      position: absolute;
+        height: 250px;
+        overflow: hidden;
+        clear: both;
+        position: absolute;
     }
 
     .mp4Video_centered {
-      left: 50%;
-      margin-left: -960px;
+        left: 50%;
+        margin-left: -960px;
     }
 
     @media screen and (min-width: 740px) and (max-width: 1920px) {
         #mp4Video {
-          width: auto;
+            width: auto;
         }
 
         .mp4Video_centered {
-          margin-left: -960px;
+            margin-left: -960px;
         }
     }
 
     .poster {
-      position: absolute;
-      width: 100%;
-      height: 250px;
+        position: absolute;
+        width: 100%;
+        height: 250px;
     }
 }
