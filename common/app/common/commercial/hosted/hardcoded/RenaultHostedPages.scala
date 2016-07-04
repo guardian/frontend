@@ -1,5 +1,6 @@
-package common.commercial.hosted
+package common.commercial.hosted.hardcoded
 
+import common.commercial.hosted.{HostedPage, HostedVideo, HostedVideoPage}
 import conf.Static
 
 object RenaultHostedPages {

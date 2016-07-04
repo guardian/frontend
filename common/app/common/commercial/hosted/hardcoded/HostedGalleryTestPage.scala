@@ -1,5 +1,6 @@
-package common.commercial.hosted
+package common.commercial.hosted.hardcoded
 
+import common.commercial.hosted.{HostedGalleryImage, HostedGalleryPage, HostedPage}
 import conf.switches.Switches
 
 object HostedGalleryTestPage {
