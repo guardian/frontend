@@ -26,7 +26,7 @@ define([
      *      data-label="false">
      * </div>
      *
-     * You can set the set which size ad(s) should be loaded at which breakpoint by using the
+     * You can set which size ad(s) should be loaded at which breakpoint by using the
      * data-[breakpoint] attributes (see detect). It works like a min-width media query.
      *
      * Labels are automatically prepended to an ad that was successfully loaded, unless the
