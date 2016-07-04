@@ -7,14 +7,14 @@ define([
     return function () {
 
         this.id = 'Giraffe';
-        this.start = '2016-06-13';
+        this.start = '2016-07-04';
         this.expiry = '2016-08-13';
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = '';
+        this.successMeasure = 'Determine the best message for driving contributions.';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = '';
@@ -22,7 +22,7 @@ define([
              return window.guardian.config.page.edition == 'UK';
         };
 
-        var writer = function (a, linkText, linkHref, copy) {
+        var writer = function (linkText, linkHref, copy) {
             var $newThing = $.create(template(giraffeMessage, {
                 linkText:linkText,
                 linkName: 'idk',
@@ -30,23 +30,34 @@ define([
                 copy: copy,
                 svg: svgs('arrowWhiteRight', ['button--giraffe__icon'])
             }));
+            var a = $('.submeta');
             $newThing.insertBefore(a[0]);
         };
 
         this.variants = [
             {
-                id: 'control',
+                id: 'everyone',
                 test: function () {
-
+                    writer('If everyone were to chip in, the Guardian\'s future would be more secure.', 'https://membership.theguardian.com/contribute', 'Please support the Guardian and independent journalism');
                 }
             },
             {
-                id: 'everyone',
+                id: 'coffee',
                 test: function () {
-                    var submeta = $('.submeta');
-                    writer(submeta, 'If everyone who sees this chipped in the Guardian\'s future would be more secure.', 'https://membership.theguardian.com/contribute?mcopy=everyone-article', 'Please support the Guardian and independent journalism');
+                    writer('Do you want the news with your coffee? Or do you just want coffee? Quality journalism costs. Please contribute', 'https://membership.theguardian.com/contribute', 'Please support the Guardian and independent journalism');
                 }
-            }
+            },
+            {
+                id: 'heritage',
+                test: function () {
+                    writer('From the Peterloo massacre to the Panama Papers, we\'ve been on your side for almost 200 years. Contribute to the Guardian\'s future today', 'https://membership.theguardian.com/contribute', 'Please support the Guardian and independent journalism');                }
+            },
+            {
+                id: 'global-beijing',
+                test: function () {
+                    writer('By the time you\'ve had your morning tea, reporters in Rio, Beijing, Dakar and Paris, have already filed their stories. Covering the world\'s news isn\'t cheap. Please chip in a few pounds', 'https://membership.theguardian.com/contribute', 'Please support the Guardian and independent journalism');
+                }
+            },
         ];
     };
 });
