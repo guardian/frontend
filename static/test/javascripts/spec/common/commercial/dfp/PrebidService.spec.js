@@ -23,14 +23,14 @@ define([
 
         beforeEach(function (done) {
             injector.mock(
-                'common/modules/commercial/dfp/QueueAsync',
+                'common/utils/QueueAsync',
                 function () {
                     return mockAsyncQueue;
                 }
             );
 
             injector.require([
-                'common/modules/commercial/dfp/PrebidService'
+                'common/modules/commercial/dfp/private/PrebidService'
             ], function () {
                 prebidService = new arguments[0](mockPageTargeting);
                 done();
