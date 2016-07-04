@@ -24,33 +24,12 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers {
+trait Controllers extends ApplicationsControllers {
   self: FrontendComponents =>
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
-  lazy val siteMapController = wire[SiteMapController]
   lazy val assets = wire[Assets]
-  lazy val crosswordPageController = wire[CrosswordPageController]
-  lazy val crosswordSearchController = wire[CrosswordSearchController]
-  lazy val notificationsController = wire[NotificationsController]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val tagIndexController = wire[TagIndexController]
-  lazy val embedController = wire[EmbedController]
-  lazy val preferencesController = wire[PreferencesController]
-  lazy val optInController = wire[OptInController]
-  lazy val webAppController = wire[WebAppController]
-  lazy val newspaperController = wire[NewspaperController]
-  lazy val quizController = wire[QuizController]
-  lazy val allIndexController = wire[AllIndexController]
-  lazy val latestIndexController = wire[LatestIndexController]
-  lazy val sudokuController = wire[SudokusController]
-  lazy val galleryController = wire[GalleryController]
-  lazy val imageContentController = wire[ImageContentController]
-  lazy val mediaController = wire[MediaController]
-  lazy val interactiveController = wire[InteractiveController]
-  lazy val shortUrlsController = wire[ShortUrlsController]
-  lazy val indexController = wire[IndexController]
-  lazy val siteVerificationController = wire[SiteVerificationController]
   lazy val surveyPageController = wire[SurveyPageController]
 }
 

@@ -58,9 +58,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/commercial/dfp/dfp-api': {
-                    addSlot: function () {}
-                }
+                'common/modules/commercial/dfp/add-slot': function () {}
             });
             injector.require([
                 'common/modules/commercial/badges',
