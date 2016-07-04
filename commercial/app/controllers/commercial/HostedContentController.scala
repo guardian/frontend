@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import common.commercial.{HostedGalleryPage, HostedPage, HostedVideoPage}
+import common.commercial.hosted.{HostedGalleryPage, HostedPage, HostedVideoPage}
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
 import play.api.mvc.{Action, Controller}

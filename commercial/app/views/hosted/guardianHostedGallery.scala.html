@@ -1,7 +1,6 @@
-@import common.commercial.HostedGalleryPage
+@import common.commercial.hosted.HostedGalleryPage
 @(page: HostedGalleryPage)(implicit request: RequestHeader)
-@import views.html.hosted.guardianHostedHeader
-@import views.html.hosted.guardianHostedGalleryImage
+@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader}
 
 @main(page, Some("commercial"))  { }  {
     <div class="hosted-gallery-page--container hosted-gallery-page">

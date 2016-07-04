@@ -1,4 +1,4 @@
-@import common.commercial.HostedVideoPage
+@import common.commercial.hosted.HostedVideoPage
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 
@@ -43,19 +43,21 @@
                                 Visit Renault now @fragments.inlineSvg("arrow-right", "icon", List(""))
                             </a>
                         </div>
+                        @for(nextPage <- page.nextPage) {
                         <div class="hosted-next-autoplay__video">
                             <div class="hosted-next-autoplay__header">
                                 <div class="hosted-next-autoplay__continue hosted-tone--renault">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@page.nextPage.video.title</h2>
+                                <h2 class="hosted-next-autoplay__subheader">@nextPage.video.title</h2>
                             </div>
-                            <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
-                                <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
+                            <a href="@nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @nextPage.video.title">
+                                <img class="hosted-next-autoplay__poster-img" src="@nextPage.video.posterUrl">
+                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@nextPage.pageUrl">10s</div>
                             </a>
-                            <a href="@page.nextPage.pageUrl" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @page.nextPage.video.title" target="_blank">
+                            <a href="@nextPage.pageUrl" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @nextPage.video.title" target="_blank">
                                 Watch now
                             </a>
                         </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -120,16 +122,18 @@
                     </div>
                 </div>
             </div>
+            @for(nextPage <- page.nextPage) {
             <div class="hosted__next-video">
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
                 </div>
-                <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextPage.video.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl" alt="Next Video: @page.nextPage.video.title">
-                    <p class="hosted__next-video-title">@page.nextPage.video.title</p>
+                <a href="@nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @nextPage.video.title">
+                    <img class="hosted__next-video-thumb" src="@nextPage.video.posterUrl" alt="Next Video: @nextPage.video.title">
+                    <p class="hosted__next-video-title">@page.nextPage.map(_.video.title)</p>
                 </a>
             </div>
+            }
         </section>
         <section class="adverts hosted__container--full">
             <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">

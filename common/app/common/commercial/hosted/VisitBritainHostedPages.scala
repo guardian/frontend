@@ -1,4 +1,4 @@
-package common.commercial
+package common.commercial.hosted
 
 import conf.switches.Switches
 
