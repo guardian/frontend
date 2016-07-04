@@ -54,16 +54,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNewUserAdvertsDisabled = Switch(
-    SwitchGroup.ABTests,
-    "ab-new-user-adverts-disabled",
-    "Enable adfree experience for 3 days for new users",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
-    exposeClientSide = true
-  )
-
   val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
     "ab-join-discussion-after-poll",
