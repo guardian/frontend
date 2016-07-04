@@ -14,7 +14,6 @@ define([
             node: adSlotNode,
             sizes: null,
             slot: null,
-            isHidden: false,
             isEmpty: false,
             isLoading: false,
             isRendering: false,

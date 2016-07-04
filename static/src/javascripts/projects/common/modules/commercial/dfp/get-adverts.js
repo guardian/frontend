@@ -9,7 +9,7 @@ define([
     function getAdverts(isWithAllAds) {
         return Object.keys(dfpEnv.advertIds).reduce(function (advertsById, id) {
             var advert = getAdvertById(id);
-            if (isWithAllAds || (!advert.isHidden && !advert.isEmpty)) {
+            if (isWithAllAds || !advert.isEmpty) {
                 advertsById[id] = advert;
             }
             return advertsById;
