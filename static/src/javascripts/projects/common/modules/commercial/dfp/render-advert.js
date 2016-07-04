@@ -49,13 +49,14 @@ define([
      * Trigger sticky scrolling for MPUs in the right-hand article column
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
-        if (advert.node.classList.contains('ad-slot--right')) {
+        var $node = bonzo(advert.node);
+        if ($node.hasClass('ad-slot--right')) {
             var mobileAdSizes = advert.sizes.mobile;
             if (mobileAdSizes && mobileAdSizes.some(function (size) { return size[0] === 300 && size[1] === 251; })) {
-                stickyMpu(bonzo(advert.node));
+                stickyMpu($node);
             }
-        } else if (advert.node.classList.contains('ad-slot--facebook')) {
-            advert.node.classList.add('ad-slot--fluid');
+        } else if ($node.hasClass('ad-slot--facebook')) {
+            $node.addClass('ad-slot--fluid');
         }
     };
 
@@ -66,10 +67,10 @@ define([
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             advert.node.classList.add('u-h');
-            var parent = advert.node.parentNode;
+            var $parent = bonzo(advert.node.parentNode);
             // if in a slice, add the 'no mpu' class
-            if (parent.classList.contains('js-fc-slice-mpu-candidate')) {
-                parent.classList.add('fc-slice__item--no-mpu');
+            if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
+                $parent.addClass('fc-slice__item--no-mpu');
             }
         }
     };
@@ -103,9 +104,10 @@ define([
 
     function isFluid250(className) {
         return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
+            var $node = bonzo(advert.node);
+            if ($node.hasClass(className)) {
                 fastdom.write(function () {
-                    advert.node.classList.add('ad-slot__fluid250');
+                    $node.addClass('ad-slot__fluid250');
                 });
             }
         };
@@ -113,9 +115,10 @@ define([
 
     function isFluid(className) {
         return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
+            var $node = bonzo(advert.node);
+            if ($node.hasClass(className)) {
                 fastdom.write(function () {
-                    advert.node.classList.add('ad-slot--fluid');
+                    $node.addClass('ad-slot--fluid');
                 });
             }
         };
