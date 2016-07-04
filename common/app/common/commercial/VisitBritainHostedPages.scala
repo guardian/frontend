@@ -57,7 +57,8 @@ object VisitBritainHostedPages {
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
     standfirst = "",
-    logoUrl = imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"
+    logoUrl = imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
+    cssClass = "visit-britain"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

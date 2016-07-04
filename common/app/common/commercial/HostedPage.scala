@@ -67,7 +67,8 @@ case class HostedGalleryPage(
                        ctaLink: String,
                        ctaIndex: Integer,
                        images: List[HostedGalleryImage],
-                       logoUrl: String
+                       logoUrl: String,
+                       cssClass: String
                      ) extends HostedPage {
 
   val pageTitle: String  = s"Advertiser content hosted by the Guardian: $title - gallery"
