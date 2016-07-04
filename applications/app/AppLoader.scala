@@ -30,6 +30,7 @@ trait Controllers extends ApplicationsControllers {
   lazy val healthCheck = wire[HealthCheck]
   lazy val assets = wire[Assets]
   lazy val emailSignupController = wire[EmailSignupController]
+  lazy val surveyPageController = wire[SurveyPageController]
 }
 
 trait AppLifecycleComponents {

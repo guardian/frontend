@@ -91,6 +91,7 @@ trait Controllers
   lazy val seriesController = wire[SeriesController]
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val stocksController = wire[StocksController]
+  lazy val surveyPageController = wire[SurveyPageController]
   lazy val techFeedbackController = wire[TechFeedbackController]
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val travelOffersController = wire[TravelOffersController]

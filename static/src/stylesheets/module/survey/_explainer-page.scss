@@ -1,0 +1,169 @@
+#survey-laboratory {
+
+    .illustration-container {
+        background-color: darken($news-main-2, 20%);
+        min-height: 220px;
+        font-size: 0;
+        white-space: nowrap;
+    }
+
+    .illustration-mobile {
+        display: inline-block;
+        width: auto;
+        height: 204px;
+        margin-top: $gs-baseline;
+        margin-left: $gs-gutter / 2;
+        position: relative;
+        z-index: 5;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+    }
+
+    .illustration-tablet {
+        display: inline-block;
+        margin-left: -56px;
+        width: auto;
+        height: 234px;
+        margin-top: $gs-baseline;
+        position: relative;
+        z-index: 3;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    .illustration-desktop {
+        display: inline-block;
+        margin-left: -66px;
+        width: auto;
+        height: 220px;
+        position: relative;
+        z-index: 4;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq($until: leftCol) {
+            display: none;
+        }
+    }    
+
+    .illustration-wide {
+        display: inline-block;
+        margin-left: -42px;
+        width: auto;
+        height: 210px;
+        position: relative;
+        z-index: 2;
+
+        svg {
+            width: auto;
+            height: 100%;
+        }
+
+        @include mq($until: wide) {
+            display: none;
+        }
+    }
+
+    .table-top { 
+        width: 100%;
+        height: 12px;
+        background: rgba(255, 255, 255, .5);
+    }
+
+    .table-base { 
+        width: 100%;
+        height: 32px;
+        background: rgba(255, 255, 255, .8);
+    }
+
+}
+
+.wrapper {
+    @include gs-container;
+
+    .wrapper-inner {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 $gs-gutter/2 $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(8);
+            margin-left: gs-span(3) + $gs-gutter;
+        }
+    }
+
+    h1 {
+        @include fs-headline(4);
+        font-weight: bold;
+        color: $guardian-brand;
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+
+        @include mq(tablet) {
+            @include fs-headline(6);
+            font-weight: bold;
+        }
+    }
+
+    p {
+        @include fs-bodyCopy(2);
+        margin-bottom: $gs-baseline;
+    }
+
+    .inline-survey_clipboard,
+    .inline-email_register {
+        padding-top: $gs-baseline;
+        display: block;
+
+        svg {
+            width: 100%;
+            height: auto;
+
+            @include mq(mobileLandscape) {
+                width: gs-span(6);
+            }
+        }
+    }
+
+
+    // Survey Styles
+    .adfreesurvey-wrapper-inner {
+        width: auto;
+        padding: $gs-gutter;
+        margin: 0 auto;
+
+        @include mq(tablet) {
+            width: $gs-column-width*10;
+            padding: $gs-gutter*2 0;
+        }
+    }
+
+    img {
+        display: block;
+    }
+
+    .l-row__item:last-child {
+        margin-top: $gs-gutter;
+
+        @include mq(tablet) {
+            margin-top: 0;
+        }
+    }
+}
