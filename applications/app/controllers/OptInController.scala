@@ -25,7 +25,7 @@ case class HttpsOptFeature(cookieName: String) extends OptFeature {
 
 case class OptInFeature(cookieName: String) extends OptFeature
 
-object OptInController extends Controller {
+class OptInController extends Controller {
 
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {

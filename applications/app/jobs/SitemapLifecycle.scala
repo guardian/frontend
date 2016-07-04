@@ -5,15 +5,15 @@ import services.{VideoSiteMap, NewsSiteMap}
 
 import scala.concurrent.ExecutionContext
 
-class SiteMapLifecycle(implicit ec: ExecutionContext) extends LifecycleComponent {
+class SiteMapLifecycle(jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   override def start(): Unit = {
-    Jobs.deschedule("SiteMap")
-    Jobs.schedule("SiteMap", "0 0/2 * * * ?") {
+    jobs.deschedule("SiteMap")
+    jobs.schedule("SiteMap", "0 0/2 * * * ?") {
       SiteMapJob.update()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       SiteMapJob.update()
     }
   }
