@@ -5,15 +5,14 @@ import model.{MetaData, SectionSummary}
 import play.api.libs.json.JsString
 
 case class HostedVideoPage(
-  sectionId: String,
+  campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
   standfirst: String,
-  logoUrl: String,
   bannerUrl: String,
   video: HostedVideo,
-  nextPage: Option[HostedVideoPage],
-  owner: String
+  cta: HostedCallToAction,
+  nextPage: Option[HostedVideoPage]
 ) extends HostedPage {
 
   val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
@@ -21,14 +20,14 @@ case class HostedVideoPage(
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
     val toneName = "Hosted content"
-    val keywordId = s"$sectionId/$sectionId"
-    val keywordName = sectionId
+    val keywordId = s"${campaign.id}/${campaign.id}"
+    val keywordName = campaign.id
     MetaData.make(
-      id = s"commercial/advertiser-content/$sectionId/$pageName",
+      id = s"commercial/advertiser-content/${campaign.id}/$pageName",
       webTitle = pageTitle,
-      section = Some(SectionSummary.fromId(sectionId)),
+      section = Some(SectionSummary.fromId(campaign.id)),
       contentType = Hosted,
-      analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
+      analyticsName = s"GFE:${campaign.id}:$Hosted:$pageName",
       description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
@@ -40,7 +39,7 @@ case class HostedVideoPage(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-        s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
+        s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
         "og:image" -> video.posterUrl,
         "fb:app_id" -> "180444840287"
       )

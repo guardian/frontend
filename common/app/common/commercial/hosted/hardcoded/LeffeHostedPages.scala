@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedPage, HostedVideo, HostedVideoPage}
+import common.commercial.hosted._
 import conf.Static
 import conf.switches.Switches
 
@@ -8,12 +8,18 @@ object LeffeHostedPages {
 
   private val vid1PageName = "vid1"
 
+  private val campaign = HostedCampaign(
+    id = "TODO",
+    name = "TODO",
+    owner = "Leffe",
+    logo = HostedLogo(Static("images/commercial/TODO.jpg"))
+  )
+
   private val vid1: HostedVideoPage = HostedVideoPage(
-    sectionId = "TODO",
+    campaign,
     pageUrl = "TODO",
     pageName = vid1PageName,
     standfirst = "TODO",
-    logoUrl = Static("TODO"),
     bannerUrl = Static("TODO"),
     video = HostedVideo(
       mediaId = "TODO",
@@ -25,8 +31,12 @@ object LeffeHostedPages {
       srcUrlOgg = "TODO",
       srcM3u8 = "TODO"
     ),
-    nextPage = None,
-    owner = "Leffe"
+    cta = HostedCallToAction(
+      url = "TODO",
+      label = "TODO",
+      trackingCode = "TODO"
+    ),
+    nextPage = None
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

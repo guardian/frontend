@@ -5,6 +5,7 @@ import model.{MetaData, SectionSummary}
 import play.api.libs.json.{JsArray, JsNumber, JsString}
 
 case class HostedGalleryPage(
+  campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
   title: String,
@@ -12,8 +13,7 @@ case class HostedGalleryPage(
   ctaText: String,
   ctaLink: String,
   ctaIndex: Integer,
-  images: List[HostedGalleryImage],
-  logoUrl: String
+  images: List[HostedGalleryImage]
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
@@ -44,7 +44,7 @@ case class HostedGalleryPage(
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
-        "og:image" -> logoUrl,
+        "og:image" -> campaign.logo.url,
         "fb:app_id" -> "180444840287"
       )
     )
