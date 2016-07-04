@@ -10,10 +10,10 @@ import weather.controllers.{WeatherController, LocationsController}
 
 trait StandaloneControllerComponents
   extends ApplicationsControllers
-  with AdminJobsControllers {
+  with AdminJobsControllers
+  with ArticleControllers {
   self: BuiltInComponents =>
 
-  lazy val articleController = wire[ArticleController]
   lazy val assets = wire[Assets]
   lazy val bookOffersController = wire[BookOffersController]
   lazy val cardController = wire[CardController]

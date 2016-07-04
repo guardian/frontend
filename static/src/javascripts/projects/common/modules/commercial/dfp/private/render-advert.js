@@ -6,8 +6,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
-    'common/modules/commercial/dfp/apply-creative-template',
-    'common/modules/commercial/dfp/render-advert-label',
+    'common/modules/commercial/dfp/private/apply-creative-template',
+    'common/modules/commercial/dfp/private/render-advert-label',
     'common/modules/onward/geo-most-popular'
 ], function (
     bonzo,
