@@ -7,7 +7,6 @@ import common.{DiagnosticsLifecycle, LifecycleComponent}
 import conf.switches.SwitchboardLifecycle
 import conf.FootballLifecycle
 import contentapi.SectionsLookUpLifecycle
-import controllers.admin._
 import controllers._
 import controllers.commercial._
 import controllers.commercial.magento.{ApiSandbox, AccessTokenGenerator}
@@ -26,7 +25,7 @@ import play.api.routing.Router
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.MatchesController
-import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent, ConfigAgentLifecycle}
+import services.ConfigAgentLifecycle
 import weather.controllers.{WeatherController, LocationsController}
 
 class AppLoader extends FrontendApplicationLoader {
@@ -41,22 +40,14 @@ trait MostPopularComponents {
   lazy val taggedContentController = wire[TaggedContentController]
 }
 
-trait PublicationComponents {
-  self: BuiltInComponents =>
-  lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
-  lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]
-  lazy val publicationController = wire[PublicationController]
-}
-
 trait Controllers
   extends AdminControllers
   with AdminJobsControllers
-  with ApplicationsControllers {
-  self: BuiltInComponents with PublicationComponents with MostPopularComponents =>
+  with ApplicationsControllers
+  with ArticleControllers {
+  self: BuiltInComponents with MostPopularComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
-  lazy val api = wire[Api]
   lazy val apiSandbox = wire[ApiSandbox]
-  lazy val articleController = wire[ArticleController]
   lazy val assets = wire[Assets]
   lazy val bookOffersController = wire[BookOffersController]
   lazy val cardController = wire[CardController]
@@ -99,7 +90,6 @@ trait Controllers
   lazy val richLinkController = wire[RichLinkController]
   lazy val seriesController = wire[SeriesController]
   lazy val soulmatesController = wire[SoulmatesController]
-  lazy val sportTroubleshooterController = wire[SportTroubleshooterController]
   lazy val stocksController = wire[StocksController]
   lazy val techFeedbackController = wire[TechFeedbackController]
   lazy val topStoriesController = wire[TopStoriesController]
@@ -110,7 +100,7 @@ trait Controllers
   lazy val witnessActivityController = wire[WitnessActivityControllerImpl]
 }
 
-trait AppComponents extends FrontendComponents with Controllers with PublicationComponents with MostPopularComponents {
+trait AppComponents extends FrontendComponents with Controllers with MostPopularComponents {
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")

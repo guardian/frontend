@@ -67,6 +67,8 @@ object Frontend extends Build with Prototypes {
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
+
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)

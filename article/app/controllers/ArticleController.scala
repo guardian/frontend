@@ -233,8 +233,6 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
 }
 
-object ArticleController extends ArticleController
-
 object ParseBlockId extends RegexParsers {
   def apply(input: String): Option[String] = {
     def withParser: Parser[Unit] = "with:" ^^ { _ => () }
