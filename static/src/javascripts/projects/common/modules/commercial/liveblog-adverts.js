@@ -3,7 +3,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/create-ad-slot',
     'common/modules/article/space-filler',
@@ -13,7 +13,7 @@ define([
     fastdom,
     config,
     mediator,
-    dfp,
+    addSlot,
     commercialFeatures,
     createAdSlot,
     spaceFiller,
@@ -66,7 +66,7 @@ define([
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
             var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline block'));
             $adSlot.insertAfter(slots[i]);
-            dfp.addSlot($adSlot);
+            addSlot($adSlot);
         }
     }
 

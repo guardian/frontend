@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-object NewspaperBooksAndSectionsAutoRefresh extends LifecycleComponent {
+class NewspaperBooksAndSectionsAutoRefresh extends LifecycleComponent {
   override def start(): Unit = {
     NewspaperBookTagAgent.start()
     NewspaperBookSectionTagAgent.start()

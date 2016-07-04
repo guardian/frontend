@@ -1,7 +1,7 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',
@@ -12,7 +12,7 @@ define([
 ], function (
     fastdom,
     Promise,
-    dfp,
+    trackAdRender,
     adSizes,
     $,
     createStore,
@@ -39,7 +39,7 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = dfp.trackAdRender('dfp-ad--top-above-nav');
+    var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 

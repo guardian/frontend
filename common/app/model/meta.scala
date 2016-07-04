@@ -200,6 +200,7 @@ object MetaData {
       isPressedPage = isPressedPage,
       contentType = contentType,
       customSignPosting = customSignPosting,
+      iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
@@ -284,7 +285,11 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || sectionId == "identity" || contentType.toLowerCase == "gallery"
+  val hasSlimHeader: Boolean =
+    contentType == "Interactive" ||
+      sectionId == "identity" ||
+      contentType.toLowerCase == "gallery" ||
+      contentType.toLowerCase == "survey"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")

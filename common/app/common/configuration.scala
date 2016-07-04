@@ -545,6 +545,10 @@ class GuardianConfiguration extends Logging {
     lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
     lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
   }
+
+  object Survey {
+    lazy val formStackAccountName: String = "guardiannewsampampmedia"
+  }
 }
 
 object ManifestData {

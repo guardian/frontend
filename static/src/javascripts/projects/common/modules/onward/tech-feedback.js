@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/get-creative-ids',
     'common/modules/experiments/ab',
     'lodash/collections/map',
     'lodash/collections/reduce',
@@ -17,7 +17,7 @@ define([
     $,
     config,
     detect,
-    dfp,
+    getCreativeIDs,
     ab,
     map,
     reduce,
@@ -45,7 +45,7 @@ define([
                 var props = {
                     page: window.location,
                     width: window.innerWidth,
-                    ads: dfp.getCreativeIDs().join(' ')
+                    ads: getCreativeIDs().join(' ')
                 };
                 var body = objToHash(assign(props, storedValues));
                 link.attr('href', oldHref + '#' + body.substring(1));
