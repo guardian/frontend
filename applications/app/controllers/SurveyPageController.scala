@@ -13,8 +13,8 @@ class SurveyPageController extends Controller with ExecutionContexts {
 
   import play.api.Play.current
 
-  def renderEmailDigest404Page() = Action { implicit request =>
-      Cached(60)(RevalidatableResult.Ok(views.html.survey.emailDigest404(StaticPages.simpleSurveyStaticPageForId(request.path))))
+  def renderCustomEmail404Page() = Action { implicit request =>
+      Cached(60)(RevalidatableResult.Ok(views.html.survey.customEmail404(StaticPages.simpleSurveyStaticPageForId(request.path))))
    }
 
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
