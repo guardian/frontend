@@ -6,7 +6,7 @@ define([
     'common/modules/component',
     'common/utils/mediator',
     'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/experiments/ab',
     'lodash/collections/contains'
@@ -18,7 +18,7 @@ define([
     Component,
     mediator,
     addSlot,
-    createAdSlot,
+    createSlot,
     commercialFeatures,
     ab,
     contains
@@ -49,7 +49,7 @@ define([
     MostPopular.prototype.prerender = function () {
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
             var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
-            this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
+            this.$mpu = $mpuEl.append(createSlot('mostpop', 'container-inline'));
         }
     };
 

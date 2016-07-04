@@ -6,7 +6,7 @@ define([
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'lodash/functions/memoize'
 ], function (
@@ -17,7 +17,7 @@ define([
     spaceFiller,
     addSlot,
     trackAdRender,
-    createAdSlot,
+    createSlot,
     commercialFeatures,
     memoize
 ) {
@@ -107,7 +107,7 @@ define([
     }
 
     function insertAdAtPara(para, name, type) {
-        var ad = createAdSlot(name, type);
+        var ad = createSlot(name, type);
         para.parentNode.insertBefore(ad, para);
     }
 
