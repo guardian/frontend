@@ -57,10 +57,10 @@ define([
         var toastContainer = qwery('.toast__container')[0];
 
         // Warning: these are re-assigned over time
-        var newBlocks;
         var currentUpdateDelay = options.minUpdateDelay;
         var latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
         var updating = false;
+        var unreadBlocksNo = 0;
 
 
         var updateDelay = function (delay) {
@@ -85,13 +85,13 @@ define([
             });
         };
 
-        var toastButtonRefresh = function (count) {
+        var toastButtonRefresh = function () {
             fastdom.write(function () {
-                if (count > 0) {
-                    var updateText = (count > 1) ? ' new updates' : ' new update';
+                if (unreadBlocksNo > 0) {
+                    var updateText = (unreadBlocksNo > 1) ? ' new updates' : ' new update';
                     $toastButton.removeClass('toast__button--closed');
                     $(toastContainer).addClass('toast__container--open');
-                    $toastText.html(count + updateText);
+                    $toastText.html(unreadBlocksNo + updateText);
                 } else {
                     $toastButton.removeClass('loading').addClass('toast__button--closed');
                     $(toastContainer).removeClass('toast__container--open');
@@ -99,8 +99,8 @@ define([
             });
         };
 
-        var injectNewBlocks = function () {
-            if (!updating && newBlocks) {
+        var injectNewBlocks = function (newBlocks) {
+            if (!updating) {
                 updating = true;
                 // Clean up blocks before insertion
                 var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
@@ -113,17 +113,7 @@ define([
                     // Insert new blocks and animate
                     $liveblogBody.prepend(elementsToAdd);
 
-                    if (detect.pageVisible()) {
-                        revealInjectedElements();
-                    }
-
-                    toastButtonRefresh(0);
-
                     mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
-                    latestBlockId = $('.block').first().attr('id');
-
-                    newBlocks = '';
 
                     RelativeDates.init();
                     twitter.enhanceTweets();
@@ -133,16 +123,25 @@ define([
             }
         };
 
+        var displayNewBlocks = function () {
+            if (detect.pageVisible()) {
+                revealInjectedElements();
+            }
+
+            unreadBlocksNo = 0;
+            toastButtonRefresh();
+        };
+
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.toast__button', function () {
                 if (isLivePage) {
                     fastdom.read(function () {
-                        scroller.scrollToElement(qwery('.block')[0], 300, 'easeOutQuad');
+                        scroller.scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
 
                         fastdom.write(function () {
                             $toastButton.addClass('loading');
                         }).then(function () {
-                            injectNewBlocks();
+                            displayNewBlocks();
                         });
                     });
                 } else {
@@ -151,17 +150,19 @@ define([
             });
 
             mediator.on('modules:toast__tofix:unfixed', function () {
-                if (isLivePage && newBlocks) {
+                if (isLivePage && unreadBlocksNo > 0) {
                     fastdom.write(function () {
                         $toastButton.addClass('loading');
                     }).then(function () {
-                        injectNewBlocks();
+                        displayNewBlocks();
                     });
                 }
             });
 
             mediator.on('modules:detect:pagevisibility:visible', function () {
-                revealInjectedElements();
+                if (unreadBlocksNo == 0) {
+                    revealInjectedElements();
+                }
                 currentUpdateDelay = options.minUpdateDelay;
             });
         };
@@ -182,15 +183,19 @@ define([
                     // updates notification bar with number of unread blocks
                     mediator.emit('modules:autoupdate:unread', count);
 
+                    unreadBlocksNo += count;
+                    if (count > 0) {
+                        latestBlockId = resp.mostRecentBlockId;
+                    }
                     if (isLivePage) {
-                        newBlocks = resp.html;
+                        injectNewBlocks(resp.html);
                         if (scrolledPastTopBlock()) {
-                            toastButtonRefresh(count);
+                            toastButtonRefresh();
                         } else {
-                            injectNewBlocks();
+                            displayNewBlocks();
                         }
                     } else {
-                        toastButtonRefresh(count);
+                        toastButtonRefresh();
                     }
                 }
             }).then(function () {
