@@ -40,7 +40,7 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
+            dfp, lazyLoad, config, detect, commercialFeatures, closeDisabledSlots;
 
         beforeEach(function (done) {
 
@@ -59,7 +59,7 @@ define([
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
                 'common/modules/commercial/close-disabled-slots',
-                'common/modules/commercial/dfp/private/dfp-env'
+                'common/modules/commercial/dfp/private/lazy-load'
             ], function () {
                 dfp = arguments[0];
                 config = arguments[1];
@@ -67,7 +67,7 @@ define([
                 commercialFeatures = arguments[3];
                 detect = arguments[4];
                 closeDisabledSlots = arguments[5];
-                dfpEnv = arguments[6];
+                lazyLoad = arguments[6];
 
                 config.switches = {
                     commercialComponents: true,
@@ -273,12 +273,12 @@ define([
 
             it('should lazy load ads when there is no pageskin', function () {
                 config.page.hasPageSkin = false;
-                expect(dfpEnv.fn.shouldLazyLoad()).toBe(true);
+                expect(lazyLoad.shouldLazyLoad()).toBe(true);
             });
 
             it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
-                expect(dfpEnv.fn.shouldLazyLoad()).toBe(false);
+                expect(lazyLoad.shouldLazyLoad()).toBe(false);
             });
 
         });

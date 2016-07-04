@@ -10,7 +10,7 @@ define([
 
     function shouldPrebidAdvert(advert) {
         return dfpEnv.prebidEnabled &&
-            dfpEnv.fn.shouldLazyLoad() &&
+            lazyLoad.shouldLazyLoad() &&
             excludedAdvertIds.indexOf(advert.id) === -1;
     }
 });

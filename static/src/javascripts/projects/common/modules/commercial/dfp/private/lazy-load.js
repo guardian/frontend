@@ -42,10 +42,10 @@ define([
         }
     }, nbOfFrames * durationOfFrame);
 
-    dfpEnv.fn.shouldLazyLoad = shouldLazyLoad;
-    dfpEnv.fn.enableLazyLoad = enableLazyLoad;
-    dfpEnv.fn.disableLazyLoad = disableLazyLoad;
-    return dfpEnv;
+    lazyLoad.shouldLazyLoad = shouldLazyLoad;
+    lazyLoad.enableLazyLoad = enableLazyLoad;
+    lazyLoad.disableLazyLoad = disableLazyLoad;
+    return lazyLoad;
 
     function shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock

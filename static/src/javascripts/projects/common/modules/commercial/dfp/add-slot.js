@@ -28,10 +28,10 @@ define([
         var advert = createAdvert(adSlot);
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
-        if (dfpEnv.fn.shouldLazyLoad()) {
-            dfpEnv.fn.enableLazyLoad();
+        if (lazyLoad.shouldLazyLoad()) {
+            lazyLoad.enableLazyLoad();
         } else {
-            dfpEnv.fn.loadAdvert(advert);
+            lazyLoad.loadAdvert(advert);
         }
     }
 });

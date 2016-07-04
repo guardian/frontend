@@ -26,7 +26,7 @@ define([
         window.googletag.cmd.push(
             queueAdverts,
             setPublisherProvidedId,
-            dfpEnv.fn.shouldLazyLoad() ? displayLazyAds : displayAds,
+            lazyLoad.shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize
         );
