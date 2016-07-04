@@ -36,7 +36,13 @@ define([
         advertsToRefresh: [],
 
         /* adverts: array<Advert>?. Keeps track of adverts and their state */
-        adverts: null
+        adverts: null,
+
+        /* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
+        shouldLazyLoad: function () {
+            // We do not want lazy loading on pageskins because it messes up the roadblock
+            return !config.page.hasPageSkin;
+        }
     };
     return dfpEnv;
 });

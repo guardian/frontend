@@ -1,10 +1,11 @@
 define([
+    'common/utils/mediator',
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/Advert',
     'common/modules/commercial/dfp/private/queue-advert',
-    'common/modules/commercial/dfp/private/lazy-load',
-    'common/utils/mediator'
-], function (dfpEnv, Advert, queueAdvert, lazyLoad, mediator) {
+    'common/modules/commercial/dfp/private/load-advert',
+    'common/modules/commercial/dfp/private/enable-lazy-load'
+], function (mediator, dfpEnv, Advert, queueAdvert, loadAdvert, enableLazyLoad) {
     return addSlot;
 
     function addSlot(adSlot) {
@@ -26,10 +27,10 @@ define([
         var advert = Advert(adSlot);
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
-        if (lazyLoad.shouldLazyLoad()) {
-            lazyLoad.enableLazyLoad();
+        if (dfpEnv.shouldLazyLoad()) {
+            enableLazyLoad();
         } else {
-            lazyLoad.loadAdvert(advert);
+            loadAdvert(advert);
         }
     }
 });

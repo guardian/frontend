@@ -19,49 +19,32 @@ define([
     var loadQueued = false;
 
     var lazyLoad = throttle(function () {
-        if (dfpEnv.advertsToLoad.length === 0) {
-            disableLazyLoad();
-        } else {
-            var viewportHeight = detect.getViewport().height;
+        var viewportHeight = detect.getViewport().height;
 
-            if( loadQueued ) {
-                return;
+        if( loadQueued ) {
+            return;
+        }
+
+        loadQueued = true;
+        fastdom.read(function () {
+            loadQueued = false;
+            dfpEnv.advertsToLoad
+                .filter(function (advert) {
+                    var rect = advert.node.getBoundingClientRect();
+                    // load the ad only if it's setting within an acceptable range
+                    return (1 - depthOfScreen) * viewportHeight < rect.bottom && rect.top < viewportHeight * depthOfScreen;
+                })
+                .forEach(loadAdvert);
+            if (dfpEnv.advertsToLoad.length === 0) {
+                disableLazyLoad();
             }
-
-            loadQueued = true;
-            fastdom.read(function () {
-                loadQueued = false;
-                dfpEnv.advertsToLoad
-                    .filter(function (advert) {
-                        var rect = advert.node.getBoundingClientRect();
-                        // load the ad only if it's setting within an acceptable range
-                        return (1 - depthOfScreen) * viewportHeight < rect.bottom && rect.top < viewportHeight * depthOfScreen;
-                    })
-                    .forEach(loadAdvert);
-            });
-        }
+        });
     }, nbOfFrames * durationOfFrame);
-
-    lazyLoad.shouldLazyLoad = shouldLazyLoad;
-    lazyLoad.enableLazyLoad = enableLazyLoad;
-    lazyLoad.disableLazyLoad = disableLazyLoad;
-    return lazyLoad;
-
-    function shouldLazyLoad() {
-        // We do not want lazy loading on pageskins because it messes up the roadblock
-        return !config.page.hasPageSkin;
-    }
-
-    function enableLazyLoad() {
-        if (!dfpEnv.lazyLoadEnabled) {
-            dfpEnv.lazyLoadEnabled = true;
-            window.addEventListener('scroll', lazyLoad);
-            lazyLoad();
-        }
-    }
 
     function disableLazyLoad() {
         dfpEnv.lazyLoadEnabled = false;
         window.removeEventListener('scroll', lazyLoad);
     }
+
+    return lazyLoad;
 });

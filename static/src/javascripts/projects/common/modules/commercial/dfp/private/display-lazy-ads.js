@@ -1,8 +1,8 @@
 define([
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/load-advert',
-    'common/modules/commercial/dfp/private/lazy-load'
-], function (dfpEnv, loadAdvert, lazyLoad) {
+    'common/modules/commercial/dfp/private/enable-lazy-load'
+], function (dfpEnv, loadAdvert, enableLazyLoad) {
     var advertsToInstantlyLoad = [
         'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high',
@@ -15,7 +15,7 @@ define([
         window.googletag.pubads().collapseEmptyDivs();
         window.googletag.enableServices();
         instantLoad();
-        lazyLoad.enableLazyLoad();
+        enableLazyLoad();
     }
 
     function instantLoad() {
