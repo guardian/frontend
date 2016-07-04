@@ -84,20 +84,24 @@ object ABHeadlines extends ExecutionContexts with Logging {
   private def isUsFront(req: RequestHeader) = req.path == "/us"
 }
 
-class ABHeadlinesLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class ABHeadlinesLifecycle(
+  appLifeCycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync
+)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   private val ABHeadlinesJob = "ABHeadlinesJob"
 
   appLifeCycle.addStopHook { () => Future {
-    Jobs.deschedule(ABHeadlinesJob)
+    jobs.deschedule(ABHeadlinesJob)
   }}
 
   override def start(): Unit = {
     //runs once a minute
-    Jobs.schedule(ABHeadlinesJob, "0 * * * * ?") {
+    jobs.schedule(ABHeadlinesJob, "0 * * * * ?") {
       ABHeadlines.refresh()
     }
-    AkkaAsync{
+    akkaAsync.after1s {
       ABHeadlines.refresh()
     }
   }

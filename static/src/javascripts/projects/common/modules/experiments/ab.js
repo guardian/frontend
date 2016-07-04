@@ -12,9 +12,8 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-football-thrasher',
-    'common/modules/experiments/tests/video-yellow-button'
+    'common/modules/experiments/tests/join-discussion-after-poll',
+    'common/modules/experiments/tests/hosted-autoplay'
 ], function (
     reportError,
     config,
@@ -29,9 +28,8 @@ define([
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
-    NewUserAdvertsDisabled,
-    VideoFootballThrasher,
-    VideoYellowPlayButton
+    JoinDiscussionAfterPoll,
+    HostedAutoplay
 ) {
 
     var TESTS = [
@@ -40,9 +38,8 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
-        new NewUserAdvertsDisabled(),
-        new VideoFootballThrasher(),
-        new VideoYellowPlayButton()
+        new JoinDiscussionAfterPoll(),
+        new HostedAutoplay()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -115,6 +112,7 @@ define([
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
             isSensitive = config.page.shouldHideAdverts;
+
         return ((isSensitive ? test.showForSensitive : true)
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }

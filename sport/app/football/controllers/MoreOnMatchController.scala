@@ -34,7 +34,7 @@ case class MatchNav(
   lazy val hasPreview = preview.isDefined
 }
 
-object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts with implicits.Dates {
+class MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts with implicits.Dates {
   def interval(contentDate: LocalDate) = new Interval(contentDate.toDateTimeAtStartOfDay - 2.days, contentDate.toDateTimeAtStartOfDay + 3.days)
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
@@ -225,3 +225,5 @@ object MoreOnMatchController extends Controller with Football with Requests with
     MatchNav(theMatch, matchReport, minByMin, preview, stats, currentPage)
   }
 }
+
+object MoreOnMatchController extends MoreOnMatchController

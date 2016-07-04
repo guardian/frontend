@@ -67,11 +67,17 @@ object Frontend extends Build with Prototypes {
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
+
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+  )
+
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
@@ -96,7 +102,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources
-    )
+    ),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
@@ -149,6 +156,7 @@ object Frontend extends Build with Prototypes {
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val dev = application("dev-build")
     .dependsOn(
@@ -167,6 +175,7 @@ object Frontend extends Build with Prototypes {
       adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator,
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
@@ -180,14 +189,18 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     adminJobs
+  ).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))

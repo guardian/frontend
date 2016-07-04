@@ -31,7 +31,6 @@ define([
     'common/modules/navigation/navigation',
     'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/hosted-about',
-    'common/modules/commercial/hosted-gallery',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -55,7 +54,6 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'common/modules/onward/mobile-labs-alerts',
     'lodash/collections/forEach'
 ], function (
     fastdom,
@@ -88,7 +86,6 @@ define([
     navigation,
     stickyAdBanner,
     hostedAbout,
-    hostedGallery,
     Profile,
     Search,
     history,
@@ -112,7 +109,6 @@ define([
     email,
     emailArticle,
     identity,
-    mobileLabsAlerts,
     forEach
 ) {
     var modules = {
@@ -203,7 +199,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             cleanupLocalStorage : function () {
@@ -376,16 +372,6 @@ define([
                 if (config.page.contentType === 'Hosted') {
                     hostedAbout.init();
                 }
-            },
-
-            initHostedGallery: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedGallery.init();
-                }
-            },
-
-            mobileLabsAlertBanner: function () {
-                mobileLabsAlerts();
             }
         };
 
@@ -436,9 +422,7 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-gallery', modules.initHostedGallery],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox],
-                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner]
+                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();
             });

@@ -7,7 +7,7 @@ import play.api.mvc.{Action, Controller}
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 
-object MostViewedVideoController extends Controller with Logging with ExecutionContexts {
+class MostViewedVideoController extends Controller with Logging with ExecutionContexts {
 
   // Move this out of here if the test is successful
   def renderInSeries(series: String) = Action.async { implicit request =>
@@ -59,3 +59,5 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
     }
   }
 }
+
+object MostViewedVideoController extends MostViewedVideoController

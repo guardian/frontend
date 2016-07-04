@@ -48,7 +48,11 @@ define([
             $(documentAnchorClass).append(externalTpl({widgetType: widgetType}));
         }
 
-        if (config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au') {
+        var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false)) >= 0;
+        var shouldIgnoreSwitch =  isMobileOrTablet || config.page.section === 'world' || config.page.edition.toLowerCase() !== 'au';
+        var shouldServePlista = config.switches.plistaForOutbrainAu && !shouldIgnoreSwitch;
+
+        if (shouldServePlista) {
             fastdom.write(function () {
                 renderWidgetContainer('plista');
             }).then(plista.init);
@@ -82,7 +86,10 @@ define([
     function loadOther() {
         imrWorldwide.load();
         remarketing.load();
-        krux.load();
+
+        if(!config.page.isFront){
+            krux.load();
+        }
     }
 
     return {

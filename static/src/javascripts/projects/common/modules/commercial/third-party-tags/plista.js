@@ -6,7 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
     'text!common/views/commercial/plista.html'
 ], function (
@@ -17,7 +17,7 @@ define([
     detect,
     template,
     identity,
-    dfp,
+    trackAdRender,
     commercialFeatures,
     plistaStr
 ) {
@@ -83,7 +83,7 @@ define([
                 module.load();
                 return Promise.resolve(true);
             } else {
-                return dfp.trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
+                return trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
                     if (!isLoaded) {
                         module.load();
                     }

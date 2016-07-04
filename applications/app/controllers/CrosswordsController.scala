@@ -46,7 +46,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-object CrosswordPageController extends CrosswordController {
+class CrosswordPageController extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
 
@@ -89,7 +89,9 @@ object CrosswordPageController extends CrosswordController {
   }
 }
 
-object CrosswordSearchController extends CrosswordController {
+object CrosswordPageController extends CrosswordPageController
+
+class CrosswordSearchController extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
@@ -160,3 +162,5 @@ object CrosswordSearchController extends CrosswordController {
 
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
+
+object CrosswordSearchController extends CrosswordSearchController

@@ -12,7 +12,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/dfp/QueueAsync'
+                'common/utils/QueueAsync'
             ], function () {
                 QueueAsync = arguments[0];
                 done();

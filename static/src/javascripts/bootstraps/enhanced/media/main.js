@@ -242,6 +242,7 @@ define([
                     });
                     player.bigPlayButton.dispose();
                     player.errorDisplay.open();
+                    player.controlBar.dispose();
                 });
             } else {
                 blockVideoAds = videoInfo.shouldHideAdverts;
@@ -415,34 +416,6 @@ define([
         }
     }
 
-    function initYellowPlayButton() {
-        var selector = '.fc-item__video';
-        var hoverStateClassName = 'u-faux-block-link--hover';
-
-        $(selector).each(function (el) {
-            bonzo(el).parent().addClass('vjs-big-play-button--yellow');
-        });
-
-        var showIntentToPlay = function (e) {
-            fastdom.write(function () {
-                $(e.currentTarget).parent().addClass(hoverStateClassName);
-            });
-        };
-
-        var removeIntentToPlay = function (e) {
-            $(e.currentTarget).parent().removeClass(hoverStateClassName);
-        };
-
-        bean.on(document.body, 'mouseenter', selector, showIntentToPlay);
-        bean.on(document.body, 'mouseleave', selector, removeIntentToPlay);
-    }
-
-    function initTests() {
-        if(ab.isInVariant('VideoYellowButton', 'variant')) {
-            initYellowPlayButton();
-        }
-    }
-
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -465,7 +438,6 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
-        initTests();
     }
 
     return {

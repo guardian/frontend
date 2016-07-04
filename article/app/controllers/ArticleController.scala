@@ -28,7 +28,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -39,11 +39,17 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
-    val allPagesJson = Seq("timeline" -> timelineHtml, "numNewBlocks" -> newBlocks.size)
+    val allPagesJson = Seq(
+      "timeline" -> timelineHtml,
+      "numNewBlocks" -> newBlocks.size
+    )
     val livePageJson = isLivePage.filter(_ == true).map { _ =>
       "html" -> blocksHtml
     }
-    Cached(page)(JsonComponent((allPagesJson ++ livePageJson): _*))
+    val mostRecent = page.article.fields.blocks.headOption.map { block =>
+      "mostRecentBlockId" -> s"block-${block.id}"
+    }
+    Cached(page)(JsonComponent((allPagesJson ++ livePageJson ++ mostRecent): _*))
   }
 
   case class TextBlock(

@@ -8,7 +8,7 @@ import model.{Cached, Page}
 import football.model.CompetitionStage
 
 
-object WallchartController extends Controller with Logging with ExecutionContexts {
+class WallchartController extends Controller with Logging with ExecutionContexts {
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>
     Competitions().withTag(competitionTag).map { competition =>
@@ -28,3 +28,5 @@ object WallchartController extends Controller with Logging with ExecutionContext
   }
 
 }
+
+object WallchartController extends WallchartController

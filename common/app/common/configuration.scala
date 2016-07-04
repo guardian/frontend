@@ -10,18 +10,18 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
-import play.api.Play.current
 
 import scala.util.Try
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
+class GuardianConfiguration extends Logging {
+  implicit private lazy val app = Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
-  protected val configuration = ConfigurationFactory.getNonLoggingConfiguration(application, webappConfDirectory)
+  protected val configuration = ConfigurationFactory.getNonLoggingConfiguration("frontend", "env")
 
   private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
     def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
@@ -318,7 +318,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
-    lazy val liveEventsImagesUrl = "https://membership.theguardian.com/events.json"
+    lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl= configuration.getStringProperty("jobs.api.url")
     lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
     lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
@@ -541,8 +541,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }
 
-  object Kibana {
-    lazy val url = configuration.getStringProperty("kibana.url")
+  object Elk {
+    lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
+    lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
+  }
+
+  object Survey {
+    lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
 }
 

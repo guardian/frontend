@@ -8,10 +8,12 @@ define([
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
     'common/modules/commercial/close-disabled-slots',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/init',
+    'common/modules/commercial/dfp/load',
     'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/hosted-video',
+    'common/modules/commercial/hosted-gallery',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
@@ -26,17 +28,19 @@ define([
     articleBodyAdverts,
     badges,
     closeDisabledSlots,
-    dfp,
+    dfpInit,
+    dfpLoad,
     sponsorships,
     frontCommercialComponents,
     hostedVideo,
+    hostedGallery,
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
     paidContainers
 ) {
     var modules = [
-        ['cm-dfp', dfp.init],
+        ['cm-dfp', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
@@ -66,10 +70,11 @@ define([
 
             Promise.all(modulePromises).then(function () {
                 robust.catchErrorsAndLogAll([
-                    ['cm-adverts', dfp.loadAds],
+                    ['cm-adverts', dfpLoad],
                     ['cm-thirdPartyTags', thirdPartyTags.init],
                     ['cm-sponsorships', sponsorships.init],
                     ['cm-hostedVideo', hostedVideo.init],
+                    ['cm-hostedGallery', hostedGallery.init],
                     ['cm-paidforBand', paidforBand.init],
                     ['cm-new-adverts', paidContainers.init],
                     ['cm-ready', function () {

@@ -4,22 +4,35 @@
 
 define([
     'bean',
+    'fastdom',
     'common/utils/$',
     'common/utils/defer-to-analytics',
+    'common/utils/detect',
+    'common/utils/report-error',
+    'common/modules/analytics/omniture',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/video/fullscreener',
+    'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
+    fastdom,
     $,
     deferToAnalytics,
+    detect,
+    reportError,
+    omniture,
+    ab,
     events,
     videojsOptions,
     fullscreener,
+    contains,
     loadingTmpl
 ) {
     var player;
+    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -42,6 +55,32 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
+    function nextVideoTimer(duration, $timer, nextVideoLink) {
+        return setInterval(function () {
+            if (duration === 0) {
+                omniture.trackLinkImmediate('Immediately play the next video');
+                window.location = nextVideoLink;
+            }
+            fastdom.write(function () {
+                $timer.text(duration + 's');
+                duration = duration - 1;
+            });
+        }, 1000);
+    }
+
+    function cancelAutoplay($hostedNext) {
+        fastdom.write(function () {
+            $hostedNext.addClass('hosted-slide-out');
+        });
+        clearInterval(nextVideoInterval);
+    }
+
+    function cancelAutoplayMobile($hostedNext) {
+        fastdom.write(function () {
+            $hostedNext.addClass('u-h');
+        });
+    }
+
     function init() {
         require(['bootstraps/enhanced/media/main'], function () {
             require(['bootstraps/enhanced/media/video-player'], function(videojs){
@@ -55,13 +94,14 @@ define([
                 player.guMediaType = 'video';
                 videojs.plugin('fullscreener', fullscreener);
 
-                // unglitching the volume on first load
-
                 player.ready(function () {
                     var vol;
+                    var duration = parseInt(this.duration(), 10);
+                    var $hostedNext = $('.js-hosted-next-autoplay');
                     initLoadingSpinner(player);
                     upgradeVideoPlayerAccessibility(player);
 
+                    // unglitching the volume on first load
                     vol = player.volume();
                     if (vol) {
                         player.volume(0);
@@ -79,6 +119,62 @@ define([
                         events.bindContentEvents(player);
                     });
 
+                    player.on('error', function () {
+                        var err = player.error();
+                        if (err && 'message' in err && 'code' in err) {
+                            reportError(new Error(err.message), {
+                                feature: 'hosted-player',
+                                vjsCode: err.code
+                            }, false);
+                        }
+                    });
+
+                    if ($hostedNext.length && ab.getParticipations().HostedAutoplay
+                        && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
+                        if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
+                            fastdom.write(function () {
+                                $hostedNext.addClass('hosted-next-autoplay--variant2');
+                            });
+                        }
+                        fastdom.write(function () {
+                            $('.js-hosted-fading').addClass('hosted-autoplay-ab');
+                        });
+
+                        //on desktop show the next video link 10 second before the end of the currently watching video
+                        if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                            player.on('timeupdate', function() {
+                                var currentTime = parseInt(this.currentTime(), 10);
+                                var time = 10; //seconds before the end when to show the timer
+
+                                if (duration - currentTime <= time) {
+                                    player.off('timeupdate');
+
+                                    var $timer = $('.js-autoplay-timer');
+                                    var nextVideoPage;
+
+                                    if ($timer.length) {
+                                        nextVideoPage = $timer.data('next-page');
+                                        nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                                        fastdom.write(function () {
+                                            $hostedNext.addClass('js-autoplay-start');
+                                        });
+                                        bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+                                            cancelAutoplay($hostedNext);
+                                        });
+                                    }
+                                }
+                            });
+                        } else {
+                            player.one('ended', function() {
+                                fastdom.write(function () {
+                                    $hostedNext.addClass('js-autoplay-start');
+                                });
+                                bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+                                    cancelAutoplayMobile($hostedNext);
+                                });
+                            });
+                        }
+                    }
                 });
             });
         });

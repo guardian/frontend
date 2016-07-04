@@ -54,34 +54,33 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNewUserAdvertsDisabled = Switch(
+  val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
-    "ab-new-user-adverts-disabled",
-    "Enable adfree experience for 3 days for new users",
+    "ab-join-discussion-after-poll",
+    "Does 'join discussion' message after poll participation increase comments",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 13),
+    exposeClientSide = true
+  )
+
+  val ABSamplingTest = Switch(
+    SwitchGroup.ABTests,
+    "ab-sampling-test",
+    "Tests the sampling",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
+    sellByDate = new LocalDate(2016, 7, 22),
     exposeClientSide = true
   )
 
-  val ABVideoFootballThrasher = Switch(
+  val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
-    "ab-video-football-thrasher",
-    "Swap video thrashers on football front",
-    owners = Seq(Owner.withGithub("blongden73")),
+    "ab-hosted-autoplay",
+    "An autoplay overlay with the next video on a hosted page",
+    owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 28), // Tuesday
+    sellByDate = new LocalDate(2016, 7, 14),
     exposeClientSide = true
   )
-
-  val ABVideoYellowButton = Switch(
-    SwitchGroup.ABTests,
-    "ab-video-yellow-button",
-    "Make big play button yellow",
-    owners = Seq(Owner.withGithub("akash1810")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 27), // Tuesday
-    exposeClientSide = true
-  )
-
 }

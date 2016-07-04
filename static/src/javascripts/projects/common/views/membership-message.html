@@ -1,9 +1,6 @@
-<p class="site-message__message" id="site-message__message">
-    <%=messageText%>
-</p>
-<ul class="site-message__actions u-unstyled">
-    <li class="site-message__actions__item">
-        <%=arrowWhiteRight%>
-        <a href="<%=linkHref%>" target="_blank" data-link-name="read more"><%=linkText%></a>
-    </li>
-</ul>
+<div id="site-message__message">
+    <div class="site-message__message site-message__message--membership">
+        <%=messageText%>
+    </div>
+    <a class="u-faux-block-link__overlay" target="_blank" href="<%=linkHref%>" data-link-name="Read more"></a>
+</div>

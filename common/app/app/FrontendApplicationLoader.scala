@@ -1,6 +1,6 @@
 package app
 
-import common.{ApplicationMetrics, AkkaAsync, JobScheduler, LifecycleComponent}
+import common._
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -16,10 +16,19 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
   def buildComponents(context: Context): FrontendComponents
 
+  // this is a workaround the lifecycle issue: "There is no started Application"
+  // When starting lifecycles, it's possible the code hit a point where we use Play.current, directly or via WS and akka.system.
+  // If that happen before the application is actually started by Play (see ProdServerStart.scala), we will get an error at runtime
+  // This workaround should be removed when we migrated to Play2.5 or when we got rid of all the deprecated calls to Play.current
+  def fakeOnStart(components: FrontendComponents): Unit = Play.maybeApplication match {
+    case Some(_) => components.startLifecycleComponents()
+    case None => components.akkaAsync.after1s(fakeOnStart(components))
+  }
+
   override def load(context: Context): Application = {
     Logger.configure(context.environment)
     val components = buildComponents(context)
-    components.startLifecycleComponents()
+    fakeOnStart(components)
     components.application
   }
 }
@@ -30,12 +39,14 @@ trait FrontendComponents
   with HttpFiltersComponent
   with BuiltInComponents
   with NingWSComponents {
+  self: BuiltInComponents =>
 
   lazy val prefix = "/"
 
   lazy val jobScheduler = new JobScheduler(environment)
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
   lazy val appMetrics = ApplicationMetrics()
+  lazy val guardianConf = new GuardianConfiguration
 
   // this is a workaround to make wsapi and the actorsystem available to the injector.
   // I'm forced to do that as we still use Ws.url and Akka.system(app) *everywhere*, and both directly get the reference from the injector

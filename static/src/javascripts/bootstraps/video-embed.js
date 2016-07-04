@@ -18,7 +18,8 @@ define([
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
-    'common/modules/video/videojs-options'
+    'common/modules/video/videojs-options',
+    'common/modules/video/events'
 ], function (
     bean,
     bonzo,
@@ -157,6 +158,9 @@ define([
                     });
 
                 }
+
+                events.initOmnitureTracking(player, mediaId);
+                events.bindContentEvents(player);
             });
 
             mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

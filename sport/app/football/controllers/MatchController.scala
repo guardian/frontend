@@ -46,7 +46,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-object MatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
@@ -78,3 +78,5 @@ object MatchController extends Controller with Football with Requests with Loggi
     response.getOrElse(Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results")))))
   }
 }
+
+object MatchController extends MatchController

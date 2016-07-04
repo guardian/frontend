@@ -9,7 +9,7 @@ import football.model._
 import pa.FootballTeam
 import model.Competition
 
-object ResultsController extends MatchListController with CompetitionResultFilters {
+class ResultsController extends MatchListController with CompetitionResultFilters {
 
   private def competitionOrTeam(tag: String): Option[Either[Competition, FootballTeam]] = {
     lookupCompetition(tag).map(Left(_))
@@ -80,3 +80,5 @@ object ResultsController extends MatchListController with CompetitionResultFilte
   def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day), Some(tag))
   def moreTagResultsForJson(year: String, month: String, day: String, tag: String) = moreTagResultsFor(year, month, day, tag)
 }
+
+object ResultsController extends ResultsController
