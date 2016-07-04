@@ -66,7 +66,7 @@ define([
      */
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
-            advert.node.classList.add('u-h');
+            bonzo(advert.node).addClass('u-h');
             var $parent = bonzo(advert.node.parentNode);
             // if in a slice, add the 'no mpu' class
             if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
@@ -149,7 +149,7 @@ define([
 
             function addRenderedClass() {
                 return isRendered ? fastdom.write(function () {
-                    advert.node.classList.add('ad-slot--rendered');
+                    bonzo(advert.node).addClass('ad-slot--rendered');
                 }) : Promise.resolve();
             }
         }).catch(raven.captureException);
