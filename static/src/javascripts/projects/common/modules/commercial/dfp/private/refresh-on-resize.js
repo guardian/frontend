@@ -19,7 +19,6 @@ define([
         hasBreakpointChanged(refresh);
     }, resizeTimeout);
 
-    dfpEnv.fn.refreshOnResize = refreshOnResize;
     return refreshOnResize;
 
     function refreshOnResize() {

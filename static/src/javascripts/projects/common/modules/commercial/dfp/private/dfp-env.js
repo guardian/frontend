@@ -36,10 +36,7 @@ define([
         advertsToRefresh: [],
 
         /* adverts: array<Advert>?. Keeps track of adverts and their state */
-        adverts: null,
-
-        /* fn: map<string -> function>. Private functions shared across dfp modules */
-        fn: {}
+        adverts: null
     };
     return dfpEnv;
 });
