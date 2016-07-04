@@ -5,11 +5,11 @@ define([
         /* renderStartTime: integer. Point in time when DFP kicks in */
         renderStartTime: -1,
 
-        /* displayed: boolean. Set to true when the first advert is getting displayed (via googletag.display) */
-        displayed: false,
+        /* firstAdDisplayed: boolean. Set to true when the first advert is getting displayed (via googletag.display) */
+        firstAdDisplayed: false,
 
-        /* rendered: boolean. Set to true when the first advert has come back from DFP */
-        rendered: false,
+        /* firstAdRendered: boolean. Set to true when the first advert has come back from DFP */
+        firstAdRendered: false,
 
         /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
         adSlotSelector: '.js-ad-slot',
