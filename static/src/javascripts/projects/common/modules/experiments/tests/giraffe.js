@@ -12,7 +12,7 @@ define([
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
-        this.audience = 0.5;
+        this.audience = 0.001;
         this.audienceOffset = 0;
         this.successMeasure = 'Determine the best message for driving contributions.';
         this.audienceCriteria = 'All users';
