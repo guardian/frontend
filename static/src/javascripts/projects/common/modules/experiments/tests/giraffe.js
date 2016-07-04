@@ -7,7 +7,7 @@ define([
     return function () {
 
         this.id = 'Giraffe';
-        this.start = '2016-07-04';
+        this.start = '2016-07-03';
         this.expiry = '2016-08-13';
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
