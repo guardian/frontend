@@ -20,9 +20,3 @@ case class HostedCampaign(
 case class HostedLogo(
   url: String
 )
-
-case class HostedCallToAction(
-  url: String,
-  label: String,
-  trackingCode: String
-)

@@ -19,7 +19,8 @@ object RenaultHostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
     label = "Discover Zoe",
-    trackingCode = "explore-renault-zoe-button"
+    trackingCode = "explore-renault-zoe-button",
+    bannerUrl = Static("images/commercial/ren_commercial_banner.jpg")
   )
 
   private val teaserWithoutNextPage: HostedVideoPage = HostedVideoPage(
@@ -27,7 +28,6 @@ object RenaultHostedPages {
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
     pageName = teaserPageName,
     standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress",
-    bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
     video = HostedVideo(
       mediaId = "renault-car-of-the-future",
       title = "Designing the car of the future",
@@ -47,7 +47,6 @@ object RenaultHostedPages {
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
     pageName = episode1PageName,
     standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist",
-    bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
     video = HostedVideo(
       mediaId = "renault-car-of-the-future",
       title = "Renault shortlists 'car of the future' designs",
@@ -67,7 +66,6 @@ object RenaultHostedPages {
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2",
     pageName = episode2PageName,
     standfirst = "A group of Central St Martins students took part in a competition to dream up the car of the future. The winning design is radical and intriguing. Meet the team whose blue-sky thinking may have created a blueprint for tomorrow's autonomous cars",
-    bannerUrl = Static("images/commercial/ren_commercial_banner.jpg"),
     video = HostedVideo(
       mediaId = "renault-car-of-the-future",
       title = "Is this the car of the future?",

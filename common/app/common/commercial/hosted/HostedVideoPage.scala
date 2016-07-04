@@ -9,7 +9,6 @@ case class HostedVideoPage(
   pageUrl: String,
   pageName: String,
   standfirst: String,
-  bannerUrl: String,
   video: HostedVideo,
   cta: HostedCallToAction,
   nextPage: Option[HostedVideoPage]
@@ -56,4 +55,11 @@ case class HostedVideo(
   srcUrlWebm: String,
   srcUrlOgg: String,
   srcM3u8: String
+)
+
+case class HostedCallToAction(
+  url: String,
+  label: String,
+  trackingCode: String,
+  bannerUrl: String
 )
