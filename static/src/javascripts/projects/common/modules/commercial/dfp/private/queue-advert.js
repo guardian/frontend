@@ -2,9 +2,8 @@ define([
     'common/utils/detect',
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/define-slot',
-    'common/modules/commercial/dfp/private/breakpoint-name-to-attribute',
-    'common/modules/commercial/commercial-features'
-], function (detect, dfpEnv, defineSlot, breakpointNameToAttribute, commercialFeatures) {
+    'common/modules/commercial/dfp/private/breakpoint-name-to-attribute'
+], function (detect, dfpEnv, defineSlot, breakpointNameToAttribute) {
     return queueAdvert;
 
     function queueAdvert(advert, index) {

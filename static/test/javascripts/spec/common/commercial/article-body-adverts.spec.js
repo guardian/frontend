@@ -22,7 +22,6 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
-            dfp,
             config,
             detect;
 
