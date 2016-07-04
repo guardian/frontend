@@ -3,13 +3,13 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!common/views/commercial/adblock-sticky-message.html',
-    'text!common/views/commercial/adblock-sticky-message-coin.html'
+    'text!common/views/commercial/adblock-influence-banner.html'
 ], function (
     fastdom,
     $,
     template,
     adblockStickyMessage,
-    adblockStickyMessageCoin) {
+    adblockInfluenceBanner) {
 
     /**
      * Message which is shown at the top of the page to the adblock users.
@@ -21,7 +21,7 @@ define([
 
         this.templates = {
             'adblock-sticky-message': adblockStickyMessage,
-            'adblock-sticky-message-coin': adblockStickyMessageCoin
+            'adblock-influence-banner': adblockInfluenceBanner
         };
     };
 

@@ -493,85 +493,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /*
  * Coin based adblock message
  */
-.adblock-sticky__coin {
-    background-color: #ff5b3a;
-    position: relative;
-    height: 180px;
-    color: #ffffff;
+.adblock-banner__wrap {
+    background-color: #f1f1f1;
 }
 
-.adblock-sticky__coin-result {
-    @include fs-headline(6);
-    text-align: center;
-}
-
-.adblock-sticky__coin-coins {
-    text-align: center;
-    padding-top: 5px;
+.adblock-banner__img {
     display: block;
-
-    .inline-adblock-coins-us, .inline-adblock-coins {
-        display: block;
-        line-height: 0;
-    }
-
-    svg {
-        height: 72px;
-    }
-}
-
-.adblock-sticky__coin-membership-logo {
-    position: absolute;
-    line-height: 0;
-    bottom: 0;
-    right: 0;
-
-    @include mq($until: tablet) {
-        display: none;
-    }
-
-    svg {
-        @include mq($until: desktop) {
-            margin-bottom: -10px;
-            width: 125px;
-        }
-    }
-
-}
-
-.adblock-sticky__coin-logo {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-}
-
-.adblock-sticky__coin-message {
-    bottom: $gs-baseline / 4;
-    left: $gs-baseline;
-    position: absolute;
-    line-height: 20px;
-
-    @include mq($until: desktop) {
-        @include fs-headline(1);
-        line-height: 15px;
-    }
-}
-
-.adblock-sticky__coin-link {
-    color: #ffffff;
-    display: block;
-
-    .inline-cursor {
-        position: relative;
-        top: $gs-baseline / 3;
-
-        svg {
-            @include mq($until: desktop) {
-                top: $gs-baseline / 4;
-                height: 15px;
-            }
-        }
-    }
 }
 
 /**
