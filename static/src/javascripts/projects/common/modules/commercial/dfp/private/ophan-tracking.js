@@ -2,7 +2,16 @@ define([
     'raven'
 ], function (raven) {
 
-    function trackPerformance(googletag, renderStartTime) {
+    var commercialInitTime;
+
+    function init() {
+
+        commercialInitTime = new Date().getTime();
+        console.log('commercial baseline ' + commercialInitTime);
+    }
+
+    function trackPerformance(googletag) {
+
         var adTimings = {};
         spyOnAdDebugTimings();
         reportAdsAndTimingsOnRender();
@@ -29,6 +38,10 @@ define([
                     adTimings[slotId] = adTimings[slotId] || {};
                     timingAttr = lifecycleIdToTimingAttr[lifecycleId];
                     adTimings[slotId][timingAttr] = new Date().getTime();
+
+                    if (slotId === 'dfp-ad--inline1' && timingAttr) {
+                        console.log('olde report: ' + timingAttr + '  ' + (adTimings[slotId][timingAttr] - commercialInitTime) );
+                    }
                 }
 
                 // Call original debugger as normal
@@ -59,10 +72,10 @@ define([
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(renderStartTime, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(commercialInitTime, new Date().getTime()),
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(renderStartTime, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(commercialInitTime, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -84,7 +97,13 @@ define([
         }
     }
 
+    function advertCheckpoint(message, timer){
+        console.log('new report: ', message, ' : ', timer - commercialInitTime);
+    }
+
     return {
-        trackPerformance : trackPerformance
+        trackPerformance : trackPerformance,
+        advertCheckpoint : advertCheckpoint,
+        init: init
     };
 });
