@@ -6,10 +6,11 @@ define([
     dfp.getAdverts = getAdverts;
     return getAdverts;
 
-    function getAdverts(isWithAllAds) {
+    function getAdverts(withEmpty) {
         return Object.keys(dfpEnv.advertIds).reduce(function (advertsById, id) {
             var advert = getAdvertById(id);
-            if (isWithAllAds || !advert.isEmpty) {
+            // Do not return empty slots unless explicitely requested
+            if (withEmpty || !advert.isEmpty) {
                 advertsById[id] = advert;
             }
             return advertsById;
