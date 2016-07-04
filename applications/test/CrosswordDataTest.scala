@@ -1,5 +1,6 @@
 package test
 
+import controllers.CrosswordPageController
 import model.{Entry, CrosswordData}
 import org.joda.time.DateTime
 import org.scalatest._
@@ -9,10 +10,13 @@ import org.scalatest.time.{Millis, Span}
 @DoNotDiscover class CrosswordDataTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite with ScalaFutures {
 
   "CrosswordData" - {
+
+    val crosswordPageController = new CrosswordPageController
+
     "fromCrossword should normalize separators for grouped entries" in {
 
       implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
-      val futureCrossword = controllers.CrosswordPageController.getCrossword("cryptic", 26666)(TestRequest("crosswords/cryptic/26666"))
+      val futureCrossword = crosswordPageController.getCrossword("cryptic", 26666)(TestRequest("crosswords/cryptic/26666"))
 
       whenReady(futureCrossword) { result =>
 
@@ -41,7 +45,7 @@ import org.scalatest.time.{Millis, Span}
     "fromCrossword should populate solutionAvailable field always and dateSolutionAvailable field if it exists" in {
 
       implicit val patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
-      val futureCrosswordWithDateSolutionAvailable = controllers.CrosswordPageController.getCrossword("prize", 26806)(TestRequest("crosswords/prize/26806"))
+      val futureCrosswordWithDateSolutionAvailable = crosswordPageController.getCrossword("prize", 26806)(TestRequest("crosswords/prize/26806"))
       whenReady(futureCrosswordWithDateSolutionAvailable) { result =>
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined

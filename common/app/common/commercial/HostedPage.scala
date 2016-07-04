@@ -110,7 +110,10 @@ case class HostedVideo(
                         title: String,
                         duration: Int,
                         posterUrl: String,
-                        srcUrl: String
+                        srcUrlMp4: String,
+                        srcUrlWebm: String,
+                        srcUrlOgg: String,
+                        srcM3u8: String
                       )
 
 case class HostedGalleryImage(

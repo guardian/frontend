@@ -6,7 +6,7 @@ import play.api.mvc.{Action, AnyContent}
 
 import scala.concurrent.Future
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck extends AllGoodCachedHealthCheck(
   9002,
   "/books",
   "/books/harrypotter",

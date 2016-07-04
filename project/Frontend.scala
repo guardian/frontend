@@ -70,6 +70,7 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
