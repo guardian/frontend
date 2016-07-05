@@ -1,7 +1,8 @@
+/*eslint no-console: "error"*/
 define([
     'raven'
 ], function (raven) {
-    /*eslint no-console: "error"*/
+
     var commercialInitTime;
 
     function init() {
