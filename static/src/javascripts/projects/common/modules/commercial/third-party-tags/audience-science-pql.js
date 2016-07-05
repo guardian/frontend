@@ -34,14 +34,16 @@ define([
     }
 
     function load() {
-        return require(['js!' + audienceSciencePqlUrl], function () {
-            var asiPlacements = window.asiPlacements;
-            var segments = storage.local.get(storageKey) || {};
-            // override the global value with our previously stored one
-            window.asiPlacements = segments[section];
-            segments[section] = asiPlacements;
-            storage.local.set(storageKey, segments);
-        });
+        return require(['js!' + audienceSciencePqlUrl], onLoad);
+    }
+
+    function onLoad() {
+        var asiPlacements = window.asiPlacements;
+        var segments = storage.local.get(storageKey) || {};
+        // override the global value with our previously stored one
+        window.asiPlacements = segments[section];
+        segments[section] = asiPlacements;
+        storage.local.set(storageKey, segments);
     }
 
     function getSegments() {
@@ -64,6 +66,7 @@ define([
         shouldRun: config.switches.audienceScienceGateway,
         url: audienceSciencePqlUrl,
         load: load,
+        onLoad: onLoad,
         getSegments: getSegments
     };
 
