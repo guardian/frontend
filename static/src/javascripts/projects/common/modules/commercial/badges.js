@@ -43,15 +43,15 @@ define([
         }
     };
 
-    function addPreBadge($adSlot, header, sponsor) {
+    function addPreBadge(adSlot, header, sponsor) {
         if (sponsor) {
-            $adSlot.append(template(
+            adSlot.innerHTML = template(
                 badgeTpl,
                 {
                     header:  header,
                     sponsor: sponsor
                 }
-            ));
+            );
         }
     }
 
@@ -59,26 +59,26 @@ define([
         var badgeConfig = badgesConfig[sponsorship],
             slotTarget  = badgeConfig.namePrefix + 'badge',
             name        = slotTarget + (++badgeConfig.count),
-            $adSlot     = bonzo(createSlot(
+            adSlot      = createSlot(
                             name,
                             ['paid-for-badge', 'paid-for-badge--front'],
                             opts.series,
                             opts.keywords,
                             slotTarget
-                          ));
+                          );
 
-        addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
+        addPreBadge(adSlot, badgeConfig.header, opts.sponsor);
 
         return fastdom.write(function () {
             var placeholder = $('.js-badge-placeholder', item);
 
             if (placeholder.length) {
-                placeholder.replaceWith($adSlot);
+                placeholder.replaceWith(adSlot);
             } else {
-                $(fallback, item).after($adSlot);
+                $(fallback, item).after(adSlot);
             }
 
-            return $adSlot;
+            return adSlot;
         });
     }
 
