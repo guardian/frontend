@@ -77,15 +77,32 @@ define([
     }
 
     function loadOther() {
-        var scripts = [
+        var services = [
             config.page.edition === 'UK' ? audienceSciencePql : null,
             config.page.edition === 'UK' ? audienceScienceGateway : null,
             imrWorldwide,
             remarketing,
             krux
-        ];
+        ].filter(function (_) { return _ && _.shouldRun; });
 
-        scripts.filter(function (_) { return _ && _.shouldRun; }).forEach(function (script) { script.load(); });
+        if (services.length) {
+            insertScripts(services);
+        }
+    }
+
+    function insertScripts(services) {
+        var ref = document.scripts[0];
+        var frag = document.createDocumentFragment();
+        while (services.length) {
+            var service = services.shift();
+            var script = document.createElement('script');
+            script.src = service.url;
+            if (service.onLoad) {
+                script.onload = service.onLoad;
+            }
+            frag.appendChild(script);
+        }
+        ref.parentNode.insertBefore(frag, ref);
     }
 
     return {
