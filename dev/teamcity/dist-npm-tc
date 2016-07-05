@@ -1,12 +1,12 @@
 #!/bin/bash
 . .profile
 
+echo "Use project Node version"
+nvm install
+
 set -o xtrace
 set -o errexit
 set -o nounset
-
-echo "Use project Node version"
-nvm install
 
 npm -g install grunt-cli
 
