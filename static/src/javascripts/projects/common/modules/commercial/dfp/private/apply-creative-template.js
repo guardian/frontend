@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'Promise',
+    'common/utils/fastdom-promise',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
     'common/modules/commercial/creatives/commercial-component',
@@ -26,7 +27,8 @@ define([
 ], function (
     bean,
     bonzo,
-    Promise
+    Promise,
+    fastdom
 ) {
     /**
      * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
@@ -73,7 +75,9 @@ define([
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
-            return renderCreative(creativeConfig);
+            return hideIframe().then(function () {
+                return renderCreative(creativeConfig);
+            });
         } else {
             return Promise.resolve(true);
         }
@@ -92,6 +96,12 @@ define([
                 require(['common/modules/commercial/creatives/' + config.name], function (Creative) {
                     resolve(new Creative(bonzo(adSlot), config.params, config.opts).create());
                 });
+            });
+        }
+
+        function hideIframe() {
+            return fastdom.write(function () {
+                iFrame.style.display = 'none';
             });
         }
     }
