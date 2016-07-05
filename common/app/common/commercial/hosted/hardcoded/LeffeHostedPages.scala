@@ -2,7 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.Static
 import conf.switches.Switches
 
 object LeffeHostedPages {
@@ -17,14 +16,14 @@ object LeffeHostedPages {
     id = "leffe-rediscover-time",
     name = "Leffe - rediscover time",
     owner = "Leffe",
-    logo = HostedLogo(Static("images/commercial/TODO.jpg"))
+    logo = HostedLogo("TODO")
   )
 
   private val cta = HostedCallToAction(
     url = "TODO",
     label = "TODO",
     trackingCode = "TODO",
-    bannerUrl = Static("TODO")
+    bannerUrl = "TODO"
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = HostedVideoPage(
@@ -36,7 +35,7 @@ object LeffeHostedPages {
       mediaId = willardWiganPageName,
       title = "Willard Wigan",
       duration = 127,
-      posterUrl = Static("TODO"),
+      posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv",
@@ -55,7 +54,7 @@ object LeffeHostedPages {
       mediaId = adrienneTreebyPageName,
       title = "Adrienne Treeby",
       duration = 116,
-      posterUrl = Static("TODO"),
+      posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian" +
                   ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian" +
@@ -78,7 +77,7 @@ object LeffeHostedPages {
       mediaId = peteLawrencePageName,
       title = "Pete Lawrence",
       duration = 138,
-      posterUrl = Static("TODO"),
+      posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid" +
@@ -98,7 +97,7 @@ object LeffeHostedPages {
       mediaId = susanDergesPageName,
       title = "Susan Derges",
       duration = 146,
-      posterUrl = Static("TODO"),
+      posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo" +
@@ -118,7 +117,7 @@ object LeffeHostedPages {
       mediaId = quayBrothersPageName,
       title = "Quay Brothers",
       duration = 134,
-      posterUrl = Static("TODO"),
+      posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv",
