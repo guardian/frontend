@@ -96,13 +96,11 @@ define([
     }
 
     function processFront(front) {
-        var $front = bonzo(front);
-
         return renderAd(
             qwery('.fc-container', front)[0],
-            $front.data('sponsorship'),
+            front.getAttribute('data-sponsorship'),
             {
-                sponsor: $front.data('sponsor')
+                sponsor: front.getAttribute('data-sponsor')
             },
             '.js-container__header'
         );
@@ -118,19 +116,17 @@ define([
 
     function processItem(fallback, item) {
         if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
-            var $item = bonzo(item);
-
             if (!item.hasAttribute('data-sponsorship')) {
                 return;
             }
 
             return renderAd(
                 item,
-                $item.data('sponsorship'),
+                item.getAttribute('data-sponsorship'),
                 {
-                    sponsor:  $item.data('sponsor'),
-                    series:   $item.data('series'),
-                    keywords: $item.data('keywords')
+                    sponsor:  item.getAttribute('data-sponsor'),
+                    series:   item.getAttribute('data-series'),
+                    keywords: item.getAttribute('data-keywords')
                 },
                 fallback
             );
@@ -143,19 +139,19 @@ define([
 
         // add a badge to a container (if appropriate)
         add: function (container) {
-            var $container = bonzo(container);
+            container = container instanceof Element ? container : container[0];
 
             if (
-                $container.hasClass('js-sponsored-container') &&
+                bonzo(container).hasClass('js-sponsored-container') &&
                 qwery('.ad-slot--paid-for-badge', container).length === 0
             ) {
                 return renderAd(
                     container,
-                    $container.data('sponsorship'),
+                    container.getAttribute('data-sponsorship'),
                     {
-                        sponsor:  $container.data('sponsor'),
-                        series:   $container.data('series'),
-                        keywords: $container.data('keywords')
+                        sponsor:  container.getAttribute('data-sponsor'),
+                        series:   container.getAttribute('data-series'),
+                        keywords: container.getAttribute('data-keywords')
                     },
                     '.js-container__header'
                 ).then(addSlot);
