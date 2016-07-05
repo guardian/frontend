@@ -96,7 +96,7 @@ install_node() {
     fi
 
     nvm install
-    EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
+    EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
   fi
 }
 
