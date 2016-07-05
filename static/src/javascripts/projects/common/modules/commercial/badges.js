@@ -134,22 +134,12 @@ define([
 
         // add a badge to a container (if appropriate)
         add: function (container) {
-            container = container instanceof Element ? container : container[0];
+            if (container) {
+                container = container instanceof Element ? container : container[0];
 
-            if (
-                bonzo(container).hasClass('js-sponsored-container') &&
-                qwery('.ad-slot--paid-for-badge', container).length === 0
-            ) {
-                return renderAd(
-                    container,
-                    container.getAttribute('data-sponsorship'),
-                    {
-                        sponsor:  container.getAttribute('data-sponsor'),
-                        series:   container.getAttribute('data-series'),
-                        keywords: container.getAttribute('data-keywords')
-                    },
-                    '.js-container__header'
-                ).then(addSlot);
+                if (bonzo(container).hasClass('js-sponsored-container')) {
+                    return processContainer(container).then(addSlot);
+                }
             }
         },
 
