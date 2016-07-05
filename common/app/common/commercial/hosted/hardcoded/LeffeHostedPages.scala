@@ -128,19 +128,19 @@ object LeffeHostedPages {
     nextPage = None
   )
 
-  private val willardWiganPage = willardWiganPageWithoutNextPage
+  private lazy val willardWiganPage = willardWiganPageWithoutNextPage
                                  .copy(nextPage = Some(adrienneTreebyPageWithoutNextPage))
 
-  private val adrienneTreebyPage = adrienneTreebyPageWithoutNextPage
+  private lazy val adrienneTreebyPage = adrienneTreebyPageWithoutNextPage
                                    .copy(nextPage = Some(peteLawrencePageWithoutNextPage))
 
-  private val peteLawrencePage = peteLawrencePageWithoutNextPage
+  private lazy val peteLawrencePage = peteLawrencePageWithoutNextPage
                                  .copy(nextPage = Some(susanDergesPageWithoutNextPage))
 
-  private val susanDergesPage = susanDergesPageWithoutNextPage
+  private lazy val susanDergesPage = susanDergesPageWithoutNextPage
                                 .copy(nextPage = Some(quayBrothersPageWithoutNextPage))
 
-  private val quayBrothersPage = quayBrothersPageWithoutNextPage
+  private lazy val quayBrothersPage = quayBrothersPageWithoutNextPage
                                    .copy(nextPage = Some(willardWiganPageWithoutNextPage))
 
   def fromPageName(pageName: String): Option[HostedPage] = {
