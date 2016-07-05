@@ -140,10 +140,6 @@
     height: 100%;
 }
 
-.hosted-gallery-page + footer {
-    display: none;
-}
-
 .hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
     .survey-text__header {
         background-color: $omgbColor;
@@ -298,12 +294,23 @@ $progressColor: #ffffff;
     display: block;
 }
 
+.use-swipe .hosted-gallery__progress {
+    display: block;
+    pointer-events: none;
+    .inline-arrow-up,
+    .inline-arrow-down {
+        display: none;
+    }
+}
+
 .hosted-gallery__progress {
     display: none;
     position: absolute;
     top: 50%;
     margin-top: $progressHeight / -2;
-    right: 0;
+    right: -10px;
+    height: $progressHeight;
+    width: $progressHeight;
 
     .hosted-gallery__image-count {
         @include f-headlineSans;

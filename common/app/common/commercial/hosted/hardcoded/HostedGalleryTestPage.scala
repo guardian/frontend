@@ -58,7 +58,7 @@ object HostedGalleryTestPage {
       logo = HostedLogo("http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png")
     ),
     images = demoImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
+    pageUrl = "https://m.code.dev-theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryTestPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",

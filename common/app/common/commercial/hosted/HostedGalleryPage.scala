@@ -45,7 +45,7 @@ case class HostedGalleryPage(
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
-        "og:image" -> campaign.logo.url,
+        "og:image" -> images.head.url,
         "fb:app_id" -> "180444840287"
       )
     )
