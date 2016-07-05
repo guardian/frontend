@@ -102,22 +102,23 @@
     @include circular;
     position: relative;
     display: block;
-    padding: 8px 40px 8px 12px;
+    width: 160px;
+    padding: 8px 8px 8px 12px;
     margin: 16px 0;
     color: #ffffff;
-    width: 130px;
     font-weight: bold;
     background-color: $omgbColor;
 
-    &:after {
-        content: '';
+    .inline-arrow-right {
         position: absolute;
-        right: 10px;
-        top: 10px;
-        border-style: solid;
-        border-color: transparent transparent transparent $neutral-7;
-        border-width: .5rem .5rem .5rem 1.125rem;
-        -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+        bottom: 0;
+        right: 6px;
+        height: 40px;
+
+         svg {
+             height: 36px;
+             width: 36px;
+         }
     }
 }
 
@@ -146,6 +147,15 @@
 .hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
     .survey-text__header {
         background-color: $omgbColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
     }
 }
 
