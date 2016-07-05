@@ -1,14 +1,8 @@
 define([
     'common/utils/config',
     'common/utils/storage',
-    'common/utils/url',
-    'lodash/functions/once',
-    'lodash/objects/pairs',
-    'lodash/arrays/zipObject',
-    'lodash/collections/map',
-    'lodash/collections/filter',
-    'common/utils/chain'
-], function (config, storage, urlUtils, once, pairs, zipObject, map, filter, chain) {
+    'common/utils/url'
+], function (config, storage, urlUtils) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql';
     var storageKey = 'gu.ads.audsci-gateway';
@@ -30,7 +24,7 @@ define([
             placementIdList: placements.join(','),
             cb: new Date().getTime()
         });
-        return [gatewayUrl, '?', query].join('');
+        return gatewayUrl + '?' + query;
     }
 
     function load() {
@@ -47,15 +41,19 @@ define([
     }
 
     function getSegments() {
-        var segments = {},
-            storedSegments = storage.local.get(storageKey);
+        var segments = {};
+        var storedSegments = storage.local.get(storageKey);
         if (config.switches.audienceScienceGateway && storedSegments) {
-            segments = chain(pairs(storedSegments[section])).and(filter, function (placement) {
+            segments = Object.keys(storedSegments[section])
+                .filter(function (placement) {
                     //keyword `default` written in dot notation throws an exception IE8
-                    return placement[1]['default']; //eslint-disable-line
-                }).and(map, function (placement) {
-                    return ['pq_' + placement[0], 'T'];
-                }).and(zipObject).valueOf();
+                    return storedSegments[section][placement]['default']; //eslint-disable-line
+                }).map(function (placement) {
+                    return ['pq_' + placement, 'T'];
+                }).reduce(function (result, input) {
+                    result[input[0]] = input[1];
+                    return result;
+                }, {});
             // set up the global asiPlacements var in case dfp returns before asg
             window.asiPlacements = storedSegments[section];
         }
