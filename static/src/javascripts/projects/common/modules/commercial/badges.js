@@ -96,14 +96,7 @@ define([
     }
 
     function processFront(front) {
-        return renderAd(
-            qwery('.fc-container', front)[0],
-            front.getAttribute('data-sponsorship'),
-            {
-                sponsor: front.getAttribute('data-sponsor')
-            },
-            '.js-container__header'
-        );
+        return processItem('.js-container__header', qwery('.fc-container', front)[0], front);
     }
 
     function processContainer(container) {
@@ -114,19 +107,21 @@ define([
         return processItem('.js-card__header', card);
     }
 
-    function processItem(fallback, item) {
-        if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
-            if (!item.hasAttribute('data-sponsorship')) {
+    function processItem(fallback, element, dataElement) {
+        if (qwery('.ad-slot--paid-for-badge', element).length === 0) {
+            dataElement = dataElement || element;
+
+            if (!dataElement.hasAttribute('data-sponsorship')) {
                 return;
             }
 
             return renderAd(
-                item,
-                item.getAttribute('data-sponsorship'),
+                element,
+                dataElement.getAttribute('data-sponsorship'),
                 {
-                    sponsor:  item.getAttribute('data-sponsor'),
-                    series:   item.getAttribute('data-series'),
-                    keywords: item.getAttribute('data-keywords')
+                    sponsor:  dataElement.getAttribute('data-sponsor'),
+                    series:   dataElement.getAttribute('data-series'),
+                    keywords: dataElement.getAttribute('data-keywords')
                 },
                 fallback
             );
