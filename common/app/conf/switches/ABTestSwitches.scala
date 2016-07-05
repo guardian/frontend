@@ -20,7 +20,7 @@ trait ABTestSwitches {
     "Live blog chrome notifications - Internal",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
