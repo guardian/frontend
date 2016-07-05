@@ -127,6 +127,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       awsKinesis
     )
