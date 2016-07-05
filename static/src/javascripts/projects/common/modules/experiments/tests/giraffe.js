@@ -2,13 +2,15 @@ define([
     'common/utils/$',
     'common/utils/template',
     'text!common/views/giraffe-message.html',
-    'common/views/svgs'
-], function ($,template,giraffeMessage, svgs) {
+    'common/views/svg',
+    'inlineSvg!svgs/icon/arrow-right',
+    'common/utils/fastdom-promise',
+], function ($,template,giraffeMessage, svg, arrowRight, fastdom) {
     return function () {
 
         this.id = 'Giraffe';
         this.start = '2016-07-03';
-        this.expiry = '2016-08-13';
+        this.expiry = '2016-08-01';
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
@@ -28,10 +30,12 @@ define([
                 linkName: 'idk',
                 linkHref: linkHref,
                 copy: copy,
-                svg: svgs('arrowWhiteRight', ['button--giraffe__icon'])
+                svg: svg(arrowRight, ['button--giraffe__icon'])
             }));
             var a = $('.submeta');
-            $newThing.insertBefore(a[0]);
+            return fastdom.write(function () {
+                $newThing.insertBefore(a);
+            });
         };
 
         this.variants = [
