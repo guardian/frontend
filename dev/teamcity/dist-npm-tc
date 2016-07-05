@@ -5,8 +5,11 @@ set -o xtrace
 set -o errexit
 set -o nounset
 
+node -v
+
 echo "Use project Node version"
 nvm install
+node -v
 
 npm -g install grunt-cli
 
@@ -17,3 +20,5 @@ make install
 
 echo "Restore default Node version"
 nvm use default
+
+node -v
