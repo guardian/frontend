@@ -1,36 +1,39 @@
-@import common.commercial.HostedVideoPage
+@import common.commercial.hosted.HostedVideoPage
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 
+@cssClass(owner: String) = {hosted-tone--@{owner.toLowerCase.replaceAll("\\s+", "-")}}
+
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-video-page", page.logoUrl)
+    @guardianHostedHeader("hosted-video-page", page.campaign.logo.url)
     <div class="l-side-margins hosted__side hosted-video-page">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <video
-                    data-duration="@page.video.duration"
-                    data-media-id="@page.video.mediaId"
+                    data-duration="@{page.video.duration}"
+                    data-media-id="@{page.video.mediaId}"
                     controls="controls"
                     preload="auto"
                     style="width: 100%;"
                     data-block-video-ads="true"
-                    poster="@page.video.posterUrl"
+                    poster="@{page.video.posterUrl}"
                     class="vjs-hosted__video hosted__video gu-media--video vjs vjs-tech-html5 vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@page.video.srcUrlMp4">
-                        <source type="video/webm" src="@page.video.srcUrlWebm">
-                        <source type="video/ogg" src="@page.video.srcUrlOgg">
-                        <source type="video/m3u8" src="@page.video.srcM3u8">
+                        <source type="video/mp4" src="@{page.video.srcUrlMp4}">
+                        <source type="video/webm" src="@{page.video.srcUrlWebm}">
+                        <source type="video/ogg" src="@{page.video.srcUrlOgg}">
+                        <source type="video/m3u8" src="@{page.video.srcM3u8}">
                     </video>
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
+                            <h1 class="hosted__heading @cssClass(page.campaign.owner)">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
+                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                         </div>
                     </div>
+                    @for(nextPage <- page.nextPage) {
                     <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
                         <div class="hosted-next-autoplay__cancel">
                             <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
@@ -38,25 +41,26 @@
                             </button>
                         </div>
                         <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">Discover your Renault Zoe</div>
-                            <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="Discover Zoe from Renault" target="_blank">
-                                Visit Renault now @fragments.inlineSvg("arrow-right", "icon", List(""))
+                            <div class="hosted-next-autoplay__subheader">@{page.campaign.name}</div>
+                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="@{page.campaign.name}" target="_blank">
+                                Visit @{page.campaign.owner} now @fragments.inlineSvg("arrow-right", "icon", List(""))
                             </a>
                         </div>
                         <div class="hosted-next-autoplay__video">
                             <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone--renault">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@page.nextPage.video.title</h2>
+                                <div class="hosted-next-autoplay__continue @cssClass(page.campaign.owner)">Continue watching</div>
+                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.video.title}</h2>
                             </div>
-                            <a href="@page.nextPage.pageUrl" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @page.nextPage.video.title">
-                                <img class="hosted-next-autoplay__poster-img" src="@page.nextPage.video.posterUrl">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@page.nextPage.pageUrl">10s</div>
+                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.video.title}">
+                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.video.posterUrl}">
+                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
                             </a>
-                            <a href="@page.nextPage.pageUrl" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @page.nextPage.video.title" target="_blank">
+                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.video.title}" target="_blank">
                                 Watch now
                             </a>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </section>
@@ -109,36 +113,38 @@
             </header>
             <div class="adverts__body">
                 <div class="hosted__meta">
-                    <h1 class="hosted__heading hosted-tone--renault">@page.video.title</h1>
+                    <h1 class="hosted__heading @cssClass(page.campaign.owner)">@{page.video.title}</h1>
                 </div>
                 <div class="hosted__standfirst">
-                    <p class="hosted__text">@page.standfirst</p>
-                    <div class="hosted__terms">​This content was paid for and produced by Renault. For more information click
+                    <p class="hosted__text">@{page.standfirst}</p>
+                    <div class="hosted__terms">​This content was paid for and produced by @{page.campaign.owner}. For more information click
                         <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
                             <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
                         </div>
                     </div>
                 </div>
             </div>
+            @for(nextPage <- page.nextPage) {
             <div class="hosted__next-video">
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                    <h2 class="hosted__next-video--client-name hosted-tone--renault">Renault</h2>
+                    <h2 class="hosted__next-video--client-name @cssClass(page.campaign.owner)">@{page.campaign.owner}</h2>
                 </div>
-                <a href="@page.nextPage.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @page.nextPage.video.title">
-                    <img class="hosted__next-video-thumb" src="@page.nextPage.video.posterUrl" alt="Next Video: @page.nextPage.video.title">
-                    <p class="hosted__next-video-title">@page.nextPage.video.title</p>
+                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.video.title}">
+                    <img class="hosted__next-video-thumb" src="@{nextPage.video.posterUrl}" alt="Next Video: @{nextPage.video.title}">
+                    <p class="hosted__next-video-title">@{nextPage.video.title}</p>
                 </a>
             </div>
+            }
         </section>
         <section class="adverts hosted__container--full">
-            <div class="hosted__banner" style="background-image: url(@page.bannerUrl);">
-                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--renault">
-                    <img class="hostedbadge__logo" src="@page.logoUrl" alt="logo Renault">
+            <div class="hosted__banner" style="background-image: url(@{page.cta.bannerUrl});">
+                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--@{page.campaign.owner.toLowerCase}">
+                    <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                 </div>
                 <div class="hosted__cta-wrapper">
-                    <a href="https://www.renault.co.uk/vehicles/new-vehicles/zoe.html" rel="nofollow" class="hosted__cta-link" data-link-name="explore-renault-zoe-button" target="_blank">
-                        <span class="hosted__cta-text">Discover Zoe</span>
+                    <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
+                        <span class="hosted__cta-text">@{page.cta.label}</span>
                         @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta"))
                     </a>
                 </div>
