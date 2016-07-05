@@ -10,6 +10,10 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
+GET        /survey/customtodayemail                                             controllers.SurveyPageController.renderCustomEmail404Page()
+GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
+GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
+
 GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

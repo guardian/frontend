@@ -5,6 +5,10 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
+GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
+GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
+GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
+
 # For dev machines
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
@@ -296,8 +300,9 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
@@ -396,7 +401,6 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
-GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

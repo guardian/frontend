@@ -1,0 +1,42 @@
+@charset 'UTF-8';
+
+@import '_head.common';
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+@import 'icons/_global-icons-sprite';
+@import 'icons/_global-icons-svg';
+@import 'icons/video-icons-sprite';
+@import 'icons/video-icons-svg';
+
+/* ==========================================================================
+   Global modules
+   ========================================================================== */
+@import 'module/content/_tones.head';
+@import 'module/content/_article';
+@import 'module/content/_content';
+@import 'module/content/_media.head';
+@import 'module/_breadcrumbs';
+@import 'module/_social';
+@import 'module/_layout-hints';
+@import 'module/_live-pulse';
+@import 'module/_chapters';
+@import 'module/content/_article-immersive';
+@import 'module/content/_article-minute';
+@import 'module/content/_gallery.head.scss';
+
+/* ==========================================================================
+   External modules
+   ========================================================================== */
+
+// These are for styling HTML that we get from external sources
+// and may contain more specific selectors than we would usually like
+
+@import 'module/external/_from-content-api';
+
+/* ==========================================================================
+   Atoms
+   ========================================================================== */
+
+@import 'module/atoms/_quiz';
