@@ -24,8 +24,6 @@ module.exports = function (grunt, options) {
         assets: [
             'common/conf/assets',
             options.staticHashDir + 'assets'
-        ],
-        // Clean any pre-commit hooks in .git/hooks directory
-        hooks: ['.git/hooks']
+        ]
     };
 };

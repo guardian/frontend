@@ -81,7 +81,7 @@
     "fsevents": "*"
   },
   "scripts": {
-    "postinstall": "grunt hookmeup",
+    "postinstall": "rm -rf .git/hooks && cp -a git-hooks/. .git/hooks",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js"
