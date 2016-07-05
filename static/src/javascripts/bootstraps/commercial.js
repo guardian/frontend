@@ -76,6 +76,7 @@ define([
             }
 
             userTiming.mark('commercial start');
+            ophanTracking.init();
 
             var modulePromises = [];
 
@@ -95,6 +96,8 @@ define([
             });
 
             Promise.all(modulePromises).then(function () {
+                ophanTracking.init();
+
                 secondaryModules.forEach(function (pair) {
                     var moduleName = pair[0];
 
