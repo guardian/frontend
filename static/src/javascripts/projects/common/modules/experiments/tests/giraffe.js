@@ -27,7 +27,7 @@ define([
         var writer = function (linkText, linkHref, copy) {
             var $newThing = $.create(template(giraffeMessage, {
                 linkText:linkText,
-                linkName: 'idk',
+                linkName: 'contribute',
                 linkHref: linkHref,
                 copy: copy,
                 svg: svg(arrowRight, ['button--giraffe__icon'])
