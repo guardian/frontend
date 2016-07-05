@@ -64,7 +64,8 @@ object HostedGalleryTestPage {
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
-    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share."
+    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
+    cssClass = "test"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

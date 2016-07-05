@@ -63,7 +63,8 @@ object VisitBritainHostedPages {
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
-    standfirst = ""
+    standfirst = "",
+    cssClass = "visit-britain"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
