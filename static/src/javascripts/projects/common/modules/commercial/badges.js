@@ -5,7 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
@@ -18,7 +18,7 @@ define([
     $,
     config,
     template,
-    idleFastdom,
+    fastdom,
     addSlot,
     createSlot,
     commercialFeatures,
@@ -69,18 +69,16 @@ define([
 
         addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
 
-        return new Promise(function (resolve) {
-            idleFastdom.write(function () {
-                var placeholder = $('.js-badge-placeholder', item);
+        return fastdom.write(function () {
+            var placeholder = $('.js-badge-placeholder', item);
 
-                if (placeholder.length) {
-                    placeholder.replaceWith($adSlot);
-                } else {
-                    $(fallback, item).after($adSlot);
-                }
+            if (placeholder.length) {
+                placeholder.replaceWith($adSlot);
+            } else {
+                $(fallback, item).after($adSlot);
+            }
 
-                resolve($adSlot);
-            });
+            return $adSlot;
         });
     }
 
