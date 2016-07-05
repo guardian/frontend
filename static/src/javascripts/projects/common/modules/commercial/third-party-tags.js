@@ -97,9 +97,7 @@ define([
             var service = services.shift();
             var script = document.createElement('script');
             script.src = service.url;
-            if (service.onLoad) {
-                script.onload = service.onLoad;
-            }
+            script.onload = service.onLoad;
             frag.appendChild(script);
         }
         ref.parentNode.insertBefore(frag, ref);
