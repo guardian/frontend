@@ -1,5 +1,5 @@
 #!/bin/bash
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+. ~/.nmv/nvm.sh
 
 echo "Use project Node version"
 nvm install
