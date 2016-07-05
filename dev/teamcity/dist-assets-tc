@@ -27,4 +27,5 @@ set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
 
-
+echo "Restore default Node version"
+nvm use default

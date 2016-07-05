@@ -14,3 +14,6 @@ echo "Install dependencies"
 make install
 
 ./grunt-tc clean
+
+echo "Restore default Node version"
+nvm use default
