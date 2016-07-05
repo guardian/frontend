@@ -1,5 +1,5 @@
 #!/bin/bash
-. ~/.nmv/nvm.sh
+. ~/.profile
 
 echo "Use project Node version"
 nvm install
