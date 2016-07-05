@@ -42,6 +42,20 @@
 .fc-container--outbrain {
     background-color: $neutral-8;
     display: none;
+
+    .fc-container__inner {
+        @include mq($from: mobile) {
+            min-height: 545px;
+        }
+
+        @include mq($from: tablet) {
+            min-height: 455.17px;
+        }
+
+        @include mq($from: desktop) {
+            min-height: 390px;
+        }
+    }
 }
 
 .fc-container--thrasher {
