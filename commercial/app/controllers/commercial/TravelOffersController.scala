@@ -28,3 +28,4 @@ class TravelOffersController extends Controller with implicits.Requests {
     }
   }
 }
+object TravelOffersController extends TravelOffersController

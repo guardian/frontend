@@ -56,3 +56,5 @@ class PaidContentCardController extends Controller with ExecutionContexts with i
   def cardHtml = renderCard(htmlFormat)
   def cardJson = renderCard(jsonFormat)
 }
+
+object PaidContentCardController extends PaidContentCardController
