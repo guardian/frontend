@@ -1,4 +1,3 @@
-/*eslint no-console: "error"*/
 define([
     'raven'
 ], function (raven) {
@@ -8,6 +7,8 @@ define([
     function init() {
 
         commercialInitTime = new Date().getTime();
+
+        /*eslint no-console: "error"*/
         console.log('commercial baseline ' + commercialInitTime);
     }
 
@@ -41,6 +42,7 @@ define([
                     adTimings[slotId][timingAttr] = new Date().getTime();
 
                     if (slotId === 'dfp-ad--inline1' && timingAttr) {
+                        /*eslint no-console: "error"*/
                         console.log('olde report: ' + timingAttr + '  ' + (adTimings[slotId][timingAttr] - commercialInitTime) );
                     }
                 }
@@ -99,6 +101,7 @@ define([
     }
 
     function advertCheckpoint(message, timer){
+        /*eslint no-console: "error"*/
         console.log('new report: ', message, ' : ', timer - commercialInitTime);
     }
 
