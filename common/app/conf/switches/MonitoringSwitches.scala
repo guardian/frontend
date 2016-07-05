@@ -31,8 +31,8 @@ trait MonitoringSwitches {
     "google-analytics",
     "If this switch is on, then Google Analytics is enabled",
     owners = Seq(Owner.withGithub("gklopper")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = false
   )
 

@@ -1,5 +1,4 @@
 @(page: model.Page)
-@import implicits.Strings.string2encodings
 @import views.support.GoogleAnalyticsAccount
 @import conf.switches.Switches.GoogleAnalyticsSwitch
 
@@ -17,9 +16,7 @@
         @***************************************************************************************
         * Code that is customised by us                                                        *
         ***************************************************************************************@
-        ga('create', '@GoogleAnalyticsAccount.account', 'auto', {
-            'sampleRate': @GoogleAnalyticsAccount.sampleRate
-        });
+        ga('create', '@GoogleAnalyticsAccount.account', 'auto');
 
         ga('set', 'forceSSL', true);
 
