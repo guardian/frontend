@@ -41,3 +41,5 @@ class SoulmatesController extends Controller with implicits.Requests {
     result(groupName, views.html.soulmates.soulmatesTest(_, _, _))
   }
 }
+
+object SoulmatesController extends SoulmatesController

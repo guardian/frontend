@@ -33,3 +33,5 @@ class JobsController extends Controller with implicits.Requests {
     }
   }
 }
+
+object JobsController extends JobsController

@@ -73,3 +73,5 @@ class BookOffersController
     }
   }
 }
+
+object BookOffersController extends BookOffersController

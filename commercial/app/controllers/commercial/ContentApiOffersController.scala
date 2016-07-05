@@ -114,3 +114,5 @@ class ContentApiOffersController extends Controller with ExecutionContexts with 
   def itemHtml = renderItems(htmlFormat, isMulti = false)
   def itemJson = renderItems(jsonFormat, isMulti = false)
 }
+
+object ContentApiOffersController extends ContentApiOffersController

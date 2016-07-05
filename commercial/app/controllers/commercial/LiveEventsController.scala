@@ -33,3 +33,5 @@ class LiveEventsController
     }
   }
 }
+
+object LiveEventsController extends LiveEventsController
