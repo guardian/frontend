@@ -9,8 +9,7 @@ define([
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
-    'text!common/views/commercial/badge.html',
-    'lodash/collections/map'
+    'text!common/views/commercial/badge.html'
 ], function (
     bonzo,
     qwery,
@@ -22,8 +21,7 @@ define([
     addSlot,
     createSlot,
     commercialFeatures,
-    badgeTpl,
-    map
+    badgeTpl
 ) {
     var badgesConfig = {
         sponsoredfeatures: {
@@ -42,6 +40,40 @@ define([
             namePrefix: 'fo'
         }
     };
+
+    return {
+
+        init: init,
+
+        // add a badge to a container (if appropriate)
+        add: function (container) {
+            if (container) {
+                container = container instanceof Element ? container : container[0];
+
+                if (bonzo(container).hasClass('js-sponsored-container')) {
+                    return processContainer(container).then(addSlot);
+                }
+            }
+        },
+
+        // for testing
+        reset: function () {
+            for (var type in badgesConfig) {
+                badgesConfig[type].count = 0;
+            }
+        }
+    };
+
+    function init() {
+        if (!commercialFeatures.badges) {
+            return false;
+        }
+
+        return Promise.all(qwery('.js-sponsored-front').map(processFront)
+            .concat(qwery('.js-sponsored-container').map(processContainer))
+            .concat(qwery('.js-sponsored-card').map(processCard))
+        );
+    }
 
     function addPreBadge(adSlot, header, sponsor) {
         if (sponsor) {
@@ -82,17 +114,6 @@ define([
         });
     }
 
-    function init() {
-        if (!commercialFeatures.badges) {
-            return false;
-        }
-
-        return Promise.all(qwery('.js-sponsored-front').map(processFront)
-            .concat(qwery('.js-sponsored-container').map(processContainer))
-            .concat(qwery('.js-sponsored-card').map(processCard))
-        );
-    }
-
     function processFront(front) {
         return processItem('.js-container__header', qwery('.fc-container', front)[0], front);
     }
@@ -125,27 +146,4 @@ define([
             );
         }
     }
-
-    return {
-
-        init: init,
-
-        // add a badge to a container (if appropriate)
-        add: function (container) {
-            if (container) {
-                container = container instanceof Element ? container : container[0];
-
-                if (bonzo(container).hasClass('js-sponsored-container')) {
-                    return processContainer(container).then(addSlot);
-                }
-            }
-        },
-
-        // for testing
-        reset: function () {
-            for (var type in badgesConfig) {
-                badgesConfig[type].count = 0;
-            }
-        }
-    };
 });
