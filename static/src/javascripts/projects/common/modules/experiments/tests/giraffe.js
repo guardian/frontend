@@ -4,7 +4,7 @@ define([
     'text!common/views/giraffe-message.html',
     'common/views/svg',
     'inlineSvg!svgs/icon/arrow-right',
-    'common/utils/fastdom-promise',
+    'common/utils/fastdom-promise'
 ], function ($,template,giraffeMessage, svg, arrowRight, fastdom) {
     return function () {
 
