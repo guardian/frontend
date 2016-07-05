@@ -28,11 +28,11 @@ define([
     describe('Create Ad Slot', function () {
 
         var injector = new Injector(),
-            createAdSlot, config;
+            createSlot, config;
 
         beforeEach(function (done) {
-            injector.require(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function () {
-                createAdSlot = arguments[0];
+            injector.require(['common/modules/commercial/dfp/create-slot', 'common/utils/config'], function () {
+                createSlot = arguments[0];
                 config = arguments[1];
 
                 config.page = {
@@ -43,7 +43,7 @@ define([
         });
 
         it('should exist', function () {
-            expect(createAdSlot).toBeDefined();
+            expect(createSlot).toBeDefined();
         });
 
         [
@@ -99,21 +99,21 @@ define([
             }
         ].forEach(function (expectation) {
             it('should create "' + expectation.name + '" ad slot', function () {
-                var adSlot = createAdSlot(expectation.name, expectation.type);
+                var adSlot = createSlot(expectation.name, expectation.type);
 
                 expect(adSlot.outerHTML).toBe(expectation.html.replace(/\n/g, '').replace(/\s+/g, ' '));
             });
         });
 
         it('should create "inline1" ad slot for inline-extra slots', function () {
-                var adSlot = createAdSlot('inline-extra', 'inline');
+                var adSlot = createSlot('inline-extra', 'inline');
 
                 expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
             });
 
         it('should accept multiple types', function () {
             var types  = ['paid-for-badge', 'paid-for-badge--container'],
-                adSlot = createAdSlot('adbadge', ['paid-for-badge', 'paid-for-badge--container']);
+                adSlot = createSlot('adbadge', ['paid-for-badge', 'paid-for-badge--container']);
 
             types.forEach(function (type) {
                 expect(bonzo(adSlot).hasClass('ad-slot--' + type)).toBeTruthy();
