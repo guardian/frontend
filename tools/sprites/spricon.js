@@ -5,190 +5,174 @@
  *
  */
 
-var fs         = require('fs'),
-    Q          = require('q'),
-    phantom    = require('phantom'),
-    btoa       = require('btoa');
-    jf         = require('jsonfile'),
-    handlebars = require('handlebars'),
-    SVGO       = require('svgo'),
-    mkdirp     = require('mkdirp'),
-    svgo       = new SVGO(),
-    svgCss     = [],
-    pngCss     = [],
-    jfDefer    = Q.defer(),
-    configFile = process.argv[2];
+const fs = require('fs');
+const path = require('path');
+const glob = require("glob");
+const phantom = require('phantom');
+const btoa = require('btoa');
+const SVGO = require('svgo');
+const mkdirp = require('mkdirp');
+const svgo = new SVGO();
 
-console.info('Running Spricon with ' + configFile);
+const configs = glob.sync('./*.json');
 
-jf.readFile(configFile, function (err, json) {
-    jfDefer.resolve(json);
+/**
+ * this is the meat of what happens:
+ */
+
+phantom.create().then(ph => {
+    const sprites = configs.map(configPath => {
+        console.info(`Running Spricon with ${configPath}`);
+
+        const config = require(configPath);
+        const imagePaths = glob.sync(`${config.src}/*.svg`);
+
+        return makeDest(config)
+            .then(getImages.bind(null, imagePaths))
+            .then(sortImages)
+            .then(files => generateSVGSass(config, files))
+            .then(files => generatePNGSass(config, files, ph))
+            .then(page => generatePNGSprite(config, page))
+            .catch(e => console.log(e));
+    });
+    Promise.all(sprites).then(() => {
+        ph.exit();
+    });
+})
+
+/**
+ * these are the individual functions used above...
+ */
+
+const makeDest = config => new Promise((resolve, reject) => {
+    fs.exists(config.cssDest, (exists) => {
+        if (exists) {
+            resolve();
+        } else {
+            mkdirp(config.cssDest, err => err ? reject(err) : resolve());
+        }
+    });
 });
 
-jfDefer.promise.then(function (config) {
-    var cssDestDefer = Q.defer();
-
-    // create output folder
-    if (!fs.existsSync(config.cssDest)) {
-        mkdirp(config.cssDest, function (error) {
-            if (error) {
-                console.error("Error creating directories: " + cssSvgOutput);
-                console.error("Error: " + error);
-            }
-            cssDestDefer.resolve();
-        });
-    } else {
-        cssDestDefer.resolve();
-    }
-
-    cssDestDefer.promise.then(function () {
-        phantom.create(function (ph) {
-            ph.createPage(function (sprite) {
-                sprite.set('viewportSize', { width: 600, height: 1 });
-                sprite.set('content', '<html><body id="sprite" style="margin: 0" /></html>');
-
-                fs.readdir(config.src, function (err, files) {
-                    Q.all(
-                        files
-                            .filter(function (file) {
-                                return file.match(/.svg$/i);
-                            })
-                            .map(function (file) {
-                                var deferred = Q.defer();
-
-                                fs.readFile(config.src + file, { encoding: 'utf-8' }, function (err, data) {
-                                    svgo.optimize(data, function (result) {
-                                        deferred.resolve({
-                                            name:       file,
-                                            svgoResult: result
-                                        });
-                                    });
-                                });
-
-                                return deferred.promise;
-                            })
-                    ).then(function (images) {
-                        return images
-                            .sort(function (a, b) {
-                                var aInfo = a.svgoResult.info,
-                                    bInfo = b.svgoResult.info;
-
-                                // order by height, then width, then name
-                                if (aInfo.height !== bInfo.height) {
-                                    return aInfo.height - bInfo.height;
-                                } else if (aInfo.width !== bInfo.width) {
-                                    return bInfo.width  - aInfo.width;
-                                } else {
-                                    return a.name.localeCompare(b.name);
-                                }
-                            })
-                            .map(function (image) {
-                                var deferred = Q.defer(),
-                                    file = image.name,
-                                    result = image.svgoResult,
-                                    iconName = file.replace(/\.svg$/i, ''),
-                                    iconData = result.data,
-                                    iconDataBase64 = btoa(iconData);
-
-                                // create svg css rule
-                                svgCss.push(
-                                    handlebars.compile(
-                                        '    %svg-i-{{name}},\n' +
-                                        '    .svg-i-{{name}} {\n' +
-                                        '        background-image: url(data:image/svg+xml;base64,{{data}});\n' +
-                                        '        background-position: 0 0;\n' +
-                                        '    }\n' +
-                                        '    .svg .i-{{name}} {\n' +
-                                        '        @extend %svg-i-{{name}} !optional;\n' +
-                                        '    }'
-                                    )({name: iconName, data: iconDataBase64})
-                                );
-                                sprite.evaluate(
-                                    function (iconData) {
-                                        var iconContainer = document.createElement('div');
-                                        iconContainer.style.display = 'block';
-                                        iconContainer.style.float = 'left';
-                                        iconContainer.style.margin = '0 1px 1px 0'; // prevents sprite icons from leaking
-                                        iconContainer.innerHTML = iconData;
-                                        document.getElementById('sprite').appendChild(iconContainer);
-                                        // get position/dimension of the icon
-                                        var icon = iconContainer.querySelector('svg');
-                                        return {
-                                            x: iconContainer.offsetLeft,
-                                            y: iconContainer.offsetTop,
-                                            w: Math.round(icon.getAttribute('width')),
-                                            h: Math.round(icon.getAttribute('height'))
-                                        };
-                                    },
-                                    function (iconProps) {
-                                        // create png css rule
-                                        pngCss.push(
-                                            handlebars.compile(
-                                                '%i-{{name}},\n' +
-                                                '.i-{{name}} {\n' +
-                                                '    background-position: -{{x}}px -{{y}}px;\n' +
-                                                '    width: {{width}}px;\n' +
-                                                '    height: {{height}}px;\n' +
-                                                '}'
-                                            )({
-                                                name: iconName,
-                                                x: iconProps.x,
-                                                y: iconProps.y,
-                                                width: iconProps.w,
-                                                height: iconProps.h
-                                            })
-                                        );
-                                        deferred.resolve();
-                                    },
-                                    iconData
-                                );
-
-                                return deferred.promise;
-                            });
-                    }).spread(function () {
-                        var svgCssDefer = Q.defer(),
-                            pngCssDefer = Q.defer(),
-                            spriteDefer = Q.defer();
-
-                        // create svg css file
-                        fs.writeFile(
-                            config.cssDest + config.cssSvgName, '@if ($svg-support) {\n' + svgCss.join('\n\n') + '\n}\n',
-                            function () {
-                                svgCssDefer.resolve();
-                            }
-                        );
-                        // create png css file
-                        fs.writeFile(
-                            config.cssDest + config.cssPngName, pngCss.join('\n\n') + '\n',
-                            function () {
-                                pngCssDefer.resolve();
-                            }
-                        );
-                        // shrink sprite
-                        sprite.evaluate(
-                            function () {
-                                var container = document.getElementById('sprite');
-                                return {
-                                    width: container.offsetWidth,
-                                    height: container.offsetHeight
-                                };
-                            },
-                            function (size) {
-                                sprite.set('viewportSize', size);
-                                sprite.render(config.imgDest + 'sprite.png', function () {
-                                    spriteDefer.resolve();
-                                });
-                            }
-                        );
-                        Q.all([svgCssDefer.promise, pngCssDefer.promise, spriteDefer.promise]).then(function () {
-                            ph.exit();
-                        });
-
+const getImages = paths => Promise.all(
+    paths.map(file =>
+        new Promise((resolve, reject) => {
+            fs.readFile(file, { encoding: 'utf-8' }, (err, data) => {
+                if (err) { reject(err) };
+                svgo.optimize(data, result => {
+                    resolve({
+                        name: path.parse(file).name,
+                        data: result
                     });
                 });
-
             });
-        }, { binary: '../../node_modules/phantomjs/bin/phantomjs' });
-    });
+        })
+    )
+);
 
+// order by height, then width, then name
+const sortImages = images => images.sort((a, b) => {
+    const aInfo = a.data.info;
+    const bInfo = b.data.info;
+    if (aInfo.height !== bInfo.height) {
+        return aInfo.height - bInfo.height;
+    } else if (aInfo.width !== bInfo.width) {
+        return bInfo.width  - aInfo.width;
+    } else {
+        return a.name.localeCompare(b.name);
+    }
 });
+
+const generateSVGSass = (config, files) => {
+    const SVGSass = files.map(file => {
+        const {name, data: fileData} = file;
+        return `
+                %svg-i-${name},
+                .svg-i-${name} {
+                    background-image: url(data:image/svg+xml;base64,${btoa(fileData.data)});
+                    background-position: 0 0;
+                }
+                .svg .i-${name} {
+                    @extend %svg-i-${name} !optional;
+                }
+        `.replace(/                /g, '');
+    });
+    // create svg scss file
+    return new Promise((resolve, reject) => {
+        fs.writeFile(
+            config.cssDest + config.cssSvgName, `
+                @if ($svg-support) {
+                    ${SVGSass.join('').trim()}
+                }
+            `.trim().replace(/                /g, ''),
+            err => err ? reject(err) : resolve(files)
+        );
+    });
+}
+
+const generatePNGSass = (config, files, ph) => {
+    return ph.createPage()
+        .then(page => {
+            page.property('viewportSize', { width: 600, height: 1 });
+            page.property('content', '<html><body id="sprite" style="margin: 0" /></html>');
+            return page;
+        })
+        .then(page => {
+            return Promise.all(files.map(file => {
+                const {name, data: fileData} = file;
+                return page.evaluate(function (data) {
+                    var iconContainer = document.createElement('div'), icon;
+                    iconContainer.style.display = 'block';
+                    iconContainer.style.float = 'left';
+                    iconContainer.style.margin = '0 1px 1px 0'; // prevents sprite icons from leaking
+                    iconContainer.innerHTML = data;
+                    document.getElementById('sprite').appendChild(iconContainer);
+                    icon = iconContainer.querySelector('svg');
+                    return {
+                        x: iconContainer.offsetLeft,
+                        y: iconContainer.offsetTop,
+                        width: Math.round(icon.getAttribute('width')),
+                        height: Math.round(icon.getAttribute('height'))
+                    };
+                }, fileData.data)
+                    .then(props => {
+                        // create png css rule
+                        const {x, y, width, height} = props;
+                        return `
+                            %i-${name},
+                            .i-${name} {
+                                background-position: -${x}px -${y}px;
+                                width: ${width}px;
+                                height: ${height}px;
+                            }
+                        `.replace(/                            /g, '');
+                    });
+            }))
+            // create PNG scss file
+            .then(scss => {
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(
+                        config.cssDest + config.cssPngName, scss.join('').trim(),
+                        err => err ? reject(err) : resolve(page)
+                    );
+                });
+            });
+        })
+}
+
+const generatePNGSprite = (config, page) => {
+    return page.evaluate(
+        function () {
+            var container = document.getElementById('sprite');
+            return {
+                width: container.offsetWidth,
+                height: container.offsetHeight
+            };
+        }
+    ).then(size => {
+        page.property('viewportSize', size);
+        // create PNG sprite file
+        return page.render(`${config.imgDest}sprite.png`);
+    });
+};
+
