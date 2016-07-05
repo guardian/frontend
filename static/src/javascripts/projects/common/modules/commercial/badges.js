@@ -77,13 +77,13 @@ define([
 
     function addPreBadge(adSlot, header, sponsor) {
         if (sponsor) {
-            adSlot.insertAdjacentHTML('beforeend', template(
+            adSlot.innerHTML = template(
                 badgeTpl,
                 {
                     header:  header,
                     sponsor: sponsor
                 }
-            ));
+            );
         }
     }
 
