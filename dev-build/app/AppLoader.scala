@@ -25,7 +25,7 @@ import play.api.routing.Router
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.MatchesController
-import services.ConfigAgentLifecycle
+import services._
 import weather.controllers.{WeatherController, LocationsController}
 
 class AppLoader extends FrontendApplicationLoader {
@@ -44,7 +44,8 @@ trait Controllers
   extends AdminControllers
   with AdminJobsControllers
   with ApplicationsControllers
-  with ArticleControllers {
+  with ArticleControllers
+  with DiagnosticsControllers {
   self: BuiltInComponents with MostPopularComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
@@ -62,7 +63,6 @@ trait Controllers
   lazy val ctaController = wire[CtaController]
   lazy val dedupedController = wire[DedupedController]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val diagnosticsController = wire[DiagnosticsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val faciaController = wire[FaciaControllerImpl]
   lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
@@ -91,6 +91,7 @@ trait Controllers
   lazy val seriesController = wire[SeriesController]
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val stocksController = wire[StocksController]
+  lazy val surveyPageController = wire[SurveyPageController]
   lazy val techFeedbackController = wire[TechFeedbackController]
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val travelOffersController = wire[TravelOffersController]

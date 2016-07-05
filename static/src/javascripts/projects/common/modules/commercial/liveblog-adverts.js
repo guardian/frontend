@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/article/space-filler',
     'Promise'
 ], function (
@@ -15,7 +15,7 @@ define([
     mediator,
     addSlot,
     commercialFeatures,
-    createAdSlot,
+    createSlot,
     spaceFiller,
     Promise
 ) {
@@ -64,7 +64,7 @@ define([
 
     function insertAds(slots) {
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-            var $adSlot = bonzo(createAdSlot('inline1' + slotCounter++, 'liveblog-inline block'));
+            var $adSlot = bonzo(createSlot('inline1' + slotCounter++, 'liveblog-inline block'));
             $adSlot.insertAfter(slots[i]);
             addSlot($adSlot);
         }

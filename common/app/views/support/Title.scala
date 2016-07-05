@@ -1,7 +1,7 @@
 package views.support
 
 import common.Localisation
-import common.commercial.HostedPage
+import common.commercial.hosted.HostedPage
 import model._
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html

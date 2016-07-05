@@ -1,0 +1,32 @@
+@(surveyPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+
+    @surveyMain(surveyPage) {
+        <div class="illustration-container">
+
+        @fragments.inlineSvg("survey", "illustration", Seq("illustration-mobile"))
+
+        </div>
+
+        <div class="content">
+
+            <div class="wrapper">
+
+                <div class="wrapper-inner">
+
+                    @fragments.inlineSvg("survey_clipboard", "illustration")
+
+                    <h2>Thank you</h2>
+
+                    <p>Got two minutes spare? We would like to hear your thoughts on this feature while we are still finalising it.</p>
+
+                    <p><a href="/survey/emaildigest" class="button button--primary button--medium" data-link-name="take part in survey">
+                        Tell us your thoughts</a></p>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
