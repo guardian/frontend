@@ -5,10 +5,6 @@ define([
 ) {
     var imrWorldwideUrl = '//secure-au.imrworldwide.com/v60.js';
 
-    function load() {
-        return require(['js!' + imrWorldwideUrl], onLoad);
-    }
-
     function onLoad() {
         var pvar = { cid: 'au-guardian', content: '0', server: 'secure-au' };
         // nol_t is a global function set by the imrworldwide library
@@ -20,8 +16,7 @@ define([
     return {
         shouldRun: config.switches.imrWorldwide,
         url: imrWorldwideUrl,
-        onLoad: onLoad,
-        load: load
+        onLoad: onLoad
     };
 
 });

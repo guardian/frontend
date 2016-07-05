@@ -6,10 +6,6 @@ define([
 
     var remarketingUrl = '//www.googleadservices.com/pagead/conversion_async.js';
 
-    function load() {
-        return require(['js!' + remarketingUrl], onLoad);
-    }
-
     function onLoad() {
         window.google_trackConversion({
             google_conversion_id: 971225648,
@@ -21,7 +17,6 @@ define([
     return {
         shouldRun: config.switches.remarketing,
         url: remarketingUrl,
-        load: load,
         onLoad: onLoad
     };
 

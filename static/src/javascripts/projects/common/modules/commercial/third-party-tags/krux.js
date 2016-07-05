@@ -9,10 +9,6 @@ define([
 ) {
     var kruxUrl = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
 
-    function load() {
-        return require(['js!' + kruxUrl]);
-    }
-
     function retrieve(n) {
         var k = 'kx' + n;
 
@@ -26,7 +22,6 @@ define([
     return {
         shouldRun: config.switches.krux,
         url: kruxUrl,
-        load: load,
         getSegments: getSegments
     };
 

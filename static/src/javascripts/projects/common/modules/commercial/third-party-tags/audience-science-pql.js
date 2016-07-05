@@ -27,10 +27,6 @@ define([
         return gatewayUrl + '?' + query;
     }
 
-    function load() {
-        return require(['js!' + audienceSciencePqlUrl], onLoad);
-    }
-
     function onLoad() {
         var asiPlacements = window.asiPlacements;
         var segments = storage.local.get(storageKey) || {};
@@ -63,7 +59,9 @@ define([
     return {
         shouldRun: config.switches.audienceScienceGateway,
         url: audienceSciencePqlUrl,
-        load: load,
+        reset: function () {
+            section = sectionPlacements[config.page.section] ? config.page.section : 'default';
+        },
         onLoad: onLoad,
         getSegments: getSegments
     };
