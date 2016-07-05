@@ -69,13 +69,6 @@ define([
             return false;
         }
 
-        switch (config.page.edition.toLowerCase()) {
-            case 'uk':
-                audienceSciencePql.load();
-                audienceScienceGateway.load();
-                break;
-        }
-
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
         loadExternalContentWidget();
 
@@ -84,10 +77,14 @@ define([
     }
 
     function loadOther() {
+        if (config.page.edition === 'UK') {
+            audienceSciencePql.load();
+            audienceScienceGateway.load();
+        }
         imrWorldwide.load();
         remarketing.load();
 
-        if(!config.page.isFront){
+        if (!config.page.isFront){
             krux.load();
         }
     }
