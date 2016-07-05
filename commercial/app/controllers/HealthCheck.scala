@@ -2,7 +2,7 @@ package controllers
 
 import conf.AnyGoodCachedHealthCheck
 
-object HealthCheck extends AnyGoodCachedHealthCheck(
+class HealthCheck extends AnyGoodCachedHealthCheck(
   9005,
   "/commercial/soulmates/mixed.json",
   "/commercial/masterclasses.json",
