@@ -140,10 +140,6 @@
     height: 100%;
 }
 
-.hosted-gallery-page + footer {
-    display: none;
-}
-
 .hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
     .survey-text__header {
         background-color: $omgbColor;

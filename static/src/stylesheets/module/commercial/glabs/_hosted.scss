@@ -52,6 +52,10 @@ $omgbColor: #e41f13;
     }
 }
 
+.hosted-page + footer {
+    display: none;
+}
+
 .hosted__glogo {
     display: inline-block;
     padding: 4px $gs-gutter / 2;
