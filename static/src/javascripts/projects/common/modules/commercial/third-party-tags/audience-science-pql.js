@@ -39,7 +39,11 @@ define([
     function getSegments() {
         var segments = {};
         var storedSegments = storage.local.get(storageKey);
-        if (config.switches.audienceScienceGateway && storedSegments) {
+        if (
+            config.switches.audienceScienceGateway &&
+            storedSegments &&
+            storedSegments[section]
+        ) {
             segments = Object.keys(storedSegments[section])
                 .filter(function (placement) {
                     //keyword `default` written in dot notation throws an exception IE8
