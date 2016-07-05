@@ -2,6 +2,8 @@
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 
+@cssClass(owner: String) = {hosted-tone--@{owner.toLowerCase.replaceAll("\\s+", "-")}}
+
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-video-page", page.campaign.logo.url)
     <div class="l-side-margins hosted__side hosted-video-page">
@@ -25,7 +27,7 @@
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.video.title}</h1>
+                            <h1 class="hosted__heading @cssClass(page.campaign.owner)">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
@@ -46,7 +48,7 @@
                         </div>
                         <div class="hosted-next-autoplay__video">
                             <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone--@{page.campaign.owner.toLowerCase}">Continue watching</div>
+                                <div class="hosted-next-autoplay__continue @cssClass(page.campaign.owner)">Continue watching</div>
                                 <h2 class="hosted-next-autoplay__subheader">@{nextPage.video.title}</h2>
                             </div>
                             <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.video.title}">
@@ -111,7 +113,7 @@
             </header>
             <div class="adverts__body">
                 <div class="hosted__meta">
-                    <h1 class="hosted__heading hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.video.title}</h1>
+                    <h1 class="hosted__heading @cssClass(page.campaign.owner)">@{page.video.title}</h1>
                 </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@{page.standfirst}</p>
@@ -126,7 +128,7 @@
             <div class="hosted__next-video">
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                    <h2 class="hosted__next-video--client-name hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.campaign.owner}</h2>
+                    <h2 class="hosted__next-video--client-name @cssClass(page.campaign.owner)">@{page.campaign.owner}</h2>
                 </div>
                 <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.video.title}">
                     <img class="hosted__next-video-thumb" src="@{nextPage.video.posterUrl}" alt="Next Video: @{nextPage.video.title}">
