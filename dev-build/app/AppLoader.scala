@@ -47,7 +47,8 @@ trait Controllers
   with ArticleControllers
   with CommercialControllers
   with DiagnosticsControllers
-  with DiscussionControllers {
+  with DiscussionControllers
+  with FaciaControllers {
   self: BuiltInComponents with MostPopularComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
@@ -57,10 +58,8 @@ trait Controllers
   lazy val changeEditionController = wire[ChangeEditionController]
   lazy val competitionListController = wire[CompetitionListController]
   lazy val cricketMatchController = wire[CricketMatchController]
-  lazy val dedupedController = wire[DedupedController]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val faciaController = wire[FaciaControllerImpl]
   lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
   lazy val fixturesController = wire[FixturesController]
   lazy val leagueTableController = wire[LeagueTableController]
