@@ -1,9 +1,9 @@
 package controllers
 
-import conf.AllGoodCachedHealthCheck
+import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
 
 object HealthCheck extends AllGoodCachedHealthCheck(
   9011,
-  "/top-stories.json",
-  "/most-read/society.json"
+  ExpiringSingleHealthCheck("/top-stories.json"),
+  ExpiringSingleHealthCheck("/most-read/society.json")
 )

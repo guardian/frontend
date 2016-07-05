@@ -76,10 +76,9 @@ define([
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
-            return Promise.all([
-                renderCreative(creativeConfig),
-                hideIframe()
-            ]);
+            return hideIframe().then(function () {
+                return renderCreative(creativeConfig);
+            });
         } else {
             return Promise.resolve(true);
         }

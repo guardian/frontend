@@ -2,6 +2,7 @@ define([
     'bonzo',
     'qwery',
     'raven',
+    'Promise',
     'common/utils/fastdom-promise',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
@@ -12,6 +13,7 @@ define([
     bonzo,
     qwery,
     raven,
+    Promise,
     fastdom,
     adSizes,
     stickyMpu,
@@ -47,13 +49,16 @@ define([
      * Trigger sticky scrolling for MPUs in the right-hand article column
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
-        if (advert.node.classList.contains('ad-slot--right')) {
+        var $node = bonzo(advert.node);
+        if ($node.hasClass('ad-slot--right')) {
             var mobileAdSizes = advert.sizes.mobile;
             if (mobileAdSizes && mobileAdSizes.some(function (size) { return size[0] === 300 && size[1] === 251; })) {
-                stickyMpu(bonzo(advert.node));
+                stickyMpu($node);
             }
-        } else if (advert.node.classList.contains('ad-slot--facebook')) {
-            advert.node.classList.add('ad-slot--fluid');
+        } else if ($node.hasClass('ad-slot--facebook')) {
+            fastdom.write(function () {
+                $node.addClass('ad-slot--fluid');
+            });
         }
     };
 
@@ -63,12 +68,14 @@ define([
      */
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
-            advert.node.classList.add('u-h');
-            var parent = advert.node.parentNode;
-            // if in a slice, add the 'no mpu' class
-            if (parent.classList.contains('js-fc-slice-mpu-candidate')) {
-                parent.classList.add('fc-slice__item--no-mpu');
-            }
+            var $parent = bonzo(advert.node.parentNode);
+            fastdom.write(function () {
+                bonzo(advert.node).addClass('u-h');
+                // if in a slice, add the 'no mpu' class
+                if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
+                    $parent.addClass('fc-slice__item--no-mpu');
+                }
+            });
         }
     };
 
@@ -101,9 +108,10 @@ define([
 
     function isFluid250(className) {
         return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
+            var $node = bonzo(advert.node);
+            if ($node.hasClass(className)) {
                 fastdom.write(function () {
-                    advert.node.classList.add('ad-slot__fluid250');
+                    $node.addClass('ad-slot__fluid250');
                 });
             }
         };
@@ -111,9 +119,10 @@ define([
 
     function isFluid(className) {
         return function (_, advert) {
-            if (advert.node.classList.contains(className)) {
+            var $node = bonzo(advert.node);
+            if ($node.hasClass(className)) {
                 fastdom.write(function () {
-                    advert.node.classList.add('ad-slot--fluid');
+                    $node.addClass('ad-slot--fluid');
                 });
             }
         };
@@ -128,14 +137,25 @@ define([
         removePlaceholders(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
-            renderAdvertLabel(advert.node);
+            return renderAdvertLabel(advert.node)
+                .then(callSizeCallback)
+                .then(addRenderedClass)
+                .then(function () {
+                    return isRendered;
+                });
 
-            var size = slotRenderEvent.size.join(',');
-            if (sizeCallbacks[size]) {
-                sizeCallbacks[size](slotRenderEvent, advert);
+            function callSizeCallback() {
+                var size = slotRenderEvent.size.join(',');
+                if (sizeCallbacks[size]) {
+                    sizeCallbacks[size](slotRenderEvent, advert);
+                }
             }
 
-            return isRendered;
+            function addRenderedClass() {
+                return isRendered ? fastdom.write(function () {
+                    bonzo(advert.node).addClass('ad-slot--rendered');
+                }) : Promise.resolve();
+            }
         }).catch(raven.captureException);
     }
 
