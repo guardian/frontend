@@ -85,56 +85,55 @@ define([
     }
 
     function init() {
-        var sponsoredFrontPromise,
-            sponsoredContainersPromise,
-            sponsoredCardsPromise;
-
         if (!commercialFeatures.badges) {
             return false;
         }
 
-        sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {
-            var $front = bonzo(front);
+        return Promise.all(qwery('.js-sponsored-front').map(processFront)
+            .concat(qwery('.js-sponsored-container').map(processContainer))
+            .concat(qwery('.js-sponsored-card').map(processCard))
+        );
+    }
+
+    function processFront(front) {
+        var $front = bonzo(front);
+
+        return renderAd(
+            qwery('.fc-container', front)[0],
+            $front.data('sponsorship'),
+            {
+                sponsor: $front.data('sponsor')
+            },
+            '.js-container__header'
+        );
+    }
+
+    function processContainer(container) {
+        return processItem('.js-container__header', container);
+    }
+
+    function processCard(card) {
+        return processItem('.js-card__header', card);
+    }
+
+    function processItem(fallback, item) {
+        if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
+            var $item = bonzo(item);
+
+            if (!item.hasAttribute('data-sponsorship')) {
+                return;
+            }
 
             return renderAd(
-                qwery('.fc-container', front)[0],
-                $front.data('sponsorship'),
+                item,
+                $item.data('sponsorship'),
                 {
-                    sponsor: $front.data('sponsor')
+                    sponsor:  $item.data('sponsor'),
+                    series:   $item.data('series'),
+                    keywords: $item.data('keywords')
                 },
-                '.js-container__header'
+                fallback
             );
-        }));
-
-        sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-            return Promise.all($('.js-sponsored-container').map(processItem.bind(undefined, '.js-container__header')));
-        });
-
-        sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
-            return Promise.all($('.js-sponsored-card').map(processItem.bind(undefined, '.js-card__header')));
-        });
-
-        return sponsoredCardsPromise;
-
-        function processItem(fallback, item) {
-            if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
-                var $item = bonzo(item);
-
-                if (!item.hasAttribute('data-sponsorship')) {
-                    return;
-                }
-
-                return renderAd(
-                    item,
-                    $item.data('sponsorship'),
-                    {
-                        sponsor:  $item.data('sponsor'),
-                        series:   $item.data('series'),
-                        keywords: $item.data('keywords')
-                    },
-                    fallback
-                );
-            }
         }
     }
 
