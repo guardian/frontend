@@ -38,7 +38,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('createAdvert',  timer );
+            ophanTracking.advertCheckpoint('advertCreated',  timer );
         }
 
         return Object.seal(advert);
