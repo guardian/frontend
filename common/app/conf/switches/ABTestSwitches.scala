@@ -4,23 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABFrontsOnArticles2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-fronts-on-articles2",
-    "Injects fronts on articles for the test",
-    owners = Seq(Owner.withName("dotcom reach")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
   val ABLiveBlogChromeNotificationsInternal = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
@@ -30,7 +20,7 @@ trait ABTestSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
@@ -51,16 +41,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 25),
-    exposeClientSide = true
-  )
-
-  val ABNewUserAdvertsDisabled = Switch(
-    SwitchGroup.ABTests,
-    "ab-new-user-adverts-disabled",
-    "Enable adfree experience for 3 days for new users",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
     exposeClientSide = true
   )
 

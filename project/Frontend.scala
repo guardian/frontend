@@ -67,11 +67,17 @@ object Frontend extends Build with Prototypes {
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
+
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+  )
+
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
@@ -96,7 +102,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources
-    )
+    ),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(

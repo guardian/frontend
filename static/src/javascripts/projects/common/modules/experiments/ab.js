@@ -7,12 +7,10 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay'
 ], function (
@@ -24,23 +22,19 @@ define([
     mvtCookie,
     memoize,
     noop,
-    FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
-    NewUserAdvertsDisabled,
     JoinDiscussionAfterPoll,
     HostedAutoplay
 ) {
 
     var TESTS = [
-        new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
-        new NewUserAdvertsDisabled(),
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay()
     ];

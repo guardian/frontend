@@ -1,5 +1,6 @@
 package test
 
+import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.test._
 import play.api.test.Helpers._
@@ -12,36 +13,38 @@ import scala.collection.JavaConversions._
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
+  lazy val articleController = new ArticleController
+
   "Article Controller" should "200 when content type is article" in {
-    val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
+    val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     status(result) should be(200)
   }
 
   it should "200 when content type is live blog" in {
-    val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
+    val result = articleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)
   }
 
   it should "count in body links" in {
-    val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
+    val result = articleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     val body = contentAsString(result)
     body should include(""""inBodyInternalLinkCount":38""")
     body should include(""""inBodyExternalLinkCount":42""")
   }
 
   it should "200 when content type is sudoku" in {
-    val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
+    val result = articleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
     status(result) should be(200)
   }
 
   it should "not cache 404s" in {
-    val result = controllers.ArticleController.renderArticle("oops")(TestRequest())
+    val result = articleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
     header("Cache-Control", result).head should be ("no-cache")
   }
 
   it should "redirect for short urls" in {
-    val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
+    val result = articleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
@@ -50,14 +53,14 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.ArticleController.renderJson(articleUrl)(fakeRequest)
+    val result = articleController.renderJson(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "internal redirect unsupported content to classic" in {
-    val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
+    val result = articleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
@@ -69,7 +72,7 @@ import scala.collection.JavaConversions._
     val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=${lastUpdateBlock}")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
+    val result = articleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
