@@ -1,11 +1,13 @@
 define([
     'bonzo',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
+    Promise,
     $,
     config,
     createAdSlot,
@@ -15,11 +17,11 @@ define([
     function init() {
 
         if (config.page.hasHighMerchandisingTarget) {
-         return false;
+         return Promise.resolve();
         }
 
         if (!commercialFeatures.frontCommercialComponents) {
-            return false;
+            return Promise.resolve();
         }
 
         var containerIndex,

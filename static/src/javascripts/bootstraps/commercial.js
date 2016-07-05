@@ -17,7 +17,8 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/paid-containers'
+    'common/modules/commercial/paid-containers',
+    'common/modules/commercial/dfp/private/ophan-tracking'
 ], function (
     Promise,
     config,
@@ -37,10 +38,11 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    paidContainers
+    paidContainers,
+    ophanTracking
 ) {
     var modules = [
-        ['cm-dfp', dfpInit],
+        ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
@@ -63,8 +65,17 @@ define([
             var modulePromises = [];
 
             modules.forEach(function (pair) {
-                robust.catchErrorsAndLog(pair[0], function () {
-                    modulePromises.push(pair[1]());
+
+                var moduleName = pair[0],
+                    modulePromise = pair[1]();
+
+                modulePromise.then(function(){
+                    var timer = new Date().getTime();
+                    ophanTracking.advertCheckpoint(moduleName,  timer);
+                });
+
+                robust.catchErrorsAndLog(moduleName, function () {
+                    modulePromises.push(modulePromise);
                 });
             });
 
