@@ -94,7 +94,7 @@
 .hosted-gallery__cta-title-last {
     @include f-headlineSans;
     @include hosted-gallery-title;
-    margin: 0 0 15px 0;
+    margin: 0 0 15px;
     line-height: 32px;
 }
 
@@ -115,10 +115,10 @@
         right: 6px;
         height: 40px;
 
-         svg {
-             height: 36px;
-             width: 36px;
-         }
+        svg {
+            height: 36px;
+            width: 36px;
+        }
     }
 }
 

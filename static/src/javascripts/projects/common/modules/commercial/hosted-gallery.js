@@ -266,7 +266,6 @@ define([
                 var that = this;
                 this.swipeContainerWidth = this.$galleryEl.dim().width;
 
-                console.log('loadSurroundingImages', this.$ctaFloat);
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
                 this.$captions.each(function (caption, index) {
