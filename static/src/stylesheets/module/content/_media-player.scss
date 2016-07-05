@@ -119,11 +119,7 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba($media-mute, .6);
-            .gu-media-wrapper:hover &,
-            .gu-media__fallback:hover & {
-                background-color: $media-default;
-            }
+            background-color: $media-default;
         }
 
         &:after {
@@ -155,10 +151,6 @@ $ima-controls-height: 70px;
     .vjs-ad-loading & {
         display: none !important;
     }
-}
-
-.vjs-big-play-button--yellow .vjs-big-play-button .vjs-control-text:before {
-    background-color: $media-default;
 }
 
 .vjs-fullscreen-clickbox {
