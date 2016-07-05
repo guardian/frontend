@@ -42,7 +42,7 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [];
+        var clashingTests = [["Giraffe", "everyone"], ["Giraffe", "coffee"], ["Giraffe", "heritage"], ["Giraffe", "global"] ];
 
         return some(clashingTests, function(test) {
             return ab.isInVariant(test[0], test[1]);
