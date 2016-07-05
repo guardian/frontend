@@ -77,16 +77,15 @@ define([
     }
 
     function loadOther() {
-        if (config.page.edition === 'UK') {
-            audienceSciencePql.load();
-            audienceScienceGateway.load();
-        }
-        imrWorldwide.load();
-        remarketing.load();
+        var scripts = [
+            config.page.edition === 'UK' ? audienceSciencePql : null,
+            config.page.edition === 'UK' ? audienceScienceGateway : null,
+            imrWorldwide,
+            remarketing,
+            krux
+        ];
 
-        if (!config.page.isFront){
-            krux.load();
-        }
+        scripts.filter(function (_) { return _ && _.shouldRun; }).forEach(function (script) { script.load(); });
     }
 
     return {

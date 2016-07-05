@@ -8,9 +8,7 @@ define([
     storage
 ) {
     function load() {
-        if (config.switches.krux) {
-            return require(['js!' + '//cdn.krxd.net/controltag?confid=JVZiE3vn']);
-        }
+        return require(['js!' + '//cdn.krxd.net/controltag?confid=JVZiE3vn']);
     }
 
     function retrieve(n) {
@@ -24,6 +22,7 @@ define([
     }
 
     return {
+        shouldRun: config.switches.krux,
         load: load,
         getSegments: getSegments
     };

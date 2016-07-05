@@ -26,23 +26,21 @@ define([
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
         load = once(function () {
-            if (config.switches.audienceScienceGateway) {
-                var placements = sectionPlacements[section],
-                    query = urlUtils.constructQuery({
-                        placementIdList: placements.join(','),
-                        cb: new Date().getTime()
-                    }),
-                    url = [gatewayUrl, '?', query].join('');
+            var placements = sectionPlacements[section],
+                query = urlUtils.constructQuery({
+                    placementIdList: placements.join(','),
+                    cb: new Date().getTime()
+                }),
+                url = [gatewayUrl, '?', query].join('');
 
-                return require(['js!' + url], function () {
-                    var asiPlacements = window.asiPlacements;
-                    var segments = storage.local.get(storageKey) || {};
-                    // override the global value with our previously stored one
-                    window.asiPlacements = segments[section];
-                    segments[section] = asiPlacements;
-                    storage.local.set(storageKey, segments);
-                });
-            }
+            return require(['js!' + url], function () {
+                var asiPlacements = window.asiPlacements;
+                var segments = storage.local.get(storageKey) || {};
+                // override the global value with our previously stored one
+                window.asiPlacements = segments[section];
+                segments[section] = asiPlacements;
+                storage.local.set(storageKey, segments);
+            });
         }),
 
         getSegments = function () {
@@ -64,6 +62,7 @@ define([
     init();
 
     return {
+        shouldRun: config.switches.audienceScienceGateway,
         load: load,
         init: init,
         getSegments: getSegments
