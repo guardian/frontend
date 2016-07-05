@@ -16,6 +16,7 @@ define([
         if (commercialFeatures.dfpAdvertising) {
             loadAdvertising();
         }
+        return Promise.resolve();
     }
 
     function loadAdvertising() {

@@ -87,7 +87,7 @@ define([
                 sponsoredCardsPromise;
 
             if (!commercialFeatures.badges) {
-                return false;
+                return Promise.resolve();
             }
 
             sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {

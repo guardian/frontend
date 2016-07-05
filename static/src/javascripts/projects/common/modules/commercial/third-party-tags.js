@@ -66,7 +66,7 @@ define([
     function init() {
 
         if (!commercialFeatures.thirdPartyTags) {
-            return false;
+            return Promise.resolve();
         }
 
         switch (config.page.edition.toLowerCase()) {
@@ -80,7 +80,7 @@ define([
         loadExternalContentWidget();
 
         loadOther();
-        return Promise.resolve(null);
+        return Promise.resolve();
     }
 
     function loadOther() {

@@ -17,7 +17,7 @@ define([
     function init() {
 
         if (config.page.hasHighMerchandisingTarget) {
-         return Promise.resolve();
+            return Promise.resolve();
         }
 
         if (!commercialFeatures.frontCommercialComponents) {

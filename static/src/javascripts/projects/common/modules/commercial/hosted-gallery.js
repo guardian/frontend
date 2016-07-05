@@ -380,7 +380,7 @@ define([
     };
 
     function init() {
-        loadCssPromise.then(function () {
+        return loadCssPromise.then(function () {
             var gallery,
                 match,
                 galleryHash = window.location.hash,
