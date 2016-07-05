@@ -2,7 +2,7 @@ package controllers
 
 import conf.{AnyGoodCachedHealthCheck, ExpiringSingleHealthCheck}
 
-object HealthCheck extends AnyGoodCachedHealthCheck(
+class HealthCheck extends AnyGoodCachedHealthCheck(
   9005,
   ExpiringSingleHealthCheck("/commercial/soulmates/mixed.json"),
   ExpiringSingleHealthCheck("/commercial/masterclasses.json"),
