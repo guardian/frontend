@@ -1,6 +1,7 @@
 package model.commercial
 
 import com.ning.http.client.{Response => AHCResponse}
+import commercial.CommercialMetrics
 import common.Logging
 import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}

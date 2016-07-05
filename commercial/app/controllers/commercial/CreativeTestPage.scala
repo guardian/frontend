@@ -43,5 +43,3 @@ class CreativeTestPage extends Controller {
   }
 }
 
-object CreativeTestPage extends CreativeTestPage
-
