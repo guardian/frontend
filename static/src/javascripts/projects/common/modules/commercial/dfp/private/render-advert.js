@@ -56,7 +56,9 @@ define([
                 stickyMpu($node);
             }
         } else if ($node.hasClass('ad-slot--facebook')) {
-            $node.addClass('ad-slot--fluid');
+            fastdom.write(function () {
+                $node.addClass('ad-slot--fluid');
+            });
         }
     };
 
@@ -66,12 +68,14 @@ define([
      */
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
-            bonzo(advert.node).addClass('u-h');
             var $parent = bonzo(advert.node.parentNode);
-            // if in a slice, add the 'no mpu' class
-            if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
-                $parent.addClass('fc-slice__item--no-mpu');
-            }
+            fastdom.write(function () {
+                bonzo(advert.node).addClass('u-h');
+                // if in a slice, add the 'no mpu' class
+                if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
+                    $parent.addClass('fc-slice__item--no-mpu');
+                }
+            });
         }
     };
 
