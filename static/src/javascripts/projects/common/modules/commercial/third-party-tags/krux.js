@@ -7,8 +7,10 @@ define([
     cookies,
     storage
 ) {
+    var kruxUrl = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
+
     function load() {
-        return require(['js!' + '//cdn.krxd.net/controltag?confid=JVZiE3vn']);
+        return require(['js!' + kruxUrl]);
     }
 
     function retrieve(n) {
@@ -23,6 +25,7 @@ define([
 
     return {
         shouldRun: config.switches.krux,
+        url: kruxUrl,
         load: load,
         getSegments: getSegments
     };

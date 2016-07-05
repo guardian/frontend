@@ -3,9 +3,10 @@ define([
 ], function (
     config
 ) {
+    var imrWorldwideUrl = '//secure-au.imrworldwide.com/v60.js';
 
     function load() {
-        return require(['js!' + '//secure-au.imrworldwide.com/v60.js'], function () {
+        return require(['js!' + imrWorldwideUrl], function () {
             var pvar = { cid: 'au-guardian', content: '0', server: 'secure-au' };
             // nol_t is a global function set by the imrworldwide library
             /*eslint-disable no-undef*/
@@ -16,6 +17,7 @@ define([
 
     return {
         shouldRun: config.switches.imrWorldwide,
+        url: imrWorldwideUrl,
         load: load
     };
 

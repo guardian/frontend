@@ -18,6 +18,7 @@ define([
 
     return {
         shouldRun: config.switches.remarketing,
+        url: remarketingUrl,
         load: load
     };
 
