@@ -1,15 +1,15 @@
 #!/bin/bash
 . ~/.profile
 
-set -o xtrace
-set -o errexit
-set -o nounset
-
 node -v
 
 echo "Use project Node version"
 nvm install
 node -v
+
+set -o xtrace
+set -o errexit
+set -o nounset
 
 npm -g install grunt-cli
 

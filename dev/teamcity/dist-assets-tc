@@ -1,12 +1,12 @@
 #!/bin/bash
 . ~/.profile
 
+echo "Use project Node version"
+nvm install
+
 set -o xtrace
 set -o nounset
 set -o errexit
-
-echo "Use project Node version"
-nvm install
 
 echo "Asset compilation"
 
