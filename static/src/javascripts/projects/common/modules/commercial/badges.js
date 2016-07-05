@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-idle',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features',
     'text!common/views/commercial/badge.html',
@@ -19,7 +19,7 @@ define([
     config,
     template,
     idleFastdom,
-    dfp,
+    addSlot,
     createAdSlot,
     commercialFeatures,
     badgeTpl,
@@ -155,10 +155,7 @@ define([
                             keywords: $container.data('keywords')
                         },
                         '.js-container__header'
-                    ).then(function ($adSlot) {
-                        // add slot to dfp
-                        dfp.addSlot($adSlot);
-                    });
+                    ).then(addSlot);
                 }
             },
 

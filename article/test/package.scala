@@ -16,5 +16,5 @@ class ArticleTestSuite extends Suites (
   new PublicationControllerTest
 ) with SingleServerSuite {
 
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck().testPort
 }
