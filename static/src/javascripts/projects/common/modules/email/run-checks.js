@@ -119,15 +119,6 @@ define([
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
                 config.page.series === 'Guardian US briefing';
         },
-        ausCampaignCatchup: function () {
-            return page.keywordExists([
-                'Australia news',
-                'Australian politics',
-                'Australian election 2016',
-                'Guardian Australia\'s Morning Mail',
-                'Australian election briefing'
-            ]);
-        },
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
                 !pageHasBlanketBlacklist() &&
