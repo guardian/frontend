@@ -6,8 +6,8 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-idle',
-    'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/add-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'text!common/views/commercial/badge.html',
     'lodash/collections/map'
@@ -19,8 +19,8 @@ define([
     config,
     template,
     idleFastdom,
-    dfp,
-    createAdSlot,
+    addSlot,
+    createSlot,
     commercialFeatures,
     badgeTpl,
     map
@@ -57,7 +57,7 @@ define([
             var badgeConfig = badgesConfig[sponsorship],
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
-                $adSlot     = bonzo(createAdSlot(
+                $adSlot     = bonzo(createSlot(
                                 name,
                                 ['paid-for-badge', 'paid-for-badge--front'],
                                 opts.series,
@@ -155,10 +155,7 @@ define([
                             keywords: $container.data('keywords')
                         },
                         '.js-container__header'
-                    ).then(function ($adSlot) {
-                        // add slot to dfp
-                        dfp.addSlot($adSlot);
-                    });
+                    ).then(addSlot);
                 }
             },
 

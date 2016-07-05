@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/modules/commercial/dfp/render-advert-label'
+    'common/modules/commercial/dfp/private/render-advert-label'
 ], function (
     bonzo,
     renderAdvertLabel

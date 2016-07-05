@@ -4,8 +4,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/space-filler',
-    'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/add-slot',
+    'common/modules/commercial/dfp/track-ad-render',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'lodash/functions/memoize'
 ], function (
@@ -14,8 +15,9 @@ define([
     config,
     detect,
     spaceFiller,
-    dfp,
-    createAdSlot,
+    addSlot,
+    trackAdRender,
+    createSlot,
     commercialFeatures,
     memoize
 ) {
@@ -105,13 +107,13 @@ define([
     }
 
     function insertAdAtPara(para, name, type) {
-        var ad = createAdSlot(name, type);
+        var ad = createSlot(name, type);
         para.parentNode.insertBefore(ad, para);
     }
 
     function addSlots(countAdded) {
         if (countAdded > 0) {
-            qwery('.ad-slot--inline').forEach(dfp.addSlot);
+            qwery('.ad-slot--inline').forEach(addSlot);
         }
     }
 
@@ -121,7 +123,7 @@ define([
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
     var waitForMerch = memoize(function () {
-        return dfp.trackAdRender('dfp-ad--im').then(function (isLoaded) {
+        return trackAdRender('dfp-ad--im').then(function (isLoaded) {
             return isLoaded ? 0 : addArticleAds(2, getRules());
         }).then(function (countAdded) {
             return countAdded === 2 ?

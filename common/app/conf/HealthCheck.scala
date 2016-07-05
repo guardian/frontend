@@ -2,18 +2,43 @@ package conf
 
 import common._
 import org.joda.time.DateTime
-import play.api.{Application => PlayApp, Mode, Play, GlobalSettings}
-import play.api.libs.ws.{WSResponse, WS}
+import play.api.{Mode, Play}
+import play.api.libs.ws.{WS, WSResponse}
 import play.api.mvc._
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 /*
-* Healthcheck endpoints are requested periodically
+* Healthcheck endpoints are requested periodically (or only once if it is set to never expires)
 * Results are stored in a cache
 * Goal: Requests made to the healthcheck endpoint by the ELBs are not 'inlined'
 * */
+
+sealed trait SingleHealthCheck {
+  def path: String
+  def expires: HealthCheckExpiration
+}
+/*
+ * NeverExpiresSingleHealthCheck should be used when the tested path depends on an upstream service like CAPI, DAPI, etc...
+ * The goal is to verify that the frontend app is correctly setup and is able to serve at least once a response that depends on an upstream service
+ * while limiting the effect of an unresponsive upstream service upon the health of frontend apps
+ */
+case class NeverExpiresSingleHealthCheck(override val path: String,
+                                         override val expires: HealthCheckExpiration = HealthCheckExpires.Never) extends SingleHealthCheck
+/*
+ * ExpiringSingleHealthCheck should be used when the tested path DOES NOT depends on an upstream service like CAPI, DAPI, etc...
+ * The goal of this type of healthcheck is to verify that the instance and the app are running.
+ */
+case class ExpiringSingleHealthCheck(override val path: String,
+                                     override val expires: HealthCheckExpiration = HealthCheckExpires.Duration((Configuration.healthcheck.updateIntervalInSecs * 2).seconds)) extends SingleHealthCheck
+
+sealed trait HealthCheckExpiration
+object HealthCheckExpires {
+  case class Duration(duration: FiniteDuration) extends HealthCheckExpiration
+  case object Never extends HealthCheckExpiration
+}
 
 sealed trait HealthCheckInternalRequestResult
 object HealthCheckResultTypes {
@@ -24,10 +49,13 @@ object HealthCheckResultTypes {
 
 private[conf] case class HealthCheckResult(url: String,
                                            result: HealthCheckInternalRequestResult,
-                                           date: DateTime = DateTime.now,
-                                           expiration: Duration = (Configuration.healthcheck.updateIntervalInSecs * 2).seconds) {
-  private val expirationDate = date.plus(expiration.toMillis)
-  private def expired: Boolean = DateTime.now.getMillis > expirationDate.getMillis
+                                           date: DateTime,
+                                           expiration: HealthCheckExpiration) {
+  private val expirationDate: Option[DateTime] = expiration match {
+    case HealthCheckExpires.Duration(e) => Some(date.plus(e.toMillis))
+    case HealthCheckExpires.Never => None
+  }
+  private def expired: Boolean = expirationDate.fold(false)(DateTime.now.getMillis > _.getMillis)
   def recentlySucceed: Boolean = result match {
     case r: HealthCheckResultTypes.Success => !expired
     case _ => false
@@ -37,14 +65,17 @@ private[conf] case class HealthCheckResult(url: String,
     case f: HealthCheckResultTypes.Failure => s"${f.statusCode} ${f.statusText}"
     case e: HealthCheckResultTypes.Exception => s"Error: ${e.exception.getLocalizedMessage}"
   }
-  def formattedDate: String = if(expired) s"${date} (Expired)" else date.toString
+  def formattedDate: String = expiration match {
+    case HealthCheckExpires.Never => "Never expires"
+    case _ => if (expired) s"${date} (Expired)" else date.toString
+  }
 }
 
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
   import play.api.Play.current
 
-  protected def fetchResult(baseUrl: String, path: String): Future[HealthCheckResult] = {
-    WS.url(s"$baseUrl$path")
+  protected def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
+    WS.url(s"$baseUrl${healthCheck.path}")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(4.seconds.toMillis).get()
       .map {
@@ -53,16 +84,16 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
           case 200 => HealthCheckResultTypes.Success(response.status)
           case _ => HealthCheckResultTypes.Failure(response.status, response.statusText)
         }
-          HealthCheckResult(path, result)
+          HealthCheckResult(healthCheck.path, result, DateTime.now, healthCheck.expires)
       }
       .recover {
         case NonFatal(t) =>
-          log.error(s"HealthCheck request to ${path} failed", t)
-          HealthCheckResult(path, HealthCheckResultTypes.Exception(t))
+          log.error(s"HealthCheck request to ${healthCheck.path} failed", t)
+          HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), DateTime.now, healthCheck.expires)
       }
   }
 
-  protected def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
+  protected def fetchResults(testPort: Int, healthChecks: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
     val defaultPort = 9000
     val port = {
       Play.current.mode match {
@@ -71,7 +102,7 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
       }
     }
     val baseUrl = s"http://localhost:$port"
-    Future.sequence(paths.map(fetchResult(baseUrl, _)))
+    Future.sequence(healthChecks.map(fetchResult(baseUrl, _)))
   }
 
 }
@@ -79,12 +110,18 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 private[conf] trait HealthCheckCache extends HealthCheckFetcher {
 
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
-  def get() = cache.get()
+  def get(): List[HealthCheckResult] = cache.get()
 
-  def fetchPaths(testPort: Int, paths: String*): Future[List[HealthCheckResult]] = {
-    fetchResults(testPort, paths:_*).flatMap(allResults => cache.alter(allResults.toList))
+  def refresh(testPort: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {
+    val alreadyFetched = noRefreshNeededResults
+    val toFetch: Seq[SingleHealthCheck] = healthChecks.filterNot(h => alreadyFetched.map(_.url).contains(h.path))
+    fetchResults(testPort, toFetch:_*).flatMap(fetchedResults => cache.alter(fetchedResults.toList ++ alreadyFetched))
   }
 
+  private def noRefreshNeededResults(): List[HealthCheckResult] = {
+    // No refresh needed for non-expiring results if they have already been fetched successfully
+    cache.get.filter(r => r.expiration == HealthCheckExpires.Never && r.result.isInstanceOf[HealthCheckResultTypes.Success])
+  }
 }
 
 sealed trait HealthCheckPolicy
@@ -97,7 +134,7 @@ trait HealthCheckController extends Controller {
   def healthCheck(): Action[AnyContent]
 }
 
-class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, paths: String*) extends HealthCheckController with Results with ExecutionContexts with Logging {
+class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, healthChecks: SingleHealthCheck*) extends HealthCheckController with Results with ExecutionContexts with Logging {
 
   private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
 
@@ -124,14 +161,14 @@ class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, paths: String*
     }
   }
 
-  def runChecks: Future[Unit] = cache.fetchPaths(testPort, paths:_*).map(_ => Nil)
+  def runChecks: Future[Unit] = cache.refresh(testPort, healthChecks:_*).map(_ => Nil)
 }
 
-case class AllGoodCachedHealthCheck(testPort: Int, paths: String*)
-  extends CachedHealthCheck(HealthCheckPolicy.All, testPort, paths:_*)
+case class AllGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthCheck*)
+  extends CachedHealthCheck(HealthCheckPolicy.All, testPort, healthChecks:_*)
 
-case class AnyGoodCachedHealthCheck(testPort: Int, paths: String*)
-  extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, paths:_*)
+case class AnyGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthCheck*)
+  extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, healthChecks:_*)
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,

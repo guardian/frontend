@@ -366,6 +366,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val hostedLeffeShowVideo1 = Switch(
+    group = CommercialLabs,
+    name = "hosted-leffe-show-video-1",
+    description = "Show video or else 404.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
+  )
+
   val hostedContentTracking = Switch(
     group = CommercialLabs,
     name = "hosted-content-tracking",

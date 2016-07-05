@@ -17,7 +17,7 @@ import play.api.mvc.{Action, Controller}
  */
 class ApiSandbox extends Controller with ExecutionContexts {
 
-  private val domain = magento.domain.get
+  private val domain = magento.domain.getOrElse(throw new RuntimeException("Unable to get [magento.domain] property. Is it set in the configuration?"))
   private val oauth = {
     val key = ConsumerKey(magento.consumerKey.get, magento.consumerSecret.get)
     val accessToken = RequestToken(magento.accessToken.get, magento.accessTokenSecret.get)

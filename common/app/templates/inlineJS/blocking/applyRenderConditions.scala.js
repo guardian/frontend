@@ -79,14 +79,7 @@
     } else {
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
     }
-
-    @if(ABNewUserAdvertsDisabled.isSwitchedOn) {
-        var adfreeClass = @JavaScript(templates.inlineJS.blocking.js.applyAdfreeRenderCondition().body);
-        if (adfreeClass) {
-            docClass += ' ' + adfreeClass;
-        }
-    }
-
+    
     // MINIMISE DOM THRASHING…
 
     // READs
