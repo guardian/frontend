@@ -8,8 +8,8 @@ import test.{ConfiguredTestSuite, TestRequest}
 
    "Travel Offers Controller" should "404 when an ad is requested where there are no matching offers" in {
      val request = TestRequest().withFormUrlEncodedBody(("k","k1"))
-     val travelOffersController = new TravelOffersController()
-     val result = travelOffersController.renderTravel(request)
+
+     val result = controllers.commercial.TravelOffersController.renderTravel(request)
 
      status(result) should be(404)
    }

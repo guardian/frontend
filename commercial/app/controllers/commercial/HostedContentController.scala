@@ -17,3 +17,5 @@ class HostedContentController extends Controller {
     }
   }
 }
+
+object HostedContentController extends HostedContentController
