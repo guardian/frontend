@@ -12,6 +12,7 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
+    'common/modules/analytics/omniture',
     'common/utils/chain',
     'common/utils/load-css-promise'
 ], function (
@@ -28,6 +29,7 @@ define([
     map,
     throttle,
     forEach,
+    omniture,
     chain,
     loadCssPromise
 ) {
@@ -241,9 +243,11 @@ define([
 
         }.bind(this));
 
-        if(newIndex && newIndex !== this.index){
-            this.index = newIndex;
-            this.trigger('reload');
+        if(newIndex && newIndex > this.index){
+            this.trigger('next');
+        }
+        if(newIndex && newIndex < this.index){
+            this.trigger('prev');
         }
     };
 
@@ -295,6 +299,7 @@ define([
                     } else {
                         this.index += 1;
                         this.reloadState = true;
+                        omniture.trackLinkImmediate('Next image (' + this.index + ')');
                     }
                 },
                 'prev': function () {
@@ -308,6 +313,7 @@ define([
                     } else {
                         this.index -= 1;
                         this.reloadState = true;
+                        omniture.trackLinkImmediate('Previous image (' + this.index + ')');
                     }
                 },
                 'reload': function () {

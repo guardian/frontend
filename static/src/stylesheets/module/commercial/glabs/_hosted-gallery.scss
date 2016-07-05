@@ -72,6 +72,7 @@
     }
     .hosted-gallery__image-sizer {
         position: absolute;
+        overflow: hidden;
     }
     img {
         width: 100%;
@@ -122,7 +123,7 @@
     }
 }
 
-.use-swipe .hosted-gallery__image .hosted-gallery__cta-title,
+.use-swipe .hosted-gallery__image .hosted-gallery__cta,
 .use-scroll.show-cta > .hosted-gallery__cta {
     opacity: 1;
     pointer-events: auto;
