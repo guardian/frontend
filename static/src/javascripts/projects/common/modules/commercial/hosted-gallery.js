@@ -243,11 +243,9 @@ define([
 
         }.bind(this));
 
-        if(newIndex && newIndex > this.index){
-            this.trigger('next');
-        }
-        if(newIndex && newIndex < this.index){
-            this.trigger('prev');
+        if(newIndex && newIndex !== this.index) {
+            this.index = newIndex;
+            this.trigger('reload');
         }
     };
 
@@ -279,7 +277,7 @@ define([
                 if(this.useSwipe){
                     this.translateContent(this.index, 0, 100);
                 }
-
+                omniture.trackLinkImmediate(config.page.analyticsName + ' - image ' + this.index);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },
@@ -299,7 +297,6 @@ define([
                     } else {
                         this.index += 1;
                         this.reloadState = true;
-                        omniture.trackLinkImmediate('Next image (' + this.index + ')');
                     }
                 },
                 'prev': function () {
@@ -313,7 +310,6 @@ define([
                     } else {
                         this.index -= 1;
                         this.reloadState = true;
-                        omniture.trackLinkImmediate('Previous image (' + this.index + ')');
                     }
                 },
                 'reload': function () {
