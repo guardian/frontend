@@ -45,7 +45,7 @@ define([
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
-        this.$captionContainer = $('.js-hosted-gallery-captions');
+        this.$captionContainer = $('.hosted-gallery__lower-bar');
         this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
         this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);

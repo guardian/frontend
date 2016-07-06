@@ -257,6 +257,37 @@
         display: flex;
         flex-direction: row;
         background: $neutral-1;
+
+    }
+    @include mq($until: tablet) {
+        .hosted-gallery__lower-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(51, 51, 51, .7), rgba(51, 51, 51, .5), transparent);
+            &:not(.hosted-gallery--show-caption) .hosted__social {
+                display: none;
+            }
+            &.hosted-gallery--show-caption {
+                background: rgba(51, 51, 51, .7);
+            }
+            .hosted-gallery__caption-text {
+                background: rgba(51, 51, 51, .7);
+                border-radius: 0;
+                margin-bottom: 13px;
+                right: -50px;
+                left: -180px;
+                width: auto;
+                max-width: none;
+            }
+        }
+    }
+    @include mq($until: tablet, $and: '(orientation: landscape)') {
+        .hosted-gallery__meta,
+        .hosted-gallery__cta {
+            margin-bottom: 30px;
+        }
     }
 }
 
@@ -309,7 +340,6 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 300ms ease, visibility 300ms ease;
 }
 
 .hosted-gallery__info-button {
