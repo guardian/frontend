@@ -58,7 +58,7 @@ define([
                     complete();
                 });
             });
-        }
+        };
 
         this.variants = [
             {
