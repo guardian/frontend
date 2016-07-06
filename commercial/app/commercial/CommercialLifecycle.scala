@@ -6,11 +6,17 @@ import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
+import metrics.MetricUploader
 
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
+
+
+object CommercialMetrics {
+  val metrics = MetricUploader("Commercial")
+}
 
 class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
