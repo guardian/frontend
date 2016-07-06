@@ -98,6 +98,9 @@
     @include hosted-gallery-cta;
     margin: 0 $gs-gutter * 2 0 $gs-gutter * 5;
     font-weight: bold;
+    @include mq($until: tablet) {
+        margin: 0 $gs-gutter * 2 0 $gs-gutter;
+    }
 }
 
 .hosted-gallery__cta-link {
