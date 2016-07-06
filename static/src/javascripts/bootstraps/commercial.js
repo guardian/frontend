@@ -88,7 +88,7 @@ define([
                     var modulePromise = pair[1]();
                     modulePromise.then(function(){
 
-                        ophanTracking.checkpoint(moduleName, 'start');
+                        ophanTracking.pageCheckpoint(moduleName, 'start');
                     });
 
                     modulePromises.push(modulePromise);
@@ -106,7 +106,7 @@ define([
 
                         modulePromise.then(function(){
                             var timer = new Date().getTime();
-                            ophanTracking.checkpoint(moduleName, 'secondary');
+                            ophanTracking.pageCheckpoint(moduleName, 'secondary');
                         });
                     });
                 });

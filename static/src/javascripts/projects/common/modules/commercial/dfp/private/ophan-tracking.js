@@ -99,7 +99,7 @@ define([
         }
     }
 
-    function checkpoint(message, baseline){
+    function pageCheckpoint(message, baseline){
         var timerEnd = new Date().getTime();
         var timerStart = baselines[baseline];
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
@@ -122,7 +122,7 @@ define([
 
     return {
         trackPerformance : trackPerformance,
-        checkpoint : checkpoint,
+        pageCheckpoint : pageCheckpoint,
         advertCheckpoint: advertCheckpoint,
         addBaseline : addBaseline
     };
