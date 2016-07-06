@@ -38,7 +38,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            //ophanTracking.advertCheckpoint('advertCreated',  timer );
+            ophanTracking.advertCheckpoint(advert.id, "create duration : ",  timer, false);
         }
 
         return Object.seal(advert);
@@ -49,7 +49,8 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            //ophanTracking.advertCheckpoint('startLoading',  timer );
+            ophanTracking.addBaseline("lazyLoadBaseline");
+            ophanTracking.advertCheckpoint(advert.id, "startDfpCall",  timer, true );
         }
     }
 
@@ -59,7 +60,7 @@ define([
 
          if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            //ophanTracking.advertCheckpoint('stopLoading',  timer );
+            ophanTracking.advertCheckpoint(advert.id,'dfp call Duration : ', timer, true );
         }
     }
 
@@ -68,7 +69,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            //ophanTracking.advertCheckpoint('startRendering',  timer );
+            ophanTracking.advertCheckpoint(advert.id,'duration to start rendering : ', timer, true );
         }
     }
 
@@ -78,7 +79,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            //ophanTracking.advertCheckpoint('stopRendering',  timer );
+            ophanTracking.advertCheckpoint(advert.id,'duration to stop rendering : ', timer, true );
         }
     }
 });

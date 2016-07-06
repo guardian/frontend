@@ -32,7 +32,10 @@ define([
             if (!window.googletag) {
                 window.googletag = {cmd: []};
                 // load the library asynchronously
-                require(['js!googletag.js']);
+                require(['js!googletag.js'], function() {
+                    var timer = new Date().getTime();
+                    ophanTracking.advertCheckpoint("GPT",'duration until loaded : ', timer, false);
+                });
             }
 
             if (dfpEnv.prebidEnabled) {

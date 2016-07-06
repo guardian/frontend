@@ -105,6 +105,17 @@ define([
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
+    function advertCheckpoint (adName, message, time , lazyLoadSusceptible) {
+        if(lazyLoadSusceptible == false) {
+            var timeDiff  = time - baselines["secondary"];
+            console.log(adName +" "+ message +" "+ timeDiff);
+        } else {
+            var lazyDelay = baselines["lazyLoadBaseline"] - baselines["start"];
+            var timeDiff = time - baselines["lazyLoadBaseline"];
+            console.log(adName + " "+ message + " " + timeDiff + " (lazyLoadDelay = " + lazyDelay + ")");
+        }
+    }
+
     function addBaseline(baselineName){
         baselines[baselineName] = new Date().getTime();
     }
@@ -112,6 +123,7 @@ define([
     return {
         trackPerformance : trackPerformance,
         checkpoint : checkpoint,
+        advertCheckpoint: advertCheckpoint,
         addBaseline : addBaseline
     };
 });
