@@ -1,24 +1,10 @@
 #!/bin/bash
-. ~/.profile
-
-node -v
-
-echo "Use project Node version"
-nvm install
-node -v
 
 set -o xtrace
 set -o errexit
 set -o nounset
 
-npm -g install grunt-cli
-
 echo "Install dependencies"
 make install
 
 ./grunt-tc clean
-
-echo "Restore default Node version"
-nvm use default
-
-node -v

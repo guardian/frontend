@@ -1,8 +1,4 @@
 #!/bin/bash
-. ~/.profile
-
-echo "Use project Node version"
-nvm install
 
 set -o xtrace
 set -o nounset
@@ -26,6 +22,3 @@ set -x
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
-
-echo "Restore default Node version"
-nvm use default
