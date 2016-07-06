@@ -37,10 +37,8 @@ define([
         // CONFIG
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
-        this.resize = this.trigger.bind(this, 'resize');
         this.index = this.index || 1;
         this.imageRatios = [];
-        mediator.on('window:resize', this.resize);
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
@@ -58,6 +56,9 @@ define([
         this.$ctaFloat = $('.js-hosted-gallery-cta-float', this.$galleryEl)[0];
 
         if(this.$galleryEl.length){
+            this.resize = this.trigger.bind(this, 'resize');
+            mediator.on('window:resize', this.resize);
+
             // FSM CONFIG
             this.fsm = new FiniteStateMachine({
                 initial: 'image',

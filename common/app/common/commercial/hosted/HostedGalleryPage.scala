@@ -13,7 +13,8 @@ case class HostedGalleryPage(
   ctaText: String,
   ctaLink: String,
   ctaIndex: Integer,
-  images: List[HostedGalleryImage]
+  images: List[HostedGalleryImage],
+  cssClass: String
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
@@ -44,7 +45,7 @@ case class HostedGalleryPage(
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
-        "og:image" -> campaign.logo.url,
+        "og:image" -> images.head.url,
         "fb:app_id" -> "180444840287"
       )
     )
