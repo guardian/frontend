@@ -5,8 +5,8 @@
 @cssClass(owner: String) = {hosted-tone--@{owner.toLowerCase.replaceAll("\\s+", "-")}}
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-video-page", page.campaign.logo.url)
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page">
+    @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url)
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
@@ -144,8 +144,8 @@
                 </div>
                 <div class="hosted__cta-wrapper">
                     <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
-                        <span class="hosted__cta-text">@{page.cta.label}</span>
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta"))
+                        <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
+                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
                     </a>
                 </div>
             </div>

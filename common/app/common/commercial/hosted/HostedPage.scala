@@ -14,7 +14,8 @@ case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logo: HostedLogo
+  logo: HostedLogo,
+  cssClass: String
 )
 
 case class HostedLogo(

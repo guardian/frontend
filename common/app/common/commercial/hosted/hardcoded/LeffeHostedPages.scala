@@ -3,6 +3,7 @@ package common.commercial.hosted.hardcoded
 import common.commercial.hosted._
 import conf.Configuration.site.host
 import conf.switches.Switches
+import conf.Static
 
 object LeffeHostedPages {
 
@@ -16,14 +17,15 @@ object LeffeHostedPages {
     id = "leffe-rediscover-time",
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
-    logo = HostedLogo("TODO")
+    logo = HostedLogo(Static("images/commercial/leffe.jpg")),
+    cssClass = "leffe"
   )
 
   private val cta = HostedCallToAction(
-    url = "TODO",
+    url = "http://www.leffe.com/en",
     label = "Click to Rediscover Time",
     trackingCode = "leffe-rediscover-time",
-    bannerUrl = "TODO"
+    bannerUrl = Static("images/commercial/willard-wigan_banner.jpg")
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = HostedVideoPage(
@@ -36,7 +38,7 @@ object LeffeHostedPages {
       mediaId = willardWiganPageName,
       title = "Slow Time: What is nothing?",
       duration = 127,
-      posterUrl = "TODO",
+      posterUrl = Static("images/commercial/willard-wigan_poster.jpg"),
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv",
