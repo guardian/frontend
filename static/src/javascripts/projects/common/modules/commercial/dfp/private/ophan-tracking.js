@@ -135,6 +135,7 @@ define([
     }
 
     function debugTimings(){
+        // This is where the first ophan send should be.
         console.log(loggingObject)
     }
 
