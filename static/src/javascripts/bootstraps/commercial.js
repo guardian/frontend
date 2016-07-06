@@ -98,6 +98,8 @@ define([
             Promise.all(modulePromises).then(function () {
                 ophanTracking.addBaseline('secondary');
 
+                var secondaryModulePromises = [];
+
                 secondaryModules.forEach(function (pair) {
                     var moduleName = pair[0];
 
@@ -108,7 +110,13 @@ define([
                             var timer = new Date().getTime();
                             ophanTracking.pageCheckpoint(moduleName, 'secondary');
                         });
+
+                        secondaryModulePromises.push(modulePromise);
                     });
+                });
+
+                Promise.all(secondaryModulePromises).then(function () {
+                    ophanTracking.debugTimings();
                 });
             });
         }

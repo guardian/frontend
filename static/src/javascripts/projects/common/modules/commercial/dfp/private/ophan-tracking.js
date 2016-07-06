@@ -2,13 +2,12 @@ define([
     'raven'
 ], function (raven) {
 
-    var baselines = {
-            initial : new Date().getTime()
-        },
-        loggingObject = {
+    var loggingObject = {
             page: {},
             adverts: {},
-            baselines: {}
+            baselines: {
+                initial : new Date().getTime()
+            }
         };
 
     function trackPerformance(googletag) {
@@ -74,10 +73,10 @@ define([
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(baselines.initial, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(loggingObject.baselines.initial, new Date().getTime()),
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(baselines.initial, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(loggingObject.baselines.initial, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -101,29 +100,34 @@ define([
 
     function pageCheckpoint(message, baseline){
         var timerEnd = new Date().getTime();
-        var timerStart = baselines[baseline];
+        var timerStart = loggingObject.baselines[baseline];
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
     function advertCheckpoint (adName, message, time , lazyLoadSusceptible) {
         if(lazyLoadSusceptible == false) {
-            var timeDiff  = time - baselines["secondary"];
+            var timeDiff  = time - loggingObject.baselines["secondary"];
             console.log(adName +" "+ message +" "+ timeDiff);
         } else {
-            var lazyDelay = baselines["lazyLoadBaseline"] - baselines["start"];
-            var timeDiff = time - baselines["lazyLoadBaseline"];
+            var lazyDelay = loggingObject.baselines["lazyLoadBaseline"] - baselines["start"];
+            var timeDiff = time - loggingObject.baselines["lazyLoadBaseline"];
             console.log(adName + " "+ message + " " + timeDiff + " (lazyLoadDelay = " + lazyDelay + ")");
         }
     }
 
     function addBaseline(baselineName){
-        baselines[baselineName] = new Date().getTime();
+        loggingObject.baselines[baselineName] = new Date().getTime();
+    }
+
+    function debugTimings(){
+        console.log(loggingObject)
     }
 
     return {
         trackPerformance : trackPerformance,
         pageCheckpoint : pageCheckpoint,
         advertCheckpoint: advertCheckpoint,
-        addBaseline : addBaseline
+        addBaseline : addBaseline,
+        debugTimings : debugTimings
     };
 });
