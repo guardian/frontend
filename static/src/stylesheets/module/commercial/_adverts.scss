@@ -386,6 +386,11 @@
         > .inline-icon {
             margin-bottom: $gs-baseline / 2;
         }
+
+        > .inline-logo > svg {
+            height: auto;
+            max-width: 100%;
+        }
     }
 
     .adverts__title {
@@ -404,6 +409,10 @@
 
     .advert__image-container {
         height: auto;
+    }
+
+    .advert__image {
+        width: 100%;
     }
 
     .has-no-flex & {
