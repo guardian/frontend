@@ -24,8 +24,7 @@ object LeffeHostedPages {
   private val cta = HostedCallToAction(
     url = "http://www.leffe.com/en",
     label = "Click to Rediscover Time",
-    trackingCode = "leffe-rediscover-time",
-    bannerUrl = Static("images/commercial/willard-wigan_banner.jpg")
+    trackingCode = "leffe-rediscover-time"
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = HostedVideoPage(
@@ -45,6 +44,7 @@ object LeffeHostedPages {
       srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629WillardWigan_V3.m3u8"
     ),
     cta,
+    ctaBanner = Static("images/commercial/willard-wigan_banner.jpg"),
     nextPage = None
   )
 
@@ -69,6 +69,7 @@ object LeffeHostedPages {
                 ".tv/interactive/2016/06/29/HLS/160629AdrienneTreeby_KP-28311272_h264_mezzanine.m3u8"
     ),
     cta,
+    ctaBanner = Static("images/commercial/adrienne-treeby_banner.jpg"),
     nextPage = None
   )
 
@@ -90,6 +91,7 @@ object LeffeHostedPages {
       srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629PeteLawrence_h264_mezzanine.m3u8"
     ),
     cta,
+    ctaBanner = Static("images/commercial/pete-lawrence_banner.jpg"),
     nextPage = None
   )
 
@@ -111,6 +113,7 @@ object LeffeHostedPages {
       srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
     ),
     cta,
+    ctaBanner = Static("images/commercial/susan-derges_banner.jpg"),
     nextPage = None
   )
 
@@ -131,6 +134,7 @@ object LeffeHostedPages {
       srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629QuayBrothers_V3.m3u8"
     ),
     cta,
+    ctaBanner = Static("images/commercial/quay-brothers_banner.jpg"),
     nextPage = None
   )
 
