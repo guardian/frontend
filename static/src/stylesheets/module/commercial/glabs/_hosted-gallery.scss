@@ -379,24 +379,23 @@ $progressColor: #ffffff;
     .inline-arrow-up,
     .inline-arrow-down {
         position: absolute;
-        left: -18px;
+        left: -19px;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, .6);
         border-radius: 50%;
-        padding: 5px;
-        svg {
-            transform: scale(.8);
-        }
+        padding: 3px 0 3px 6px;
+        width: 30px;
+        height: 30px;
     }
 
     .inline-arrow-up {
         top: -31px;
+        transform: rotate(-90deg)
     }
 
     .inline-arrow-down {
         bottom: -31px;
-        padding-top: 10px;
-        padding-bottom: 0;
+        transform: rotate(90deg)
     }
 
     .hosted-gallery__progress-border {

@@ -31,7 +31,7 @@
                     </div>
                     @guardianHostedGalleryCta(page.ctaText, page.ctaLink, "Visit OMGB now", "js-hosted-gallery-cta-float")
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
-                        @fragments.inlineSvg("arrow-up", "icon")
+                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">
                             <div class="hosted-gallery__progress-border">
                                 <div class="hosted-gallery__progress-border-static"></div>
@@ -41,11 +41,11 @@
                         <div class="hosted-gallery__image-count js-hosted-gallery-image-count">
                             1/@page.images.length
                         </div>
-                        @fragments.inlineSvg("arrow-down", "icon")
+                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                     </div>
                 </div>
             </section>
-            <section class="adverts adverts--legacy hosted-gallery__lower-bar">
+            <section class="adverts adverts--legacy hosted-gallery__lower-bar js-gallery-caption-bar">
                 <header class="adverts__header hosted__social">
                     <div class="meta__social hosted__social-wrapper" data-component="share">
                         <ul class="social social--top u-unstyled u-cf" data-component="social">
@@ -92,7 +92,7 @@
                         </ul>
                     </div>
                 </header>
-                <div class="hosted-gallery__captions js-hosted-gallery-captions">
+                <div class="hosted-gallery__captions">
                     @for(i <- page.images.indices) {
                         <div class="hosted-gallery__caption js-hosted-gallery-caption @{if (i == 0) "current-caption" else ""}">
                             @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
