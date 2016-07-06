@@ -19,13 +19,12 @@ define([
             if (HTMLFormElement.prototype.checkValidity) {
                 // quizzes can be set to only show answers at the end, in which case we do a round trip.
                 // we'll run this code only if it's an instant-reveal quiz
-                var $quizzes = $('.js-atom-quiz--instant-reveal'),
-                    $numberOfQuestions = $('.js-atom__quiz_question').length;
+                var $quizzes = $('.js-atom-quiz--instant-reveal');
 
                 if ($quizzes.length > 0) {
                     bean.on(document, 'click', toArray($quizzes), function (e) {
                         var quiz = e.currentTarget,
-                            total = total = $(':checked + .atom-quiz__answer__item', quiz).length;
+                            total =  $(':checked + .atom-quiz__answer__item', quiz).length;
 
                         omniture.trackLinkImmediate('quiz-question-answered-'+total);
                         if (quiz.checkValidity()) { // the form (quiz) is complete
