@@ -12,7 +12,8 @@ trait StandaloneControllerComponents
   extends ApplicationsControllers
   with AdminJobsControllers
   with ArticleControllers
-  with CommercialControllers {
+  with CommercialControllers
+  with FaciaControllers {
   self: BuiltInComponents =>
 
   lazy val assets = wire[Assets]
@@ -23,7 +24,6 @@ trait StandaloneControllerComponents
   lazy val cricketMatchController = wire[CricketMatchController]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val faciaController = wire[FaciaControllerImpl]
   lazy val faciaDraftController: FaciaDraftController = wire[FaciaDraftController]
   lazy val faviconController = wire[FaviconController]
   lazy val fixturesController = wire[FixturesController]

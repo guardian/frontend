@@ -63,6 +63,7 @@ object Frontend extends Build with Prototypes {
   val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies += scalaCheck
   )
 
@@ -94,7 +95,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       scalaUri
     ),
-    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
+    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._"),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val router = application("router")
