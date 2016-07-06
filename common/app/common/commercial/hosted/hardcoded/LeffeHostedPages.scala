@@ -14,15 +14,15 @@ object LeffeHostedPages {
 
   private val campaign = HostedCampaign(
     id = "leffe-rediscover-time",
-    name = "Leffe - rediscover time",
+    name = "Leffe - Rediscover Time",
     owner = "Leffe",
     logo = HostedLogo("TODO")
   )
 
   private val cta = HostedCallToAction(
     url = "TODO",
-    label = "TODO",
-    trackingCode = "TODO",
+    label = "Click to Rediscover Time",
+    trackingCode = "leffe-rediscover-time",
     bannerUrl = "TODO"
   )
 
@@ -30,10 +30,11 @@ object LeffeHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$willardWiganPageName",
     pageName = willardWiganPageName,
-    standfirst = "TODO",
+    standfirst = "Leffe presents a film about micro-sculptor Willard Wigan, who slows down his own heartbeat to " +
+                 "create sculptures so tiny the eye can't see them.",
     video = HostedVideo(
       mediaId = willardWiganPageName,
-      title = "Willard Wigan",
+      title = "Slow Time: What is nothing?",
       duration = 127,
       posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_H264.mp4",
@@ -49,10 +50,11 @@ object LeffeHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$adrienneTreebyPageName",
     pageName = adrienneTreebyPageName,
-    standfirst = "TODO",
+    standfirst = "Leffe presents a film about charcuterie producer Adrienne E. Treeby, who uses centuries-old recipe " +
+                 "ideas to cure a delicious Leffe-infused salami.",
     video = HostedVideo(
       mediaId = adrienneTreebyPageName,
-      title = "Adrienne Treeby",
+      title = "Slow Time: Tasting the past",
       duration = 116,
       posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian" +
@@ -72,10 +74,11 @@ object LeffeHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$peteLawrencePageName",
     pageName = peteLawrencePageName,
-    standfirst = "TODO",
+    standfirst = "Leffe presents a film featuring astronomical observer Pete Lawrence as he literally rediscovers " +
+                 "time, capturing distance light using long exposures.",
     video = HostedVideo(
       mediaId = peteLawrencePageName,
-      title = "Pete Lawrence",
+      title = "Slow Time: Capturing time",
       duration = 138,
       posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4",
@@ -92,10 +95,11 @@ object LeffeHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$susanDergesPageName",
     pageName = susanDergesPageName,
-    standfirst = "TODO",
+    standfirst = "Leffe presents a film about artist Susan Derges, who specialises in creating unique camera-less " +
+                 "photos using natural light and water.",
     video = HostedVideo(
       mediaId = susanDergesPageName,
-      title = "Susan Derges",
+      title = "Slow Time: Still The river",
       duration = 146,
       posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
@@ -112,10 +116,11 @@ object LeffeHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$quayBrothersPageName",
     pageName = quayBrothersPageName,
-    standfirst = "TODO",
+    standfirst = "Leffe presents a film featuring influential stop-frame animators, Stephen and Timothy Quay, who " +
+                 "give an insight into their unique appreciation of time.",
     video = HostedVideo(
       mediaId = quayBrothersPageName,
-      title = "Quay Brothers",
+      title = "Slow Time: Quay Brothers",
       duration = 134,
       posterUrl = "TODO",
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4",
