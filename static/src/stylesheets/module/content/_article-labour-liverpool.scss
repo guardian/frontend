@@ -2,6 +2,13 @@ $labour-liverpool-header-font-colour: #ffffff;
 $labour-liverpool-standfirst-font-colour: #41635e;
 $labour-liverpool-standfirst-background-colour: #ffffff;
 $labour-liverpool-identity-font-colour: #ffffff;
+$labour-liverpool-contact-top-border-colour: #4bc6df;
+$labour-liverpool-contact-button-background-colour: #00b0ce;
+$labour-liverpool-contact-button-font-colour: #ffffff;
+$labour-liverpool-contact-textbox-background-colour: #577da0;
+$labour-liverpool-contact-textbox-font-colour: #ffffff;
+$labour-liverpool-contact-twitter-logo-background-colour: #01c0ed;
+$labour-liverpool-contact-email-logo-background-colour: #767676;
 
 .heroic-header-container--labour-liverpool {
     min-height: 20vh;
@@ -138,6 +145,156 @@ $labour-liverpool-identity-font-colour: #ffffff;
 
         @include mq($from: desktop) {
             left: -30%;
+        }
+    }
+}
+
+.labour-liverpool-contact {
+
+    .labour-liverpool-contact__top-border {
+        border-top: 1px solid $labour-liverpool-contact-top-border-colour;
+    }
+
+    .labour-liverpool-contact__wrapper {
+        text-align: center;
+
+        @include mq($from: tablet) {
+            text-align: left;
+        }
+    }
+
+    .labour-liverpool-contact__sign-up {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 100%;
+        @include mq($from: tablet) {
+            width: 75%;
+            padding-right: 5em;
+        }
+        @include mq($from: desktop) {
+            left: -30%;
+            padding-right: 0;
+        }
+    }
+
+    .labour-liverpool-contact__sign-up__header {
+        @include fs-header(3);
+        margin-top: 12px;
+    }
+
+    .labour-liverpool-contact__sign-up__form {
+        border: 0;
+        width: 100%;
+        @include mq(tablet) {
+            height: 500px;
+        }
+        @include mq($from: desktop) {
+            width: 75%;
+        }
+    }
+
+    .content__meta-container {
+        display: none;
+    }
+
+    .labour-liverpool-contact__contact-ewen {
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: top;
+
+        .labour-liverpool-contact__contact-ewen__textbox {
+            width: 50%;
+            float: left;
+            position: relative;
+
+            .textbox-container-mask {
+                position: absolute;
+                top: -161px;
+                @include mq($from: tablet) {
+                    top: -150px;
+                }
+
+                .inline-labour-liverpool-textbox-mask__svg {
+                    width: 128px;
+                    @include mq($from: tablet) {
+                        width: 156px;
+                    }
+                }
+            }
+
+            .avatar {
+                width: 100%;
+                max-width: 140px;
+
+                @include mq($from: desktop) {
+                    max-width: 90px;
+                }
+            }
+
+            .textbox-container {
+                @include fs-header(1);
+                color: $labour-liverpool-contact-textbox-font-colour;
+                background-color: $labour-liverpool-contact-textbox-background-colour;
+                padding: 0 11px 17px;
+                max-width: 140px;
+
+                @include mq($from: tablet) {
+                    @include fs-header(2);
+                    padding: 4px 8px 19px;
+                }
+            }
+
+            @include mq($from: tablet) {
+                width: 100%;
+                float: none;
+            }
+        }
+
+        .labour-liverpool-contact__contact-ewen__buttons {
+            width: calc(50% - 20px);
+            float: left;
+            margin-left: 20px;
+            margin-top: 160px;
+
+            .button-twitter, .button-email {
+                @include fs-textSans(1);
+                color: $labour-liverpool-contact-button-font-colour;
+                position: relative;
+                display: block;
+                padding: 9px 0 9px 36px;
+                background-color: $labour-liverpool-contact-button-background-colour;
+                border-radius: 20px;
+                margin-top: 6px;
+
+                .button-logo {
+                    position: absolute;
+                    top: 5px;
+                    left: 5px;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 30px;
+                }
+            }
+
+            .inline-twitter-logo, .inline-email {
+                position: relative;
+                top: -4px;
+                left: -4px;
+            }
+
+            .button-twitter .button-logo {
+                background-color: $labour-liverpool-contact-twitter-logo-background-colour;
+            }
+
+            .button-email .button-logo {
+                background-color: $labour-liverpool-contact-email-logo-background-colour;
+            }
+
+            @include mq($from: tablet) {
+                width: 100%;
+                float: none;
+                margin: 0;
+            }
         }
     }
 }

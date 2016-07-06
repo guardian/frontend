@@ -53,6 +53,10 @@
             </div>
         </article>
 
+        @if(article.content.tags.isLabourLiverpoolSeries) {
+            @fragments.labourLiverpoolContact()
+        }
+
         @fragments.contentFooter(article, model.related)
 
     </div>
