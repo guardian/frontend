@@ -163,6 +163,7 @@ $omgbColor: #e41f13;
             top: 16px;
             left: 16px;
             border-width: 8px 8px 8px 18px;
+            border-color: transparent transparent transparent $neutral-7;
         }
 
         @include fs-textSans(4);
