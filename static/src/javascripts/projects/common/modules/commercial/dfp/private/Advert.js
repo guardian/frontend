@@ -38,7 +38,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('advertCreated',  timer );
+            //ophanTracking.advertCheckpoint('advertCreated',  timer );
         }
 
         return Object.seal(advert);
@@ -49,7 +49,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('startLoading',  timer );
+            //ophanTracking.advertCheckpoint('startLoading',  timer );
         }
     }
 
@@ -59,7 +59,7 @@ define([
 
          if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('stopLoading',  timer );
+            //ophanTracking.advertCheckpoint('stopLoading',  timer );
         }
     }
 
@@ -68,7 +68,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('startRendering',  timer );
+            //ophanTracking.advertCheckpoint('startRendering',  timer );
         }
     }
 
@@ -78,7 +78,7 @@ define([
 
         if (advert.id === 'dfp-ad--inline1' ) {
             var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint('stopRendering',  timer );
+            //ophanTracking.advertCheckpoint('stopRendering',  timer );
         }
     }
 });
