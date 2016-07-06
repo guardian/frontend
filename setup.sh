@@ -132,8 +132,7 @@ compile() {
 
 report() {
   if [[ ${#EXTRA_STEPS[@]} -gt 0 ]]; then
-    echo -e
-    echo "Remaining tasks: "
+    node ./tools/messages.js install-steps
     for i in "${!EXTRA_STEPS[@]}"; do
       echo "  $((i+1)). ${EXTRA_STEPS[$i]}"
     done
