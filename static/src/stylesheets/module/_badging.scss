@@ -54,18 +54,6 @@
    ========================================================================== */
 
 .content--liveblog {
-    .content__head--aus-election {
-        .content__header .gs-container {
-            background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog.jpg');
-        }
-
-        &.tonal__head--tone-dead {
-            .content__header .gs-container {
-                background-image: url('https://uploads.guim.co.uk/2016/05/11/Election_liveblog_dead.jpg');
-            }
-        }
-    }
-
     .content__head--us-election {
         .content__header .gs-container {
             background-image: url('https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2016/2/1/1454339615039/uselectionliveblogon.jpg');
