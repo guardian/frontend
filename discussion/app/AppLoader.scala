@@ -1,11 +1,11 @@
 import dev.DevAssetsController
-import http.{DiscussionFilters, CorsHttpErrorHandler}
+import http.CorsHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.CachedHealthCheckLifeCycle
+import conf.{CommonFilters, CachedHealthCheckLifeCycle}
 import controllers.{DiscussionControllers, HealthCheck}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -42,5 +42,5 @@ trait AppComponents extends FrontendComponents with AppLifecycleComponents with 
   lazy val appIdentity = ApplicationIdentity("frontend-discussion")
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[DiscussionFilters].filters
+  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
 }
