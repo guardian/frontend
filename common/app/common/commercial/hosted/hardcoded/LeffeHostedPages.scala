@@ -58,7 +58,7 @@ object LeffeHostedPages {
       mediaId = adrienneTreebyPageName,
       title = "Slow Time: Tasting the past",
       duration = 116,
-      posterUrl = "TODO",
+      posterUrl = Static("images/commercial/adrienne-treeby_poster.jpg"),
       srcUrlMp4 = "https://cdn.theguardian" +
                   ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian" +
@@ -82,7 +82,7 @@ object LeffeHostedPages {
       mediaId = peteLawrencePageName,
       title = "Slow Time: Capturing time",
       duration = 138,
-      posterUrl = "TODO",
+      posterUrl = Static("images/commercial/pete-lawrence_poster.jpg"),
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid" +
@@ -103,7 +103,7 @@ object LeffeHostedPages {
       mediaId = susanDergesPageName,
       title = "Slow Time: Still The river",
       duration = 146,
-      posterUrl = "TODO",
+      posterUrl = Static("images/commercial/susan-derges_poster.jpg"),
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo" +
@@ -124,7 +124,7 @@ object LeffeHostedPages {
       mediaId = quayBrothersPageName,
       title = "Slow Time: Quay Brothers",
       duration = 134,
-      posterUrl = "TODO",
+      posterUrl = Static("images/commercial/quay-brothers_poster.jpg"),
       srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4",
       srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm",
       srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv",
