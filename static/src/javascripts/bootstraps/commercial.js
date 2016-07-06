@@ -76,9 +76,9 @@ define([
             }
 
             userTiming.mark('commercial start');
-            ophanTracking.addBaseline('start');
+            ophanTracking.addBaseline(ophanTracking.primaryBaseline);
 
-            var modulePromises = [];
+            var primaryModulePromises = [];
 
             primaryModules.forEach(function (pair) {
 
@@ -86,17 +86,17 @@ define([
 
                 robust.catchErrorsAndLog(moduleName, function () {
                     var modulePromise = pair[1]();
-                    modulePromise.then(function(){
 
-                        ophanTracking.pageCheckpoint(moduleName, 'start');
+                    modulePromise.then(function(){
+                        ophanTracking.pageCheckpoint(moduleName, ophanTracking.primaryBaseline);
                     });
 
-                    modulePromises.push(modulePromise);
+                    primaryModulePromises.push(modulePromise);
                 });
             });
 
-            Promise.all(modulePromises).then(function () {
-                ophanTracking.addBaseline('secondary');
+            Promise.all(primaryModulePromises).then(function () {
+                ophanTracking.addBaseline(ophanTracking.secondaryBaseline);
 
                 var secondaryModulePromises = [];
 
@@ -107,8 +107,7 @@ define([
                         var modulePromise = pair[1]();
 
                         modulePromise.then(function(){
-                            var timer = new Date().getTime();
-                            ophanTracking.pageCheckpoint(moduleName, 'secondary');
+                            ophanTracking.pageCheckpoint(moduleName, ophanTracking.secondaryBaseline);
                         });
 
                         secondaryModulePromises.push(modulePromise);

@@ -8,7 +8,9 @@ define([
             baselines: {
                 initial : new Date().getTime()
             }
-        };
+        },
+        primaryBaseline = 'primary',
+        secondaryBaseline = 'secondary';
 
     function trackPerformance(googletag) {
 
@@ -100,7 +102,7 @@ define([
 
     function pageCheckpoint(message, baseline){
         var timerEnd = new Date().getTime();
-        var timerStart = loggingObject.baselines[baseline];
+        var timerStart = getBaseline(baseline);
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
@@ -128,6 +130,10 @@ define([
         loggingObject.baselines[baselineName] = new Date().getTime();
     }
 
+    function getBaseline(baselineName){
+        return loggingObject.baselines[baselineName];
+    }
+
     function debugTimings(){
         console.log(loggingObject)
     }
@@ -137,6 +143,9 @@ define([
         pageCheckpoint : pageCheckpoint,
         advertCheckpoint: advertCheckpoint,
         addBaseline : addBaseline,
+        primaryBaseline : primaryBaseline,
+        secondaryBaseline: secondaryBaseline,
+
         debugTimings : debugTimings
     };
 });
