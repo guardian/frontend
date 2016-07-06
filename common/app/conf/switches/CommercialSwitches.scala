@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,7,8),
+    sellByDate = new LocalDate(2016,10,12),
     exposeClientSide = false
   )
 
@@ -320,9 +320,9 @@ trait CommercialSwitches {
     group = CommercialLabs,
     "static-badges",
     "If on, all badges are served server side",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 8, 10),
     exposeClientSide = true
   )
 
@@ -330,9 +330,9 @@ trait CommercialSwitches {
     group = CommercialLabs,
     "static-container-badges",
     "Serve container branding from capi",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 8, 10),
     exposeClientSide = true
   )
 
