@@ -76,7 +76,7 @@ define([
             }
 
             userTiming.mark('commercial start');
-            ophanTracking.init();
+            ophanTracking.addBaseline('start');
 
             var modulePromises = [];
 
@@ -87,8 +87,8 @@ define([
                 robust.catchErrorsAndLog(moduleName, function () {
                     var modulePromise = pair[1]();
                     modulePromise.then(function(){
-                        var timer = new Date().getTime();
-                        ophanTracking.advertCheckpoint(moduleName,  timer);
+
+                        ophanTracking.checkpoint(moduleName, 'start');
                     });
 
                     modulePromises.push(modulePromise);
@@ -96,7 +96,7 @@ define([
             });
 
             Promise.all(modulePromises).then(function () {
-                ophanTracking.init();
+                ophanTracking.addBaseline('secondary');
 
                 secondaryModules.forEach(function (pair) {
                     var moduleName = pair[0];
@@ -106,7 +106,7 @@ define([
 
                         modulePromise.then(function(){
                             var timer = new Date().getTime();
-                            ophanTracking.advertCheckpoint(moduleName,  timer);
+                            ophanTracking.checkpoint(moduleName, 'secondary');
                         });
                     });
                 });

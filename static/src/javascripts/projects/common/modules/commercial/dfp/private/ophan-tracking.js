@@ -2,15 +2,14 @@ define([
     'raven'
 ], function (raven) {
 
-    var commercialInitTime;
+    //var commercialInitTime;
+    var baselines = {};
 
-    function init() {
-
-        commercialInitTime = new Date().getTime();
-
-        /*eslint no-console: "error"*/
-        console.log('commercial baseline ' + commercialInitTime);
-    }
+    var loggingObject = {
+        page: {},
+        adverts: {},
+        baselines: {}
+    };
 
     function trackPerformance(googletag) {
 
@@ -42,8 +41,8 @@ define([
                     adTimings[slotId][timingAttr] = new Date().getTime();
 
                     if (slotId === 'dfp-ad--inline1' && timingAttr) {
-                        /*eslint no-console: "error"*/
-                        console.log('olde report: ' + timingAttr + '  ' + (adTimings[slotId][timingAttr] - commercialInitTime) );
+
+                        //console.log('olde report: ' + timingAttr + '  ' + (adTimings[slotId][timingAttr] - commercialInitTime) );
                     }
                 }
 
@@ -70,12 +69,12 @@ define([
                         }
                     }
 
-                    ophan.record({
+                    /*ophan.record({
                         ads: [{
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(commercialInitTime, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(, new Date().getTime()),
 
                             // overall time to make an ad request
                             timeToAdRequest: safeDiff(commercialInitTime, slotTiming.fetch),
@@ -88,7 +87,7 @@ define([
 
                             adServer: 'DFP'
                         }]
-                    });
+                    });*/
                 });
             }));
 
@@ -100,14 +99,19 @@ define([
         }
     }
 
-    function advertCheckpoint(message, timer){
-        /*eslint no-console: "error"*/
-        console.log('new report: ', message, ' : ', timer - commercialInitTime);
+    function checkpoint(message, baseline){
+        var timerEnd = new Date().getTime();
+        var timerStart = baselines[baseline];
+        console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
+    }
+
+    function addBaseline(baselineName){
+        baselines[baselineName] = new Date().getTime();
     }
 
     return {
         trackPerformance : trackPerformance,
-        advertCheckpoint : advertCheckpoint,
-        init: init
+        checkpoint : checkpoint,
+        addBaseline : addBaseline
     };
 });
