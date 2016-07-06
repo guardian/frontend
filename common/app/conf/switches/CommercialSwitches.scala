@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,7,8),
+    sellByDate = new LocalDate(2016,10,12),
     exposeClientSide = false
   )
 
