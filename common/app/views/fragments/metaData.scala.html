@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, CommercialSwitch, SmartAppBanner}
+@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -29,6 +29,10 @@
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
     }
 
+    @if(ComscoreSwitch.isSwitchedOn) {
+        <link rel="dns-prefetch" href="//sb.scorecardresearch.com" />
+    }
+
     @if(UseLinkPreconnect.isSwitchedOn) {
         <link rel="preconnect" crossorigin href="@Configuration.assets.path" />
         <link rel="preconnect" crossorigin href="@Configuration.images.path" />
@@ -40,6 +44,10 @@
 
         @if(GoogleAnalyticsSwitch.isSwitchedOn) {
             <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
+        }
+
+        @if(ComscoreSwitch.isSwitchedOn) {
+            <link rel="preconnect" href="//sb.scorecardresearch.com" />
         }
 
         @if(CommercialSwitch.isSwitchedOn) {
