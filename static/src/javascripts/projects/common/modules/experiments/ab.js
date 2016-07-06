@@ -321,6 +321,16 @@ define([
             });
         },
 
+        forceRegisterCompleteEvent: function(testId, variantId) {
+            var test = getTest(testId);
+            var variant = test && test.variants.filter(function (v) {
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
+            var onTestComplete = variant && variant.success || noop;
+
+            onTestComplete(recordTestComplete(test, variantId));
+        },
+
         segmentUser: function () {
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -332,6 +342,7 @@ define([
                     test = abParam[0];
                     variant = abParam[1];
                     ab.forceSegment(test, variant);
+                    ab.forceRegisterCompleteEvent(test, variant);
                 });
             } else {
                 ab.segment();

@@ -139,6 +139,14 @@ define([
     })
 ```
 
+### Forcing yourself into a test
+Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to force yourself into a test.
+e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton
+
+#### Firing complete events in dev mode
+In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, follow the #ab- pattern above.
+Whichever test you set in the hash will have its completion function called.
+
 ### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket.
 ```
