@@ -78,12 +78,12 @@ define([
 
     function loadOther() {
         var services = [
-            config.page.edition === 'UK' ? audienceSciencePql : null,
-            config.page.edition === 'UK' ? audienceScienceGateway : null,
+            audienceSciencePql,
+            audienceScienceGateway,
             imrWorldwide,
             remarketing,
             krux
-        ].filter(function (_) { return _ && _.shouldRun; });
+        ].filter(function (_) { return _.shouldRun; });
 
         if (services.length) {
             insertScripts(services);

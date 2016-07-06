@@ -61,7 +61,7 @@ define([
     }
 
     return {
-        shouldRun: config.switches.audienceScienceGateway,
+        shouldRun: config.page.edition === 'UK' && config.switches.audienceScienceGateway,
         url: audienceSciencePqlUrl,
         reset: function () {
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
