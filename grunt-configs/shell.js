@@ -1,7 +1,7 @@
 module.exports = function () {
     return {
         spriteGeneration: {
-            command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
+            command: 'node spricon',
             options: {
                 execOptions: {
                     cwd: 'tools/sprites'

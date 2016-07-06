@@ -11,7 +11,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-object VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
@@ -89,3 +89,5 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     renderFormat(response, response, 900)
   }
 }
+
+object VideoEndSlateController extends VideoEndSlateController

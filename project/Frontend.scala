@@ -67,11 +67,17 @@ object Frontend extends Build with Prototypes {
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
+
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+  )
+
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
@@ -96,7 +102,8 @@ object Frontend extends Build with Prototypes {
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources
-    )
+    ),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
@@ -142,13 +149,17 @@ object Frontend extends Build with Prototypes {
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
-      .settings(libraryDependencies ++= List(shadeMemcached))
+      .settings(
+        libraryDependencies ++= List(shadeMemcached),
+        RoutesKeys.routesGenerator := InjectedRoutesGenerator
+      )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val dev = application("dev-build")
     .dependsOn(
@@ -167,6 +178,7 @@ object Frontend extends Build with Prototypes {
       adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator,
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 

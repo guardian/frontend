@@ -118,14 +118,14 @@
 
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
 }
 .top-banner-ad-container--below-nav {
     @include mq(desktop) {
-        .js-on:not(.is-adfree) & {
+        .js-on & {
             display: block;
         }
     }
@@ -413,11 +413,18 @@
 }
 .ad-slot--im {
     float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq($until: mobileLandscape) {
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
+    &:not(.ad-slot--rendered) {
+        width: 0;
+        height: 0;
+    }
+
+    &.ad-slot--rendered > * {
+        margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
+        @include mq(mobileLandscape) {
+            margin-bottom: $gs-baseline;
+            margin-right: $gs-gutter;
+        }
     }
 }
 .ad-slot--fobadge.ad-slot--im {

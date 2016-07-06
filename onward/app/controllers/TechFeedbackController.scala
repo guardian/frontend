@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import model.{Cached, MetaData, SectionSummary}
 import play.api.mvc.{Action, Controller}
 
-object TechFeedbackController extends Controller with Logging {
+class TechFeedbackController extends Controller with Logging {
 
   def techFeedback(path: String) = Action { implicit request =>
     val page = model.SimplePage(MetaData.make(
@@ -18,3 +18,5 @@ object TechFeedbackController extends Controller with Logging {
   }
 
 }
+
+object TechFeedbackController extends TechFeedbackController

@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Height of the top banner is fixed at 250px in the Tech section",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = false
   )
 
@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
     owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,7,8),
+    sellByDate = new LocalDate(2016,10,12),
     exposeClientSide = false
   )
 
@@ -320,9 +320,9 @@ trait CommercialSwitches {
     group = CommercialLabs,
     "static-badges",
     "If on, all badges are served server side",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 8, 10),
     exposeClientSide = true
   )
 
@@ -330,10 +330,20 @@ trait CommercialSwitches {
     group = CommercialLabs,
     "static-container-badges",
     "Serve container branding from capi",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 8, 10),
     exposeClientSide = true
+  )
+
+  val showPaidSeriesContainer = Switch(
+    group = CommercialLabs,
+    "show-paid-series-containers",
+    "Show series containers on paid content pages.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
   )
 
   val hostedGalleryTest = Switch(
@@ -342,7 +352,27 @@ trait CommercialSwitches {
     "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 12),
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = false
+  )
+
+  val hostedGalleryVisitBritain = Switch(
+    group = CommercialLabs,
+    "hosted-gallery-visit-britain",
+    "If on, gallery pages for Visit Britain are available",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = false
+  )
+
+  val hostedLeffeShowVideo1 = Switch(
+    group = CommercialLabs,
+    name = "hosted-leffe-show-video-1",
+    description = "Show video or else 404.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 10),
     exposeClientSide = false
   )
 
@@ -352,7 +382,7 @@ trait CommercialSwitches {
     description = "Use special extra tracking parameters for hosted content",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 12),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
 }

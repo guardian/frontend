@@ -5,8 +5,8 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/dfp-api',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/add-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/experiments/ab',
     'lodash/collections/contains'
@@ -17,8 +17,8 @@ define([
     detect,
     Component,
     mediator,
-    dfp,
-    createAdSlot,
+    addSlot,
+    createSlot,
     commercialFeatures,
     ab,
     contains
@@ -49,13 +49,13 @@ define([
     MostPopular.prototype.prerender = function () {
         if (commercialFeatures.popularContentMPU && !this.mobileMaximumSlotsReached()) {
             var $mpuEl = $('.js-fc-slice-mpu-candidate', this.elem);
-            this.$mpu = $mpuEl.append(createAdSlot('mostpop', 'container-inline'));
+            this.$mpu = $mpuEl.append(createSlot('mostpop', 'container-inline'));
         }
     };
 
     MostPopular.prototype.ready = function () {
         if (this.$mpu) {
-            dfp.addSlot($('.ad-slot', this.$mpu));
+            addSlot($('.ad-slot', this.$mpu));
             this.$mpu.removeClass('fc-slice__item--no-mpu');
         }
         mediator.emit('modules:popular:loaded', this.elem);

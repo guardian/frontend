@@ -3,7 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
@@ -29,11 +29,11 @@ define([
             injector = new Injector(),
             sliceAdverts, config, detect, commercialFeatures;
 
-        var createSlotSpy = jasmine.createSpy('create-ad-slot').and.callFake(createAdSlot);
+        var createSlotSpy = jasmine.createSpy('dfp/create-slot').and.callFake(createAdSlot);
 
         beforeEach(function (done) {
             createSlotSpy.calls.reset();
-            injector.mock('common/modules/commercial/create-ad-slot', createSlotSpy);
+            injector.mock('common/modules/commercial/dfp/create-slot', createSlotSpy);
 
             injector.require([
                 'common/modules/commercial/slice-adverts',

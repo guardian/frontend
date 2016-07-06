@@ -1,8 +1,8 @@
 package controllers
 
-import conf.AllGoodCachedHealthCheck
+import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck extends AllGoodCachedHealthCheck(
   9015,
-  "/news-alert/alerts"
+  ExpiringSingleHealthCheck("/news-alert/alerts")
 )

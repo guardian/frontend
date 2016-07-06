@@ -61,24 +61,6 @@
         color: $neutral-2-contrasted;
     }
 }
-.ad-slot--im {
-    float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
-
-    @include mq($until: mobileLandscape) {
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
-    }
-}
-.ad-slot--fobadge.ad-slot--im {
-    min-width: gs-span(2) + $gs-gutter;
-
-    .brandbadge__inner {
-        padding: $gs-baseline / 2 0 $gs-baseline;
-        border-top: 1px solid $neutral-3;
-        border-bottom: 1px dotted $neutral-3;
-    }
- }
 .brandbadge--onside {
     padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted $neutral-5;

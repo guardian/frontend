@@ -40,10 +40,7 @@ define([
             code:          'membership-message-uk-2016-06-24',
             minVisited:    10,
             data: {
-                messageText: [
-                    'Support Guardian journalism and our coverage of critical, under-reported stories from around the world.',
-                    'Become a Supporter for just £49 per year.'
-                ].join(' '),
+                messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just £49 per year.',
                 linkText: 'Find out more'
             }
         },
@@ -52,7 +49,7 @@ define([
             code:          'membership-message-us-2016-06-24',
             minVisited:    10,
             data: {
-                messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month',
+                messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month.',
                 linkText: 'Find out more'
             }
         },
@@ -61,10 +58,7 @@ define([
             code:          'membership-message-int-2016-06-24',
             minVisited:    10,
             data: {
-                messageText: [
-                    'Support Guardian journalism and our coverage of critical, under-reported stories from around the world.',
-                    'Become a Supporter for just $49/€49 per year.'
-                ].join(' '),
+                messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $49/€49 per year.',
                 linkText: 'Find out more'
             }
         }

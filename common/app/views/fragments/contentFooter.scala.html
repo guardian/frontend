@@ -8,17 +8,11 @@
     @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
         @fragments.storyPackagePlaceholder(content, related)
     } {
-        @fragments.onwardPlaceholder()
-    } {
-        <div class="js-fronts-section" data-link-name="fronts-on-articles | section-front"></div>
-    } {
-        <div class="js-fronts-network-1" data-link-name="fronts-on-articles | network-front | block-1"></div>
+        @fragments.onwardPlaceholder(content.commercial.isAdvertisementFeature)
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {
         @fragments.mostPopularPlaceholder(content.metadata.sectionId)
-    } {
-        <div class="js-fronts-network-2" data-link-name="fronts-on-articles | network-front | block-2"></div>
     } {
         @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
             <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>

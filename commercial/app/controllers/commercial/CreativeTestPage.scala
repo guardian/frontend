@@ -33,7 +33,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   val navSection: String = "Commercial"
 }
 
-object CreativeTestPage extends Controller {
+class CreativeTestPage extends Controller {
   def allComponents(keyword : List[String]) = Action{ implicit request =>
     if(Configuration.environment.stage == "dev" || Configuration.environment.stage == "code") {
       Ok(views.html.debugger.allcreatives(TestPage(keyword)))

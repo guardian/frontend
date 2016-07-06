@@ -7,7 +7,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object LiveEventsController
+class LiveEventsController
   extends Controller
   with ExecutionContexts
   with implicits.Requests {

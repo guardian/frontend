@@ -8,7 +8,7 @@ import views.html.sudoku
 
 import scala.concurrent.Future
 
-object SudokusController extends Controller with ExecutionContexts {
+class SudokusController extends Controller with ExecutionContexts {
   def render(id: String) = Action.async { implicit request =>
     if (Switches.SudokuSwitch.isSwitchedOn) {
       SudokuApi.getData(id) map {

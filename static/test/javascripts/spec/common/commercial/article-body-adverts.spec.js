@@ -22,39 +22,38 @@ define([
             spaceFiller,
             spaceFillerStub,
             commercialFeatures,
-            dfp,
             config,
             detect;
 
         beforeEach(function (done) {
+            injector.mock('common/modules/commercial/dfp/track-ad-render', function trackAdRender(id) {
+                return Promise.resolve(ads[id]);
+            });
+
+            injector.mock('common/modules/commercial/dfp/add-slot', function () {
+                /* noop */
+            });
             injector.require([
-                'common/modules/commercial/dfp/dfp-api',
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
             ], function () {
-                dfp = arguments[0];
-                dfp.addSlot = function () { /* noop */ };
-                dfp.trackAdRender = function (id) {
-                    return Promise.resolve(ads[id]);
-                };
+                articleBodyAdverts = arguments[0];
 
-                articleBodyAdverts = arguments[1];
-
-                commercialFeatures = arguments[2];
+                commercialFeatures = arguments[1];
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[3];
+                spaceFiller = arguments[2];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                config = arguments[4];
+                config = arguments[3];
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[5];
+                detect = arguments[4];
 
                 done();
             });

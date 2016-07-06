@@ -7,15 +7,12 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/visitor-frequency-quick-survey',
-    'common/modules/experiments/tests/video-yellow-button',
-    'common/modules/experiments/tests/participation-low-fric-music-v2'
+    'common/modules/experiments/tests/join-discussion-after-poll',
+    'common/modules/experiments/tests/hosted-autoplay'
 ], function (
     reportError,
     config,
@@ -25,27 +22,21 @@ define([
     mvtCookie,
     memoize,
     noop,
-    FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
-    NewUserAdvertsDisabled,
-    VisitorFrequencyQuickSurvey,
-    VideoYellowPlayButton,
-    ParticipationLowFricMusicV2
+    JoinDiscussionAfterPoll,
+    HostedAutoplay
 ) {
 
     var TESTS = [
-        new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
-        new NewUserAdvertsDisabled(),
-        new VisitorFrequencyQuickSurvey(),
-        new VideoYellowPlayButton(),
-        new ParticipationLowFricMusicV2()
+        new JoinDiscussionAfterPoll(),
+        new HostedAutoplay()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -118,6 +109,7 @@ define([
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
             isSensitive = config.page.shouldHideAdverts;
+
         return ((isSensitive ? test.showForSensitive : true)
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }

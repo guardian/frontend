@@ -5,7 +5,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/track-ad-load',
     'lodash/functions/memoize'
 ], function (
     qwery,
@@ -14,7 +14,7 @@ define([
     fastdom,
     config,
     mediator,
-    dfp,
+    trackAdLoad,
     memoize
 ) {
     // total_hours_spent_maintaining_this = 64
@@ -145,7 +145,7 @@ define([
     var onAdsLoaded = memoize(function (rules) {
         return Promise.all(qwery('.js-ad-slot', rules.body)
             .map(function (ad) { return ad.id; })
-            .map(dfp.trackAdLoad)
+            .map(trackAdLoad)
         );
     }, getFuncId);
 

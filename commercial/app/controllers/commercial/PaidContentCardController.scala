@@ -7,7 +7,7 @@ import play.api.mvc._
 import views.support.Item300
 import views.support.commercial.TrackingCodeBuilder
 
-object PaidContentCardController extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class PaidContentCardController extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private def renderCard(format: Format) = Action.async { implicit request =>
 

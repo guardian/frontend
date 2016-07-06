@@ -21,7 +21,7 @@ define([
     'common/modules/article/space-filler',
     'common/modules/commercial/badges',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/component',

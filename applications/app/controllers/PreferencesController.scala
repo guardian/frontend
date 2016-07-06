@@ -4,7 +4,7 @@ import model.Cached.RevalidatableResult
 import model.{PreferencesMetaData, Cached}
 import play.api.mvc.{Action, Controller}
 
-object PreferencesController extends Controller with common.ExecutionContexts {
+class PreferencesController extends Controller with common.ExecutionContexts {
 
   def indexPrefs() = Action { implicit request =>
     Cached(300) {
@@ -12,3 +12,5 @@ object PreferencesController extends Controller with common.ExecutionContexts {
     }
   }
 }
+
+object PreferencesController extends PreferencesController

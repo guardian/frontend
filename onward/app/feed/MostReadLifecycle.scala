@@ -1,25 +1,29 @@
 package feed
 
-import common.{LifecycleComponent, AkkaAsync, Jobs}
+import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class MostReadLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class MostReadLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler = Jobs,
+  akkaAsync: AkkaAsync = AkkaAsync
+)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
-    Jobs.deschedule("MostReadAgentRefreshJob")
+    jobs.deschedule("MostReadAgentRefreshJob")
   }}
 
   override def start(): Unit = {
-    Jobs.deschedule("MostReadAgentRefreshJob")
+    jobs.deschedule("MostReadAgentRefreshJob")
 
     // update every 30 min
-    Jobs.schedule("MostReadAgentRefreshJob",  "0 0/30 * * * ?") {
+    jobs.schedule("MostReadAgentRefreshJob",  "0 0/30 * * * ?") {
       MostReadAgent.update()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       MostReadAgent.update()
     }
   }
