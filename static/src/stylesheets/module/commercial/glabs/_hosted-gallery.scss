@@ -28,17 +28,6 @@
     transition: opacity 300ms ease, visibility 300ms ease;
 }
 
-@mixin hosted-gallery-title {
-    color: #ffffff;
-    margin-left: 15px;
-    margin-bottom: 15px;
-    margin-right: 90px;
-    font-size: 30px;
-    &:hover {
-        text-decoration: none;
-    }
-}
-
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
@@ -78,29 +67,42 @@
         width: 100%;
         height: 100%;
     }
+    .hosted-gallery__image-gradient {
+        position: absolute;
+        top: 60%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    }
 }
 
 .hosted-gallery__cta-title {
     @include f-headlineSans;
-    @include hosted-gallery-cta;
-    @include hosted-gallery-title;
+    color: #ffffff;
+    margin-bottom: 15px;
+    margin-right: 90px;
+    font-size: 20px;
+    line-height: 22px;
+    @include mq(tablet) {
+        font-size: 24px;
+        line-height: 26px;
+    }
+    @include mq(desktop) {
+        font-size: 30px;
+        line-height: 32px;
+    }
 }
 
 .hosted-gallery__cta {
     @include hosted-gallery-cta;
-    margin: 0 $gs-column-width * 10 0 $gs-column-width * 4;
+    margin: 0 $gs-gutter * 2 0 $gs-gutter * 5;
     font-weight: bold;
-}
-
-.hosted-gallery__cta-title-last {
-    @include f-headlineSans;
-    @include hosted-gallery-title;
-    margin: 0 0 15px;
-    line-height: 32px;
 }
 
 .hosted-gallery__cta-link {
     @include circular;
+    @include f-headlineSans;
     position: relative;
     display: block;
     width: 160px;
@@ -109,6 +111,7 @@
     color: #ffffff;
     font-weight: bold;
     background-color: $omgbColor;
+    text-decoration: none;
 
     .inline-arrow-right {
         position: absolute;
@@ -119,6 +122,17 @@
         svg {
             height: 36px;
             width: 36px;
+        }
+    }
+
+    @include mq($until: tablet) {
+        padding: 6px 4px 3px 10px;
+        margin: 8px 0 16px;
+        width: 140px;
+        font-size: 14px;
+        .inline-arrow-right {
+            height: 33px;
+            right: 3px;
         }
     }
 }
@@ -165,11 +179,31 @@
     position: absolute;
     bottom: 0;
     color: #ffffff;
-    padding: 10px 10%;
+    padding: 50px 120px 10px 60px;
+    @include mq($until: tablet) {
+        padding: 10px 70px 10px 20px;
+    }
 }
 
 .hosted-gallery__heading {
     @include f-headlineSans;
+    margin-bottom: 5px;
+    font-size: 20px;
+    line-height: 22px;
+    @include mq(tablet) {
+        font-size: 24px;
+        line-height: 26px;
+    }
+}
+
+.hosted-gallery__sub-heading {
+    @include f-headlineSans;
+    font-size: 16px;
+    line-height: 18px;
+    @include mq(tablet) {
+        font-size: 20px;
+        line-height: 22px;
+    }
 }
 
 .hosted-gallery-page--container {
@@ -212,13 +246,14 @@
         background: #1b1b1b;
     }
     @include mq($until: desktop) {
-        .hosted__container--content {
+        .hosted-gallery__lower-bar {
             padding: 0;
         }
     }
-    .hosted__container--content {
+    .hosted-gallery__lower-bar {
         display: flex;
         flex-direction: row;
+        background: $neutral-1;
     }
 }
 
