@@ -1,14 +1,14 @@
 define([
-    'raven'
-], function (raven) {
+    'raven',
+    'common/utils/user-timing'
+], function (raven, userTiming) {
 
     var loggingObject = {
             page: {},
             adverts: {},
-            baselines: {
-                initial : new Date().getTime()
-            }
+            baselines: {}
         },
+        initial = new Date().getTime(), // For backwards compatibility below, whilst we still use the old ophan format.
         primaryBaseline = 'primary',
         secondaryBaseline = 'secondary';
 
@@ -75,10 +75,10 @@ define([
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(loggingObject.baselines.initial, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(initial, new Date().getTime()),
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(loggingObject.baselines.initial, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(initial, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -101,7 +101,7 @@ define([
     }
 
     function pageCheckpoint(message, baseline){
-        var timerEnd = new Date().getTime();
+        var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
@@ -127,7 +127,7 @@ define([
     }
 
     function addBaseline(baselineName){
-        loggingObject.baselines[baselineName] = new Date().getTime();
+        loggingObject.baselines[baselineName] = userTiming.getCurrentTime();
     }
 
     function getBaseline(baselineName){
