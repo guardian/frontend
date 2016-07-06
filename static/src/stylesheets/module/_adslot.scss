@@ -418,6 +418,14 @@
         width: 0;
         height: 0;
     }
+
+    &.ad-slot--rendered > * {
+        margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
+        @include mq(mobileLandscape) {
+            margin-bottom: $gs-baseline;
+            margin-right: $gs-gutter;
+        }
+    }
 }
 .ad-slot--fobadge.ad-slot--im {
     min-width: gs-span(2) + $gs-gutter;
