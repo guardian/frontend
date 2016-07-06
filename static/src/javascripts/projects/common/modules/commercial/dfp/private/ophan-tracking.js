@@ -2,14 +2,14 @@ define([
     'raven'
 ], function (raven) {
 
-    //var commercialInitTime;
-    var baselines = {};
-
-    var loggingObject = {
-        page: {},
-        adverts: {},
-        baselines: {}
-    };
+    var baselines = {
+            initial : new Date().getTime()
+        },
+        loggingObject = {
+            page: {},
+            adverts: {},
+            baselines: {}
+        };
 
     function trackPerformance(googletag) {
 
@@ -69,15 +69,15 @@ define([
                         }
                     }
 
-                    /*ophan.record({
+                    ophan.record({
                         ads: [{
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(baselines.initial, new Date().getTime()),
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(commercialInitTime, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(baselines.initial, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -87,7 +87,7 @@ define([
 
                             adServer: 'DFP'
                         }]
-                    });*/
+                    });
                 });
             }));
 
