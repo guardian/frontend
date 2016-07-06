@@ -105,19 +105,29 @@ define([
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
-    function advertCheckpoint (adName, message, time , lazyLoadSusceptible) {
+    function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
+        if(!loggingObject.adverts[adName]) {
+            loggingObject.adverts[adName] = {};
+        }
+
         if(lazyLoadSusceptible == false) {
-            var timeDiff  = time - baselines["secondary"];
-            console.log(adName +" "+ message +" "+ timeDiff);
+            var timeDiff  = time - baselines["start"];
+
+            loggingObject.adverts[adName][stage] = timeDiff;
         } else {
-            var lazyDelay = baselines["lazyLoadBaseline"] - baselines["start"];
+            if(!loggingObject.adverts[adName]["lazyDelay"]){
+                var lazyDelay = baselines["lazyLoadBaseline"] - baselines["start"];
+                loggingObject.adverts[adName]["lazyDelay"] = lazyDelay;
+            }
             var timeDiff = time - baselines["lazyLoadBaseline"];
-            console.log(adName + " "+ message + " " + timeDiff + " (lazyLoadDelay = " + lazyDelay + ")");
+            loggingObject.adverts[adName][stage] = timeDiff;
+            console.log(loggingObject);
         }
     }
 
     function addBaseline(baselineName){
         baselines[baselineName] = new Date().getTime();
+        console.log(baselines)
     }
 
     return {
