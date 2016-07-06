@@ -36,6 +36,16 @@ trait MonitoringSwitches {
     exposeClientSide = false
   )
 
+  val ComscoreSwitch = Switch(
+    SwitchGroup.Monitoring,
+    "comscore",
+    "If this switch is on, then Comscore reporting is enabled",
+    owners = Seq(Owner.withGithub("cb372")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ScrollDepthSwitch = Switch(
     SwitchGroup.Monitoring,
     "scroll-depth",
