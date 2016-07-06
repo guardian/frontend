@@ -88,7 +88,7 @@ define([
                     var modulePromise = pair[1]();
                     modulePromise.then(function(){
 
-                        ophanTracking.checkpoint(moduleName, 'start');
+                        ophanTracking.pageCheckpoint(moduleName, 'start');
                     });
 
                     modulePromises.push(modulePromise);
@@ -98,6 +98,8 @@ define([
             Promise.all(modulePromises).then(function () {
                 ophanTracking.addBaseline('secondary');
 
+                var secondaryModulePromises = [];
+
                 secondaryModules.forEach(function (pair) {
                     var moduleName = pair[0];
 
@@ -106,9 +108,15 @@ define([
 
                         modulePromise.then(function(){
                             var timer = new Date().getTime();
-                            ophanTracking.checkpoint(moduleName, 'secondary');
+                            ophanTracking.pageCheckpoint(moduleName, 'secondary');
                         });
+
+                        secondaryModulePromises.push(modulePromise);
                     });
+                });
+
+                Promise.all(secondaryModulePromises).then(function () {
+                    ophanTracking.debugTimings();
                 });
             });
         }
