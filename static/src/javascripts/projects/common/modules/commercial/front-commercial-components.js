@@ -3,6 +3,7 @@ define([
     'Promise',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -10,6 +11,7 @@ define([
     Promise,
     $,
     config,
+    fastdom,
     createAdSlot,
     commercialFeatures
 ) {
@@ -36,9 +38,11 @@ define([
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
             }
 
-            return $adSlotWrapper
-                .append($adSlot)
-                .insertAfter($containers[containerIndex]);
+            return fastdom.write(function () {
+                $adSlotWrapper
+                    .append($adSlot)
+                    .insertAfter($containers[containerIndex]);
+            });
         }
 
     }
