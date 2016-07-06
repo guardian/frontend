@@ -180,7 +180,7 @@ define([
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
                 var classNames = (index > 2 ? ['hide-until-tablet'] : [])
                     .concat(['manual', tpl.params.toneClass.replace('commercial--tone-', '')])
-                    .concat(tpl.params.prominent && index === 1 ? ['advert--large', 'advert--landscape', 'advert--inverse', 'advert--large--1x2'] : []);
+                    .concat(tpl.params.prominent && index === 1 ? ['large', 'landscape', 'inverse', 'large--1x2'] : []);
                 return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.prominent && index === 1 ? 'manual-card-large' : 'manual-card']({
                     clickMacro:          tpl.params.clickMacro,
                     offerUrl:            tpl.params['offer' + index + 'url'],
