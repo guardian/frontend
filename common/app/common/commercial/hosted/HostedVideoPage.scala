@@ -12,6 +12,8 @@ case class HostedVideoPage(
   video: HostedVideo,
   cta: HostedCallToAction,
   ctaBanner: String,
+  twitterTxt: String,
+  emailTxt: String,
   nextPage: Option[HostedVideoPage]
 ) extends HostedPage {
 
