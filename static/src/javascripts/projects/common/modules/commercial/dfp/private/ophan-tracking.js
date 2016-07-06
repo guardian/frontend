@@ -112,12 +112,12 @@ define([
         }
 
         if(lazyLoadSusceptible == false) {
-            var timeDiff  = time - loggingObject.baselines["start"];
+            var timeDiff  = time - getBaseline(primaryBaseline);
 
             loggingObject.adverts[adName][stage] = timeDiff;
         } else {
             if(!loggingObject.adverts[adName]["lazyDelay"]){
-                var lazyDelay = loggingObject.baselines["lazyLoadBaseline"] - loggingObject.baselines["start"];
+                var lazyDelay = loggingObject.baselines["lazyLoadBaseline"] - getBaseline(primaryBaseline);
                 loggingObject.adverts[adName]["lazyDelay"] = lazyDelay;
             }
             var timeDiff = time - loggingObject.baselines["lazyLoadBaseline"];
