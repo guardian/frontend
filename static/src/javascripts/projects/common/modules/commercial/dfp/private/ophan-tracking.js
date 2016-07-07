@@ -47,7 +47,7 @@ define([
                     timingAttr = lifecycleIdToTimingAttr[lifecycleId];
                     adTimings[slotId][timingAttr] = new Date().getTime();
 
-                    var advert = getAdvertById(event.slot.getSlotElementId());
+                    var advert = getAdvertById(slot.getSlotElementId());
                     var timing = lifecycleIdToAdvertTiming[lifecycleId];
                     if (advert && timing in advert.timings) {
                         advert.timings[timing] = userTiming.getCurrentTime();
