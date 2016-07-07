@@ -69,10 +69,11 @@ define([
             return false;
         }
 
-        return Promise.all(qwery('.js-sponsored-front').map(processFront)
-            .concat(qwery('.js-sponsored-container').map(processContainer))
-            .concat(qwery('.js-sponsored-card').map(processCard))
-        );
+        return Promise.all(qwery('.js-sponsored-front').map(processFront))
+            .then(function () {
+                return Promise.all(qwery('.js-sponsored-container').map(processContainer)
+                    .concat(qwery('.js-sponsored-card').map(processCard)));
+            });
     }
 
     function addPreBadge(adSlot, header, sponsor) {
