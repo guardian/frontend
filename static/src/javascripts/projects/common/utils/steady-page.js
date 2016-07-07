@@ -23,7 +23,7 @@ define([
     function insert (insertionContainer, insertionCallback, insertBelow) {
         return fastdom.read(function(){
             var currentScrollPos = document.body.scrollTop;
-            var containerTopPos = insertionContainer.scrollTop;
+            var containerTopPos = insertionContainer.offsetTop;
 
             if (insertBelow) {
                 containerTopPos = containerTopPos + insertionContainer.scrollHeight;
@@ -37,48 +37,31 @@ define([
         })
     }
 
-    // Convert an existing element to a different height
-    // Use if your element shifts from one height to a new height
-    function convert (convertEl, convertCallback) {
+    // When inserting, converting or removing elements that adjust
+    // the flow of an article, we must use an anchor point to measure
+    // the difference made to the scroll position to elements below
+    function articleAdjustment (el, convertCallback) {
         return fastdom.read(function(){
             var currentScrollPos = document.body.scrollTop;
-            var convertElPos = convertEl.scrollTop;
-            var convertElPrevHeight = convertEl.scrollHeight;
-
-            console.log(currentScrollPos, 'Convert: currentScrollPos');
-            console.log(convertElPos, 'Convert: convertElPos');
-            console.log(convertElPrevHeight, 'Convert: convertElPrevHeight');
-
+            var elTop = el.offsetTop;
+            var submetaEl = document.getElementsByClassName('submeta')[0];
+            var prevAnchorTop = submetaEl.offsetTop;
+            console.log(document.body.scrollTop)
             fastdomAdjustmentCallback(convertCallback).then(function(){
-                console.log(currentScrollPos > convertElPos, 'Convert: scrollAbove')
-                console.log(currentScrollPos + (convertEl.scrollHeight - convertElPrevHeight), 'Convert: newScrollPos')
-                if (currentScrollPos > convertElPos) {
-                    document.body.scrollTop = currentScrollPos + (convertEl.scrollHeight - convertElPrevHeight);
+                if (currentScrollPos > elTop) {
+                    console.log('true dat')
+                    var anchorPosDiff = prevAnchorTop - submetaEl.offsetTop;
+                    document.body.scrollTop = currentScrollPos - anchorPosDiff;
+                    console.log(document.body.scrollTop)
                 }
             });
         });
     }
 
-    // Remove from the page flow
-    // Use this if your element effect elements below by removing itself and causing
-    // those elements to shift upwards
-    function remove (removeEl, removeCallback) {
-        return fastdom.read(function(){
-            var currentScrollPos = document.body.scrollTop;
-            var convertElPos = removeEl.scrollTop;
-            var removeElPrevHeight = removeEl.scrollHeight;
 
-            fastdomAdjustmentCallback(removeCallback).then(function(){
-                if (currentScrollPos > convertElPos) {
-                    document.body.scrollTop = currentScrollPos - removeElPrevHeight;
-                }
-            });
-        });
-    }
 
     return {
         insert: insert,
-        convert: convert,
-        remove: remove
+        articleAdjustment: articleAdjustment
     }
 });
