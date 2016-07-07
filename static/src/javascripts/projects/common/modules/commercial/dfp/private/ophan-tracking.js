@@ -110,7 +110,6 @@ define([
     function pageCheckpoint(message, baseline){
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
-        console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
     /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
@@ -143,13 +142,11 @@ define([
 
     function debugTimings(){
         // This is where the first ophan send should be.
-        console.log(loggingObject)
     }
 
     return {
         trackPerformance : trackPerformance,
         pageCheckpoint : pageCheckpoint,
-        advertCheckpoint: advertCheckpoint,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
