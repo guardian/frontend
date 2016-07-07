@@ -1,27 +1,24 @@
-import dev.DevAssetsController
-import http.CorsHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
-import controllers.{DiscussionControllers, HealthCheck}
+import controllers.{Application, HealthCheck}
+import lifecycle.FaciaPressLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api.http.HttpErrorHandler
-import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import services.ConfigAgentLifecycle
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers extends DiscussionControllers {
+trait Controllers {
   lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
+  lazy val applicationController = wire[Application]
 }
 
 trait AppLifecycleComponents {
@@ -29,9 +26,10 @@ trait AppLifecycleComponents {
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
-    wire[CloudWatchMetricsLifecycle],
+    wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CloudWatchMetricsLifecycle],
+    wire[FaciaPressLifecycle]
   )
 }
 
@@ -39,8 +37,17 @@ trait AppComponents extends FrontendComponents with AppLifecycleComponents with 
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-discussion")
+  lazy val appIdentity = ApplicationIdentity("frontend-facia-press")
 
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
+  override lazy val appMetrics = ApplicationMetrics(
+    FaciaPressMetrics.FrontPressCronSuccess,
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
+    ContentApiMetrics.ContentApi404Metric,
+    ContentApiMetrics.ContentApiErrorMetric,
+    FaciaPressMetrics.UkPressLatencyMetric,
+    FaciaPressMetrics.UsPressLatencyMetric,
+    FaciaPressMetrics.AuPressLatencyMetric,
+    FaciaPressMetrics.AllFrontsPressLatencyMetric
+  )
 }
