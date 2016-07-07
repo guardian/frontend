@@ -4,7 +4,7 @@ define([
     'common/modules/commercial/dfp/private/get-advert-by-id'
 ], function (raven, userTiming, getAdvertById) {
 
-    var loggingObject = {
+    var performanceLog = {
             page: {},
             adverts: {},
             baselines: {}
@@ -107,9 +107,13 @@ define([
         }
     }
 
-    function pageCheckpoint(message, baseline){
+    function pageCheckpoint(module, baseline){
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
+        performanceLog.page[module] = {
+            start: timerStart,
+            duration: timerEnd - timerStart
+        };
     }
 
     /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
@@ -133,11 +137,11 @@ define([
     }*/
 
     function addBaseline(baselineName){
-        loggingObject.baselines[baselineName] = userTiming.getCurrentTime();
+        performanceLog.baselines[baselineName] = userTiming.getCurrentTime();
     }
 
     function getBaseline(baselineName){
-        return loggingObject.baselines[baselineName];
+        return performanceLog.baselines[baselineName];
     }
 
     function debugTimings(){
