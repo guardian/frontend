@@ -110,10 +110,11 @@ define([
     function moduleCheckpoint(module, baseline){
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
-        performanceLog.page[module] = {
+        performanceLog.modules.push({
+            name: module,
             start: timerStart,
             duration: timerEnd - timerStart
-        };
+        });
     }
 
     /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {

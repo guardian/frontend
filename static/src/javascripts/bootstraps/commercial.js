@@ -107,7 +107,7 @@ define([
                         var modulePromise = pair[1]();
 
                         modulePromise.then(function(){
-                            ophanTracking.pageCheckpoint(moduleName, ophanTracking.secondaryBaseline);
+                            ophanTracking.moduleCheckpoint(moduleName, ophanTracking.secondaryBaseline);
                         });
 
                         secondaryModulePromises.push(modulePromise);
