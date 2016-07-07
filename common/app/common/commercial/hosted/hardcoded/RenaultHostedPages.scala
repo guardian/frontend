@@ -42,8 +42,8 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = "Advertiser content hosted by the Guardian: " + videoTitle + " Watch full film: ",
-      emailTxt = "Advertiser content hosted by the Guardian: " + videoTitle,
+      twitterTxt = videoTitle + " Watch full film: ",
+      emailTxt = videoTitle,
       nextPage = None
     )
   }
@@ -67,8 +67,8 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = "Advertiser content hosted by the Guardian: " + videoTitle + " Watch full film: ",
-      emailTxt = "Advertiser content hosted by the Guardian: " + videoTitle,
+      twitterTxt = videoTitle + " Watch full film: ",
+      emailTxt = videoTitle,
       nextPage = None
     )
   }
@@ -92,8 +92,8 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = "Advertiser content hosted by the Guardian: " + videoTitle + " Watch full film: ",
-      emailTxt = "Advertiser content hosted by the Guardian: " + videoTitle,
+      twitterTxt = videoTitle + " Watch full film: ",
+      emailTxt = videoTitle,
       nextPage = None
     )
   }
