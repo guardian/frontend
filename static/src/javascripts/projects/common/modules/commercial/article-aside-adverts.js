@@ -4,7 +4,7 @@ define([
     'common/utils/$css',
     'common/utils/config',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
 ], function (
     Promise,
@@ -12,7 +12,7 @@ define([
     $css,
     config,
     fastdom,
-    createAdSlot,
+    createSlot,
     commercialFeatures
 ) {
     var minArticleHeight = 1300;
@@ -52,7 +52,7 @@ define([
                 'right' :
                 'right-small';
 
-            $adSlot = createAdSlot(adType, 'mpu-banner-ad');
+            $adSlot = createSlot(adType, 'mpu-banner-ad');
 
             return fastdom.write(function () {
                 if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {

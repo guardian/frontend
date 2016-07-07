@@ -2,12 +2,14 @@ define([
     'bean',
     'common/utils/$',
     'common/utils/fastdom-promise',
-    'lodash/collections/toArray'
+    'lodash/collections/toArray',
+    'common/modules/analytics/omniture'
 ], function (
     bean,
     $,
     fastdom,
-    toArray
+    toArray,
+    omniture
 ) {
     return {
         // find a bucket message to show once you finish a quiz
@@ -21,10 +23,12 @@ define([
 
                 if ($quizzes.length > 0) {
                     bean.on(document, 'click', toArray($quizzes), function (e) {
-                        var quiz = e.currentTarget;
+                        var quiz = e.currentTarget,
+                            total =  $(':checked + .atom-quiz__answer__item', quiz).length;
+
+                        omniture.trackLinkImmediate('quiz-question-answered-'+total);
                         if (quiz.checkValidity()) { // the form (quiz) is complete
-                            var $bucket__message = null,
-                                total = $(':checked + .atom-quiz__answer__item--is-correct', quiz).length;
+                            var $bucket__message = null;
                             do {
                                 // try and find a .bucket__message for your total
                                 $bucket__message = $('.js-atom-quiz__bucket-message--' + total, quiz);

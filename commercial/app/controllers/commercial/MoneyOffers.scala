@@ -62,8 +62,6 @@ class MoneyOffers extends Controller with implicits.Requests {
 
 }
 
-object MoneyOffers extends MoneyOffers
-
 sealed trait BestBuysRelevance {
   def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html
 }

@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
@@ -12,15 +12,11 @@ define([
     $,
     config,
     fastdom,
-    createAdSlot,
+    createSlot,
     commercialFeatures
 ) {
 
     function init() {
-
-        if (config.page.hasHighMerchandisingTarget) {
-            return Promise.resolve();
-        }
 
         if (!commercialFeatures.frontCommercialComponents) {
             return Promise.resolve();
@@ -28,7 +24,7 @@ define([
 
         var containerIndex,
             $adSlotWrapper = $.create('<div class="fc-container"></div>'),
-            $adSlot        = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
+            $adSlot        = bonzo(createSlot('merchandising-high', 'commercial-component-high')),
             $containers    = $('.fc-container');
 
         if ($containers.length >= 2) {

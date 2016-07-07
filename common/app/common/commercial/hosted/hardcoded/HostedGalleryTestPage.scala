@@ -1,5 +1,6 @@
-package common.commercial
+package common.commercial.hosted.hardcoded
 
+import common.commercial.hosted._
 import conf.switches.Switches
 
 object HostedGalleryTestPage {
@@ -50,15 +51,21 @@ object HostedGalleryTestPage {
   )
 
   val demoGallery: HostedGalleryPage = HostedGalleryPage(
+    campaign = HostedCampaign(
+      id = "hosted-gallery",
+      name = "hosted-gallery",
+      owner = "test",
+      logo = HostedLogo("http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"),
+      cssClass = "test"
+    ),
     images = demoImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
+    pageUrl = "https://m.code.dev-theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryTestPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
-    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
-    logoUrl = "http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"
+    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share."
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

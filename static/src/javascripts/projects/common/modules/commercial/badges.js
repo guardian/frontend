@@ -5,12 +5,11 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
-    'common/utils/fastdom-idle',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
-    'text!common/views/commercial/badge.html',
-    'lodash/collections/map'
+    'text!common/views/commercial/badge.html'
 ], function (
     bonzo,
     qwery,
@@ -18,155 +17,133 @@ define([
     $,
     config,
     template,
-    idleFastdom,
+    fastdom,
     addSlot,
-    createAdSlot,
+    createSlot,
     commercialFeatures,
-    badgeTpl,
-    map
+    badgeTpl
 ) {
     var badgesConfig = {
-            sponsoredfeatures: {
-                count:      0,
-                header:     'Supported by',
-                namePrefix: 'sp'
-            },
-            'advertisement-features': {
-                count:      0,
-                header:     'Paid for by',
-                namePrefix: 'ad'
-            },
-            'foundation-features': {
-                count:      0,
-                header:     'Supported by',
-                namePrefix: 'fo'
-            }
+        sponsoredfeatures: {
+            count:      0,
+            header:     'Supported by',
+            namePrefix: 'sp'
         },
-        addPreBadge  = function ($adSlot, header, sponsor) {
-            if (sponsor) {
-                $adSlot.append(template(
-                    badgeTpl,
-                    {
-                        header:  header,
-                        sponsor: sponsor
-                    }
-                ));
-            }
+        'advertisement-features': {
+            count:      0,
+            header:     'Paid for by',
+            namePrefix: 'ad'
         },
-        renderAd = function (item, sponsorship, opts, fallback) {
-            var badgeConfig = badgesConfig[sponsorship],
-                slotTarget  = badgeConfig.namePrefix + 'badge',
-                name        = slotTarget + (++badgeConfig.count),
-                $adSlot     = bonzo(createAdSlot(
-                                name,
-                                ['paid-for-badge', 'paid-for-badge--front'],
-                                opts.series,
-                                opts.keywords,
-                                slotTarget
-                              ));
+        'foundation-features': {
+            count:      0,
+            header:     'Supported by',
+            namePrefix: 'fo'
+        }
+    };
 
-            addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
+    return {
 
-            return new Promise(function (resolve) {
-                idleFastdom.write(function () {
-                    var placeholder = $('.js-badge-placeholder', item);
+        init: init,
 
-                    if (placeholder.length) {
-                        placeholder.replaceWith($adSlot);
-                    } else {
-                        $(fallback, item).after($adSlot);
-                    }
+        // add a badge to a container (if appropriate)
+        add: function (container) {
+            if (container) {
+                container = container instanceof Element ? container : container[0];
 
-                    resolve($adSlot);
-                });
-            });
-        },
-        init = function () {
-            var sponsoredFrontPromise,
-                sponsoredContainersPromise,
-                sponsoredCardsPromise;
-
-            if (!commercialFeatures.badges) {
-                return Promise.resolve();
-            }
-
-            sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {
-                var $front = bonzo(front);
-
-                return renderAd(
-                    qwery('.fc-container', front)[0],
-                    $front.data('sponsorship'),
-                    {
-                        sponsor: $front.data('sponsor')
-                    },
-                    '.js-container__header'
-                );
-            }));
-
-            sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all($('.js-sponsored-container').map(processItem.bind(undefined, '.js-container__header')));
-            });
-
-            sponsoredCardsPromise = sponsoredContainersPromise.then(function () {
-                return Promise.all($('.js-sponsored-card').map(processItem.bind(undefined, '.js-card__header')));
-            });
-
-            return sponsoredCardsPromise;
-
-            function processItem(fallback, item) {
-                if (qwery('.ad-slot--paid-for-badge', item).length === 0) {
-                    var $item = bonzo(item);
-
-                    if (!item.hasAttribute('data-sponsorship')) {
-                        return;
-                    }
-
-                    return renderAd(
-                        item,
-                        $item.data('sponsorship'),
-                        {
-                            sponsor:  $item.data('sponsor'),
-                            series:   $item.data('series'),
-                            keywords: $item.data('keywords')
-                        },
-                        fallback
-                    );
+                if (bonzo(container).hasClass('js-sponsored-container')) {
+                    return processContainer(container).then(addSlot);
                 }
             }
         },
-        badges = {
 
-            init: init,
-
-            // add a badge to a container (if appropriate)
-            add: function (container) {
-                var $container = bonzo(container);
-
-                if (
-                    $container.hasClass('js-sponsored-container') &&
-                    qwery('.ad-slot--paid-for-badge', container).length === 0
-                ) {
-                    return renderAd(
-                        container,
-                        $container.data('sponsorship'),
-                        {
-                            sponsor:  $container.data('sponsor'),
-                            series:   $container.data('series'),
-                            keywords: $container.data('keywords')
-                        },
-                        '.js-container__header'
-                    ).then(addSlot);
-                }
-            },
-
-            // for testing
-            reset: function () {
-                for (var type in badgesConfig) {
-                    badgesConfig[type].count = 0;
-                }
+        // for testing
+        reset: function () {
+            for (var type in badgesConfig) {
+                badgesConfig[type].count = 0;
             }
-        };
+        }
+    };
 
-    return badges;
+    function init() {
+        if (!commercialFeatures.badges) {
+            return false;
+        }
 
+        return Promise.all(qwery('.js-sponsored-front').map(processFront)
+            .concat(qwery('.js-sponsored-container').map(processContainer))
+            .concat(qwery('.js-sponsored-card').map(processCard))
+        );
+    }
+
+    function addPreBadge(adSlot, header, sponsor) {
+        if (sponsor) {
+            adSlot.innerHTML = template(
+                badgeTpl,
+                {
+                    header:  header,
+                    sponsor: sponsor
+                }
+            );
+        }
+    }
+
+    function renderAd(item, sponsorship, opts, fallback) {
+        var badgeConfig = badgesConfig[sponsorship],
+            slotTarget  = badgeConfig.namePrefix + 'badge',
+            name        = slotTarget + (++badgeConfig.count),
+            adSlot      = createSlot(
+                            name,
+                            ['paid-for-badge', 'paid-for-badge--front'],
+                            opts.series,
+                            opts.keywords,
+                            slotTarget
+                          );
+
+        addPreBadge(adSlot, badgeConfig.header, opts.sponsor);
+
+        return fastdom.write(function () {
+            var placeholder = $('.js-badge-placeholder', item);
+
+            if (placeholder.length) {
+                placeholder.replaceWith(adSlot);
+            } else {
+                $(fallback, item).after(adSlot);
+            }
+
+            return adSlot;
+        });
+    }
+
+    function processFront(front) {
+        return processItem('.js-container__header', qwery('.fc-container', front)[0], front);
+    }
+
+    function processContainer(container) {
+        return processItem('.js-container__header', container);
+    }
+
+    function processCard(card) {
+        return processItem('.js-card__header', card);
+    }
+
+    function processItem(fallback, element, dataElement) {
+        if (qwery('.ad-slot--paid-for-badge', element).length === 0) {
+            dataElement = dataElement || element;
+
+            if (!dataElement.hasAttribute('data-sponsorship')) {
+                return;
+            }
+
+            return renderAd(
+                element,
+                dataElement.getAttribute('data-sponsorship'),
+                {
+                    sponsor:  dataElement.getAttribute('data-sponsor'),
+                    series:   dataElement.getAttribute('data-series'),
+                    keywords: dataElement.getAttribute('data-keywords')
+                },
+                fallback
+            );
+        }
+    }
 });

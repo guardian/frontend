@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/fronts-on-articles2',
     'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
@@ -23,7 +22,6 @@ define([
     mvtCookie,
     memoize,
     noop,
-    FrontsOnArticles2,
     LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
@@ -33,7 +31,6 @@ define([
 ) {
 
     var TESTS = [
-        new FrontsOnArticles2(),
         new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
@@ -324,6 +321,16 @@ define([
             });
         },
 
+        forceRegisterCompleteEvent: function(testId, variantId) {
+            var test = getTest(testId);
+            var variant = test && test.variants.filter(function (v) {
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
+            var onTestComplete = variant && variant.success || noop;
+
+            onTestComplete(recordTestComplete(test, variantId));
+        },
+
         segmentUser: function () {
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -335,6 +342,7 @@ define([
                     test = abParam[0];
                     variant = abParam[1];
                     ab.forceSegment(test, variant);
+                    ab.forceRegisterCompleteEvent(test, variant);
                 });
             } else {
                 ab.segment();

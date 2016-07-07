@@ -110,5 +110,3 @@ class Multi
     }
   }
 }
-
-object Multi extends Multi

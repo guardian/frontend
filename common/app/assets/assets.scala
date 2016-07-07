@@ -71,6 +71,7 @@ object css {
   private def project(project: String): String = {
     project match {
       case "facia" => "stylesheets/facia.css"
+      case "survey" => "stylesheets/survey.css"
       case _ => "stylesheets/content.css"
     }
   }

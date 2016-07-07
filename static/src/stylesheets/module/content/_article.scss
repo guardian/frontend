@@ -57,22 +57,3 @@
         display: none;
     }
 }
-
-//For the fronts-on-article work - to-do: remove this stuff from the container html
-.content-footer {
-    .fc-container--has-show-more .treats__container {
-        bottom: $gs-baseline;
-    }
-
-    .fc-container--first .fc-container__inner {
-        border-top: 1px solid $news-main-2 !important;
-    }
-
-    .fc-container--first .fc-container__header__title {
-        border: 0 !important;
-    }
-
-    .fc-show-more--hidden .button--show-more {
-        display: none;
-    }
-}

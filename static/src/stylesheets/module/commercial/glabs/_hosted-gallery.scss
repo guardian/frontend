@@ -18,6 +18,27 @@
     margin: 0 auto;
 }
 
+@mixin hosted-gallery-cta {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    bottom: 0;
+    left: 0;
+    transition: opacity 300ms ease, visibility 300ms ease;
+}
+
+@mixin hosted-gallery-title {
+    color: #ffffff;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    margin-right: 90px;
+    font-size: 30px;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
@@ -60,25 +81,49 @@
 
 .hosted-gallery__cta-title {
     @include f-headlineSans;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
+    @include hosted-gallery-cta;
+    @include hosted-gallery-title;
+}
+
+.hosted-gallery__cta {
+    @include hosted-gallery-cta;
+    margin: 0 $gs-column-width * 10 0 $gs-column-width * 4;
+    font-weight: bold;
+}
+
+.hosted-gallery__cta-title-last {
+    @include f-headlineSans;
+    @include hosted-gallery-title;
+    margin: 0 0 15px;
+    line-height: 32px;
+}
+
+.hosted-gallery__cta-link {
+    @include circular;
+    position: relative;
+    display: block;
+    width: 160px;
+    padding: 8px 8px 8px 12px;
+    margin: 16px 0;
     color: #ffffff;
-    bottom: 0;
-    left: 0;
-    margin-left: 15px;
-    margin-bottom: 15px;
-    margin-right: 90px;
-    font-size: 30px;
-    position: absolute;
-    transition: opacity 300ms ease, visibility 300ms ease;
-    &:hover {
-        text-decoration: none;
+    font-weight: bold;
+    background-color: $omgbColor;
+
+    .inline-arrow-right {
+        position: absolute;
+        bottom: 0;
+        right: 6px;
+        height: 40px;
+
+        svg {
+            height: 36px;
+            width: 36px;
+        }
     }
 }
 
 .use-swipe .hosted-gallery__image .hosted-gallery__cta-title,
-.use-scroll.show-cta > .hosted-gallery__cta-title {
+.use-scroll.show-cta > .hosted-gallery__cta {
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
@@ -95,8 +140,19 @@
     height: 100%;
 }
 
-.hosted-gallery-page + footer {
-    display: none;
+.hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $omgbColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
+    }
 }
 
 .hosted-gallery-page .hostedbadge__info {
@@ -238,12 +294,23 @@ $progressColor: #ffffff;
     display: block;
 }
 
+.use-swipe .hosted-gallery__progress {
+    display: block;
+    pointer-events: none;
+    .inline-arrow-up,
+    .inline-arrow-down {
+        display: none;
+    }
+}
+
 .hosted-gallery__progress {
     display: none;
     position: absolute;
     top: 50%;
     margin-top: $progressHeight / -2;
-    right: 0;
+    right: -10px;
+    height: $progressHeight;
+    width: $progressHeight;
 
     .hosted-gallery__image-count {
         @include f-headlineSans;

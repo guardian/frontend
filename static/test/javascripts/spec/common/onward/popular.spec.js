@@ -19,7 +19,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/commercial/create-ad-slot': function () {
+                'common/modules/commercial/dfp/create-slot': function () {
                     return '<div class="ad-slot"></div>';
                 },
                 'common/modules/commercial/dfp/add-slot': function () {}

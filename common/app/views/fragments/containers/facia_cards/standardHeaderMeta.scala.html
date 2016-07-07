@@ -10,7 +10,7 @@
     <div class="fc-container__header
                 @if(containerDefinition.customHeader.isEmpty) {js-container__header}
                 @badgeFor(containerDefinition).map { badge => fc-container__header--is-badged
-	                @badge.classModifier.map(modifier => s"content__head--$modifier")
+	                @badge.classModifier.map(modifier => s"fc-container__header--$modifier")
                 }">
         @title.map { title =>
             @defining(frontProperties.editorialType.contains("Contributor")) { isContributor =>
