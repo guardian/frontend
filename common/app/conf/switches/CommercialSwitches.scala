@@ -302,7 +302,7 @@ trait CommercialSwitches {
     "If on, the client will report empty dfp ad responses.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,7,8),
+    sellByDate = new LocalDate(2016,10,8),
     exposeClientSide = true
   )
 
