@@ -1,8 +1,9 @@
 define([
     'Promise',
-    'common/utils/user-timing'
+    'common/utils/user-timing',
+    'common/modules/commercial/dfp/private/ophan-tracking'
 
-], function (Promise, userTiming) {
+], function (Promise, userTiming, ophanTracking) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;
