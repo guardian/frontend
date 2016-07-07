@@ -176,6 +176,8 @@
 .hosted-gallery__meta {
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     color: #ffffff;
     padding: 50px 120px 10px 60px;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
@@ -244,6 +246,15 @@
     .l-side-margins:after,
     .l-side-margins:before {
         background: #1b1b1b;
+    }
+    @include mq($until: desktop) {
+        .hosted__container--content {
+            padding: 0;
+        }
+    }
+    .hosted__container--content {
+        display: flex;
+        flex-direction: row;
     }
 }
 
