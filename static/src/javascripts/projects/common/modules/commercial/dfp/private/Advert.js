@@ -1,8 +1,9 @@
 define([
     'Promise',
+    'common/utils/user-timing',
     'common/modules/commercial/dfp/private/ophan-tracking'
 
-], function (Promise, ophanTracking) {
+], function (Promise, userTiming, ophanTracking) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;
@@ -23,7 +24,17 @@ define([
             whenLoaded: null,
             whenLoadedResolver: null,
             whenRendered: null,
-            whenRenderedResolver: null
+            whenRenderedResolver: null,
+            timings: {
+                constructing: null,
+                startLoading: null,
+                dfpFetching: null,
+                dfpReceived: null,
+                dfpRendered: null,
+                stopLoading: null,
+                startRendering: null,
+                stopRendering: null
+            }
         };
         advert.whenLoaded = new Promise(function (resolve) {
             advert.whenLoadedResolver = resolve;
@@ -36,50 +47,30 @@ define([
             advert.isRendered = isRendered;
         });
 
-        if (advert.id === 'dfp-ad--inline1' ) {
-            var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint(advert.id, "createDuration",  timer, false);
-        }
+        advert.timings.createTime = userTiming.getCurrentTime();
 
         return Object.seal(advert);
     }
 
     function startLoading(advert) {
         advert.isLoading = true;
-
-        if (advert.id === 'dfp-ad--inline1' ) {
-            var timer = new Date().getTime();
-            ophanTracking.addBaseline("lazyLoadBaseline");
-            // ophanTracking.advertCheckpoint(advert.id, "startDfpCall",  timer, true );
-        }
+        advert.timings.startLoading = userTiming.getCurrentTime();
     }
 
     function stopLoading(advert, isLoaded) {
         advert.isLoading = false;
         advert.whenLoadedResolver(isLoaded);
-
-         if (advert.id === 'dfp-ad--inline1' ) {
-            var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint(advert.id,'dfDpuration', timer, true );
-        }
+        advert.timings.stopLoading = userTiming.getCurrentTime();
     }
 
     function startRendering(advert) {
         advert.isRendering = true;
-
-        if (advert.id === 'dfp-ad--inline1' ) {
-            var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint(advert.id,'startRenderingDuration', timer, true );
-        }
+        advert.timings.startRendering = userTiming.getCurrentTime();
     }
 
     function stopRendering(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
-
-        if (advert.id === 'dfp-ad--inline1' ) {
-            var timer = new Date().getTime();
-            ophanTracking.advertCheckpoint(advert.id,'stopRenderingDuration', timer, true );
-        }
+        advert.timings.stopRendering = userTiming.getCurrentTime();
     }
 });

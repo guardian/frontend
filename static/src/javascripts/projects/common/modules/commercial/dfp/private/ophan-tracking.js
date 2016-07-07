@@ -1,7 +1,8 @@
 define([
     'raven',
-    'common/utils/user-timing'
-], function (raven, userTiming) {
+    'common/utils/user-timing',
+    'common/modules/commercial/dfp/private/get-advert-by-id'
+], function (raven, userTiming, getAdvertById) {
 
     var loggingObject = {
             page: {},
@@ -30,6 +31,11 @@ define([
                     3: 'fetch',
                     4: 'receive',
                     6: 'render'
+                },
+                lifecycleIdToAdvertTiming = {
+                    3: 'dfpFetching',
+                    4: 'dfpReceived',
+                    6: 'dfpRendered'
                 };
 
             googletag.debug_log.log = function interceptedGptDebugger(level, message, service, slot) {
@@ -41,9 +47,10 @@ define([
                     timingAttr = lifecycleIdToTimingAttr[lifecycleId];
                     adTimings[slotId][timingAttr] = new Date().getTime();
 
-                    if (slotId === 'dfp-ad--inline1' && timingAttr) {
-
-                        //console.log('olde report: ' + timingAttr + '  ' + (adTimings[slotId][timingAttr] - commercialInitTime) );
+                    var advert = getAdvertById(event.slot.getSlotElementId());
+                    var timing = lifecycleIdToAdvertTiming[lifecycleId];
+                    if (advert && timing in advert.timings) {
+                        advert.timings[timing] = userTiming.getCurrentTime();
                     }
                 }
 
