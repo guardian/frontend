@@ -54,7 +54,8 @@ object VisitBritainHostedPages {
       id = "visit-britain",
       name = "Visit Britain",
       owner = "OMGB",
-      logo = HostedLogo(imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg")
+      logo = HostedLogo(imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
+      cssClass = "visit-britain"
     ),
     images = activityImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
@@ -64,8 +65,7 @@ object VisitBritainHostedPages {
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
     ctaIndex = 5,
-    standfirst = "",
-    cssClass = "visit-britain"
+    standfirst = ""
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

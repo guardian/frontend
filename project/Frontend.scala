@@ -63,6 +63,7 @@ object Frontend extends Build with Prototypes {
   val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies += scalaCheck
   )
 
@@ -125,6 +126,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       awsKinesis
     )

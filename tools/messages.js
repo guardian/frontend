@@ -64,5 +64,12 @@ switch (process.argv[2]) {
             heading: 'Pasteup files have changed'
         }, 'info');
         break;
+
+
+    case 'install-steps':
+      notify('Please run the following to complete your installation:', {
+        heading: 'Additional steps'
+      }, 'info');
+      break;
 }
 
