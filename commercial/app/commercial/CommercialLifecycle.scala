@@ -2,39 +2,20 @@ package commercial
 
 import commercial.feeds._
 import common._
-import metrics.MetricUploader
 import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
 import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
+import metrics.MetricUploader
 
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
+
 object CommercialMetrics {
   val metrics = MetricUploader("Commercial")
-}
-
-private [commercial] object CommercialLifecycleMetrics extends Logging {
-
-  val metricAgents = Map(
-    "fetch-failure" -> AkkaAgent(0.0),
-    "fetch-success" -> AkkaAgent(0.0),
-    "parse-failure" -> AkkaAgent(0.0),
-    "parse-success" -> AkkaAgent(0.0)
-  )
-
-  private[commercial] def update(): Unit = {
-
-    val metricsAsMap = metricAgents map { case (key, agent) => key -> agent.get }
-
-    log.info(s"uploading commercial feed metrics: $metricsAsMap")
-    CommercialMetrics.metrics.put(metricsAsMap)
-    CommercialMetrics.metrics.upload()
-    metricAgents.values.foreach(_ send 0)
-  }
 }
 
 class CommercialLifecycle(
@@ -72,16 +53,8 @@ class CommercialLifecycle(
     new MasterclassTagsRefresh(jobs),
     new CountriesRefresh(jobs),
     new IndustriesRefresh(jobs),
-    new MoneyBestBuysRefresh(jobs),
-    new CommercialMetricsRefresh(jobs)
+    new MoneyBestBuysRefresh(jobs)
   )
-
-  private def recordEvent(eventName:String, outcome:String): Unit = {
-    val keyName = s"$eventName-$outcome"
-    CommercialLifecycleMetrics.metricAgents
-      .get(keyName)
-      .foreach(agent => agent.send(_ + 1.0))
-  }
 
   override def start(): Unit = {
 
@@ -98,7 +71,6 @@ class CommercialLifecycle(
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("fetch","failure")
           logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
                                    e,
                                    toLogFields(feedName, "fetch", false))
@@ -106,7 +78,6 @@ class CommercialLifecycle(
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordEvent("fetch","success")
           logInfoWithCustomFields(s"$msgPrefix succeeded in ${response.duration}",
                                   toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)))
       }
@@ -124,14 +95,12 @@ class CommercialLifecycle(
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("parse","failure")
           logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
                                    e,
                                    toLogFields(feedName, "parse", false))
       }
       parsedFeed onSuccess {
         case feed =>
-          recordEvent("parse","success")
           logInfoWithCustomFields(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}",
                                   toLogFields(feedName, "parse", true, Some(feed.parseDuration.toSeconds), Some(feed.contents.size)))
       }
@@ -181,8 +150,6 @@ class CommercialLifecycle(
       }
 
       BestBuysAgent.refresh()
-
-      CommercialLifecycleMetrics.update()
 
       for (fetcher <- FeedFetcher.all) {
         fetchFeed(fetcher)

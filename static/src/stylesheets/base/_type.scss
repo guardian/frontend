@@ -56,7 +56,7 @@ h6 {
 
 
 // SerifText
-.type-5 { @extend %type-5; }
+.type-5 { @extend %type-5 !optional; }
 
 
 /* Default type elements

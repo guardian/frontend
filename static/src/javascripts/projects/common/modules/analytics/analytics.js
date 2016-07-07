@@ -41,8 +41,7 @@
             now     = new Date(),
             webPublicationDate = config.page.webPublicationDate;
 
-        var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
-            NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+        var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
 
         var getChannel = function () {
             if (config.page.contentType === 'Network Front') {
@@ -200,7 +199,6 @@
 
             if (navInteraction) {
                 trackNavigationInteraction(navInteraction.value);
-                window.sessionStorage.removeItem(R2_STORAGE_KEY);
                 window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
 
