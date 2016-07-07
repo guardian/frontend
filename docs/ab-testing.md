@@ -144,8 +144,8 @@ Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to forc
 e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton
 
 #### Firing complete events in dev mode
-In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, follow the #ab- pattern above.
-Whichever test you set in the hash will have its completion function called.
+In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, force yourself into the test using the #ab-<TestName>=<VariantName> pattern described above.
+This way, the `success` function of the test and variant you specify will be run, so you can test your completion behaviour.
 
 ### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket.
