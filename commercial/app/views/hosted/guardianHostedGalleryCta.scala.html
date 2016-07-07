@@ -1,10 +1,10 @@
-@(ctaText: String, ctaLink: String, dataLinkName: String, cssClass: String = "")
+@(ctaText: String, ctaLink: String, buttonText: String, cssClass: String = "")
     <div class="hosted-gallery__cta @{cssClass}">
         <div class="hosted-gallery__cta-title">
             @{ctaText}
         </div>
-        <a class="hosted-gallery__cta-link" href="@{ctaLink}" target="_blank" data-link-name="@{dataLinkName}">
-            Visit OMGB now @fragments.inlineSvg("arrow-right", "icon")
+        <a class="hosted-gallery__cta-link" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
+            @{buttonText} @fragments.inlineSvg("arrow-right", "icon")
         </a>
     </div>
 
