@@ -113,7 +113,7 @@ define([
         console.log('new report: ', message, ' : duration : ', timerEnd - timerStart, ' began execution at ', timerStart);
     }
 
-    function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
+    /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
         if(!loggingObject.adverts[adName]) {
             loggingObject.adverts[adName] = {};
         }
@@ -131,7 +131,7 @@ define([
             loggingObject.adverts[adName][stage] = timeDiff;
             console.log(loggingObject);
         }
-    }
+    }*/
 
     function addBaseline(baselineName){
         loggingObject.baselines[baselineName] = userTiming.getCurrentTime();
