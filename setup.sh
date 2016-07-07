@@ -17,6 +17,14 @@ installed() {
   hash "$1" 2>/dev/null
 }
 
+nvm_installed() {
+  if [ -d '/usr/local/Cellar/nvm' ] || [ -d "$HOME/.nvm" ]; then
+    true
+  else
+    false
+  fi
+}
+
 create_install_vars() {
   local path="/etc/gu"
   local filename="install_vars"
@@ -84,12 +92,12 @@ install_jdk() {
 }
 
 install_node() {
-  if ! installed nvm; then
-    if ! installed curl; then
-      sudo apt-get install -y curl
-    fi
-
+  if ! nvm_installed; then
     if linux; then
+      if ! installed curl; then
+        sudo apt-get install -y curl
+      fi
+
       curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
     elif mac && installed brew; then
       brew install nvm
