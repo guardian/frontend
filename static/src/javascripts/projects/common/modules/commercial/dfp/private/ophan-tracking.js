@@ -125,7 +125,7 @@ define([
     // the object with additional timings.
     function advertCheckpoint(advert){
         performanceLog.adverts = performanceLog.adverts.filter(function(element){
-            return advert.id !== element.id
+            return advert.id !== element.id;
         });
         performanceLog.adverts.push({
             id: advert.id,
