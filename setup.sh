@@ -17,6 +17,14 @@ installed() {
   hash "$1" 2>/dev/null
 }
 
+nvm_installed() {
+  if [ -d '/usr/local/Cellar/nvm' ] || [ -d "$HOME/.nvm" ]; then
+    true
+  else
+    false
+  fi
+}
+
 create_install_vars() {
   local path="/etc/gu"
   local filename="install_vars"
@@ -84,17 +92,19 @@ install_jdk() {
 }
 
 install_node() {
-  if ! installed node || ! installed npm; then
-    if ! installed curl; then
-      sudo apt-get install -y curl
+  if ! nvm_installed; then
+    if linux; then
+      if ! installed curl; then
+        sudo apt-get install -y curl
+      fi
+
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+    elif mac && installed brew; then
+      brew install nvm
     fi
 
-    if linux; then
-      curl -sL https://deb.nodesource.com/setup | sudo bash -
-      sudo apt-get install -y nodejs
-    elif mac && installed brew; then
-      brew install node
-    fi
+    nvm install
+    EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
   fi
 }
 

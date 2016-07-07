@@ -107,9 +107,9 @@
 @mixin icon($name, $with-width: true) {
     @if ($svg-support) {
         .svg & {
-            @extend %svg-i-#{$name};
+            @extend %svg-i-#{$name} !optional;
             @if ($with-width) {
-                @extend %i-#{$name};
+                @extend %i-#{$name} !optional;
             }
             display: inline-block;
             background-repeat: no-repeat;
@@ -187,7 +187,7 @@
             padding-left: $gap * .5;
             padding-right: $gap * .5;
 
-            &:nth-child(#{$cols}n+1) {
+            &:nth-child(#{$cols + 'n+1'}) {
                 clear: left;
             }
         }
