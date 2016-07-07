@@ -188,8 +188,8 @@ $leffeColor: #ffffff;
         }
 
         &:after {
-            top: 16px;
-            left: 16px;
+            top: 50%;
+            left: 25px;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }

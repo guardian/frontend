@@ -97,10 +97,8 @@ $ima-controls-height: 70px;
         padding-bottom: $vjs-control-height;
     }
 
-    &:hover {
-        .vjs-control-text {
-            transform: translate3d(-50%, -50%, 0) scale(1.15);
-        }
+    &:hover .vjs-control-text {
+        transform: translate3d(-50%, -50%, 0) scale(1.15);
     }
 
     .vjs-control-text {
@@ -111,6 +109,7 @@ $ima-controls-height: 70px;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
         -webkit-backface-visibility: hidden;
 
         @include mq(mobileLandscape) {
@@ -126,11 +125,6 @@ $ima-controls-height: 70px;
                 @include video-play-button-size($vjs-large-button-size);
             }
             background-color: $media-default;
-
-            .gu-media-wrapper:hover &,
-            .gu-media__fallback:hover & {
-                background-color: darken($media-default, 15%);
-            }
         }
 
         &:after {
