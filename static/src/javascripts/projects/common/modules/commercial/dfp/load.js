@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'qwery',
     'common/utils/sha1',
     'common/modules/identity/api',
@@ -9,7 +10,7 @@ define([
     'common/modules/commercial/dfp/private/display-lazy-ads',
     'common/modules/commercial/dfp/private/display-ads',
     'common/modules/commercial/dfp/private/refresh-on-resize'
-], function (qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
+], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
     return load;
 
     function load() {
