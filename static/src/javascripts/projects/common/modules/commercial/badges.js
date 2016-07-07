@@ -69,6 +69,9 @@ define([
             return false;
         }
 
+        // Sponsored fronts must come first, because they add a badge to the
+        // first container. But if the first container turns out to be sponsored
+        // too, a second badge will be added ... i.e. if the both run in parallel.
         return Promise.all(qwery('.js-sponsored-front').map(processFront))
             .then(function () {
                 return Promise.all(qwery('.js-sponsored-container').map(processContainer)
