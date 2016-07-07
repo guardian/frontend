@@ -97,15 +97,22 @@ $ima-controls-height: 70px;
         padding-bottom: $vjs-control-height;
     }
 
+    &:hover {
+        .vjs-control-text {
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+    }
+
     .vjs-control-text {
         // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-
         @include video-play-button-size($vjs-small-button-size);
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: $vjs-small-button-size/-2;
-        margin-left: $vjs-small-button-size/-2;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25,.46,.45,.94);
+        z-index: 9;
+        -webkit-backface-visibility: hidden;
 
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
@@ -125,8 +132,9 @@ $ima-controls-height: 70px;
         &:after {
             content: '';
             position: absolute;
-            left: 1.85em;
-            top: 1.85em;
+            top: 50%;
+            left: 50%;
+            transform: translate3d(-40%, -50%, 0);
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent $neutral-1;
