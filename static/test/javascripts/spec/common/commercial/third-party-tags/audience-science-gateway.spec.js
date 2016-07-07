@@ -31,7 +31,7 @@ define([
         });
 
         it('should be able to get segments', function () {
-            audienceScienceGateway.init();
+            audienceScienceGateway.reset();
             var stored = {},
                 storedValue = {
                     Y1C40a: {
@@ -68,14 +68,14 @@ define([
         });
 
         it('should return empty object if no segments', function () {
-            audienceScienceGateway.init();
+            audienceScienceGateway.reset();
             storage.local.set('gu.ads.audsci-gateway', {});
             expect(audienceScienceGateway.getSegments()).toEqual({});
         });
 
         it('should return empty object if switch is off', function () {
             config.page.section = undefined;
-            audienceScienceGateway.init();
+            audienceScienceGateway.reset();
             expect(audienceScienceGateway.getSegments()).toEqual({});
         });
 
