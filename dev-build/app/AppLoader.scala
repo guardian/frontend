@@ -47,6 +47,7 @@ trait Controllers
   with ArticleControllers
   with CommercialControllers
   with DiagnosticsControllers
+  with DiscussionControllers
   with FaciaControllers {
   self: BuiltInComponents with MostPopularComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
@@ -55,11 +56,8 @@ trait Controllers
   lazy val cardController = wire[CardController]
   lazy val changeAlphaController = wire[ChangeAlphaController]
   lazy val changeEditionController = wire[ChangeEditionController]
-  lazy val commentCountController = wire[CommentCountController]
-  lazy val commentsController = wire[CommentsController]
   lazy val competitionListController = wire[CompetitionListController]
   lazy val cricketMatchController = wire[CricketMatchController]
-  lazy val ctaController = wire[CtaController]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
@@ -75,7 +73,6 @@ trait Controllers
   lazy val mostViewedGalleryController = wire[MostViewedGalleryController]
   lazy val mostViewedSocialController = wire[MostViewedSocialController]
   lazy val mostViewedVideoController = wire[MostViewedVideoController]
-  lazy val profileActivityController = wire[ProfileActivityController]
   lazy val resultsController = wire[ResultsController]
   lazy val richLinkController = wire[RichLinkController]
   lazy val seriesController = wire[SeriesController]
@@ -86,7 +83,6 @@ trait Controllers
   lazy val videoEndSlateController = wire[VideoEndSlateController]
   lazy val wallchartController = wire[WallchartController]
   lazy val weatherController = wire[WeatherController]
-  lazy val witnessActivityController = wire[WitnessActivityControllerImpl]
 }
 
 trait AppComponents extends FrontendComponents with Controllers with MostPopularComponents {
