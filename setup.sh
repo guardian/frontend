@@ -115,10 +115,12 @@ install_gcc() {
 }
 
 install_libpng() {
-  if linux; then
-    sudo apt-get install -y libpng-dev
-  elif mac; then
-    brew install libpng
+  if ! installed libpng-config; then
+    if linux; then
+      sudo apt-get install -y libpng-dev
+    elif mac; then
+      brew install libpng
+    fi
   fi
 }
 
