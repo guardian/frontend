@@ -98,7 +98,7 @@ $ima-controls-height: 70px;
     }
 
     &:hover .vjs-control-text {
-        transform: translate3d(-50%, -50%, 0) scale(1.15);
+        transform: translate(-50%, -50%) scale(1.15);
     }
 
     .vjs-control-text {
@@ -107,10 +107,9 @@ $ima-controls-height: 70px;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate3d(-50%, -50%, 0);
+        transform: translate(-50%, -50%);
         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
         user-select: none;
-        -webkit-backface-visibility: hidden;
 
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
@@ -132,7 +131,7 @@ $ima-controls-height: 70px;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate3d(-40%, -50%, 0);
+            transform: translate(-40%, -50%);
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent $neutral-1;
