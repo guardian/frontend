@@ -1,4 +1,41 @@
 @(book: model.commercial.books.Book, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@import views.support.{ImgSrc, Item300}
+    <!--
+<aside class="adverts adverts--manual adverts--legacy-inline adverts--tone-membership adverts--membership" data-link-name="merchandising | book | @omnitureId">
+    <header class="adverts__header">
+        <h1 class="adverts__title">
+            <a class="adverts__logo" href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="title">
+                @fragments.inlineSvg("marque-36", "icon")
+                @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
+                <span class="u-h">The Guardian Bookshop</span>
+            </a>
+        </h1>
+    </header>
+    <div class="adverts__body">
+        <a class="advert advert--inline advert--brand" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v2_0_2014-10-15-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
+            <h2 class="advert__title">@book.title</h2>
+            <div class="advert__image-container">
+            @book.jacketUrl.map { url =>
+                <img class="advert__image" src="@ImgSrc(url, Item300)" alt="">
+            }
+            </div>
+            <div class="advert__meta">
+                <span>@book.author</span>,
+            </div>
+            <div class="advert__meta">
+                @book.price.map { price => RRP £@("%.2f".format(price))<br> }
+                @book.offerPrice.map { price =>
+                    <strong>Our price: <span itemprop="price">£@("%.2f".format(price))</span></strong>
+                    <meta itemprop="priceCurrency" content="GBP">
+                }
+            </div>
+            <span class="advert__more button button--small button--primary">
+                Buy now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+            </span>
+        </a>
+    </div>
+</aside>
+    -->
 
 @defining(("2_0", "2014-10-15")) { case (version, date) =>
     <div class="commercial commercial--tone-books commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book" data-link-name="merchandising | book | @omnitureId">
