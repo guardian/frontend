@@ -1,6 +1,7 @@
 @import common.commercial.hosted.HostedGalleryPage
 @(page: HostedGalleryPage)(implicit request: RequestHeader)
-@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader}
+@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader, guardianHostedGalleryCta}
+@import java.net.URLEncoder
 
 @main(page, Some("commercial"))  { }  {
     <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @{page.campaign.cssClass}">
@@ -12,15 +13,13 @@
                         @guardianHostedGalleryImage(page.images.head, {
                             <div class="hosted-gallery__meta">
                                 <h1 class="hosted-gallery__heading">{page.title}</h1>
-                                <h3 class="hosted-gallery__heading">{page.standfirst}</h3>
+                                <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
                             </div>
                         }.toString)
                         @for(i <- page.images.indices.tail) {
                             @guardianHostedGalleryImage(page.images(i), if (i == page.ctaIndex) {
-                                <a class="hosted-gallery__cta-title" href="{page.ctaLink}" target="_blank">
-                                    {page.ctaText}
-                                </a>
-                            }.toString.replace("{page.ctaLink}", page.ctaLink) else "")
+                                guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
+                            } else "")
                         }
                     </div>
                     <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
@@ -28,16 +27,9 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    <div class="hosted-gallery__cta js-hosted-gallery-cta-float">
-                        <div class="hosted-gallery__cta-title-last">
-                            @{page.ctaText}
-                        </div>
-                        <a class="hosted-gallery__cta-link" href="@{page.ctaLink}" target="_blank" data-link-name="Visit OMGB now">
-                            Visit OMGB now @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-                    </div>
+                    @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, "js-hosted-gallery-cta-float")
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
-                        @fragments.inlineSvg("arrow-up", "icon")
+                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">
                             <div class="hosted-gallery__progress-border">
                                 <div class="hosted-gallery__progress-border-static"></div>
@@ -47,11 +39,11 @@
                         <div class="hosted-gallery__image-count js-hosted-gallery-image-count">
                             1/@page.images.length
                         </div>
-                        @fragments.inlineSvg("arrow-down", "icon")
+                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                     </div>
                 </div>
             </section>
-            <section class="adverts adverts--legacy hosted__container hosted__container--content hosted-tone--dark">
+            <section class="adverts adverts--legacy hosted__container hosted__container--content hosted-gallery__lower-bar js-gallery-caption-bar">
                 <header class="adverts__header hosted__social">
                     <div class="meta__social hosted__social-wrapper" data-component="share">
                         <ul class="social social--top u-unstyled u-cf" data-component="social">
@@ -68,7 +60,7 @@
                             <li class="social__item social__item--twitter" data-link-name="twitter">
                                 <a class="social__action social-icon-wrapper"
                                 data-link-name="twitter-social-share-1"
-                                href="https://twitter.com/intent/tweet?text=@{page.pageTitle}&url=@{page.pageUrl}"
+                                href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.pageTitle, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
                                 target="_blank"
                                 title="twitter">
                                     <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
@@ -98,7 +90,7 @@
                         </ul>
                     </div>
                 </header>
-                <div class="hosted-gallery__captions js-hosted-gallery-captions">
+                <div class="hosted-gallery__captions">
                     @for(i <- page.images.indices) {
                         <div class="hosted-gallery__caption js-hosted-gallery-caption @{if (i == 0) "current-caption" else ""}">
                             @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
@@ -108,7 +100,10 @@
                             </div>
                         </div>
                     }
-                    <div class="hosted-gallery__info-button js-gallery-caption-button">i</div>
+                    <div class="hosted-gallery__info-button js-gallery-caption-button">
+                        <span class="icon-i">i</span>
+                        @fragments.inlineSvg("cross", "icon", List("inline-cross inline-icon "))
+                    </div>
                 </div>
                 </section>
         </div>

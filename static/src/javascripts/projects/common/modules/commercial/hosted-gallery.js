@@ -12,6 +12,7 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
+    'common/modules/analytics/omniture',
     'common/utils/chain',
     'common/utils/load-css-promise'
 ], function (
@@ -28,6 +29,7 @@ define([
     map,
     throttle,
     forEach,
+    omniture,
     chain,
     loadCssPromise
 ) {
@@ -43,7 +45,7 @@ define([
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
-        this.$captionContainer = $('.js-hosted-gallery-captions');
+        this.$captionContainer = $('.js-gallery-caption-bar');
         this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
         this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
@@ -241,7 +243,7 @@ define([
 
         }.bind(this));
 
-        if(newIndex && newIndex !== this.index){
+        if(newIndex && newIndex !== this.index) {
             this.index = newIndex;
             this.trigger('reload');
         }
@@ -275,7 +277,7 @@ define([
                 if(this.useSwipe){
                     this.translateContent(this.index, 0, 100);
                 }
-
+                omniture.trackLinkImmediate(config.page.analyticsName + ' - image ' + this.index);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },

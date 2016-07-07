@@ -12,6 +12,7 @@ case class HostedGalleryPage(
   standfirst: String,
   ctaText: String,
   ctaLink: String,
+  ctaButtonText: String,
   ctaIndex: Integer,
   images: List[HostedGalleryImage]
 ) extends HostedPage {
