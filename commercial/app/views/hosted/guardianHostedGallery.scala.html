@@ -20,7 +20,7 @@
                         @for(i <- page.images.indices.tail) {
                             @guardianHostedGalleryImage(page.images(i), if (i == page.ctaIndex) {
                                 "<div class=\"hosted-gallery__image-gradient\"></div>" +
-                                guardianHostedGalleryCta(page.ctaText, page.ctaLink, "Visit OMGB now").toString
+                                guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
                             } else "")
                         }
                     </div>
@@ -29,7 +29,7 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    @guardianHostedGalleryCta(page.ctaText, page.ctaLink, "Visit OMGB now", "js-hosted-gallery-cta-float")
+                    @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, "js-hosted-gallery-cta-float")
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">

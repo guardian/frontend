@@ -62,6 +62,7 @@ object VisitBritainHostedPages {
     title = "Activities",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
+    ctaButtonText = "Visit OMGB now",
     ctaIndex = 5,
     standfirst = "",
     cssClass = "visit-britain"

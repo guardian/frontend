@@ -63,6 +63,7 @@ object HostedGalleryTestPage {
     title = "Great Britain - Home of Amazing Moments #OMGB",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
+    ctaButtonText = "Visit OMGB now",
     ctaIndex = 5,
     standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
     cssClass = "test"
