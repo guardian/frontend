@@ -7,7 +7,7 @@ define([
     var performanceLog = {
             modules: [],
             adverts: {},
-            baselines: {}
+            baselines: []
         },
         initial = new Date().getTime(), // For backwards compatibility below, whilst we still use the old ophan format.
         primaryBaseline = 'primary',
@@ -138,7 +138,10 @@ define([
     }*/
 
     function addBaseline(baselineName){
-        performanceLog.baselines[baselineName] = userTiming.getCurrentTime();
+        performanceLog.baselines.push({
+            name: baselineName,
+            time: userTiming.getCurrentTime()
+        });
     }
 
     function getBaseline(baselineName){
