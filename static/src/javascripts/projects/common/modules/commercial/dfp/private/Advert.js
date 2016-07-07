@@ -47,6 +47,7 @@ define([
         });
 
         advert.timings.createTime = userTiming.getCurrentTime();
+        ophanTracking.advertCheckpoint(advert);
 
         return Object.seal(advert);
     }
@@ -71,5 +72,6 @@ define([
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
         advert.timings.stopRendering = userTiming.getCurrentTime();
+        ophanTracking.advertCheckpoint(advert);
     }
 });
