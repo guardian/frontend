@@ -95,7 +95,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       scalaUri
     ),
-    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
+    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._"),
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val router = application("router")
