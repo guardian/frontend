@@ -5,7 +5,7 @@ define([
 ], function (raven, userTiming, getAdvertById) {
 
     var performanceLog = {
-            page: {},
+            modules: [],
             adverts: {},
             baselines: {}
         },
@@ -107,7 +107,7 @@ define([
         }
     }
 
-    function pageCheckpoint(module, baseline){
+    function moduleCheckpoint(module, baseline){
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
         performanceLog.page[module] = {
@@ -151,7 +151,7 @@ define([
 
     return {
         trackPerformance : trackPerformance,
-        pageCheckpoint : pageCheckpoint,
+        moduleCheckpoint : moduleCheckpoint,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,

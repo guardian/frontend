@@ -88,7 +88,7 @@ define([
                     var modulePromise = pair[1]();
 
                     modulePromise.then(function(){
-                        ophanTracking.pageCheckpoint(moduleName, ophanTracking.primaryBaseline);
+                        ophanTracking.moduleCheckpoint(moduleName, ophanTracking.primaryBaseline);
                     });
 
                     primaryModulePromises.push(modulePromise);
