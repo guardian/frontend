@@ -122,10 +122,6 @@ install_libpng() {
   fi
 }
 
-install_dependencies() {
-  $BASEDIR/install-dependencies.sh
-}
-
 compile() {
   make install compile
 }
@@ -150,7 +146,6 @@ main() {
   install_gcc
   install_grunt
   install_libpng
-  install_dependencies
   compile
   report
 }
