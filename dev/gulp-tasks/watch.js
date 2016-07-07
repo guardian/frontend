@@ -4,7 +4,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 
 import postcss from 'gulp-postcss';
-import autoprefixer from 'autoprefixer-core';
+import autoprefixer from 'autoprefixer';
 import pxtorem from 'postcss-pxtorem';
 
 import {DIRECTORIES, PRESETS} from './config';
