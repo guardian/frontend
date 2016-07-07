@@ -75,6 +75,4 @@ bower_components
 # Scala test framework #
 local.conf
 
-#Node Version Manager
-.nvmrc
 static/src/stylesheets/pasteup/.npmrc

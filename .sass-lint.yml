@@ -35,7 +35,7 @@ rules:
     - ignore-single-line-rulesets: true
 
   # Disallows
-  no-color-keyword: 1
+  no-color-keywords: 1
   no-css-comments: 0
   no-debug: 1
   no-duplicate-properties: 1

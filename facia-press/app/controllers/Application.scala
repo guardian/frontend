@@ -11,7 +11,7 @@ import services.ConfigAgent
 
 import scala.concurrent.Future
 
-object Application extends Controller with ExecutionContexts {
+class Application extends Controller with ExecutionContexts {
   def index = Action {
     NoCache(Ok("Hello, I am the Facia Press."))
   }

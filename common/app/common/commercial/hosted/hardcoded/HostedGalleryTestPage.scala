@@ -55,7 +55,8 @@ object HostedGalleryTestPage {
       id = "hosted-gallery",
       name = "hosted-gallery",
       owner = "test",
-      logo = HostedLogo("http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png")
+      logo = HostedLogo("http://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"),
+      cssClass = "test"
     ),
     images = demoImages,
     pageUrl = "https://m.code.dev-theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
@@ -64,8 +65,7 @@ object HostedGalleryTestPage {
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaIndex = 5,
-    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share.",
-    cssClass = "test"
+    standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share."
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

@@ -126,6 +126,11 @@ $ima-controls-height: 70px;
                 @include video-play-button-size($vjs-large-button-size);
             }
             background-color: $media-default;
+
+            .gu-media-wrapper:hover &,
+            .gu-media__fallback:hover & {
+                background-color: darken($media-default, 15%);
+            }
         }
 
         &:after {
@@ -141,11 +146,6 @@ $ima-controls-height: 70px;
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: .2em;
-            }
-
-            .gu-media-wrapper:hover &,
-            .gu-media__fallback:hover & {
-                border-left-color: #333333;
             }
         }
     }
