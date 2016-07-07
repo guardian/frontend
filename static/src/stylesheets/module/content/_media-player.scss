@@ -111,7 +111,6 @@ $ima-controls-height: 70px;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        z-index: 9;
         -webkit-backface-visibility: hidden;
 
         @include mq(mobileLandscape) {
