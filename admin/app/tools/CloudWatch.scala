@@ -202,27 +202,22 @@ object CloudWatch extends Logging with ExecutionContexts {
     } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
   }
 
-  def omnitureConfidence = for {
+  def confidenceGraph(metricName: String): Future[AwsLineChart] = for {
     percentConversion <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(900)
       .withStatistics("Average")
       .withNamespace("Analytics")
-      .withMetricName("omniture-percent-conversion")
+      .withMetricName(metricName)
       .withDimensions(stage)))
-  } yield new AwsLineChart("omniture-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
+  } yield new AwsLineChart(metricName, Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
 
-  def ophanConfidence = for {
-    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusWeeks(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(900)
-      .withStatistics("Average")
-      .withNamespace("Analytics")
-      .withMetricName("ophan-percent-conversion")
-      .withDimensions(stage)))
-  } yield new AwsLineChart("ophan-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
+  def omnitureConfidence: Future[AwsLineChart] = confidenceGraph("omniture-percent-conversion")
+
+  def ophanConfidence: Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
+
+  def googleConfidence: Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
 
   def user50x = for {
     metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
