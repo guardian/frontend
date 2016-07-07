@@ -25,7 +25,7 @@ define([
             whenRendered: null,
             whenRenderedResolver: null,
             timings: {
-                constructing: null,
+                createTime: null,
                 startLoading: null,
                 dfpFetching: null,
                 dfpReceived: null,
