@@ -6,7 +6,7 @@ define([
 
     var performanceLog = {
             modules: [],
-            adverts: {},
+            adverts: [],
             baselines: []
         },
         initial = new Date().getTime(), // For backwards compatibility below, whilst we still use the old ophan format.
@@ -117,6 +117,24 @@ define([
         });
     }
 
+    function advertCheckpoint(advert){
+        performanceLog.adverts = performanceLog.adverts.filter(function(element){
+            return advert.id !== element.id
+        });
+        performanceLog.adverts.push({
+            id: advert.id,
+            isEmpty: advert.isEmpty,
+            createTime: advert.timings.createTime,
+            startLoading: advert.timings.startLoading,
+            dfpFetching: advert.timings.dfpFetching,
+            dfpReceived: advert.timings.dfpReceived,
+            dfpRendered: advert.timings.dfpRendered,
+            stopLoading: advert.timings.stopLoading,
+            startRendering: advert.timings.startRendering,
+            stopRendering: advert.timings.stopRendering
+        });
+    }
+
     /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
         if(!loggingObject.adverts[adName]) {
             loggingObject.adverts[adName] = {};
@@ -156,9 +174,11 @@ define([
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
+        advertCheckpoint : advertCheckpoint,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
+
 
         debugTimings : debugTimings
     };
