@@ -107,6 +107,9 @@ define([
         }
     }
 
+    // moduleCheckpoint() is called when a module has finished execution.
+    // The baseline allows us to determine whether the module was called in the first
+    // boot phase (primary) or the second boot phase (secondary).
     function moduleCheckpoint(module, baseline){
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
@@ -117,6 +120,9 @@ define([
         });
     }
 
+    // advertCheckpoint() is called whenever the advert timings need to be updated.
+    // It may be called multiple times for the same advert, so that we effectively update
+    // the object with additional timings.
     function advertCheckpoint(advert){
         performanceLog.adverts = performanceLog.adverts.filter(function(element){
             return advert.id !== element.id
