@@ -97,14 +97,10 @@
         <script>
             @Html(curlConfig().body)
 
-            @if(Configuration.assets.useHashedBundles) {
-                window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
-            } else {
-                window.curl.paths['bootstraps/video-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/video-embed.js';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
-            }
+            window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+
             @Html(common.Assets.js.curl)
+
             require(['bootstraps/video-embed'], function(bootstrap) {
                 bootstrap.init();
             });

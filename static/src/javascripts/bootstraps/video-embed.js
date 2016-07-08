@@ -3,8 +3,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'videojs',
-    'videojsembed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -13,19 +11,17 @@ define([
     'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
     'common/modules/video/videojs-options',
-    'common/modules/video/events'
+    'bootstraps/enhanced/media/video-player',
+    'common/modules/video/fullscreener'
 ], function (
     bean,
     bonzo,
     qwery,
-    videojs,
-    videojsembed,
     $,
     config,
     deferToAnalytics,
@@ -34,12 +30,13 @@ define([
     Component,
     techOrder,
     events,
-    fullscreener,
     svgs,
     loadingTmpl,
     titlebarTmpl,
     debounce,
-    videojsOptions
+    videojsOptions,
+    videojs,
+    fullscreener
 ) {
 
     function initLoadingSpinner(player) {

@@ -65,7 +65,6 @@ window.curlConfig = {
             'bootstraps/enhanced/media/video-player':   'bootstraps/enhanced/media/video-player-dev.js',
             videojs:                                    'components/video.js/video.js',
             'videojs-contrib-ads':                      'components/videojs-contrib-ads/videojs.ads.js',
-            videojsembeddev:                            'bootstraps/enhanced/media/videojsembed-dev.js',
             videojsembed:                               'components/videojs-embed/videojs.embed.js',
             'videojs-ima':                              'components/videojs-ima/videojs.ima.js',
             videojspersistvolume:                       'components/videojs-persistvolume/videojs.persistvolume.js',
