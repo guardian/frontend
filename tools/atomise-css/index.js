@@ -21,16 +21,32 @@ const stylesheets = `${static}/src/stylesheets`;
 const src = `${stylesheets}/atomised`;
 const target = `common/conf/assets`;
 
+// get an array of paths to the Sass files
 pGlob(`${src}/**/*.scss`)
-    .then(paths => Promise.all([
-        `${stylesheets}/_vars.scss`,
-        `${stylesheets}/_mixins.scss`
-    ].concat(paths).map(path => pFs.readFile(path, 'utf8'))))
+
+    // prepend vars and mixins files to Sass file array
+    .then(paths =>
+        [
+            `${stylesheets}/_vars.scss`,
+            `${stylesheets}/_mixins.scss`
+        ].concat(paths)
+    )
+
+    // get the contents of all the src files
+    .then(paths => Promise.all(
+        paths.map(path => pFs.readFile(path, 'utf8'))
+    ))
+
+    // as a string
     .then(fileData => fileData.join(''))
+
+    // render it
     .then(scss => pSass.render({
         data: scss,
         includePaths: [stylesheets]
     }))
+
+    // get the CSS
     .then(result => result.css.toString())
 
     // clean + normalise the CSS
@@ -65,5 +81,7 @@ pGlob(`${src}/**/*.scss`)
         autoprefixer(),
         perfectionist({format: 'compact'})
     ]).process(atomised))
+
+    // save it
     .then(atomisedCSS => pFs.writeFile(`${target}/inline-stylesheets/atomic.css`, atomisedCSS.css, 'utf8'))
     .catch(e => console.log(e))
