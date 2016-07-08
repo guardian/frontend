@@ -4,7 +4,7 @@ $hosted-video-height: 540px;
 $renaultColor: #ffc421;
 $renaultLight: #fff9e9;
 $omgbColor: #e41f13;
-$leffeColor: #ffffff;
+$leffeColor: #dec190;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
@@ -51,19 +51,19 @@ $leffeColor: #ffffff;
 
 /* Temporary Leffe's colors will be the same as Renault's because of the contrast issues */
 .hosted-tone--leffe {
-    color: $renaultColor;
+    color: $leffeColor;
 }
 
 .hosted-tone-bg--leffe {
-    background-color: $renaultColor;
+    background-color: $leffeColor;
 }
 
 .hosted-tone-btn--leffe {
     &,
     &:focus,
     &:hover {
-        background-color: $renaultColor;
-        border-color: $renaultColor;
+        background-color: $leffeColor;
+        border-color: $leffeColor;
     }
 }
 
@@ -166,15 +166,11 @@ $leffeColor: #ffffff;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: -40px;
-        margin-top: -40px;
+        margin-left: 0;
+        margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
-
-        @include mq(mobileLandscape) {
-            margin-left: -70px;
-        }
 
         &:before {
             content: 'Watch now';
@@ -188,8 +184,8 @@ $leffeColor: #ffffff;
         }
 
         &:after {
-            top: 16px;
-            left: 16px;
+            top: 50%;
+            left: 20%;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }
@@ -490,6 +486,10 @@ $leffeColor: #ffffff;
     }
 }
 
+.hosted__cta-btn-wrapper {
+    padding-bottom: 5%;
+}
+
 .hosted__cta.button {
     padding: 0;
 
@@ -579,8 +579,16 @@ $leffeColor: #ffffff;
     color: #767676;
 }
 
-.hosted__link {
-    color: $renaultColor;
+.leffe {
+    .hosted__link {
+        color: $leffeColor;
+    }
+}
+
+.renault {
+    .hosted__link {
+        color: $renaultColor;
+    }
 }
 
 .hosted__standfirst {
@@ -802,7 +810,7 @@ $leffeColor: #ffffff;
 
 .hosted-video-page.leffe ~ .survey-overlay-simple {
     .survey-text__header {
-        background-color: $renaultColor;
+        background-color: $leffeColor;
     }
 }
 
@@ -848,6 +856,12 @@ $leffeColor: #ffffff;
 
     &:active {
         color: #333333;
+    }
+}
+
+.leffe {
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $leffeColor;
     }
 }
 
