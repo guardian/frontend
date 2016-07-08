@@ -411,7 +411,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
     )
   }
 
