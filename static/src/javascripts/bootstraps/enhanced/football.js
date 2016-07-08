@@ -13,8 +13,7 @@ define([
     'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/tag-page-stats',
     'common/modules/sport/score-board',
-    'common/modules/ui/rhc',
-    'lodash/functions/debounce'
+    'common/modules/ui/rhc'
 ], function (
     bean,
     bonzo,
@@ -30,8 +29,7 @@ define([
     MatchListLive,
     tagPageStats,
     ScoreBoard,
-    rhc,
-    debounce
+    rhc
 ) {
 
     function renderNav(match, callback) {
