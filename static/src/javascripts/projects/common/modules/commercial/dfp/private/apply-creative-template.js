@@ -77,11 +77,10 @@ define([
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
-            return hideIframe().then(
-                 JSON.parse
-                ).then(
-                 renderCreative
-            ).catch(function (err) {
+            return hideIframe()
+                .then(JSON.parse)
+                .then(renderCreative)
+                .catch(function (err) {
                 reportError('Failed to get creative JSON ' + err);
             });
         } else {
