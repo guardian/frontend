@@ -3,6 +3,7 @@ define([
     'bonzo',
     'Promise',
     'common/utils/fastdom-promise',
+    'common/utils/report-error',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
     'common/modules/commercial/creatives/commercial-component',
@@ -28,7 +29,8 @@ define([
     bean,
     bonzo,
     Promise,
-    fastdom
+    fastdom,
+    reportError
 ) {
     /**
      * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
@@ -80,7 +82,7 @@ define([
                 ).then(
                  renderCreative
             ).catch(function (err) {
-                console.log(err);
+                reportError(err)
             });
         } else {
             return Promise.resolve(true);
