@@ -1,6 +1,7 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
@@ -15,13 +16,14 @@ define([
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/hosted-gallery',
     'common/modules/commercial/slice-adverts',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/paid-containers',
-    'common/modules/commercial/sticky-top-banner'
+    'common/modules/commercial/paid-containers'
 ], function (
     Promise,
     config,
+    detect,
     mediator,
     robust,
     userTiming,
@@ -36,10 +38,10 @@ define([
     hostedVideo,
     hostedGallery,
     sliceAdverts,
+    stickyTopBanner,
     thirdPartyTags,
     paidforBand,
-    paidContainers,
-    stickyTopBanner
+    paidContainers
 ) {
     var modules = [
         ['cm-dfp', dfpInit],
