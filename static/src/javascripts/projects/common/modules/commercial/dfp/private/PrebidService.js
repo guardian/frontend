@@ -165,13 +165,20 @@ define([
     }
 
     function enableAnalytics() {
-        pbjs.enableAnalytics({
-            provider: 'ga',
-            options: {
-                global: 'ga',
-                enableDistribution: false
-            }
-        });
+        if (config.switches.googleAnalytics) {
+            // Create a named tracker: if we do this, we need a way to share
+            // the account ID
+            // ga('create', 'UA-XXXXX-Z', 'auto', 'prebidTracker');
+
+            pbjs.enableAnalytics({
+                provider: 'ga',
+                options: {
+                    global: 'ga',
+    // trackerName: 'prebidTracker',
+                    enableDistribution: false
+                }
+            });
+        }
     }
 
     function logError(e) {
