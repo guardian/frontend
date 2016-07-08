@@ -12,47 +12,54 @@ object VisitBritainHostedPages {
   private val imageUrlPrefix = "https://static.theguardian.com/commercial/hosted/visit-britain/"
   private val campaign = HostedCampaign(
     id = "visit-britain",
-    name = "Visit Britain",
+    name = "#OMGB. Home of Amazing Moments. Great Britain & Northern Ireland",
     owner = "OMGB",
     logo = HostedLogo(imageUrlPrefix + "OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
     cssClass = "visit-britain"
   )
 
-  private val activityImages : List[HostedGalleryImage] = List(
-    HostedGalleryImage (
+  private val activityImages: List[HostedGalleryImage] = List(
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/505635_6004330_OMGB_48sh_Images_Surf snowdonia.jpg",
-      title = "Surf Snowdonia, Wales",
-      caption = "© VisitBritain"
+      title = "Ride the waves at Surf Snowdonia",
+      caption = "Surf Snowdonia, Wales",
+      credit = "© VisitBritain"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/England_Cumbria_Cycling_VE23598.jpg",
-      title = "Eden Valley, Cumbria, England",
-      caption = "© VisitEngland / Tony West Photography / Nurture Eden"
+      title = "Pedal past the wild landscapes of Cumbria",
+      caption = "Eden Valley, Cumbria, England",
+      credit = "© VisitEngland / Tony West Photography / Nurture Eden"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/England_Yorkshire_Goathland, home to Harry Potter's Hogsmeade Credit Alan Pratt_NYMR.jpg",
-      title = "Goathland, North York Moors, Yorkshire, England",
-      caption = "© Alan Pratt_NYMR"
+      title = "Hop aboard the Hogwart Express in North Yorkshire",
+      caption = "Goathland, North York Moors, Yorkshire, England",
+      credit = "© Alan Pratt_NYMR"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/England_Cumbria_Swim_pm-5-103-final.jpg",
-      title = "Lake District, Cumbria, England",
-      caption = "© VisitEngland / Blacks"
+      title = "Swap the pool for a wild swimming in a tranquil lake",
+      caption = "Lake District, Cumbria, England",
+      credit = "© VisitEngland / Blacks"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/England_IsleofWight_Paddleboard_VE18617.jpg",
-      title = "Alum Bay, Isle of Wight, England",
-      caption = "© VisitEngland / Jeremy Congialosi"
+      title = "Keep your balance while admiring coastal landmarks",
+      caption = "Alum Bay, Isle of Wight, England",
+      credit = "© VisitEngland / Jeremy Congialosi"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/England_Dorset_Coasteering_VB34139944.jpg",
-      title = "Stair Hole, Jurassic Coast, Dorset, England",
-      caption = "© VisitBritain / Ben Selway"
+      title = "Take the plunge in Dorset on a coasteering adventure",
+      caption = "Stair Hole, Jurassic Coast, Dorset, England",
+      credit = "© VisitBritain / Ben Selway"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "activities/505635_6004330_OMGB_720x480_Images5_SurfSnowdonia.jpg",
-      title = "Surf Snowdonia, Wales",
-      caption = "© VisitBritain / Ben Selway"
+      title = "Ride the waves at Surf Snowdonia",
+      caption = "Surf Snowdonia, Wales",
+      credit = "© VisitBritain / Ben Selway"
     )
   )
 
@@ -61,38 +68,43 @@ object VisitBritainHostedPages {
     images = activityImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
-    title = "Activities",
+    title = "Don’t be a sloth this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
-    standfirst = ""
+    standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
   )
 
-  private val cityImages : List[HostedGalleryImage] = List(
-    HostedGalleryImage (
+  private val cityImages: List[HostedGalleryImage] = List(
+    HostedGalleryImage(
       url = imageUrlPrefix + "city/England_London_VB34135297.jpg",
-      title = "Tower Bridge, London, England",
-      caption = "© VisitBritain / Mark Thomasson"
+      title = "Dare to look down at Tower Bridge’s glass floor experience",
+      caption = "Tower Bridge, London, England",
+      credit = "© VisitBritain / Mark Thomasson"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "city/England_Bristol Balloon Fiesta MorningLaunch.jpg",
-      title = "Bristol International Balloon Fiesta, Bristol, Avon, England",
-      caption = "© Destination Bristol"
+      title = "Crank your neck for the eye-popping International Balloon Fiesta",
+      caption = "Bristol International Balloon Fiesta, Bristol, Avon, England",
+      credit = "© Destination Bristol"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "city/Scotland_Edinburgh_VB34148271.jpg",
-      title = "Calton Hill, Edinburgh, Scotland",
-      caption = "© VisitBritain / Andrew Pickett"
+      title = "Survey Edinburgh’s iconic skyline from Calton Hill",
+      caption = "Calton Hill, Edinburgh, Scotland",
+      credit = "© VisitBritain / Andrew Pickett"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "city/England_London_RegentsPark_Theatre_VB34135044.jpg",
-      title = "Pride & Prejudice, Regents Park, London, England",
-      caption = "© VisitBritain / Eric Nathan"
+      title = "Take your seat at the Regents Park Open Air Theatre",
+      caption = "Pride & Prejudice, Regents Park, London, England",
+      credit = "© VisitBritain / Eric Nathan"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "city/Scotland_Edinburgh_Fringe_VB34148150.jpg",
-      title = "The Edinburgh Festival and Edinburgh Fringe Festival, Edinburgh, Scotland",
-      caption = "© VisitBritain / Andrew Pickett"
+      title = "Catch hotly-tipped acts at Edinburgh Fringe",
+      caption = "The Edinburgh Festival and Edinburgh Fringe Festival, Edinburgh, Scotland",
+      credit = "© VisitBritain / Andrew Pickett"
     )
   )
 
@@ -101,58 +113,65 @@ object VisitBritainHostedPages {
     images = cityImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/city",
     pageName = activitiesPageName,
-    title = "City",
+    title = "Take a city break from the norm",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
-    standfirst = ""
+    standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and hotly-tipped comedy acts at Edinburgh Fringe."
   )
 
-  private val coastImages : List[HostedGalleryImage] = List(
-//    HostedGalleryImage (
-//      url = imageUrlPrefix + "coast/505635_6004330_OMGB_48sh_Images6_GiantsCauseway.jpg",
-//      title = "The Giant's Causeway, Northern Ireland",
-//      caption = "© VisitBritain / Ben Selway"
-//    ),
-    HostedGalleryImage (
+  private val coastImages: List[HostedGalleryImage] = List(
+    HostedGalleryImage(
+      url = imageUrlPrefix + "coast/505635_6004330_OMGB_48sh_Images6_GiantsCauseway.jpg",
+      caption = "The Giant's Causeway, Northern Ireland",
+      title = "Admire atmospheric rock formations at the Giant’s Causeway",
+      credit = "© VisitBritain / Ben Selway"
+    ),
+    HostedGalleryImage(
       url = imageUrlPrefix + "coast/England_IslesOfScilly_VE25005.jpg",
-      title = "St Mary's, Isles of Scilly, Cornwall, England",
-      caption = "© VisitEngland / Alex Hare"
+      caption = "St Mary's, Isles of Scilly, Cornwall, England",
+      title = "Feel a million miles from the UK on the Isles of Scilly",
+      credit = "© VisitEngland / Alex Hare"
     ),
-//    HostedGalleryImage (
-//      url = imageUrlPrefix + "coast/Wales_LlandudnoPier_VB34133048.jpg",
-//      title = "Llandudno Pier, WalesLlandudno Pier, Wales",
-//      caption = "© VisitBritain/ Lee Beel "
-//    ),
-//    HostedGalleryImage (
-//      url = imageUrlPrefix + "coast/England_Yorkshire_Whitby Regatta fireworks Credit Colin Carter_NYMNPA_BIG.jpg",
-//      title = "Whitby, Yorkshire, England",
-//      caption = "© Colin Carter_NYMNPA"
-//    ),
-    HostedGalleryImage (
+    HostedGalleryImage(
+      url = imageUrlPrefix + "coast/Wales_LlandudnoPier_VB34133048.jpg",
+      caption = "Llandudno Pier, WalesLlandudno Pier, Wales",
+      title = "Soak up the sea air from Llandudno Pier in Wales",
+      credit = "© VisitBritain/ Lee Beel "
+    ),
+    HostedGalleryImage(
+      url = imageUrlPrefix + "coast/England_Yorkshire_Whitby Regatta fireworks Credit Colin Carter_NYMNPA_BIG.jpg",
+      caption = "Whitby, Yorkshire, England",
+      title = "Get the party started at the Whitby Regatta in August.",
+      credit = "© Colin Carter_NYMNPA"
+    ),
+    HostedGalleryImage(
       url = imageUrlPrefix + "coast/Scotland_Dunnottar_VB21954447.jpg",
-      title = "Dunnottar Castle, Grampian, Scotland",
-      caption = "© VisitBritain / Britain on View"
+      caption = "Dunnottar Castle, Grampian, Scotland",
+      title = "Marvel at the majestic medieval ruins of Dunnottar Castle",
+      credit = "© VisitBritain / Britain on View"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "coast/England_Cornwall_Minack_VB25754182.jpg",
-      title = "Minack Theatre, Cornwall, England",
-      caption = "© VisitBritain / Britain on View"
+      caption = "Minack Theatre, Cornwall, England",
+      title = "Get swept away by drama on and off set at the  Minack",
+      credit = "© VisitBritain / Britain on View"
     ),
-//    HostedGalleryImage (
-//      url = imageUrlPrefix + "coast/England_Merseyside_VB21978639.jpg",
-//      title = "Sculpture by Anthony Gormley, Crosby Beach, Merseyside, England",
-//      caption = "© VisitBritain / Pete Seaward"
-//    ),
-    HostedGalleryImage (
+    HostedGalleryImage(
+      url = imageUrlPrefix + "coast/England_Merseyside_VB21978639.jpg",
+      caption = "Sculpture by Anthony Gormley, Crosby Beach, Merseyside, England",
+      title = "Join Antony Gormley’s sculptures on Crosby Beach",
+      credit = "© VisitBritain / Pete Seaward"
+    ),
+    HostedGalleryImage(
       url = imageUrlPrefix + "coast/505635_6004330_OMGB_720x480_Images3_Dunluce.jpg",
       title = "Dunluce Castle, Northern Ireland",
-      caption = "© VisitBritain / Ben Selway"
+      credit = "© VisitBritain / Ben Selway"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "coast/505635_6004330_OMGB_48sh_Images6_GiantsCauseway.jpg",
       title = "The Giant's Causeway, Northern Ireland",
-      caption = "© Northern Ireland Tourist Board"
+      credit = "© Northern Ireland Tourist Board"
     )
   )
 
@@ -162,44 +181,49 @@ object VisitBritainHostedPages {
     images = coastImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/coast",
     pageName = coastPageName,
-    title = "Coast",
+    title = "Find cool-on-sea this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
-    standfirst = ""
+    standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical climes and join the party at the Whitby Regatta."
   )
 
 
-  private val countrysideImages : List[HostedGalleryImage] = List(
-    HostedGalleryImage (
+  private val countrysideImages: List[HostedGalleryImage] = List(
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/505635_6004330_OMGB_48sh_Images5_GlenCoe.jpg",
-      title = "Glen Coe, Scotland",
-      caption = "© VisitBritain / Rod Edwards"
+      title = "Marvel at Glen Coe, Scotland’s most iconic glen",
+      caption = "Glen Coe, Scotland",
+      credit = "© VisitBritain / Rod Edwards"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/505635_6004330_OMGB_48sh_Images2_Wastwater.jpg",
-      title = "Wastwater, The Lake District",
-      caption = "© VisitEngland / Rod Edwards"
+      title = "Float past snow-capped peaks on Wastwater",
+      caption = "Wastwater, The Lake District",
+      credit = "© VisitEngland / Rod Edwards"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/GettyImages-600586061_DarkHedges.jpg",
-      title = "The Dark Hedges, Northern Ireland",
-      caption = "© Getty Images"
+      title = "Follow in the footsteps of Arya Stark at Dark Hedges",
+      caption = "The Dark Hedges, Northern Ireland",
+      credit = "© Getty Images"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/England_North York Moors_Heather on Cleveland Way Landscape_Credit VisitEngland_Thomas Heaton.jpg",
-      title = "Cleveland Way, North York Moors, Yorkshire, England",
-      caption = "© VisitEngland / Thomas Heaton"
+      title = "Admire purple hues along the Cleveland Way",
+      caption = "Cleveland Way, North York Moors, Yorkshire, England",
+      credit = "© VisitEngland / Thomas Heaton"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/505635_6004330_OMGB_48sh_Images7_GlenCoe.jpg",
       title = "Glen Coe, Scotland",
-      caption = "© VisitBritain / Rod Edwards"
+      credit = "© VisitBritain / Rod Edwards"
     ),
-    HostedGalleryImage (
+    HostedGalleryImage(
       url = imageUrlPrefix + "countryside/England_Northumberland_Hadrians Wall Landscape_Credit Thomas Heaton_VisitEngland.jpg",
-      title = "Hadrian's Wall, Northumberland, England",
-      caption = "© VisitEngland / Thomas Heaton"
+      title = "Stroll alongside ancient history at Hadrian’s Wall",
+      caption = "Hadrian's Wall, Northumberland, England",
+      credit = "© VisitEngland / Thomas Heaton"
     )
   )
 
@@ -208,11 +232,11 @@ object VisitBritainHostedPages {
     images = countrysideImages,
     pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/countryside",
     pageName = countrysidePageName,
-    title = "Countryside",
+    title = "Mend your relationship with Mother Nature",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
-    standfirst = ""
+    standfirst = "Switch off and soak up the country air as you ramble through the heather-coated North York Moors or explore the dramatic scenery of Glen Coe."
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

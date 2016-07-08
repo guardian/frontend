@@ -55,5 +55,6 @@ case class HostedGalleryPage(
 case class HostedGalleryImage(
   url: String,
   title: String,
-  caption: String
+  caption: String = "",
+  credit: String = ""
 )
