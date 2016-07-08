@@ -60,7 +60,7 @@
                             <li class="social__item social__item--twitter" data-link-name="twitter">
                                 <a class="social__action social-icon-wrapper"
                                 data-link-name="twitter-social-share-1"
-                                href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.pageTitle, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+                                href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.standfirst, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
                                 target="_blank"
                                 title="twitter">
                                     <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
@@ -97,6 +97,8 @@
                             <span>@page.images(i).title</span>
                             <div class="hosted-gallery__caption-text">
                                 @page.images(i).caption
+                                @{if (page.images(i).caption.length > 0 && page.images(i).credit.length > 0) <br/>}
+                                @page.images(i).credit
                             </div>
                         </div>
                     }
