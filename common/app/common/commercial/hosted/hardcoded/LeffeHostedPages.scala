@@ -47,7 +47,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/willard-wigan_banner.jpg"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue. Watch full film: ",
+      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -77,7 +77,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/adrienne-treeby_banner.jpg"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue. Watch full film: ",
+      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -104,7 +104,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/pete-lawrence_banner.jpg"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue. Watch full film: ",
+      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -131,7 +131,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/susan-derges_banner.jpg"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue. Watch full film: ",
+      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -157,7 +157,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/quay-brothers_banner.jpg"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue. Watch full film: ",
+      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
