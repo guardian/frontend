@@ -17,14 +17,19 @@ const pxtorem = require('postcss-pxtorem');
 const perfectionist = require('perfectionist');
 
 const static = `${__dirname}/../../static`;
-const src = `${static}/src/stylesheets/atomised`;
+const stylesheets = `${static}/src/stylesheets`;
+const src = `${stylesheets}/atomised`;
 const target = `common/conf/assets`;
 
 pGlob(`${src}/**/*.scss`)
-    .then(paths => Promise.all(paths.map(path => pFs.readFile(path, 'utf8'))))
+    .then(paths => Promise.all([
+        `${stylesheets}/_vars.scss`,
+        `${stylesheets}/_mixins.scss`
+    ].concat(paths).map(path => pFs.readFile(path, 'utf8'))))
     .then(fileData => fileData.join(''))
     .then(scss => pSass.render({
-        data: scss
+        data: scss,
+        includePaths: [stylesheets]
     }))
     .then(result => result.css.toString())
 
@@ -58,7 +63,7 @@ pGlob(`${src}/**/*.scss`)
     // prep it for inlining
     .then(atomised => postcss([
         autoprefixer(),
-        perfectionist({format: 'compressed'})
+        perfectionist({format: 'compact'})
     ]).process(atomised))
     .then(atomisedCSS => pFs.writeFile(`${target}/inline-stylesheets/atomic.css`, atomisedCSS.css, 'utf8'))
     .catch(e => console.log(e))
