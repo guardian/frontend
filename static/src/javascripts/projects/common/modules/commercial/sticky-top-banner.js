@@ -240,7 +240,7 @@ define([
     };
 
     return {
-        initialise: initialise,
+        init: initialise,
         // Needed for testing
         render: render
     };

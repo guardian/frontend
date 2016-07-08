@@ -17,7 +17,8 @@ define([
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/paid-containers'
+    'common/modules/commercial/paid-containers',
+    'common/modules/commercial/sticky-top-banner'
 ], function (
     Promise,
     config,
@@ -37,7 +38,8 @@ define([
     sliceAdverts,
     thirdPartyTags,
     paidforBand,
-    paidContainers
+    paidContainers,
+    stickyTopBanner
 ) {
     var modules = [
         ['cm-dfp', dfpInit],
@@ -46,11 +48,35 @@ define([
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
+    ],
+    secondaryModules = [
+        ['cm-adverts', dfpLoad],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
+        ['cm-sponsorships', sponsorships.init],
+        ['cm-hostedVideo', hostedVideo.init],
+        ['cm-hostedGallery', hostedGallery.init],
+        ['cm-paidforBand', paidforBand.init],
+        ['cm-new-adverts', paidContainers.init],
+        ['cm-ready', function () {
+            mediator.emit('page:commercial:ready');
+            userTiming.mark('commercial end');
+        }]
     ];
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
         modules.push(['cm-badges', badges.init]);
     }
+
+    if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
+         config.page.disableStickyTopBanner ||
+         config.tests.abNewHeaderVariant
+    ) {
+        config.page.hasStickyAdBanner = false;
+    } else {
+        config.page.hasStickyAdBanner = true;
+        secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
+    }
+
 
     return {
         init: function () {
@@ -69,19 +95,7 @@ define([
             });
 
             Promise.all(modulePromises).then(function () {
-                robust.catchErrorsAndLogAll([
-                    ['cm-adverts', dfpLoad],
-                    ['cm-thirdPartyTags', thirdPartyTags.init],
-                    ['cm-sponsorships', sponsorships.init],
-                    ['cm-hostedVideo', hostedVideo.init],
-                    ['cm-hostedGallery', hostedGallery.init],
-                    ['cm-paidforBand', paidforBand.init],
-                    ['cm-new-adverts', paidContainers.init],
-                    ['cm-ready', function () {
-                        mediator.emit('page:commercial:ready');
-                        userTiming.mark('commercial end');
-                    }]
-                ]);
+                robust.catchErrorsAndLogAll(secondaryModules);
             });
         }
     };
