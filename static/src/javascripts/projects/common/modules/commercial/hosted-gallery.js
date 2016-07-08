@@ -156,13 +156,19 @@ define([
             map,
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
-            $img = $('img', this.$images[i]);
-            if (!this.imageRatios[i]) {
-                that.imageRatios[i] = $img[0].naturalWidth/$img[0].naturalHeight;
+            $img = $('img', this.$images[i])[0];
+            if (!$img.complete) {
+                bean.one($img, 'load', function () {
+                    that.imageRatios[i] = this.naturalWidth / this.naturalHeight;
+                    that.resizeImage.call(that, i);
+                });
+            } else {
+                if (!this.imageRatios[i]) {
+                    that.imageRatios[i] = $img.naturalWidth / $img.naturalHeight;
+                }
+                that.resizeImage.call(that, i);
             }
-            that.resizeImage.call(that, i);
         }.bind(this));
-
     };
 
     HostedGallery.prototype.resizeImage = function (imgIndex) {
