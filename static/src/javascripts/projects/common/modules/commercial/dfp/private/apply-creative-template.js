@@ -82,7 +82,7 @@ define([
                 ).then(
                  renderCreative
             ).catch(function (err) {
-                reportError(err)
+                reportError("Failed to get creative JSON " + err);
             });
         } else {
             return Promise.resolve(true);
