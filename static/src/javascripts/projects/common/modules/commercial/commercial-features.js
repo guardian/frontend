@@ -17,15 +17,10 @@ define([
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
     function CommercialFeatures() {
-        var isSSL =
-            config.page.isSSL &&
-            config.page.section !== 'admin';
-
         // this is used for SpeedCurve tests
         var noadsUrl = location.getHash().match(/[#&]noads(&.*)?$/);
 
         var externalAdvertising =
-            !isSSL &&
             !noadsUrl &&
             !userPrefs.isOff('adverts');
 
