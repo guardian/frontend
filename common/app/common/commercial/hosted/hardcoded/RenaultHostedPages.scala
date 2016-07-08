@@ -20,7 +20,8 @@ object RenaultHostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
     label = "Discover Zoe",
-    trackingCode = "explore-renault-zoe-button"
+    trackingCode = "explore-renault-zoe-button",
+    btnText = ""
   )
 
   private val teaserWithoutNextPage: HostedVideoPage = {
