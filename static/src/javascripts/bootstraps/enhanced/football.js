@@ -275,37 +275,6 @@ define([
             window.location = this.value;
         });
 
-        // World Cup content
-        // config.switches.worldCupWallchartEmbed
-        // Remove this content below when you remove the switch as it's specific to World Cup 2014
-        if (config.page.isFootballWorldCup2014) {
-            $('a').attr('target', '_top');
-
-            (function () {
-                var t, h, i, resize;
-
-                // This stops the SecurityError from halting the execution any further.
-                try {
-                    i = $('.interactive iframe', window.parent.document).get(0);
-                } catch (e) {/**/}
-
-                resize = (function r() {
-                    if (!t) {
-                        // if this isn't timed out, it triggers another resize
-                        h = $('#js-context').offset().height + 50;
-
-                        if (i) { i.height = h; }
-                        t = setTimeout(function () {
-                            clearTimeout(t); t = null;
-                        }, 200);
-                    }
-                    return r;
-                })();
-                mediator.on('window:resize', debounce(resize, 200));
-                bean.on(document, 'click', '.dropdown__button', resize);
-            })();
-        }
-
         tagPageStats();
     }
 
