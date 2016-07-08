@@ -82,12 +82,12 @@ object css {
 
   def head(projectOverride: Option[String]) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
   def inlineStoryPackage = inline("story-package")
+  def atomic = inline("atomic")
 
   def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
   def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
   def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
-  def atomic = inline("atomic")
 
   private def inline(module: String): String = {
     val resourceName = s"assets/inline-stylesheets/$module.css"

@@ -5,6 +5,9 @@ watch: compile-dev
 		npm run css-watch & \
 		npm run browser-sync
 
+atomise-css:
+	@node tools/atomise-css
+
 compile: clean-assets
 	@grunt compile-assets
 
