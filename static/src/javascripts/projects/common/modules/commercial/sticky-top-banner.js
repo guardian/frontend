@@ -211,7 +211,9 @@ define([
     };
 
     var initialise = function () {
-        if (detect.isBreakpoint({ min: 'desktop' })) {
+        // Although we check as much config as possible to decide whether to run sticky-top-banner,
+        // it is still entirely possible for the ad slot to be closed.
+        if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
             getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 
