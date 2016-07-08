@@ -1,6 +1,7 @@
 @import common.commercial.hosted.HostedVideoPage
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
+@import java.net.URLEncoder
 
 @cssClass(owner: String) = {hosted-tone--@{owner.toLowerCase.replaceAll("\\s+", "-")}}
 
@@ -81,7 +82,7 @@
                         <li class="social__item social__item--twitter" data-link-name="twitter">
                             <a class="social__action social-icon-wrapper"
                             data-link-name="twitter-social-share-1"
-                            href="https://twitter.com/intent/tweet?text=@{page.twitterTxt}&url=@{page.pageUrl}"
+                            href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterTxt, "utf-8")}&url=@{page.pageUrl}"
                             target="_blank"
                             title="twitter">
                                 <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
