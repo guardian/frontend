@@ -17,6 +17,7 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
   private val rawPageViews = new AtomicLong(0L)
   private val omniturePageViews = new AtomicLong(0L)
   private val ophanPageViews = new AtomicLong(0L)
+  private val googlePageViews = new AtomicLong(0L)
 
   val omnitureConversionRate = GaugeMetric(
     name = "omniture-percent-conversion",
@@ -36,6 +37,15 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
     }
   )
 
+  val googleConversionRate = GaugeMetric(
+    name = "google-percent-conversion",
+    description = "The percentage of raw page views that contain a recorded Google Analytics page view",
+    metricUnit = StandardUnit.Percent,
+    get = () => {
+      googlePageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
+    }
+  )
+
   def run() {
 
     // Update rawPageViews.
@@ -50,12 +60,18 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
       omniturePageViews.set(views)
     }
 
+    // Update googlePageViews.
+    CloudWatchStats.googleAnalyticsPageViews.foreach { stats =>
+      val views = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
+      googlePageViews.set(views)
+    }
+
     // Update ophanPageViews.
     ophanViews.foreach { views =>
       ophanPageViews.set(views)
     }
 
-    CloudWatch.putMetrics("Analytics", List(ophanConversionRate, omnitureConversionRate), List.empty)
+    CloudWatch.putMetrics("Analytics", List(ophanConversionRate, omnitureConversionRate, googleConversionRate), List.empty)
   }
 
   private def ophanViews: Future[Long] = {
