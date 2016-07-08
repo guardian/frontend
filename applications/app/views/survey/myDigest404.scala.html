@@ -7,18 +7,18 @@
 @surveyMain(surveyPage) {
     <div class="illustration-container">
 
-        <div class="gs-container">
-
-            @fragments.inlineSvg("mobile-lab", "illustration", Seq("illustration-mobile") )
-            @fragments.inlineSvg("tablet-lab", "illustration", Seq("illustration-tablet") )
-            @fragments.inlineSvg("desktop-lab", "illustration", Seq("illustration-desktop") )
-            @fragments.inlineSvg("wide-lab", "illustration", Seq("illustration-wide") )
-
+        <div class="wrapper">
+            <div class="wrapper-inner my-digest-illustration-wrapper">
+                @fragments.inlineSvg("my-digest", "illustration")
+            </div>
         </div>
 
-        <div class="table-top"></div>
-        <div class="table-base"></div>
+    </div>
 
+    <div class="wrapper">
+        <div class="wrapper-inner">
+            <div class="my-digest-bottom-margin"></div>
+        </div>
     </div>
 
 
