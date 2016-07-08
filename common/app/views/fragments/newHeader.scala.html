@@ -1,4 +1,5 @@
 @()(implicit request: RequestHeader)
+@import conf.CssClass
 
 @import common.LinkTo
 
@@ -12,7 +13,7 @@
             @fragments.inlineSvg("world", "icon")
             <span>UK Edition</span>
         </button>
-        <nav class="new-header__nav">
+        <nav class="@CssClass("new-header__nav")">
             <button class="new-header__nav__menu-button">
                 <i class="new-header__nav__menu-button__burger-icon"></i>
                 <span class="u-h">Menu</span>
