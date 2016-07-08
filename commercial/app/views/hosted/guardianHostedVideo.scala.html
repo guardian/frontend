@@ -142,12 +142,23 @@
                 <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--@{page.campaign.owner.toLowerCase}">
                     <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                 </div>
-                <div class="hosted__cta-wrapper">
-                    <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
-                        <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
-                    </a>
-                </div>
+                @if(page.cta.btnText.length == 0) {
+                    <div class="hosted__cta-wrapper">
+                        <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
+                            <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
+                            @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
+                        </a>
+                    </div>
+                } else {
+                    <div class="hosted__cta-wrapper">
+                        <div class="hosted__cta-btn-wrapper">
+                            <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
+                            <a href="@{page.cta.url}" class="hosted__cta-btn" data-link-name="@{page.cta.trackingCode}" target="_blank">
+                                @{page.cta.btnText}
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
         </section>
     </div>
