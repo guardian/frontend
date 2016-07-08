@@ -528,7 +528,8 @@ $leffeColor: #dec190;
     }
 }
 
-.hosted__cta-text {
+.hosted__cta-text,
+.hosted__cta-label {
     @include f-headlineSans;
 
     font-size: 25px;
@@ -536,6 +537,26 @@ $leffeColor: #dec190;
 
     @include mq(tablet) {
         font-size: 38px;
+    }
+}
+
+.hosted__cta-label {
+    color: #ffffff;
+}
+
+.hosted__cta-btn-text {
+    @include circular;
+    position: relative;
+    display: block;
+    padding: 4px 6px 4px 40px;
+    margin: 16px 0;
+    color: #000000;
+    width: 30%;
+    font-weight: bold;
+    background-color: #ffffff;
+
+    .inline-icon {
+        fill: #000000;
     }
 }
 
