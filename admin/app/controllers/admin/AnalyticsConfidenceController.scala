@@ -29,7 +29,7 @@ class AnalyticsConfidenceController extends Controller with Logging with AuthLog
       }
 
       val googleGraph = new AwsLineChart("Google confidence", Seq("Time", "%", "avg."), ChartFormat(Colour.`tone-comment-1`, Colour.success)) {
-        override lazy val dataset = ophan.dataset.map{ point =>
+        override lazy val dataset = google.dataset.map{ point =>
           point.copy(values =  point.values :+ googleAverage)
         }
       }
