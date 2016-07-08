@@ -151,22 +151,16 @@ define([
     };
 
     HostedGallery.prototype.loadSurroundingImages = function (index, count) {
-        var imageContent = config.page.images, $img, that = this;
+        var $img, that = this;
         chain([0, 1, 2]).and(
             map,
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
             $img = $('img', this.$images[i]);
-            if (!$img.attr('src')) {
-                $img.attr('src', imageContent[i]);
-
-                bean.one($img[0], 'load', function () {
-                    that.imageRatios[i] = this.naturalWidth/this.naturalHeight;
-                    that.resizeImage.call(that, i);
-                });
-            } else {
-                that.resizeImage.call(that, i);
+            if (!this.imageRatios[i]) {
+                that.imageRatios[i] = $img[0].naturalWidth/$img[0].naturalHeight;
             }
+            that.resizeImage.call(that, i);
         }.bind(this));
 
     };
