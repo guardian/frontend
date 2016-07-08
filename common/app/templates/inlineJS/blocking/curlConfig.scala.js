@@ -29,7 +29,7 @@ window.curlConfig = {
             stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
+            'prebid.js':                         '@Static("javascripts/vendor/prebid/0.10.0/prebid.js")',
 
             // plugins
             text:                                'text', // noop
@@ -58,7 +58,7 @@ window.curlConfig = {
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
+            'prebid.js':                    'vendor/prebid/0.10.0/prebid.js',
             svgs:                           '../inline-svgs',
 
             // video
