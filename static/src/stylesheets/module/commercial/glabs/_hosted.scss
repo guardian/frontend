@@ -166,15 +166,11 @@ $leffeColor: #ffffff;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: -40px;
-        margin-top: -40px;
+        margin-left: 0;
+        margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
-
-        @include mq(mobileLandscape) {
-            margin-left: -70px;
-        }
 
         &:before {
             content: 'Watch now';
@@ -188,8 +184,8 @@ $leffeColor: #ffffff;
         }
 
         &:after {
-            top: 16px;
-            left: 16px;
+            top: 50%;
+            left: 20%;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }
