@@ -241,11 +241,32 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
+    // There are many checks that might disable sticky top banner, listed below.
+    // But if we are in the super sticky banner campaign, we must ignore them!
+    val canDisableStickyTopBanner =
+      metadata.shouldHideHeaderAndTopAds ||
+      commercial.isAdvertisementFeature ||
+      metadata.contentType == "Interactive" ||
+      metadata.contentType == "Crossword" ||
+      metadata.contentType == "Hosted"
+
+    // These conditions must always disable sticky banner.
+    val alwaysDisableStickyTopBanner =
+      shouldHideAdverts ||
+      metadata.sectionId == "childrens-books-site"
+
+    val maybeDisableSticky = canDisableStickyTopBanner match {
+      case true if !tags.hasSuperStickyBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ => None
+    }
+
     val meta: List[Option[(String, JsValue)]] = List(
       rugbyMeta,
       articleMeta,
       trackingMeta,
-      atomsMeta
+      atomsMeta,
+      maybeDisableSticky
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }

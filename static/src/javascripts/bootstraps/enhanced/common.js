@@ -134,23 +134,14 @@ define([
             },
 
             initialiseStickyAdBanner: function () {
-                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site'
-                    && !config.tests.abNewHeaderVariant
-                    && (config.page.hasSuperStickyBanner
-                        || config.page.contentType !== 'Interactive'
-                        && config.page.contentType !== 'Crossword'
-                        && config.page.contentType !== 'Hosted'
-                        && !config.page.isImmersive
-                        && !config.page.isUsMinute
-                        && !config.page.isAdvertisementFeature
-                        )
+                if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
+                     config.page.disableStickyTopBanner ||
+                     config.tests.abNewHeaderVariant
                 ) {
+                    config.page.hasStickyAdBanner = false;
+                } else {
                     stickyAdBanner.initialise();
                     config.page.hasStickyAdBanner = true;
-                } else {
-                    config.page.hasStickyAdBanner = false;
                 }
             },
 
