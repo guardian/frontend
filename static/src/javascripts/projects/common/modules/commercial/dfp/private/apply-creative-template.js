@@ -89,7 +89,6 @@ define([
         function fetchCreativeConfig() {
                 var breakoutScript = iFrame.contentDocument.body.querySelector('.breakout__script[type="application/json"]');
                 return breakoutScript ? breakoutScript.innerHTML : null;
-                // return breakoutScript ? JSON.parse(breakoutScript.innerHTML) : null;
         }
 
         function renderCreative(config) {
