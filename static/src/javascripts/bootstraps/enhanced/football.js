@@ -275,14 +275,6 @@ define([
             window.location = this.value;
         });
 
-        if (!config.page.isFootballWorldCup2014) {
-            bean.on(document.body, 'click', '.table tr[data-link-to]', function (e) {
-                if (!e.target.getAttribute('href')) {
-                    window.location = this.getAttribute('data-link-to');
-                }
-            });
-        }
-
         // World Cup content
         // config.switches.worldCupWallchartEmbed
         // Remove this content below when you remove the switch as it's specific to World Cup 2014
