@@ -7,7 +7,7 @@ define([
 ) {
     return function () {
 
-        this.id = 'LiveBlogChromeNotificationsProd';
+        this.id = 'LiveBlogChromeNotificationsProd2';
         this.start = '2016-06-08';
         this.expiry = '2016-08-31';
         this.author = 'Nathaniel Bennett';
