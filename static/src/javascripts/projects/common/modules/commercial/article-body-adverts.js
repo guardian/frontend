@@ -3,6 +3,7 @@ define([
     'qwery',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/steady-page',
     'common/modules/article/space-filler',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
@@ -14,6 +15,7 @@ define([
     qwery,
     config,
     detect,
+    steadyPage,
     spaceFiller,
     addSlot,
     trackAdRender,
@@ -108,7 +110,16 @@ define([
 
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
-        para.parentNode.insertBefore(ad, para);
+        if (detect.isBreakpoint({max: 'tablet'})) {
+            // Insert ad using steady page
+            // To avoid jumping the user
+            steadyPage.insert(ad, function() {
+                para.parentNode.insertBefore(ad, para);
+            });
+
+        } else {
+            para.parentNode.insertBefore(ad, para);
+        }
     }
 
     function addSlots(countAdded) {
