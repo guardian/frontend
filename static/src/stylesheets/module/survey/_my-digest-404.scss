@@ -1,0 +1,77 @@
+
+.my-digest-illustration-wrapper {
+}
+
+.inline-my-digest {
+    display: inline;
+    position: absolute;
+    z-index: 9;
+
+    width: map-get($mq-breakpoints, mobile);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    .inline-my-digest__svg {
+        display: inline-block;
+        width: map-get($mq-breakpoints, mobile);
+        height: auto;
+    }
+}
+
+.my-digest-bottom-margin {
+    border-bottom: 2px solid #5ab0f4;
+    margin: 1em auto 0 auto;
+}
+
+
+
+.my-digest-steps__step {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+
+    float: left;
+    clear: both;
+
+    position: relative;
+    min-height: 3.5em;
+
+}
+
+.my-digest-steps__number {
+    position: absolute;
+    text-align: center;
+    line-height: 2em;
+    background-color: #5ab0f4;
+    border-radius: 100px;
+    color: white;
+    float: left;
+    width: 2em;
+    height: 2em;
+}
+
+.my-digest-steps__dots {
+    position: absolute;
+    height: 100%;
+    width: 0;
+    margin-left: 1em;
+    border-left: thin dotted #5ab0f4;
+}
+
+.my-digest-steps__text {
+    display: block;
+    line-height: 2em;
+    margin-left: 3em;
+    margin-bottom: 1em;
+}
+
+.my-digest-steps__create-button {
+    background-color: white;
+    border-radius: 50px;
+    border: thin solid #5ab0f4;
+    padding: 0.3em 1em;
+    color: $news-main-1;
+    white-space: nowrap;
+}
