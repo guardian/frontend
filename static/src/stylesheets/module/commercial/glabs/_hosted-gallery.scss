@@ -31,6 +31,8 @@
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
+    display: flex;
+    flex-direction: column;
 
     @include mq(desktop) {
         @include gallery-side-margins(gs-span(12));
@@ -45,6 +47,8 @@
 
 .hosted-gallery__gallery-container {
     opacity: 0;
+    flex: 1;
+    position: relative;
     &.use-swipe, &.use-scroll {
         opacity: 1;
     }
@@ -62,9 +66,14 @@
     .hosted-gallery__image-sizer {
         position: absolute;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
     }
     .u-responsive-ratio {
         position: static;
+    }
+    img {
+        object-fit: cover;
     }
 }
 
@@ -167,7 +176,7 @@
     }
 }
 
-.hosted-gallery-page .hostedbadge__info {
+.hosted-gallery-page.visit-britain .hostedbadge__info {
     background: $omgbColor;
     color: #ffffff;
 }
@@ -232,6 +241,9 @@
 }
 
 .hosted-gallery-page {
+    .hosted__headerwrap {
+        max-width: 100%;
+    }
     .hosted__social.adverts__header {
         padding: 0;
         width: 170px;
@@ -435,9 +447,8 @@ $progressColor: #ffffff;
 }
 
 .hosted-gallery__lower-bar {
-    display: flex;
-    flex-direction: row;
     background: $neutral-1;
+    z-index: 1;
     @include mq($until: desktop) {
         padding: 0;
     }

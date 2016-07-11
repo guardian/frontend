@@ -44,6 +44,7 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
+        this.$header = $('.hosted__headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
         this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
@@ -75,6 +76,7 @@ define([
 
             bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
             this.loadSurroundingImages(1, this.$images.length);
+            this.setPageWidth();
 
             if (this.useSwipe) {
                 this.$galleryEl.addClass('use-swipe');
@@ -156,54 +158,51 @@ define([
             map,
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
-            $img = $('img', this.$images[i])[0];
-            if (!$img.complete) {
-                bean.one($img, 'load', function () {
-                    that.imageRatios[i] = this.naturalWidth / this.naturalHeight;
-                    that.resizeImage.call(that, i);
+            $img = $('img', this.$images[i]);
+            if (!$img[0].complete) {
+                bean.one($img[0], 'load', function () {
+                    if(this.naturalWidth < this.naturalHeight){
+                        $img.css('object-fit', 'contain');
+                    } else {
+                        that.resizeLandscapeImage.call(that, i);
+                    }
+
                 });
             } else {
-                if (!this.imageRatios[i]) {
-                    that.imageRatios[i] = $img.naturalWidth / $img.naturalHeight;
+                if($img[0].naturalWidth < $img[0].naturalHeight){
+                    $img.css('object-fit', 'contain');
+                } else {
+                    that.resizeLandscapeImage.call(that, i);
                 }
-                that.resizeImage.call(that, i);
             }
         }.bind(this));
     };
 
-    HostedGallery.prototype.resizeImage = function (imgIndex) {
+    HostedGallery.prototype.resizeLandscapeImage = function (imgIndex) {
         var $imageDiv = this.$images[imgIndex],
             $imagesContainer = this.$imagesContainer[0],
             $gallery = this.$galleryEl[0],
             width = $gallery.clientWidth,
             height = $imagesContainer.clientHeight,
             $sizer = $('.hosted-gallery__image-sizer', $imageDiv),
-            $img = $('img', $sizer),
-            imgRatio = this.imageRatios[imgIndex],
+            imgRatio = 5/3,
             imageHeight = height,
             imageWidth = width,
             topBottom = 0,
             leftRight = 0;
-        if ($img.attr('src') && imgRatio) {
-            if(imgRatio > width/height) {
-                // landscape image
-                imageHeight = width / imgRatio;
-                topBottom = (height - imageHeight) / 2 + 'px';
-            } else {
-                // portrait image
-                imageWidth = height * imgRatio;
-                leftRight = (width - imageWidth) / 2 + 'px';
-            }
-            $sizer.css('width', imageWidth);
-            $sizer.css('height', imageHeight);
-            $sizer.css('top', topBottom);
-            $sizer.css('left', leftRight);
-            if(!this.useSwipe && imgIndex === config.page.ctaIndex){
-                bonzo(this.$ctaFloat).css('bottom', topBottom);
-                bonzo(this.$ctaFloat).css('left', leftRight);
-                bonzo(this.$ctaFloat).css('right', leftRight);
-            }
+        if(imgRatio > width/height) {
+            // portrait screens
+            imageHeight = width / imgRatio;
+            topBottom = (height - imageHeight) / 2 + 'px';
+        } else {
+            // landscape screens
+            imageWidth = height * imgRatio;
+            leftRight = (width - imageWidth) / 2 + 'px';
         }
+        $sizer.css('width', imageWidth);
+        $sizer.css('height', imageHeight);
+        $sizer.css('top', topBottom);
+        $sizer.css('left', leftRight);
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -324,12 +323,8 @@ define([
                 'show-info': function () {
                     this.$captionContainer.addClass('hosted-gallery--show-caption');
                 },
-                'resize': function () {
-                    this.swipeContainerWidth = this.$galleryEl.dim().width;
-                    this.loadSurroundingImages(this.index, this.$images.length); // regenerate src
-                    if(this.useSwipe){
-                        this.translateContent(this.index, 0, 0);
-                    }
+                'resize': function(){
+                    this.onResize();
                 }
             }
         },
@@ -357,15 +352,48 @@ define([
                 'reload': function () {
                     this.reloadState = true;
                 },
-                'resize': function () {
-                    this.swipeContainerWidth = this.$galleryEl.dim().width;
-                    this.loadSurroundingImages(this.index, this.$images.length);
-                    if(this.useSwipe){
-                        this.translateContent(this.$images.length, 0, 0);
-                    }
+                'resize': function(){
+                    this.onResize();
                 }
             }
         }
+    };
+
+    HostedGallery.prototype.onResize = function () {
+        this.swipeContainerWidth = this.$galleryEl.dim().width;
+        this.loadSurroundingImages(this.index, this.$images.length);
+        if(this.useSwipe){
+            this.translateContent(this.$images.length, 0, 0);
+        }
+        this.setPageWidth();
+    };
+
+    HostedGallery.prototype.setPageWidth = function () {
+        var $imagesContainer = this.$imagesContainer[0],
+            $gallery = this.$galleryEl[0],
+            width = $gallery.clientWidth,
+            height = $imagesContainer.clientHeight,
+            $header = this.$header,
+            $footer = this.$captionContainer,
+            $progress = this.$progress,
+            imgRatio = 5/3,
+            imageWidth = width,
+            imageHeight = height,
+            leftRight = 0,
+            topBottom = 0;
+        if(imgRatio < width/height) {
+            imageWidth = height * imgRatio;
+            leftRight = (width - imageWidth) / 2 + 'px';
+        } else {
+            imageHeight = width / imgRatio;
+            topBottom = (height - imageHeight) / 2 + 'px';
+        }
+        $header.css('width', imageWidth);
+        $footer.css('padding', '0 ' + leftRight);
+        $progress.css('right', leftRight);
+        bonzo(this.$ctaFloat).css('left', leftRight);
+        bonzo(this.$ctaFloat).css('right', leftRight);
+        bonzo(this.$ctaFloat).css('bottom', topBottom);
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {
