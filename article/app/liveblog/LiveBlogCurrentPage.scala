@@ -1,10 +1,66 @@
 package liveblog
 
-import model.liveblog.BodyBlock
+import model.liveblog.{Blocks, BodyBlock}
+
+sealed trait BlockRange { def query: Option[Seq[String]] }
+case object Canonical extends BlockRange {
+  val firstPage = "body:latest:30"
+  val oldestPage = "body:oldest:1"
+  val timeline = "body:key-events"
+  // this only makes sense for liveblogs at the moment, but article use field body not blocks anyway
+  val query = Some(Seq(firstPage, oldestPage, timeline))
+}
+case class PageWithBlock(page: String) extends BlockRange {
+  // just get them all, the caching should prevent too many requests, could use "around"
+  val query = None
+}
+case class SinceBlockId(lastUpdate: String) extends BlockRange {
+  val around = s"body:around:$lastUpdate:5"
+  // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
+  val query = Some(Seq(around))
+}
 
 object LiveBlogCurrentPage {
 
-  def apply(pageSize: Int, blocks: Seq[BodyBlock], isRequestedBlock: Option[String]): Option[LiveBlogCurrentPage] = {
+  def apply(pageSize: Int, blocks: Blocks, range: BlockRange): Option[LiveBlogCurrentPage] = {
+    range match {
+      case Canonical => firstPage(pageSize, blocks)
+      case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
+      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId))
+    }
+  }
+
+  // filters newer blocks out of the list
+  def updates(blocks: Blocks, sinceBlockId: SinceBlockId) = {
+    val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
+      bodyBlocks.takeWhile(_.id != sinceBlockId.lastUpdate)
+    }
+    Some(LiveBlogCurrentPage(FirstPage(bodyBlocks), None))// just pretend to be the first page, it'll be ignored
+  }
+
+  // turns the slimmed down (to save bandwidth) capi response into a first page model object
+  def firstPage(pageSize: Int, blocks: Blocks): Option[LiveBlogCurrentPage] = {
+    val remainder = blocks.totalBodyBlocks % pageSize
+    val numPages = blocks.totalBodyBlocks / pageSize
+    blocks.requestedBodyBlocks.get(Canonical.firstPage).map { requestedBodyBlocks =>
+      val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
+      val oldestPage = blocks.requestedBodyBlocks.get(Canonical.oldestPage).flatMap(_.headOption.map { block =>
+        BlockPage(blocks = Nil, blockId = block.id, pageNumber = numPages)
+      } )
+      val olderPage = startOfSecondPageBlocks.headOption.map { block => BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2) }
+      val pagination = if (blocks.totalBodyBlocks > firstPageBlocks.size) Some(Pagination(
+        newest = None,
+        newer = None,
+        oldest = oldestPage,
+        older = olderPage,
+        numberOfPages = numPages
+      )) else None
+      LiveBlogCurrentPage(FirstPage(firstPageBlocks), pagination)
+    }
+  }
+
+  // turns a full capi blocks list into a page model of the page with a specific block in it
+  def findPageWithBlock(pageSize: Int, blocks: Seq[BodyBlock], isRequestedBlock: String) = {
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, blocks)
     val newestPage = FirstPage(mainPageBlocks)
     val pages = newestPage :: restPagesBlocks
@@ -18,7 +74,7 @@ object LiveBlogCurrentPage {
     val endedPages = None :: (pages.map(Some.apply) :+ None)
 
     def hasRequestedBlock(page: LiveBlogCurrentPage): Boolean = {
-      isRequestedBlock.map(isRequestedBlock => page.currentPage.blocks.exists(_.id == isRequestedBlock)).getOrElse(true)
+      page.currentPage.blocks.exists(_.id == isRequestedBlock)
     }
 
 
@@ -76,4 +132,12 @@ case class FirstPage(blocks: Seq[BodyBlock]) extends PageReference {
 case class BlockPage(blocks: Seq[BodyBlock], blockId: String, pageNumber: Int) extends PageReference {
   val suffix = s"?page=with:block-$blockId"
   val isArchivePage = true
+}
+
+object LatestBlock {
+  def apply(maybeBlocks: Option[Blocks]): Option[String] = {
+    maybeBlocks.flatMap { blocks =>
+      blocks.requestedBodyBlocks.getOrElse(Canonical.firstPage, blocks.body).headOption.map(_.id)
+    }
+  }
 }

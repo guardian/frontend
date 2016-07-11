@@ -58,9 +58,10 @@ define([
 
         // Warning: these are re-assigned over time
         var currentUpdateDelay = options.minUpdateDelay;
-        var latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
+        var latestBlockId = $liveblogBody.data('most-recent-block');
         var updating = false;
         var unreadBlocksNo = 0;
+        var updateTimeoutId = undefined;
 
 
         var updateDelay = function (delay) {
@@ -164,10 +165,16 @@ define([
                     revealInjectedElements();
                 }
                 currentUpdateDelay = options.minUpdateDelay;
+                checkForUpdates();
             });
         };
 
         var checkForUpdates = function () {
+
+            if (updateTimeoutId != undefined) {
+                clearTimeout(updateTimeoutId);
+            }
+
             var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
             var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
 
@@ -198,9 +205,9 @@ define([
                         toastButtonRefresh();
                     }
                 }
-            }).then(function () {
+            }).always(function () {
                 updateDelay(currentUpdateDelay);
-                setTimeout(checkForUpdates, currentUpdateDelay);
+                updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
             });
         };
 

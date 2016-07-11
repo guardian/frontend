@@ -3,7 +3,7 @@ package model
 import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
-import model.liveblog.{BlockAttributes, BodyBlock}
+import model.liveblog.{BlockAttributes, Blocks, BodyBlock}
 import model.pressed._
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
@@ -190,6 +190,7 @@ object ContentTypeFormat {
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
+  implicit val blocksFormat = Json.format[Blocks]
   val fieldsFormat = Json.format[Fields]
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]

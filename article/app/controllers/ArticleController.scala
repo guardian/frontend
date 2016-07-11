@@ -1,13 +1,13 @@
 package controllers
 
-import _root_.liveblog.LiveBlogCurrentPage
+import _root_.liveblog._
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.Cached.WithoutRevalidationResult
 import model._
-import model.liveblog.{BodyBlock, KeyEventData}
+import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.functional.syntax._
@@ -32,11 +32,15 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, blocks = true)(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
 
-  private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: String, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
-    val newBlocks = page.article.fields.blocks.takeWhile(block => s"block-${block.id}" != lastUpdateBlockId)
+  private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
+    val newBlocks = page.article.fields.blocks.toSeq.flatMap {
+      _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+    }.takeWhile { block =>
+      block.id != lastUpdateBlockId.lastUpdate
+    }
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", KeyEventData(newBlocks, Edition(request).timezone))
     val allPagesJson = Seq(
@@ -46,7 +50,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val livePageJson = isLivePage.filter(_ == true).map { _ =>
       "html" -> blocksHtml
     }
-    val mostRecent = page.article.fields.blocks.headOption.map { block =>
+    val mostRecent = newBlocks.headOption.map { block =>
       "mostRecentBlockId" -> s"block-${block.id}"
     }
     Cached(page)(JsonComponent((allPagesJson ++ livePageJson ++ mostRecent): _*))
@@ -70,10 +74,10 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
     case LiveBlogPage(liveBlog, _, _) =>
-      val blocks = liveBlog.blocks.collect {
+      val blocks = liveBlog.blocks.toSeq.flatMap{_.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap(_.collect {
         case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
           TextBlock(id, title, publishedAt, updatedAt, html)
-      }.take(number)
+      })}.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
 
@@ -117,16 +121,27 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def renderLiveBlog(path: String, page: Option[String] = None) =
     Action.async { implicit request =>
-      mapModel(path, blocks = true, page) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
-        render(path, _)
+      val range = page.map(ParseBlockId.fromPage) match {
+        case Some(Some(id)) => Left(PageWithBlock(id)) // we know the id of a block
+        case Some(None) => Right(NotFound) // page param there but couldn't extract a block id
+        case None => Left(Canonical) // no page param
+      }
+      range.left.map { range =>
+        mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+          render(path, _)
+        }
+      } match {
+        case Left(f) => f
+        case Right(status) => Future.successful(Cached(10)(WithoutRevalidationResult(status)))
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     Action.async { implicit request =>
-      mapModel(path, blocks = true) { model =>
-        (lastUpdate, rendered) match {
-          case (Some(lastUpdate), _) => renderNewerUpdates(model, lastUpdate, isLivePage)
+      val range = lastUpdate.flatMap(blockId => ParseBlockId.fromBlockId(blockId)).orElse(rendered.flatMap(r => if (r == false) Some(Canonical) else None))
+      mapModel(path, range = range) { model =>
+        (range, rendered) match {
+          case (Some(SinceBlockId(lastBlockId)), _) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
           case (None, Some(false)) => blockText(model, 6)
           case (_, _) => render(path, model)
         }
@@ -144,20 +159,22 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def renderArticle(path: String) = {
     Action.async { implicit request =>
-      mapModel(path, blocks = request.isEmail) {
+      mapModel(path, range = if (request.isEmail) Some(Canonical) else None) {
         render(path, _)
       }
     }
   }
 
-  def mapModel(path: String, blocks: Boolean = false, pageParam: Option[String] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path, blocks) map responseToModelOrResult(pageParam) recover convertApiExceptions map {
+  // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
+  // if we switch to using blocks instead of body for articles, then it no longer needs to be Optional
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String, blocks: Boolean)(implicit request: RequestHeader): Future[ItemResponse] = {
+  private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
@@ -167,7 +184,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       .showReferences("all")
       .showAtoms("all")
 
-    val capiItemWithBlocks = if (blocks) capiItem.showBlocks("body") else capiItem
+    val capiItemWithBlocks = range.map(r => capiItem.showBlocks(r.query.map(_.mkString(",")).getOrElse("body"))).getOrElse(capiItem)
     ContentApiClient.getResponse(capiItemWithBlocks)
 
   }
@@ -179,18 +196,15 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     * @param response
    * @return Either[PageWithStoryPackage, Result]
    */
-  def responseToModelOrResult(pageParam: Option[String])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+  def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
-    val page = pageParam.map(ParseBlockId.apply)
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
-      (content, page) match {
+      (content, range) match {
         case (minute: Article, None) if minute.isUSMinute =>
           Left(MinutePage(minute, StoryPackages(minute, response)))
-        case (liveBlog: Article, None/*no page param*/) if liveBlog.isLiveBlog =>
-          createLiveBlogModel(liveBlog, response, None)
-        case (liveBlog: Article, Some(Some(requiredBlockId))/*page param specified and valid format*/) if liveBlog.isLiveBlog =>
-          createLiveBlogModel(liveBlog, response, Some(requiredBlockId))
+        case (liveBlog: Article, Some(range)) if liveBlog.isLiveBlog =>
+          createLiveBlogModel(liveBlog, response, range)
         case (article: Article, None) => Left(ArticlePage(article, StoryPackages(article, response)))
         case _ =>
           Right(NotFound)
@@ -200,14 +214,17 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     content
   }
 
-  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, maybeRequiredBlockId: Option[String]) = {
+  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange) = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
-    val liveBlogPageModel = LiveBlogCurrentPage(
-      pageSize = pageSize,
-      liveBlog.content.fields.blocks,
-      maybeRequiredBlockId
-    )
+    val liveBlogPageModel =
+      liveBlog.content.fields.blocks.map { blocks =>
+        LiveBlogCurrentPage(
+          pageSize = pageSize,
+          blocks,
+          range
+        )
+      } getOrElse None
     liveBlogPageModel match {
       case Some(pageModel) =>
 
@@ -234,14 +251,26 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 }
 
 object ParseBlockId extends RegexParsers {
-  def apply(input: String): Option[String] = {
-    def withParser: Parser[Unit] = "with:" ^^ { _ => () }
-    def block: Parser[Unit] = "block-" ^^ { _ => () }
-    def id: Parser[String] = "[a-zA-Z0-9]+".r
-    def expr: Parser[String] = withParser ~> block ~> id
+
+  // the return types are so the compiler can check for me whether I've parsed (yet) or not
+
+  def withParser: Parser[Unit] = "with:" ^^ { _ => () }
+  def block: Parser[Unit] = "block-" ^^ { _ => () }
+  def id: Parser[String] = "[a-zA-Z0-9]+".r
+  def blockId = block ~> id
+
+  def fromPage(input: String): Option[String] = {
+    def expr: Parser[String] = withParser ~> blockId
 
     parse(expr, input) match {
       case Success(matched, _) => Some(matched)
+      case _ => None
+    }
+  }
+
+  def fromBlockId(input: String): Option[SinceBlockId] = {
+    parse(blockId, input) match {
+      case Success(matched, _) => Some(SinceBlockId(matched))
       case _ => None
     }
   }
