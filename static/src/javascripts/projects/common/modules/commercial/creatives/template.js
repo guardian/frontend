@@ -58,17 +58,17 @@ define([
             if( this.params.creative === 'manual-single') {
                 this.params.type = 'single';
                 this.params.creative = 'manual-container';
-                this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+                this.params.prominent = false;
             } else if (this.params.creative === 'manual-multiple') {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
                 this.params.offerLinkText = this.params.offerlinktext;
+                this.params.prominent = this.params.prominent === 'true';
 
                 this.params.type = 'multiple';
                 this.params.creative = 'manual-container';
-                this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             } else if (this.params.creative === 'manual-inline') {
                 this.params.omnitureId = this.params.omniture_id;
@@ -80,7 +80,6 @@ define([
                 this.params.offerText = this.params.offer_meta;
 
                 this.params.creative = 'manual-container';
-                this.params.creativeCard = 'manual-card';
                 this.params.type = 'inline';
                 this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             } else if (this.params.creative === 'logo-ad-feature') {

@@ -9,6 +9,7 @@ import play.api.inject.{NewInstanceInjector, SimpleInjector, Injector}
 import play.api.libs.ws.ning.NingWSComponents
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
+import play.filters.csrf.CSRFComponents
 
 import scala.concurrent.ExecutionContext
 
@@ -38,7 +39,8 @@ trait FrontendComponents
   with ExecutionContextComponent
   with HttpFiltersComponent
   with BuiltInComponents
-  with NingWSComponents {
+  with NingWSComponents
+  with CSRFComponents {
   self: BuiltInComponents =>
 
   lazy val prefix = "/"
@@ -50,7 +52,7 @@ trait FrontendComponents
 
   // this is a workaround to make wsapi and the actorsystem available to the injector.
   // I'm forced to do that as we still use Ws.url and Akka.system(app) *everywhere*, and both directly get the reference from the injector
-  override lazy val injector: Injector = new SimpleInjector(NewInstanceInjector) + router + crypto + httpConfiguration + wsApi + actorSystem
+  override lazy val injector: Injector = new SimpleInjector(NewInstanceInjector) + router + crypto + httpConfiguration + wsApi + actorSystem + csrfConfig
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity

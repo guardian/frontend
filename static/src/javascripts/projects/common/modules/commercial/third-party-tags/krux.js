@@ -7,11 +7,7 @@ define([
     cookies,
     storage
 ) {
-    function load() {
-        if (config.switches.krux) {
-            return require(['js!' + '//cdn.krxd.net/controltag?confid=JVZiE3vn']);
-        }
-    }
+    var kruxUrl = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
 
     function retrieve(n) {
         var k = 'kx' + n;
@@ -24,7 +20,8 @@ define([
     }
 
     return {
-        load: load,
+        shouldRun: !(config.page.contentType == 'Network Front') && config.switches.krux,
+        url: kruxUrl,
         getSegments: getSegments
     };
 

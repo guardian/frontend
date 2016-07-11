@@ -24,5 +24,3 @@ class MasterclassesController extends Controller with implicits.Requests {
     }
   }
 }
-
-object MasterclassesController extends MasterclassesController

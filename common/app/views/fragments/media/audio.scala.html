@@ -1,5 +1,7 @@
 @(player: model.AudioPlayer)
 
+@trackingCode(target: String) = {@if(player.audio.tags.isPodcast){podcast:}@target:@player.title}
+
 <div class="gu-media-wrapper gu-media-wrapper--audio">
     <audio controls="controls" class="gu-media gu-media--audio js-gu-media--enhance" data-title="@player.title"
         data-duration="@player.audioElement.audio.duration.toString()" data-media-id="@player.audioElement.properties.id"
@@ -15,19 +17,22 @@
                 @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                     <li class="podcast-meta__item podcast-meta__item--itunes">
                         <a class="podcast-meta__item__link pseudo-icon pseudo-icon--audio--white"
-                            href="@iTunesSubscriptionUrl">Subscribe via iTunes</a>
+                           href="@iTunesSubscriptionUrl"
+                           data-link-name="@trackingCode("subscribe")">Subscribe via iTunes</a>
                     </li>
                 }
                 @audio.downloadUrl.map { downloadUrl =>
                     <li class="podcast-meta__item podcast-meta__item--download">
                         <a class="podcast-meta__item__link pseudo-icon pseudo-icon--download--white"
-                            href="@downloadUrl">Download MP3</a>
+                           href="@downloadUrl"
+                           data-link-name="@trackingCode("download")">Download MP3</a>
                     </li>
                 }
                 @audio.seriesFeedUrl.map { seriesFeedUrl =>
                     <li class="podcast-meta__item podcast-meta__item--feed">
                         <a class="podcast-meta__item__link pseudo-icon pseudo-icon--rss--white"
-                            href="@seriesFeedUrl">Podcast feed URL</a>
+                           href="@seriesFeedUrl"
+                           data-link-name="@trackingCode("feed")">Podcast feed URL</a>
                     </li>
                 }
             </ul>

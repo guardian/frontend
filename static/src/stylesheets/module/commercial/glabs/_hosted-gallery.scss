@@ -28,17 +28,6 @@
     transition: opacity 300ms ease, visibility 300ms ease;
 }
 
-@mixin hosted-gallery-title {
-    color: #ffffff;
-    margin-left: 15px;
-    margin-bottom: 15px;
-    margin-right: 90px;
-    font-size: 30px;
-    &:hover {
-        text-decoration: none;
-    }
-}
-
 .hosted-gallery__gallery-section {
     position: relative;
     flex: 1;
@@ -72,34 +61,43 @@
     }
     .hosted-gallery__image-sizer {
         position: absolute;
+        overflow: hidden;
     }
-    img {
-        width: 100%;
-        height: 100%;
+    .u-responsive-ratio {
+        position: static;
     }
 }
 
 .hosted-gallery__cta-title {
     @include f-headlineSans;
-    @include hosted-gallery-cta;
-    @include hosted-gallery-title;
+    color: #ffffff;
+    margin-bottom: 15px;
+    margin-right: 90px;
+    font-size: 20px;
+    line-height: 22px;
+    @include mq(tablet) {
+        font-size: 24px;
+        line-height: 26px;
+    }
+    @include mq(desktop) {
+        font-size: 30px;
+        line-height: 32px;
+    }
 }
 
 .hosted-gallery__cta {
     @include hosted-gallery-cta;
-    margin: 0 $gs-column-width * 10 0 $gs-column-width * 4;
+    padding: 50px $gs-gutter * 3 0 $gs-gutter * 5;
     font-weight: bold;
-}
-
-.hosted-gallery__cta-title-last {
-    @include f-headlineSans;
-    @include hosted-gallery-title;
-    margin: 0 0 15px;
-    line-height: 32px;
+    background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    @include mq($until: tablet) {
+        padding: 50px $gs-gutter * 2 0 $gs-gutter;
+    }
 }
 
 .hosted-gallery__cta-link {
     @include circular;
+    @include f-headlineSans;
     position: relative;
     display: block;
     width: 160px;
@@ -108,6 +106,7 @@
     color: #ffffff;
     font-weight: bold;
     background-color: $omgbColor;
+    text-decoration: none;
 
     .inline-arrow-right {
         position: absolute;
@@ -120,13 +119,26 @@
             width: 36px;
         }
     }
+
+    @include mq($until: tablet) {
+        padding: 6px 4px 3px 10px;
+        margin: 8px 0 16px;
+        width: 140px;
+        font-size: 14px;
+        .inline-arrow-right {
+            height: 33px;
+            right: 3px;
+        }
+    }
 }
 
-.use-swipe .hosted-gallery__image .hosted-gallery__cta-title,
+.use-swipe .hosted-gallery__image .hosted-gallery__cta,
 .use-scroll.show-cta > .hosted-gallery__cta {
     opacity: 1;
-    pointer-events: auto;
     visibility: visible;
+    .hosted-gallery__cta-link {
+        pointer-events: auto;
+    }
 }
 
 .use-swipe .hosted-gallery__image {
@@ -163,12 +175,35 @@
 .hosted-gallery__meta {
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     color: #ffffff;
-    padding: 10px 10%;
+    padding: 50px 120px 10px 60px;
+    background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    @include mq($until: tablet) {
+        padding: 20px 70px 10px 20px;
+    }
 }
 
 .hosted-gallery__heading {
     @include f-headlineSans;
+    margin-bottom: 5px;
+    font-size: 20px;
+    line-height: 22px;
+    @include mq(tablet) {
+        font-size: 24px;
+        line-height: 26px;
+    }
+}
+
+.hosted-gallery__sub-heading {
+    @include f-headlineSans;
+    font-size: 16px;
+    line-height: 18px;
+    @include mq(tablet) {
+        font-size: 20px;
+        line-height: 22px;
+    }
 }
 
 .hosted-gallery-page--container {
@@ -201,6 +236,7 @@
         padding: 0;
         width: 170px;
         order: 0;
+        margin: 0;
     }
     .hosted__social-wrapper {
         padding: 7px;
@@ -270,7 +306,6 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 300ms ease, visibility 300ms ease;
 }
 
 .hosted-gallery__info-button {
@@ -279,11 +314,22 @@
     top: 3px;
     border: 1px solid #ffffff;
     border-radius: 50%;
-    padding: 14px;
-    line-height: 4px;
-    font-weight: bold;
+    padding: 9px;
     margin-left: 5px;
     cursor: pointer;
+    .icon-i {
+        font-weight: bold;
+        display: block;
+        height: 15px;
+        width: 15px;
+        line-height: 16px;
+        text-align: center;
+    }
+    .inline-cross {
+        display: none;
+        width: 15px;
+        height: 15px;
+    }
 }
 
 $progressHeight: 50px;
@@ -339,24 +385,23 @@ $progressColor: #ffffff;
     .inline-arrow-up,
     .inline-arrow-down {
         position: absolute;
-        left: -18px;
+        left: -19px;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, .6);
         border-radius: 50%;
-        padding: 5px;
-        svg {
-            transform: scale(.8);
-        }
+        padding: 3px 0 3px 6px;
+        width: 30px;
+        height: 30px;
     }
 
     .inline-arrow-up {
         top: -31px;
+        transform: rotate(-90deg)
     }
 
     .inline-arrow-down {
         bottom: -31px;
-        padding-top: 10px;
-        padding-bottom: 0;
+        transform: rotate(90deg)
     }
 
     .hosted-gallery__progress-border {
@@ -386,5 +431,54 @@ $progressColor: #ffffff;
 
     &.first-half .hosted-gallery__progress-border-static {
         border-color: transparent;
+    }
+}
+
+.hosted-gallery__lower-bar {
+    display: flex;
+    flex-direction: row;
+    background: $neutral-1;
+    @include mq($until: desktop) {
+        padding: 0;
+    }
+}
+
+@include mq($until: tablet) {
+    .hosted-gallery__lower-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(51, 51, 51, .8), rgba(51, 51, 51, .5), transparent);
+        &:not(.hosted-gallery--show-caption) .hosted__social {
+            display: none;
+        }
+        &.hosted-gallery--show-caption {
+            background: rgba(51, 51, 51, .8);
+        }
+        .hosted-gallery__caption-text {
+            background: rgba(51, 51, 51, .8);
+            border-radius: 0;
+            margin-bottom: 3px;
+            right: -50px;
+            left: -180px;
+            width: auto;
+            max-width: none;
+        }
+    }
+    .hosted-gallery--show-caption {
+        .icon-i {
+            display: none;
+        }
+        .hosted-gallery__info-button .inline-cross {
+            display: block;
+        }
+    }
+}
+
+@include mq($until: tablet, $and: '(orientation: landscape)') {
+    .hosted-gallery__meta,
+    .hosted-gallery__cta {
+        padding-bottom: 30px;
     }
 }

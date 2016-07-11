@@ -79,13 +79,13 @@ blockquote .quoted__contents {
     }
     .pseudo-icon--download--white {
         &:before {
-            @extend %svg-i-download-white;
+            @extend %svg-i-download-white !optional;
             width: 1em;
         }
     }
     .pseudo-icon--rss--white {
         &:before {
-            @extend %svg-i-rss-white;
+            @extend %svg-i-rss-white !optional;
             width: 1em;
         }
     }

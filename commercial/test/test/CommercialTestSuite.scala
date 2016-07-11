@@ -21,5 +21,5 @@ class CommercialTestSuite extends Suites (
   new BookTest
   ) with SingleServerSuite {
 
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck().testPort
 }
