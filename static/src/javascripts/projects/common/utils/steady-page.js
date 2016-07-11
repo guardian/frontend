@@ -1,6 +1,6 @@
 /*
- Module: steady-insert.js
- Description: Insert components into web-pages without jumping them around
+ Utility: steady-insert.js
+ Insert components into web-pages without jumping them around
  */
 
 define([
@@ -9,59 +9,37 @@ define([
     fastdom
 ) {
     /*
-
+     * The callback should contain the functionality
+     * to display the element (insertion, change of display).
      */
-    function fastdomAdjustmentCallback (insertionCallback) {
+    function displayAndLayout (insertionCallback) {
         return fastdom.write(function(){
-            // Call all the bits inside
+            // The callback should contain all
             insertionCallback();
         });
     }
 
-    // Insert an element into the page
-    // Use if your element doesn't exist and is inserted into a container
-    function insert (insertionContainer, insertionCallback, insertBelow) {
-        return fastdom.read(function(){
-            var currentScrollPos = document.body.scrollTop;
+    /*
+     * Insert an element into the page
+     * Use if your element doesn't exist and is inserted into a container
+     * ** Don't use fastdom - it is handled in this utility **
+     * @param {HTMLElement} insertionContainer The element that the component is being inserted into
+     * @param {Function} insertionCallback Should contain all functionality that displays and lays-out the element
+     */
+    function insert (insertionContainer, insertionCallback) {
+        return fastdom.read(function() {
+            var currentScrollPos = window.scrollY;
             var containerTopPos = insertionContainer.offsetTop;
 
-            if (insertBelow) {
-                containerTopPos = containerTopPos + insertionContainer.scrollHeight;
-            }
-
-            fastdomAdjustmentCallback(insertionCallback).then(function(){
+            return displayAndLayout(insertionCallback).then(function(){
                 if (currentScrollPos > containerTopPos) {
-                    document.body.scrollTop = currentScrollPos + insertionContainer.scrollHeight;
-                }
-            });
-        })
-    }
-
-    // When inserting, converting or removing elements that adjust
-    // the flow of an article, we must use an anchor point to measure
-    // the difference made to the scroll position to elements below
-    function articleAdjustment (el, convertCallback) {
-        return fastdom.read(function(){
-            var currentScrollPos = document.body.scrollTop;
-            var elTop = el.offsetTop;
-            var submetaEl = document.getElementsByClassName('submeta')[0];
-            var prevAnchorTop = submetaEl.offsetTop;
-            console.log(document.body.scrollTop)
-            fastdomAdjustmentCallback(convertCallback).then(function(){
-                if (currentScrollPos > elTop) {
-                    console.log('true dat')
-                    var anchorPosDiff = prevAnchorTop - submetaEl.offsetTop;
-                    document.body.scrollTop = currentScrollPos - anchorPosDiff;
-                    console.log(document.body.scrollTop)
+                    window.scrollTo(0, currentScrollPos + insertionContainer.scrollHeight);
                 }
             });
         });
     }
 
-
-
     return {
-        insert: insert,
-        articleAdjustment: articleAdjustment
+        insert: insert
     }
 });
