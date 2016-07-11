@@ -6,6 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/identity/api',
+    'common/utils/steady-page',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
@@ -19,6 +20,7 @@ define([
     detect,
     template,
     identity,
+    steadyPage,
     trackAdRender,
     commercialFeatures,
     getCode,
@@ -72,7 +74,8 @@ define([
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
-        return fastdom.write(function () {
+
+        return steadyPage.insert($container[0], function() {
             if (slot === 'merchandising') {
                 $(selectors[slot].widget).replaceWith($outbrain[0]);
             }
