@@ -301,7 +301,7 @@ GET            /commercial/paid.json                                            
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 
 # Commercial Admin
