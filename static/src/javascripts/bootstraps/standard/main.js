@@ -215,10 +215,6 @@ define([
             onScroll
         );
 
-        require(['ophan/ng'], function(ophan) {
-            ophan.setEventEmitter(mediator);
-        });
-
         //
         // Membership access
         //
