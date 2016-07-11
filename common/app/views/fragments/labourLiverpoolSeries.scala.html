@@ -13,23 +13,22 @@
 
     <div class="@RenderClasses(Map(
             "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
-            "content--heroic-article-without-main-media" -> !hasMainMedia,
-            "heroic-main-media" -> hasMainMedia
+            "immersive-main-media" -> hasMainMedia
         ),
-        "content", "content--heroic", "content--heroic-article", "tonal", s"tonal--${toneClass(page.item)}")
+        "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
-        <div class="gs-container heroic-main-media__logo">
+        <div class="gs-container immersive-main-media__logo">
             <a href="@LinkTo{/}">
                 <span class="u-h">The Guardian</span>
                 @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
             </a>
         </div>
-        <div class="heroic-main-media__media">
+        <div class="immersive-main-media__media">
             @if(page.item.elements.hasMainPicture) {
                 @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
                     @fragments.image(
                         picture = picture,
-                        classes = Seq("heroic-main-media__media"),
+                        classes = Seq("immersive-main-media__media"),
                         widths = MainMedia.immersive,
                         imageAltText = "",
                         isImmersiveMainMedia = true
@@ -37,8 +36,8 @@
                 }
             } else {
                 @if(hasMainMedia) {
-                    <div class="heroic-main-media__media__loading">
-                        <div class="heroic-main-media__loading-animation is-updating"></div>
+                    <div class="immersive-main-media__media__loading">
+                        <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>
                     </div>
                     @Html(page.item.fields.main)
@@ -75,12 +74,10 @@
             </div>
         </div>
     </div>
-    <div class="l-side-margins">
+    <div class="l-side-margins content__wrapper--standfirst">
         <div class="gs-container">
             <div class="content__main-column">
-                <div class="content__wrapper--standfirst">
-                    @fragments.labourLiverpoolStandfirst(page.item)
-                </div>
+                @fragments.labourLiverpoolStandfirst(page.item)
             </div>
         </div>
     </div>

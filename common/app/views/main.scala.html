@@ -60,20 +60,20 @@
                     @fragments.immersiveGalleryMainMedia(page)
                 </div>
             }
+            case page: model.ContentPage if (page.item.content.isHeroic) => {
+                <div class="@RenderClasses(Map(
+                    ("immersive-header-container", page.item.fields.main.nonEmpty),
+                    ("immersive-header-container--labour-liverpool", page.item.content.tags.isLabourLiverpoolSeries)))">
+                    @headerAndTopAds(showAdverts, edition, adBelowNav)
+
+                    @fragments.labourLiverpoolSeries(page)
+                </div>
+            }
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {
                 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
                     @headerAndTopAds(showAdverts, edition)
 
                     @fragments.immersiveMainMedia(page)
-                </div>
-            }
-            case page: model.ContentPage if (page.item.content.isHeroic) => {
-                <div class="@RenderClasses(Map(
-                    ("heroic-header-container", page.item.fields.main.nonEmpty),
-                    ("heroic-header-container--labour-liverpool", page.item.content.tags.isLabourLiverpoolSeries)))">
-                    @headerAndTopAds(showAdverts, edition, adBelowNav)
-
-                    @fragments.labourLiverpoolSeries(page)
                 </div>
             }
             case _: commercial.hosted.HostedPage => {}

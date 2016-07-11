@@ -17,10 +17,8 @@
     @fragments.inlineSvg("quote", "icon", List("labour-liverpool-quotes"))
 
     @item.fields.standfirst.map { standfirst =>
-        @defining(Edition(request)) { edition =>
-            @withJsoup(BulletCleaner(
-                "<div class=\"membership-quote-marks\">" + fragments.inlineSvg("quote-marks", "membership") + "</div>" + standfirst
-            ))(InBodyLinkCleaner("in standfirst link"))
-        }
+        @withJsoup(BulletCleaner(
+            standfirst
+        ))(InBodyLinkCleaner("in standfirst link"))
     }
 </div>

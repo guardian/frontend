@@ -80,8 +80,8 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
   lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
@@ -404,7 +404,6 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isHeroic", JsBoolean(content.isHeroic)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       ("videoDuration" -> videoDuration)
     ) ++ bookReviewIsbn
@@ -434,7 +433,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle || content.isHeroic
+      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
     )
   }
 

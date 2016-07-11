@@ -1,109 +1,90 @@
-$labour-liverpool-header-font-colour: #ffffff;
-$labour-liverpool-standfirst-font-colour: #41635e;
-$labour-liverpool-standfirst-background-colour: #ffffff;
-$labour-liverpool-identity-font-colour: #ffffff;
-$labour-liverpool-contact-top-border-colour: #4bc6df;
-$labour-liverpool-contact-button-background-colour: #00b0ce;
-$labour-liverpool-contact-button-font-colour: #ffffff;
-$labour-liverpool-contact-textbox-background-colour: #577da0;
-$labour-liverpool-contact-textbox-font-colour: #ffffff;
-$labour-liverpool-contact-twitter-logo-background-colour: #01c0ed;
-$labour-liverpool-contact-email-logo-background-colour: #767676;
+$labour-liverpool-header-element-opacity: .85;
 
-.heroic-header-container--labour-liverpool {
-    min-height: 20vh;
+.immersive-header-container--labour-liverpool {
+    min-height: gs-height(6);
 
-    .heroic-main-media__media {
-        @supports not (object-fit: cover) {
-            position: relative;
-            top: -42px;
-            max-height: 70vh;
+    .immersive-main-media__media {
+        // fallback for IE not supporting object-fit: cover
+        @include mq($from: desktop) {
+            max-height: gs-height(8);
         }
     }
 
-    .l-side-margins {
-        height: auto;
-    }
-
     .content__wrapper--standfirst {
-        background-color: $labour-liverpool-standfirst-background-colour;
+        background-color: #ffffff;
         padding: 0;
 
-        .content__standfirst--labour-liverpool-article {
-            @include fs-headline(3);
-            color: $labour-liverpool-standfirst-font-colour;
-            margin-top: 10px;
-
-            .membership-cutout {
-                display: none;
-
-                @include mq($from: tablet) {
-                    display: block;
-                    float: left;
-                    height: 116px;
-                    margin-left: -20px;
-                    margin-right: -15px;
-                }
-            }
-
-            .membership-quote-marks {
-                float: left;
-                height: 24px;
-                padding-right: 8px;
-            }
+        // necessary for Safari
+        &.l-side-margins {
+            height: auto;
         }
     }
 }
 
-.content--labour-liverpool-article {
-    .content--labour-liverpool-article__headline-background {
-        position: absolute;
-        top: -210px;
-        width: 100%;
+.content__standfirst--labour-liverpool-article {
+    @include fs-headline(3);
+    color: darken($news-support-4, 25%);
+    margin-top: $gs-baseline;
 
-        .inline-labour-liverpool-headline-bg__svg {
-            width: 100%;
+    .membership-cutout {
+        float: left;
+        height: 116px;
+        margin: 0 $gs-gutter/-2;
+
+        @include mq($from: mobile, $until: tablet) {
+            display: none;
         }
     }
 
-    .heroic-main-media__headline-container {
-        position: absolute;
-        top: 0;
-        width: 100%;
-
-        @include mq($from: tablet) {
-            background-position: 0 -7vw;
-            background-size: 100%;
-        }
+    > p:first-of-type {
+        display: inline;
     }
+}
 
-    .headline {
-        position: relative;
-        top: 25vh;
-        max-width: 600px;
+.labour-liverpool-quotes__svg {
+    fill: $news-support-4;
+    width: 30px;
+    height: 18px;
+    padding-right: $gs-gutter/4;
+}
 
-        h1 {
-            @include fs-headline(6);
-            position: absolute;
-            font-weight: 200;
-            color: $labour-liverpool-header-font-colour;
-            margin: 10px;
+.labour-liverpool-headline {
+    position: absolute;
+    top: gs-height(6);
+    max-width: gs-span(8);
 
-            @include mq($from: tablet) {
-                @include fs-headline(8);
-                font-weight: 200;
-                margin: 20px;
-            }
-        }
-
-        .header-background {
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 130px;
-            transform: rotate(180deg);
-        }
+    @include mq($from: wide) {
+        left: 5%;
     }
+}
+
+.labour-liverpool-headline__content {
+    @include fs-headline(5);
+    position: absolute;
+    font-weight: 200;
+    color: #ffffff;
+    margin: $gs-baseline 0;
+    padding-left: $gs-gutter;
+    width: gs-span(4);
+
+    @include mq($from: tablet) {
+        @include fs-headline(8);
+        font-weight: 200;
+        width: gs-span(7);
+        margin: $gs-baseline $gs-gutter*2;
+    }
+}
+
+.labour-liverpool-headline__background {
+    position: absolute;
+    left: -$gs-gutter*1.5;
+    height: 130px;
+    transform: rotate(180deg);
+
+    @include mq($from: tablet) {
+        left: auto;
+    }
+}
 
 .inline-labour-liverpool-header-bg__svg {
     fill: $news-main-2;
@@ -163,38 +144,83 @@ $labour-liverpool-contact-email-logo-background-colour: #767676;
     }
 }
 
-.labour-liverpool-contact {
+.labour-liverpool-contact__top-border {
+    border-top: 1px solid $news-main-2;
+}
 
-    .labour-liverpool-contact__top-border {
-        border-top: 1px solid $labour-liverpool-contact-top-border-colour;
+.labour-liverpool-contact__wrapper {
+    text-align: center;
+
+    @include mq($from: tablet) {
+        text-align: left;
     }
+}
 
-    .labour-liverpool-contact__wrapper {
-        text-align: center;
-
-        @include mq($from: tablet) {
-            text-align: left;
-        }
+.labour-liverpool-contact__sign-up {
+    display: inline-block;
+    width: 100%;
+    @include mq($from: tablet) {
+        width: calc(75% - 5em);
+        padding-right: 5em;
     }
-
-    .labour-liverpool-contact__sign-up {
-        display: inline-block;
-        box-sizing: border-box;
-        width: 100%;
-        @include mq($from: tablet) {
-            width: 75%;
-            padding-right: 5em;
-        }
-        @include mq($from: desktop) {
-            left: -30%;
-            padding-right: 0;
-        }
+    @include mq($from: desktop) {
+        left: -30%;
+        padding-right: 0;
     }
+}
 
-    .labour-liverpool-contact__sign-up__header {
-        @include fs-header(3);
-        margin-top: 12px;
+.labour-liverpool-contact__sign-up__header {
+    @include fs-header(3);
+    margin-top: 12px;
+}
+
+.labour-liverpool-contact__sign-up__form {
+    border: 0;
+    width: 100%;
+    @include mq(tablet) {
+        height: 500px;
     }
+    @include mq($from: desktop) {
+        width: 75%;
+    }
+}
+
+.labour-liverpool-contact__contact-ewen {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.labour-liverpool-contact__avatar-container {
+    width: 100%;
+    position: relative;
+}
+
+.labour-liverpool-contact__avatar {
+    width: 100%;
+    max-width: 140px;
+
+    @include mq($from: desktop) {
+        max-width: 90px;
+    }
+}
+
+.speech-bubble {
+    @include fs-header(1);
+    color: #ffffff;
+    background-color: $news-main-1;
+    opacity: .7;
+    // padding within the speech bubble has to be specific values
+    padding: 0 11px 17px;
+    // this sets the width of the speech bubble in the Labour & Liverpool contact form
+    max-width: 106px;
+
+    @include mq($from: tablet) {
+        @include fs-header(2);
+        padding: $gs-baseline/3 12px 23px;
+        max-width: 132px;
+    }
+}
 
 .inline-speech-bubble-mask {
     position: absolute;
@@ -215,58 +241,10 @@ $labour-liverpool-contact-email-logo-background-colour: #767676;
     }
 }
 
-    .labour-liverpool-contact__contact-ewen {
-        overflow: hidden;
-        display: inline-block;
-        vertical-align: top;
-
-        .labour-liverpool-contact__contact-ewen__textbox {
-            width: 50%;
-            float: left;
-            position: relative;
-
-            .textbox-container-mask {
-                position: absolute;
-                top: -161px;
-                @include mq($from: tablet) {
-                    top: -150px;
-                }
-
-                .inline-labour-liverpool-textbox-mask__svg {
-                    width: 128px;
-                    @include mq($from: tablet) {
-                        width: 156px;
-                    }
-                }
-            }
-
-            .avatar {
-                width: 100%;
-                max-width: 140px;
-
-                @include mq($from: desktop) {
-                    max-width: 90px;
-                }
-            }
-
-            .textbox-container {
-                @include fs-header(1);
-                color: $labour-liverpool-contact-textbox-font-colour;
-                background-color: $labour-liverpool-contact-textbox-background-colour;
-                padding: 0 11px 17px;
-                max-width: 140px;
-
-                @include mq($from: tablet) {
-                    @include fs-header(2);
-                    padding: 4px 8px 19px;
-                }
-            }
-
-            @include mq($from: tablet) {
-                width: 100%;
-                float: none;
-            }
-        }
+.labour-liverpool-contact__contact-ewen__buttons {
+    width: 100%;
+    margin: 0;
+}
 
 .labour-liverpool-contact__button {
     @include fs-textSans(2);
