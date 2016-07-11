@@ -1,6 +1,6 @@
 package test
 
-import controllers.PublicationController
+import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
@@ -20,7 +20,8 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val emptySeq: Seq[TagDefinition] = Seq.empty
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
-  val publicationController = new PublicationController(bookAgent, bookSectionAgent)
+  val articleController = new ArticleController
+  val publicationController = new PublicationController(bookAgent, bookSectionAgent, articleController)
 
   "Publication Controller" should "redirect to an /all page when an observer dated book url is requested" in {
     when(bookAgent.getTags("theobserver")).thenReturn(Seq(new TagDefinition("Observer Magazine","theobserver/magazine",None,false)))

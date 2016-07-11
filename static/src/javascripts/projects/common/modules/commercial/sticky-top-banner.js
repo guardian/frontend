@@ -1,7 +1,7 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',
@@ -12,7 +12,7 @@ define([
 ], function (
     fastdom,
     Promise,
-    dfp,
+    trackAdRender,
     adSizes,
     $,
     createStore,
@@ -39,7 +39,7 @@ define([
     var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = dfp.trackAdRender('dfp-ad--top-above-nav');
+    var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
@@ -211,7 +211,9 @@ define([
     };
 
     var initialise = function () {
-        if (detect.isBreakpoint({ min: 'desktop' })) {
+        // Although we check as much config as possible to decide whether to run sticky-top-banner,
+        // it is still entirely possible for the ad slot to be closed.
+        if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
             getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 
@@ -240,7 +242,7 @@ define([
     };
 
     return {
-        initialise: initialise,
+        init: initialise,
         // Needed for testing
         render: render
     };

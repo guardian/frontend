@@ -1,6 +1,6 @@
 package services
 
-import common.{LifecycleComponent, Jobs}
+import common.{JobScheduler, LifecycleComponent, Jobs}
 import metrics.CountMetric
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
@@ -11,10 +11,10 @@ object GoogleBotMetric {
   val Googlebot404Count = CountMetric("googlebot-404s", "Googlebot 404s")
 }
 
-class ArchiveMetrics(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook{ () => Future{
-    Jobs.deschedule("ArchiveSystemMetricsJob")
+    jobs.deschedule("ArchiveSystemMetricsJob")
   }}
 
   private def report() {
@@ -22,9 +22,9 @@ class ArchiveMetrics(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionC
   }
 
   override def start(): Unit = {
-    Jobs.deschedule("ArchiveSystemMetricsJob")
+    jobs.deschedule("ArchiveSystemMetricsJob")
 
-    Jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
+    jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
       report()
     }
   }

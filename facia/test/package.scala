@@ -51,5 +51,5 @@ class FaciaTestSuite extends Suites (
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
 ) with SingleServerSuite {
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck().testPort
 }

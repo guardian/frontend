@@ -4,7 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -13,7 +13,7 @@ define([
     config,
     detect,
     fastdom,
-    createAdSlot,
+    createSlot,
     userPrefs,
     commercialFeatures
 ) {
@@ -84,8 +84,8 @@ define([
                     'inline' + index :
                     'inline' + (index + 1);
                 var adSlot = replaceTopSlot && index === 0 ?
-                    createAdSlot('top-above-nav', 'container-inline') :
-                    createAdSlot(adName, 'container-inline');
+                    createSlot('top-above-nav', 'container-inline') :
+                    createSlot(adName, 'container-inline');
 
                 adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
 

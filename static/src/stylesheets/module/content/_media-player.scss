@@ -97,15 +97,19 @@ $ima-controls-height: 70px;
         padding-bottom: $vjs-control-height;
     }
 
+    &:hover .vjs-control-text {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+
     .vjs-control-text {
         // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-
         @include video-play-button-size($vjs-small-button-size);
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: $vjs-small-button-size/-2;
-        margin-left: $vjs-small-button-size/-2;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
 
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
@@ -119,30 +123,21 @@ $ima-controls-height: 70px;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-            background-color: rgba($media-mute, .6);
-            .gu-media-wrapper:hover &,
-            .gu-media__fallback:hover & {
-                background-color: $media-default;
-            }
+            background-color: $media-default;
         }
 
         &:after {
             content: '';
             position: absolute;
-            left: 1.85em;
-            top: 1.85em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $neutral-7;
-            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+            border-color: transparent transparent transparent $neutral-1;
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: .2em;
-            }
-
-            .gu-media-wrapper:hover &,
-            .gu-media__fallback:hover & {
-                border-left-color: #333333;
             }
         }
     }
@@ -155,10 +150,6 @@ $ima-controls-height: 70px;
     .vjs-ad-loading & {
         display: none !important;
     }
-}
-
-.vjs-big-play-button--yellow .vjs-big-play-button .vjs-control-text:before {
-    background-color: $media-default;
 }
 
 .vjs-fullscreen-clickbox {

@@ -29,9 +29,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/hosted-about',
-    'common/modules/commercial/hosted-gallery',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -85,9 +83,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    stickyAdBanner,
     hostedAbout,
-    hostedGallery,
     Profile,
     Search,
     history,
@@ -135,27 +131,6 @@ define([
                 navigation.init();
             },
 
-            initialiseStickyAdBanner: function () {
-                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site'
-                    && !config.tests.abNewHeaderVariant
-                    && (config.page.hasSuperStickyBanner
-                        || config.page.contentType !== 'Interactive'
-                        && config.page.contentType !== 'Crossword'
-                        && config.page.contentType !== 'Hosted'
-                        && !config.page.isImmersive
-                        && !config.page.isUsMinute
-                        && !config.page.isAdvertisementFeature
-                        )
-                ) {
-                    stickyAdBanner.initialise();
-                    config.page.hasStickyAdBanner = true;
-                } else {
-                    config.page.hasStickyAdBanner = false;
-                }
-            },
-
             showTabs: function () {
                 var tabs = new Tabs();
                 ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
@@ -201,7 +176,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             cleanupLocalStorage : function () {
@@ -374,12 +349,6 @@ define([
                 if (config.page.contentType === 'Hosted') {
                     hostedAbout.init();
                 }
-            },
-
-            initHostedGallery: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedGallery.init();
-                }
             }
         };
 
@@ -402,7 +371,6 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -430,7 +398,6 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-gallery', modules.initHostedGallery],
                 ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
             ]), function (fn) {
                 fn();

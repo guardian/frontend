@@ -200,6 +200,7 @@ object MetaData {
       isPressedPage = isPressedPage,
       contentType = contentType,
       customSignPosting = customSignPosting,
+      iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
@@ -284,7 +285,11 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || sectionId == "identity" || contentType.toLowerCase == "gallery"
+  val hasSlimHeader: Boolean =
+    contentType == "Interactive" ||
+      sectionId == "identity" ||
+      contentType.toLowerCase == "gallery" ||
+      contentType.toLowerCase == "survey"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -624,6 +629,8 @@ final case class Tags(
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
   lazy val isElection = isUSElection || isAusElection
 
+  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+
   lazy val keywordIds = keywords.map { _.id }
 
   lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
@@ -631,7 +638,7 @@ final case class Tags(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
+    ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),

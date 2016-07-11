@@ -1,9 +1,9 @@
 default: help
 
 watch: compile-dev
-	@./node_modules/grunt-sass/node_modules/node-sass/bin/node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true & \
-		./node_modules/.bin/gulp --cwd ./dev watch:css & \
-		./node_modules/browser-sync/bin/browser-sync.js start --config ./dev/bs-config.js
+	@npm run sass-watch & \
+		npm run css-watch & \
+		npm run browser-sync
 
 compile: clean-assets
 	@grunt compile-assets

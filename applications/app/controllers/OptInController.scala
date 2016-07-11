@@ -25,11 +25,12 @@ case class HttpsOptFeature(cookieName: String) extends OptFeature {
 
 case class OptInFeature(cookieName: String) extends OptFeature
 
-object OptInController extends Controller {
+class OptInController extends Controller {
 
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "https" => https.opt(choice)
+      case "hsts" => hsts.opt(choice)
       case "header" => header.opt(choice)
       case "gallery" => gallery.opt(choice)
       case _ => NotFound
@@ -37,6 +38,7 @@ object OptInController extends Controller {
   }
 
   val https = HttpsOptFeature("https_opt_in")
+  val hsts = OptInFeature("hsts_opt_in")
   val header = OptInFeature("new_header_opt_in")
   val gallery = OptInFeature("gallery_redesign_opt_in")
 }

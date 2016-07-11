@@ -4,23 +4,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABFrontsOnArticles2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-fronts-on-articles2",
-    "Injects fronts on articles for the test",
-    owners = Seq(Owner.withName("dotcom reach")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
   val ABLiveBlogChromeNotificationsInternal = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-internal",
     "Live blog chrome notifications - Internal",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
@@ -30,7 +20,7 @@ trait ABTestSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
@@ -54,16 +44,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABNewUserAdvertsDisabled = Switch(
-    SwitchGroup.ABTests,
-    "ab-new-user-adverts-disabled",
-    "Enable adfree experience for 3 days for new users",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
-    exposeClientSide = true
-  )
-
   val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
     "ab-join-discussion-after-poll",
@@ -81,6 +61,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 22),
+    exposeClientSide = true
+  )
+
+  val ABHostedAutoplay = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-autoplay",
+    "An autoplay overlay with the next video on a hosted page",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 14),
+    exposeClientSide = true
+  )
+
+  val giraffe = Switch(
+    SwitchGroup.ABTests,
+    "ab-giraffe",
+    "Test effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
 }

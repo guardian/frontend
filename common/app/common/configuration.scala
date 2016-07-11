@@ -191,8 +191,6 @@ class GuardianConfiguration extends Logging {
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
-    lazy val corsOrigins: Seq[String] = configuration.getStringProperty("amp.cors.origin").map(_.split(",")
-      .map(_.trim).toSeq).getOrElse(Nil)
   }
 
   object id {
@@ -544,6 +542,10 @@ class GuardianConfiguration extends Logging {
   object Elk {
     lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
     lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
+  }
+
+  object Survey {
+    lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
 }
 

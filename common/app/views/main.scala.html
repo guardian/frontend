@@ -2,12 +2,12 @@
 
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch, ForceOneByOnePxSlotSwitch}
+@import model.Page.getContent
 @import views.support.Commercial.topBelowNavSlot
 @import views.support.{Commercial, RenderClasses}
-@import model.Page.getContent
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
-    @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
+    @if(!page.metadata.shouldHideHeaderAndTopAds) {
         @if(showAdverts) {
             @defining(
                 page match {
@@ -74,7 +74,7 @@
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
-            case _: commercial.HostedPage => {}
+            case _: commercial.hosted.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, adBelowNav)
             }

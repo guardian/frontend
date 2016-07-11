@@ -26,30 +26,27 @@ define([
         config,
         identity,
         detect,
-        dfp,
         sut,
         commercialFeatures,
         injector = new Injector();
 
     describe('Plista', function () {
         beforeEach(function (done) {
+            injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
+                return Promise.resolve(ads[id]);
+            });
             injector.require([
-                'common/modules/commercial/dfp/dfp-api',
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',
                 'common/modules/commercial/third-party-tags/plista',
                 'common/modules/commercial/commercial-features'
             ], function () {
-                dfp      = arguments[0];
-                dfp.trackAdRender = function (id) {
-                    return Promise.resolve(ads[id]);
-                };
-                config = arguments[1];
-                identity = arguments[2];
-                detect = arguments[3];
-                sut = arguments[4];
-                commercialFeatures = arguments[5];
+                config = arguments[0];
+                identity = arguments[1];
+                detect = arguments[2];
+                sut = arguments[3];
+                commercialFeatures = arguments[4];
 
                 commercialFeatures.thirdPartyTags = true;
                 commercialFeatures.outbrain = true;

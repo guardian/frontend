@@ -7,9 +7,9 @@ define([
     'common/utils/fastdom-idle',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
-    'common/modules/commercial/dfp/dfp-api',
+    'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'lodash/objects/defaults'
 ], function (
     Promise,
@@ -20,9 +20,9 @@ define([
     idleFastdom,
     identityApi,
     ab,
-    dfp,
+    addSlot,
     commercialFeatures,
-    createAdSlot,
+    createSlot,
     defaults
 ) {
     return function (options) {
@@ -61,9 +61,9 @@ define([
 
                     adType = 'comments';
 
-                    $adSlot = $(createAdSlot(adType, 'mpu-banner-ad'));
+                    $adSlot = $(createSlot(adType, 'mpu-banner-ad'));
                     $adSlotContainer.append($adSlot);
-                    dfp.addSlot($adSlot);
+                    addSlot($adSlot);
                 });
             });
         });

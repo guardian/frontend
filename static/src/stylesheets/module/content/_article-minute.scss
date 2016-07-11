@@ -419,7 +419,7 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     .svg  & .caption--img:before {
-        @extend %svg-i-camera-white-large;
+        @extend %svg-i-camera-white-large !optional;
         margin-right: 5px;
     }
 
