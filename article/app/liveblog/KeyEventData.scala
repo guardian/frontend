@@ -6,9 +6,8 @@ import org.scala_tools.time.Imports._
 
 object KeyEventData {
 
+  // just for convenience for use from the templates
   def apply(maybeBlocks: Option[Blocks], timezone: DateTimeZone): Seq[KeyEventData] = {
-
-    val TIMELINE_MAX_ENTRIES = 7
 
     val blocks = maybeBlocks.toSeq.flatMap(blocks => blocks.requestedBodyBlocks.getOrElse(Canonical.timeline, blocks.body))
 

@@ -121,7 +121,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def renderLiveBlog(path: String, page: Option[String] = None) =
     Action.async { implicit request =>
-      val range = page.map(ParseBlockId.fromPage) match {
+      val range = page.map(ParseBlockId.fromPageParam) match {
         case Some(Some(id)) => Left(PageWithBlock(id)) // we know the id of a block
         case Some(None) => Right(NotFound) // page param there but couldn't extract a block id
         case None => Left(Canonical) // no page param
@@ -252,14 +252,12 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
 object ParseBlockId extends RegexParsers {
 
-  // the return types are so the compiler can check for me whether I've parsed (yet) or not
-
   def withParser: Parser[Unit] = "with:" ^^ { _ => () }
   def block: Parser[Unit] = "block-" ^^ { _ => () }
   def id: Parser[String] = "[a-zA-Z0-9]+".r
   def blockId = block ~> id
 
-  def fromPage(input: String): Option[String] = {
+  def fromPageParam(input: String): Option[String] = {
     def expr: Parser[String] = withParser ~> blockId
 
     parse(expr, input) match {

@@ -133,42 +133,6 @@ define([
             toastButtonRefresh();
         };
 
-        var setUpListeners = function () {
-            bean.on(document.body, 'click', '.toast__button', function () {
-                if (isLivePage) {
-                    fastdom.read(function () {
-                        scroller.scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
-
-                        fastdom.write(function () {
-                            $toastButton.addClass('loading');
-                        }).then(function () {
-                            displayNewBlocks();
-                        });
-                    });
-                } else {
-                    location.assign(window.location.pathname);
-                }
-            });
-
-            mediator.on('modules:toast__tofix:unfixed', function () {
-                if (isLivePage && unreadBlocksNo > 0) {
-                    fastdom.write(function () {
-                        $toastButton.addClass('loading');
-                    }).then(function () {
-                        displayNewBlocks();
-                    });
-                }
-            });
-
-            mediator.on('modules:detect:pagevisibility:visible', function () {
-                if (unreadBlocksNo == 0) {
-                    revealInjectedElements();
-                }
-                currentUpdateDelay = options.minUpdateDelay;
-                checkForUpdates();
-            });
-        };
-
         var checkForUpdates = function () {
 
             if (updateTimeoutId != undefined) {
@@ -208,6 +172,42 @@ define([
             }).always(function () {
                 updateDelay(currentUpdateDelay);
                 updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+            });
+        };
+
+        var setUpListeners = function () {
+            bean.on(document.body, 'click', '.toast__button', function () {
+                if (isLivePage) {
+                    fastdom.read(function () {
+                        scroller.scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
+
+                        fastdom.write(function () {
+                            $toastButton.addClass('loading');
+                        }).then(function () {
+                            displayNewBlocks();
+                        });
+                    });
+                } else {
+                    location.assign(window.location.pathname);
+                }
+            });
+
+            mediator.on('modules:toast__tofix:unfixed', function () {
+                if (isLivePage && unreadBlocksNo > 0) {
+                    fastdom.write(function () {
+                        $toastButton.addClass('loading');
+                    }).then(function () {
+                        displayNewBlocks();
+                    });
+                }
+            });
+
+            mediator.on('modules:detect:pagevisibility:visible', function () {
+                if (unreadBlocksNo == 0) {
+                    revealInjectedElements();
+                }
+                currentUpdateDelay = options.minUpdateDelay;
+                checkForUpdates();
             });
         };
 
