@@ -25,7 +25,7 @@ object LeffeHostedPages {
     url = "https://www.facebook.com/Leffe.uk/",
     label = "Rediscover Time",
     trackingCode = "leffe-rediscover-time",
-    btnText = ""
+    btnText = "Visit Leffe on Facebook"
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
