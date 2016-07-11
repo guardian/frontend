@@ -12,8 +12,9 @@
             <meta itemprop="description" content="@trailText" />
         }
     }
-    
+
     <img class="membership-cutout" src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png?w=300&q=55&auto=format&usm=12&fit=max&s=2c8dc813795a8c11dd98e28377a5893f">
+    @fragments.inlineSvg("quote", "icon", List("labour-liverpool-quotes"))
 
     @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>

@@ -21,7 +21,7 @@
         <div class="gs-container heroic-main-media__logo">
             <a href="@LinkTo{/}">
                 <span class="u-h">The Guardian</span>
-                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("heroic-main-media__logo__svg"))
+                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
             </a>
         </div>
         <div class="heroic-main-media__media">
@@ -45,30 +45,32 @@
                 }
             }
         </div>
-        <div class="heroic-main-media__headline-container">
-            <div class="content--labour-liverpool-article__headline-background">
-                 @fragments.inlineSvg("labour-liverpool-headline-bg", "membership")
-            </div>
+        <div class="content--labour-liverpool-article__headline-background">
+             @fragments.inlineSvg("labour-liverpool-headline-bg", "membership")
+        </div>
+
+        <div class="series-identity">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <div class="series-identity">
-                        <div class="series-identity__background">
-                            @fragments.inlineSvg("labour-liverpool-identity-bg", "membership")
-                        </div>
-                        <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
-                            <div class="series-identity__title">Labour &amp; Liverpool</div>
-                            <div class="series-identity__byline">with Ewen MacAskill</div>
-                        </a>
+                    <div class="series-identity__background">
+                        @fragments.inlineSvg("labour-liverpool-identity-bg", "membership")
                     </div>
-                    <div class="headline">
-                        <div class="header-background">
-                            @fragments.inlineSvg("labour-liverpool-header-bg", "membership")
-                        </div>
-                        <h1 class="@RenderClasses(Map("content__headline--heroic--with-main-media" -> hasMainMedia),
-                            "content__headline", "content__headline--heroic", "content__headline--heroic-article")">
-                            @Html(page.item.trail.headline)
-                        </h1>
+                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
+                        <div class="series-identity__title">Labour &amp; Liverpool</div>
+                        <div class="series-identity__byline">with Ewen MacAskill</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="labour-liverpool-headline">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <div class="labour-liverpool-headline__background">
+                        @fragments.inlineSvg("labour-liverpool-header-bg", "membership")
                     </div>
+                    <h1 class="labour-liverpool-headline__content">
+                        @Html(page.item.trail.headline)
+                    </h1>
                 </div>
             </div>
         </div>
