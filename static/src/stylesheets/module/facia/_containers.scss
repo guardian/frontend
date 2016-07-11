@@ -45,7 +45,7 @@
 
     .fc-container__inner {
         @include mq($from: mobile) {
-            min-height: 545px;
+            min-height: 621px;
         }
 
         @include mq($from: tablet) {
