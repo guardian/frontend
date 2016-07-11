@@ -70,7 +70,7 @@ Comments.prototype.defaultOptions = {
     discussionId: null,
     showRepliesCount: 3,
     commentId: null,
-    order: 'newest',
+    order: config.switches.discussionOrderByOldest ? 'oldest' : 'newest',
     threading: 'collapsed'
 };
 
