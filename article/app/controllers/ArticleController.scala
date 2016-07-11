@@ -159,7 +159,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def renderArticle(path: String) = {
     Action.async { implicit request =>
-      mapModel(path, range = if (request.isEmail) Some(Canonical) else None) {
+      mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
         render(path, _)
       }
     }
@@ -199,16 +199,15 @@ class ArticleController extends Controller with RendersItemResponse with Logging
   def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult = ModelOrResult(supportedContent, response)
-    val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap { content =>
-      (content, range) match {
-        case (minute: Article, None) if minute.isUSMinute =>
-          Left(MinutePage(minute, StoryPackages(minute, response)))
-        case (liveBlog: Article, Some(range)) if liveBlog.isLiveBlog =>
-          createLiveBlogModel(liveBlog, response, range)
-        case (article: Article, None) => Left(ArticlePage(article, StoryPackages(article, response)))
-        case _ =>
-          Right(NotFound)
-      }
+    val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
+      case minute: Article if minute.isUSMinute =>
+        Left(MinutePage(minute, StoryPackages(minute, response)))
+      case liveBlog: Article if liveBlog.isLiveBlog =>
+        range.map {
+          createLiveBlogModel(liveBlog, response, _)
+        }.getOrElse(Right(NotFound))
+      case article: Article =>
+        Left(ArticlePage(article, StoryPackages(article, response)))
     }
 
     content

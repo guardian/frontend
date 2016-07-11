@@ -14,6 +14,10 @@ case class PageWithBlock(page: String) extends BlockRange {
   // just get them all, the caching should prevent too many requests, could use "around"
   val query = None
 }
+case object ArticleBlocks extends BlockRange {
+  // we currently only use this for emails, we just want all the blocks
+  val query = None
+}
 case class SinceBlockId(lastUpdate: String) extends BlockRange {
   val around = s"body:around:$lastUpdate:5"
   // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
@@ -27,6 +31,7 @@ object LiveBlogCurrentPage {
       case Canonical => firstPage(pageSize, blocks)
       case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
       case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId))
+      case ArticleBlocks => None
     }
   }
 
