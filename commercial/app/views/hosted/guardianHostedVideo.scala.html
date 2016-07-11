@@ -150,11 +150,9 @@
                             @fragments.inlineSvg("arrow-right", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
                         </div>
                     } else {
-                        <div class="hosted__cta-wrapper">
-                            <div class="hosted__cta-btn-wrapper">
-                                <span class="hosted__cta-label">@{page.cta.label}</span>
-                                <span class="hosted__cta-btn-text">@{page.cta.btnText} @fragments.inlineSvg("arrow-right", "icon")</span>
-                            </div>
+                        <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                            <span class="hosted__cta-label">@{page.cta.label}</span>
+                            <span class="hosted__cta-btn-text">@{page.cta.btnText} @fragments.inlineSvg("arrow-right", "icon")</span>
                         </div>
                     }
                 </a>
