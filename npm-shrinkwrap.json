@@ -1671,6 +1671,14 @@
         }
       }
     },
+    "gulp-shell": {
+      "version": "0.5.2",
+      "dependencies": {
+        "lodash": {
+          "version": "4.13.1"
+        }
+      }
+    },
     "gulp-sourcemaps": {
       "version": "1.6.0",
       "dependencies": {

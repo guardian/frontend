@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import watch from 'gulp-watch';
+import shell from 'gulp-shell';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 
@@ -10,6 +11,10 @@ import pxtorem from 'postcss-pxtorem';
 import {DIRECTORIES, PRESETS} from './config';
 
 const TARGET = `${DIRECTORIES.target}/stylesheets`;
+
+gulp.task('atomise-css', shell.task(['make atomise-css'], {
+    cwd: '../'
+}))
 
 gulp.task('watch:css', (done) => {
 
@@ -29,6 +34,8 @@ gulp.task('watch:css', (done) => {
                 .pipe(sourcemaps.write('.'))
                 .pipe(gulp.dest(TARGET))
     });
+
+    gulp.watch(`${DIRECTORIES.src}/stylesheets-atomised/**/*.scss`, ['atomise-css']);
     done();
 });
 

@@ -1,95 +1,26 @@
-.new-header {
-    background-color: $guardian-brand;
-}
+.new-header__logo svg {
+    // Removes extra spacing
+    display: block;
 
-.new-header__inner {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
-
-.new-header__logo {
-
-    svg {
-        // Removes extra spacing
-        display: block;
-
-        // Aspect ratio: 16:3
-        @include mq($until: mobileLandscape) {
-            width: 50vw;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 46vw);
-            padding: ($gs-baseline / 2) 0;
-            min-width: 147px;
-            min-height: 28px;
-        }
-
-        @include mq(mobileLandscape) {
-            width: 240px;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 240px);
-            padding: ($gs-baseline / 2) ($gs-gutter / 2);
-        }
-
-        @include mq(phablet) {
-            padding-bottom: 0;
-        }
-    }
-}
-
-.new-header__edition-button {
-    @include fs-textSans(2);
-    order: -1;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    // TODO: Use reset util?
-    // Unset button from user agent stylesheet
-    background: none;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    padding: ($gs-gutter / 2);
-
+    // Aspect ratio: 16:3
     @include mq($until: mobileLandscape) {
-        font-size: 3.8vw;
+        width: 50vw;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 46vw);
+        padding: ($gs-baseline / 2) 0;
+        min-width: 147px;
+        min-height: 28px;
     }
 
-    svg {
-        fill: currentColor;
-        // Spacing also due to inline elements
-        margin-right: 1px;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 14px;
-        min-height: 14px;
-
-        @include mq($until: mobileLandscape) {
-            width: 4vw;
-            height: 4vw;
-        }
+    @include mq(mobileLandscape) {
+        width: 240px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 240px);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
     }
-}
 
-.new-header__nav__menu-button {
-    // Override button from user agent stylesheet
-    background-color: $news-main-2;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    // Must be square
-    padding: $gs-gutter * .6;
-    border-radius: 100%;
-    z-index: $zindex-modal;
-    height: 42px;
-    width: 42px;
-    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
-
-    @include mq($until: mobileLandscape) {
-        margin-right: 4vw;
-        margin-top: -2vw;
-        margin-bottom: -2vw;
+    @include mq(phablet) {
+        padding-bottom: 0;
     }
 }
 
@@ -121,34 +52,6 @@
     &:after {
         @extend %new-header__burger-icon__line;
         top: 10px;
-    }
-}
-
-.new-header__nav__list {
-    display: flex;
-    flex-wrap: wrap;
-    // Unset ul from _lists.scss
-    margin-left: 0;
-    // Unset ul from user agent stylesheet
-    margin-top: 0;
-    // Unset ul from user agent stylesheet
-    margin-bottom: 3px;
-
-    @include mq($until: mobileLandscape) {
-        order: -1;
-    }
-}
-
-.new-header__nav__list-item {
-    // Override inherited nav ul from _lists.scss
-    list-style: none;
-    white-space: nowrap;
-
-    &:not(:last-child) {
-        &:after {
-            content: '/';
-            color: $news-main-2;
-        }
     }
 }
 

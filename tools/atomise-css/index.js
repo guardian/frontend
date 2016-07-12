@@ -2,11 +2,13 @@ const fs = require('fs');
 
 const sass = require('node-sass');
 const glob = require("glob");
+const mkdirp = require("mkdirp");
 
 const pify = require('pify'); // promisifies functions with callbacks
 const pGlob = pify(glob);
 const pFs = pify(fs);
 const pSass = pify(sass);
+const pMkdirp = pify(mkdirp);
 
 const postcss = require('postcss');
 const atomised = require('postcss-atomised');
@@ -18,8 +20,9 @@ const perfectionist = require('perfectionist');
 
 const static = `${__dirname}/../../static`;
 const stylesheets = `${static}/src/stylesheets`;
-const src = `${stylesheets}/atomised`;
-const target = `common/conf/assets`;
+const src = `${stylesheets}-atomised`;
+const target = `${static}/target/stylesheets`;
+const conf = `common/conf/assets`;
 
 // get an array of paths to the Sass files
 pGlob(`${src}/**/*.scss`)
@@ -69,7 +72,7 @@ pGlob(`${src}/**/*.scss`)
     // atomise it
     .then(cleaned => postcss([
         atomised({
-            json: `${target}/atomic-class-map.json`
+            json: `${conf}/atomic-class-map.json`
         }),
         reporter()
     ]).process(cleaned))
@@ -81,5 +84,7 @@ pGlob(`${src}/**/*.scss`)
     ]).process(atomised))
 
     // save it
-    .then(atomisedCSS => pFs.writeFile(`${target}/inline-stylesheets/atomic.css`, atomisedCSS.css, 'utf8'))
+    .then(atomisedCSS => pMkdirp(target)
+        .then(() => pFs.writeFile(`${target}/atomic.css`, atomisedCSS.css, 'utf8'))
+    )
     .catch(e => console.log(e))

@@ -1,0 +1,112 @@
+.new-header {
+    background-color: $guardian-brand;
+    background-color: green;
+}
+
+.new-header__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.new-header__edition-button {
+    @include fs-textSans(2);
+    order: -1;
+    color: $news-support-1;
+    // Override from fs-textSans mixin
+    line-height: 1;
+    // TODO: Use reset util?
+    // Unset button from user agent stylesheet
+    background: none;
+    // Unset button from user agent stylesheet
+    border: 0;
+    // Override button from user agent stylesheet
+    padding: ($gs-gutter / 2);
+
+    @include mq($until: mobileLandscape) {
+        font-size: 3.8vw;
+    }
+}
+
+.new-header__edition-button--svg {
+    fill: currentColor;
+    // Spacing also due to inline elements
+    margin-right: 1px;
+    vertical-align: middle;
+    margin-top: -2px;
+    min-width: 14px;
+    min-height: 14px;
+
+    @include mq($until: mobileLandscape) {
+        width: 4vw;
+        height: 4vw;
+    }
+}
+
+.new-header__nav {
+    @include fs-textSans(6);
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    @include mq($until: mobileLandscape) {
+        font-size: 5vw;
+        padding-left: ($gs-gutter / 2);
+        padding-right: ($gs-gutter / 2);
+        // Position after pseudo element which forces line break
+        order: 1;
+        flex: 1;
+        justify-content: space-between;
+    }
+}
+
+.new-header__nav__menu-button {
+    // Override button from user agent stylesheet
+    background-color: $news-main-2;
+    // Unset button from user agent stylesheet
+    border: 0;
+    // Override button from user agent stylesheet
+    // Must be square
+    padding: $gs-gutter * .6;
+    border-radius: 100%;
+    z-index: $zindex-modal;
+    height: 42px;
+    width: 42px;
+    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
+
+    @include mq($until: mobileLandscape) {
+        margin-right: 4vw;
+        margin-top: -2vw;
+        margin-bottom: -2vw;
+    }
+}
+
+.new-header__nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    // Unset ul from _lists.scss
+    margin-left: 0;
+    // Unset ul from user agent stylesheet
+    margin-top: 0;
+    // Unset ul from user agent stylesheet
+    margin-bottom: 3px;
+
+    @include mq($until: mobileLandscape) {
+        order: -1;
+    }
+}
+
+
+.new-header__nav__list-item {
+    // Override inherited nav ul from _lists.scss
+    list-style: none;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+        &:after {
+            content: '/';
+            color: $news-main-2;
+        }
+    }
+}

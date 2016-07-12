@@ -44,6 +44,7 @@
     "gulp-load-tasks": "^0.8.3",
     "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.0.1",
+    "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.4",
