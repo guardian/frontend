@@ -16,8 +16,8 @@ class AssetsTest extends FlatSpec with Matchers with OneAppPerSuite {
   "CssMap" should "collect css maps" in {
     val static = new CssMap("assets/testclass-map.json")
 
-    static("nav").toString should be("nav e f")
-    static("nav:hover").toString should be("nav h")
+    static("el1").toString should be("el1 e f")
+    static("el2").toString should be("el2 h")
   }
 
 }
