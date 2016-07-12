@@ -3,6 +3,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'videojs',
+    'videojsembed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -16,12 +18,13 @@ define([
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
-    'bootstraps/enhanced/media/video-player',
     'common/modules/video/videojs-options'
 ], function (
     bean,
     bonzo,
     qwery,
+    videojs,
+    videojsembed,
     $,
     config,
     deferToAnalytics,
@@ -35,7 +38,6 @@ define([
     loadingTmpl,
     titlebarTmpl,
     debounce,
-    videojs,
     videojsOptions
 ) {
 
