@@ -160,22 +160,23 @@ define([
         ).and(forEach, function (i) {
             $img = $('img', this.$images[i]);
             if (!$img[0].complete) {
-                bean.one($img[0], 'load', function () {
-                    if(this.naturalWidth < this.naturalHeight){
-                        $img.css('object-fit', 'contain');
-                    } else {
-                        that.resizeLandscapeImage.call(that, i);
-                    }
-
-                });
+                bean.one($img[0], 'load', setSize.bind(this, $img, i));
             } else {
-                if($img[0].naturalWidth < $img[0].naturalHeight){
-                    $img.css('object-fit', 'contain');
-                } else {
-                    that.resizeLandscapeImage.call(that, i);
-                }
+                setSize($img, i);
             }
         }.bind(this));
+
+        function setSize($image, index){
+            if(!that.imageRatios[index]){
+                that.imageRatios[index] = $image[0].naturalWidth / $image[0].naturalHeight;
+                if (that.imageRatios[index] < 1) {
+                    $image.css('object-fit', 'contain');
+                }
+            }
+            if(that.imageRatios[index] > 1){
+                that.resizeLandscapeImage.call(that, index);
+            }
+        }
     };
 
     HostedGallery.prototype.resizeLandscapeImage = function (imgIndex) {
@@ -391,17 +392,20 @@ define([
         $header.css('width', imageWidth);
         $footer.css('padding', '0 ' + leftRight);
         $progress.css('right', leftRight);
-        bonzo(this.$ctaFloat).css('left', leftRight);
-        bonzo(this.$ctaFloat).css('right', leftRight);
-        bonzo(this.$ctaFloat).css('bottom', topBottom);
+        var lastImageIsPortrait = this.imageRatios[this.imageRatios.length - 1] > 1;
+        if(!this.useSwipe){
+            bonzo(this.$ctaFloat).css('left', leftRight);
+            bonzo(this.$ctaFloat).css('right', leftRight);
+            bonzo(this.$ctaFloat).css('bottom', lastImageIsPortrait ? 0 : topBottom);
+        }
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {
-        if (e.keyCode === 38) { // up
+        if (e.keyCode === 37 || e.keyCode === 38){ // up/left
             e.preventDefault();
             this.scrollTo(-1);
             return false;
-        } else if (e.keyCode === 40) { // down
+        } else if (e.keyCode === 39 || e.keyCode === 40) { // down/right
             e.preventDefault();
             this.scrollTo(1);
             return false;
