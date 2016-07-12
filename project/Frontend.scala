@@ -159,6 +159,9 @@ object Frontend extends Build with Prototypes {
       )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+    .settings(
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    )
 
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
