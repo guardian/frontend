@@ -28,7 +28,7 @@ $labour-liverpool-header-element-opacity: .85;
 
     .membership-cutout {
         float: left;
-        height: 116px;
+        width: 140px;
         margin: 0 $gs-gutter/-2;
 
         @include mq($from: mobile, $until: tablet) {
@@ -199,10 +199,6 @@ $labour-liverpool-header-element-opacity: .85;
 .labour-liverpool-contact__avatar {
     width: 100%;
     max-width: 140px;
-
-    @include mq($from: desktop) {
-        max-width: 90px;
-    }
 }
 
 .speech-bubble {

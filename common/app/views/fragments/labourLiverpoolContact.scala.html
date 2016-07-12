@@ -1,3 +1,5 @@
+@import views.support.{ImgSrc, Item140}
+
 <div class="labour-liverpool-contact fc-container">
     <div class="fc-container__inner">
         <div class="fc-container__header">
@@ -14,7 +16,7 @@
                     <div class="labour-liverpool-contact__avatar-container">
                         <div class="speech-bubble">Want to ask a question or contact me directly?</div>
                         @fragments.inlineSvg("speech-bubble-mask", "membership")
-                        <img class="labour-liverpool-contact__avatar" src="https://interactive.guim.co.uk/2016/06/interactive-labour-liverpool/1466688646612/assets/imgs/Ewen.png">
+                        <img class="labour-liverpool-contact__avatar" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
                     </div>
                     <div class="labour-liverpool-contact__contact-ewen__buttons">
                         <a class="button--medium labour-liverpool-contact__button" href="https://twitter.com/ewenmacaskill">
@@ -30,5 +32,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>
