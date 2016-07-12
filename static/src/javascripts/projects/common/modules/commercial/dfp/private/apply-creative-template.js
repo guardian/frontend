@@ -3,6 +3,7 @@ define([
     'bonzo',
     'Promise',
     'common/utils/fastdom-promise',
+    'common/utils/report-error',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
     'common/modules/commercial/creatives/commercial-component',
@@ -28,7 +29,8 @@ define([
     bean,
     bonzo,
     Promise,
-    fastdom
+    fastdom,
+    reportError
 ) {
     /**
      * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
@@ -75,20 +77,19 @@ define([
         var creativeConfig = fetchCreativeConfig();
 
         if (creativeConfig) {
-            return hideIframe().then(function () {
-                return renderCreative(creativeConfig);
+            return hideIframe()
+                .then(JSON.parse)
+                .then(renderCreative)
+                .catch(function (err) {
+                reportError('Failed to get creative JSON ' + err);
             });
         } else {
             return Promise.resolve(true);
         }
 
         function fetchCreativeConfig() {
-            try {
                 var breakoutScript = iFrame.contentDocument.body.querySelector('.breakout__script[type="application/json"]');
-                return breakoutScript ? JSON.parse(breakoutScript.innerHTML) : null;
-            } catch (_) {
-                return null;
-            }
+                return breakoutScript ? breakoutScript.innerHTML : null;
         }
 
         function renderCreative(config) {
@@ -102,6 +103,7 @@ define([
         function hideIframe() {
             return fastdom.write(function () {
                 iFrame.style.display = 'none';
+                return creativeConfig;
             });
         }
     }

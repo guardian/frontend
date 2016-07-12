@@ -73,4 +73,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 14),
     exposeClientSide = true
   )
+
+  val giraffe = Switch(
+    SwitchGroup.ABTests,
+    "ab-giraffe",
+    "Test effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
+    exposeClientSide = true
+  )
 }

@@ -26,12 +26,12 @@ define([
         advert.whenLoaded = new Promise(function (resolve) {
             advert.whenLoadedResolver = resolve;
         }).then(function (isLoaded) {
-            advert.isLoaded = isLoaded;
+            return advert.isLoaded = isLoaded;
         });
         advert.whenRendered = new Promise(function (resolve) {
             advert.whenRenderedResolver = resolve;
         }).then(function (isRendered) {
-            advert.isRendered = isRendered;
+            return advert.isRendered = isRendered;
         });
         return Object.seal(advert);
     }
