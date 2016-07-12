@@ -2,6 +2,7 @@ package controllers
 
 import org.scalatest.{Matchers => ShouldMatchers, WordSpec}
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
 import services._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
@@ -12,7 +13,7 @@ import client.Auth
 import scala.concurrent.Future
 import org.joda.time.DateTime
 import play.api.mvc._
-import test.{TestApplication, Fake}
+import test.Fake
 import idapiclient.responses.CookieResponse
 import idapiclient.UserCookie
 import services.IdentityRequest
@@ -22,7 +23,7 @@ import play.api.mvc.Cookie
 import play.api.test.Helpers._
 
 
-class SignoutControllerTest extends WordSpec with TestApplication with ShouldMatchers with MockitoSugar {
+class SignoutControllerTest extends WordSpec with OneAppPerSuite with ShouldMatchers with MockitoSugar{
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = new IdentityConfiguration

@@ -4,9 +4,11 @@ import model.Titles
 import play.api.data.Forms._
 import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
-import play.api.i18n.MessagesApi
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
-class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
+object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
+  override val messagesApi = applicationMessagesApi
 
   private val genders = List("Male", "Female", "Transgender", "unknown", "")
 
@@ -47,6 +49,10 @@ class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMappin
     ("privateFields.billingCountry", "billingAddress.country"),
     ("privateFields.telephoneNumber", "telephoneNumber")
   )
+}
+
+trait AccountDetailsMapping {
+  val accountDetailsMapping = AccountDetailsMapping
 }
 
 case class AccountFormData(
