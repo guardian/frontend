@@ -1,13 +1,13 @@
-import gulp from 'gulp';
-import watch from 'gulp-watch';
-import sourcemaps from 'gulp-sourcemaps';
-import gutil from 'gulp-util';
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const sourcemaps = require('gulp-sourcemaps');
+const gutil = require('gulp-util');
 
-import postcss from 'gulp-postcss';
-import autoprefixer from 'autoprefixer-core';
-import pxtorem from 'postcss-pxtorem';
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer-core');
+const pxtorem = require('postcss-pxtorem');
 
-import {DIRECTORIES, PRESETS} from './config';
+const {DIRECTORIES, PRESETS} = require('./config');
 
 const TARGET = `${DIRECTORIES.target}/stylesheets`;
 

@@ -25,7 +25,7 @@ object LeffeHostedPages {
     url = "https://www.facebook.com/Leffe.uk/",
     label = "Rediscover Time",
     trackingCode = "leffe-rediscover-time",
-    btnText = ""
+    btnText = "Visit Leffe on Facebook"
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
@@ -48,7 +48,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
+      twitterTxt = "Leffe presents Slow Time: What Is Nothing? Features @willard_wigan #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -78,7 +78,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
+      twitterTxt = "Leffe presents Slow Time: Tasting The Past, feat @crownandqueue #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -105,7 +105,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
+      twitterTxt = "Leffe presents Slow Time: Capturing Time, featuring @Avertedvision #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -132,7 +132,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
+      twitterTxt = "Leffe presents Slow Time: Still The River #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -158,7 +158,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents " + videoTitle + ", feat @crownandqueue #ad. Watch full film: ",
+      twitterTxt = "Leffe presents Slow Time: Quay Brothers  #ad. Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )

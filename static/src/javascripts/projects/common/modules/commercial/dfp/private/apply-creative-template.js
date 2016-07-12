@@ -18,6 +18,7 @@ define([
     'common/modules/commercial/creatives/fabric-v1',
     'common/modules/commercial/creatives/fabric-expanding-v1',
     'common/modules/commercial/creatives/fabric-expandable-video-v1',
+    'common/modules/commercial/creatives/fabric-video',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
     'common/modules/commercial/creatives/hosted-thrasher',
@@ -88,8 +89,13 @@ define([
         }
 
         function fetchCreativeConfig() {
+            try {
                 var breakoutScript = iFrame.contentDocument.body.querySelector('.breakout__script[type="application/json"]');
                 return breakoutScript ? breakoutScript.innerHTML : null;
+            } catch (err) {
+                return null;
+            }
+
         }
 
         function renderCreative(config) {
