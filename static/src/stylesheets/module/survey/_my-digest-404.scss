@@ -1,7 +1,4 @@
 
-.my-digest-illustration-wrapper {
-}
-
 .inline-my-digest {
     display: inline;
     position: absolute;
@@ -38,6 +35,12 @@
     position: relative;
     min-height: 3.5em;
 
+    margin-left: 1em;
+    border-left: thin dotted #5ab0f4;
+}
+
+.my-digest-steps__step:last-child {
+    border: none;
 }
 
 .my-digest-steps__number {
@@ -50,20 +53,13 @@
     float: left;
     width: 2em;
     height: 2em;
-}
-
-.my-digest-steps__dots {
-    position: absolute;
-    height: 100%;
-    width: 0;
-    margin-left: 1em;
-    border-left: thin dotted #5ab0f4;
+    left: -1em;
 }
 
 .my-digest-steps__text {
     display: block;
     line-height: 2em;
-    margin-left: 3em;
+    margin-left: 2em;
     margin-bottom: 1em;
 }
 
@@ -74,4 +70,6 @@
     padding: 0.3em 1em;
     color: $news-main-1;
     white-space: nowrap;
+    left: -1em;
+    position: absolute;
 }
