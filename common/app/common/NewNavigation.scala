@@ -2,16 +2,18 @@ package common
 
 sealed class TopLevelSection(val name: String)
 
-case object News extends TopLevelSection("news")
-case object Opinion extends TopLevelSection("opinion")
-case object Sports extends TopLevelSection("sports")
-case object Arts extends TopLevelSection("arts")
-case object Life extends TopLevelSection("life")
+object TopLevelSection {
+  case object News extends TopLevelSection("news")
+  case object Opinion extends TopLevelSection("opinion")
+  case object Sports extends TopLevelSection("sports")
+  case object Arts extends TopLevelSection("arts")
+  case object Life extends TopLevelSection("life")
+}
 
 case class NavLink(name: String, url: String)
 
 object NewNavigation {
-  val topLevelSections = List(News, Opinion, Sports, Arts, Life)
+  val topLevelSections = List(TopLevelSection.News, TopLevelSection.Opinion, TopLevelSection.Sports, TopLevelSection.Arts, TopLevelSection.Life)
 
   private val newsSections = List(
     NavLink("UK", "/uk-news"),
@@ -74,10 +76,10 @@ object NewNavigation {
   )
 
   val sectionItems: Map[TopLevelSection, List[NavLink]] = Map(
-    News -> newsSections,
-    Opinion -> opinionSections,
-    Sports -> sportsSections,
-    Arts -> artsSections,
-    Life -> lifeSections
+    TopLevelSection.News -> newsSections,
+    TopLevelSection.Opinion -> opinionSections,
+    TopLevelSection.Sports -> sportsSections,
+    TopLevelSection.Arts -> artsSections,
+    TopLevelSection.Life -> lifeSections
   )
 }
