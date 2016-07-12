@@ -4,22 +4,21 @@ import actions.AuthenticatedActions
 import client.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
+import form.{ProfileMapping, PrivacyMapping, AccountDetailsMapping, ProfileFormsMapping}
 import idapiclient.{TrackingData, _}
 import model.{PhoneNumbers, Countries}
 import org.mockito.Mockito._
 import org.mockito.{Matchers, ArgumentCaptor}
 import org.scalatest.{WordSpec, ShouldMatchers, OptionValues}
 import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.OneAppPerSuite
 import play.api.mvc._
 import play.api.test.Helpers._
 import services._
-import test.FakeCSRFRequest
+import test._
 import scala.concurrent.Future
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
 
 //TODO test form validation and population of form fields.
-class EditProfileControllerTest extends WordSpec with OneAppPerSuite with ShouldMatchers with MockitoSugar with OptionValues {
+class EditProfileControllerTest extends WordSpec with TestApplication with ShouldMatchers with MockitoSugar with OptionValues {
 
   trait EditProfileFixture {
 
@@ -38,6 +37,13 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
 
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
 
+    val messagesApi = I18NTestComponents.messagesApi
+    val profileFormsMapping = ProfileFormsMapping(
+      new AccountDetailsMapping(messagesApi),
+      new PrivacyMapping(messagesApi),
+      new ProfileMapping(messagesApi)
+    )
+
     when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
@@ -45,7 +51,7 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, applicationMessagesApi)
+    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, profileFormsMapping)
   }
 
   "EditProfileController" when {
