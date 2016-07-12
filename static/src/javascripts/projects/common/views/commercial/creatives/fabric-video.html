@@ -7,7 +7,11 @@
                 <div style="background-image:url(<%=data.Layer2animatedimage1%>)" class="creative__slide creative__slide1"></div>
                 <div style="background-image:url(<%=data.Layer2animatedimage2%>)" class="creative__slide creative__slide2"></div>
                 <div style="background-image:url(<%=data.Layer2animatedimage3%>)" class="creative__slide creative__slide3"></div>
-                <div style="background-image:url(<%=data.Layer2animatedimage4%>)" class="creative__slide creative__slide4"><%=data.Layer2clickbuttonMarkup%></div>
+                <div style="background-image:url(<%=data.Layer2animatedimage4%>)" class="creative__slide creative__slide4">
+                    <%if (data.Layer2clickbutton){%>
+                        <img src="<%=data.Layer2clickbutton%>" class="click_button"></div>
+                    <%}%>
+                </div>
             </div>
             <div class="creative__layer creative__layer3" style="background-image:url(<%=data.Layer3backgroundimage%>);background-position: <%=data.Layer3backgroundimageposition%>;"></div>
         </div>
@@ -18,7 +22,11 @@
                 <div style="background-image:url(<%=data.Layer2animatedimage1%>)" class="creative__slide creative__slide1"></div>
                 <div style="background-image:url(<%=data.Layer2animatedimage2%>)" class="creative__slide creative__slide2"></div>
                 <div style="background-image:url(<%=data.Layer2animatedimage3%>)" class="creative__slide creative__slide3"></div>
-                <div style="background-image:url(<%=data.Layer2animatedimage4%>)" class="creative__slide creative__slide4"><%=data.Layer2clickbuttonMarkup%></div>
+                <div style="background-image:url(<%=data.Layer2animatedimage4%>)" class="creative__slide creative__slide4">
+                    <%if (data.Layer2clickbutton){%>
+                        <img src="<%=data.Layer2clickbutton%>" class="click_button"></div>
+                    <%}%>
+                </div>
             </div>
             <div class="creative__layer creative__layer3" style="background-image:url(<%=data.Layer3backgroundimagemobile%>);background-position:<%=data.Layer3backgroundimagepositionmobile%>;"></div>
         </div>

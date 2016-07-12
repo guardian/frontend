@@ -56,7 +56,7 @@ define([
                 stickyMpu($node);
             }
         } else if ($node.hasClass('ad-slot--facebook')) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 $node.addClass('ad-slot--fluid');
             });
         }
@@ -69,7 +69,7 @@ define([
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             var $parent = bonzo(advert.node.parentNode);
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 bonzo(advert.node).addClass('u-h');
                 // if in a slice, add the 'no mpu' class
                 if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
@@ -85,7 +85,7 @@ define([
     sizeCallbacks[adSizes.portrait] = function () {
         // remove geo most popular
         geoMostPopular.whenRendered.then(function (geoMostPopular) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 bonzo(geoMostPopular.elem).remove();
             });
         });
@@ -110,7 +110,7 @@ define([
         return function (_, advert) {
             var $node = bonzo(advert.node);
             if ($node.hasClass(className)) {
-                fastdom.write(function () {
+                return fastdom.write(function () {
                     $node.addClass('ad-slot__fluid250');
                 });
             }
@@ -121,7 +121,7 @@ define([
         return function (_, advert) {
             var $node = bonzo(advert.node);
             if ($node.hasClass(className)) {
-                fastdom.write(function () {
+                return fastdom.write(function () {
                     $node.addClass('ad-slot--fluid');
                 });
             }
@@ -147,7 +147,7 @@ define([
             function callSizeCallback() {
                 var size = slotRenderEvent.size.join(',');
                 if (sizeCallbacks[size]) {
-                    sizeCallbacks[size](slotRenderEvent, advert);
+                    return sizeCallbacks[size](slotRenderEvent, advert);
                 }
             }
 

@@ -23,10 +23,6 @@ define([
             params.videoOrPoster = '<div class="poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
         }
 
-        params.Layer2clickbuttonMarkup = params.Layer2clickbutton ?
-             '<img src="'+ params.Layer2clickbutton + '" class="click_button"></div>' :
-             '';
-
         return Object.freeze({
             create: create
         });

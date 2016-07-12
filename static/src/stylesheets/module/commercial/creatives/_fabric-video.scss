@@ -99,7 +99,7 @@
         margin-left: -960px;
     }
 
-    @media screen and (min-width: 740px) and (max-width: 1920px) {
+    @include mq(tablet, leftCol) {
         #mp4Video {
             width: auto;
         }
