@@ -1,9 +1,9 @@
 .giraffe {
+    @include f-header;
     width: 100%;
     display: block;
     margin-bottom: 1em;
     border-top: 1px dotted $neutral-4;
-    @include f-header;
 }
 .giraffe--heading {
     margin-bottom: 0px;
@@ -15,7 +15,6 @@
     float: right;
 }
 .giraffe--copy {
-
     color: $neutral-2;
     margin-bottom: $gs-baseline;
 }
