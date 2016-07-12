@@ -18,6 +18,8 @@ define([
     var HostedThrasherMulti = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
+
+        console.log(params);
     };
 
     HostedThrasherMulti.prototype.create = function () {
@@ -48,7 +50,6 @@ define([
             ' | ' + this.params['subHeader' + i] +
             ' | ' + this.params.sponsorName;
         }
-        this.params['playIcon'] = svgs('play32ToneMedia');
     };
 
     return HostedThrasherMulti;
