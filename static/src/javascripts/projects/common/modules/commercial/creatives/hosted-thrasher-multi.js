@@ -2,14 +2,12 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/template',
-    'common/views/svgs',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/hosted-thrasher-multi.html'
 ], function (
     fastdom,
     config,
     template,
-    svgs,
     addTrackingPixel,
     hostedThrasherStr
 ) {
