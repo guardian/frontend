@@ -3,20 +3,26 @@ package views.support
 import java.net.URLEncoder._
 
 import conf.Configuration
-import model.{ContentPage, MetaData, Page}
+import model.{ContentPage, MetaData, Page, EmbedPage}
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
+
 object OmnitureAnalyticsAccount {
-  def apply(page: MetaData): String = {
-    val sectionSpecficAccounts = Map(
-      ("guardian-masterclasses", "guardiangu-masterclasses"),
-      ("Guardian Masterclasses", "guardiangu-masterclasses"),
-      ("careers", "guardiangu-careers"),
-      ("Guardian Careers", "guardiangu-careers")
-    )
-    Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.sectionId)).flatten.mkString(",")
+  def apply(page: Page): String = {
+    page match {
+      case _: EmbedPage => Configuration.omniture.thirdPartyAppsAccount
+      case _            => {
+        val sectionSpecficAccounts = Map(
+          ("guardian-masterclasses", "guardiangu-masterclasses"),
+          ("Guardian Masterclasses", "guardiangu-masterclasses"),
+          ("careers", "guardiangu-careers"),
+          ("Guardian Careers", "guardiangu-careers")
+        )
+        Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.metadata.sectionId)).flatten.mkString(",")
+      }
+    }
   }
 }
 

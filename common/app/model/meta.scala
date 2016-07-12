@@ -443,6 +443,8 @@ case class GalleryPage(
   val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
+case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
+
 case class TagCombiner(
   id: String,
   leftTag: Tag,
