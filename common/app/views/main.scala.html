@@ -7,7 +7,7 @@
 @import views.support.{Commercial, RenderClasses}
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, adBelowNav: Boolean) = {
-    @if(!(page.metadata.shouldHideHeaderAndTopAds && getContent(page).exists(_.tags.isArticle))) {
+    @if(!page.metadata.shouldHideHeaderAndTopAds) {
         @if(showAdverts) {
             @defining(
                 page match {
