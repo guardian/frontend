@@ -40,16 +40,12 @@ class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Conf
 }
 
 // turns a readable CSS class into a list of rules in short form from the atomic css file
-class CssMap(mapResource: String, useCssMap: Boolean = Configuration.assets.useHashedBundles) extends Logging {
+class CssMap(mapResource: String) extends Logging {
 
   lazy val lookup: Map[String, List[String]] = Get(cssMap(mapResource))
 
-  def apply(path: String): String = {
-    if (useCssMap) {
-      lookup.getOrElse(path, throw new CssClassNotFoundException(path)).mkString(" ")
-    } else {
-      path
-    }
+  def apply(className: String): String = {
+      className + ' ' + lookup.getOrElse(className, throw new CssClassNotFoundException(className)).mkString(" ")
   }
 
   def jsonToAssetMap(json: String): Try[Map[String, List[String]]] =
