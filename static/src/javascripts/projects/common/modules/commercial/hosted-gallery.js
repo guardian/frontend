@@ -204,6 +204,10 @@ define([
         $sizer.css('height', imageHeight);
         $sizer.css('top', topBottom);
         $sizer.css('left', leftRight);
+        if(imgIndex + 1 === this.$images.length && !this.useSwipe){
+            bonzo(this.$ctaFloat).css('bottom', topBottom);
+        }
+
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -379,24 +383,17 @@ define([
             $progress = this.$progress,
             imgRatio = 5/3,
             imageWidth = width,
-            imageHeight = height,
-            leftRight = 0,
-            topBottom = 0;
+            leftRight = 0;
         if(imgRatio < width/height) {
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
-        } else {
-            imageHeight = width / imgRatio;
-            topBottom = (height - imageHeight) / 2 + 'px';
         }
         $header.css('width', imageWidth);
         $footer.css('padding', '0 ' + leftRight);
         $progress.css('right', leftRight);
-        var lastImageIsPortrait = this.imageRatios[this.imageRatios.length - 1] > 1;
         if(!this.useSwipe){
             bonzo(this.$ctaFloat).css('left', leftRight);
             bonzo(this.$ctaFloat).css('right', leftRight);
-            bonzo(this.$ctaFloat).css('bottom', lastImageIsPortrait ? 0 : topBottom);
         }
     };
 
