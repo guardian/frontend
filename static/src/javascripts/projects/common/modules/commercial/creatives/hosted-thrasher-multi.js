@@ -18,8 +18,6 @@ define([
     var HostedThrasherMulti = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params = params;
-
-        console.log(params);
     };
 
     HostedThrasherMulti.prototype.create = function () {
