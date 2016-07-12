@@ -77,9 +77,14 @@
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
 <!--<![endif]-->
-<style>
-@Html(common.Assets.css.atomic)
-</style>
+
+@if(Configuration.assets.useHashedBundles) {
+    <style id="atomised-css">
+        @Html(common.Assets.css.atomic)
+    </style>
+} else {
+    <link rel="stylesheet" id="atomised-css" type="text/css" href="@Static("stylesheets/atomic.css")" />
+}
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
 
