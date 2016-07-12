@@ -92,6 +92,68 @@
         font-size: 30px;
         line-height: 32px;
     }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.hosted-gallery__oj {
+    @include hosted-gallery-cta;
+    background: rgba(51, 51, 51, .8);
+    display: flex;
+    color: #ffffff;
+    .hosted-gallery__cta-title {
+        margin: 0;
+        font-size: 18px;
+        line-height: 20px;
+        @include mq(tablet) {
+            font-size: 22px;
+            line-height: 24px;
+        }
+    }
+}
+
+.hosted-gallery__oj-sub-header {
+    @include f-headlineSans;
+    color: $omgbColor;
+    font-size: 14px;
+}
+
+.hosted-gallery__oj-cta {
+    padding-top: 5px;
+}
+
+.hosted-gallery__oj-cta,
+.hosted-gallery__oj-next-gallery {
+    flex: 1;
+    margin: 10px 10px 0;
+    border-top: 1px solid $omgbColor;
+}
+
+.hosted-gallery__oj-next-gallery {
+    pointer-events: auto;
+    display: flex;
+    &:hover {
+        text-decoration: none;
+    }
+    &:nth-child(3) {
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+    }
+}
+
+.hosted-gallery__next-gallery-image {
+    width: 170px;
+    height: 95px;
+    object-fit: cover;
+    @include mq($until: tablet) {
+        display: none;
+    }
+    @include mq($until: desktop) {
+        width: 115px;
+        height: 65px;
+    }
 }
 
 .hosted-gallery__cta {
@@ -115,7 +177,9 @@
     color: #ffffff;
     font-weight: bold;
     background-color: $omgbColor;
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 
     .inline-arrow-right {
         position: absolute;
@@ -142,7 +206,9 @@
 }
 
 .use-swipe .hosted-gallery__image .hosted-gallery__cta,
-.use-scroll.show-cta > .hosted-gallery__cta {
+.use-swipe .hosted-gallery__image .hosted-gallery__oj,
+.use-scroll.show-cta > .hosted-gallery__cta,
+.use-scroll.show-oj > .hosted-gallery__oj {
     opacity: 1;
     visibility: visible;
     .hosted-gallery__cta-link {
@@ -487,8 +553,9 @@ $progressColor: #ffffff;
     }
 }
 
-@include mq($until: tablet, $and: '(orientation: landscape)') {
+@include mq($until: tablet) {
     .hosted-gallery__meta,
+    .hosted-gallery__oj,
     .hosted-gallery__cta {
         padding-bottom: 30px;
     }

@@ -62,18 +62,6 @@ object VisitBritainHostedPages {
     )
   )
 
-  val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
-    campaign = campaign,
-    images = activityImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
-    pageName = activitiesPageName,
-    title = "Don’t be a sloth this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
-    standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
-  )
-
   private val cityImages: List[HostedGalleryImage] = List(
     HostedGalleryImage(
       url = "http://media.guim.co.uk/628946348eea991e04e02c8a3fd1420d2d6d44d0/0_0_5500_3270/2000.jpg",
@@ -105,18 +93,6 @@ object VisitBritainHostedPages {
       caption = "The Edinburgh Festival and Edinburgh Fringe Festival, Edinburgh, Scotland",
       credit = "© VisitBritain / Andrew Pickett"
     )
-  )
-
-  val cityGallery: HostedGalleryPage = HostedGalleryPage(
-    campaign = campaign,
-    images = cityImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/city",
-    pageName = activitiesPageName,
-    title = "Take a city break from the norm",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
-    standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and hotly-tipped comedy acts at Edinburgh Fringe."
   )
 
   private val coastImages: List[HostedGalleryImage] = List(
@@ -175,18 +151,6 @@ object VisitBritainHostedPages {
   )
 
 
-  private val coastGallery: HostedGalleryPage = HostedGalleryPage(
-    campaign = campaign,
-    images = coastImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/coast",
-    pageName = coastPageName,
-    title = "Find cool-on-sea this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
-    standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical climes and join the party at the Whitby Regatta."
-  )
-
 
   private val countrysideImages: List[HostedGalleryImage] = List(
     HostedGalleryImage(
@@ -226,6 +190,46 @@ object VisitBritainHostedPages {
     )
   )
 
+
+  val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
+    campaign = campaign,
+    images = activityImages,
+    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
+    pageName = activitiesPageName,
+    title = "Don’t be a sloth this summer",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
+    ctaButtonText = "Visit OMGB now",
+    nextGalleryNames = List(cityPageName, coastPageName),
+    standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
+  )
+
+  val cityGallery: HostedGalleryPage = HostedGalleryPage(
+    campaign = campaign,
+    images = cityImages,
+    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/city",
+    pageName = cityPageName,
+    title = "Take a city break from the norm",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
+    ctaButtonText = "Visit OMGB now",
+    nextGalleryNames = List(coastPageName, countrysidePageName),
+    standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and hotly-tipped comedy acts at Edinburgh Fringe."
+  )
+
+  private val coastGallery: HostedGalleryPage = HostedGalleryPage(
+    campaign = campaign,
+    images = coastImages,
+    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/coast",
+    pageName = coastPageName,
+    title = "Find cool-on-sea this summer",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
+    ctaLink = "http://en.omgb.com/map/",
+    ctaButtonText = "Visit OMGB now",
+    nextGalleryNames = List(countrysidePageName, activitiesPageName),
+    standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical climes and join the party at the Whitby Regatta."
+  )
+
   private val countrysideGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = countrysideImages,
@@ -235,6 +239,7 @@ object VisitBritainHostedPages {
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
+    nextGalleryNames = List(activitiesPageName, cityPageName),
     standfirst = "Switch off and soak up the country air as you ramble through the heather-coated North York Moors or explore the dramatic scenery of Glen Coe."
   )
 

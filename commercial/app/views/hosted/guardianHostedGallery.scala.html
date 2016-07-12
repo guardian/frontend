@@ -1,6 +1,6 @@
 @import common.commercial.hosted.HostedGalleryPage
 @(page: HostedGalleryPage)(implicit request: RequestHeader)
-@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader, guardianHostedGalleryCta}
+@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader, guardianHostedGalleryCta, guardianHostedGalleryOj}
 @import java.net.URLEncoder
 
 @main(page, Some("commercial"))  { }  {
@@ -17,7 +17,9 @@
                             </div>
                         }.toString)
                         @for(i <- page.images.indices.tail) {
-                            @guardianHostedGalleryImage(page.images(i), if (i == page.ctaIndex) {
+                            @guardianHostedGalleryImage(page.images(i), if (i == page.images.length - 1) {
+                                guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries).toString
+                            } else  if (i == page.ctaIndex.getOrElse(-1)) {
                                 guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
                             } else "")
                         }
@@ -27,7 +29,10 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, "js-hosted-gallery-cta-float")
+                    @if(page.ctaIndex.isDefined){
+                        @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, "js-hosted-gallery-cta-float")
+                    }
+                    @guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries, "js-hosted-gallery-oj-float")
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">

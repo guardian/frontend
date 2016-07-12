@@ -57,6 +57,7 @@ define([
         this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
         this.$ctaFloat = $('.js-hosted-gallery-cta-float', this.$galleryEl)[0];
+        this.$ojFloat = $('.js-hosted-gallery-oj-float', this.$galleryEl)[0];
 
         if(this.$galleryEl.length){
             this.resize = this.trigger.bind(this, 'resize');
@@ -194,20 +195,25 @@ define([
         if(imgRatio > width/height) {
             // portrait screens
             imageHeight = width / imgRatio;
-            topBottom = (height - imageHeight) / 2 + 'px';
+            topBottom = (height - imageHeight) / 2;
         } else {
             // landscape screens
             imageWidth = height * imgRatio;
-            leftRight = (width - imageWidth) / 2 + 'px';
+            leftRight = (width - imageWidth) / 2;
         }
         $sizer.css('width', imageWidth);
         $sizer.css('height', imageHeight);
         $sizer.css('top', topBottom);
         $sizer.css('left', leftRight);
-        if(imgIndex + 1 === this.$images.length && !this.useSwipe){
+        if(imgIndex === config.page.ctaIndex && !this.useSwipe){
             bonzo(this.$ctaFloat).css('bottom', topBottom);
         }
-
+        if(imgIndex === this.$images.length - 1 && !this.useSwipe){
+            bonzo(this.$ojFloat).css('bottom', topBottom);
+        }
+        if (topBottom > 40 && !this.useSwipe) {
+            bonzo(this.$ojFloat).css('padding-bottom', 0);
+        }
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -242,6 +248,7 @@ define([
             bonzo(this.$border).css('-webkit-transform', 'rotate(' + deg + 'deg)');
 
             bonzo(this.$galleryEl).toggleClass('show-cta', progress <= ctaIndex && progress >= ctaIndex - 0.25);
+            bonzo(this.$galleryEl).toggleClass('show-oj', progress >= length - 1.25);
 
             bonzo(this.$progress).toggleClass('first-half', fractionProgress && fractionProgress < 0.5);
 
@@ -393,7 +400,9 @@ define([
         $progress.css('right', leftRight);
         if(!this.useSwipe){
             bonzo(this.$ctaFloat).css('left', leftRight);
+            bonzo(this.$ojFloat).css('left', leftRight);
             bonzo(this.$ctaFloat).css('right', leftRight);
+            bonzo(this.$ojFloat).css('right', leftRight);
         }
     };
 
