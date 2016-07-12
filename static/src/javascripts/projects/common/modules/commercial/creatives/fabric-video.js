@@ -4,17 +4,17 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'text!common/views/commercial/creatives/fabric-video.html'
-], function (qwery, fastdom, detect, template, fluid250VideoBgStr) {
-    var fluid250VideoBgTpl;
+], function (qwery, fastdom, detect, template, fabricVideoStr) {
+    var fabricVideoTpl;
 
-    return Fluid250VideoBg;
+    return FabricVideo;
 
-    function Fluid250VideoBg(adSlot, params) {
+    function FabricVideo(adSlot, params) {
         var isUpdating = false;
         var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
-        fluid250VideoBgTpl || (fluid250VideoBgTpl = template(fluid250VideoBgStr));
+        fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
         hasVideo = !detect.isIOS();
         if (hasVideo) {
@@ -29,7 +29,7 @@ define([
 
         function create() {
             return fastdom.write(function () {
-                adSlot.insertAdjacentHTML('beforeend', fluid250VideoBgTpl({ data: params }));
+                adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 

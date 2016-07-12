@@ -1,4 +1,4 @@
-.creative--fluid250-videobg {
+.creative--fabric-video {
     position: relative;
     height: 250px;
 
@@ -24,15 +24,6 @@
     .creative__layer1 { z-index: 1; }
     .creative__layer2 { z-index: 2; }
     .creative__layer3 { z-index: 3; }
-
-    .fluid250_layer2 .slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 250px;
-        opacity: 0;
-    }
 
     .creative__slide {
         opacity: 0;
