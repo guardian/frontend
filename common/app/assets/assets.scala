@@ -54,6 +54,7 @@ object css {
 
   def head(projectOverride: Option[String]) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
   def inlineStoryPackage = inline("story-package")
+  def inlineLabourLiverpool = inline("article-labour-liverpool")
 
   def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
   def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
