@@ -12,7 +12,9 @@
             </summary>
             <ul class="main-navigation__secondary navigation-group">
                 @NewNavigation.sectionItems(topLevelSection).map { sectionItem =>
-                    <li class = "navigation-group__item" ><a href="@sectionItem.url" tabindex="0">@sectionItem.name</a></li>
+                    <li class = "navigation-group__item" >
+                        <a href="@sectionItem.url">@sectionItem.name</a>
+                    </li>
                 }
             </ul>
         </details>
@@ -36,29 +38,29 @@
             }
         </ul>
         <ul class="navigation-group navigation-border">
-            <li class="navigation-group__item"><a href="#" tabindex="0">Jobs</a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">Dating</a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">Masterclasses</a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">Courses</a></li>
+            <li class="navigation-group__item"><a href="#">Jobs</a></li>
+            <li class="navigation-group__item"><a href="#">Dating</a></li>
+            <li class="navigation-group__item"><a href="#">Masterclasses</a></li>
+            <li class="navigation-group__item"><a href="#">Courses</a></li>
         </ul>
         <ul class="navigation-group navigation-border">
-            <li class="navigation-group__item"><a href="#" tabindex="0">Crosswords</a></li>
+            <li class="navigation-group__item"><a href="#">Crosswords</a></li>
         </ul>
         <ul class="navigation-group navigation-border">
-            <li class="navigation-group__item"><a href="#" tabindex="0">The Observer</a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">Today’s Paper</a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">Sunday’s Paper</a></li>
+            <li class="navigation-group__item"><a href="#">The Observer</a></li>
+            <li class="navigation-group__item"><a href="#">Today’s Paper</a></li>
+            <li class="navigation-group__item"><a href="#">Sunday’s Paper</a></li>
         </ul>
         <ul class="navigation-group navigation-border">
-            <li class="navigation-group__item"><a href="#" tabindex="0">
+            <li class="navigation-group__item"><a href="#">
                 @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__social-icon"))
                 Facebook
             </a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">
+            <li class="navigation-group__item"><a href="#">
                 @fragments.inlineSvg("share-twitter", "icon", List("navigation-group__social-icon"))
                 Twitter
             </a></li>
-            <li class="navigation-group__item"><a href="#" tabindex="0">
+            <li class="navigation-group__item"><a href="#">
                 @fragments.inlineSvg("instagram", "icon", List("navigation-group__social-icon"))
                 Instagram
             </a></li>
