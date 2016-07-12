@@ -9,6 +9,7 @@ import conf.Configuration
 import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatest.Suite
 import org.scalatestplus.play._
 import play.api._
 import play.api.test._
@@ -93,11 +94,8 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
 }
 
-trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
-  this: SingleServerSuite with org.scalatest.Suite =>
-
-  BrowserVersion.setDefault(BrowserVersion.CHROME)
-
+trait TestApplication extends OneServerPerSuite with ServerProvider {
+  this: Suite =>
   lazy val initialSettings: Map[String, AnyRef] = Map(
     ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
     ("guardian.projectName", "test-project"),
@@ -125,6 +123,12 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
       ApplicationLoader.apply(context).load(context)
     }
   }
+}
+
+trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory with TestApplication {
+  this: Suite =>
+
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
 }
 
 object TestRequest {
