@@ -15,8 +15,6 @@ import play.api.test._
 import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
-  def globalSettingsOverride: Option[GlobalSettings] = None
-
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
@@ -116,7 +114,6 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
 
     if (appLoader.contains("play.api.inject.guice.GuiceApplicationLoader")) {
       FakeApplication(
-        withGlobal = globalSettingsOverride,
         additionalConfiguration = initialSettings
       )
     } else {
