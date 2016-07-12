@@ -9,13 +9,14 @@ import conf.Configuration
 import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import org.scalatest.Suite
 import org.scalatestplus.play._
 import play.api._
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
+  def globalSettingsOverride: Option[GlobalSettings] = None
+
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
@@ -94,8 +95,11 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
 }
 
-trait TestApplication extends OneServerPerSuite with ServerProvider {
-  this: Suite =>
+trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
+  this: SingleServerSuite with org.scalatest.Suite =>
+
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
+
   lazy val initialSettings: Map[String, AnyRef] = Map(
     ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
     ("guardian.projectName", "test-project"),
@@ -112,6 +116,7 @@ trait TestApplication extends OneServerPerSuite with ServerProvider {
 
     if (appLoader.contains("play.api.inject.guice.GuiceApplicationLoader")) {
       FakeApplication(
+        withGlobal = globalSettingsOverride,
         additionalConfiguration = initialSettings
       )
     } else {
@@ -123,12 +128,6 @@ trait TestApplication extends OneServerPerSuite with ServerProvider {
       ApplicationLoader.apply(context).load(context)
     }
   }
-}
-
-trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory with TestApplication {
-  this: Suite =>
-
-  BrowserVersion.setDefault(BrowserVersion.CHROME)
 }
 
 object TestRequest {

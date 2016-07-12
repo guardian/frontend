@@ -1,19 +1,23 @@
 package controllers
 
+import org.mockito.Matchers
 import org.scalatest.path
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import play.api.Play
 import services._
 import idapiclient.IdApiClient
+import play.api.test.Helpers._
 import play.api.test._
-import test.{I18NTestComponents, TestRequest, Fake}
+import test.{TestRequest, Fake}
 import scala.concurrent.Future
 import client.Auth
 import conf.IdentityConfiguration
 import play.api.mvc.Cookies
 import org.joda.time.DateTime
+import idapiclient.ClientAuth
 import idapiclient.responses.CookieResponse
 import idapiclient.EmailPassword
 import idapiclient.TrackingData
@@ -21,6 +25,8 @@ import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
 import play.api.test.Helpers._
 import play.api.mvc.RequestHeader
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -33,7 +39,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, None, Some(false), true)
   val signInService = new PlaySigninService(conf)
 
-  lazy val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService, I18NTestComponents.messagesApi)
+  lazy val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService, applicationMessagesApi)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
   when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])).thenReturn(None)
 

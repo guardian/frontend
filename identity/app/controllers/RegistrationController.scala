@@ -13,6 +13,7 @@ import play.api.mvc._
 import play.api.data._
 import scala.concurrent.Future
 import services._
+import utils.SafeLogging
 import form.Mappings
 import tracking.Omniture
 

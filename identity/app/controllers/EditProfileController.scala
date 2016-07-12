@@ -28,8 +28,7 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                       authenticatedActions: AuthenticatedActions,
                                       identityApiClient: IdApiClient,
                                       idRequestParser: IdRequestParser,
-                                      val messagesApi: MessagesApi,
-                                      implicit val profileFormsMapping: ProfileFormsMapping)
+                                      val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._
@@ -107,7 +106,11 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   }
 }
 
-case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], privacyForm: Form[PrivacyFormData], activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping) {
+case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], privacyForm: Form[PrivacyFormData], activePage: EditProfilePage)
+  extends ProfileMapping
+  with AccountDetailsMapping
+  with PrivacyMapping
+{
 
   lazy val activeForm = activePage match {
     case PublicEditProfilePage => publicForm
@@ -127,9 +130,9 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
 
   def bindForms(user: User): ProfileForms = {
     copy(
-      publicForm = profileFormsMapping.profileMapping.bindForm(user),
-      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-      privacyForm = profileFormsMapping.privacyMapping.bindForm(user)
+      publicForm = profileMapping.bindForm(user),
+      accountForm = accountDetailsMapping.bindForm(user),
+      privacyForm = privacyMapping.bindForm(user)
     )
   }
 
@@ -145,9 +148,9 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
   }
 
   private lazy val activeMapping = activePage match {
-    case PublicEditProfilePage => profileFormsMapping.profileMapping
-    case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
-    case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
+    case PublicEditProfilePage => profileMapping
+    case AccountEditProfilePage => accountDetailsMapping
+    case PrivacyEditProfilePage => privacyMapping
   }
 
   private def update(change: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
@@ -159,12 +162,15 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
   }
 }
 
-object ProfileForms {
+object ProfileForms
+  extends ProfileMapping
+  with AccountDetailsMapping
+  with PrivacyMapping {
 
-  def apply(user: User, activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping): ProfileForms = ProfileForms(
-    publicForm = profileFormsMapping.profileMapping.bindForm(user),
-    accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-    privacyForm = profileFormsMapping.privacyMapping.bindForm(user),
+  def apply(user: User, activePage: EditProfilePage): ProfileForms = ProfileForms(
+    publicForm = profileMapping.bindForm(user),
+    accountForm = accountDetailsMapping.bindForm(user),
+    privacyForm = privacyMapping.bindForm(user),
     activePage = activePage
   )
 }
