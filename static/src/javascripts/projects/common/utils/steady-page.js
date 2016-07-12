@@ -23,11 +23,8 @@ define([
      * Height with margins
      */
     function outerHeight(el) {
-        var height = el.offsetHeight;
         var style = getComputedStyle(el);
-
-        height += parseInt(style.marginTop) + parseInt(style.marginBottom);
-        return height;
+        return el.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
     }
 
     /*
