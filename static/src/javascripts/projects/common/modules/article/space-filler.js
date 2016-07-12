@@ -11,6 +11,7 @@ define([
     raven,
     spacefinder
 ) {
+    var domWriter = fastdom.write;
     var queue;
 
     function SpaceFiller() {
@@ -29,6 +30,7 @@ define([
      * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
      */
     SpaceFiller.prototype.fillSpace = function (rules, writer, options) {
+        var write = domWriter || options.domWriter;
         return queue.add(insertNextContent);
 
         function insertNextContent() {
@@ -36,7 +38,7 @@ define([
         }
 
         function onSpacesFound(paragraphs) {
-            return fastdom.write(function () {
+            return write(function () {
                 return writer(paragraphs);
             });
         }

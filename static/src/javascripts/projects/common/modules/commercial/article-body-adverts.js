@@ -83,7 +83,8 @@ define([
         }, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true
+            waitForInteractives: true,
+            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
         });
     }
 
@@ -92,7 +93,8 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true
+            waitForInteractives: true,
+            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
         });
 
         function insertInlineAds(paras) {
@@ -110,22 +112,28 @@ define([
 
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
-        if (detect.isBreakpoint({max: 'tablet'})) {
-            // Insert ad using steady page
-            // To avoid jumping the user
-            steadyPage.insert(ad, function() {
-                para.parentNode.insertBefore(ad, para);
-            });
 
-        } else {
+        function insertion () {
             para.parentNode.insertBefore(ad, para);
         }
+
+        // If on mobile we will
+        // insert ad using steady page
+        // to avoid jumping the user
+        detect.isBreakpoint({max: 'tablet'}) ? steadyPage.insert(ad, insertion): insertion();
     }
 
     function addSlots(countAdded) {
         if (countAdded > 0) {
             qwery('.ad-slot--inline').forEach(addSlot);
         }
+    }
+
+    // If we're on mobile, we want to use steady-page right before dom insertion
+    // when we have the adslot so we provide a non-fastdom writer as
+    // fastdom is handled in steady-page
+    function writerOverride (writerCallback) {
+        return writerCallback();
     }
 
     // If a merchandizing component has been rendered but is empty,
