@@ -128,6 +128,7 @@ class GuardianConfiguration extends Logging {
   object omniture {
     lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-network")
     lazy val ampAccount = configuration.getStringProperty("guardian.page.omnitureAmpAccount").getOrElse("guardiangudev-code")
+    lazy val thirdPartyAppsAccount = configuration.getStringProperty("guardian.page.thirdPartyAppsAccount").getOrElse("guardiangu-thirdpartyapps")
   }
 
   object googletag {

@@ -20,7 +20,8 @@ object RenaultHostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
     label = "Discover Zoe",
-    trackingCode = "explore-renault-zoe-button"
+    trackingCode = "explore-renault-zoe-button",
+    btnText = ""
   )
 
   private val teaserWithoutNextPage: HostedVideoPage = {
@@ -42,7 +43,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " Watch full film: ",
+      twitterTxt = videoTitle + " #ad Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -67,7 +68,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " Watch full film: ",
+      twitterTxt = videoTitle + " #ad Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )
@@ -92,7 +93,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " Watch full film: ",
+      twitterTxt = videoTitle + " #ad Watch full film: ",
       emailTxt = videoTitle,
       nextPage = None
     )

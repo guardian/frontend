@@ -196,6 +196,7 @@
         left: $gs-gutter/2;
         position: absolute;
         margin: 0;
+        background-color: $renaultColor; //can be overwritten by DFP setting
         @include mq(leftCol) {
             top: 210px;
             left: - $left-column - $gs-gutter;
