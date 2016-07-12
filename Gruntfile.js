@@ -106,7 +106,7 @@ module.exports = function (grunt) {
             grunt.task.run(['shell:updateCanIUse']);
         }
 
-        grunt.task.run(['px_to_rem', 'postcss']);
+        grunt.task.run(['shell:atomiseCSS', 'px_to_rem', 'postcss']);
     });
     grunt.registerTask('compile:js', function () {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
