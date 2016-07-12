@@ -42,11 +42,14 @@ define([
             // TODO: Support browsers that don't have transitions
             // We still want to hide this
             if (mainMenuEl.length > 0) {
+
                 mainMenuEl[0].addEventListener('transitionend', function handler() {
+
+                    mainMenuEl[0].removeEventListener('transitionend', handler);
+
                     return fastdomPromise.write(function () {
                         mainMenuEl.removeClass('off-screen');
                         mainMenuEl.removeClass('shown');
-                        mainMenuEl[0].removeEventListener('transitionend', handler);
                     }).then(function() {
                         $('.new-header__nav__menu-button').focus();
                         // Users should be able to scroll again
