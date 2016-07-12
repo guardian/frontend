@@ -475,10 +475,7 @@ $leffeColor: #dec190;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    padding-top: 270px;
 
     a {
         // hack stop the link underline
@@ -487,7 +484,7 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta-btn-wrapper {
-    padding-bottom: 5%;
+    padding-top: 220px;
 }
 
 .hosted__cta.button {
@@ -528,7 +525,8 @@ $leffeColor: #dec190;
     }
 }
 
-.hosted__cta-text {
+.hosted__cta-text,
+.hosted__cta-label {
     @include f-headlineSans;
 
     font-size: 25px;
@@ -536,6 +534,29 @@ $leffeColor: #dec190;
 
     @include mq(tablet) {
         font-size: 38px;
+    }
+}
+
+.hosted__cta-label {
+    color: #ffffff;
+}
+
+.hosted__cta-btn-text {
+    @include circular;
+    @include f-headlineSans;
+    position: relative;
+    display: block;
+    padding: 6px 6px 6px 14px;
+    color: #000000;
+    width: $gs-column-width * 3.2;
+    font-weight: bold;
+    background-color: #ffffff;
+
+    .inline-icon {
+        fill: #000000;
+        position: absolute;
+        top: 3px;
+        right: 10px;
     }
 }
 
