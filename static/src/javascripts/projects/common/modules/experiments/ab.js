@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/join-discussion-after-poll',
-    'common/modules/experiments/tests/hosted-autoplay'
+    'common/modules/experiments/tests/hosted-autoplay',
+    'common/modules/experiments/tests/giraffe'
 ], function (
     reportError,
     config,
@@ -27,7 +28,8 @@ define([
     CleverFriendBrexit,
     ParticipationDiscussionTest,
     JoinDiscussionAfterPoll,
-    HostedAutoplay
+    HostedAutoplay,
+    Giraffe
 ) {
 
     var TESTS = [
@@ -36,7 +38,8 @@ define([
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
         new JoinDiscussionAfterPoll(),
-        new HostedAutoplay()
+        new HostedAutoplay(),
+        new Giraffe()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -321,6 +324,16 @@ define([
             });
         },
 
+        forceRegisterCompleteEvent: function(testId, variantId) {
+            var test = getTest(testId);
+            var variant = test && test.variants.filter(function (v) {
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
+            var onTestComplete = variant && variant.success || noop;
+
+            onTestComplete(recordTestComplete(test, variantId));
+        },
+
         segmentUser: function () {
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -332,6 +345,7 @@ define([
                     test = abParam[0];
                     variant = abParam[1];
                     ab.forceSegment(test, variant);
+                    ab.forceRegisterCompleteEvent(test, variant);
                 });
             } else {
                 ab.segment();

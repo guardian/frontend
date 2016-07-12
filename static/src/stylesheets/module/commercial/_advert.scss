@@ -171,6 +171,14 @@
         > .advert__text {
             flex: 1;
             padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline / 2 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            > .advert__more {
+                margin-top: auto;
+            }
         }
 
         > .advert__image-container {

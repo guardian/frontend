@@ -130,13 +130,6 @@
         }
     }
 }
-.top-banner-ad-container--wimbledon {
-    @include mq(leftCol) {
-        > .ad-slot--top-banner-ad {
-            height: 385px;
-        }
-    }
-}
 
 .ad-slot--top-banner-ad {
     text-align: center;
@@ -417,6 +410,14 @@
     &:not(.ad-slot--rendered) {
         width: 0;
         height: 0;
+    }
+
+    &.ad-slot--rendered > * {
+        margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
+        @include mq(mobileLandscape) {
+            margin-bottom: $gs-baseline;
+            margin-right: $gs-gutter;
+        }
     }
 }
 .ad-slot--fobadge.ad-slot--im {

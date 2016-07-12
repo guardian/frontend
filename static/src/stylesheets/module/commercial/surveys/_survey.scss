@@ -45,6 +45,7 @@
         max-height: 90%;
         background-color: #ffffff;
         box-sizing: border-box;
+        overflow-y: scroll;
 
         @include mq(tablet) {
             left: 50%;
@@ -53,6 +54,7 @@
             height: auto;
             margin-left: -$gs-column-width * 5;
             margin-top: 40px;
+            overflow-y: auto;
         }
     }
 

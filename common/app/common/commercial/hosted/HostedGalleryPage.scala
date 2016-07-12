@@ -12,7 +12,8 @@ case class HostedGalleryPage(
   standfirst: String,
   ctaText: String,
   ctaLink: String,
-  ctaIndex: Integer,
+  ctaButtonText: String,
+  ctaIndex: Option[Integer] = None,
   images: List[HostedGalleryImage]
 ) extends HostedPage {
 
@@ -37,14 +38,14 @@ case class HostedGalleryPage(
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
-        "ctaIndex" -> JsNumber(BigDecimal(ctaIndex))
+        "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
-        "og:image" -> campaign.logo.url,
+        "og:image" -> images.head.url,
         "fb:app_id" -> "180444840287"
       )
     )
@@ -54,5 +55,6 @@ case class HostedGalleryPage(
 case class HostedGalleryImage(
   url: String,
   title: String,
-  caption: String
+  caption: String = "",
+  credit: String = ""
 )

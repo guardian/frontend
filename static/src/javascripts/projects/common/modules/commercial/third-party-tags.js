@@ -69,13 +69,6 @@ define([
             return false;
         }
 
-        switch (config.page.edition.toLowerCase()) {
-            case 'uk':
-                audienceSciencePql.load();
-                audienceScienceGateway.load();
-                break;
-        }
-
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
         loadExternalContentWidget();
 
@@ -84,12 +77,30 @@ define([
     }
 
     function loadOther() {
-        imrWorldwide.load();
-        remarketing.load();
+        var services = [
+            audienceSciencePql,
+            audienceScienceGateway,
+            imrWorldwide,
+            remarketing,
+            krux
+        ].filter(function (_) { return _.shouldRun; });
 
-        if(!config.page.isFront){
-            krux.load();
+        if (services.length) {
+            insertScripts(services);
         }
+    }
+
+    function insertScripts(services) {
+        var ref = document.scripts[0];
+        var frag = document.createDocumentFragment();
+        while (services.length) {
+            var service = services.shift();
+            var script = document.createElement('script');
+            script.src = service.url;
+            script.onload = service.onLoad;
+            frag.appendChild(script);
+        }
+        ref.parentNode.insertBefore(frag, ref);
     }
 
     return {
