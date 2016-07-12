@@ -10,6 +10,7 @@ import pxtorem from 'postcss-pxtorem';
 
 import {DIRECTORIES, PRESETS} from './config';
 
+const SRC = `${DIRECTORIES.src}/stylesheets`;
 const TARGET = `${DIRECTORIES.target}/stylesheets`;
 
 gulp.task('atomise-css', shell.task(['make atomise-css'], {

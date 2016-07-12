@@ -1,6 +1,7 @@
 const root = '..';
 
 export const DIRECTORIES = {
+    src: `${root}/static/src`,
     target: `${root}/static/target`
 };
 
