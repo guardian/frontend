@@ -2,9 +2,22 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "dependencies": {
+    "hyperscript-helpers": "^3.0.0",
+    "immutable": "^3.8.1",
+    "monapt": "^0.5.4",
+    "virtual-dom": "^2.1.1"
+  },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "browser-sync": "^2.8.2",
     "btoa": "1.1.2",
     "check-dependencies": "^0.11.0",
@@ -73,7 +86,8 @@
     "shoe": "0.0.11",
     "sorted-object": "^1.0.0",
     "svgo": "0.4.5",
-    "time-grunt": "1.2.0"
+    "time-grunt": "1.2.0",
+    "webpack": "^1.13.1"
   },
   "optionalDependencies": {
     "fsevents": "*"
@@ -82,6 +96,7 @@
     "postinstall": "grunt hookmeup",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
-    "browser-sync": "browser-sync start --config ./dev/bs-config.js"
+    "browser-sync": "browser-sync start --config ./dev/bs-config.js",
+    "compile-deploy-radiator": "webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
   }
 }

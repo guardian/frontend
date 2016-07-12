@@ -37,16 +37,7 @@ module.exports = function () {
         },
 
         makeDeploysRadiator: {
-            command: [
-                'npm run build',
-                'mkdir -p ../../target/deploys-radiator',
-                'cp ./target/** ../../target/deploys-radiator'
-            ].join(' && '),
-            options: {
-                execOptions: {
-                    cwd: 'static/src/deploys-radiator'
-                }
-            }
+            command: 'npm run compile-deploy-radiator'
         }
     };
 };
