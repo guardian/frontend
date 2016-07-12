@@ -105,11 +105,11 @@ define([
             // Display, measure heights and then scrollTo
             return displayAndLayout(insertionCallback)
                 .then(getHeightAdjustment)
-                .then(scrollToHeight)
+                .then(scrollToHeight);
         });
     }
 
     return {
         insert: insert
-    }
+    };
 });
