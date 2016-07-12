@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/join-discussion-after-poll',
-    'common/modules/experiments/tests/hosted-autoplay'
+    'common/modules/experiments/tests/hosted-autoplay',
+    'common/modules/experiments/tests/giraffe'
 ], function (
     reportError,
     config,
@@ -27,7 +28,8 @@ define([
     CleverFriendBrexit,
     ParticipationDiscussionTest,
     JoinDiscussionAfterPoll,
-    HostedAutoplay
+    HostedAutoplay,
+    Giraffe
 ) {
 
     var TESTS = [
@@ -36,7 +38,8 @@ define([
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
         new JoinDiscussionAfterPoll(),
-        new HostedAutoplay()
+        new HostedAutoplay(),
+        new Giraffe()
     ];
 
     var participationsKey = 'gu.ab.participations';

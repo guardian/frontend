@@ -12,6 +12,7 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
+    'common/modules/analytics/omniture',
     'common/utils/chain',
     'common/utils/load-css-promise'
 ], function (
@@ -28,6 +29,7 @@ define([
     map,
     throttle,
     forEach,
+    omniture,
     chain,
     loadCssPromise
 ) {
@@ -43,7 +45,7 @@ define([
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
-        this.$captionContainer = $('.js-hosted-gallery-captions');
+        this.$captionContainer = $('.js-gallery-caption-bar');
         this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
         this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
@@ -149,24 +151,24 @@ define([
     };
 
     HostedGallery.prototype.loadSurroundingImages = function (index, count) {
-        var imageContent = config.page.images, $img, that = this;
+        var $img, that = this;
         chain([0, 1, 2]).and(
             map,
             function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
         ).and(forEach, function (i) {
-            $img = $('img', this.$images[i]);
-            if (!$img.attr('src')) {
-                $img.attr('src', imageContent[i]);
-
-                bean.one($img[0], 'load', function () {
-                    that.imageRatios[i] = this.naturalWidth/this.naturalHeight;
+            $img = $('img', this.$images[i])[0];
+            if (!$img.complete) {
+                bean.one($img, 'load', function () {
+                    that.imageRatios[i] = this.naturalWidth / this.naturalHeight;
                     that.resizeImage.call(that, i);
                 });
             } else {
+                if (!this.imageRatios[i]) {
+                    that.imageRatios[i] = $img.naturalWidth / $img.naturalHeight;
+                }
                 that.resizeImage.call(that, i);
             }
         }.bind(this));
-
     };
 
     HostedGallery.prototype.resizeImage = function (imgIndex) {
@@ -241,7 +243,7 @@ define([
 
         }.bind(this));
 
-        if(newIndex && newIndex !== this.index){
+        if(newIndex && newIndex !== this.index) {
             this.index = newIndex;
             this.trigger('reload');
         }
@@ -275,7 +277,7 @@ define([
                 if(this.useSwipe){
                     this.translateContent(this.index, 0, 100);
                 }
-
+                omniture.trackLinkImmediate(config.page.analyticsName + ' - image ' + this.index);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },

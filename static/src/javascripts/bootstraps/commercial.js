@@ -1,6 +1,7 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
@@ -15,6 +16,7 @@ define([
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/hosted-gallery',
     'common/modules/commercial/slice-adverts',
+    'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
     'common/modules/commercial/paid-containers',
@@ -22,6 +24,7 @@ define([
 ], function (
     Promise,
     config,
+    detect,
     mediator,
     robust,
     userTiming,
@@ -36,6 +39,7 @@ define([
     hostedVideo,
     hostedGallery,
     sliceAdverts,
+    stickyTopBanner,
     thirdPartyTags,
     paidforBand,
     paidContainers,
@@ -67,6 +71,16 @@ define([
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
         primaryModules.push(['cm-badges', badges.init]);
+    }
+
+    if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
+         config.page.disableStickyTopBanner ||
+         config.tests.abNewHeaderVariant
+    ) {
+        config.page.hasStickyAdBanner = false;
+    } else {
+        config.page.hasStickyAdBanner = true;
+        secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
     return {

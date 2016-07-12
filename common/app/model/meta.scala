@@ -443,6 +443,8 @@ case class GalleryPage(
   val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
+case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
+
 case class TagCombiner(
   id: String,
   leftTag: Tag,
@@ -629,6 +631,8 @@ final case class Tags(
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
   lazy val isElection = isUSElection || isAusElection
 
+  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+
   lazy val keywordIds = keywords.map { _.id }
 
   lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
@@ -636,7 +640,7 @@ final case class Tags(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
+    ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),
