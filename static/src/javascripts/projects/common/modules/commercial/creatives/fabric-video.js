@@ -3,7 +3,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/detect',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-videobg.html'
+    'text!common/views/commercial/creatives/fabric-video.html'
 ], function (qwery, fastdom, detect, template, fluid250VideoBgStr) {
     var fluid250VideoBgTpl;
 
