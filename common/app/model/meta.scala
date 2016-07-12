@@ -272,9 +272,6 @@ final case class MetaData (
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   } else Nil
-  def hasAdInBelowTopNavSlot(edition: Edition) = if (isPressedPage) {
-    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
-  } else false
   def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
