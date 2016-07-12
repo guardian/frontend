@@ -3,16 +3,19 @@
     display: block;
     margin-bottom: 1em;
     border-top: 1px dotted $neutral-4;
+    @include f-header;
 }
 .giraffe--heading {
-    margin-bottom: $gs-baseline;
-    color: $news-default;
+    margin-bottom: 0px;
+    margin-top: 4px;
+    color: $news-support-2  ;
+    line-height: 28px;
 }
 .button--giraffe__icon {
     float: right;
 }
 .giraffe--copy {
-    @include fs-textSans(3);
+
     color: $neutral-2;
     margin-bottom: $gs-baseline;
 }
