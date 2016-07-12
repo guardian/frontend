@@ -1,9 +1,9 @@
 @()(implicit request: RequestHeader)
-@import conf.CssClass
+@import conf.Atomise
 
 @import common.LinkTo
 
-<header class="new-header mobile-only" role="banner" data-link-name="global navigation: new header">
+<header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
         <a href="@LinkTo{/}" class="new-header__logo" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
@@ -13,7 +13,7 @@
             @fragments.inlineSvg("world", "icon")
             <span>UK Edition</span>
         </button>
-        <nav class="@CssClass("new-header__nav")">
+        <nav class="new-header__nav">
             <button class="new-header__nav__menu-button">
                 <i class="new-header__nav__menu-button__burger-icon"></i>
                 <span class="u-h">Menu</span>
