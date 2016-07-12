@@ -18,9 +18,9 @@ define([
 
         hasVideo = !detect.isIOS();
         if (hasVideo) {
-            params.videoOrPoster = '<video webkit-playsinline muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+            params.video = '<video webkit-playsinline muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
         } else {
-            params.videoOrPoster = '<div class="poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            params.video = '<div class="poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
         }
 
         return Object.freeze({
