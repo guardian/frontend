@@ -14,6 +14,7 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // see https://github.com/guardian/frontend/pull/13446
   val HeroicTemplateSwitch = Switch(
     SwitchGroup.Feature,
     "heroic-main-media",
