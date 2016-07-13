@@ -123,10 +123,6 @@ define([
                         secondaryModulePromises.push(modulePromise);
                     });
                 });
-
-                Promise.all(secondaryModulePromises).then(function () {
-                    ophanTracking.debugTimings();
-                });
             });
         }
     };
