@@ -120,14 +120,15 @@ define([
         });
     }
 
-    // advertCheckpoint() is called whenever the advert timings need to be updated.
+    // updateAdvertMetric() is called whenever the advert timings need to be updated.
     // It may be called multiple times for the same advert, so that we effectively update
     // the object with additional timings.
-    function advertCheckpoint(advert){
+    function updateAdvertMetric(advert, metricName, metricValue){
         performanceLog.adverts = performanceLog.adverts.filter(function(element){
             return advert.id !== element.id;
         });
-        performanceLog.adverts.push({
+        advert.timings[metricName] = metricValue;
+        performanceLog.adverts.push(Object.freeze({
             id: advert.id,
             isEmpty: advert.isEmpty,
             createTime: advert.timings.createTime,
@@ -138,7 +139,7 @@ define([
             stopLoading: advert.timings.stopLoading,
             startRendering: advert.timings.startRendering,
             stopRendering: advert.timings.stopRendering
-        });
+        }));
     }
 
     /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
@@ -183,12 +184,10 @@ define([
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
-        advertCheckpoint : advertCheckpoint,
+        updateAdvertMetric : updateAdvertMetric,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
-
-
         debugTimings : debugTimings
     };
 });
