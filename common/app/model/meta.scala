@@ -629,6 +629,7 @@ final case class Tags(
   lazy val isElection = isUSElection || isAusElection
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
 
   lazy val keywordIds = keywords.map { _.id }
 

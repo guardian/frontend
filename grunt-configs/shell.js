@@ -38,6 +38,10 @@ module.exports = function () {
 
         makeDeploysRadiator: {
             command: 'npm run compile-deploy-radiator'
+        },
+
+        atomiseCSS: {
+            command: 'make atomise-css'
         }
     };
 };
