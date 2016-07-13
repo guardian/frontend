@@ -138,7 +138,8 @@ define([
             dfpRendered: advert.timings.dfpRendered,
             stopLoading: advert.timings.stopLoading,
             startRendering: advert.timings.startRendering,
-            stopRendering: advert.timings.stopRendering
+            stopRendering: advert.timings.stopRendering,
+            lazyWaitComplete: advert.timings.lazyWaitComplete
         }));
     }
 
