@@ -3,13 +3,18 @@
 
 $labour-liverpool-header-element-opacity: .85;
 
+.content--labour-liverpool-article {
+    min-height: gs-height(6);
+}
+
 .immersive-header-container--labour-liverpool {
     min-height: gs-height(6);
 
     .immersive-main-media__media {
+        position: absolute;
         // fallback for IE not supporting object-fit: cover
         @include mq($from: desktop) {
-            max-height: gs-height(8);
+            height: gs-height(8);
         }
     }
 
@@ -52,12 +57,19 @@ $labour-liverpool-header-element-opacity: .85;
 }
 
 .labour-liverpool-headline {
-    position: absolute;
-    top: gs-height(6);
-    max-width: gs-span(8);
+    position: relative;
+    // make bottom left corner of headline flush with the bottom of the main media image
+    top: 195px;
+    width: 100%;
 
-    @include mq($from: wide) {
-        left: 5%;
+    .gs-container {
+        @include mq(mobile) {
+            padding: 0;
+        }
+    }
+
+    @include mq($from: tablet) {
+        top: 190px;
     }
 }
 
@@ -78,24 +90,23 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-headline__background {
+.labour-liverpool-headline__background, .labour-liverpool-headline__background-mobile {
     position: absolute;
-    left: -$gs-gutter*1.5;
     height: 130px;
-    transform: rotate(180deg);
-
-    @include mq($from: tablet) {
-        left: auto;
-    }
 }
 
-.inline-labour-liverpool-header-bg__svg {
+.inline-labour-liverpool-header-bg__svg, .inline-labour-liverpool-header-bg-mobile__svg {
     fill: $news-main-2;
     opacity: $labour-liverpool-header-element-opacity;
+    height: auto;
+}
+
+.inline-labour-liverpool-header-bg-mobile__svg {
+    width: 100%;
 }
 
 .series-identity {
-    position: absolute;
+    position: relative;
     max-width: gs-span(3.5);
     top: $gs-baseline*3;
 
@@ -134,17 +145,16 @@ $labour-liverpool-header-element-opacity: .85;
     color: #ffffff;
 }
 
-.content--labour-liverpool-article__headline-background {
+.content--labour-liverpool-article__headline-background, .content--labour-liverpool-article__headline-background-mobile {
     position: absolute;
-    //TODO: Need a designer to fix the SVG so that we don't need to position it in the CSS
-    top: -210px;
     width: 100%;
+}
 
-    .inline-labour-liverpool-headline-bg__svg {
-        fill: $news-main-2;
-        opacity: $labour-liverpool-header-element-opacity;
-        width: 100%;
-    }
+.inline-labour-liverpool-headline-bg__svg, .inline-labour-liverpool-headline-bg-mobile__svg {
+    fill: $news-main-2;
+    opacity: $labour-liverpool-header-element-opacity;
+    height: auto;
+    width: 100%;
 }
 
 .labour-liverpool-contact__top-border {

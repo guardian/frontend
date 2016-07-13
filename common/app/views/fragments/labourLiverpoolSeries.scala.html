@@ -48,8 +48,11 @@
                 }
             }
         </div>
-        <div class="content--labour-liverpool-article__headline-background">
+        <div class="content--labour-liverpool-article__headline-background hide-on-mobile">
              @fragments.inlineSvg("labour-liverpool-headline-bg", "membership")
+        </div>
+        <div class="content--labour-liverpool-article__headline-background-mobile mobile-only">
+             @fragments.inlineSvg("labour-liverpool-headline-bg-mobile", "membership")
         </div>
 
         <div class="series-identity">
@@ -65,11 +68,15 @@
                 </div>
             </div>
         </div>
+
         <div class="labour-liverpool-headline">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <div class="labour-liverpool-headline__background">
+                    <div class="labour-liverpool-headline__background hide-on-mobile">
                         @fragments.inlineSvg("labour-liverpool-header-bg", "membership")
+                    </div>
+                    <div class="labour-liverpool-headline__background-mobile mobile-only">
+                        @fragments.inlineSvg("labour-liverpool-header-bg-mobile", "membership")
                     </div>
                     <h1 class="labour-liverpool-headline__content">
                         @Html(page.item.trail.headline)
@@ -78,6 +85,7 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="l-side-margins content__wrapper--standfirst">
         <div class="gs-container">
             <div class="content__main-column">
@@ -85,4 +93,5 @@
             </div>
         </div>
     </div>
+    -->
 }
