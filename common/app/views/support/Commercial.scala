@@ -64,13 +64,6 @@ object Commercial {
     }
   }
 
-  object topBelowNavSlot {
-
-    def hasAd(metaData: MetaData, edition: Edition): Boolean = {
-      metaData.hasAdInBelowTopNavSlot(edition)
-    }
-  }
-
   object topSlot {
 
     def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
