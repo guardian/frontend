@@ -220,6 +220,7 @@ object Frontend extends Build with Prototypes {
   val rss = application("rss")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val main = root().aggregate(
     common,
