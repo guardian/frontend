@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Does 'join discussion' message after poll participation increase comments",
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 7, 27),
     exposeClientSide = true
   )
 
