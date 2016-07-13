@@ -169,7 +169,10 @@ define([
     }
 
     function getBaseline(baselineName){
-        return performanceLog.baselines[baselineName];
+        var baseline = performanceLog.baselines.find(function(baseline){
+            return baseline.name === baselineName;
+        });
+        return baseline.time;
     }
 
     function debugTimings(){
