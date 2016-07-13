@@ -496,8 +496,6 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta.button {
-    padding: 0;
-
     &,
     &:focus,
     &:hover {
@@ -505,26 +503,30 @@ $leffeColor: #dec190;
     }
 
     @include mq(mobile) {
+        padding: 4px;
         height: 26px;
+        width: 26px;
         margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
             fill: $neutral-1;
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
         }
     }
 
     @include mq(tablet) {
+        padding: 8px;
         height: 38px;
+        width: 38px;
         margin: 8px;
         line-height: 1;
 
         svg {
-            width: 37px;
-            height: 37px;
+            width: 20px;
+            height: 20px;
         }
     }
 
@@ -563,8 +565,13 @@ $leffeColor: #dec190;
     .inline-icon {
         fill: #000000;
         position: absolute;
-        top: 3px;
-        right: 10px;
+        top: 6px;
+        right: 16px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
 
