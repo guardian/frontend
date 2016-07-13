@@ -31,7 +31,6 @@ define([
             } else {
                 ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'lazy-load');
             }
-            ophanTracking.advertCheckpoint(advert);
         });
 
         instantLoadAdverts.forEach(loadAdvert);
