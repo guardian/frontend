@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
+import controllers.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.liveblog.BodyBlock
@@ -74,10 +75,15 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
     case LiveBlogPage(liveBlog, _, _) =>
-      val blocks = liveBlog.blocks.toSeq.flatMap{_.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap(_.collect {
-        case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
-          TextBlock(id, title, publishedAt, updatedAt, html)
-      })}.take(number)
+      val blocks =
+        liveBlog.blocks.toSeq.flatMap { blocks =>
+        blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap { bodyBlocks: Seq[BodyBlock] =>
+          bodyBlocks.collect {
+            case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+              TextBlock(id, title, publishedAt, updatedAt, html)
+          }
+        }
+      }.take(number)
       Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
     case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
 
@@ -121,30 +127,34 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def renderLiveBlog(path: String, page: Option[String] = None) =
     Action.async { implicit request =>
-      val range = page.map(ParseBlockId.fromPageParam) match {
-        case Some(Some(id)) => Left(PageWithBlock(id)) // we know the id of a block
-        case Some(None) => Right(NotFound) // page param there but couldn't extract a block id
-        case None => Left(Canonical) // no page param
-      }
-      range.left.map { range =>
+
+      def renderWithRange(range: BlockRange) =
         mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
           render(path, _)
         }
-      } match {
-        case Left(f) => f
-        case Right(status) => Future.successful(Cached(10)(WithoutRevalidationResult(status)))
+
+      page.map(ParseBlockId.fromPageParam) match {
+        case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
+        case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+        case None => renderWithRange(Canonical) // no page param
       }
     }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     Action.async { implicit request =>
-      val range = lastUpdate.flatMap(blockId => ParseBlockId.fromBlockId(blockId)).orElse(rendered.flatMap(r => if (r == false) Some(Canonical) else None))
-      mapModel(path, range = range) { model =>
-        (range, rendered) match {
-          case (Some(SinceBlockId(lastBlockId)), _) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
-          case (None, Some(false)) => blockText(model, 6)
-          case (_, _) => render(path, model)
+
+      def renderWithRange(range: BlockRange) =
+        mapModel(path, Some(range)) { model =>
+          range match {
+            case SinceBlockId(lastBlockId) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
+            case _ => render(path, model)
+          }
         }
+
+      lastUpdate.map(ParseBlockId.fromBlockId) match {
+        case Some(ParsedBlockId(id)) => renderWithRange(SinceBlockId(id))
+        case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+        case None => if (rendered.contains(false)) mapModel(path) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
       }
     }
   }
@@ -251,24 +261,28 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
 object ParseBlockId extends RegexParsers {
 
-  def withParser: Parser[Unit] = "with:" ^^ { _ => () }
-  def block: Parser[Unit] = "block-" ^^ { _ => () }
-  def id: Parser[String] = "[a-zA-Z0-9]+".r
-  def blockId = block ~> id
+  sealed trait ParseResult { def toOption: Option[String] }
+  case object InvalidFormat extends ParseResult { val toOption = None }
+  case class ParsedBlockId(blockId: String) extends ParseResult { val toOption = Some(blockId) }
 
-  def fromPageParam(input: String): Option[String] = {
+  private def withParser: Parser[Unit] = "with:" ^^ { _ => () }
+  private def block: Parser[Unit] = "block-" ^^ { _ => () }
+  private def id: Parser[String] = "[a-zA-Z0-9]+".r
+  private def blockId = block ~> id
+
+  def fromPageParam(input: String): ParseResult = {
     def expr: Parser[String] = withParser ~> blockId
 
     parse(expr, input) match {
-      case Success(matched, _) => Some(matched)
-      case _ => None
+      case Success(matched, _) => ParsedBlockId(matched)
+      case _ => InvalidFormat
     }
   }
 
-  def fromBlockId(input: String): Option[SinceBlockId] = {
+  def fromBlockId(input: String): ParseResult = {
     parse(blockId, input) match {
-      case Success(matched, _) => Some(SinceBlockId(matched))
-      case _ => None
+      case Success(matched, _) => ParsedBlockId(matched)
+      case _ => InvalidFormat
     }
   }
 }
