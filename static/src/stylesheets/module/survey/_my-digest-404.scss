@@ -21,7 +21,9 @@
     margin: 1em auto 0 auto;
 }
 
-
+.my-digest-steps {
+    counter-reset: digest-steps;
+}
 
 .my-digest-steps__step {
     list-style-type: none;
@@ -43,7 +45,9 @@
     border: none;
 }
 
-.my-digest-steps__number {
+.my-digest-steps__text::before {
+    counter-increment: digest-steps;
+    content: counter(digest-steps);
     position: absolute;
     text-align: center;
     line-height: 2em;
