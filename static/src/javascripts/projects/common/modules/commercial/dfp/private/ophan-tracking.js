@@ -110,7 +110,7 @@ define([
     // moduleCheckpoint() is called when a module has finished execution.
     // The baseline allows us to determine whether the module was called in the first
     // boot phase (primary) or the second boot phase (secondary).
-    function moduleCheckpoint(module, baseline){
+    function moduleCheckpoint(module, baseline) {
         var timerEnd = userTiming.getCurrentTime();
         var timerStart = getBaseline(baseline);
         performanceLog.modules.push({
@@ -123,7 +123,7 @@ define([
     // updateAdvertMetric() is called whenever the advert timings need to be updated.
     // It may be called multiple times for the same advert, so that we effectively update
     // the object with additional timings.
-    function updateAdvertMetric(advert, metricName, metricValue){
+    function updateAdvertMetric(advert, metricName, metricValue) {
         performanceLog.adverts = performanceLog.adverts.filter(function(element){
             return advert.id !== element.id;
         });
@@ -164,21 +164,21 @@ define([
         }
     }*/
 
-    function addBaseline(baselineName){
+    function addBaseline(baselineName) {
         performanceLog.baselines.push({
             name: baselineName,
             time: userTiming.getCurrentTime()
         });
     }
 
-    function getBaseline(baselineName){
+    function getBaseline(baselineName) {
         var baseline = performanceLog.baselines.find(function(baseline){
             return baseline.name === baselineName;
         });
         return baseline.time;
     }
 
-    function debugTimings(){
+    function debugTimings() {
         // This is where the first ophan send should be.
         return performanceLog;
     }
