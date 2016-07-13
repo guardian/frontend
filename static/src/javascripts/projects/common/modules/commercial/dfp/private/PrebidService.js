@@ -168,13 +168,13 @@ define([
         if (config.switches.googleAnalytics) {
             // Create a named tracker: if we do this, we need a way to share
             // the account ID
-            // ga('create', 'UA-XXXXX-Z', 'auto', 'prebidTracker');
+            // ga('create', config.ga.accountId, 'auto', 'prebidTracker');
 
             pbjs.enableAnalytics({
                 provider: 'ga',
                 options: {
                     global: 'ga',
-    // trackerName: 'prebidTracker',
+                    // trackerName: 'prebidTracker',
                     enableDistribution: false
                 }
             });
