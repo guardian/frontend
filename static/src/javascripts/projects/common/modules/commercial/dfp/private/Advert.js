@@ -49,8 +49,7 @@ define([
             return advert.isRendered = isRendered;
         });
 
-        advert.timings.createTime = userTiming.getCurrentTime();
-        ophanTracking.advertCheckpoint(advert);
+        ophanTracking.updateAdvertMetric(advert, 'createTime', userTiming.getCurrentTime());
 
         return Object.seal(advert);
     }
@@ -74,7 +73,6 @@ define([
     function stopRendering(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
-        advert.timings.stopRendering = userTiming.getCurrentTime();
-        ophanTracking.advertCheckpoint(advert);
+        ophanTracking.updateAdvertMetric(advert, 'stopRendering', userTiming.getCurrentTime());
     }
 });
