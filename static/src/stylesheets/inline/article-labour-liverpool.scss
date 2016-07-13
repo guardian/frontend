@@ -1,20 +1,27 @@
 @import '../_vars';
 @import '../_mixins';
-
 $labour-liverpool-header-element-opacity: .85;
 
-.content--labour-liverpool-article {
-    min-height: gs-height(6);
-}
+// make bottom left corner of headline flush with the bottom of the main media image
+$labour-liverpool-headline-top-supports-cover-mobile: 319px;
+$labour-liverpool-headline-top-supports-cover-tablet: 314px;
+$labour-liverpool-headline-top: 250px; // IE / Edge
 
 .immersive-header-container--labour-liverpool {
-    min-height: gs-height(6);
+    min-height: gs-height(8);
 
     .immersive-main-media__media {
         position: absolute;
-        // fallback for IE not supporting object-fit: cover
-        @include mq($from: desktop) {
-            height: gs-height(8);
+        width: 100%;
+        // Remove inline spacing
+        display: block;
+        height: gs-height(8);
+
+        @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+            object-fit: cover;
+            top: 0;
+            height: 100%;
+            width: 100%;
         }
     }
 
@@ -29,27 +36,24 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.content__standfirst--labour-liverpool-article {
+.content--labour-liverpool .content__article-body > p:first-of-type {
     @include fs-headline(3);
     color: darken($news-support-4, 25%);
     margin-top: $gs-baseline;
+}
 
-    .membership-cutout {
-        float: left;
-        width: 140px;
-        margin: 0 $gs-gutter/-2;
+.labour-liverpool-cutout {
+    float: left;
+    width: 140px;
+    margin: 0 $gs-gutter/-2;
 
-        @include mq($from: mobile, $until: tablet) {
-            display: none;
-        }
-    }
-
-    > p:first-of-type {
-        display: inline;
+    @include mq($from: mobile, $until: tablet) {
+        display: none;
     }
 }
 
 .labour-liverpool-quotes__svg {
+    float: left;
     fill: $news-support-4;
     width: 30px;
     height: 18px;
@@ -58,9 +62,8 @@ $labour-liverpool-header-element-opacity: .85;
 
 .labour-liverpool-headline {
     position: relative;
-    // make bottom left corner of headline flush with the bottom of the main media image
-    top: 195px;
     width: 100%;
+    top: $labour-liverpool-headline-top;
 
     .gs-container {
         @include mq(mobile) {
@@ -68,8 +71,12 @@ $labour-liverpool-header-element-opacity: .85;
         }
     }
 
-    @include mq($from: tablet) {
-        top: 190px;
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        top: $labour-liverpool-headline-top-supports-cover-mobile;
+
+        @include mq($from: tablet) {
+            top: $labour-liverpool-headline-top-supports-cover-tablet;
+        }
     }
 }
 
