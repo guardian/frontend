@@ -50,7 +50,7 @@ const run = () => {
     });
     const buildsPromise = latestDeploysPromise.then(([latestCodeDeploy, oldestProdDeploy]) => (Promise.all([
         getBuild(latestCodeDeploy.build),
-        getBuild(oldestProdDeploy.build),
+        getBuild(oldestProdDeploy.build)
     ])));
     const differencePromise = buildsPromise.then(([codeBuild, prodBuild]) => (getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())));
     return Promise.all([deploysPromise, latestDeploysPromise, differencePromise])
@@ -62,7 +62,7 @@ const wait = () => new Promise(resolve => setTimeout(resolve, intervalSeconds * 
 const update = () => {
     return run()
         .then(wait, (error) => {
-            console.error('Handled promise rejection.', error.stack);
+            console.error('Handled promise rejection.', error.stack); // eslint-disable-line no-console
             return wait();
         })
         .then(update);

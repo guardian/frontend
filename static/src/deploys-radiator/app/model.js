@@ -12,7 +12,7 @@ export const createBuildRecord = Record({
     number: undefined,
     projectName: undefined,
     revision: undefined,
-    commits: undefined,
+    commits: undefined
 }, 'Build');
 
 export const createDeployGroupRecord = Record({
