@@ -19,7 +19,7 @@
                         @for(i <- page.images.indices.tail) {
                             @guardianHostedGalleryImage(page.images(i), if (i == page.images.length - 1) {
                                 guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries).toString
-                            } else  if (i == page.ctaIndex.getOrElse(-1)) {
+                            } else if (page.ctaIndex.contains(i)) {
                                 guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
                             } else "")
                         }
@@ -101,7 +101,7 @@
                                 <span>@page.images(i).title</span>
                                 <div class="hosted-gallery__caption-text">
                                     @page.images(i).caption
-                                    @{if (page.images(i).caption.length > 0 && page.images(i).credit.length > 0) <br/>}
+                                    @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
                                     @page.images(i).credit
                                 </div>
                             </div>
