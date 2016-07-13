@@ -139,6 +139,7 @@ define([
             stopLoading: advert.timings.stopLoading,
             startRendering: advert.timings.startRendering,
             stopRendering: advert.timings.stopRendering,
+            loadingMethod: advert.timings.loadingMethod,
             lazyWaitComplete: advert.timings.lazyWaitComplete
         }));
     }

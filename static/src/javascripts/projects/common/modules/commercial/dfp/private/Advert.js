@@ -33,7 +33,9 @@ define([
                 dfpRendered: null,
                 stopLoading: null,
                 startRendering: null,
-                stopRendering: null
+                stopRendering: null,
+                loadingMethod: null,
+                lazyWaitComplete: null
             }
         };
         advert.whenLoaded = new Promise(function (resolve) {
