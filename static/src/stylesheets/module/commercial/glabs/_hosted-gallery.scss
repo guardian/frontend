@@ -133,6 +133,9 @@
 .hosted-gallery__oj-next-gallery {
     pointer-events: auto;
     display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: flex-end;
+    align-content: flex-end;
     &:hover {
         text-decoration: none;
     }
@@ -141,6 +144,11 @@
             display: none;
         }
     }
+}
+
+.hosted-gallery__next-gallery-title {
+    flex: 1;
+    min-width: 90px;
 }
 
 .hosted-gallery__next-gallery-image {
@@ -213,6 +221,12 @@
     visibility: visible;
     .hosted-gallery__cta-link {
         pointer-events: auto;
+    }
+}
+
+.show-oj.use-swipe .hosted-gallery__progress {
+    @include mq($until: tablet) {
+        display: none;
     }
 }
 

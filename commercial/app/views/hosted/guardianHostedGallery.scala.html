@@ -32,7 +32,6 @@
                     @if(page.ctaIndex.isDefined){
                         @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, "js-hosted-gallery-cta-float")
                     }
-                    @guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries, "js-hosted-gallery-oj-float")
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">
@@ -46,6 +45,7 @@
                         </div>
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                     </div>
+                    @guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries, "js-hosted-gallery-oj-float")
                 </div>
                 <div class="hosted__container hosted__container--content hosted-gallery__lower-bar js-gallery-caption-bar">
                     <header class="adverts__header hosted__social">

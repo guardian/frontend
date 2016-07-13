@@ -44,7 +44,7 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
-        this.$header = $('.hosted__headerwrap');
+        this.$header = $('.js-hosted-headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
         this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
@@ -184,9 +184,13 @@ define([
         var $imageDiv = this.$images[imgIndex],
             $imagesContainer = this.$imagesContainer[0],
             $gallery = this.$galleryEl[0],
+            $ctaFloat = this.$ctaFloat,
+            $ojFloat = this.$ojFloat,
+            $images = this.$images,
+            useSwipe = this.useSwipe,
             width = $gallery.clientWidth,
             height = $imagesContainer.clientHeight,
-            $sizer = $('.hosted-gallery__image-sizer', $imageDiv),
+            $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = 5/3,
             imageHeight = height,
             imageWidth = width,
@@ -201,19 +205,21 @@ define([
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2;
         }
-        $sizer.css('width', imageWidth);
-        $sizer.css('height', imageHeight);
-        $sizer.css('top', topBottom);
-        $sizer.css('left', leftRight);
-        if(imgIndex === config.page.ctaIndex && !this.useSwipe){
-            bonzo(this.$ctaFloat).css('bottom', topBottom);
-        }
-        if(imgIndex === this.$images.length - 1 && !this.useSwipe){
-            bonzo(this.$ojFloat).css('bottom', topBottom);
-        }
-        if (topBottom > 40 && !this.useSwipe) {
-            bonzo(this.$ojFloat).css('padding-bottom', 0);
-        }
+        fastdom.write(function () {
+            $sizer.css('width', imageWidth);
+            $sizer.css('height', imageHeight);
+            $sizer.css('top', topBottom);
+            $sizer.css('left', leftRight);
+            if (imgIndex === config.page.ctaIndex && !useSwipe) {
+                bonzo($ctaFloat).css('bottom', topBottom);
+            }
+            if (imgIndex === $images.length - 1 && !useSwipe) {
+                bonzo($ojFloat).css('bottom', topBottom);
+            }
+            if (imgIndex === $images.length - 1 && topBottom > 40) {
+                $('.js-hosted-gallery-oj').css('padding-bottom', 0);
+            }
+        });
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -285,8 +291,10 @@ define([
                     bonzo(caption).toggleClass('current-caption', that.index === index + 1);
                 });
                 bonzo(this.$counter).html(this.index + '/' + this.$images.length);
+
                 if(this.useSwipe){
                     this.translateContent(this.index, 0, 100);
+                    bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
                 }
                 omniture.trackLinkImmediate(config.page.analyticsName + ' - image ' + this.index);
                 // event bindings
@@ -388,6 +396,9 @@ define([
             $header = this.$header,
             $footer = this.$captionContainer,
             $progress = this.$progress,
+            $ctaFloat = this.$ctaFloat,
+            $ojFloat = this.$ojFloat,
+            useSwipe = this.useSwipe,
             imgRatio = 5/3,
             imageWidth = width,
             leftRight = 0;
@@ -395,15 +406,17 @@ define([
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
         }
-        $header.css('width', imageWidth);
-        $footer.css('padding', '0 ' + leftRight);
-        $progress.css('right', leftRight);
-        if(!this.useSwipe){
-            bonzo(this.$ctaFloat).css('left', leftRight);
-            bonzo(this.$ojFloat).css('left', leftRight);
-            bonzo(this.$ctaFloat).css('right', leftRight);
-            bonzo(this.$ojFloat).css('right', leftRight);
-        }
+        fastdom.write(function () {
+            $header.css('width', imageWidth);
+            $footer.css('padding', '0 ' + leftRight);
+            $progress.css('right', leftRight);
+            if (!useSwipe) {
+                bonzo($ctaFloat).css('left', leftRight);
+                bonzo($ojFloat).css('left', leftRight);
+                bonzo($ctaFloat).css('right', leftRight);
+                bonzo($ojFloat).css('right', leftRight);
+            }
+        });
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {

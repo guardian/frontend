@@ -1,6 +1,6 @@
 @import common.commercial.hosted.HostedGalleryPage
 @(ctaText: String, ctaLink: String, buttonText: String, nextGalleries: List[HostedGalleryPage], cssClass: String = "")
-    <div class="hosted-gallery__oj @{cssClass}">
+    <div class="hosted-gallery__oj js-hosted-gallery-oj @{cssClass}">
         <div class="hosted-gallery__oj-cta">
             <div class="hosted-gallery__cta-title">
                 @{ctaText}
@@ -11,7 +11,7 @@
         </div>
         @for(gallery <- nextGalleries){
             <a href="@{gallery.pageUrl}" class="hosted-gallery__oj-next-gallery">
-                <div>
+                <div class="hosted-gallery__next-gallery-title">
                     <div class="hosted-gallery__oj-sub-header">
                         Continue reading
                     </div>
