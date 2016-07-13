@@ -99,9 +99,7 @@ define([
                 var moduleName = pair[0];
 
                 robust.catchErrorsAndLog(moduleName, function () {
-                    var modulePromise = pair[1]();
-
-                    modulePromise.then(function(){
+                    var modulePromise = pair[1]().then(function(){
                         ophanTracking.moduleCheckpoint(moduleName, ophanTracking.primaryBaseline);
                     });
 
@@ -118,9 +116,7 @@ define([
                     var moduleName = pair[0];
 
                     robust.catchErrorsAndLog(moduleName, function () {
-                        var modulePromise = pair[1]();
-
-                        modulePromise.then(function(){
+                        var modulePromise = pair[1]().then(function(){
                             ophanTracking.moduleCheckpoint(moduleName, ophanTracking.secondaryBaseline);
                         });
 
