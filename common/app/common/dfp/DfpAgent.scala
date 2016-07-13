@@ -155,7 +155,6 @@ object DfpAgent
     }
 
     updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)
-    updateLineItems(TopBelowNavSlot, topBelowNavSlotTakeoversKey)
     updateLineItems(TopSlot, topSlotTakeoversKey)
 
     update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
