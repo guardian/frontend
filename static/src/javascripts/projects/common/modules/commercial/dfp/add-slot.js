@@ -26,13 +26,15 @@ define([
 
     function displayAd(adSlot) {
         var advert = Advert(adSlot);
-        ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'add-slot');
 
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
         if (dfpEnv.shouldLazyLoad()) {
+            ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
             enableLazyLoad();
         } else {
+            ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-instant');
+            ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
             loadAdvert(advert);
         }
     }
