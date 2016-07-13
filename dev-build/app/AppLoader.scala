@@ -11,6 +11,7 @@ import controllers._
 import controllers.commercial._
 import controllers.commercial.magento.{ApiSandbox, AccessTokenGenerator}
 import cricket.conf.CricketLifecycle
+import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
 import feed._
@@ -24,9 +25,8 @@ import play.api._
 import play.api.routing.Router
 import router.Routes
 import rugby.conf.RugbyLifecycle
-import rugby.controllers.MatchesController
+import rugby.controllers.RugbyControllers
 import services._
-import weather.controllers.{WeatherController, LocationsController}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -41,25 +41,17 @@ trait Controllers
   with DiagnosticsControllers
   with DiscussionControllers
   with FaciaControllers
-  with OnwardControllers {
+  with OnwardControllers
+  with FootballControllers
+  with RugbyControllers
+  with CricketControllers {
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val assets = wire[Assets]
-  lazy val competitionListController = wire[CompetitionListController]
-  lazy val cricketMatchController = wire[CricketMatchController]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
-  lazy val fixturesController = wire[FixturesController]
-  lazy val leagueTableController = wire[LeagueTableController]
-  lazy val matchController = wire[MatchController]
-  lazy val matchDayController = wire[MatchDayController]
-  lazy val matchesController = wire[MatchesController]
-  lazy val moreOnMatchController = wire[MoreOnMatchController]
-  lazy val resultsController = wire[ResultsController]
   lazy val surveyPageController = wire[SurveyPageController]
-  lazy val wallchartController = wire[WallchartController]
 }
 
 trait AppComponents extends FrontendComponents with Controllers {

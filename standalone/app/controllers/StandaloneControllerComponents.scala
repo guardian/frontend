@@ -2,10 +2,11 @@ package controllers
 
 import com.softwaremill.macwire._
 import controllers.commercial.CommercialControllers
+import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import football.controllers._
 import play.api.BuiltInComponents
-import rugby.controllers.MatchesController
+import rugby.controllers.RugbyControllers
 
 trait StandaloneControllerComponents
   extends ApplicationsControllers
@@ -13,24 +14,17 @@ trait StandaloneControllerComponents
   with ArticleControllers
   with CommercialControllers
   with FaciaControllers
-  with OnwardControllers {
+  with OnwardControllers
+  with FootballControllers
+  with CricketControllers
+  with RugbyControllers {
   self: BuiltInComponents =>
 
   lazy val assets = wire[Assets]
-  lazy val competitionListController = wire[CompetitionListController]
-  lazy val cricketMatchController = wire[CricketMatchController]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val faciaDraftController: FaciaDraftController = wire[FaciaDraftController]
   lazy val faviconController = wire[FaviconController]
-  lazy val fixturesController = wire[FixturesController]
   lazy val itemController = wire[ItemController]
-  lazy val leagueTableController = wire[LeagueTableController]
-  lazy val matchController = wire[MatchController]
-  lazy val matchDayController = wire[MatchDayController]
-  lazy val matchesController = wire[MatchesController]
-  lazy val moreOnMatchController = wire[MoreOnMatchController]
   lazy val oAuthLoginController = wire[OAuthLoginController]
-  lazy val resultsController = wire[ResultsController]
-  lazy val wallchartController = wire[WallchartController]
 }
