@@ -27,7 +27,7 @@ define([
             if (advertsToInstantlyLoad.indexOf(advert.id) > -1) {
                 ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'instant');
                 ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
-                instantLoadAdverts.push(advert)
+                instantLoadAdverts.push(advert);
             } else {
                 ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'lazy-load');
             }
