@@ -161,6 +161,12 @@
             height: 250px;
         }
 
+        &.ad-slot--fluid {
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+        }
+
         .ad-slot__label {
             margin-top: (-1) * $gs-row-height / 2;
         }
