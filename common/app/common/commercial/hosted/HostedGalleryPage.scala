@@ -21,7 +21,7 @@ case class HostedGalleryPage(
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
 
-  def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromPageName(campaign.id, _) flatMap {
+  def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
     case gallery: HostedGalleryPage => Some(gallery)
     case _ => None
   })
