@@ -144,26 +144,6 @@ define([
         }));
     }
 
-    /*function advertCheckpoint (adName, stage, time , lazyLoadSusceptible) {
-        if(!loggingObject.adverts[adName]) {
-            loggingObject.adverts[adName] = {};
-        }
-
-        if(lazyLoadSusceptible == false) {
-            var timeDiff  = time - getBaseline(primaryBaseline);
-
-            loggingObject.adverts[adName][stage] = timeDiff;
-        } else {
-            if(!loggingObject.adverts[adName]["lazyDelay"]){
-                var lazyDelay = loggingObject.baselines["lazyLoadBaseline"] - getBaseline(primaryBaseline);
-                loggingObject.adverts[adName]["lazyDelay"] = lazyDelay;
-            }
-            var timeDiff = time - loggingObject.baselines["lazyLoadBaseline"];
-            loggingObject.adverts[adName][stage] = timeDiff;
-            console.log(loggingObject);
-        }
-    }*/
-
     function addBaseline(baselineName) {
         performanceLog.baselines.push({
             name: baselineName,
