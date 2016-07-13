@@ -9,7 +9,6 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 
-case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 class EmbedController extends Controller with Logging with ExecutionContexts {
 

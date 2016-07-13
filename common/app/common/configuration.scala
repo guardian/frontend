@@ -128,6 +128,7 @@ class GuardianConfiguration extends Logging {
   object omniture {
     lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-network")
     lazy val ampAccount = configuration.getStringProperty("guardian.page.omnitureAmpAccount").getOrElse("guardiangudev-code")
+    lazy val thirdPartyAppsAccount = configuration.getStringProperty("guardian.page.thirdPartyAppsAccount").getOrElse("guardiangu-thirdpartyapps")
   }
 
   object googletag {
@@ -306,7 +307,6 @@ class GuardianConfiguration extends Logging {
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
-    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers-v1.json"
     lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"

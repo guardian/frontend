@@ -1,0 +1,108 @@
+.creative--fabric-video {
+    position: relative;
+    height: 250px;
+
+    > .creative__video,
+    > .creative__link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .creative__alt,
+    .creative__layer,
+    .creative__slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .creative__layer1 { z-index: 1; }
+    .creative__layer2 { z-index: 2; }
+    .creative__layer3 { z-index: 3; }
+
+    .creative__slide {
+        opacity: 0;
+        animation-name: fade-in-out;
+        animation-duration: 4.5s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+        animation-play-state: paused;
+        background-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .is-animating .creative__slide {
+        animation-play-state: running;
+    }
+
+    .creative__slide1 {
+        animation-delay: 1s;
+        animation-duration: 5.25s;
+    }
+
+    .creative__slide2 {
+        animation-delay: 4.75s;
+    }
+
+    .creative__slide3 {
+        animation-delay: 7.75s;
+    }
+
+    .creative__slide4 {
+        animation-name: fade-in;
+        animation-delay: 10.75s;
+        animation-duration: 5.25s;
+    }
+
+    .click_button {
+        position: absolute;
+        top: 62%;
+        left: 50%;
+        margin-left: -85px;
+    }
+
+    @keyframes fade-in-out {
+        0%    { opacity: 0; }
+        50%   { opacity: 1; }
+        100%  { opacity: 0; }
+    }
+
+    @keyframes fade-in {
+        0%    { opacity: 0; }
+        100%  { opacity: 1; }
+    }
+
+    #mp4Video {
+        height: 250px;
+        overflow: hidden;
+        clear: both;
+        position: absolute;
+    }
+
+    .mp4Video_centered {
+        left: 50%;
+        margin-left: -960px;
+    }
+
+    @include mq(tablet, leftCol) {
+        #mp4Video {
+            width: auto;
+        }
+
+        .mp4Video_centered {
+            margin-left: -960px;
+        }
+    }
+
+    .poster {
+        position: absolute;
+        width: 100%;
+        height: 250px;
+    }
+}

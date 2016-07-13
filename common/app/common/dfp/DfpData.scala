@@ -286,9 +286,6 @@ case class GuLineItem(id: Long,
     (endTime.isEmpty || endTime.exists(_.isAfterNow))
   }
 
-  lazy val isSuitableForTopBelowNavSlot: Boolean = targeting.customTargetSets
-                                                   .exists(_.targets.exists(_.isSlot("top-below-nav")))
-
   lazy val isSuitableForTopSlot: Boolean = {
     costType == "CPD" &&
     targetsNetworkOrSectionFrontDirectly &&

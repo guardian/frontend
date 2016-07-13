@@ -13,7 +13,7 @@ case class HostedGalleryPage(
   ctaText: String,
   ctaLink: String,
   ctaButtonText: String,
-  ctaIndex: Integer,
+  ctaIndex: Option[Integer] = None,
   images: List[HostedGalleryImage]
 ) extends HostedPage {
 
@@ -38,7 +38,7 @@ case class HostedGalleryPage(
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
-        "ctaIndex" -> JsNumber(BigDecimal(ctaIndex))
+        "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
@@ -55,5 +55,6 @@ case class HostedGalleryPage(
 case class HostedGalleryImage(
   url: String,
   title: String,
-  caption: String
+  caption: String = "",
+  credit: String = ""
 )

@@ -47,6 +47,10 @@ module.exports = function () {
                     cwd: 'static/src/deploys-radiator'
                 }
             }
+        },
+
+        atomiseCSS: {
+            command: 'make atomise-css'
         }
     };
 };

@@ -4,7 +4,7 @@ $hosted-video-height: 540px;
 $renaultColor: #ffc421;
 $renaultLight: #fff9e9;
 $omgbColor: #e41f13;
-$leffeColor: #ffffff;
+$leffeColor: #dec190;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
@@ -51,19 +51,19 @@ $leffeColor: #ffffff;
 
 /* Temporary Leffe's colors will be the same as Renault's because of the contrast issues */
 .hosted-tone--leffe {
-    color: $renaultColor;
+    color: $leffeColor;
 }
 
 .hosted-tone-bg--leffe {
-    background-color: $renaultColor;
+    background-color: $leffeColor;
 }
 
 .hosted-tone-btn--leffe {
     &,
     &:focus,
     &:hover {
-        background-color: $renaultColor;
-        border-color: $renaultColor;
+        background-color: $leffeColor;
+        border-color: $leffeColor;
     }
 }
 
@@ -166,11 +166,18 @@ $leffeColor: #ffffff;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: 0;
+        @include fs-textSans(4);
+        margin-left: 16px;
         margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
+        @include mq(desktop) {
+            margin-left: 0;
+        }
 
         &:before {
             content: 'Watch now';
@@ -189,11 +196,6 @@ $leffeColor: #ffffff;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }
-
-        @include fs-textSans(4);
-        color: #ffffff;
-        border: 2px solid #ffffff;
-        border-radius: 30px;
     }
 
     .vjs-control,
@@ -472,17 +474,24 @@ $leffeColor: #ffffff;
 }
 
 .hosted__cta-wrapper {
+    padding-top: 140px;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    @include mq(desktop) {
+        padding-top: 270px;
+    }
 
     a {
         // hack stop the link underline
         color: transparent;
+    }
+}
+
+.hosted__cta-btn-wrapper {
+    padding-top: 90px;
+    @include mq(desktop) {
+        padding-top: 220px;
     }
 }
 
@@ -524,7 +533,8 @@ $leffeColor: #ffffff;
     }
 }
 
-.hosted__cta-text {
+.hosted__cta-text,
+.hosted__cta-label {
     @include f-headlineSans;
 
     font-size: 25px;
@@ -532,6 +542,29 @@ $leffeColor: #ffffff;
 
     @include mq(tablet) {
         font-size: 38px;
+    }
+}
+
+.hosted__cta-label {
+    color: #ffffff;
+}
+
+.hosted__cta-btn-text {
+    @include circular;
+    @include f-headlineSans;
+    position: relative;
+    display: block;
+    padding: 6px 6px 6px 14px;
+    color: #000000;
+    width: $gs-column-width * 3.2;
+    font-weight: bold;
+    background-color: #ffffff;
+
+    .inline-icon {
+        fill: #000000;
+        position: absolute;
+        top: 3px;
+        right: 10px;
     }
 }
 
@@ -575,8 +608,16 @@ $leffeColor: #ffffff;
     color: #767676;
 }
 
-.hosted__link {
-    color: $renaultColor;
+.leffe {
+    .hosted__link {
+        color: $leffeColor;
+    }
+}
+
+.renault {
+    .hosted__link {
+        color: $renaultColor;
+    }
 }
 
 .hosted__standfirst {
@@ -798,7 +839,7 @@ $leffeColor: #ffffff;
 
 .hosted-video-page.leffe ~ .survey-overlay-simple {
     .survey-text__header {
-        background-color: $renaultColor;
+        background-color: $leffeColor;
     }
 }
 
@@ -844,6 +885,12 @@ $leffeColor: #ffffff;
 
     &:active {
         color: #333333;
+    }
+}
+
+.leffe {
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $leffeColor;
     }
 }
 
