@@ -39,7 +39,9 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
 }
 
 @Singleton
-class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends IdRequestParser(returnUrlVerifier)  {
+class TorNodeLoggingIdRequestParser @Inject()(idRequestParser: IdRequestParser) extends RemoteAddress {
+
+  def apply(request: RequestHeader): IdentityRequest = idRequestParser.apply(request)
 
   def apply(request: RequestHeader, email: String) : IdentityRequest = {
 
@@ -51,7 +53,7 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
       }
       case _ =>
     }
-    super.apply(request)
+    idRequestParser.apply(request)
   }
 }
 

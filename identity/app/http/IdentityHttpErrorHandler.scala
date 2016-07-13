@@ -1,22 +1,20 @@
 package http
 
-import com.google.inject.{Provider, Inject}
 import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status._
 import play.api.mvc.{Result, RequestHeader, Results}
-import play.api.routing.Router
 import play.api._
+import play.core.SourceMapper
 import utils.SafeLogging
 import play.api.Play.current
 
 import scala.concurrent.Future
 
-class IdentityHttpErrorHandler @Inject() (
+class IdentityHttpErrorHandler(
   env: Environment,
   config: Configuration,
-  sourceMapper: OptionalSourceMapper,
-  router: Provider[Router]
-) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with Results with SafeLogging {
+  sourceMapper: Option[SourceMapper]
+) extends DefaultHttpErrorHandler(env, config, sourceMapper) with Results with SafeLogging {
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     logger.error("Serving error page", exception)
