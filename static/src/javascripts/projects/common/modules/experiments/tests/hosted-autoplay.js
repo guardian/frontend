@@ -43,6 +43,12 @@ define([
                 id: 'variant1',
                 test: function () {},
                 success: function (complete) {
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
+                        complete();
+                    });
+                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
+                        complete();
+                    });
                     bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
                         complete();
                     });
@@ -55,6 +61,12 @@ define([
                 id: 'variant2',
                 test: function () {},
                 success: function (complete) {
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
+                        complete();
+                    });
+                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
+                        complete();
+                    });
                     bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
                         complete();
                     });
