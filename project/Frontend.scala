@@ -80,6 +80,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       paClient,
       akkaContrib
