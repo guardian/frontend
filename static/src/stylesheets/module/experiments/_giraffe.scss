@@ -1,7 +1,7 @@
 .giraffe {
     @include f-header;
     width: 100%;
-    padding: 5px 5px 12px 5px;
+    padding: 5px 5px 12px;
     background: $multimedia-main-2;
     line-height: 24px;
     box-sizing: border-box;
@@ -16,7 +16,7 @@
     float: right;
 }
 .giraffe--copy {
-    color: white;
+    color: #ffffff;
     font-size: 24px;
     display: inline;
 }
@@ -24,9 +24,9 @@
 .giraffe-button {
     background: $maps-main-2;
     margin-top: $gs-baseline;
-    border: none;
+    border: 0;
 
     &:hover, &:focus {
-        background-color: darken(#328A3E, 10%);
+        background-color: darken(#328a3e, 10%);
     }
 }
