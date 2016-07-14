@@ -31,7 +31,7 @@ define([
     return function () {
         this.id = 'JoinDiscussionAfterPoll';
         this.start = '2016-06-15';
-        this.expiry = '2016-07-13';
+        this.expiry = '2016-07-27';
         this.author = 'George Haberis - Participation';
         this.description = 'Participation - Does "join discussion" message after poll participation increase comments';
         this.audience = 0.1;

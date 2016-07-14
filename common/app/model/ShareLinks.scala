@@ -93,7 +93,6 @@ object ShareLinks {
     lazy val facebookParams = List(
       Some("app_id" -> facebookAppId),
       Some("href" -> encodedHref),
-      Some("redirect_uri" -> encodedHref),
       mediaPath.map(path => "picture" -> path.urlEncoded)
     ).flatten.toMap
 
@@ -144,36 +143,24 @@ final case class ShareLinks(
     List(Facebook, Twitter, PinterestBlock)
   }
 
-  private def createShortUrlWithCampaign(platform: SharePlatform): String = platform.campaign match {
-    case Some(campaign) => s"${fields.shortUrl}/$campaign"
-    case _ => fields.shortUrl
+  private def campaignParams(platform: SharePlatform): Map[String, String] = {
+    platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => Map("CMP" -> campaign)).getOrElse(Map.empty)
   }
 
   def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
-
-    // Currently, only element shares on live blogs will use fully expanded urls. These urls take a CMP parameter.
-    // Everything else uses short urls with campaign codes.
-    val href = if (tags.isLiveBlog) {
-      val webUrlParams = List(
-        Some("page" -> s"with:$elementId"),
-        sharePlatform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign)
-      ).flatten.toMap
-
-      metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams)
-    } else {
-      createShortUrlWithCampaign(sharePlatform).addFragment(elementId)
-    }
-
+    val webUrlParams = campaignParams(sharePlatform)
+    val href = metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams + ("page" -> s"with:$elementId"))
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
   val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
+    val webUrlParams = campaignParams(sharePlatform)
+    val href = metadata.webUrl.appendQueryParams(webUrlParams)
+
     val contentTitle = sharePlatform match {
       case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
       case _ => metadata.webTitle
     }
-
-    val href = createShortUrlWithCampaign(sharePlatform)
 
     ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
   })

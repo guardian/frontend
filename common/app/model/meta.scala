@@ -272,9 +272,6 @@ final case class MetaData (
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   } else Nil
-  def hasAdInBelowTopNavSlot(edition: Edition) = if (isPressedPage) {
-    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
-  } else false
   def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
@@ -632,6 +629,7 @@ final case class Tags(
   lazy val isElection = isUSElection || isAusElection
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
 
   lazy val keywordIds = keywords.map { _.id }
 
