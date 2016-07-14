@@ -164,7 +164,6 @@ define([
         updateAdvertMetric : updateAdvertMetric,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
-        secondaryBaseline: secondaryBaseline,
-        debugTimings : debugTimings
+        secondaryBaseline: secondaryBaseline
     };
 });
