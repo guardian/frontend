@@ -208,15 +208,13 @@
         text-decoration: none;
     }
 
-    .inline-arrow-right {
-        position: absolute;
-        bottom: 0;
-        right: 6px;
-        height: 40px;
+    .inline-external-link {
+        margin-left: 5px;
 
         svg {
-            height: 36px;
-            width: 36px;
+            height: 22px;
+            width: 20px;
+            vertical-align: top;
         }
     }
 
@@ -225,9 +223,9 @@
         margin: 8px 0 16px;
         width: 140px;
         font-size: 14px;
-        .inline-arrow-right {
-            height: 33px;
-            right: 3px;
+        .inline-external-link svg {
+            height: 16px;
+            width: 18px;
         }
     }
 }
