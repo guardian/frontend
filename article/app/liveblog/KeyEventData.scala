@@ -16,13 +16,13 @@ object KeyEventData {
 
   def apply(blocks: Seq[BodyBlock], timezone: DateTimeZone): Seq[KeyEventData] = {
 
-    val TIMELINE_MAX_ENTRIES = 7
+    val TimelineMaxEntries = 7
 
-    blocks.foldLeft((false, Nil: List[BodyBlock])) {
-      case ((summaryFound, soFar), nextBlock) if !summaryFound && nextBlock.eventType == SummaryEvent => (true, nextBlock :: soFar)
-      case ((summaryFound, soFar), nextBlock) if nextBlock.eventType == KeyEvent => (summaryFound, nextBlock :: soFar)
-      case ((summaryFound, soFar), _) => (summaryFound, soFar)
-    }._2.reverse.take(TIMELINE_MAX_ENTRIES).map { bodyBlock =>
+    val latestSummary = blocks.find(_.eventType == SummaryEvent)
+    val keyEvents = blocks.filter(_.eventType == KeyEvent)
+    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.lastModifiedDate.getOrElse(new DateTime(0)).millis).reverse.take(TimelineMaxEntries)
+
+    bodyBlocks.map { bodyBlock =>
       KeyEventData(bodyBlock.id, bodyBlock.publishedCreatedDate(timezone), bodyBlock.title)
     }
   }

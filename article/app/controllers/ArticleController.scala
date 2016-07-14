@@ -194,7 +194,10 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       .showReferences("all")
       .showAtoms("all")
 
-    val capiItemWithBlocks = range.map(r => capiItem.showBlocks(r.query.map(_.mkString(",")).getOrElse("body"))).getOrElse(capiItem)
+    val capiItemWithBlocks = range.map { blockRange =>
+      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
+      capiItem.showBlocks(blocksParam)
+    }.getOrElse(capiItem)
     ContentApiClient.getResponse(capiItemWithBlocks)
 
   }
