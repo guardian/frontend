@@ -8,102 +8,198 @@
  */
 
 define([
-    'common/utils/fastdom-promise'
+    'common/utils/fastdom-promise',
+    'Promise',
+    'lodash/objects/assign'
 ], function (
-    fastdom
+    fastdom,
+    Promise,
+    assign
 ) {
-    var currentFrameContainers = [];
-    var currentScrollPos;
-    var heightToAdd = 0;
-    var options = {
-        pixelGrace: 100 // Give the scroll some distance as it's likely the user has scrolled past the top of the screen
+
+    function Queue() {
+        this.queue = [];
+    }
+
+    /**
+     * Add an item to the queue
+     *
+     * @param  {Object} item  item to add
+     * @return {Number}         queue length
+     */
+    Queue.prototype.enqueue = function(item) {
+        return this.queue.push(item);
     };
 
-    /*
-     * Height with margins
+    /**
+     * Take the first item from the queue
+     *
+     * @return {Anything} the item
      */
-    function outerHeight(el) {
-        var style = getComputedStyle(el);
-        return el.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
+    Queue.prototype.dequeue = function() {
+        return this.queue.shift();
+    };
+
+    /**
+     * Check if the queue is empty
+     *
+     * @return {Boolean}
+     */
+    Queue.prototype.empty = function() {
+        return this.queue.length === 0;
+    };
+
+
+
+
+
+
+
+// -------------------
+
+
+
+
+    var q = new Queue();
+    var running = false;
+    var promise;
+
+    /**
+     * Given a batch and a previous currentBatchHeight, measure the height of each container
+     * in the batch
+     *
+     * @param  {Array} batch
+     * @param  {Number} currentBatchHeight
+     */
+    function getHeightOfAllContainers (batch, state) {
+        return fastdom.read(function() {
+            // Add all the heights of the passed in batch
+            // removing the current height
+            return batch.filter(elementIsAbove).reduce(function(height, insertion) {
+                return height + readHeight(insertion.container);
+            }, 0);
+        });
+
+        function elementIsAbove(el) {
+            return el.container.offsetTop > -1 &&
+                state.scrollY + 100 > el.container.offsetTop &&
+                el.container.offsetHeight;
+        }
+
+        function readHeight(el) {
+            var style = getComputedStyle(el);
+            var height = el.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
+            return isNaN(height) ? 0 : height;
+        }
     }
 
-    /*
-     * The callback should contain the functionality
-     * to display the element (insertion, change of display).
+    /**
+     * Given a batch
+     *
+     * This doesn't use fastdom as it's already called from inside a fastdom read
+     *
+     * @param  {Array} batch
+     * @param  {Object} state
      */
-    function displayAndLayout (insertionCallback) {
-        return fastdom.write(function(){
-            insertionCallback();
+    function insertElements (batch) {
+        return fastdom.write(function () {
+            batch.forEach(function (insertion) {
+                insertion.cb();
+            });
         });
     }
 
-    /*
-     * Add the height of each inserted element within this animation frame
-     * together so we know what the total height change required for
-     * the scroll adjustment is
+    /**
+     * Calculate the new height and either scroll or run the next batch of updates
+     *
+     * @param  {Number} state.height The total height of elements in the previous recursions
+     * @param  {Number} state.newHeight The height of all the elements added in the current recursion level
      */
-    function getHeightAdjustment () {
-        return fastdom.read(function(){
-            for (var i = 0; i < currentFrameContainers.length; i++) {
-                var currentContainer = currentFrameContainers[i];
+    function calculateScrollY (state) {
+        if (q.empty()) {
+            // If the queue is empty (no more elements need to be added to the page) we immediately scroll
+            return state.newHeight + state.prevHeight + state.scrollY;
+        } else {
+            // If there are elements waiting to be added to the page we take the previous container's heights
+            // and recursively call the function so that we only scroll the page once the queue is empty -
+            // this prevents excessive and jarring scrolling
+            return go(assign(state, {
+                prevHeight: state.prevHeight + state.newHeight
+            }));
+        }
+    }
 
-                // The container should have an offsetTop,
-                // be above our current scroll position
-                // and have a height we can query
-                if (currentContainer.offsetTop > -1 &&
-                    currentScrollPos + options.pixelGrace > currentContainer.offsetTop &&
-                    currentContainer.scrollHeight) {
-                    heightToAdd += outerHeight(currentContainer);
+    /**
+     * Process the insertion operation:
+     *
+     *   1. Calculate the original height of the container
+     *   2. Apply the insertion functions for all inserted elements
+     *   3. Calculate the new height of the container
+     *   4. Adjust the scroll position to account for the new container height
+     *
+     * @param  {Number} state.scrollY The original scroll position
+     */
+    function go(state) {
+        running = true;
+
+        var batch = [];
+        var batchHeightsBeforeInsert;
+
+
+
+        promise = fastdom.read(function(){
+                while (!q.empty()) {
+                    // Take the current queue items and add them to the batch array
+                    var insertion = q.dequeue();
+                    batch.push(insertion);
                 }
-            }
 
-            // Empty the container array once the loop is done
-            currentFrameContainers = [];
-        });
+                return batch;
+            })
+            .then(function(){
+                getHeightOfAllContainers(batch, state);
+            })
+            .then(function(heightsBeforeIns) {
+                batchHeightsBeforeInsert = heightsBeforeIns || 0;
+                return insertElements(batch);
+            })
+            .then(function(){
+                return getHeightOfAllContainers(batch, state).then(function(newHeights) {
+                    return assign(state, {
+                        newHeight: newHeights - batchHeightsBeforeInsert
+                    });
+                });
+            })
+            .then(calculateScrollY);
+
+        return promise;
+
     }
 
-    /*
-     * The callback should contain the functionality
-     * to display the element (insertion, change of display).
-     */
-    function scrollToHeight () {
-
-            var newScrollPos = currentScrollPos + heightToAdd;
-
-            // If we're not at the top of the page
-            // and the height is more than nothing
-            // and the current and new scroll positions aren't the same
-            if ((currentScrollPos > 0 && heightToAdd > 0) &&
-                (currentScrollPos !== newScrollPos)) {
-                window.scrollTo(0, newScrollPos);
-            }
-
-            // Reset the current scroll position &
-            // reset the height to add
-            currentScrollPos = window.scrollY;
-            heightToAdd = 0;
+    function scrollThePage (scrollY) {
+        window.scrollTo(0, scrollY);
+        running = false;
     }
 
-    /*
+    /**
      * Insert an element into the page
      * Use if your element doesn't exist and is inserted into a container
      * ** Don't use fastdom - it is handled in this utility **
      * @param {HTMLElement} insertionContainer The element that the component is being inserted into
      * @param {Function} insertionCallback Should contain all functionality that displays and lays-out the element
      */
-    function insert (insertionContainer, insertionCallback) {
-        return fastdom.read(function() {
+    function insert(container, cb) {
+        var initialState = {
+            scrollY: window.scrollY,
+            prevHeight: 0
+        };
 
-            currentScrollPos = window.scrollY;
-
-            // Push all the containers in the current fastdom read frame
-            currentFrameContainers.push(insertionContainer);
-
-            // Display, measure heights and then scrollTo
-            return displayAndLayout(insertionCallback)
-                .then(getHeightAdjustment)
-                .then(scrollToHeight);
+        q.enqueue({
+            container: container,
+            cb: cb
         });
+
+        return (running ? promise : go(initialState)).then(scrollThePage);
     }
 
     return {
