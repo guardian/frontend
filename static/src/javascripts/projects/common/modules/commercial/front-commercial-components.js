@@ -19,7 +19,7 @@ define([
     function init() {
 
         if (!commercialFeatures.frontCommercialComponents) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
 
         var containerIndex,

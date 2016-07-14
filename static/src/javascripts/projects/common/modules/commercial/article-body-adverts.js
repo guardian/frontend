@@ -142,7 +142,7 @@ define([
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
 
         var rules = getRules();
