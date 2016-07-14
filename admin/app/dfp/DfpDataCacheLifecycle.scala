@@ -1,5 +1,6 @@
 package dfp
 
+import app.LifecycleComponent
 import common.dfp.{GuAdUnit, GuCreativeTemplate}
 import common._
 import play.api.inject.ApplicationLifecycle

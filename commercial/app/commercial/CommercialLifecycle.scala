@@ -1,5 +1,6 @@
 package commercial
 
+import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries

@@ -1,5 +1,6 @@
 package common
 
+import app.LifecycleComponent
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}

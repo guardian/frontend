@@ -1,6 +1,7 @@
 package services
 
 import akka.util.Timeout
+import app.LifecycleComponent
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}

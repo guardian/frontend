@@ -1,6 +1,7 @@
 package feed
 
-import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync, Jobs}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}

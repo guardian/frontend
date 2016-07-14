@@ -1,5 +1,6 @@
 package contentapi
 
+import app.LifecycleComponent
 import common._
 import play.api.inject.ApplicationLifecycle
 

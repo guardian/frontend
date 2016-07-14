@@ -1,6 +1,7 @@
 package conf
 
-import common.{LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{AkkaAsync, Jobs}
 import jobs.{TorExitNodeList, BlockedEmailDomainList}
 import model.PhoneNumbers
 import play.api.inject.ApplicationLifecycle

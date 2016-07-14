@@ -1,4 +1,4 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle

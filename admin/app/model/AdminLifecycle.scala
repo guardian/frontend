@@ -2,6 +2,7 @@ package model
 
 import java.util.TimeZone
 
+import app.LifecycleComponent
 import common._
 import conf.Configuration
 import conf.Configuration.environment

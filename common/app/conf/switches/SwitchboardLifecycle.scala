@@ -1,5 +1,6 @@
 package conf.switches
 
+import app.LifecycleComponent
 import common._
 import conf.Configuration
 import play.api.inject.ApplicationLifecycle

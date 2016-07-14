@@ -1,6 +1,7 @@
 package services
 
-import common.{LifecycleComponent, AutoRefresh}
+import app.LifecycleComponent
+import common.AutoRefresh
 import model.TagIndexListings
 
 import scala.concurrent.ExecutionContext.Implicits.global

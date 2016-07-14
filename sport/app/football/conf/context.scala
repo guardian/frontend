@@ -1,5 +1,6 @@
 package conf
 
+import app.LifecycleComponent
 import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}

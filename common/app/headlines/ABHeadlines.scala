@@ -1,5 +1,6 @@
 package headlines
 
+import app.LifecycleComponent
 import com.google.gdata.client.spreadsheet.{FeedURLFactory, SpreadsheetService}
 import com.google.gdata.data.spreadsheet.{CellFeed, ListFeed, WorksheetFeed}
 import common._

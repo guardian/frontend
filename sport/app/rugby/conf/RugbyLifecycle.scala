@@ -1,6 +1,7 @@
 package rugby.conf
 
-import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync, Jobs}
 import play.api.inject.ApplicationLifecycle
 import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob

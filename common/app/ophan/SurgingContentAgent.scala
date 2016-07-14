@@ -1,5 +1,6 @@
 package ophan
 
+import app.LifecycleComponent
 import common.{AkkaAsync, Jobs, _}
 import org.joda.time.DateTime
 import play.api.inject.ApplicationLifecycle
