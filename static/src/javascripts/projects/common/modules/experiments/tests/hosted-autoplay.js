@@ -23,7 +23,7 @@ define([
         this.idealOutcome = 'People will either more often click on the next hosted video or wait until end of the current video to be redirected into the next video page url.';
 
         this.canRun = function () {
-            return config.page.contentType === 'Hosted';
+            return config.page.contentType === 'Video' && config.page.tones === 'Hosted';
         };
 
         this.variants = [
@@ -52,9 +52,7 @@ define([
                     bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
                         complete();
                     });
-                    mediator.on('hosted video: autoredirect', function (){
-                        complete();
-                    });
+                    mediator.on('hosted video: autoredirect', complete);
                 }
             },
             {
