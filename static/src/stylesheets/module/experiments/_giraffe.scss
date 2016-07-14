@@ -1,20 +1,31 @@
 .giraffe {
     @include f-header;
     width: 100%;
-    display: block;
-    margin-bottom: 1em;
-    border-top: 1px dotted $neutral-4;
+    padding: 5px 5px 12px 5px;
+    background: $multimedia-main-2;
+    line-height: 24px;
 }
+
 .giraffe--heading {
-    margin-bottom: 0px;
-    margin-top: 4px;
-    color: $news-support-2  ;
-    line-height: 28px;
+    color: $neutral-1;
+    display: inline;
 }
+
 .button--giraffe__icon {
     float: right;
 }
 .giraffe--copy {
-    color: $neutral-2;
-    margin-bottom: $gs-baseline;
+    color: white;
+    font-size: 24px;
+    display: inline;
+}
+
+.giraffe-button {
+    background: $maps-main-2;
+    margin-top: $gs-baseline;
+    border: none;
+
+    &:hover, &:focus {
+        background-color: darken(#328A3E, 10%);
+    }
 }

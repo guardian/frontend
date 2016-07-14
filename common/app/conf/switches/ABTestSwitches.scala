@@ -79,7 +79,7 @@ trait ABTestSwitches {
     "ab-giraffe",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )

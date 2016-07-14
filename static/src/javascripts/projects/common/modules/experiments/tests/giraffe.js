@@ -64,7 +64,7 @@ define([
             {
                 id: 'everyone',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure', 'https://membership.theguardian.com/contribute?INTCMP=article-1-everyone', 'Please support the Guardian and independent journalism');
+                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=article-1-everyone', 'Please support the Guardian and independent journalism');
                 },
                 success: function (complete) {
                     completer(complete);
