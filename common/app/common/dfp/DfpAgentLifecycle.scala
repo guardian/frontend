@@ -1,7 +1,7 @@
 package common.dfp
 
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync, Jobs}
+import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -32,8 +32,8 @@ class DfpAgentLifecycle(
 
 class FaciaDfpAgentLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
 
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()

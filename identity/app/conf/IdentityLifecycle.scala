@@ -1,39 +1,43 @@
 package conf
 
 import app.LifecycleComponent
-import common.{AkkaAsync, Jobs}
+import common.{JobScheduler, AkkaAsync}
 import jobs.{TorExitNodeList, BlockedEmailDomainList}
 import model.PhoneNumbers
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class IdentityLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class IdentityLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  akkaAsync: AkkaAsync,
+  jobs: JobScheduler
+)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
   }}
 
   private def scheduleJobs() {
-      Jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
-         BlockedEmailDomainList.run()
-      }
+    jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
+       BlockedEmailDomainList.run()
+    }
 
-      Jobs.schedule("TorExitNodeRefeshJob","0 0/30 * * * ?" ) {
-         TorExitNodeList.run()
-      }
+    jobs.schedule("TorExitNodeRefeshJob","0 0/30 * * * ?" ) {
+       TorExitNodeList.run()
+    }
   }
 
   private def descheduleJobs() {
-    Jobs.deschedule("BlockedEmailsRefreshJobs")
-    Jobs.deschedule("TorExitNodeRefeshJob")
+    jobs.deschedule("BlockedEmailsRefreshJobs")
+    jobs.deschedule("TorExitNodeRefeshJob")
   }
 
   override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
-    AkkaAsync {
+    akkaAsync.after1s {
       BlockedEmailDomainList.run()
       TorExitNodeList.run()
       PhoneNumbers

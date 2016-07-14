@@ -1,7 +1,7 @@
 package cricket.conf
 
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync, Jobs}
+import common.{JobScheduler, AkkaAsync}
 import jobs.CricketStatsJob
 import play.api.inject.ApplicationLifecycle
 

@@ -1,7 +1,7 @@
 package ophan
 
 import app.LifecycleComponent
-import common.{AkkaAsync, Jobs, _}
+import common._
 import org.joda.time.DateTime
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.{JsArray, JsValue}
