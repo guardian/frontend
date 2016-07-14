@@ -24,11 +24,14 @@ define([
             });
         }).then(function () {
             var firstButton = $('.main-navigation__item__button')[0];
-            if (firstButton) {
-                firstButton.focus();
-            }
-            // Prevents scrolling on the body
-            html.css('overflow', 'hidden');
+
+            return fastdomPromise.write(function () {
+                if (firstButton) {
+                    firstButton.focus();
+                }
+                // Prevents scrolling on the body
+                html.css('overflow', 'hidden');
+            });
         });
     }
 
@@ -51,9 +54,11 @@ define([
                         mainMenuEl.removeClass('off-screen');
                         mainMenuEl.removeClass('shown');
                     }).then(function() {
-                        $('.new-header__nav__menu-button').focus();
-                        // Users should be able to scroll again
-                        html.css('overflow', '');
+                        return fastdomPromise.write(function () {
+                            $('.new-header__nav__menu-button').focus();
+                            // Users should be able to scroll again
+                            html.css('overflow', '');
+                        });
                     });
                 });
             }
