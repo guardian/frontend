@@ -6,29 +6,21 @@
 
 @surveyMain(surveyPage) {
     <div class="illustration-container">
-
-        <div class="wrapper">
-            <div class="wrapper-inner my-digest-illustration-wrapper">
-                @fragments.inlineSvg("my-digest", "illustration")
+        <div class="content">
+            <div class="gs-container">
+                <div class="content__main-column my-digest-illustration-wrapper">
+                    @fragments.inlineSvg("my-digest", "illustration")
+                </div>
+                <div class="my-digest-bottom-margin"></div>
             </div>
         </div>
-
     </div>
 
-    <div class="wrapper">
-        <div class="wrapper-inner">
-            <div class="my-digest-bottom-margin"></div>
-        </div>
-    </div>
+    <div class="content my-digest-main">
 
+        <div class="gs-container">
 
-
-    <div class="content">
-
-        <div class="wrapper">
-
-            <div class="wrapper-inner">
-
+            <div class="content__main-column my-digest-main__main-column">
                 <header class="my-digest-header">
                     <h1>my<span class="my-digest-header__digest">digest</span></h1>
 

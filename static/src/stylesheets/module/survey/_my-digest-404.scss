@@ -18,6 +18,17 @@
 
 .my-digest-header h1 {
     font-size: 2rem;
+    color: $news-main-1;
+}
+
+.my-digest-main {
+    margin: 26px auto 0;
+}
+
+.my-digest-main__main-column::before {
+    content: '';
+    display: block;
+    border-bottom: 2px solid #5ab0f4;
 }
 
 .my-digest-header::after {
