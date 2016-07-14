@@ -61,7 +61,6 @@ define([
         return setInterval(function () {
             if (duration === 0) {
                 omniture.trackLinkImmediate('Immediately play the next video');
-                console.log('redirect');
                 mediator.emit('hosted video: autoredirect');//inform AB framework about the success
                 window.location = nextVideoLink;
             }

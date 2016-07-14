@@ -43,7 +43,6 @@ define([
                 id: 'variant1',
                 test: function () {},
                 success: function (complete) {
-                    console.log(qwery('.hosted-next-autoplay__poster')[0]);
                     bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
                         complete();
                     });
