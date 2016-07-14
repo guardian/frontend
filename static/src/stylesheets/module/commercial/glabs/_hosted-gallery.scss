@@ -25,6 +25,7 @@
     visibility: hidden;
     bottom: 0;
     left: 0;
+    right: 0;
     transition: opacity 300ms ease, visibility 300ms ease;
 }
 
@@ -231,10 +232,8 @@
     }
 }
 
-.use-swipe .hosted-gallery__image .hosted-gallery__cta,
-.use-swipe .hosted-gallery__image .hosted-gallery__oj,
-.use-scroll.show-cta > .hosted-gallery__cta,
-.use-scroll.show-oj > .hosted-gallery__oj {
+.show-cta .hosted-gallery__cta,
+.show-oj .hosted-gallery__oj {
     opacity: 1;
     visibility: visible;
     .hosted-gallery__cta-link {
