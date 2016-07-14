@@ -194,7 +194,7 @@ object VisitBritainHostedPages {
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = activityImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/activities",
+    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
     title = "Don’t be a sloth this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
@@ -207,7 +207,7 @@ object VisitBritainHostedPages {
   val cityGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = cityImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/city",
+    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/city",
     pageName = cityPageName,
     title = "Take a city break from the norm",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
@@ -220,7 +220,7 @@ object VisitBritainHostedPages {
   private val coastGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = coastImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/coast",
+    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/coast",
     pageName = coastPageName,
     title = "Find cool-on-sea this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
@@ -233,7 +233,7 @@ object VisitBritainHostedPages {
   private val countrysideGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = countrysideImages,
-    pageUrl = "https://www.theguardian.com/commercial/advertiser-content/visit-britain/countryside",
+    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/countryside",
     pageName = countrysidePageName,
     title = "Mend your relationship with Mother Nature",
     ctaText = "Explore our collection of unique experiences from all over Great Britain.",
