@@ -89,8 +89,8 @@ define([
     }
 
     HostedGallery.prototype.initScroll = function () {
-        bean.on(this.nextBtn, 'click', this.scrollTo.bind(this, 1));
-        bean.on(this.prevBtn, 'click', this.scrollTo.bind(this, -1));
+        bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next', {nav: 'Click'}));
+        bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev', {nav: 'Click'}));
 
         bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
     };
@@ -129,13 +129,13 @@ define([
 
             if (direction === 1) {
                 if (this.index > 1) {
-                    this.trigger('prev');
+                    this.trigger('prev', {nav: 'Swipe'});
                 } else {
                     this.trigger('reload');
                 }
             } else if (direction === -1) {
                 if (this.index < this.$images.length) {
-                    this.trigger('next');
+                    this.trigger('next', {nav: 'Swipe'});
                 } else {
                     this.trigger('reload');
                 }
@@ -185,8 +185,8 @@ define([
             height = $imagesContainer.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
-            ctaSize = getFrame(imgRatio < 1 ? 0 : 5/3),
-            imageSize = getFrame(imgRatio < 1 ? imgRatio : 5/3);
+            ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
         fastdom.write(function () {
             $sizer.css('width', imageSize.width);
             $sizer.css('height', imageSize.height);
@@ -199,7 +199,7 @@ define([
                 bonzo($ojFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 0 : "null");
+                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 0 : 'null');
             }
         });
         function getFrame(desiredRatio, w, h) {
@@ -211,7 +211,7 @@ define([
                 topBottom: 0,
                 leftRight: 0
             };
-            if(!desiredRatio) return frame;
+            if (!desiredRatio) return frame;
             if (desiredRatio > w / h) {
                 // portrait screens
                 frame.height = w / desiredRatio;
@@ -265,20 +265,21 @@ define([
 
         if (newIndex && newIndex !== this.index) {
             this.index = newIndex;
-            this.trigger('reload');
+            this.trigger('reload', {nav: 'Scroll'});
         }
     };
 
-    HostedGallery.prototype.scrollTo = function (direction) {
+    HostedGallery.prototype.scrollTo = function (index) {
         var scrollEl = this.$scrollEl;
         var length = this.$images.length;
         var scrollTop = scrollEl[0].scrollTop;
         var scrollHeight = scrollEl[0].scrollHeight;
         var progress = length * (scrollTop / scrollHeight);
-        var newIndex = Math.round(progress + (direction * 0.51));
-        fastdom.write(function () {
-            scrollEl.scrollTop(newIndex * scrollHeight / length);
-        });
+        if (Math.abs(progress - index + 1) > 0.99) {
+            fastdom.write(function () {
+                scrollEl.scrollTop((index - 1) * scrollHeight / length);
+            });
+        }
     };
 
 
@@ -299,8 +300,9 @@ define([
                     this.translateContent(this.index, 0, 100);
                     bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
                     bonzo(this.$galleryEl).toggleClass('show-cta', this.index === config.page.ctaIndex + 1);
+                } else {
+                    this.scrollTo(this.index);
                 }
-                omniture.trackLinkImmediate(config.page.trackingPrefix + ' - image ' + this.index);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },
@@ -309,33 +311,22 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function () {
-                    if (this.index === this.$images.length) { // last img
-                        if (this.showEndslate) {
-                            this.state = 'endslate';
-                        } else {
-                            this.index = 1;
-                            this.reloadState = true;
-                        }
-                    } else {
+                'next': function (e) {
+                    if (this.index < this.$images.length) { // last img
                         this.index += 1;
-                        this.reloadState = true;
+                        this.trackNavBetweenImages(e);
                     }
+                    this.reloadState = true;
                 },
-                'prev': function () {
-                    if (this.index === 1) { // first img
-                        if (this.showEndslate) {
-                            this.state = 'endslate';
-                        } else {
-                            this.index = this.$images.length;
-                            this.reloadState = true;
-                        }
-                    } else {
+                'prev': function (e) {
+                    if (this.index > 1) { // first img
                         this.index -= 1;
-                        this.reloadState = true;
+                        this.trackNavBetweenImages(e);
                     }
+                    this.reloadState = true;
                 },
-                'reload': function () {
+                'reload': function (e) {
+                    this.trackNavBetweenImages(e);
                     this.reloadState = true;
                 },
                 'toggle-info': function () {
@@ -351,35 +342,12 @@ define([
                     this.onResize();
                 }
             }
-        },
+        }
+    };
 
-        'endslate': {
-            enter: function () {
-                if (this.useSwipe) {
-                    this.translateContent(this.$images.length, 0, 0);
-                }
-                this.index = this.$images.length + 1;
-                mediator.on('window:resize', this.resize);
-            },
-            leave: function () {
-                mediator.off('window:resize', this.resize);
-            },
-            events: {
-                'next': function () {
-                    this.index = 1;
-                    this.state = 'image';
-                },
-                'prev': function () {
-                    this.index = this.$images.length;
-                    this.state = 'image';
-                },
-                'reload': function () {
-                    this.reloadState = true;
-                },
-                'resize': function () {
-                    this.onResize();
-                }
-            }
+    HostedGallery.prototype.trackNavBetweenImages = function (data) {
+        if (data && data.nav) {
+            omniture.trackLinkImmediate(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
         }
     };
 
@@ -424,21 +392,19 @@ define([
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {
+        var keyNames = {
+            '37': 'left',
+            '38': 'up',
+            '39': 'right',
+            '40': 'down'
+        };
         if (e.keyCode === 37 || e.keyCode === 38) { // up/left
             e.preventDefault();
-            if(this.useSwipe){
-                this.trigger('prev');
-            } else {
-                this.scrollTo(-1);
-            }
+            this.trigger('prev', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 39 || e.keyCode === 40) { // down/right
             e.preventDefault();
-            if(this.useSwipe){
-                this.trigger('next');
-            } else {
-                this.scrollTo(1);
-            }
+            this.trigger('next', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
