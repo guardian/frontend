@@ -32,14 +32,6 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait MostPopularComponents {
-  self: BuiltInComponents =>
-  lazy val mostPopularController = wire[MostPopularController]
-  lazy val popularInTag = wire[PopularInTag]
-  lazy val relatedController = wire[RelatedController]
-  lazy val taggedContentController = wire[TaggedContentController]
-}
-
 trait Controllers
   extends AdminControllers
   with AdminJobsControllers
@@ -48,14 +40,12 @@ trait Controllers
   with CommercialControllers
   with DiagnosticsControllers
   with DiscussionControllers
-  with FaciaControllers {
-  self: BuiltInComponents with MostPopularComponents =>
+  with FaciaControllers
+  with OnwardControllers {
+  self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val assets = wire[Assets]
-  lazy val cardController = wire[CardController]
-  lazy val changeAlphaController = wire[ChangeAlphaController]
-  lazy val changeEditionController = wire[ChangeEditionController]
   lazy val competitionListController = wire[CompetitionListController]
   lazy val cricketMatchController = wire[CricketMatchController]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -63,29 +53,16 @@ trait Controllers
   lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
   lazy val fixturesController = wire[FixturesController]
   lazy val leagueTableController = wire[LeagueTableController]
-  lazy val locationsController = wire[LocationsController]
   lazy val matchController = wire[MatchController]
   lazy val matchDayController = wire[MatchDayController]
   lazy val matchesController = wire[MatchesController]
-  lazy val mediaInSectionController = wire[MediaInSectionController]
   lazy val moreOnMatchController = wire[MoreOnMatchController]
-  lazy val mostViewedAudioController = wire[MostViewedAudioController]
-  lazy val mostViewedGalleryController = wire[MostViewedGalleryController]
-  lazy val mostViewedSocialController = wire[MostViewedSocialController]
-  lazy val mostViewedVideoController = wire[MostViewedVideoController]
   lazy val resultsController = wire[ResultsController]
-  lazy val richLinkController = wire[RichLinkController]
-  lazy val seriesController = wire[SeriesController]
-  lazy val stocksController = wire[StocksController]
   lazy val surveyPageController = wire[SurveyPageController]
-  lazy val techFeedbackController = wire[TechFeedbackController]
-  lazy val topStoriesController = wire[TopStoriesController]
-  lazy val videoEndSlateController = wire[VideoEndSlateController]
   lazy val wallchartController = wire[WallchartController]
-  lazy val weatherController = wire[WeatherController]
 }
 
-trait AppComponents extends FrontendComponents with Controllers with MostPopularComponents {
+trait AppComponents extends FrontendComponents with Controllers {
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
