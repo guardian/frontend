@@ -1,3 +1,5 @@
+var autoprefixer = require('autoprefixer');
+
 module.exports = function (grunt, options) {
     var dir = options.staticTargetDir + 'stylesheets/';
     return {
@@ -10,7 +12,10 @@ module.exports = function (grunt, options) {
             }],
             options: {
                 // browserslist for 'modern' is specified in /browserslist
-                map: options.isDev
+                map: options.isDev,
+                processors: [
+                    autoprefixer()
+                ]
             }
         },
         'old-ie': {
@@ -21,7 +26,9 @@ module.exports = function (grunt, options) {
                 dest: dir
             }],
             options: {
-                browsers: ['Explorer 8']
+                processors: [
+                    autoprefixer({browsers: 'Explorer 8'})
+                ]
             }
         },
         ie9: {
@@ -32,7 +39,9 @@ module.exports = function (grunt, options) {
                 dest: dir
             }],
             options: {
-                browsers: ['Explorer 9']
+                processors: [
+                    autoprefixer({browsers: 'Explorer 9'})
+                ]
             }
         }
     };

@@ -1,5 +1,6 @@
 package common.commercial.hosted
 
+import common.commercial.hosted.hardcoded.HostedPages
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.{JsArray, JsNumber, JsString}
@@ -14,10 +15,16 @@ case class HostedGalleryPage(
   ctaLink: String,
   ctaButtonText: String,
   ctaIndex: Option[Integer] = None,
-  images: List[HostedGalleryImage]
+  images: List[HostedGalleryImage],
+  nextGalleryNames: List[String] = List()
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
+
+  def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
+    case gallery: HostedGalleryPage => Some(gallery)
+    case _ => None
+  })
 
   override val metadata: MetaData = {
     val toneId = "tone/hosted-content"
