@@ -80,7 +80,7 @@ trait ABTestSwitches {
     "Testing if increasing prominence of video caption drives plays.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
+    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 }
