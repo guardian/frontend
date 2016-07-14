@@ -1,10 +1,9 @@
 package services
 
-import com.google.inject.Inject
 import conf.IdentityConfiguration
 import java.net.URLEncoder
 
-class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
+class IdentityUrlBuilder(conf: IdentityConfiguration) {
 
   def queryParams(idRequest: IdentityRequest): List[(String, String)] = {
     val params = List(
