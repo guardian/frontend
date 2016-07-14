@@ -1,4 +1,4 @@
-package controllers
+package cricket.controllers
 
 import common._
 import cricketModel.Match
