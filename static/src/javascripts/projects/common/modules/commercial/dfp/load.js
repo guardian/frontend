@@ -15,20 +15,23 @@ define([
 
     function load() {
         if (commercialFeatures.dfpAdvertising) {
-            loadAdvertising();
+            return loadAdvertising();
         }
         return Promise.resolve();
     }
 
     function loadAdvertising() {
-        createAdverts();
-        window.googletag.cmd.push(
-            queueAdverts,
-            setPublisherProvidedId,
-            dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
-            // anything we want to happen after displaying ads
-            refreshOnResize
-        );
+
+        return new Promise(function(resolve) {
+            window.googletag.cmd.push(
+                createAdverts,
+                queueAdverts,
+                setPublisherProvidedId,
+                dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
+                // anything we want to happen after displaying ads
+                refreshOnResize,
+                resolve);
+        });
     }
 
     function createAdverts() {
