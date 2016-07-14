@@ -158,11 +158,6 @@ define([
         return baseline.time;
     }
 
-    function debugTimings() {
-        // This is where the first ophan send should be.
-        return performanceLog;
-    }
-
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
