@@ -1,8 +1,18 @@
-define([], function () {
+define([
+    'bean',
+    'qwery',
+    'common/utils/config',
+    'common/utils/mediator'
+], function (
+    bean,
+    qwery,
+    config,
+    mediator
+) {
     return function () {
         this.id = 'HostedAutoplay';
-        this.start = '2016-30-06';
-        this.expiry = '2016-14-07';
+        this.start = '2016-15-07';
+        this.expiry = '2016-29-07';
         this.author = 'Zofia Korcz';
         this.description = 'An autoplay overlay with the next video on a hosted page.';
         this.audience = 0;
@@ -13,26 +23,46 @@ define([], function () {
         this.idealOutcome = 'People will either more often click on the next hosted video or wait until end of the current video to be redirected into the next video page url.';
 
         this.canRun = function () {
-            return true;
+            return config.page.contentType === 'Hosted';
         };
 
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-
+                test: function () {},
+                success: function (complete) {
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
+                        complete();
+                    });
+                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
+                        complete();
+                    });
                 }
             },
             {
                 id: 'variant1',
-                test: function () {
-
+                test: function () {},
+                success: function (complete) {
+                    console.log(qwery('.hosted-next-autoplay__poster')[0]);
+                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
+                        complete();
+                    });
+                    mediator.on('hosted video: autoredirect', function (){
+                        complete();
+                    });
                 }
             },
             {
                 id: 'variant2',
-                test: function () {
-
+                test: function () {},
+                success: function (complete) {
+                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
+                        complete();
+                    });
+                    bean.on(qwery('.hosted-next-autoplay__tile')[0], 'click', function (){
+                        complete();
+                    });
+                    mediator.on('hosted video: autoredirect', complete);
                 }
             }
         ];

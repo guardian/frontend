@@ -420,7 +420,6 @@ define([
                 (ab.getParticipations()[testName].variant === variant) &&
                 ab.testCanBeRun(testName);
         },
-
         shouldRunTest: shouldRunTest,
 
         // testing
