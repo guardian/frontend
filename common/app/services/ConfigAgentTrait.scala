@@ -157,8 +157,8 @@ object ConfigAgent extends ConfigAgentTrait
 
 class ConfigAgentLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)
   (implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {

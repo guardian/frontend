@@ -21,8 +21,8 @@ object CommercialMetrics {
 
 class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()

@@ -8,8 +8,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DfpAgentLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     jobs.deschedule("DfpDataRefreshJob")

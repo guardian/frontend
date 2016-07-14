@@ -87,8 +87,8 @@ object ABHeadlines extends ExecutionContexts with Logging {
 
 class ABHeadlinesLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   private val ABHeadlinesJob = "ABHeadlinesJob"

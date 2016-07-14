@@ -9,8 +9,8 @@ import scala.concurrent.{Future, ExecutionContext}
 
 class CricketLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {

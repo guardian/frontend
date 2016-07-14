@@ -11,8 +11,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FootballLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     descheduleJobs()

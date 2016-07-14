@@ -5,7 +5,7 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler = Jobs)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()

@@ -173,8 +173,8 @@ case class AnyGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthChe
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync) extends LifecycleComponent {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync) extends LifecycleComponent {
 
   private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
