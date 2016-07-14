@@ -73,4 +73,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
+
+  val ABVideoCaption = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-caption",
+    "Testing if increasing prominence of video caption drives plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
+    exposeClientSide = true
+  )
 }
