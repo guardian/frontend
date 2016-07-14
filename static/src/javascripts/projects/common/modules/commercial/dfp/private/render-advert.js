@@ -32,8 +32,8 @@ define([
      */
 
     function addClassIfHasClass(newClassNames) {
-        return function (classNames) {
-            return function (_, advert) {
+        return function hasClass(classNames) {
+            return function onAdvertRendered(_, advert) {
                 var $node = bonzo(advert.node);
                 if (classNames.some($node.hasClass.bind($node))) {
                     return fastdom.write(function () {
