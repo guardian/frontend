@@ -217,3 +217,15 @@ $available-image-widths: 140px, 220px, 300px, 460px, 620px, 700px, 860px, 940px,
 // =============================================================================
 
 $popup-toggle-arrow-size: 4px;
+
+/**
+ * This shall stop the z-index chaos
+ */
+
+$zindex-ads: 1010;     // Ads
+$zindex-content: 1015; // Modals and overlays inside content
+$zindex-sticky: 1020;  // Sticky header
+$zindex-modal: 1030;   // Search modal
+$zindex-popover: 1040; // Breaking news
+$zindex-overlay: 1050; // Lightbox
+$zindex-notifications-permissions-warning: 1060;

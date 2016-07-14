@@ -5,6 +5,9 @@ watch: compile-dev
 		npm run css-watch & \
 		npm run browser-sync
 
+atomise-css:
+	@node tools/atomise-css
+
 compile: clean-assets
 	@grunt compile-assets
 
@@ -43,7 +46,7 @@ validate-js:
 	@grunt validate:js
 
 shrinkwrap:
-	@npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
+	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
 	@node tools/messages.js did-shrinkwrap
 
 clean-assets:
@@ -51,7 +54,6 @@ clean-assets:
 
 pasteup:
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
-
 
 # internal targets
 help:

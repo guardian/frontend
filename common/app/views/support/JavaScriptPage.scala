@@ -41,7 +41,6 @@ object JavaScriptPage {
       "oasSiteIdHost" -> JsString("www.theguardian-alpha.com"),
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
-      "hasBelowTopNavSlot" -> JsBoolean(metaData.hasAdInBelowTopNavSlot(edition)),
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case c: CommercialExpiryPage => true

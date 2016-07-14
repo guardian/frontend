@@ -80,19 +80,6 @@
         position: relative;
     }
 
-    &.top-banner-ad-container--below-nav {
-        border-bottom-width: 1px;
-
-        .ad-slot--top-banner-ad {
-            width: 980px;
-            padding-left: 0;
-        }
-
-        .ad-slot__label {
-            width: 980px;
-        }
-    }
-
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -118,13 +105,6 @@
 
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
-        .js-on & {
-            display: block;
-        }
-    }
-}
-.top-banner-ad-container--below-nav {
-    @include mq(desktop) {
         .js-on & {
             display: block;
         }
@@ -165,14 +145,6 @@
             margin-top: (-1) * $gs-row-height / 2;
         }
 
-        .ad-below-nav & {
-            min-height: 0;
-            padding-bottom: 0;
-
-            > div:last-of-type {
-                margin-bottom: $gs-row-height / 2;
-            }
-        }
         @include mq(tablet) {
             .js-on & {
                 display: block;

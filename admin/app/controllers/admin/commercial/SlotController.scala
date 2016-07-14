@@ -18,8 +18,6 @@ class SlotController extends Controller {
           Ok(views.html.commercial.slotTop(environment.stage, report))
         case "top-above-nav" =>
           Ok(views.html.commercial.slotTopAboveNav(environment.stage, report))
-        case "top-below-nav" =>
-          Ok(views.html.commercial.slotTopBelowNav(environment.stage, report))
         case _ => InternalServerError("Missing template")
       }
     maybeResult getOrElse Ok("No data available.")

@@ -166,11 +166,18 @@ $leffeColor: #dec190;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: 0;
+        @include fs-textSans(4);
+        margin-left: 16px;
         margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
+        @include mq(desktop) {
+            margin-left: 0;
+        }
 
         &:before {
             content: 'Watch now';
@@ -189,11 +196,6 @@ $leffeColor: #dec190;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }
-
-        @include fs-textSans(4);
-        color: #ffffff;
-        border: 2px solid #ffffff;
-        border-radius: 30px;
     }
 
     .vjs-control,
@@ -472,10 +474,13 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta-wrapper {
+    padding-top: 140px;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-    padding-top: 270px;
+    @include mq(desktop) {
+        padding-top: 270px;
+    }
 
     a {
         // hack stop the link underline
@@ -484,12 +489,13 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta-btn-wrapper {
-    padding-top: 220px;
+    padding-top: 90px;
+    @include mq(desktop) {
+        padding-top: 220px;
+    }
 }
 
 .hosted__cta.button {
-    padding: 0;
-
     &,
     &:focus,
     &:hover {
@@ -497,26 +503,30 @@ $leffeColor: #dec190;
     }
 
     @include mq(mobile) {
+        padding: 4px;
         height: 26px;
+        width: 26px;
         margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
             fill: $neutral-1;
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
         }
     }
 
     @include mq(tablet) {
+        padding: 8px;
         height: 38px;
+        width: 38px;
         margin: 8px;
         line-height: 1;
 
         svg {
-            width: 37px;
-            height: 37px;
+            width: 20px;
+            height: 20px;
         }
     }
 
@@ -555,8 +565,13 @@ $leffeColor: #dec190;
     .inline-icon {
         fill: #000000;
         position: absolute;
-        top: 3px;
-        right: 10px;
+        top: 6px;
+        right: 16px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
 
