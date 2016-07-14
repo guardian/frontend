@@ -64,11 +64,7 @@ define([
             // FSM CONFIG
             this.fsm = new FiniteStateMachine({
                 initial: 'image',
-                onChangeState: function (oldState, newState) {
-                    this.$galleryEl
-                        .removeClass('hosted-gallery--' + oldState)
-                        .addClass('hosted-gallery--' + newState);
-                },
+                onChangeState: function () {},
                 context: this,
                 states: this.states
             });
@@ -89,8 +85,14 @@ define([
     }
 
     HostedGallery.prototype.initScroll = function () {
-        bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next', {nav: 'Click'}));
-        bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev', {nav: 'Click'}));
+        bean.on(this.nextBtn, 'click', function(){
+            this.scrollTo(this.index + 1);
+            this.trigger.bind(this, 'next', {nav: 'Click'});
+        }.bind(this));
+        bean.on(this.prevBtn, 'click', function(){
+            this.scrollTo(this.index - 1);
+            this.trigger.bind(this, 'prev', {nav: 'Click'});
+        }.bind(this));
 
         bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
     };
@@ -272,14 +274,10 @@ define([
     HostedGallery.prototype.scrollTo = function (index) {
         var scrollEl = this.$scrollEl;
         var length = this.$images.length;
-        var scrollTop = scrollEl[0].scrollTop;
         var scrollHeight = scrollEl[0].scrollHeight;
-        var progress = length * (scrollTop / scrollHeight);
-        if (Math.abs(progress - index + 1) > 0.99) {
-            fastdom.write(function () {
-                scrollEl.scrollTop((index - 1) * scrollHeight / length);
-            });
-        }
+        fastdom.write(function () {
+            scrollEl.scrollTop((index - 1) * scrollHeight / length);
+        });
     };
 
 
@@ -300,8 +298,6 @@ define([
                     this.translateContent(this.index, 0, 100);
                     bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
                     bonzo(this.$galleryEl).toggleClass('show-cta', this.index === config.page.ctaIndex + 1);
-                } else {
-                    this.scrollTo(this.index);
                 }
                 // event bindings
                 mediator.on('window:resize', this.resize);
@@ -400,10 +396,12 @@ define([
         };
         if (e.keyCode === 37 || e.keyCode === 38) { // up/left
             e.preventDefault();
+            this.scrollTo(this.index - 1);
             this.trigger('prev', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 39 || e.keyCode === 40) { // down/right
             e.preventDefault();
+            this.scrollTo(this.index + 1);
             this.trigger('next', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 73) { // 'i'
