@@ -16,7 +16,6 @@ class IndexListingsLifecycle extends LifecycleComponent {
     ContributorAlphaIndexAutoRefresh.start()
   }
 }
-object IndexListingsLifecycle extends IndexListingsLifecycle
 
 object KeywordSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
   override protected def refresh(): Future[TagIndexListings] = Future {
