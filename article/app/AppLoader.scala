@@ -1,4 +1,4 @@
-import _root_.http.CorsHttpErrorHandler
+import http.CorsHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
