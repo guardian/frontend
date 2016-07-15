@@ -40,6 +40,8 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
     @include fs-headline(3);
     color: darken($news-support-4, 25%);
     margin-top: $gs-baseline;
+    font-size: 22px;
+    font-weight: 200;
 }
 
 .labour-liverpool-cutout {
