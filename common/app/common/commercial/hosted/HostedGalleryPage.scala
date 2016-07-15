@@ -27,8 +27,6 @@ case class HostedGalleryPage(
   })
 
   override val metadata: MetaData = {
-    val toneId = "tone/hosted-content"
-    val toneName = "Hosted content"
     val sectionId = "hosted-gallery"
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
@@ -36,14 +34,15 @@ case class HostedGalleryPage(
       id = s"commercial/advertiser-content/$sectionId/$pageName",
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
-      contentType = Hosted,
-      analyticsName = s"GFE:$sectionId:$Hosted:$pageName",
+      contentType = Gallery,
+      analyticsName = s"GFE:$sectionId:$Gallery:$pageName",
       description = Some(pageTitle),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
+        "trackingPrefix" -> JsString(s"Hosted:GFE:gallery:$pageName:"),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
         "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
       ),
