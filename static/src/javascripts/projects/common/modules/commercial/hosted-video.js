@@ -9,6 +9,7 @@ define([
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/report-error',
     'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
@@ -24,6 +25,7 @@ define([
     $,
     deferToAnalytics,
     detect,
+    mediator,
     reportError,
     omniture,
     ab,
@@ -61,6 +63,7 @@ define([
         return setInterval(function () {
             if (duration === 0) {
                 omniture.trackLinkImmediate('Immediately play the next video');
+                mediator.emit('hosted video: autoredirect');//inform AB framework about the success
                 window.location = nextVideoLink;
             }
             fastdom.write(function () {
