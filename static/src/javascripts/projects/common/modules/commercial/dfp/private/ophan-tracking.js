@@ -1,8 +1,20 @@
 define([
-    'raven'
-], function (raven) {
+    'raven',
+    'common/utils/user-timing',
+    'common/modules/commercial/dfp/private/get-advert-by-id'
+], function (raven, userTiming, getAdvertById) {
 
-    function trackPerformance(googletag, renderStartTime) {
+    var performanceLog = {
+            modules: [],
+            adverts: [],
+            baselines: []
+        },
+        initial = new Date().getTime(), // For backwards compatibility below, whilst we still use the old ophan format.
+        primaryBaseline = 'primary',
+        secondaryBaseline = 'secondary';
+
+    function trackPerformance(googletag) {
+
         var adTimings = {};
         spyOnAdDebugTimings();
         reportAdsAndTimingsOnRender();
@@ -19,6 +31,11 @@ define([
                     3: 'fetch',
                     4: 'receive',
                     6: 'render'
+                },
+                lifecycleIdToAdvertTiming = {
+                    3: 'dfpFetching',
+                    4: 'dfpReceived',
+                    6: 'dfpRendered'
                 };
 
             googletag.debug_log.log = function interceptedGptDebugger(level, message, service, slot) {
@@ -29,6 +46,12 @@ define([
                     adTimings[slotId] = adTimings[slotId] || {};
                     timingAttr = lifecycleIdToTimingAttr[lifecycleId];
                     adTimings[slotId][timingAttr] = new Date().getTime();
+
+                    var advert = getAdvertById(slotId);
+                    var timing = lifecycleIdToAdvertTiming[lifecycleId];
+                    if (advert && timing in advert.timings) {
+                        advert.timings[timing] = userTiming.getCurrentTime();
+                    }
                 }
 
                 // Call original debugger as normal
@@ -59,10 +82,10 @@ define([
                             slot: event.slot.getSlotElementId(),
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
-                            timeToRenderEnded: safeDiff(renderStartTime, new Date().getTime()),
+                            timeToRenderEnded: safeDiff(initial, new Date().getTime()),
 
                             // overall time to make an ad request
-                            timeToAdRequest: safeDiff(renderStartTime, slotTiming.fetch),
+                            timeToAdRequest: safeDiff(initial, slotTiming.fetch),
 
                             // delay between requesting and receiving an ad
                             adRetrievalTime: safeDiff(slotTiming.fetch, slotTiming.receive),
@@ -84,7 +107,63 @@ define([
         }
     }
 
+    // moduleCheckpoint() is called when a module has finished execution.
+    // The baseline allows us to determine whether the module was called in the first
+    // boot phase (primary) or the second boot phase (secondary).
+    function moduleCheckpoint(module, baseline) {
+        var timerEnd = userTiming.getCurrentTime();
+        var timerStart = getBaseline(baseline);
+        performanceLog.modules.push({
+            name: module,
+            start: timerStart,
+            duration: timerEnd - timerStart
+        });
+    }
+
+    // updateAdvertMetric() is called whenever the advert timings need to be updated.
+    // It may be called multiple times for the same advert, so that we effectively update
+    // the object with additional timings.
+    function updateAdvertMetric(advert, metricName, metricValue) {
+        performanceLog.adverts = performanceLog.adverts.filter(function(element){
+            return advert.id !== element.id;
+        });
+        advert.timings[metricName] = metricValue;
+        performanceLog.adverts.push(Object.freeze({
+            id: advert.id,
+            isEmpty: advert.isEmpty,
+            createTime: advert.timings.createTime,
+            startLoading: advert.timings.startLoading,
+            dfpFetching: advert.timings.dfpFetching,
+            dfpReceived: advert.timings.dfpReceived,
+            dfpRendered: advert.timings.dfpRendered,
+            stopLoading: advert.timings.stopLoading,
+            startRendering: advert.timings.startRendering,
+            stopRendering: advert.timings.stopRendering,
+            loadingMethod: advert.timings.loadingMethod,
+            lazyWaitComplete: advert.timings.lazyWaitComplete
+        }));
+    }
+
+    function addBaseline(baselineName) {
+        performanceLog.baselines.push({
+            name: baselineName,
+            time: userTiming.getCurrentTime()
+        });
+    }
+
+    function getBaseline(baselineName) {
+        var baseline = performanceLog.baselines.find(function(baseline){
+            return baseline.name === baselineName;
+        });
+        return baseline.time;
+    }
+
     return {
-        trackPerformance : trackPerformance
+        trackPerformance : trackPerformance,
+        moduleCheckpoint : moduleCheckpoint,
+        updateAdvertMetric : updateAdvertMetric,
+        addBaseline : addBaseline,
+        primaryBaseline : primaryBaseline,
+        secondaryBaseline: secondaryBaseline
     };
 });

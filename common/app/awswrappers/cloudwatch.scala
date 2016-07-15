@@ -13,8 +13,8 @@ import scala.concurrent.Future
   */
 object cloudwatch {
   implicit class RichAsyncCloudWatchClient(client: AmazonCloudWatchAsyncClient) {
-    def putMetricDataFuture(request: PutMetricDataRequest): Future[Void] =
-      asFuture[PutMetricDataRequest, Void](client.putMetricDataAsync(request, _))
+    def putMetricDataFuture(request: PutMetricDataRequest): Future[PutMetricDataResult] =
+      asFuture[PutMetricDataRequest, PutMetricDataResult](client.putMetricDataAsync(request, _))
 
     def getMetricStatisticsFuture(request: GetMetricStatisticsRequest): Future[GetMetricStatisticsResult] =
       asFuture[GetMetricStatisticsRequest, GetMetricStatisticsResult](client.getMetricStatisticsAsync(request, _))

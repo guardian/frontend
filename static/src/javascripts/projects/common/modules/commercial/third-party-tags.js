@@ -66,14 +66,14 @@ define([
     function init() {
 
         if (!commercialFeatures.thirdPartyTags) {
-            return false;
+            return Promise.resolve(false);
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
         loadExternalContentWidget();
 
         loadOther();
-        return Promise.resolve(null);
+        return Promise.resolve(true);
     }
 
     function loadOther() {
