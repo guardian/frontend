@@ -34,7 +34,7 @@
     }
 }
 
-.new-header__edition-button {
+.new-header__edition-picker {
     @include fs-textSans(2);
     order: -1;
     color: $news-support-1;
@@ -51,20 +51,20 @@
     @include mq($until: mobileLandscape) {
         font-size: 3.8vw;
     }
+}
 
-    svg {
-        fill: currentColor;
-        // Spacing also due to inline elements
-        margin-right: 1px;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 14px;
-        min-height: 14px;
+.inline-world__svg {
+    fill: currentColor;
+    // Spacing also due to inline elements
+    margin-right: 1px;
+    vertical-align: middle;
+    margin-top: -2px;
+    min-width: 14px;
+    min-height: 14px;
 
-        @include mq($until: mobileLandscape) {
-            width: 4vw;
-            height: 4vw;
-        }
+    @include mq($until: mobileLandscape) {
+        width: 4vw;
+        height: 4vw;
     }
 }
 
