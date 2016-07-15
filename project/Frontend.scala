@@ -142,8 +142,6 @@ object Frontend extends Build with Prototypes {
       identityModel,
       identityRequest,
       identityCookie,
-      seeGuice,
-      guice,
       liftJson,
       commonsHttpClient,
       slf4jExt,
