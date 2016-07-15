@@ -117,7 +117,7 @@
 }
 
 .ad-slot--top-banner-ad-mobile {
-    height: 50px;
+    min-height: 250px;
     padding: $gs-baseline 0;
 
     @include mq(tablet) {
