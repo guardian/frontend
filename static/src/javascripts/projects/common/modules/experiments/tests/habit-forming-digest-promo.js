@@ -33,7 +33,7 @@ define([
         this.idealOutcome = 'Visitors click on the CTA and demonstrate demand for the feature';
 
         this.canRun = function () {
-            return !(config.page.isAdvertisementFeature) && config.page.contentType === 'Article';
+            return !(config.page.isAdvertisementFeature) && config.page.contentType === 'Article' && isInfrequentVisitor();
         };
 
         var defaultData = {
@@ -45,8 +45,7 @@ define([
             this.config = config;
 
             this.templates = {
-                'adblock-sticky-message': digestPromo,
-                'adblock-sticky-message-coin': adblockStickyMessageCoin
+                'adblock-sticky-message': digestPromo
             };
         };
 
@@ -55,25 +54,14 @@ define([
         };
 
         // check if the user is one of the target audience
-        function isInfrequentVisitor(cookieName) {
-            var habitCookie = cookies.get(cookieName);
-            if (!(habitCookie) && storage.local.isStorageAvailable()) {
+        function isInfrequentVisitor() {
+            if (storage.local.isStorageAvailable()) {
                 var alreadyVisited = storage.local.get('gu.alreadyVisited');
-                // check alreadyVisited and visit frequency?
-                return true;
+                if (alreadyVisited > 3) {
+                    return true;
+                }
             }
             return false;
-        }
-
-        // makes the thing
-        function renderDigestSnap2(messageText, linkText) {
-            return fastdomPromise.write(function () {
-                var article = document.getElementsByClassName('content__article-body')[0];
-                var insertionPoint = article.getElementsByTagName('p')[1];
-                var habitDigest = document.createElement('div');
-                habitDigest.innerHTML = digestPromo;
-                article.insertBefore(habitDigest, insertionPoint);
-            });
         }
 
         function renderDigestSnap(messageText, linkText, linkHref) {
@@ -93,25 +81,25 @@ define([
             {
                 id: 'digest',
                 test: function () {
-                    var messageText = "Get a package of stories tailored to you";
-                    var linkText = "Get started";
-                    var linkHref = "http://www.google.com";
+                    var messageText = 'Get a package of stories tailored to you';
+                    var linkText = 'Get started';
+                    var linkHref = 'http://www.google.com';
                     renderDigestSnap(messageText, linkText, linkHref);
                 }
             }, {
                 id: 'weekend',
                 test: function () {
-                    var messageText = "Get the best stuff you didn't have time to read during the week delivered to you every Saturday";
-                    var linkText = "Sign up";
-                    var linkHref = "http://www.google.com";
+                    var messageText = 'Get the best stuff you didn\'t have time to read during the week delivered to you every Saturday';
+                    var linkText = 'Sign up';
+                    var linkHref = 'http://www.google.com';
                     renderDigestSnap(messageText, linkText, linkHref);
                 }
             }, {
                 id: 'headlines',
                 test: function () {
-                    var messageText = "Get the top headlines delivered to you every morning";
-                    var linkText = "Sign up";
-                    var linkHref = "http://www.google.com";
+                    var messageText = 'Get the top headlines delivered to you every morning';
+                    var linkText = 'Sign up';
+                    var linkHref = 'http://www.google.com';
                     renderDigestSnap(messageText, linkText, linkHref);
                 }
             }
