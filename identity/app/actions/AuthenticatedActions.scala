@@ -4,9 +4,7 @@ import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
 import client.Logging
-import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
-import play.api.mvc.Results._
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc.{Result, RequestHeader, ActionRefiner, Results}
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
@@ -18,8 +16,7 @@ object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
 }
 
-@Singleton
-class AuthenticatedActions @Inject()(authService: AuthenticationService, identityApiClient: IdApiClient, identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
+class AuthenticatedActions(authService: AuthenticationService, identityApiClient: IdApiClient, identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
 
   def redirectWithReturn(request: RequestHeader, path: String) = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")

@@ -1,5 +1,6 @@
 package conf
 
+import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
 import play.api.{Mode, Play}
@@ -172,8 +173,8 @@ case class AnyGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthChe
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync) extends LifecycleComponent {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync) extends LifecycleComponent {
 
   private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 

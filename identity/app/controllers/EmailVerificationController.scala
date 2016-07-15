@@ -1,7 +1,6 @@
 package controllers
 
 import play.api.mvc.{Controller, Action}
-import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import services.{ReturnUrlVerifier, AuthenticationService, IdentityUrlBuilder, IdRequestParser}
 import common.ExecutionContexts
@@ -9,13 +8,12 @@ import utils.SafeLogging
 import model.IdentityPage
 import actions.AuthenticatedActions
 
-@Singleton
-class EmailVerificationController @Inject()( api: IdApiClient,
-                                             authenticatedActions: AuthenticatedActions,
-                                             authenticationService: AuthenticationService,
-                                             idRequestParser: IdRequestParser,
-                                             idUrlBuilder: IdentityUrlBuilder,
-                                             returnUrlVerifier: ReturnUrlVerifier)
+class EmailVerificationController( api: IdApiClient,
+                                   authenticatedActions: AuthenticatedActions,
+                                   authenticationService: AuthenticationService,
+                                   idRequestParser: IdRequestParser,
+                                   idUrlBuilder: IdentityUrlBuilder,
+                                   returnUrlVerifier: ReturnUrlVerifier)
   extends Controller with ExecutionContexts with SafeLogging {
   import ValidationState._
   import authenticatedActions.authActionWithUser

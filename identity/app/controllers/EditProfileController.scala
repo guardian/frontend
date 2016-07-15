@@ -2,7 +2,6 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.User
 import common.ExecutionContexts
 import form._
@@ -23,13 +22,12 @@ case object PublicEditProfilePage extends EditProfilePage
 case object AccountEditProfilePage extends EditProfilePage
 case object PrivacyEditProfilePage extends EditProfilePage
 
-@Singleton
-class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
-                                      authenticatedActions: AuthenticatedActions,
-                                      identityApiClient: IdApiClient,
-                                      idRequestParser: IdRequestParser,
-                                      val messagesApi: MessagesApi,
-                                      implicit val profileFormsMapping: ProfileFormsMapping)
+class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
+                            authenticatedActions: AuthenticatedActions,
+                            identityApiClient: IdApiClient,
+                            idRequestParser: IdRequestParser,
+                            val messagesApi: MessagesApi,
+                            implicit val profileFormsMapping: ProfileFormsMapping)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._

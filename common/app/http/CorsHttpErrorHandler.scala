@@ -1,8 +1,7 @@
 package http
 
-import com.google.inject.Inject
 import model.Cors
-import play.api.{Configuration => PlayConfiguration, OptionalSourceMapper, Mode, Environment}
+import play.api.{Configuration => PlayConfiguration, Mode, Environment}
 import play.api.http.Status._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.{Result, RequestHeader, Results}
@@ -19,11 +18,6 @@ class CorsHttpErrorHandler(
   configuration = configuration,
   sourceMapper = sourceMapper
 ) with Results {
-
-  @Inject()
-  def this(environment: Environment, configuration: PlayConfiguration, sourceMapper: OptionalSourceMapper)(implicit ec: ExecutionContext) {
-    this(environment, configuration, sourceMapper.sourceMapper)(ec)
-  }
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")

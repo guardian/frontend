@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
@@ -23,7 +22,6 @@ define([
     mvtCookie,
     memoize,
     noop,
-    LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
@@ -33,7 +31,6 @@ define([
 ) {
 
     var TESTS = [
-        new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),

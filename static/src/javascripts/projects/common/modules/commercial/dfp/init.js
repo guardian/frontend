@@ -11,14 +11,13 @@ define([
     'common/modules/commercial/dfp/private/PrebidService',
     'common/modules/commercial/dfp/private/ophan-tracking'
 ], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
-    /* renderStartTime: integer. Point in time when DFP kicks in */
-    var renderStartTime = -1;
+
+
     return init;
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            setupAdvertising();
-            return Promise.resolve();
+            return setupAdvertising();
         }
 
         return fastdom.write(function () {
@@ -27,30 +26,33 @@ define([
     }
 
     function setupAdvertising() {
-        // if we don't already have googletag, create command queue and load it async
-        if (!window.googletag) {
-            window.googletag = { cmd: [] };
-            // load the library asynchronously
-            require(['js!googletag.js']);
-        }
 
-        if (dfpEnv.prebidEnabled) {
-            dfpEnv.prebidService = new PrebidService();
-        }
+        return new Promise(function(resolve) {
+            // if we don't already have googletag, create command queue and load it async
+            if (!window.googletag) {
+                window.googletag = {cmd: []};
+                // load the library asynchronously
+                require(['js!googletag.js']);
+            }
 
-        window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
+            if (dfpEnv.prebidEnabled) {
+                dfpEnv.prebidService = new PrebidService();
+            }
 
-        window.googletag.cmd.push(
-            function () {
-                renderStartTime = new Date().getTime();
-            },
-            setListeners,
-            setPageTargeting
-        );
+            window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
+
+            window.googletag.cmd.push(
+                setListeners,
+                setPageTargeting,
+                resolve
+            );
+        });
     }
 
     function setListeners() {
-        ophanTracking.trackPerformance(window.googletag, renderStartTime);
+
+        ophanTracking.trackPerformance(window.googletag);
+
 
         window.googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     }

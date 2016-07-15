@@ -21,13 +21,13 @@ trait CloudWatch extends Logging {
     client
   }
 
-  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
+  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with Logging
   {
     def onError(exception: Exception)
     {
       log.info(s"CloudWatch PutMetricDataRequest error: ${exception.getMessage}}")
     }
-    def onSuccess(request: PutMetricDataRequest, result: Void )
+    def onSuccess(request: PutMetricDataRequest, result: PutMetricDataResult )
     {
       log.info("CloudWatch PutMetricDataRequest - success")
     }

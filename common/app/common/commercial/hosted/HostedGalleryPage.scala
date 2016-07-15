@@ -15,11 +15,13 @@ case class HostedGalleryPage(
   ctaLink: String,
   ctaButtonText: String,
   ctaIndex: Option[Integer] = None,
+  shareText: Option[String] = None,
   images: List[HostedGalleryImage],
   nextGalleryNames: List[String] = List()
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
+  val twitterText = shareText.getOrElse(if(standfirst.length < 136) standfirst else title) + " #ad"
 
   def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
     case gallery: HostedGalleryPage => Some(gallery)
@@ -27,7 +29,7 @@ case class HostedGalleryPage(
   })
 
   override val metadata: MetaData = {
-    val sectionId = "hosted-gallery"
+    val sectionId = campaign.id
     val keywordId = s"$sectionId/$sectionId"
     val keywordName = sectionId
     MetaData.make(

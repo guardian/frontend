@@ -130,7 +130,14 @@ define([
                     })
                 };
                 window.googletag = {
-                    cmd: [],
+                    cmd: {
+                        push: function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            args.forEach(function(command) {
+                                command();
+                            });
+                        }
+                    },
                     pubads: function () {
                         return pubAds;
                     },
@@ -182,11 +189,9 @@ define([
 
         it('should get the slots', function (done) {
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should not get hidden ad slots', function (done) {
@@ -195,7 +200,6 @@ define([
                 .then(dfp.init)
                 .then(dfp.load)
                 .then(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
                     var slots = dfp.getAdverts();
                     expect(Object.keys(slots).length).toBe(3);
                     for (var slotId in slots) {
@@ -203,7 +207,6 @@ define([
                     }
                     done();
                 });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should set listeners', function (done) {
@@ -211,13 +214,10 @@ define([
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should define slots', function (done) {
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
-
                 [
                     ['dfp-ad-html-slot', [[300, 50]], [[[0, 0], [[300, 50]]]], 'html-slot'],
                     ['dfp-ad-script-slot', [[300, 50], [320, 50]], [[[0, 0], [[300, 50], [320, 50]]]], 'script-slot'],
@@ -235,7 +235,6 @@ define([
 
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should display ads', function (done) {
@@ -244,24 +243,20 @@ define([
                 return 'wide';
             };
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
                 expect(window.googletag.enableServices).toHaveBeenCalled();
                 expect(window.googletag.display).toHaveBeenCalled('dfp-ad-html-slot');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should expose ads IDs', function (done) {
@@ -271,7 +266,6 @@ define([
             fakeEventTwo.creativeId = '2';
 
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
                 window.googletag.pubads().listener(fakeEventOne);
                 window.googletag.pubads().listener(fakeEventTwo);
 
@@ -282,7 +276,6 @@ define([
                 expect(result[1]).toEqual('2');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         describe('pageskin loading', function () {
@@ -303,17 +296,14 @@ define([
 
             it('should send page level keywords', function () {
                 dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
             });
 
             it('should send container level keywords', function (done) {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
                 dfp.init().then(dfp.load).then(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 }).then(done).catch(done.fail);
-                window.googletag.cmd.forEach(function (func) { func(); });
             });
 
         });

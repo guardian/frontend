@@ -3,13 +3,11 @@ package controllers
 import java.net.URI
 
 import actions.AuthenticatedActions
-import client.Error
 import com.gu.identity.model.SavedArticles
 import model._
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
-import com.google.inject.{Singleton, Inject}
 import common.ExecutionContexts
 import idapiclient.IdApiClient
 import implicits.Articles._
@@ -24,15 +22,13 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-@Singleton
-class SaveContentController @Inject() ( api: IdApiClient,
-                                        identityRequestParser: IdRequestParser,
-                                        authenticatedActions: AuthenticatedActions,
-                                        returnUrlVerifier: ReturnUrlVerifier,
-                                        savedArticleService: PlaySavedArticlesService,
-                                        idUrlBuilder: IdentityUrlBuilder,
-                                        pageDataBuilder: SaveForLaterDataBuilder
-                                        )
+class SaveContentController(api: IdApiClient,
+                            identityRequestParser: IdRequestParser,
+                            authenticatedActions: AuthenticatedActions,
+                            returnUrlVerifier: ReturnUrlVerifier,
+                            savedArticleService: PlaySavedArticlesService,
+                            idUrlBuilder: IdentityUrlBuilder,
+                            pageDataBuilder: SaveForLaterDataBuilder)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import SavedArticleData._

@@ -3030,8 +3030,14 @@
       "version": "5.1.0"
     },
     "postcss-atomised": {
-      "version": "0.2.3",
+      "version": "0.3.1",
       "dependencies": {
+        "minimist": {
+          "version": "0.0.8"
+        },
+        "mkdirp": {
+          "version": "0.5.1"
+        },
         "pretty-bytes": {
           "version": "3.0.1"
         }
@@ -3486,7 +3492,20 @@
       "version": "0.5.3"
     },
     "shoe": {
-      "version": "0.0.11"
+      "version": "0.0.11",
+      "dependencies": {
+        "node-uuid": {
+          "version": "1.3.3"
+        },
+        "sockjs": {
+          "version": "0.3.1",
+          "resolved": "git://github.com/substack/sockjs-node.git#49090a1212ba2e7216c1cf36415de3c5c74e1901"
+        },
+        "sockjs-client": {
+          "version": "0.0.0-unreleasable",
+          "resolved": "git://github.com/substack/sockjs-client.git#40d48d06b4dba884416bf88a051f76ca3c8ffcae"
+        }
+      }
     },
     "shorthash": {
       "version": "0.0.2"
@@ -3543,19 +3562,6 @@
           "version": "3.3.2"
         }
       }
-    },
-    "sockjs": {
-      "version": "0.3.1",
-      "resolved": "git://github.com/substack/sockjs-node.git#49090a1212ba2e7216c1cf36415de3c5c74e1901",
-      "dependencies": {
-        "node-uuid": {
-          "version": "1.3.3"
-        }
-      }
-    },
-    "sockjs-client": {
-      "version": "0.0.0-unreleasable",
-      "resolved": "git://github.com/substack/sockjs-client.git#40d48d06b4dba884416bf88a051f76ca3c8ffcae"
     },
     "sort-keys": {
       "version": "1.1.2"

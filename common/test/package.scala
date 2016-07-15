@@ -3,7 +3,6 @@ package test
 import java.io.File
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
-import com.typesafe.config.ConfigFactory
 import common.ExecutionContexts
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
@@ -106,24 +105,13 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
     ("ws.timeout.idle", "10000"),
     ("ws.timeout.request", "10000"))
 
-  // depending on which project we're testing:
-  // we either want the GuiceAppLoader (default fake app) or the actual compile time injected app
   implicit override lazy val app: Application = {
-    val initialConfig = ConfigFactory.load()
-    val appLoader = Option(initialConfig.getString("play.application.loader"))
-
-    if (appLoader.contains("play.api.inject.guice.GuiceApplicationLoader")) {
-      FakeApplication(
-        additionalConfiguration = initialSettings
-      )
-    } else {
-      val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
-      val context = ApplicationLoader.createContext(
-        environment = environment,
-        initialSettings = initialSettings
-      )
-      ApplicationLoader.apply(context).load(context)
-    }
+    val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val context = ApplicationLoader.createContext(
+      environment = environment,
+      initialSettings = initialSettings
+    )
+    ApplicationLoader.apply(context).load(context)
   }
 }
 
