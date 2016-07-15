@@ -4,7 +4,7 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABLiveBlogChromeNotificationsProd = Switch(
+  val ABLiveBlogChromeNotificationsProd2 = Switch(
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
