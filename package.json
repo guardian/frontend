@@ -85,7 +85,7 @@
     "phantomjs-prebuilt": "^2.1.7",
     "pify": "^2.3.0",
     "postcss": "^5.0.21",
-    "postcss-atomised": "^0.2.0-alpha.3",
+    "postcss-atomised": "^0.3.1",
     "postcss-pxtorem": "^3.3.1",
     "postcss-reporter": "^1.4.1",
     "require-dir": "^0.3.0",

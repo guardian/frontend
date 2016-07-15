@@ -63,7 +63,7 @@
         position: relative;
         margin-bottom: .8em;
     }
-    h2 {
+    > h2 {
         @include fs-header(2);
 
         @include mq(tablet) {
@@ -71,7 +71,7 @@
             margin-bottom: 1px;
         }
     }
-    h3 {
+    > h3 {
         @include fs-bodyHeading(2);
         margin: 0;
 

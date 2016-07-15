@@ -1,9 +1,9 @@
 package football.controllers
 
-import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 
 class HealthCheck extends AllGoodCachedHealthCheck(
   9013,
-  ExpiringSingleHealthCheck("/football/live"),
-  ExpiringSingleHealthCheck("/football/premierleague/results")
+  NeverExpiresSingleHealthCheck("/football/live"),
+  NeverExpiresSingleHealthCheck("/football/premierleague/results")
 )

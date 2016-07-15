@@ -19,7 +19,8 @@ define([
     'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/third-party-tags',
     'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/paid-containers'
+    'common/modules/commercial/paid-containers',
+    'common/modules/commercial/dfp/private/ophan-tracking'
 ], function (
     Promise,
     config,
@@ -41,32 +42,35 @@ define([
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
-    paidContainers
+    paidContainers,
+    ophanTracking
 ) {
-    var modules = [
-        ['cm-dfp', dfpInit],
+    var primaryModules = [
+        ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
-    ],
-    secondaryModules = [
-        ['cm-adverts', dfpLoad],
+    ];
+
+    var secondaryModules = [
+        ['cm-load', dfpLoad],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-sponsorships', sponsorships.init],
         ['cm-hostedVideo', hostedVideo.init],
         ['cm-hostedGallery', hostedGallery.init],
         ['cm-paidforBand', paidforBand.init],
-        ['cm-new-adverts', paidContainers.init],
+        ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
             mediator.emit('page:commercial:ready');
             userTiming.mark('commercial end');
+            return Promise.resolve();
         }]
     ];
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
-        modules.push(['cm-badges', badges.init]);
+        primaryModules.push(['cm-badges', badges.init]);
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
@@ -79,6 +83,27 @@ define([
         secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
+    function loadModules(modules, baseline) {
+
+        ophanTracking.addBaseline(baseline);
+
+        var modulePromises = [];
+
+        modules.forEach(function (pair) {
+
+            var moduleName = pair[0];
+
+            robust.catchErrorsAndLog(moduleName, function () {
+                var modulePromise = pair[1]().then(function(){
+                    ophanTracking.moduleCheckpoint(moduleName, baseline);
+                });
+
+                modulePromises.push(modulePromise);
+            });
+        });
+
+       return Promise.all(modulePromises);
+    }
 
     return {
         init: function () {
@@ -88,16 +113,8 @@ define([
 
             userTiming.mark('commercial start');
 
-            var modulePromises = [];
-
-            modules.forEach(function (pair) {
-                robust.catchErrorsAndLog(pair[0], function () {
-                    modulePromises.push(pair[1]());
-                });
-            });
-
-            Promise.all(modulePromises).then(function () {
-                robust.catchErrorsAndLogAll(secondaryModules);
+            loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
+                loadModules(secondaryModules, ophanTracking.secondaryBaseline);
             });
         }
     };
