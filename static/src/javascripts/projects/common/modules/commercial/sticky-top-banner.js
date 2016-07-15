@@ -35,7 +35,7 @@ define([
     // Rubicon ads may resize asynchronously. They have a resize event we can
     // subscribe to.
 
-    var $adBanner = $('.top-banner-ad-container--desktop');
+    var $adBanner = $('.js-top-banner-desktop');
     var $adBannerInner = $('.ad-slot', $adBanner);
     var $header = $('.js-header');
 
