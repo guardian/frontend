@@ -59,6 +59,6 @@ define([
     return {
         listenToMediaEvents: listenToMediaEvents,
         ophanRecord: ophanRecord
-    }
+    };
 
 });

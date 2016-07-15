@@ -42,7 +42,7 @@ define([
 
             bean.one(el, eventName, function() {
                 bean.fire(el, fullEventName, eventProps);
-                mediator.emit(fullEventName, eventProps)
+                mediator.emit(fullEventName, eventProps);
             });
         });
 
