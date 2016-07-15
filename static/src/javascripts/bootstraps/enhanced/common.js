@@ -29,6 +29,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
+    'common/modules/navigation/newHeaderNavigation',
     'common/modules/commercial/hosted-about',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
@@ -83,6 +84,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
+    newHeaderNavigation,
     hostedAbout,
     Profile,
     Search,
@@ -129,6 +131,7 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+                newHeaderNavigation();
             },
 
             showTabs: function () {

@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Does 'join discussion' message after poll participation increase comments",
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 7, 27),
     exposeClientSide = true
   )
 
@@ -70,7 +70,7 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 14),
+    sellByDate = new LocalDate(2016, 7, 29),
     exposeClientSide = true
   )
 

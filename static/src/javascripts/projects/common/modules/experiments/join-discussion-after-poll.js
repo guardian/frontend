@@ -54,7 +54,7 @@ define([
         var messageElem = document.createElement('div');
 
         messageElem.classList.add('join-discussion-after-poll');
-        messageElem.innerHTML = '<p>Thanks for taking part! Why not <a href="#comments">join the discussion</a>?</p>';
+        messageElem.innerHTML = '<p>Thanks for taking part! Why not <a data-link-name="poll: cta: join discussion" href="#comments">join the discussion</a>?</p>';
 
         if (nextSibling) {
             nextSibling.parentNode.insertBefore(messageElem, nextSibling);

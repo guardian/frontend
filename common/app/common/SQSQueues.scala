@@ -35,8 +35,8 @@ object SQSQueues {
     def receiveMessageFuture(request: ReceiveMessageRequest): Future[ReceiveMessageResult] =
       asFuture[ReceiveMessageRequest, ReceiveMessageResult](client.receiveMessageAsync(request, _))
 
-    def deleteMessageFuture(request: DeleteMessageRequest): Future[Void] =
-      asFuture[DeleteMessageRequest, Void](client.deleteMessageAsync(request, _))
+    def deleteMessageFuture(request: DeleteMessageRequest): Future[DeleteMessageResult] =
+      asFuture[DeleteMessageRequest, DeleteMessageResult](client.deleteMessageAsync(request, _))
 
     def sendMessageFuture(request: SendMessageRequest): Future[SendMessageResult] =
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
