@@ -79,7 +79,8 @@ import scala.collection.JavaConversions._
 
     // newer blocks
     content should include("block-56d03894e4b0bd5a0524cbab")
-    content should include("block-56d04877e4b0bd5a0524cbe2")
+    content should include("block-56d039fce4b0d38537b1f61e")
+    content should not include("56d04877e4b0bd5a0524cbe2")// at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
     //this block
     content should not include lastUpdateBlock

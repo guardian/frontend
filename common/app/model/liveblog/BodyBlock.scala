@@ -13,7 +13,7 @@ object Blocks {
   def make(blocks: ApiBlocks): Blocks = {
 
     def orderBlocks(blocks: Seq[BodyBlock]) =
-      blocks.sortBy(_.publishedDate.map(_.getMillis).getOrElse(0L)).reverse
+      blocks.sortBy(_.firstPublishedDate.map(_.getMillis).getOrElse(0L)).reverse
 
     val bodyBlocks = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
