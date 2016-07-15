@@ -49,7 +49,6 @@ object Commercial {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
-        "top-banner-ad-container--above-nav",
         "js-top-banner-above-nav",
         "top-banner-ad-container--reveal"
       )
