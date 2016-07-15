@@ -10,57 +10,16 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'common/utils/Queue'
 ], function (
     fastdom,
     Promise,
-    assign
+    assign,
+    Queue
 ) {
 
-    function Queue() {
-        this.queue = [];
-    }
-
-    /**
-     * Add an item to the queue
-     *
-     * @param  {Object} item  item to add
-     * @return {Number}         queue length
-     */
-    Queue.prototype.enqueue = function(item) {
-        return this.queue.push(item);
-    };
-
-    /**
-     * Take the first item from the queue
-     *
-     * @return {Anything} the item
-     */
-    Queue.prototype.dequeue = function() {
-        return this.queue.shift();
-    };
-
-    /**
-     * Check if the queue is empty
-     *
-     * @return {Boolean}
-     */
-    Queue.prototype.empty = function() {
-        return this.queue.length === 0;
-    };
-
-
-
-
-
-
-
-// -------------------
-
-
-
-
-    var q = new Queue();
+    var q = Queue;
     var running = false;
     var promise;
 
@@ -69,7 +28,7 @@ define([
      * in the batch
      *
      * @param  {Array} batch
-     * @param  {Number} currentBatchHeight
+     * @param  {Number} state.scrollY
      */
     function getHeightOfAllContainers (batch, state) {
         return fastdom.read(function() {
