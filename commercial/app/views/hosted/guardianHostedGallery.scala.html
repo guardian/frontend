@@ -12,16 +12,14 @@
                     <div class="js-hosted-gallery-images hosted-gallery__images-container">
                         @guardianHostedGalleryImage(page.images.head, {
                             <div class="hosted-gallery__meta">
-                                <h1 class="hosted-gallery__heading">{page.title}</h1>
-                                <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
+                                <div class="content__main-column">
+                                    <h1 class="hosted-gallery__heading">{page.title}</h1>
+                                    <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
+                                </div>
                             </div>
                         }.toString)
                         @for(i <- page.images.indices.tail) {
-                            @guardianHostedGalleryImage(page.images(i), if (i == page.images.length - 1) {
-                                guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries).toString
-                            } else if (page.ctaIndex.contains(i)) {
-                                guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
-                            } else "")
+                            @guardianHostedGalleryImage(page.images(i))
                         }
                     </div>
                     <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
@@ -64,7 +62,7 @@
                                 <li class="social__item social__item--twitter" data-link-name="twitter">
                                     <a class="social__action social-icon-wrapper"
                                     data-link-name="twitter-social-share-1"
-                                    href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.standfirst, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+                                    href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterText, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
                                     target="_blank"
                                     title="twitter">
                                         <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>

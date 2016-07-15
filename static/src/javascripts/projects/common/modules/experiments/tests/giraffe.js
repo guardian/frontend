@@ -26,7 +26,7 @@ define([
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
-        this.audience = 0;
+        this.audience = 0.10;
         this.audienceOffset = 0;
         this.successMeasure = 'Determine the best message for driving contributions.';
         this.audienceCriteria = 'All users';
@@ -64,7 +64,7 @@ define([
             {
                 id: 'everyone',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure', 'https://membership.theguardian.com/contribute?INTCMP=article-1-everyone', 'Please support the Guardian and independent journalism');
+                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=article-1-everyone', 'Please support the Guardian and independent journalism');
                 },
                 success: function (complete) {
                     completer(complete);

@@ -6,14 +6,14 @@
                 @{ctaText}
             </div>
             <a class="hosted-gallery__cta-link" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
-                @{buttonText} @fragments.inlineSvg("arrow-right", "icon")
+                @{buttonText} @fragments.inlineSvg("external-link", "icon")
             </a>
         </div>
         @for(gallery <- nextGalleries){
             <a href="@{gallery.pageUrl}" class="hosted-gallery__oj-next-gallery">
                 <div class="hosted-gallery__next-gallery-title">
                     <div class="hosted-gallery__oj-sub-header">
-                        Continue reading
+                        More
                     </div>
                     <div class="hosted-gallery__cta-title">
                         @{gallery.title}
