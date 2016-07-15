@@ -1,5 +1,5 @@
 package controllers
 
-import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 
-class HealthCheck extends AllGoodCachedHealthCheck(9006, ExpiringSingleHealthCheck("/robots.txt"))
+class HealthCheck extends AllGoodCachedHealthCheck(9006, NeverExpiresSingleHealthCheck("/robots.txt"))
