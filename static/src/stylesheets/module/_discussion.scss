@@ -697,9 +697,9 @@ $avatarPadding: $gs-gutter / 2;
     padding-left: $gs-baseline * 2;
     svg {
         fill: $guardian-brand;
-        height: 16px;
-        width: 16px;
-        left: 4px;
+        height: 14px;
+        width: 14px;
+        left: $gs-gutter / 2;
     }
 }
 
