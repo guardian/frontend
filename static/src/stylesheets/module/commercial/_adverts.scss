@@ -280,6 +280,7 @@
     .adverts__row--wrap {
         position: relative;
         padding-top: 0;
+        flex-wrap: wrap;
 
         @include mq(mobileLandscape) {
             > *::before {
