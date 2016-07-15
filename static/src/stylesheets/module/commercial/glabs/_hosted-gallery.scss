@@ -25,12 +25,16 @@
     visibility: hidden;
     bottom: 0;
     left: 0;
+    right: 0;
     transition: opacity 300ms ease, visibility 300ms ease;
 }
 
 .hosted-gallery__gallery-section {
     position: relative;
-    flex: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include mq(desktop) {
         @include gallery-side-margins(gs-span(12));
@@ -45,9 +49,16 @@
 
 .hosted-gallery__gallery-container {
     opacity: 0;
+    flex: 1;
+    position: relative;
     &.use-swipe, &.use-scroll {
         opacity: 1;
     }
+}
+
+.has-no-flex .hosted-gallery__gallery-container {
+    height: calc(100% - 46px);
+    width: 100%;
 }
 
 .hosted-gallery__image {
@@ -62,9 +73,14 @@
     .hosted-gallery__image-sizer {
         position: absolute;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
     }
     .u-responsive-ratio {
         position: static;
+    }
+    img {
+        object-fit: cover;
     }
 }
 
@@ -82,6 +98,88 @@
     @include mq(desktop) {
         font-size: 30px;
         line-height: 32px;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.hosted-gallery__oj {
+    @include hosted-gallery-cta;
+    background: rgba(51, 51, 51, .8);
+    display: flex;
+    color: #ffffff;
+    .hosted-gallery__cta-title {
+        margin: 0;
+        font-size: 18px;
+        line-height: 20px;
+        @include mq(tablet) {
+            font-size: 22px;
+            line-height: 24px;
+        }
+    }
+}
+
+.hosted-gallery__oj-sub-header {
+    @include f-headlineSans;
+    color: $omgbColor;
+    font-size: 14px;
+}
+
+.hosted-gallery__oj-cta {
+    padding-top: 5px;
+}
+
+.hosted-gallery__oj-cta,
+.hosted-gallery__oj-next-gallery {
+    flex: 1;
+    margin: 10px 10px 0;
+    border-top: 1px solid $omgbColor;
+}
+
+.has-no-flex {
+    .hosted-gallery__oj-cta,
+    .hosted-gallery__oj-next-gallery {
+        width: calc(33% - 22px);
+        display: inline-block;
+        vertical-align: top;
+        @include mq($until: mobileLandscape) {
+            width: calc(50% - 22px);
+        }
+    }
+}
+
+.hosted-gallery__oj-next-gallery {
+    pointer-events: auto;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: flex-end;
+    align-content: flex-end;
+    &:hover {
+        text-decoration: none;
+    }
+    &:nth-child(3) {
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+    }
+}
+
+.hosted-gallery__next-gallery-title {
+    flex: 1;
+    min-width: 90px;
+}
+
+.hosted-gallery__next-gallery-image {
+    width: 170px;
+    height: 95px;
+    object-fit: cover;
+    @include mq($until: tablet) {
+        display: none;
+    }
+    @include mq($until: desktop) {
+        width: 115px;
+        height: 65px;
     }
 }
 
@@ -106,17 +204,17 @@
     color: #ffffff;
     font-weight: bold;
     background-color: $omgbColor;
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 
-    .inline-arrow-right {
-        position: absolute;
-        bottom: 0;
-        right: 6px;
-        height: 40px;
+    .inline-external-link {
+        margin-left: 5px;
 
         svg {
-            height: 36px;
-            width: 36px;
+            height: 22px;
+            width: 20px;
+            vertical-align: top;
         }
     }
 
@@ -125,19 +223,25 @@
         margin: 8px 0 16px;
         width: 140px;
         font-size: 14px;
-        .inline-arrow-right {
-            height: 33px;
-            right: 3px;
+        .inline-external-link svg {
+            height: 16px;
+            width: 18px;
         }
     }
 }
 
-.use-swipe .hosted-gallery__image .hosted-gallery__cta,
-.use-scroll.show-cta > .hosted-gallery__cta {
+.show-cta .hosted-gallery__cta,
+.show-oj .hosted-gallery__oj {
     opacity: 1;
     visibility: visible;
     .hosted-gallery__cta-link {
         pointer-events: auto;
+    }
+}
+
+.show-oj.use-swipe .hosted-gallery__progress {
+    @include mq($until: tablet) {
+        display: none;
     }
 }
 
@@ -167,7 +271,7 @@
     }
 }
 
-.hosted-gallery-page .hostedbadge__info {
+.hosted-gallery-page.visit-britain .hostedbadge__info {
     background: $omgbColor;
     color: #ffffff;
 }
@@ -231,7 +335,14 @@
     position: relative;
 }
 
+.has-no-flex .hosted-gallery-page .hosted__side {
+    height: calc(100% - 58px);
+}
+
 .hosted-gallery-page {
+    .hosted__headerwrap {
+        max-width: 100%;
+    }
     .hosted__social.adverts__header {
         padding: 0;
         width: 170px;
@@ -435,9 +546,8 @@ $progressColor: #ffffff;
 }
 
 .hosted-gallery__lower-bar {
-    display: flex;
-    flex-direction: row;
     background: $neutral-1;
+    z-index: 1;
     @include mq($until: desktop) {
         padding: 0;
     }
@@ -476,8 +586,9 @@ $progressColor: #ffffff;
     }
 }
 
-@include mq($until: tablet, $and: '(orientation: landscape)') {
+@include mq($until: tablet) {
     .hosted-gallery__meta,
+    .hosted-gallery__oj,
     .hosted-gallery__cta {
         padding-bottom: 30px;
     }

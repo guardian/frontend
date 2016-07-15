@@ -1,0 +1,64 @@
+@()(implicit request: RequestHeader)
+
+@import common.{ NewNavigation, TopLevelSection, LinkTo }
+
+@sectionList(topLevelSection: TopLevelSection) = {
+    <li class="main-navigation__item navigation-border">
+            <!-- TODO: Firefox -->
+        <details>
+            <summary class="main-navigation__item__button">
+                @fragments.inlineSvg("arrow-down", "icon")
+                @topLevelSection.name
+            </summary>
+            <ul class="main-navigation__secondary navigation-group">
+                @NewNavigation.sectionItems(topLevelSection).map { sectionItem =>
+                    <li class = "navigation-group__item" >
+                        <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
+                    </li>
+                }
+            </ul>
+        </details>
+    </li>
+}
+
+<div class="main-menu-container" id="main-menu">
+        <!-- TODO: Provide tabbable alternative -->
+    <a href="#" class="main-menu-container__overlay" aria-hidden="true"></a>
+
+    <div class="main-menu-container__menu">
+
+        <div class="main-menu-container__profile-container">
+            @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "main-menu-container__profile-icon"))
+            Sign in/up
+        </div>
+
+        <ul class="main-navigation">
+            @NewNavigation.topLevelSections.map { section =>
+                @sectionList(section)
+            }
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="https://jobs.theguardian.com">Jobs</a></li>
+            <li class="navigation-group__item"><a href="https://soulmates.theguardian.com/">Dating</a></li>
+            <li class="navigation-group__item"><a href="@LinkTo { /guardian-masterclasses }">Masterclasses</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="@LinkTo { /crosswords }">Crosswords</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="@LinkTo { /observer }">The Observer</a></li>
+            <li class="navigation-group__item"><a href="@LinkTo { /theguardian }">Today’s Paper</a></li>
+            <li class="navigation-group__item"><a href="@LinkTo { /theobserver }">Sunday’s Paper</a></li>
+        </ul>
+        <ul class="navigation-group navigation-border">
+            <li class="navigation-group__item"><a href="https://www.facebook.com/theguardian">
+                @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__social-icon"))
+                Facebook
+            </a></li>
+            <li class="navigation-group__item"><a href="https://twitter.com/guardian">
+                @fragments.inlineSvg("share-twitter", "icon", List("navigation-group__social-icon"))
+                Twitter
+            </a></li>
+        </ul>
+    </div>
+</div>
