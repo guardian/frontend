@@ -1,0 +1,48 @@
+@(surveyPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+@import conf.Configuration.Survey.formStackAccountName
+
+
+@surveyMain(surveyPage) {
+    <div class="illustration-container">
+        <div class="content">
+            <div class="gs-container">
+                <div class="content__main-column my-digest-illustration-wrapper">
+                @fragments.inlineSvg("my-digest", "illustration")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content my-digest-main">
+
+        <div class="gs-container">
+
+            <div class="content__main-column my-digest-main__main-column">
+                <header class="my-digest-header">
+                    <h1>weekend<span class="my-digest-header__digest">reading</span></h1>
+
+                    <p>Every Saturday, we'll email you our editors' picks of the best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.</p>
+                </header>
+
+                <div class="email-signup">
+                    <form>
+                        <div class="email-signup__field">
+                            <input class="email-signup__field-input" type="text" />
+                        </div>
+                        <div class="email-signup__action">
+                            <button class="email-signup__action-button">Sign Up</button>
+                        </div>
+                    </form>
+                    <div class="email-signup__aside-text">
+                        <p>We haven't launched this digest yet, but if you sign up we'll send it to you as soon as it's out.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+}
