@@ -207,8 +207,6 @@
         }
 
         @include mq($until: tablet) {
-            flex-flow: row wrap;
-
             > * {
                 flex-basis: calc(50% - #{$gs-gutter});
             }
