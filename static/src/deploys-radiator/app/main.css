@@ -1,5 +1,20 @@
 @import 'https://fonts.googleapis.com/css?family=Schoolbell|Space+Mono';
 
+@keyframes background {
+    0% {
+        background-color: hsl(338, 100%, 93%);
+    }
+    33% {
+        background-color: hsl(89, 100%, 93%);
+    }
+    66% {
+        background-color: hsl(183, 100%, 93%);
+    }
+    100% {
+        background-color: hsl(338, 100%, 93%);
+    }
+}
+
 .number {
     font-family: 'Space Mono';
     -webkit-font-smoothing: none;
@@ -11,6 +26,8 @@ body {
     margin: 0;
     padding: 0 10vw;
     font-family: 'Schoolbell';
+    animation: background linear 60s;
+    animation-iteration-count: infinite;
 }
 
 #root > h1 {
