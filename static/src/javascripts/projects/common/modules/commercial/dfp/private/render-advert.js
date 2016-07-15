@@ -111,7 +111,7 @@ define([
             var $node = bonzo(advert.node);
             if ($node.hasClass(className)) {
                 return fastdom.write(function () {
-                    $node.addClass('ad-slot__fluid250');
+                    $node.addClass('ad-slot--fluid250');
                 });
             }
         };
