@@ -75,6 +75,27 @@
         position: relative;
     }
 
+    @include mq(tablet) {
+        .js-on & {
+            display: block;
+        }
+    }
+}
+
+.ad-slot--top-banner-ad {
+    text-align: center;
+    /*
+     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
+     * We are giving this ad priority 5 so it will go over everything except lightbox
+     */
+    overflow: visible;
+    z-index: $zindex-popover;
+
+    @include mq(wide) {
+        width: gs-span(16) - ($left-column-wide + $gs-gutter);
+        padding-left: $left-column-wide + $gs-gutter;
+    }
+
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -86,32 +107,6 @@
         @include mq(wide) {
             margin: 0;
         }
-    }
-
-    /*
-     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
-     * We are giving this ad priority 5 so it will go over everything except lightbox
-     */
-    .ad-slot {
-        overflow: visible;
-        z-index: $zindex-popover;
-    }
-}
-
-.top-banner-ad-container--above-nav {
-    @include mq(tablet) {
-        .js-on & {
-            display: block;
-        }
-    }
-}
-
-.ad-slot--top-banner-ad {
-    text-align: center;
-
-    @include mq(wide) {
-        width: gs-span(16) - ($left-column-wide + $gs-gutter);
-        padding-left: $left-column-wide + $gs-gutter;
     }
 
     .top-banner-ad-container--mobile & {
