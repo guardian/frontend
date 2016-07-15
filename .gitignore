@@ -47,6 +47,7 @@ node_modules
 screenshots
 
 common/conf/assets
+atomic-map.json
 
 dev/gems
 dev/casperjs
