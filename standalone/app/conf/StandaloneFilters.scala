@@ -1,7 +1,5 @@
 package conf
 
-import javax.inject.Inject
-
 import com.gu.googleauth.{UserIdentity, FilterExemption}
 import common.ExecutionContexts
 import controllers.AuthCookie

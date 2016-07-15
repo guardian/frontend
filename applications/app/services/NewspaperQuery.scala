@@ -1,6 +1,5 @@
 package services
 
-import _root_.model.Content
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag}
 import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
 import com.gu.facia.api.{models => fapi}

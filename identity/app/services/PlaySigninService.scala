@@ -1,6 +1,5 @@
 package services
 
-import com.google.inject.{Singleton, Inject}
 import play.api.mvc.Cookie
 import client.Response
 import scala.concurrent.Future
@@ -10,8 +9,7 @@ import conf.IdentityConfiguration
 import idapiclient.responses.CookiesResponse
 import common.ExecutionContexts
 
-@Singleton
-class PlaySigninService @Inject()(conf: IdentityConfiguration) extends SafeLogging with ExecutionContexts {
+class PlaySigninService(conf: IdentityConfiguration) extends SafeLogging with ExecutionContexts {
   def getCookies(cookiesResponse: Future[Response[CookiesResponse]], rememberMe: Boolean): Future[Response[List[Cookie]]] = {
     cookiesResponse map {
       _.right.map { apiCookies =>

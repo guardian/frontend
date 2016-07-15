@@ -4,6 +4,7 @@ import java.io.File
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
+import app.LifecycleComponent
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
 import conf.Configuration
 import metrics._
@@ -171,7 +172,7 @@ class CloudWatchMetricsLifecycle(
   appLifecycle: ApplicationLifecycle,
   appIdentity: ApplicationIdentity,
   appMetrics: ApplicationMetrics = ApplicationMetrics(Nil),
-  jobs: JobScheduler = Jobs)
+  jobs: JobScheduler)
   (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
