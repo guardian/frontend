@@ -72,8 +72,6 @@
     .sticky-ad-banner & {
         z-index: 1022;
         width: 100%;
-        transform: translateZ(0);
-        will-change: transform;
         position: relative;
     }
 
