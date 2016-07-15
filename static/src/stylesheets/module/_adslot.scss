@@ -618,16 +618,19 @@
     width: auto;
 }
 
+.ad-slot__fabric-v1,
 .ad-slot--fluid250 {
     min-height: 250px;
-    width: 100%;
+    width: auto;
     margin-left: 0;
     padding: 0;
 
     .ad-slot__label {
         display: none;
     }
+}
 
+.ad-slot--fluid250 {
     &.ad-slot--top-banner-ad-mobile {
         padding-bottom: $gs-baseline*1.5;
     }

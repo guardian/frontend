@@ -476,27 +476,18 @@
     }
 }
 
-.ad-slot--dfp.ad-slot__fabric-v1 {
-    height: auto;
-    width: auto;
-    padding-left: 0;
-    padding-bottom: 0;
-    padding-top: 0;
+.creative--fabric-v1__label {
+    text-align: left;
 
-    .ad-slot__label {
-        display: none;
+    .ad-slot__fabric-v1 & {
+        width: auto;
+        display: block;
+        margin-top: 0;
     }
 
-    .creative--fabric-v1__label {
-        width: 100%;
-        display: block;
-        text-align: left;
-        margin-top: 0;
-
-        .fc-container__inner {
-            padding-top: 0;
-            border-top: 0;
-        }
+    .fc-container__inner {
+        padding-top: 0;
+        border-top: 0;
     }
 }
 
