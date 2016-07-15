@@ -103,3 +103,35 @@
     left: -1em;
     position: absolute;
 }
+
+.email-signup {
+    background-color: $news-main-1;
+    padding: 1em 1.5em;
+    min-width: 16em;
+}
+
+.email-signup__field-input {
+    width: 100%;
+    border-radius: 100px;
+    border: 0;
+    height: 2.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.email-signup__action-button {
+    width: 100%;
+    background-color: $news-main-1;
+    border: 2px solid $guardian-brand-light;
+    border-radius: 100px;
+    height: 2.5em;
+    color: white;
+    margin-bottom: 1em;
+}
+
+.email-signup__aside-text {
+    color: $guardian-brand-light;
+    font-size: 10pt;
+    text-align: center;
+}

@@ -21,6 +21,10 @@ class SurveyPageController extends Controller with ExecutionContexts {
       Cached(60)(RevalidatableResult.Ok(views.html.survey.myDigest404(StaticPages.simpleSurveyStaticPageForId(request.path))))
    }
 
+  def renderWeekendReading404Page() = Action { implicit request =>
+      Cached(60)(RevalidatableResult.Ok(views.html.survey.weekendReading404(StaticPages.simpleSurveyStaticPageForId(request.path))))
+   }
+
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
       WS.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
         .head
