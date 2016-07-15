@@ -20,16 +20,14 @@ case class HostedVideoPage(
   val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
 
   override val metadata: MetaData = {
-    val toneId = "tone/hosted-content"
-    val toneName = "Hosted content"
     val keywordId = s"${campaign.id}/${campaign.id}"
     val keywordName = campaign.id
     MetaData.make(
       id = s"commercial/advertiser-content/${campaign.id}/$pageName",
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaign.id)),
-      contentType = Hosted,
-      analyticsName = s"GFE:${campaign.id}:$Hosted:$pageName",
+      contentType = Video,
+      analyticsName = s"GFE:${campaign.id}:$Video:$pageName",
       description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
@@ -63,5 +61,6 @@ case class HostedVideo(
 case class HostedCallToAction(
   url: String,
   label: String,
-  trackingCode: String
+  trackingCode: String,
+  btnText: String
 )

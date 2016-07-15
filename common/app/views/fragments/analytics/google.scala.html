@@ -1,6 +1,7 @@
 @(page: model.Page)
 @import views.support.GoogleAnalyticsAccount
 @import conf.switches.Switches.GoogleAnalyticsSwitch
+@import conf.Configuration
 
 @if(GoogleAnalyticsSwitch.isSwitchedOn) {
     <script id='google_analytics'>
@@ -42,7 +43,12 @@
         ga('set', 'dimension10', guardian.config.page.toneIds);
         ga('set', 'dimension11', guardian.config.page.seriesId);
 
-        ga('send', 'pageview');
+        ga('send', 'pageview', {
+            hitCallback: function() {
+                var image = new Image();
+                image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
+            }
+        });
     </script>
 
     @*

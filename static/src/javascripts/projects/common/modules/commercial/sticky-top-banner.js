@@ -79,14 +79,17 @@ define([
         var isFluid250 = adSizes.fluid250.toString() === slotSize;
         var isFabricV1 = adSizes.fabric.toString() === slotSize;
         var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
-        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
-        // injected asynchronously, so we can't be sure when they will be in the dom
-        var fluidAdInnerHeight = 250;
-        var fluidAdPadding = 18;
-        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
         if (isFluidAd) {
-            return Promise.resolve(fluidAdHeight);
+            // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
+            // injected asynchronously, so we can't be sure when they will be in the dom
+            var fluidAdInnerHeight = 250;
+            return fastdom.read(function () {
+                var label = $adBannerInner[0].getElementsByClassName('ad-slot__label');
+                return label.length ? label[0].offsetHeight : 0;
+            }).then(function (fluidAdPadding) {
+                return fluidAdInnerHeight + fluidAdPadding;
+            });
         } else {
             var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
             // We can't calculate the height of Rubicon ads because they transition
@@ -211,8 +214,10 @@ define([
     };
 
     var initialise = function () {
-        if (detect.isBreakpoint({ min: 'desktop' })) {
-            getInitialState().then(function (initialState) {
+        // Although we check as much config as possible to decide whether to run sticky-top-banner,
+        // it is still entirely possible for the ad slot to be closed.
+        if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
+            return getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 
                 setupDispatchers(store.dispatch);
@@ -236,11 +241,13 @@ define([
                     store.subscribe(update);
                 });
             });
+        } else {
+            return Promise.resolve();
         }
     };
 
     return {
-        initialise: initialise,
+        init: initialise,
         // Needed for testing
         render: render
     };

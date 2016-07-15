@@ -1,8 +1,8 @@
 package controllers
 
-import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck extends AllGoodCachedHealthCheck(
   9014,
-  ExpiringSingleHealthCheck("/books/harrypotter/rss")
+  NeverExpiresSingleHealthCheck("/books/harrypotter/rss")
 )

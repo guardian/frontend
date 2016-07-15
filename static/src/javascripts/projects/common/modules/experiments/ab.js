@@ -7,12 +7,12 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/clever-friend-brexit',
     'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/join-discussion-after-poll',
-    'common/modules/experiments/tests/hosted-autoplay'
+    'common/modules/experiments/tests/hosted-autoplay',
+    'common/modules/experiments/tests/giraffe'
 ], function (
     reportError,
     config,
@@ -22,21 +22,21 @@ define([
     mvtCookie,
     memoize,
     noop,
-    LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
     CleverFriendBrexit,
     ParticipationDiscussionTest,
     JoinDiscussionAfterPoll,
-    HostedAutoplay
+    HostedAutoplay,
+    Giraffe
 ) {
 
     var TESTS = [
-        new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
         new CleverFriendBrexit(),
         new ParticipationDiscussionTest(),
         new JoinDiscussionAfterPoll(),
-        new HostedAutoplay()
+        new HostedAutoplay(),
+        new Giraffe()
     ];
 
     var participationsKey = 'gu.ab.participations';

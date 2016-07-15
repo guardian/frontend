@@ -39,6 +39,30 @@ class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Conf
 
 }
 
+// turns a readable CSS class into a list of rules in short form from the atomic css file
+class CssMap(mapResource: String) extends Logging {
+
+  lazy val lookup: Map[String, List[String]] = Get(cssMap(mapResource))
+
+  def apply(className: String): String = {
+      className + ' ' + lookup.getOrElse(className, throw new CssClassNotFoundException(className)).mkString(" ")
+  }
+
+  def jsonToAssetMap(json: String): Try[Map[String, List[String]]] =
+    Json.parse(json).validate[Map[String, List[String]]] match {
+      case JsSuccess(m, _) => Success(m)
+      case JsError(errors) => Failure(new Exception(s"$errors"))
+    }
+
+  def cssMap(resourceName: String): Try[Map[String, List[String]]] = {
+    for {
+      rawResource <- LoadFromClasspath(resourceName)
+      mappings <- jsonToAssetMap(rawResource)
+    } yield mappings
+  }
+
+}
+
 object inlineSvg {
 
   private val memoizedSvg: ConcurrentMap[String, Try[String]] = TrieMap()
@@ -54,10 +78,13 @@ object css {
 
   def head(projectOverride: Option[String]) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
   def inlineStoryPackage = inline("story-package")
+  def atomic = inline("atomic")
+  def inlineLabourLiverpool = inline("article-labour-liverpool")
 
   def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
   def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
   def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
+
 
   private def inline(module: String): String = {
     val resourceName = s"assets/inline-stylesheets/$module.css"
@@ -135,3 +162,5 @@ object LoadFromClasspath {
 }
 
 case class AssetNotFoundException(assetPath: String) extends Exception(s"Cannot find asset $assetPath. You should run `make compile`.")
+
+case class CssClassNotFoundException(cssClass: String) extends Exception(s"Cannot find css class $cssClass in the atomic class mappings")

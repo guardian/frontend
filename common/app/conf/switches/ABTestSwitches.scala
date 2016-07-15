@@ -4,19 +4,9 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABLiveBlogChromeNotificationsInternal = Switch(
+  val ABLiveBlogChromeNotificationsProd2 = Switch(
     SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-internal",
-    "Live blog chrome notifications - Internal",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
-    exposeClientSide = true
-  )
-
-  val ABLiveBlogChromeNotificationsProd = Switch(
-    SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-prod",
+    "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
@@ -50,7 +40,7 @@ trait ABTestSwitches {
     "Does 'join discussion' message after poll participation increase comments",
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 13),
+    sellByDate = new LocalDate(2016, 7, 27),
     exposeClientSide = true
   )
 
@@ -70,7 +60,17 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 14),
+    sellByDate = new LocalDate(2016, 7, 29),
+    exposeClientSide = true
+  )
+
+  val giraffe = Switch(
+    SwitchGroup.ABTests,
+    "ab-giraffe",
+    "Test effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
 }

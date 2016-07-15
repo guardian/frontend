@@ -125,8 +125,8 @@ GET            /info/tech-feedback                                              
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
-GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
-GET            /sport/cricket/match/:matchDate/:teamId                                                                           controllers.CricketMatchController.renderMatchId(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId                                                                           cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/more/:year/:month/:day                                                                         football.controllers.FixturesController.moreFixturesFor(year, month, day)
@@ -302,7 +302,7 @@ GET            /commercial/paid.json                                            
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 
 # Commercial Admin

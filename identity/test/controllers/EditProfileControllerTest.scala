@@ -4,22 +4,22 @@ import actions.AuthenticatedActions
 import client.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
+import form.{ProfileMapping, PrivacyMapping, AccountDetailsMapping, ProfileFormsMapping}
 import idapiclient.{TrackingData, _}
 import model.{PhoneNumbers, Countries}
 import org.mockito.Mockito._
 import org.mockito.{Matchers, ArgumentCaptor}
-import org.scalatest.{WordSpec, ShouldMatchers, OptionValues}
+import org.scalatest.{DoNotDiscover, WordSpec, ShouldMatchers, OptionValues}
 import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.ConfiguredServer
 import play.api.mvc._
 import play.api.test.Helpers._
 import services._
-import test.FakeCSRFRequest
+import test._
 import scala.concurrent.Future
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
 
 //TODO test form validation and population of form fields.
-class EditProfileControllerTest extends WordSpec with OneAppPerSuite with ShouldMatchers with MockitoSugar with OptionValues {
+@DoNotDiscover class EditProfileControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with OptionValues with ConfiguredServer {
 
   trait EditProfileFixture {
 
@@ -38,6 +38,13 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
 
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
 
+    val messagesApi = I18NTestComponents.messagesApi
+    val profileFormsMapping = ProfileFormsMapping(
+      new AccountDetailsMapping(messagesApi),
+      new PrivacyMapping(messagesApi),
+      new ProfileMapping(messagesApi)
+    )
+
     when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
@@ -45,7 +52,7 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, applicationMessagesApi)
+    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, profileFormsMapping)
   }
 
   "EditProfileController" when {
@@ -56,36 +63,34 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
 
       "save the user through the ID API" in new EditProfileFixture {
 
-        running(app) {
-          val fakeRequest = FakeCSRFRequest()
-            .withFormUrlEncodedBody(
-              "location" -> location,
-              "aboutMe" -> aboutMe,
-              "interests" -> interests
-            )
-
-          val updatedUser = user.copy(
-            publicFields = PublicFields(
-              location = Some(location),
-              aboutMe = Some(aboutMe),
-              interests = Some(interests)
-            )
+        val fakeRequest = FakeCSRFRequest()
+          .withFormUrlEncodedBody(
+            "location" -> location,
+            "aboutMe" -> aboutMe,
+            "interests" -> interests
           )
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(updatedUser)))
 
-          val result = controller.submitPublicProfileForm().apply(fakeRequest)
+        val updatedUser = user.copy(
+          publicFields = PublicFields(
+            location = Some(location),
+            aboutMe = Some(aboutMe),
+            interests = Some(interests)
+          )
+        )
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
 
-          status(result) should be(200)
+        val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
-          val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-          verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-          val userUpdate = userUpdateCapture.getValue
+        status(result) should be(200)
 
-          userUpdate.publicFields.value.location.value should equal(location)
-          userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
-          userUpdate.publicFields.value.interests.value should equal(interests)
-        }
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+
+        userUpdate.publicFields.value.location.value should equal(location)
+        userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
+        userUpdate.publicFields.value.interests.value should equal(interests)
       }
     }
 
@@ -96,35 +101,33 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
       val allowThirdPartyProfiling = false
 
       "then the user should be saved on the ID API" in new EditProfileFixture {
-        running(app) {
-          val fakeRequest = FakeCSRFRequest()
-            .withFormUrlEncodedBody(
-              "receiveGnmMarketing" -> receiveGnmMarketing.toString,
-              "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString,
-              "allowThirdPartyProfiling" -> allowThirdPartyProfiling.toString
-            )
-
-          val updatedUser = user.copy(
-            statusFields = StatusFields(
-              receiveGnmMarketing = Some(receiveGnmMarketing),
-              receive3rdPartyMarketing = Some(receive3rdPartyMarketing)
-            )
+        val fakeRequest = FakeCSRFRequest()
+          .withFormUrlEncodedBody(
+            "receiveGnmMarketing" -> receiveGnmMarketing.toString,
+            "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString,
+            "allowThirdPartyProfiling" -> allowThirdPartyProfiling.toString
           )
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(updatedUser)))
 
-          val result = controller.submitPrivacyForm().apply(fakeRequest)
+        val updatedUser = user.copy(
+          statusFields = StatusFields(
+            receiveGnmMarketing = Some(receiveGnmMarketing),
+            receive3rdPartyMarketing = Some(receive3rdPartyMarketing)
+          )
+        )
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
 
-          status(result) should be(200)
+        val result = controller.submitPrivacyForm().apply(fakeRequest)
 
-          val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-          verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-          val userUpdate = userUpdateCapture.getValue
+        status(result) should be(200)
 
-          userUpdate.statusFields.value.receive3rdPartyMarketing.value should equal(receive3rdPartyMarketing)
-          userUpdate.statusFields.value.receiveGnmMarketing.value should equal(receiveGnmMarketing)
-          userUpdate.statusFields.value.allowThirdPartyProfiling.value should equal(allowThirdPartyProfiling)
-        }
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+
+        userUpdate.statusFields.value.receive3rdPartyMarketing.value should equal(receive3rdPartyMarketing)
+        userUpdate.statusFields.value.receiveGnmMarketing.value should equal(receiveGnmMarketing)
+        userUpdate.statusFields.value.allowThirdPartyProfiling.value should equal(allowThirdPartyProfiling)
       }
     }
 
@@ -249,177 +252,165 @@ class EditProfileControllerTest extends WordSpec with OneAppPerSuite with Should
       }
 
       "return 200 if called with a valid CSRF request" in new EditProfileFixture {
-        running(app) {
-          val fakeRequest = createFakeRequestWithBillingAddress
+        val fakeRequest = createFakeRequestWithBillingAddress
 
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(user)))
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(user)))
 
-          val result = controller.submitAccountForm().apply(fakeRequest)
-          status(result) should be(200)
-        }
+        val result = controller.submitAccountForm().apply(fakeRequest)
+        status(result) should be(200)
       }
 
       "save the user with the ID API without billing address request" in new EditProfileFixture {
-        running(app) {
-          val fakeRequest = createFakeRequestWithoutBillingAddress
+        val fakeRequest = createFakeRequestWithoutBillingAddress
 
-          val updatedUser = user.copy(
-            primaryEmailAddress = primaryEmailAddress,
-            privateFields = PrivateFields(
-              title = Some(testTitle),
-              firstName = Some(firstName),
-              secondName = Some(secondName),
-              gender = Some(gender),
-              address1 = Some(address1),
-              address2 = Some(address2),
-              address3 = Some(address3),
-              address4 = Some(address4),
-              postcode = Some(postcode),
-              country = Some(country),
-              telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-            )
+        val updatedUser = user.copy(
+          primaryEmailAddress = primaryEmailAddress,
+          privateFields = PrivateFields(
+            title = Some(testTitle),
+            firstName = Some(firstName),
+            secondName = Some(secondName),
+            gender = Some(gender),
+            address1 = Some(address1),
+            address2 = Some(address2),
+            address3 = Some(address3),
+            address4 = Some(address4),
+            postcode = Some(postcode),
+            country = Some(country),
+            telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
           )
+        )
 
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(updatedUser)))
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
 
-          val result = controller.submitAccountForm().apply(fakeRequest)
-          status(result) should be(200)
-          val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-          verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-          val userUpdate = userUpdateCapture.getValue
+        val result = controller.submitAccountForm().apply(fakeRequest)
+        status(result) should be(200)
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
 
-          userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
-          userUpdate.privateFields.value.firstName.value should equal(firstName)
-          userUpdate.privateFields.value.secondName.value should equal(secondName)
-          userUpdate.privateFields.value.gender.value should equal(gender)
-          userUpdate.privateFields.value.address1.value should equal(address1)
-          userUpdate.privateFields.value.address2.value should equal(address2)
-          userUpdate.privateFields.value.address3 should equal(None)
-          userUpdate.privateFields.value.address4 should equal(None)
-          userUpdate.privateFields.value.postcode.value should equal(postcode)
-          userUpdate.privateFields.value.country.value should equal(country)
-          userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-        }
+        userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.firstName.value should equal(firstName)
+        userUpdate.privateFields.value.secondName.value should equal(secondName)
+        userUpdate.privateFields.value.gender.value should equal(gender)
+        userUpdate.privateFields.value.address1.value should equal(address1)
+        userUpdate.privateFields.value.address2.value should equal(address2)
+        userUpdate.privateFields.value.address3 should equal(None)
+        userUpdate.privateFields.value.address4 should equal(None)
+        userUpdate.privateFields.value.postcode.value should equal(postcode)
+        userUpdate.privateFields.value.country.value should equal(country)
+        userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
       }
 
       "delete a telephone number with a delete telephone number request" in new EditProfileFixture {
-        running(app) {
-          val fakeRequest = createFakeRequestDeleteTelephoneNumber
+        val fakeRequest = createFakeRequestDeleteTelephoneNumber
 
-          when(api.deleteTelephone(Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(())))
+        when(api.deleteTelephone(Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(())))
 
-          val result = controller.submitAccountForm().apply(fakeRequest)
-          status(result) should be(200)
+        val result = controller.submitAccountForm().apply(fakeRequest)
+        status(result) should be(200)
 
-          verify(api).deleteTelephone(Matchers.eq(testAuth))
-        }
+        verify(api).deleteTelephone(Matchers.eq(testAuth))
       }
 
       "save the user on the ID API without telephone number request" in new EditProfileFixture {
-        running(app) {
+        val fakeRequest = createFakeRequestWithoutTelephoneNumber
 
-          val fakeRequest = createFakeRequestWithoutTelephoneNumber
-
-          val updatedUser = user.copy(
-            primaryEmailAddress = primaryEmailAddress,
-            privateFields = PrivateFields(
-              title = Some(testTitle),
-              firstName = Some(firstName),
-              secondName = Some(secondName),
-              gender = Some(gender),
-              address1 = Some(address1),
-              address2 = Some(address2),
-              address3 = Some(address3),
-              address4 = Some(address4),
-              postcode = Some(postcode),
-              country = Some(country)
-            )
+        val updatedUser = user.copy(
+          primaryEmailAddress = primaryEmailAddress,
+          privateFields = PrivateFields(
+            title = Some(testTitle),
+            firstName = Some(firstName),
+            secondName = Some(secondName),
+            gender = Some(gender),
+            address1 = Some(address1),
+            address2 = Some(address2),
+            address3 = Some(address3),
+            address4 = Some(address4),
+            postcode = Some(postcode),
+            country = Some(country)
           )
+        )
 
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(updatedUser)))
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
 
-          val result = controller.submitAccountForm().apply(fakeRequest)
-          status(result) should be(200)
+        val result = controller.submitAccountForm().apply(fakeRequest)
+        status(result) should be(200)
 
-          val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-          verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-          val userUpdate = userUpdateCapture.getValue
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
 
-          userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
-          userUpdate.privateFields.value.title.value should equal(testTitle)
-          userUpdate.privateFields.value.firstName.value should equal(firstName)
-          userUpdate.privateFields.value.secondName.value should equal(secondName)
-          userUpdate.privateFields.value.gender.value should equal(gender)
-          userUpdate.privateFields.value.address1.value should equal(address1)
-          userUpdate.privateFields.value.address2.value should equal(address2)
-          userUpdate.privateFields.value.address3 should equal(None)
-          userUpdate.privateFields.value.address4 should equal(None)
-          userUpdate.privateFields.value.postcode.value should equal(postcode)
-          userUpdate.privateFields.value.country.value should equal(country)
-        }
+        userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.title.value should equal(testTitle)
+        userUpdate.privateFields.value.firstName.value should equal(firstName)
+        userUpdate.privateFields.value.secondName.value should equal(secondName)
+        userUpdate.privateFields.value.gender.value should equal(gender)
+        userUpdate.privateFields.value.address1.value should equal(address1)
+        userUpdate.privateFields.value.address2.value should equal(address2)
+        userUpdate.privateFields.value.address3 should equal(None)
+        userUpdate.privateFields.value.address4 should equal(None)
+        userUpdate.privateFields.value.postcode.value should equal(postcode)
+        userUpdate.privateFields.value.country.value should equal(country)
       }
 
       "save the user on the ID API with billing address" in new EditProfileFixture {
-        running(app) {
+        val fakeRequest = createFakeRequestWithBillingAddress
 
-          val fakeRequest = createFakeRequestWithBillingAddress
-
-          val updatedUser = user.copy(
-            primaryEmailAddress = primaryEmailAddress,
-            privateFields = PrivateFields(
-              title = Some(testTitle),
-              firstName = Some(firstName),
-              secondName = Some(secondName),
-              gender = Some(gender),
-              address1 = Some(address1),
-              address2 = Some(address2),
-              address3 = Some(address3),
-              address4 = Some(address4),
-              postcode = Some(postcode),
-              country = Some(country),
-              billingAddress1 = Some(billingAddress1),
-              billingAddress2 = Some(billingAddress2),
-              billingAddress3 = Some(billingAddress3),
-              billingAddress4 = Some(billingAddress4),
-              billingPostcode = Some(billingPostcode),
-              billingCountry = Some(billingCountry),
-              telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-            )
+        val updatedUser = user.copy(
+          primaryEmailAddress = primaryEmailAddress,
+          privateFields = PrivateFields(
+            title = Some(testTitle),
+            firstName = Some(firstName),
+            secondName = Some(secondName),
+            gender = Some(gender),
+            address1 = Some(address1),
+            address2 = Some(address2),
+            address3 = Some(address3),
+            address4 = Some(address4),
+            postcode = Some(postcode),
+            country = Some(country),
+            billingAddress1 = Some(billingAddress1),
+            billingAddress2 = Some(billingAddress2),
+            billingAddress3 = Some(billingAddress3),
+            billingAddress4 = Some(billingAddress4),
+            billingPostcode = Some(billingPostcode),
+            billingCountry = Some(billingCountry),
+            telephoneNumber = Some(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
           )
+        )
 
-          when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-            .thenReturn(Future.successful(Right(updatedUser)))
+        when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
 
-          val result = controller.submitAccountForm().apply(fakeRequest)
-          status(result) should be(200)
+        val result = controller.submitAccountForm().apply(fakeRequest)
+        status(result) should be(200)
 
-          val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-          verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-          val userUpdate = userUpdateCapture.getValue
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
 
-          userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
-          userUpdate.privateFields.value.title.value should equal(testTitle)
-          userUpdate.privateFields.value.firstName.value should equal(firstName)
-          userUpdate.privateFields.value.secondName.value should equal(secondName)
-          userUpdate.privateFields.value.gender.value should equal(gender)
-          userUpdate.privateFields.value.address1.value should equal(address1)
-          userUpdate.privateFields.value.address2.value should equal(address2)
-          userUpdate.privateFields.value.address3 should equal(None)
-          userUpdate.privateFields.value.address4 should equal(None)
-          userUpdate.privateFields.value.postcode.value should equal(postcode)
-          userUpdate.privateFields.value.country.value should equal(country)
-          userUpdate.privateFields.value.billingAddress1.value should equal(billingAddress1)
-          userUpdate.privateFields.value.billingAddress2.value should equal(billingAddress2)
-          userUpdate.privateFields.value.billingAddress3 should equal(None)
-          userUpdate.privateFields.value.billingAddress4 should equal(None)
-          userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
-          userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
-          userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-        }
+        userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
+        userUpdate.privateFields.value.title.value should equal(testTitle)
+        userUpdate.privateFields.value.firstName.value should equal(firstName)
+        userUpdate.privateFields.value.secondName.value should equal(secondName)
+        userUpdate.privateFields.value.gender.value should equal(gender)
+        userUpdate.privateFields.value.address1.value should equal(address1)
+        userUpdate.privateFields.value.address2.value should equal(address2)
+        userUpdate.privateFields.value.address3 should equal(None)
+        userUpdate.privateFields.value.address4 should equal(None)
+        userUpdate.privateFields.value.postcode.value should equal(postcode)
+        userUpdate.privateFields.value.country.value should equal(country)
+        userUpdate.privateFields.value.billingAddress1.value should equal(billingAddress1)
+        userUpdate.privateFields.value.billingAddress2.value should equal(billingAddress2)
+        userUpdate.privateFields.value.billingAddress3 should equal(None)
+        userUpdate.privateFields.value.billingAddress4 should equal(None)
+        userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
+        userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
+        userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
       }
     }
   }

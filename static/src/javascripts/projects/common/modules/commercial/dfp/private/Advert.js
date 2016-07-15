@@ -1,6 +1,9 @@
 define([
-    'Promise'
-], function (Promise) {
+    'Promise',
+    'common/utils/user-timing',
+    'common/modules/commercial/dfp/private/ophan-tracking'
+
+], function (Promise, userTiming, ophanTracking) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;
@@ -13,7 +16,7 @@ define([
             node: adSlotNode,
             sizes: null,
             slot: null,
-            isEmpty: false,
+            isEmpty: null,
             isLoading: false,
             isRendering: false,
             isLoaded: false,
@@ -21,36 +24,55 @@ define([
             whenLoaded: null,
             whenLoadedResolver: null,
             whenRendered: null,
-            whenRenderedResolver: null
+            whenRenderedResolver: null,
+            timings: {
+                createTime: null,
+                startLoading: null,
+                dfpFetching: null,
+                dfpReceived: null,
+                dfpRendered: null,
+                stopLoading: null,
+                startRendering: null,
+                stopRendering: null,
+                loadingMethod: null,
+                lazyWaitComplete: null
+            }
         };
         advert.whenLoaded = new Promise(function (resolve) {
             advert.whenLoadedResolver = resolve;
         }).then(function (isLoaded) {
-            advert.isLoaded = isLoaded;
+            return advert.isLoaded = isLoaded;
         });
         advert.whenRendered = new Promise(function (resolve) {
             advert.whenRenderedResolver = resolve;
         }).then(function (isRendered) {
-            advert.isRendered = isRendered;
+            return advert.isRendered = isRendered;
         });
+
+        ophanTracking.updateAdvertMetric(advert, 'createTime', userTiming.getCurrentTime());
+
         return Object.seal(advert);
     }
 
     function startLoading(advert) {
         advert.isLoading = true;
+        advert.timings.startLoading = userTiming.getCurrentTime();
     }
 
     function stopLoading(advert, isLoaded) {
         advert.isLoading = false;
         advert.whenLoadedResolver(isLoaded);
+        advert.timings.stopLoading = userTiming.getCurrentTime();
     }
 
     function startRendering(advert) {
         advert.isRendering = true;
+        advert.timings.startRendering = userTiming.getCurrentTime();
     }
 
     function stopRendering(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
+        ophanTracking.updateAdvertMetric(advert, 'stopRendering', userTiming.getCurrentTime());
     }
 });

@@ -18,8 +18,7 @@ define([
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
-    'common/modules/video/videojs-options',
-    'common/modules/video/events'
+    'common/modules/video/videojs-options'
 ], function (
     bean,
     bonzo,

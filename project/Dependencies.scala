@@ -7,8 +7,8 @@ object Dependencies {
   val identityLibVersion = "3.52"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-  val awsVersion = "1.10.58"
-  val faciaVersion = "1.6.2"
+  val awsVersion = "1.11.7"
+  val faciaVersion = "2.0.1"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -66,7 +66,7 @@ object Dependencies {
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
-  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.2.0"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
