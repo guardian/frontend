@@ -16,12 +16,10 @@ define([
             ]
         };
 
-        var $stickyAdBannerTestEl;
         var elements;
         beforeEach(function () {
-            $stickyAdBannerTestEl = fixtures.render(fixture);
+            fixtures.render(fixture);
             elements = {
-                $document: $stickyAdBannerTestEl,
                 $adBanner: $('.ad-banner'),
                 $adBannerInner: $('.ad-banner-inner'),
                 $header: $('.header'),

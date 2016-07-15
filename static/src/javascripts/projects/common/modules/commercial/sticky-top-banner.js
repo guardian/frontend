@@ -124,8 +124,6 @@ define([
     };
 
     var render = function (els, state) {
-        els.$document.addClass('sticky-ad-banner');
-
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';
 
@@ -139,6 +137,7 @@ define([
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
+        els.$adBanner.addClass('sticky-top-banner-ad');
         els.$adBanner.css({
             'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
@@ -223,7 +222,6 @@ define([
                 setupDispatchers(store.dispatch);
 
                 var elements = {
-                    $document: $(document.body),
                     $adBanner: $adBanner,
                     $adBannerInner: $adBannerInner,
                     $header: $header,

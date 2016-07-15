@@ -67,13 +67,13 @@
 }
 .top-banner-ad-container--desktop {
     background-color: $neutral-8;
+}
 
-    .sticky-ad-banner & {
-        overflow: hidden;
-        z-index: 1022;
-        width: 100%;
-        position: relative;
-    }
+.sticky-top-banner-ad {
+    overflow: hidden;
+    z-index: 1022;
+    width: 100%;
+    position: relative;
 }
 
 .ad-slot--top-banner-ad {
