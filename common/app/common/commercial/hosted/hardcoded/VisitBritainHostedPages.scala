@@ -201,6 +201,7 @@ object VisitBritainHostedPages {
     ctaLink = "http://en.omgb.com/map/",
     ctaButtonText = "Visit OMGB now",
     nextGalleryNames = List(cityPageName, coastPageName),
+    shareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
     standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
   )
 
