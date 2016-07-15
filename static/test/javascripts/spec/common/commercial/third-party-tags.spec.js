@@ -24,9 +24,17 @@ define([
             expect(tagsContainer).toBeDefined();
         });
 
-        it('should not run if disabled in commercial features', function () {
+        it('should not run if disabled in commercial features', function (done) {
             commercialFeatures.thirdPartyTags = false;
-            expect(tagsContainer.init()).toBe(false);
+            tagsContainer.init()
+                .then(function(enabled) {
+                    expect(enabled).toBe(false);
+                    done();
+                })
+                .catch(function() {
+                    done.fail('third-party tags failed');
+                });
+
         });
 
     });

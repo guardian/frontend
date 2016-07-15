@@ -3,6 +3,7 @@
  */
 
 define([
+    'Promise',
     'bean',
     'fastdom',
     'common/utils/$',
@@ -18,6 +19,7 @@ define([
     'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
+    Promise,
     bean,
     fastdom,
     $,
@@ -85,101 +87,105 @@ define([
     }
 
     function init() {
-        require(['bootstraps/enhanced/media/main'], function () {
-            require(['bootstraps/enhanced/media/video-player'], function(videojs){
-                var $videoEl = $('.vjs-hosted__video');
+        return new Promise(function (resolve) {
+            require(['bootstraps/enhanced/media/main'], function () {
+                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
+                    var $videoEl = $('.vjs-hosted__video');
 
-                if (!$videoEl.length) {
-                    return;
-                }
-
-                player = videojs($videoEl.get(0), videojsOptions());
-                player.guMediaType = 'video';
-                videojs.plugin('fullscreener', fullscreener);
-
-                player.ready(function () {
-                    var vol;
-                    var duration = parseInt(this.duration(), 10);
-                    var $hostedNext = $('.js-hosted-next-autoplay');
-                    initLoadingSpinner(player);
-                    upgradeVideoPlayerAccessibility(player);
-
-                    // unglitching the volume on first load
-                    vol = player.volume();
-                    if (vol) {
-                        player.volume(0);
-                        player.volume(vol);
+                    if (!$videoEl.length) {
+                        return;
                     }
 
-                    player.fullscreener();
+                    player = videojs($videoEl.get(0), videojsOptions());
+                    player.guMediaType = 'video';
+                    videojs.plugin('fullscreener', fullscreener);
 
-                    var mediaId = $videoEl.attr('data-media-id');
-                    deferToAnalytics(function () {
-                        events.initOmnitureTracking(player);
-                        events.initOphanTracking(player, mediaId);
+                    player.ready(function () {
+                        var vol;
+                        var duration = parseInt(this.duration(), 10);
+                        var $hostedNext = $('.js-hosted-next-autoplay');
+                        initLoadingSpinner(player);
+                        upgradeVideoPlayerAccessibility(player);
 
-                        events.bindGlobalEvents(player);
-                        events.bindContentEvents(player);
-                    });
-
-                    player.on('error', function () {
-                        var err = player.error();
-                        if (err && 'message' in err && 'code' in err) {
-                            reportError(new Error(err.message), {
-                                feature: 'hosted-player',
-                                vjsCode: err.code
-                            }, false);
+                        // unglitching the volume on first load
+                        vol = player.volume();
+                        if (vol) {
+                            player.volume(0);
+                            player.volume(vol);
                         }
-                    });
 
-                    if ($hostedNext.length && ab.getParticipations().HostedAutoplay
-                        && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
-                        if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
-                            fastdom.write(function () {
-                                $hostedNext.addClass('hosted-next-autoplay--variant2');
-                            });
-                        }
-                        fastdom.write(function () {
-                            $('.js-hosted-fading').addClass('hosted-autoplay-ab');
+                        player.fullscreener();
+
+                        var mediaId = $videoEl.attr('data-media-id');
+                        deferToAnalytics(function () {
+                            events.initOmnitureTracking(player);
+                            events.initOphanTracking(player, mediaId);
+
+                            events.bindGlobalEvents(player);
+                            events.bindContentEvents(player);
                         });
 
-                        //on desktop show the next video link 10 second before the end of the currently watching video
-                        if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-                            player.on('timeupdate', function() {
-                                var currentTime = parseInt(this.currentTime(), 10);
-                                var time = 10; //seconds before the end when to show the timer
+                        player.on('error', function () {
+                            var err = player.error();
+                            if (err && 'message' in err && 'code' in err) {
+                                reportError(new Error(err.message), {
+                                    feature: 'hosted-player',
+                                    vjsCode: err.code
+                                }, false);
+                            }
+                        });
 
-                                if (duration - currentTime <= time) {
-                                    player.off('timeupdate');
-
-                                    var $timer = $('.js-autoplay-timer');
-                                    var nextVideoPage;
-
-                                    if ($timer.length) {
-                                        nextVideoPage = $timer.data('next-page');
-                                        nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
-                                        fastdom.write(function () {
-                                            $hostedNext.addClass('js-autoplay-start');
-                                        });
-                                        bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
-                                            cancelAutoplay($hostedNext);
-                                        });
-                                    }
-                                }
-                            });
-                        } else {
-                            player.one('ended', function() {
+                        if ($hostedNext.length && ab.getParticipations().HostedAutoplay
+                            && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
+                            if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
                                 fastdom.write(function () {
-                                    $hostedNext.addClass('js-autoplay-start');
+                                    $hostedNext.addClass('hosted-next-autoplay--variant2');
                                 });
-                                bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
-                                    cancelAutoplayMobile($hostedNext);
-                                });
+                            }
+                            fastdom.write(function () {
+                                $('.js-hosted-fading').addClass('hosted-autoplay-ab');
                             });
+
+                            //on desktop show the next video link 10 second before the end of the currently watching video
+                            if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                                player.on('timeupdate', function () {
+                                    var currentTime = parseInt(this.currentTime(), 10);
+                                    var time = 10; //seconds before the end when to show the timer
+
+                                    if (duration - currentTime <= time) {
+                                        player.off('timeupdate');
+
+                                        var $timer = $('.js-autoplay-timer');
+                                        var nextVideoPage;
+
+                                        if ($timer.length) {
+                                            nextVideoPage = $timer.data('next-page');
+                                            nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
+                                            fastdom.write(function () {
+                                                $hostedNext.addClass('js-autoplay-start');
+                                            });
+                                            bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                                                cancelAutoplay($hostedNext);
+                                            });
+                                        }
+                                    }
+                                });
+                            } else {
+                                player.one('ended', function () {
+                                    fastdom.write(function () {
+                                        $hostedNext.addClass('js-autoplay-start');
+                                    });
+                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                                        cancelAutoplayMobile($hostedNext);
+                                    });
+                                });
+                            }
                         }
-                    }
+                    });
                 });
             });
+
+            resolve();
         });
     }
 
