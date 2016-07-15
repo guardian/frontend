@@ -1,9 +1,7 @@
 package services
 
-import com.google.inject.Singleton
-import com.gu.identity.model.{StatusFields, PublicFields, PrivateFields, User}
+import com.gu.identity.model.{PublicFields, PrivateFields, User}
 
-@Singleton
 class UserCreationService {
 
     def createUser(firstName: String, secondName: String, email: String, userName: String,  password: String,

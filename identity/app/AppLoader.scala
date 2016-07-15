@@ -1,6 +1,5 @@
-import _root_.http.IdentityHttpErrorHandler
+import http.IdentityHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
-import com.gu.identity.cookie.{ProductionKeys, PreProductionKeys, IdentityKeys}
 import com.softwaremill.macwire._
 import common.CloudWatchMetricsLifecycle
 import common.Logback.LogstashLifecycle

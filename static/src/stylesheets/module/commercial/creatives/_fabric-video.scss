@@ -11,6 +11,10 @@
         height: 100%;
     }
 
+    > .creative__video {
+        object-fit: cover;
+    }
+
     .creative__alt,
     .creative__layer,
     .creative__slide {

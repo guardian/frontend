@@ -1,6 +1,6 @@
 package controllers
 
-import _root_.liveblog._
+import liveblog.LiveBlogCurrentPage
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches

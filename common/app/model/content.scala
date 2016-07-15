@@ -199,7 +199,8 @@ final case class Content(
     ("references", JsArray(javascriptReferences)),
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
-    ("isImmersive", JsBoolean(isImmersive))
+    ("isImmersive", JsBoolean(isImmersive)),
+    ("isHeroic", JsBoolean(isHeroic))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.

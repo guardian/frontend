@@ -1,6 +1,6 @@
 package controllers
 
-import _root_.play.api.mvc.{Action, Results}
+import play.api.mvc.{Action, Results}
 import conf.HealthCheckController
 import frontpress.ToolPressQueueWorker
 import org.joda.time.DateTime

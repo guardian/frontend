@@ -1,7 +1,8 @@
 package services
 
 import akka.actor.ActorSystem
-import common.{LifecycleComponent, AutoRefresh}
+import app.LifecycleComponent
+import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}
 import play.libs.Akka
 

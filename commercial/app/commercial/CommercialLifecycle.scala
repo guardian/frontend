@@ -1,5 +1,6 @@
 package commercial
 
+import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries
@@ -20,8 +21,8 @@ object CommercialMetrics {
 
 class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()

@@ -1,11 +1,47 @@
+@import 'https://fonts.googleapis.com/css?family=Schoolbell|Space+Mono';
+
+@keyframes background {
+    0% {
+        background-color: hsl(338, 100%, 93%);
+    }
+    33% {
+        background-color: hsl(89, 100%, 93%);
+    }
+    66% {
+        background-color: hsl(183, 100%, 93%);
+    }
+    100% {
+        background-color: hsl(338, 100%, 93%);
+    }
+}
+
+.number {
+    font-family: 'Space Mono';
+    -webkit-font-smoothing: none;
+    text-shadow: rgba(255,255,255,0.4) 1px 1px 0px, rgba(0,0,0,0.2) 2px 2px 0px;
+}
+
 body {
     /* Unset UAS body */
     margin: 0;
-    padding: 1rem;
+    padding: 0 10vw;
+    font-family: 'Schoolbell';
+    animation: background linear 7200s;
+    animation-iteration-count: infinite;
+}
+
+#root > h1 {
+    font-size: 4vw;
+    margin-top: 7vw;
+    margin-bottom: 0;
+    padding-bottom: 2vw;
+    font-weight: bold;
+    flex-basis: 100%
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 3vw;
+    text-align: center;
 }
 
 h2 {
@@ -25,9 +61,8 @@ h2 {
 }
 
 .deploy {
-    width: 9em;
-    margin-right: 1em;
-    margin-bottom: 1em;
+    width: 100%;
+    margin-bottom: 1vw;
     box-sizing: border-box;
     padding: 1em;
     float: left;
@@ -37,6 +72,7 @@ h2 {
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
+    font-size: 4vw;
 }
 
 .deploy ul {
@@ -68,6 +104,22 @@ h2 {
     background-color: hsl(0, 50%, 80%);
 }
 
+.builds h2 {
+    font-size: 2.5vw;
+}
+
+.builds ul {
+    list-style-type: none;
+    text-align: center;
+    background-color: #ff0332;
+    color: white;
+    padding: 1vw 0 3vw;
+}
+
+.builds li {
+    margin-bottom: -1.6vw;
+}
+
 .hidden {
     display: none;
 }
@@ -84,11 +136,12 @@ a:hover {
 /*Clearfix*/
 .row {
     overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .col {
-    float: left;
-    width: 33.333%;
     box-sizing: border-box;
-    padding-right: 1rem;
+    padding: 0 1vw;
+    flex: 1
 }

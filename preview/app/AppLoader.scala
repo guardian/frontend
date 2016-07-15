@@ -1,6 +1,5 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
-import common.LifecycleComponent
 import conf.{StandaloneFilters, CachedHealthCheckLifeCycle}
 import controllers.{ResponsiveViewerController, StandaloneControllerComponents, HealthCheck}
 import model.ApplicationIdentity

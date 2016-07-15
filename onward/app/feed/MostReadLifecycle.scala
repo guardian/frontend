@@ -1,14 +1,15 @@
 package feed
 
-import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
 class MostReadLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
