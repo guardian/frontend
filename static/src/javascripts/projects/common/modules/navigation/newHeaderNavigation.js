@@ -16,7 +16,7 @@ define([
             mainMenuEl.addClass('shown');
             mainMenuEl.addClass('off-screen');
 
-            burgerMenu.addClass('new-header__burger-icon--open');
+            burgerLink.addClass('new-header__nav__menu-button--open');
             burgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
@@ -39,7 +39,7 @@ define([
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen');
 
-            burgerMenu.removeClass('new-header__burger-icon--open');
+            burgerLink.removeClass('new-header__nav__menu-button--open');
             burgerLink.attr('href', mainMenuId);
 
             // TODO: Support browsers that don't have transitions

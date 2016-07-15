@@ -1,3 +1,5 @@
+$mobileMedium: 375px; // Breakpoint for our most common device sizes
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -6,30 +8,35 @@
 }
 
 .new-header__logo {
+    padding-top: ($gs-baseline / 2);
+    padding-bottom: ($gs-baseline / 2);
 
     svg {
         // Removes extra spacing
         display: block;
+        padding-right: ($gs-gutter / 2);
 
-        // Aspect ratio: 16:3
-        @include mq($until: mobileLandscape) {
-            width: 50vw;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 46vw);
-            padding: ($gs-baseline / 2) 0;
-            min-width: 147px;
-            min-height: 28px;
+        @include mq($from: mobileLandscape) {
+            margin-right: ($gs-gutter / 2);
         }
 
-        @include mq(mobileLandscape) {
+        // Aspect ratio: 16:3
+        @include mq($until: $mobileMedium) {
+            width: 170px;
+            // height: auto doesn't work in Safari
+            height: calc(3/16 * 170px);
+        }
+
+        @include mq($from: $mobileMedium, $until: mobileLandscape) {
+            width: 225px;
+            height: calc(3/16 * 225px);
+        }
+
+        @include mq($from: mobileLandscape) {
             width: 240px;
             // height: auto doesn't work in Safari
             height: calc(3/16 * 240px);
             padding: ($gs-baseline / 2) ($gs-gutter / 2);
-        }
-
-        @include mq(phablet) {
-            padding-bottom: 0;
         }
     }
 }
@@ -48,8 +55,8 @@
     // Override button from user agent stylesheet
     padding: ($gs-gutter / 2);
 
-    @include mq($until: mobileLandscape) {
-        font-size: 3.8vw;
+    @include mq($from: mobileLandscape) {
+        margin-left: ($gs-gutter / 2);
     }
 
     svg {
@@ -66,6 +73,16 @@
             height: 4vw;
         }
     }
+
+    &:hover,
+    &:focus {
+        outline: none;
+        color: #ffffff;
+
+        path {
+            fill: #ffffff;
+        }
+    }
 }
 
 .new-header__nav {
@@ -76,8 +93,7 @@
 
     @include mq($until: mobileLandscape) {
         font-size: 5vw;
-        padding-left: ($gs-gutter / 2);
-        padding-right: ($gs-gutter / 2);
+        line-height: 1.6;
         // Position after pseudo element which forces line break
         order: 1;
         flex: 1;
@@ -85,37 +101,73 @@
     }
 }
 
+// These
+$veggieburgerSmall: 42px;
+$veggieburgerMedium: 52px;
+$gutterSmall: 30px;
+$gutterMedium: 37px;
+
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
-    background-color: $news-main-2;
+    position: relative;
     // Unset button from user agent stylesheet
+    cursor: pointer;
     border: 0;
+    outline: none;
     // Override button from user agent stylesheet
-    // Must be square
-    padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
-    height: 18px;
-    width: 18px;
-    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
 
-    @include mq($until: mobileLandscape) {
-        margin-right: 4vw;
-        margin-top: -2vw;
-        margin-bottom: -2vw;
+    @include mq($until: $mobileMedium) {
+        //Smaller menu button
+        height: $veggieburgerSmall;
+        width: $veggieburgerSmall;
+        margin-top: (-$gs-baseline);
+        margin-bottom: (-$gs-baseline);
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutterSmall;
+    }
+
+    @include mq($mobileMedium) {
+        height: $veggieburgerMedium;
+        width: $veggieburgerMedium;
+    }
+
+    @include mq($from: $mobileMedium, $until: mobileLandscape) {
+        margin-top: (-$gs-baseline / 1.5);
+        margin-bottom: (-$gs-baseline / 1.5);
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutterMedium;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        background-color: $news-main-2;
+        border-radius: 100%;
+        z-index: -1;
     }
 }
 
 .new-header__burger-icon {
-    position: relative;
-    margin-top: 3px;
-    cursor: pointer;
+    position: absolute;;
+    width: $gs-gutter;
+    height: 14px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
 
     transform: rotate(0deg);
     transition: .4s ease-in-out;
 
     span {
-        display: block;
         position: absolute;
         height: 2px;
         width: 100%;
@@ -137,19 +189,25 @@
     }
 }
 
-.new-header__burger-icon--open {
-    span {
-        &:nth-child(1) {
-            opacity: 0;
-        }
-        &:nth-child(2) {
-            transform: rotate(45deg);
-        }
-        &:nth-child(3) {
-            transform: rotate(-45deg);
-        }
-        &:nth-child(4) {
-            opacity: 0;
+.new-header__nav__menu-button--open {
+    &:after {
+        transform: scale(1.1);
+    }
+
+    .new-header__burger-icon {
+        span {
+            &:nth-child(1) {
+                opacity: 0;
+            }
+            &:nth-child(2) {
+                transform: rotate(45deg);
+            }
+            &:nth-child(3) {
+                transform: rotate(-45deg);
+            }
+            &:nth-child(4) {
+                opacity: 0;
+            }
         }
     }
 }
@@ -162,10 +220,11 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 3px;
+    margin-bottom: 0;
 
     @include mq($until: mobileLandscape) {
         order: -1;
+        margin-left: ($gs-gutter / 2);
     }
 }
 
@@ -173,6 +232,10 @@
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+
+    &:first-child .new-header__nav__link{
+        padding-left: 0;
+    }
 
     &:not(:last-child) {
         &:after {
@@ -185,7 +248,9 @@
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    padding: 2px;
+    // Optically aligns slashes
+    padding-left: 2px;
+    padding-right: 3px;
 }
 
 /****************
@@ -230,7 +295,6 @@
 
 .main-menu-container__menu {
     height: 100%;
-    width: 90%;
     background-color: $guardian-brand;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
@@ -243,6 +307,14 @@
 
     will-change: transform;
     transition: transform .2s ease-out;
+
+    @include mq($until: $mobileMedium) {
+        margin-right: $gutterSmall + ($veggieburgerSmall / 2);
+    }
+
+    @include mq($from: $mobileMedium, $until: mobileLandscape) {
+        margin-right: $gutterMedium + ($veggieburgerMedium / 2);
+    }
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
