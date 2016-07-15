@@ -42,13 +42,4 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   // they should "be responsive for 88x70 ad on US business front" in {
   //   topAboveNavSlot.cssClasses(metaDataFromId("us/business"), defaultEdition, Seq(responsiveSize)) should endWith("top-banner-ad-container--responsive")
   // }
-
-  they should "be default for any other page" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("uk/culture"), defaultEdition, None, Nil) should
-      endWith("top-banner-ad-container--reveal")
-    topAboveNavSlot.cssClasses(metaDataFromId(
-      "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis"),
-      defaultEdition, None, Nil)
-      .should(endWith("top-banner-ad-container--reveal"))
-  }
 }
