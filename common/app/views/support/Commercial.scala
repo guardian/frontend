@@ -49,8 +49,7 @@ object Commercial {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
-        "js-top-banner-desktop",
-        "top-banner-ad-container--reveal"
+        "js-top-banner-desktop"
       )
 
       classes mkString " "
