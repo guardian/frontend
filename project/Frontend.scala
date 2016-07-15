@@ -80,6 +80,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       paClient,
       akkaContrib
@@ -159,6 +160,9 @@ object Frontend extends Build with Prototypes {
       )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+    .settings(
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    )
 
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
@@ -217,6 +221,7 @@ object Frontend extends Build with Prototypes {
   val rss = application("rss")
     .dependsOn(commonWithTests)
     .aggregate(common)
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val main = root().aggregate(
     common,

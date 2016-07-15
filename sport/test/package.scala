@@ -39,7 +39,7 @@ class SportTestSuite extends Suites (
   new rugby.model.MatchParserTest
 ) with SingleServerSuite with FootballTestData {
 
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck().testPort
 
   // Inject stub api.
   FootballClient.http = TestHttp

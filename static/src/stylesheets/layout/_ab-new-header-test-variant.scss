@@ -95,8 +95,8 @@
     padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
-    height: 42px;
-    width: 42px;
+    height: 18px;
+    width: 18px;
     margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
 
     @include mq($until: mobileLandscape) {
@@ -106,34 +106,51 @@
     }
 }
 
-%new-header__burger-icon__line {
-    width: 100%;
-    height: 2px;
-    background-color: #ffffff;
+.new-header__burger-icon {
+    position: relative;
+    margin-top: 3px;
+    cursor: pointer;
+
+    transform: rotate(0deg);
+    transition: .4s ease-in-out;
+
+    span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: #ffffff;
+
+        opacity: 1;
+        transform: rotate(0deg);
+        transition: .2s ease-in-out;
+
+        &:nth-child(1) {
+            top: 0;
+        }
+        &:nth-child(2), &:nth-child(3) {
+            top: 5px;
+        }
+        &:nth-child(4) {
+            top: 10px;
+        }
+    }
 }
 
-.new-header__nav__menu-button__burger-icon {
-    @extend %new-header__burger-icon__line;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 3px;
-    position: relative;
-
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        display: block;
-    }
-
-    &:before {
-        @extend %new-header__burger-icon__line;
-        top: 5px;
-    }
-
-    &:after {
-        @extend %new-header__burger-icon__line;
-        top: 10px;
+.new-header__burger-icon--open {
+    span {
+        &:nth-child(1) {
+            opacity: 0;
+        }
+        &:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        &:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        &:nth-child(4) {
+            opacity: 0;
+        }
     }
 }
 
@@ -169,4 +186,203 @@
     // Override a from _lists.scss
     color: #ffffff;
     padding: 2px;
+}
+
+/****************
+ * Menu Styling
+ ****************/
+
+.main-menu-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // TODO: Why 3?
+    z-index: 3;
+
+    .js-on & {
+        &:not(.shown) {
+            display: none;
+        }
+    }
+
+    .js-off & {
+        &:not(:target) {
+            display: none;
+        }
+    }
+}
+
+.main-menu-container__overlay {
+    background-color: hsla(0, 0%, 0%, .5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: opacity .2s;
+
+    .main-menu-container.off-screen & {
+        opacity: 0;
+    }
+}
+
+.main-menu-container__menu {
+    height: 100%;
+    width: 90%;
+    background-color: $guardian-brand;
+    color: #ffffff;
+    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
+    font-family: $f-sans-serif-text;
+    font-size: 20px;
+    text-transform: lowercase;
+    // TODO: Remove
+    padding-top: 10px;
+    overflow: auto;
+
+    will-change: transform;
+    transition: transform .2s ease-out;
+
+    .main-menu-container.off-screen & {
+        transform: translateX(-110%);
+    }
+}
+
+.main-menu-container__profile-container {
+    @include fs-textSans(5);
+    margin-bottom: $gs-row-height;
+}
+
+.main-menu-container__profile-icon {
+    background-color: darken($guardian-brand, 3%);
+    text-align: center;
+    fill: $news-support-1;
+    height: 23px;
+    width: 23px;
+    overflow: hidden;
+    margin-left: $gs-gutter/2;
+
+    svg {
+        height: 23px;
+        width: 23px;
+    }
+}
+
+.main-navigation {
+    // Unset ul from _lists.scss
+    margin-left: 0;
+    // Unset ul from user agent stylesheet
+    margin-top: 0;
+    // Unset ul from user agent stylesheet
+    margin-bottom: 0;
+    padding-bottom: 16px;
+    text-transform: lowercase;
+}
+
+.main-navigation__item {
+    // Override inherited ul from user agent stylesheet
+    list-style: none;
+}
+
+$navigation-horizontal-padding: 38px;
+
+.main-navigation__item__button {
+    // padding-left: $navigation-horizontal-padding;
+    padding-right: $navigation-horizontal-padding;
+    padding-bottom: 6px;
+    font-size: 26px;
+
+    &:focus {
+        // Unset a:focus from user agent stylesheet
+        outline: 0;
+        background-color: darken($guardian-brand, 5%);
+    }
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    // TODO: Why both?
+    .inline-icon, svg {
+        vertical-align: middle;
+    }
+
+    svg {
+        fill: hsla(0, 0%, 100%, .3);
+        margin-left: ($navigation-horizontal-padding - 15px) / 2;
+        margin-right: ($navigation-horizontal-padding - 15px) / 2 - 6px;
+        width: 15px;
+        height: auto;
+
+        details[open] & {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.main-navigation__secondary {
+    background-color: darken($guardian-brand, 3%);
+    color: $news-support-1;
+}
+
+.navigation-border {
+    &:before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: $guardian-brand-dark;
+        margin-left: $navigation-horizontal-padding;
+    }
+}
+
+.navigation-group {
+    // Unset ul from _lists.scss
+    margin-left: 0;
+    // Unset ul from user agent stylesheet
+    margin-top: 0;
+    // Unset ul from user agent stylesheet
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+.navigation-group__item {
+    // Override inherited ul from user agent stylesheet
+    list-style: none;
+
+    a {
+        display: block;
+        padding-left: $navigation-horizontal-padding;
+        padding-right: $navigation-horizontal-padding;
+        padding-bottom: 6px;
+        // Override a from user agent stylesheet
+        color: inherit;
+
+        // TODO: Share with large nav?
+        &:focus {
+            // Unset a:focus from user agent stylesheet
+            outline: 0;
+            background-color: darken($guardian-brand, 5%);
+        }
+    }
+}
+
+.navigation-group__social-icon {
+    fill: hsla(0, 0%, 100%, .3);
+    position: absolute;
+    left: 0;
+
+    svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    &.inline-instagram svg {
+        width: 17px;
+        height: 17px;
+    }
+}
+
+.no-text-transform {
+    text-transform: none;
 }
