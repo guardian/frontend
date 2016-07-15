@@ -83,6 +83,28 @@ define([
         secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
+    function loadModules(modules, baseline) {
+
+        ophanTracking.addBaseline(baseline);
+
+        var modulePromises = [];
+
+        modules.forEach(function (pair) {
+
+            var moduleName = pair[0];
+
+            robust.catchErrorsAndLog(moduleName, function () {
+                var modulePromise = pair[1]().then(function(){
+                    ophanTracking.moduleCheckpoint(moduleName, baseline);
+                });
+
+                modulePromises.push(modulePromise);
+            });
+        });
+
+       return Promise.all(modulePromises)
+    }
+
     return {
         init: function () {
             if (!config.switches.commercial) {
@@ -90,39 +112,9 @@ define([
             }
 
             userTiming.mark('commercial start');
-            ophanTracking.addBaseline(ophanTracking.primaryBaseline);
 
-            var primaryModulePromises = [];
-
-            primaryModules.forEach(function (pair) {
-
-                var moduleName = pair[0];
-
-                robust.catchErrorsAndLog(moduleName, function () {
-                    var modulePromise = pair[1]().then(function(){
-                        ophanTracking.moduleCheckpoint(moduleName, ophanTracking.primaryBaseline);
-                    });
-
-                    primaryModulePromises.push(modulePromise);
-                });
-            });
-
-            Promise.all(primaryModulePromises).then(function () {
-                ophanTracking.addBaseline(ophanTracking.secondaryBaseline);
-
-                var secondaryModulePromises = [];
-
-                secondaryModules.forEach(function (pair) {
-                    var moduleName = pair[0];
-
-                    robust.catchErrorsAndLog(moduleName, function () {
-                        var modulePromise = pair[1]().then(function(){
-                            ophanTracking.moduleCheckpoint(moduleName, ophanTracking.secondaryBaseline);
-                        });
-
-                        secondaryModulePromises.push(modulePromise);
-                    });
-                });
+            loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
+                loadModules(secondaryModules, ophanTracking.secondaryBaseline);
             });
         }
     };
