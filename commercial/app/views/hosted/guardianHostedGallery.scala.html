@@ -17,11 +17,7 @@
                             </div>
                         }.toString)
                         @for(i <- page.images.indices.tail) {
-                            @guardianHostedGalleryImage(page.images(i), if (i == page.images.length - 1) {
-                                guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries).toString
-                            } else if (page.ctaIndex.contains(i)) {
-                                guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText).toString
-                            } else "")
+                            @guardianHostedGalleryImage(page.images(i))
                         }
                     </div>
                     <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">

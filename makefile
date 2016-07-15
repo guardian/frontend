@@ -17,11 +17,9 @@ compile-dev: clean-assets
 install:
 	@echo 'Installing 3rd party dependencies…'
 	@npm install
-	@cd static/src/deploys-radiator && npm install && node_modules/.bin/jspm install && node_modules/.bin/tsd install
 	@echo '…done.'
 	@echo 'Removing any unused 3rd party dependencies…'
 	@npm prune
-	@cd static/src/deploys-radiator && node_modules/.bin/jspm clean && npm prune
 	@echo '…done.'
 	@node tools/messages.js install
 
@@ -29,7 +27,6 @@ reinstall: uninstall install
 
 uninstall:
 	@rm -rf node_modules
-	@cd static/src/deploys-radiator && rm -rf node_modules jspm_packages typings
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 test:

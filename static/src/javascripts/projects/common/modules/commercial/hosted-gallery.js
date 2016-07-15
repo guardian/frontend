@@ -64,16 +64,13 @@ define([
             // FSM CONFIG
             this.fsm = new FiniteStateMachine({
                 initial: 'image',
-                onChangeState: function (oldState, newState) {
-                    this.$galleryEl
-                        .removeClass('hosted-gallery--' + oldState)
-                        .addClass('hosted-gallery--' + newState);
-                },
+                onChangeState: function () {},
                 context: this,
                 states: this.states
             });
 
             bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+            bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
 
@@ -88,10 +85,14 @@ define([
     }
 
     HostedGallery.prototype.initScroll = function () {
-        bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
-
-        bean.on(this.nextBtn, 'click', this.scrollTo.bind(this, 1));
-        bean.on(this.prevBtn, 'click', this.scrollTo.bind(this, -1));
+        bean.on(this.nextBtn, 'click', function(){
+            this.scrollTo(this.index + 1);
+            this.trigger.bind(this, 'next', {nav: 'Click'});
+        }.bind(this));
+        bean.on(this.prevBtn, 'click', function(){
+            this.scrollTo(this.index - 1);
+            this.trigger.bind(this, 'prev', {nav: 'Click'});
+        }.bind(this));
 
         bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
     };
@@ -130,13 +131,13 @@ define([
 
             if (direction === 1) {
                 if (this.index > 1) {
-                    this.trigger('prev');
+                    this.trigger('prev', {nav: 'Swipe'});
                 } else {
                     this.trigger('reload');
                 }
             } else if (direction === -1) {
                 if (this.index < this.$images.length) {
-                    this.trigger('next');
+                    this.trigger('next', {nav: 'Swipe'});
                 } else {
                     this.trigger('reload');
                 }
@@ -170,56 +171,60 @@ define([
         function setSize($image, index) {
             if (!that.imageRatios[index]) {
                 that.imageRatios[index] = $image[0].naturalWidth / $image[0].naturalHeight;
-                if (that.imageRatios[index] < 1) {
-                    $image.css('object-fit', 'contain');
-                }
             }
-            if (that.imageRatios[index] > 1) {
-                that.resizeLandscapeImage.call(that, index);
-            }
+            that.resizeImage.call(that, index);
         }
     };
 
-    HostedGallery.prototype.resizeLandscapeImage = function (imgIndex) {
+    HostedGallery.prototype.resizeImage = function (imgIndex) {
         var $imageDiv = this.$images[imgIndex],
             $imagesContainer = this.$imagesContainer[0],
             $gallery = this.$galleryEl[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
             $images = this.$images,
-            useSwipe = this.useSwipe,
             width = $gallery.clientWidth,
             height = $imagesContainer.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
-            imgRatio = 5 / 3,
-            imageHeight = height,
-            imageWidth = width,
-            topBottom = 0,
-            leftRight = 0;
-        if (imgRatio > width / height) {
-            // portrait screens
-            imageHeight = width / imgRatio;
-            topBottom = (height - imageHeight) / 2;
-        } else {
-            // landscape screens
-            imageWidth = height * imgRatio;
-            leftRight = (width - imageWidth) / 2;
-        }
+            imgRatio = this.imageRatios[imgIndex],
+            ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
         fastdom.write(function () {
-            $sizer.css('width', imageWidth);
-            $sizer.css('height', imageHeight);
-            $sizer.css('top', topBottom);
-            $sizer.css('left', leftRight);
-            if (imgIndex === config.page.ctaIndex && !useSwipe) {
-                bonzo($ctaFloat).css('bottom', topBottom);
+            $sizer.css('width', imageSize.width);
+            $sizer.css('height', imageSize.height);
+            $sizer.css('top', imageSize.topBottom);
+            $sizer.css('left', imageSize.leftRight);
+            if (imgIndex === config.page.ctaIndex) {
+                bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
             }
-            if (imgIndex === $images.length - 1 && !useSwipe) {
-                bonzo($ojFloat).css('bottom', topBottom);
+            if (imgIndex === $images.length - 1) {
+                bonzo($ojFloat).css('bottom', ctaSize.topBottom);
             }
-            if (imgIndex === $images.length - 1 && topBottom > 40) {
-                $('.js-hosted-gallery-oj').css('padding-bottom', 0);
+            if (imgIndex === $images.length - 1) {
+                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 0 : 'null');
             }
         });
+        function getFrame(desiredRatio, w, h) {
+            w = w || width;
+            h = h || height;
+            var frame = {
+                height: h,
+                width: w,
+                topBottom: 0,
+                leftRight: 0
+            };
+            if (!desiredRatio) return frame;
+            if (desiredRatio > w / h) {
+                // portrait screens
+                frame.height = w / desiredRatio;
+                frame.topBottom = (h - frame.height) / 2;
+            } else {
+                // landscape screens
+                frame.width = h * desiredRatio;
+                frame.leftRight = (w - frame.width) / 2;
+            }
+            return frame;
+        }
     };
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -262,19 +267,16 @@ define([
 
         if (newIndex && newIndex !== this.index) {
             this.index = newIndex;
-            this.trigger('reload');
+            this.trigger('reload', {nav: 'Scroll'});
         }
     };
 
-    HostedGallery.prototype.scrollTo = function (direction) {
+    HostedGallery.prototype.scrollTo = function (index) {
         var scrollEl = this.$scrollEl;
         var length = this.$images.length;
-        var scrollTop = scrollEl[0].scrollTop;
         var scrollHeight = scrollEl[0].scrollHeight;
-        var progress = length * (scrollTop / scrollHeight);
-        var newIndex = Math.round(progress + (direction * 0.51));
         fastdom.write(function () {
-            scrollEl.scrollTop(newIndex * scrollHeight / length);
+            scrollEl.scrollTop((index - 1) * scrollHeight / length);
         });
     };
 
@@ -295,8 +297,8 @@ define([
                 if (this.useSwipe) {
                     this.translateContent(this.index, 0, 100);
                     bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
+                    bonzo(this.$galleryEl).toggleClass('show-cta', this.index === config.page.ctaIndex + 1);
                 }
-                omniture.trackLinkImmediate(config.page.analyticsName + ' - image ' + this.index);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },
@@ -305,33 +307,22 @@ define([
                 mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function () {
-                    if (this.index === this.$images.length) { // last img
-                        if (this.showEndslate) {
-                            this.state = 'endslate';
-                        } else {
-                            this.index = 1;
-                            this.reloadState = true;
-                        }
-                    } else {
+                'next': function (e) {
+                    if (this.index < this.$images.length) { // last img
                         this.index += 1;
-                        this.reloadState = true;
+                        this.trackNavBetweenImages(e);
                     }
+                    this.reloadState = true;
                 },
-                'prev': function () {
-                    if (this.index === 1) { // first img
-                        if (this.showEndslate) {
-                            this.state = 'endslate';
-                        } else {
-                            this.index = this.$images.length;
-                            this.reloadState = true;
-                        }
-                    } else {
+                'prev': function (e) {
+                    if (this.index > 1) { // first img
                         this.index -= 1;
-                        this.reloadState = true;
+                        this.trackNavBetweenImages(e);
                     }
+                    this.reloadState = true;
                 },
-                'reload': function () {
+                'reload': function (e) {
+                    this.trackNavBetweenImages(e);
                     this.reloadState = true;
                 },
                 'toggle-info': function () {
@@ -347,35 +338,12 @@ define([
                     this.onResize();
                 }
             }
-        },
+        }
+    };
 
-        'endslate': {
-            enter: function () {
-                if (this.useSwipe) {
-                    this.translateContent(this.$images.length, 0, 0);
-                }
-                this.index = this.$images.length + 1;
-                mediator.on('window:resize', this.resize);
-            },
-            leave: function () {
-                mediator.off('window:resize', this.resize);
-            },
-            events: {
-                'next': function () {
-                    this.index = 1;
-                    this.state = 'image';
-                },
-                'prev': function () {
-                    this.index = this.$images.length;
-                    this.state = 'image';
-                },
-                'reload': function () {
-                    this.reloadState = true;
-                },
-                'resize': function () {
-                    this.onResize();
-                }
-            }
+    HostedGallery.prototype.trackNavBetweenImages = function (data) {
+        if (data && data.nav) {
+            omniture.trackLinkImmediate(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
         }
     };
 
@@ -401,7 +369,6 @@ define([
             $progress = this.$progress,
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
-            useSwipe = this.useSwipe,
             imgRatio = 5 / 3,
             imageWidth = width,
             leftRight = 0;
@@ -413,23 +380,29 @@ define([
             $header.css('width', imageWidth);
             $footer.css('padding', '0 ' + leftRight);
             $progress.css('right', leftRight);
-            if (!useSwipe) {
-                bonzo($ctaFloat).css('left', leftRight);
-                bonzo($ojFloat).css('left', leftRight);
-                bonzo($ctaFloat).css('right', leftRight);
-                bonzo($ojFloat).css('right', leftRight);
-            }
+            bonzo($ctaFloat).css('left', leftRight);
+            bonzo($ojFloat).css('left', leftRight);
+            bonzo($ctaFloat).css('right', leftRight);
+            bonzo($ojFloat).css('right', leftRight);
         });
     };
 
     HostedGallery.prototype.handleKeyEvents = function (e) {
+        var keyNames = {
+            '37': 'left',
+            '38': 'up',
+            '39': 'right',
+            '40': 'down'
+        };
         if (e.keyCode === 37 || e.keyCode === 38) { // up/left
             e.preventDefault();
-            this.scrollTo(-1);
+            this.scrollTo(this.index - 1);
+            this.trigger('prev', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 39 || e.keyCode === 40) { // down/right
             e.preventDefault();
-            this.scrollTo(1);
+            this.scrollTo(this.index + 1);
+            this.trigger('next', {nav: 'KeyPress:' + keyNames[e.keyCode]});
             return false;
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
@@ -437,7 +410,7 @@ define([
     };
 
     function init() {
-        loadCssPromise.then(function () {
+        return loadCssPromise.then(function () {
             var gallery,
                 match,
                 galleryHash = window.location.hash,
