@@ -94,16 +94,6 @@ define([
                     adSizes.fluid250,
                     adSizes.fabric,
                     adSizes.fluid
-                ),
-                desktop: compile(
-                    adSizes.outOfPage,
-                    adSizes.fluid250,
-                    adSizes.leaderboard,
-                    adSizes.cascade,
-                    adSizes.superHeader,
-                    adSizes.billboard,
-                    adSizes.fabric,
-                    adSizes.fluid
                 )
             }
         }
