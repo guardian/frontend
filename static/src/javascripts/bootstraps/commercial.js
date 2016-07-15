@@ -102,7 +102,7 @@ define([
             });
         });
 
-       return Promise.all(modulePromises)
+       return Promise.all(modulePromises);
     }
 
     return {
