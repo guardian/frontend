@@ -11,9 +11,13 @@ import org.joda.time.{DateTime, DateTimeZone}
 object Blocks {
 
   def make(blocks: ApiBlocks): Blocks = {
-    val bodyBlocks = blocks.body.toSeq.flatMap(BodyBlock.make)
+
+    def orderBlocks(blocks: Seq[BodyBlock]) =
+      blocks.sortBy(_.publishedDate.map(_.getMillis).getOrElse(0L)).reverse
+
+    val bodyBlocks = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
-      map.toMap.mapValues(BodyBlock.make)
+      map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
     }.getOrElse(Map())
     Blocks(
       totalBodyBlocks = blocks.totalBodyBlocks.getOrElse(bodyBlocks.length),
