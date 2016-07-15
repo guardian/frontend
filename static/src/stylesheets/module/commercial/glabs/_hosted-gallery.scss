@@ -282,7 +282,7 @@
     left: 0;
     right: 0;
     color: #ffffff;
-    padding: 50px 120px 10px 60px;
+    padding: 20px;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
     @include mq($until: tablet) {
         padding: 20px 70px 10px 20px;
@@ -292,11 +292,15 @@
 .hosted-gallery__heading {
     @include f-headlineSans;
     margin-bottom: 5px;
-    font-size: 20px;
-    line-height: 22px;
+    font-size: 26px;
+    line-height: 28px;
     @include mq(tablet) {
-        font-size: 24px;
-        line-height: 26px;
+        font-size: 30px;
+        line-height: 32px;
+    }
+    @include mq(desktop) {
+        font-size: 36px;
+        line-height: 36px;
     }
 }
 
@@ -590,6 +594,6 @@ $progressColor: #ffffff;
     .hosted-gallery__meta,
     .hosted-gallery__oj,
     .hosted-gallery__cta {
-        padding-bottom: 30px;
+        padding-bottom: 20px;
     }
 }
