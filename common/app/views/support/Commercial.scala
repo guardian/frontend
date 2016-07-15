@@ -58,7 +58,7 @@ object Commercial {
     }
 
     def slotCssClasses(metaData: MetaData): Seq[String] = {
-        val classes = Seq("top-banner-ad")
+        val classes = Seq("top-banner-ad", "top-banner-ad-desktop")
         val fixedTechSlotClass = if(FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) Some("h250") else None
         classes ++ fixedTechSlotClass
     }
