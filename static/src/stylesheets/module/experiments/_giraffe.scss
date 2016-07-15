@@ -1,13 +1,13 @@
 .giraffe {
-    @include f-header;
     width: 100%;
-    padding: 5px 5px 12px;
+    //padding: 5px 5px 12px;
+    padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
     background: $multimedia-main-2;
-    line-height: 28px;
     box-sizing: border-box;
 }
 
-.giraffe--heading {
+.giraffe__heading {
+    @include fs-header(5);
     color: $neutral-1;
     display: inline;
 }
@@ -16,18 +16,21 @@
     float: right;
 }
 
-.giraffe--copy {
+.giraffe__copy {
+    @include fs-header(5);
     color: #ffffff;
-    font-size: 24px;
     display: inline;
 }
 
-.giraffe-button {
-    background: $maps-main-2;
+.button--primary {
     margin-top: $gs-baseline;
-    border: 0;
 
-    &:hover, &:focus {
-        background-color: darken(#328a3e, 10%);
-    }
+    @include button-colour(
+            $maps-main-2,
+            #ffffff
+    );
+    @include button-hover-colour(
+            mix($maps-main-2, $neutral-1, 60%)
+    );
 }
+
