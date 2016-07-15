@@ -69,6 +69,7 @@
     background-color: $neutral-8;
 
     .sticky-ad-banner & {
+        overflow: hidden;
         z-index: 1022;
         width: 100%;
         position: relative;
@@ -77,11 +78,6 @@
 
 .ad-slot--top-banner-ad {
     text-align: center;
-    /*
-     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
-     * We are giving this ad priority 5 so it will go over everything except lightbox
-     */
-    overflow: visible;
     z-index: $zindex-popover;
 
     @include mq(wide) {
