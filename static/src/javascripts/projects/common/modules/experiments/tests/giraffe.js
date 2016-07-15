@@ -33,7 +33,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.canRun = function () {
-             return window.guardian.config.page.edition == 'UK';
+             return !window.guardian.config.page.isSensitive &&
+                 !window.guardian.config.page.isLiveBlog && window.guardian.config.page.edition == 'UK';
         };
 
         var writer = function (linkText, linkHref, copy) {
