@@ -32,7 +32,7 @@
     display: block;
 }
 
-.my-digest-main__main-column::before {
+.main__column--horizontal-bar::before {
     content: '';
     display: block;
     border-bottom: 2px solid #5ab0f4;
