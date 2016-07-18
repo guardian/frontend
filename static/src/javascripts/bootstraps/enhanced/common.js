@@ -30,7 +30,6 @@ define([
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/navigation/newHeaderNavigation',
-    'common/modules/commercial/hosted-about',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -85,7 +84,6 @@ define([
     CookieRefresh,
     navigation,
     newHeaderNavigation,
-    hostedAbout,
     Profile,
     Search,
     history,
@@ -346,13 +344,8 @@ define([
 
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
-            },
-
-            initHostedAboutLightbox: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedAbout.init();
-                }
             }
+
         };
 
     return {
@@ -400,8 +393,7 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });
