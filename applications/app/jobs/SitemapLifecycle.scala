@@ -1,5 +1,6 @@
 package jobs
 
+import app.LifecycleComponent
 import common._
 import services.{VideoSiteMap, NewsSiteMap}
 

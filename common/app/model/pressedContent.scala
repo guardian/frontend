@@ -458,7 +458,6 @@ object Image {
   def make(image: fapi.FaciaImage): Image = image match {
     case cutout: fapi.Cutout => Cutout.make(cutout)
     case replace: fapi.Replace => Replace.make(replace)
-    case imageReplace: fapi.ImageReplace => ImageReplace.make(imageReplace)
     case slideshow: fapi.ImageSlideshow => ImageSlideshow.make(slideshow)
   }
 }
@@ -480,13 +479,6 @@ object Replace {
 
 }
 final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String) extends Image
-
-object ImageReplace {
-  def make(imageReplace: fapi.ImageReplace): ImageReplace = ImageReplace(
-    src = imageReplace.src)
-
-}
-final case class ImageReplace(src: String) extends Image
 
 object ImageSlideshow {
   def make(slideshow: fapi.ImageSlideshow): ImageSlideshow = ImageSlideshow(

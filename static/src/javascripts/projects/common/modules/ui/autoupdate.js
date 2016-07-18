@@ -58,9 +58,10 @@ define([
 
         // Warning: these are re-assigned over time
         var currentUpdateDelay = options.minUpdateDelay;
-        var latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
+        var latestBlockId = $liveblogBody.data('most-recent-block');
         var updating = false;
         var unreadBlocksNo = 0;
+        var updateTimeoutId = undefined;
 
 
         var updateDelay = function (delay) {
@@ -132,6 +133,48 @@ define([
             toastButtonRefresh();
         };
 
+        var checkForUpdates = function () {
+
+            if (updateTimeoutId != undefined) {
+                clearTimeout(updateTimeoutId);
+            }
+
+            var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
+            var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
+
+            return ajax({
+                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
+                type: 'json',
+                method: 'get',
+                crossOrigin: true
+            }).then(function (resp) {
+                var count = resp.numNewBlocks;
+
+                if (count > 0) {
+                    // updates notification bar with number of unread blocks
+                    mediator.emit('modules:autoupdate:unread', count);
+
+                    unreadBlocksNo += count;
+                    if (count > 0) {
+                        latestBlockId = resp.mostRecentBlockId;
+                    }
+                    if (isLivePage) {
+                        injectNewBlocks(resp.html);
+                        if (scrolledPastTopBlock()) {
+                            toastButtonRefresh();
+                        } else {
+                            displayNewBlocks();
+                        }
+                    } else {
+                        toastButtonRefresh();
+                    }
+                }
+            }).always(function () {
+                updateDelay(currentUpdateDelay);
+                updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+            });
+        };
+
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.toast__button', function () {
                 if (isLivePage) {
@@ -164,43 +207,7 @@ define([
                     revealInjectedElements();
                 }
                 currentUpdateDelay = options.minUpdateDelay;
-            });
-        };
-
-        var checkForUpdates = function () {
-            var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
-            var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
-
-            return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
-            }).then(function (resp) {
-                var count = resp.numNewBlocks;
-
-                if (count > 0) {
-                    // updates notification bar with number of unread blocks
-                    mediator.emit('modules:autoupdate:unread', count);
-
-                    unreadBlocksNo += count;
-                    if (count > 0) {
-                        latestBlockId = resp.mostRecentBlockId;
-                    }
-                    if (isLivePage) {
-                        injectNewBlocks(resp.html);
-                        if (scrolledPastTopBlock()) {
-                            toastButtonRefresh();
-                        } else {
-                            displayNewBlocks();
-                        }
-                    } else {
-                        toastButtonRefresh();
-                    }
-                }
-            }).then(function () {
-                updateDelay(currentUpdateDelay);
-                setTimeout(checkForUpdates, currentUpdateDelay);
+                checkForUpdates();
             });
         };
 

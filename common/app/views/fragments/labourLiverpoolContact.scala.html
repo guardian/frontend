@@ -1,0 +1,35 @@
+@import views.support.{ImgSrc, Item140}
+
+<div class="labour-liverpool-contact fc-container">
+    <div class="fc-container__inner">
+        <div class="fc-container__header">
+            <div class="fc-container__header__title">
+                <span class="fc-container__title__text">Sign up for the Labour and Liverpool Newsletter</span>
+            </div>
+        </div>
+        <div class="fc-container__body">
+            <div class="fc-slice-wrapper labour-liverpool-contact__wrapper">
+                <div class="labour-liverpool-contact__sign-up">
+                    <iframe class="labour-liverpool-contact__sign-up__form" height="350px" src="https://s3.amazonaws.com/gdn-cdn/embed/labour-and-liverpool-forms/emailform.html"></iframe>
+                </div>
+                <div class="labour-liverpool-contact__contact-ewen">
+                    <div class="labour-liverpool-contact__avatar-container">
+                        <div class="speech-bubble">Want to ask a question or contact me directly?</div>
+                        @fragments.inlineSvg("speech-bubble-mask", "membership")
+                        <img class="labour-liverpool-contact__avatar" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
+                    </div>
+                    <div class="labour-liverpool-contact__contact-ewen__buttons">
+                        <a class="button--medium labour-liverpool-contact__button" href="https://twitter.com/ewenmacaskill">
+                            @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon", "social-icon", "social-icon--small", "social-icon--twitter"))
+                            Twitter
+                        </a>
+                        <a class="button--medium labour-liverpool-contact__button" href="mailto:e.macaskill@@guardian.co.uk">
+                            @fragments.inlineSvg("share-email", "icon", List("rounded-icon", "social-icon", "social-icon--small", "social-icon--email"))
+                            Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

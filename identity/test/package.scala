@@ -1,52 +1,33 @@
 package test
 
-import com.gargoylesoftware.htmlunit.BrowserVersion
-import controllers.HealthCheck
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import play.api.test.{TestServer, TestBrowser, FakeApplication}
+import java.io.File
+
+import play.api.i18n.I18nComponents
+import play.api._
 import play.api.test.Helpers._
 
-object `package` {
-
-  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
-}
-
-class EditionalisedHtmlUnit(val port: String) extends TestSettings {
-
-  // the default is I.E 7 which we do not support
-  BrowserVersion.setDefault(BrowserVersion.CHROME)
-
-  val host = s"http://localhost:${port}"
-
-  def apply[T](path: String)(block: TestBrowser => T): T = goTo(path, host)(block)
-
-  protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
-
-    running(TestServer(port.toInt,
-      FakeApplication(withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
-
-      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
-
-      browser.goTo(host + path)
-      block(browser)
-    }
-  }
-}
 
 /**
  * Executes a block of code in a FakeApplication.
  */
 trait FakeApp extends TestSettings {
-
-  def apply[T](block: => T): T = running(
-    FakeApplication(
-      withGlobal = globalSettingsOverride,
-      additionalConfiguration = Map(
+  def app: Application = {
+    val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val context = ApplicationLoader.createContext(
+      environment = environment,
+      initialSettings = Map(
         "application.secret" -> "this_is_not_a_real_secret_just_for_tests"
       )
     )
-  ) { block }
+    ApplicationLoader.apply(context).load(context)
+  }
+
+  def apply[T](block: => T): T = running(app) { block }
 }
 
 object Fake extends FakeApp
+
+object I18NTestComponents extends I18nComponents {
+  override val environment: Environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+  override val configuration: Configuration = Configuration.load(environment)
+}

@@ -1,8 +1,10 @@
 @()(implicit request: RequestHeader)
 
+@import conf.Atomise
 @import common.LinkTo
 
-<header class="new-header mobile-only" role="banner" data-link-name="global navigation: new header">
+@fragments.nav.newHeaderMenu()
+<header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
         <a href="@LinkTo{/}" class="new-header__logo" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
@@ -13,10 +15,15 @@
             <span>UK Edition</span>
         </button>
         <nav class="new-header__nav">
-            <button class="new-header__nav__menu-button">
-                <i class="new-header__nav__menu-button__burger-icon"></i>
+            <a href="#main-menu" class="new-header__nav__menu-button js-change-link" tabindex="0">
+                <div class="new-header__burger-icon js-animate-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <span class="u-h">Menu</span>
-            </button>
+            </a>
             <ul class="new-header__nav__list">
                 @* TODO: Should open a menu *@
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/}">news</a></li>

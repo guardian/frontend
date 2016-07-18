@@ -1,6 +1,7 @@
 package services
 
 import akka.util.Timeout
+import app.LifecycleComponent
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
@@ -156,8 +157,8 @@ object ConfigAgent extends ConfigAgentTrait
 
 class ConfigAgentLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)
   (implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {

@@ -80,19 +80,6 @@
         position: relative;
     }
 
-    &.top-banner-ad-container--below-nav {
-        border-bottom-width: 1px;
-
-        .ad-slot--top-banner-ad {
-            width: 980px;
-            padding-left: 0;
-        }
-
-        .ad-slot__label {
-            width: 980px;
-        }
-    }
-
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -123,13 +110,6 @@
         }
     }
 }
-.top-banner-ad-container--below-nav {
-    @include mq(desktop) {
-        .js-on & {
-            display: block;
-        }
-    }
-}
 
 .ad-slot--top-banner-ad {
     text-align: center;
@@ -155,24 +135,50 @@
         padding-top: $gs-row-height / 2;
 
         /* Oh horrible code, I'm looking at you. One day, you'll disappear.
-           One day, I'll fucking rip you apart.
+           One day, I'll [redacted].
          */
         &.ad-slot--h250 {
             height: 250px;
+        }
+
+        &.ad-slot--fluid {
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+
+            > .ad-slot__label {
+                box-sizing: content-box;
+                // Copying stuff from _mixins.scss because I don't want to
+                // use @extend and no, I am not modifying the markup
+                margin-left: $gs-gutter / 2;
+                margin-right: $gs-gutter / 2;
+
+                @include mq(mobileLandscape) {
+                    margin-left: $gs-gutter;
+                    margin-right: $gs-gutter;
+                }
+                @include mq(containerWidestMobile) {
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: $mobile-max-container-width;
+                }
+                @include mq(tablet) {
+                    padding-left: $gs-gutter;
+                    padding-right: $gs-gutter;
+                }
+                @each $breakpoint, $container-width in $breakpoints {
+                    @include mq($breakpoint) {
+                        width: $container-width;
+                    }
+                }
+
+            }
         }
 
         .ad-slot__label {
             margin-top: (-1) * $gs-row-height / 2;
         }
 
-        .ad-below-nav & {
-            min-height: 0;
-            padding-bottom: 0;
-
-            > div:last-of-type {
-                margin-bottom: $gs-row-height / 2;
-            }
-        }
         @include mq(tablet) {
             .js-on & {
                 display: block;

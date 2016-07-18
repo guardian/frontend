@@ -14,6 +14,17 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // see https://github.com/guardian/frontend/pull/13446
+  val HeroicTemplateSwitch = Switch(
+    SwitchGroup.Feature,
+    "heroic-main-media",
+    "If this switch is on, Heroic template will be applied to heroic articles. This template is part of a Membership Explore test",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 29),
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",

@@ -1,8 +1,8 @@
 package controllers
 
-import org.scalatest.{Matchers => ShouldMatchers, WordSpec}
+import org.scalatest.{Matchers => ShouldMatchers, DoNotDiscover, WordSpec}
 import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.ConfiguredServer
 import services._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
@@ -13,7 +13,6 @@ import client.Auth
 import scala.concurrent.Future
 import org.joda.time.DateTime
 import play.api.mvc._
-import test.Fake
 import idapiclient.responses.CookieResponse
 import idapiclient.UserCookie
 import services.IdentityRequest
@@ -23,7 +22,7 @@ import play.api.mvc.Cookie
 import play.api.test.Helpers._
 
 
-class SignoutControllerTest extends WordSpec with OneAppPerSuite with ShouldMatchers with MockitoSugar{
+@DoNotDiscover class SignoutControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredServer {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = new IdentityConfiguration
@@ -41,26 +40,24 @@ class SignoutControllerTest extends WordSpec with OneAppPerSuite with ShouldMatc
     when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
     when(api.unauth(any[Auth], same(trackingData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("test_gu_so", "testVal"))))))
-    "call the api with the secure cookie data" in Fake {
+    "call the api with the secure cookie data" in {
       signoutController.signout()(fakeRequest)
       verify(api).unauth(UserCookie("testscguuval"),trackingData)
     }
 
-    "redirect the user to the returnUrl" in Fake {
+    "redirect the user to the returnUrl" in {
       val result = signoutController.signout()(fakeRequest)
       status(result) should equal(FOUND)
       redirectLocation(result).get should equal("http://example.com/return")
     }
 
-    "set the signout cookie on the response" in Fake {
-      running(app) {
-        val result = signoutController.signout()(fakeRequest)
-        val responseCookies: Cookies = cookies(result)
-        val testSignOutCookie = responseCookies.get("test_gu_so").get
-        testSignOutCookie should have('value ("testVal"))
-        testSignOutCookie should have('secure (false))
-        testSignOutCookie should have('httpOnly (false))
-      }
+    "set the signout cookie on the response" in {
+      val result = signoutController.signout()(fakeRequest)
+      val responseCookies: Cookies = cookies(result)
+      val testSignOutCookie = responseCookies.get("test_gu_so").get
+      testSignOutCookie should have('value ("testVal"))
+      testSignOutCookie should have('secure (false))
+      testSignOutCookie should have('httpOnly (false))
     }
   }
 }
