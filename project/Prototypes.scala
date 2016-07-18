@@ -22,7 +22,7 @@ trait Prototypes {
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
-      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
+      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings"), // ,"-Xfatal-warnings"
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
     scalaVersion := "2.11.8",
