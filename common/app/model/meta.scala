@@ -8,7 +8,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock
+import model.liveblog.{Blocks, BodyBlock}
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -124,7 +124,7 @@ object Fields {
       standfirst = apiContent.fields.flatMap(_.standfirst),
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
-      blocks = BodyBlock.make(apiContent.blocks),
+      blocks = apiContent.blocks.map(Blocks.make),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
@@ -141,7 +141,7 @@ final case class Fields(
   standfirst: Option[String],
   main: String,
   body: String,
-  blocks: Seq[BodyBlock],
+  blocks: Option[Blocks],
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean,

@@ -1,5 +1,7 @@
-@import model.liveblog.KeyEventData
+@import _root_.liveblog.KeyEventData
 @import model.Badges.badgeFor
+
+@import _root_.liveblog.Canonical
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
@@ -7,6 +9,7 @@
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
+@import _root_.liveblog.SinceBlockId
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>
@@ -92,7 +95,7 @@
                             @if(model.currentPage.currentPage.isArchivePage) {
                                 @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
                             }
-                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
+                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{_root_.liveblog.LatestBlock(article.blocks)}" data-test-id="live-blog-blocks"
                                 itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                                 @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
                             </div>

@@ -1,9 +1,9 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
-import common.{DiagnosticsLifecycle, LifecycleComponent}
+import common.DiagnosticsLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.FootballLifecycle
 import contentapi.SectionsLookUpLifecycle

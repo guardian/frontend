@@ -1,12 +1,13 @@
 package conf.switches
 
+import app.LifecycleComponent
 import common._
 import conf.Configuration
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler = Jobs, akkaAsync: AkkaAsync = AkkaAsync)
+class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)
   (implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
 
   appLifecycle.addStopHook { () => Future {

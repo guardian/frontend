@@ -8,13 +8,10 @@ import org.joda.time.format.ISODateTimeFormat
 
 import scala.concurrent.Future
 
-import client.{Auth, Error, Response}
-import com.google.inject.{Inject, Singleton}
+import client.{Auth, Error}
 import utils.SafeLogging
-import implicits.Articles.RichSavedArticles
 
-@Singleton
-class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging with ExecutionContexts{
+class PlaySavedArticlesService(api: IdApiClient) extends SafeLogging with ExecutionContexts{
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 

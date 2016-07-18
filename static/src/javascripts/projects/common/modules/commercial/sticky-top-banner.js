@@ -35,8 +35,8 @@ define([
     // Rubicon ads may resize asynchronously. They have a resize event we can
     // subscribe to.
 
-    var $adBanner = $('.top-banner-ad-container--above-nav');
-    var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
+    var $adBanner = $('.js-top-banner-desktop');
+    var $adBannerInner = $('.ad-slot', $adBanner);
     var $header = $('.js-header');
 
     var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
@@ -124,8 +124,6 @@ define([
     };
 
     var render = function (els, state) {
-        els.$document.addClass('sticky-ad-banner');
-
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';
 
@@ -139,6 +137,7 @@ define([
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
+        els.$adBanner.addClass('sticky-top-banner-ad');
         els.$adBanner.css({
             'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
@@ -223,7 +222,6 @@ define([
                 setupDispatchers(store.dispatch);
 
                 var elements = {
-                    $document: $(document.body),
                     $adBanner: $adBanner,
                     $adBannerInner: $adBannerInner,
                     $header: $header,

@@ -697,9 +697,9 @@ $avatarPadding: $gs-gutter / 2;
     padding-left: $gs-baseline * 2;
     svg {
         fill: $guardian-brand;
-        height: 16px;
-        width: 16px;
-        left: 4px;
+        height: 14px;
+        width: 14px;
+        left: $gs-gutter / 2;
     }
 }
 
@@ -840,13 +840,25 @@ $comment-recommend-button-size: 19px;
 .d-comment__actions {
     position: absolute;
     bottom: $gs-baseline;
+    opacity: .7;
     .discussion--closed & {
-        display: none;
+        .d-comment__action--reply,
+        .d-comment__action-separator,
+        .d-comment__action-pick {
+            display: none;
+        }
+        .sharing-component {
+            margin: 0;
+        }
     }
 }
 
+.d-comment__actions:hover {
+    opacity: 1;
+}
+
 .d-comment__action {
-    @include fs-textSans(1);
+    @include fs-textSans(3);
     display: inline-block;
     color: $news-default;
     font-weight: bold;
@@ -901,6 +913,69 @@ $comment-recommend-button-size: 19px;
     .d-comment__action-separator {
         display: inline-block;
     }
+}
+
+.sharing-component {
+    height: 1.2rem;
+    vertical-align: middle;
+    margin-left: 5px;
+
+    &:hover {
+        .sharing-buttons {
+            opacity: 1;
+        }
+
+        .comment-facebook-icon,
+        .comment-twitter-icon {
+            height: 1.2rem;
+            min-width: 1.2rem;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .comment-facebook-icon {
+            transition: all .3s ease-in-out;
+        }
+
+        .comment-twitter-icon {
+            transition: all .3s .15s ease-in-out;
+        }
+    }
+}
+
+.sharing-text {
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+}
+
+.comment-share-icon {
+    fill: $guardian-brand;
+}
+
+.comment-share-icon svg {
+    vertical-align: text-top;
+}
+
+.sharing-buttons {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.comment-facebook-icon,
+.comment-twitter-icon {
+    height: 0;
+    min-width: 0;
+    margin: .6rem;
+}
+
+.comment-facebook-icon {
+    transition: all .3s .15s ease-in-out;
+}
+
+.comment-twitter-icon {
+    transition: all .3s ease-in-out;
 }
 
 /* Report

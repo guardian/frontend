@@ -4,6 +4,7 @@
     }
 }
 
+.adverts--tone-membership .advert__more,
 .adverts--tone-membership .button--legacy-single,
 .advert--membership .button {
     @include button-colour(
@@ -12,6 +13,7 @@
     );
 }
 
+.adverts--membership,
 .advert--membership {
     &:hover,
     &:focus,
@@ -33,5 +35,17 @@
             darken($membership-default, 5%),
             null
         );
+    }
+}
+
+.adverts--membership {
+    .advert__standfirst {
+        font-size: 1rem;
+        letter-spacing: -.03em;
+        margin: .25em 0;
+
+        > strong {
+            font-weight: 400;
+        }
     }
 }

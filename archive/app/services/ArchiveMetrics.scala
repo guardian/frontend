@@ -1,6 +1,7 @@
 package services
 
-import common.{JobScheduler, LifecycleComponent, Jobs}
+import app.LifecycleComponent
+import common.JobScheduler
 import metrics.CountMetric
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle

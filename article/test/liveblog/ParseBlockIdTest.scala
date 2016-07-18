@@ -1,20 +1,21 @@
 package liveblog
 
 import controllers.ParseBlockId
+import controllers.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import org.scalatest.{FlatSpec, Matchers}
 
 class ParseBlockIdTest extends FlatSpec with Matchers {
 
   it should "parse a with" in {
-    val result = ParseBlockId("with:block-asdf")
+    val result = ParseBlockId.fromPageParam("with:block-asdf")
 
-    result should be(Some("asdf"))
+    result should be(ParsedBlockId("asdf"))
   }
 
   it should "not parse a blah" in {
-    val result = ParseBlockId("""\"'/""")
+    val result = ParseBlockId.fromBlockId("""\"'/""")
 
-    result should be(None)
+    result should be(InvalidFormat)
   }
 
 }

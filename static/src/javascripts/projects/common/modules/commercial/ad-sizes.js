@@ -11,8 +11,6 @@ define(function () {
         fluid:                  AdSize(0, 0),
 
         // guardian proprietary ad sizes
-        cascade:                AdSize(940, 230),
-        superHeader:            AdSize(900, 250),
         stickyMpu:              AdSize(300, 251),
         badge:                  AdSize(140, 90),
         merchandisingHigh:      AdSize(88, 87),
@@ -27,8 +25,6 @@ define(function () {
     adSizes['300x250'] = adSizes.mpu;
     adSizes['300x600'] = adSizes.halfPage;
     adSizes['300x1050'] = adSizes.portrait;
-    adSizes['940x230'] = adSizes.cascade;
-    adSizes['900x250'] = adSizes.superHeader;
 
     return adSizes;
 

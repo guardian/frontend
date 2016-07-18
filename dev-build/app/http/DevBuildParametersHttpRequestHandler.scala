@@ -1,12 +1,11 @@
 package http
 
-import com.google.inject.Inject
 import common.CanonicalLink
 import dev.DevParametersHttpRequestHandler
 import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler}
 import play.api.routing.Router
 
-class DevBuildParametersHttpRequestHandler @Inject() (
+class DevBuildParametersHttpRequestHandler(
   router: Router,
   errorHandler: HttpErrorHandler,
   configuration: HttpConfiguration,

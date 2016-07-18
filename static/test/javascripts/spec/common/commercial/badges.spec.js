@@ -91,10 +91,12 @@ define([
             expect(badges).toBeDefined();
         });
 
-        it('should not display ad slot if badges disabled in commercial features', function () {
+        it('should not display ad slot if badges disabled in commercial features', function (done) {
             commercialFeatures.badges = false;
-            expect(badges.init()).toBe(false);
-            expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            badges.init().then(function (res) {
+                expect(res).toBe(false);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            }).then(done);
         });
 
         describe('sponsored pages', function () {
