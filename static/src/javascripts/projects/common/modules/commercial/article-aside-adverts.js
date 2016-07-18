@@ -30,7 +30,7 @@ define([
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
-            return false;
+            return Promise.resolve(false);
         }
 
         $mainCol = $(mainColumnSelector);

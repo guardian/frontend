@@ -1,15 +1,13 @@
 package model
 
-import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.{ExecutionContexts, Edition, Pagination}
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient._
-import layout.{ItemClasses, FaciaCard, ContentCard}
-import services.{FaciaContentConvert, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
+import layout.{ItemClasses, FaciaCard}
+import services.{FaciaContentConvert, IdentityRequest, IdentityUrlBuilder}
 import implicits.Articles._
 import pressed.{PressedContent, CollectionConfig}
-import cards._
 
 import scala.concurrent.Future
 
@@ -36,8 +34,7 @@ case class SaveForLaterPageData(
   totalArticlesSaved: Int,
   shortUrls: List[String])
 
-@Singleton
-class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extends ExecutionContexts {
+class SaveForLaterDataBuilder(idUrlBuilder: IdentityUrlBuilder) extends ExecutionContexts {
 
   def apply(savedArticles: SavedArticles, idRequest: IdentityRequest, pageNum: Int): Future[SaveForLaterPageData] = {
 

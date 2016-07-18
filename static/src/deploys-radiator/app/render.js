@@ -27,7 +27,7 @@ const renderGroupDeployListNode = (deploys) => {
             className: `deploy deploy--${deployGroup.status.split(' ').join('-').toLowerCase()}`
         }, [
             h('h2', [
-                h('a', {
+                h('a.number', {
                     href: createBuildLink(deployGroup.build)
                 }, `${deployGroup.build}`)
             ]),
@@ -86,22 +86,17 @@ const renderGroupDeployListNode = (deploys) => {
 };
 const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDeploy], commits) => {
     const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
-    return h('.row#root', {}, [
+    return h(`${exp(commits.size == 0) ? '.unsynced' : ''}.row#root`, {}, [
         h('h1', [
-            `Status: ${isInSync ? 'in sync.' : 'out of sync – ship it!'}`
+            `${isInSync ? '🌷👌' : '🔥 ship it!'}`
         ]),
-        h('hr', {}, []),
-        exp(commits.size > 0) && h('.col', [
+        h('.col', [
+            h('h1', 'code'),
+            renderGroupDeployListNode(codeDeploys)
+        ]),
+        exp(commits.size > 0) && h('.col.builds', [
             h('h1', [
-                'Difference (',
-                h('span', {
-                    title: 'Oldest PROD deploy'
-                }, `${oldestProdDeploy.build}`),
-                '...',
-                h('span', {
-                    title: 'Latest CODE deploy'
-                }, `${latestCodeDeploy.build}`),
-                ')'
+                'waiting…'
             ]),
             ih('ul', {}, (commits
                 .groupBy(commit => commit.authorLogin)
@@ -112,11 +107,7 @@ const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDep
                 .toList()))
         ]),
         h('.col', [
-            h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys)
-        ]),
-        h('.col', [
-            h('h1', 'PROD'),
+            h('h1', 'prod'),
             renderGroupDeployListNode(prodDeploys)
         ])
     ]);

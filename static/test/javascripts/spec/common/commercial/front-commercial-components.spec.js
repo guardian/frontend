@@ -112,11 +112,14 @@ define([
             });
         });
 
-        it('it should not display ad slot if commercial-features switch is disabled', function () {
+        it('it should not display ad slot if commercial-features switch is disabled', function (done) {
             commercialFeatures.frontCommercialComponents = false;
 
-            expect(frontCommercialComponents.init()).toBe(false);
-            expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+            frontCommercialComponents.init().then(function(result) {
+                expect(result).toBe(false);
+                expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+                done();
+            });
         });
 
         it('should not display ad slot if there is less than two containers', function () {

@@ -199,7 +199,8 @@ final case class Content(
     ("references", JsArray(javascriptReferences)),
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
-    ("isImmersive", JsBoolean(isImmersive))
+    ("isImmersive", JsBoolean(isImmersive)),
+    ("isHeroic", JsBoolean(isHeroic))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -507,7 +508,6 @@ final case class Article (
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = content.fields.blocks
-  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
 object Audio {

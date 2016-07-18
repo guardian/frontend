@@ -2,13 +2,12 @@ package services
 
 import java.net.URI
 
-import com.google.inject.Inject
 import conf.IdentityConfiguration
 import play.api.mvc.RequestHeader
 import utils.SafeLogging
 import scala.util.Try
 
-class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends SafeLogging {
+class ReturnUrlVerifier(conf: IdentityConfiguration) extends SafeLogging {
 
   private val returnUrlDomains = List(conf.id.domain)
 

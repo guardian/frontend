@@ -2,11 +2,9 @@ package controllers
 
 import client._
 import common.ExecutionContexts
-import com.google.inject.Inject
 import com.gu.identity.model.User
 import utils.{ThirdPartyConditions, SafeLogging}
 import idapiclient.{ IdApiClient, EmailPassword }
-import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
@@ -16,14 +14,13 @@ import services._
 import form.Mappings
 import tracking.Omniture
 
-@Singleton
-class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
-                                     userCreationService : UserCreationService,
-                                     api: IdApiClient,
-                                     idRequestParser : TorNodeLoggingIdRequestParser,
-                                     idUrlBuilder : IdentityUrlBuilder,
-                                     signinService : PlaySigninService,
-                                     val messagesApi: MessagesApi )
+class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
+                             userCreationService : UserCreationService,
+                             api: IdApiClient,
+                             idRequestParser : TorNodeLoggingIdRequestParser,
+                             idUrlBuilder : IdentityUrlBuilder,
+                             signinService : PlaySigninService,
+                             val messagesApi: MessagesApi )
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/register", "Register", "register")

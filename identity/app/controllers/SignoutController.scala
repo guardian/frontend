@@ -4,19 +4,16 @@ import model.NoCache
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{PlaySigninService, IdRequestParser, ReturnUrlVerifier}
-import com.google.inject.{Inject, Singleton}
 import conf.IdentityConfiguration
 import utils.SafeLogging
 import idapiclient.{UserCookie, IdApiClient}
 import scala.concurrent.Future
 
-
-@Singleton
-class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                  conf: IdentityConfiguration,
-                                  api: IdApiClient,
-                                  idRequestParser : IdRequestParser,
-                                  signinService: PlaySigninService)
+class SignoutController(returnUrlVerifier: ReturnUrlVerifier,
+                        conf: IdentityConfiguration,
+                        api: IdApiClient,
+                        idRequestParser : IdRequestParser,
+                        signinService: PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging {
 
   def signout = Action.async { implicit request =>

@@ -1,6 +1,6 @@
 package business
 
-import common.LifecycleComponent
+import app.LifecycleComponent
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}

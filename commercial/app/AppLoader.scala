@@ -1,5 +1,5 @@
-import _root_.commercial.CommercialLifecycle
-import _root_.http.CorsHttpErrorHandler
+import commercial.CommercialLifecycle
+import http.CorsHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._

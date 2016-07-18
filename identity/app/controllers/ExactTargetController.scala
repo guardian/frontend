@@ -4,19 +4,17 @@ import actions.AuthenticatedActions
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{IdRequestParser, ReturnUrlVerifier}
-import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
 import conf.IdentityConfiguration
 import play.api.libs.ws._
-import exacttarget.{SubscriptionDef, DataExtId}
+import exacttarget.SubscriptionDef
 
-@Singleton
-class ExactTargetController @Inject()(
-                                       conf: IdentityConfiguration,
-                                       returnUrlVerifier: ReturnUrlVerifier,
-                                       idRequestParser: IdRequestParser,
-                                       authenticatedActions: AuthenticatedActions)
+class ExactTargetController(
+                           conf: IdentityConfiguration,
+                           returnUrlVerifier: ReturnUrlVerifier,
+                           idRequestParser: IdRequestParser,
+                           authenticatedActions: AuthenticatedActions)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import play.api.Play.current

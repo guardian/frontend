@@ -1,8 +1,9 @@
 package common.Logback
 
+import app.LifecycleComponent
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.util.EC2MetadataUtils
-import common.{LifecycleComponent, ManifestData}
+import common.ManifestData
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Logger => PlayLogger, Configuration => PlayConfiguration, Play}

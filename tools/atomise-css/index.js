@@ -72,7 +72,7 @@ pGlob(`${src}/**/*.scss`)
     // atomise it
     .then(cleaned => postcss([
         atomised({
-            json: `${conf}/atomic-class-map.json`
+            jsonPath: `${conf}/atomic-class-map.json`
         }),
         reporter()
     ]).process(cleaned))

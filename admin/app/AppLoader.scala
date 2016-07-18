@@ -1,4 +1,4 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
@@ -7,7 +7,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
-import _root_.http.AdminHttpErrorHandler
+import http.AdminHttpErrorHandler
 import dev.DevAssetsController
 import model.{ApplicationIdentity, AdminLifecycle}
 import ophan.SurgingContentAgentLifecycle

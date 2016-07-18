@@ -1,7 +1,6 @@
 package controllers
 
-import utils.{ThirdPartyConditions, SafeLogging}
-import ThirdPartyConditions._
+import utils.ThirdPartyConditions
 import implicits.Forms
 import play.api.mvc._
 import play.api.data._
@@ -9,7 +8,6 @@ import play.api.data.validation.Constraints
 import model.{NoCache, IdentityPage}
 import common.ExecutionContexts
 import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
-import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import play.api.i18n.{MessagesApi, Messages}
 import idapiclient.EmailPassword
@@ -18,13 +16,12 @@ import form.Mappings
 import scala.concurrent.Future
 
 
-@Singleton
-class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                 api: IdApiClient,
-                                 idRequestParser: IdRequestParser,
-                                 idUrlBuilder: IdentityUrlBuilder,
-                                 signInService : PlaySigninService,
-                                 val messagesApi: MessagesApi)
+class SigninController(returnUrlVerifier: ReturnUrlVerifier,
+                       api: IdApiClient,
+                       idRequestParser: IdRequestParser,
+                       idUrlBuilder: IdentityUrlBuilder,
+                       signInService : PlaySigninService,
+                       val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/signin", "Sign in", "signin")
