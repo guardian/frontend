@@ -17,12 +17,11 @@
                     <img class="advert__image" src="@ImgSrc(event.imageUrl, Item300)" alt="">
                 </div>
                 <div class="advert__meta">
-                    <span>@event.date.toString("dd MMM yyyy")</span>,
-                    <span>@event.venue.description</span>
-                    @if(event.ratioTicketsLeft <= 0.1){
-                        <div>Last few tickets remaining</div>
-                    }
+                    @event.date.toString("dd MMM yyyy"), @event.venue.description
                 </div>
+                @if(event.ratioTicketsLeft <= 0.1){
+                    <div class="advert__meta advert__meta--scarcity">Last few tickets remaining</div>
+                }
                 <div class="advert__standfirst">
                     <strong>@event.displayPrice</strong>
                 </div>
