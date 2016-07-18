@@ -6,25 +6,28 @@
 
     .site-message__media {
         display: table-cell;
-        padding: 10px 10px 0 0;
+        padding: $gs-baseline/2 $gs-gutter/2 0 0;
     }
 
     .inline-icon {
         fill: $guardian-brand;
     }
 
+    .site-message__digest {
+        margin-right: $gs-gutter/2;
+    }
+
     .digest-text__copy {
-        margin: 0 10px 0 0;
-        font-size: 0.9rem;
+        display: table-cell;
+        vertical-align: middle;
     }
 
     .digest-text__question {
         font-weight: bold;
-        font-size: 1rem;
     }
 
     .site-message__actions {
-        margin: 8px 0px;
+        margin: $gs-baseline/2 0;
     }
 
     .site-message__actions__item {
@@ -41,15 +44,14 @@
     }
 
     .site-message__close {
-        width: 32px;
-        padding-top: 10px;
+        padding-top: $gs-baseline/2;
     }
 
     .site-message__close-btn {
-        border-color: #bdbdbd;
+        border-color: #dfdfdf
     }
 
     .inline-close--small {
-        fill: #bdbdbd;
+        fill: #dfdfdf
     }
 }
