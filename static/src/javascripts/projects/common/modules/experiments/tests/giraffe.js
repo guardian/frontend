@@ -20,8 +20,8 @@ define([
 ) {
     return function () {
 
-        this.id = 'Giraffe';
-        this.start = '2016-07-03';
+        this.id = 'GiraffeArticle';
+        this.start = '2016-07-18';
         this.expiry = '2016-08-01';
         this.author = 'Alex Ware';
         this.description = 'Add a button allowing readers to contribute money.';
