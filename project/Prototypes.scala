@@ -30,8 +30,7 @@ trait Prototypes {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
         "Java 8 is required for this project.")
-    },
-    routesGenerator := StaticRoutesGenerator
+    }
   )
 
   val frontendIntegrationTestsSettings = Seq (
