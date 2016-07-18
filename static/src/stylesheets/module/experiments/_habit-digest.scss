@@ -1,0 +1,55 @@
+
+.site-message--habit-digest {
+    background-color: #ffffff;
+    border-top: 1px solid $guardian-brand;
+    color: $guardian-brand;
+
+    .site-message__media {
+        display: table-cell;
+        padding: 10px 10px 0 0;
+    }
+
+    .inline-icon {
+        fill: $guardian-brand;
+    }
+
+    .digest-text__copy {
+        margin: 0 10px 0 0;
+        font-size: 0.9rem;
+    }
+
+    .digest-text__question {
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .site-message__actions {
+        margin: 8px 0px;
+    }
+
+    .site-message__actions__item {
+        color: $guardian-brand;
+        border-color: $guardian-brand;
+
+        a {
+            color: $guardian-brand;
+        }
+
+        .inline-icon {
+            fill: $guardian-brand;
+        }
+    }
+
+    .site-message__close {
+        width: 32px;
+        padding-top: 10px;
+    }
+
+    .site-message__close-btn {
+        border-color: #bdbdbd;
+    }
+
+    .inline-close--small {
+        fill: #bdbdbd;
+    }
+}

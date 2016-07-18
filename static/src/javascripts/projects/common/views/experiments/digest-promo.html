@@ -1,13 +1,11 @@
 
-<div class="site-message__message site-message__message--membership" style="display:flex;align-items:center;">
-    <p style="margin:0;"><span class="digest-text__question" style="font-weight:bold">Pressed for time? </span>
+<div class="site-message__digest">
+    <p class="digest-text__copy"><span class="digest-text__question">Pressed for time? </span>
     <span class="digest-text__message"><%=messageText%></span></p>
-    <div style="display:inline">
-        <ul class="site-message__actions u-unstyled">
-            <li class="site-message__actions__item">
-                <%=arrowWhiteRight%>
-                <a href="<%=linkHref%>" target="_blank" data-link-name="<%=linkText%>"><%=linkText%></a>
-            </li>
-        </ul>
-    </div>
+    <ul class="site-message__actions u-unstyled">
+        <li class="site-message__actions__item">
+            <%=arrowRight%>
+            <a href="<%=linkHref%>" target="_blank" data-link-name="<%=linkText%>"><%=linkText%></a>
+        </li>
+    </ul>
 </div>

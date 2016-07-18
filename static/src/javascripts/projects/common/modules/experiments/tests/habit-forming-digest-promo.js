@@ -37,7 +37,7 @@ define([
         };
 
         var defaultData = {
-            arrowWhiteRight: svgs('arrowWhiteRight')
+            arrowRight: svgs('arrowRight')
         };
 
         var DigestBanner = function (template, config) {
@@ -67,7 +67,7 @@ define([
         function renderDigestSnap(messageText, linkText, linkHref) {
             var data = defaults({linkText: linkText}, {messageText: messageText}, {linkHref: linkHref}, defaultData);
 
-            var cssModifierClass = 'membership-message';
+            var cssModifierClass = 'habit-digest';
 
             return new Message('habit-digest-message-07-16', {
                 pinOnHide: false,
