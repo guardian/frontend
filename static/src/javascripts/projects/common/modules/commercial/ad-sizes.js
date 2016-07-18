@@ -1,6 +1,8 @@
 define(function () {
     var adSizes = {
         // standard ad sizes
+        billboard:              AdSize(970, 250),
+        leaderboard:            AdSize(728, 90),
         mpu:                    AdSize(300, 250),
         halfPage:               AdSize(300, 600),
         portrait:               AdSize(300, 1050),
@@ -18,6 +20,8 @@ define(function () {
         fluid250:               AdSize(88, 70),
         outOfPage:              AdSize(1, 1)
     };
+    adSizes['970x250'] = adSizes.billboard;
+    adSizes['728x90'] = adSizes.leaderboard;
     adSizes['300x250'] = adSizes.mpu;
     adSizes['300x600'] = adSizes.halfPage;
     adSizes['300x1050'] = adSizes.portrait;
