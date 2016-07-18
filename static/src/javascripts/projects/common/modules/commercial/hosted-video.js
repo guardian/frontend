@@ -3,6 +3,7 @@
  */
 
 define([
+    'Promise',
     'bean',
     'fastdom',
     'common/utils/$',
@@ -18,6 +19,7 @@ define([
     'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
+    Promise,
     bean,
     fastdom,
     $,
@@ -87,7 +89,7 @@ define([
     function init() {
         return new Promise(function (resolve) {
             require(['bootstraps/enhanced/media/main'], function () {
-                require(['bootstraps/enhanced/media/video-player'], function(videojs){
+                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
 
                     if (!$videoEl.length) {
@@ -146,7 +148,7 @@ define([
 
                             //on desktop show the next video link 10 second before the end of the currently watching video
                             if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-                                player.on('timeupdate', function() {
+                                player.on('timeupdate', function () {
                                     var currentTime = parseInt(this.currentTime(), 10);
                                     var time = 10; //seconds before the end when to show the timer
 
@@ -162,26 +164,26 @@ define([
                                             fastdom.write(function () {
                                                 $hostedNext.addClass('js-autoplay-start');
                                             });
-                                            bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+                                            bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
                                                 cancelAutoplay($hostedNext);
                                             });
                                         }
                                     }
                                 });
                             } else {
-                                player.one('ended', function() {
+                                player.one('ended', function () {
                                     fastdom.write(function () {
                                         $hostedNext.addClass('js-autoplay-start');
                                     });
-                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
                                         cancelAutoplayMobile($hostedNext);
                                     });
                                 });
                             }
                         }
-
-                        resolve();
                     });
+
+                    resolve();
                 });
             });
         });
