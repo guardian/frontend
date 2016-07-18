@@ -78,6 +78,6 @@ define([
     }
 
     return function () {
-        return listenForCheatCode().then(startToneDisco);
+        listenForCheatCode().then(startToneDisco);
     };
 });

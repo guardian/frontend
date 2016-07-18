@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/detect'
 ], function (Promise, fastdom, detect) {
     return {
