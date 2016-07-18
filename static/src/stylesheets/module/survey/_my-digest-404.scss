@@ -27,7 +27,7 @@
 
 .my-digest-main:before {
     content: '';
-    background-color: white;
+    background-color: #ffffff;
     height: 26px;
     display: block;
 }
@@ -41,7 +41,7 @@
 
 .email-signup-main {
     .main__column--horizontal-bar::before {
-        margin: 0 0.3rem;
+        margin: 0 .3rem;
     }
 }
 
@@ -138,15 +138,15 @@
 .email-signup {
     //No script tag
     a {
-        color: #FFFFFF;
-        padding: 0 0.3em;
+        color: #ffffff;
+        padding: 0 .3em;
     }
 
     .fsLabel {
         @include f-bodyHeading;
 
-        color: #FFFFFF;
-        padding: 0 0.3rem;
+        color: #ffffff;
+        padding: 0 .3rem;
     }
 
     .fsPagination {
@@ -173,7 +173,7 @@
         border: 2px solid $guardian-brand-light;
         border-radius: 100px;
         height: 2.5em;
-        color: white;
+        color: #ffffff;
         margin-bottom: 1em;
     }
 
@@ -181,14 +181,14 @@
         background-color: $news-main-1;
 
         .fsLabel {
-            color: #FFFFFF;
+            color: #ffffff;
             background-image: none;
-            padding: 0 0.3rem;
+            padding: 0 .3rem;
         }
     }
 
     .fsError {
-        margin: 0 0.3rem;
+        margin: 0 .3rem;
 
     }
 }
@@ -209,7 +209,7 @@
     border: 2px solid $guardian-brand-light;
     border-radius: 100px;
     height: 2.5em;
-    color: white;
+    color: #ffffff;
     margin-bottom: 1em;
 }
 
@@ -218,42 +218,42 @@
 
     color: $guardian-brand-light;
     font-size: 10pt;
-    padding: 0 0.3rem;
+    padding: 0 .3rem;
 }
 
 .weekend-read-header {
-    color: white;
+    color: #ffffff;
 }
 
 .weekend-read-header__heading {
     @include f-bodyHeading;
 
     font-size: 12pt;
-    padding: 0 0.3rem;
+    padding: 0 .3rem;
 }
 
 .weekend-read-header__text {
     @include f-bodyCopy;
 
     font-size: 10pt;
-    padding: 0 0.3rem;
+    padding: 0 .3rem;
 }
 
 .weekend-read-sample {
     margin-top: 1em;
-    background-color: white;
+    background-color: #ffffff;
 }
 
 .weekend-read-sample__button {
     position: relative;
-    border: thin solid lightgrey;
-    background-color: white;
+    border: thin solid #808080;
+    background-color: #ffffff;
     border-radius: 100px;
-    padding: 0.3em 0.5em 0.3em 30px;
+    padding: .3em .5em .3em 30px;
     font-size: 10pt;
 
     .inline-plus {
-        fill: grey;
+        fill: #808080;
         position: absolute;
         left: 2px;
         top: 1px;
@@ -261,6 +261,6 @@
 }
 
 .email-signup__aside-text__frequency {
-    color: white;
+    color: #ffffff;
     float: right;
 }
