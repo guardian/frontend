@@ -33,11 +33,17 @@ define([
                 status.checks.filter(function (check) {
                     return /elb|host|cdn|rss/.test(check.name.toLowerCase());
                 }).forEach(function (check) {
+
                     var li = document.createElement('li');
                     li.className = check.status;
                     li.textContent = check.name;
                     li.setAttribute('title', check.name);
-                    pingdom.appendChild(li);
+
+                    var link = document.createElement('a');
+                    link.href = 'https://my.pingdom.com/reports/uptime#check=' + check.id;
+                    link.appendChild(li);
+
+                    pingdom.appendChild(link);
                 });
             }
         );
