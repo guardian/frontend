@@ -31,7 +31,7 @@ body {
 }
 
 #root > h1 {
-    font-size: 4vw;
+    font-size: 6vw;
     margin-top: 7vw;
     margin-bottom: 0;
     padding-bottom: 2vw;
@@ -72,7 +72,8 @@ h2 {
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
-    font-size: 4vw;
+    font-size: 6vw;
+    line-height: 1;
 }
 
 .deploy ul {
@@ -86,6 +87,7 @@ h2 {
 
 .deploy li {
      display: block;
+     font-size: 3vw
 }
 
 .deploy--completed {
@@ -105,7 +107,8 @@ h2 {
 }
 
 .builds h2 {
-    font-size: 2.5vw;
+    font-size: 3.5vw;
+    line-height: 1;
 }
 
 .builds ul {
@@ -113,11 +116,11 @@ h2 {
     text-align: center;
     background-color: #ff0332;
     color: white;
-    padding: 1vw 0 3vw;
+    padding: 1vw 0;
 }
 
 .builds li {
-    margin-bottom: -1.6vw;
+    margin-bottom: 0;
 }
 
 .hidden {
