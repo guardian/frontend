@@ -69,6 +69,7 @@ define([
         }
     }
 
+
     /**
      * Given a batch, call all of the callbacks on the insertion object
      *
@@ -176,6 +177,10 @@ define([
     }
 
     return {
-        insert: insert
+        insert: insert,
+        _tests: {
+            getHeightOfAllContainers: getHeightOfAllContainers,
+            insertElements: insertElements
+        }
     };
 });
