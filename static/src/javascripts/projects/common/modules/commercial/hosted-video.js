@@ -182,10 +182,10 @@ define([
                             }
                         }
                     });
+
+                    resolve();
                 });
             });
-
-            resolve();
         });
     }
 
