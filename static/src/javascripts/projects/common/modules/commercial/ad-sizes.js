@@ -1,8 +1,6 @@
 define(function () {
     var adSizes = {
         // standard ad sizes
-        billboard:              AdSize(970, 250),
-        leaderboard:            AdSize(728, 90),
         mpu:                    AdSize(300, 250),
         halfPage:               AdSize(300, 600),
         portrait:               AdSize(300, 1050),
@@ -11,8 +9,6 @@ define(function () {
         fluid:                  AdSize(0, 0),
 
         // guardian proprietary ad sizes
-        cascade:                AdSize(940, 230),
-        superHeader:            AdSize(900, 250),
         stickyMpu:              AdSize(300, 251),
         badge:                  AdSize(140, 90),
         merchandisingHigh:      AdSize(88, 87),
@@ -22,13 +18,9 @@ define(function () {
         fluid250:               AdSize(88, 70),
         outOfPage:              AdSize(1, 1)
     };
-    adSizes['970x250'] = adSizes.billboard;
-    adSizes['728x90'] = adSizes.leaderboard;
     adSizes['300x250'] = adSizes.mpu;
     adSizes['300x600'] = adSizes.halfPage;
     adSizes['300x1050'] = adSizes.portrait;
-    adSizes['940x230'] = adSizes.cascade;
-    adSizes['900x250'] = adSizes.superHeader;
 
     return adSizes;
 

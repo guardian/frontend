@@ -39,7 +39,7 @@ define([
     };
 
     FabricV1.prototype.create = function () {
-        this.$adSlot.addClass('ad-slot__fabric-v1 content__mobile-full-width');
+        this.$adSlot.addClass('ad-slot--fabric-v1 content__mobile-full-width');
 
         if (!fabricV1Tpl) {
             fabricV1Tpl = template(fabricV1Html);
