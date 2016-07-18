@@ -93,7 +93,7 @@ define([
                     var $videoEl = $('.vjs-hosted__video');
 
                     if (!$videoEl.length) {
-                        return;
+                        resolve();
                     }
 
                     player = videojs($videoEl.get(0), videojsOptions());
