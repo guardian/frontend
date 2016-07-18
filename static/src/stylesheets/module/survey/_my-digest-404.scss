@@ -36,6 +36,8 @@
     content: '';
     display: block;
     border-bottom: 2px solid #5ab0f4;
+    margin: 0 0.3rem;
+
 }
 
 .my-digest-header::after {
@@ -128,6 +130,64 @@
     min-width: 16em;
 }
 
+.email-signup {
+    //No script tag
+    a {
+        color: #FFFFFF;
+        padding: 0 0.3em;
+    }
+
+    .fsLabel {
+        @include f-bodyHeading;
+
+        color: #FFFFFF;
+        padding: 0 0.3rem;
+    }
+
+    .fsPagination {
+        margin: 0;
+    }
+
+    .fsRequiredMarker {
+        display: none;
+    }
+
+    .fsField {
+        width: 100%;
+        border-radius: 100px;
+        border: 0;
+        height: 2.5em;
+        padding-left: 1em;
+        box-sizing: border-box;
+        margin-bottom: 1em;
+    }
+
+    .fsSubmitButton {
+        width: 100%;
+        background-color: $news-main-1;
+        border: 2px solid $guardian-brand-light;
+        border-radius: 100px;
+        height: 2.5em;
+        color: white;
+        margin-bottom: 1em;
+    }
+
+    .fsValidationError {
+        background-color: $news-main-1;
+
+        .fsLabel {
+            color: #FFFFFF;
+            background-image: none;
+            padding: 0 0.3rem;
+        }
+    }
+
+    .fsError {
+        margin: 0 0.3rem;
+
+    }
+}
+
 .email-signup__field-input {
     width: 100%;
     border-radius: 100px;
@@ -149,9 +209,11 @@
 }
 
 .email-signup__aside-text {
+    @include f-textSans;
+
     color: $guardian-brand-light;
     font-size: 10pt;
-    padding: 0 1em;
+    padding: 0 0.3rem;
 }
 
 .weekend-read-header {
@@ -159,11 +221,17 @@
 }
 
 .weekend-read-header__heading {
+    @include f-bodyHeading;
+
     font-size: 12pt;
+    padding: 0 0.3rem;
 }
 
 .weekend-read-header__text {
+    @include f-bodyCopy;
+
     font-size: 10pt;
+    padding: 0 0.3rem;
 }
 
 .weekend-read-sample {
