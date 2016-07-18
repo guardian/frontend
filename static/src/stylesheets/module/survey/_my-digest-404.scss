@@ -36,8 +36,13 @@
     content: '';
     display: block;
     border-bottom: 2px solid #5ab0f4;
-    margin: 0 0.3rem;
 
+}
+
+.email-signup-main {
+    .main__column--horizontal-bar::before {
+        margin: 0 0.3rem;
+    }
 }
 
 .my-digest-header::after {
