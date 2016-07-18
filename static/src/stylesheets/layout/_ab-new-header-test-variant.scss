@@ -114,6 +114,10 @@ $gutterMedium: 37px;
     background-color: $news-main-2;
     transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
+    &:focus {
+        transform: scale(1.1);
+    }
+
     @include mq($until: $mobileMedium) {
         //Smaller menu button
         height: $veggieburgerSmall;
@@ -154,7 +158,7 @@ $gutterMedium: 37px;
     margin: auto;
 
     transform: rotate(0deg);
-    transition: .4s ease-in-out;
+    transition: 300ms cubic-bezier(.25, .46, .45, .94);
 
     span {
         position: absolute;
@@ -224,7 +228,7 @@ $gutterMedium: 37px;
     list-style: none;
     white-space: nowrap;
 
-    &:first-child .new-header__nav__link{
+    &:first-child .new-header__nav__link {
         padding-left: 0;
     }
 

@@ -8,8 +8,7 @@ define([
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
-    var burgerMenu = $('.js-animate-menu');
-    var burgerLink = $('.js-change-link');
+    var burgerLink = $('.js-animate-menu');
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
