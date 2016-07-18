@@ -7,6 +7,14 @@ define([
     assign,
     adSizes
 ) {
+    var badgeDefinition = {
+        label: false,
+        refresh: false,
+        sizeMappings: {
+            mobile: compile(adSizes.outOfPage, adSizes.badge)
+        }
+    };
+
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -60,27 +68,9 @@ define([
                 mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
             }
         },
-        spbadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
-        adbadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
-        fobadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
+        spbadge: badgeDefinition,
+        adbadge: badgeDefinition,
+        fobadge: badgeDefinition,
         comments: {
             sizeMappings: {
                 mobile: compile(adSizes.outOfPage, adSizes.badge)
