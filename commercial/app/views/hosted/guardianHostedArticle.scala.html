@@ -1,0 +1,10 @@
+@import common.commercial.hosted.HostedArticlePage
+@import views.html.hosted.guardianHostedHeader
+@(page: HostedArticlePage)(implicit request: RequestHeader)
+
+@main(page, Some("commercial")) { } {
+    @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
+
+    TODO ...
+
+}
