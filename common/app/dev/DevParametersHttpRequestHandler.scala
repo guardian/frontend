@@ -62,7 +62,8 @@ class DevParametersHttpRequestHandler(
     "0p19G" // Google AMP AB test parameter
   )
 
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
+  // Set("") is to fix an issue where we sometimes have an empty parameter key
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Set("")
 
   override def routeRequest(request: RequestHeader) = {
 
@@ -79,10 +80,10 @@ class DevParametersHttpRequestHandler(
         !request.uri.startsWith("/crosswords/lookup") &&
         !request.uri.startsWith("/commercial/anx/anxresize.js") // this is used by commercial for advert resizing, served through api.nextgen
       ) {
-        val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
+        val illegalParams = request.queryString.keySet -- allowedParams
         if (illegalParams.nonEmpty) {
           // it is pretty hard to spot what is happening in tests without this println
-          println(s"\n\nILLEGAL PARAMETER(S) FOUND : ${illegalParams.mkString(",")}\n\n")
+          println(s"\n\nILLEGAL PARAMETER(S) FOUND : $illegalParams ${illegalParams.nonEmpty} ${illegalParams.size} ${illegalParams.contains("")} ${illegalParams.mkString(",")}\n\n")
           throw new RuntimeException(s"illegal parameter(s) found ${illegalParams.mkString(",")}")
         }
       }
