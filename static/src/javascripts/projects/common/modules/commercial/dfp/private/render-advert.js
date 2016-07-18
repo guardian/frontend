@@ -45,7 +45,7 @@ define([
     }
 
     var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
-    var addFluid    = addClassIfHasClass(['ad-slot--fluid', 'ad-slot--h250']);
+    var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
 
     var sizeCallbacks = {};
 
