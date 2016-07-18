@@ -60,7 +60,7 @@ class MostViewedSocialController extends Controller with ExecutionContexts {
             properties
           )(request)
 
-          renderFormat(facebookResponse, facebookResponse, 1)
+          renderFormat(facebookResponse, facebookResponse, 900)
         }
 
       case _ =>

@@ -89,7 +89,7 @@ class MediaInSectionController extends Controller with Logging with Paging with 
       ).withTimeStamps,
       FrontProperties.empty
     )(request)
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 }
 
