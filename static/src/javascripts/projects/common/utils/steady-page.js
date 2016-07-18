@@ -50,12 +50,12 @@ define([
                 parentEl = parentEl.offsetParent;
             }
 
-            var elTopPos = parentElArray.reduce(function(elTopPos, parentEl){
+            var elTopPos = parentElArray.reduce(function(topPos, parentEl){
                 // This will loop up the parents until the body taking into account all the positions
                 // so that if an element is equal to the scrollY position then this will return 0
-                return elTopPos + (parentEl.offsetTop - parentEl.scrollTop + parentEl.clientTop);
+                return topPos + (parentEl.offsetTop - parentEl.scrollTop + parentEl.clientTop);
             }, 0);
-
+            
             // If the distance of the element from the top of the screen minus the height of the
             // element we are measuring is less than 0 then we know that it will push the page down
             // when loading in
