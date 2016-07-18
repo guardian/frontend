@@ -10,7 +10,10 @@ case class HostedArticlePage(
   pageName: String,
   pageTitle: String,
   standfirst: String,
-  facebookImageUrl: String
+  facebookImageUrl: String,
+  cta: HostedCallToAction,
+  ctaBanner: String,
+  mainPicture: String
 )
   extends HostedPage {
 

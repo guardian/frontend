@@ -3,6 +3,7 @@ package common.commercial.hosted.hardcoded
 import common.commercial.hosted._
 import conf.Configuration.site.host
 import conf.switches.Switches
+import conf.Static
 
 // todo rename
 object ArticleCampaign {
@@ -15,6 +16,13 @@ object ArticleCampaign {
     cssClass = "TODO"
   )
 
+  val cta = HostedCallToAction(
+    url = "TODO",
+    label = "Lorem ipsum",
+    trackingCode = "TODO",
+    btnText = "Lorem!"
+  )
+
   val articlePageName = "hosted-article"
 
   val hostedArticlePage = HostedArticlePage(
@@ -23,7 +31,10 @@ object ArticleCampaign {
     pageName = articlePageName,
     pageTitle = "Advertiser content hosted by the Guardian: some title here",
     standfirst = "TODO",
-    facebookImageUrl = "TODO"
+    facebookImageUrl = "TODO",
+    cta,
+    ctaBanner = Static("images/commercial/leffe_banner.png"),
+    mainPicture = Static("images/commercial/leffe_banner.png")
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
