@@ -146,7 +146,8 @@ define([
             networks: 'network'
         };
         manualContainerButtonTpl || (manualContainerButtonTpl = template(manualContainerButtonStr));
-        manualCardTpls[tpl.params.creativeCard] || (manualCardTpls[tpl.params.creativeCard] = template(manualCardStrs[tpl.params.creativeCard]));
+        manualCardTpls['manual-card'] || (manualCardTpls['manual-card'] = template(manualCardStrs['manual-card']));
+        manualCardTpls['manual-card-large'] || (manualCardTpls['manual-card-large'] = template(manualCardStrs['manual-card-large']));
         manualCardCtaTpl || (manualCardCtaTpl = template(manualCardCtaStr));
         tpl.params.classNames = ['manual'].concat(tpl.params.classNames).map(function (cn) { return 'adverts--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
@@ -177,7 +178,9 @@ define([
         if (tpl.params.type === 'multiple') {
             tpl.params.row = true;
             tpl.params.innards = [1, 2, 3, 4].map(function(index) {
-                return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.creativeCard]({
+                var classNames = ['manual', tpl.params.toneClass.replace('commercial--tone-', '')]
+                        .concat(tpl.params.prominent && index === 1 ? ['large', 'landscape', 'inverse', 'large--1x2'] : []);
+                return tpl.params['offer' + index + 'url'] ? manualCardTpls[tpl.params.prominent && index === 1 ? 'manual-card-large' : 'manual-card']({
                     clickMacro:          tpl.params.clickMacro,
                     offerUrl:            tpl.params['offer' + index + 'url'],
                     offerImage:          tpl.params['offer' + index + 'image'],
@@ -188,12 +191,12 @@ define([
                         arrowRight:          tpl.params.arrowRight,
                         classNames:          ''
                     }) : '',
-                    classNames:          [index > 2 ? 'hide-until-tablet' : ''].concat(['manual', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); })).join(' ')
+                    classNames:          classNames.map(getStem).concat(index > 2 ? ['hide-until-tablet'] : []).join(' ')
                 }) : null;
             }).filter(identity).join('');
         } else if (tpl.params.type === 'single') {
             tpl.params.row = true;
-            tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
+            tpl.params.innards = manualCardTpls['manual-card-large']({
                 clickMacro:          tpl.params.clickMacro,
                 offerUrl:            tpl.params.offerUrl,
                 offerImage:          tpl.params.offerImage,
@@ -204,7 +207,7 @@ define([
                     arrowRight:          tpl.params.arrowRight,
                     classNames:          'button--tertiary'
                 }) : '',
-                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                classNames:          ['single', 'landscape', 'large', 'inverse', tpl.params.toneClass.replace('commercial--tone-', '')].map(getStem).join(' ')
             }) + manualContainerButtonTpl({
                 baseUrl:             tpl.params.baseUrl,
                 clickMacro:          tpl.params.clickMacro,
@@ -213,7 +216,7 @@ define([
             });
         } else {
             tpl.params.row = false;
-            tpl.params.innards = manualCardTpls[tpl.params.creativeCard]({
+            tpl.params.innards = manualCardTpls['manual-card']({
                 clickMacro:          tpl.params.clickMacro,
                 offerUrl:            tpl.params.offerUrl,
                 offerImage:          tpl.params.offerImage,
@@ -224,8 +227,12 @@ define([
                     arrowRight:          tpl.params.arrowRight,
                     classNames:          'button--primary'
                 }),
-                classNames:          ['inline', tpl.params.toneClass.replace('commercial--tone-', '')].map(function (cn) { return 'advert--' + (stems[cn] || cn); }).join(' ')
+                classNames:          ['inline', tpl.params.toneClass.replace('commercial--tone-', '')].map(getStem).join(' ')
             });
+        }
+
+        function getStem(cn) {
+            return 'advert--' + (stems[cn] || cn);
         }
     }
 

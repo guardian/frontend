@@ -12,9 +12,9 @@ case class HostedGalleryPage(
   standfirst: String,
   ctaText: String,
   ctaLink: String,
-  ctaIndex: Integer,
-  images: List[HostedGalleryImage],
-  cssClass: String
+  ctaButtonText: String,
+  ctaIndex: Option[Integer] = None,
+  images: List[HostedGalleryImage]
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
@@ -38,7 +38,7 @@ case class HostedGalleryPage(
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
-        "ctaIndex" -> JsNumber(BigDecimal(ctaIndex))
+        "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,
@@ -55,5 +55,6 @@ case class HostedGalleryPage(
 case class HostedGalleryImage(
   url: String,
   title: String,
-  caption: String
+  caption: String = "",
+  credit: String = ""
 )

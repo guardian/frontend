@@ -43,6 +43,12 @@
     > .adverts__header {
         background: $features-main-1;
     }
+
+    &.adverts--legacy-inline {
+        .inline-logo-bookshop__svg {
+            opacity: .8;
+        }
+    }
 }
 
 .advert--book {
@@ -70,6 +76,26 @@
             );
         }
     }
+
+    &.adverts--legacy-inline {
+        @include mq(mobileLandscape) {
+            width: gs-span(2);
+        }
+
+        .advert > :not(.advert__image-container) {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .adverts__body {
+            padding: $gs-baseline / 2 $gs-gutter / 4 0;
+        }
+
+        .advert__meta {
+            margin-top: $gs-baseline / 2;
+        }
+    }
+
 }
 
 .adverts--tone-books .button--legacy-single {
@@ -90,4 +116,8 @@
 
 .logo--tone-books {
     fill: $features-main-1;
+}
+
+.tone-book-highlight {
+    color: $features-main-2;
 }

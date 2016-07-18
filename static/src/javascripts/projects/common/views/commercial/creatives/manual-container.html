@@ -9,7 +9,7 @@
         <div class="adverts__ctas"><%=ctas%></div>
     </header>
     <div class="adverts__body">
-        <%if(row){%><div class="adverts__row"><%}%>
+        <%if(row){%><div class="adverts__row <%if(prominent){%>adverts__row--2x1x1<%}%>"><%}%>
             <%=innards%>
         <%if(row){%></div><%}%>
     </div>

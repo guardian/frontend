@@ -56,10 +56,5 @@ class MoneyBestBuysRefresh(val jobs: JobScheduler) extends RefreshJob {
   def refresh() = BestBuysAgent.refresh()
 }
 
-class CommercialMetricsRefresh(val jobs: JobScheduler) extends RefreshJob {
-  val name: String = "Update Metrics"
-
-  def refresh() = CommercialLifecycleMetrics.update()
-}
 
 

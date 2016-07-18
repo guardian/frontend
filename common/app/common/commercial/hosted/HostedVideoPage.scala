@@ -11,6 +11,9 @@ case class HostedVideoPage(
   standfirst: String,
   video: HostedVideo,
   cta: HostedCallToAction,
+  ctaBanner: String,
+  twitterTxt: String,
+  emailTxt: String,
   nextPage: Option[HostedVideoPage]
 ) extends HostedPage {
 
@@ -61,5 +64,5 @@ case class HostedCallToAction(
   url: String,
   label: String,
   trackingCode: String,
-  bannerUrl: String
+  btnText: String
 )

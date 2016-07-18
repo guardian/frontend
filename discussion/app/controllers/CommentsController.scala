@@ -11,12 +11,12 @@ import play.api.data._
 import play.api.data.validation._
 import play.api.libs.ws.{WS, WSResponse}
 import play.api.mvc.{Action, Cookie, RequestHeader, Result}
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import play.filters.csrf.{CSRFConfig, CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController extends DiscussionController with ExecutionContexts {
+class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(
@@ -70,7 +70,7 @@ class CommentsController extends DiscussionController with ExecutionContexts {
     "Report Abuse",
     "GFE: Report Abuse"
   ))
-  def reportAbuseForm(commentId: Int) = CSRFAddToken {
+  def reportAbuseForm(commentId: Int) = CSRFAddToken({
     Action {
       implicit request =>
 
@@ -78,7 +78,7 @@ class CommentsController extends DiscussionController with ExecutionContexts {
           Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
         }
     }
-  }
+  }, csrfConfig)
 
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
@@ -123,7 +123,7 @@ class CommentsController extends DiscussionController with ExecutionContexts {
 
   }
 
-  def reportAbuseSubmission(commentId: Int)  =  CSRFCheck {
+  def reportAbuseSubmission(commentId: Int) = CSRFCheck({
     Action.async { implicit request =>
     val scGuU = request.cookies.get("SC_GU_U")
       userForm.bindFromRequest.fold(
@@ -139,7 +139,7 @@ class CommentsController extends DiscussionController with ExecutionContexts {
         }
       )
     }
-  }
+  }, config = csrfConfig)
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {
     val params = optParams.getOrElse(DiscussionParams(request))
@@ -186,5 +186,3 @@ class CommentsController extends DiscussionController with ExecutionContexts {
     }
   }
 }
-
-object CommentsController extends CommentsController
