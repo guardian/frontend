@@ -59,7 +59,6 @@ define([
         // Warning: these are re-assigned over time
         var currentUpdateDelay = options.minUpdateDelay;
         var latestBlockId = $liveblogBody.data('most-recent-block');
-        var updating = false;
         var unreadBlocksNo = 0;
         var updateTimeoutId = undefined;
 
@@ -101,27 +100,22 @@ define([
         };
 
         var injectNewBlocks = function (newBlocks) {
-            if (!updating) {
-                updating = true;
-                // Clean up blocks before insertion
-                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
-                var elementsToAdd;
+            // Clean up blocks before insertion
+            var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
+            var elementsToAdd;
 
-                fastdom.write(function () {
-                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
+            fastdom.write(function () {
+                bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                elementsToAdd = toArray(resultHtml.children);
 
-                    // Insert new blocks and animate
-                    $liveblogBody.prepend(elementsToAdd);
+                // Insert new blocks
+                $liveblogBody.prepend(elementsToAdd);
 
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+                mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
-                    RelativeDates.init();
-                    twitter.enhanceTweets();
-                }).then(function () {
-                    updating = false;
-                });
-            }
+                RelativeDates.init();
+                twitter.enhanceTweets();
+            });
         };
 
         var displayNewBlocks = function () {
@@ -151,13 +145,13 @@ define([
                 var count = resp.numNewBlocks;
 
                 if (count > 0) {
-                    // updates notification bar with number of unread blocks
-                    mediator.emit('modules:autoupdate:unread', count);
-
                     unreadBlocksNo += count;
-                    if (count > 0) {
-                        latestBlockId = resp.mostRecentBlockId;
-                    }
+
+                    // updates notification bar with number of unread blocks
+                    mediator.emit('modules:autoupdate:unread', unreadBlocksNo);
+
+                    latestBlockId = resp.mostRecentBlockId;
+
                     if (isLivePage) {
                         injectNewBlocks(resp.html);
                         if (scrolledPastTopBlock()) {
