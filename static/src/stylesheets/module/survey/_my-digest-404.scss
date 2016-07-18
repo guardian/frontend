@@ -22,7 +22,14 @@
 }
 
 .my-digest-main {
-    margin: 26px auto 0;
+    margin: 0 auto;
+}
+
+.my-digest-main:before {
+    content: '';
+    background-color: white;
+    height: 26px;
+    display: block;
 }
 
 .my-digest-main__main-column::before {
@@ -104,9 +111,20 @@
     position: absolute;
 }
 
+.email-signup-main {
+    background-color: $news-main-1;
+}
+
+.email-signup-main:before {
+    height: 26px;
+    content: '';
+    background-color: $news-main-1;
+    display: block;
+}
+
 .email-signup {
     background-color: $news-main-1;
-    padding: 1em 1.5em;
+    padding: 1em 0;
     min-width: 16em;
 }
 
@@ -133,5 +151,43 @@
 .email-signup__aside-text {
     color: $guardian-brand-light;
     font-size: 10pt;
-    text-align: center;
+    padding: 0 1em;
+}
+
+.weekend-read-header {
+    color: white;
+}
+
+.weekend-read-header h1 {
+    font-size: 12pt;
+}
+
+.weekend-read-header p {
+    font-size: 10pt;
+}
+
+.weekend-read-sample {
+    margin-top: 1em;
+    background-color: white;
+}
+
+.weekend-read-sample__button {
+    position: relative;
+    border: thin solid lightgrey;
+    background-color: white;
+    border-radius: 100px;
+    padding: 0.3em 0.5em 0.3em 30px;
+    font-size: 10pt;
+
+    .inline-plus {
+        fill: grey;
+        position: absolute;
+        left: 2px;
+        top: 1px;
+    }
+}
+
+.email-signup__aside-text__frequency {
+    color: white;
+    float: right;
 }
