@@ -70,12 +70,9 @@ define([
     }
 
     /**
-     * Given a batch
-     *
-     * This doesn't use fastdom as it's already called from inside a fastdom read
+     * Given a batch, call all of the callbacks on the insertion object
      *
      * @param  {Array} batch
-     * @param  {Object} state
      */
     function insertElements (batch) {
         return fastdom.write(function () {
@@ -161,8 +158,8 @@ define([
      * Insert an element into the page
      * Use if your element doesn't exist and is inserted into a container
      * ** Don't use fastdom - it is handled in this utility **
-     * @param {HTMLElement} insertionContainer The element that the component is being inserted into
-     * @param {Function} insertionCallback Should contain all functionality that displays and lays-out the element
+     * @param {HTMLElement} container The element that the component is being inserted into
+     * @param {Function} cb Should contain all functionality that displays and lays-out the element
      */
     function insert(container, cb) {
         var initialState = {
