@@ -108,7 +108,7 @@ class SeriesController extends Controller with Logging with Paging with Executio
       properties
     )(request)
 
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 }
 

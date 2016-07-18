@@ -6,7 +6,7 @@ define([
 ], function (fastdom, Promise, config, Sticky) {
     function init() {
         if (config.page.hasSuperStickyBanner) {
-            return;
+            return Promise.resolve(false);
         }
 
         return new Promise(function (resolve) {

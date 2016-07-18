@@ -84,7 +84,7 @@
 .witness__button {
     position: relative;
     float: left;
-    padding-left: 38px;
+    padding-left: $gs-gutter * 2 - 2px;
     color: $news-support-1;
     font-family: $f-serif-headline;
     font-size: get-font-size(header, 1);
@@ -92,12 +92,20 @@
     white-space: nowrap;
     margin-right: 0;
 
+    @include mq($from: desktop) {
+        &.button--large {
+            line-height: $gs-baseline * 3 - 2px;
+        }
+    }
+
     .inline-plus svg {
         position: absolute;
-        top: 6px;
-        left: 8px;
-        height: 24px;
-        width: 24px;
+        top: 0;
+        bottom: 0;
+        left: $gs-gutter / 2;
+        margin: auto;
+        height: 18px;
+        width: 18px;
     }
 }
 

@@ -83,7 +83,7 @@ object ShareLinks {
 
   val defaultShares = List(Facebook, Twitter, PinterestBlock)
 
-  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String], quote: Option[String] = None): ShareLink = {
 
     val encodedHref = href.urlEncoded
     val fullMediaPath: Option[String] = mediaPath.map { originalPath =>
@@ -93,6 +93,7 @@ object ShareLinks {
     lazy val facebookParams = List(
       Some("app_id" -> facebookAppId),
       Some("href" -> encodedHref),
+      quote.map(q => "quote" -> q),
       mediaPath.map(path => "picture" -> path.urlEncoded)
     ).flatten.toMap
 
@@ -120,8 +121,13 @@ object ShareLinks {
     create(platform, campaignHref, title, mediaPath)
   }
 
-  def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String]): Seq[ShareLink] = {
-    platforms.map(create(_, href, title, mediaPath))
+  // TODO: Use campaign codes
+  def createShareLinkForComment(platform: SharePlatform, href: String, text: String, quote: Option[String] = None): ShareLink = {
+    create(platform, href, text, None, quote)
+  }
+
+  def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String], quote: Option[String] = None): Seq[ShareLink] = {
+    platforms.map(create(_, href, title, mediaPath, quote))
   }
 }
 

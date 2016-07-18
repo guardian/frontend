@@ -28,7 +28,7 @@ define([
 
     function init() {
         if (!commercialFeatures.sliceAdverts) {
-            return false;
+            return Promise.resolve(false);
         }
 
         var adSlots;

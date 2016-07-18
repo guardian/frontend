@@ -56,62 +56,64 @@
         }
     }
 
-    @page.article.fields.blocks.map { block =>
-        @block.title.map { title =>
-            @paddedRow {
-                <h2 class="block__title">@title</h2>
+    @page.article.fields.blocks.toSeq.map { blocks =>
+        @blocks.body.map { block =>
+            @block.title.map { title =>
+                @paddedRow {
+                    <h2 class="block__title">@title</h2>
+                }
             }
-        }
 
-        @block.elements.map { element =>
-            @element match {
-                case TextBlockElement(Some(html)) => {
-                    @paddedRow(Html(html))
-                }
-
-                case RichLinkBlockElement(Some(url), Some(text), _) => {
-                    @paddedRow(Seq("rich-link")) {
-                        <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
+            @block.elements.map { element =>
+                @element match {
+                    case TextBlockElement(Some(html)) => {
+                        @paddedRow(Html(html))
                     }
-                }
 
-                case EmbedBlockElement(Some(html), _, _) => {
-                    @*fullRow(Html(html))*@
-                }
-
-                case ImageBlockElement(media, data, showCredit) => {
-                    @EmailArticleImage.bestFor(media).map { url =>
-                        @fullRow {
-                            <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                    case RichLinkBlockElement(Some(url), Some(text), _) => {
+                        @paddedRow(Seq("rich-link")) {
+                            <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
                         }
+                    }
 
-                        @paddedRow {
-                            @data.get("caption").map { caption =>
-                                <div class="caption">
-                                    @icon("camera")
+                    case EmbedBlockElement(Some(html), _, _) => {
+                        @*fullRow(Html(html))*@
+                    }
 
-                                    @Html(caption)
+                    case ImageBlockElement(media, data, showCredit) => {
+                        @EmailArticleImage.bestFor(media).map { url =>
+                            @fullRow {
+                                <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                            }
 
-                                    @if(showCredit) {
-                                        @data.get("credit").map(Html(_))
-                                    }
+                            @paddedRow {
+                                @data.get("caption").map { caption =>
+                                    <div class="caption">
+                                        @icon("camera")
 
-                                    <hr />
-                                </div>
+                                        @Html(caption)
+
+                                        @if(showCredit) {
+                                            @data.get("credit").map(Html(_))
+                                        }
+
+                                        <hr />
+                                    </div>
+                                }
                             }
                         }
                     }
-                }
 
-                case GuVideoBlockElement(video, media, data) => {
-                    @data.get("url").map { url =>
-                        @fullRowWithBackground(media) {
-                            <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                    case GuVideoBlockElement(video, media, data) => {
+                        @data.get("url").map { url =>
+                            @fullRowWithBackground(media) {
+                                <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                            }
                         }
                     }
-                }
 
-                case _ => {}
+                    case _ => {}
+                }
             }
         }
     }

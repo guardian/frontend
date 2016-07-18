@@ -2,33 +2,55 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, BlockElement => ApiBlockElement, VideoElementFields, Blocks, Asset}
+import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, BlockElement => ApiBlockElement, Blocks => ApiBlocks, Block, VideoElementFields, Asset}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 
+object Blocks {
+
+  def make(blocks: ApiBlocks): Blocks = {
+
+    def orderBlocks(blocks: Seq[BodyBlock]) =
+      blocks.sortBy(_.firstPublishedDate.map(_.getMillis).getOrElse(0L)).reverse
+
+    val bodyBlocks = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
+    val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
+      map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
+    }.getOrElse(Map())
+    Blocks(
+      totalBodyBlocks = blocks.totalBodyBlocks.getOrElse(bodyBlocks.length),
+      body = bodyBlocks,
+      requestedBodyBlocks = reqBlocks
+    )
+  }
+
+}
+
+case class Blocks(
+  totalBodyBlocks: Int,
+  body: Seq[BodyBlock],
+  requestedBodyBlocks: Map[String, Seq[BodyBlock]]
+)
+
 object BodyBlock {
 
-  def make(maybeBlocks: Option[Blocks]): Seq[BodyBlock] =
-    maybeBlocks.toSeq.flatMap { blocks =>
-      blocks.body.toSeq.flatMap { maybeBodyBlocks =>
-        maybeBodyBlocks.map { bodyBlock =>
-          BodyBlock(bodyBlock.id,
-            bodyBlock.bodyHtml,
-            bodyBlock.bodyTextSummary,
-            bodyBlock.title,
-            BlockAttributes.make(bodyBlock.attributes),
-            bodyBlock.published,
-            bodyBlock.createdDate.map(_.toJodaDateTime),
-            bodyBlock.firstPublishedDate.map(_.toJodaDateTime),
-            bodyBlock.publishedDate.map(_.toJodaDateTime),
-            bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
-            bodyBlock.contributors,
-            bodyBlock.elements.flatMap(BlockElement.make))
-        }
+  def make(blocks: Seq[Block]): Seq[BodyBlock] =
+    blocks.map { bodyBlock =>
+        BodyBlock(bodyBlock.id,
+          bodyBlock.bodyHtml,
+          bodyBlock.bodyTextSummary,
+          bodyBlock.title,
+          BlockAttributes.make(bodyBlock.attributes),
+          bodyBlock.published,
+          bodyBlock.createdDate.map(_.toJodaDateTime),
+          bodyBlock.firstPublishedDate.map(_.toJodaDateTime),
+          bodyBlock.publishedDate.map(_.toJodaDateTime),
+          bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
+          bodyBlock.contributors,
+          bodyBlock.elements.flatMap(BlockElement.make))
       }
-    }
 
   sealed trait EventType
   case object KeyEvent extends EventType

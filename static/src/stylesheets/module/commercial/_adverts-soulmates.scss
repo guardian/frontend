@@ -3,6 +3,8 @@
         // In the soulmates component, we want to show rows of 3 profiles
         // on mobile. Except if this is a manual component.
         &:not(.adverts--manual) .adverts__row {
+            flex-wrap: wrap;
+
             > * {
                 flex-basis: calc(33.33% - #{$gs-gutter});
                 &:nth-child(even)::before {
