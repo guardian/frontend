@@ -41,6 +41,7 @@ define([
             });
         }
 
+        return Promise.resolve(false);
     }
 
     return {

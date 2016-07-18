@@ -1,7 +1,6 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.google.inject.{Inject, Singleton}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
@@ -11,20 +10,18 @@ import play.api.mvc._
 import scala.concurrent.Future
 import model.{EmailSubscriptions, IdentityPage}
 import play.api.data._
-import client.{Error}
-import net.liftweb.json.JsonDSL._
+import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
 import play.api.i18n.{MessagesApi, I18nSupport}
 
-@Singleton
-class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                conf: IdentityConfiguration,
-                                api: IdApiClient,
-                                idRequestParser: IdRequestParser,
-                                idUrlBuilder: IdentityUrlBuilder,
-                                authenticatedActions: AuthenticatedActions,
-                                val messagesApi: MessagesApi)
+class EmailController(returnUrlVerifier: ReturnUrlVerifier,
+                      conf: IdentityConfiguration,
+                      api: IdApiClient,
+                      idRequestParser: IdRequestParser,
+                      idUrlBuilder: IdentityUrlBuilder,
+                      authenticatedActions: AuthenticatedActions,
+                      val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
   import EmailPrefsData._
   import authenticatedActions.authAction

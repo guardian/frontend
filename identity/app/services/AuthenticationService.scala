@@ -1,7 +1,6 @@
 package services
 
 import client.{Auth, Logging}
-import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
 import idapiclient.ScGuU
@@ -15,8 +14,7 @@ object AuthenticatedUser {
 
 case class AuthenticatedUser(user: User, auth: Auth)
 
-@Singleton
-class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecoder,
+class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
                                       idRequestParser: IdRequestParser,
                                       identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
 

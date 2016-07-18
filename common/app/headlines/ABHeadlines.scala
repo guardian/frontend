@@ -1,5 +1,6 @@
 package headlines
 
+import app.LifecycleComponent
 import com.google.gdata.client.spreadsheet.{FeedURLFactory, SpreadsheetService}
 import com.google.gdata.data.spreadsheet.{CellFeed, ListFeed, WorksheetFeed}
 import common._
@@ -86,8 +87,8 @@ object ABHeadlines extends ExecutionContexts with Logging {
 
 class ABHeadlinesLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   private val ABHeadlinesJob = "ABHeadlinesJob"

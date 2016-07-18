@@ -4,7 +4,6 @@ import model.Cached.RevalidatableResult
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
-import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import model.{Cached, IdentityPage}
 import idapiclient.IdApiClient
@@ -12,10 +11,9 @@ import scala.concurrent.Future
 import com.gu.identity.model.User
 import client.Response
 
-@Singleton
-class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
-                                        identityApiClient: IdApiClient,
-                                        idRequestParser: IdRequestParser)
+class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
+                              identityApiClient: IdApiClient,
+                              idRequestParser: IdRequestParser)
   extends Controller
   with ExecutionContexts
   with SafeLogging{

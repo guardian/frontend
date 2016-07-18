@@ -172,11 +172,13 @@ define([
             });
         });
 
-        it('should not display ad slot if disabled in commercial-features', function () {
+        it('should not display ad slot if disabled in commercial-features', function (done) {
             commercialFeatures.sliceAdverts = false;
 
-            expect(sliceAdverts.init()).toBe(false);
-            expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            sliceAdverts.init().then(function (res) {
+                expect(res).toBe(false);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            }).then(done);
         });
 
         it('should not add ad to first container if network front', function (done) {

@@ -5,18 +5,16 @@ import play.api.mvc._
 import model.IdentityPage
 import common.ExecutionContexts
 import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
-import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.switches.Switches
 
-@Singleton
-class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                    idRequestParser: IdRequestParser,
-                                    idUrlBuilder: IdentityUrlBuilder,
-                                    authenticatedActions: AuthenticatedActions,
-                                    formStackApi: FormstackApi)
+class FormstackController(returnUrlVerifier: ReturnUrlVerifier,
+                          idRequestParser: IdRequestParser,
+                          idUrlBuilder: IdentityUrlBuilder,
+                          authenticatedActions: AuthenticatedActions,
+                          formStackApi: FormstackApi)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import authenticatedActions.authAction

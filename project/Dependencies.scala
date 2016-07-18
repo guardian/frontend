@@ -34,7 +34,6 @@ object Dependencies {
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
   val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
-  val guice = "com.google.inject" % "guice" % "3.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
@@ -56,7 +55,6 @@ object Dependencies {
   val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0" % Test
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
-  val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
@@ -66,7 +64,7 @@ object Dependencies {
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
-  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.2.0"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

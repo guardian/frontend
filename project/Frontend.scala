@@ -101,6 +101,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val router = application("router")
+    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -141,8 +142,6 @@ object Frontend extends Build with Prototypes {
       identityModel,
       identityRequest,
       identityCookie,
-      seeGuice,
-      guice,
       liftJson,
       commonsHttpClient,
       slf4jExt,
