@@ -20,7 +20,7 @@ define([
 ) {
     return function () {
 
-        this.id = 'GiraffeArticle';
+        this.id = 'GiraffeArticle20160719';
         this.start = '2016-07-18';
         this.expiry = '2016-08-01';
         this.author = 'Alex Ware';
