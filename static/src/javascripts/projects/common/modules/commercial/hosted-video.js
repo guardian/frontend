@@ -92,8 +92,9 @@ define([
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
 
-                    if (!$videoEl.length) {
-                        resolve();
+                    if ($videoEl.length === 0) {
+                        // halt execution
+                        return resolve();
                     }
 
                     player = videojs($videoEl.get(0), videojsOptions());
