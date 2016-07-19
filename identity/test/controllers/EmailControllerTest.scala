@@ -4,7 +4,8 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
 import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
-import org.scalatestplus.play.ConfiguredServer
+import play.api.libs.crypto.CSRFTokenSigner
+import play.filters.csrf.{CSRFAddToken, CSRFConfig}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
@@ -25,7 +26,8 @@ import actions.AuthenticatedActions
 
 @DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
 
-  val csrfAddToken = app.injector.instanceOf[play.filters.csrf.CSRFAddToken]
+  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
+  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]
