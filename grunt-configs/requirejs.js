@@ -304,22 +304,6 @@ module.exports = function (grunt, options) {
                 }
             }
         },
-        mediaAnalitics: {
-            options: {
-                name: 'bootstraps/enhanced/media/analytics',
-                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/media/analytics.js',
-                exclude: [
-                    'boot',
-                    'bootstraps/standard/main',
-                    'bootstraps/commercial',
-                    'bootstraps/enhanced/main',
-                    'text',
-                    'inlineSvg'
-                ],
-                generateSourceMaps: true,
-                preserveLicenseComments: false
-            }
-        },
         videoEmbed : {
             options: {
                 name: 'bootstraps/video-embed',
