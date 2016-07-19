@@ -364,6 +364,7 @@
 .adverts--legacy-inline {
     padding: 0;
     width: $gs-gutter * 6.5;
+    background: #eaeaea;
 
     @include mq(mobileLandscape) {
         width: gs-span(3);
@@ -381,9 +382,16 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        color: #ffffff;
+        fill: #ffffff;
 
         > .inline-icon {
             margin-bottom: $gs-baseline / 2;
+        }
+
+        > .inline-logo > svg {
+            height: auto;
+            max-width: 100%;
         }
     }
 
@@ -403,6 +411,10 @@
 
     .advert__image-container {
         height: auto;
+    }
+
+    .advert__image {
+        width: 100%;
     }
 
     .has-no-flex & {
@@ -676,14 +688,6 @@
 
     .button {
         margin-right: 0;
-    }
-}
-
-.adverts--legacy-inline {
-    background: #eaeaea;
-
-    .adverts__logo {
-        color: #ffffff;
     }
 }
 
