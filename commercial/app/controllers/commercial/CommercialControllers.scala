@@ -10,7 +10,6 @@ trait CommercialControllers {
   lazy val jobsController = wire[JobsController]
   lazy val liveEventsController = wire[LiveEventsController]
   lazy val masterclassesController = wire[MasterclassesController]
-  lazy val moneyOffers = wire[MoneyOffers]
   lazy val multi = wire[Multi]
   lazy val paidContentCardController = wire[PaidContentCardController]
   lazy val soulmatesController = wire[SoulmatesController]

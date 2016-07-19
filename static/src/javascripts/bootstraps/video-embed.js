@@ -4,7 +4,7 @@ define([
     'bonzo',
     'qwery',
     'videojs',
-    'videojsembed',
+    'videojs-embed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',

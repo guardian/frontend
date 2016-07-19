@@ -60,9 +60,6 @@ define([
         ['cm-load', dfpLoad],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-sponsorships', sponsorships.init],
-        ['cm-hostedAbout', hostedAbout.init],
-        ['cm-hostedVideo', hostedVideo.init],
-        ['cm-hostedGallery', hostedGallery.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
@@ -71,6 +68,13 @@ define([
             return Promise.resolve();
         }]
     ];
+
+    if (config.isHosted) {
+        secondaryModules.unshift(
+            ['cm-hostedAbout', hostedAbout.init],
+            ['cm-hostedVideo', hostedVideo.init],
+            ['cm-hostedGallery', hostedGallery.init]);
+    }
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
         primaryModules.push(['cm-badges', badges.init]);

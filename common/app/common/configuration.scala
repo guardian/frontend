@@ -318,8 +318,6 @@ class GuardianConfiguration extends Logging {
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
     lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl= configuration.getStringProperty("jobs.api.url")
-    lazy val mortgagesUrl = configuration.getStringProperty("lc.mortgages.api.url")
-    lazy val moneyUrl = configuration.getStringProperty("moneysupermarket.api.url")
 
     object magento {
       lazy val domain = configuration.getStringProperty("magento.domain")

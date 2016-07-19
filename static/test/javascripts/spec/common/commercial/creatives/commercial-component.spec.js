@@ -69,11 +69,11 @@ define([
             mediator.once('modules:commercial:creatives:commercial-component:loaded', done);
 
             server.respondWith(
-                '/commercial/money/bestbuys.json?k=annerice&k=fiction&k=books&k=culture',
+                '/commercial/soulmates/mixed.json?k=annerice&k=fiction&k=books&k=culture',
                 [200, {}, '{ "html": "" }']
             );
 
-            new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
+            new CommercialComponent(adSlot, { type: 'soulmates' }).create();
         });
 
         it('should use pageId if no keywordIds', function (done) {
@@ -81,11 +81,11 @@ define([
             config.page.keywordIds = '';
 
             server.respondWith(
-                '/commercial/money/bestbuys.json?k=prince-lestat-anne-rice-review',
+                '/commercial/soulmates/mixed.json?k=prince-lestat-anne-rice-review',
                 [200, {}, '{ "html": "" }']
             );
 
-            new CommercialComponent(adSlot, { type: 'bestbuy' }).create();
+            new CommercialComponent(adSlot, { type: 'soulmates' }).create();
         });
 
         it('should load component into the slot', function (done) {
