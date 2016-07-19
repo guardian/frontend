@@ -89,7 +89,7 @@ trait ABTestSwitches {
     "ab-habit-forming-digest-promo",
     "Show infrequent users a banner offering a curated digest",
     owners = Seq(Owner.withGithub("katebee")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
