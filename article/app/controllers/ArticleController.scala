@@ -238,8 +238,19 @@ class ArticleController extends Controller with RendersItemResponse with Logging
           range
         )
       } getOrElse None
-    liveBlogPageModel match {
-      case Some(pageModel) =>
+    (liveBlogPageModel, range) match {
+      case (Some(pageModel), SinceBlockId(_)) =>
+        val cacheTime =
+          if (liveBlog.fields.isLive && pageModel.currentPage.blocks.isEmpty)
+            liveBlog.metadata.cacheTime
+          else
+            CacheTime.NotRecentlyUpdated
+        val liveBlogCache = liveBlog.copy(
+          content = liveBlog.content.copy(
+            metadata = liveBlog.content.metadata.copy(
+              cacheTime = cacheTime)))
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
+      case (Some(pageModel), _) =>
 
         val cacheTime =
           if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive)
@@ -256,7 +267,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
             metadata = liveBlog.content.metadata.copy(
               cacheTime = cacheTime)))
         Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
-      case None => Right(NotFound)
+      case (None, _) => Right(NotFound)
     }
 
   }
