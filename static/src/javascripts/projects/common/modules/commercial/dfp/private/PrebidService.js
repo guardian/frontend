@@ -171,7 +171,7 @@ define([
                 options: {
                     global: 'ga',
                     trackerName: 'headerBiddingPropertyTracker',
-                    enableDistribution: false
+                    enableDistribution: true
                 }
             });
         }
