@@ -85,10 +85,9 @@ define([
             });
         }
 
-        if (config.isMedia || qwery('video, audio').length) {
-            require(['bootstraps/enhanced/media/main', 'bootstraps/enhanced/media/analytics'], function (media, mediaAnalytics) {
+        if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
+            require(['bootstraps/enhanced/media/main'], function (media) {
                 bootstrapContext('media', media);
-                bootstrapContext('media : analytics', mediaAnalytics);
             });
         }
 

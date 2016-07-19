@@ -3,7 +3,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'bootstraps/enhanced/media/video-player',
+    'videojs',
+    'videojs-embed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
@@ -17,13 +18,13 @@ define([
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
-    'common/modules/video/videojs-options',
-    'bootstraps/enhanced/media/analytics'
+    'common/modules/video/videojs-options'
 ], function (
     bean,
     bonzo,
     qwery,
     videojs,
+    videojsembed,
     $,
     config,
     deferToAnalytics,
@@ -37,8 +38,7 @@ define([
     loadingTmpl,
     titlebarTmpl,
     debounce,
-    videojsOptions,
-    mediaAnalytics
+    videojsOptions
 ) {
 
     function initLoadingSpinner(player) {
@@ -105,7 +105,6 @@ define([
     }
 
     function initPlayer() {
-        mediaAnalytics.init();
 
         videojs.plugin('fullscreener', fullscreener);
 
@@ -158,6 +157,9 @@ define([
                     });
 
                 }
+
+                events.initOmnitureTracking(player, mediaId);
+                events.bindContentEvents(player);
             });
 
             mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

@@ -19,12 +19,9 @@
     @*
         Basic Omniture runs on both Core & 'Full experience'
         We just need to run Ophan here.
-
-        We don't want ophan on embedded content as it uses it's own ophan/embed module
-        which conflicts with ophan/ng
     *@
 
-    if (!guardian.isEnhanced && !guardian.isEmbed) {
+    if (!guardian.isEnhanced) {
         var ophanScript = document.createElement('script'),
                 sc = document.getElementsByTagName('script')[0];
 
