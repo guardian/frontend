@@ -397,8 +397,11 @@ define([
         }
 
         var mediaType = getMediaType();
-        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
-        onwardContainer.init(el, mediaType);
+        var els = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular');
+
+        els.each(function(el) {
+            onwardContainer.init(el, mediaType);
+        });
     }
 
     function initWithRaven(withPreroll) {

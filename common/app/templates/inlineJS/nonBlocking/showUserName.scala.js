@@ -4,9 +4,14 @@ try {
 
         if (isVeryModern && user) {
             window.requestAnimationFrame(() => {
-                document.getElementsByClassName('js-profile-info')[0].innerHTML = user.displayName;
-
+                var $profileInfoElem = document.getElementsByClassName('js-profile-info')[0];
                 var $profileNavElem = document.getElementsByClassName('js-profile-nav')[0];
+
+                if (!$profileInfoElem && !$profileNavElem) {
+                    return;
+                }
+
+                $profileInfoElem.innerHTML = user.displayName;
                 $profileNavElem.classList.add('is-signed-in');
 
                 var $signInLinkElem = $profileNavElem.getElementsByTagName('a')[0];
