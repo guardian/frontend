@@ -151,8 +151,10 @@ define([
     }
 
     function scrollThePage (scrollY) {
-        window.scrollTo(0, scrollY);
-        running = false;
+        if (scrollY) {
+            window.scrollTo(0, scrollY);
+            running = false;
+        }
     }
 
     /**
