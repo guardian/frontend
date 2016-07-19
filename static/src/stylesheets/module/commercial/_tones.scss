@@ -10,8 +10,7 @@
         .commercial--tone__highlight {
             color: $accentColour;
         }
-        .commercial__header,
-        .commercial--v-high__header {
+        .commercial__header {
             background-color: $colour;
 
             @if $titleColor {
