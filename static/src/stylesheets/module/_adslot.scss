@@ -160,7 +160,7 @@
             }
             @each $breakpoint, $container-width in $breakpoints {
                 @include mq($breakpoint) {
-                 width: $container-width;
+                    width: $container-width;
                 }
             }
         }
