@@ -29,8 +29,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-top-banner',
-    'common/modules/commercial/hosted-about',
+    'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -84,8 +83,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    stickyAdBanner,
-    hostedAbout,
+    newHeaderNavigation,
     Profile,
     Search,
     history,
@@ -131,27 +129,7 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
-            },
-
-            initialiseStickyAdBanner: function () {
-                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site'
-                    && !config.tests.abNewHeaderVariant
-                    && (config.page.hasSuperStickyBanner
-                        || config.page.contentType !== 'Interactive'
-                        && config.page.contentType !== 'Crossword'
-                        && config.page.contentType !== 'Hosted'
-                        && !config.page.isImmersive
-                        && !config.page.isUsMinute
-                        && !config.page.isAdvertisementFeature
-                        )
-                ) {
-                    stickyAdBanner.initialise();
-                    config.page.hasStickyAdBanner = true;
-                } else {
-                    config.page.hasStickyAdBanner = false;
-                }
+                newHeaderNavigation();
             },
 
             showTabs: function () {
@@ -366,13 +344,8 @@ define([
 
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
-            },
-
-            initHostedAboutLightbox: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedAbout.init();
-                }
             }
+
         };
 
     return {
@@ -394,7 +367,6 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -421,8 +393,7 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });

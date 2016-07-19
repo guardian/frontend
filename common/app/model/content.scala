@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay, HeroicTemplateSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -80,7 +80,8 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries
+  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
@@ -198,7 +199,8 @@ final case class Content(
     ("references", JsArray(javascriptReferences)),
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
-    ("isImmersive", JsBoolean(isImmersive))
+    ("isImmersive", JsBoolean(isImmersive)),
+    ("isHeroic", JsBoolean(isHeroic))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -241,11 +243,32 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
+    // There are many checks that might disable sticky top banner, listed below.
+    // But if we are in the super sticky banner campaign, we must ignore them!
+    val canDisableStickyTopBanner =
+      metadata.shouldHideHeaderAndTopAds ||
+      commercial.isAdvertisementFeature ||
+      metadata.contentType == "Interactive" ||
+      metadata.contentType == "Crossword" ||
+      metadata.contentType == "Hosted"
+
+    // These conditions must always disable sticky banner.
+    val alwaysDisableStickyTopBanner =
+      shouldHideAdverts ||
+      metadata.sectionId == "childrens-books-site"
+
+    val maybeDisableSticky = canDisableStickyTopBanner match {
+      case true if !tags.hasSuperStickyBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ => None
+    }
+
     val meta: List[Option[(String, JsValue)]] = List(
       rugbyMeta,
       articleMeta,
       trackingMeta,
-      atomsMeta
+      atomsMeta,
+      maybeDisableSticky
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }
@@ -411,7 +434,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
     )
   }
 
@@ -455,6 +478,7 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
   val isImmersive: Boolean = content.isImmersive
+  val isHeroic: Boolean = content.isHeroic
   val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -484,7 +508,6 @@ final case class Article (
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = content.fields.blocks
-  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
 object Audio {

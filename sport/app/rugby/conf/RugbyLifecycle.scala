@@ -1,6 +1,7 @@
 package rugby.conf
 
-import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
 import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
@@ -11,8 +12,8 @@ import scala.concurrent.duration._
 
 class RugbyLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   protected val initializationTimeout: FiniteDuration = 10.seconds

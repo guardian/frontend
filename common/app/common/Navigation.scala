@@ -238,7 +238,6 @@ trait Navigation {
   val membership = SectionLink("membership", "membership", "Membership", "/membership")
 
   val footballNav = Seq(
-    SectionLink("football", "euro 2016", "Euro 2016", "/football/euro-2016"),
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),

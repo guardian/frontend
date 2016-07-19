@@ -12,12 +12,8 @@ object CapiAgent extends Logging {
 
   private lazy val cache = shortUrlAgent.get()
 
-  private[commercial] def idsFromShortUrls(shortUrls: Seq[String]): Seq[String] = {
-    shortUrls map { url =>
-      val slashPrefixed = if (url startsWith "/") url else s"/$url"
-      slashPrefixed.trim.stripSuffix("/stw")
-    }
-  }
+  private[commercial] def idsFromShortUrls(shortUrls: Seq[String]): Seq[String] =
+    shortUrls map (_.trim.stripPrefix("/").stripSuffix("/stw"))
 
   def contentByShortUrls(shortUrls: Seq[String])
                         (implicit ec: ExecutionContext): Future[Seq[ContentType]] = {

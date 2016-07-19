@@ -166,11 +166,18 @@ $leffeColor: #dec190;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: 0;
+        @include fs-textSans(4);
+        margin-left: 16px;
         margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
+        @include mq(desktop) {
+            margin-left: 0;
+        }
 
         &:before {
             content: 'Watch now';
@@ -189,11 +196,6 @@ $leffeColor: #dec190;
             border-width: 8px 8px 8px 18px;
             border-color: transparent transparent transparent $neutral-7;
         }
-
-        @include fs-textSans(4);
-        color: #ffffff;
-        border: 2px solid #ffffff;
-        border-radius: 30px;
     }
 
     .vjs-control,
@@ -472,13 +474,13 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta-wrapper {
+    padding-top: 140px;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    @include mq(desktop) {
+        padding-top: 270px;
+    }
 
     a {
         // hack stop the link underline
@@ -487,12 +489,13 @@ $leffeColor: #dec190;
 }
 
 .hosted__cta-btn-wrapper {
-    padding-bottom: 5%;
+    padding-top: 90px;
+    @include mq(desktop) {
+        padding-top: 220px;
+    }
 }
 
 .hosted__cta.button {
-    padding: 0;
-
     &,
     &:focus,
     &:hover {
@@ -500,26 +503,30 @@ $leffeColor: #dec190;
     }
 
     @include mq(mobile) {
+        padding: 4px;
         height: 26px;
+        width: 26px;
         margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
             fill: $neutral-1;
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
         }
     }
 
     @include mq(tablet) {
+        padding: 8px;
         height: 38px;
+        width: 38px;
         margin: 8px;
         line-height: 1;
 
         svg {
-            width: 37px;
-            height: 37px;
+            width: 20px;
+            height: 20px;
         }
     }
 
@@ -528,7 +535,8 @@ $leffeColor: #dec190;
     }
 }
 
-.hosted__cta-text {
+.hosted__cta-text,
+.hosted__cta-label {
     @include f-headlineSans;
 
     font-size: 25px;
@@ -536,6 +544,34 @@ $leffeColor: #dec190;
 
     @include mq(tablet) {
         font-size: 38px;
+    }
+}
+
+.hosted__cta-label {
+    color: #ffffff;
+}
+
+.hosted__cta-btn-text {
+    @include circular;
+    @include f-headlineSans;
+    position: relative;
+    display: block;
+    padding: 6px 6px 6px 14px;
+    color: #000000;
+    width: $gs-column-width * 3.2;
+    font-weight: bold;
+    background-color: #ffffff;
+
+    .inline-icon {
+        fill: #000000;
+        position: absolute;
+        top: 6px;
+        right: 16px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
 
@@ -897,7 +933,8 @@ $leffeColor: #dec190;
 //Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
-    @include hosted-fade-out;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     top: 0;
     right: 0;
@@ -943,7 +980,6 @@ $leffeColor: #dec190;
 
     .hosted-next-autoplay__video {
         margin: 6px;
-        border-top: 1px solid $renaultColor;
     }
 
     .hosted-next-autoplay__subheader {
@@ -977,7 +1013,6 @@ $leffeColor: #dec190;
         padding: 10px;
         color: #000000;
         border-radius: 100%;
-        background-color: $renaultColor;
         font-weight: bold;
         line-height: 20px;
         text-align: center;
@@ -1035,7 +1070,6 @@ $leffeColor: #dec190;
             display: block;
             margin: 6px;
             padding-top: 6px;
-            border-top: 1px solid $renaultColor;
         }
         .hosted-next-autoplay__tile {
             @include clearfix;
@@ -1044,7 +1078,6 @@ $leffeColor: #dec190;
             float: left;
             color: #333333;
             line-height: 30px;
-            background-color: $renaultColor;
             margin: 12px 0;
             font-weight: 600;
             padding: 4px 6px 4px 16px;
@@ -1057,6 +1090,7 @@ $leffeColor: #dec190;
                 display: block;
                 float: right;
                 height: 30px;
+                width: 30px;
                 margin-left: 40px;
             }
 
@@ -1064,6 +1098,32 @@ $leffeColor: #dec190;
                 position: static;
                 fill: #333333;
             }
+        }
+    }
+}
+
+.leffe {
+    .hosted-next-autoplay {
+        .hosted-next-autoplay__poster-timer,
+        .hosted-next-autoplay__tile {
+            background-color: $leffeColor;
+        }
+        .hosted-next-autoplay__video,
+        .hosted-next-autoplay__next-in-series {
+            border-top: 1px solid $leffeColor;
+        }
+    }
+}
+
+.renault {
+    .hosted-next-autoplay {
+        .hosted-next-autoplay__poster-timer,
+        .hosted-next-autoplay__tile {
+            background-color: $renaultColor;
+        }
+        .hosted-next-autoplay__video,
+        .hosted-next-autoplay__next-in-series {
+            border-top: 1px solid $renaultColor;
         }
     }
 }

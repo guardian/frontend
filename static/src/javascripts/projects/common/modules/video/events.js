@@ -11,7 +11,7 @@ define([
     'common/modules/onward/history',
     'text!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
-    'lodash/functions/throttle'
+    'common/modules/video/ophan-media'
 ], function (
     bean,
     qwery,
@@ -24,20 +24,16 @@ define([
     history,
     adsSkipOverlayTmpl,
     indexOf,
-    throttle
+    ophanMedia
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
-        QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
             'preroll:request',
             'preroll:ready',
             'preroll:play',
-            'preroll:end',
-            'content:ready',
-            'content:play',
-            'content:end'
+            'preroll:end'
         ];
 
     function getMediaType(player) {
@@ -52,26 +48,10 @@ define([
         return getMediaType(player) + ':' + eventName;
     }
 
-    function ophanRecord(id, event, player) {
-        var ophanPath = isEmbed ? 'ophan/embed' : 'ophan/ng';
-        if (id) {
-            require([ophanPath], function (ophan) {
-                var eventObject = {};
-                eventObject[getMediaType(player)] = {
-                    id: id,
-                    eventType: event.type
-                };
-                ophan.record(eventObject);
-            });
-        }
-    }
-
     function initOphanTracking(player, mediaId) {
-        EVENTS.concat(QUARTILES.map(function (q) {
-            return 'content:' + q;
-        })).forEach(function (event) {
+        EVENTS.forEach(function (event) {
             player.one(constructEventName(event, player), function (event) {
-                ophanRecord(mediaId, event, player);
+                ophanMedia.ophanRecord(mediaId, getMediaType(player), event.type);
             });
         });
     }
@@ -159,22 +139,10 @@ define([
                     player.one('durationchange', events.play);
                 }
             },
-            timeupdate: function () {
-                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
-                QUARTILES.reverse().some(function (quart) {
-                    if (progress >= quart) {
-                        player.trigger(constructEventName('content:' + quart, player));
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            },
             ready: function () {
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
-                player.on('timeupdate', throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
 
                 if (shouldAutoPlay(player)) {

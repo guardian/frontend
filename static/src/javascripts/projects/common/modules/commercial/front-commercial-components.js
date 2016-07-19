@@ -1,13 +1,17 @@
 define([
     'bonzo',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
+    Promise,
     $,
     config,
+    fastdom,
     createSlot,
     commercialFeatures
 ) {
@@ -15,7 +19,7 @@ define([
     function init() {
 
         if (!commercialFeatures.frontCommercialComponents) {
-            return false;
+            return Promise.resolve(false);
         }
 
         var containerIndex,
@@ -30,11 +34,14 @@ define([
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
             }
 
-            return $adSlotWrapper
-                .append($adSlot)
-                .insertAfter($containers[containerIndex]);
+            return fastdom.write(function () {
+                $adSlotWrapper
+                    .append($adSlot)
+                    .insertAfter($containers[containerIndex]);
+            });
         }
 
+        return Promise.resolve(false);
     }
 
     return {

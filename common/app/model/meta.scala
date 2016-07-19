@@ -8,7 +8,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock
+import model.liveblog.{Blocks, BodyBlock}
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -124,7 +124,7 @@ object Fields {
       standfirst = apiContent.fields.flatMap(_.standfirst),
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
-      blocks = BodyBlock.make(apiContent.blocks),
+      blocks = apiContent.blocks.map(Blocks.make),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
@@ -141,7 +141,7 @@ final case class Fields(
   standfirst: Option[String],
   main: String,
   body: String,
-  blocks: Seq[BodyBlock],
+  blocks: Option[Blocks],
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean,
@@ -272,9 +272,6 @@ final case class MetaData (
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   } else Nil
-  def hasAdInBelowTopNavSlot(edition: Edition) = if (isPressedPage) {
-    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
-  } else false
   def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
@@ -442,6 +439,8 @@ case class GalleryPage(
   override lazy val item = gallery
   val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
+
+case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 case class TagCombiner(
   id: String,
@@ -629,6 +628,9 @@ final case class Tags(
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
   lazy val isElection = isUSElection || isAusElection
 
+  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
+
   lazy val keywordIds = keywords.map { _.id }
 
   lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
@@ -636,7 +638,7 @@ final case class Tags(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
+    ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),

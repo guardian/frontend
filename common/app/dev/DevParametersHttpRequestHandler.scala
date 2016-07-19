@@ -1,6 +1,5 @@
 package dev
 
-import com.google.inject.Inject
 import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
 import play.api.routing.Router
 import play.api.Play
@@ -8,7 +7,7 @@ import play.api.mvc.RequestHeader
 import Play.isProd
 import common.CanonicalLink
 
-class DevParametersHttpRequestHandler @Inject() (
+class DevParametersHttpRequestHandler(
     router: Router,
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,

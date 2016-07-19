@@ -2,7 +2,6 @@ package formstack
 
 import client.parser.JodaJsonSerializer
 import client.{Error, Response}
-import com.google.inject.{Inject, Singleton}
 import com.gu.identity.model.LiftJsonConfig
 import common.ExecutionContexts
 import conf.Configuration
@@ -10,8 +9,7 @@ import net.liftweb.json._
 import utils.SafeLogging
 import scala.concurrent.Future
 
-@Singleton
-class FormstackApi @Inject()(httpClient: WsFormstackHttp) extends ExecutionContexts with SafeLogging {
+class FormstackApi(httpClient: WsFormstackHttp) extends ExecutionContexts with SafeLogging {
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 

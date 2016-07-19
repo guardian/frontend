@@ -7,6 +7,14 @@ define([
     assign,
     adSizes
 ) {
+    var badgeDefinition = {
+        label: false,
+        refresh: false,
+        sizeMappings: {
+            mobile: compile(adSizes.outOfPage, adSizes.badge)
+        }
+    };
+
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -60,27 +68,9 @@ define([
                 mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
             }
         },
-        spbadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
-        adbadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
-        fobadge: {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
-            }
-        },
+        spbadge: badgeDefinition,
+        adbadge: badgeDefinition,
+        fobadge: badgeDefinition,
         comments: {
             sizeMappings: {
                 mobile: compile(adSizes.outOfPage, adSizes.badge)
@@ -91,21 +81,7 @@ define([
                 mobile: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
-                    adSizes.fabric,
-                    adSizes.fluid
-                ),
-                tablet: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
-                    adSizes.fluid
-                ),
-                desktop: compile(
-                    adSizes.outOfPage,
                     adSizes.fluid250,
-                    adSizes.leaderboard,
-                    adSizes.cascase,
-                    adSizes.superHeader,
-                    adSizes.billboard,
                     adSizes.fabric,
                     adSizes.fluid
                 )

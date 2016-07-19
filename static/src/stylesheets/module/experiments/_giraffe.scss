@@ -1,18 +1,34 @@
 .giraffe {
     width: 100%;
-    display: block;
-    margin-bottom: 1em;
-    border-top: 1px dotted $neutral-4;
+    padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+    background: $multimedia-main-2;
+    box-sizing: border-box;
 }
-.giraffe--heading {
-    margin-bottom: $gs-baseline;
-    color: $news-default;
+
+.giraffe__heading {
+    @include fs-header(5);
+    color: $neutral-1;
+    display: inline;
 }
+
 .button--giraffe__icon {
     float: right;
 }
-.giraffe--copy {
-    @include fs-textSans(3);
-    color: $neutral-2;
-    margin-bottom: $gs-baseline;
+
+.giraffe__copy {
+    @include fs-header(5);
+    color: #ffffff;
+    display: inline;
 }
+
+.button--giraffe {
+    @include button-colour(
+        $maps-main-2,
+        #ffffff
+    );
+    @include button-hover-colour(
+        mix($maps-main-2, $neutral-1, 60%)
+    );
+    margin-top: $gs-baseline;
+}
+

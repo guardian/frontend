@@ -10,7 +10,6 @@ files:
     - 'static/src/stylesheets/module/commercial/_adverts-soulmates.scss'
     - 'static/src/stylesheets/module/commercial/_advert.scss'
     - 'static/src/stylesheets/module/commercial/_adverts.scss'
-    - 'static/src/stylesheets/module/commercial/_commercial--v-high.scss'
     - 'static/src/stylesheets/module/content/_article-minute.scss'
     - 'static/src/stylesheets/module/email/_form.scss'
     - 'static/src/stylesheets/module/facia/_item.scss'

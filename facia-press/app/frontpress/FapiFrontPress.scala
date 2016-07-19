@@ -100,7 +100,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]]
 
-  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
+  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showFields(showFields)
@@ -285,7 +285,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       // Discard all elements except the main video.
       // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
       val slimElements = Elements.apply(content.elements.mainVideo.toList)
-      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
+      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = None)
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.

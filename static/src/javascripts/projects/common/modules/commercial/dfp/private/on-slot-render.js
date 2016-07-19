@@ -24,6 +24,7 @@ define([
         var advert = getAdvertById(event.slot.getSlotElementId());
         Advert.stopLoading(advert, true);
         Advert.startRendering(advert);
+        advert.isEmpty = event.isEmpty;
 
         if (event.isEmpty) {
             emptyAdvert(advert);

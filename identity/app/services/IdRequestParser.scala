@@ -2,13 +2,11 @@ package services
 
 import idapiclient.TrackingData
 import play.api.mvc.RequestHeader
-import com.google.inject.{Inject, Singleton}
 import utils.{ThirdPartyConditions, RemoteAddress}
 import jobs.TorExitNodeList
 import conf.switches.Switches
 
-@Singleton
-class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
+class IdRequestParser(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
   def apply(request: RequestHeader): IdentityRequest = {
 
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
@@ -38,8 +36,9 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
   }
 }
 
-@Singleton
-class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends IdRequestParser(returnUrlVerifier)  {
+class TorNodeLoggingIdRequestParser(idRequestParser: IdRequestParser) extends RemoteAddress {
+
+  def apply(request: RequestHeader): IdentityRequest = idRequestParser.apply(request)
 
   def apply(request: RequestHeader, email: String) : IdentityRequest = {
 
@@ -51,7 +50,7 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
       }
       case _ =>
     }
-    super.apply(request)
+    idRequestParser.apply(request)
   }
 }
 

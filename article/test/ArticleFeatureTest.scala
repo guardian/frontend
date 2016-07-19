@@ -357,11 +357,11 @@ import collection.JavaConversions._
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90|88,71|fluid")
+        adPlaceholder.getAttribute("data-tablet") should be("1,1|88,70|728,90|88,71|fluid")
         adPlaceholder.getAttribute("data-desktop") should be("1,1|88,70|728,90|940,230|900,250|970,250|88,71|fluid")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("js-ad-slot ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("js-ad-slot ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
@@ -445,10 +445,10 @@ import collection.JavaConversions._
       goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
-        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&redirect_uri=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb"
-        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
-        val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
+        val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_link"
+        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_fb"
+        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_tw"
+        val gplusShareUrl = "https://plus.google.com/share?url=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_gp&amp;hl=en-GB&amp;wwc=1"
 
         Then("I should see buttons for my favourite social network")
 

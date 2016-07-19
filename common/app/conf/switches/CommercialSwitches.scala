@@ -6,16 +6,6 @@ import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
-  val WimbledonTopAd = Switch(
-    SwitchGroup.Commercial,
-    "wimbledon-top-ad",
-    "Commands the appearance of the Rolex/Wimbledon super funky ads",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 11),
-    exposeClientSide = false
-  )
-
   val DfpCachingSwitch = Switch(
     SwitchGroup.Commercial,
     "dfp-caching",
@@ -196,16 +186,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MoneysupermarketFeedsSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "moneysupermarket",
-    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val GuBookshopFeedsSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
@@ -232,16 +212,6 @@ trait CommercialSwitches {
     "If this switch is on, content flagged with membershipAccess will be protected",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val LCMortgageFeedSwitch = Switch(
-    SwitchGroup.Commercial,
-    "lc-mortgages",
-    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
@@ -363,6 +333,16 @@ trait CommercialSwitches {
     owners = Owner.group(CommercialLabs),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 10),
+    exposeClientSide = false
+  )
+
+  val hostedArticle = Switch(
+    group = CommercialLabs,
+    name = "hosted-article",
+    description = "Show hosted article or 404.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
   )
 

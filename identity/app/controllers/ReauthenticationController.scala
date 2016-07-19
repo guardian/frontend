@@ -1,7 +1,6 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.google.inject.{Inject, Singleton}
 import common.ExecutionContexts
 import form.Mappings
 import idapiclient.{ScGuU, EmailPassword, IdApiClient}
@@ -17,8 +16,7 @@ import utils.SafeLogging
 import scala.concurrent.Future
 
 
-@Singleton
-class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
+class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
                                  api: IdApiClient,
                                  idRequestParser: IdRequestParser,
                                  idUrlBuilder: IdentityUrlBuilder,

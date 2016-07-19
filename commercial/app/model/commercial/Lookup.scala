@@ -28,7 +28,7 @@ object Lookup extends ExecutionContexts with Logging {
 
   def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
-      val shortIds = shortUrls map (_.stripPrefix("http://").stripPrefix("gu.com").stripPrefix("/")) mkString ","
+      val shortIds = shortUrls map (_.replaceFirst("^[a-zA-Z]+://gu.com/","")) mkString ","
       getResponse(ContentApiClient.search(defaultEdition).ids(shortIds)) map {
         _.results map (Content(_))
       }

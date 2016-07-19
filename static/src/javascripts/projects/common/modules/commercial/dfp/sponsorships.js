@@ -1,7 +1,8 @@
 define([
-    'fastdom',
+    'Promise',
+    'common/utils/fastdom-promise',
     'common/utils/detect'
-], function (fastdom, detect) {
+], function (Promise, fastdom, detect) {
     return {
         init: init
     };
@@ -10,13 +11,15 @@ define([
         var sponsorshipContainers = getSponsorshipContainers();
 
         if (detect.adblockInUseSync() && sponsorshipContainers.length) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 sponsorshipContainers.forEach(function (container) {
                     var sponsorshipClasses = container.className.replace('ad-slot ', '');
                     var sponsorshipBadge = '<div class="' + sponsorshipClasses + '">' + container.innerHTML + '</div>';
                     container.insertAdjacentHTML('beforebegin', sponsorshipBadge);
                 });
             });
+        } else {
+            return Promise.resolve();
         }
     }
 

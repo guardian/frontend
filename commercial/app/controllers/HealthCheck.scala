@@ -1,13 +1,12 @@
 package controllers
 
-import conf.{AnyGoodCachedHealthCheck, ExpiringSingleHealthCheck}
+import conf.{AnyGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 
 class HealthCheck extends AnyGoodCachedHealthCheck(
   9005,
-  ExpiringSingleHealthCheck("/commercial/soulmates/mixed.json"),
-  ExpiringSingleHealthCheck("/commercial/masterclasses.json"),
-  ExpiringSingleHealthCheck("/commercial/travel/offers.json"),
-  ExpiringSingleHealthCheck("/commercial/jobs.json"),
-  ExpiringSingleHealthCheck("/commercial/money/bestbuys.json"),
-  ExpiringSingleHealthCheck("/commercial/books/books.json")
+  NeverExpiresSingleHealthCheck("/commercial/soulmates/mixed.json"),
+  NeverExpiresSingleHealthCheck("/commercial/masterclasses.json"),
+  NeverExpiresSingleHealthCheck("/commercial/travel/offers.json"),
+  NeverExpiresSingleHealthCheck("/commercial/jobs.json"),
+  NeverExpiresSingleHealthCheck("/commercial/books/books.json")
 )

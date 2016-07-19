@@ -146,7 +146,7 @@
                                 return 'adverts--tone-' + tone;
                             });
                     bean.on($palette[0], 'change', function () {
-                        $('#multiple1 > .adverts, #manual1 > .adverts, .commercial--v-high')
+                        $('#multiple1 > .adverts, #manual1 > .adverts, .ad-slot--manual-inline > .adverts')
                             .removeClass(toneClasses.join(' '))
                             .addClass('adverts--tone-' + $palette.val());
                     });
@@ -231,7 +231,8 @@
                     .then(function(
                         Template
                     ) {
-                        new Template(document.querySelector('.ad-slot--manual-inline'), {
+                        var adSlot = document.querySelector('.ad-slot--manual-inline');
+                        new Template(adSlot, {
                             creative: 'manual-inline',
                             Toneclass: 'commercial--tone-brand',
                             component_title: 'The Guardian Bookshop',
@@ -243,7 +244,9 @@
                             offer_meta: 'Meta',
                             offer_button: 'yes',
                             clickMacro: '%%CLICK_URL_ESC%%'
-                        }).create();
+                        }).create().then(function () {
+                            adSlot.classList.add('ad-slot--rendered');
+                        });
                       });
                 });
             loadCommercial(function () {
@@ -251,12 +254,15 @@
                     .then(function(
                         CommercialComponent
                     ) {
-                        new CommercialComponent(document.querySelector('.ad-slot--inline-book'), {
+                        var adSlot = document.querySelector('.ad-slot--inline-book');
+                        new CommercialComponent(adSlot, {
                             type: 'book',
-                            isbn: '9780852655634',
+                            isbn: '9781786070470',
                             clickMacro: '%%CLICK_URL_ESC%%',
                             omnitureId: '[%OmnitureID%]'
-                        }).create();
+                        }).create().then(function () {
+                            adSlot.classList.add('ad-slot--rendered');
+                        });
                     });
                 });
             loadCommercial(function () {
@@ -264,12 +270,15 @@
                     .then(function(
                         CommercialComponent
                     ) {
-                        new CommercialComponent(document.querySelector('.ad-slot--inline-event'), {
+                        var adSlot = document.querySelector('.ad-slot--inline-event')
+                        new CommercialComponent(adSlot, {
                             type: 'liveevents',
-                            id: '25574834017',
+                            id: '26078306918',
                             clickMacro: '%%CLICK_URL_ESC%%',
                             omnitureId: '[%OmnitureID%]'
-                        }).create();
+                        }).create().then(function () {
+                            adSlot.classList.add('ad-slot--rendered');
+                        });
                     });
                 });
         </script>
@@ -434,31 +443,6 @@
                     bean.fire(qwery('.js-merchandising-travel-layout select')[0], 'change');
                 });
         });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030647">
-                Merchandising: commercial component (best buys)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-bestbuys ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-    loadCommercial(function () {
-        require(['common/modules/commercial/creatives/commercial-component'])
-            .then(function(
-                CommercialComponent
-            ) {
-                new CommercialComponent(document.querySelector('.js-merchandising-bestbuys'), {
-                type: 'bestbuy',
-                omnitureId: '[%OmnitureID%]',
-                clickMacro: '%%CLICK_URL_ESC%%'
-            }).create();
-        });
-    });
     </script>
 
     <div class="fc-container__inner">
