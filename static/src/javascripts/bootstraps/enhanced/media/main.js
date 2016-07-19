@@ -179,7 +179,7 @@ define([
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
-        var mediaType = $(el).hasClass('gu-media--audio') ? 'audio' : 'video',
+        var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
             mediaId = $el.attr('data-media-id'),
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
