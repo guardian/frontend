@@ -1,6 +1,7 @@
 package feed
 
-import common.{LifecycleComponent, AutoRefresh}
+import app.LifecycleComponent
+import common.AutoRefresh
 import play.api.inject.ApplicationLifecycle
 import play.api.{Application, GlobalSettings}
 import services.{MostReadItem, OphanApi}

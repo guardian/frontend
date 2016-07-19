@@ -31,27 +31,17 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
-                        complete();
-                    });
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    bean.on(qwery('.hosted__container--full')[0], 'click', complete);
                 }
             },
             {
                 id: 'variant1',
                 test: function () {},
                 success: function (complete) {
-                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
-                        complete();
-                    });
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    bean.on(qwery('.hosted__container--full')[0], 'click', complete);
+                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', complete);
                     mediator.on('hosted video: autoredirect', complete);
                 }
             },
@@ -59,18 +49,10 @@ define([
                 id: 'variant2',
                 test: function () {},
                 success: function (complete) {
-                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted__container--full')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', function (){
-                        complete();
-                    });
-                    bean.on(qwery('.hosted-next-autoplay__tile')[0], 'click', function (){
-                        complete();
-                    });
+                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    bean.on(qwery('.hosted__container--full')[0], 'click', complete);
+                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', complete);
+                    bean.on(qwery('.hosted-next-autoplay__tile')[0], 'click', complete);
                     mediator.on('hosted video: autoredirect', complete);
                 }
             }

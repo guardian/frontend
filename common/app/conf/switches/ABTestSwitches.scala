@@ -4,9 +4,9 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABLiveBlogChromeNotificationsProd = Switch(
+  val ABLiveBlogChromeNotificationsProd2 = Switch(
     SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-prod",
+    "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
@@ -66,11 +66,21 @@ trait ABTestSwitches {
 
   val giraffe = Switch(
     SwitchGroup.ABTests,
-    "ab-giraffe",
+    "ab-giraffe-article",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 1),
+    exposeClientSide = true
+  )
+
+  val ABVideoCaption = Switch(
+    SwitchGroup.ABTests,
+    "ab-video-caption",
+    "Testing if increasing prominence of video caption drives plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 7, 25),
     exposeClientSide = true
   )
 }

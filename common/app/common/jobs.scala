@@ -102,5 +102,3 @@ class JobScheduler(env: Environment) extends Logging {
     scheduler.deleteJob(new JobKey(name))
   }
 }
-
-object Jobs extends JobScheduler(Environment(Play.current.path, Play.current.classloader, Play.current.mode))

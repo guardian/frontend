@@ -1,10 +1,10 @@
 package commercial
 
+import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
-import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 import metrics.MetricUploader
 
@@ -20,8 +20,8 @@ object CommercialMetrics {
 
 class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -52,8 +52,7 @@ class CommercialLifecycle(
   private val refreshJobs: List[RefreshJob] = List(
     new MasterclassTagsRefresh(jobs),
     new CountriesRefresh(jobs),
-    new IndustriesRefresh(jobs),
-    new MoneyBestBuysRefresh(jobs)
+    new IndustriesRefresh(jobs)
   )
 
   override def start(): Unit = {
@@ -148,8 +147,6 @@ class CommercialLifecycle(
       Industries.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
-
-      BestBuysAgent.refresh()
 
       for (fetcher <- FeedFetcher.all) {
         fetchFeed(fetcher)

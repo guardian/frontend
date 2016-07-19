@@ -34,7 +34,7 @@ define([
         this.expiry = '2016-07-27';
         this.author = 'George Haberis - Participation';
         this.description = 'Participation - Does "join discussion" message after poll participation increase comments';
-        this.audience = 0.1;
+        this.audience = 0.5;
         this.audienceOffset = 0.4;
         this.successMeasure = 'Control - User does not see message, Variant 1 - User sees message';
         this.audienceCriteria = 'Articles which have embeded poll';

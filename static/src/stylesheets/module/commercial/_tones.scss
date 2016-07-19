@@ -112,13 +112,6 @@
     $features-support-4
 );
 
-/* .commercial--tone-money */
-@include tone-commercial(
-    money,
-    $news-main-2,
-    $news-support-2
-);
-
 /* .commercial--tone-gardening */
 @include tone-commercial(
     gardening,

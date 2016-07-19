@@ -1,6 +1,7 @@
 package ophan
 
-import common.{AkkaAsync, Jobs, _}
+import app.LifecycleComponent
+import common._
 import org.joda.time.DateTime
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.{JsArray, JsValue}
@@ -61,8 +62,8 @@ object SurgeUtils {
 
 class SurgingContentAgentLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     jobs.deschedule("SurgingContentAgentRefreshJob")

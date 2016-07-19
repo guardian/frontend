@@ -697,9 +697,9 @@ $avatarPadding: $gs-gutter / 2;
     padding-left: $gs-baseline * 2;
     svg {
         fill: $guardian-brand;
-        height: 16px;
-        width: 16px;
-        left: 4px;
+        height: 14px;
+        width: 14px;
+        left: $gs-gutter / 2;
     }
 }
 
@@ -841,12 +841,27 @@ $comment-recommend-button-size: 19px;
     position: absolute;
     bottom: $gs-baseline;
     .discussion--closed & {
-        display: none;
+        .d-comment__action--reply,
+        .d-comment__action-separator,
+        .d-comment__action-pick {
+            display: none;
+        }
+        .d-comment__action--share {
+            margin: 0;
+        }
     }
 }
 
+.d-comment__actions:hover {
+    opacity: 1;
+}
+
+.d-comment__actions--left {
+    bottom: .5rem;
+}
+
 .d-comment__action {
-    @include fs-textSans(1);
+    @include fs-textSans(3);
     display: inline-block;
     color: $news-default;
     font-weight: bold;
@@ -856,6 +871,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--reply {
     cursor: pointer;
+    margin-right: $gs-gutter / 4;
 
     &:hover {
         text-decoration: underline;
@@ -901,6 +917,64 @@ $comment-recommend-button-size: 19px;
     .d-comment__action-separator {
         display: inline-block;
     }
+}
+
+.d-comment__action--share {
+    vertical-align: middle;
+    margin-left: $gs-gutter / 4;
+
+    &:hover {
+        .sharing-text span:nth-child(2) {
+            text-decoration: underline;
+        }
+
+        .comment-facebook-icon,
+        .comment-twitter-icon {
+            transform: scale(1);
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .comment-facebook-icon {
+            transition: all .2s ease-in-out;
+        }
+
+        .comment-twitter-icon {
+            transition: all .2s .1s ease-in-out;
+        }
+    }
+}
+
+.sharing-text {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: $gs-gutter / 4;
+}
+
+.comment-share-icon {
+    fill: $guardian-brand;
+}
+
+.comment-share-icon svg {
+    vertical-align: text-top;
+}
+
+.sharing-buttons {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.comment-facebook-icon,
+.comment-twitter-icon {
+    transform: scale(0);
+}
+
+.comment-facebook-icon {
+    transition: all .2s .1s ease-in-out;
+}
+
+.comment-twitter-icon {
+    transition: all .2s ease-in-out;
 }
 
 /* Report

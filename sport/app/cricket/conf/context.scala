@@ -1,6 +1,7 @@
 package cricket.conf
 
-import common.{JobScheduler, LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync}
 import jobs.CricketStatsJob
 import play.api.inject.ApplicationLifecycle
 
@@ -8,8 +9,8 @@ import scala.concurrent.{Future, ExecutionContext}
 
 class CricketLifecycle(
   appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
