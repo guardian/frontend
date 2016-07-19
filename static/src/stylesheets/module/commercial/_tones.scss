@@ -31,14 +31,6 @@
                 }
             }
         }
-        .commercial--multi__header {
-            .commercial__title {
-                a {
-                    color: $colour;
-                    fill: $colour;
-                }
-            }
-        }
         .button--primary {
             @include button-colour(
                 $accentColour,
