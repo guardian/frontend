@@ -871,7 +871,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--reply {
     cursor: pointer;
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4;
 
     &:hover {
         text-decoration: underline;
@@ -921,7 +921,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--share {
     vertical-align: middle;
-    margin-left: 5px;
+    margin-left: $gs-gutter / 4;
 
     &:hover {
         .sharing-text span:nth-child(2) {
@@ -948,7 +948,7 @@ $comment-recommend-button-size: 19px;
 .sharing-text {
     cursor: pointer;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4;
 }
 
 .comment-share-icon {
