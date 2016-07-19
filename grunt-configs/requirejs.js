@@ -304,7 +304,7 @@ module.exports = function (grunt, options) {
                 }
             }
         },
-        mediaAnalitics: {
+        mediaAnalytics: {
             options: {
                 name: 'bootstraps/enhanced/media/analytics',
                 out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/media/analytics.js',
