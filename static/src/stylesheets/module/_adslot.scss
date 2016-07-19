@@ -649,15 +649,15 @@
     padding-bottom: 0;
 }
 
+.ad-slot--fabric-v1 {
+    min-height: 250px;
+}
+
 .ad-slot--fabric-v1,
 .ad-slot--fluid250 {
     width: auto;
     margin-left: 0;
     padding: 0;
-
-    @include mq(desktop) {
-        min-height: 250px;
-    }
 
     .ad-slot__label {
         display: none;
@@ -665,6 +665,10 @@
 }
 
 .ad-slot--fluid250 {
+    @include mq(desktop) {
+        min-height: 250px;
+    }
+
     &.ad-slot--top-banner-ad-mobile {
         padding-bottom: $gs-baseline*1.5;
     }
