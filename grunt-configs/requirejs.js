@@ -313,7 +313,15 @@ module.exports = function (grunt, options) {
                     'inlineSvg'
                 ],
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                shim: {
+                    'videojs-ima': {
+                        deps: ['videojs-ads-lib']
+                    },
+                    'videojs-ads-lib': {
+                        deps: ['bootstraps/enhanced/media/videojs-global']
+                    }
+                }
             }
         },
         accessibility: {
