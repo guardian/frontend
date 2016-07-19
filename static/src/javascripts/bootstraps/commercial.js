@@ -60,7 +60,6 @@ define([
         ['cm-load', dfpLoad],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-sponsorships', sponsorships.init],
-
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
