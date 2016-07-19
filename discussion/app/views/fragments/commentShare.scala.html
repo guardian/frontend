@@ -3,9 +3,9 @@
 @import org.jsoup.safety.Whitelist
 @import org.apache.commons.lang.StringEscapeUtils
 
-<div class="sharing-component d-comment__action">
+<div class="d-comment__action d-comment__action--share">
 
-    <div class="sharing-text">@fragments.inlineSvg("share", "icon", List("comment-share-icon")) Share</div>
+    <div class="sharing-text">@fragments.inlineSvg("share", "icon", List("comment-share-icon")) <span>Share</span></div>
 
     <div class="sharing-buttons" data-link-name="comment social">
     @defining(s"${comment.discussion.webUrl}") { permalink =>
