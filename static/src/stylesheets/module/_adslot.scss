@@ -71,14 +71,13 @@
 
 .sticky-top-banner-ad {
     overflow: hidden;
-    z-index: 1022;
+    z-index: $zindex-popover;
     width: 100%;
     position: relative;
 }
 
 .ad-slot--top-banner-ad {
     text-align: center;
-    z-index: $zindex-popover;
 
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
