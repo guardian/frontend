@@ -1,10 +1,9 @@
 define([
     'videojs',
-    'bootstraps/enhanced/media/videojsads',
-    'bootstraps/enhanced/media/videojsima',
-    'js!videojspersistvolume',
-    'js!videojsplaylist',
-    'js!videojsembed'
+    'videojs-ima',
+    'videojs-embed',
+    'videojs-persistvolume',
+    'videojs-playlist'
 ], function (video) {
     return video;
 });

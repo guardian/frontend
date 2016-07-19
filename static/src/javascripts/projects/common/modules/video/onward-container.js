@@ -36,7 +36,7 @@ define([
         var paginatedEndpoint = endpoint + (page ? '?page=' + page : '');
         component.manipulationType = manipulationType;
         component.endpoint = paginatedEndpoint;
-
+        console.log(el)
         el.innerHTML = ''; // we have no replace in component
 
         return component.fetch(el, 'html');
