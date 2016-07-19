@@ -9,7 +9,6 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/lazyload',
-    'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/objects/pick',
@@ -23,7 +22,6 @@ define([
     config,
     mediator,
     lazyload,
-    Tabs,
     Toggles,
     isArray,
     pick,
@@ -32,7 +30,6 @@ define([
     reduce
 ) {
     var urlBuilders = {
-        bestbuy:        defaultUrlBuilder('money/bestbuys'),
         soulmates:      defaultUrlBuilder('soulmates/mixed'),
         soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
@@ -196,9 +193,6 @@ define([
     };
 
     CommercialComponent.prototype.postLoadEvents = {
-        bestbuy: function (el) {
-            new Tabs().init(el);
-        },
         capi: createToggle,
         capiSingle: createToggle,
         paidforCard: function (el) {
