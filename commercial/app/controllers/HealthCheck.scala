@@ -8,6 +8,5 @@ class HealthCheck extends AnyGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/commercial/masterclasses.json"),
   NeverExpiresSingleHealthCheck("/commercial/travel/offers.json"),
   NeverExpiresSingleHealthCheck("/commercial/jobs.json"),
-  NeverExpiresSingleHealthCheck("/commercial/money/bestbuys.json"),
   NeverExpiresSingleHealthCheck("/commercial/books/books.json")
 )
