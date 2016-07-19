@@ -64,14 +64,13 @@ window.curlConfig = {
             svgs:                           '../inline-svgs',
 
             // video
-            'videojs-ima':                              'bootstraps/enhanced/media/videojs-ima.js',
-            'videojs':                                  'components/video.js/video.js',
-            'videojs-ima-lib':                          'components/videojs-ima/videojs.ima.js',
-            'videojs-ads-lib':                          'components/videojs-contrib-ads/videojs.ads.js',
-
-            'videojs-embed':                            'components/videojs-embed/videojs.embed.js',
-            'videojs-persistvolume':                    'components/videojs-persistvolume/videojs.persistvolume.js',
-            'videojs-playlist':                         'components/videojs-playlist-audio/videojs.playlist.js',
+            'videojs-ima':                  'bootstraps/enhanced/media/videojs-ima.js',
+            'videojs':                      'components/video.js/video.js',
+            'videojs-ima-lib':              'components/videojs-ima/videojs.ima.js',
+            'videojs-ads-lib':              'components/videojs-contrib-ads/videojs.ads.js',
+            'videojs-embed':                'components/videojs-embed/videojs.embed.js',
+            'videojs-persistvolume':        'components/videojs-persistvolume/videojs.persistvolume.js',
+            'videojs-playlist':             'components/videojs-playlist-audio/videojs.playlist.js',
 
             // These paths are for the pre-fetch-modules.js performance-optimisation module, used by boot.js.
             // The resolved paths are loaded through pre-fetch-modules XHR, not curl, so they don't inherit the standard baseUrl.
