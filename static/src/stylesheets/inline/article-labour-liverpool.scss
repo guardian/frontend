@@ -2,26 +2,15 @@
 @import '../_mixins';
 $labour-liverpool-header-element-opacity: .85;
 
-// make bottom left corner of headline flush with the bottom of the main media image
-$labour-liverpool-headline-top-supports-cover-mobile: 319px;
-$labour-liverpool-headline-top-supports-cover-tablet: 314px;
-$labour-liverpool-headline-top: 250px; // IE / Edge
-
 .immersive-header-container--labour-liverpool {
     min-height: gs-height(8);
 
     .immersive-main-media__media {
         position: absolute;
-        width: 100%;
-        // Remove inline spacing
-        display: block;
         height: gs-height(8);
 
         @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
-            object-fit: cover;
-            top: 0;
             height: 100%;
-            width: 100%;
         }
     }
 
@@ -48,10 +37,6 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
     float: left;
     width: 140px;
     margin: 0 $gs-gutter/-2;
-
-    @include mq($from: mobile, $until: tablet) {
-        display: none;
-    }
 }
 
 .labour-liverpool-quotes__svg {
@@ -65,7 +50,8 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
 .labour-liverpool-headline {
     position: relative;
     width: 100%;
-    top: $labour-liverpool-headline-top;
+    // make bottom left corner of headline flush with the bottom of the main media image
+    top: 250px; // IE / Edge
 
     .gs-container {
         @include mq(mobile) {
@@ -74,10 +60,10 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
     }
 
     @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
-        top: $labour-liverpool-headline-top-supports-cover-mobile;
+        top: 319px;
 
         @include mq($from: tablet) {
-            top: $labour-liverpool-headline-top-supports-cover-tablet;
+            top: 314px;
         }
     }
 }

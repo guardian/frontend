@@ -24,7 +24,7 @@
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
                             @if(article.content.tags.isLabourLiverpoolSeries) {
-                                <img class="labour-liverpool-cutout" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
+                                <img class="labour-liverpool-cutout hide-on-mobile" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
                                 @fragments.inlineSvg("quote", "icon", List("labour-liverpool-quotes"))
                             }
                             @BodyCleaner(article, article.fields.body, amp = amp)
