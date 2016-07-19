@@ -125,11 +125,11 @@ define([
     }
 
     function addTitleBar() {
-        var videoTitleElement = document.querySelector('[data-link-name="Video caption link"]');
+        var videoTitleElement = document.querySelector('.caption--main a');
 
         var data = {
             webTitle: videoTitleElement.textContent,
-            pageId: config.page.pageId,
+            pageId: videoTitleElement.getAttribute('href'),
             icon: null
         };
         $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
