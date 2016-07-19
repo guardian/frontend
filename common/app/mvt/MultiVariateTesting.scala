@@ -49,6 +49,18 @@ object ABHeadlinesTestControl extends TestDefinition(
   }
 }
 
+object CommercialClientLoggingVariant extends TestDefinition(
+  "commercial-client-logging",
+  "",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  new LocalDate(2016, 9, 1)
+  ) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ccl").contains("ccl-A")
+  }
+}
+
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 

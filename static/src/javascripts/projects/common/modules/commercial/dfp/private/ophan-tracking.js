@@ -1,8 +1,9 @@
 define([
     'raven',
+    'common/utils/ajax-promise',
     'common/utils/user-timing',
     'common/modules/commercial/dfp/private/get-advert-by-id'
-], function (raven, userTiming, getAdvertById) {
+], function (raven, ajaxPromise, userTiming, getAdvertById) {
 
     var performanceLog = {
             modules: [],
@@ -96,6 +97,8 @@ define([
                             adServer: 'DFP'
                         }]
                     });
+
+                    reportTrackingData();
                 });
             }));
 
@@ -158,12 +161,23 @@ define([
         return baseline.time;
     }
 
+    function reportTrackingData() {
+        return ajaxPromise({
+            url: '/commercial-report',
+            type: 'json',
+            method: 'post',
+            crossOrigin: true,
+            data: performanceLog
+        });
+    }
+
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
         updateAdvertMetric : updateAdvertMetric,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
-        secondaryBaseline: secondaryBaseline
+        secondaryBaseline: secondaryBaseline,
+        reportTrackingData: reportTrackingData
     };
 });
