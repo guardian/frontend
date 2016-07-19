@@ -28,9 +28,8 @@ define([
      * in the batch
      *
      * @param  {Array} batch
-     * @param  {Number} state.scrollY
      */
-    function getHeightOfAllContainers (batch, state) {
+    function getHeightOfAllContainers (batch) {
         return fastdom.read(function() {
             // Add all the heights of the passed in batch
             // removing the current height
@@ -55,10 +54,10 @@ define([
                 // so that if an element is equal to the scrollY position then this will return 0
                 return topPos + parentEl.offsetTop + parentEl.clientTop;
             }, 0);
-            
+
             // If the distance of the element from the top of the screen minus the height of the
-            // element we are measuring is less than 0 then we know that it will push the page down
-            // when loading in
+            // element we are measuring is less than the scroll position then we know that it will
+            // push the page down when loading in
             return el.container.offsetHeight > -1 && (elTopPos - el.container.offsetHeight < window.scrollY);
         }
 
@@ -131,14 +130,14 @@ define([
                 return batch;
             })
             .then(function(){
-                getHeightOfAllContainers(batch, state);
+                getHeightOfAllContainers(batch);
             })
             .then(function(heightsBeforeIns) {
                 batchHeightsBeforeInsert = heightsBeforeIns || 0;
                 return insertElements(batch);
             })
             .then(function(){
-                return getHeightOfAllContainers(batch, state).then(function(newHeights) {
+                return getHeightOfAllContainers(batch).then(function(newHeights) {
                     return assign(state, {
                         newHeight: newHeights - batchHeightsBeforeInsert
                     });
