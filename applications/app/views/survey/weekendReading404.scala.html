@@ -1,0 +1,67 @@
+@(surveyPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+@import conf.Configuration.Survey.formStackAccountName
+
+
+@surveyMain(surveyPage) {
+    <div class="illustration-container">
+        <div class="content">
+            <div class="gs-container">
+                <div class="content__main-column my-digest-illustration-wrapper">
+                @fragments.inlineSvg("my-digest", "illustration")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content email-signup-main">
+
+        <div class="gs-container">
+
+            <div class="content__main-column main__column--horizontal-bar">
+                <header class="weekend-read-header">
+                    <h1 class="weekend-read-header__heading">Weekend Reading</h1>
+
+                    <p class="weekend-read-header__text">Every Saturday, we'll email you our editors' picks of the best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.</p>
+
+                    <p class="weekend-read-header__text">We haven't launched this digest yet, but if you sign up we'll send it to you as soon as it's out.</p>
+                </header>
+
+                <div class="email-signup">
+                    <script type="text/javascript" src="https://guardiannewsampampmedia.formstack.com/forms/js.php/weekend_reading_inline_email?no_style_strict=1"></script><noscript><a href="https://guardiannewsampampmedia.formstack.com/forms/weekend_reading_inline_email" title="Online Form">Click here to sign up to Weekend Reading</a></noscript>
+
+                    <div class="email-signup__aside-text">
+                        <span class="email-signup__aside-text__frequency">
+                            @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                            Every Sat
+                        </span>
+                        <p>No spam ever. Unsubscribe in one click.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="gs-container">
+
+            <div class="content__main-column">
+
+                <div class="weekend-read-sample">
+                    <button class="weekend-read-sample__button">
+                        @fragments.inlineSvg("plus", "icon")
+                        View a sample
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+}
