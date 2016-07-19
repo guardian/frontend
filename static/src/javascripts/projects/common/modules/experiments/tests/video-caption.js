@@ -20,7 +20,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'Video starts.';
         this.audienceCriteria = 'Users viewing an article with a video embedded.';
-        this.dataLinkNames = 'video caption play';
+        this.dataLinkNames = '';
         this.idealOutcome = 'Video starts are increased';
         this.canRun = function() {
             return config.page.contentType === 'Article' &&  qwery('[data-component="main video"]').length > 0;
