@@ -99,18 +99,14 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
     }
 }
 
-.labour-liverpool-headline__background, .labour-liverpool-headline__background-mobile {
+.labour-liverpool-headline__background {
     position: absolute;
-    height: 130px;
+    width: 100%;
 }
 
-.inline-labour-liverpool-header-bg__svg, .inline-labour-liverpool-header-bg-mobile__svg {
+.inline-labour-liverpool-header-bg__svg {
     fill: $news-main-2;
     opacity: $labour-liverpool-header-element-opacity;
-    height: auto;
-}
-
-.inline-labour-liverpool-header-bg-mobile__svg {
     width: 100%;
 }
 
@@ -154,15 +150,14 @@ $labour-liverpool-headline-top: 250px; // IE / Edge
     color: #ffffff;
 }
 
-.content--labour-liverpool-article__headline-background, .content--labour-liverpool-article__headline-background-mobile {
+.content--labour-liverpool-article__headline-background {
     position: absolute;
     width: 100%;
 }
 
-.inline-labour-liverpool-headline-bg__svg, .inline-labour-liverpool-headline-bg-mobile__svg {
+.inline-labour-liverpool-headline-bg__svg {
     fill: $news-main-2;
     opacity: $labour-liverpool-header-element-opacity;
-    height: auto;
     width: 100%;
 }
 
