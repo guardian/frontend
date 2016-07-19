@@ -132,7 +132,7 @@ define([
             pageId: config.page.pageId,
             icon: null
         };
-        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
         removeCaptionLink();
     }
 
