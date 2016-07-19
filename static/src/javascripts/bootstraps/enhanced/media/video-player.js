@@ -1,10 +1,9 @@
 define([
     'videojs',
-    'videojsads',
-    'videojsima',
+    'videojs-ima',
+    'videojs-embed',
     'videojs-persistvolume',
-    'videojs-playlist',
-    'videojs-embed'
+    'videojs-playlist'
 ], function (video) {
     return video;
 });

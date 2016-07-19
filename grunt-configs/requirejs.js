@@ -22,12 +22,15 @@ module.exports = function (grunt, options) {
                 reqwest:              'components/reqwest/reqwest',
                 stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
-                videojs:              'components/video.js/video',
-                videojsads:           'components/videojs-contrib-ads/videojs.ads',
-                videojsembed:         'components/videojs-embed/videojs.embed',
-                videojsima:           'components/videojs-ima/videojs.ima',
-                videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
+
+                // video
+                videojs:                 'components/video.js/video',
+                'videojs-embed':         'components/videojs-embed/videojs.embed',
+                'videojs-ima':           'components/videojs-ima/videojs.ima',
+                'videojs-ads-lib':       'components/videojs-contrib-ads/videojs.ads',
+                'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
+                'videojs-playlist':      'components/videojs-playlist-audio/videojs.playlist',
+
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
@@ -292,10 +295,10 @@ module.exports = function (grunt, options) {
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
                 shim: {
-                    videojsima: {
-                        deps: ['videojsads']
+                    'videojs-ima': {
+                        deps: ['videojs-ads-lib']
                     },
-                    videojsads: {
+                    'videojs-ads-lib': {
                         deps: ['bootstraps/enhanced/media/videojs-global']
                     }
                 }

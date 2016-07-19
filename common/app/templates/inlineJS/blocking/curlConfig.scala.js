@@ -5,6 +5,7 @@
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
+    @* We need this as a dependecy for the ima and ads plugins *@
     @if(!Configuration.assets.useHashedBundles){ preloads: ['videojs-global'], }
     paths: {
         @if(Configuration.assets.useHashedBundles) {
@@ -63,7 +64,6 @@ window.curlConfig = {
             svgs:                           '../inline-svgs',
 
             // video
-            'bootstraps/enhanced/media/video-player':   'bootstraps/enhanced/media/video-player-dev.js',
             'videojs-global':                           'bootstraps/enhanced/media/videojs-global.js',
             'videojs-ima':                              'bootstraps/enhanced/media/videojs-ima.js',
             'videojs':                                  'components/video.js/video.js',
