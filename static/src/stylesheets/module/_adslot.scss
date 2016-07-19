@@ -71,14 +71,13 @@
 
 .sticky-top-banner-ad {
     overflow: hidden;
-    z-index: 1022;
+    z-index: $zindex-popover;
     width: 100%;
     position: relative;
 }
 
 .ad-slot--top-banner-ad {
     text-align: center;
-    z-index: $zindex-popover;
 
     @include mq(wide) {
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
@@ -113,7 +112,7 @@
 }
 
 .ad-slot--top-banner-ad-mobile {
-    min-height: 250px;
+    min-height: 100px;
     padding: $gs-baseline 0;
 
     @include mq(tablet) {
@@ -136,6 +135,35 @@
      */
     &.ad-slot--h250 {
         height: 250px;
+    }
+
+    &.ad-slot--fluid {
+        > .ad-slot__label {
+            box-sizing: content-box;
+            // Copying stuff from _mixins.scss because I don't want to
+            // use @extend and no, I am not modifying the markup
+            margin-left: $gs-gutter / 2;
+            margin-right: $gs-gutter / 2;
+
+            @include mq(mobileLandscape) {
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+            }
+            @include mq(containerWidestMobile) {
+                margin-left: auto;
+                margin-right: auto;
+                width: $mobile-max-container-width;
+            }
+            @include mq(tablet) {
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+            }
+            @each $breakpoint, $container-width in $breakpoints {
+                @include mq($breakpoint) {
+                    width: $container-width;
+                }
+            }
+        }
     }
 
     .ad-slot__label {
@@ -616,11 +644,17 @@
  */
 .ad-slot--fluid {
     width: auto;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.ad-slot--fabric-v1 {
+    min-height: 250px;
 }
 
 .ad-slot--fabric-v1,
 .ad-slot--fluid250 {
-    min-height: 250px;
     width: auto;
     margin-left: 0;
     padding: 0;
@@ -631,6 +665,10 @@
 }
 
 .ad-slot--fluid250 {
+    @include mq(desktop) {
+        min-height: 250px;
+    }
+
     &.ad-slot--top-banner-ad-mobile {
         padding-bottom: $gs-baseline*1.5;
     }
