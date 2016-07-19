@@ -12,8 +12,10 @@ import org.mockito.{Matchers, ArgumentCaptor}
 import org.scalatest.{DoNotDiscover, WordSpec, ShouldMatchers, OptionValues}
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
+import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
 import play.api.test.Helpers._
+import play.filters.csrf.{CSRFCheck, CSRFConfig, CSRFAddToken}
 import services._
 import test._
 import scala.concurrent.Future
@@ -21,8 +23,9 @@ import scala.concurrent.Future
 //TODO test form validation and population of form fields.
 @DoNotDiscover class EditProfileControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with OptionValues with ConfiguredServer {
 
-  lazy val csrfAddToken = app.injector.instanceOf[play.filters.csrf.CSRFAddToken]
-  lazy val csrfCheck = app.injector.instanceOf[play.filters.csrf.CSRFCheck]
+  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
+  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
+  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   trait EditProfileFixture {
 

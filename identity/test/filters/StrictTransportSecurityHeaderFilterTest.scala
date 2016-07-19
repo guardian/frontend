@@ -1,17 +1,17 @@
 package filters
 
 import akka.stream.Materializer
-import org.scalatest.{Matchers, FunSuite}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatest.{DoNotDiscover, Matchers, FunSuite}
 import play.api.mvc.{Result, RequestHeader}
 import play.api.test.FakeRequest
 import play.api.mvc.Results._
+import test.ConfiguredTestSuite
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
-class StrictTransportSecurityHeaderFilterTest extends FunSuite with Matchers with OneAppPerSuite {
-  implicit val mat: Materializer = app.materializer
+@DoNotDiscover class StrictTransportSecurityHeaderFilterTest extends FunSuite with Matchers with ConfiguredTestSuite {
+  implicit lazy val mat: Materializer = app.materializer
 
   test("filter should add the strict-transport-security header") {
     val request = FakeRequest()
