@@ -13,7 +13,9 @@ define([
 ) {
 
     function addContentEvents(el) {
-        var mediaType = el.tagName.toLowerCase();
+        // TODO: We need a better check here.
+        var mediaType = $(el).hasClass('gu-media--audio') ? 'audio' : 'video';
+
         // TODO: fastdom
         var mediaId = el.getAttribute('data-media-id');
 
