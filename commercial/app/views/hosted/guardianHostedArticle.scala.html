@@ -1,112 +1,81 @@
 @import common.commercial.hosted.HostedArticlePage
 @import views.html.hosted.guardianHostedHeader
 @(page: HostedArticlePage)(implicit request: RequestHeader)
+@import java.net.URLEncoder
 
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
-        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage tonal tonal--tone-feature" role="main">
+    <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
+        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase">
                 <img src="@{page.mainPicture}" alt="@{page.campaign.owner}">
-            </div>
-            <div class="content__main tonal__main tonal__main--tone-feature">
+            </div><!--End of top banner !-->
+            <div class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
-                            <div class="meta__extras">
-                                <div class="meta__social" data-component="share">
-                                    <ul class="social social--top u-unstyled u-cf" data-component="social">
-                                        <li class="social__item social__item--facebook" data-link-name="facebook">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="https://www.facebook.com/dialog/share?app_id=180444840287&amp;href=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_fb" target="_blank" title="Facebook">
-                                                <span class="inline-icon__fallback button share-modal__item share-modal__item--facebook">Share on Facebook</span>
-                                                <span class="inline-share-facebook inline-icon rounded-icon social-icon social-icon--facebook">
-                                                    <svg width="32" height="32" viewBox="-2 -2 32 32" class="rounded-icon__svg social-icon__svg social-icon--facebook__svg inline-share-facebook__svg inline-icon__svg">
-                                                        <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--twitter" data-link-name="twitter">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="https://twitter.com/intent/tweet?text=A%20Strong%20Exit%2C%20a%20new%20play%20by%20James%20Graham&amp;url=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_tw" target="_blank" title="Twitter">
-                                                <span class="inline-icon__fallback button share-modal__item share-modal__item--twitter">Share on Twitter</span>
-                                                <span class="inline-share-twitter inline-icon rounded-icon social-icon social-icon--twitter">
-                                                    <svg width="32" height="32" viewBox="-2 -2 32 32" class="rounded-icon__svg social-icon__svg social-icon--twitter__svg inline-share-twitter__svg inline-icon__svg">
-                                                        <path d="M21.3 10.5v.5c0 4.7-3.5 10.1-9.9 10.1-2 0-3.8-.6-5.3-1.6.3 0 .6.1.8.1 1.6 0 3.1-.6 4.3-1.5-1.5 0-2.8-1-3.3-2.4.2 0 .4.1.7.1l.9-.1c-1.6-.3-2.8-1.8-2.8-3.5.5.3 1 .4 1.6.4-.9-.6-1.6-1.7-1.6-2.9 0-.6.2-1.3.5-1.8 1.7 2.1 4.3 3.6 7.2 3.7-.1-.3-.1-.5-.1-.8 0-2 1.6-3.5 3.5-3.5 1 0 1.9.4 2.5 1.1.8-.1 1.5-.4 2.2-.8-.3.8-.8 1.5-1.5 1.9.7-.1 1.4-.3 2-.5-.4.4-1 1-1.7 1.5z"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--email" data-link-name="email">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="mailto:?subject=A%20Strong%20Exit%2C%20a%20new%20play%20by%20James%20Graham&amp;body=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_link" target="_blank" title="Email">
-                                                <span class="inline-icon__fallback button share-modal__item share-modal__item--email">Share via Email</span>
-                                                <span class="inline-share-email inline-icon rounded-icon social-icon social-icon--email">
-                                                    <svg width="32" height="32" viewBox="-2 -2 32 32" class="rounded-icon__svg social-icon__svg social-icon--email__svg inline-share-email__svg inline-icon__svg">
-                                                        <path d="M20.2 11.7l-.4-.4-5.7 2.7-5.7-2.7-.3.4 6 4.9 6.1-4.9zM21.4 7H6.5L5 9.5v9.3L6.6 20h14.9l1.5-1.2V9.5L21.4 7zm-.5 10.8H7.1V9.2h13.8v8.6z"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--linkedin" data-link-name="linkedin">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="http://www.linkedin.com/shareArticle?mini=true&amp;title=A+Strong+Exit%2C+a+new+play+by+James+Graham&amp;url=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit" target="_blank" title="LinkedIn">
-                                                <span class=" u-h ">Share on LinkedIn</span>
-                                                <span class="inline-share-linkedin inline-icon rounded-icon social-icon social-icon--linkedin">
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" class="rounded-icon__svg social-icon__svg social-icon--linkedin__svg inline-share-linkedin__svg inline-icon__svg">
-                                                        <path d="M10.576 7.985c.865 0 1.568.703 1.568 1.568 0 .866-.703 1.57-1.568 1.57-.867 0-1.568-.704-1.568-1.57 0-.865.7-1.568 1.568-1.568zm-1.353 4.327h2.706v8.704H9.222v-8.704zm4.403 0h2.595v1.19h.038c.36-.685 1.244-1.407 2.56-1.407 2.737 0 3.243 1.803 3.243 4.147v4.774h-2.7v-4.232c0-1.01-.02-2.308-1.407-2.308-1.408 0-1.623 1.1-1.623 2.235v4.306h-2.704v-8.704"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--gplus" data-link-name="gplus">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="https://plus.google.com/share?url=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_gp&amp;amp;hl=en-GB&amp;amp;wwc=1" target="_blank" title="Google plus">
-                                                <span class=" u-h ">Share on Google+</span>
-                                                <span class="inline-share-gplus inline-icon rounded-icon social-icon social-icon--gplus">
-                                                    <svg width="32" height="32" viewBox="4 -4 32 32" class="rounded-icon__svg social-icon__svg social-icon--gplus__svg inline-share-gplus__svg inline-icon__svg">
-                                                        <path d="M8.8 12c-.1 2.9 2 5.7 4.7 6.6 2.6.9 5.8.2 7.5-2 1.3-1.6 1.6-3.6 1.4-5.6h-6.7v2.4h4c-.3 1.2-1.1 2.2-2.3 2.7-2.3 1-5.1-.3-5.8-2.7-.9-2.3.5-5 2.9-5.7 1.4-.5 2.9.1 4.1.8l1.8-1.8c-1.4-1.2-3.2-1.9-5-1.7-3.6.1-6.8 3.4-6.6 7zm18-3v2h-2v2h2v2h2v-2h2v-2h-2V9h-2z"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--whatsapp" data-link-name="whatsapp">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="whatsapp://send?text=%22A%20Strong%20Exit%2C%20a%20new%20play%20by%20James%20Graham%22%20https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_wa" target="_blank" title="WhatsApp">
-                                                <span class=" u-h ">Share on WhatsApp</span>
-                                                <span class="inline-share-whatsapp inline-icon rounded-icon social-icon social-icon--whatsapp">
-                                                    <svg width="30" height="30" viewBox="0 0 30 30" class="rounded-icon__svg social-icon__svg social-icon--whatsapp__svg inline-share-whatsapp__svg inline-icon__svg">
-                                                        <path d="M22.09 7.87c-1.88-1.88-4.38-2.92-7.05-2.92-5.49 0-9.96 4.47-9.96 9.96 0 1.75.46 3.47 1.33 4.98L5 25.04l5.28-1.38c1.45.79 3.09 1.21 4.76 1.21 5.49 0 9.96-4.47 9.96-9.96 0-2.65-1.03-5.15-2.91-7.04m-7.05 15.32c-1.49 0-2.95-.4-4.22-1.15l-.3-.18-3.13.82.84-3.05-.2-.31C7.2 18 6.76 16.47 6.77 14.91c0-4.56 3.71-8.27 8.28-8.27 2.21 0 4.29.86 5.85 2.43 1.56 1.56 2.42 3.64 2.42 5.85 0 4.56-3.72 8.27-8.28 8.27m4.54-6.2c-.25-.12-1.47-.73-1.7-.81s-.39-.12-.56.12c-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.66.31-.22.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.57.12.17 1.75 2.68 4.25 3.76.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18s.21-1.08.14-1.18c-.06-.08-.23-.14-.48-.27"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="social__item social__item--messenger" data-link-name="messenger">
-                                            <a class="social__action social-icon-wrapper" data-link-name="social top" href="fb-messenger://share?link=https%3A%2F%2Fwww.theguardian.com%2Fstage%2F2016%2Fjul%2F18%2Fa-strong-exit-a-new-play-by-james-graham-brexit%3FCMP%3Dshare_btn_me&amp;app_id=180444840287" target="_blank" title="Messenger">
-                                                <span class=" u-h ">Share on Messenger</span>
-                                                <span class="inline-share-messenger inline-icon rounded-icon social-icon social-icon--messenger">
-                                                    <svg width="66" height="66" viewBox="-12 -12 90 90" class="rounded-icon__svg social-icon__svg social-icon--messenger__svg inline-share-messenger__svg inline-icon__svg">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFF" d="M33 61.1c-3.6 0-7.1-.5-10.4-1.5L10.1 66V52.5C3.9 47 0 39.2 0 30.6 0 13.7 14.8 0 33 0s33 13.7 33 30.6c0 16.8-14.8 30.5-33 30.5zM36.5 41L28 32.2l-16.4 9 18-18.9 8.5 8.8 16.4-9-18 18.9z"></path>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <div class="meta__extras" data-component="share">
+                                <ul class="social social--top u-unstyled u-cf" data-component="social">
+                                    <li class="social__item social__item--facebook" data-link-name="facebook">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="facebook-social-share-1"
+                                        href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="facebook">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+                                            @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--twitter" data-link-name="twitter">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="twitter-social-share-1"
+                                        href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterTxt, "utf-8")}&url=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="twitter">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+                                            @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--email" data-link-name="email">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="email-social-share-1"
+                                        href="mailto:?subject=@{page.emailTxt}&body=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="email">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+                                            @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--pinterest" data-link-name="pinterest">
+                                        <a  class="social__action social-icon-wrapper"
+                                        data-link-name="Pinterest-social-share-1"
+                                        href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.ctaBanner}"
+                                        target="_blank"
+                                        title="pinterest">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                                            @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!--End of social media icons !-->
                         </div>
 
                         <div class="content__article-body from-content-api js-article__body">
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus sit amet urna quis pulvinar. Nulla varius convallis dolor. Aliquam ac efficitur orci, eu laoreet nibh. Suspendisse id nisi ac arcu sodales scelerisque. Curabitur arcu nisi, consectetur et ex eu, ullamcorper mattis ipsum. Aenean sed sem sit amet erat vulputate porta. Sed porttitor purus a cursus finibus. Donec bibendum leo id suscipit fermentum. Nunc ac dui et lectus fringilla sodales. Maecenas finibus justo eget ante consectetur lacinia ut nec ligula. Vestibulum ac dictum justo, fringilla varius risus.
-
+                                <span class="drop-cap">L</span> orem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus sit amet urna quis pulvinar. Nulla varius convallis dolor. Aliquam ac efficitur orci, eu laoreet nibh. Suspendisse id nisi ac arcu sodales scelerisque. Curabitur arcu nisi, consectetur et ex eu, ullamcorper mattis ipsum. Aenean sed sem sit amet erat vulputate porta. Sed porttitor purus a cursus finibus. Donec bibendum leo id suscipit fermentum. Nunc ac dui et lectus fringilla sodales. Maecenas finibus justo eget ante consectetur lacinia ut nec ligula. Vestibulum ac dictum justo, fringilla varius risus.
+                            </p>
                                 Donec justo lectus, finibus vitae imperdiet nec, mattis sit amet mauris. In dui diam, facilisis ut tempor vitae, ultrices nec velit. Vestibulum ac mauris ac nisl egestas convallis. Pellentesque at lacus sed ipsum placerat ultrices. Aenean blandit ultrices quam, eu congue massa tincidunt eu. Phasellus lobortis, enim a viverra fermentum, dui lorem lacinia ex, ut vestibulum ligula justo vitae dui. Sed consequat venenatis magna in vehicula. Proin et suscipit mi, ut laoreet nulla. Proin interdum tempus nibh, non mollis nunc. In rhoncus diam eget magna ultrices pellentesque nec elementum quam. Nam odio nulla, elementum tincidunt dui ac, ullamcorper interdum massa.
-
+                            <p>
                                 Donec finibus urna non placerat feugiat. Vivamus quis feugiat est. Maecenas pretium ornare tellus, sed tristique mauris faucibus non. In hac habitasse platea dictumst. Donec orci sapien, pretium quis efficitur nec, rutrum sed justo. Curabitur condimentum pulvinar tellus, id aliquam erat. Nunc vehicula ante at ipsum tincidunt scelerisque.
-
+                            </p>
+                            <p>
                                 Proin a luctus purus. Praesent commodo magna in pellentesque imperdiet. Integer pulvinar volutpat libero, in hendrerit massa gravida sit amet. Pellentesque elementum est quis pharetra hendrerit. Praesent a fringilla mi. Sed tincidunt magna sit amet justo viverra, in pulvinar erat mattis. Quisque quis est vitae felis consectetur congue vitae nec velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean at condimentum mi. Vivamus nec lacus leo. Aliquam justo quam, finibus et urna quis, vestibulum dictum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur egestas odio pulvinar leo sollicitudin auctor. Nam luctus neque diam, sit amet dignissim dui molestie vitae. Quisque condimentum, nunc eget sollicitudin gravida, augue ligula hendrerit dolor, vel euismod sapien purus consectetur dolor.
-
                                 Etiam lacinia felis nec felis interdum ultrices. Cras lobortis magna a pellentesque maximus. Nulla facilisis nulla non mauris volutpat mollis. Vestibulum rhoncus vel libero non rutrum. Mauris sagittis pharetra sapien id porttitor. Sed finibus diam mauris, quis venenatis magna mollis ac. Praesent non vehicula libero, rhoncus mollis sem. Proin lacinia tincidunt commodo. Sed sit amet suscipit quam. Curabitur vel est augue. Mauris malesuada sodales dignissim. Phasellus in arcu sit amet leo gravida efficitur sit amet ut tellus. Fusce dignissim justo eu velit ornare, sed elementum urna fermentum. Donec viverra sapien facilisis urna bibendum, a scelerisque ante dapibus. Vestibulum consectetur vitae dolor in blandit. Aliquam mattis sed erat non dapibus.
                             </p>
-                        </div>
+                        </div><!--End of article body !-->
                     </div>
                     <div class="content__secondary-column js-secondary-column">
-                    </div>
+                    </div><!--End of secondary column !-->
                 </div>
             </div>
         </article>

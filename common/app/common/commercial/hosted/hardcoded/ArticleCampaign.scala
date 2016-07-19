@@ -13,7 +13,7 @@ object ArticleCampaign {
     name = "Name of the campaign here",
     owner = "TODO",
     logo = HostedLogo("TODO"),
-    cssClass = "TODO"
+    cssClass = "zootropolis"
   )
 
   val cta = HostedCallToAction(
@@ -34,7 +34,9 @@ object ArticleCampaign {
     facebookImageUrl = "TODO",
     cta,
     ctaBanner = Static("images/commercial/leffe_banner.png"),
-    mainPicture = Static("images/commercial/leffe_banner.png")
+    mainPicture = Static("images/commercial/leffe_banner.png"),
+    twitterTxt = "TODO  #ad: ",
+    emailTxt = "TODO"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

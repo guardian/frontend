@@ -1,0 +1,25 @@
+.hosted-article-page {
+    .content__article-body {
+        @include fs-textSans(4);
+
+        .drop-cap {
+            display: inline-block;
+            float: left;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 400%;
+            line-height: 74px;
+            width: 77px;
+            height: 77px;
+            margin-right: 14px;
+        }
+    }
+}
+
+.zootropolis {
+    .content__article-body {
+        .drop-cap {
+            background-color: $zootropolisColor;
+        }
+    }
+}
