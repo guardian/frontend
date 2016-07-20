@@ -47,7 +47,7 @@ define([
 
         beforeEach(function (done) {
             $style = $.create('<style type="text/css"></style>')
-                .html('.before{ height: 500px } ' +
+                .html('.before{ height: 1000px } ' +
                     '.after { height: 1000px } ' +
                     '.steady-container { margin: 10px 0; }')
                 .appendTo('head');
