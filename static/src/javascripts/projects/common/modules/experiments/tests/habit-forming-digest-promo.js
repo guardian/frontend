@@ -27,7 +27,7 @@ define([
         this.description = 'Show infrequent users a banner offering a curated digest';
         this.audience = 0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Find if their is demand for various Guardian digest offerings';
+        this.successMeasure = 'Find if there is demand for various Guardian digest offerings';
         this.audienceCriteria = 'Infrequent visitors, excluding first time visits';
         this.dataLinkNames = 'habit forming digest promo';
         this.idealOutcome = 'Visitors click on the CTA and demonstrate demand for the feature';

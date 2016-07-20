@@ -11,7 +11,6 @@
 
     .inline-icon {
         fill: $guardian-brand;
-
     }
 
     .u-vertical-align-middle-icon__svg {
@@ -38,6 +37,7 @@
     .site-message__actions__item {
         color: $guardian-brand;
         border-color: $guardian-brand;
+        cursor: pointer;
 
         a {
             color: $guardian-brand;
@@ -53,10 +53,16 @@
     }
 
     .site-message__close-btn {
-        border-color: #dfdfdf
+        border-color: rgba(189, 189, 189, .5);
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: rgba(189, 189, 189, 1);
+        }
     }
 
     .inline-close--small {
-        fill: #dfdfdf
+        fill: $neutral-3;
     }
 }
