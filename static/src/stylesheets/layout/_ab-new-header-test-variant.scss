@@ -14,6 +14,7 @@ $mobileMedium: 375px; // Breakpoint for our most common device sizes
     svg {
         // Removes extra spacing
         display: block;
+        height: auto;
         padding-right: ($gs-gutter / 2);
 
         // Aspect ratio: 16:3
