@@ -56,8 +56,13 @@ create_frontend_properties() {
     if [[ ! -d "$path" ]]; then
       mkdir "$path"
     fi
-
-    aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+    
+    if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
+      echo your hard disk is not encrypted!
+    else
+      aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+    fi
+ 
   fi
 }
 
