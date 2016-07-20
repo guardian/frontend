@@ -11,4 +11,12 @@ class CapiAgentTest extends FlatSpec with Matchers {
   it should "give ID of a valid short URL with campaign suffix" in {
     CapiAgent.idsFromShortUrls(Seq("p/4dy39/stw")) shouldBe Seq("p/4dy39")
   }
+
+  it should "give ID of a valid short URL with leading slash" in {
+    CapiAgent.idsFromShortUrls(Seq("/p/4dy39")) shouldBe Seq("p/4dy39")
+  }
+
+  it should "give ID of a valid short URL with leading slash and campaign suffix" in {
+    CapiAgent.idsFromShortUrls(Seq("/p/4dy39/stw")) shouldBe Seq("p/4dy39")
+  }
 }
