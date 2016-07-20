@@ -11,7 +11,6 @@ define([
     raven,
     spacefinder
 ) {
-    var domWriter = fastdom.write;
     var queue;
 
     function SpaceFiller() {
@@ -26,11 +25,13 @@ define([
      *
      * @param rules - a spacefinder ruleset
      * @param writer - function, takes a para element and injects a container for the new content synchronously. It should NOT use Fastdom.
+     * @param options - Options
+     * @param options.domWriter - Override fastdom.write as the mechanism for queueing writes
      *
      * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
      */
     SpaceFiller.prototype.fillSpace = function (rules, writer, options) {
-        var write = domWriter || options.domWriter;
+        var write = (options && options.domWriter) || fastdom.write;
         return queue.add(insertNextContent);
 
         function insertNextContent() {
