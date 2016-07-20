@@ -35,7 +35,6 @@ define([
             '<div class="after"></div>'
         ];
         var insertedElHeight = 100;
-        var containerMargins = 20;
         var callbackFunc = function (className, container) {
             return function () {
                 var insertedEl = $.create('<div class="' + className + '" style="height: ' + insertedElHeight +'px;"></div>');
@@ -90,7 +89,7 @@ define([
 
             steadyPage.insert($container[0], callbackFunc('js-inserted-container', $container)).then(function() {
                 // scrollTo should be called with the scroll position and the inserted element
-                expect(window.scrollTo).toHaveBeenCalledWith(0, prevScrollPos + insertedElHeight + containerMargins);
+                expect(window.scrollTo).toHaveBeenCalledWith(0, prevScrollPos + insertedElHeight);
 
                 // the container should be inserted
                 expect(document.getElementsByClassName('js-inserted-container').length).toBeTruthy();
@@ -132,7 +131,7 @@ define([
                 ).toBeTruthy();
 
                 // We should have called scrollTo with the previous scroll position and 3 times the container height
-                expect(window.scrollTo).toHaveBeenCalledWith(0, prevScrollPos + (insertedElHeight + containerMargins) * 3);
+                expect(window.scrollTo).toHaveBeenCalledWith(0, prevScrollPos + insertedElHeight * 3);
                 done();
             });
 

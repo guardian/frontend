@@ -115,7 +115,7 @@ define([
                 return batch;
             })
             .then(function(){
-                getHeightOfAllContainers(batch);
+                return getHeightOfAllContainers(batch);
             })
             .then(function(heightsBeforeIns) {
                 batchHeightsBeforeInsert = heightsBeforeIns || 0;
