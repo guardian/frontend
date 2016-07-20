@@ -197,6 +197,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    line-height: 1;
     // TODO: Why 3?
     z-index: 3;
 
@@ -236,8 +237,6 @@
     font-family: $f-sans-serif-text;
     font-size: 20px;
     text-transform: lowercase;
-    // TODO: Remove
-    padding-top: 10px;
     overflow: auto;
 
     will-change: transform;
@@ -254,7 +253,7 @@
 }
 
 .main-menu-container__profile-icon {
-    background-color: darken($guardian-brand, 3%);
+    background-color: $guardian-brand-dark;
     text-align: center;
     fill: $news-support-1;
     height: 23px;
@@ -274,55 +273,77 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 0;
-    padding-bottom: 16px;
+    margin-bottom: $gs-baseline;
     text-transform: lowercase;
 }
 
 .main-navigation__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
+    color: $news-support-1;
 }
 
 $navigation-horizontal-padding: 38px;
 
 .main-navigation__item__button {
-    // padding-left: $navigation-horizontal-padding;
+    position: relative;
+    padding-top: $gs-baseline / 2;
+    padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
-    padding-bottom: 6px;
+    padding-bottom: $gs-baseline * 1.5;
     font-size: 26px;
 
     &:focus {
         // Unset a:focus from user agent stylesheet
         outline: 0;
-        background-color: darken($guardian-brand, 5%);
+        //background-color: darken($guardian-brand, 5%);
     }
 
     &::-webkit-details-marker {
         display: none;
     }
 
-    // TODO: Why both?
-    .inline-icon, svg {
-        vertical-align: middle;
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        left: $gs-gutter;
+        transition: .2s ease-in-out;
+        width: 10px;
+        height: 10px;
+        border: 2px solid $news-support-2;
+        top: $gs-baseline;
     }
 
-    svg {
-        fill: hsla(0, 0%, 100%, .3);
-        margin-left: ($navigation-horizontal-padding - 15px) / 2;
-        margin-right: ($navigation-horizontal-padding - 15px) / 2 - 6px;
-        width: 15px;
-        height: auto;
+    &:before {
+        transform: rotate(-45deg);
+        transform-origin: bottom left;
+        border-top: none;
+        border-right: none;
+    }
 
-        details[open] & {
-            transform: rotate(180deg);
-        }
+    &:after {
+        transform: rotate(-45deg);
+        transform-origin: bottom left;
+        border-top: none;
+        border-right: none;
+    }
+
+    details[open] &:before {
+        top: $gs-baseline - $gs-baseline / 2;
+        left: $gs-gutter + 2px;
+        transform: rotate(225deg);
+    }
+
+    details[open] &:after {
+        top: $gs-baseline - $gs-baseline / 2;;
+        transform: rotate(45deg);
     }
 }
 
 .main-navigation__secondary {
     background-color: darken($guardian-brand, 3%);
-    color: $news-support-1;
+    color: #ffffff;
 }
 
 .navigation-border {
@@ -330,7 +351,8 @@ $navigation-horizontal-padding: 38px;
         content: '';
         display: block;
         height: 1px;
-        background: $guardian-brand-dark;
+        background: darken($guardian-brand, 3%);
+        margin-top: -1px;
         margin-left: $navigation-horizontal-padding;
     }
 }
@@ -341,8 +363,11 @@ $navigation-horizontal-padding: 38px;
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 0;
-    padding-bottom: 10px;
+    margin-bottom: $gs-baseline;
+
+    &:last-child {
+        margin-bottom: $gs-baseline * 3;
+    }
 }
 
 .navigation-group__item {
@@ -351,9 +376,10 @@ $navigation-horizontal-padding: 38px;
 
     a {
         display: block;
+        padding-top: $gs-baseline / 3;
         padding-left: $navigation-horizontal-padding;
         padding-right: $navigation-horizontal-padding;
-        padding-bottom: 6px;
+        padding-bottom: $gs-baseline;
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -361,24 +387,20 @@ $navigation-horizontal-padding: 38px;
         &:focus {
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: darken($guardian-brand, 5%);
+            background-color: $guardian-brand-dark;
         }
     }
 }
 
 .navigation-group__social-icon {
-    fill: hsla(0, 0%, 100%, .3);
+    fill: $news-support-2;
     position: absolute;
     left: 0;
+    margin-top: -8px;
 
     svg {
         width: 36px;
         height: 36px;
-    }
-
-    &.inline-instagram svg {
-        width: 17px;
-        height: 17px;
     }
 }
 
