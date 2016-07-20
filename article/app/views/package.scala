@@ -61,7 +61,7 @@ object BodyCleaner {
       ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      LabourLiverpoolVideos(article.isHeroic),
+      HeroicVideos(article.isHeroic),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)
