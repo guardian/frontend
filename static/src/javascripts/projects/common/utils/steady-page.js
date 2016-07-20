@@ -63,7 +63,9 @@ define([
             // If the distance of the element from the top of the page minus the height of the
             // element we are measuring is less than the scroll position then we know that it will
             // push the page down when loading in
-            return el.container.offsetHeight > -1 && (elTopPos - el.container.offsetHeight < window.scrollY);
+            return el.container.offsetHeight > -1 &&
+                window.scrollY > 0 &&
+                (elTopPos - el.container.offsetHeight < window.scrollY);
         }
 
         function readHeight(el) {
