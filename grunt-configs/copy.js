@@ -36,14 +36,6 @@ module.exports = function (grunt, options) {
                 dest: options.staticTargetDir + 'images'
             }]
         },
-        flash: {
-            files: [{
-                expand: true,
-                cwd: 'static/public/flash',
-                src: ['**/*.swf'],
-                dest: options.staticTargetDir + 'flash'
-            }]
-        },
         inlineCss: {
             files: [{
                 expand: true,

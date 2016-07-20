@@ -961,17 +961,6 @@ $ima-controls-height: 70px;
     color: $neutral-7;
 }
 
-/* Tech overrides
-   ========================================================================== */
-.vjs-tech-flash {
-    .vjs-poster,
-    .vjs-big-play-button,
-    .vjs-fullscreen-clickbox,
-    .vast-blocker {
-        display: none !important;
-    }
-}
-
 /* IMA Adverts
    ========================================================================== */
 #ima-ad-container {
