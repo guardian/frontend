@@ -74,17 +74,18 @@ define([
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
-
-        return steadyPage.insert($container[0], function() {
-            if (slot === 'merchandising') {
-                $(selectors[slot].widget).replaceWith($outbrain[0]);
-            }
-            $container.append(widgetHtml);
-            $outbrain.css('display', 'block');
-        }).then(function () {
-            module.tracking(widgetCodes.code || widgetCodes.image);
-            require(['js!' + outbrainUrl]);
-        });
+        if ($container.length) {
+            return steadyPage.insert($container[0], function() {
+                if (slot === 'merchandising') {
+                    $(selectors[slot].widget).replaceWith($outbrain[0]);
+                }
+                $container.append(widgetHtml);
+                $outbrain.css('display', 'block');
+            }).then(function () {
+                module.tracking(widgetCodes.code || widgetCodes.image);
+                require(['js!' + outbrainUrl]);
+            });   
+        }
     }
 
     function tracking(widgetCode) {
