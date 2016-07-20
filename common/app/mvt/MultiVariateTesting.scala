@@ -86,7 +86,9 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
     ABHeadlinesTestControl,
-    ABHeadlinesTestVariant
+    ABHeadlinesTestVariant,
+    ABNewHeaderDummyTestControl,
+    ABNewHeaderDummyTestVariant
   )
 }
 
