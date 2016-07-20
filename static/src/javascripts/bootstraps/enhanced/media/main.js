@@ -150,7 +150,7 @@ define([
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
-            $el = bonzo(el).addClass('vjs vjs-tech-html5'),
+            $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),

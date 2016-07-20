@@ -100,7 +100,7 @@ define([
         bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
             var player,
                 mouseMoveIdle,
-                $el = bonzo(el).addClass('vjs vjs-tech-html5'),
+                $el = bonzo(el).addClass('vjs'),
                 mediaId = $el.attr('data-media-id');
 
             bonzo(el).addClass('vjs');
