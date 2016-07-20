@@ -35,8 +35,8 @@ define([
     // Rubicon ads may resize asynchronously. They have a resize event we can
     // subscribe to.
 
-    var $adBanner = $('.top-banner-ad-container--above-nav');
-    var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
+    var $adBanner = $('.js-top-banner-desktop');
+    var $adBannerInner = $('.ad-slot', $adBanner);
     var $header = $('.js-header');
 
     var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
@@ -79,14 +79,17 @@ define([
         var isFluid250 = adSizes.fluid250.toString() === slotSize;
         var isFabricV1 = adSizes.fabric.toString() === slotSize;
         var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
-        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
-        // injected asynchronously, so we can't be sure when they will be in the dom
-        var fluidAdInnerHeight = 250;
-        var fluidAdPadding = 18;
-        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
         if (isFluidAd) {
-            return Promise.resolve(fluidAdHeight);
+            // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
+            // injected asynchronously, so we can't be sure when they will be in the dom
+            var fluidAdInnerHeight = 250;
+            return fastdom.read(function () {
+                var label = $adBannerInner[0].getElementsByClassName('ad-slot__label');
+                return label.length ? label[0].offsetHeight : 0;
+            }).then(function (fluidAdPadding) {
+                return fluidAdInnerHeight + fluidAdPadding;
+            });
         } else {
             var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
             // We can't calculate the height of Rubicon ads because they transition
@@ -121,8 +124,6 @@ define([
     };
 
     var render = function (els, state) {
-        els.$document.addClass('sticky-ad-banner');
-
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';
 
@@ -136,6 +137,7 @@ define([
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
+        els.$adBanner.addClass('sticky-top-banner-ad');
         els.$adBanner.css({
             'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
@@ -214,13 +216,12 @@ define([
         // Although we check as much config as possible to decide whether to run sticky-top-banner,
         // it is still entirely possible for the ad slot to be closed.
         if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
-            getInitialState().then(function (initialState) {
+            return getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 
                 setupDispatchers(store.dispatch);
 
                 var elements = {
-                    $document: $(document.body),
                     $adBanner: $adBanner,
                     $adBannerInner: $adBannerInner,
                     $header: $header,
@@ -238,6 +239,8 @@ define([
                     store.subscribe(update);
                 });
             });
+        } else {
+            return Promise.resolve();
         }
     };
 

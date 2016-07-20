@@ -7,8 +7,8 @@ define([
 ) {
     return function () {
 
-        this.id = 'LiveBlogChromeNotificationsProd';
-        this.start = '2016-06-08';
+        this.id = 'LiveBlogChromeNotificationsProd2';
+        this.start = '2016-07-15';
         this.expiry = '2016-08-31';
         this.author = 'Nathaniel Bennett';
         this.description = 'Allows users to to subscribe to live blogs on chrome - separately to internal test so we can run the internal one on prod if need be';

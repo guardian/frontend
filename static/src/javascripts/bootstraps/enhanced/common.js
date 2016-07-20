@@ -29,7 +29,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/hosted-about',
+    'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -83,7 +83,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    hostedAbout,
+    newHeaderNavigation,
     Profile,
     Search,
     history,
@@ -129,6 +129,7 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+                newHeaderNavigation();
             },
 
             showTabs: function () {
@@ -343,13 +344,8 @@ define([
 
             headlinesTestAnalytics: function () {
                 HeadlinesTestAnalytics.init();
-            },
-
-            initHostedAboutLightbox: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedAbout.init();
-                }
             }
+
         };
 
     return {
@@ -397,8 +393,7 @@ define([
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
+                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
             ]), function (fn) {
                 fn();
             });

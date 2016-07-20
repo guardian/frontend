@@ -14,6 +14,17 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // see https://github.com/guardian/frontend/pull/13446
+  val HeroicTemplateSwitch = Switch(
+    SwitchGroup.Feature,
+    "heroic-main-media",
+    "If this switch is on, Heroic template will be applied to heroic articles. This template is part of a Membership Explore test",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 29),
+    exposeClientSide = false
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
@@ -457,6 +468,17 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "smart-app-banner",
     "When ON, show the Apple smart app banner by adding a meta tag",
+    owners = Seq(Owner.withGithub("marialivia16")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Maria Livia Chiorean
+  val SharingComments = Switch(
+    SwitchGroup.Feature,
+    "sharing-comments",
+    "When ON, the user will be able to share comments",
     owners = Seq(Owner.withGithub("marialivia16")),
     safeState = Off,
     sellByDate = never,

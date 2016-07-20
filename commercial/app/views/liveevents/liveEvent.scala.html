@@ -1,30 +1,33 @@
 @(event: model.commercial.events.LiveEvent, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
-@import views.support.{ImgSrc, Item140}
+@import views.support.{ImgSrc, Item300}
 
-    <div class="commercial commercial--tone-membership commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Event" data-link-name="merchandising | event | @omnitureId">
-        <div class="commercial--v-high__header commercial__header--membership">
-            <h3 class="commercial__title commercial__title--membership">
-                <a href="@{clickMacro}https://membership.theguardian.com/events" data-link-name="">
+    <aside class="adverts adverts--manual adverts--legacy-inline adverts--tone-membership adverts--membership" data-link-name="merchandising | event | @omnitureId">
+        <header class="adverts__header">
+            <h1 class="adverts__title">
+                <a class="adverts__logo" href="@{clickMacro}https://membership.theguardian.com/events" data-link-name="title">
                     @fragments.inlineSvg("membership-logo", "logo")
-                    <span class="u-h">The Guardian</span> <span class="u-h">Membership</span>
+                    <span class="u-h">The Guardian Membership</span>
                 </a>
-            </h3>
-        </div>
-        <div class="commercial--v-high__body">
-            <a href="@clickMacro@event.eventUrl" class="lineitem__link" data-link-name="merchandising-liveEvents-superHigh-@{event.eventId}-@{event.name}">
-                <img class="lineitem__image" itemprop="image" src="@ImgSrc(event.imageUrl, Item140)" alt=""/>
-                <h4 class="lineitem__title" itemprop="name">@event.name</h4>
-                <p class="lineitem__meta">
-                    <span class="lineitem__startdate" itemprop="startDate">@event.date.toString("dd MMM yyyy")</span>,
-                    <span class="lineitem__location" itemprop="location">@event.venue.description</span>
-                    @if(event.ratioTicketsLeft <= 0.1){
-                    <br><span class="lineitem__scarcity">Last few tickets remaining</span>
-                    }
-                </p>
-                <p class="lineitem__price">@event.displayPrice</p>
+            </h1>
+        </header>
+        <div class="adverts__body">
+            <a class="advert advert--inline advert--brand" href="@clickMacro@event.eventUrl" data-link-name="merchandising-liveEvents-superHigh-@{event.eventId}-@{event.name}">
+                <h2 class="advert__title">@event.name</h2>
+                <div class="advert__image-container">
+                    <img class="advert__image" src="@ImgSrc(event.imageUrl, Item300)" alt="">
+                </div>
+                <div class="advert__meta">
+                    @event.date.toString("dd MMM yyyy"), @event.venue.description
+                </div>
+                @if(event.ratioTicketsLeft <= 0.1){
+                    <div class="advert__meta advert__meta--scarcity">Last few tickets remaining</div>
+                }
+                <div class="advert__standfirst">
+                    <strong>@event.displayPrice</strong>
+                </div>
+                <span class="advert__more button button--small button--primary">
+                    Book now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                </span>
             </a>
-            <a href="@clickMacro@event.eventUrl" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-liveEvents-superHigh-visit-shop">
-                Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-            </a>
         </div>
-    </div>
+    </aside>

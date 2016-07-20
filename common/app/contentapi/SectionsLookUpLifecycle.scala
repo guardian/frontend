@@ -1,5 +1,6 @@
 package contentapi
 
+import app.LifecycleComponent
 import common._
 import play.api.inject.ApplicationLifecycle
 
@@ -7,8 +8,8 @@ import scala.concurrent.{Future, ExecutionContext}
 
 class SectionsLookUpLifecycle(
   appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler = Jobs,
-  akkaAsync: AkkaAsync = AkkaAsync
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync
 )(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {

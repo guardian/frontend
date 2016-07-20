@@ -6,11 +6,9 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller}
 import services._
-import javax.inject.Singleton
 
 import scala.concurrent.Future
 
-@Singleton
 class PublicationController(
   bookAgent: NewspaperBookTagAgent = NewspaperBookTagAgent,
   bookSectionAgent: NewspaperBookSectionTagAgent = NewspaperBookSectionTagAgent,

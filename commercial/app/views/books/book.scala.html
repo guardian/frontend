@@ -1,37 +1,37 @@
 @(book: model.commercial.books.Book, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@import views.support.{ImgSrc, Item300}
 
-@defining(("2_0", "2014-10-15")) { case (version, date) =>
-    <div class="commercial commercial--tone-books commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book" data-link-name="merchandising | book | @omnitureId">
-        <div class="commercial--v-high__header">
-            <h3 class="commercial__title">
-                <a href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
-                    @fragments.inlineSvg("marque-36", "icon")
-                    @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
-                    <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
-                </a>
-            </h3>
-        </div>
-        <div class="commercial--v-high__body">
-            <a href="@clickMacro@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
-                @book.jacketUrl.map { url =>
-                    <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
-                }
-            <h4 class="lineitem__title" itemprop="name">@book.title</h4>
-            <meta itemprop="isbn" content="@{book.isbn}" />
-            <p class="lineitem__meta lineitem__author" itemprop="author">@book.author</p>
-            <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                @book.price.map { price =>
-                    RRP &pound;@("%.2f".format(price))<br/>
-                }
+<aside class="adverts adverts--manual adverts--legacy-inline adverts--tone-books advert--book" data-link-name="merchandising | book | @omnitureId">
+    <header class="adverts__header">
+        <h1 class="adverts__title">
+            <a class="adverts__logo" href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="title">
+                @fragments.inlineSvg("marque-36", "icon")
+                @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
+                <span class="u-h">The Guardian Bookshop</span>
+            </a>
+        </h1>
+    </header>
+    <div class="adverts__body">
+        <a class="advert advert--inline" href="@clickMacro@book.buyUrl" data-link-name="merchandising-bookshop-v2_0_2014-10-15-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
+            <h2 class="advert__title">@book.title</h2>
+            <div class="advert__image-container">
+            @book.jacketUrl.map { url =>
+                <img class="advert__image" src="@ImgSrc(url, Item300)" alt="">
+            }
+            </div>
+            <div class="advert__meta">
+                <span>@book.author</span>,
+            </div>
+            <div class="advert__meta">
+                @book.price.map { price => RRP £@("%.2f".format(price))<br> }
                 @book.offerPrice.map { price =>
-                    <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
-                    <meta itemprop="priceCurrency" content="GBP"/>
+                    <strong class="tone-book-highlight">Our price: <span itemprop="price">£@("%.2f".format(price))</span></strong>
+                    <meta itemprop="priceCurrency" content="GBP">
                 }
-            </p>
-            </a>
-            <a href="@clickMacro@book.buyUrl" class="lineitem__cta button button--primary button--small" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
-                Buy now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-            </a>
-        </div>
+            </div>
+            <span class="advert__more button button--small button--primary">
+                Buy now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+            </span>
+        </a>
     </div>
-}
+</aside>

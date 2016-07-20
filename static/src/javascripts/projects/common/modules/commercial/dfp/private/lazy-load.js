@@ -3,9 +3,11 @@ define([
     'lodash/functions/throttle',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/user-timing',
     'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/load-advert'
-], function (fastdom, throttle, config, detect, dfpEnv, loadAdvert) {
+    'common/modules/commercial/dfp/private/load-advert',
+    'common/modules/commercial/dfp/private/ophan-tracking'
+], function (fastdom, throttle, config, detect, userTiming, dfpEnv, loadAdvert, ophanTracking) {
     /* nbOfFrames: integer. Number of refresh frames we want to throttle the scroll handler */
     var nbOfFrames = 6;
 
@@ -28,13 +30,17 @@ define([
         loadQueued = true;
         fastdom.read(function () {
             loadQueued = false;
-            dfpEnv.advertsToLoad
+            var lazyLoad = dfpEnv.advertsToLoad
                 .filter(function (advert) {
                     var rect = advert.node.getBoundingClientRect();
                     // load the ad only if it's setting within an acceptable range
                     return (1 - depthOfScreen) * viewportHeight < rect.bottom && rect.top < viewportHeight * depthOfScreen;
-                })
-                .forEach(loadAdvert);
+                });
+
+            lazyLoad.forEach(function(advert) {
+                ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
+                loadAdvert(advert);
+            });
             if (dfpEnv.advertsToLoad.length === 0) {
                 disableLazyLoad();
             }

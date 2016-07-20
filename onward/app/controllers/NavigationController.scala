@@ -7,7 +7,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{Action, Controller}
 
-object NavigationController extends Controller {
+class NavigationController extends Controller {
 
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)

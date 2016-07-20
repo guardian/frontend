@@ -31,12 +31,28 @@ define([
      *
      */
 
+    function addClassIfHasClass(newClassNames) {
+        return function hasClass(classNames) {
+            return function onAdvertRendered(_, advert) {
+                var $node = bonzo(advert.node);
+                if (classNames.some($node.hasClass.bind($node))) {
+                    return fastdom.write(function () {
+                        newClassNames.forEach($node.addClass.bind($node));
+                    });
+                }
+            };
+        };
+    }
+
+    var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
+    var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
+
     var sizeCallbacks = {};
 
     /**
      * DFP fluid ads should use existing fluid-250 styles in the top banner position
      */
-    sizeCallbacks[adSizes.fluid] = isFluid250('ad-slot--top-banner-ad');
+    sizeCallbacks[adSizes.fluid] = addFluid250(['ad-slot--top-banner-ad']);
 
     /**
      * Trigger sticky scrolling if the ad has the magic 'sticky' size
@@ -55,10 +71,8 @@ define([
             if (mobileAdSizes && mobileAdSizes.some(function (size) { return size[0] === 300 && size[1] === 251; })) {
                 stickyMpu($node);
             }
-        } else if ($node.hasClass('ad-slot--facebook')) {
-            fastdom.write(function () {
-                $node.addClass('ad-slot--fluid');
-            });
+        } else {
+            return addFluid(['ad-slot--facebook'])(_, advert);
         }
     };
 
@@ -69,7 +83,7 @@ define([
     sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             var $parent = bonzo(advert.node.parentNode);
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 bonzo(advert.node).addClass('u-h');
                 // if in a slice, add the 'no mpu' class
                 if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
@@ -85,7 +99,7 @@ define([
     sizeCallbacks[adSizes.portrait] = function () {
         // remove geo most popular
         geoMostPopular.whenRendered.then(function (geoMostPopular) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 bonzo(geoMostPopular.elem).remove();
             });
         });
@@ -94,39 +108,17 @@ define([
     /**
      * Top banner ads with fluid250 size get special styling
      */
-    sizeCallbacks[adSizes.fluid250] = isFluid250('ad-slot--top-banner-ad');
+    sizeCallbacks[adSizes.fluid250] = addFluid250(['ad-slot--top-banner-ad']);
 
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = isFluid('ad-slot--mobile');
+    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
 
     /**
      * Commercial components with merch sizing get fluid-250 styling
      */
-    sizeCallbacks[adSizes.merchandising] = isFluid250('ad-slot--commercial-component');
-
-    function isFluid250(className) {
-        return function (_, advert) {
-            var $node = bonzo(advert.node);
-            if ($node.hasClass(className)) {
-                fastdom.write(function () {
-                    $node.addClass('ad-slot__fluid250');
-                });
-            }
-        };
-    }
-
-    function isFluid(className) {
-        return function (_, advert) {
-            var $node = bonzo(advert.node);
-            if ($node.hasClass(className)) {
-                fastdom.write(function () {
-                    $node.addClass('ad-slot--fluid');
-                });
-            }
-        };
-    }
+    sizeCallbacks[adSizes.merchandising] = addFluid250(['ad-slot--commercial-component']);
 
     /**
      * @param adSlotId - DOM ID of the rendered slot
@@ -147,7 +139,7 @@ define([
             function callSizeCallback() {
                 var size = slotRenderEvent.size.join(',');
                 if (sizeCallbacks[size]) {
-                    sizeCallbacks[size](slotRenderEvent, advert);
+                    return sizeCallbacks[size](slotRenderEvent, advert);
                 }
             }
 

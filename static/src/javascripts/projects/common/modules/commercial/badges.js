@@ -66,7 +66,7 @@ define([
 
     function init() {
         if (!commercialFeatures.badges) {
-            return false;
+            return Promise.resolve(false);
         }
 
         // Sponsored fronts must come first, because they add a badge to the

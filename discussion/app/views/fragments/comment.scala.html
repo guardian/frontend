@@ -1,5 +1,6 @@
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
+@import conf.switches.Switches.SharingComments
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment
@@ -64,7 +65,7 @@
 
         <div class="d-comment__content">
 
-            @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
+            @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to whether recs should show when recs are closed *@
                 <div
                     class="d-comment__recommend js-recommend-comment"
                     data-comment-id="@comment.id"
@@ -106,12 +107,15 @@
                             Reply
                         </a>
 
+                        @if(SharingComments.isSwitchedOn) {
+                            @commentShare(comment)
+                        }
+
                         <span class="d-comment__action-separator d-staff-required">|</span>
 
                         <button class="u-button-reset d-comment__action d-comment__action--pick d-staff-required" role="button"
                             data-comment-id="@comment.id"
                             data-comment-highlighted="@comment.isHighlighted" data-link-name="Pick comment">@if(comment.isHighlighted){Unpick}else{Pick}</button>
-
                     </div>
 
                     <div class="report-comment-container js-report-comment-container d-comment__action d-comment__action--report">

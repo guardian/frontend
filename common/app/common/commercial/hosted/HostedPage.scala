@@ -8,6 +8,9 @@ trait HostedPage extends StandalonePage {
   def pageName: String
   def pageTitle: String
   def standfirst: String
+
+  final val toneId = "tone/hosted"
+  final val toneName = "Hosted"
 }
 
 case class HostedCampaign(

@@ -36,19 +36,11 @@ module.exports = function (grunt, options) {
                 dest: options.staticTargetDir + 'images'
             }]
         },
-        flash: {
-            files: [{
-                expand: true,
-                cwd: 'static/public/flash',
-                src: ['**/*.swf'],
-                dest: options.staticTargetDir + 'flash'
-            }]
-        },
         inlineCss: {
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets',
-                src: ['**/head*.css', 'inline/**/*.css'],
+                src: ['atomic.css', '**/head*.css', 'inline/**/*.css'],
                 flatten: true,
                 dest: 'common/conf/assets/inline-stylesheets'
             }]

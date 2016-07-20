@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.{AllGoodCachedHealthCheck, CachedHealthCheckLifeCycle, ExpiringSingleHealthCheck}
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import dispatch.{FunctionHandler, Http}
 import scala.concurrent.Future
 import contentapi.{ContentApiClient, Response}
@@ -40,7 +40,7 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
 
 class HealthCheck extends AllGoodCachedHealthCheck(
  9016,
- ExpiringSingleHealthCheck("/info/developer-blog/2016/apr/14/training-preview-healthcheck")
+ NeverExpiresSingleHealthCheck("/info/developer-blog/2016/apr/14/training-preview-healthcheck")
 ) {
   init()
 

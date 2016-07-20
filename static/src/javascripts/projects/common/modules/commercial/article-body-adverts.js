@@ -161,7 +161,7 @@ define([
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
-            return false;
+            return Promise.resolve(false);
         }
 
         var rules = getRules();

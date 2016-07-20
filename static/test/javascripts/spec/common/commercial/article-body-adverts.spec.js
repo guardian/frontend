@@ -67,11 +67,13 @@ define([
             expect(articleBodyAdverts).toBeDefined();
         });
 
-        it('should exit if commercial feature disabled', function () {
+        it('should exit if commercial feature disabled', function (done) {
             commercialFeatures.articleBodyAdverts = false;
-            var executionResult = articleBodyAdverts.init();
-            expect(executionResult).toBe(false);
-            expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
+            articleBodyAdverts.init().then(function(executionResult){
+                expect(executionResult).toBe(false);
+                expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
+                done();
+            });
         });
 
         it('should call space-filler`s insertion method with the correct arguments', function (done) {

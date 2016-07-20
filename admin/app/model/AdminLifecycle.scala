@@ -2,6 +2,7 @@ package model
 
 import java.util.TimeZone
 
+import app.LifecycleComponent
 import common._
 import conf.Configuration
 import conf.Configuration.environment
@@ -14,7 +15,7 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler = Jobs, akkaAsync: AkkaAsync = AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()

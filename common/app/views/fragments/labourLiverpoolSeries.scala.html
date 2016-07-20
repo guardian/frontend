@@ -1,0 +1,82 @@
+@(page: ContentPage)(implicit request: RequestHeader)
+
+@import layout.ContentWidths.MainMedia
+@import model.ContentPage
+@import views.support.TrailCssClasses.toneClass
+@import views.support.RenderClasses
+
+@defining((
+    page.item.elements.hasMainEmbed,
+    page.item.fields.main.nonEmpty,
+    page.item.tags.isLabourLiverpoolSeries
+)) { case (hasEmbed, hasMainMedia, isLabourLiverpoolSeries) =>
+
+    <style>
+    @Html(common.Assets.css.inlineLabourLiverpool)
+    </style>
+
+    <div class="@RenderClasses(Map(
+            "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
+            "immersive-main-media" -> hasMainMedia
+        ),
+        "content", "tonal", s"tonal--${toneClass(page.item)}")
+    ">
+        <div class="gs-container immersive-main-media__logo">
+            <a href="@LinkTo{/}">
+                <span class="u-h">The Guardian</span>
+                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
+            </a>
+        </div>
+        <div class="immersive-main-media__media">
+            @if(page.item.elements.hasMainPicture) {
+                @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                    @fragments.image(
+                        picture = picture,
+                        classes = Seq("immersive-main-media__media"),
+                        widths = MainMedia.immersive,
+                        imageAltText = "",
+                        isImmersiveMainMedia = true
+                    )
+                }
+            } else {
+                @if(hasMainMedia) {
+                    <div class="immersive-main-media__media__loading">
+                        <div class="immersive-main-media__loading-animation is-updating"></div>
+                        <span class="u-h">Loading header</span>
+                    </div>
+                    @Html(page.item.fields.main)
+                }
+            }
+        </div>
+
+        <div class="content--labour-liverpool-article__headline-background">
+             @fragments.inlineSvg("labour-liverpool-headline-bg", "membership")
+        </div>
+        <div class="series-identity">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <div class="series-identity__background">
+                        @fragments.inlineSvg("labour-liverpool-identity-bg", "membership")
+                    </div>
+                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
+                        <div class="series-identity__title">Labour &amp; Liverpool</div>
+                        <div class="series-identity__byline">with Ewen MacAskill</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="labour-liverpool-headline">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <div class="labour-liverpool-headline__background">
+                        @fragments.inlineSvg("labour-liverpool-header-bg", "membership")
+                    </div>
+                    <h1 class="labour-liverpool-headline__content">
+                        @Html(page.item.trail.headline)
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+}

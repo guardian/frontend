@@ -1,11 +1,9 @@
 package controllers
 
 import actions.AuthenticatedActions
-import client.Error
-import com.google.inject.{Inject, Singleton}
 import common.ExecutionContexts
 import conf.IdentityConfiguration
-import utils.{ThirdPartyConditions, SafeLogging}
+import utils.ThirdPartyConditions
 import ThirdPartyConditions._
 import form.Mappings
 import idapiclient.IdApiClient
@@ -18,14 +16,13 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
-@Singleton
-class ThirdPartyConditionsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                               idRequestParser: IdRequestParser,
-                                               conf: IdentityConfiguration,
-                                               api: IdApiClient,
-                                               idUrlBuilder: IdentityUrlBuilder,
-                                               authenticatedActions: AuthenticatedActions,
-                                               val messagesApi: MessagesApi)
+class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
+                                     idRequestParser: IdRequestParser,
+                                     conf: IdentityConfiguration,
+                                     api: IdApiClient,
+                                     idUrlBuilder: IdentityUrlBuilder,
+                                     authenticatedActions: AuthenticatedActions,
+                                     val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
 
   import authenticatedActions.{agreeAction, authAction}

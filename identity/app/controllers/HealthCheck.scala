@@ -1,5 +1,5 @@
 package controllers
 
-import conf.{AllGoodCachedHealthCheck, ExpiringSingleHealthCheck}
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 
-object HealthCheck extends AllGoodCachedHealthCheck(9010, ExpiringSingleHealthCheck("/signin"))
+class HealthCheck extends AllGoodCachedHealthCheck(9010, NeverExpiresSingleHealthCheck("/signin"))

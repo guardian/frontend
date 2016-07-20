@@ -20,7 +20,7 @@ object ABHeadlinesTestVariant extends TestDefinition(
   "headlines-ab-variant",
   "To test how much of a difference changing a headline makes (variant group)",
   owners = Seq(Owner.withGithub("dominickendrick")),
-  new LocalDate(2016, 7, 26) // Tuesday
+  new LocalDate(2016, 8, 10) // Wednesday
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-V")
@@ -42,7 +42,7 @@ object ABHeadlinesTestControl extends TestDefinition(
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
   owners = Seq(Owner.withGithub("dominickendrick")),
-  new LocalDate(2016, 7, 26) // Tuesday
+  new LocalDate(2016, 8, 10) // Wednesday
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-C")
