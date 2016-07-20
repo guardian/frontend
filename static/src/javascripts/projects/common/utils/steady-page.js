@@ -21,7 +21,7 @@ define([
     config
 ) {
 
-    var q = Queue;
+    var q = new Queue();
     var running = false;
     var promise;
 

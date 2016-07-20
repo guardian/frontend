@@ -10,7 +10,7 @@ define([
         // Setup
 
         beforeEach(function () {
-            initialQueue = Queue;
+            initialQueue = new Queue();
         });
 
         afterEach(function () {
@@ -21,13 +21,13 @@ define([
 
 
         it('should initialise multiple queues on multiple calls', function () {
-            var secondQueue = Queue;
+            var secondQueue = new Queue();
 
             initialQueue.enqueue('i1');
             secondQueue.enqueue('i2');
 
-            expect(initialQueue.dequeue()).toBe('i1');
             expect(secondQueue.dequeue()).toBe('i2');
+            expect(initialQueue.dequeue()).toBe('i1');
         });
 
         it('if queueing one item it should return it when dequeue is called', function () {
