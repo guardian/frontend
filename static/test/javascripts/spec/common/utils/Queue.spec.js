@@ -4,7 +4,7 @@ define([
     Queue
 ) {
 
-    fdescribe('Queue Utility', function () {
+    describe('Queue Utility', function () {
         var initialQueue;
 
         // Setup

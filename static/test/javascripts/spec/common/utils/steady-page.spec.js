@@ -32,10 +32,10 @@ define([
         ];
         var insertedElHeight = 100;
         var containerMargins = 20;
-        var callbackFunc = function (className, $container) {
+        var callbackFunc = function (className, container) {
             return function () {
                 var insertedEl = $.create('<div class="' + className + '" style="height: ' + insertedElHeight +'px;"></div>');
-                $container.append(insertedEl);
+                container.append(insertedEl);
             };
         };
 
@@ -109,7 +109,7 @@ define([
             window.scrollY = prevScrollPos;
 
             Promise.all(containers.map(function(containerObj){
-                return steadyPage.insert(containerObj.container[0], callbackFunc(containerObj.className, containerObj.container))
+                return steadyPage.insert(containerObj.container[0], callbackFunc(containerObj.className, containerObj.container));
             })).then(function() {
                 // All the elements should be inserted
                 expect(
@@ -155,7 +155,7 @@ define([
             // getHeightOfAllContainers expects an array of objects with container
             // as the key for the value of a dom object
             var currContainerFormatted = currContainers.map(function(currContainer) {
-                    return { container: document.querySelectorAll(currContainer)[0] }
+                    return { container: document.querySelectorAll(currContainer)[0] };
                 });
 
             // Set scrollY so container heights will all be read
@@ -169,7 +169,7 @@ define([
 
                 $customStyle.remove();
                 done();
-            })
+            });
         });
 
         it('should call the callbacks in the passed array of objects', function (done) {
@@ -181,7 +181,7 @@ define([
             // insertElements expects an array of objects with cb
             // as the key for the value of a function to be called
             var currCallbackFormatted =  [cb1, cb2, cb3].map(function(currCallback) {
-                return { cb: currCallback }
+                return { cb: currCallback };
             });
 
             var insertElsPromise = steadyPage._tests.insertElements(currCallbackFormatted);
@@ -195,7 +195,7 @@ define([
                 // The non-passed callback should not have been called
                 expect(cb4).not.toHaveBeenCalled();
                 done();
-            })
+            });
         });
 
 
