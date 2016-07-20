@@ -14,7 +14,7 @@ define([
     Injector
 ) {
 
-    fdescribe('Steady Page Utility', function () {
+    describe('Steady Page Utility', function () {
         var $container;
         var $style;
         var injector = new Injector();
@@ -216,13 +216,13 @@ define([
             $container = $('.js-steady-container');
 
             window.scrollY = 1000;
-            
+
             config.switches.steadyPageUtil = false;
 
             steadyPage.insert($container[0], callbackFunc('js-inserted-container', $container)).then(function() {
                 // scrollTo should be called with the scroll position and the inserted element
                 expect(window.scrollTo).not.toHaveBeenCalled();
-                    
+
                 // the container should be inserted
                 expect(document.getElementsByClassName('js-inserted-container').length).toBeTruthy();
                 done();
