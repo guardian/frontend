@@ -47,8 +47,7 @@ object Commercial {
     def cssClasses(metaData: MetaData, edition: Edition, maybeTags: Option[Tags], sizesOverride: Seq[AdSize] = Nil): String = {
       val classes = Seq(
         "top-banner-ad-container",
-        "top-banner-ad-container--desktop",
-        "js-top-banner-desktop"
+        "js-top-banner"
       )
 
       classes mkString " "
