@@ -415,6 +415,19 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
+//
+
+case class HeroicVideos(isHeroic: Boolean) extends HtmlCleaner{
+  override def clean(document: Document): Document = {
+    if(isHeroic){
+      document.getElementsByTag("figure").filter(_.hasClass("element-video"))foreach{ elementVideo =>
+          elementVideo.addClass("element-video--heroic");
+      }
+    }
+    document
+  }
+}
+
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {

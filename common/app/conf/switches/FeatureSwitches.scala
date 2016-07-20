@@ -20,7 +20,7 @@ trait FeatureSwitches {
     "heroic-main-media",
     "If this switch is on, Heroic template will be applied to heroic articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = false
   )
