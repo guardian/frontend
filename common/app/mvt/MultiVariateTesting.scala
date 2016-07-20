@@ -27,17 +27,6 @@ object ABHeadlinesTestVariant extends TestDefinition(
   }
 }
 
-object ABNewHeaderVariant extends TestDefinition(
-  name = "ab-new-header-variant",
-  description = "Feature switch (0% test) for the new header",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 7, 27) // Wednesday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variant")
-  }
-}
-
 object ABHeadlinesTestControl extends TestDefinition(
   "headlines-ab-control",
   "To test how much of a difference changing a headline makes (control group)",
@@ -46,6 +35,39 @@ object ABHeadlinesTestControl extends TestDefinition(
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-hlt").contains("hlt-C")
+  }
+}
+
+object ABNewHeaderVariant extends TestDefinition(
+  name = "ab-new-header-variant",
+  description = "Feature switch (0% test) for the new header",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2016, 9, 8) // Thursday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("variant")
+  }
+}
+
+object ABNewHeaderDummyTestControl extends TestDefinition(
+  name = "ab-new-header-dummy-test-control",
+  description = "New header dummy test control",
+  owners = Seq(Owner.withGithub("nataliaLKB")),
+  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-control")
+  }
+}
+
+object ABNewHeaderDummyTestVariant extends TestDefinition(
+  name = "ab-new-header-dummy-test-variant",
+  description = "New header dummy test variant",
+  owners = Seq(Owner.withGithub("nataliaLKB")),
+  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-variant")
   }
 }
 
