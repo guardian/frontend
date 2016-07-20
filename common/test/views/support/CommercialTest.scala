@@ -45,10 +45,10 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
 
   they should "be default for any other page" in {
     topAboveNavSlot.cssClasses(metaDataFromId("uk/culture"), defaultEdition, None, Nil) should
-      endWith("js-top-banner-desktop")
+      endWith("js-top-banner")
     topAboveNavSlot.cssClasses(metaDataFromId(
       "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis"),
       defaultEdition, None, Nil)
-      .should(endWith("js-top-banner-desktop"))
+      .should(endWith("js-top-banner"))
   }
 }

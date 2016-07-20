@@ -34,7 +34,7 @@ define([
         this.idealOutcome = '';
         this.canRun = function () {
             var pageObj = window.guardian.config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog) && pageObj.edition === 'UK';
+            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront) && pageObj.edition === 'UK';
         };
 
         var writer = function (linkText, linkHref, copy) {

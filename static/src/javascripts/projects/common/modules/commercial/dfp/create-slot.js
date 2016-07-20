@@ -32,7 +32,6 @@ define([
                 mobile: compile(
                     adSizes.outOfPage,
                     adSizes.mpu,
-                    adSizes.stickyMpu,
                     adSizes.halfPage,
                     config.page.edition === 'US' ? adSizes.portrait : null
                 )

@@ -13,10 +13,6 @@ define([
 ) {
     function init() {
 
-        if (config.page.tones !== 'Hosted') {
-            return Promise.resolve();
-        }
-
         return new Promise(function(resolve) {
 
             var survey = new SurveySimple({

@@ -186,16 +186,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MoneysupermarketFeedsSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "moneysupermarket",
-    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val GuBookshopFeedsSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
@@ -222,16 +212,6 @@ trait CommercialSwitches {
     "If this switch is on, content flagged with membershipAccess will be protected",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val LCMortgageFeedSwitch = Switch(
-    SwitchGroup.Commercial,
-    "lc-mortgages",
-    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )

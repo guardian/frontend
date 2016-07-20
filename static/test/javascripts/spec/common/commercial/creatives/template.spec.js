@@ -66,7 +66,7 @@ define([
                 clickMacro: '%%CLICK_URL_ESC%%'
             };
             new Template(slot, params).create().then(function () {
-                expect(document.querySelector('.commercial--v-high__body .button', slot)).toBe(null);
+                expect(document.querySelector('.adverts__body .button', slot)).toBe(null);
             });
         });
     });

@@ -1,15 +1,16 @@
 @import '../_vars';
 @import '../_mixins';
-
 $labour-liverpool-header-element-opacity: .85;
 
 .immersive-header-container--labour-liverpool {
-    min-height: gs-height(6);
+    min-height: gs-height(8);
 
     .immersive-main-media__media {
-        // fallback for IE not supporting object-fit: cover
-        @include mq($from: desktop) {
-            max-height: gs-height(8);
+        position: absolute;
+        height: gs-height(8);
+
+        @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+            height: 100%;
         }
     }
 
@@ -24,27 +25,22 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.content__standfirst--labour-liverpool-article {
+.content--labour-liverpool .content__article-body > p:first-of-type {
     @include fs-headline(3);
     color: darken($news-support-4, 25%);
     margin-top: $gs-baseline;
+    font-size: 22px;
+    font-weight: 200;
+}
 
-    .membership-cutout {
-        float: left;
-        width: 140px;
-        margin: 0 $gs-gutter/-2;
-
-        @include mq($from: mobile, $until: tablet) {
-            display: none;
-        }
-    }
-
-    > p:first-of-type {
-        display: inline;
-    }
+.labour-liverpool-cutout {
+    float: left;
+    width: 140px;
+    margin: 0 $gs-gutter/-2;
 }
 
 .labour-liverpool-quotes__svg {
+    float: left;
     fill: $news-support-4;
     width: 30px;
     height: 18px;
@@ -52,12 +48,23 @@ $labour-liverpool-header-element-opacity: .85;
 }
 
 .labour-liverpool-headline {
-    position: absolute;
-    top: gs-height(6);
-    max-width: gs-span(8);
+    position: relative;
+    width: 100%;
+    // make bottom left corner of headline flush with the bottom of the main media image
+    top: 250px; // IE / Edge
 
-    @include mq($from: wide) {
-        left: 5%;
+    .gs-container {
+        @include mq(mobile) {
+            padding: 0;
+        }
+    }
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        top: 319px;
+
+        @include mq($from: tablet) {
+            top: 314px;
+        }
     }
 }
 
@@ -80,22 +87,17 @@ $labour-liverpool-header-element-opacity: .85;
 
 .labour-liverpool-headline__background {
     position: absolute;
-    left: -$gs-gutter*1.5;
-    height: 130px;
-    transform: rotate(180deg);
-
-    @include mq($from: tablet) {
-        left: auto;
-    }
+    width: 100%;
 }
 
 .inline-labour-liverpool-header-bg__svg {
     fill: $news-main-2;
     opacity: $labour-liverpool-header-element-opacity;
+    width: 100%;
 }
 
 .series-identity {
-    position: absolute;
+    position: relative;
     max-width: gs-span(3.5);
     top: $gs-baseline*3;
 
@@ -136,15 +138,13 @@ $labour-liverpool-header-element-opacity: .85;
 
 .content--labour-liverpool-article__headline-background {
     position: absolute;
-    //TODO: Need a designer to fix the SVG so that we don't need to position it in the CSS
-    top: -210px;
     width: 100%;
+}
 
-    .inline-labour-liverpool-headline-bg__svg {
-        fill: $news-main-2;
-        opacity: $labour-liverpool-header-element-opacity;
-        width: 100%;
-    }
+.inline-labour-liverpool-headline-bg__svg {
+    fill: $news-main-2;
+    opacity: $labour-liverpool-header-element-opacity;
+    width: 100%;
 }
 
 .labour-liverpool-contact__top-border {

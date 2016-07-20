@@ -185,8 +185,7 @@ define([
         events.ready();
     }
 
-    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
-    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
+    // These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
