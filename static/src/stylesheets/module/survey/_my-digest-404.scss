@@ -189,7 +189,7 @@
         &:hover,
         &:focus,
         &:active {
-           border-color: darken(#ffffff, 15%);
+            border-color: darken(#ffffff, 15%);
 }
 
     }
@@ -226,7 +226,7 @@
     border: 2px solid $guardian-brand-light;
     border-radius: 100px;
     height: 2.5em;
-    color: red;
+    color: #ff0000;
     margin-bottom: 1em;
 }
 
@@ -276,7 +276,6 @@
     border-radius: 100px;
     padding-left: 12px;
     padding-right: 32px;
-    border-radius: 16px;
 
     &:hover,
     &:focus,
