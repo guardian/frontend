@@ -134,6 +134,10 @@
     min-width: 16em;
 }
 
+.content {
+    padding-bottom: $gs-baseline * 2;
+}
+
 .email-signup {
     //No script tag
     a {
@@ -250,7 +254,10 @@
 }
 
 .weekend-read-header__terms {
+    @include fs-textSans(2);
+    padding-left: .3rem;
     padding-bottom: 20px;
+    color: $guardian-brand-light;
 }
 
 .weekend-read-sample {
