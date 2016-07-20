@@ -1,0 +1,19 @@
+@()(implicit request: RequestHeader)
+
+@import common.{Edition, LinkTo}
+
+<div class="new-header__edition-picker">
+    @fragments.inlineSvg("world", "icon")
+
+    <select onchange="location = this.value;">
+        <option>@Edition(request).displayName</option>
+        @Edition.others(request).map{ edition =>
+            <option data-edition="@edition.id"
+                data-link-name="new header switch to @edition.id edition"
+                value="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                title="Switch to the @edition.id edition">
+                    @edition.displayName
+            </option>
+        }
+    </select>
+</div>
