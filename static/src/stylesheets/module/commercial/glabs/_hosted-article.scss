@@ -1,7 +1,31 @@
 .hosted-article-page {
-    .content__article-body {
+    .media-primary {
+        position: relative;
+    }
+    .title {
         @include fs-textSans(4);
-
+        position: absolute;
+        bottom: 38px;
+        left: $gs-column-width * 4 + 20;
+        color: #ffffff;
+        font-size: 36px;
+        line-height: 36px;
+        font-weight: bold;
+    }
+    .caption {
+        position: absolute;
+        bottom: -50px;
+        right: 10px;
+        width: $gs-column-width * 3 + 40;
+    }
+    .social__item--pinterest {
+        display: block;
+    }
+    .content__article-body {
+        .intro {
+            font-size: 26px;
+            line-height: 30px;
+        }
         .drop-cap {
             display: inline-block;
             float: left;
@@ -16,10 +40,27 @@
     }
 }
 
-.zootropolis {
-    .content__article-body {
-        .drop-cap {
-            background-color: $zootropolisColor;
+.hostedbadge.hosted-tone-bg--zootropolis {
+    .hostedbadge__info {
+        color: #ffffff;
+    }
+}
+.hosted-article-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+    }
+}
+.hosted-article-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
         }
     }
 }
