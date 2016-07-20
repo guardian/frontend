@@ -72,7 +72,7 @@ define([
         fobadge: badgeDefinition,
         comments: {
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.badge)
+                mobile: compile(adSizes.outOfPage, adSizes.mpu)
             }
         },
         'top-above-nav': {
