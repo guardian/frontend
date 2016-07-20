@@ -131,7 +131,6 @@
 
 .email-signup {
     background-color: $news-main-1;
-    padding: 1em 0;
     min-width: 16em;
 }
 
@@ -143,10 +142,11 @@
     }
 
     .fsLabel {
-        @include f-bodyHeading;
+        @include fs-header(2);
 
         color: #ffffff;
         padding: 0 .3rem;
+
     }
 
     .fsPagination {
@@ -158,23 +158,36 @@
     }
 
     .fsField {
+        @include fs-textSans(2);
         width: 100%;
         border-radius: 100px;
         border: 0;
-        height: 2.5em;
+        height: 32px;
         padding-left: 1em;
         box-sizing: border-box;
-        margin-bottom: 1em;
+        margin-bottom: $gs-baseline;
     }
 
     .fsSubmitButton {
+        @include fs-textSans(2);
+        display: inline-block;
+        float: left;
         width: 100%;
-        background-color: $news-main-1;
-        border: 2px solid $guardian-brand-light;
-        border-radius: 100px;
-        height: 2.5em;
+        height: 32px;
+        line-height: 28px;
+        overflow: hidden;
+        margin-bottom: $gs-baseline;
+        border-radius: 15px;
+        border: 1px solid currentColor;
         color: #ffffff;
-        margin-bottom: 1em;
+        background-color: transparent;
+    
+        &:hover,
+        &:focus,
+        &:active {
+           border-color: darken(#ffffff, 15%);
+}
+
     }
 
     .fsValidationError {
@@ -209,15 +222,14 @@
     border: 2px solid $guardian-brand-light;
     border-radius: 100px;
     height: 2.5em;
-    color: #ffffff;
+    color: red;
     margin-bottom: 1em;
 }
 
 .email-signup__aside-text {
-    @include f-textSans;
+    @include fs-textSans(2);
 
     color: $guardian-brand-light;
-    font-size: 10pt;
     padding: 0 .3rem;
 }
 
@@ -226,36 +238,49 @@
 }
 
 .weekend-read-header__heading {
-    @include f-bodyHeading;
+    @include fs-header(2);
 
-    font-size: 12pt;
     padding: 0 .3rem;
 }
 
 .weekend-read-header__text {
-    @include f-bodyCopy;
+    @include fs-bodyCopy(2);
 
-    font-size: 10pt;
     padding: 0 .3rem;
 }
 
+.weekend-read-header__terms {
+    padding-bottom: 20px;
+}
+
 .weekend-read-sample {
-    margin-top: 1em;
+    margin-top: $gs-baseline;
     background-color: #ffffff;
 }
 
 .weekend-read-sample__button {
+    @include fs-textSans(2);
     position: relative;
-    border: thin solid #808080;
-    background-color: #ffffff;
+    color: $neutral-1;
+    border: thin solid $neutral-3;
+    background-color: transparent;
+    height: 32px;
+    line-height: 28px;
     border-radius: 100px;
-    padding: .3em .5em .3em 30px;
-    font-size: 10pt;
+    padding-left: 12px;
+    padding-right: 32px;
+    border-radius: 16px;
 
-    .inline-plus {
-        fill: #808080;
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $neutral-2;
+    }
+
+    .inline-arrow-right {
+        fill: $neutral-2;
         position: absolute;
-        left: 2px;
+        right: 2px;
         top: 1px;
     }
 }
