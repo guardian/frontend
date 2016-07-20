@@ -27,6 +27,17 @@ object ABHeadlinesTestVariant extends TestDefinition(
   }
 }
 
+object ABHeadlinesTestControl extends TestDefinition(
+  "headlines-ab-control",
+  "To test how much of a difference changing a headline makes (control group)",
+  owners = Seq(Owner.withGithub("dominickendrick")),
+  new LocalDate(2016, 8, 10) // Wednesday
+  ) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-hlt").contains("hlt-C")
+  }
+}
+
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
   description = "Feature switch (0% test) for the new header",
@@ -38,14 +49,25 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
-object ABHeadlinesTestControl extends TestDefinition(
-  "headlines-ab-control",
-  "To test how much of a difference changing a headline makes (control group)",
-  owners = Seq(Owner.withGithub("dominickendrick")),
-  new LocalDate(2016, 8, 10) // Wednesday
-  ) {
+object ABNewHeaderDummyTestControl extends TestDefinition(
+  name = "ab-new-header-dummy-test-control",
+  description = "New header dummy test control",
+  owners = Seq(Owner.withGithub("nataliaLKB")),
+  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-C")
+    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-control")
+  }
+}
+
+object ABNewHeaderDummyTestVariant extends TestDefinition(
+  name = "ab-new-header-dummy-test-variant",
+  description = "New header dummy test variant",
+  owners = Seq(Owner.withGithub("nataliaLKB")),
+  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-variant")
   }
 }
 
