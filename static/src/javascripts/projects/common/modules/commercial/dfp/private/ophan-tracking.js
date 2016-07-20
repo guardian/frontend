@@ -152,9 +152,10 @@ define([
     }
 
     function getBaseline(baselineName) {
-        var baseline = performanceLog.baselines.find(function(baseline){
-            return baseline.name === baselineName;
-        });
+        var baseline = performanceLog.baselines[performanceLog.baselines
+            .map(function (_) { return _.name; })
+            .indexOf(baselineName)
+        ];
         return baseline.time;
     }
 
