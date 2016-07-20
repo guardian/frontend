@@ -135,6 +135,7 @@ define([
 
             var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
             var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
+            var count = 0;
 
             return ajax({
                 url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
@@ -142,7 +143,7 @@ define([
                 method: 'get',
                 crossOrigin: true
             }).then(function (resp) {
-                var count = resp.numNewBlocks;
+                count = resp.numNewBlocks;
 
                 if (count > 0) {
                     unreadBlocksNo += count;
@@ -164,8 +165,13 @@ define([
                     }
                 }
             }).always(function () {
-                updateDelay(currentUpdateDelay);
-                updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+                if (count == 0 || currentUpdateDelay > 0) {
+                    updateDelay(currentUpdateDelay);
+                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+                } else {
+                    // might have been cached so check straight away
+                    updateTimeoutId = setTimeout(checkForUpdates, 1);
+                }
             });
         };
 
@@ -200,7 +206,7 @@ define([
                 if (unreadBlocksNo == 0) {
                     revealInjectedElements();
                 }
-                currentUpdateDelay = options.minUpdateDelay;
+                currentUpdateDelay = 0; // means please get us fully up to date
                 checkForUpdates();
             });
         };
