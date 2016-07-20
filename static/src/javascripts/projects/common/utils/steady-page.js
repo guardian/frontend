@@ -88,26 +88,6 @@ define([
     }
 
     /**
-     * Calculate the new height and either scroll or run the next batch of updates
-     *
-     * @param  {Number} state.height The total height of elements in the previous recursions
-     * @param  {Number} state.newHeight The height of all the elements added in the current recursion level
-     */
-    function calculateScrollY (state) {
-        if (q.empty()) {
-            // If the queue is empty (no more elements need to be added to the page) we immediately scroll
-            return state.newHeight + state.prevHeight + state.scrollY;
-        } else {
-            // If there are elements waiting to be added to the page we take the previous container's heights
-            // and recursively call the function so that we only scroll the page once the queue is empty -
-            // this prevents excessive and jarring scrolling
-            return go(assign(state, {
-                prevHeight: state.prevHeight + state.newHeight
-            }));
-        }
-    }
-
-    /**
      * Process the insertion operation:
      *
      *   1. Calculate the original height of the container
@@ -146,7 +126,19 @@ define([
                     });
                 });
             })
-            .then(calculateScrollY);
+            .then(function(state){
+                if (q.empty()) {
+                    // If the queue is empty (no more elements need to be added to the page) we immediately scroll
+                    return state.newHeight + state.prevHeight + state.scrollY;
+                } else {
+                    // If there are elements waiting to be added to the page we take the previous container's heights
+                    // and recursively call the function so that we only scroll the page once the queue is empty -
+                    // this prevents excessive and jarring scrolling
+                    return go(assign(state, {
+                        prevHeight: state.prevHeight + state.newHeight
+                    }));
+                }
+            });
 
         return promise;
 
