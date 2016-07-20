@@ -15,7 +15,9 @@ case class HostedArticlePage(
   ctaBanner: String,
   mainPicture: String,
   twitterTxt: String,
-  emailTxt: String
+  emailTxt: String,
+  slothPic: String,
+  deskClerkPic: String
 )
   extends HostedPage {
 

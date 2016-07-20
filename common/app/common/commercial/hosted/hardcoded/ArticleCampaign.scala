@@ -11,16 +11,16 @@ object ArticleCampaign {
   val campaign = HostedCampaign(
     id = "article-campaign",
     name = "Name of the campaign here",
-    owner = "TODO",
-    logo = HostedLogo("TODO"),
+    owner = "Disney",
+    logo = HostedLogo(Static("images/commercial/zootropolis-logo.png")),
     cssClass = "zootropolis"
   )
 
   val cta = HostedCallToAction(
     url = "TODO",
-    label = "Lorem ipsum",
+    label = "The Zootropolis Activity pack",
     trackingCode = "TODO",
-    btnText = "Lorem!"
+    btnText = "Download now"
   )
 
   val articlePageName = "hosted-article"
@@ -33,10 +33,12 @@ object ArticleCampaign {
     standfirst = "TODO",
     facebookImageUrl = "TODO",
     cta,
-    ctaBanner = Static("images/commercial/leffe_banner.png"),
-    mainPicture = Static("images/commercial/leffe_banner.png"),
+    ctaBanner = Static("images/commercial/zootropolis-banner.png"),
+    mainPicture = Static("images/commercial/zootropolis.png"),
     twitterTxt = "TODO  #ad: ",
-    emailTxt = "TODO"
+    emailTxt = "TODO",
+    slothPic = Static("images/commercial/sloth.png"),
+    deskClerkPic = Static("images/commercial/desk-clerk.png")
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

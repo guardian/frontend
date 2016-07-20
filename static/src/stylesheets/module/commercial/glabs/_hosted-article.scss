@@ -18,8 +18,10 @@
         right: 10px;
         width: $gs-column-width * 3 + 40;
     }
-    .social__item--pinterest {
-        display: block;
+    .content[class*='-advertisement-feature'] {
+        .social__item--pinterest {
+            display: block;
+        }
     }
     .content__article-body {
         .intro {
@@ -45,11 +47,13 @@
         color: #ffffff;
     }
 }
+
 .hosted-article-page.zootropolis ~ .survey-overlay-simple {
     .survey-text__header {
         background-color: $zootropolisColor;
     }
 }
+
 .hosted-article-page.zootropolis ~ .survey-overlay-simple {
     .survey-text__header {
         background-color: $zootropolisColor;
@@ -62,5 +66,63 @@
                 fill: #ffffff;
             }
         }
+    }
+}
+
+.hosted-article-page.zootropolis {
+    @mixin animal-stripe {
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        height: 240px;
+
+        @include mq(desktop) {
+            left: ($gs-column-width * 4 + 20) * -1;
+            top: 20px;
+            width: gs-span(16) + $gs-gutter * 2;
+        }
+
+        &.con-artist {
+            .animal__stripe-character {
+                position: absolute;
+                top: 0px;
+                left: 280px;
+            }
+        }
+        &.rookie {
+            .animal__stripe-character {
+                position: absolute;
+                top: 0px;
+                right: 280px;
+            }
+        }
+        &.dmv-employee {
+            .animal__stripe-character {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+        }
+        &.desk-clerk {
+            .animal__stripe-character {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+        }
+    }
+    .animal {
+        position: relative;
+    }
+    .animal__stripe-odd {
+        @include animal-stripe;
+        background-color: #f26623;
+    }
+    .animal__stripe-even {
+        @include animal-stripe;
+        background-color: #3370b3;
+    }
+    .animal__info {
+        padding-top: 260px;
     }
 }
