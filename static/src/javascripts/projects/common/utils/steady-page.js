@@ -11,12 +11,14 @@ define([
     'common/utils/fastdom-promise',
     'Promise',
     'lodash/objects/assign',
-    'common/utils/Queue'
+    'common/utils/Queue',
+    'common/utils/config'
 ], function (
     fastdom,
     Promise,
     assign,
-    Queue
+    Queue,
+    config
 ) {
 
     var q = Queue;
@@ -164,6 +166,10 @@ define([
      * @param {Function} cb Should contain all functionality that displays and lays-out the element
      */
     function insert(container, cb) {
+        if (!config.switches.steadyPageUtil) {
+            return fastdom.write(cb);
+        }
+
         var initialState = {
             scrollY: window.scrollY,
             prevHeight: 0

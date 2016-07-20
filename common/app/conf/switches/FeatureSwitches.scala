@@ -397,7 +397,7 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-    // Owner: Frank Longden
+    // Owner: Super, Super, Frank Longden-Morris
   val ArticleBadgesSwitch = Switch(
     SwitchGroup.Feature,
     "article-header-badge",
@@ -480,6 +480,17 @@ trait FeatureSwitches {
     "sharing-comments",
     "When ON, the user will be able to share comments",
     owners = Seq(Owner.withGithub("marialivia16")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Gareth Trufitt
+  val SteadyPageUtil = Switch(
+    SwitchGroup.Feature,
+    "steady-page-util",
+    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

@@ -3,18 +3,22 @@ define([
     'common/utils/$',
     'common/utils/steady-page',
     'helpers/fixtures',
-    'Promise'
+    'Promise',
+    'helpers/injector'
 ], function (
     bonzo,
     $,
     steadyPage,
     fixtures,
-    Promise
+    Promise,
+    Injector
 ) {
 
-    describe('Steady Page Utility', function () {
+    fdescribe('Steady Page Utility', function () {
         var $container;
         var $style;
+        var injector = new Injector();
+        var config;
         var fixturesConfig =  {
             id: 'steady-body'
         };
@@ -41,7 +45,7 @@ define([
 
         // Setup
 
-        beforeEach(function () {
+        beforeEach(function (done) {
             $style = $.create('<style type="text/css"></style>')
                 .html('.before{ height: 500px } ' +
                     '.after { height: 1000px } ' +
@@ -51,11 +55,20 @@ define([
             // We can't scroll the Phantom window for some reason, so
             // we mock window instead
             sinon.spy(window, 'scrollTo');
+
+            injector.require([
+                'common/utils/config'
+            ], function (injConfig) {
+                config = injConfig;
+                config.switches.steadyPageUtil = true;
+                done();
+            });
         });
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
             $style.remove();
+            window.scrollY = 0;
             window.scrollTo.restore();
         });
 
@@ -131,8 +144,6 @@ define([
             fixtures.render(fixturesConfig);
             $container = $('.js-steady-container');
 
-            window.scrollY = 0;
-
             steadyPage.insert($container[0], callbackFunc('js-inserted-container', $container)).then(function() {
                 // We shouldn't call scrollTo if the element was below the current scroll position
                 expect(window.scrollTo).not.toHaveBeenCalled();
@@ -185,7 +196,6 @@ define([
             });
 
             var insertElsPromise = steadyPage._tests.insertElements(currCallbackFormatted);
-
             insertElsPromise.then(function(){
                 // All the passed callbacks should have been called
                 expect(cb1).toHaveBeenCalled();
@@ -194,9 +204,32 @@ define([
 
                 // The non-passed callback should not have been called
                 expect(cb4).not.toHaveBeenCalled();
+
                 done();
             });
         });
+
+        it('should call the callback without modifying any scroll positions if steadyPageUtil switch is false', function (done) {
+            fixturesConfig.fixtures = fixtureSingleContainer;
+
+            fixtures.render(fixturesConfig);
+            $container = $('.js-steady-container');
+
+            window.scrollY = 1000;
+            
+            config.switches.steadyPageUtil = false;
+
+            steadyPage.insert($container[0], callbackFunc('js-inserted-container', $container)).then(function() {
+                // scrollTo should be called with the scroll position and the inserted element
+                expect(window.scrollTo).not.toHaveBeenCalled();
+                    
+                // the container should be inserted
+                expect(document.getElementsByClassName('js-inserted-container').length).toBeTruthy();
+                done();
+            });
+        });
+
+
 
 
     });
