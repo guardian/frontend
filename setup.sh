@@ -58,7 +58,7 @@ create_frontend_properties() {
     fi
     
     if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
-      echo your hard disk is not encrypted!
+      echo your hard disk is not encrypted! follow these instructions: https://support.apple.com/en-gb/HT204837
     else
       aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
     fi
