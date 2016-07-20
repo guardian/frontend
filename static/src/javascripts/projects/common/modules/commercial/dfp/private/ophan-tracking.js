@@ -166,8 +166,9 @@ define([
             url: '/commercial-report',
             type: 'json',
             method: 'post',
+            contentType: 'application/json',
             crossOrigin: true,
-            data: performanceLog
+            data: JSON.stringify(performanceLog)
         });
     }
 
