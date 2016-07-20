@@ -31,7 +31,7 @@ object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
   description = "Feature switch (0% test) for the new header",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 7, 27) // Wednesday
+  sellByDate = new LocalDate(2016, 9, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variant")
