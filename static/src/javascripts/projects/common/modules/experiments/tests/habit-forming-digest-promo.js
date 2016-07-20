@@ -7,6 +7,7 @@ define([
     'common/modules/commercial/user-features',
     'common/views/svgs',
     'lodash/objects/defaults',
+    'lodash/arrays/uniq',
     'text!common/views/experiments/habit-digest-promo.html'
 ], function (
     config,
@@ -17,6 +18,7 @@ define([
     userFeatures,
     svgs,
     defaults,
+    uniq,
     digestPromo
 ) {
     return function () {
@@ -35,7 +37,8 @@ define([
         this.canRun = function () {
             return !(config.page.isAdvertisementFeature) &&
             config.page.contentType === 'Article' &&
-            isInfrequentVisitor();
+            isInfrequentVisitor() &&
+            hasSeenMembership();
         };
 
         var defaultData = {
@@ -51,6 +54,20 @@ define([
                 }
             }
             return false;
+        }
+
+        // check that the membership banner has been seen and dismissed
+        function hasSeenMembership() {
+            var messageStates = storage.local.get('gu.prefs.messages');
+            return messageStates &&
+            messageStates.indexOf('membership-message-uk-2016-06-24') > -1;
+        }
+
+        // alternative behaviour to other site messages: we only want to display this banner once to each user
+        function remember() {
+            var messageStates = storage.local.get('gu.prefs.messages') || [];
+            messageStates.push('habit-digest-message-07-16');
+            storage.local.set('gu.prefs.messages', uniq(messageStates));
         }
 
         function renderDigestSnap(messageText, linkText, linkHref, variantName) {
@@ -79,6 +96,7 @@ define([
                     var linkText = 'Sign up';
                     var linkHref = '/survey/mydigest';
                     renderDigestSnap(messageText, linkText, linkHref, 'digest');
+                    remember();
                 }
             }, {
                 id: 'weekend',
@@ -87,6 +105,7 @@ define([
                     var linkText = 'Sign up';
                     var linkHref = '/survey/weekendreading';
                     renderDigestSnap(messageText, linkText, linkHref, 'weekend');
+                    remember();
                 }
             }, {
                 id: 'headlines',
@@ -95,6 +114,7 @@ define([
                     var linkText = 'Sign up';
                     var linkHref = '/info/2015/dec/08/daily-email-uk';
                     renderDigestSnap(messageText, linkText, linkHref, 'headlines');
+                    remember();
                 }
             }
         ];
