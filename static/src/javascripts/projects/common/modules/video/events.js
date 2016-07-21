@@ -2,6 +2,7 @@
 define([
     'bean',
     'qwery',
+    'common/utils/mediator',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/config',
@@ -9,10 +10,12 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
     'lodash/arrays/indexOf',
-    'lodash/functions/throttle'
+    'lodash/functions/throttle',
+    'lodash/objects/forOwn'
 ], function (
     bean,
     qwery,
+    mediator,
     reportError,
     $,
     config,
@@ -20,7 +23,8 @@ define([
     OmnitureMedia,
     history,
     indexOf,
-    throttle
+    throttle,
+    forOwn
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
@@ -35,6 +39,93 @@ define([
             'content:play',
             'content:end'
         ];
+
+
+    /**
+     *
+     * @param mediaId {string}
+     * @param mediaType {string} audio|video
+     * @param eventType {string} e.g. firstplay, firstend
+     * @param preroll {boolean}
+     * @returns {{mediaId: string, mediaType: string, eventType: string, preroll: boolean}}
+     */
+    function MediaEvent(mediaId, mediaType, eventType, preroll) {
+        return {
+            mediaId: mediaId,
+            mediaType: mediaType,
+            eventType: eventType,
+            preroll: preroll
+        };
+    }
+
+    function debugEvents(player) {
+        var allEvents = [
+            'ready',
+            'play',
+            'end',
+            'skip',
+            'watched25',
+            'watched50',
+            'watched75'
+        ];
+
+        allEvents.map(function(eventName) { return 'media:' + eventName }).forEach(function(eventName) {
+            player.on(eventName, function(_, mediaEvent) {
+                console.log('What did I hear?', eventName, mediaEvent);
+            });
+        });
+    }
+
+    function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, preroll) {
+        forOwn(eventsMap, function(value, key) {
+            var fullEventName = 'media:' + value;
+            var mediaEvent = MediaEvent(mediaId, mediaType, value, preroll);
+
+            player.one(key, function() {
+                player.trigger(fullEventName, mediaEvent);
+                mediator.emit(fullEventName, mediaEvent);
+            });
+        });
+    }
+
+    function addContentEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            ready: 'ready',
+            play: 'play',
+            passed25: 'watched25',
+            passed50: 'watched50',
+            passed75: 'watched75',
+            ended: 'end'
+        };
+
+        player.on('timeupdate', throttle(function() {
+            var percent = Math.round((player.currentTime() / player.duration()) * 100);
+
+            if (percent >= 25) {
+                player.trigger('passed25');
+            }
+            if (percent >= 50) {
+                player.trigger('passed50');
+            }
+            if (percent >= 75) {
+                player.trigger('passed75');
+            }
+        }, 1000));
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
+    }
+
+    function addPrerollEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            'adstart': 'play',
+            'adend': 'end',
+            'adsready': 'ready',
+            // This comes from the skipAd plugin
+            'adskip': 'skip'
+        };
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
+    }
 
     function getMediaType(player) {
         return isEmbed ? 'video' : player.guMediaType;
@@ -230,6 +321,9 @@ define([
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
         handleInitialMediaError: handleInitialMediaError,
-        bindErrorHandler: bindErrorHandler
+        bindErrorHandler: bindErrorHandler,
+        addContentEvents: addContentEvents,
+        addPrerollEvents: addPrerollEvents,
+        debugEvents: debugEvents
     };
 });

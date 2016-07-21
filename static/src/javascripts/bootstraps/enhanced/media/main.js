@@ -166,6 +166,7 @@ define([
             withPreroll,
             blockVideoAds;
 
+
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
             // These are set to the safest defaults that will always play video.
@@ -200,6 +201,11 @@ define([
                 }
             }
         }));
+        events.addContentEvents(player, mediaId, mediaType);
+        events.addPrerollEvents(player, mediaId, mediaType);
+        if (window.location.hash === '#debugVideoEvents') {
+            events.debugEvents(player);
+        }
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -271,7 +277,7 @@ define([
                                             prerollTimeout: 1000,
                                             // We set this sightly higher so contrib-ads never timeouts before ima.
                                             contribAdsSettings: {
-                                                timeout: 1200
+                                                timeout: 2000
                                             }
                                         });
                                         player.on('adstart', function() {
