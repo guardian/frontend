@@ -11,7 +11,6 @@ define(function () {
         fluid:                  AdSize(0, 0),
 
         // guardian proprietary ad sizes
-        stickyMpu:              AdSize(300, 251),
         badge:                  AdSize(140, 90),
         merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),

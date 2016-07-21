@@ -3,7 +3,6 @@ package views.support
 import common.Edition
 import common.editions.Uk
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
-import common.dfp.AdSize.responsiveSize
 import common.dfp._
 import conf.switches.Switches.{FixedTechTopSlot, containerBrandingFromCapi}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
@@ -48,8 +47,7 @@ object Commercial {
     def cssClasses(metaData: MetaData, edition: Edition, maybeTags: Option[Tags], sizesOverride: Seq[AdSize] = Nil): String = {
       val classes = Seq(
         "top-banner-ad-container",
-        "top-banner-ad-container--desktop",
-        "js-top-banner-desktop"
+        "js-top-banner"
       )
 
       classes mkString " "
@@ -59,13 +57,6 @@ object Commercial {
         val classes = Seq("top-banner-ad", "top-banner-ad-desktop")
         val fixedTechSlotClass = if(FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) Some("h250") else None
         classes ++ fixedTechSlotClass
-    }
-  }
-
-  object topSlot {
-
-    def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
-      hasAdOfSize(TopSlot, responsiveSize, metaData, edition)
     }
   }
 

@@ -29,7 +29,6 @@ object Metric extends Logging {
     ("404", CountMetric("kpis-user-404", "beacon on the 404 page that tells us that real users are getting 404 not found")),
 
     // video
-    ("video-tech-flash", CountMetric("video-tech-flash", "video-tech-flash")),
     ("video-tech-html5", CountMetric("video-tech-html5", "video-tech-html5")),
 
     ("sm-page-view", CountMetric("sm-page-view", "sm-page-view")),

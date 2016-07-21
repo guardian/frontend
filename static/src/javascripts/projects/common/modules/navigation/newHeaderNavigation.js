@@ -13,8 +13,7 @@ define([
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
-            mainMenuEl.addClass('shown');
-            mainMenuEl.addClass('off-screen');
+            mainMenuEl.addClass('off-screen shown');
 
             burgerMenu.addClass('new-header__burger-icon--open');
             burgerLink.attr('href', '#');
@@ -37,30 +36,32 @@ define([
 
     function animateMenuClose() {
         return fastdomPromise.write(function () {
-            mainMenuEl.addClass('off-screen');
+            if (mainMenuEl.hasClass('shown')) {
+                mainMenuEl.addClass('off-screen');
 
-            burgerMenu.removeClass('new-header__burger-icon--open');
-            burgerLink.attr('href', mainMenuId);
+                burgerMenu.removeClass('new-header__burger-icon--open');
+                burgerLink.attr('href', mainMenuId);
 
-            // TODO: Support browsers that don't have transitions
-            // We still want to hide this
-            if (mainMenuEl.length > 0) {
+                // TODO: Support browsers that don't have transitions
+                // We still want to hide this
+                if (mainMenuEl.length > 0) {
 
-                mainMenuEl[0].addEventListener('transitionend', function handler() {
+                    mainMenuEl[0].addEventListener('transitionend', function handler() {
 
-                    mainMenuEl[0].removeEventListener('transitionend', handler);
+                        mainMenuEl[0].removeEventListener('transitionend', handler);
 
-                    return fastdomPromise.write(function () {
-                        mainMenuEl.removeClass('off-screen');
-                        mainMenuEl.removeClass('shown');
-                    }).then(function() {
                         return fastdomPromise.write(function () {
-                            $('.new-header__nav__menu-button').focus();
-                            // Users should be able to scroll again
-                            html.css('overflow', '');
+                            mainMenuEl.removeClass('off-screen');
+                            mainMenuEl.removeClass('shown');
+                        }).then(function () {
+                            return fastdomPromise.write(function () {
+                                $('.new-header__nav__menu-button').focus();
+                                // Users should be able to scroll again
+                                html.css('overflow', '');
+                            });
                         });
                     });
-                });
+                }
             }
         });
     }

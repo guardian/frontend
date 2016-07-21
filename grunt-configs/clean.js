@@ -13,10 +13,6 @@ module.exports = function (grunt, options) {
             options.staticTargetDir + 'images',
             options.staticHashDir + 'images'
         ],
-        flash: [
-            options.staticTargetDir + 'flash',
-            options.staticHashDir + 'flash'
-        ],
         fonts: [
             options.staticTargetDir + 'fonts',
             options.staticHashDir + 'fonts'

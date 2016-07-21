@@ -18,7 +18,8 @@ define(['lodash/objects/assign'], function(assign) {
         // If you are going to set autoplay to any other value, note it breaks
         // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
         autoplay: false,
-        preload: 'metadata'
+        preload: 'metadata',
+        techOrder: ['html5']
     };
 
     return function(overrides) {
