@@ -188,6 +188,7 @@
     padding: 50px $gs-gutter * 3 0 $gs-gutter * 5;
     font-weight: bold;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#333333');
     @include mq($until: tablet) {
         padding: 50px $gs-gutter * 2 0 $gs-gutter;
     }
@@ -286,6 +287,7 @@
     color: #ffffff;
     padding: 20px;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#333333');
     @include mq($until: tablet) {
         padding: 20px 70px 10px 20px;
     }
