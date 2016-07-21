@@ -38,7 +38,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerMenu.removeClass('new-header__burger-icon--open');
+                burgerLink.removeClass('new-header__burger-icon--open');
                 burgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
