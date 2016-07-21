@@ -2,7 +2,7 @@
 @import model.Badges.badgeFor
 
 @import _root_.liveblog.Canonical
-@(model: LiveBlogPage)(implicit request: RequestHeader)
+@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
 @import conf.switches.Switches._
@@ -30,7 +30,7 @@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-                        @fragments.meta.metaInline(article)
+                        @fragments.meta.metaInline(article, amp)
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
                     <div class="js-cricket-score"></div>
 
-                    @fragments.mainMedia(article)
+                    @fragments.mainMedia(article, amp)
 
                     @fragments.witnessCallToAction(article.content)
 
