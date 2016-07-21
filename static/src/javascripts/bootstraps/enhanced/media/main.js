@@ -275,7 +275,7 @@ define([
                                             }
                                         });
                                         player.on('adstart', function() {
-                                            player.adSkip(mediaType, 15);
+                                            player.adSkip(mediaType, 2);
                                         });
                                         player.ima.requestAds();
 

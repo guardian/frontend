@@ -1,8 +1,12 @@
 define([
+    'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/template',
     'text!common/views/ui/video-ads-skip-overlay.html'
 ], function(
+    qwery,
+    bean,
     $,
     template,
     adsSkipOverlayTemplate
@@ -32,7 +36,7 @@ define([
                 },
                 skip: function () {
                     $('.js-ads-skip', this.el()).hide();
-                    this.trigger(constructEventName('preroll:skip', this));
+                    this.trigger(mediaType + ':preroll:skip');
                     // in lieu of a 'skip' api, rather hacky way of achieving it
                     this.ima.onAdComplete_();
                     this.ima.onContentResumeRequested_();
