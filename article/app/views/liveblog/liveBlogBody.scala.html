@@ -41,9 +41,14 @@
                     <div class="content__main-column content__main-column--liveblog">
                         @fragments.standfirst(article)
 
-                        <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
-                        </div>
+                        @if(!amp) {
+                            <div class="content__updated-container content__updated-container--liveblog">
+                                @if(article.fields.isLive) {
+                                    <span class="blog__live live-pulse-icon flashing-image">LIVE</span>
+                                }
+                                Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -84,14 +89,16 @@
 
                     @fragments.dropdown("Live feed", Some("live-feed"), true) {
                         <div class="js-article__container" data-component="body">
-                            <div class="toast__space-reserver">
-                                <div id="toast__tofix" class="toast__container">
-                                    <button class="toast__button toast__button--closed button button--large">
-                                        <span class="toast__text"></span>
-                                        @fragments.inlineSvg("refresh", "icon", List(""))
-                                    </button>
+                            @if(!amp) {
+                                <div class="toast__space-reserver">
+                                    <div id="toast__tofix" class="toast__container">
+                                        <button class="toast__button toast__button--closed button button--large">
+                                            <span class="toast__text"></span>
+                                            @fragments.inlineSvg("refresh", "icon", List(""))
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             @if(model.currentPage.currentPage.isArchivePage) {
                                 @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
                             }
