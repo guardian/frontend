@@ -10,6 +10,7 @@ case class HostedArticlePage(
   pageName: String,
   pageTitle: String,
   standfirst: String,
+  standfirstLink: String,
   facebookImageUrl: String,
   cta: HostedCallToAction,
   ctaBanner: String,
