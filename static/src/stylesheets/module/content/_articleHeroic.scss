@@ -268,9 +268,30 @@ $labour-liverpool-header-element-opacity: .85;
     overflow:hidden;
   }
 
-  .caption{
+  .caption--img{
+    &::before{
+      //Apologies for the important
+      display: none !important;
+    }
+  }
+
+  a{
+    position: relative;
+    top: 0px;
+    z-index: 10;
+  }
+
+  .video-caption-bubble{
+    width: 100%;
+    z-index: 0;
     position: absolute;
-    bottom: 30px;
+  }
+}
+figcaption{
+  .caption-heroic{
+    position: absolute;
+    top: 80%;
     z-index: 40;
+    max-width: $gs-gutter;
   }
 }
