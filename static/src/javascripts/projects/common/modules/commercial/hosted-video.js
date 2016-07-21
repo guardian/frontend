@@ -15,7 +15,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
-    'common/modules/video/fullscreener',
+    'common/modules/media/videojs-plugins/fullscreener',
     'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
@@ -44,7 +44,6 @@ define([
 
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
-        // It doesn't matter what kind of tech this is, flash or html5.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
         // Hide superfluous controls, and label useful buttons.
@@ -92,8 +91,9 @@ define([
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
 
-                    if (!$videoEl.length) {
-                        resolve();
+                    if ($videoEl.length === 0) {
+                        // halt execution
+                        return resolve();
                     }
 
                     player = videojs($videoEl.get(0), videojsOptions());

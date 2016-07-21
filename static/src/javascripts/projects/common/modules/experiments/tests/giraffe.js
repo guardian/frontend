@@ -20,7 +20,7 @@ define([
 ) {
     return function () {
 
-        this.id = 'GiraffeArticle';
+        this.id = 'GiraffeArticle20160719';
         this.start = '2016-07-18';
         this.expiry = '2016-08-01';
         this.author = 'Alex Ware';
@@ -34,7 +34,7 @@ define([
         this.idealOutcome = '';
         this.canRun = function () {
             var pageObj = window.guardian.config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog) && pageObj.edition === 'UK';
+            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
         var writer = function (linkText, linkHref, copy) {

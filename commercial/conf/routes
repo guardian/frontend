@@ -20,13 +20,6 @@ GET        /commercial/masterclasses.json                                       
 GET        /commercial/soulmates/$subgroup<\w+>.json                            controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET        /commercial/soulmates-test/$subgroup<\w+>.json                       controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 
-# Money merchandising components
-GET        /commercial/money/bestbuys.json                                      controllers.commercial.MoneyOffers.renderBestBuys
-GET        /commercial/money/savings/:savingsType                               controllers.commercial.MoneyOffers.savings(savingsType)
-GET        /commercial/money/current-accounts/:currentAccountType               controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
-GET        /commercial/money/credit-cards/:creditCardType                       controllers.commercial.MoneyOffers.creditCards(creditCardType)
-GET        /commercial/money/loans/:loanType                                    controllers.commercial.MoneyOffers.loans(loanType)
-
 # Book merchandising components
 GET        /commercial/books/book.json                                          controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                         controllers.commercial.BookOffersController.renderBooks

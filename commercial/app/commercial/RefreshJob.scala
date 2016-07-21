@@ -3,7 +3,6 @@ package commercial
 import common.{JobScheduler, Logging}
 import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
-import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
 
 trait RefreshJob extends Logging {
@@ -48,13 +47,3 @@ class IndustriesRefresh(val jobs: JobScheduler) extends RefreshJob {
 
   def refresh() = Industries.refresh()
 }
-
-class MoneyBestBuysRefresh(val jobs: JobScheduler) extends RefreshJob {
-
-  val name: String = "Best Buys"
-
-  def refresh() = BestBuysAgent.refresh()
-}
-
-
-

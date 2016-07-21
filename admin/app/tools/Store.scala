@@ -46,9 +46,6 @@ trait Store extends Logging with Dates {
   def putTopAboveNavSlotTakeovers(takeovers: String) {
     S3.putPublic(topAboveNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
   }
-  def putTopSlotTakeovers(takeovers: String) {
-    S3.putPublic(topSlotTakeoversKey, takeovers, defaultJsonEncoding)
-  }
   def putDfpTemplateCreatives(creatives: String) {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
@@ -78,7 +75,6 @@ trait Store extends Logging with Dates {
 
   def getSlotTakeoversReport(slotName: String): Option[String] = slotName match {
     case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
-    case "top" => S3.get(topSlotTakeoversKey)
     case _ => None
   }
 

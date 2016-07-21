@@ -233,6 +233,8 @@
 .show-cta .hosted-gallery__cta,
 .show-oj .hosted-gallery__oj {
     opacity: 1;
+    transition-delay: 500ms;
+    transition-duration: 500ms;
     visibility: visible;
     .hosted-gallery__cta-link {
         pointer-events: auto;

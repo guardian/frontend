@@ -6,6 +6,7 @@ define([
     'common/utils/$',
     'qwery',
     'common/utils/config',
+    'common/utils/url',
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
@@ -22,6 +23,7 @@ define([
              $,
              qwery,
              config,
+             url,
              detect,
              FiniteStateMachine,
              mediator,
@@ -201,7 +203,7 @@ define([
                 bonzo($ojFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 0 : 'null');
+                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 20 : 40);
             }
         });
         function getFrame(desiredRatio, w, h) {
@@ -299,6 +301,8 @@ define([
                     bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
                     bonzo(this.$galleryEl).toggleClass('show-cta', this.index === config.page.ctaIndex + 1);
                 }
+
+                url.pushUrl({}, document.title, config.page.pageName + '#img-' + this.index, true);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },
@@ -352,7 +356,7 @@ define([
                 this.loadSurroundingImages(this.index, this.$images.length);
                 if (this.useSwipe) {
                     this.swipeContainerWidth = this.$galleryEl.dim().width;
-                    this.translateContent(this.$images.length, 0, 0);
+                    this.translateContent(this.index, 0, 0);
                 }
                 this.setPageWidth();
             }.bind(this);
@@ -409,6 +413,16 @@ define([
         }
     };
 
+    HostedGallery.prototype.loadAtIndex = function (i) {
+        this.index = i;
+        this.trigger('reload');
+        if(this.useSwipe){
+            this.translateContent(this.index, 0, 0);
+        } else {
+            this.scrollTo(this.index);
+        }
+    };
+
     function init() {
         return loadCssPromise.then(function () {
             var gallery,
@@ -419,11 +433,11 @@ define([
             gallery = new HostedGallery();
             match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch gallery at that index
-                gallery.index = parseInt(match[1], 10);
+                gallery.loadAtIndex(parseInt(match[1], 10));
             } else {
                 res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
                 if (res) {
-                    gallery.index = parseInt(res[1], 10);
+                    gallery.loadAtIndex(parseInt(res[1], 10));
                 }
             }
         });

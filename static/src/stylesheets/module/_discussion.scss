@@ -840,14 +840,13 @@ $comment-recommend-button-size: 19px;
 .d-comment__actions {
     position: absolute;
     bottom: $gs-baseline;
-    opacity: .7;
     .discussion--closed & {
         .d-comment__action--reply,
         .d-comment__action-separator,
         .d-comment__action-pick {
             display: none;
         }
-        .sharing-component {
+        .d-comment__action--share {
             margin: 0;
         }
     }
@@ -855,6 +854,10 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__actions:hover {
     opacity: 1;
+}
+
+.d-comment__actions--left {
+    bottom: .5rem;
 }
 
 .d-comment__action {
@@ -868,6 +871,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--reply {
     cursor: pointer;
+    margin-right: $gs-gutter / 4;
 
     &:hover {
         text-decoration: underline;
@@ -915,30 +919,28 @@ $comment-recommend-button-size: 19px;
     }
 }
 
-.sharing-component {
-    height: 1.2rem;
+.d-comment__action--share {
     vertical-align: middle;
-    margin-left: 5px;
+    margin-left: $gs-gutter / 4;
 
     &:hover {
-        .sharing-buttons {
-            opacity: 1;
+        .sharing-text span:nth-child(2) {
+            text-decoration: underline;
         }
 
         .comment-facebook-icon,
         .comment-twitter-icon {
-            height: 1.2rem;
-            min-width: 1.2rem;
-            margin: 0;
+            transform: scale(1);
             cursor: pointer;
+            vertical-align: middle;
         }
 
         .comment-facebook-icon {
-            transition: all .3s ease-in-out;
+            transition: all .2s ease-in-out;
         }
 
         .comment-twitter-icon {
-            transition: all .3s .15s ease-in-out;
+            transition: all .2s .1s ease-in-out;
         }
     }
 }
@@ -946,8 +948,7 @@ $comment-recommend-button-size: 19px;
 .sharing-text {
     cursor: pointer;
     display: inline-block;
-    float: left;
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4;
 }
 
 .comment-share-icon {
@@ -965,17 +966,15 @@ $comment-recommend-button-size: 19px;
 
 .comment-facebook-icon,
 .comment-twitter-icon {
-    height: 0;
-    min-width: 0;
-    margin: .6rem;
+    transform: scale(0);
 }
 
 .comment-facebook-icon {
-    transition: all .3s .15s ease-in-out;
+    transition: all .2s .1s ease-in-out;
 }
 
 .comment-twitter-icon {
-    transition: all .3s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 /* Report

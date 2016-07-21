@@ -3,12 +3,12 @@
 @import org.jsoup.safety.Whitelist
 @import org.apache.commons.lang.StringEscapeUtils
 
-<div class="sharing-component d-comment__action">
+<div class="d-comment__action d-comment__action--share">
 
-    <div class="sharing-text">@fragments.inlineSvg("share", "icon", List("comment-share-icon")) Share</div>
+    <div class="sharing-text">@fragments.inlineSvg("share", "icon", List("comment-share-icon")) <span>Share</span></div>
 
     <div class="sharing-buttons" data-link-name="comment social">
-    @defining(s"${comment.discussion.webUrl}") { permalink =>
+    @defining(s"${comment.webUrl}") { permalink =>
         @defining(StringEscapeUtils.unescapeHtml(Jsoup.clean(comment.body, Whitelist.none()))) { commentBody =>
             <a href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"""${comment.profile.displayName} commented: "$commentBody"""")).href"
             target="_blank"
@@ -22,7 +22,7 @@
 
             @* Twitter allows 140 characters. We need 2 for the quotes and 24 for the URL. *@
             @defining(if(commentBody.length <= 114) s""""$commentBody"""" else s""""${commentBody.take(111)}..."""") { commentText =>
-                <a href="@ShareLinks.createShareLinkForComment(platform = Twitter, href = comment.webUrl, text = commentText).href"
+                <a href="@ShareLinks.createShareLinkForComment(platform = Twitter, href = permalink, text = commentText).href"
                 target="_blank"
                 class="social__action social-icon-wrapper"
                 data-link-name="social-comment : twitter">

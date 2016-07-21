@@ -15,8 +15,8 @@ define([
         this.expiry = '2016-29-07';
         this.author = 'Zofia Korcz';
         this.description = 'An autoplay overlay with the next video on a hosted page.';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.75;
+        this.audienceOffset = 0.25;
         this.successMeasure = 'People will either more often click on the next hosted video or wait until end of the current video to be redirected into the next video page url.';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Next video autoplay: Cancel autoplay of the next video, Discover Zoe from Renault, Next Hosted Video Autoplay, Immediately play the next video, Next Hosted Video';

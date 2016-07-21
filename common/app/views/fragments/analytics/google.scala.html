@@ -17,43 +17,53 @@
         @***************************************************************************************
         * Code that is customised by us                                                        *
         ***************************************************************************************@
-        ga('create', '@GoogleAnalyticsAccount.account', 'auto');
+        @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest, GoogleAnalyticsAccount.headerBidding)) {
+            ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName');
+        }
 
-        ga('set', 'forceSSL', true);
+        @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
+            ga('@{trackerName}.set', 'forceSSL', true);
 
-        ga('set', 'title', guardian.config.page.webTitle);
+            ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
 
-        @***************************************************************************************
-        * Custom dimensions common to all platforms across the whole Guardian estate           *
-        ***************************************************************************************@
-        ga('set', 'dimension1', guardian.config.ophan.pageViewId);
-        ga('set', 'dimension2', guardian.config.ophan.browserId);
-        ga('set', 'dimension3', 'theguardian.com'); @* Platform *@
+            @***************************************************************************************
+            * Custom dimensions common to all platforms across the whole Guardian estate           *
+            ***************************************************************************************@
+            ga('@{trackerName}.set', 'dimension1', guardian.config.ophan.pageViewId);
+            ga('@{trackerName}.set', 'dimension2', guardian.config.ophan.browserId);
+            ga('@{trackerName}.set', 'dimension3', 'theguardian.com'); @* Platform *@
 
-        @***************************************************************************************
-        * Custom dimensions for 'editorial' platforms (this site, the mobile apps, etc.)       *
-        * Some of these will be undefined for non-content pages, but that's fine.              *
-        ***************************************************************************************@
-        ga('set', 'dimension4', guardian.config.page.section);
-        ga('set', 'dimension5', guardian.config.page.contentType);
-        ga('set', 'dimension6', guardian.config.page.commissioningDesk);
-        ga('set', 'dimension7', guardian.config.page.contentId);
-        ga('set', 'dimension8', guardian.config.page.authorIds);
-        ga('set', 'dimension9', guardian.config.page.keywordIds);
-        ga('set', 'dimension10', guardian.config.page.toneIds);
-        ga('set', 'dimension11', guardian.config.page.seriesId);
+            @***************************************************************************************
+            * Custom dimensions for 'editorial' platforms (this site, the mobile apps, etc.)       *
+            * Some of these will be undefined for non-content pages, but that's fine.              *
+            ***************************************************************************************@
+            ga('@{trackerName}.set', 'dimension4', guardian.config.page.section);
+            ga('@{trackerName}.set', 'dimension5', guardian.config.page.contentType);
+            ga('@{trackerName}.set', 'dimension6', guardian.config.page.commissioningDesk);
+            ga('@{trackerName}.set', 'dimension7', guardian.config.page.contentId);
+            ga('@{trackerName}.set', 'dimension8', guardian.config.page.authorIds);
+            ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
+            ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
+            ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
 
-        ga('send', 'pageview', {
-            hitCallback: function() {
-                var image = new Image();
-                image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
-            }
-        });
+            ga('@{trackerName}.send', 'pageview', {
+                hitCallback: function() {
+                    var image = new Image();
+                    image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
+                }
+            });
+        }
     </script>
 
     @*
-    If at some point in the future this goes live, please somebody think of the "noscript" for Google Analytics
+    TODO For now we only include a confidence beacon in the noscript.
+    If this brings our confidence up, we should also request a pixel
+    from a Fastly/frontend endpoint that can make a server-side call to GA to record the pageview.
     *@
+    <noscript id="googleNoScript">
+      <img id="googleConfidenceNoScriptImage" alt=""
+        src="@{Configuration.debug.beaconUrl}/count/pvg.gif" width="1" height="1" class="u-h" />
+    </noscript>
 }
 
 

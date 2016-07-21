@@ -3,11 +3,13 @@
 @import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.toneClass
+@import views.support.{ImgSrc, Item140}
 
 @defining(model.article) { article =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
-            class="content content--article"
+            class="content content--article
+            @if(article.content.tags.isLabourLiverpoolSeries){content--labour-liverpool}"
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -21,6 +23,10 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
+                            @if(article.content.tags.isLabourLiverpoolSeries) {
+                                <img class="labour-liverpool-cutout hide-on-mobile" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
+                                @fragments.inlineSvg("quote", "icon", List("labour-liverpool-quotes"))
+                            }
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
                         <div class="after-article js-after-article"></div>

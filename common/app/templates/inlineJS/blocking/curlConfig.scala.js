@@ -5,6 +5,8 @@
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
     apiName: 'require',
+    @* We need this as a dependecy for the ima and ads plugins *@
+    @if(!Configuration.assets.useHashedBundles){ preloads: ['bootstraps/enhanced/media/videojs-global'], }
     paths: {
         @if(Configuration.assets.useHashedBundles) {
             'bootstraps/enhanced/main':          '@Static("javascripts/bootstraps/enhanced/main.js")',
@@ -62,14 +64,13 @@ window.curlConfig = {
             svgs:                           '../inline-svgs',
 
             // video
-            'bootstraps/enhanced/media/video-player':   'bootstraps/enhanced/media/video-player-dev.js',
-            videojs:                                    'components/video.js/video.js',
-            'videojs-contrib-ads':                      'components/videojs-contrib-ads/videojs.ads.js',
-            videojsembeddev:                            'bootstraps/enhanced/media/videojsembed-dev.js',
-            videojsembed:                               'components/videojs-embed/videojs.embed.js',
-            'videojs-ima':                              'components/videojs-ima/videojs.ima.js',
-            videojspersistvolume:                       'components/videojs-persistvolume/videojs.persistvolume.js',
-            videojsplaylist:                            'components/videojs-playlist-audio/videojs.playlist.js',
+            'videojs-ima':                  'bootstraps/enhanced/media/videojs-ima.js',
+            'videojs':                      'components/video.js/video.js',
+            'videojs-ima-lib':              'components/videojs-ima/videojs.ima.js',
+            'videojs-ads-lib':              'components/videojs-contrib-ads/videojs.ads.js',
+            'videojs-embed':                'components/videojs-embed/videojs.embed.js',
+            'videojs-persistvolume':        'components/videojs-persistvolume/videojs.persistvolume.js',
+            'videojs-playlist':             'components/videojs-playlist-audio/videojs.playlist.js',
 
             // These paths are for the pre-fetch-modules.js performance-optimisation module, used by boot.js.
             // The resolved paths are loaded through pre-fetch-modules XHR, not curl, so they don't inherit the standard baseUrl.
