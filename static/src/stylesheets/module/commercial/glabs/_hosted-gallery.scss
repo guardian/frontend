@@ -188,6 +188,7 @@
     padding: 50px $gs-gutter * 3 0 $gs-gutter * 5;
     font-weight: bold;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#B4333333');
     @include mq($until: tablet) {
         padding: 50px $gs-gutter * 2 0 $gs-gutter;
     }
@@ -285,6 +286,7 @@
     color: #ffffff;
     padding: 20px;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#B4333333');
     @include mq($until: tablet) {
         padding: 20px 70px 10px 20px;
     }
@@ -380,6 +382,13 @@
     position: relative;
     align-self: flex-end;
     padding-bottom: 3px;
+}
+
+.has-no-flex .hosted-gallery__captions {
+    width: calc(100% - 170px);
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .hosted-gallery__caption {
@@ -512,12 +521,12 @@ $progressColor: #ffffff;
 
     .inline-arrow-up {
         top: -31px;
-        transform: rotate(-90deg)
+        transform: rotate(-90deg);
     }
 
     .inline-arrow-down {
         bottom: -31px;
-        transform: rotate(90deg)
+        transform: rotate(90deg);
     }
 
     .hosted-gallery__progress-border {
@@ -553,6 +562,7 @@ $progressColor: #ffffff;
 .hosted-gallery__lower-bar {
     background: $neutral-1;
     z-index: 1;
+    position: relative;
     @include mq($until: desktop) {
         padding: 0;
     }
