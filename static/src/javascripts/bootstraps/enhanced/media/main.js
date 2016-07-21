@@ -18,7 +18,8 @@ define([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
+    'common/modules/media/videojs-plugins/fullscreener',
+    'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
@@ -48,6 +49,7 @@ define([
     ab,
     events,
     fullscreener,
+    skipAd,
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
@@ -138,7 +140,7 @@ define([
     }
 
     function initPlayer(withPreroll) {
-        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
+        videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
 
         fastdom.read(function () {
@@ -273,7 +275,7 @@ define([
                                             }
                                         });
                                         player.on('adstart', function() {
-                                            player.adSkipCountdown(15);
+                                            player.skipAd(mediaType, 15);
                                         });
                                         player.ima.requestAds();
 

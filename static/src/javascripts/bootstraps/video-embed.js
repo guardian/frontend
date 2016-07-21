@@ -12,7 +12,7 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/component',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
+    'common/modules/media/videojs-plugins/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
