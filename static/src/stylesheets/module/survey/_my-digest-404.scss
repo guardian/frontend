@@ -74,7 +74,7 @@
     clear: both;
 
     position: relative;
-    min-height: 3.5em;
+    min-height: 3.5rem;
     border-left: thin dotted $news-main-2;
 }
 
@@ -87,23 +87,23 @@
     content: counter(digest-steps);
     position: absolute;
     text-align: center;
-    line-height: 2em;
+    line-height: 2rem;
     background-color: #ffffff;
     border: thin solid $news-main-2;
-    border-radius: 1em;
+    border-radius: 1rem;
     color: $news-main-1;
     float: left;
-    width: 2em;
-    height: 2em;
-    left: -1.1em;
+    width: 2rem;
+    height: 2rem;
+    left: -1.1rem;
 }
 
 .my-digest-steps__text {
     @include fs-textSans(4);
     display: block;
-    line-height: 2em;
-    margin-left: 2em;
-    margin-bottom: 1em;
+    line-height: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
 }
 
 .my-digest-steps__create-button {

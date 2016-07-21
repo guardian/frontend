@@ -22,7 +22,7 @@
     //No script tag
     a {
         color: #ffffff;
-        padding: 0 .3em;
+        padding: 0 .3rem;
     }
 
     .fsLabel {
@@ -47,7 +47,7 @@
         border-radius: 100px;
         border: 0;
         height: 32px;
-        padding-left: 1em;
+        padding-left: 1rem;
         box-sizing: border-box;
         margin-bottom: $gs-baseline;
     }
@@ -95,9 +95,9 @@
     border-radius: 100px;
     border: 0;
     height: 2.5em;
-    padding-left: 1em;
+    padding-left: 1rem;
     box-sizing: border-box;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .email-signup__action-button {
@@ -105,9 +105,9 @@
     background-color: $news-main-1;
     border: 2px solid $guardian-brand-light;
     border-radius: 100px;
-    height: 2.5em;
+    height: 2.5rem;
     color: #ff0000;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .email-signup__aside-text {
