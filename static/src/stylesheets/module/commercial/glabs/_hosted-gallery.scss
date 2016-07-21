@@ -197,9 +197,8 @@
     @include circular;
     @include f-headlineSans;
     position: relative;
-    display: block;
-    width: 160px;
-    padding: 8px 8px 8px 12px;
+    display: inline-block;
+    padding: 8px 12px;
     margin: 16px 0;
     color: #ffffff;
     font-weight: bold;
