@@ -33,8 +33,11 @@ define([
             var lazyLoad = dfpEnv.advertsToLoad
                 .filter(function (advert) {
                     var rect = advert.node.getBoundingClientRect();
+                    var isNotHidden = rect.top + rect.left + rect.right + rect.bottom !== 0;
+                    var isNotTooFarFromTop = (1 - depthOfScreen) * viewportHeight < rect.bottom;
+                    var isNotTooFarFromBottom = rect.top < viewportHeight * depthOfScreen;
                     // load the ad only if it's setting within an acceptable range
-                    return (1 - depthOfScreen) * viewportHeight < rect.bottom && rect.top < viewportHeight * depthOfScreen;
+                    return isNotHidden && isNotTooFarFromTop && isNotTooFarFromBottom;
                 });
 
             lazyLoad.forEach(function(advert) {
