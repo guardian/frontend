@@ -107,7 +107,7 @@
 }
 
 .my-digest-steps__create-button {
-   @include fs-textSans(4);
+    @include fs-textSans(4);
     position: relative;
     color: $guardian-brand;
     border: thin solid $news-main-2;
