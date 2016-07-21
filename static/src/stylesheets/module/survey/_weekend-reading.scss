@@ -1,0 +1,177 @@
+.email-signup-main {
+    background-color: $news-main-1;
+}
+
+.email-signup-main:before {
+    height: 26px;
+    content: '';
+    background-color: $news-main-1;
+    display: block;
+}
+
+.email-signup {
+    background-color: $news-main-1;
+    min-width: 16em;
+}
+
+.content {
+    padding-bottom: $gs-baseline * 2;
+}
+
+.email-signup {
+    //No script tag
+    a {
+        color: #ffffff;
+        padding: 0 .3em;
+    }
+
+    .fsLabel {
+        @include fs-header(2);
+
+        color: #ffffff;
+        padding: 0 .3rem;
+
+    }
+
+    .fsPagination {
+        margin: 0;
+    }
+
+    .fsRequiredMarker {
+        display: none;
+    }
+
+    .fsField {
+        @include fs-textSans(2);
+        width: 100%;
+        border-radius: 100px;
+        border: 0;
+        height: 32px;
+        padding-left: 1em;
+        box-sizing: border-box;
+        margin-bottom: $gs-baseline;
+    }
+
+    .fsSubmitButton {
+        @include fs-textSans(2);
+        display: inline-block;
+        float: left;
+        width: 100%;
+        height: 32px;
+        line-height: 28px;
+        overflow: hidden;
+        margin-bottom: $gs-baseline;
+        border-radius: 15px;
+        border: 1px solid currentColor;
+        color: #ffffff;
+        background-color: transparent;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: darken(#ffffff, 15%);
+        }
+
+    }
+
+    .fsValidationError {
+        background-color: $news-main-1;
+
+        .fsLabel {
+            color: #ffffff;
+            background-image: none;
+            padding: 0 .3rem;
+        }
+    }
+
+    .fsError {
+        margin: 0 .3rem;
+
+    }
+}
+
+.email-signup__field-input {
+    width: 100%;
+    border-radius: 100px;
+    border: 0;
+    height: 2.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.email-signup__action-button {
+    width: 100%;
+    background-color: $news-main-1;
+    border: 2px solid $guardian-brand-light;
+    border-radius: 100px;
+    height: 2.5em;
+    color: #ff0000;
+    margin-bottom: 1em;
+}
+
+.email-signup__aside-text {
+    @include fs-textSans(2);
+
+    color: $guardian-brand-light;
+    padding: 0 .3rem;
+}
+
+.weekend-read-header {
+    color: #ffffff;
+}
+
+.weekend-read-header__heading {
+    @include fs-header(2);
+
+    padding: 0 .3rem;
+}
+
+.weekend-read-header__text {
+    @include fs-bodyCopy(2);
+
+    padding: 0 .3rem;
+}
+
+.weekend-read-header__terms {
+    @include fs-textSans(2);
+    padding-left: .3rem;
+    padding-bottom: 20px;
+    color: $guardian-brand-light;
+}
+
+.weekend-read-sample {
+    margin-top: $gs-baseline;
+    background-color: #ffffff;
+}
+
+.weekend-read-sample__button {
+    @include fs-textSans(2);
+    position: relative;
+    color: $neutral-1;
+    border: thin solid $neutral-3;
+    background-color: transparent;
+    height: 32px;
+    line-height: 28px;
+    border-radius: 100px;
+    padding-left: 12px;
+    padding-right: 32px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $neutral-2;
+    }
+
+    .inline-arrow-right {
+        fill: $neutral-2;
+        position: absolute;
+        right: 2px;
+        top: 1px;
+    }
+}
+
+.email-signup__aside-text__frequency {
+    color: #ffffff;
+    float: right;
+}
