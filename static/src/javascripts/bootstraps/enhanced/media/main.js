@@ -409,6 +409,10 @@ define([
         }
     }
 
+    function initMinute() {
+        require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net//mi-guardian-prod.js']);
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -437,6 +441,8 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+
+        initMinute();
     }
 
     return {
