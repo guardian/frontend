@@ -57,12 +57,16 @@ create_frontend_properties() {
       mkdir "$path"
     fi
     
-    if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
-      echo your hard disk is not encrypted! follow these instructions: https://support.apple.com/en-gb/HT204837
-    else
-      aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+    if linux; then
+        EXTRA_STEPS+=("Sorry, can't check if your hard disk is encryped so won't download frontend.properties.  Please check (applies to both portable and Desktop machines) and download from s3://aws-frontend-store/template-frontend.properties")
+    elif mac; then
+      if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
+        EXTRA_STEPS+=("won't download frontend.properties as your hard disk is not encrypted! Follow these instructions: https://support.apple.com/en-gb/HT204837")
+      else
+        aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+      fi
     fi
- 
+    
   fi
 }
 
