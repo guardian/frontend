@@ -38,5 +38,5 @@ define([], function (
         return this.queue.length === 0;
     };
 
-    return Queue
+    return Queue;
 });
