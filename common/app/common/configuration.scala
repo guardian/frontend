@@ -307,7 +307,6 @@ class GuardianConfiguration extends Logging {
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
-    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers-v1.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 

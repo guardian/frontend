@@ -80,5 +80,3 @@ trait AdSlotAgent {
 sealed abstract class AdSlot(val name: String)
 
 case object TopAboveNavSlot extends AdSlot("top-above-nav")
-
-case object TopSlot extends AdSlot("top")

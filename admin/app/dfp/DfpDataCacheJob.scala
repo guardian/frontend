@@ -177,7 +177,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
       Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
         data.topAboveNavSlotTakeovers))))
-      Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
     }
   }
 }

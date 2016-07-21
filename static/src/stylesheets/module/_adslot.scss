@@ -62,10 +62,7 @@
  * Banner ads
  */
 
-.top-banner-ad-container--mobile {
-    background-color: #f0f0f0;
-}
-.top-banner-ad-container--desktop {
+.top-banner-ad-container {
     background-color: $neutral-8;
 }
 
@@ -108,15 +105,6 @@
                 margin-right: auto;
             }
         }
-    }
-}
-
-.ad-slot--top-banner-ad-mobile {
-    min-height: 100px;
-    padding: $gs-baseline 0;
-
-    @include mq(tablet) {
-        display: none;
     }
 }
 
@@ -173,11 +161,6 @@
     @include mq(wide) {
         text-align: left;
     }
-}
-
-/* horrible, but to centre align new doubleclick studio ads */
-.ad-slot--top > div > div {
-    margin: 0 auto;
 }
 
 /**
@@ -667,9 +650,5 @@
 .ad-slot--fluid250 {
     @include mq(desktop) {
         min-height: 250px;
-    }
-
-    &.ad-slot--top-banner-ad-mobile {
-        padding-bottom: $gs-baseline*1.5;
     }
 }

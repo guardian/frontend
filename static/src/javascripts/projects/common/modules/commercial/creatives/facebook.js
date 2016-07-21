@@ -60,7 +60,7 @@ define([
                 );
             });
 
-            var markup = facebookTpl(assign({ externalLink: svgs('externalLink') }, adUnits[this.params.placement]));
+            var markup = facebookTpl(assign({ externalLink: svgs('externalLink'), testMode: this.params.testMode }, adUnits[this.params.placement]));
             var labelMarkup = labelTpl({ data: {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',
