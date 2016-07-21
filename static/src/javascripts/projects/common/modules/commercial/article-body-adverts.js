@@ -108,6 +108,7 @@ define([
                 }
                 insertAdAtPara(para, adDefinition, 'inline');
                 bodyAds += 1;
+                countAdded += 1;
             }
             return countAdded;
         }
