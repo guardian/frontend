@@ -81,38 +81,58 @@
             top: 20px;
             width: gs-span(16) + $gs-gutter * 2;
         }
+    }
+    .animal {
+        position: relative;
+        margin-top: 40px;
 
         &.con-artist {
             .animal__stripe-character {
                 position: absolute;
-                top: 0px;
-                left: 280px;
+                top: -117px;
+                left: 42px;
             }
         }
         &.rookie {
+            margin-top: 80px;
             .animal__stripe-character {
                 position: absolute;
-                top: 0px;
-                right: 280px;
+                top: -154px;
+                right: 176px;
+            }
+        }
+        &.buffalo {
+            margin-top: 244px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -230px;
+                left: 80px;
             }
         }
         &.dmv-employee {
+            margin-top: 200px;
             .animal__stripe-character {
                 position: absolute;
-                top: 0px;
+                top: -223px;
                 right: 0px;
             }
         }
         &.desk-clerk {
+            margin-top: 320px;
             .animal__stripe-character {
                 position: absolute;
-                top: 0px;
-                left: 0px;
+                top: -285px;
+                left: 100px;
             }
         }
-    }
-    .animal {
-        position: relative;
+        &.pop-star {
+            margin-top: 224px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -206px;
+                left: 0;
+            }
+        }
     }
     .animal__stripe-odd {
         @include animal-stripe;
@@ -123,6 +143,26 @@
         background-color: #3370b3;
     }
     .animal__info {
-        padding-top: 260px;
+        padding-top: 276px;
+    }
+    .animal__info-poster {
+        position: absolute;
+        left: -160px;
+        padding-right: 20px;
+    }
+    .animal__info-about-header {
+        @include fs-textSans(4);
+        font-size: 30px;
+        line-height: 22px;
+        padding-bottom: 16px;
+        font-weight: bold;
+    }
+    .animal__info-about-download {
+        display: block;
+        width: 194px;
+        font-weight: 900;
+        color: #333333;
+        border-bottom: $zootropolisColor 2px solid;
+        text-decoration: none;
     }
 }

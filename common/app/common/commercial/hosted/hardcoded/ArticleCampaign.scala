@@ -37,8 +37,18 @@ object ArticleCampaign {
     mainPicture = Static("images/commercial/zootropolis.png"),
     twitterTxt = "TODO  #ad: ",
     emailTxt = "TODO",
+    conArtistPic = Static("images/commercial/con-artist.png"),
+    conArtistPoster = Static("images/commercial/con-artist-poster.png"),
+    rookiePic = Static("images/commercial/rookie.png"),
+    rookiePoster = Static("images/commercial/rookie-poster.png"),
+    chiefPic = Static("images/commercial/chief.png"),
+    chiefPoster = Static("images/commercial/chief-poster.png"),
     slothPic = Static("images/commercial/sloth.png"),
-    deskClerkPic = Static("images/commercial/desk-clerk.png")
+    slothPoster = Static("images/commercial/sloth-poster.png"),
+    deskClerkPic = Static("images/commercial/desk-clerk.png"),
+    deskClerkPoster = Static("images/commercial/desk-clerk-poster.png"),
+    gazellePic = Static("images/commercial/popstar.png"),
+    gazellePoster = Static("images/commercial/popstar-poster.png")
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
