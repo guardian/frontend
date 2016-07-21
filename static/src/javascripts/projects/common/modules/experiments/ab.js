@@ -13,7 +13,8 @@ define([
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
-    'common/modules/experiments/tests/video-caption'
+    'common/modules/experiments/tests/video-caption',
+    'common/modules/experiments/tests/ad-feedback'
 ], function (
     reportError,
     config,
@@ -29,7 +30,8 @@ define([
     JoinDiscussionAfterPoll,
     HostedAutoplay,
     Giraffe,
-    VideoCaption
+    VideoCaption,
+    AdFeedback
 ) {
 
     var TESTS = [
@@ -39,7 +41,8 @@ define([
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
-        new VideoCaption()
+        new VideoCaption(),
+        new AdFeedback()
     ];
 
     var participationsKey = 'gu.ab.participations';

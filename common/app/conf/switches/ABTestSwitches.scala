@@ -83,4 +83,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 7, 25),
     exposeClientSide = true
   )
+
+  val ABAdFeedbackSwitch = Switch(
+    SwitchGroup.ABTests,
+    "ab-ad-feedback",
+    "Solicit feedback for ad impressions",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On, // TODO - Set SafeState OFF!
+    sellByDate = new LocalDate(2016, 8, 25),
+    exposeClientSide = true
+  )
 }
