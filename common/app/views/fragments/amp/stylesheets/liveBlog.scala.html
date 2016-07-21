@@ -44,57 +44,74 @@
     margin-bottom: 0.375rem;
 }
 
-/**
- * Dropdown
- */
-
-.dropdown--key-events, .dropdown--live-feed {
-    margin-top: 0.75rem;
-    border-top: 0;
-}
-
-.dropdown--key-events .dropdown__button, .dropdown--live-feed .dropdown__button {
-    background-color: #ffffff;
-    padding-right: 1.25rem;
-    padding-left: 1.25rem;
-}
-
-.dropdown--key-events .dropdown__label, .dropdown--live-feed .dropdown__label {
-    font-size: 1.25rem;
-    line-height: 1.5rem;
-    font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
-    font-weight: 900;
-}
-
-.dropdown-styled .dropdown__button {
-    color: #333;
-    text-align: left;
-}
-
-.dropdown-styled .dropdown__button .inline-icon {
-    background-color: #767676;
-}
-
-.dropdown-styled .dropdown__button .control {
-    border-color: #dfdfdf;
-    float: right;
+.rounded-icon {
+    border-radius: 62.5rem;
+    display: inline-block;
+    vertical-align: middle;
     position: relative;
 }
 
-.inline-icon {
-    fill: #ffffff;
+.u-h {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 0.0625rem !important;
+    margin: -0.0625rem !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 0.0625rem !important;
 }
 
-.u-button-reset {
+/* Social
+ ========================================= */
+
+.block-share--liveblog {
+    margin-left: 5rem;
+    margin-top: 0.75rem;
+    clear: both;
+}
+
+.block-share__item {
     display: block;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    width: 100%;
-    background: transparent;
+    float: left;
+    cursor: pointer;
+    border: 0.0625rem solid #bdbdbd;
+    margin-right: 0.3125rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-button {
-    -webkit-appearance: button;
-    cursor: pointer;
+.block-share__item--facebook {
+    border-color: #3067a3;
+    color: #3067a3;
+}
+
+.block-share__item .inline-icon svg {
+    width: 1.4375rem;
+    height: 1.4375rem;
+}
+
+.block-share__item--facebook .inline-icon {
+    fill: #3067a3;
+}
+
+.block-share__item--twitter {
+    border-color: #03b3ee;
+    color: #03b3ee;
+}
+
+.block-share__item--twitter .inline-icon {
+    fill: #03b3ee;
+}
+
+.block-share__item--gplus {
+    border-color: #e15440;
+    color: #e15440;
+}
+
+.block-share__item--gplus .inline-icon {
+    fill: #e15440;
 }
