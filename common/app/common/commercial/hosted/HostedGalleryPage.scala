@@ -44,6 +44,7 @@ case class HostedGalleryPage(
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
+        "pageName" -> JsString(pageName),
         "trackingPrefix" -> JsString(s"Hosted:GFE:gallery:$pageName:"),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
         "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
