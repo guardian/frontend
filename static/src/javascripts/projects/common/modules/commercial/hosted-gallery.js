@@ -190,6 +190,7 @@ define([
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
             ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            tabletSize = 740,
             imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
         fastdom.write(function () {
             $sizer.css('width', imageSize.width);
@@ -203,7 +204,7 @@ define([
                 bonzo($ojFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('padding-bottom', ctaSize.topBottom > 40 ? 20 : 40);
+                bonzo($ojFloat).css('padding-bottom', (ctaSize.topBottom > 40 || width > tabletSize) ? 0 : 40);
             }
         });
         function getFrame(desiredRatio, w, h) {
@@ -382,7 +383,7 @@ define([
         }
         fastdom.write(function () {
             $header.css('width', imageWidth);
-            $footer.css('padding', '0 ' + leftRight);
+            $footer.css('margin', '0 ' + leftRight);
             $progress.css('right', leftRight);
             bonzo($ctaFloat).css('left', leftRight);
             bonzo($ojFloat).css('left', leftRight);
