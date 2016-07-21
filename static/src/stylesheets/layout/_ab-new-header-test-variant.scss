@@ -1,4 +1,4 @@
-$mobileMedium: 375px; // Breakpoint for our most common device sizes
+$mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__inner {
     display: flex;
@@ -7,35 +7,35 @@ $mobileMedium: 375px; // Breakpoint for our most common device sizes
     align-items: flex-start;
 }
 
-.new-header__logo {
-    padding-top: ($gs-baseline / 2);
-    padding-bottom: ($gs-baseline / 2);
+.new-header__logo-wrapper {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+}
 
-    svg {
-        // Removes extra spacing
-        display: block;
-        height: auto;
-        padding-right: ($gs-gutter / 2);
+.new-header__logo__svg {
+    // Removes extra spacing
+    display: block;
+    height: auto;
+    padding-right: $gs-gutter / 2;
 
-        // Aspect ratio: 16:3
-        @include mq($until: $mobileMedium) {
-            width: 170px;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 170px);
-        }
+    // Aspect ratio: 16:3
+    @include mq($until: $mobile-medium) {
+        width: 170px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 170px);
+    }
 
-        @include mq($from: $mobileMedium, $until: mobileLandscape) {
-            width: 225px;
-            height: calc(3/16 * 225px);
-        }
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        width: 225px;
+        height: calc(3/16 * 225px);
+    }
 
-        @include mq($from: mobileLandscape) {
-            width: 260px;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 260px);
-            padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
-            margin-right: ($gs-gutter / 2);
-        }
+    @include mq($from: mobileLandscape) {
+        width: 260px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 260px);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+        margin-right: $gs-gutter / 2;
     }
 }
 
@@ -54,7 +54,7 @@ $mobileMedium: 375px; // Breakpoint for our most common device sizes
     padding: ($gs-baseline) ($gs-gutter / 2);
 
     @include mq(mobileLandscape) {
-        margin-left: ($gs-gutter / 2);
+        margin-left: $gs-gutter / 2;
     }
 
     svg {
@@ -96,16 +96,15 @@ $mobileMedium: 375px; // Breakpoint for our most common device sizes
 }
 
 // Specific values for menu button breakpoints
-$veggieburgerSmall: 42px;
-$veggieburgerMedium: 52px;
-$gutterSmall: 30px;
-$gutterMedium: 37px;
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
+$gutter-small: 30px;
+$gutter-medium: 37px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
     position: relative;
     // Unset button from user agent stylesheet
-    cursor: pointer;
     border: 0;
     outline: none;
     // Override button from user agent stylesheet
@@ -114,41 +113,37 @@ $gutterMedium: 37px;
     background-color: $news-main-2;
     transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
-    &:focus {
-        transform: scale(1.1);
-    }
-
-    @include mq($until: $mobileMedium) {
+    @include mq($until: $mobile-medium) {
         //Smaller menu button
-        height: $veggieburgerSmall;
-        width: $veggieburgerSmall;
-        margin-top: (-$gs-baseline);
-        margin-bottom: (-$gs-baseline);
+        height: $veggie-burger-small;
+        width: $veggie-burger-small;
+        margin-top: -$gs-baseline;
+        margin-bottom: -$gs-baseline;
         //Align with the 'i' in 'theguardian'
-        margin-right: $gutterSmall;
+        margin-right: $gutter-small;
     }
 
-    @include mq($mobileMedium) {
-        height: $veggieburgerMedium;
-        width: $veggieburgerMedium;
+    @include mq($mobile-medium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
     }
 
-    @include mq($from: $mobileMedium, $until: mobileLandscape) {
-        margin-top: (-$gs-baseline / 1.5);
-        margin-bottom: (-$gs-baseline / 1.5);
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
         //Align with the 'i' in 'theguardian'
-        margin-right: $gutterMedium;
+        margin-right: $gutter-medium;
     }
 
     @include mq(mobileLandscape) {
-        margin-top: (-$gs-baseline / 1.5);
-        margin-bottom: (-$gs-baseline / 1.5);
-        margin-left: ($gs-gutter -$gs-gutter / 4) ;
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
+        margin-left: $gs-gutter -$gs-gutter / 4;
     }
 }
 
 .new-header__burger-icon {
-    position: absolute;;
+    position: absolute;
     width: $gs-gutter;
     height: 14px;
     top: 2px;
@@ -185,20 +180,18 @@ $gutterMedium: 37px;
 .new-header__nav__menu-button--open {
     transform: scale(1.1);
 
-    .new-header__burger-icon {
-        span {
-            &:nth-child(1) {
-                opacity: 0;
-            }
-            &:nth-child(2) {
-                transform: rotate(45deg);
-            }
-            &:nth-child(3) {
-                transform: rotate(-45deg);
-            }
-            &:nth-child(4) {
-                opacity: 0;
-            }
+    span {
+        &:nth-child(1) {
+            opacity: 0;
+        }
+        &:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        &:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        &:nth-child(4) {
+            opacity: 0;
         }
     }
 }
@@ -215,11 +208,11 @@ $gutterMedium: 37px;
 
     @include mq($until: mobileLandscape) {
         order: -1;
-        margin-left: ($gs-gutter / 2);
+        margin-left: $gs-gutter / 2;
     }
 
     @include mq(mobileLandscape) {
-        margin-left: ($gs-gutter / 2);
+        margin-left: $gs-gutter / 2;
     }
 }
 
@@ -303,12 +296,12 @@ $gutterMedium: 37px;
     will-change: transform;
     transition: transform .2s ease-out;
 
-    @include mq($until: $mobileMedium) {
-        margin-right: $gutterSmall + ($veggieburgerSmall / 2);
+    @include mq($until: $mobile-medium) {
+        margin-right: $gutter-small + ($veggie-burger-small / 2);
     }
 
-    @include mq($from: $mobileMedium, $until: mobileLandscape) {
-        margin-right: $gutterMedium + ($veggieburgerMedium / 2);
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
     }
 
     .main-menu-container.off-screen & {
