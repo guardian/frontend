@@ -21,17 +21,30 @@
         position: absolute;
         z-index: 3;
         bottom: 38px;
-        left: $gs-column-width * 4 + 20;
+        left: 10px;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
         font-weight: bold;
+
+        @include mq(desktop) {
+            left: $gs-column-width * 4 + 20;
+        }
     }
     .caption {
         position: absolute;
-        bottom: -54px;
-        right: 10px;
-        width: $gs-column-width * 3 + 40;
+        left: 10px;
+        bottom: -40px;
+        @include mq(desktop) {
+            bottom: -54px;
+            right: 10px;
+            width: $gs-column-width * 3 + 40;
+        }
+    }
+    .content__meta-container {
+        @include mq($until: desktop) {
+            margin-top: 48px;
+        }
     }
     .content[class*='-advertisement-feature'] {
         .social__item--pinterest {
@@ -104,7 +117,8 @@
     @mixin animal-stripe {
         position: absolute;
         z-index: 10;
-        width: 100%;
+        width: gs-span(5);
+        left: ($gs-column-width * 0.2) * -1;
         height: 240px;
 
         @include mq(desktop) {
@@ -177,9 +191,12 @@
         padding-top: 276px;
     }
     .animal__info-poster {
-        position: absolute;
-        left: -160px;
         padding-right: 20px;
+        float: left;
+        @include mq(desktop) {
+            position: absolute;
+            left: -160px;
+        }
     }
     .animal__info-about-header {
         @include fs-textSans(4);
