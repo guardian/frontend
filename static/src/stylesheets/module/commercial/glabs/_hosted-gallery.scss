@@ -520,13 +520,11 @@ $progressColor: #ffffff;
 
     .inline-arrow-up {
         top: -31px;
-        -ms-filter: 'progid:DXImageTransform.Microsoft.Matrix(M11=3.061616997868383e-16, M12=1, M21=-1, M22=3.061616997868383e-16, SizingMethod="auto expand")';
         transform: rotate(-90deg);
     }
 
     .inline-arrow-down {
         bottom: -31px;
-        -ms-filter: 'progid:DXImageTransform.Microsoft.Matrix(M11=-1.8369701987210297e-16, M12=-1, M21=1, M22=-1.8369701987210297e-16, SizingMethod="auto expand")';
         transform: rotate(90deg);
     }
 
