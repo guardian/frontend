@@ -49,7 +49,7 @@ define([
     ab,
     events,
     fullscreener,
-    adSkip,
+    skipAd,
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
@@ -140,7 +140,7 @@ define([
     }
 
     function initPlayer(withPreroll) {
-        videojs.plugin('adSkip', adSkip);
+        videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
 
         fastdom.read(function () {
@@ -275,7 +275,7 @@ define([
                                             }
                                         });
                                         player.on('adstart', function() {
-                                            player.adSkip(mediaType, 2);
+                                            player.skipAd(mediaType, 15);
                                         });
                                         player.ima.requestAds();
 
