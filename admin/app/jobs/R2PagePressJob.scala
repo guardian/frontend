@@ -81,7 +81,7 @@ case class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Log
   private def pressAsUrl(urlIn: String): String = urlIn.replace("https://", "").replace("http://","")
 
   private def parseAndClean(originalDocSource: String, convertToHttps: Boolean): Future[String] = {
-    val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
+    val cleaners = Seq(PollsHtmlCleaner(wsClient), InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
     val doc: Document = cleaners.filter(_.canClean(archiveDocument))
       .map(_.clean(archiveDocument, convertToHttps))

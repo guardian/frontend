@@ -2,11 +2,10 @@ package pagepresser
 
 import org.jsoup.nodes.Document
 import play.api.libs.json.Json
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import scala.collection.JavaConversions._
-import play.api.Play.current
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.duration._
 
 object PollDeserializer {
@@ -19,7 +18,7 @@ case class Poll(pollId: String, questions: List[Question])
 case class Question(id: Int, count: Double, answers: List[Answer])
 case class Answer(id: Int, question: Int, count: Double)
 
-object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
+case class PollsHtmlCleaner(wsClient: WSClient) extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
     document.getElementsByAttribute("data-poll-url").nonEmpty
@@ -66,7 +65,7 @@ object PollsHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   import PollDeserializer._
   def fetchPoll(url: String): Option[Poll] = {
-    val result = Await.result(WS.url(url).getOKResponse(), 1.second)
+    val result = Await.result(wsClient.url(url).getOKResponse(), 1.second)
 
     result.json.asOpt[Poll]
 
