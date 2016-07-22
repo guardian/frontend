@@ -35,8 +35,7 @@ define([
         this.idealOutcome = 'Visitors click on the CTA and demonstrate demand for the feature';
 
         this.canRun = function () {
-            return !(config.page.isAdvertisementFeature) &&
-            config.page.contentType === 'Article'
+            return !config.page.isAdvertisementFeature && config.page.contentType === 'Article';
         };
 
         var defaultData = {
