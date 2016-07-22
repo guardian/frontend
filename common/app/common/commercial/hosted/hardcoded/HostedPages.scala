@@ -21,8 +21,7 @@ object HostedPages {
   private val visitBritainCampaignName = "visit-britain"
   private val leffeCampaignName = "leffe-rediscover-time"
 
-  // todo rename
-  private val articleCampaignName = "zootropolis-campaign"
+  private val articleCampaignName = "disney-zootropolis"
 
   def fromCampaignAndPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {

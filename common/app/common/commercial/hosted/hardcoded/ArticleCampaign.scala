@@ -8,7 +8,7 @@ import conf.Static
 object ZootropolisCampaign {
 
   val campaign = HostedCampaign(
-    id = "article-campaign",
+    id = "disney-zootropolis",
     name = "Zootropolis",
     owner = "Disney",
     logo = HostedLogo(Static("images/commercial/zootropolis-logo.png")),
@@ -37,7 +37,7 @@ object ZootropolisCampaign {
     gazellePoster = Static("images/commercial/popstar-poster.png")
   )
 
-  val articlePageName = "zootropolis"
+  val articlePageName = "meet-the-characters-of-zootropolis"
 
   val hostedArticlePage = HostedArticlePage(
     campaign,
