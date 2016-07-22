@@ -36,7 +36,6 @@ object Au extends Edition(
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
-      NavItem(auElection2016),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
@@ -58,7 +57,6 @@ object Au extends Edition(
 
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
-    NavItem(auElection2016),
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(opinion),
