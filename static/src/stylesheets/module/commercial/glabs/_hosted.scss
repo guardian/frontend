@@ -573,10 +573,9 @@ $leffeColor: #dec190;
     @include circular;
     @include f-headlineSans;
     position: relative;
-    display: block;
-    padding: 6px 40px 6px 14px;
+    display: inline-block;
+    padding: 6px 45px 6px 14px;
     color: #000000;
-    width: $gs-column-width * 3.2;
     font-weight: bold;
     background-color: #ffffff;
 
