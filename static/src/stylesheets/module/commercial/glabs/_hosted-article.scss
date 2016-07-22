@@ -27,6 +27,10 @@
         line-height: 36px;
         font-weight: bold;
 
+        @include mq(tablet) {
+            left: $gs-gutter * 1.5;
+        }
+
         @include mq(desktop) {
             left: $gs-column-width * 4 + 20;
         }
@@ -35,9 +39,17 @@
         position: absolute;
         left: 10px;
         bottom: -40px;
+        right: unset;
+
+        @include mq(tablet) {
+            bottom: -32px;
+            left: $gs-gutter * 1.5;
+        }
+
         @include mq(desktop) {
             bottom: -54px;
             right: 10px;
+            left: unset;
             width: $gs-column-width * 3 + 40;
         }
     }
@@ -120,6 +132,12 @@
         width: gs-span(5);
         left: ($gs-column-width * 0.2) * -1;
         height: 240px;
+
+        @include mq(tablet) {
+            left: $gs-column-width * -1;
+            top: 20px;
+            width: gs-span(11);
+        }
 
         @include mq(desktop) {
             left: ($gs-column-width * 4 + 20) * -1;
