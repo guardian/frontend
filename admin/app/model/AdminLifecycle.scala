@@ -56,17 +56,17 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(HighFrequency)
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
-      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(StandardFrequency)
+      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(LowFrequency)
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency)
       Future.successful(())
     }
 
@@ -97,7 +97,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
     jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
-      VideoEncodingsJob.run()
+      VideoEncodingsJob.run(akkaAsync)
     }
 
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
@@ -132,7 +132,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     akkaAsync.after1s {
       RebuildIndexJob.run()
-      VideoEncodingsJob.run()
+      VideoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
     }
   }
