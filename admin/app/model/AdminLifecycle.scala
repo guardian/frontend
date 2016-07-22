@@ -10,12 +10,13 @@ import conf.switches.Switches._
 import football.feed.MatchDayRecorder
 import jobs._
 import play.api.inject.ApplicationLifecycle
+import play.api.libs.ws.WSClient
 import services.EmailService
 import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync, emailService: EmailService)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync, emailService: EmailService, wsClient: WSClient)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -97,7 +98,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
     jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
-      VideoEncodingsJob.run(akkaAsync)
+      VideoEncodingsJob(wsClient).run(akkaAsync)
     }
 
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
@@ -132,7 +133,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     akkaAsync.after1s {
       RebuildIndexJob.run()
-      VideoEncodingsJob.run(akkaAsync)
+      VideoEncodingsJob(wsClient).run()
       AssetMetricsCache.run()
     }
   }
