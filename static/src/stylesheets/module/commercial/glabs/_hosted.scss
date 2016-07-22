@@ -6,7 +6,6 @@ $renaultLight: #fff9e9;
 $omgbColor: #e41f13;
 $zootropolisColor: #2ec869;
 $leffeColor: #dec190;
-$zootropolisColor: #38c66d;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
@@ -33,14 +32,6 @@ $zootropolisColor: #38c66d;
 @mixin hosted-slide-out {
     right: -242px;
     transition: right 2s linear;
-}
-
-.hosted-tone--zootropolis {
-    color: $zootropolisColor;
-}
-
-.hosted-tone-bg--zootropolis {
-    background-color: $zootropolisColor;
 }
 
 .hosted-tone--renault {
