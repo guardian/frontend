@@ -8,15 +8,14 @@ import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
 import controllers.admin.AuthActions
 import model.NoCache
-import play.api.Play.current
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc.{AnyContent, Controller}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class ImageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class ImageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
   import ImageDecacheController._
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
@@ -40,10 +39,11 @@ class ImageDecacheController extends Controller with Logging with AuthLogging wi
 
       val originUri = new URI(originUrl)
 
-      ImageServices.clearFastly(originUri)
-      ImageServices.clearImgix(originUri)
+      val imageServices = new ImageServices(wsClient)
+      imageServices.clearFastly(originUri)
+      imageServices.clearImgix(originUri)
 
-      val decacheRequest: Future[WSResponse] = WS.url(s"$originUrl?cachebust=$cacheBust").get
+      val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
       decacheRequest.map(_.status).map{
         case NOT_FOUND => Ok(views.html.cache.imageDecacheForm(
           messageType = Cleared,
