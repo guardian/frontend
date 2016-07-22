@@ -59,8 +59,12 @@ define([
                 siteMessageCloseBtn: 'habit digest hide',
                 cssModifierClass: cssModifierClass
             });
-            message.show(template(digestPromo, data));
-            message.remember();
+
+            if (message.show(template(digestPromo, data))) {
+                // Only mark the message as closed if it was actually shown
+                // (i.e. there was no clash with another message)
+                message.remember();
+            }
         }
 
         this.variants = [
