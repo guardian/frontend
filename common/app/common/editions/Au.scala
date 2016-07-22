@@ -4,8 +4,7 @@ import java.util.Locale
 
 import common.editions.Uk._
 import org.joda.time.DateTimeZone
-import common._
-import common.NavItem
+import common.{NavItem, _}
 
 //This object exists to be used with ItemTrailblockDescription and is not a real edition like the others.
 //All that is really being used is Edition.id, which is AU
@@ -39,16 +38,17 @@ object Au extends Edition(
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
+      NavItem(politics),
       NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
-      NavItem(technology),
       NavItem(culture, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
-      NavItem(fashion),
-      NavItem(economy, economyLocalNav),
-      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
-      NavItem(media),
       NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness)),
+      NavItem(economy, economyLocalNav),
+      NavItem(media),
+      NavItem(technology),
+      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
+      NavItem(fashion),
       NavItem(science),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
@@ -60,16 +60,15 @@ object Au extends Edition(
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(opinion),
+    NavItem(politics),
     NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
     NavItem(football, aLeague :: footballNav.toList),
-    NavItem(technology),
     NavItem(culture, cultureLocalNav),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
-    NavItem(fashion),
-    // add back when the AU election is over
-    // NavItem(economy, economyLocalNav),
-    // NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+    NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness)),
+    NavItem(economy, economyLocalNav),
     NavItem(media),
-    NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness))
+    NavItem(technology),
+    NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel))
   )
 }
