@@ -6,7 +6,6 @@ define([
     'common/modules/ui/message',
     'common/modules/commercial/user-features',
     'common/views/svgs',
-    'lodash/objects/defaults',
     'lodash/arrays/uniq',
     'text!common/views/experiments/habit-digest-promo.html'
 ], function (
@@ -17,7 +16,6 @@ define([
     Message,
     userFeatures,
     svgs,
-    defaults,
     uniq,
     digestPromo
 ) {
@@ -38,17 +36,14 @@ define([
             return !config.page.isAdvertisementFeature && config.page.contentType === 'Article';
         };
 
-        var defaultData = {
-            arrowRight: svgs('arrowRight')
-        };
-
         function renderDigestSnap(messageText, linkText, linkHref, variantName) {
-            var data = defaults(
-                {linkText: linkText},
-                {messageText: messageText},
-                {linkHref: linkHref},
-                {variantName: variantName},
-                defaultData);
+            var templateData = {
+                linkText: linkText,
+                messageText: messageText,
+                linkHref: linkHref,
+                variantName: variantName,
+                arrowRight: svgs('arrowRight')
+            };
 
             var cssModifierClass = 'habit-digest';
 
@@ -59,7 +54,7 @@ define([
                 cssModifierClass: cssModifierClass
             });
 
-            if (message.show(template(digestPromo, data))) {
+            if (message.show(template(digestPromo, templateData))) {
                 // Only mark the message as closed if it was actually shown
                 // (i.e. there was no clash with another message)
                 message.remember();
