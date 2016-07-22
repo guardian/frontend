@@ -36,20 +36,12 @@ define([
 
         this.canRun = function () {
             return !(config.page.isAdvertisementFeature) &&
-            config.page.contentType === 'Article' &&
-            hasSeenMembership();
+            config.page.contentType === 'Article'
         };
 
         var defaultData = {
             arrowRight: svgs('arrowRight')
         };
-
-        // check that the membership banner has been seen and dismissed
-        function hasSeenMembership() {
-            var messageStates = storage.local.get('gu.prefs.messages');
-            return messageStates &&
-            messageStates.indexOf('membership-message-uk-2016-06-24') > -1;
-        }
 
         function renderDigestSnap(messageText, linkText, linkHref, variantName) {
             var data = defaults(
