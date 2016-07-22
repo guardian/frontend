@@ -23,14 +23,16 @@ define([
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
-     * inserted dynamically. It is used to give each MPU its own ID. */
+     * inserted dynamically. */
     var bodyAds;
+    var inlineAd;
     var replaceTopSlot;
     var inlineMerchRules;
     var longArticleRules;
 
     function boot() {
         bodyAds = 0;
+        inlineAd = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
     }
 
@@ -96,11 +98,17 @@ define([
         function insertInlineAds(paras) {
             var countAdded = 0;
             while(countAdded < count && paras.length) {
+                var para = paras.shift();
+                var adDefinition;
+                if (replaceTopSlot && bodyAds === 0) {
+                    adDefinition = 'top-above-nav';
+                } else {
+                    inlineAd += 1;
+                    adDefinition = 'inline' + inlineAd;
+                }
+                insertAdAtPara(para, adDefinition, 'inline');
                 bodyAds += 1;
                 countAdded += 1;
-                var para = paras.shift();
-                var adDefinition = 'inline' + bodyAds;
-                insertAdAtPara(para, replaceTopSlot && countAdded === 1 ? 'top-above-nav' : adDefinition, 'inline');
             }
             return countAdded;
         }
