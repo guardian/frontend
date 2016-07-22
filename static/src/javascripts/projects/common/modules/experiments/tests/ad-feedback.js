@@ -1,13 +1,11 @@
 define([
-    'common/utils/config',
-    'common/utils/cookies'
+    'common/utils/config'
 ], function (
-    config,
-    cookies
+    config
 ) {
 
     return function () {
-        this.id = 'AbAdFeedback';
+        this.id = 'AdFeedback';
         this.start = '2016-07-21';
         this.expiry = '2016-08-25';
         this.author = 'Justin Pinner';
@@ -15,22 +13,18 @@ define([
         this.audience = 0.02;
         this.audienceOffset = 0;
         this.audienceCriteria = 'Ad-seeing users';
-        this.idealOutcome = 'Learn about poor quality ads so that we can figure out how to make things better.';
+        this.idealOutcome = 'Learn about the quality of ads so that we can figure out how to make things better.';
 
         this.canRun = function () {
             return config.switches.abAdFeedback === true;
         };
 
         this.variants = [{
-            id: 'ab-ad-feedback-variant',
-            test: function () {
-                cookies.add('gu_ad_feedback', 'ad-feedback-variant');
-            }
+            id: 'ad-feedback-variant',
+            test: function () {}
         }, {
-            id: 'ab-ad-feedback-control',
-            test: function () {
-                cookies.add('gu_ad_feedback', 'ad-feedback-control');
-            }
+            id: 'ad-feedback-control',
+            test: function () {}
         }];
 
     };

@@ -84,7 +84,7 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABAdFeedbackSwitch = Switch(
+  val ABAdFeedback = Switch(
     SwitchGroup.ABTests,
     "ab-ad-feedback",
     "Solicit feedback for ad impressions",
