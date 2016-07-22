@@ -48,7 +48,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     }
 
     jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
-      R2PagePressJob.run()
+      R2PagePressJob(wsClient).run()
     }
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
