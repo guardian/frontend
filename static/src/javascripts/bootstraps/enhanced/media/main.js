@@ -166,7 +166,6 @@ define([
             withPreroll,
             blockVideoAds;
 
-
         var videoInfo = new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
             // These are set to the safest defaults that will always play video.
