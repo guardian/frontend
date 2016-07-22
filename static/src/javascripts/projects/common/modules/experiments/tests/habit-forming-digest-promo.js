@@ -37,24 +37,12 @@ define([
         this.canRun = function () {
             return !(config.page.isAdvertisementFeature) &&
             config.page.contentType === 'Article' &&
-            isInfrequentVisitor() &&
             hasSeenMembership();
         };
 
         var defaultData = {
             arrowRight: svgs('arrowRight')
         };
-
-        // check if the user is one of the target audience
-        function isInfrequentVisitor() {
-            if (storage.local.isStorageAvailable()) {
-                var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
-                if (alreadyVisited > 3 && !userFeatures.isPayingMember()) {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         // check that the membership banner has been seen and dismissed
         function hasSeenMembership() {
