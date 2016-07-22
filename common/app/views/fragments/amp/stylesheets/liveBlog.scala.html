@@ -3,6 +3,16 @@
     position: relative;
 }
 
+.block:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+.block.is-key-event, .block.is-summary {
+    border-top: 0.0625rem solid #cc2b12;
+}
+
 .block--content {
     padding-top: 0.375rem;
     padding-bottom: 0.75rem;
@@ -13,7 +23,7 @@
 
 .block-time {
     line-height: 0.9375rem;
-    padding: 0.1875rem 0 0.75rem 0.625rem;
+    padding: 0.1875rem 0 0.75rem 0;
     position: relative;
 }
 
@@ -66,7 +76,6 @@
  ========================================= */
 
 .block-share--liveblog {
-    margin-left: 5rem;
     margin-top: 0.75rem;
     clear: both;
 }
