@@ -18,7 +18,8 @@
 
 /* Container Rules
    ========================================================================== */
-.fc-container__header--voices-of-america {
+.fc-container__header--voices-of-america,
+.fc-container__header--rio-2016 {
     .badge-slot {
         width: gs-span(1.5);
         float: left;
@@ -47,6 +48,27 @@
     .content__section-label,
     .content__series-label {
         float: none;
+    }
+}
+
+.content__head--rio-2016 {
+    .badge-slot {
+        float: none;
+        width: gs-span(1.5);
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+    }
+
+    .content__section-label {
+        display: none;
+    }
+
+    .content__series-label {
+        margin-top: $gs-baseline / 3;
+        padding-top: $gs-baseline / 4;
+        border-top: 0.0625rem dotted rgba(0, 0, 0, .15);
     }
 }
 
