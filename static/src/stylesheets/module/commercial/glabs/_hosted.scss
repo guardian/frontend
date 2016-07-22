@@ -6,9 +6,11 @@ $renaultLight: #fff9e9;
 $omgbColor: #e41f13;
 $zootropolisColor: #2ec869;
 $leffeColor: #dec190;
+$zootropolisColor: #38c66d;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
+@import '_hosted-article.scss';
 @import '_hosted-header.scss';
 
 @mixin hosted-fade-in {
@@ -58,7 +60,6 @@ $leffeColor: #dec190;
     }
 }
 
-/* Temporary Leffe's colors will be the same as Renault's because of the contrast issues */
 .hosted-tone--leffe {
     color: $leffeColor;
 }
@@ -73,6 +74,23 @@ $leffeColor: #dec190;
     &:hover {
         background-color: $leffeColor;
         border-color: $leffeColor;
+    }
+}
+
+.hosted-tone--zootropolis {
+    color: $zootropolisColor;
+}
+
+.hosted-tone-bg--zootropolis {
+    background-color: $zootropolisColor;
+}
+
+.hosted-tone-btn--zootropolis {
+    &,
+    &:focus,
+    &:hover {
+        background-color: $zootropolisColor;
+        border-color: $zootropolisColor;
     }
 }
 
