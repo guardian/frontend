@@ -4,7 +4,6 @@ define([
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/revealer.html'
 ], function(fastdom, template, addTrackingPixel, revealerStr) {
-    var hasBackgroundFixedSupport = !detect.isAndroid();
     var revealerTpl;
 
     function Revealer($adSlot, params) {
