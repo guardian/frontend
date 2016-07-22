@@ -1,0 +1,39 @@
+.creative--revealer {
+    height: 250px;
+    position: relative;
+
+    .creative__cta {
+        background-attachment: fixed;
+        background-size: cover;
+        height: 250px;
+    }
+
+    .creative__background {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: $gs-gutter / 2;
+        right: $gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
+            left: $gs-gutter;
+            right: $gs-gutter;
+        }
+    }
+
+    .creative__button {
+        position: absolute;
+    }
+
+    .creative__button--left    { left: 0; }
+    .creative__button--center  { left: 50%; transform: translate(-50%,0); }
+    .creative__button--right   { right: 0; }
+
+    .creative__button--top     { top: 0; }
+    .creative__button--middle  { top: 50%; transform: translate(0,-50%); }
+    .creative__button--bottom  { bottom: 0; }
+
+    .creative__button--center.creative__button--middle {
+        transform: translate(-50%,-50%);
+    }
+}
