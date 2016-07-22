@@ -3,9 +3,8 @@ package controllers.commercial.magento
 import common.ExecutionContexts
 import conf.Configuration.commercial.magento
 import model.NoCache
-import play.api.Play.current
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, Controller}
 
 /**
@@ -15,7 +14,7 @@ import play.api.mvc.{Action, Controller}
  * http://www.magentocommerce.com/api/rest/Resources/resources.html
  * http://www.magentocommerce.com/api/rest/get_filters.html
  */
-class ApiSandbox extends Controller with ExecutionContexts {
+class ApiSandbox(wsClient: WSClient) extends Controller with ExecutionContexts {
 
   private val domain = magento.domain.getOrElse(throw new RuntimeException("Unable to get [magento.domain] property. Is it set in the configuration?"))
   private val oauth = {
@@ -25,7 +24,7 @@ class ApiSandbox extends Controller with ExecutionContexts {
   }
 
   def getResource(path: String) = Action.async { implicit request =>
-    WS.url(s"http://$domain/$path")
+    wsClient.url(s"http://$domain/$path")
       .sign(oauth)
       .get()
       .map(result => NoCache(Ok(result.body)))
@@ -40,5 +39,3 @@ class ApiSandbox extends Controller with ExecutionContexts {
   }
 
 }
-
-object ApiSandbox extends ApiSandbox
