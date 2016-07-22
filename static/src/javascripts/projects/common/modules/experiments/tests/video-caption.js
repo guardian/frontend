@@ -12,12 +12,12 @@ define([
     return function()
     {
         this.id = 'VideoCaption';
-        this.start = '2016-07-18';
-        this.expiry = '2016-09-01';
+        this.start = '2016-07-22';
+        this.expiry = '2016-07-25';
         this.author = 'Gideon Goldberg';
         this.description = 'Increase the prominence of the video caption on in-article videos.';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.06;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'Video starts.';
         this.audienceCriteria = 'Users viewing an article with a video embedded.';
         this.dataLinkNames = '';
