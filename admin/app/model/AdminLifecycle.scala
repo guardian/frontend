@@ -15,12 +15,12 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync, emailService: EmailService)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
     CloudWatch.shutdown()
-    EmailService.shutdown()
+    emailService.shutdown()
   }}
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
@@ -82,15 +82,15 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
       jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
-        AdsStatusEmailJob.run()
+        AdsStatusEmailJob(emailService).run()
       }
       jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
-        ExpiringAdFeaturesEmailJob.run()
+        ExpiringAdFeaturesEmailJob(emailService).run()
       }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
-        ExpiringSwitchesEmailJob.run()
+        ExpiringSwitchesEmailJob(emailService).run()
       }
     }
 
