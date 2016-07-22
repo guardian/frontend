@@ -37,7 +37,7 @@ object ZootropolisCampaign {
     gazellePoster = Static("images/commercial/popstar-poster.png")
   )
 
-  val articlePageName = "hosted-article"
+  val articlePageName = "zootropolis"
 
   val hostedArticlePage = HostedArticlePage(
     campaign,
