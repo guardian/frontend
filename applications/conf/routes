@@ -11,6 +11,8 @@ GET        /sitemaps/news.xml                                                   
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
 GET        /survey/customtodayemail                                             controllers.SurveyPageController.renderCustomEmail404Page()
+GET        /survey/mydigest                                                     controllers.SurveyPageController.renderMyDigestExplainerPage()
+GET        /survey/mydigest/404                                                 controllers.SurveyPageController.renderMyDigest404Page()
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
