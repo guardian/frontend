@@ -95,18 +95,14 @@
             margin-right: 14px;
         }
     }
-    .adverts__body {
-        margin-top: 50px;
+    .hosted__standfirst {
+        padding: 0;
+        margin: 50px 0 0;
 
-        .hosted__standfirst {
-            padding: 0;
-            margin: 0;
-
-            .hosted__terms {
-                margin-top: 0;
-                padding-top: 10px;
-                border-top: 2px solid #eeeeee;
-            }
+        .hosted__terms {
+            margin-top: 0;
+            padding-top: 10px;
+            border-top: 2px solid #eeeeee;
         }
     }
 }
