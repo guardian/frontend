@@ -44,7 +44,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
     jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
-      FastlyCloudwatchLoadJob.run()
+      FastlyCloudwatchLoadJob(wsClient).run()
     }
 
     jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {

@@ -4,8 +4,9 @@ import common.{ Logging, ExecutionContexts }
 import conf.AdminConfiguration.fastly
 import com.amazonaws.services.cloudwatch.model.{ Dimension, MetricDatum }
 import org.joda.time.DateTime
-import play.api.libs.ws.WS
-import play.api.libs.json.{ JsArray, JsObject, JsValue, Json, JsNull }
+import play.api.libs.ws.WSClient
+import play.api.libs.json.{JsValue, Json}
+
 import scala.concurrent.Future
 
 case class FastlyStatistic(service: String, region: String, timestamp: Long, name: String, value: String) {
@@ -19,8 +20,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
     withValue(value.toDouble)
 }
 
-object Fastly extends ExecutionContexts with Logging {
-  import play.api.Play.current
+case class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private case class FastlyApiStat(
     hits: Int,
@@ -34,11 +34,11 @@ object Fastly extends ExecutionContexts with Logging {
 
   private val regions = List("usa", "europe", "ausnz")
 
-  def apply(): Future[List[FastlyStatistic]] = {
+  def fetch(): Future[List[FastlyStatistic]] = {
 
     val futureResponses: Future[List[String]] = Future.sequence{
       regions map { region =>
-        val request = WS.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
+        val request = wsClient.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
           .withHeaders("Fastly-Key" -> fastly.key)
           .withRequestTimeout(20000)
 
