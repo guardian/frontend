@@ -32,6 +32,14 @@
         }
 
         @include mq(desktop) {
+            left: $gs-column-width + 20;
+        }
+
+        @include mq(leftCol) {
+            left: $gs-column-width * 3;
+        }
+
+        @include mq(wide) {
             left: $gs-column-width * 4 + 20;
         }
     }
@@ -48,9 +56,14 @@
 
         @include mq(desktop) {
             bottom: -54px;
-            right: 10px;
             left: unset;
+            right: $gs-column-width + 10;
             width: $gs-column-width * 3 + 40;
+        }
+
+        @include mq(leftCol) {
+            bottom: -54px;
+            right: 10px;
         }
     }
     .content__meta-container {
@@ -211,7 +224,8 @@
     .animal__info-poster {
         padding-right: 20px;
         float: left;
-        @include mq(desktop) {
+        
+        @include mq(leftCol) {
             position: absolute;
             left: -160px;
         }
