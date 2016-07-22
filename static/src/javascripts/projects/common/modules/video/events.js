@@ -71,7 +71,7 @@ define([
 
         allEvents.map(function(eventName) { return 'media:' + eventName }).forEach(function(eventName) {
             player.on(eventName, function(_, mediaEvent) {
-                console.log('What did I hear?', eventName, mediaEvent);
+                window.console.log('What did I hear?', eventName, mediaEvent);
             });
         });
     }
