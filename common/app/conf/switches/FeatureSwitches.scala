@@ -490,7 +490,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "minute-video-teaser",
     "When ON, the user will be able to share comments",
-    owners = Seq(Owner.withName("multimedia team")),
+    owners = Seq(Owner.withGithub("guardian/multimedia")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
