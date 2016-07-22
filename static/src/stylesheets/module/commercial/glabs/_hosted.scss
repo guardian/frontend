@@ -4,6 +4,7 @@ $hosted-video-height: 540px;
 $renaultColor: #ffc421;
 $renaultLight: #fff9e9;
 $omgbColor: #e41f13;
+$zootropolisColor: #2ec869;
 $leffeColor: #dec190;
 
 @import '_hosted-video.scss';
@@ -30,6 +31,14 @@ $leffeColor: #dec190;
 @mixin hosted-slide-out {
     right: -242px;
     transition: right 2s linear;
+}
+
+.hosted-tone--zootropolis {
+    color: $zootropolisColor;
+}
+
+.hosted-tone-bg--zootropolis {
+    background-color: $zootropolisColor;
 }
 
 .hosted-tone--renault {
@@ -556,7 +565,7 @@ $leffeColor: #dec190;
     @include f-headlineSans;
     position: relative;
     display: block;
-    padding: 6px 6px 6px 14px;
+    padding: 6px 40px 6px 14px;
     color: #000000;
     width: $gs-column-width * 3.2;
     font-weight: bold;
