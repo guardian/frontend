@@ -71,19 +71,19 @@ class DfpDataCacheLifecycle(
     new Job[Unit] {
       val name: String = "DFP-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpAdUnitCacheJob.run()
+      def run(): Future[Unit] = DfpAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Unit] {
       val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpMobileAppAdUnitCacheJob.run()
+      def run(): Future[Unit] = DfpMobileAppAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Unit] {
       val name: String = "DFP-Facebook-IA-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpFacebookIaAdUnitCacheJob.run()
+      def run(): Future[Unit] = DfpFacebookIaAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Seq[GuCreativeTemplate]] {
