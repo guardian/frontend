@@ -5,8 +5,7 @@ import conf.Configuration.site.host
 import conf.switches.Switches
 import conf.Static
 
-// todo rename
-object ArticleCampaign {
+object ZootropolisCampaign {
 
   val campaign = HostedCampaign(
     id = "article-campaign",
@@ -21,6 +20,21 @@ object ArticleCampaign {
     label = "The Zootropolis Activity pack",
     trackingCode = "TODO",
     btnText = "Download now"
+  )
+
+  val customData = CustomData(
+    conArtistPic = Static("images/commercial/con-artist.png"),
+    conArtistPoster = Static("images/commercial/con-artist-poster.png"),
+    rookiePic = Static("images/commercial/rookie.png"),
+    rookiePoster = Static("images/commercial/rookie-poster.png"),
+    chiefPic = Static("images/commercial/chief.png"),
+    chiefPoster = Static("images/commercial/chief-poster.png"),
+    slothPic = Static("images/commercial/sloth.png"),
+    slothPoster = Static("images/commercial/sloth-poster.png"),
+    deskClerkPic = Static("images/commercial/desk-clerk.png"),
+    deskClerkPoster = Static("images/commercial/desk-clerk-poster.png"),
+    gazellePic = Static("images/commercial/popstar.png"),
+    gazellePoster = Static("images/commercial/popstar-poster.png")
   )
 
   val articlePageName = "hosted-article"
@@ -38,18 +52,7 @@ object ArticleCampaign {
     mainPicture = Static("images/commercial/zootropolis.png"),
     twitterTxt = "TODO  #ad: ",
     emailTxt = "TODO",
-    conArtistPic = Static("images/commercial/con-artist.png"),
-    conArtistPoster = Static("images/commercial/con-artist-poster.png"),
-    rookiePic = Static("images/commercial/rookie.png"),
-    rookiePoster = Static("images/commercial/rookie-poster.png"),
-    chiefPic = Static("images/commercial/chief.png"),
-    chiefPoster = Static("images/commercial/chief-poster.png"),
-    slothPic = Static("images/commercial/sloth.png"),
-    slothPoster = Static("images/commercial/sloth-poster.png"),
-    deskClerkPic = Static("images/commercial/desk-clerk.png"),
-    deskClerkPoster = Static("images/commercial/desk-clerk-poster.png"),
-    gazellePic = Static("images/commercial/popstar.png"),
-    gazellePoster = Static("images/commercial/popstar-poster.png")
+    customData
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
