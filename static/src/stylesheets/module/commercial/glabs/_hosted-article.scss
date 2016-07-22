@@ -224,7 +224,7 @@
     .animal__info-poster {
         padding-right: 20px;
         float: left;
-        
+
         @include mq(leftCol) {
             position: absolute;
             left: -160px;

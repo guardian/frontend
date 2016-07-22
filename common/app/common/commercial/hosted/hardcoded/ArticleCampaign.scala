@@ -10,7 +10,7 @@ object ArticleCampaign {
 
   val campaign = HostedCampaign(
     id = "article-campaign",
-    name = "Name of the campaign here",
+    name = "Zootropolis",
     owner = "Disney",
     logo = HostedLogo(Static("images/commercial/zootropolis-logo.png")),
     cssClass = "zootropolis"
