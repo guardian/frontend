@@ -69,7 +69,7 @@ define([
             'watched75'
         ];
 
-        allEvents.map(function(eventName) { return 'media:' + eventName }).forEach(function(eventName) {
+        allEvents.map(function(eventName) { return 'media:' + eventName; }).forEach(function(eventName) {
             player.on(eventName, function(_, mediaEvent) {
                 window.console.log('What did I hear?', eventName, mediaEvent);
             });
