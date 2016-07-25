@@ -8,7 +8,6 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/participation-discussion-test',
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
@@ -24,7 +23,6 @@ define([
     memoize,
     noop,
     LiveBlogChromeNotificationsProd,
-    ParticipationDiscussionTest,
     JoinDiscussionAfterPoll,
     HostedAutoplay,
     Giraffe,
@@ -34,7 +32,6 @@ define([
 
     var TESTS = [
         new LiveBlogChromeNotificationsProd(),
-        new ParticipationDiscussionTest(),
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
