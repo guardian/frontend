@@ -260,17 +260,17 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.element-video--heroic{
+.element-video--heroic {
 
-  .gu-media-wrapper--video{
-  	-webkit-clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
-    clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
-    overflow:hidden;
-  }
+    .gu-media-wrapper--video {
+        -webkit-clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
+        clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
+        overflow: hidden;
+    }
 
-  .caption{
-    position: absolute;
-    bottom: 30px;
-    z-index: 40;
-  }
+    .caption {
+        position: absolute;
+        bottom: 30px;
+        z-index: 40;
+    }
 }
