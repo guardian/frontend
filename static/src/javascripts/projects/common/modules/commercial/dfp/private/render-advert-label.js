@@ -16,13 +16,16 @@ define([
                 try {
                     var abParticipant = store.local.get('gu.ab.participations')['AdFeedback'];
                     if (abParticipant && abParticipant.variant === 'ad-feedback-variant') {
-                        labelInner = '<div class="ad-slot__feedback">Feedback UI goes here</div>';
+                        var feedbackOpts = '<ul class="popup popup--default popup__group is-off" id="ad-feedback-menu__' + adSlotNode.id + '"><li class="popup__item">Offensive</li><li class="popup__item">Intrusive</li></ul>';
+                        //TODO: correct styling
+                        //TODO: No nbsp!
+                        labelInner = '&nbsp;<a class="popup__toggle js-toggle-ready" aria-haspopup="true">(feedback)</a>' + feedbackOpts;
                     }
                 } catch (x) {
                     // if we can't pull the ad feedback participation state, we'll treat it as excluded
                 }
             }
-            var labelDiv = '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement' + labelInner + '</div>';
+            var labelDiv = '<div class="ad-slot__label has-popup" data-test-id="ad-slot-label">Advertisement' + labelInner + '</div>';
             return fastdom.write(function () {
                 adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
             });
