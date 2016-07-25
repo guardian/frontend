@@ -10,7 +10,14 @@ case class HostedArticlePage(
   pageName: String,
   pageTitle: String,
   standfirst: String,
-  facebookImageUrl: String
+  standfirstLink: String,
+  facebookImageUrl: String,
+  cta: HostedCallToAction,
+  ctaBanner: String,
+  mainPicture: String,
+  twitterTxt: String,
+  emailTxt: String,
+  customData: CustomData
 )
   extends HostedPage {
 
@@ -41,3 +48,18 @@ case class HostedArticlePage(
     )
   }
 }
+
+case class CustomData(
+   conArtistPic: String,
+   conArtistPoster: String,
+   rookiePic: String,
+   rookiePoster: String,
+   chiefPic: String,
+   chiefPoster: String,
+   slothPic: String,
+   slothPoster: String,
+   deskClerkPic: String,
+   deskClerkPoster: String,
+   gazellePic: String,
+   gazellePoster: String
+)

@@ -1,0 +1,253 @@
+.hosted-article-page {
+    .media-primary.media-primary--showcase {
+        position: relative;
+        height: 378px;
+        margin-bottom: 10px;
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: linear-gradient(to top, rgba(51, 51, 51, .4) 0%, rgba(51, 51, 51, .4) 2%, transparent 100%);
+        }
+    }
+    .title {
+        @include fs-textSans(4);
+        position: absolute;
+        z-index: 3;
+        bottom: 38px;
+        left: 10px;
+        color: #ffffff;
+        font-size: 36px;
+        line-height: 36px;
+        font-weight: bold;
+
+        @include mq(tablet) {
+            left: $gs-gutter * 1.5;
+        }
+
+        @include mq(desktop) {
+            left: $gs-column-width + 20;
+        }
+
+        @include mq(leftCol) {
+            left: $gs-column-width * 3;
+        }
+
+        @include mq(wide) {
+            left: $gs-column-width * 4 + 20;
+        }
+    }
+    .caption {
+        position: absolute;
+        left: 10px;
+        bottom: -40px;
+        right: unset;
+
+        @include mq(tablet) {
+            bottom: -32px;
+            left: $gs-gutter * 1.5;
+        }
+
+        @include mq(desktop) {
+            bottom: -54px;
+            left: unset;
+            right: $gs-column-width + 10;
+            width: $gs-column-width * 3 + 40;
+        }
+
+        @include mq(leftCol) {
+            bottom: -54px;
+            right: 10px;
+        }
+    }
+    .content__meta-container {
+        @include mq($until: desktop) {
+            margin-top: 48px;
+        }
+    }
+    .content[class*='-advertisement-feature'] {
+        .social__item--pinterest {
+            display: block;
+        }
+    }
+    .content__article-body {
+        .intro {
+            font-size: 26px;
+            line-height: 30px;
+            font-weight: 100;
+        }
+        .drop-cap {
+            @include fs-textSans(4);
+            display: inline-block;
+            float: left;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 480%;
+            line-height: 68px;
+            width: 77px;
+            height: 77px;
+            margin-right: 14px;
+        }
+    }
+    .hosted__standfirst {
+        padding: 0;
+        margin: 50px 0 0;
+
+        .hosted__terms {
+            margin-top: 0;
+            padding-top: 10px;
+            border-top: 2px solid #eeeeee;
+        }
+    }
+}
+
+.hostedbadge.hosted-tone-bg--zootropolis {
+    .hostedbadge__info {
+        color: #ffffff;
+    }
+}
+
+.hosted-article-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+    }
+}
+
+.hosted-article-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
+.hosted-article-page.zootropolis {
+    @mixin animal-stripe {
+        position: absolute;
+        z-index: 10;
+        width: gs-span(5);
+        left: ($gs-column-width * .2) * -1;
+        height: 240px;
+
+        @include mq(tablet) {
+            left: $gs-column-width * -1;
+            top: 20px;
+            width: gs-span(11);
+        }
+
+        @include mq(desktop) {
+            left: ($gs-column-width * 4 + 20) * -1;
+            top: 20px;
+            width: gs-span(16) + $gs-gutter * 2;
+        }
+    }
+    .animal {
+        position: relative;
+        margin-top: 40px;
+
+        &.con-artist {
+            .animal__stripe-character {
+                position: absolute;
+                top: -117px;
+                left: 42px;
+            }
+        }
+        &.rookie {
+            margin-top: 80px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -154px;
+                right: 176px;
+            }
+        }
+        &.buffalo {
+            margin-top: 244px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -230px;
+                left: 80px;
+            }
+        }
+        &.dmv-employee {
+            margin-top: 200px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -223px;
+                right: 0px;
+            }
+        }
+        &.desk-clerk {
+            margin-top: 320px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -285px;
+                left: 100px;
+            }
+        }
+        &.pop-star {
+            margin-top: 224px;
+            .animal__stripe-character {
+                position: absolute;
+                top: -206px;
+                left: 0;
+            }
+        }
+    }
+    .animal__stripe-odd {
+        @include animal-stripe;
+        background-color: #f26623;
+    }
+    .animal__stripe-even {
+        @include animal-stripe;
+        background-color: #3370b3;
+    }
+    .animal__info {
+        padding-top: 276px;
+    }
+    .animal__info-poster {
+        padding-right: 20px;
+        float: left;
+
+        @include mq(leftCol) {
+            position: absolute;
+            left: -160px;
+        }
+    }
+    .animal__info-about-header {
+        @include fs-textSans(4);
+        font-size: 30px;
+        line-height: 22px;
+        padding-bottom: 16px;
+        font-weight: bold;
+    }
+    .animal__info-about-download {
+        display: block;
+        width: 194px;
+        font-weight: 900;
+        color: #333333;
+        border-bottom: $zootropolisColor 2px solid;
+        text-decoration: none;
+        padding-top: 16px;
+    }
+    .hosted__cta-btn-text {
+        background-color: $zootropolisColor;
+        color: #ffffff;
+
+        .inline-icon {
+            fill: #ffffff;
+        }
+    }
+}

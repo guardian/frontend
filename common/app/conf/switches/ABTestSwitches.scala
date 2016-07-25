@@ -44,16 +44,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABSamplingTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-sampling-test",
-    "Tests the sampling",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 22),
-    exposeClientSide = true
-  )
-
   val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-autoplay",
@@ -81,6 +71,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 25),
+    exposeClientSide = true
+  )
+
+  val ABHabitFormingDigestPromo = Switch(
+    SwitchGroup.ABTests,
+    "ab-habit-forming-digest-promo",
+    "Show infrequent users a banner offering a curated digest",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
 }

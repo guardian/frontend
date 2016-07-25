@@ -1,0 +1,50 @@
+@(surveyPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+@import conf.Configuration.Survey.formStackAccountName
+
+
+@surveyMain(surveyPage) {
+    <div class="illustration-container">
+        <div class="content">
+            <div class="gs-container">
+                <div class="content__main-column my-digest-illustration-wrapper">
+                    @fragments.inlineSvg("my-digest", "illustration")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content my-digest-main">
+
+        <div class="gs-container">
+
+            <div class="content__main-column main__column--horizontal-bar">
+                <header class="my-digest-header">
+                    <h1>my<span class="my-digest-header__digest">digest</span></h1>
+
+                    <p>Tell us what you like to read, and we’ll deliver a daily or weekly selection of 10 stories just for you.</p>
+                </header>
+
+                <div class="my-digest-steps">
+                    <ul>
+                        <li class="my-digest-steps__step">
+                            <div class="my-digest-steps__text">Select your favourite sections</div>
+                        </li>
+                        <li class="my-digest-steps__step">
+                            <div class="my-digest-steps__text">Choose a delivery time and frequency</div>
+                        </li>
+                        <li class="my-digest-steps__step">
+                            <div class="my-digest-steps__text">We'll email your digest of 10 stories</div>
+                        </li>
+                        <li class="my-digest-steps__step">
+                            <a href="/survey/mydigest/404"><button class="my-digest-steps__create-button">Create my digest @fragments.inlineSvg("arrow-right", "icon")
+                            </button></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

@@ -1,10 +1,209 @@
 @import common.commercial.hosted.HostedArticlePage
 @import views.html.hosted.guardianHostedHeader
 @(page: HostedArticlePage)(implicit request: RequestHeader)
+@import java.net.URLEncoder
 
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
+    <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
+        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
+            <div class="media-primary media-content media-primary--showcase">
+                <img src="@{page.mainPicture}" alt="@{page.campaign.owner}">
+                <h2 class="title">Meet the characters of Zootropolis</h2>
+                <span class="caption hosted-tone--zootropolis">Felske uses stencils for the wheels to save time. Photograph: Jake Curtis for the Guardian</span>
+            </div><!--End of top banner !-->
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--article js-content-main-column">
+                        <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
+                            <div class="meta__extras" data-component="share">
+                                <ul class="social social--top u-unstyled u-cf" data-component="social">
+                                    <li class="social__item social__item--facebook" data-link-name="facebook">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="facebook-social-share-1"
+                                        href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="facebook">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+                                            @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--twitter" data-link-name="twitter">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="twitter-social-share-1"
+                                        href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterTxt, "utf-8")}&url=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="twitter">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+                                            @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--email" data-link-name="email">
+                                        <a class="social__action social-icon-wrapper"
+                                        data-link-name="email-social-share-1"
+                                        href="mailto:?subject=@{page.emailTxt}&body=@{page.pageUrl}"
+                                        target="_blank"
+                                        title="email">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+                                            @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
+                                        </a>
+                                    </li>
+                                    <li class="social__item social__item--pinterest" data-link-name="pinterest">
+                                        <a  class="social__action social-icon-wrapper"
+                                        data-link-name="Pinterest-social-share-1"
+                                        href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.ctaBanner}"
+                                        target="_blank"
+                                        title="pinterest">
+                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                                            @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!--End of social media icons !-->
+                        </div>
 
-    TODO ...
+                        <div class="content__article-body from-content-api js-article__body">
+                            <p class="intro">
+                                Zootropolis is a city like no other. But when optimistic Judy Hopps arrives, she discovers that being a bunny on a police force of big, tough animals isn’t so easy.
+                            </p>
+                            <p>
+                                <span class="drop-cap hosted-tone-bg--zootropolis">D</span> Determined to prove herself, she jumps at the opportunity to crack a case, even if it means partnering with a fast-talking fox, Nick Wilde. Walt Disney Animation Studios’ “Zootropolis,” is a comedy-adventure directed by Tangled’s Byron Howard.
+                            </p>
 
+                            <!--Beginning of the Con Artist - fox !-->
+                            <div class="animal con-artist">
+                                <p class="animal__stripe-odd">
+                                    <img src="@{page.customData.conArtistPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.conArtistPoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Con Artist</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Beginning of the Rookie - bunny !-->
+                            <div class="animal rookie">
+                                <p class="animal__stripe-even">
+                                    <img src="@{page.customData.rookiePic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.rookiePoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Rookie</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Beginning of the Chief - bison !-->
+                            <div class="animal buffalo">
+                                <p class="animal__stripe-odd">
+                                    <img src="@{page.customData.chiefPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.chiefPoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Chief</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Beginning of the DMV Employee - sloth !-->
+                            <div class="animal dmv-employee">
+                                <p class="animal__stripe-even">
+                                    <img src="@{page.customData.slothPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.slothPoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The DMV Employee</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Beginning of the Desk Clerk - tiger !-->
+                            <div class="animal desk-clerk">
+                                <p class="animal__stripe-odd">
+                                    <img src="@{page.customData.deskClerkPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.deskClerkPoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Desk Clerk</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Beginning of the Pop Star - gazelle !-->
+                            <div class="animal pop-star">
+                                <p class="animal__stripe-even">
+                                    <img src="@{page.customData.gazellePic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                </p>
+                                <div class="animal__info">
+                                    <div class="animal__info-poster">
+                                        <img src="@{page.customData.gazellePoster}" alt="@{page.campaign.owner}">
+                                    </div>
+                                    <div class="animal__info-about">
+                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Pop Star</h3>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--End of article body !-->
+                        <div class="hosted__standfirst">
+                            <div class="hosted__terms">​@{page.standfirst}
+                                <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
+                                    <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn hosted-tone--zootropolis js-hosted-about" data-link-name="terms-and-conditions-text-link">@{page.standfirstLink}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content__secondary-column js-secondary-column">
+                    </div><!--End of secondary column !-->
+                </div>
+            </div>
+        </article>
+        <section class="adverts hosted__container--full">
+            <div class="hosted__banner" style="background-image: url(@{page.ctaBanner});">
+                <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
+                    <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--@{page.campaign.owner.toLowerCase}">
+                        <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                    </div>
+                    @if(page.cta.btnText.length == 0) {
+                        <div class="hosted__cta-wrapper">
+                            <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
+                            @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
+                        </div>
+                    } else {
+                        <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                            <span class="hosted__cta-label">@{page.cta.label}</span>
+                            <span class="hosted__cta-btn-text">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
+                        </div>
+                    }
+                </a>
+            </div>
+        </section>
+    </div>
 }

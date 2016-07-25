@@ -8,14 +8,13 @@ define([
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
-    var burgerMenu = $('.js-animate-menu');
-    var burgerLink = $('.js-change-link');
+    var burgerLink = $('.js-animate-menu');
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            burgerMenu.addClass('new-header__burger-icon--open');
+            burgerLink.addClass('new-header__nav__menu-button--open');
             burgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
@@ -39,7 +38,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerMenu.removeClass('new-header__burger-icon--open');
+                burgerLink.removeClass('new-header__burger-icon--open');
                 burgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
