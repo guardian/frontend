@@ -24,7 +24,7 @@ object ZootropolisHostedPages {
     btnText = "Out now on digital download"
   )
 
-  private val videoPage: HostedVideoPage = {
+  private val videoPageWithoutNextPage: HostedVideoPage = {
     val videoTitle = "Disney’s’ Zootropolis: Download & keep today!"
     HostedVideoPage(
       campaign,
@@ -72,7 +72,7 @@ object ZootropolisHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
-    pageTitle = "Advertiser content hosted by the Guardian: Disney Zootropolis",
+    title = "Meet the characters of Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
     facebookImageUrl = Static("images/commercial/zootropolis.png"),
@@ -83,6 +83,10 @@ object ZootropolisHostedPages {
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
     customData
   )
+
+
+  private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
+    .copy(nextPage = Some(articlePage)) else videoPageWithoutNextPage
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
