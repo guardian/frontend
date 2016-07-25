@@ -52,7 +52,7 @@ object ZootropolisHostedPages {
   }
 
   val customData = CustomData(
-    conArtistPic = Static("images/commercial/con-artist.png"),
+    conArtistPic = "https://media.guim.co.uk/f57ea457837fcae4f77bb31d1b997af1fd158aed/0_0_2816_2389/2000.png",
     conArtistPoster = Static("images/commercial/con-artist-poster.png"),
     rookiePic = Static("images/commercial/rookie.png"),
     rookiePoster = Static("images/commercial/rookie-poster.png"),

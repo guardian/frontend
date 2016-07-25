@@ -2,6 +2,11 @@
 @import views.html.hosted.guardianHostedHeader
 @(page: HostedArticlePage)(implicit request: RequestHeader)
 @import java.net.URLEncoder
+@import layout.ContentWidths.GalleryMedia
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
 
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
@@ -66,14 +71,19 @@
                             <p class="intro">
                                 Zootropolis is a city like no other. But when optimistic Judy Hopps arrives, she discovers that being a bunny on a police force of big, tough animals isn’t so easy.
                             </p>
-                            <p>
+                            <p class="text">
                                 <span class="drop-cap hosted-tone-bg--zootropolis">D</span> etermined to prove herself, she jumps at the opportunity to crack a case, even if it means partnering with a fast-talking fox, Nick Wilde. Walt Disney Animation Studios’ “Zootropolis,” is a comedy-adventure directed by Tangled’s Byron Howard.
                             </p>
 
                             <!--Beginning of the Con Artist - fox !-->
                             <div class="animal con-artist">
                                 <p class="animal__stripe-odd">
-                                    <img src="@{page.customData.conArtistPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
+                                    @fragments.image(
+                                        ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.conArtistPic)), 0))),
+                                        Seq("animal__stripe-character"),
+                                        GalleryMedia.inline,
+                                        "TODO"
+                                    )
                                 </p>
                                 <div class="animal__info">
                                     <div class="animal__info-poster">
@@ -81,7 +91,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The Con Artist</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
@@ -98,7 +108,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The Rookie</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
@@ -115,7 +125,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The Chief</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
@@ -132,7 +142,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The DMV Employee</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
@@ -149,7 +159,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The Desk Clerk</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
@@ -166,7 +176,7 @@
                                     </div>
                                     <div class="animal__info-about">
                                         <h3 class="animal__info-about-header hosted-tone--zootropolis">The Pop Star</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
+                                        <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
                                         <a href="#" class="animal__info-about-download">Download character poster</a>
                                     </div>
                                 </div>
