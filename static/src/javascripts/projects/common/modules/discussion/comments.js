@@ -431,8 +431,6 @@ Comments.prototype.reportComment = function(e) {
                 })
                 .then(self.reportCommentSuccess.bind(self, form), self.reportCommentFailure.bind(self) );
             }
-
-            //bonzo(form).addClass('u-h');
         });
     }).appendTo(
         $('#comment-' + commentId + ' .js-report-comment-container').first()
