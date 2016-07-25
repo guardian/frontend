@@ -8,6 +8,7 @@ import model.deploys.{RiffRaffService, ApiResults}
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
 import model.deploys._
+import play.api.libs.ws.WSClient
 
 trait DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests {
 
@@ -28,8 +29,9 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
 
 }
 
-class DeploysRadiatorControllerImpl extends DeploysRadiatorController {
-  override val riffRaff = RiffRaffService
-  override val teamcity = TeamcityService
+class DeploysRadiatorControllerImpl(wsClient: WSClient) extends DeploysRadiatorController {
+  val httpClient = HttpClient(wsClient)
+  override val riffRaff = RiffRaffService(httpClient)
+  override val teamcity = TeamcityService(httpClient)
 }
 

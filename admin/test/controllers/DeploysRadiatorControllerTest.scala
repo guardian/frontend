@@ -5,7 +5,7 @@ import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsArray
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.ConfiguredTestSuite
@@ -14,23 +14,20 @@ import test.ConfiguredTestSuite
 
   val existingBuild = "1621"
 
-  val RecordingHttpClient = new HttpClient {
+  class TestHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
       DeploysTestHttpRecorder.load(url, extentedHeaders) {
-        WS.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
-  class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = new TeamcityService {
-      override val httpClient: HttpClient = RecordingHttpClient
-    }
+  val recordingHttpClient = new TestHttpClient(wsClient)
 
-    override val riffRaff = new RiffRaffService {
-      override val httpClient: HttpClient = RecordingHttpClient
-    }
+  class DeploysRadiatorControllerStub extends DeploysRadiatorController {
+    override val teamcity = TeamcityService(recordingHttpClient)
+    override val riffRaff = RiffRaffService(recordingHttpClient)
   }
 
   val controller = new DeploysRadiatorControllerStub()

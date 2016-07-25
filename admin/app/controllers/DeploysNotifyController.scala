@@ -7,6 +7,7 @@ import model.deploys.{NotifyRequestBody, NotifyTypes, ApiKeyAuthenticationSuppor
 import ApiResults.{ApiErrors, ApiError, ApiResponse}
 import model.deploys._
 import play.api.libs.json.{JsError, JsSuccess}
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Request, Controller}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import scala.concurrent.Future
@@ -16,6 +17,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests {
 
   val apiKey: String
+  val wsClient: WSClient
 
   override def validApiKey(key: String): Boolean = {
     key == apiKey
@@ -52,7 +54,7 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
 
   // Used in test to override requests to 3rd parties
   protected def sendNotice(step: NoticeStep, notice: Notice): Future[NoticeResponse] = {
-    notice.send(step)
+    notice.send(wsClient)(step)
   }
 
   //
@@ -74,11 +76,12 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
 
 }
 
-class DeploysNotifyControllerImpl extends DeploysNotifyController {
+class DeploysNotifyControllerImpl(val wsClient: WSClient) extends DeploysNotifyController {
   override val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
     throw new RuntimeException("Deploys-notify API Key not set")
   )
-  override val riffRaff = RiffRaffService
-  override val teamcity = TeamcityService
+  val httpClient = HttpClient(wsClient)
+  override val riffRaff = RiffRaffService(httpClient)
+  override val teamcity = TeamcityService(httpClient)
 }
 
