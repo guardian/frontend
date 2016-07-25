@@ -144,7 +144,9 @@ define([
 
             function addFeedbackDropdownToggle() {
                 return isRendered ? fastdom.write(function () {
-                    new Toggles(advert.node).init();
+                    if (!bonzo(advert.node).hasClass('js-toggle-ready')){
+                        new Toggles(advert.node).init();
+                    }
                 }) : Promise.resolve();
             }
         }).catch(raven.captureException);
