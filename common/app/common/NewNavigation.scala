@@ -5,7 +5,7 @@ sealed class TopLevelSection(val name: String)
 object TopLevelSection {
   case object News extends TopLevelSection("news")
   case object Opinion extends TopLevelSection("opinion")
-  case object Sports extends TopLevelSection("sports")
+  case object Sport extends TopLevelSection("sport")
   case object Arts extends TopLevelSection("arts")
   case object Life extends TopLevelSection("life")
 }
@@ -13,7 +13,7 @@ object TopLevelSection {
 case class NavLink(name: String, url: String)
 
 object NewNavigation {
-  val topLevelSections = List(TopLevelSection.News, TopLevelSection.Opinion, TopLevelSection.Sports, TopLevelSection.Arts, TopLevelSection.Life)
+  val topLevelSections = List(TopLevelSection.News, TopLevelSection.Opinion, TopLevelSection.Sport, TopLevelSection.Arts, TopLevelSection.Life)
 
   private val newsSections = List(
     NavLink("UK", "/uk-news"),
@@ -38,7 +38,7 @@ object NewNavigation {
     NavLink("Yotam Ottolenghi", "/profile/yotamottolenghi")
   )
 
-  private val sportsSections = List(
+  private val sportSections = List(
     NavLink("football", "/football"),
     NavLink("cricket", "/sport/cricket"),
     NavLink("rugby union", "/sport/rugby-union"),
@@ -78,7 +78,7 @@ object NewNavigation {
   val sectionItems: Map[TopLevelSection, List[NavLink]] = Map(
     TopLevelSection.News -> newsSections,
     TopLevelSection.Opinion -> opinionSections,
-    TopLevelSection.Sports -> sportsSections,
+    TopLevelSection.Sport -> sportSections,
     TopLevelSection.Arts -> artsSections,
     TopLevelSection.Life -> lifeSections
   )

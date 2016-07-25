@@ -72,15 +72,15 @@ object ZootropolisHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
-    pageTitle = "Advertiser content hosted by the Guardian: some title here",
+    pageTitle = "Advertiser content hosted by the Guardian: Disney Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
-    facebookImageUrl = "TODO",
+    facebookImageUrl = Static("images/commercial/zootropolis.png"),
     cta,
     ctaBanner = Static("images/commercial/zootropolis-banner.png"),
     mainPicture = Static("images/commercial/zootropolis.png"),
-    twitterTxt = "TODO  #ad: ",
-    emailTxt = "TODO",
+    twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
+    emailTxt = "Disney Zootropolis asset pack on the Guardian",
     customData
   )
 
