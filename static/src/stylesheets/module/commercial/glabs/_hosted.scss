@@ -60,11 +60,11 @@ $leffeColor: #dec190;
 }
 
 .hosted-tone-btn--leffe {
-    &,
+    &.hosted-tone-btn--leffe,
     &:focus,
     &:hover {
-        background-color: $leffeColor;
-        border-color: $leffeColor;
+        background-color: #ffffff;
+        border-color: #ffffff;
     }
 }
 
@@ -77,11 +77,15 @@ $leffeColor: #dec190;
 }
 
 .hosted-tone-btn--zootropolis {
-    &,
+    &.hosted-tone-btn--zootropolis,
     &:focus,
     &:hover {
         background-color: $zootropolisColor;
         border-color: $zootropolisColor;
+        color: #ffffff;
+        svg {
+            fill: #ffffff;
+        }
     }
 }
 
@@ -1141,6 +1145,33 @@ $leffeColor: #dec190;
         .hosted-next-autoplay__video,
         .hosted-next-autoplay__next-in-series {
             border-top: 1px solid $renaultColor;
+        }
+    }
+}
+
+.hostedbadge.hosted-tone-bg--zootropolis {
+    .hostedbadge__info {
+        color: #ffffff;
+    }
+}
+
+.hosted-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+    }
+}
+
+.hosted-page.zootropolis ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $zootropolisColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
         }
     }
 }
