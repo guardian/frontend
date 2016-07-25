@@ -24,7 +24,7 @@ object ZootropolisHostedPages {
     btnText = "Out now on digital download"
   )
 
-  private val videoPage: HostedVideoPage = {
+  private val videoPageWithoutNextPage: HostedVideoPage = {
     val videoTitle = "Disney’s’ Zootropolis: Download & keep today!"
     HostedVideoPage(
       campaign,
@@ -83,6 +83,10 @@ object ZootropolisHostedPages {
     emailTxt = "TODO",
     customData
   )
+
+
+  private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
+    .copy(nextPage = Some(articlePage)) else videoPageWithoutNextPage
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {

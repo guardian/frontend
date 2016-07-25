@@ -52,13 +52,13 @@
                         <div class="hosted-next-autoplay__video">
                             <div class="hosted-next-autoplay__header">
                                 <div class="hosted-next-autoplay__continue @brandColorCss(page)">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.video.title}</h2>
+                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
                             </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.video.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.video.posterUrl}">
+                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
+                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
                                 <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
                             </a>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.video.title}" target="_blank">
+                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
                                 Watch now
                             </a>
                         </div>
@@ -133,9 +133,9 @@
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name @brandColorCss(page)">@{page.campaign.owner}</h2>
                 </div>
-                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.video.title}">
-                    <img class="hosted__next-video-thumb" src="@{nextPage.video.posterUrl}" alt="Next Video: @{nextPage.video.title}">
-                    <p class="hosted__next-video-title">@{nextPage.video.title}</p>
+                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                    <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
+                    <p class="hosted__next-video-title">@{nextPage.title}</p>
                 </a>
             </div>
             }

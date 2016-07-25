@@ -21,6 +21,9 @@ case class HostedArticlePage(
 )
   extends HostedPage {
 
+  val title = pageTitle
+  val imageUrl = mainPicture
+
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"
     val keywordName = campaign.id
