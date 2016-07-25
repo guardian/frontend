@@ -62,7 +62,7 @@ define([
         if ($node.hasClass('ad-slot--right')) {
             stickyMpu($node);
         } else {
-            return addFluid(['ad-slot--facebook'])(_, advert);
+            return addFluid(['ad-slot--facebook', 'ad-slot--revealer'])(_, advert);
         }
     };
 

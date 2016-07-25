@@ -9,7 +9,7 @@
 
     <div class="sharing-buttons" data-link-name="comment social">
     @defining(s"${comment.webUrl}") { permalink =>
-        @defining(StringEscapeUtils.unescapeHtml(Jsoup.clean(comment.body, Whitelist.none()))) { commentBody =>
+        @defining(StringEscapeUtils.unescapeHtml(Jsoup.clean(comment.body.replaceAll("<blockquote>.*</blockquote>", ""), Whitelist.none()))) { commentBody =>
             <a href="@ShareLinks.createShareLinkForComment(platform = Facebook, href = permalink, text = "", quote = Some(s"""${comment.profile.displayName} commented: "$commentBody"""")).href"
             target="_blank"
             class="social__action social-icon-wrapper"
