@@ -1017,6 +1017,11 @@ $comment-recommend-button-size: 19px;
     width: auto;
 }
 
+.d-report-comment__close--error {
+    margin-top: -$gs-baseline * 6;
+}
+
+
 /* Top Comments
    ========================================================================== */
 
@@ -1238,6 +1243,11 @@ $comment-recommend-button-size: 19px;
     .d-discussion__error-text {
         display: inline-block;
         margin-left: $gs-gutter * 1.2;
+
+        .d-report-comment-form & {
+            margin-left: 0;
+        }
+
     }
     .i-alert { position: absolute; }
 }
