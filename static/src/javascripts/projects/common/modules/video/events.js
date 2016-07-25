@@ -6,10 +6,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle'
 ], function (
@@ -19,10 +17,8 @@ define([
     $,
     config,
     detect,
-    template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl,
     indexOf,
     throttle
 ) {
@@ -201,58 +197,6 @@ define([
         });
     }
 
-    function adSkipCountdown(skipTimeout) {
-        var intervalId,
-            events = {
-                update: function () {
-                    var adsManager  = this.ima.getAdsManager(),
-                        currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
-                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
-
-                    if (skipTime > 0) {
-                        $('.js-skip-remaining-time', this.el()).text(skipTime);
-                    } else {
-                        window.clearInterval(intervalId);
-                        $('.js-ads-skip', this.el())
-                            .html(
-                                '<button class="js-ads-skip-button vjs-ads-skip__button" data-link-name="Skip video advert">' +
-                                    '<i class="i i-play-icon-grey skip-icon"></i>' +
-                                    '<i class="i i-play-icon-gold skip-icon"></i>Skip advert' +
-                                '</button>'
-                            );
-                        bean.on(qwery('.js-ads-skip-button')[0], 'click', events.skip.bind(this));
-                    }
-                },
-                skip: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    this.trigger(constructEventName('preroll:skip', this));
-                    // in lieu of a 'skip' api, rather hacky way of achieving it
-                    this.ima.onAdComplete_();
-                    this.ima.onContentResumeRequested_();
-                    this.ima.getAdsManager().stop();
-                },
-                init: function () {
-                    var adDuration = this.ima.getAdsManager().getCurrentAd().getDuration();
-
-                    var skipButton = template(adsSkipOverlayTmpl, {
-                        adDuration: adDuration,
-                        skipTimeout: skipTimeout
-                    });
-
-                    $(this.el()).append(skipButton);
-                    intervalId = setInterval(events.update.bind(this), 500);
-
-                },
-                end: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    window.clearInterval(intervalId);
-                }
-            };
-
-        this.one(constructEventName('preroll:play', this), events.init.bind(this));
-        this.one(constructEventName('preroll:end', this), events.end.bind(this));
-    }
-
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
             reportError(new Error(err.message), {
@@ -285,7 +229,6 @@ define([
         bindGlobalEvents: bindGlobalEvents,
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
-        adSkipCountdown: adSkipCountdown,
         handleInitialMediaError: handleInitialMediaError,
         bindErrorHandler: bindErrorHandler
     };

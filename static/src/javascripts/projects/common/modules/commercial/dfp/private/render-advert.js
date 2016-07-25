@@ -55,24 +55,14 @@ define([
     sizeCallbacks[adSizes.fluid] = addFluid250(['ad-slot--top-banner-ad']);
 
     /**
-     * Trigger sticky scrolling if the ad has the magic 'sticky' size
-     */
-    sizeCallbacks[adSizes.stickyMpu] = function (_, advert) {
-        stickyMpu(bonzo(advert.node));
-    };
-
-    /**
      * Trigger sticky scrolling for MPUs in the right-hand article column
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
         var $node = bonzo(advert.node);
         if ($node.hasClass('ad-slot--right')) {
-            var mobileAdSizes = advert.sizes.mobile;
-            if (mobileAdSizes && mobileAdSizes.some(function (size) { return size[0] === 300 && size[1] === 251; })) {
-                stickyMpu($node);
-            }
+            stickyMpu($node);
         } else {
-            return addFluid(['ad-slot--facebook'])(_, advert);
+            return addFluid(['ad-slot--facebook', 'ad-slot--revealer'])(_, advert);
         }
     };
 

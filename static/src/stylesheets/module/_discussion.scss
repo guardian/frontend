@@ -956,7 +956,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .comment-share-icon svg {
-    vertical-align: text-top;
+    vertical-align: middle;
 }
 
 .sharing-buttons {
@@ -1016,6 +1016,13 @@ $comment-recommend-button-size: 19px;
     margin-bottom: $gs-baseline / 2;
     width: auto;
 }
+.d-report-comment__close--error-hidden {
+    display: none;
+}
+.d-report-comment__close--error {
+    margin-top: -$gs-baseline * 6;
+}
+
 
 /* Top Comments
    ========================================================================== */
@@ -1238,8 +1245,18 @@ $comment-recommend-button-size: 19px;
     .d-discussion__error-text {
         display: inline-block;
         margin-left: $gs-gutter * 1.2;
+
+        .d-report-comment-form & {
+            margin-left: 0;
+            margin-bottom: .25rem;
+        }
+
     }
     .i-alert { position: absolute; }
+}
+
+.d-discussion__error--hidden {
+    display: none;
 }
 
 .d-comment-box__error-meta {

@@ -5,7 +5,6 @@
    ========================================================================== */
 
 /* Common */
-@import '_commercial--multi';
 @import '_lineitem';
 
 /* Tones */
@@ -24,6 +23,7 @@
 /* Creative styles */
 @import '_creatives';
 @import 'creatives/_fabric-video';
+@import 'creatives/_revealer';
 
 /* GU styled commercial content */
 @import 'gustyle/_gu-comcontent';

@@ -413,7 +413,8 @@ Comments.prototype.replyToComment = function(e) {
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
 
-    var commentId = e.currentTarget.getAttribute('data-comment-id');
+    var self = this,
+        commentId = e.currentTarget.getAttribute('data-comment-id');
 
     $('.js-report-comment-form').first().each(function(form) {
         bean.one(form, 'submit', function(e) {
@@ -422,18 +423,27 @@ Comments.prototype.reportComment = function(e) {
                 comment = form.elements.comment.value;
 
             if (category.value !== '0') {
-                DiscussionApi.reportComment(commentId, {
+                DiscussionApi
+                    .reportComment(commentId, {
                     emailAddress: form.elements.email.value,
                     categoryId: category.value,
                     reason: comment
-                });
+                })
+                .then(self.reportCommentSuccess.bind(self, form), self.reportCommentFailure.bind(self) );
             }
-
-            bonzo(form).addClass('u-h');
         });
     }).appendTo(
         $('#comment-' + commentId + ' .js-report-comment-container').first()
     ).removeClass('u-h');
+};
+
+Comments.prototype.reportCommentSuccess = function(form) {
+    bonzo(form).addClass('u-h');
+};
+
+Comments.prototype.reportCommentFailure = function() {
+    $('.js-discussion__report-comment-error').removeClass('d-discussion__error--hidden');
+    $('.d-report-comment__close').addClass('d-report-comment__close--error');
 };
 
 Comments.prototype.addUser = function(user) {

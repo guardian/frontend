@@ -33,7 +33,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("gklopper")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 26),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ComscoreSwitch = Switch(
