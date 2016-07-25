@@ -136,7 +136,7 @@ import collection.JavaConversions._
 
         And("I should see the image url")
         findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
-          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=300&q=55&auto=format&usm=12&fit=max&s=5c104f891f729f652c8f50caf5ee2dc6")
+          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=a3609bca562f97c2c3b80fd2d625c132")
 
         And("I should see the image width")
         findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")

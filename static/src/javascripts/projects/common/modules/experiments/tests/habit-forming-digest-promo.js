@@ -25,8 +25,8 @@ define([
         this.expiry = '2016-08-13';
         this.author = 'Kate Whalen';
         this.description = 'For just one pageview, show users a banner offering a curated digest';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.1;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'Find if there is demand for various Guardian digest offerings';
         this.audienceCriteria = 'Everyone';
         this.dataLinkNames = 'habit forming digest promo';

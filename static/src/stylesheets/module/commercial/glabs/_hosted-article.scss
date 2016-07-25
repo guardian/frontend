@@ -3,6 +3,7 @@
         position: relative;
         height: 378px;
         margin-bottom: 10px;
+        overflow: hidden;
 
         &:after {
             content: '';
@@ -203,7 +204,7 @@
     .animal__info-about-header {
         @include fs-textSans(4);
         font-size: 30px;
-        line-height: 22px;
+        line-height: 28px;
         padding-bottom: 16px;
         font-weight: bold;
     }
