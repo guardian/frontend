@@ -6,12 +6,10 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
-    'common/modules/video/ophan-media'
+    'lodash/functions/throttle'
 ], function (
     bean,
     qwery,
@@ -19,21 +17,23 @@ define([
     $,
     config,
     detect,
-    template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl,
     indexOf,
-    ophanMedia
+    throttle
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
+        QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
             'preroll:request',
             'preroll:ready',
             'preroll:play',
-            'preroll:end'
+            'preroll:end',
+            'content:ready',
+            'content:play',
+            'content:end'
         ];
 
     function getMediaType(player) {
@@ -48,10 +48,26 @@ define([
         return getMediaType(player) + ':' + eventName;
     }
 
+    function ophanRecord(id, event, player) {
+        var ophanPath = isEmbed ? 'ophan/embed' : 'ophan/ng';
+        if (id) {
+            require([ophanPath], function (ophan) {
+                var eventObject = {};
+                eventObject[getMediaType(player)] = {
+                    id: id,
+                    eventType: event.type
+                };
+                ophan.record(eventObject);
+            });
+        }
+    }
+
     function initOphanTracking(player, mediaId) {
-        EVENTS.forEach(function (event) {
+        EVENTS.concat(QUARTILES.map(function (q) {
+            return 'content:' + q;
+        })).forEach(function (event) {
             player.one(constructEventName(event, player), function (event) {
-                ophanMedia.ophanRecord(mediaId, getMediaType(player), event.type);
+                ophanRecord(mediaId, event, player);
             });
         });
     }
@@ -139,10 +155,22 @@ define([
                     player.one('durationchange', events.play);
                 }
             },
+            timeupdate: function () {
+                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
+                QUARTILES.reverse().some(function (quart) {
+                    if (progress >= quart) {
+                        player.trigger(constructEventName('content:' + quart, player));
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            },
             ready: function () {
                 player.trigger(constructEventName('content:ready', player));
 
                 player.one('play', events.play);
+                player.on('timeupdate', throttle(events.timeupdate, 1000));
                 player.one('ended', events.end);
 
                 if (shouldAutoPlay(player)) {
@@ -153,8 +181,7 @@ define([
         events.ready();
     }
 
-    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
-    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
+    // These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
@@ -168,58 +195,6 @@ define([
             bean.fire(document.body, 'videoEnded');
             kruxTracking(player, 'videoEnded');
         });
-    }
-
-    function adSkipCountdown(skipTimeout) {
-        var intervalId,
-            events = {
-                update: function () {
-                    var adsManager  = this.ima.getAdsManager(),
-                        currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
-                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
-
-                    if (skipTime > 0) {
-                        $('.js-skip-remaining-time', this.el()).text(skipTime);
-                    } else {
-                        window.clearInterval(intervalId);
-                        $('.js-ads-skip', this.el())
-                            .html(
-                                '<button class="js-ads-skip-button vjs-ads-skip__button" data-link-name="Skip video advert">' +
-                                    '<i class="i i-play-icon-grey skip-icon"></i>' +
-                                    '<i class="i i-play-icon-gold skip-icon"></i>Skip advert' +
-                                '</button>'
-                            );
-                        bean.on(qwery('.js-ads-skip-button')[0], 'click', events.skip.bind(this));
-                    }
-                },
-                skip: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    this.trigger(constructEventName('preroll:skip', this));
-                    // in lieu of a 'skip' api, rather hacky way of achieving it
-                    this.ima.onAdComplete_();
-                    this.ima.onContentResumeRequested_();
-                    this.ima.getAdsManager().stop();
-                },
-                init: function () {
-                    var adDuration = this.ima.getAdsManager().getCurrentAd().getDuration();
-
-                    var skipButton = template(adsSkipOverlayTmpl, {
-                        adDuration: adDuration,
-                        skipTimeout: skipTimeout
-                    });
-
-                    $(this.el()).append(skipButton);
-                    intervalId = setInterval(events.update.bind(this), 500);
-
-                },
-                end: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    window.clearInterval(intervalId);
-                }
-            };
-
-        this.one(constructEventName('preroll:play', this), events.init.bind(this));
-        this.one(constructEventName('preroll:end', this), events.end.bind(this));
     }
 
     function beaconError(err) {
@@ -254,7 +229,6 @@ define([
         bindGlobalEvents: bindGlobalEvents,
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
-        adSkipCountdown: adSkipCountdown,
         handleInitialMediaError: handleInitialMediaError,
         bindErrorHandler: bindErrorHandler
     };

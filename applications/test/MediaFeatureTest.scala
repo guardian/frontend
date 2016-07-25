@@ -21,18 +21,6 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Load video fallbacks") {
-      Given("I am on a video page")
-      goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
-        import browser._
-        Then("the flash fallback should be available")
-        $(".player object") should have size (1)
-
-        And("the ultimate fallback should be an image")
-        findFirst(".player object img").getAttribute("src") should include ("/Chloe-Grace-Moretz-talks--016.jpg")
-      }
-    }
-
     scenario("Have correct canonical url when 410 encountered") {
       Given("I am on a video page")
       goTo("/world/video/2008/dec/11/guantanamo-bay") { browser =>

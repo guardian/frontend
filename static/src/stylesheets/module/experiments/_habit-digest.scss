@@ -1,0 +1,68 @@
+
+.site-message--habit-digest {
+    background-color: #ffffff;
+    border-top: 1px solid $guardian-brand;
+    color: $guardian-brand;
+
+    .site-message__media {
+        display: table-cell;
+        padding: $gs-baseline/2 $gs-gutter/2 0 0;
+    }
+
+    .inline-icon {
+        fill: $guardian-brand;
+    }
+
+    .u-vertical-align-middle-icon__svg {
+        vertical-align: inherit;
+    }
+
+    .site-message__digest {
+        margin-right: $gs-gutter/2;
+    }
+
+    .digest-text__copy {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .digest-text__question {
+        font-weight: bold;
+    }
+
+    .site-message__actions {
+        margin: $gs-baseline/2 0;
+    }
+
+    .site-message__actions__item {
+        color: $guardian-brand;
+        border-color: $guardian-brand;
+        cursor: pointer;
+
+        a {
+            color: $guardian-brand;
+        }
+
+        .inline-icon {
+            fill: $guardian-brand;
+        }
+    }
+
+    .site-message__close {
+        padding-top: $gs-baseline/2;
+    }
+
+    .site-message__close-btn {
+        border-color: rgba(189, 189, 189, .5);
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: rgba(189, 189, 189, 1);
+        }
+    }
+
+    .inline-close--small {
+        fill: $neutral-3;
+    }
+}

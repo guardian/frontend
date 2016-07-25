@@ -49,8 +49,6 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
-        val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf")
-
         val mediaId = element.attr("data-media-id")
 
         val asset = findVideoFromId(mediaId)
@@ -70,17 +68,6 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         video.map(_.images).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
           element.attr("poster", url)
         }
-
-        asset.foreach(video => {
-          element.append(
-            s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
-                  <param name="allowFullScreen" value="true" />
-                  <param name="movie" value="$flashMediaElement" />
-                  <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
-                  Sorry, your browser is unable to play this video.
-                </object>""")
-
-        })
 
         findVideoApiElement(mediaId).foreach { videoElement =>
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)

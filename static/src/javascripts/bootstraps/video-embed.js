@@ -3,42 +3,40 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'bootstraps/enhanced/media/video-player',
+    'videojs',
+    'videojs-embed',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/component',
-    'common/modules/video/tech-order',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
+    'common/modules/media/videojs-plugins/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html',
     'lodash/functions/debounce',
-    'common/modules/video/videojs-options',
-    'bootstraps/enhanced/media/analytics'
+    'common/modules/video/videojs-options'
 ], function (
     bean,
     bonzo,
     qwery,
     videojs,
+    videojsembed,
     $,
     config,
     deferToAnalytics,
     template,
     omniture,
     Component,
-    techOrder,
     events,
     fullscreener,
     svgs,
     loadingTmpl,
     titlebarTmpl,
     debounce,
-    videojsOptions,
-    mediaAnalytics
+    videojsOptions
 ) {
 
     function initLoadingSpinner(player) {
@@ -46,16 +44,7 @@ define([
     }
 
     function createVideoPlayer(el, options) {
-        var player;
-
-        options.techOrder = techOrder(el);
-        player = videojs(el, options);
-
-        if (events.handleInitialMediaError(player)) {
-            player.dispose();
-            options.techOrder = techOrder(el).reverse();
-            player = videojs(el, options);
-        }
+        var player = videojs(el, options);
 
         return player;
     }
@@ -105,14 +94,13 @@ define([
     }
 
     function initPlayer() {
-        mediaAnalytics.init();
 
         videojs.plugin('fullscreener', fullscreener);
 
         bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
             var player,
                 mouseMoveIdle,
-                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+                $el = bonzo(el).addClass('vjs'),
                 mediaId = $el.attr('data-media-id');
 
             bonzo(el).addClass('vjs');
@@ -158,6 +146,9 @@ define([
                     });
 
                 }
+
+                events.initOmnitureTracking(player, mediaId);
+                events.bindContentEvents(player);
             });
 
             mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

@@ -85,7 +85,7 @@ const renderGroupDeployListNode = (deploys) => {
     ]);
 };
 const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDeploy], commits) => {
-    const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
+    const isInSync = oldestProdDeploy.build === latestCodeDeploy.build && !hasDeployStarted(oldestProdDeploy) && !hasDeployStarted(latestCodeDeploy);
     return h(`${exp(commits.size == 0) ? '.unsynced' : ''}.row#root`, {}, [
         h('h1', [
             `${isInSync ? '🌷👌' : '🔥 ship it!'}`

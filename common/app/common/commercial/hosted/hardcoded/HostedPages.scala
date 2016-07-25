@@ -20,15 +20,13 @@ object HostedPages {
 
   private val visitBritainCampaignName = "visit-britain"
   private val leffeCampaignName = "leffe-rediscover-time"
-
-  // todo rename
-  private val articleCampaignName = "article-campaign"
+  private val zootropolisCampaignName = "disney-zootropolis"
 
   def fromCampaignAndPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {
       case `visitBritainCampaignName` => VisitBritainHostedPages.fromPageName(pageName)
       case `leffeCampaignName` => LeffeHostedPages.fromPageName(pageName)
-      case `articleCampaignName` => ArticleCampaign.fromPageName(pageName)
+      case `zootropolisCampaignName` => ZootropolisHostedPages.fromPageName(pageName)
       case _ => None;
     }
   }

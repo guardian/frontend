@@ -13,7 +13,8 @@ define([
     'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
-    'common/modules/experiments/tests/video-caption'
+    'common/modules/experiments/tests/video-caption',
+    'common/modules/experiments/tests/habit-forming-digest-promo'
 ], function (
     reportError,
     config,
@@ -29,7 +30,8 @@ define([
     JoinDiscussionAfterPoll,
     HostedAutoplay,
     Giraffe,
-    VideoCaption
+    VideoCaption,
+    HabitFormingDigestPromo
 ) {
 
     var TESTS = [
@@ -39,6 +41,7 @@ define([
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
+        new HabitFormingDigestPromo(),
         new VideoCaption()
     ];
 

@@ -18,8 +18,8 @@ define([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
-    'common/modules/video/tech-order',
+    'common/modules/media/videojs-plugins/fullscreener',
+    'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
@@ -27,7 +27,9 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html',
+    'common/utils/template'
 ], function (
     bean,
     bonzo,
@@ -49,13 +51,15 @@ define([
     ab,
     events,
     fullscreener,
-    techOrder,
+    skipAd,
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    titlebarTmpl,
+    template
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -81,7 +85,6 @@ define([
 
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
-        // It doesn't matter what kind of tech this is, flash or html5.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
         // Hide superfluous controls, and label useful buttons.
@@ -97,13 +100,10 @@ define([
     }
 
     function createVideoPlayer(el, options) {
-
-        var player = videojs(el, options),
-            $el = $(el),
-            duration = parseInt($el.attr('data-duration'), 10);
+        var player = videojs(el, options);
+        var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
-
             if (!isNaN(duration)) {
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
@@ -115,27 +115,28 @@ define([
             // need to explicitly set the dimensions for the ima plugin.
             player.height(bonzo(player.el()).parent().dim().height);
             player.width(bonzo(player.el()).parent().dim().width);
-
-            if (events.handleInitialMediaError(player)) {
-                player.dispose();
-                options.techOrder = techOrder(el).reverse();
-                player = videojs(el, options);
-            }
         });
 
         return player;
     }
+    
+    function removeCaptionLink(){
+        bonzo($('.caption--main a')).remove();
+    }
 
-    // Apologies for the slightly hacky nature of this.
-    // Improvements welcomed...
-    function isFlash(event) {
-        return event.target.firstChild &&
-            event.target.firstChild.id &&
-            event.target.firstChild.id.indexOf('flash_api') > 0;
+    function addTitleBar() {
+        var videoTitleElement = document.querySelector('.caption--main a');
+
+        var data = {
+            webTitle: videoTitleElement.textContent,
+            pageId: videoTitleElement.getAttribute('href'),
+            icon: null
+        };
+        $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
+        removeCaptionLink();
     }
 
     function initPlayButtons(root) {
-
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el) {
                 var $el = bonzo(el);
@@ -159,11 +160,7 @@ define([
     }
 
     function initPlayer(withPreroll) {
-        // When possible, use our CDN instead of a third party (zencoder).
-        if (config.page.videoJsFlashSwf) {
-            videojs.options.flash.swf = config.page.videoJsFlashSwf;
-        }
-        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
+        videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
 
         fastdom.read(function () {
@@ -171,16 +168,11 @@ define([
                 enhanceVideo(el, false, withPreroll);
             });
         });
-
-        initPlayButtons(document.body);
-
-        mediator.on('modules:related:loaded', initPlayButtons);
-        mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
-            $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+            $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
@@ -188,7 +180,6 @@ define([
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
             shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
-            techPriority = techOrder(el),
             player,
             mouseMoveIdle,
             playerSetupComplete,
@@ -222,7 +213,6 @@ define([
         });
 
         player = createVideoPlayer(el, videojsOptions({
-            techOrder: techPriority,
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
@@ -270,12 +260,8 @@ define([
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
 
-                        player.one('playing', function (e) {
-                            if (isFlash(e)) {
-                                beacon.counts('video-tech-flash');
-                            } else {
-                                beacon.counts('video-tech-html5');
-                            }
+                        player.one('playing', function() {
+                            beacon.counts('video-tech-html5');
                         });
 
                         // unglitching the volume on first load
@@ -309,7 +295,7 @@ define([
                                             }
                                         });
                                         player.on('adstart', function() {
-                                            player.adSkipCountdown(15);
+                                            player.skipAd(mediaType, 15);
                                         });
                                         player.ima.requestAds();
 
@@ -346,6 +332,10 @@ define([
                 });
 
                 playerSetupComplete.then(function () {
+                    if(ab.isInVariant('VideoCaption','caption-overlay')) {
+                        addTitleBar();
+                    }
+
                     if (autoplay) {
                         player.play();
                     }
@@ -438,6 +428,12 @@ define([
                 initWithRaven();
             }
         }
+
+        // Setup play buttons
+        initPlayButtons(document.body);
+        mediator.on('modules:related:loaded', initPlayButtons);
+        mediator.on('page:media:moreinloaded', initPlayButtons);
+
         initFacia();
         initMoreInSection();
         initOnwardContainer();
