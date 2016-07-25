@@ -8,7 +8,7 @@ define([
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
-    var burgerLink = $('.js-animate-menu');
+    var burgerLink = $('.js-change-link');
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
@@ -38,7 +38,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerLink.removeClass('new-header__burger-icon--open');
+                burgerLink.removeClass('new-header__nav__menu-button--open');
                 burgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
