@@ -7,8 +7,10 @@ import conf.switches.SwitchboardLifecycle
 import conf.{FootballLifecycle, CommonFilters, CachedHealthCheckLifeCycle}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
+import cricketPa.PaFeed
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import football.controllers.{FootballControllers, HealthCheck}
+import jobs.CricketStatsJob
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -16,6 +18,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle
 import router.Routes
 import rugby.controllers.RugbyControllers
@@ -24,12 +27,18 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
+trait CricketServices {
+  def wsClient: WSClient
+  lazy val cricketPaFeed = wire[PaFeed]
+  lazy val cricketStatsJob = wire[CricketStatsJob]
+}
+
 trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 }
 
-trait AppLifecycleComponents {
+trait AppLifecycleComponents extends CricketServices {
   self: FrontendComponents with Controllers =>
 
   override lazy val lifecycleComponents = List(

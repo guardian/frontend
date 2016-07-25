@@ -10,7 +10,7 @@ import feed.OnwardJourneyLifecycle
 import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 
-trait StandaloneLifecycleComponents {
+trait StandaloneLifecycleComponents extends CricketServices {
   self: FrontendComponents =>
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
