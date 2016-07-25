@@ -1016,7 +1016,9 @@ $comment-recommend-button-size: 19px;
     margin-bottom: $gs-baseline / 2;
     width: auto;
 }
-
+.d-report-comment__close--error-hidden {
+    display: none;
+}
 .d-report-comment__close--error {
     margin-top: -$gs-baseline * 6;
 }
@@ -1246,10 +1248,15 @@ $comment-recommend-button-size: 19px;
 
         .d-report-comment-form & {
             margin-left: 0;
+            margin-bottom: 0.25rem;
         }
 
     }
     .i-alert { position: absolute; }
+}
+
+.d-discussion__error--hidden {
+    display: none;
 }
 
 .d-comment-box__error-meta {

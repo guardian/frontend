@@ -442,15 +442,8 @@ Comments.prototype.reportCommentSuccess = function(form) {
 };
 
 Comments.prototype.reportCommentFailure = function() {
-    var message = 'Sorry there was an error reporting this comment. Please try another browser or network connection.',
-        error = bonzo.create(
-        '<div class="d-discussion__error ' + this.getClass('error', true) + '">' +
-        '<i class="i i-alert"></i>' +
-        '<span class="d-discussion__error-text">' + message + '</span>' +
-        '</div>'
-    )[0];
+    $('.js-discussion__report-comment-error').removeClass('d-discussion__error--hidden');
     $('.d-report-comment__close').addClass('d-report-comment__close--error');
-    $('.js-report-comment-form').first().prepend(error);
 };
 
 Comments.prototype.addUser = function(user) {
