@@ -16,11 +16,11 @@ define([
                 try {
                     var abParticipant = store.local.get('gu.ab.participations')['AdFeedback'];
                     if (abParticipant && abParticipant.variant === 'ad-feedback-variant') {
-                        var feedBackOpts = '<span>Tell us why you\'re reporting this advertisement</span><hr/><li class="popup__item">It\'s offensive</li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item">Makes a sound</li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item">Too much movement</li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item">Not relevant</li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item">Other</li>';
+                        var feedBackOpts = '<span>Tell us why you\'re reporting this advertisement</span><hr/><li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=offensive">It\'s offensive</a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=makes-a-sound">Makes a sound</a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=too-much-movement">Too much movement</a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=not-relevant">Not relevant</a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=other">Other</a></li>';
                         var feedbackMenu = '<ul class="popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '">' + feedBackOpts + '</ul>';
                         //TODO: correct styling
                         labelInner = ' <a class="popup__toggle" data-toggle="' + adSlotNode.id + '__popup--feedback" aria-haspopup="true" aria-controls="ad-feedback-menu__' + adSlotNode.id + '">(Report this ad)</a>' + feedbackMenu;
