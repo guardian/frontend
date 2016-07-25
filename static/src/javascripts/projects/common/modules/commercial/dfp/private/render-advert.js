@@ -8,7 +8,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/dfp/private/apply-creative-template',
     'common/modules/commercial/dfp/private/render-advert-label',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/onward/geo-most-popular',
+    'common/modules/ui/toggles'
 ], function (
     bonzo,
     qwery,
@@ -19,7 +20,8 @@ define([
     stickyMpu,
     applyCreativeTemplate,
     renderAdvertLabel,
-    geoMostPopular
+    geoMostPopular,
+    Toggles
 ) {
     /**
      * ADVERT RENDERING
@@ -120,6 +122,7 @@ define([
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return renderAdvertLabel(advert.node)
+                .then(addFeedbackDropdownToggle())
                 .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
@@ -136,6 +139,12 @@ define([
             function addRenderedClass() {
                 return isRendered ? fastdom.write(function () {
                     bonzo(advert.node).addClass('ad-slot--rendered');
+                }) : Promise.resolve();
+            }
+
+            function addFeedbackDropdownToggle() {
+                return isRendered ? fastdom.write(function () {
+                    new Toggles(advert.node).init();
                 }) : Promise.resolve();
             }
         }).catch(raven.captureException);

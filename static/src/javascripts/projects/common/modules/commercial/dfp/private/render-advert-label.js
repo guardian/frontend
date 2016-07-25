@@ -16,10 +16,14 @@ define([
                 try {
                     var abParticipant = store.local.get('gu.ab.participations')['AdFeedback'];
                     if (abParticipant && abParticipant.variant === 'ad-feedback-variant') {
-                        var feedbackOpts = '<ul class="popup popup--default popup__group is-off" id="ad-feedback-menu__' + adSlotNode.id + '"><li class="popup__item">Offensive</li><li class="popup__item">Intrusive</li></ul>';
+                        var feedBackOpts = '<span>Tell us why you\'re reporting this advertisement</span><hr/><li class="popup__item">It\'s offensive</li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item">Makes a sound</li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item">Too much movement</li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item">Not relevant</li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item">Other</li>';
+                        var feedbackMenu = '<ul class="popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '">' + feedBackOpts + '</ul>';
                         //TODO: correct styling
-                        //TODO: No nbsp!
-                        labelInner = '&nbsp;<a class="popup__toggle js-toggle-ready" aria-haspopup="true">(feedback)</a>' + feedbackOpts;
+                        labelInner = ' <a class="popup__toggle" data-toggle="' + adSlotNode.id + '__popup--feedback" aria-haspopup="true" aria-controls="ad-feedback-menu__' + adSlotNode.id + '">(Report this ad)</a>' + feedbackMenu;
                     }
                 } catch (x) {
                     // if we can't pull the ad feedback participation state, we'll treat it as excluded
