@@ -5,18 +5,17 @@ import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
 import discussion.{DiscussionParams, ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
 import model.{Cached, MetaData, NoCache, SectionSummary, SimplePage, TinyResponse}
-import play.api.Play.current
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Action, Cookie, RequestHeader, Result}
 import play.filters.csrf.{CSRFConfig, CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController with ExecutionContexts {
+class CommentsController(csrfConfig: CSRFConfig, wsClient: WSClient) extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(
@@ -108,7 +107,7 @@ class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController wi
     val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, "GU-Client" -> conf.Configuration.discussion.apiClientHeader)
     if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
+    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
 
   }
 
