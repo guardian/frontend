@@ -175,23 +175,21 @@ $gutter-medium: 37px;
     }
 }
 
-.new-header__nav__menu-button--open {
-    .new-header__burger-icon  {
-        transition-delay: .14s;
-        transition-timing-function: cubic-bezier(.215,.61,.355,1);
-        transform: rotate(225deg);
+.new-header__burger-icon--open {
+    transition-delay: .14s;
+    transition-timing-function: cubic-bezier(.215,.61,.355,1);
+    transform: rotate(225deg);
 
-        &:before {
-            top: 0;
-            transition: top .1s ease-out,opacity .1s .14s ease-out;
-            opacity: 0;
-        }
+    &:before {
+        top: 0;
+        transition: top .1s ease-out,opacity .1s .14s ease-out;
+        opacity: 0;
+    }
 
-        &:after {
-            bottom: 0;
-            transition: bottom .1s ease-out, transform .3s .14s cubic-bezier(.215,.61,.355,1);
-            transform: rotate(-90deg);
-        }
+    &:after {
+        bottom: 0;
+        transition: bottom .1s ease-out, transform .3s .14s cubic-bezier(.215,.61,.355,1);
+        transform: rotate(-90deg);
     }
 }
 
