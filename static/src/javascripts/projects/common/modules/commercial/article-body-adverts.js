@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/space-filler',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
@@ -15,6 +16,7 @@ define([
     config,
     detect,
     spaceFiller,
+    adSizes,
     addSlot,
     trackAdRender,
     createSlot,
@@ -49,7 +51,7 @@ define([
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             },
             filter: function(slot) {
-                if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
+                if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
                     prevSlot = slot;
                     return true;
                 }
