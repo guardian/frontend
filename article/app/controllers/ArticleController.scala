@@ -96,11 +96,12 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
-      noAMP {
-        val htmlResponse = () => views.html.liveBlog (blog)
-        val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
-        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+      val htmlResponse = () => {
+        if (request.isAmp) views.html.liveBlogAMP(blog)
+        else views.html.liveBlog(blog)
       }
+      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
+      renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
 
     case minute: MinutePage =>
       noAMP {
