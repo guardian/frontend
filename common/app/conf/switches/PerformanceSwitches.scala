@@ -82,7 +82,7 @@ trait PerformanceSwitches {
     "If this switch is on, we monitor latency and requests to see if servers are overloaded",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 27),
+    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = false
   )
 
@@ -92,7 +92,7 @@ trait PerformanceSwitches {
     "If this switch is on, we log latency when we are monitoring it with panic-monitoring",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 27),
+    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = false
   )
 
@@ -102,7 +102,7 @@ trait PerformanceSwitches {
     "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 27),
+    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = false
   )
 
