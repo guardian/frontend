@@ -19,7 +19,7 @@ define([
          * It's safe for the next page load though.
          */
         function resetProp71Cookie() {
-            if (config.switches.hostedContentTracking && config.page.toneIds == 'tone/hosted-content') {
+            if (config.page.toneIds == 'tone/hosted') {
                 s.getPreviousValue(s.prop71, 's_prev_ch');
             }
         }
@@ -56,7 +56,7 @@ define([
                 'prop39'    // media id
             ];
 
-        if (config.switches.hostedContentTracking && config.page.toneIds == 'tone/hosted-content') {
+        if (config.page.toneIds == 'tone/hosted') {
             trackingVars.push('prop71');    // previous site section
         }
 
@@ -69,7 +69,7 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
-             
+
             resetProp71Cookie();
 
             omniture.populateEventProperties(eventName || event);
