@@ -130,14 +130,15 @@ define([
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
                 /*global gaGlobal*/
-                // var gaEvent = {
-                //     eventCategory: category,
-                //     eventAction: mediaEvent.eventAction,
-                //     eventLabel: mediaEvent.mediaId,
-                //     mediaType: mediaEvent.mediaType,
-                //     preroll: mediaEvent.preroll,
-                //     player: 'guardian-videojs'
-                // };
+                var gaEvent = {
+                    eventCategory: category,
+                    eventAction: mediaEvent.eventAction,
+                    eventLabel: mediaEvent.mediaId,
+                    mediaType: mediaEvent.mediaType,
+                    preroll: mediaEvent.preroll,
+                    player: 'guardian-videojs'
+                };
+                return gaEvent;
                 // gaGlobal('guardianTestPropertyTracker.send', gaEvent);
             });
         });
