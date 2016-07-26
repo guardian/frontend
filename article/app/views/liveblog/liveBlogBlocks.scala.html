@@ -23,7 +23,7 @@
             }
         }
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-        @BodyCleaner(article, block.bodyHtml, amp = false)
+        @BodyCleaner(article, block.bodyHtml, amp)
         </div>
         @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
         <p class="block-time updated-time">Updated
