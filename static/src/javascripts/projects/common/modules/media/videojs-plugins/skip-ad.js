@@ -37,6 +37,8 @@ define([
                 skip: function () {
                     $('.js-ads-skip', this.el()).hide();
                     this.trigger(mediaType + ':preroll:skip');
+                    // This is to follow more closely the videojs convention
+                    this.trigger('adskip');
                     // in lieu of a 'skip' api, rather hacky way of achieving it
                     this.ima.onAdComplete_();
                     this.ima.onContentResumeRequested_();

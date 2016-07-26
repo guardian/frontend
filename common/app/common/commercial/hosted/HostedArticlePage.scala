@@ -8,7 +8,7 @@ case class HostedArticlePage(
   campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
-  pageTitle: String,
+  title: String,
   standfirst: String,
   standfirstLink: String,
   facebookImageUrl: String,
@@ -20,6 +20,9 @@ case class HostedArticlePage(
   customData: CustomData
 )
   extends HostedPage {
+
+  val pageTitle = s"Advertiser content hosted by the Guardian: $title"
+  val imageUrl = mainPicture
 
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"

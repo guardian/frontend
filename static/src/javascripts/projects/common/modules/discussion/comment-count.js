@@ -2,8 +2,6 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/modules/experiments/ab',
-    'common/modules/experiments/tests/utils/comment-blocker',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/formatters',
@@ -23,8 +21,6 @@ define([
     bonzo,
     fastdom,
     qwery,
-    ab,
-    CommentBlocker,
     $,
     ajax,
     formatters,
@@ -72,14 +68,9 @@ define([
                 var format,
                     $node = bonzo(node),
                     url = $node.attr('data-discussion-url') || getContentUrl(node),
-                    shortUrl = $node.attr('data-loyalty-short-url') || '',
                     $container,
                     meta,
                     html;
-
-                if (shortUrl && ab.isInVariant('ParticipationDiscussionTest', 'variant-1') &&  CommentBlocker.hideComments(shortUrl.replace('/p/','')) ) {
-                    return;
-                }
 
                 if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
