@@ -1,6 +1,6 @@
 package model.diagnostics.commercial
 
-import play.api.libs.json.{Json, JsError, JsSuccess, JsValue}
+import play.api.libs.json.{Json, JsSuccess, JsValue}
 
 case class Module(
   duration: Double,
@@ -28,11 +28,12 @@ case class Baseline(
 )
 
 case class Report(
+  viewId: String,
   modules: Seq[Module],
   adverts: Seq[Advert],
   baselines: Seq[Baseline])
 
-object Report {
+object Report extends common.Logging {
 
   implicit val moduleFormat = Json.format[Module]
   implicit val advertFormat = Json.format[Advert]
@@ -41,8 +42,8 @@ object Report {
 
   def report(requestBody: JsValue): Unit = {
     requestBody.validate[Report] match {
-      case JsSuccess(report, _) => println("ok")
-      case JsError(e) => println("not ok")
+      case JsSuccess(report, _) => RedisReport.report(report)
+      case _ =>
     }
   }
 }

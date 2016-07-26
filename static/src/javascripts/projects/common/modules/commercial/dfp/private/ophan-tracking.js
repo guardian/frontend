@@ -6,6 +6,7 @@ define([
 ], function (raven, ajaxPromise, userTiming, getAdvertById) {
 
     var performanceLog = {
+            viewId: 'unknown',
             modules: [],
             adverts: [],
             baselines: []
@@ -162,13 +163,17 @@ define([
     }
 
     function reportTrackingData() {
-        return ajaxPromise({
-            url: '/commercial-report',
-            type: 'json',
-            method: 'post',
-            contentType: 'application/json',
-            crossOrigin: true,
-            data: JSON.stringify(performanceLog)
+        require(['ophan/ng'], function (ophan) {
+            performanceLog.viewId = ophan.viewId;
+
+            ajaxPromise({
+                url: '/commercial-report',
+                type: 'json',
+                method: 'post',
+                contentType: 'application/json',
+                crossOrigin: true,
+                data: JSON.stringify(performanceLog)
+            });
         });
     }
 
