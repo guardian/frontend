@@ -70,7 +70,7 @@ define([
 
         function text () {
             var result = bodyRead ? Promise.reject(new TypeError('Already read')) : Promise.resolve(body);
-            bodyRead = false;
+            bodyRead = true;
             return result;
         }
 

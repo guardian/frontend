@@ -21,8 +21,8 @@ define([
             .catch(function (ex) {
                 expect(ex instanceof Error).toBe(true, 'rejects an error');
                 expect(ex.message).toMatch(/fetch error/i);
+                done();
             })
-            .then(done)
             .catch(done.fail);
 
             this.requests[0].respond(0, {}, 'invalid');
@@ -55,14 +55,34 @@ define([
 
                 return resp.json();
             })
+            .then(done.fail)
             .catch(function (ex) {
                 expect(ex instanceof Error).toBe(true, 'rejects an error');
                 expect(ex.message).toMatch(/json/i);
+                done();
             })
-            .then(done)
             .catch(done.fail);
 
             this.requests[0].respond(200, {}, 'Plain text');
+        });
+
+        it('rejects if trying to consume the body multiple times', function (done) {
+            fetch('multiple-body')
+            .then(function (resp) {
+                return Promise.all([
+                    resp.text(),
+                    resp.json()
+                ]);
+            })
+            .then(done.fail)
+            .catch(function (ex) {
+                expect(ex instanceof TypeError).toBe(true, 'rejects an error');
+                expect(ex.message).toBe('Already read');
+                done();
+            })
+            .catch(done.fail);
+
+            this.requests[0].respond(200, {}, '{}');
         });
 
         it('resolves a correct response in plain text', function (done) {
