@@ -18,14 +18,14 @@ object ZootropolisHostedPages {
   )
 
   private val cta = HostedCallToAction(
-    url = "http://bfy.tw/6qk7",
+    url = "https://www.skystore.com/product/zootropolis/eeeeeeee-b061-44c8-a672-5ba1d34eb447",
     label = "",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
   )
 
   private val videoPageWithoutNextPage: HostedVideoPage = {
-    val videoTitle = "Disney’s’ Zootropolis: Download & keep today!"
+    val videoTitle = "Disney’s Zootropolis: Download & keep today!"
     HostedVideoPage(
       campaign,
       pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName",
