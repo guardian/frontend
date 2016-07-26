@@ -46,15 +46,15 @@ define([
      * @param mediaId {string}
      * @param mediaType {string} audio|video
      * @param eventType {string} e.g. firstplay, firstend
-     * @param preroll {boolean}
-     * @returns {{mediaId: string, mediaType: string, eventType: string, preroll: boolean}}
+     * @param isPreroll {boolean}
+     * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
      */
-    function MediaEvent(mediaId, mediaType, eventType, preroll) {
+    function MediaEvent(mediaId, mediaType, eventType, isPreroll) {
         return {
             mediaId: mediaId,
             mediaType: mediaType,
             eventType: eventType,
-            preroll: preroll
+            isPreroll: isPreroll
         };
     }
 
@@ -76,10 +76,10 @@ define([
         });
     }
 
-    function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, preroll) {
+    function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, isPreroll) {
         forOwn(eventsMap, function(value, key) {
             var fullEventName = 'media:' + value;
-            var mediaEvent = MediaEvent(mediaId, mediaType, value, preroll);
+            var mediaEvent = MediaEvent(mediaId, mediaType, value, isPreroll);
 
             player.one(key, function() {
                 player.trigger(fullEventName, mediaEvent);
