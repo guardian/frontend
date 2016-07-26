@@ -19,7 +19,7 @@ define(['qwery',
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.canRun = function() {
-            return config.page.contentType === 'Article' &&  qwery('[data-component="main video"]').length > 0;
+            return true;
         };
 
         this.variants = [

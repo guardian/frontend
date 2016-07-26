@@ -410,7 +410,6 @@ define([
     }
 
     function initMinute() {
-        var viableFront = ['uk', 'us', 'video'].indexOf(config.page.pageId) !== -1;
         if(ab.isInVariant('Minute','minute')) {
             // This is our minute account number
             window._min = {_publisher: 'MIN-21000'};
