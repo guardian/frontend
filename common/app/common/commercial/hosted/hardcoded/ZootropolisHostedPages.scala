@@ -52,17 +52,17 @@ object ZootropolisHostedPages {
   }
 
   val customData = CustomData(
-    conArtistPic = "https://media.guim.co.uk/f57ea457837fcae4f77bb31d1b997af1fd158aed/0_0_2816_2389/2000.png",
+    conArtistPic = "https://media.guim.co.uk/f57ea457837fcae4f77bb31d1b997af1fd158aed/947_0_1869_2380/393.png",
     conArtistPoster = Static("images/commercial/con-artist-poster.png"),
-    rookiePic = Static("images/commercial/rookie.png"),
+    rookiePic = "https://media.guim.co.uk/6079f37ef66a544b745087606ef987a72a0b6982/71_0_1123_1730/325.png",
     rookiePoster = Static("images/commercial/rookie-poster.png"),
-    chiefPic = Static("images/commercial/chief.png"),
+    chiefPic = "https://media.guim.co.uk/5e2f2703d753bd2c532d443d55dd9b0e325b4087/58_12_1367_1716/398.png",
     chiefPoster = Static("images/commercial/chief-poster.png"),
-    slothPic = Static("images/commercial/sloth.png"),
+    slothPic = "https://media.guim.co.uk/09bd9dda35d757fdfedf6e626226c656dfe4db20/0_49_1650_1340/500.png",
     slothPoster = Static("images/commercial/sloth-poster.png"),
-    deskClerkPic = Static("images/commercial/desk-clerk.png"),
+    deskClerkPic = "https://media.guim.co.uk/223857a17c0446397a53075cadb66c7179fb83ee/0_0_1476_1575/937.png",
     deskClerkPoster = Static("images/commercial/desk-clerk-poster.png"),
-    gazellePic = Static("images/commercial/popstar.png"),
+    gazellePic = "https://media.guim.co.uk/fca2bfbba8424cb98340dd5d841fbd25be383a5d/0_0_1156_1435/806.png",
     gazellePoster = Static("images/commercial/popstar-poster.png")
   )
 
@@ -77,7 +77,7 @@ object ZootropolisHostedPages {
     standfirstLink = "commercial content explainer.",
     facebookImageUrl = Static("images/commercial/zootropolis.png"),
     cta,
-    ctaBanner = Static("images/commercial/zootropolis-banner.png"),
+    ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
     mainPicture = Static("images/commercial/zootropolis.png"),
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
