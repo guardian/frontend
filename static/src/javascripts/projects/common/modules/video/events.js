@@ -129,7 +129,6 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                /*global gaGlobal*/
                 var gaEvent = {
                     eventCategory: category,
                     eventAction: mediaEvent.eventAction,
