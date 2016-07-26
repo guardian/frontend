@@ -119,7 +119,7 @@ define([
 
         return player;
     }
-    
+
     function removeCaptionLink(){
         bonzo($('.caption--main a')).remove();
     }
