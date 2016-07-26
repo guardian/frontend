@@ -32,6 +32,7 @@ define([
         this.permanent = opts.permanent || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
+        this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
@@ -69,6 +70,9 @@ define([
         this.updateMessageOnWidth();
         mediator.on('window:resize', debounce(this.updateMessageOnWidth, 200).bind(this));
 
+        if (this.siteMessageComponentName) {
+            siteMessage.attr('data-component', this.siteMessageComponentName);
+        }
         if (this.siteMessageLinkName) {
             siteMessage.attr('data-link-name', this.siteMessageLinkName);
         }
