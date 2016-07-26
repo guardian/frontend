@@ -3,7 +3,8 @@ import http.CorsHttpErrorHandler
 import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
-import _root_.commercial.feeds.FeedsFetcher
+import _root_.commercial.feeds.{FeedsFetcher, FeedsParser}
+import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CommonFilters, CachedHealthCheckLifeCycle}
@@ -28,13 +29,19 @@ trait Controllers extends CommercialControllers {
   lazy val healthCheck = wire[HealthCheck]
 }
 
-trait FeedServices {
+trait CommercialServices {
   def wsClient: WSClient
+
+  lazy val magentoService = wire[MagentoService]
+  lazy val bookFinder = wire[BookFinder]
+  lazy val bestsellersAgent = wire[BestsellersAgent]
+
   lazy val feedsFetcher = wire[FeedsFetcher]
+  lazy val feedsParser = wire[FeedsParser]
 }
 
 trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers with FeedServices =>
+  self: FrontendComponents with Controllers with CommercialServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -45,7 +52,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with FeedServices {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with CommercialServices {
 
   lazy val router: Router = wire[Routes]
 

@@ -1,8 +1,11 @@
 package controllers.commercial
 
 import com.softwaremill.macwire._
+import model.commercial.books.{BestsellersAgent, BookFinder}
 
 trait CommercialControllers {
+  def bestsellersAgent: BestsellersAgent
+  def bookFinder: BookFinder
   lazy val bookOffersController = wire[BookOffersController]
   lazy val contentApiOffersController = wire[ContentApiOffersController]
   lazy val creativeTestPage = wire[CreativeTestPage]

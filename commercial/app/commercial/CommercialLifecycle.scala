@@ -22,7 +22,8 @@ class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
-  feedsFetcher: FeedsFetcher)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  feedsFetcher: FeedsFetcher,
+  feedsParser: FeedsParser)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -120,7 +121,7 @@ class CommercialLifecycle(
       }
     }
 
-    for (parser <- FeedParser.all) {
+    for (parser <- feedsParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       jobs.deschedule(jobName)
@@ -153,7 +154,7 @@ class CommercialLifecycle(
         fetchFeed(fetcher)
       }
 
-      for (parser <- FeedParser.all) {
+      for (parser <- feedsParser.all) {
         parseFeed(parser)
       }
     }
@@ -166,7 +167,7 @@ class CommercialLifecycle(
       jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
     }
 
-    for (parser <- FeedParser.all) {
+    for (parser <- feedsParser.all) {
       jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
   }

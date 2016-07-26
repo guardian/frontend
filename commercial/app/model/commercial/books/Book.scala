@@ -54,14 +54,13 @@ object Book {
     )(Book.apply _)
 }
 
-
-object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
+case class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] with ExecutionContexts {
 
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 
   def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
     Future.sequence {
-      isbns map (BookFinder.findByIsbn(_))
+      isbns map (bookFinder.findByIsbn(_))
     } map (_.flatten.sortBy(book => isbns.indexOf(book.isbn)))
   }
 

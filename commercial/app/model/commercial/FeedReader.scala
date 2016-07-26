@@ -3,16 +3,15 @@ package model.commercial
 import com.ning.http.client.{Response => AHCResponse}
 import commercial.CommercialMetrics
 import common.Logging
-import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{WS, WSSignatureCalculator}
+import play.api.libs.ws.{WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-object FeedReader extends Logging {
+case class FeedReader(wsClient: WSClient) extends Logging {
 
   def read[T](request: FeedRequest,
               signature: Option[WSSignatureCalculator] = None,
@@ -31,7 +30,7 @@ object FeedReader extends Logging {
       val start = System.currentTimeMillis
 
       val requestHolder = {
-        val unsignedRequestHolder = WS.url(request.url)
+        val unsignedRequestHolder = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
           .withRequestTimeout(request.timeout.toMillis.toInt)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>

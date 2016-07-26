@@ -10,19 +10,20 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.WSSignatureCalculator
+import play.api.libs.ws.WSClient
 import shade.memcached.{Configuration => MemcachedConfiguration, Memcached, MemcachedCodecs}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object BookFinder extends Logging {
+case class BookFinder(magentoService: MagentoService) extends Logging {
 
   private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
 
   def findByIsbn(isbn: String,
                  cache: BookDataCache = MemcachedBookDataCache,
-                 lookup: String => Future[Option[JsValue]] = MagentoService.findByIsbn):
+                 lookup: String => Future[Option[JsValue]] = magentoService.findByIsbn):
   Future[Option[Book]] = {
 
     def cachedBook(bookData: JsValue): Future[Option[Book]] = {
@@ -61,7 +62,7 @@ object BookFinder extends Logging {
 }
 
 
-object MagentoService extends Logging {
+case class MagentoService(wsClient: WSClient) extends Logging {
 
   private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
 
@@ -118,7 +119,7 @@ object MagentoService extends Logging {
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
-        FeedReader.read(request,
+        FeedReader(wsClient).read(request,
           signature = Some(props.oauth),
           validResponseStatuses = Seq(200, 404)) { responseBody =>
           val bookJson = Json.parse(responseBody)

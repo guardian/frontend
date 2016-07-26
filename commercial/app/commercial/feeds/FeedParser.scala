@@ -17,7 +17,7 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
   def parse(feedContent: => Option[String]): Future[ParsedFeed[T]]
 }
 
-object FeedParser {
+case class FeedsParser(bestsellersAgent: BestsellersAgent) {
 
   private val jobs: Option[FeedParser[Job]] = {
     Configuration.commercial.jobsUrl map { url =>
@@ -50,7 +50,7 @@ object FeedParser {
 
         val feedMetaData = BestsellersFeedMetaData(domain)
 
-        def parse(feedContent: => Option[String]) = BestsellersAgent.refresh(feedMetaData, feedContent)
+        def parse(feedContent: => Option[String]) = bestsellersAgent.refresh(feedMetaData, feedContent)
       }
     }
   }
