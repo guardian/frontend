@@ -2,11 +2,11 @@ $hosted-stripe: 28px;
 $hosted-video-width: 960px;
 $hosted-video-height: 540px;
 
-@import '_hosted-colours.scss';
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
 @import '_hosted-article.scss';
 @import '_hosted-header.scss';
+@import '_hosted-colours.scss';
 
 @mixin hosted-fade-in {
     visibility: visible;

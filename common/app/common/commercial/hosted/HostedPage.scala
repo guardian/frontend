@@ -13,6 +13,12 @@ trait HostedPage extends StandalonePage {
 
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
+
+  val brandColourCssClass = s"hosted-tone--${campaign.cssClass}"
+  val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass}"
+  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass}"
+  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass}"
+
 }
 
 case class HostedCampaign(
