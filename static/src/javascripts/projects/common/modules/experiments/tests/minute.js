@@ -1,9 +1,6 @@
-define(['qwery',
-    'common/utils/config'
+define([
+    
 ], function(
-    qwery,
-    config
-
 ) {
     return function() {
         this.id = 'Minute';
