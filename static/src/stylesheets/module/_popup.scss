@@ -308,7 +308,7 @@ $control-offset: 36 + $gs-gutter/2;
         padding: 5px 2px;
     }
     .popup__group-header:last-of-type {
-        border-top: none;
+        border-top: 0;
         border-bottom: 1px solid #dcdcdc;
     }
     .popup__item:first-of-type {
