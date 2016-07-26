@@ -298,10 +298,17 @@ $control-offset: 36 + $gs-gutter/2;
 .ad-feedback.popup {
     left: inherit;
     top: 18px;
-    background: #ffffff;
+    background: $neutral-8;
+    border: 1px solid #dcdcdc;
+    ul {
+        margin-left: 5px;
+    }
     .popup__group-header {
         text-align: center;
         padding: 5px 2px;
+    }
+    .popup__group-header:last-of-type {
+        border-top: none;
         border-bottom: 1px solid #dcdcdc;
     }
     .popup__item:first-of-type {
@@ -309,7 +316,7 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .popup__item {
         font-size: 13px;
-        line-height: 20px;
+        line-height: 30px;
     }
     .popup__item:last-of-type {
         margin-bottom: 10px;

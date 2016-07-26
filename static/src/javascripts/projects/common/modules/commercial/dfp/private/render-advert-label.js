@@ -16,11 +16,11 @@ define([
                 try {
                     var abParticipant = store.local.get('gu.ab.participations')['AdFeedback'];
                     if (abParticipant && abParticipant.variant === 'ad-feedback-variant') {
-                        var feedBackOpts = '<h3 class="ad-feedback popup__group-header">Tell us why you\'re reporting this advertisement</h3><li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=offensive">It\'s offensive</a></li>';
+                        var feedBackOpts = '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=offensive">It\'s offensive</a></li>';
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=makes-a-sound">Makes a sound</a></li>';
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=too-much-movement">Too much movement</a></li>';
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=not-relevant">Not relevant</a></li>';
-                        var feedbackMenu = '<ul class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '">' + feedBackOpts + '</ul>';
+                        var feedbackMenu = '<div class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '"><h3 class="ad-feedback popup__group-header"><strong>Thank you.</strong></h3><h3 class="ad-feedback popup__group-header">Could you tell us why you reported this advert?</h3><ul>' + feedBackOpts + '</ul></div>';
                         labelInner = ' <a class="ad-feedback popup__toggle" data-toggle="' + adSlotNode.id + '__popup--feedback" aria-haspopup="true" aria-controls="ad-feedback-menu__' + adSlotNode.id + '">(Report this ad)</a>' + feedbackMenu;
                     }
                 } catch (x) {
