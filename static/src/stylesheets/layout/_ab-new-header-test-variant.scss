@@ -150,8 +150,8 @@ $gutter-medium: 37px;
     margin-left: auto;
     margin-right: auto;
 
-    transition-timing-function: cubic-bezier(.55,.055,.675,.19);
     transition-duration: .3s;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
     &,
     &:before,
@@ -160,36 +160,39 @@ $gutter-medium: 37px;
         position: absolute;
         width: $gs-gutter;
         height: $gs-baseline / 6;
-        transition: background-color 0s .1s cubic-bezier(.645,.045,.355,1), transform .2s cubic-bezier(.645,.045,.355,1);
         background-color: #ffffff;
     }
 
     &:before {
         top: -$gs-gutter / 4;
-        transition: top .1s .34s ease-in, opacity .1s ease-in;
+        transition: top 0.1s 0.34s ease-in,
+        opacity .1s ease-in;
     }
 
     &:after {
         bottom: -$gs-gutter / 4;
-        transition: bottom .1s .34s ease-in,transform .3s cubic-bezier(.55,.055,.675,.19), transform .3s;
+        transition: bottom 0.1s 0.34s ease-in,
+        transform .3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
 }
 
 .new-header__burger-icon--open {
-    transition-delay: .14s;
-    transition-timing-function: cubic-bezier(.215,.61,.355,1);
     transform: rotate(225deg);
+    transition-delay: .14s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 
     &:before {
         top: 0;
-        transition: top .1s ease-out,opacity .1s .14s ease-out;
         opacity: 0;
+        transition: top .1s ease-out,
+        opacity .1s .14s ease-out;
     }
 
     &:after {
         bottom: 0;
-        transition: bottom .1s ease-out, transform .3s .14s cubic-bezier(.215,.61,.355,1);
         transform: rotate(-90deg);
+        transition: bottom .1s ease-out,
+        transform .3s .14s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
 }
 
@@ -271,7 +274,7 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
-    transition: opacity .2s;
+    transition: opacity .3s;
 
     .main-menu-container.off-screen & {
         opacity: 0;
@@ -291,7 +294,7 @@ $gutter-medium: 37px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .2s ease-out;
+    transition: transform .3s ease-out;
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
