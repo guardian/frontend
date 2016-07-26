@@ -1,13 +1,13 @@
 package metadata
 
-import com.gu.facia.client.models.{FrontJson, ConfigJson}
+import com.gu.facia.client.models.{ConfigJson, FrontJson}
+import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
-
 import services.ConfigAgent
-import test.{TestRequest, ConfiguredTestSuite}
+import test.{ConfiguredTestSuite, TestFrontJsonFapi, TestRequest}
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll {
 
@@ -19,20 +19,21 @@ import test.{TestRequest, ConfiguredTestSuite}
     )
   }
 
+  val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val articleUrl = "music"
 
   it should "Include organisation metadata" in {
-    val result = test.faciaController.renderFront(articleUrl)(TestRequest())
+    val result = faciaController.renderFront(articleUrl)(TestRequest())
     MetaDataMatcher.ensureOrganisation(result)
   }
 
   it should "Include webpage metadata" in {
-    val result = test.faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
+    val result = faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
   }
 
   it should "Include item list metadata" in {
-    val result = test.faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
+    val result = faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 

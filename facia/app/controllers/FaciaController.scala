@@ -246,8 +246,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 }
 
-class FaciaControllerImpl extends FaciaController {
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
-}
+case class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive) extends FaciaController
 
-object FaciaController extends FaciaControllerImpl

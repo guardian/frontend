@@ -4,6 +4,7 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import model.PressedPage
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import services.SecureS3Request
 
 import scala.concurrent.Future
@@ -11,6 +12,9 @@ import scala.concurrent.Future
 trait FrontJsonFapi extends Logging with ExecutionContexts {
   val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
+
+  val wsClient: WSClient
+  val secureS3Request = SecureS3Request(wsClient)
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.json"
 
@@ -25,7 +29,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   }
 
   def getRaw(path: String): Future[Option[String]] = {
-    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+    val response = secureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       log.info(s"S3 got ${r.header("Content-Length").getOrElse("unknown")} bytes (ungzipped to ${r.bodyAsBytes.length} bytes) for front $path")
       r.status match {
@@ -52,7 +56,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   }
 
   def getAsJsValue(path: String): Future[JsValue] = {
-    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+    val response = secureS3Request.urlGet(getAddressForPath(path)).get()
 
     response.flatMap { r =>
       log.info(s"S3 got ${r.header("Content-Length").getOrElse("unknown")} bytes (ungzipped to ${r.bodyAsBytes.length} bytes) json for front $path")
@@ -64,6 +68,10 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   }
 }
 
-object FrontJsonFapiLive extends FrontJsonFapi {
-  val bucketLocation: String = s"$stage/frontsapi/pressed/live"
+case class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
+  override val bucketLocation: String = s"$stage/frontsapi/pressed/live"
+}
+
+case class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
+  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }

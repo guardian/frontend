@@ -2,14 +2,14 @@ package controllers.preview
 
 import controllers.FaciaController
 import controllers.front.FrontJsonFapi
+import play.api.libs.ws.WSClient
 import services.ConfigAgent
 
-object FrontJsonFapiDraft extends FrontJsonFapi {
+case class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
-object FaciaDraftController extends FaciaController {
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiDraft
+case class FaciaDraftController(val frontJsonFapi: FrontJsonFapi) extends FaciaController {
 
   override def renderFront(path: String) = {
     log.info(s"Serving Path: $path")
