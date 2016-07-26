@@ -202,8 +202,8 @@ define([
         }));
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
-        if (window.location.hash === '#debugVideoEvents') {
-            events.debugEvents(player);
+        if (window.location.hash === '#gaMediaEvents') {
+            events.bindGoogleAnalyticsEvents(player);
         }
 
         videoInfo.then(function(videoInfo) {

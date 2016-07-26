@@ -127,6 +127,40 @@ define([
         bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
     }
 
+
+    function bindGoogleAnalyticsEvents(player) {
+        var allEvents = [
+            'ready',
+            'play',
+            'end',
+            'skip',
+            'watched25',
+            'watched50',
+            'watched75'
+        ];
+        var category = 'media';
+
+        // see ga() api here:
+        // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#implementation
+        // ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
+        allEvents.map(function(eventName) {
+            return 'media:' + eventName;
+        }).forEach(function(playerEvent) {
+            player.on(playerEvent, function(_, mediaEvent) {
+                /*global gaGlobal*/
+                // var gaEvent = {
+                //     eventCategory: category,
+                //     eventAction: mediaEvent.eventAction,
+                //     eventLabel: mediaEvent.mediaId,
+                //     mediaType: mediaEvent.mediaType,
+                //     preroll: mediaEvent.preroll,
+                //     player: 'guardian-videojs'
+                // };
+                // gaGlobal('guardianTestPropertyTracker.send', gaEvent);
+            });
+        });
+    }
+
     function getMediaType(player) {
         return isEmbed ? 'video' : player.guMediaType;
     }
@@ -324,6 +358,6 @@ define([
         bindErrorHandler: bindErrorHandler,
         addContentEvents: addContentEvents,
         addPrerollEvents: addPrerollEvents,
-        debugEvents: debugEvents
+        bindGoogleAnalyticsEvents: bindGoogleAnalyticsEvents
     };
 });
