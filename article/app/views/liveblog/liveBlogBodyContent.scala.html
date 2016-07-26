@@ -1,15 +1,6 @@
-@import _root_.liveblog.KeyEventData
-@import model.Badges.badgeFor
-
-@import _root_.liveblog.Canonical
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import common.{Edition, LinkTo}
-@import conf.switches.Switches._
-@import layout.{FaciaCardAndIndex, ItemClasses}
-@import views.html.fragments.items.facia_cards.item
-@import views.support.TrailCssClasses.toneClass
-@import _root_.liveblog.SinceBlockId
+@import common.{Edition}
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
     <div class="js-article__container" data-component="body">
