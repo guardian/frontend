@@ -12,6 +12,7 @@ import controllers.HealthCheck
 import controllers.commercial.CommercialControllers
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
+import model.commercial.events.LiveEventAgent
 import play.api.ApplicationLoader.Context
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
@@ -35,6 +36,7 @@ trait CommercialServices {
   lazy val magentoService = wire[MagentoService]
   lazy val bookFinder = wire[BookFinder]
   lazy val bestsellersAgent = wire[BestsellersAgent]
+  lazy val liveEventAgent = wire[LiveEventAgent]
 
   lazy val feedsFetcher = wire[FeedsFetcher]
   lazy val feedsParser = wire[FeedsParser]
