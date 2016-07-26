@@ -242,7 +242,7 @@ trait CommercialSwitches {
     "British Council's beacon",
     owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = false
   )
 
@@ -354,15 +354,5 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
-  )
-
-  val hostedContentTracking = Switch(
-    group = CommercialLabs,
-    name = "hosted-content-tracking",
-    description = "Use special extra tracking parameters for hosted content",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = true
   )
 }

@@ -96,11 +96,12 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
-      noAMP {
-        val htmlResponse = () => views.html.liveBlog (blog)
-        val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
-        renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+      val htmlResponse = () => {
+        if (request.isAmp) views.html.liveBlogAMP(blog)
+        else views.html.liveBlog(blog)
       }
+      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
+      renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
 
     case minute: MinutePage =>
       noAMP {
@@ -238,26 +239,28 @@ class ArticleController extends Controller with RendersItemResponse with Logging
           range
         )
       } getOrElse None
-    liveBlogPageModel match {
-      case Some(pageModel) =>
 
-        val cacheTime =
-          if (!pageModel.currentPage.isArchivePage && liveBlog.fields.isLive)
-            liveBlog.metadata.cacheTime
-          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 1.hour)
-            CacheTime.RecentlyUpdated
-          else if (liveBlog.fields.lastModified > DateTime.now(liveBlog.fields.lastModified.getZone) - 24.hours)
-            CacheTime.LastDayUpdated
-          else
-            CacheTime.NotRecentlyUpdated
+    liveBlogPageModel.map { pageModel =>
 
-        val liveBlogCache = liveBlog.copy(
-          content = liveBlog.content.copy(
-            metadata = liveBlog.content.metadata.copy(
-              cacheTime = cacheTime)))
-        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
-      case None => Right(NotFound)
-    }
+      val isTransient = range match {
+        case SinceBlockId(_) =>
+          pageModel.currentPage.blocks.isEmpty
+        case _ =>
+          !pageModel.currentPage.isArchivePage
+      }
+
+      val cacheTime = if (isTransient && liveBlog.fields.isLive)
+        liveBlog.metadata.cacheTime
+      else
+        CacheTime.NotRecentlyUpdated
+
+      val liveBlogCache = liveBlog.copy(
+        content = liveBlog.content.copy(
+          metadata = liveBlog.content.metadata.copy(
+            cacheTime = cacheTime)))
+      Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
+
+    }.getOrElse(Right(NotFound))
 
   }
 

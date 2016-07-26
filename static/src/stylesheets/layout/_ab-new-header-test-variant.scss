@@ -83,7 +83,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     width: 100%;
 
     @include mq($until: mobileLandscape) {
-        font-size: 5vw;
+        font-size: 5.2vw;
         line-height: 1.6;
         // Position after pseudo element which forces line break
         order: 1;

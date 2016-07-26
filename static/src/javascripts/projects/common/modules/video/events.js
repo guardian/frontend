@@ -2,6 +2,7 @@
 define([
     'bean',
     'qwery',
+    'common/utils/mediator',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/config',
@@ -9,10 +10,12 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
     'lodash/arrays/indexOf',
-    'lodash/functions/throttle'
+    'lodash/functions/throttle',
+    'lodash/objects/forOwn'
 ], function (
     bean,
     qwery,
+    mediator,
     reportError,
     $,
     config,
@@ -20,7 +23,8 @@ define([
     OmnitureMedia,
     history,
     indexOf,
-    throttle
+    throttle,
+    forOwn
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
@@ -35,6 +39,109 @@ define([
             'content:play',
             'content:end'
         ];
+
+
+    /**
+     *
+     * @param mediaId {string}
+     * @param mediaType {string} audio|video
+     * @param eventType {string} e.g. firstplay, firstend
+     * @param isPreroll {boolean}
+     * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
+     */
+    function MediaEvent(mediaId, mediaType, eventType, isPreroll) {
+        return {
+            mediaId: mediaId,
+            mediaType: mediaType,
+            eventType: eventType,
+            isPreroll: isPreroll
+        };
+    }
+
+    function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, isPreroll) {
+        forOwn(eventsMap, function(value, key) {
+            var fullEventName = 'media:' + value;
+            var mediaEvent = MediaEvent(mediaId, mediaType, value, isPreroll);
+
+            player.one(key, function() {
+                player.trigger(fullEventName, mediaEvent);
+                mediator.emit(fullEventName, mediaEvent);
+            });
+        });
+    }
+
+    function addContentEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            ready: 'ready',
+            play: 'play',
+            passed25: 'watched25',
+            passed50: 'watched50',
+            passed75: 'watched75',
+            ended: 'end'
+        };
+
+        player.on('timeupdate', throttle(function() {
+            var percent = Math.round((player.currentTime() / player.duration()) * 100);
+
+            if (percent >= 25) {
+                player.trigger('passed25');
+            }
+            if (percent >= 50) {
+                player.trigger('passed50');
+            }
+            if (percent >= 75) {
+                player.trigger('passed75');
+            }
+        }, 1000));
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
+    }
+
+    function addPrerollEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            'adstart': 'play',
+            'adend': 'end',
+            'adsready': 'ready',
+            // This comes from the skipAd plugin
+            'adskip': 'skip'
+        };
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
+    }
+
+
+    function bindGoogleAnalyticsEvents(player) {
+        var allEvents = [
+            'ready',
+            'play',
+            'end',
+            'skip',
+            'watched25',
+            'watched50',
+            'watched75'
+        ];
+        var category = 'media';
+
+        // see ga() api here:
+        // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#implementation
+        // ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
+        allEvents.map(function(eventName) {
+            return 'media:' + eventName;
+        }).forEach(function(playerEvent) {
+            player.on(playerEvent, function(_, mediaEvent) {
+                var gaEvent = {
+                    eventCategory: category,
+                    eventAction: mediaEvent.eventAction,
+                    eventLabel: mediaEvent.mediaId,
+                    mediaType: mediaEvent.mediaType,
+                    preroll: mediaEvent.preroll,
+                    player: 'guardian-videojs'
+                };
+                return gaEvent;
+                // gaGlobal('guardianTestPropertyTracker.send', gaEvent);
+            });
+        });
+    }
 
     function getMediaType(player) {
         return isEmbed ? 'video' : player.guMediaType;
@@ -230,6 +337,9 @@ define([
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
         handleInitialMediaError: handleInitialMediaError,
-        bindErrorHandler: bindErrorHandler
+        bindErrorHandler: bindErrorHandler,
+        addContentEvents: addContentEvents,
+        addPrerollEvents: addPrerollEvents,
+        bindGoogleAnalyticsEvents: bindGoogleAnalyticsEvents
     };
 });

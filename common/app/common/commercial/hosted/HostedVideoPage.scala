@@ -14,10 +14,12 @@ case class HostedVideoPage(
   ctaBanner: String,
   twitterTxt: String,
   emailTxt: String,
-  nextPage: Option[HostedVideoPage]
+  nextPage: Option[HostedPage]
 ) extends HostedPage {
 
   val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
+  val title = video.title
+  val imageUrl = video.posterUrl
 
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"

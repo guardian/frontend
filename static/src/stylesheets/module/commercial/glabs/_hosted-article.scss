@@ -3,6 +3,7 @@
         position: relative;
         height: 378px;
         margin-bottom: 10px;
+        overflow: hidden;
 
         &:after {
             content: '';
@@ -107,32 +108,6 @@
     }
 }
 
-.hostedbadge.hosted-tone-bg--zootropolis {
-    .hostedbadge__info {
-        color: #ffffff;
-    }
-}
-
-.hosted-article-page.zootropolis ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $zootropolisColor;
-    }
-}
-
-.hosted-article-page.zootropolis ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $zootropolisColor;
-        color: #ffffff;
-
-        .site-message__close-btn {
-            border-color: #ffffff;
-
-            .inline-cross {
-                fill: #ffffff;
-            }
-        }
-    }
-}
 
 .hosted-article-page.zootropolis {
     @mixin animal-stripe {
@@ -229,7 +204,7 @@
     .animal__info-about-header {
         @include fs-textSans(4);
         font-size: 30px;
-        line-height: 22px;
+        line-height: 28px;
         padding-bottom: 16px;
         font-weight: bold;
     }
