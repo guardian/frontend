@@ -2,27 +2,24 @@ package rugby.jobs
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import rugby.feed.{OptaFeed, RugbyOptaFeedException}
 import rugby.model._
 import rugby.feed.{MatchNavigation, OptaFeed, OptaEvent, RugbyOptaFeedException}
 import scala.concurrent.Future
 import scala.util.Failure
 import scala.util.Success
 
-object RugbyStatsJob extends RugbyStatsJob
 
-trait RugbyStatsJob extends ExecutionContexts with Logging {
+case class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
   protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
   protected val pastMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
   protected val groupTables =  AkkaAgent[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
 
-
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
-  def fixturesAndResults(fixturesAndResults: Future[Seq[Match]]) : Future[Any] = {
-    fixturesAndResults.flatMap { matches =>
+  def fetchFixturesAndResults() : Future[Any] = {
+    optaFeed.getFixturesAndResults.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
         fixturesAndResultsMatches.alter {_ +  (aMatch.key -> aMatch)}
       })
@@ -32,8 +29,8 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
     }
   }
 
-  def groupTables(groupTablesData: Future[Map[OptaEvent, Seq[GroupTable]]]) : Future[Any] = {
-    groupTablesData.map { data =>
+  def fetchGroupTables() : Future[Any] = {
+    optaFeed.getGroupTables.map { data =>
       groupTables.alter { data }
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
@@ -54,7 +51,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   private def fetchScoreEvents(matches: List[Match]): Future[Map[Match, List[ScoreEvent]]] = {
     val scoresEventsForMatchesFuture: Future[List[(Match, List[ScoreEvent])]] = Future.sequence {
       matches.map(rugbyMatch =>
-        OptaFeed.getScoreEvents(rugbyMatch).map(scoreEvents => rugbyMatch -> scoreEvents.toList)
+        optaFeed.getScoreEvents(rugbyMatch).map(scoreEvents => rugbyMatch -> scoreEvents.toList)
       )
     }
     scoresEventsForMatchesFuture.onComplete {
@@ -78,7 +75,7 @@ trait RugbyStatsJob extends ExecutionContexts with Logging {
   private def fetchMatchesStat(matches: List[Match]): Future[Map[Match, MatchStat]] = {
     val statForMatchesFuture = Future.sequence {
       matches.map(rugbyMatch =>
-        OptaFeed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
+        optaFeed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
       )
     }
     statForMatchesFuture.onComplete {

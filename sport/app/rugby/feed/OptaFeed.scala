@@ -1,14 +1,9 @@
 package rugby.feed
 
 import common.{ExecutionContexts, Logging}
-import play.api.Play.current
-import play.api.libs.ws.{WSRequest, WS}
-import rugby.jobs.RugbyStatsJob
+import play.api.libs.ws.WSClient
 import rugby.model._
-import conf.Configuration
-
 import scala.concurrent.Future
-import scala.xml.XML
 
 sealed trait OptaEvent {
   def competition: String
@@ -24,7 +19,7 @@ case object WorldCup2015 extends OptaEvent {
 
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
-object OptaFeed extends ExecutionContexts with Logging {
+case class OptaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private def events = List(WorldCup2015)
 
@@ -42,7 +37,7 @@ object OptaFeed extends ExecutionContexts with Logging {
 
       val queryParams = List(competition,  season, apiKey, apiUser, feedType) ++ gameParameter
 
-      WS.url(s"$endpoint$path")
+      wsClient.url(s"$endpoint$path")
         .withHeaders(xmlContentType)
         .withQueryString(queryParams: _*)
         .get

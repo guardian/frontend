@@ -22,15 +22,19 @@ import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle
 import router.Routes
 import rugby.controllers.RugbyControllers
+import rugby.feed.OptaFeed
+import rugby.jobs.RugbyStatsJob
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait CricketServices {
+trait SportServices {
   def wsClient: WSClient
   lazy val cricketPaFeed = wire[PaFeed]
   lazy val cricketStatsJob = wire[CricketStatsJob]
+  lazy val rugbyFeed = wire[OptaFeed]
+  lazy val rugbyStatsJob = wire[RugbyStatsJob]
 }
 
 trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {
@@ -38,8 +42,8 @@ trait Controllers extends FootballControllers with CricketControllers with Rugby
   lazy val devAssetsController = wire[DevAssetsController]
 }
 
-trait AppLifecycleComponents extends CricketServices {
-  self: FrontendComponents with Controllers =>
+trait AppLifecycleComponents {
+  self: FrontendComponents with Controllers with SportServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -53,7 +57,7 @@ trait AppLifecycleComponents extends CricketServices {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with SportServices{
 
   lazy val router: Router = wire[Routes]
 
