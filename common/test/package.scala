@@ -129,7 +129,7 @@ trait WithTestWsClient {
   self: WithTestWsClient with BeforeAndAfterAll =>
 
   private val lazyWsClient = Lazy(NingWSClient(NingWSClientConfig(maxRequestRetry = 0)))
-  protected lazy val wsClient: WSClient = lazyWsClient
+  lazy val wsClient: WSClient = lazyWsClient
 
   override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
 }
