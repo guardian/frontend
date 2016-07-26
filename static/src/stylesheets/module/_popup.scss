@@ -292,3 +292,27 @@ $control-offset: 36 + $gs-gutter/2;
         margin-bottom: -1px;
     }
 }
+
+/* Ad feedback menu
+   ========================================================================== */
+.ad-feedback.popup {
+    left: inherit;
+    top: 18px;
+    background: #ffffff;
+    .popup__group-header {
+        text-align: center;
+        padding: 5px 2px;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    .popup__item:first-of-type {
+        margin-top: 10px;
+    }
+    .popup__item {
+        font-size: 13px;
+        line-height: 20px;
+    }
+    .popup__item:last-of-type {
+        margin-bottom: 10px;
+    }
+}
+
