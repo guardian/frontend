@@ -7,7 +7,7 @@ import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
 import com.ning.http.client.uri.Uri;
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.Application
 import java.util
 import java.net.URI
@@ -56,8 +56,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class DiscussionApiStub extends DiscussionApi {
-  import play.api.Play.current
+class DiscussionApiStub(wsClient: WSClient) extends DiscussionApi {
   protected val clientHeaderValue: String =""
 
   protected val apiRoot =
@@ -69,7 +68,7 @@ class DiscussionApiStub extends DiscussionApi {
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    WS.url(url).withRequestTimeout(2000).get()
+    wsClient.url(url).withRequestTimeout(2000).get()
   }
 }
 
@@ -86,5 +85,5 @@ class DiscussionTestSuite extends Suites (
   override lazy val port: Int = new HealthCheck().testPort
 
   // Inject stub api.
-  controllers.delegate.api = new DiscussionApiStub()
+  controllers.delegate.api = new DiscussionApiStub(wsClient)
 }
