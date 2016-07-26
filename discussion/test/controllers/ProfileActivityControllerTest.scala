@@ -3,14 +3,14 @@ package controllers
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, DiscussionApiStub}
 
 @DoNotDiscover class ProfileActivityControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val userId = "10000001"
 
   "CommenterActivity" should "return profile discussions component" in {
-    val action = ProfileActivityController.profileDiscussions(userId)
+    val action = ProfileActivityController(new DiscussionApiStub(wsClient)).profileDiscussions(userId)
     val fakeRequest = FakeRequest(GET, "/discussion/profile/"+ userId +"/discussions.json").withHeaders("host" -> "localhost:9000")
     val result = action(fakeRequest)
 

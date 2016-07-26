@@ -5,16 +5,17 @@ import controllers.HealthCheck
 import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
-import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
-import com.ning.http.client.uri.Uri;
+import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response => NingResponse}
+import com.ning.http.client.uri.Uri
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.Application
 import java.util
 import java.net.URI
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
+
 import play.api.Plugin
-import discussion.DiscussionApi
+import discussion.{DiscussionApi, DiscussionApiLike}
 
 private case class Resp(getResponseBody: String) extends NingResponse {
   def getContentType: String = "application/json"
@@ -56,7 +57,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class DiscussionApiStub(wsClient: WSClient) extends DiscussionApi {
+class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
   protected val clientHeaderValue: String =""
 
   protected val apiRoot =
@@ -83,7 +84,4 @@ class DiscussionTestSuite extends Suites (
   new ProfileTest
   ) with SingleServerSuite {
   override lazy val port: Int = new HealthCheck().testPort
-
-  // Inject stub api.
-  controllers.delegate.api = new DiscussionApiStub(wsClient)
 }

@@ -1,18 +1,19 @@
 package controllers
 
 import conf.Configuration
-import discussion.DiscussionApi
+import discussion.{DiscussionApi, DiscussionApiLike}
 import discussion.model.Comment
 import org.scalatest._
 import test.ConfiguredTestSuite
-import scala.concurrent.{Future, Await}
+
+import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WS, WSClient}
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite {
 
-  object TestPlugin extends DiscussionApi {
+  case class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
     override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
@@ -26,12 +27,14 @@ import play.api.libs.ws.WS
     override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 
+  val testPlugin = TestPlugin(wsClient)
+
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {
 
-    val responseFuture: Future[Comment] = TestPlugin.commentFor(0)
+    val responseFuture: Future[Comment] = testPlugin.commentFor(0)
 
     Await.ready(responseFuture, 2 seconds)
 
-    TestPlugin.headersReceived.get("GU-Client") should be (Some("nextgen-dev"))
+    testPlugin.headersReceived.get("GU-Client") should be (Some("nextgen-dev"))
   }
 }
