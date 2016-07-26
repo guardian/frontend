@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/habit-forming-digest-promo'
+    'common/modules/experiments/tests/habit-forming-digest-promo',
+    'common/modules/experiments/tests/minute'
 ], function (
     reportError,
     config,
@@ -27,7 +28,8 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    HabitFormingDigestPromo
+    HabitFormingDigestPromo,
+    Minute
 ) {
 
     var TESTS = [
@@ -35,8 +37,9 @@ define([
         new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
+        new VideoCaption(),
         new HabitFormingDigestPromo(),
-        new VideoCaption()
+        new Minute()
     ];
 
     var participationsKey = 'gu.ab.participations';
