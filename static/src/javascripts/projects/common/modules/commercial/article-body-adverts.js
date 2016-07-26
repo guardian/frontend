@@ -74,7 +74,7 @@ define([
         if (!longArticleRules) {
             longArticleRules = getRules();
             longArticleRules.selectors[' .ad-slot'].minAbove =
-            longArticleRules.selectors[' .ad-slot'].minBelow = 1300;
+            longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         }
         return longArticleRules;
     }
