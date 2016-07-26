@@ -31,7 +31,7 @@
     position: relative;
 }
 
-.block-time.published-time {
+.published-time {
     font-size: 0.8125rem;
     line-height: 1.125rem;
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -39,7 +39,7 @@
     font-weight: bold;
 }
 
-.block-time .block-time__absolute {
+.block-time__absolute {
     font-size: 0.75rem;
     line-height: 1rem;
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -97,17 +97,17 @@
     box-sizing: border-box;
 }
 
+.inline-share-facebook__svg, .inline-share-twitter__svg, .inline-share-gplus__svg {
+    width: 1.4375rem;
+    height: 1.4375rem;
+}
+
 .block-share__item--facebook {
     border-color: #3067a3;
     color: #3067a3;
 }
 
-.block-share__item .inline-icon svg {
-    width: 1.4375rem;
-    height: 1.4375rem;
-}
-
-.block-share__item--facebook .inline-icon {
+.inline-share-facebook {
     fill: #3067a3;
 }
 
@@ -116,7 +116,7 @@
     color: #03b3ee;
 }
 
-.block-share__item--twitter .inline-icon {
+.inline-share-twitter {
     fill: #03b3ee;
 }
 
@@ -125,6 +125,6 @@
     color: #e15440;
 }
 
-.block-share__item--gplus .inline-icon {
+.inline-share-gplus {
     fill: #e15440;
 }
