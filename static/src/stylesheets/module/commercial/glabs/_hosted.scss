@@ -745,6 +745,7 @@ $hosted-video-height: 540px;
     height: 72px;
     width: 120px;
     align-self: flex-start;
+    object-fit: cover;
 
     @include mq($until: phablet) {
         height: 54px;
