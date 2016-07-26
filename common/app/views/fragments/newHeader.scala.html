@@ -10,10 +10,9 @@
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
         </a>
-        <button class="new-header__edition-button">
-            @fragments.inlineSvg("world", "icon")
-            <span>UK Edition</span>
-        </button>
+
+        @fragments.nav.editionPicker()
+
         <nav class="new-header__nav">
             <a href="#main-menu" class="new-header__nav__menu-button js-change-link" tabindex="0">
                 <div class="new-header__burger-icon js-animate-menu">

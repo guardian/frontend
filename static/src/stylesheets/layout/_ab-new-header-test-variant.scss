@@ -39,43 +39,6 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     }
 }
 
-.new-header__edition-button {
-    @include fs-textSans(3);
-    order: -1;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    // TODO: Use reset util?
-    // Unset button from user agent stylesheet
-    background: none;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    padding: ($gs-baseline) ($gs-gutter / 2);
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-
-    svg {
-        fill: currentColor;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 1em;
-        min-height: 1em;
-    }
-
-    &:hover,
-    &:focus {
-        outline: none;
-        color: #ffffff;
-
-        path {
-            fill: #ffffff;
-        }
-    }
-}
-
 .new-header__nav {
     @include fs-textSans(6);
     display: flex;
@@ -239,6 +202,93 @@ $gutter-medium: 37px;
     // Optically aligns slashes
     padding-left: 2px;
     padding-right: 3px;
+}
+
+/*****************
+ * Edition Picker
+ *****************/
+
+.edition-picker {
+    @include fs-textSans(3);
+    order: -1;
+    color: $news-support-1;
+    // Override from fs-textSans mixin
+    line-height: 1;
+    padding: ($gs-baseline) ($gs-gutter / 2);
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+
+    &:hover {
+        outline: none;
+        color: #ffffff;
+    }
+}
+
+.inline-world__svg {
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    fill: currentColor;
+    min-width: 1em;
+    min-height: 1em;
+
+    &:hover {
+        fill: #ffffff;
+    }
+}
+
+.edition-picker__checkbox {
+    display: none;
+
+    &:checked {
+        & ~ .edition-picker__dropdown__item {
+            display: block;
+            background-color: lighten($guardian-brand, 5%);
+        }
+        & ~ .edition-picker__dropdown__item--first {
+            background-color: $guardian-brand-dark;
+        }
+        & ~ .inline-world__svg {
+            fill: #ffffff;
+        }
+        & ~ .edition-picker__current-edition {
+            position: absolute;
+            top: $gs-baseline/2;
+            left: $gs-gutter/2;
+            background-color: $guardian-brand-dark;
+            display: block;
+            width: gs-span(2);
+            color: #ffffff;
+        }
+    }
+}
+
+.edition-picker__dropdown__item:not(.edition-picker__dropdown__item--first) {
+    display: none;
+}
+
+.edition-picker__dropdown {
+    list-style: none;
+    // overriding default styling
+    margin: 0;
+    position: absolute;
+    top: $gs-baseline/2;
+    left: $gs-gutter/2;
+    z-index: 3;
+    //box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    padding: 0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.edition-picker__dropdown__item {
+    padding: $gs-baseline/2 $gs-gutter;
+}
+
+.edition-picker__dropdown-item-link {
+    color: $news-support-1;
 }
 
 /****************
