@@ -58,24 +58,6 @@ define([
         };
     }
 
-    function debugEvents(player) {
-        var allEvents = [
-            'ready',
-            'play',
-            'end',
-            'skip',
-            'watched25',
-            'watched50',
-            'watched75'
-        ];
-
-        allEvents.map(function(eventName) { return 'media:' + eventName; }).forEach(function(eventName) {
-            player.on(eventName, function(_, mediaEvent) {
-                window.console.log('What did I hear?', eventName, mediaEvent);
-            });
-        });
-    }
-
     function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, isPreroll) {
         forOwn(eventsMap, function(value, key) {
             var fullEventName = 'media:' + value;
