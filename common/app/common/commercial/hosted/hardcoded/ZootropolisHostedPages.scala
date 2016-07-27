@@ -18,7 +18,7 @@ object ZootropolisHostedPages {
   )
 
   private val cta = HostedCallToAction(
-    url = "https://www.skystore.com/product/zootropolis/eeeeeeee-b061-44c8-a672-5ba1d34eb447",
+    url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
     label = "",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
