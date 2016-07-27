@@ -359,7 +359,6 @@ $navigation-horizontal-padding: 38px;
     &:focus {
         // Unset a:focus from user agent stylesheet
         outline: 0;
-        //background-color: darken($guardian-brand, 5%);
     }
 
     &::-webkit-details-marker {
@@ -371,13 +370,12 @@ $navigation-horizontal-padding: 38px;
         position: absolute;
         top: $gs-baseline - 2px;
         left: $gs-gutter / 1.5;
-        //transition: 200ms cubic-bezier(.25, .46, .45, .94);
         width: 10px;
         height: 10px;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
-        border-top: none;
-        border-right: none;
+        border-top: 0;
+        border-right: 0;
     }
 
     details[open] &:before {
