@@ -14,26 +14,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABCleverFriend = Switch(
-    SwitchGroup.ABTests,
-    "ab-clever-friend-brexit",
-    "Switch to trigger segmentation for clever friend exposure",
-    owners = Seq(Owner.withGithub("annebyrne")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = true
-  )
-
-  val ABParticipationDiscussionTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-discussion-test",
-    "We are going to hide comments on a random half of articles",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
-    exposeClientSide = true
-  )
-
   val ABJoinDiscussionAfterPoll = Switch(
     SwitchGroup.ABTests,
     "ab-join-discussion-after-poll",
@@ -41,16 +21,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 7, 27),
-    exposeClientSide = true
-  )
-
-  val ABSamplingTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-sampling-test",
-    "Tests the sampling",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 22),
     exposeClientSide = true
   )
 
@@ -80,7 +50,17 @@ trait ABTestSwitches {
     "Testing if increasing prominence of video caption drives plays.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
+    sellByDate = new LocalDate(2016, 8, 3),
+    exposeClientSide = true
+  )
+
+  val ABHabitFormingDigestPromo = Switch(
+    SwitchGroup.ABTests,
+    "ab-habit-forming-digest-promo",
+    "Show infrequent users a banner offering a curated digest",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 1),
     exposeClientSide = true
   )
 }

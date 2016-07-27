@@ -1,16 +1,14 @@
 package controllers.admin
 
 import conf.Configuration
-import controllers.AuthLogging
 import common.{ExecutionContexts, Logging}
+import controllers.AuthLogging
 import implicits.Strings
 import play.api.mvc._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import model.NoCache
 
-class Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
-
-  import play.api.Play.current
+class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
   def proxy(path: String, callback: String) = AuthActions.AuthActionTest.async { request =>
     val queryString = request.queryString.map { p =>
@@ -21,7 +19,7 @@ class Api extends Controller with Logging with AuthLogging with ExecutionContext
 
     log("Proxying tag API query to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
     }
   }
@@ -36,7 +34,7 @@ class Api extends Controller with Logging with AuthLogging with ExecutionContext
 
     log("Proxying tag API query to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
     }
   }
@@ -51,7 +49,7 @@ class Api extends Controller with Logging with AuthLogging with ExecutionContext
 
     log("Proxying item API query to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
     }
   }
@@ -59,7 +57,7 @@ class Api extends Controller with Logging with AuthLogging with ExecutionContext
   def json(url: String) = AuthActions.AuthActionTest.async { request =>
     log("Proxying json request to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/json"))
     }
   }

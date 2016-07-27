@@ -1,13 +1,11 @@
 $hosted-stripe: 28px;
 $hosted-video-width: 960px;
 $hosted-video-height: 540px;
-$renaultColor: #ffc421;
-$renaultLight: #fff9e9;
-$omgbColor: #e41f13;
-$leffeColor: #dec190;
 
+@import '_hosted-colours.scss';
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
+@import '_hosted-article.scss';
 @import '_hosted-header.scss';
 
 @mixin hosted-fade-in {
@@ -30,41 +28,6 @@ $leffeColor: #dec190;
 @mixin hosted-slide-out {
     right: -242px;
     transition: right 2s linear;
-}
-
-.hosted-tone--renault {
-    color: $renaultColor;
-}
-
-.hosted-tone-bg--renault {
-    background-color: $renaultColor;
-}
-
-.hosted-tone-btn--renault {
-    &,
-    &:focus,
-    &:hover {
-        background-color: $renaultColor;
-        border-color: $renaultColor;
-    }
-}
-
-/* Temporary Leffe's colors will be the same as Renault's because of the contrast issues */
-.hosted-tone--leffe {
-    color: $leffeColor;
-}
-
-.hosted-tone-bg--leffe {
-    background-color: $leffeColor;
-}
-
-.hosted-tone-btn--leffe {
-    &,
-    &:focus,
-    &:hover {
-        background-color: $leffeColor;
-        border-color: $leffeColor;
-    }
 }
 
 .hosted-tone--dark {
@@ -555,10 +518,9 @@ $leffeColor: #dec190;
     @include circular;
     @include f-headlineSans;
     position: relative;
-    display: block;
-    padding: 6px 6px 6px 14px;
+    display: inline-block;
+    padding: 6px 45px 6px 14px;
     color: #000000;
-    width: $gs-column-width * 3.2;
     font-weight: bold;
     background-color: #ffffff;
 
@@ -613,18 +575,6 @@ $leffeColor: #dec190;
     font-size: 12px;
     line-height: 1.2;
     color: #767676;
-}
-
-.leffe {
-    .hosted__link {
-        color: $leffeColor;
-    }
-}
-
-.renault {
-    .hosted__link {
-        color: $renaultColor;
-    }
 }
 
 .hosted__standfirst {
@@ -844,12 +794,6 @@ $leffeColor: #dec190;
     font-weight: 200;
 }
 
-.hosted-video-page.leffe ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $leffeColor;
-    }
-}
-
 .hosted__next-video--header {
     padding-bottom: 10px;
     margin: $gs-baseline $gs-gutter 10px;
@@ -884,20 +828,13 @@ $leffeColor: #dec190;
 
 .hosted__next-video .hosted__next-video--tile {
     display: flex;
-    background: $renaultLight;
     color: #333333;
-    border-top: 2px solid $renaultColor;
+    border-top: 2px solid;
     margin: 0 $gs-gutter $gs-gutter;
     text-decoration: none;
 
     &:active {
         color: #333333;
-    }
-}
-
-.leffe {
-    .hosted__next-video .hosted__next-video--tile {
-        border-top-color: $leffeColor;
     }
 }
 
@@ -1098,32 +1035,6 @@ $leffeColor: #dec190;
                 position: static;
                 fill: #333333;
             }
-        }
-    }
-}
-
-.leffe {
-    .hosted-next-autoplay {
-        .hosted-next-autoplay__poster-timer,
-        .hosted-next-autoplay__tile {
-            background-color: $leffeColor;
-        }
-        .hosted-next-autoplay__video,
-        .hosted-next-autoplay__next-in-series {
-            border-top: 1px solid $leffeColor;
-        }
-    }
-}
-
-.renault {
-    .hosted-next-autoplay {
-        .hosted-next-autoplay__poster-timer,
-        .hosted-next-autoplay__tile {
-            background-color: $renaultColor;
-        }
-        .hosted-next-autoplay__video,
-        .hosted-next-autoplay__next-in-series {
-            border-top: 1px solid $renaultColor;
         }
     }
 }

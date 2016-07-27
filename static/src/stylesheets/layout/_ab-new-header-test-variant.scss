@@ -1,3 +1,5 @@
+$mobile-medium: 375px; // Breakpoint for our most common device sizes
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -5,37 +7,40 @@
     align-items: flex-start;
 }
 
-.new-header__logo {
+.new-header__logo-wrapper {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+}
 
-    svg {
-        // Removes extra spacing
-        display: block;
+.new-header__logo__svg {
+    // Removes extra spacing
+    display: block;
+    height: auto;
+    padding-right: $gs-gutter / 2;
 
-        // Aspect ratio: 16:3
-        @include mq($until: mobileLandscape) {
-            width: 50vw;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 46vw);
-            padding: ($gs-baseline / 2) 0;
-            min-width: 147px;
-            min-height: 28px;
-        }
+    // Aspect ratio: 16:3
+    @include mq($until: $mobile-medium) {
+        width: 170px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 170px);
+    }
 
-        @include mq(mobileLandscape) {
-            width: 240px;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 240px);
-            padding: ($gs-baseline / 2) ($gs-gutter / 2);
-        }
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        width: 225px;
+        height: calc(3/16 * 225px);
+    }
 
-        @include mq(phablet) {
-            padding-bottom: 0;
-        }
+    @include mq($from: mobileLandscape) {
+        width: 260px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 260px);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+        margin-right: $gs-gutter / 2;
     }
 }
 
 .new-header__edition-button {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     order: -1;
     color: $news-support-1;
     // Override from fs-textSans mixin
@@ -46,24 +51,27 @@
     // Unset button from user agent stylesheet
     border: 0;
     // Override button from user agent stylesheet
-    padding: ($gs-gutter / 2);
+    padding: ($gs-baseline) ($gs-gutter / 2);
 
-    @include mq($until: mobileLandscape) {
-        font-size: 3.8vw;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
     }
 
     svg {
         fill: currentColor;
-        // Spacing also due to inline elements
-        margin-right: 1px;
         vertical-align: middle;
         margin-top: -2px;
-        min-width: 14px;
-        min-height: 14px;
+        min-width: 1em;
+        min-height: 1em;
+    }
 
-        @include mq($until: mobileLandscape) {
-            width: 4vw;
-            height: 4vw;
+    &:hover,
+    &:focus {
+        outline: none;
+        color: #ffffff;
+
+        path {
+            fill: #ffffff;
         }
     }
 }
@@ -75,46 +83,79 @@
     width: 100%;
 
     @include mq($until: mobileLandscape) {
-        font-size: 5vw;
-        padding-left: ($gs-gutter / 2);
-        padding-right: ($gs-gutter / 2);
+        font-size: 5.2vw;
+        line-height: 1.6;
         // Position after pseudo element which forces line break
         order: 1;
         justify-content: space-between;
     }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+    }
 }
+
+// Specific values for menu button breakpoints
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
+$gutter-small: 30px;
+$gutter-medium: 37px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
-    background-color: $news-main-2;
+    position: relative;
     // Unset button from user agent stylesheet
     border: 0;
+    outline: none;
     // Override button from user agent stylesheet
-    // Must be square
-    padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
-    height: 18px;
-    width: 18px;
-    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
+    background-color: $news-main-2;
+    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
-    @include mq($until: mobileLandscape) {
-        margin-right: 4vw;
-        margin-top: -2vw;
-        margin-bottom: -2vw;
+    @include mq($until: $mobile-medium) {
+        //Smaller menu button
+        height: $veggie-burger-small;
+        width: $veggie-burger-small;
+        margin-top: -$gs-baseline;
+        margin-bottom: -$gs-baseline;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-small;
+    }
+
+    @include mq($mobile-medium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-medium;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
+        margin-left: $gs-gutter -$gs-gutter / 4;
     }
 }
 
 .new-header__burger-icon {
-    position: relative;
-    margin-top: 3px;
-    cursor: pointer;
+    position: absolute;
+    width: $gs-gutter;
+    height: 14px;
+    top: 2px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
 
     transform: rotate(0deg);
-    transition: .4s ease-in-out;
+    transition: 300ms cubic-bezier(.25, .46, .45, .94);
 
     span {
-        display: block;
         position: absolute;
         height: 2px;
         width: 100%;
@@ -136,7 +177,9 @@
     }
 }
 
-.new-header__burger-icon--open {
+.new-header__nav__menu-button--open {
+    transform: scale(1.1);
+
     span {
         &:nth-child(1) {
             opacity: 0;
@@ -161,10 +204,15 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 3px;
+    margin-bottom: 0;
 
     @include mq($until: mobileLandscape) {
         order: -1;
+        margin-left: $gs-gutter / 2;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
     }
 }
 
@@ -172,6 +220,10 @@
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+
+    &:first-child .new-header__nav__link {
+        padding-left: 0;
+    }
 
     &:not(:last-child) {
         &:after {
@@ -184,7 +236,9 @@
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    padding: 2px;
+    // Optically aligns slashes
+    padding-left: 2px;
+    padding-right: 3px;
 }
 
 /****************
@@ -229,7 +283,6 @@
 
 .main-menu-container__menu {
     height: 100%;
-    width: 90%;
     background-color: $guardian-brand;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
@@ -242,6 +295,14 @@
 
     will-change: transform;
     transition: transform .2s ease-out;
+
+    @include mq($until: $mobile-medium) {
+        margin-right: $gutter-small + ($veggie-burger-small / 2);
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+    }
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);

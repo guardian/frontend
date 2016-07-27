@@ -7,11 +7,11 @@ import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
 import scala.concurrent.Future
-import services.Notification
+import services.SwitchNotification
 import tools.Store
 import model.NoCache
 
-class SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
@@ -70,7 +70,7 @@ class SwitchboardController extends Controller with AuthLogging with Logging wit
     log.info("switches successfully updated")
 
     val changes = updates filterNot { current contains _ }
-    Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
+    SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
       log.info(s"Switch change by ${requester}: ${change}")
     }

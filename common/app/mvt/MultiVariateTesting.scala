@@ -53,7 +53,7 @@ object ABNewHeaderDummyTestControl extends TestDefinition(
   name = "ab-new-header-dummy-test-control",
   description = "New header dummy test control",
   owners = Seq(Owner.withGithub("nataliaLKB")),
-  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+  sellByDate = new LocalDate(2016, 8, 2) // Tuesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-control")
@@ -64,7 +64,7 @@ object ABNewHeaderDummyTestVariant extends TestDefinition(
   name = "ab-new-header-dummy-test-variant",
   description = "New header dummy test variant",
   owners = Seq(Owner.withGithub("nataliaLKB")),
-  sellByDate = new LocalDate(2016, 7, 26) // Tuesday
+  sellByDate = new LocalDate(2016, 8, 2) // Tuesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-variant")

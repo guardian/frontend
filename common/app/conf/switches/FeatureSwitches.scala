@@ -377,6 +377,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val LiveBlogAmpSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-blog-amp",
+    "If this switch is on, link to amp pages will be in the metadata for live blogs",
+    owners = Seq(Owner.withGithub("SiAdcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 26),
+    exposeClientSide = false
+  )
+
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",

@@ -5,12 +5,13 @@ import com.softwaremill.macwire._
 import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
+import play.api.libs.ws.WSClient
 import services.IdentityServices
 
 trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
+  def wsClient: WSClient
 
   lazy val authenticatedActions = wire[AuthenticatedActions]
-
   lazy val changePasswordController = wire[ChangePasswordController]
   lazy val reauthenticationController = wire[ReauthenticationController]
   lazy val signinController = wire[SigninController]

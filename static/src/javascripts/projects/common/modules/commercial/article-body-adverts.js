@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/steady-page',
     'common/modules/article/space-filler',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
@@ -17,6 +18,7 @@ define([
     detect,
     steadyPage,
     spaceFiller,
+    adSizes,
     addSlot,
     trackAdRender,
     createSlot,
@@ -51,7 +53,7 @@ define([
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             },
             filter: function(slot) {
-                if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
+                if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
                     prevSlot = slot;
                     return true;
                 }
@@ -74,7 +76,7 @@ define([
         if (!longArticleRules) {
             longArticleRules = getRules();
             longArticleRules.selectors[' .ad-slot'].minAbove =
-            longArticleRules.selectors[' .ad-slot'].minBelow = 1300;
+            longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         }
         return longArticleRules;
     }
