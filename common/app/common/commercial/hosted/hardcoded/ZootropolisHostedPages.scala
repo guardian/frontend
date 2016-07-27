@@ -53,17 +53,17 @@ object ZootropolisHostedPages {
 
   val customData = CustomData(
     conArtistPic = "https://media.guim.co.uk/f57ea457837fcae4f77bb31d1b997af1fd158aed/947_0_1869_2380/393.png",
-    conArtistPoster = Static("images/commercial/con-artist-poster.png"),
+    conArtistPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zoo-test.png",
     rookiePic = "https://media.guim.co.uk/6079f37ef66a544b745087606ef987a72a0b6982/71_0_1123_1730/325.png",
-    rookiePoster = Static("images/commercial/rookie-poster.png"),
+    rookiePoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/bunny.png",
     chiefPic = "https://media.guim.co.uk/5e2f2703d753bd2c532d443d55dd9b0e325b4087/58_12_1367_1716/398.png",
-    chiefPoster = Static("images/commercial/chief-poster.png"),
+    chiefPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/bull.png",
     slothPic = "https://media.guim.co.uk/09bd9dda35d757fdfedf6e626226c656dfe4db20/0_49_1650_1340/500.png",
-    slothPoster = Static("images/commercial/sloth-poster.png"),
+    slothPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/sloth.png",
     deskClerkPic = "https://media.guim.co.uk/223857a17c0446397a53075cadb66c7179fb83ee/0_0_1476_1575/937.png",
-    deskClerkPoster = Static("images/commercial/desk-clerk-poster.png"),
+    deskClerkPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/cat.png",
     gazellePic = "https://media.guim.co.uk/fca2bfbba8424cb98340dd5d841fbd25be383a5d/0_0_1156_1435/806.png",
-    gazellePoster = Static("images/commercial/popstar-poster.png")
+    gazellePoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/gazelle.png"
   )
 
   val articlePageName = "meet-the-characters-of-zootropolis"
@@ -81,7 +81,9 @@ object ZootropolisHostedPages {
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
-    customData
+    customData,
+    posterPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/CharactersZootropolis.pdf",
+    colouringPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ColoringZootropolis.pdf"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

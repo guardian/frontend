@@ -17,7 +17,9 @@ case class HostedArticlePage(
   mainPicture: String,
   twitterTxt: String,
   emailTxt: String,
-  customData: CustomData
+  customData: CustomData,
+  posterPdf: String,
+  colouringPdf: String
 )
   extends HostedPage {
 
