@@ -8,5 +8,5 @@ class IdentityTestSuite extends Suites(
   new EmailControllerTest,
   new SignoutControllerTest
 ) with SingleServerSuite {
-  override lazy val port: Int = new HealthCheck().testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

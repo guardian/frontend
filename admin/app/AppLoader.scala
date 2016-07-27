@@ -38,6 +38,7 @@ trait AdminServices {
 }
 
 trait Controllers extends AdminControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 }

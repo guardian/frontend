@@ -29,8 +29,8 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
     val mockTestPort: Int = 9100
-    val controller = new CachedHealthCheck(policy, mockTestPort, mockHealthChecks:_*) {
-      override val cache = new HealthCheckCache {
+    val controller = new CachedHealthCheck(policy, wsClient, mockTestPort, mockHealthChecks:_*) {
+      override val cache = new HealthCheckCache(wsClient) {
         override def fetchResults(testPort: Int, paths: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
           Future.successful(mockResults)
         }

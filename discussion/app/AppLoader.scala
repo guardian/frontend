@@ -22,6 +22,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers extends DiscussionControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 }

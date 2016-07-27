@@ -1,11 +1,11 @@
-import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi.SectionsLookUpLifecycle
-import controllers.{RssController, HealthCheck}
+import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
@@ -14,6 +14,7 @@ import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import services.ConfigAgentLifecycle
 import router.Routes
 
@@ -22,6 +23,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val rssController = wire[RssController]
 }

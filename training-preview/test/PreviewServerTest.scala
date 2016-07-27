@@ -6,7 +6,7 @@ class TrainingTestSuite extends Suites (
   new TrainingServerTest
 ) with SingleServerSuite {
 
-  override lazy val port: Int = new controllers.HealthCheck().testPort
+  override lazy val port: Int = new controllers.HealthCheck(wsClient).testPort
 }
 
 @DoNotDiscover class TrainingServerTest extends FlatSpec with Matchers with ConfiguredTestSuite {

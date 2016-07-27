@@ -15,5 +15,5 @@ object `package` {
 class ArchiveTestSuite extends Suites (
   new ArchiveControllerTest ) with SingleServerSuite {
 
-  override lazy val port: Int = new HealthCheck().testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

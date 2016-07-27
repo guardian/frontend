@@ -1,4 +1,5 @@
 import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
@@ -19,6 +20,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers {
+  def wsClient: WSClient
   def toolPressQueueWorker: ToolPressQueueWorker
   def liveFapiFrontPress: LiveFapiFrontPress
   def draftFapiFrontPress: DraftFapiFrontPress

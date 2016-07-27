@@ -39,5 +39,5 @@ class ApplicationsTestSuite extends Suites (
   new NewspaperControllerTest
 ) with SingleServerSuite {
 
-  override lazy val port: Int = new HealthCheck().testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }
