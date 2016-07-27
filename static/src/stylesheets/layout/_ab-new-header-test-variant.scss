@@ -310,18 +310,18 @@ $gutter-medium: 37px;
 
 .main-menu-container__profile-container {
     @include fs-textSans(5);
-    margin-top: 6px;
+    margin-top: $gs-baseline / 2;
     margin-bottom: $gs-row-height;
 }
 
 .main-menu-container__profile-icon {
-    background-color: $guardian-brand-dark;
+    background-color: darken($guardian-brand, 3%);
     text-align: center;
     fill: $news-support-1;
     height: 23px;
     width: 23px;
     overflow: hidden;
-    margin-left: $gs-gutter / 2;
+    margin-left: $gs-gutter/2;
 
     svg {
         margin-top: 3px;
@@ -365,6 +365,7 @@ $navigation-horizontal-padding: 38px;
         display: none;
     }
 
+    // Arrow icon
     &:before {
         content: '';
         position: absolute;
@@ -396,6 +397,7 @@ $navigation-horizontal-padding: 38px;
         display: block;
         height: 1px;
         background: darken($guardian-brand, 3%);
+        // Creates a seamless line when section has dark background
         margin-top: -1px;
         margin-left: $navigation-horizontal-padding;
     }
