@@ -6,6 +6,7 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import football.controllers._
 import play.api.BuiltInComponents
+import play.api.libs.ws.WSClient
 import rugby.controllers.RugbyControllers
 
 trait StandaloneControllerComponents
@@ -19,6 +20,8 @@ trait StandaloneControllerComponents
   with CricketControllers
   with RugbyControllers {
   self: BuiltInComponents =>
+
+  def wsClient: WSClient
 
   lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]

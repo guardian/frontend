@@ -6,6 +6,8 @@ trait HostedPage extends StandalonePage {
   def campaign: HostedCampaign
   def pageUrl: String
   def pageName: String
+  def title: String
+  def imageUrl: String
   def pageTitle: String
   def standfirst: String
 

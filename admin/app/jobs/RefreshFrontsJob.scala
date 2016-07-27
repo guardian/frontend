@@ -1,7 +1,7 @@
 package jobs
 
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, TrainingPriority}
-import common.{ExecutionContexts, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration
 import services.{ConfigAgent, FrontPressNotification}
 
@@ -33,12 +33,12 @@ object RefreshFrontsJob extends Logging with ExecutionContexts {
       }
   }
 
-  def runFrequency(frontType: FrontType): Boolean = {
+  def runFrequency(akkaAsync: AkkaAsync)(frontType: FrontType): Boolean = {
     if (Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info(s"Putting press jobs on Facia Cron $frontType")
       for (update <- getAllCronUpdates.filter(_.frontType == frontType)) {
         log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)
+        FrontPressNotification.sendWithoutSubject(akkaAsync)(update.path)
       }
       true
     } else {
@@ -49,12 +49,12 @@ object RefreshFrontsJob extends Logging with ExecutionContexts {
 
   //This is used by a route in admin to push ALL paths to the facia-press SQS queue.
   //The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
-  def runAll(): Option[Seq[Unit]] = {
+  def runAll(akkaAsync: AkkaAsync): Option[Seq[Unit]] = {
     Configuration.aws.frontPressSns.map(Function.const {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
       for (update <- getAllCronUpdates)
         yield {
         log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)}})
+        FrontPressNotification.sendWithoutSubject(akkaAsync)(update.path)}})
   }
 }

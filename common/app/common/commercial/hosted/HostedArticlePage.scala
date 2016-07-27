@@ -8,11 +8,21 @@ case class HostedArticlePage(
   campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
-  pageTitle: String,
+  title: String,
   standfirst: String,
-  facebookImageUrl: String
+  standfirstLink: String,
+  facebookImageUrl: String,
+  cta: HostedCallToAction,
+  ctaBanner: String,
+  mainPicture: String,
+  twitterTxt: String,
+  emailTxt: String,
+  customData: CustomData
 )
   extends HostedPage {
+
+  val pageTitle = s"Advertiser content hosted by the Guardian: $title"
+  val imageUrl = mainPicture
 
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"
@@ -41,3 +51,18 @@ case class HostedArticlePage(
     )
   }
 }
+
+case class CustomData(
+   conArtistPic: String,
+   conArtistPoster: String,
+   rookiePic: String,
+   rookiePoster: String,
+   chiefPic: String,
+   chiefPoster: String,
+   slothPic: String,
+   slothPoster: String,
+   deskClerkPic: String,
+   deskClerkPoster: String,
+   gazellePic: String,
+   gazellePoster: String
+)

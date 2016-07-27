@@ -1,0 +1,35 @@
+@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
+
+@import common.{Edition}
+
+@defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
+    <div class="js-article__container" data-component="body">
+        @if(!amp) {
+            <div class="toast__space-reserver">
+                <div id="toast__tofix" class="toast__container">
+                    <button class="toast__button toast__button--closed button button--large">
+                        <span class="toast__text"></span>
+                        @fragments.inlineSvg("refresh", "icon", List(""))
+                    </button>
+                </div>
+            </div>
+        }
+        @if(model.currentPage.currentPage.isArchivePage) {
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+        }
+        <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
+            _root_.liveblog.LatestBlock(article.blocks)
+        }" data-test-id="live-blog-blocks"
+        itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
+        @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone, amp)
+        </div>
+        @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
+        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+    </div>
+
+    @fragments.submeta(article)
+
+    <div class="after-article js-after-article"></div>
+
+    <div class="js-bottom-marker"></div>
+}

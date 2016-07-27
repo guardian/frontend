@@ -18,7 +18,8 @@ define([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
+    'common/modules/media/videojs-plugins/fullscreener',
+    'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
@@ -26,7 +27,9 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html',
+    'common/utils/template'
 ], function (
     bean,
     bonzo,
@@ -48,12 +51,15 @@ define([
     ab,
     events,
     fullscreener,
+    skipAd,
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    titlebarTmpl,
+    template
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -113,6 +119,22 @@ define([
 
         return player;
     }
+    
+    function removeCaptionLink(){
+        bonzo($('.caption--main a')).remove();
+    }
+
+    function addTitleBar() {
+        var videoTitleElement = document.querySelector('.caption--main a');
+
+        var data = {
+            webTitle: videoTitleElement.textContent,
+            pageId: videoTitleElement.getAttribute('href'),
+            icon: null
+        };
+        $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
+        removeCaptionLink();
+    }
 
     function initPlayButtons(root) {
         fastdom.read(function () {
@@ -138,7 +160,7 @@ define([
     }
 
     function initPlayer(withPreroll) {
-        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
+        videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
 
         fastdom.read(function () {
@@ -198,6 +220,11 @@ define([
                 }
             }
         }));
+        events.addContentEvents(player, mediaId, mediaType);
+        events.addPrerollEvents(player, mediaId, mediaType);
+        if (window.location.hash === '#gaMediaEvents') {
+            events.bindGoogleAnalyticsEvents(player);
+        }
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -269,11 +296,11 @@ define([
                                             prerollTimeout: 1000,
                                             // We set this sightly higher so contrib-ads never timeouts before ima.
                                             contribAdsSettings: {
-                                                timeout: 1200
+                                                timeout: 2000
                                             }
                                         });
                                         player.on('adstart', function() {
-                                            player.adSkipCountdown(15);
+                                            player.skipAd(mediaType, 15);
                                         });
                                         player.ima.requestAds();
 
@@ -310,6 +337,10 @@ define([
                 });
 
                 playerSetupComplete.then(function () {
+                    if(ab.isInVariant('VideoCaption','caption-overlay')) {
+                        addTitleBar();
+                    }
+
                     if (autoplay) {
                         player.play();
                     }

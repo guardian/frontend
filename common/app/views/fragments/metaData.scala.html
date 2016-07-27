@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
+@import conf.switches.Switches.{AmpSwitch, LiveBlogAmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -66,11 +66,16 @@
 
     @Page.getContentPage(page).map { page =>
         @if(
-            page.item.tags.isArticle &&
-            !page.item.tags.isLiveBlog &&
-            !page.item.content.isImmersive &&
-            !page.item.tags.isQuiz &&
-            AmpSwitch.isSwitchedOn
+            (
+                page.item.tags.isArticle &&
+                !page.item.tags.isLiveBlog &&
+                !page.item.content.isImmersive &&
+                !page.item.tags.isQuiz &&
+                AmpSwitch.isSwitchedOn
+            ) || (
+                page.item.tags.isLiveBlog &&
+                LiveBlogAmpSwitch.isSwitchedOn
+            )
         ) {
             <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }

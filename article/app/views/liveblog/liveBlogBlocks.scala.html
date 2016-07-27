@@ -2,7 +2,7 @@
 @import model.Article
 @import org.joda.time.DateTimeZone
 
-@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone)(implicit request: RequestHeader)
+@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import views.BodyCleaner
 @import model.liveblog.{LiveBlogDate}
@@ -23,13 +23,13 @@
             }
         }
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-        @BodyCleaner(article, block.bodyHtml, amp = false)
+        @BodyCleaner(article, block.bodyHtml, amp)
         </div>
         @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
         <p class="block-time updated-time">Updated
             <time datetime="@republishedDate">at @ampm @gmt</time>
         </p>
         }
-        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType)
+        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
 }

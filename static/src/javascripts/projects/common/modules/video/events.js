@@ -2,29 +2,29 @@
 define([
     'bean',
     'qwery',
+    'common/utils/mediator',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html',
     'lodash/arrays/indexOf',
-    'lodash/functions/throttle'
+    'lodash/functions/throttle',
+    'lodash/objects/forOwn'
 ], function (
     bean,
     qwery,
+    mediator,
     reportError,
     $,
     config,
     detect,
-    template,
     OmnitureMedia,
     history,
-    adsSkipOverlayTmpl,
     indexOf,
-    throttle
+    throttle,
+    forOwn
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
@@ -39,6 +39,109 @@ define([
             'content:play',
             'content:end'
         ];
+
+
+    /**
+     *
+     * @param mediaId {string}
+     * @param mediaType {string} audio|video
+     * @param eventType {string} e.g. firstplay, firstend
+     * @param isPreroll {boolean}
+     * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
+     */
+    function MediaEvent(mediaId, mediaType, eventType, isPreroll) {
+        return {
+            mediaId: mediaId,
+            mediaType: mediaType,
+            eventType: eventType,
+            isPreroll: isPreroll
+        };
+    }
+
+    function bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, isPreroll) {
+        forOwn(eventsMap, function(value, key) {
+            var fullEventName = 'media:' + value;
+            var mediaEvent = MediaEvent(mediaId, mediaType, value, isPreroll);
+
+            player.one(key, function() {
+                player.trigger(fullEventName, mediaEvent);
+                mediator.emit(fullEventName, mediaEvent);
+            });
+        });
+    }
+
+    function addContentEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            ready: 'ready',
+            play: 'play',
+            passed25: 'watched25',
+            passed50: 'watched50',
+            passed75: 'watched75',
+            ended: 'end'
+        };
+
+        player.on('timeupdate', throttle(function() {
+            var percent = Math.round((player.currentTime() / player.duration()) * 100);
+
+            if (percent >= 25) {
+                player.trigger('passed25');
+            }
+            if (percent >= 50) {
+                player.trigger('passed50');
+            }
+            if (percent >= 75) {
+                player.trigger('passed75');
+            }
+        }, 1000));
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
+    }
+
+    function addPrerollEvents(player, mediaId, mediaType) {
+        var eventsMap = {
+            'adstart': 'play',
+            'adend': 'end',
+            'adsready': 'ready',
+            // This comes from the skipAd plugin
+            'adskip': 'skip'
+        };
+
+        bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
+    }
+
+
+    function bindGoogleAnalyticsEvents(player) {
+        var allEvents = [
+            'ready',
+            'play',
+            'end',
+            'skip',
+            'watched25',
+            'watched50',
+            'watched75'
+        ];
+        var category = 'media';
+
+        // see ga() api here:
+        // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#implementation
+        // ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
+        allEvents.map(function(eventName) {
+            return 'media:' + eventName;
+        }).forEach(function(playerEvent) {
+            player.on(playerEvent, function(_, mediaEvent) {
+                var gaEvent = {
+                    eventCategory: category,
+                    eventAction: mediaEvent.eventAction,
+                    eventLabel: mediaEvent.mediaId,
+                    mediaType: mediaEvent.mediaType,
+                    preroll: mediaEvent.preroll,
+                    player: 'guardian-videojs'
+                };
+                return gaEvent;
+                // gaGlobal('guardianTestPropertyTracker.send', gaEvent);
+            });
+        });
+    }
 
     function getMediaType(player) {
         return isEmbed ? 'video' : player.guMediaType;
@@ -201,58 +304,6 @@ define([
         });
     }
 
-    function adSkipCountdown(skipTimeout) {
-        var intervalId,
-            events = {
-                update: function () {
-                    var adsManager  = this.ima.getAdsManager(),
-                        currentTime = adsManager.getCurrentAd().getDuration() - adsManager.getRemainingTime(),
-                        skipTime    = parseInt((skipTimeout - currentTime).toFixed(), 10);
-
-                    if (skipTime > 0) {
-                        $('.js-skip-remaining-time', this.el()).text(skipTime);
-                    } else {
-                        window.clearInterval(intervalId);
-                        $('.js-ads-skip', this.el())
-                            .html(
-                                '<button class="js-ads-skip-button vjs-ads-skip__button" data-link-name="Skip video advert">' +
-                                    '<i class="i i-play-icon-grey skip-icon"></i>' +
-                                    '<i class="i i-play-icon-gold skip-icon"></i>Skip advert' +
-                                '</button>'
-                            );
-                        bean.on(qwery('.js-ads-skip-button')[0], 'click', events.skip.bind(this));
-                    }
-                },
-                skip: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    this.trigger(constructEventName('preroll:skip', this));
-                    // in lieu of a 'skip' api, rather hacky way of achieving it
-                    this.ima.onAdComplete_();
-                    this.ima.onContentResumeRequested_();
-                    this.ima.getAdsManager().stop();
-                },
-                init: function () {
-                    var adDuration = this.ima.getAdsManager().getCurrentAd().getDuration();
-
-                    var skipButton = template(adsSkipOverlayTmpl, {
-                        adDuration: adDuration,
-                        skipTimeout: skipTimeout
-                    });
-
-                    $(this.el()).append(skipButton);
-                    intervalId = setInterval(events.update.bind(this), 500);
-
-                },
-                end: function () {
-                    $('.js-ads-skip', this.el()).hide();
-                    window.clearInterval(intervalId);
-                }
-            };
-
-        this.one(constructEventName('preroll:play', this), events.init.bind(this));
-        this.one(constructEventName('preroll:end', this), events.end.bind(this));
-    }
-
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
             reportError(new Error(err.message), {
@@ -285,8 +336,10 @@ define([
         bindGlobalEvents: bindGlobalEvents,
         initOphanTracking: initOphanTracking,
         initOmnitureTracking: initOmnitureTracking,
-        adSkipCountdown: adSkipCountdown,
         handleInitialMediaError: handleInitialMediaError,
-        bindErrorHandler: bindErrorHandler
+        bindErrorHandler: bindErrorHandler,
+        addContentEvents: addContentEvents,
+        addPrerollEvents: addPrerollEvents,
+        bindGoogleAnalyticsEvents: bindGoogleAnalyticsEvents
     };
 });
