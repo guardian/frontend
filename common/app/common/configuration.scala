@@ -42,7 +42,7 @@ class GuardianConfiguration extends Logging {
     new CM(List(userPrivate, opsPrivate, public), cmLogger).load
   }
 
-  private implicit class OptionalString2MandatoryString(conf: Config) {
+  implicit class ScalaConvertProperties(conf: Config) {
 
     def getStringProperty = getProperty(conf.getString)_
     def getMandatoryStringProperty = getMandatoryProperty(conf.getString)_
