@@ -8,6 +8,45 @@ $leffeColor: #dec190;
 $leffeLight: #f8f2e9;
 
 
+.hosted-tone--test {
+    color: #a00000;
+}
+
+.hosted-tone-bg--test {
+    background-color: #a00000;
+}
+
+.hosted-tone-border--test {
+    border-color: #a00000;
+}
+
+.hosted-tone--visit-britain {
+    color: $omgbColor;
+}
+
+.hosted-tone-bg--visit-britain {
+    background-color: $omgbColor;
+}
+
+.hosted-tone-border--visit-britain {
+    border-color: $omgbColor;
+}
+
+.hosted-page.visit-britain ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $omgbColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
 .hosted-tone--renault {
     color: $renaultColor;
 }
