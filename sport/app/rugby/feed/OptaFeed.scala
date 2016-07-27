@@ -19,7 +19,7 @@ case object WorldCup2015 extends OptaEvent {
 
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
-case class OptaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
+class OptaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private def events = List(WorldCup2015)
 

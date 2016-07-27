@@ -41,7 +41,7 @@ class SportTestSuite extends Suites (
   override lazy val port: Int = new HealthCheck().testPort
 
   // Inject stub api.
-  FootballClient.http = TestHttp(wsClient)
+  FootballClient.http = new TestHttp(wsClient)
   loadTestData()
 }
 
@@ -82,7 +82,7 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
 }
 
 // Stubs data for Football stats integration tests
-case class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
+class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
     FootballHttpRecorder.load(url) {

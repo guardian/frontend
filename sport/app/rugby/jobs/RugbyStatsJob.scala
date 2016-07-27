@@ -9,7 +9,7 @@ import scala.util.Failure
 import scala.util.Success
 
 
-case class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
+class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
   protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
