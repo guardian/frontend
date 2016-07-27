@@ -9,7 +9,7 @@ import play.libs.Akka
 import services.S3
 
 /*
-ExpiredKeyEventSubscriber listens to notifications. When a key expires, it gathers
+ExpiredKeyEventSubscriber listens to Redis notifications. When a key expires, it gathers
 all the known data for that surrogate key from Redis, and writes a single loggable report object into S3.
 */
 class ExpiredKeyEventSubscriber(client: RedisClient) {
@@ -53,6 +53,7 @@ When the key expires, the ExpiredKeyEventSubscriber object will be notified.
 */
 object RedisReport extends Logging with ExecutionContexts {
 
+  // Make a client for each usage, otherwise there may be protocol errors.
   def redisClient: Option[RedisClient] = {
     try {
       Configuration.redis.endpoint.map(new RedisClient(_, 6379))
@@ -64,14 +65,9 @@ object RedisReport extends Logging with ExecutionContexts {
     }
   }
 
-  lazy val subscriber: Option[ExpiredKeyEventSubscriber] = redisClient.map { client =>
-    new ExpiredKeyEventSubscriber(client)
-  }
-
   def dataKeyFromId(viewId: String): String = viewId + "-data"
 
   def report(report: Report): Unit = {
-    subscriber
     redisClient.foreach { client =>
       client.setex(report.viewId, 5L, "surrogate-key")
       client.setex(dataKeyFromId(report.viewId), 10L, Json.toJson(report).toString)
