@@ -3,7 +3,8 @@ package cricket.controllers
 import common._
 import cricketModel.Match
 import cricketPa.PaFeed.dateFormat
-import cricketPa.{CricketTeam, CricketTeams, PaFeed}
+import cricketPa.{CricketTeam, CricketTeams}
+import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc.{Action, Controller}
@@ -16,13 +17,13 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
     analyticsName = s"GFE:Cricket:automatic:match:${dateFormat.print(theMatch.gameDate)}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}")
 }
 
-class CricketMatchController extends Controller with Logging with ExecutionContexts {
+class CricketMatchController(cricketStatsJob: CricketStatsJob) extends Controller with Logging with ExecutionContexts {
 
   def renderMatchIdJson(date: String, teamId: String) = renderMatchId(date, teamId)
 
   def renderMatchId(date: String, teamId: String) = Action { implicit request =>
     CricketTeams.byWordsForUrl(teamId).flatMap { team =>
-      PaFeed.findMatch(team, date).map { matchData =>
+      cricketStatsJob.findMatch(team, date).map { matchData =>
         val page = CricketMatchPage(matchData, date, team)
         Cached(60) {
           if (request.isJson)
@@ -37,5 +38,3 @@ class CricketMatchController extends Controller with Logging with ExecutionConte
   }
 
 }
-
-object CricketMatchController extends CricketMatchController

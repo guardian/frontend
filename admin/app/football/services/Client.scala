@@ -1,7 +1,7 @@
 package football.services
 
 import scala.concurrent.{ExecutionContext, Future}
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.Play.current
 import org.joda.time.LocalDate
 import java.io.File
@@ -20,23 +20,24 @@ trait Client extends PaClient with Http with ExecutionContexts {
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = super.get(suffix)(context)
 }
-private object Client extends Client {
+
+private case class RealClient(wsClient: WSClient) extends Client {
 
   override def apiKey: String = AdminConfiguration.pa.footballApiKey
 
   override def GET(urlString: String): Future[pa.Response] = {
-    import play.api.Play.current
-    WS.url(urlString).get().map { response =>
+    wsClient.url(urlString).get().map { response =>
       pa.Response(response.status, response.body, response.statusText)
     }
   }
 
 }
-private object TestClient extends Client {
+private case class TestClient(wsClient: WSClient) extends Client {
   override def GET(urlString: String): Future[Response] = ???
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
 
+    val realClient = RealClient(wsClient)
     val todayString = LocalDate.now().toString("yyyyMMdd")
     val filename = {
       suffix
@@ -45,7 +46,7 @@ private object TestClient extends Client {
     }
     val realApiCallPath = {
       suffix
-        .replace("KEY", Client.apiKey)
+        .replace("KEY", realClient.apiKey)
     }
 
     current.getExistingFile(s"/admin/test/football/testdata/$filename.xml") match {
@@ -55,7 +56,7 @@ private object TestClient extends Client {
       }
       case None => {
         Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
-        val response = Client.get(realApiCallPath)(context)
+        val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
             Logger.info(s"writing response to testdata, $filename.xml, $str")
@@ -78,5 +79,6 @@ private object TestClient extends Client {
   override def apiKey: String = "KEY"
 }
 trait GetPaClient {
-  lazy val client: Client = if (play.Play.isTest) TestClient else Client
+  val wsClient: WSClient
+  lazy val client: Client = if (play.Play.isTest) TestClient(wsClient) else RealClient(wsClient)
 }

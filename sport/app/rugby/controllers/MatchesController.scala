@@ -5,7 +5,6 @@ import model.Cached.RevalidatableResult
 import model.{Cached, MetaData, SectionSummary, StandalonePage}
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
-import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
 
@@ -17,24 +16,24 @@ case class MatchPage(liveScore: Match) extends StandalonePage {
     analyticsName = s"GFE:Rugby:automatic:match:${liveScore.date.toString("dd MMM YYYY")}:${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 
-class MatchesController extends Controller with Logging with ExecutionContexts {
+class MatchesController(rugbyStatsJob: RugbyStatsJob) extends Controller with Logging with ExecutionContexts {
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 
   def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
-    val matchOpt = RugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+    val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
 
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>
-      val matchNav = CapiFeed.findMatchArticle(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
+      val matchNav = rugbyStatsJob.getMatchNavContent(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
-      val scoreEvents = RugbyStatsJob.getScoreEvents(aMatch)
+      val scoreEvents = rugbyStatsJob.getScoreEvents(aMatch)
       val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
 
-      val matchStat = RugbyStatsJob.getMatchStat(aMatch)
-      val table = RugbyStatsJob.getGroupTable(aMatch)
+      val matchStat = rugbyStatsJob.getMatchStat(aMatch)
+      val table = rugbyStatsJob.getGroupTable(aMatch)
 
       val page = MatchPage(aMatch)
       Cached(60){
@@ -54,5 +53,3 @@ class MatchesController extends Controller with Logging with ExecutionContexts {
     }.getOrElse(NotFound)
   }
 }
-
-object MatchesController extends MatchesController
