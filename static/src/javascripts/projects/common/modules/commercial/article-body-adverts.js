@@ -130,7 +130,11 @@ define([
         // If on mobile we will
         // insert ad using steady page
         // to avoid jumping the user
-        detect.isBreakpoint({max: 'tablet'}) ? steadyPage.insert(ad, insertion): insertion();
+        if (detect.isBreakpoint({max: 'tablet'})) {
+            steadyPage.insert(ad, insertion);
+        } else {
+            insertion();
+        }
     }
 
     function addSlots(countAdded) {
