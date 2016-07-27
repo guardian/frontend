@@ -46,23 +46,20 @@
     .caption {
         position: absolute;
         left: 10px;
-        bottom: -40px;
+        top: 390px;
         right: unset;
 
         @include mq(tablet) {
-            bottom: -32px;
             left: $gs-gutter * 1.5;
         }
 
         @include mq(desktop) {
-            bottom: -54px;
             left: unset;
             right: $gs-column-width + 10;
             width: $gs-column-width * 3 + 40;
         }
 
         @include mq(leftCol) {
-            bottom: -54px;
             right: 10px;
         }
     }

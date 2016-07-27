@@ -78,7 +78,7 @@ object ZootropolisHostedPages {
     facebookImageUrl = Static("images/commercial/zootropolis.png"),
     cta,
     ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
-    mainPicture = Static("images/commercial/zootropolis.png"),
+    mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
     customData
