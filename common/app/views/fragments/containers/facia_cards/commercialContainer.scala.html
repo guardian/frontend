@@ -27,7 +27,7 @@
                     @defining(Commercial.containerCard.mkCardsWithSponsorDataAttributes(container, 4)) { items =>
                         <ul class="lineitems l-row l-row--cols-@math.min(items.length, 4)">
                             @for(cardWithSponsorData <- items) {
-                                <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-container"
+                                <li class="lineitem l-row__item l-row__item--span-1 js-sponsored-card"
                                     @for(sponsorData <- cardWithSponsorData.sponsorData) {
                                         @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
                                         data-sponsorship="@sponsorData.sponsorshipType"
@@ -40,12 +40,13 @@
                                             @for( InlineImage(images) <- cardWithSponsorData.card.displayElement) {
                                                 @itemImage(images)
                                             }
-                                            <div class="rich-link__header">
+                                            <div class="rich-link__header js-card__header">
                                                 @title(cardWithSponsorData.card.header, 0, container.index)
                                             </div>
                                             <div class="rich-link__standfirst u-cf">@for( text <- cardWithSponsorData.card.trailText) {@Html(text)}</div>
                                             <a class="rich-link__link u-faux-block-link__overlay" @Html(cardWithSponsorData.card.header.url.hrefWithRel)>@RemoveOuterParaHtml(cardWithSponsorData.card.header.headline)</a>
                                         </div>
+                                        <div class="js-badge-placeholder"></div>
                                     </div>
                                 </li>
                             }
