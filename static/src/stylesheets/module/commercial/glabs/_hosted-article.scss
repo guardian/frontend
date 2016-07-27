@@ -3,7 +3,6 @@
         position: relative;
         height: 378px;
         margin-bottom: 10px;
-        overflow: hidden;
 
         &:after {
             content: '';
@@ -153,8 +152,13 @@
         }
 
         @include mq(desktop) {
-            left: ($gs-column-width * 4 + 20) * -1;
+            left: ($gs-gutter * 3) * -1;
             top: 20px;
+            width: gs-span(13);
+        }
+
+        @include mq(leftCol) {
+            left: ($gs-column-width * 4 + 20) * -1;
             width: gs-span(16) + $gs-gutter * 2;
         }
     }
@@ -171,13 +175,17 @@
             .u-responsive-ratio {
                 @include animal-stripe-character;
                 top: -30px;
-                left: 176px;
+                left: 26px;
                 height: 370px;
                 width: 282px;
 
                 img {
                     height: 370px;
                     width: 282px;
+                }
+
+                @include mq(desktop) {
+                    left: 176px;
                 }
             }
         }
@@ -186,7 +194,7 @@
             .u-responsive-ratio {
                 @include animal-stripe-character;
                 top: 0;
-                right: 300px;
+                right: 116px;
                 height: 340px;
                 width: 240px;
 
@@ -194,50 +202,95 @@
                     height: 340px;
                     width: 240px;
                 }
+
+                @include mq(desktop) {
+                    right: 300px;
+                }
             }
         }
         &.buffalo {
             margin-top: 140px;
             .u-responsive-ratio {
                 @include animal-stripe-character;
-                top: -130px;
-                left: 120px;
-                height: 470px;
-                width: 382px;
+                top: -80px;
+                left: 0;
+                height: 420px;
+                width: 310px;
 
                 img {
+                    height: 420px;
+                    width: 310px;
+                }
+
+                @include mq(desktop) {
+                    top: -130px;
+                    left: 120px;
                     height: 470px;
                     width: 382px;
+
+                    img {
+                        height: 470px;
+                        width: 382px;
+                    }
                 }
             }
         }
         &.dmv-employee {
-            margin-top: 100px;
+            margin-top: 40px;
+            @include mq(desktop) {
+                margin-top: 100px;
+            }
             .u-responsive-ratio {
                 @include animal-stripe-character;
-                top: -110px;
+                top: 24px;
                 right: 0;
-                height: 450px;
-                width: 550px;
+                height: 316px;
+                width: 408px;
 
                 img {
+                    height: 316px;
+                    width: 408px;
+                }
+
+                @include mq(desktop) {
+                    top: -110px;
                     height: 450px;
                     width: 550px;
+
+                    img {
+                        height: 450px;
+                        width: 550px;
+                    }
                 }
             }
         }
         &.desk-clerk {
-            margin-top: 190px;
+            margin-top: 40px;
+            @include mq(desktop) {
+                margin-top: 190px;
+            }
             .u-responsive-ratio {
                 @include animal-stripe-character;
-                top: -190px;
-                left: 100px;
-                height: 530px;
-                width: 496px;
+                top: -20px;
+                left: 0;
+                height: 360px;
+                width: 346px;
 
                 img {
+                    height: 360px;
+                    width: 346px;
+                }
+
+                @include mq(desktop) {
+                    top: -190px;
+                    left: 100px;
                     height: 530px;
                     width: 496px;
+
+                    img {
+                        height: 530px;
+                        width: 496px;
+                    }
                 }
             }
         }
@@ -245,14 +298,25 @@
             margin-top: 160px;
             .u-responsive-ratio {
                 @include animal-stripe-character;
-                top: -114px;
+                top: -80px;
                 left: 0;
-                height: 454px;
-                width: 360px;
+                height: 420px;
+                width: 324px;
 
                 img {
+                    height: 420px;
+                    width: 324px;
+                }
+
+                @include mq(desktop) {
+                    top: -114px;
                     height: 454px;
                     width: 360px;
+
+                    img {
+                        height: 454px;
+                        width: 360px;
+                    }
                 }
             }
         }
@@ -279,10 +343,14 @@
     }
     .animal__info-about-header {
         @include fs-textSans(4);
-        font-size: 30px;
+        font-size: 26px;
         line-height: 28px;
         padding-bottom: 16px;
         font-weight: bold;
+
+        @include mq(desktop) {
+            font-size: 30px;
+        }
     }
     .animal__info-about-download {
         display: block;
