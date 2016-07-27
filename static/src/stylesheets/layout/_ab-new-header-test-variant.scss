@@ -149,7 +149,6 @@ $gutter-medium: 37px;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-
     transition-duration: .3s;
     transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
@@ -171,28 +170,29 @@ $gutter-medium: 37px;
 
     &:after {
         bottom: -$gs-gutter / 4;
-        transition: bottom 0.1s 0.34s ease-in,
+        // The first time value is open animation, second is close animation
+        transition: bottom .1s .34s ease-in,
         transform .3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
-}
 
-.new-header__burger-icon--open {
-    transform: rotate(225deg);
-    transition-delay: .14s;
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    &--open {
+        transform: rotate(225deg);
+        transition-delay: .14s;
+        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 
-    &:before {
-        top: 0;
-        opacity: 0;
-        transition: top .1s ease-out,
-        opacity .1s .14s ease-out;
-    }
+        &:before {
+            top: 0;
+            opacity: 0;
+            transition: top .1s ease-out,
+            opacity .1s .14s ease-out;
+        }
 
-    &:after {
-        bottom: 0;
-        transform: rotate(-90deg);
-        transition: bottom .1s ease-out,
-        transform .3s .14s cubic-bezier(0.215, 0.61, 0.355, 1);
+        &:after {
+            bottom: 0;
+            transform: rotate(-90deg);
+            transition: bottom .1s ease-out,
+            transform .3s .14s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
     }
 }
 
