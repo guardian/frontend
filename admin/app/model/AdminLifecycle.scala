@@ -15,7 +15,13 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync, emailService: EmailService)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle,
+                     jobs: JobScheduler,
+                     akkaAsync: AkkaAsync,
+                     emailService: EmailService,
+                     fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
+                     r2PagePressJob: R2PagePressJob,
+                     videoEncodingsJob: VideoEncodingsJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -43,11 +49,11 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
     jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
-      FastlyCloudwatchLoadJob.run()
+      fastlyCloudwatchLoadJob.run()
     }
 
     jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
-      R2PagePressJob.run()
+      r2PagePressJob.run()
     }
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
@@ -97,7 +103,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
     jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
-      VideoEncodingsJob.run(akkaAsync)
+      videoEncodingsJob.run(akkaAsync)
     }
 
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
@@ -132,7 +138,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     akkaAsync.after1s {
       RebuildIndexJob.run()
-      VideoEncodingsJob.run(akkaAsync)
+      videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
     }
   }
