@@ -1,12 +1,17 @@
 define([
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/user-prefs'
 ], function (
     config,
+    mediator,
     userPrefs
 ){
 
     return function() {
+
+        var module = this;
+
         this.id = 'ParticipationDiscussionOrdering';
         this.start = '2016-07-25';
         this.expiry = '2016-08-26';
@@ -21,39 +26,47 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function() {
-
-            //If a user has ordered comments, let's not knob them about
+            //If a user has already ordered comments, let's not knob them about
             var preferredOrdering = userPrefs.get('discussion.order') || 'none';
-            console.log("+++++++++++++++++++++=  Hello Miss milksteamer! " + config.page.commentable + " Ordering: " + preferredOrdering === 'none');
             return config.page.commentable && preferredOrdering === 'none';
         };
 
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    console.log("++++++++++++++++++++ Oldest");
-                }
+                test: function () {}
             },
             {
                 id: 'order-by-oldest',
                 test: function() {
-                    console.log("++++++++++++++++++++ Oldest");
-                    userPrefs.set('discussion.order', 'oldest');
+                    userPrefs.set('discussion.order.test', 'oldest');
+                },
+                success: function(complete) {
+                    if(module.canRun()) {
+                        mediator.on('discussion:comments:view-more', complete);
+                    }
                 }
             },
             {
                 id: 'order-by-newest',
                 test: function() {
-                    console.log("++++++++++++++++++++ Newest");
-                    userPrefs.set('discussion.order', 'newest');
+                    userPrefs.set('discussion.order.test', 'newest');
+                },
+                success: function(complete) {
+                    if(module.canRun()) {
+                        mediator.on('discussion:comments:view-more', complete);
+                    }
                 }
             },
             {
                 id: 'order-by-recommended',
                 test: function() {
-                    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Recommend");
-                    userPrefs.set('discussion.order', 'recommendations');
+                    userPrefs.set('discussion.order.test', 'recommendations');
+                },
+                success: function(complete) {
+                    if(module.canRun()) {
+                        mediator.on('discussion:comments:view-more', complete);
+                    }
                 }
             }
         ];

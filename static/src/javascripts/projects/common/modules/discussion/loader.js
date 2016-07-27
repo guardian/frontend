@@ -85,12 +85,11 @@ Loader.prototype.initMainComments = function() {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
+    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
-
-    console.log("+++++++++++++++++++++++++++++++++++++++++++++ LOAD COMMENTS MUTHAFUCKA!");
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
@@ -103,10 +102,8 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page', function() {
-        mediator.emit('discussion:show-more-comments');
-        this.removeTruncation();
-    });
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page',
+        this.removeTruncation.bind(this));
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
@@ -484,8 +481,9 @@ Loader.prototype.loadComments = function(options) {
 
 Loader.prototype.removeTruncation = function() {
 
+    mediator.emit('discussion:comments:view-more');
+
     // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
-    console.log("++ Remove za truncation, ja!");
     if (this.comments.isAllPageSizeActive()) {
         this.loadComments();
     } else {
