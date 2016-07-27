@@ -164,7 +164,7 @@ $gutter-medium: 37px;
 
     &:before {
         top: -$gs-gutter / 4;
-        transition: top 0.1s 0.34s ease-in,
+        transition: top .1s .34s ease-in,
         opacity .1s ease-in;
     }
 
