@@ -1,9 +1,9 @@
 define([
     'raven',
-    'common/utils/ajax-promise',
     'common/utils/user-timing',
+    'common/modules/analytics/beacon',
     'common/modules/commercial/dfp/private/get-advert-by-id'
-], function (raven, ajaxPromise, userTiming, getAdvertById) {
+], function (raven, userTiming, beacon, getAdvertById) {
 
     var performanceLog = {
             viewId: 'unknown',
@@ -166,14 +166,7 @@ define([
         require(['ophan/ng'], function (ophan) {
             performanceLog.viewId = ophan.viewId;
 
-            ajaxPromise({
-                url: '/commercial-report',
-                type: 'json',
-                method: 'post',
-                contentType: 'application/json',
-                crossOrigin: true,
-                data: JSON.stringify(performanceLog)
-            });
+            beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
         });
     }
 

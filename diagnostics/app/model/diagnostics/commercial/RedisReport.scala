@@ -69,6 +69,9 @@ object RedisReport extends Logging with ExecutionContexts {
 
   def report(report: Report): Unit = {
     redisClient.foreach { client =>
+      // The surrogate key is set to expire first. This causes the expiry notification to be sent
+      // on the Redis pub-sub channel, triggering the callback which will forward the data into S3.
+      // Nothing bad happens if data expires too soon, or the system falls behind; we just collect less data.
       client.setex(report.viewId, 5L, "surrogate-key")
       client.setex(dataKeyFromId(report.viewId), 10L, Json.toJson(report).toString)
     }
