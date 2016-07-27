@@ -26,70 +26,6 @@ define([
     var promise;
 
     /**
-     * Given a batch and a previous currentBatchHeight, measure the height of each container
-     * in the batch
-     *
-     * @param  {Array} batch
-     */
-    function getHeightOfAllContainers (batch) {
-        return fastdom.read(function() {
-            // Add all the heights of the passed in batch
-            // removing the current height
-            return batch.filter(elementIsAbove).reduce(function(height, insertion) {
-                return height + readHeight(insertion.container);
-            }, 0);
-        });
-
-        function elementIsAbove(el) {
-            var parentElArray = [];
-            var parentEl = el.container;
-            var viewportAdjustment = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) / 2;
-
-            // Push the container's parents into an array so we can calculate
-            // the position of the elements all the way until the body
-            while (parentEl) {
-                parentElArray.push(parentEl);
-                parentEl = parentEl.offsetParent;
-            }
-
-            // Get the top position of the element + half of the viewport (to account for an element loading
-            // just below the top of the viewport)
-            var elTopPos = parentElArray.reduce(function(topPos, parentEl){
-                // This will loop up the parents until the body taking into account all the positions
-                // so that if an element is equal to the scrollY position then this will return 0
-                return topPos + parentEl.offsetTop + parentEl.clientTop;
-            }, 0) - viewportAdjustment;
-
-            // If the distance of the element from the top of the page minus the height of the
-            // element we are measuring is less than the scroll position then we know that it will
-            // push the page down when loading in
-            return el.container.offsetHeight > -1 &&
-                window.scrollY > 0 &&
-                (elTopPos - el.container.offsetHeight < window.scrollY);
-        }
-
-        function readHeight(el) {
-            var style = getComputedStyle(el);
-            var height = el.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
-            return isNaN(height) ? 0 : height;
-        }
-    }
-
-
-    /**
-     * Given a batch, call all of the callbacks on the insertion object
-     *
-     * @param  {Array} batch
-     */
-    function insertElements (batch) {
-        return fastdom.write(function () {
-            batch.forEach(function (insertion) {
-                insertion.cb();
-            });
-        });
-    }
-
-    /**
      * Process the insertion operation:
      *
      *   1. Calculate the original height of the container
@@ -106,14 +42,14 @@ define([
         var batchHeightsBeforeInsert;
 
         promise = fastdom.read(function(){
-                while (!q.empty()) {
-                    // Take the current queue items and add them to the batch array
-                    var insertion = q.dequeue();
-                    batch.push(insertion);
-                }
+            while (!q.empty()) {
+                // Take the current queue items and add them to the batch array
+                var insertion = q.dequeue();
+                batch.push(insertion);
+            }
 
-                return batch;
-            })
+            return batch;
+        })
             .then(function(){
                 return getHeightOfAllContainers(batch);
             })
@@ -146,13 +82,6 @@ define([
 
     }
 
-    function scrollThePage (scrollY) {
-        if (scrollY) {
-            window.scrollTo(0, scrollY);
-            running = false;
-        }
-    }
-
     /**
      * Insert an element into the page
      * Use if your element doesn't exist and is inserted into a container
@@ -176,6 +105,77 @@ define([
         });
 
         return (running ? promise : go(initialState)).then(scrollThePage);
+    }
+
+
+    /**
+     * Given a batch, call all of the callbacks on the insertion object
+     *
+     * @param  {Array} batch
+     */
+    function insertElements (batch) {
+        return fastdom.write(function () {
+            batch.forEach(function (insertion) {
+                insertion.cb();
+            });
+        });
+    }
+
+    function scrollThePage (scrollY) {
+        if (scrollY) {
+            window.scrollTo(0, scrollY);
+            running = false;
+        }
+    }
+
+    /**
+     * Given a batch and a previous currentBatchHeight, measure the height of each container
+     * in the batch
+     *
+     * @param  {Array} batch
+     */
+    function getHeightOfAllContainers (batch) {
+        return fastdom.read(function() {
+            // Add all the heights of the passed in batch
+            // removing the current height
+            return batch.filter(elementIsAbove).reduce(function(height, insertion) {
+                return height + readHeight(insertion.container);
+            }, 0);
+        });
+
+        function elementIsAbove(el) {
+            var parentElArray = [];
+            var parentEl = el.container;
+            var viewportAdjustment = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) / 2;
+
+            // Push the container's parents into an array so we can calculate
+            // the position of the elements all the way until the body
+            while (parentEl) {
+                parentElArray.push(parentEl);
+                parentEl = parentEl.offsetParent;
+            }
+
+            // Get the top position of the element + half of the viewport (to account for an element loading
+            // just below the top of the viewport)
+            var elTopPos = parentElArray.reduce(function(topPos, parentEl){
+                    // This will loop up the parents until the body taking into account all the positions
+                    // so that if an element is equal to the scrollY position then this will return 0
+                    return topPos + parentEl.offsetTop + parentEl.clientTop;
+                }, 0) - viewportAdjustment;
+
+            // If the distance of the element from the top of the page minus the height of the
+            // element we are measuring is less than the scroll position then we know that it will
+            // push the page down when loading in
+            return el.container.offsetHeight > -1 &&
+                window.scrollY > 0 &&
+                (elTopPos - el.container.offsetHeight < window.scrollY);
+        }
+
+        function readHeight(el) {
+            var style = getComputedStyle(el);
+            var height = el.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
+            return isNaN(height) ? 0 : height;
+        }
     }
 
     return {
