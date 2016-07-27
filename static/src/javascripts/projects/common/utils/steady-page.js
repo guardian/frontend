@@ -44,8 +44,7 @@ define([
         promise = fastdom.read(function(){
             while (!q.empty()) {
                 // Take the current queue items and add them to the batch array
-                var insertion = q.dequeue();
-                batch.push(insertion);
+                batch.push(q.dequeue());
             }
 
             return batch;
