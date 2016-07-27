@@ -1,12 +1,11 @@
-@import model.liveblog.BodyBlock
-@import model.Article
 @import org.joda.time.DateTimeZone
+@import model.Article
+@import model.liveblog.{LiveBlogDate,BodyBlock}
+@import views.BodyCleaner
 @import views.support.AmpAd
+@import common.Edition
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
-
-@import views.BodyCleaner
-@import model.liveblog.{LiveBlogDate}
 
 @blocks.sliding(5, 5).map { blockGroup =>
     @blockGroup.map { block =>
@@ -36,12 +35,12 @@
         </div>
     }
 
-    @* TODO: find edition*@
-    <div class="live-blog-amp-ad-container">
-        <amp-ad width="300" height="250" type="doubleclick"
-            json=@AmpAd.buildJsonString(article, request.path, "uk")
+    @if(blockGroup.length == 5) {
+        <div class="live-blog-amp-ad-container">
+            <amp-ad width="300" height="250" type="doubleclick"
+            json=@AmpAd.buildJsonString(article, request.path, Edition(request).id.toLowerCase())
             data-slot=@AmpAd.buildDataSlot(article)>
-        </amp-ad>
-    </div>
-
+            </amp-ad>
+        </div>
+    }
 }
