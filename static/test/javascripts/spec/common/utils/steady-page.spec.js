@@ -16,7 +16,7 @@ define([
     fastdom
 ) {
 
-    fdescribe('Steady Page Utility', function () {
+    describe('Steady Page Utility', function () {
         var $container;
         var $style;
         var injector = new Injector();
