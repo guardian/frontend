@@ -5,7 +5,7 @@ import model.{Article, Tag}
 import org.jsoup.nodes.{Document, Element}
 import play.api.libs.json.Json
 import views.support.HtmlCleaner
-
+import views.support.AmpAd
 import scala.collection.JavaConversions._
 
 object AmpAdCleaner {
@@ -87,42 +87,11 @@ object AmpAdCleaner {
 
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
-  private def grabLastFragmentOfId(items: Seq[Tag]) = {
-    items.map { item =>
-      if (item.id == "uk/uk") {
-        item.id
-      } else {
-        val keyword = item.id.split("/").last
-        keyword.replaceAll("""/[+s]+/g""", "-").toLowerCase()
-      }
-    }
-  }
-
   def adAfter(element: Element) = {
-    val section = article.metadata.sectionId
-    val contentType = article.metadata.contentType.toLowerCase
-    val dataSlot = s"/59666047/theguardian.com/$section/$contentType/amp"
-
-    val json = Json.obj(
-      "targeting" -> Json.obj(
-        "url" -> uri,
-        "edition" -> edition.id.toLowerCase(),
-        "se" -> grabLastFragmentOfId(article.trail.tags.series).mkString(","),
-        "ct" -> article.metadata.contentType,
-        "p" -> "amp",
-        "keywordIds" -> article.trail.tags.keywords.map(_.id).mkString(","),
-        "k" -> grabLastFragmentOfId(article.trail.tags.keywords).mkString(","),
-        "co" -> grabLastFragmentOfId(article.trail.tags.contributors).mkString(","),
-        "bl" -> grabLastFragmentOfId(article.trail.tags.blogs).mkString(","),
-        "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
-        "section" -> article.metadata.sectionId
-      )
-    )
-
     val ampAd = <div class="amp-ad-container">
           <amp-ad width="300" height="250" type="doubleclick"
-                  json={json.toString()}
-                  data-slot={dataSlot}>
+                  json={AmpAd.buildJsonString(article, uri, edition.id.toLowerCase())}
+                  data-slot={AmpAd.buildDataSlot(article)}>
           </amp-ad>
       </div>
 

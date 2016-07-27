@@ -1,7 +1,7 @@
 @import model.liveblog.BodyBlock
 @import model.Article
 @import org.joda.time.DateTimeZone
-@import play.api.libs.json.Json
+@import views.support.AmpAd
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
@@ -33,32 +33,13 @@
         }
         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
+
+    @* TODO: find edition *@
     <div class="live-blog-amp-ad-container">
-        @*
-          TODO:
-            edition
-            se(ries)
-            k(eywords)
-            co(ntributord)
-            bl(ogs)
-        *@
         <amp-ad width="300" height="250" type="doubleclick"
-        json="@Json.obj(
-            "targeting" -> Json.obj(
-                "url" -> request.path,
-                "edition" -> "uk",
-                "se" -> article.trail.tags.series.mkString(","),
-                "ct" -> article.metadata.contentType,
-                "p" -> "amp",
-                "keywordIds" -> article.trail.tags.keywords.map(_.id).mkString(","),
-                "k" -> article.trail.tags.keywords.mkString(","),
-                "co" -> article.trail.tags.contributors.mkString(","),
-                "bl" -> article.trail.tags.blogs.mkString(","),
-                "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
-                "section" -> article.metadata.sectionId
-            )
-        ).toString()"
-        data-slot="/59666047/theguardian.com/@article.metadata.sectionId/@article.metadata.contentType.toLowerCase/amp">
+            json=@AmpAd.buildJsonString(article, request.path, "uk")
+            data-slot=@AmpAd.buildDataSlot(article)>
         </amp-ad>
     </div>
+
 }
