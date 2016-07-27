@@ -108,32 +108,6 @@
     }
 }
 
-.hostedbadge.hosted-tone-bg--zootropolis {
-    .hostedbadge__info {
-        color: #ffffff;
-    }
-}
-
-.hosted-article-page.zootropolis ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $zootropolisColor;
-    }
-}
-
-.hosted-article-page.zootropolis ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $zootropolisColor;
-        color: #ffffff;
-
-        .site-message__close-btn {
-            border-color: #ffffff;
-
-            .inline-cross {
-                fill: #ffffff;
-            }
-        }
-    }
-}
 
 .hosted-article-page.zootropolis {
     @mixin animal-stripe {

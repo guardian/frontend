@@ -355,14 +355,4 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
   )
-
-  val hostedContentTracking = Switch(
-    group = CommercialLabs,
-    name = "hosted-content-tracking",
-    description = "Use special extra tracking parameters for hosted content",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = true
-  )
 }

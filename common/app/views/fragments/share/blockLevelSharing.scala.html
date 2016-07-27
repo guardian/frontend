@@ -1,4 +1,4 @@
-@(id: String, shareItems: Seq[model.ShareLink], contentType: String, isNewGallery: Boolean = false)
+@(id: String, shareItems: Seq[model.ShareLink], contentType: String, isNewGallery: Boolean = false, amp: Boolean = false)
 
 <div class="block-share block-share--@contentType.toLowerCase @if(!isNewGallery) { hide-on-mobile }" data-link-name="block share">
     @shareItems.map { item: model.ShareLink =>
@@ -9,7 +9,7 @@
     }
 </div>
 
-@if(contentType != "Article" && !isNewGallery) {
+@if(contentType != "Article" && !isNewGallery && !amp) {
     <div class="block-share--@contentType.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
         <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary} mobile-only">
             Share

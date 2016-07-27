@@ -9,7 +9,7 @@ import services.EmailService
 
 import scala.concurrent.Future
 
-object ExpiringAdFeaturesEmailJob extends Logging with ExecutionContexts {
+case class ExpiringAdFeaturesEmailJob(emailService: EmailService) extends Logging with ExecutionContexts {
 
   def run(): Future[Unit] = {
 
@@ -35,7 +35,7 @@ object ExpiringAdFeaturesEmailJob extends Logging with ExecutionContexts {
         val htmlBody =
           views.html.commercial.email.expiringAdFeatures(expired, expiring).body.trim()
 
-        EmailService.send(
+        emailService.send(
           from = adTech,
           to = gLabs :+ adOps,
           cc = Seq(adTech),

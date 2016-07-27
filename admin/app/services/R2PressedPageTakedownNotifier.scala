@@ -1,12 +1,12 @@
 package services
 
-import common.Logging
+import common.{AkkaAsync, Logging}
 
 object R2PressedPageTakedownNotifier extends Logging {
 
-  def enqueue(path: String): String = {
+  def enqueue(akkaAsync: AkkaAsync)(path: String): String = {
     try {
-      R2PressedPageTakedownNotification.sendWithoutSubject(path)
+      R2PressedPageTakedownNotification.sendWithoutSubject(akkaAsync)(path)
       val msg = s"Queued for takedown: $path"
       log.info(msg)
       msg

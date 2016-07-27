@@ -22,6 +22,7 @@ case class HostedGalleryPage(
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
   val twitterText = shareText.getOrElse(if(standfirst.length < 136) standfirst else title) + " #ad"
+  val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
     case gallery: HostedGalleryPage => Some(gallery)

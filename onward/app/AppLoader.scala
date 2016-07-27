@@ -1,12 +1,12 @@
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
-import controllers.{OnwardControllers, HealthCheck}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import model.ApplicationIdentity

@@ -8,7 +8,7 @@ import services.EmailService
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
+case class ExpiringSwitchesEmailJob(emailService: EmailService) extends ExecutionContexts with Logging {
 
   def run(): Future[Unit] = {
     (for (webEngineers <- webEngineersEmail) yield {
@@ -16,7 +16,7 @@ object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
 
       if (expiringSwitches.nonEmpty) {
         val htmlBody = views.html.email.expiringSwitches(expiringSwitches).body.trim()
-        val eventualResult = EmailService.send(
+        val eventualResult = emailService.send(
           from = webEngineers,
           to = Seq(webEngineers),
           subject = "Expiring Feature Switches",

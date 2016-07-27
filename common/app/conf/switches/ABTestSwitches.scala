@@ -14,26 +14,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-discussion-test",
-    "We are going to hide comments on a random half of articles",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
-    exposeClientSide = true
-  )
-
-  val ABJoinDiscussionAfterPoll = Switch(
-    SwitchGroup.ABTests,
-    "ab-join-discussion-after-poll",
-    "Does 'join discussion' message after poll participation increase comments",
-    owners = Seq(Owner.withGithub("GHaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 27),
-    exposeClientSide = true
-  )
-
   val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-autoplay",
@@ -60,7 +40,7 @@ trait ABTestSwitches {
     "Testing if increasing prominence of video caption drives plays.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
+    sellByDate = new LocalDate(2016, 8, 3),
     exposeClientSide = true
   )
 

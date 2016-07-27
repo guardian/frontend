@@ -49,6 +49,7 @@ define([
 
             var message = new Message('habit-digest-message-07-16', {
                 pinOnHide: false,
+                siteMessageComponentName: 'habit digest snap',
                 siteMessageLinkName: 'habit digest message',
                 siteMessageCloseBtn: 'habit digest hide',
                 cssModifierClass: cssModifierClass
