@@ -2,13 +2,13 @@ package controllers.admin
 
 import java.io.File
 
-import common.{ExecutionContexts, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import controllers.AuthLogging
 import model.R2PressMessage
 import play.api.mvc.{AnyContent, Controller}
 import services.{R2PressedPageTakedownNotifier, R2PagePressNotifier}
 
-class R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))
@@ -48,9 +48,9 @@ class R2PressController extends Controller with Logging with AuthLogging with Ex
         if (line.nonEmpty) {
           //TODO: other validation?
           if (isTakedown) {
-            R2PressedPageTakedownNotifier.enqueue(line)
+            R2PressedPageTakedownNotifier.enqueue(akkaAsync)(line)
           } else {
-            R2PagePressNotifier.enqueue(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
+            R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
         } else {
           "* empty line *"
@@ -70,9 +70,9 @@ class R2PressController extends Controller with Logging with AuthLogging with Ex
           // TODO: other validation?
           case url if url.nonEmpty => {
             if (isTakedown(body)) {
-              R2PressedPageTakedownNotifier.enqueue(url)
+              R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
             } else {
-              R2PagePressNotifier.enqueue(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
+              R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
           }
           case _ => "URL was not specified"

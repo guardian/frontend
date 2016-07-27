@@ -1,6 +1,7 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
+import conf.Configuration.site.host
 import conf.Static
 
 object RenaultHostedPages {
@@ -28,7 +29,7 @@ object RenaultHostedPages {
     val videoTitle = "Designing the car of the future"
     HostedVideoPage(
       campaign,
-      pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
+      pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser",
       pageName = teaserPageName,
       standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at Central St Martins are working with Renault to design the interior for cars that will drive themselves. Watch this short video to find out more about the project, and visit this page again soon to catch up on the students' progress",
       video = HostedVideo(
@@ -53,7 +54,7 @@ object RenaultHostedPages {
     val videoTitle = "Renault shortlists 'car of the future' designs"
     HostedVideoPage(
       campaign,
-      pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
+      pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1",
       pageName = episode1PageName,
       standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning design will be announced at Clerkenwell Design Week (and on this site). Watch this short video to find out who made the shortlist",
       video = HostedVideo(
@@ -78,7 +79,7 @@ object RenaultHostedPages {
     val videoTitle = "Is this the car of the future?"
     HostedVideoPage(
       campaign,
-      pageUrl = "https://www.theguardian.com/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2",
+      pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2",
       pageName = episode2PageName,
       standfirst = "A group of Central St Martins students took part in a competition to dream up the car of the future. The winning design is radical and intriguing. Meet the team whose blue-sky thinking may have created a blueprint for tomorrow's autonomous cars",
       video = HostedVideo(

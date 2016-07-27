@@ -2,7 +2,7 @@ package controllers.admin
 
 import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.mvc.Controller
 import tools._
 import model.NoCache
@@ -12,7 +12,7 @@ import play.api.Play.current
 
 import scala.concurrent.Future
 
-class MetricsController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class MetricsController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
   // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase
@@ -60,7 +60,7 @@ class MetricsController extends Controller with Logging with AuthLogging with Ex
   }
 
   def renderAfg() = AuthActions.AuthActionTest.async { implicit request =>
-    WS.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map { response =>
+    wsClient.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map { response =>
       NoCache(Ok(views.html.afg(stage, response.body)))
     }
   }

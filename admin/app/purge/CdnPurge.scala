@@ -4,10 +4,9 @@ import common.{ExecutionContexts, Logging}
 import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
 import implicits.Dates
-import play.api.Play.current
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 
-object CdnPurge extends ExecutionContexts with Dates with Logging {
+class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Logging {
 
   private val serviceId = "2eYr6Wx3ZCUoVPShlCM61l"
 
@@ -16,7 +15,7 @@ object CdnPurge extends ExecutionContexts with Dates with Logging {
     // under normal circumstances we only ever want this called from PROD.
     // Don't want too much decache going on.
     if (environment.isProd) {
-      val purgeRequest = WS.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
+      val purgeRequest = wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
         .withHeaders("Fastly-Key" -> fastly.key)
         .post("")
 

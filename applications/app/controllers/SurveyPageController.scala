@@ -2,17 +2,16 @@ package controllers
 
 import common.ExecutionContexts
 import conf.Configuration
-import model.{NoCache, Cached}
+import model.{Cached, NoCache}
 import model.Cached.RevalidatableResult
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, Controller}
 import staticpages.StaticPages
 import scala.concurrent.duration._
 
 
-class SurveyPageController extends Controller with ExecutionContexts {
+class SurveyPageController(wsClient: WSClient) extends Controller with ExecutionContexts {
 
-  import play.api.Play.current
   val defaultCacheDuration: Duration = 15.minutes
 
   def renderCustomEmail404Page() = Action { implicit request =>
@@ -32,7 +31,7 @@ class SurveyPageController extends Controller with ExecutionContexts {
    }
 
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
-      WS.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
+      wsClient.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
         .head
         .map { headResponse =>
           headResponse.status match {

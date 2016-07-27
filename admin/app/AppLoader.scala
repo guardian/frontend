@@ -9,18 +9,30 @@ import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
-import model.{ApplicationIdentity, AdminLifecycle}
+import jobs.{FastlyCloudwatchLoadJob, R2PagePressJob, VideoEncodingsJob}
+import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import services.ConfigAgentLifecycle
+import play.api.libs.ws.WSClient
+import services.{ConfigAgentLifecycle, FastlyStatisticService, EmailService}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+}
+
+trait AdminServices {
+  def wsClient: WSClient
+  def akkaAsync: AkkaAsync
+  lazy val emailService = wire[EmailService]
+  lazy val fastlyStatisticService = wire[FastlyStatisticService]
+  lazy val fastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
+  lazy val r2PagePressJob = wire[R2PagePressJob]
+  lazy val videoEncodingsJob = wire[VideoEncodingsJob]
 }
 
 trait Controllers extends AdminControllers {
@@ -44,7 +56,7 @@ trait AdminLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers with AdminServices {
 
   lazy val router: Router = wire[Routes]
 

@@ -220,6 +220,11 @@ define([
                 }
             }
         }));
+        events.addContentEvents(player, mediaId, mediaType);
+        events.addPrerollEvents(player, mediaId, mediaType);
+        if (window.location.hash === '#gaMediaEvents') {
+            events.bindGoogleAnalyticsEvents(player);
+        }
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -291,7 +296,7 @@ define([
                                             prerollTimeout: 1000,
                                             // We set this sightly higher so contrib-ads never timeouts before ima.
                                             contribAdsSettings: {
-                                                timeout: 1200
+                                                timeout: 2000
                                             }
                                         });
                                         player.on('adstart', function() {
