@@ -16,11 +16,16 @@ import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import services.ConfigAgentLifecycle
+import services.{ConfigAgentLifecycle, EmailService}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+}
+
+trait AdminServices {
+  def akkaAsync: AkkaAsync
+  lazy val emailService = wire[EmailService]
 }
 
 trait Controllers extends AdminControllers {
@@ -44,7 +49,7 @@ trait AdminLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers with AdminServices {
 
   lazy val router: Router = wire[Routes]
 
