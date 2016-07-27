@@ -5,8 +5,9 @@ import play.api.mvc.Controller
 import common.{ExecutionContexts, Logging}
 import model.NoCache
 import controllers.AuthLogging
+import play.api.libs.ws.WSClient
 import tools.LoadBalancer
-import play.api.libs.ws.WS
+
 import scala.concurrent.Future
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
@@ -18,7 +19,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def index() = AuthActions.AuthActionTest{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
@@ -113,7 +114,7 @@ class TroubleshooterController extends Controller with Logging with AuthLogging 
 
   private def httpGet(testName: String, url: String) =  {
     import play.api.Play.current
-    WS.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
+    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {
           TestPassed(testName)

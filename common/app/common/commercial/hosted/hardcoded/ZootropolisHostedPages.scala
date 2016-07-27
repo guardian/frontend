@@ -18,14 +18,14 @@ object ZootropolisHostedPages {
   )
 
   private val cta = HostedCallToAction(
-    url = "http://bfy.tw/6qk7",
+    url = "https://www.skystore.com/product/zootropolis/eeeeeeee-b061-44c8-a672-5ba1d34eb447",
     label = "",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
   )
 
-  private val videoPage: HostedVideoPage = {
-    val videoTitle = "Disney’s’ Zootropolis: Download & keep today!"
+  private val videoPageWithoutNextPage: HostedVideoPage = {
+    val videoTitle = "Disney’s Zootropolis: Download & keep today!"
     HostedVideoPage(
       campaign,
       pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName",
@@ -72,7 +72,7 @@ object ZootropolisHostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
-    pageTitle = "Advertiser content hosted by the Guardian: Disney Zootropolis",
+    title = "Meet the characters of Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
     facebookImageUrl = Static("images/commercial/zootropolis.png"),
@@ -85,6 +85,10 @@ object ZootropolisHostedPages {
     posterPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/CharactersZootropolis.pdf",
     colouringPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ColoringZootropolis.pdf"
   )
+
+
+  private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
+    .copy(nextPage = Some(articlePage)) else videoPageWithoutNextPage
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {

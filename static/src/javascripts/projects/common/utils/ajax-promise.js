@@ -5,6 +5,7 @@ define([
     ajax,
     Promise
 ) {
+    // This should no longer be used. Prefer the new 'common/utils/fetch' or 'common/utils/fetch-json'
     return function wrappedAjax(params) {
         return new Promise(function (resolve, reject) {
             ajax(params)
