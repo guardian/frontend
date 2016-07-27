@@ -1,17 +1,20 @@
 package common
 
 import java.io.{File, FileInputStream}
+import java.util.Map.Entry
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.conf.ConfigurationFactory
+import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, Logger}
+import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 
-import scala.util.Try
+import scala.collection.JavaConversions._
+import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
@@ -21,11 +24,42 @@ class GuardianConfiguration extends Logging {
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
-  protected val configuration = ConfigurationFactory.getNonLoggingConfiguration("frontend", "env")
+  import com.gu.cm.{Configuration => CM}
+  import com.typesafe.config.Config
+  val configuration = {
 
-  private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
-    def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
+    val cmLogger = new Logger {
+      override def warn(message: => String): Unit = log.warn(message)
+      override def error(message: => String): Unit = log.error(message)
+      override def error(message: => String, exception: => Throwable): Unit = log.error(message, exception)
+      override def info(message: => String): Unit = log.info(message)
+    }
+
+    val stage = new CM(List(FileConfigurationSource(s"/etc/gu/install_vars")), cmLogger).load.getStringProperty("STAGE").getOrElse("DEV")
+    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
+    lazy val opsPrivate = FileConfigurationSource(s"/etc/gu/frontend.properties")
+    lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
+    new CM(List(userPrivate, opsPrivate, public), cmLogger).load
+  }
+
+  private implicit class OptionalString2MandatoryString(conf: Config) {
+
+    def getStringProperty = getProperty(conf.getString)_
+    def getMandatoryStringProperty = getMandatoryProperty(conf.getString)_
+    def getIntegerProperty = getProperty(conf.getInt)_
+
+    def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
+
+    def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
+    def getProperty[T](get: String => T)(property: String): Option[T] = Try(get(property)) match {
+      case Success(value) => Some(value)
+      case Failure(e: ConfigException.Missing) => None
+      case Failure(e) =>
+        log.error(s"couldn't retrive $property", e)
+        None
+    }
+
   }
 
   object business {
