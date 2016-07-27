@@ -68,7 +68,7 @@ object ZootropolisHostedPages {
 
   val articlePageName = "meet-the-characters-of-zootropolis"
 
-  val articlePage = HostedArticlePage(
+  val articlePageWithoutNextPage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
@@ -88,7 +88,12 @@ object ZootropolisHostedPages {
 
 
   private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
-    .copy(nextPage = Some(articlePage)) else videoPageWithoutNextPage
+    .copy(nextPage = Some(articlePageWithoutNextPage)) else videoPageWithoutNextPage
+
+  //private lazy val articlePage = if (Switches.hostedVideoDisneyZootropolis.isSwitchedOn) articlePageWithoutNextPage
+   // .copy(nextPage = Some(videoPageWithoutNextPage)) else articlePageWithoutNextPage
+
+  private lazy val articlePage = articlePageWithoutNextPage.copy(nextPage = Some(videoPageWithoutNextPage))
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {

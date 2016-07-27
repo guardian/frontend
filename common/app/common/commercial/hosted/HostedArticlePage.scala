@@ -20,7 +20,8 @@ case class HostedArticlePage(
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
-  customData: CustomData
+  customData: CustomData,
+  nextPage: Option[HostedPage] = None
 )
   extends HostedPage {
 

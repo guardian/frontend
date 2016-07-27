@@ -107,6 +107,17 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             border-top: 2px solid #eeeeee;
         }
     }
+
+    .content__mobile-full-width {
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+    .content__secondary-column {
+        .hosted__next-video {
+            margin-top: 76px;
+        }
+    }
 }
 
 
