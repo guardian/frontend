@@ -17,9 +17,10 @@ case class HostedArticlePage(
   mainPicture: String,
   twitterTxt: String,
   emailTxt: String,
-  customData: CustomData,
-  posterPdf: String,
-  colouringPdf: String
+  facebookShareText: Option[String] = None,
+  twitterShareText: Option[String] = None,
+  emailSubjectText: Option[String] = None,
+  customData: CustomData
 )
   extends HostedPage {
 
@@ -66,5 +67,7 @@ case class CustomData(
    deskClerkPic: String,
    deskClerkPoster: String,
    gazellePic: String,
-   gazellePoster: String
+   gazellePoster: String,
+   posterPdf: String,
+   colouringPdf: String
 )

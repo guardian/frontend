@@ -18,7 +18,7 @@ object ZootropolisHostedPages {
   )
 
   private val cta = HostedCallToAction(
-    url = "https://www.skystore.com/product/zootropolis/eeeeeeee-b061-44c8-a672-5ba1d34eb447",
+    url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
     label = "",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
@@ -45,9 +45,7 @@ object ZootropolisHostedPages {
       ),
       cta,
       ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
-      twitterTxt = videoTitle,
-      emailTxt = videoTitle,
-      nextPage = None
+      twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
     )
   }
 
@@ -63,7 +61,9 @@ object ZootropolisHostedPages {
     deskClerkPic = "https://media.guim.co.uk/223857a17c0446397a53075cadb66c7179fb83ee/0_0_1476_1575/937.png",
     deskClerkPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/cat.png",
     gazellePic = "https://media.guim.co.uk/fca2bfbba8424cb98340dd5d841fbd25be383a5d/0_0_1156_1435/806.png",
-    gazellePoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/gazelle.png"
+    gazellePoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/gazelle.png",
+    posterPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/CharactersZootropolis.pdf",
+    colouringPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ColoringZootropolis.pdf"
   )
 
   val articlePageName = "meet-the-characters-of-zootropolis"
@@ -81,9 +81,9 @@ object ZootropolisHostedPages {
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
-    customData,
-    posterPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/CharactersZootropolis.pdf",
-    colouringPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ColoringZootropolis.pdf"
+    twitterShareText = Some("Disney Zootropolis asset pack on the Guardian"),
+    emailSubjectText = Some("Disney Zootropolis asset pack on the Guardian"),
+    customData = customData
   )
 
 

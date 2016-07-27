@@ -44,8 +44,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }
@@ -69,8 +68,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }
@@ -94,8 +92,7 @@ object RenaultHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }

@@ -48,8 +48,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents Slow Time: What Is Nothing? Features @willard_wigan #ad. Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
       nextPage = None
     )
   }
@@ -78,8 +77,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents Slow Time: Tasting The Past, feat @crownandqueue #ad. Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
       nextPage = None
     )
   }
@@ -105,8 +103,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents Slow Time: Capturing Time, featuring @Avertedvision #ad. Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
       nextPage = None
     )
   }
@@ -132,8 +129,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents Slow Time: Still The River #ad. Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
       nextPage = None
     )
   }
@@ -158,8 +154,7 @@ object LeffeHostedPages {
       ),
       cta,
       ctaBanner = Static("images/commercial/leffe_banner.png"),
-      twitterTxt = "Leffe presents Slow Time: Quay Brothers  #ad. Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
       nextPage = None
     )
   }
