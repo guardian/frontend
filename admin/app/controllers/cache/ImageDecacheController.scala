@@ -18,6 +18,8 @@ import scala.concurrent.Future.successful
 class ImageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
   import ImageDecacheController._
 
+  val imageServices = new ImageServices(wsClient)
+
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
@@ -39,7 +41,6 @@ class ImageDecacheController(wsClient: WSClient) extends Controller with Logging
 
       val originUri = new URI(originUrl)
 
-      val imageServices = new ImageServices(wsClient)
       imageServices.clearFastly(originUri)
       imageServices.clearImgix(originUri)
 

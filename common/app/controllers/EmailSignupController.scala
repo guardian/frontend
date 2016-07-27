@@ -140,6 +140,7 @@ class EmailFormService(wsClient: WSClient) {
 }
 
 class EmailSignupController(wsClient: WSClient) extends Controller with ExecutionContexts with Logging {
+  val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -194,7 +195,7 @@ class EmailSignupController(wsClient: WSClient) extends Controller with Executio
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => EmailFormService(wsClient).submit(form).map(_.status match {
+      form => emailFormService.submit(form).map(_.status match {
           case 200 | 201 =>
             EmailSubmission.increment()
             respond(Subscribed)
