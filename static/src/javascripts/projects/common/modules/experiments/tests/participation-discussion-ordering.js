@@ -18,7 +18,7 @@ define([
         this.author = 'Nathaniel Bennett';
         this.description = 'Changes the default ordering of comments so we can determine whether sorting by recommended causes more users to view comments';
         this.audience = 0.1;
-        this.audienceOffset = 0.0;
+        this.audienceOffset = 0.6;
         this.successMeasure = '';
         this.showForSensitive = true;
         this.audienceCriteria = 'All';
