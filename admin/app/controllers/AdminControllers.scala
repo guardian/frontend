@@ -5,10 +5,13 @@ import common.AkkaAsync
 import controllers.admin._
 import controllers.admin.commercial.{DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
 import controllers.cache.{ImageDecacheController, PageDecacheController}
+import jobs.VideoEncodingsJob
+import play.api.libs.ws.WSClient
 
 trait AdminControllers {
   def akkaAsync: AkkaAsync
-
+  def wsClient: WSClient
+  def videoEncodingsJob: VideoEncodingsJob
   lazy val oAuthLoginController = wire[OAuthLoginController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]

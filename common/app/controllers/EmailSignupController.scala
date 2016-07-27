@@ -5,13 +5,12 @@ import common.{ExecutionContexts, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import play.api.Play.current
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats.stringFormat
 import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Action, Controller, Result}
 
 import scala.concurrent.Future
@@ -114,7 +113,7 @@ object EmailTypes {
   val plain = "plain"
 }
 
-object EmailForm {
+class EmailFormService(wsClient: WSClient) {
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
@@ -127,7 +126,7 @@ object EmailForm {
   def submit(form: EmailForm): Future[WSResponse] = {
     val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.getOrElse(form.listId, None)
 
-    WS.url(Configuration.emailSignup.url).post(
+    wsClient.url(Configuration.emailSignup.url).post(
       JsObject(Json.obj(
       "email" -> form.email,
       "listId" -> form.listId,
@@ -140,7 +139,8 @@ object EmailForm {
   }
 }
 
-class EmailSignupController extends Controller with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient) extends Controller with ExecutionContexts with Logging {
+  val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -195,7 +195,7 @@ class EmailSignupController extends Controller with ExecutionContexts with Loggi
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => EmailForm.submit(form).map(_.status match {
+      form => emailFormService.submit(form).map(_.status match {
           case 200 | 201 =>
             EmailSubmission.increment()
             respond(Subscribed)
@@ -217,5 +217,3 @@ class EmailSignupController extends Controller with ExecutionContexts with Loggi
     TinyResponse.noContent(Some("GET, POST, OPTIONS"))
   }
 }
-
-object EmailSignupController extends EmailSignupController
