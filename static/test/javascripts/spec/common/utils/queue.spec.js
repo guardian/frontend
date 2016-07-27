@@ -1,5 +1,5 @@
 define([
-    'common/utils/Queue'
+    'common/utils/queue'
 ], function (
     Queue
 ) {

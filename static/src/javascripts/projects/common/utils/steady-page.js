@@ -11,7 +11,7 @@ define([
     'common/utils/fastdom-promise',
     'Promise',
     'lodash/objects/assign',
-    'common/utils/Queue',
+    'common/utils/queue',
     'common/utils/config'
 ], function (
     fastdom,
