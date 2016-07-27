@@ -16,12 +16,16 @@ define([
                 try {
                     var abParticipant = store.local.get('gu.ab.participations')['AdFeedback'];
                     if (abParticipant && abParticipant.variant === 'ad-feedback-variant') {
-                        var feedBackOpts = '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=offensive">It\'s offensive</a></li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=makes-a-sound">Makes a sound</a></li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=too-much-movement">Too much movement</a></li>';
-                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=not-relevant">Not relevant</a></li>';
-                        var feedbackMenu = '<div class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '"><h3 class="ad-feedback popup__group-header"><strong>Thank you.</strong></h3><h3 class="ad-feedback popup__group-header">Could you tell us why you reported this advert?</h3><ul>' + feedBackOpts + '</ul></div>';
+                        var feedBackOpts = '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=distracting"><div class="popup__item-option-text">Distracting</div></a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=obscures-content"><div class="popup__item-option-text">Obscures content</div></a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=inappropriate"><div class="popup__item-option-text">Inappropriate</div></a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=repetitive"><div class="popup__item-option-text">Repetitive</div></a></li>';
+                        feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=irrelevant"><div class="popup__item-option-text">Irrelevant</div></a></li>';
+                        var feedbackMenu = '<div class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '"><h3 class="ad-feedback popup__group-header">Thank you for reporting this advert. To help us improve the ad experience, can you tell us why?</h3><ul>' + feedBackOpts + '</ul></div>';
                         labelInner = ' <a class="ad-feedback popup__toggle" data-toggle="' + adSlotNode.id + '__popup--feedback" aria-haspopup="true" aria-controls="ad-feedback-menu__' + adSlotNode.id + '">(Report this ad)</a>' + feedbackMenu;
+                    }
+                    if (labelInner) {
+                        adSlotNode.style.zIndex = 2000;
                     }
                 } catch (x) {
                     // if we can't pull the ad feedback participation state, we'll treat it as excluded

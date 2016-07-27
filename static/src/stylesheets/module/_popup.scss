@@ -296,15 +296,15 @@ $control-offset: 36 + $gs-gutter/2;
 /* Ad feedback menu
    ========================================================================== */
 .ad-feedback.popup {
-    left: inherit;
+    width: 150px;
     top: 18px;
     background: $neutral-8;
     border: 1px solid #dcdcdc;
+    text-align: left;
     ul {
-        margin-left: 5px;
+        margin-left: 2px;
     }
     .popup__group-header {
-        text-align: center;
         padding: 5px 2px;
     }
     .popup__group-header:last-of-type {
@@ -312,14 +312,28 @@ $control-offset: 36 + $gs-gutter/2;
         border-bottom: 1px solid #dcdcdc;
     }
     .popup__item:first-of-type {
-        margin-top: 10px;
+        margin-top: 2px;
     }
     .popup__item {
         font-size: 13px;
-        line-height: 30px;
+        line-height: 25px;
+        text-decoration: none;
+        .popup__item-option-text {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .popup__item:hover {
+        background: $neutral-3;
+    }
+    .popup__item a {
+        border: 0;
+    }
+    .popup__item a:hover {
+        text-decoration: none;
     }
     .popup__item:last-of-type {
-        margin-bottom: 10px;
+        margin-bottom: 2px;
     }
 }
 

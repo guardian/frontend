@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: hidden;
+    overflow: initial;
 
     .js-off & {
         display: none;
