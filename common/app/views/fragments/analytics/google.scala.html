@@ -52,6 +52,30 @@
                     image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
                 }
             });
+
+            @*
+            If there is internal link click data in session storage, send a click event.?:
+
+            We rely on the fact that this inline JS runs before the Omniture code.
+            The Omniture code removes the entry from session storage after it has read it.
+
+            TODO: When we get rid of Omniture, we should delete the entry from session storage here.
+            *@
+
+            try {
+                var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+                var referrerVarsData = window.sessionStorage.getItem(NG_STORAGE_KEY);
+                var referrerVars = JSON.parse(referrerVarsData);
+                if (referrerVars && referrerVars.value) {
+                    var d = new Date().getTime();
+                    if (d - referrerVars.value.time < 60 * 1000) { // One minute
+                        ga('guardianTestPropertyTracker.send', 'event', 'Click', 'Internal', referrerVars.value.tag, {
+                            dimension12: referrerVars.value.pageName
+                        });
+                    }
+                }
+            } catch (e) { }
+
         }
     </script>
 
