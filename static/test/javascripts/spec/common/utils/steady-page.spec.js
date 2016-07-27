@@ -4,17 +4,19 @@ define([
     'common/utils/steady-page',
     'helpers/fixtures',
     'Promise',
-    'helpers/injector'
+    'helpers/injector',
+    'common/utils/fastdom-promise'
 ], function (
     bonzo,
     $,
     steadyPage,
     fixtures,
     Promise,
-    Injector
+    Injector,
+    fastdom
 ) {
 
-    describe('Steady Page Utility', function () {
+    fdescribe('Steady Page Utility', function () {
         var $container;
         var $style;
         var injector = new Injector();
@@ -135,6 +137,33 @@ define([
                 done();
             });
 
+        });
+
+        it('should call scrollTo with the height of the two inserted element when the second insertion is called after the initial fastdom read', function (done) {
+
+                fixturesConfig.fixtures = fixtureMultiContainer;
+
+                fixtures.render(fixturesConfig);
+                var cont1 = $('.js-steady-container-1');
+                var cont2 = $('.js-steady-container-2');
+
+                var prevScrollPos = 1000;
+                window.scrollY = prevScrollPos;
+
+                var firstInsert = steadyPage.insert(cont1[0], callbackFunc('js-inserted-container-a', cont1));
+                // To test the recursion in go we push the insertion to the fastdom.write queue
+                var secondInsert = fastdom.write(function(){
+                    steadyPage.insert(cont2[0], callbackFunc('js-inserted-container-b', cont2));
+                });
+
+
+                Promise.all([firstInsert, secondInsert]).then(function() {
+                    // We don't expect scrollTo to have been called with the height of one container
+                    expect(window.scrollTo).not.toHaveBeenCalledWith(0, prevScrollPos + insertedElHeight);
+                    // We should have called scrollTo with the previous scroll position and 2 times the container height
+                    expect(window.scrollTo).toHaveBeenCalledWith(0, prevScrollPos + insertedElHeight * 2);
+                    done();
+                });
         });
 
         it('shouldn\'t call scrollTo if the insertion is below current scroll position', function (done) {
