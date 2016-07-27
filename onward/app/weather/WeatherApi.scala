@@ -15,7 +15,7 @@ import dispatch._, Defaults._
 import java.util.concurrent.{TimeoutException, TimeUnit}
 import scala.concurrent.duration.Duration
 
-case class WeatherApi(wsClient: WSClient) extends ExecutionContexts with ResourcesHelper {
+class WeatherApi(wsClient: WSClient) extends ExecutionContexts with ResourcesHelper {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )

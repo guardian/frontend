@@ -20,7 +20,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
     withValue(value.toDouble)
 }
 
-case class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with Logging {
+class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private case class FastlyApiStat(
     hits: Int,

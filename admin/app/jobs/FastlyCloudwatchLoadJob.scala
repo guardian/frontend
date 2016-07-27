@@ -9,9 +9,8 @@ import services.{FastlyStatistic, FastlyStatisticService}
 import scala.collection.mutable
 import conf.Configuration
 import org.joda.time.DateTime
-import play.api.libs.ws.WSClient
 
-case class FastlyCloudwatchLoadJob(wsClient: WSClient) extends ExecutionContexts with Logging {
+class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) extends ExecutionContexts with Logging {
   // Samples in CloudWatch are additive so we want to limit duplicate reporting.
   // We do not want to corrupt the past either, so set a default value (the most
   // recent 15 minutes of results are unstable).
@@ -46,7 +45,7 @@ case class FastlyCloudwatchLoadJob(wsClient: WSClient) extends ExecutionContexts
 
   def run() {
     log.info("Loading statistics from Fastly to CloudWatch.")
-    FastlyStatisticService(wsClient).fetch().map { statistics =>
+    fastlyStatisticService.fetch().map { statistics =>
 
       val fresh: List[FastlyStatistic] = statistics filter { statistic =>
         latestTimestampsSent(statistic.key) < statistic.timestamp

@@ -9,7 +9,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-case class StocksData(wsClient: WSClient) extends AutoRefresh[Stocks](0 seconds, 1 minute) with Logging {
+class StocksData(wsClient: WSClient) extends AutoRefresh[Stocks](0 seconds, 1 minute) with Logging {
   override protected def refresh(): Future[Stocks] = {
 
     try {

@@ -24,7 +24,7 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
   def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
-      CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
+      new CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
       successful(NoCache(Ok(views.html.cache.pageDecacheForm())))
     }.getOrElse(successful(BadRequest("No image submitted")))
 

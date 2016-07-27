@@ -18,7 +18,7 @@ case class Poll(pollId: String, questions: List[Question])
 case class Question(id: Int, count: Double, answers: List[Answer])
 case class Answer(id: Int, question: Int, count: Double)
 
-case class PollsHtmlCleaner(wsClient: WSClient) extends HtmlCleaner with implicits.WSRequests {
+class PollsHtmlCleaner(wsClient: WSClient) extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
     document.getElementsByAttribute("data-poll-url").nonEmpty

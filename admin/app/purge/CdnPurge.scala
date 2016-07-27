@@ -6,7 +6,7 @@ import conf.Configuration.environment
 import implicits.Dates
 import play.api.libs.ws.WSClient
 
-case class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Logging {
+class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Logging {
 
   private val serviceId = "2eYr6Wx3ZCUoVPShlCM61l"
 

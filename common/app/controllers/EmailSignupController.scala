@@ -113,7 +113,7 @@ object EmailTypes {
   val plain = "plain"
 }
 
-case class EmailFormService(wsClient: WSClient) {
+class EmailFormService(wsClient: WSClient) {
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */

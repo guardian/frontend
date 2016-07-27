@@ -14,7 +14,7 @@ import services.MissingVideoEncodings
 import model.diagnostics.video.DynamoDbStore
 
 
-case class VideoEncodingsJob(wsClient: WSClient) extends ExecutionContexts with Logging  {
+class VideoEncodingsJob(wsClient: WSClient) extends ExecutionContexts with Logging  {
 
   private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
