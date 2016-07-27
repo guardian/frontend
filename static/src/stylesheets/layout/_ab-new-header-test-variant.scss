@@ -150,7 +150,7 @@ $gutter-medium: 37px;
     margin-left: auto;
     margin-right: auto;
     transition-duration: .3s;
-    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition-timing-function: cubic-bezier(.55, .055, .675, .19);
 
     &,
     &:before,
@@ -172,13 +172,13 @@ $gutter-medium: 37px;
         bottom: -$gs-gutter / 4;
         // The first time value is open animation, second is close animation
         transition: bottom .1s .34s ease-in,
-        transform .3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        transform .3s cubic-bezier(.55, .055, .675, .19);
     }
 
     &--open {
         transform: rotate(225deg);
         transition-delay: .14s;
-        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition-timing-function: cubic-bezier(.215, .61, .355, 1);
 
         &:before {
             top: 0;
@@ -191,7 +191,7 @@ $gutter-medium: 37px;
             bottom: 0;
             transform: rotate(-90deg);
             transition: bottom .1s ease-out,
-            transform .3s .14s cubic-bezier(0.215, 0.61, 0.355, 1);
+            transform .3s .14s cubic-bezier(.215, .61, .355, 1);
         }
     }
 }
