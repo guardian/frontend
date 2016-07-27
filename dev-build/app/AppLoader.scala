@@ -54,7 +54,7 @@ trait Controllers
   lazy val surveyPageController = wire[SurveyPageController]
 }
 
-trait AppComponents extends FrontendComponents with Controllers with AdminServices with SportServices with CommercialServices with DiscussionServices {
+trait AppComponents extends FrontendComponents with Controllers with AdminServices with SportServices with CommercialServices with DiscussionServices with FapiServices {
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
