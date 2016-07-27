@@ -2,8 +2,17 @@ package controllers
 
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
+import business.StocksData
+import weather.WeatherApi
+import play.api.libs.ws.WSClient
 
-trait OnwardControllers {
+trait OnwardServices {
+  def wsClient: WSClient
+  lazy val stocksData = wire[StocksData]
+  lazy val weatherApi = wire[WeatherApi]
+}
+
+trait OnwardControllers extends OnwardServices {
   lazy val navigationController = wire[NavigationController]
   lazy val weatherController = wire[WeatherController]
   lazy val locationsController = wire[LocationsController]

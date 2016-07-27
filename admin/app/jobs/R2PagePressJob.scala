@@ -9,16 +9,15 @@ import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
 import pagepresser.{NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import services.{S3Archive, S3ArchiveOriginals, PagePresses}
-import play.api.Play.current
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
 
 import scala.concurrent.Future
 
-object R2PagePressJob extends ExecutionContexts with Logging {
+class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging {
   private val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private val credentials = Configuration.aws.mandatoryCredentials
@@ -82,7 +81,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
   private def pressAsUrl(urlIn: String): String = urlIn.replace("https://", "").replace("http://","")
 
   private def parseAndClean(originalDocSource: String, convertToHttps: Boolean): Future[String] = {
-    val cleaners = Seq(PollsHtmlCleaner, InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
+    val cleaners = Seq(new PollsHtmlCleaner(wsClient), InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
     val doc: Document = cleaners.filter(_.canClean(archiveDocument))
       .map(_.clean(archiveDocument, convertToHttps))
@@ -135,7 +134,7 @@ object R2PagePressJob extends ExecutionContexts with Logging {
 
     if (urlIn.nonEmpty) {
 
-      val wsRequest = WS.url(urlIn)
+      val wsRequest = wsClient.url(urlIn)
 
       log.info(s"Calling ${wsRequest.uri}")
 

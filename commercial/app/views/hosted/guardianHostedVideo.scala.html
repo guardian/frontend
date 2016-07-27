@@ -1,11 +1,6 @@
 @import common.commercial.hosted.HostedVideoPage
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
-@import java.net.URLEncoder
-
-@brandColorCss(page: HostedVideoPage) = {hosted-tone--@{page.campaign.cssClass.toLowerCase.replaceAll("\\s+", "-")}}
-@brandBackgroundCss(page: HostedVideoPage) = {hosted-tone-bg--@{page.campaign.cssClass.toLowerCase.replaceAll("\\s+", "-")}}
-@brandBtnCss(page: HostedVideoPage) = {hosted-tone-btn--@{page.campaign.cssClass.toLowerCase.replaceAll("\\s+", "-")}}
 
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url)
@@ -30,7 +25,7 @@
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading @brandColorCss(page)">@{page.video.title}</h1>
+                            <h1 class="hosted__heading @{page.brandColourCssClass}">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
@@ -51,7 +46,7 @@
                         </div>
                         <div class="hosted-next-autoplay__video">
                             <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue @brandColorCss(page)">Continue watching</div>
+                                <div class="hosted-next-autoplay__continue @{page.brandColourCssClass}">Continue watching</div>
                                 <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
                             </div>
                             <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
@@ -70,53 +65,12 @@
         <section class="adverts adverts--legacy hosted__container hosted__container--content">
             <header class="adverts__header hosted__social">
                 <div class="meta__social hosted__social-wrapper" data-component="share">
-                    <ul class="social social--top u-unstyled u-cf" data-component="social">
-                        <li class="social__item social__item--facebook" data-link-name="facebook">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="facebook-social-share-1"
-                            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
-                            target="_blank"
-                            title="facebook">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
-                                @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--twitter" data-link-name="twitter">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="twitter-social-share-1"
-                            href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterTxt, "utf-8")}&url=@{page.pageUrl}"
-                            target="_blank"
-                            title="twitter">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
-                                @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--email" data-link-name="email">
-                            <a class="social__action social-icon-wrapper"
-                            data-link-name="email-social-share-1"
-                            href="mailto:?subject=@{page.emailTxt}&body=@{page.pageUrl}"
-                            target="_blank"
-                            title="email">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
-                                @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
-                            </a>
-                        </li>
-                        <li class="social__item social__item--pinterest" data-link-name="pinterest">
-                            <a  class="social__action social-icon-wrapper"
-                            data-link-name="Pinterest-social-share-1"
-                            href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.video.posterUrl}"
-                            target="_blank"
-                            title="pinterest">
-                                <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
-                                @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
-                            </a>
-                        </li>
-                    </ul>
+                    @guardianHostedShareButtons(page)
                 </div>
             </header>
             <div class="adverts__body">
                 <div class="hosted__meta">
-                    <h1 class="hosted__heading @brandColorCss(page)">@{page.video.title}</h1>
+                    <h1 class="hosted__heading @{page.brandColourCssClass}">@{page.video.title}</h1>
                 </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@{page.standfirst}</p>
@@ -131,7 +85,7 @@
             <div class="hosted__next-video">
                 <div class="hosted__next-video--header">
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                    <h2 class="hosted__next-video--client-name @brandColorCss(page)">@{page.campaign.owner}</h2>
+                    <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                 </div>
                 <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
                     <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
@@ -143,19 +97,19 @@
         <section class="adverts hosted__container--full">
             <div class="hosted__banner" style="background-image: url(@{page.ctaBanner});">
                 <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
-                    <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown @brandBackgroundCss(page)">
+                    <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown @{page.brandBackgroundCssClass}">
                         <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                     </div>
                     @if(page.cta.btnText.length == 0) {
                         <div class="hosted__cta-wrapper">
-                            <span class="hosted__cta-text @brandColorCss(page)">@{page.cta.label}</span>
-                            @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta", brandBtnCss(page).toString()))
+                            <span class="hosted__cta-text @{page.brandColourCssClass}">@{page.cta.label}</span>
+                            @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta", page.brandBtnCssClass))
                         </div>
                     } else {
                         <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
                             <span class="hosted__cta-label">@{page.cta.label}</span>
                             <br/>
-                            <span class="hosted__cta-btn-text @brandBtnCss(page)">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
+                            <span class="hosted__cta-btn-text @page.brandBtnCssClass">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
                         </div>
                     }
                 </a>

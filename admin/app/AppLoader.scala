@@ -9,14 +9,17 @@ import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
-import model.{ApplicationIdentity, AdminLifecycle}
+import football.feed.MatchDayRecorder
+import jobs.{FastlyCloudwatchLoadJob, R2PagePressJob, VideoEncodingsJob}
+import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import services.{ConfigAgentLifecycle, EmailService}
+import play.api.libs.ws.WSClient
+import services.{ConfigAgentLifecycle, FastlyStatisticService, EmailService}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -24,8 +27,14 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait AdminServices {
+  def wsClient: WSClient
   def akkaAsync: AkkaAsync
   lazy val emailService = wire[EmailService]
+  lazy val fastlyStatisticService = wire[FastlyStatisticService]
+  lazy val fastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
+  lazy val r2PagePressJob = wire[R2PagePressJob]
+  lazy val videoEncodingsJob = wire[VideoEncodingsJob]
+  lazy val matchDayRecorder = wire[MatchDayRecorder]
 }
 
 trait Controllers extends AdminControllers {
@@ -34,7 +43,7 @@ trait Controllers extends AdminControllers {
 }
 
 trait AdminLifecycleComponents {
-  self: AppComponents with Controllers =>
+  self: AppComponents with Controllers with AdminServices =>
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],

@@ -1,3 +1,10 @@
+/* ==========================================================================
+   Styles in this file are loaded asynchronously so should NOT
+   be critical to the initial rendering of the page.
+
+   Above-the-fold styles which should block rendering belong in head.*.scss
+   ========================================================================== */
+
 @charset 'UTF-8';
 
 @import '_vars';

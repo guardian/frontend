@@ -5,17 +5,14 @@ import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
 import tools.CloudWatch
-import play.api.libs.ws.WS
-import play.api.libs.ws.WSAuthScheme
+import play.api.libs.ws.{WSAuthScheme, WSClient}
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
-import org.joda.time.LocalDate
-import play.api.Play.current
 
-class RadiatorController extends Controller with Logging with AuthLogging with Requests{
+class RadiatorController(wsClient: WSClient) extends Controller with Logging with AuthLogging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -32,7 +29,7 @@ class RadiatorController extends Controller with Logging with AuthLogging with R
 
   // proxy call to github so we do not leak the access key
   def commitDetail(hash: String) = AuthActions.AuthActionTest.async { implicit request =>
-    val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
+    val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
@@ -60,7 +57,7 @@ class RadiatorController extends Controller with Logging with AuthLogging with R
     val password = Configuration.pingdom.password
     val apiKey = Configuration.pingdom.apiKey
 
-    WS.url(url)
+    wsClient.url(url)
       .withAuth(user, password,  WSAuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>

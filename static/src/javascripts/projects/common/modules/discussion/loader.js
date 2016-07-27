@@ -4,12 +4,12 @@ define([
     'qwery',
     'raven',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
     'common/utils/fastdom-promise',
+    'common/utils/fetch-json',
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
@@ -25,12 +25,12 @@ define([
     qwery,
     raven,
     $,
-    ajaxPromise,
     config,
     detect,
     mediator,
     scroller,
     fastdom,
+    fetchJson,
     DiscussionAnalytics,
     register,
     Component,
@@ -61,11 +61,8 @@ Loader.prototype.initTopComments = function() {
         this.gotoComment(commentId);
     });
 
-    return ajaxPromise({
-        url: '/discussion/top-comments/' + this.getDiscussionId() + '.json',
-        type: 'json',
-        method: 'get',
-        crossOrigin: true
+    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json', {
+        mode: 'cors'
     }).then(
         function render(resp) {
             this.$topCommentsContainer.html(resp.html);
@@ -356,32 +353,30 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function() {
-    ajaxPromise({
-        url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
-        type: 'json',
-        method: 'get',
-        crossOrigin: true,
-        success: function(response) {
-            if(response && response.counts && response.counts.length) {
-                var commentCount = response.counts[0].count;
-                if (commentCount > 0) {
-                    // Remove non-JS links
-                    bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
+    fetchJson('/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(), {
+        mode: 'cors'
+    })
+    .then(function (response) {
+        if(response && response.counts && response.counts.length) {
+            var commentCount = response.counts[0].count;
+            if (commentCount > 0) {
+                // Remove non-JS links
+                bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
 
-                    var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                        html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
-                               '  <i class="i"></i>' + commentCount +
-                               '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
-                               '</a>';
-                    $('.js-comment-count').html(html);
+                var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
+                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                           '  <i class="i"></i>' + commentCount +
+                           '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
+                           '</a>';
+                $('.js-comment-count').html(html);
 
-                    $('.js-discussion-comment-count').text('(' + commentCount + ')');
-                } else {
-                    this.setState('empty');
-                }
+                $('.js-discussion-comment-count').text('(' + commentCount + ')');
+            } else {
+                this.setState('empty');
             }
-        }.bind(this)
-    });
+        }
+    }.bind(this))
+    .catch(this.logError.bind(this, 'CommentCount'));
 };
 
 Loader.prototype.getCommentIdFromHash = function() {
