@@ -1,0 +1,47 @@
+@import common.commercial.hosted.HostedPage
+@import java.net.URLEncoder
+
+@(page: HostedPage)
+    <ul class="social social--top u-unstyled u-cf" data-component="social">
+        <li class="social__item social__item--facebook" data-link-name="facebook">
+            <a class="social__action social-icon-wrapper"
+            data-link-name="facebook-social-share-1"
+            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{URLEncoder.encode(page.pageUrl, "utf-8")}&redirect_uri=@{URLEncoder.encode(page.pageUrl, "utf-8")}&quote=@{page.facebookText}"
+            target="_blank"
+            title="facebook">
+                <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+                @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
+            </a>
+        </li>
+        <li class="social__item social__item--twitter" data-link-name="twitter">
+            <a class="social__action social-icon-wrapper"
+            data-link-name="twitter-social-share-1"
+            href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterText, "utf-8")}&url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+            target="_blank"
+            title="twitter">
+                <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+                @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
+            </a>
+        </li>
+        <li class="social__item social__item--email" data-link-name="email">
+            <a class="social__action social-icon-wrapper"
+            data-link-name="email-social-share-1"
+            href="mailto:?subject=@{URLEncoder.encode(page.emailText, "utf-8")}&body=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+            target="_blank"
+            title="email">
+                <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+                @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
+            </a>
+        </li>
+        <li class="social__item social__item--pinterest" data-link-name="pinterest">
+            <a  class="social__action social-icon-wrapper"
+            data-link-name="Pinterest-social-share-1"
+            href="https://www.pinterest.com/pin/find/?url=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+            target="_blank"
+            title="pinterest">
+                <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+                @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
+            </a>
+        </li>
+    </ul>
+

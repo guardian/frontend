@@ -45,9 +45,7 @@ object ZootropolisHostedPages {
       ),
       cta,
       ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
-      twitterTxt = videoTitle,
-      emailTxt = videoTitle,
-      nextPage = None
+      twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
     )
   }
 
@@ -81,7 +79,9 @@ object ZootropolisHostedPages {
     mainPicture = Static("images/commercial/zootropolis.png"),
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
-    customData
+    twitterShareText = Some("Disney Zootropolis asset pack on the Guardian"),
+    emailSubjectText = Some("Disney Zootropolis asset pack on the Guardian"),
+    customData = customData
   )
 
 
