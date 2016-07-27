@@ -14,6 +14,7 @@ import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
 import play.api.i18n.{MessagesApi, I18nSupport}
+import play.api.libs.json._
 
 class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       conf: IdentityConfiguration,
@@ -127,7 +128,13 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
             }
           }
       }).map{ case (form, emailSubscriptions) =>
-        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), emailSubscriptions))
+        // TODO: refactor for more functional style
+        if (form.hasErrors)
+          // TODO: better status code?
+          Unauthorized(form.errorsAsJson)
+        else
+          // TODO: write JSON converter for subscriptions
+          Ok(Json.obj("subscriptions" -> emailSubscriptions.toString))
       }
     }
   }
