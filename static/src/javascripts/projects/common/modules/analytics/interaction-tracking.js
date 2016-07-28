@@ -48,7 +48,7 @@ define([
     function trackSamePageLinkClick(spec) {
         // Do not perform a same-page track link when there isn't a tag.
         if (spec.tag) {
-            google.trackSamePageLinkClick(spec.tag);
+            google.trackSamePageLinkClick(spec.target, spec.tag);
             omniture.trackSamePageLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
         }
     }
@@ -69,7 +69,7 @@ define([
         // Execute the GA and Omniture tracking in parallel
         // and rely on Omniture to provide a 500 ms delay so they both get a chance to complete.
         // TODO when Omniture goes away, implement the delay ourselves.
-        google.trackExternalLinkClick(spec.tag);
+        google.trackExternalLinkClick(spec.target, spec.tag);
         omniture.trackExternalLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
     }
 
