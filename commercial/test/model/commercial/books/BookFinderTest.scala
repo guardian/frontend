@@ -4,7 +4,7 @@ import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
-import test.{ConfiguredTestSuite, WithTestWsClient}
+import test.{SingleServerSuite, WithTestWsClient}
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -13,7 +13,7 @@ import scala.concurrent.Future
   extends FlatSpec
   with Matchers
   with ScalaFutures
-  with ConfiguredTestSuite
+  with SingleServerSuite
   with BeforeAndAfterAll
   with WithTestWsClient {
 
@@ -33,7 +33,7 @@ import scala.concurrent.Future
     def add(isbn: String, json: JsValue): Future[Boolean] = Future.failed(new RuntimeException)
   }
 
-  private val bookFinder = new BookFinder(new MagentoService(wsClient))
+  private val bookFinder = new BookFinder(app.actorSystem, new MagentoService(app.actorSystem, wsClient))
 
   private val book = Book(
     title = "Cameron's Coup",

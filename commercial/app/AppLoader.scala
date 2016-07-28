@@ -4,6 +4,7 @@ import app.{FrontendComponents, FrontendApplicationLoader}
 import com.softwaremill.macwire._
 import common._
 import _root_.commercial.feeds.{FeedsFetcher, FeedsParser}
+import akka.actor.ActorSystem
 import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
@@ -32,6 +33,7 @@ trait Controllers extends CommercialControllers {
 
 trait CommercialServices {
   def wsClient: WSClient
+  def actorSystem: ActorSystem
 
   lazy val magentoService = wire[MagentoService]
   lazy val bookFinder = wire[BookFinder]
