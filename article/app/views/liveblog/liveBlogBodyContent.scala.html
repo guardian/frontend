@@ -3,7 +3,7 @@
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.Edition
-@import views.support.AmpAd
+@import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
@@ -14,8 +14,8 @@
         @if(blockGroup.length == 5 && index < 8) {
             <div class="block amp-ad-container amp-ad-container--live-blog">
                 <amp-ad width="300" height="250" type="doubleclick"
-                json=@AmpAd.adTargetingJson(article, request.path, Edition(request).id.toLowerCase()).toString()
-                data-slot=@AmpAd.buildDataSlot(article)>
+                json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toJson().toString()
+                data-slot=@AmpAdDataSlot(article).toString()>
                 </amp-ad>
             </div>
         }

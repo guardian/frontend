@@ -4,7 +4,7 @@ import model.Tag
 import model.Article
 import play.api.libs.json.{JsObject, Json}
 
-object AmpAd {
+case class AmpAd(article: Article, uri: String, edition: String) {
   private def buildAdFlagsFromTags(items: Seq[Tag]) = {
     items.map { item =>
       if (item.id == "uk/uk") {
@@ -16,7 +16,7 @@ object AmpAd {
     }
   }
 
-  def adTargetingJson(article: Article, uri: String, edition: String): JsObject = {
+  def toJson(): JsObject = {
     Json.obj(
       "targeting" -> Json.obj(
         "url" -> uri,
@@ -33,8 +33,9 @@ object AmpAd {
       )
     )
   }
-
-  def buildDataSlot(article: Article): String = {
+}
+case class AmpAdDataSlot(article: Article) {
+  override def toString(): String = {
     val section = article.metadata.sectionId
     val contentType = article.metadata.contentType.toLowerCase
 

@@ -1,11 +1,10 @@
 package views.support.cleaner
 
 import common.Edition
-import model.{Article, Tag}
+import model.Article
 import org.jsoup.nodes.{Document, Element}
-import play.api.libs.json.Json
-import views.support.HtmlCleaner
-import views.support.AmpAd
+import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
+
 import scala.collection.JavaConversions._
 
 object AmpAdCleaner {
@@ -18,7 +17,7 @@ object AmpAdCleaner {
     val ALLOWED = 0
     val DISALLOWED = 1
 
-    // create the contstraints for each paragraph how far before and after we can have it
+    // create the constraints for each paragraph how far before and after we can have it
     val constraints = children.map { element =>
 
       def para = element.tagName() != "p"
@@ -90,8 +89,8 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
   def adAfter(element: Element) = {
     val ampAd = <div class="amp-ad-container">
           <amp-ad width="300" height="250" type="doubleclick"
-                  json={AmpAd.adTargetingJson(article, uri, edition.id.toLowerCase()).toString()}
-                  data-slot={AmpAd.buildDataSlot(article)}>
+                  json={AmpAd(article, uri, edition.id.toLowerCase()).toJson().toString()}
+                  data-slot={AmpAdDataSlot(article).toString()}>
           </amp-ad>
       </div>
 
