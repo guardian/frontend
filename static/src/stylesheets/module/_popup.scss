@@ -309,7 +309,7 @@ $control-offset: 36 + $gs-gutter/2;
         margin-left: 4px;
         border-left: $popup-toggle-arrow-size solid transparent;
         border-right: $popup-toggle-arrow-size solid transparent;
-        border-top: $popup-toggle-arrow-size solid blue;
+        border-top: $popup-toggle-arrow-size solid #dcdcdc;
     }
 
     // When active (the menu is open)...
@@ -330,7 +330,7 @@ $control-offset: 36 + $gs-gutter/2;
             margin-left: 4px;
             border-left: $popup-toggle-arrow-size solid transparent;
             border-right: $popup-toggle-arrow-size solid transparent;
-            border-bottom: $popup-toggle-arrow-size solid blue;
+            border-bottom: $popup-toggle-arrow-size solid #dcdcdc;
         }
     }
 
