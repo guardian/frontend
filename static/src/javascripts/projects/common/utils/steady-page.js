@@ -10,7 +10,7 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'lodash/objects/assign',
+    'common/utils/assign',
     'common/utils/queue',
     'common/utils/config'
 ], function (
@@ -62,20 +62,21 @@ define([
                         newHeight: newHeights - batchHeightsBeforeInsert
                     });
                 });
-            })
-            .then(function(state){
-                if (q.empty()) {
-                    // If the queue is empty (no more elements need to be added to the page) we immediately scroll
-                    return state.newHeight + state.prevHeight + state.scrollY;
-                } else {
-                    // If there are elements waiting to be added to the page we take the previous container's heights
-                    // and recursively call the function so that we only scroll the page once the queue is empty -
-                    // this prevents excessive and jarring scrolling
-                    return go(assign(state, {
-                        prevHeight: state.prevHeight + state.newHeight
-                    }));
-                }
             });
+        })
+        .then(function(state){
+            if (q.empty()) {
+                // If the queue is empty (no more elements need to be added to the page) we immediately scroll
+                return state.newHeight + state.prevHeight + state.scrollY;
+            } else {
+                // If there are elements waiting to be added to the page we take the previous container's heights
+                // and recursively call the function so that we only scroll the page once the queue is empty -
+                // this prevents excessive and jarring scrolling
+                return go(assign(state, {
+                    prevHeight: state.prevHeight + state.newHeight
+                }));
+            }
+        });
 
         return promise;
 
