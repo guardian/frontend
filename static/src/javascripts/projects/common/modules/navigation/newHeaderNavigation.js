@@ -1,9 +1,11 @@
 define([
     'common/utils/fastdom-promise',
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/navigation/edition-picker'
 ], function (
     fastdomPromise,
-    $
+    $,
+    editionPicker
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
@@ -79,6 +81,7 @@ define([
     function init() {
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
+        editionPicker();
     }
 
     return init;

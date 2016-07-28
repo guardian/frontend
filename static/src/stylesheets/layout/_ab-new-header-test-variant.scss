@@ -281,10 +281,10 @@ $gutter-medium: 37px;
     display: block;
 }
 
-.edition-picker__checkbox {
+.edition-picker__checkbox, .edition-picker__button {
     display: none;
 
-    &:checked {
+    &:checked, &.open {
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: lighten($guardian-brand, 5%);
