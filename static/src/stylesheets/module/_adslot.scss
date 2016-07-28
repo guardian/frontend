@@ -67,7 +67,7 @@
 }
 
 .sticky-top-banner-ad {
-    overflow: hidden;
+    overflow: initial;
     z-index: $zindex-popover;
     width: 100%;
     position: relative;

@@ -11,6 +11,7 @@ define([
 ) {
     function renderAdvertLabel(adSlotNode) {
         if (shouldRenderLabel(adSlotNode)) {
+            var zIndexOverlay = 1050;
             var labelInner = '';
             if (config.switches.abAdFeedback) {
                 try {
@@ -21,17 +22,17 @@ define([
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=inappropriate"><div class="popup__item-option-text">Inappropriate</div></a></li>';
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=repetitive"><div class="popup__item-option-text">Repetitive</div></a></li>';
                         feedBackOpts = feedBackOpts + '<li class="popup__item"><a href="//feedback/report-ad?slot='+ adSlotNode.id +'&asset=' + 'TBC' + '&reason=irrelevant"><div class="popup__item-option-text">Irrelevant</div></a></li>';
-                        var feedbackMenu = '<div class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '"><h3 class="ad-feedback popup__group-header">Thank you for reporting this advert. To help us improve the ad experience, can you tell us why?</h3><ul>' + feedBackOpts + '</ul></div>';
+                        var feedbackMenu = '<div class="ad-feedback popup popup--default popup__group is-off ' + adSlotNode.id + '__popup--feedback" id="ad-feedback-menu__' + adSlotNode.id + '" style="z-index: ' + zIndexOverlay + ';"><h3 class="ad-feedback popup__group-header"><p>Thank you for reporting this advert.</p><p>To help us improve the ad experience, can you tell us why?</p></h3><ul>' + feedBackOpts + '</ul></div>';
                         labelInner = ' <a class="ad-feedback popup__toggle" data-toggle="' + adSlotNode.id + '__popup--feedback" aria-haspopup="true" aria-controls="ad-feedback-menu__' + adSlotNode.id + '">(Report this ad)</a>' + feedbackMenu;
                     }
-                    if (labelInner) {
-                        adSlotNode.style.zIndex = 2000;
+                    if (labelInner.length > 0) {
+                        adSlotNode.style.zIndex = zIndexOverlay;
                     }
                 } catch (x) {
                     // if we can't pull the ad feedback participation state, we'll treat it as excluded
                 }
             }
-            var labelDiv = '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement' + labelInner + '</div>';
+            var labelDiv = '<div class="ad-slot__label" data-test-id="ad-slot-label" style="z-index: 2010;">Advertisement' + labelInner + '</div>';
             return fastdom.write(function () {
                 adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
             });
