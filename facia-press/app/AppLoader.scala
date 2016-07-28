@@ -4,11 +4,13 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import controllers.{Application, HealthCheck}
+import frontpress.{DraftFapiFrontPress, FrontPressCron, LiveFapiFrontPress, ToolPressQueueWorker}
 import lifecycle.FaciaPressLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import services.ConfigAgentLifecycle
 import router.Routes
 
@@ -17,12 +19,23 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers {
+  def toolPressQueueWorker: ToolPressQueueWorker
+  def liveFapiFrontPress: LiveFapiFrontPress
+  def draftFapiFrontPress: DraftFapiFrontPress
   lazy val healthCheck = wire[HealthCheck]
-  lazy val applicationController = wire[Application]
+  lazy val applicationController: Application = wire[Application]
 }
 
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+trait FapiFrontPresses {
+  def wsClient: WSClient
+  lazy val liveFapiFrontPress = wire[LiveFapiFrontPress]
+  lazy val draftFapiFrontPress = wire[DraftFapiFrontPress]
+  lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
+  lazy val frontPressCron = wire[FrontPressCron]
+}
+
+trait AppLifecycleComponents extends FapiFrontPresses {
+  self: FrontendComponents =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
