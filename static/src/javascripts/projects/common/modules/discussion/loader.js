@@ -76,13 +76,16 @@ Loader.prototype.initTopComments = function() {
 
 Loader.prototype.initMainComments = function() {
 
-    var commentId = this.getCommentIdFromHash();
+    var self = this,
+        commentId = this.getCommentIdFromHash();
+
 
     if (commentId) {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
+    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
@@ -98,8 +101,12 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page',
-        this.removeTruncation.bind(this));
+    this.on('click,', '.js-discussion-author-link, .js-discussion-change-page', this.removeTruncation.bind(this));
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function () {
+        mediator.emit('discussion:comments:get-more-replies');
+        self.removeTruncation();
+    });
+
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
