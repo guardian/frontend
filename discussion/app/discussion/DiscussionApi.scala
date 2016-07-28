@@ -202,7 +202,7 @@ trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
   }
 }
 
-case class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
+class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
   override protected val apiRoot =
     if (Configuration.environment.isProd)
       Configuration.discussion.apiRoot

@@ -12,7 +12,7 @@ import scala.language.postfixOps
 
 @DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
-  case class UrlValidatorDiscussionAPI(expectedUrl: String, val wsClient: WSClient = wsClient) extends DiscussionApiLike {
+  class UrlValidatorDiscussionAPI(expectedUrl: String, val wsClient: WSClient = wsClient) extends DiscussionApiLike {
     override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
       assert(expectedUrl === url)
       Future {null} // Don't care what is returned for this test
@@ -21,7 +21,7 @@ import scala.language.postfixOps
     protected val apiRoot: String = ""
   }
 
-  def urlValidator(expectedUrl: String) : DiscussionApiLike = UrlValidatorDiscussionAPI(expectedUrl)
+  def urlValidator(expectedUrl: String) : DiscussionApiLike = new UrlValidatorDiscussionAPI(expectedUrl)
 
   def waitFor(f: Future[_], timeout: Duration = 2 seconds) = Await.ready(f, timeout)
 

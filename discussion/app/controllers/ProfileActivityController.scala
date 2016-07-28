@@ -6,7 +6,7 @@ import discussion.model.Profile
 import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.Action
 
-case class ProfileActivityController(val discussionApi: DiscussionApiLike) extends DiscussionController {
+class ProfileActivityController(val discussionApi: DiscussionApiLike) extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = SimplePage(
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",

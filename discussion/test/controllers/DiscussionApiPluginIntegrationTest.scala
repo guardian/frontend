@@ -13,7 +13,7 @@ import play.api.libs.ws.{WS, WSClient}
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithTestWsClient {
 
-  case class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
+  class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
     override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
@@ -27,7 +27,7 @@ import play.api.libs.ws.{WS, WSClient}
     override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 
-  val testPlugin = TestPlugin(wsClient)
+  val testPlugin = new TestPlugin(wsClient)
 
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {
 
