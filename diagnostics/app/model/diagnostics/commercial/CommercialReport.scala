@@ -1,6 +1,6 @@
 package model.diagnostics.commercial
 
-import play.api.libs.json.{Json, JsSuccess, JsValue}
+import play.api.libs.json.{JsError, Json, JsSuccess, JsValue}
 
 case class Module(
   duration: Double,
@@ -43,7 +43,7 @@ object Report extends common.Logging {
   def report(requestBody: JsValue): Unit = {
     requestBody.validate[Report] match {
       case JsSuccess(report, _) => RedisReport.report(report)
-      case _ =>
+      case error: JsError => log.logger.error(JsError.toJson(error).toString)
     }
   }
 }
