@@ -448,7 +448,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object redis {
-    lazy val endpoint = configuration.getStringProperty("redis.host")//"comm-client-logs.ylaniy.0001.euw1.cache.amazonaws.com" // 6379
+    lazy val endpoint = configuration.getStringProperty("redis.host")
   }
 
   object aws {
