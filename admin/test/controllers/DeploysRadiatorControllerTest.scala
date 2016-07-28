@@ -3,14 +3,20 @@ package controllers.admin
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
-import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
-@DoNotDiscover class DeploysRadiatorControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
+@DoNotDiscover class DeploysRadiatorControllerTest
+  extends WordSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with ExecutionContexts
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   val existingBuild = "1621"
 

@@ -3,16 +3,22 @@ package controllers.admin
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
-import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent.Future
 
-@DoNotDiscover class DeploysNotifyControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
+@DoNotDiscover class DeploysNotifyControllerTest
+  extends WordSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with ExecutionContexts
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   val existingBuild = "1629"
   val fakeApiKey = "fake-api-key"
