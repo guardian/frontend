@@ -66,7 +66,13 @@ define([
         .then(function(state){
             if (q.empty()) {
                 // If the queue is empty (no more elements need to be added to the page) we immediately scroll
-                return state.newHeight + state.prevHeight + state.scrollY;
+                var scrollY = state.newHeight + state.prevHeight + state.scrollY;
+
+                if (scrollY) {
+                    window.scrollTo(0, scrollY);
+                }
+
+                running = false;
             } else {
                 // If there are elements waiting to be added to the page we take the previous container's heights
                 // and recursively call the function so that we only scroll the page once the queue is empty -
@@ -103,7 +109,7 @@ define([
             cb: cb
         });
 
-        return (running ? promise : go(initialState)).then(scrollThePage);
+        return (running ? promise : go(initialState))
     }
 
 
@@ -118,13 +124,6 @@ define([
                 insertion.cb();
             });
         });
-    }
-
-    function scrollThePage (scrollY) {
-        if (scrollY) {
-            window.scrollTo(0, scrollY);
-            running = false;
-        }
     }
 
     /**
