@@ -2,45 +2,33 @@
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
-@import views.support.AmpAd
-@import common.Edition
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
-@blocks.sliding(5, 5).map { blockGroup =>
-    @blockGroup.map { block =>
-        <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
-            <p class="block-time published-time">
-                <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-                @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
-                </a>
-            </p>
-            @block.title.map { title =>
-                <h2 class="block-title" itemprop="headline">@title</h2>
+@blocks.map { block =>
+    <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <p class="block-time published-time">
+            <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
+            @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
+            </a>
+        </p>
+        @block.title.map { title =>
+            <h2 class="block-title" itemprop="headline">@title</h2>
+        }
+        @block.contributors.map { contributorId =>
+            @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
+                @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
             }
-            @block.contributors.map { contributorId =>
-                @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
-                    @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-                }
-            }
-            <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-            @BodyCleaner(article, block.bodyHtml, amp)
-            </div>
-            @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
-            <p class="block-time updated-time">Updated
-                <time datetime="@republishedDate">at @ampm @gmt</time>
-            </p>
-            }
-            @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
+        }
+        <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
+        @BodyCleaner(article, block.bodyHtml, amp)
         </div>
-    }
-
-    @if(blockGroup.length == 5) {
-        <div class="live-blog-amp-ad-container">
-            <amp-ad width="300" height="250" type="doubleclick"
-            json=@AmpAd.buildJsonString(article, request.path, Edition(request).id.toLowerCase())
-            data-slot=@AmpAd.buildDataSlot(article)>
-            </amp-ad>
-        </div>
-    }
+        @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
+        <p class="block-time updated-time">Updated
+            <time datetime="@republishedDate">at @ampm @gmt</time>
+        </p>
+        }
+        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
+    </div>
 }
+
