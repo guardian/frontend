@@ -119,7 +119,7 @@ define([
 
         return player;
     }
-    
+
     function removeCaptionLink(){
         bonzo($('.caption--main a')).remove();
     }
@@ -414,6 +414,14 @@ define([
         }
     }
 
+    function initMinute() {
+        if(ab.isInVariant('Minute','minute')) {
+            // This is our minute account number
+            window._min = {_publisher: 'MIN-21000'};
+            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
+        }
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -442,6 +450,8 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+
+        initMinute();
     }
 
     return {
