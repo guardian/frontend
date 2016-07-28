@@ -14,15 +14,21 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
-import services.ArchiveMetrics
+import services.{ArchiveMetrics, DynamoDB}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
+trait ArchiveServices {
+  def wsClient: WSClient
+  lazy val dynamoDB = wire[DynamoDB]
+}
+
 trait Controllers {
   def wsClient: WSClient
+  def dynamoDB: DynamoDB
   lazy val healthCheck = wire[HealthCheck]
   lazy val archiveController = wire[ArchiveController]
 }
@@ -39,7 +45,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ArchiveServices {
 
   lazy val router: Router = wire[Routes]
 
