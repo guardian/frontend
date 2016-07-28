@@ -14,7 +14,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   val bucketLocation: String
 
   val wsClient: WSClient
-  val secureS3Request = SecureS3Request(wsClient)
+  val secureS3Request = new SecureS3Request(wsClient)
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.json"
 
@@ -68,10 +68,10 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   }
 }
 
-case class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
+class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
   override val bucketLocation: String = s"$stage/frontsapi/pressed/live"
 }
 
-case class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
+class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }

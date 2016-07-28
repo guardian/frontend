@@ -168,7 +168,7 @@ object S3FrontsApi extends S3 {
     getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
 }
 
-case class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
+class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
   val algorithm: String = "HmacSHA1"
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
