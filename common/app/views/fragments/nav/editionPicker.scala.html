@@ -3,17 +3,18 @@
 @import common.{Edition, LinkTo}
 
 <div class="edition-picker">
+
+    <input class="edition-picker__checkbox" type="checkbox" id="edition-picker">
+
+    <label class="edition-picker__current-edition" for="edition-picker" tabindex="0">
+        @fragments.inlineSvg("world", "icon")
+        <span class="u-h"> Change editions from the </span>
+        @Edition(request).displayName
+    </label>
+
     <ul class="edition-picker__dropdown">
-        <input class="edition-picker__checkbox" type="checkbox" id="edition-picker">
-        <li class="edition-picker__dropdown__item edition-picker__dropdown__item--first">
-            <label class="edition-picker__current-edition" for="edition-picker">
-                @fragments.inlineSvg("world", "icon")
-                <span class="u-h"> Change editions from the </span>
-                @Edition(request).displayName
-            </label>
-        </li>
         @Edition.others(request).map { edition =>
-            <li class="edition-picker__dropdown__item">
+            <li class="edition-picker__dropdown__item" tabindex="1">
                 <a class="edition-picker__dropdown-item-link"
                 data-edition="@edition.id"
                 data-link-name="new header switch to @edition.id edition"
