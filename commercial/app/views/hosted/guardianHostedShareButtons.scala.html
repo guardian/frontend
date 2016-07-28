@@ -26,7 +26,7 @@
         <li class="social__item social__item--email" data-link-name="email">
             <a class="social__action social-icon-wrapper"
             data-link-name="email-social-share-1"
-            href="mailto:?subject=@{URLEncoder.encode(page.emailText, "utf-8")}&body=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
+            href="mailto:?subject=@{page.emailText}&body=@{URLEncoder.encode(page.pageUrl, "utf-8")}"
             target="_blank"
             title="email">
                 <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
