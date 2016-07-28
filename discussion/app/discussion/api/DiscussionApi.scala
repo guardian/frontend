@@ -6,6 +6,7 @@ import com.netaporter.uri.dsl._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import discussion.model.{CommentCount, _}
+import discussion.model._
 import discussion.util.Http
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -196,7 +197,7 @@ trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
     val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
     if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
+    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport))
 
   }
 }

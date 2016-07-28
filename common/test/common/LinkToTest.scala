@@ -9,8 +9,6 @@ import play.api.test.FakeRequest
 
 class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
-  Play.unsafeApplication
-
   implicit val edition = Uk
   implicit val editions = Seq(Uk,Us,Au)
   implicit val request = FakeRequest("GET", "/")

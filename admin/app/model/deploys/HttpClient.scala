@@ -5,6 +5,10 @@ import scala.concurrent.Future
 
 import scala.concurrent.duration._
 
+trait HttpLike {
+  def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse]
+}
+
 class HttpClient(wsClient: WSClient) extends HttpLike {
 
   override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
