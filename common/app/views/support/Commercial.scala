@@ -34,7 +34,7 @@ object Commercial {
       val fluidAdvertsTop = Seq("fluid")
       Map(
         "tablet" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70", "728,90") ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
     }
 
@@ -48,9 +48,7 @@ object Commercial {
       classes mkString " "
     }
 
-    def slotCssClasses(metaData: MetaData): Seq[String] = {
-        Seq("top-banner-ad", "top-banner-ad-desktop")
-    }
+    val slotCssClasses(metaData: MetaData) = Seq("top-banner-ad", "top-banner-ad-desktop")
   }
 
   object container {
