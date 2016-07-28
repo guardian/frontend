@@ -1,9 +1,11 @@
 define([
     'common/utils/ajax',
+    'common/utils/steady-page',
     'bonzo',
     'lodash/objects/merge'
 ], function (
     ajax,
+    steadyPage,
     bonzo,
     merge
 ) {
@@ -41,8 +43,10 @@ define([
                     crossOrigin: true
                 })
                 .then(function (resp) {
-                    $container.html(options.beforeInsert(resp.html))
-                        .addClass('lazyloaded');
+                    steadyPage.insert($container[0], function(){
+                        $container.html(options.beforeInsert(resp.html))
+                            .addClass('lazyloaded');
+                    });
                     options.success(resp);
                 })
                 .catch(options.error)
