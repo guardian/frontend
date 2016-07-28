@@ -246,16 +246,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FixedTechTopSlot = Switch(
-    SwitchGroup.Commercial,
-    "fixed-tech-top-slot",
-    "Height of the top banner is fixed at 250px in the Tech section",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = false
-  )
-
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "optimise-high-merchandising",
