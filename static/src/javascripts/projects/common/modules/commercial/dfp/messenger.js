@@ -9,7 +9,7 @@ define([
     return {
         register: register,
         unregister: unregister
-    }
+    };
 
     function register(type, callback) {
         if( registeredListeners === 0 ) {
@@ -74,7 +74,7 @@ define([
             return function promiseCallback(ret) {
                 var thisRet = listener(data.value, ret);
                 return thisRet === undefined ? ret : thisRet;
-            }
+            };
         })
         // We don't know what each callack will be made of, we don't want to.
         // And so we wrap each call in a promise chain, in case one drops the
