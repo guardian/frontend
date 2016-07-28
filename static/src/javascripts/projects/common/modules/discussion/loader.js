@@ -476,7 +476,7 @@ Loader.prototype.loadComments = function(options) {
 
 Loader.prototype.removeTruncation = function() {
 
-    mediator.emit('discussion:comments:show-more-replies');
+    mediator.emit('discussion:comments:get-more-replies');
 
     // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
     if (this.comments.isAllPageSizeActive()) {
