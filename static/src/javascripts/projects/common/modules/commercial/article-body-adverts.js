@@ -103,6 +103,7 @@ define([
 
         function insertInlineAds(paras) {
             var countAdded = 0;
+            var insertionArr = [];
             while(countAdded < count && paras.length) {
                 var para = paras.shift();
                 var adDefinition;
@@ -112,11 +113,14 @@ define([
                     inlineAd += 1;
                     adDefinition = 'inline' + inlineAd;
                 }
-                insertAdAtPara(para, adDefinition, 'inline');
+                insertionArr.push(insertAdAtPara(para, adDefinition, 'inline'));
                 bodyAds += 1;
                 countAdded += 1;
             }
-            return countAdded;
+
+            return Promise.all(insertionArr).then(function(){
+                return countAdded;
+            });
         }
     }
 
@@ -131,11 +135,15 @@ define([
         // insert ad using steady page
         // to avoid jumping the user
         if (detect.isBreakpoint({max: 'tablet'})) {
-            steadyPage.insert(ad, function(){
+            return steadyPage.insert(ad, function(){
                 insertion(ad, para);
             });
         } else {
-            insertion(ad, para);
+            // If we're not on mobile we insert and resolve the promise immediately
+            return new Promise(function(resolve){
+                insertion(ad, para);
+                resolve();
+            });
         }
     }
 
