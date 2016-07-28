@@ -2,7 +2,7 @@ package views.support
 
 import model.Tag
 import model.Article
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 
 object AmpAd {
   private def grabLastFragmentOfId(items: Seq[Tag]) = {
@@ -16,7 +16,7 @@ object AmpAd {
     }
   }
 
-  def buildJsonString(article: Article, uri: String, edition: String): String = {
+  def adTargetingJson(article: Article, uri: String, edition: String): JsObject = {
     Json.obj(
       "targeting" -> Json.obj(
         "url" -> uri,
@@ -31,7 +31,7 @@ object AmpAd {
         "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
         "section" -> article.metadata.sectionId
       )
-    ).toString()
+    )
   }
 
   def buildDataSlot(article: Article): String = {

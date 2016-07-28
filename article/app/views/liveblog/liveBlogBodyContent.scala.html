@@ -30,7 +30,7 @@
                     @if(blockGroup.length == 5 && index < 8) {
                         <div class="block amp-ad-container amp-ad-container--live-blog">
                             <amp-ad width="300" height="250" type="doubleclick"
-                            json=@AmpAd.buildJsonString(article, request.path, Edition(request).id.toLowerCase())
+                            json=@AmpAd.adTargetingJson(article, request.path, Edition(request).id.toLowerCase()).toString()
                             data-slot=@AmpAd.buildDataSlot(article)>
                             </amp-ad>
                         </div>

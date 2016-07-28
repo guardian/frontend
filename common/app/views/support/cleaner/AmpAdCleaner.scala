@@ -90,7 +90,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
   def adAfter(element: Element) = {
     val ampAd = <div class="amp-ad-container">
           <amp-ad width="300" height="250" type="doubleclick"
-                  json={AmpAd.buildJsonString(article, uri, edition.id.toLowerCase())}
+                  json={AmpAd.adTargetingJson(article, uri, edition.id.toLowerCase()).toString()}
                   data-slot={AmpAd.buildDataSlot(article)}>
           </amp-ad>
       </div>
