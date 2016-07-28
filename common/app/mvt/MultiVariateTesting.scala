@@ -100,7 +100,8 @@ object ActiveTests extends ServerSideABTests {
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
     ABNewHeaderDummyTestControl,
-    ABNewHeaderDummyTestVariant
+    ABNewHeaderDummyTestVariant,
+    CommercialClientLoggingVariant
   )
 }
 
