@@ -143,10 +143,17 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
         }
 
         // TODO: refactor for more functional style
-        if (form.hasErrors)
-          Forbidden(form.errorsAsJson)
-        else
+        if (form.hasErrors) {
+          val errorsAsJson = Json.toJson(
+            form.errors.groupBy(_.key).map { case (key, errors) =>
+              val nonEmptyKey = if (key.isEmpty) "global" else key
+              (nonEmptyKey, errors.map(e => play.api.i18n.Messages(e.message, e.args: _*)))
+            }
+          )
+          Forbidden(errorsAsJson)
+        } else {
           Ok(Json.obj("subscriptions" -> emailSubscriptions.subscriptions.filter(_.subscribedTo)))
+        }
       }
     }
   }
