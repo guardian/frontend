@@ -26,6 +26,7 @@ object Frontend extends Build with Prototypes {
       filters,
       commonsLang,
       configMagic,
+      configMagicPlay,
       jodaConvert,
       jodaTime,
       jSoup,

@@ -6,7 +6,7 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, Logger}
+import com.gu.cm.{PlayDefaultLogger, ClassPathConfigurationSource, FileConfigurationSource, Logger}
 import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -18,28 +18,17 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-class GuardianConfiguration extends Logging {
-  implicit private lazy val app = Play.current
-
-  case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
-  case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
+object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
-  val configuration = {
+  lazy val configuration = {
 
-    val cmLogger = new Logger {
-      override def warn(message: => String): Unit = log.warn(message)
-      override def error(message: => String): Unit = log.error(message)
-      override def error(message: => String, exception: => Throwable): Unit = log.error(message, exception)
-      override def info(message: => String): Unit = log.info(message)
-    }
-
-    val stage = new CM(List(FileConfigurationSource(s"/etc/gu/install_vars")), cmLogger).load.getStringProperty("STAGE").getOrElse("DEV")
+    val stage = new CM(List(FileConfigurationSource(s"/etc/gu/install_vars")), PlayDefaultLogger).load.getStringProperty("STAGE").getOrElse("DEV")
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
     lazy val opsPrivate = FileConfigurationSource(s"/etc/gu/frontend.properties")
     lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
-    new CM(List(userPrivate, opsPrivate, public), cmLogger).load
+    new CM(List(userPrivate, opsPrivate, public), PlayDefaultLogger).load
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
@@ -49,6 +38,12 @@ class GuardianConfiguration extends Logging {
     def getIntegerProperty = getProperty(conf.getInt)_
 
     def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
+    def getStringPropertiesSplitByComma(propertyName: String): List[String] = {
+      getStringProperty(propertyName) match {
+        case Some(property) => (property split ",").toList
+        case None => Nil
+      }
+    }
 
     def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
@@ -61,6 +56,15 @@ class GuardianConfiguration extends Logging {
     }
 
   }
+
+}
+
+class GuardianConfiguration extends Logging {
+  import GuardianConfiguration._
+  implicit private lazy val app = Play.current
+
+  case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+  case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
