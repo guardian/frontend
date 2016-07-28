@@ -44,8 +44,8 @@ define([
     }
 
     function onMessage(event) {
-        var origin = event.origin || event.originalEvent.origin;
-        if (origin !== currentHost) {
+        // We only allow communication with ads created by DFP
+        if (event.origin !== currentHost) {
             return;
         }
 
