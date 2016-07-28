@@ -72,10 +72,10 @@ object ABNewHeaderDummyTestVariant extends TestDefinition(
 }
 
 object CommercialClientLoggingVariant extends TestDefinition(
-  "commercial-client-logging",
-  "",
+  name = "commercial-client-logging",
+  description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  new LocalDate(2016, 9, 1)
+  sellByDate = new LocalDate(2016, 9, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
