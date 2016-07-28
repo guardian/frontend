@@ -30,8 +30,8 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
 }
 
 class DeploysRadiatorControllerImpl(wsClient: WSClient) extends DeploysRadiatorController {
-  val httpClient = HttpClient(wsClient)
-  override val riffRaff = RiffRaffService(httpClient)
-  override val teamcity = TeamcityService(httpClient)
+  val httpClient = new HttpClient(wsClient)
+  override val riffRaff = new RiffRaffService(httpClient)
+  override val teamcity = new TeamcityService(httpClient)
 }
 

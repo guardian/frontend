@@ -32,8 +32,8 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
   val recordingHttpClient = new TestHttpClient(wsClient)
 
   class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = TeamcityService(recordingHttpClient)
-    override val riffRaff = RiffRaffService(recordingHttpClient)
+    override val teamcity = new TeamcityService(recordingHttpClient)
+    override val riffRaff = new RiffRaffService(recordingHttpClient)
   }
 
   val controller = new DeploysRadiatorControllerStub()

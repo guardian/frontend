@@ -51,7 +51,7 @@ object TeamCityBuild {
     )(TeamCityBuild.apply _)
 }
 
-case class TeamcityService(httpClient: HttpLike) {
+class TeamcityService(httpClient: HttpLike) {
 
   def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
     val apiPath = "/guestAuth/app/rest"

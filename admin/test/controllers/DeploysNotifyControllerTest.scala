@@ -23,7 +23,7 @@ import scala.concurrent.Future
   val existingBuild = "1629"
   val fakeApiKey = "fake-api-key"
 
-  case class RecordingHttpClient(wsClient: WSClient) extends HttpLike {
+  class RecordingHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
       DeploysTestHttpRecorder.load(url, extentedHeaders) {
@@ -37,9 +37,9 @@ import scala.concurrent.Future
   class DeploysNotifyControllerStub(override val wsClient: WSClient) extends DeploysNotifyController {
     lazy val apiKey = fakeApiKey
 
-	  val recordingHttpClient = RecordingHttpClient(wsClient)
-    override val teamcity = TeamcityService(recordingHttpClient)
-    override val riffRaff = RiffRaffService(recordingHttpClient)
+    val recordingHttpClient = new RecordingHttpClient(wsClient)
+    override val teamcity = new TeamcityService(recordingHttpClient)
+    override val riffRaff = new RiffRaffService(recordingHttpClient)
 
     override protected def sendNotice(step: NoticeStep, notice: Notice): Future[NoticeResponse] = {
       Future.successful(NoticeResponse(notice, "Fake response"))

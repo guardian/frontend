@@ -7,7 +7,7 @@ trait HttpLike {
   def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse]
 }
 
-case class HttpClient(wsClient: WSClient) extends HttpLike {
+class HttpClient(wsClient: WSClient) extends HttpLike {
 
   override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
     wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()

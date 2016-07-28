@@ -17,7 +17,7 @@ case class RiffRaffDeploy(uuid: String,
                           time: String)
 object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
 
-case class RiffRaffService(httpClient: HttpLike) {
+class RiffRaffService(httpClient: HttpLike) {
 
   def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"

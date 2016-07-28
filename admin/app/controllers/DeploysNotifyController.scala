@@ -80,8 +80,8 @@ class DeploysNotifyControllerImpl(val wsClient: WSClient) extends DeploysNotifyC
   override val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
     throw new RuntimeException("Deploys-notify API Key not set")
   )
-  val httpClient = HttpClient(wsClient)
-  override val riffRaff = RiffRaffService(httpClient)
-  override val teamcity = TeamcityService(httpClient)
+  val httpClient = new HttpClient(wsClient)
+  override val riffRaff = new RiffRaffService(httpClient)
+  override val teamcity = new TeamcityService(httpClient)
 }
 
