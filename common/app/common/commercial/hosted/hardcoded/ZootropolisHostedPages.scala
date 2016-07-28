@@ -24,7 +24,7 @@ object ZootropolisHostedPages {
     btnText = "Out now on digital download"
   )
 
-  private val videoPageWithoutNextPage: HostedVideoPage = {
+  private lazy val videoPageWithoutNextPage: HostedVideoPage = {
     val videoTitle = "Disney’s Zootropolis: Download & keep today!"
     HostedVideoPage(
       campaign,
@@ -49,7 +49,7 @@ object ZootropolisHostedPages {
     )
   }
 
-  val customData = CustomData(
+  private lazy val customData = CustomData(
     conArtistPic = "https://media.guim.co.uk/f57ea457837fcae4f77bb31d1b997af1fd158aed/947_0_1869_2380/393.png",
     conArtistPoster = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zoo-test.png",
     rookiePic = "https://media.guim.co.uk/6079f37ef66a544b745087606ef987a72a0b6982/71_0_1123_1730/325.png",
@@ -66,16 +66,17 @@ object ZootropolisHostedPages {
     colouringPdf = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ColoringZootropolis.pdf"
   )
 
-  val articlePageName = "meet-the-characters-of-zootropolis"
+  private lazy val articlePageName = "meet-the-characters-of-zootropolis"
 
-  val articlePageWithoutNextPage = HostedArticlePage(
+  private lazy val articlePageWithoutNextPage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
     title = "Meet the characters of Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
-    facebookImageUrl = Static("images/commercial/zootropolis.png"),
+    // todo: this is going to change
+    facebookImageUrl = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     cta,
     ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
@@ -85,7 +86,6 @@ object ZootropolisHostedPages {
     emailSubjectText = Some("Disney Zootropolis asset pack on the Guardian"),
     customData = customData
   )
-
 
   private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
     .copy(nextPage = Some(articlePageWithoutNextPage)) else videoPageWithoutNextPage

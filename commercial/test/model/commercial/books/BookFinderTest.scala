@@ -2,14 +2,20 @@ package model.commercial.books
 
 import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
-import test.ConfiguredTestSuite
+import test.{SingleServerSuite, WithTestWsClient}
 
 import scala.collection.mutable
 import scala.concurrent.Future
 
-@DoNotDiscover class BookFinderTest extends FlatSpec with Matchers with ScalaFutures with ConfiguredTestSuite {
+@DoNotDiscover class BookFinderTest
+  extends FlatSpec
+  with Matchers
+  with ScalaFutures
+  with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   private implicit val defaultPatience =
     PatienceConfig(timeout = Span(2, Seconds), interval = Span(5, Millis))
@@ -26,6 +32,8 @@ import scala.concurrent.Future
     def get(isbn: String): Future[Option[JsValue]] = Future.failed(new RuntimeException)
     def add(isbn: String, json: JsValue): Future[Boolean] = Future.failed(new RuntimeException)
   }
+
+  private val bookFinder = new BookFinder(app.actorSystem, new MagentoService(app.actorSystem, wsClient))
 
   private val book = Book(
     title = "Cameron's Coup",
@@ -126,38 +134,38 @@ import scala.concurrent.Future
 
   "findByIsbn" should "give some book when it's in cache" in {
     def bookFromIsbn(isbn: String): Future[Option[Book]] =
-      BookFinder.findByIsbn(isbn, populatedCache, testLookup)
+      bookFinder.findByIsbn(isbn, populatedCache, testLookup)
     bookFromIsbn("9781783350438").futureValue should be(Some(book))
     bookFromIsbn("9780224102018").futureValue should be(Some(book2))
   }
 
   it should "give none when it's stored as not-found in cache" in {
-    val result = BookFinder.findByIsbn("12345", populatedCache, testLookup)
+    val result = bookFinder.findByIsbn("12345", populatedCache, testLookup)
     result.futureValue should be(None)
   }
 
   it should "use lookup when cache get fails" in {
-    val result = BookFinder.findByIsbn("9781783350438", FailingCache, testLookup)
+    val result = bookFinder.findByIsbn("9781783350438", FailingCache, testLookup)
     result.futureValue should be(Some(book))
   }
 
   it should "give some book, and update cache, for available book when cache is empty" in {
     val cache = emptyCache
-    val result = BookFinder.findByIsbn("9781783350438", cache, testLookup)
+    val result = bookFinder.findByIsbn("9781783350438", cache, testLookup)
     result.futureValue should be(Some(book))
     cache.get("9781783350438").futureValue should be(Some(bookJson))
   }
 
   it should "give none, and update cache, for unavailable book when cache is empty" in {
     val cache = emptyCache
-    val result = BookFinder.findByIsbn("12345", cache, testLookup)
+    val result = bookFinder.findByIsbn("12345", cache, testLookup)
     result.futureValue should be(None)
     cache.get("12345").futureValue should be(Some(JsNull))
   }
 
   it should "fail, and not update cache, when lookup fails" in {
     val cache = emptyCache
-    val result = BookFinder.findByIsbn("98765", cache, testLookup)
+    val result = bookFinder.findByIsbn("98765", cache, testLookup)
 
     whenReady(result.failed) { e =>
       cache.get("98765").futureValue should be(None)

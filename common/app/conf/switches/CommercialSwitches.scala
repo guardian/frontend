@@ -349,7 +349,7 @@ trait CommercialSwitches {
   val hostedArticle = Switch(
     group = CommercialLabs,
     name = "hosted-article",
-    description = "Show hosted article or 404.",
+    description = "Show Zootropolis hosted article or 404.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 17),

@@ -20,7 +20,7 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = true
   )
 
