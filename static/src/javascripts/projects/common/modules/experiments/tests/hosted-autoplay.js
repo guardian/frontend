@@ -11,8 +11,8 @@ define([
 ) {
     return function () {
         this.id = 'HostedAutoplay';
-        this.start = '2016-15-07';
-        this.expiry = '2016-12-08';
+        this.start = '2016-07-15';
+        this.expiry = '2016-08-12';
         this.author = 'Zofia Korcz';
         this.description = 'An autoplay overlay with the next video on a hosted page.';
         this.audience = 0.75;
