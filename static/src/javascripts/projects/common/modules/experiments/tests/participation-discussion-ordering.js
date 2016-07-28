@@ -43,7 +43,7 @@ define([
                 },
                 success: function(complete) {
                     if(module.canRun()) {
-                        mediator.on('discussion:comments:view-more', complete);
+                        mediator.on('discussion:comments:show-more-replies', complete);
                     }
                 }
             },
@@ -54,7 +54,7 @@ define([
                 },
                 success: function(complete) {
                     if(module.canRun()) {
-                        mediator.on('discussion:comments:view-more', complete);
+                        mediator.on('discussion:comments:show-more-replies', complete);
                     }
                 }
             },
@@ -65,7 +65,7 @@ define([
                 },
                 success: function(complete) {
                     if(module.canRun()) {
-                        mediator.on('discussion:comments:view-more', complete);
+                        mediator.on('discussion:comments:show-more-replies', complete);
                     }
                 }
             }
