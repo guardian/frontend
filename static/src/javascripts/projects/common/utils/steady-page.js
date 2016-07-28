@@ -134,7 +134,11 @@ define([
      * @param  {Array} batch
      */
     function getHeightOfAllContainers (batch) {
+        var viewportAdjustment;
+        
         return fastdom.read(function() {
+            viewportAdjustment = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) / 2;
+            
             // Add all the heights of the passed in batch
             // removing the current height
             return batch.filter(elementIsAbove).reduce(function(height, insertion) {
@@ -145,7 +149,6 @@ define([
         function elementIsAbove(el) {
             var parentElArray = [];
             var parentEl = el.container;
-            var viewportAdjustment = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) / 2;
 
             // Push the container's parents into an array so we can calculate
             // the position of the elements all the way until the body
