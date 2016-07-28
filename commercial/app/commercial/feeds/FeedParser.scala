@@ -17,7 +17,7 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
   def parse(feedContent: => Option[String]): Future[ParsedFeed[T]]
 }
 
-case class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventAgent) {
+class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventAgent) {
 
   private val jobs: Option[FeedParser[Job]] = {
     Configuration.commercial.jobsUrl map { url =>

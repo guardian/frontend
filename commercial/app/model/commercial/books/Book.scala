@@ -54,7 +54,7 @@ object Book {
     )(Book.apply _)
 }
 
-case class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] with ExecutionContexts {
+class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] with ExecutionContexts {
 
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 

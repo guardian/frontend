@@ -109,7 +109,7 @@ class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMe
   }
 }
 
-case class FeedsFetcher(wsClient: WSClient) {
+class FeedsFetcher(wsClient: WSClient) {
 
 
   private val jobs: Option[FeedFetcher] = {

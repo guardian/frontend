@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-case class FeedReader(wsClient: WSClient) extends Logging {
+class FeedReader(wsClient: WSClient) extends Logging {
 
   def read[T](request: FeedRequest,
               signature: Option[WSSignatureCalculator] = None,

@@ -33,7 +33,7 @@ import scala.concurrent.Future
     def add(isbn: String, json: JsValue): Future[Boolean] = Future.failed(new RuntimeException)
   }
 
-  private val bookFinder = BookFinder(MagentoService(wsClient))
+  private val bookFinder = new BookFinder(new MagentoService(wsClient))
 
   private val book = Book(
     title = "Cameron's Coup",

@@ -17,7 +17,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-case class BookFinder(magentoService: MagentoService) extends Logging {
+class BookFinder(magentoService: MagentoService) extends Logging {
 
   private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
 
@@ -62,9 +62,11 @@ case class BookFinder(magentoService: MagentoService) extends Logging {
 }
 
 
-case class MagentoService(wsClient: WSClient) extends Logging {
+class MagentoService(wsClient: WSClient) extends Logging {
 
   private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
+
+  private val feedReader = new FeedReader(wsClient)
 
   private val magentoProperties = {
     for {
@@ -119,7 +121,7 @@ case class MagentoService(wsClient: WSClient) extends Logging {
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
-        FeedReader(wsClient).read(request,
+        feedReader.read(request,
           signature = Some(props.oauth),
           validResponseStatuses = Seq(200, 404)) { responseBody =>
           val bookJson = Json.parse(responseBody)

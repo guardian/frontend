@@ -13,7 +13,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-case class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging {
+class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Seq.empty)
 
