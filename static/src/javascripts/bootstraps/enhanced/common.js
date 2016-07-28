@@ -16,7 +16,6 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
-    'common/modules/analytics/omniture',
     'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
@@ -71,7 +70,6 @@ define([
     storage,
     Foresee,
     mediaListener,
-    omniture,
     interactionTracking,
     register,
     ScrollDepth,
@@ -164,7 +162,7 @@ define([
             },
 
             loadAnalytics: function () {
-                omniture.go();
+                interactionTracking.init();
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
                         if (config.switches.scrollDepth) {

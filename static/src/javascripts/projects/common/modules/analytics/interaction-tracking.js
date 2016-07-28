@@ -73,9 +73,14 @@ define([
         omniture.trackExternalLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
     }
 
-    addHandlers();
+    function init() {
+        omniture.go();
+        addHandlers();
+        mediator.emit('analytics:ready');
+    }
 
     return {
+        init: init,
         trackClick: trackClick,
         trackNonClickInteraction: trackNonClickInteraction
     };

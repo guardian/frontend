@@ -117,7 +117,6 @@ define([
     Omniture.prototype.go = function () {
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';
-        mediator.emit('analytics:ready');
     };
 
     // A single Omniture instance for the whole application.

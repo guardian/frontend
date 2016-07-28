@@ -5,7 +5,7 @@ define([
 ) {
     describe('interaction-tracking', function () {
 
-        var google, omniture, mediator, injector;
+        var google, omniture, mediator, interactionTracking, injector;
 
         beforeEach(function (done) {
             injector = new Injector();
@@ -15,6 +15,7 @@ define([
                     trackExternalLinkClick: sinon.spy()
                 })
                 .mock('common/modules/analytics/omniture', {
+                    go: sinon.spy(),
                     trackSamePageLinkClick: sinon.spy(),
                     trackExternalLinkClick: sinon.spy()
                 })
@@ -27,6 +28,8 @@ define([
                     mediator = arguments[0];
                     google = arguments[1];
                     omniture = arguments[2];
+                    interactionTracking = arguments[3];
+                    
                     done();
                 });
         });
@@ -38,14 +41,16 @@ define([
         });
 
         it('should log a clickstream event for an in-page link', function () {
+            interactionTracking.init();
+            
             var clickSpec = {
-                    target: document.documentElement,
-                    samePage: true,
-                    sameHost: true,
-                    validTarget: true,
-                    tag: true
-                };
-        
+                target: document.documentElement,
+                samePage: true,
+                sameHost: true,
+                validTarget: true,
+                tag: true
+            };
+
             mediator.emit('module:clickstream:click', clickSpec);
         
             expect(google.trackSamePageLinkClick).toHaveBeenCalledOnce();
@@ -53,6 +58,8 @@ define([
         });
 
         it('should not log clickstream events with an invalidTarget', function () {
+            interactionTracking.init();
+            
             var clickSpec = {
                 target: document.documentElement,
                 samePage: true,
@@ -68,6 +75,8 @@ define([
         });
 
         it('should use local storage for same-host links', function () {
+            interactionTracking.init();
+
             var el        = document.createElement('a'),
                 clickSpec = {
                     target: el,
@@ -83,6 +92,8 @@ define([
         });
 
         it('should log a clickstream event for an external link', function () {
+            interactionTracking.init();
+
             var el        = document.createElement('a'),
                 clickSpec = {
                     target: el,
