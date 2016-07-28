@@ -1,10 +1,12 @@
 package test
 
-import org.scalatest.{Suites, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest._
 
 class PreviewTestSuite extends Suites (
   new PreviewServerTest
-) with SingleServerSuite {
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   override lazy val port: Int = new controllers.HealthCheck(wsClient).testPort
 }
