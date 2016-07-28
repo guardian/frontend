@@ -1,8 +1,14 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/ajax-promise'
-], function (fastdom, $, ajax) {
+    'common/utils/fetch-json',
+    'common/utils/report-error'
+], function (
+    fastdom,
+    $,
+    fetchJson,
+    reportError
+) {
 
     var ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded',
         ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
@@ -12,9 +18,8 @@ define([
             matches = href.match(/https:\/\/membership.theguardian.com/);
 
         if (matches) {
-            ajax({
-                url: href + '/card',
-                crossOrigin: true
+            fetchJson(href + '/card', {
+                mode: 'cors'
             }).then(function (resp) {
                 if (resp.html) {
                     fastdom.write(function () {
@@ -23,6 +28,11 @@ define([
                             .addClass(ELEMENT_UPGRADED_CLASS);
                     });
                 }
+            })
+            .catch(function (ex) {
+                reportError(ex, {
+                    feature: 'membership-events'
+                });
             });
         }
     }

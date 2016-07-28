@@ -259,3 +259,79 @@ $labour-liverpool-header-element-opacity: .85;
         height: 88%;
     }
 }
+.content__article-body {
+    figure {
+        //these styles need to overide the styles coming from Layout Hint
+        &.element-video--heroic {
+            margin-bottom: $gs-gutter*3;
+
+            @include mq($until: phablet) {
+                margin-bottom: $gs-gutter*4;
+            }
+
+            @include mq($until: mobileLandscape) {
+                margin-bottom: $gs-gutter*5;
+            }
+        }
+
+        figcaption {
+            &.caption-heroic {
+                top: 80%;
+            }
+        }
+    }
+}
+.element-video--heroic {
+    .gu-media-wrapper--video {
+        -webkit-clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
+        clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
+        overflow: hidden;
+    }
+
+    .caption--img {
+        &::before {
+            //this hides the little icon before the caption
+            display: none !important;
+        }
+    }
+
+    .video-caption-bubble {
+        width: 100%;
+        z-index: -10;
+        position: absolute;
+        //this is to align the bubble in the right position, countering the padding put on the caption-heroic
+        margin-left: -$gs-gutter/2;
+        margin-top: -$gs-gutter/2;
+    }
+
+    .video-caption-bubble__svg {
+        fill: #a4d8f4;
+    }
+
+    figcaption {
+        a {
+            position: relative;
+            top: 0px;
+            z-index: 10;
+            display: block;
+            max-width: gs-span(3);
+            border: 0;
+            //needs important as there is another one somewhere else
+            text-decoration: underline !important;
+        }
+    }
+
+    .vjs-big-play-button {
+        .vjs-control-text {
+            &:before {
+                background-color: $news-main-2;
+            }
+        }
+    }
+}
+
+.caption-heroic {
+    position: absolute;
+    z-index: 40;
+    color: $news-main-1;
+}

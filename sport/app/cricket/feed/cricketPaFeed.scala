@@ -2,21 +2,20 @@ package cricketPa
 
 import common.{ExecutionContexts, Logging}
 import cricket.feed.ThrottledTask
-import cricketModel.Match
-import jobs.CricketStatsJob
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import scala.concurrent.Future
 import scala.xml.XML
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
-object PaFeed extends ExecutionContexts with Logging {
-
-  import play.api.Play.current
-
+object PaFeed {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+}
+
+class PaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
+
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
@@ -24,7 +23,7 @@ object PaFeed extends ExecutionContexts with Logging {
   private def getMatchPaResponse(apiMethod: String) : Future[String] = {
     credentials.map ( header => ThrottledTask {
       val endpoint = s"$paEndpoint/$apiMethod"
-      WS.url(endpoint)
+      wsClient.url(endpoint)
         .withHeaders(header, xmlContentType)
         .get
         .map { response =>
@@ -63,11 +62,11 @@ object PaFeed extends ExecutionContexts with Logging {
 
   private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate): Future[Seq[String]] =
     credentials.map ( header => ThrottledTask {
-      val start = dateFormat.print(startDate)
-      val end = dateFormat.print(endDate)
+      val start = PaFeed.dateFormat.print(startDate)
+      val end = PaFeed.dateFormat.print(endDate)
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
-      WS.url(endpoint)
+      wsClient.url(endpoint)
         .withHeaders(header, xmlContentType)
         .withQueryString(("startDate", start),("endDate", end))
         .get
@@ -84,16 +83,4 @@ object PaFeed extends ExecutionContexts with Logging {
       }
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
 
-  def findMatch(team: CricketTeam, date: String): Option[Match] = {
-    // A test match runs over 5 days, so check the dates for the whole period.
-    val requestDate = dateFormat.parseLocalDate(date)
-
-    val matchObjects = for {
-      day <- 0 until 5
-      date <- Some(dateFormat.print(requestDate.minusDays(day)))
-    } yield {
-      CricketStatsJob.getMatch(team, date)
-    }
-    matchObjects.flatten.headOption
-  }
 }

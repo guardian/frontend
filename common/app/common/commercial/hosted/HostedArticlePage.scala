@@ -17,6 +17,9 @@ case class HostedArticlePage(
   mainPicture: String,
   twitterTxt: String,
   emailTxt: String,
+  facebookShareText: Option[String] = None,
+  twitterShareText: Option[String] = None,
+  emailSubjectText: Option[String] = None,
   customData: CustomData
 )
   extends HostedPage {

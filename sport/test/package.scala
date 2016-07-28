@@ -8,13 +8,12 @@ import java.nio.ByteBuffer
 import java.util
 
 import football.controllers.HealthCheck
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import conf.FootballClient
 import pa.{Http, Response => PaResponse}
-import play.api.Play.current
 
 import scala.concurrent.Future
 
@@ -37,12 +36,12 @@ class SportTestSuite extends Suites (
   new MatchFeatureTest,
   new ResultsFeatureTest,
   new rugby.model.MatchParserTest
-) with SingleServerSuite with FootballTestData {
+) with SingleServerSuite with FootballTestData with BeforeAndAfterAll with WithTestWsClient {
 
   override lazy val port: Int = new HealthCheck().testPort
 
   // Inject stub api.
-  FootballClient.http = TestHttp
+  FootballClient.http = new TestHttp(wsClient)
   loadTestData()
 }
 
@@ -83,11 +82,11 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
 }
 
 // Stubs data for Football stats integration tests
-object TestHttp extends Http with ExecutionContexts {
+class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
     FootballHttpRecorder.load(url) {
-      WS.url(url)
+      wsClient.url(url)
         .withRequestTimeout(10000)
         .get()
         .map { wsResponse =>
