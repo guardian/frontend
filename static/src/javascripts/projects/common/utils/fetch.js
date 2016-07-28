@@ -17,8 +17,6 @@ define([
      * - - input can only be a string, Request is not supported
      * - - does not support JSONP
      * - - headers can only be specified as an object literal, the Headers interface is not supported
-     * - Request
-     * - - there's no way to send a body
      * - Response
      * - - blob is not supported
      * - - formData is not supported
