@@ -1,13 +1,12 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import play.api.test.FakeRequest
 import controllers.CommentsController
 import discussion.model.DiscussionKey
 import play.filters.csrf.CSRFConfig
 
-@DoNotDiscover class CommentPageControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CommentPageControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   "Discussion" should "return 200" in {
     val commentsController = new CommentsController(CSRFConfig.fromConfiguration(app.configuration), new DiscussionApiStub(wsClient))

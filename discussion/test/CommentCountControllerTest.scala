@@ -1,11 +1,10 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import controllers.CommentCountController
-import discussion.DiscussionApiLike
 
-@DoNotDiscover class CommentCountControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CommentCountControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   "Discussion" should "return 200" in {
     val result = CommentCountController(new DiscussionApiStub(wsClient)).commentCount("p/37v3a")(TestRequest())

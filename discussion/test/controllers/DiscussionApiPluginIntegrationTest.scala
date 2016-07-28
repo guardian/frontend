@@ -1,17 +1,17 @@
 package controllers
 
 import conf.Configuration
-import discussion.{DiscussionApi, DiscussionApiLike}
+import discussion.DiscussionApiLike
 import discussion.model.Comment
 import org.scalatest._
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
 import play.api.libs.ws.{WS, WSClient}
 
-@DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite {
+@DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithTestWsClient {
 
   case class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 

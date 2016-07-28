@@ -1,17 +1,16 @@
 package discussion
 
 import discussion.model.DiscussionKey
-import org.scalatest.{DoNotDiscover, FreeSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Headers
-import test.ConfiguredTestSuite
-import views.support.URLEncode
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-@DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite {
+@DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   case class UrlValidatorDiscussionAPI(expectedUrl: String, val wsClient: WSClient = wsClient) extends DiscussionApiLike {
     override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {

@@ -1,11 +1,11 @@
 package controllers
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
-import test.{ConfiguredTestSuite, DiscussionApiStub}
+import test.{ConfiguredTestSuite, DiscussionApiStub, WithTestWsClient}
 
-@DoNotDiscover class ProfileActivityControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ProfileActivityControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   val userId = "10000001"
 
