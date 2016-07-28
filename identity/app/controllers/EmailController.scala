@@ -8,7 +8,7 @@ import common.ExecutionContexts
 import utils.SafeLogging
 import play.api.mvc._
 import scala.concurrent.Future
-import model.{EmailSubscriptions, IdentityPage}
+import model.{EmailSubscription, EmailSubscriptions, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
@@ -128,13 +128,26 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
             }
           }
       }).map{ case (form, emailSubscriptions) =>
+        implicit val subscriptionWrites = new Writes[EmailSubscription] {
+          def writes(emailSubscription: EmailSubscription) = Json.obj(
+            "name" -> emailSubscription.name,
+            "theme" -> emailSubscription.theme,
+            "about" -> emailSubscription.about,
+            "description" -> emailSubscription.description,
+            "frequency" -> emailSubscription.frequency,
+            "listId" -> emailSubscription.listId,
+            "popularity" -> emailSubscription.popularity,
+            "subscribedTo" -> emailSubscription.subscribedTo,
+            "exampleUrl" -> emailSubscription.exampleUrl
+          )
+        }
+
         // TODO: refactor for more functional style
         if (form.hasErrors)
           // TODO: better status code?
           Unauthorized(form.errorsAsJson)
         else
-          // TODO: write JSON converter for subscriptions
-          Ok(Json.obj("subscriptions" -> emailSubscriptions.toString))
+          Ok(Json.obj("subscriptions" -> emailSubscriptions.subscriptions.filter(_.subscribedTo)))
       }
     }
   }
