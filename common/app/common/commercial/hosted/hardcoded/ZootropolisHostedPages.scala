@@ -75,7 +75,8 @@ object ZootropolisHostedPages {
     title = "Meet the characters of Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
-    facebookImageUrl = Static("images/commercial/zootropolis.png"),
+    // todo: this is going to change
+    facebookImageUrl = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     cta,
     ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
