@@ -1,22 +1,21 @@
 package model.diagnostics.commercial
 
-import akka.actor.Props
-import com.redis._
+import akka.actor.{ActorSystem, Props}
+import com.redis.{M => Message, S => Subscribed, E => Error, U => Unsubscribed, _}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import play.api.libs.json.Json
-import play.libs.Akka
 import services.S3
 
 /*
 ExpiredKeyEventSubscriber listens to Redis notifications. When a key expires, it gathers
 all the known data for that surrogate key from Redis, and writes a single loggable report object into S3.
 */
-class ExpiredKeyEventSubscriber(client: RedisClient) {
+class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) {
 
   val expiredKeyEventChannel = "__keyevent@0__:expired"
 
-  val subscriber = Akka.system().actorOf(Props(new Subscriber(client)))
+  val subscriber = system.actorOf(Props(new Subscriber(client)))
 
   subscriber ! Register(callback)
   client.setConfig("notify-keyspace-events", "Ex")
@@ -27,10 +26,12 @@ class ExpiredKeyEventSubscriber(client: RedisClient) {
   }
 
   def callback(pubsub: PubSubMessage) = pubsub match {
-    case M(`expiredKeyEventChannel`, id) if !id.endsWith("-data") => {
+    case Message(`expiredKeyEventChannel`, id) if !id.endsWith("-data") => {
       uploadReportToS3(id)
     }
-    case _ =>
+    case Unsubscribed(_, _) =>
+    case Subscribed(_, _) =>
+    case Error(_) =>
   }
 
   private def uploadReportToS3(id: String): Unit = {
