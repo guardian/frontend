@@ -134,11 +134,10 @@ define([
      * @param  {Array} batch
      */
     function getHeightOfAllContainers (batch) {
-        var viewportAdjustment;
-        
+        var viewportHeight;
+
         return fastdom.read(function() {
-            viewportAdjustment = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) / 2;
-            
+            viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
             // Add all the heights of the passed in batch
             // removing the current height
             return batch.filter(elementIsAbove).reduce(function(height, insertion) {
@@ -147,30 +146,13 @@ define([
         });
 
         function elementIsAbove(el) {
-            var parentElArray = [];
-            var parentEl = el.container;
 
-            // Push the container's parents into an array so we can calculate
-            // the position of the elements all the way until the body
-            while (parentEl) {
-                parentElArray.push(parentEl);
-                parentEl = parentEl.offsetParent;
-            }
-
-            // Get the top position of the element + half of the viewport (to account for an element loading
-            // just below the top of the viewport)
-            var elTopPos = parentElArray.reduce(function(topPos, parentEl){
-                    // This will loop up the parents until the body taking into account all the positions
-                    // so that if an element is equal to the scrollY position then this will return 0
-                    return topPos + parentEl.offsetTop + parentEl.clientTop;
-                }, 0) - viewportAdjustment;
-
-            // If the distance of the element from the top of the page minus the height of the
-            // element we are measuring is less than the scroll position then we know that it will
-            // push the page down when loading in
-            return el.container.offsetHeight > -1 &&
-                window.scrollY > 0 &&
-                (elTopPos - el.container.offsetHeight < window.scrollY);
+            var elTopPos = el.container.getBoundingClientRect().top;
+            // If the element has height
+            // and the user has scrolled
+            // and the distance from the top of the element to the top of the viewport is less
+            // than the viewport height then we know the page will be yanked
+            return el.container.offsetHeight > -1 && window.scrollY > 0 && elTopPos < viewportHeight;
         }
 
         function readHeight(el) {
