@@ -324,7 +324,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .animal__info {
         padding-top: 376px;
     }
-    .animal__info-poster {
+    .animal__poster {
         padding-right: 20px;
         float: left;
 
@@ -333,7 +333,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             left: -160px;
         }
     }
-    .animal__info-about-header {
+    .animal__header {
         @include fs-textSans(4);
         font-size: 26px;
         line-height: 28px;
@@ -344,7 +344,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             font-size: 30px;
         }
     }
-    .animal__info-about-download {
+    .animal__download {
         font-weight: 900;
         color: #333333;
         border-bottom: $zootropolisColor 2px solid;
