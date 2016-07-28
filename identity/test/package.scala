@@ -2,9 +2,9 @@ package test
 
 import java.io.File
 
-import controllers.{HealthCheck, SignoutControllerTest, EmailControllerTest, EditProfileControllerTest}
+import controllers.{EditProfileControllerTest, EmailControllerTest, HealthCheck, SignoutControllerTest}
 import filters.StrictTransportSecurityHeaderFilterTest
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.i18n.I18nComponents
 import play.api._
 import play.api.test.Helpers._
@@ -40,6 +40,9 @@ class IdentityTestSuite extends Suites(
   new EmailControllerTest,
   new SignoutControllerTest,
   new StrictTransportSecurityHeaderFilterTest
-) with SingleServerSuite {
-  override lazy val port: Int = new HealthCheck().testPort
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestWsClient {
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

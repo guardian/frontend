@@ -12,7 +12,7 @@ import org.scalatest.concurrent.ScalaFutures
   with ConfiguredTestSuite
   with ScalaFutures
   with BeforeAndAfterAll
-  with WithTestWsClient {
+  with WithMaterializer with WithTestWsClient {
 
   "CDN health check" should "mimic the instance health check" in {
     val testPort: Int = port
