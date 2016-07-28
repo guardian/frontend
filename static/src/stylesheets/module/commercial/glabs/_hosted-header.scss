@@ -13,6 +13,26 @@
     }
 }
 
+.has-no-flex .hosted__header {
+    .hostedbadge {
+        position: absolute;
+        top: 0;
+        margin-top: 30px;
+    }
+
+    .hosted__label {
+        position: absolute;
+        top: 0;
+        left: 140px;
+    }
+
+    .hosted__glogo {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
 .hosted__headerwrap {
     margin: 0 auto;
     text-align: right;

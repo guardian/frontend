@@ -702,7 +702,7 @@ $ima-controls-height: 70px;
 
 .vjs-title-bar {
     @include fs-textSans(3);
-    position: fixed;
+    position: absolute;
     width: 100%;
     height: $gs-baseline*4;
     box-sizing: border-box;
@@ -959,17 +959,6 @@ $ima-controls-height: 70px;
 .podcast-meta__item__link {
     @include fs-textSans(1);
     color: $neutral-7;
-}
-
-/* Tech overrides
-   ========================================================================== */
-.vjs-tech-flash {
-    .vjs-poster,
-    .vjs-big-play-button,
-    .vjs-fullscreen-clickbox,
-    .vast-blocker {
-        display: none !important;
-    }
 }
 
 /* IMA Adverts

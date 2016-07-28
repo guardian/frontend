@@ -2,7 +2,7 @@ package controllers.admin
 
 import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.twirl.api.Html
 import common.{Logging, ExecutionContexts}
 import football.services.GetPaClient
@@ -21,7 +21,7 @@ import pa.LiveMatch
 import play.api.libs.json.JsResultException
 
 
-class FrontsController extends Controller with ExecutionContexts with GetPaClient with Logging {
+class FrontsController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
@@ -195,7 +195,7 @@ class FrontsController extends Controller with ExecutionContexts with GetPaClien
   private def previewFrontsComponent(snapFields: SnapFields)(implicit requestHeader: RequestHeader): Future[PlayResult] = {
     import play.api.Play.current
     val result = (for {
-      previewResponse <- WS.url(snapFields.uri).get()
+      previewResponse <- wsClient.url(snapFields.uri).get()
     } yield {
       val embedContent = (previewResponse.json \ "html").as[String]
       Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))

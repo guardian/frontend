@@ -3,13 +3,15 @@ package controllers
 import common._
 import model._
 import java.net.URI
+
 import org.jsoup.Jsoup
 import play.api.mvc.{ Controller, Action }
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.libs.json.{ JsObject, Json }
+
 import scala.concurrent.Future
 
-class CardController extends Controller with Logging with ExecutionContexts {
+class CardController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
   import play.api.Play.current
 
@@ -36,7 +38,7 @@ class CardController extends Controller with Logging with ExecutionContexts {
       "gov.uk")
 
     host match {
-      case a if (whiteList.contains(a)) => WS.url(r).get().map { response =>
+      case a if (whiteList.contains(a)) => wsClient.url(r).get().map { response =>
           response.status match {
             case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
@@ -61,7 +63,7 @@ class CardController extends Controller with Logging with ExecutionContexts {
           }
         }
 
-      case w if (w.startsWith("en.wikipedia.org")) => WS.url(r).get().map { response =>
+      case w if (w.startsWith("en.wikipedia.org")) => wsClient.url(r).get().map { response =>
           response.status match {
             case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
@@ -85,5 +87,3 @@ class CardController extends Controller with Logging with ExecutionContexts {
     }
   }
 }
-
-object CardController extends CardController

@@ -36,7 +36,7 @@
         @if(isMain) {
             <meta itemprop="representativeOfPage" content="true">
         }
-        <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
+        <meta itemprop="url" content="@ImgSrc.findNearestSrc(picture, Item700)">
         <meta itemprop="width" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.width)">
         <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
 

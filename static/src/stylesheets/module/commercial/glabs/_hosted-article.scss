@@ -1,0 +1,357 @@
+$zootropolisColor: #2ec869; //need to remove references to brand colours here eventually, this stops it breaking for now
+
+.hosted-article-page {
+    .media-primary.media-primary--showcase {
+        position: relative;
+        height: 378px;
+        margin-bottom: 10px;
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: linear-gradient(to top, rgba(51, 51, 51, .4) 0%, rgba(51, 51, 51, .4) 2%, transparent 100%);
+        }
+    }
+    .title {
+        @include fs-textSans(4);
+        position: absolute;
+        z-index: 3;
+        bottom: 38px;
+        left: 10px;
+        color: #ffffff;
+        font-size: 36px;
+        line-height: 36px;
+        font-weight: bold;
+
+        @include mq(tablet) {
+            left: $gs-gutter * 1.5;
+        }
+
+        @include mq(desktop) {
+            left: $gs-column-width + 20;
+        }
+
+        @include mq(leftCol) {
+            left: $gs-column-width * 3;
+        }
+
+        @include mq(wide) {
+            left: $gs-column-width * 4 + 20;
+        }
+    }
+    .caption {
+        position: absolute;
+        left: 10px;
+        top: 390px;
+        right: unset;
+
+        @include mq(tablet) {
+            left: $gs-gutter * 1.5;
+        }
+
+        @include mq(desktop) {
+            left: unset;
+            right: $gs-column-width + 10;
+            width: $gs-column-width * 3 + 40;
+        }
+
+        @include mq(leftCol) {
+            right: 10px;
+        }
+    }
+    .content__meta-container {
+        @include mq($until: desktop) {
+            margin-top: 48px;
+        }
+    }
+    .content[class*='-advertisement-feature'] {
+        .social__item--pinterest {
+            display: block;
+        }
+    }
+    .content__article-body {
+        .intro {
+            font-size: 26px;
+            line-height: 30px;
+            font-weight: 100;
+        }
+        .drop-cap {
+            @include fs-textSans(4);
+            display: inline-block;
+            float: left;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 480%;
+            line-height: 68px;
+            width: 77px;
+            height: 77px;
+            margin-right: 14px;
+        }
+        .text {
+            line-height: 20px;
+        }
+    }
+    .hosted__standfirst {
+        padding: 0;
+        margin: 50px 0 0;
+
+        .hosted__terms {
+            margin-top: 0;
+            padding-top: 10px;
+            border-top: 2px solid #eeeeee;
+        }
+    }
+
+    .hide-on-desktop {
+        .hosted__next-video {
+            margin-top: 30px;
+        }
+        .hosted__next-video--header,
+        .hosted__next-video--tile {
+            margin: 0;
+        }
+    }
+    .content__secondary-column {
+        .hosted__next-video {
+            margin-top: 76px;
+        }
+    }
+}
+
+
+.hosted-article-page.zootropolis {
+    @mixin animal-stripe {
+        position: absolute;
+        z-index: 1;
+        width: gs-span(5);
+        left: ($gs-column-width * .2) * -1;
+        height: 340px;
+
+        @include mq(tablet) {
+            left: $gs-column-width * -1;
+            top: 20px;
+            width: gs-span(11);
+        }
+
+        @include mq(desktop) {
+            left: ($gs-gutter * 3) * -1;
+            top: 20px;
+            width: gs-span(13);
+        }
+
+        @include mq(leftCol) {
+            left: ($gs-column-width * 4 + 20) * -1;
+            width: gs-span(16) + $gs-gutter * 2;
+        }
+    }
+    @mixin animal-stripe-character {
+        z-index: 2;
+        position: absolute;
+        padding-bottom: 0 !important; //u-responsive-ratio has inline styles which sets padding-bottom to 100% to keep the proper ratio but I dont need to care about this here
+    }
+    .animal {
+        position: relative;
+        margin-top: 30px;
+
+        &.con-artist {
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: -30px;
+                left: 26px;
+                height: 370px;
+                width: 282px;
+
+                img {
+                    height: 370px;
+                    width: 282px;
+                }
+
+                @include mq(desktop) {
+                    left: 176px;
+                }
+            }
+        }
+        &.rookie {
+            margin-top: 50px;
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: 0;
+                right: 116px;
+                height: 340px;
+                width: 240px;
+
+                img {
+                    height: 340px;
+                    width: 240px;
+                }
+
+                @include mq(desktop) {
+                    right: 300px;
+                }
+            }
+        }
+        &.buffalo {
+            margin-top: 140px;
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: -80px;
+                left: 0;
+                height: 420px;
+                width: 310px;
+
+                img {
+                    height: 420px;
+                    width: 310px;
+                }
+
+                @include mq(desktop) {
+                    top: -130px;
+                    left: 120px;
+                    height: 470px;
+                    width: 382px;
+
+                    img {
+                        height: 470px;
+                        width: 382px;
+                    }
+                }
+            }
+        }
+        &.dmv-employee {
+            margin-top: 40px;
+            @include mq(desktop) {
+                margin-top: 100px;
+            }
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: 24px;
+                right: 0;
+                height: 316px;
+                width: 408px;
+
+                img {
+                    height: 316px;
+                    width: 408px;
+                }
+
+                @include mq(desktop) {
+                    top: -110px;
+                    height: 450px;
+                    width: 550px;
+
+                    img {
+                        height: 450px;
+                        width: 550px;
+                    }
+                }
+            }
+        }
+        &.desk-clerk {
+            margin-top: 40px;
+            @include mq(desktop) {
+                margin-top: 190px;
+            }
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: -20px;
+                left: 0;
+                height: 360px;
+                width: 346px;
+
+                img {
+                    height: 360px;
+                    width: 346px;
+                }
+
+                @include mq(desktop) {
+                    top: -190px;
+                    left: 100px;
+                    height: 530px;
+                    width: 496px;
+
+                    img {
+                        height: 530px;
+                        width: 496px;
+                    }
+                }
+            }
+        }
+        &.pop-star {
+            margin-top: 160px;
+            .u-responsive-ratio {
+                @include animal-stripe-character;
+                top: -80px;
+                left: 0;
+                height: 420px;
+                width: 324px;
+
+                img {
+                    height: 420px;
+                    width: 324px;
+                }
+
+                @include mq(desktop) {
+                    top: -114px;
+                    height: 454px;
+                    width: 360px;
+
+                    img {
+                        height: 454px;
+                        width: 360px;
+                    }
+                }
+            }
+        }
+    }
+    .animal__stripe-odd {
+        @include animal-stripe;
+        background-color: #f26623;
+    }
+    .animal__stripe-even {
+        @include animal-stripe;
+        background-color: #3370b3;
+    }
+    .animal__info {
+        padding-top: 376px;
+    }
+    .animal__poster {
+        padding-right: 20px;
+        float: left;
+
+        @include mq(leftCol) {
+            position: absolute;
+            left: -160px;
+        }
+    }
+    .animal__header {
+        @include fs-textSans(4);
+        font-size: 26px;
+        line-height: 28px;
+        padding-bottom: 16px;
+        font-weight: bold;
+
+        @include mq(desktop) {
+            font-size: 30px;
+        }
+    }
+    .animal__download {
+        font-weight: 900;
+        color: #333333;
+        border-bottom: $zootropolisColor 2px solid;
+        text-decoration: none;
+    }
+    .hosted__cta-btn-text {
+        background-color: $zootropolisColor;
+        color: #ffffff;
+
+        .inline-icon {
+            fill: #ffffff;
+        }
+    }
+}

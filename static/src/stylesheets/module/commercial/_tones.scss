@@ -10,8 +10,7 @@
         .commercial--tone__highlight {
             color: $accentColour;
         }
-        .commercial__header,
-        .commercial--v-high__header {
+        .commercial__header {
             background-color: $colour;
 
             @if $titleColor {
@@ -29,14 +28,6 @@
                     &:hover {
                         border-color: rgba($titleColor, 1);
                     }
-                }
-            }
-        }
-        .commercial--multi__header {
-            .commercial__title {
-                a {
-                    color: $colour;
-                    fill: $colour;
                 }
             }
         }

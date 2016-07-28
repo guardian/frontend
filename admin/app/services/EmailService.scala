@@ -16,13 +16,14 @@ import scala.concurrent.{Future, Promise}
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
-object EmailService extends ExecutionContexts with Logging {
+class EmailService(akkaAsync: AkkaAsync) extends ExecutionContexts with Logging {
 
   private lazy val client = {
     val cl = new AmazonSimpleEmailServiceAsyncClient(mandatoryCredentials)
     cl.setRegion(getRegion(EU_WEST_1))
     cl
   }
+  val sendAsync = client.sendAsyncEmail(akkaAsync)_
 
   def shutdown(): Unit = client.shutdown()
 
@@ -58,7 +59,7 @@ object EmailService extends ExecutionContexts with Logging {
       .withDestination(new EmailDestination().withToAddresses(to).withCcAddresses(cc))
       .withMessage(message)
 
-    val futureResponse = client.sendAsyncEmail(request)
+    val futureResponse = sendAsync(request)
 
     futureResponse onSuccess {
       case response => log.info(s"Sent message ID ${response.getMessageId}")
@@ -74,10 +75,10 @@ object EmailService extends ExecutionContexts with Logging {
 
   private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsyncClient) {
 
-    def sendAsyncEmail(request: SendEmailRequest): Future[SendEmailResult] = {
+    def sendAsyncEmail(akkaAsync: AkkaAsync)(request: SendEmailRequest): Future[SendEmailResult] = {
       val promise = Promise[SendEmailResult]()
 
-      AkkaAsync.after(1.minute) {
+      akkaAsync.after(1.minute) {
         promise.tryFailure(new TimeoutException(s"Timed out"))
       }
 

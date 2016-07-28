@@ -242,7 +242,7 @@ trait CommercialSwitches {
     "British Council's beacon",
     owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = false
   )
 
@@ -312,7 +312,7 @@ trait CommercialSwitches {
     "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = false
   )
 
@@ -322,7 +322,17 @@ trait CommercialSwitches {
     "If on, gallery pages for Visit Britain are available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
+    exposeClientSide = false
+  )
+
+  val hostedVideoDisneyZootropolis = Switch(
+    group = CommercialLabs,
+    "hosted-video-zootropolis",
+    "If on, video page for Zootropolis is available",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = false
   )
 
@@ -339,20 +349,10 @@ trait CommercialSwitches {
   val hostedArticle = Switch(
     group = CommercialLabs,
     name = "hosted-article",
-    description = "Show hosted article or 404.",
+    description = "Show Zootropolis hosted article or 404.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
-  )
-
-  val hostedContentTracking = Switch(
-    group = CommercialLabs,
-    name = "hosted-content-tracking",
-    description = "Use special extra tracking parameters for hosted content",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = true
   )
 }

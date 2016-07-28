@@ -5,8 +5,6 @@ import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
 import model.NoCache
 import scala.concurrent.Future
-import play.api.libs.ws.WS
-import play.api.Play.current
 import model.quality.QualityData
 
 class AnalyticsController extends Controller with Logging with AuthLogging with ExecutionContexts {

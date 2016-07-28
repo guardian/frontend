@@ -1,0 +1,186 @@
+
+$renaultColor: #ffc421;
+$renaultLight: #fff9e9;
+$omgbColor: #e41f13;
+$zootropolisColor: #2ec869;
+$zootropolisLight: #d5f4e1;
+$leffeColor: #dec190;
+$leffeLight: #f8f2e9;
+
+
+.hosted-tone--test {
+    color: #a00000;
+}
+
+.hosted-tone-bg--test {
+    background-color: #a00000;
+}
+
+.hosted-tone-border--test {
+    border-color: #a00000;
+}
+
+.hosted-tone--visit-britain {
+    color: $omgbColor;
+}
+
+.hosted-tone-bg--visit-britain {
+    background-color: $omgbColor;
+}
+
+.hosted-tone-border--visit-britain {
+    border-color: $omgbColor;
+}
+
+.hosted-page.visit-britain ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $omgbColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
+.hosted-tone--renault {
+    color: $renaultColor;
+}
+
+.hosted-tone-bg--renault {
+    background-color: $renaultColor;
+}
+
+.hosted-tone-btn--renault {
+    &.hosted-tone-btn--renault,
+    &:focus,
+    &:hover {
+        background-color: $renaultColor;
+        border-color: $renaultColor;
+    }
+}
+
+.hosted-page.renault {
+    .hosted-next-autoplay {
+        .hosted-next-autoplay__poster-timer,
+        .hosted-next-autoplay__tile {
+            background-color: $renaultColor;
+        }
+        .hosted-next-autoplay__video,
+        .hosted-next-autoplay__next-in-series {
+            border-top: 1px solid $renaultColor;
+        }
+    }
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $renaultColor;
+        background: $renaultLight;
+    }
+    .hosted__link {
+        color: $renaultColor;
+    }
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            background-color: $renaultColor;
+        }
+    }
+}
+
+.hosted-tone--leffe {
+    color: $leffeColor;
+}
+
+.hosted-tone-bg--leffe {
+    background-color: $leffeColor;
+}
+
+.hosted-tone-btn--leffe {
+    &.hosted-tone-btn--leffe,
+    &:focus,
+    &:hover {
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }
+}
+
+.hosted-page.leffe {
+    .hosted-next-autoplay {
+        .hosted-next-autoplay__poster-timer,
+        .hosted-next-autoplay__tile {
+            background-color: $leffeColor;
+        }
+        .hosted-next-autoplay__video,
+        .hosted-next-autoplay__next-in-series {
+            border-top: 1px solid $leffeColor;
+        }
+    }
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $leffeColor;
+        background: $leffeLight;
+    }
+    .hosted__link {
+        color: $leffeColor;
+    }
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            background-color: $leffeColor;
+        }
+    }
+}
+
+.hosted-tone--zootropolis {
+    color: $zootropolisColor;
+}
+
+.hosted-tone-bg--zootropolis {
+    background-color: $zootropolisColor;
+}
+
+.hosted-tone-btn--zootropolis {
+    &.hosted-tone-btn--zootropolis,
+    &:focus,
+    &:hover {
+        background-color: $zootropolisColor;
+        border-color: $zootropolisColor;
+        color: #ffffff;
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.zootropolis {
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $zootropolisColor;
+        background: $zootropolisLight;
+    }
+}
+
+.hostedbadge.hosted-tone-bg--zootropolis {
+    .hostedbadge__info {
+        color: #ffffff;
+    }
+}
+
+.hosted-page.zootropolis {
+    .hosted__link {
+        color: $zootropolisColor;
+    }
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            background-color: $zootropolisColor;
+            color: #ffffff;
+
+            .site-message__close-btn {
+                border-color: #ffffff;
+
+                .inline-cross {
+                    fill: #ffffff;
+                }
+            }
+        }
+    }
+}

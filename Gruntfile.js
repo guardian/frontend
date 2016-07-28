@@ -117,7 +117,6 @@ module.exports = function (grunt) {
         grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
-    grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
     var identity = function (x) { return x; };
@@ -125,7 +124,6 @@ module.exports = function (grunt) {
         'compile:css',
         (options.isDev ? 'develop:js' : 'compile:js'),
         'compile:fonts',
-        'compile:flash',
         !options.isDev && 'makeDeploysRadiator',
         !options.isDev && 'asset_hash',
         'compile:conf'

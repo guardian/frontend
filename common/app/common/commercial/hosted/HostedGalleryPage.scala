@@ -15,13 +15,15 @@ case class HostedGalleryPage(
   ctaLink: String,
   ctaButtonText: String,
   ctaIndex: Option[Integer] = None,
-  shareText: Option[String] = None,
+  facebookShareText: Option[String] = None,
+  twitterShareText: Option[String] = None,
+  emailSubjectText: Option[String] = None,
   images: List[HostedGalleryImage],
   nextGalleryNames: List[String] = List()
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
-  val twitterText = shareText.getOrElse(if(standfirst.length < 136) standfirst else title) + " #ad"
+  val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextGalleries: List[HostedGalleryPage] = nextGalleryNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
     case gallery: HostedGalleryPage => Some(gallery)
@@ -44,6 +46,7 @@ case class HostedGalleryPage(
         "keywords" -> JsString(keywordName),
         "toneIds" -> JsString(toneId),
         "tones" -> JsString(toneName),
+        "pageName" -> JsString(pageName),
         "trackingPrefix" -> JsString(s"Hosted:GFE:gallery:$pageName:"),
         "images" -> JsArray(images.map((image) => JsString(image.url))),
         "ctaIndex" -> JsNumber(ctaIndex.map(BigDecimal(_)).getOrElse(BigDecimal(images.length - 1)))
