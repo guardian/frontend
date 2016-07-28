@@ -407,7 +407,7 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-    // Owner: Super, Super, Frank Longden-Morris
+    // Owner: Frank Longden
   val ArticleBadgesSwitch = Switch(
     SwitchGroup.Feature,
     "article-header-badge",
