@@ -90,10 +90,8 @@ object ZootropolisHostedPages {
   private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
     .copy(nextPage = Some(articlePageWithoutNextPage)) else videoPageWithoutNextPage
 
-  //private lazy val articlePage = if (Switches.hostedVideoDisneyZootropolis.isSwitchedOn) articlePageWithoutNextPage
-   // .copy(nextPage = Some(videoPageWithoutNextPage)) else articlePageWithoutNextPage
-
-  private lazy val articlePage = articlePageWithoutNextPage.copy(nextPage = Some(videoPageWithoutNextPage))
+  private lazy val articlePage = if (Switches.hostedVideoDisneyZootropolis.isSwitchedOn) articlePageWithoutNextPage
+    .copy(nextPage = Some(videoPageWithoutNextPage)) else articlePageWithoutNextPage
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
