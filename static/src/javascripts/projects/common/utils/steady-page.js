@@ -151,7 +151,8 @@ define([
             // and the user has scrolled
             // and the distance from the top of the element to the top of the viewport is less
             // than the viewport height then we know the page will be yanked
-            return el.container.offsetHeight > -1 && window.scrollY > 0 && elTopPos < viewportHeight;
+
+            return el.container.offsetHeight > -1 && window.scrollY > 0 && elTopPos < Math.max(viewportHeight, el.container.offsetHeight || 0);
         }
 
         function readHeight(el) {
