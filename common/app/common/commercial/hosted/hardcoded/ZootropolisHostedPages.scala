@@ -44,7 +44,7 @@ object ZootropolisHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/07/18/HLS/160718GLZootropolisSpot_h264_mezzanine.m3u8"
       ),
       cta,
-      ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
+      ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
       twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
     )
   }
@@ -78,7 +78,7 @@ object ZootropolisHostedPages {
     // todo: this is going to change
     facebookImageUrl = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     cta,
-    ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
+    ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
     emailTxt = "Disney Zootropolis asset pack on the Guardian",
