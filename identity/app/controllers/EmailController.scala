@@ -144,8 +144,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
 
         // TODO: refactor for more functional style
         if (form.hasErrors)
-          // TODO: better status code?
-          Unauthorized(form.errorsAsJson)
+          Forbidden(form.errorsAsJson)
         else
           Ok(Json.obj("subscriptions" -> emailSubscriptions.subscriptions.filter(_.subscribedTo)))
       }
