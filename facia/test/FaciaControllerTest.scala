@@ -12,7 +12,7 @@ import org.scalatest._
 import controllers.FaciaControllerImpl
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite
-  with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach with WithTestWsClient {
+  with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach with WithMaterializer with WithTestWsClient {
 
   val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
