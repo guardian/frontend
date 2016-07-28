@@ -1,10 +1,10 @@
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{FootballLifecycle, CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballLifecycle}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import cricketPa.PaFeed
@@ -38,6 +38,7 @@ trait SportServices {
 }
 
 trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 }

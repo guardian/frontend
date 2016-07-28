@@ -5,7 +5,7 @@ import java.io.File
 import controllers.{FaciaController, HealthCheck, front}
 import controllers.front.{FrontJsonFapi, FrontJsonFapiLive}
 import org.fluentlenium.core.domain.FluentWebElement
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.libs.ws.WSClient
 import recorder.HttpRecorder
 
@@ -49,6 +49,8 @@ class FaciaTestSuite extends Suites (
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
-) with SingleServerSuite {
-  override lazy val port: Int = new HealthCheck().testPort
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

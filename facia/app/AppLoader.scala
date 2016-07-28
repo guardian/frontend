@@ -33,6 +33,7 @@ trait FapiServices {
 
 trait Controllers extends FaciaControllers {
   self: BuiltInComponents =>
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val assets = wire[Assets]

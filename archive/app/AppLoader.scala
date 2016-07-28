@@ -1,10 +1,10 @@
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.{ArchiveController, HealthCheck}
 import dev.DevParametersHttpRequestHandler
 import model.ApplicationIdentity
@@ -13,6 +13,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import services.ArchiveMetrics
 import router.Routes
 
@@ -21,6 +22,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val archiveController = wire[ArchiveController]
 }

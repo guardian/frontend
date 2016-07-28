@@ -2,7 +2,7 @@ package test
 
 import conf.Configuration
 import controllers.HealthCheck
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response => NingResponse}
@@ -82,6 +82,8 @@ class DiscussionTestSuite extends Suites (
   new discussion.DiscussionApiTest,
   new CommentCountControllerTest,
   new ProfileTest
-  ) with SingleServerSuite {
-  override lazy val port: Int = new HealthCheck().testPort
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

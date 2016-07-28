@@ -1,6 +1,6 @@
 import commercial.CommercialLifecycle
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import _root_.commercial.feeds.{FeedsFetcher, FeedsParser}
@@ -8,7 +8,7 @@ import akka.actor.ActorSystem
 import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.HealthCheck
 import controllers.commercial.CommercialControllers
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
@@ -27,6 +27,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers extends CommercialControllers {
+  def wsClient: WSClient
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
 }
