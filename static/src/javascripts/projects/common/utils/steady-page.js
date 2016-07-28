@@ -109,7 +109,7 @@ define([
             cb: cb
         });
 
-        return (running ? promise : go(initialState))
+        return (running ? promise : go(initialState));
     }
 
 

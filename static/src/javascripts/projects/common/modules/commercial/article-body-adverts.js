@@ -123,7 +123,7 @@ define([
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
 
-        function insertion () {
+        function insertion (ad, para) {
             para.parentNode.insertBefore(ad, para);
         }
 
@@ -131,9 +131,11 @@ define([
         // insert ad using steady page
         // to avoid jumping the user
         if (detect.isBreakpoint({max: 'tablet'})) {
-            steadyPage.insert(ad, insertion);
+            steadyPage.insert(ad, function(){
+                insertion(ad, para);
+            });
         } else {
-            insertion();
+            insertion(ad, para);
         }
     }
 
