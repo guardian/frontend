@@ -7,14 +7,15 @@ import services.{IdRequestParser, ReturnUrlVerifier}
 import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
 import conf.IdentityConfiguration
-import play.api.libs.ws._
+import play.api.libs.ws.WSClient
 import exacttarget.SubscriptionDef
 
 class ExactTargetController(
                            conf: IdentityConfiguration,
                            returnUrlVerifier: ReturnUrlVerifier,
                            idRequestParser: IdRequestParser,
-                           authenticatedActions: AuthenticatedActions)
+                           authenticatedActions: AuthenticatedActions,
+                           wsClient: WSClient)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import play.api.Play.current
@@ -39,7 +40,7 @@ class ExactTargetController(
             val triggeredEmailRequest =
               exactTargetFactory.createRequest(emailAddress, parameters, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
 
-            WS.url(exactTargetFactory.endPoint.toString).withHeaders(
+            wsClient.url(exactTargetFactory.endPoint.toString).withHeaders(
               "Content-Type" -> "text/xml; charset=utf-8",
               "SOAPAction" -> triggeredEmailRequest.getSoapAction
             ).post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
