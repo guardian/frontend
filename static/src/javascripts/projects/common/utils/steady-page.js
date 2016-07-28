@@ -41,26 +41,25 @@ define([
         var batch = [];
         var batchHeightsBeforeInsert;
 
-        promise = fastdom.read(function(){
+        promise = new Promise(function(resolve){
             while (!q.empty()) {
                 // Take the current queue items and add them to the batch array
                 batch.push(q.dequeue());
             }
 
-            return batch;
+            resolve(batch);
         })
-            .then(function(){
-                return getHeightOfAllContainers(batch);
-            })
-            .then(function(heightsBeforeIns) {
-                batchHeightsBeforeInsert = heightsBeforeIns || 0;
-                return insertElements(batch);
-            })
-            .then(function(){
-                return getHeightOfAllContainers(batch).then(function(newHeights) {
-                    return assign(state, {
-                        newHeight: newHeights - batchHeightsBeforeInsert
-                    });
+        .then(function(){
+            return getHeightOfAllContainers(batch);
+        })
+        .then(function(heightsBeforeIns) {
+            batchHeightsBeforeInsert = heightsBeforeIns || 0;
+            return insertElements(batch);
+        })
+        .then(function(){
+            return getHeightOfAllContainers(batch).then(function(newHeights) {
+                return assign(state, {
+                    newHeight: newHeights - batchHeightsBeforeInsert
                 });
             });
         })
