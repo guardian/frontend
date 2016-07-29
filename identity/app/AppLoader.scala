@@ -1,16 +1,17 @@
 import http.IdentityHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common.CloudWatchMetricsLifecycle
 import common.Logback.LogstashLifecycle
 import conf._
 import conf.switches.SwitchboardLifecycle
-import controllers.{IdentityControllers, Assets, HealthCheck}
+import controllers.{Assets, HealthCheck, IdentityControllers}
 import dev.DevAssetsController
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpErrorHandler
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
@@ -22,6 +23,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait Controllers extends IdentityControllers {
   self: BuiltInComponents with IdentityConfigurationComponents =>
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val assets = wire[Assets]

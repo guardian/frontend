@@ -1,7 +1,8 @@
 define([
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
+    'common/utils/fetch-json',
+    'common/utils/report-error',
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/business/stock-value.html',
@@ -10,8 +11,9 @@ define([
     'lodash/collections/map'
 ], function (
     $,
-    ajax,
     config,
+    fetchJson,
+    reportError,
     template,
     svgs,
     stockValueTemplate,
@@ -24,11 +26,13 @@ define([
     }
 
     function getStocksData() {
-        return ajax({
-            url: '/business-data/stocks.json',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
+        return fetchJson('/business-data/stocks.json', {
+            mode: 'cors'
+        })
+        .catch(function (ex) {
+            reportError(ex, {
+                feature: 'stocks'
+            });
         });
     }
 

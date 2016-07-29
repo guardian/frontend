@@ -119,10 +119,13 @@ define([
                         writer = firstCall.args[1];
                     writer([paragraph]);
 
-                    var expectedAd = fixture.querySelector('#dfp-ad--im');
-                    expect(expectedAd).toBeTruthy();
+                    // Wait until fastdom has written before checking
+                    fastdom.read(function(){
+                        var expectedAd = fixture.querySelector('#dfp-ad--im');
+                        expect(expectedAd).toBeTruthy();
+                        done();
+                    });
 
-                    done();
                 });
             });
 

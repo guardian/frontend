@@ -16,14 +16,13 @@ import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
-import play.api.Play.current
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
 
-object LiveFapiFrontPress extends FapiFrontPress {
+class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
@@ -51,7 +50,7 @@ object LiveFapiFrontPress extends FapiFrontPress {
     FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
-object DraftFapiFrontPress extends FapiFrontPress {
+class DraftFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
@@ -93,6 +92,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
   implicit val apiClient: ApiClient
+  val wsClient: WSClient
   def pressByPathId(path: String): Future[Unit]
 
   def collectionContentWithSnaps(
@@ -152,7 +152,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         embedType <- content.properties.embedType if embedType == "json.html"
         embedUri <- content.properties.embedUri
       } yield {
-        val maybeUpdate = WS.url(embedUri).get().map { response =>
+        val maybeUpdate = wsClient.url(embedUri).get().map { response =>
           Json.parse(response.body).validate[EmbedJsonHtml] match {
             case JsSuccess(embed, _) => {
               beforeEnrichment.copy(embedHtml = Some(embed.html))

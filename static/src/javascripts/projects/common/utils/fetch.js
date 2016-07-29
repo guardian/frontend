@@ -16,9 +16,7 @@ define([
      * - fetch
      * - - input can only be a string, Request is not supported
      * - - does not support JSONP
-     * - - headers can't be specified
-     * - Request
-     * - - there's no way to send a body
+     * - - headers can only be specified as an object literal, the Headers interface is not supported
      * - Response
      * - - blob is not supported
      * - - formData is not supported
@@ -27,6 +25,7 @@ define([
      * If you're still wondering what it actually supports
      * - CORS
      * - credentials
+     * - body, any body that you want to add to your request except for GET or HEAD
      * - response.text() and response.json()
      * - response.ok .status .statusText
      */
@@ -60,6 +59,8 @@ define([
             type: 'text',
             method: options.method || 'GET',
             crossOrigin: isCors,
+            headers: options.headers,
+            data: options.body,
             withCredentials: withCredentials
         };
     }

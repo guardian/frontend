@@ -3,16 +3,18 @@ package discussion
 import java.net.URLEncoder
 
 import common.{ExecutionContexts, Logging}
+
 import scala.concurrent.Future
 import discussion.model._
-import play.api.mvc.{RequestHeader, Headers}
+import play.api.mvc.{Cookie, Headers, RequestHeader}
 import discussion.util.Http
-import play.api.libs.ws.WSResponse
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import discussion.model.CommentCount
 import com.netaporter.uri.dsl._
+import conf.Configuration
 
-trait DiscussionApi extends Http with ExecutionContexts with Logging {
+trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
 
   protected def GET(url: String, headers: (String, String)*): Future[WSResponse]
 
@@ -183,7 +185,33 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
+
+  def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
+    Map("categoryId" -> Seq(abuseReport.categoryId.toString),
+      "commentId" -> Seq(abuseReport.commentId.toString),
+      "reason" -> abuseReport.reason.toSeq,
+      "email" -> abuseReport.email.toSeq)
+  }
+
+  def postAbuseReport(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie]): Future[WSResponse] = {
+    val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
+    val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
+    if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
+    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
+
+  }
 }
+
+class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
+  override protected val apiRoot =
+    if (Configuration.environment.isProd)
+      Configuration.discussion.apiRoot
+    else
+      Configuration.discussion.apiRoot.replaceFirst("https://", "http://") // CODE SSL cert is defective and expensive to fix
+
+  override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
+}
+
 
 object AuthHeaders {
   val guIdToken = "GU-IdentityToken"

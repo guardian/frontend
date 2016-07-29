@@ -11,7 +11,7 @@ import services._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
+class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress) extends JsonQueueWorker[PressJob] with Logging {
   override val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
@@ -36,8 +36,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
     log.info(s"Processing job from tool to update $path on $pressType")
 
     lazy val pressFuture: Future[Unit] = pressType match {
-      case Draft => DraftFapiFrontPress.pressByPathId(path)
-      case Live => LiveFapiFrontPress.pressByPathId(path)}
+      case Draft => draftFapiFrontPress.pressByPathId(path)
+      case Live => liveFapiFrontPress.pressByPathId(path)}
 
     lazy val forceConfigUpdateFuture: Future[_] =
       if (forceConfigUpdate.exists(identity)) {

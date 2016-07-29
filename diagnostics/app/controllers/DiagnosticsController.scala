@@ -1,11 +1,11 @@
 package controllers
 
 import common._
-import org.joda.time.Instant
 import play.api.mvc._
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
+import model.diagnostics.commercial.Report
 import model.TinyResponse
 
 class DiagnosticsController extends Controller with Logging {
@@ -42,6 +42,8 @@ class DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent()
   }
 
+  def cssOptions = postOptions
+
   def csp = Action(jsonParser) { implicit request =>
     if (conf.switches.Switches.CspReporting.isSwitchedOn && r.nextInt(100) == 1) {
       CSP.report(request.body)
@@ -49,6 +51,18 @@ class DiagnosticsController extends Controller with Logging {
 
     TinyResponse.noContent()
   }
+
+  def cspOptions = postOptions
+
+  def commercialReport = Action(jsonParser) { implicit request =>
+    if (mvt.CommercialClientLoggingVariant.isParticipating(request)) {
+      Report.report(request.body)
+    }
+
+    TinyResponse.noContent()
+  }
+
+  def commercialOptions = postOptions
 
   def postOptions: Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))

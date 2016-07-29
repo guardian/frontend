@@ -15,8 +15,6 @@ case class HostedArticlePage(
   cta: HostedCallToAction,
   ctaBanner: String,
   mainPicture: String,
-  twitterTxt: String,
-  emailTxt: String,
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,

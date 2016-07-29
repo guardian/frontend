@@ -38,7 +38,7 @@ class SportTestSuite extends Suites (
   new rugby.model.MatchParserTest
 ) with SingleServerSuite with FootballTestData with BeforeAndAfterAll with WithTestWsClient {
 
-  override lazy val port: Int = new HealthCheck().testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 
   // Inject stub api.
   FootballClient.http = new TestHttp(wsClient)

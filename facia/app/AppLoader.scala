@@ -4,7 +4,8 @@ import common._
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{Assets, FaciaControllers, HealthCheck}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
@@ -16,15 +17,23 @@ import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
+import play.api.libs.ws.WSClient
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
+trait FapiServices {
+  def wsClient: WSClient
+  lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
+  lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
+}
+
 trait Controllers extends FaciaControllers {
   self: BuiltInComponents =>
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val assets = wire[Assets]
@@ -47,7 +56,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with FapiServices {
 
   lazy val router: Router = wire[Routes]
 
