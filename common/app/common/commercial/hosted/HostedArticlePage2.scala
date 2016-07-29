@@ -10,7 +10,6 @@ case class HostedArticlePage2(
   pageName: String,
   title: String,
   standfirst: String,
-  facebookImageUrl: String,
   cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
@@ -45,7 +44,7 @@ case class HostedArticlePage2(
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
-        "og:image" -> facebookImageUrl,
+        "og:image" -> mainPicture,
         "fb:app_id" -> "180444840287"
       )
     )

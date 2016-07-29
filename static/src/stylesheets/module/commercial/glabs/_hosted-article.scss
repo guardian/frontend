@@ -47,6 +47,31 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             left: $gs-column-width * 4 + 20;
         }
     }
+    .caption {
+        position: absolute;
+        left: 10px;
+        top: 390px;
+        right: unset;
+
+        @include mq(tablet) {
+            left: $gs-gutter * 1.5;
+        }
+
+        @include mq(desktop) {
+            left: unset;
+            right: $gs-column-width + 10;
+            width: $gs-column-width * 3 + 40;
+        }
+
+        @include mq(leftCol) {
+            right: 10px;
+        }
+    }
+    .content__meta-container {
+        @include mq($until: desktop) {
+            margin-top: 48px;
+        }
+    }
     .content[class*='-advertisement-feature'] {
         .social__item--pinterest {
             display: block;
