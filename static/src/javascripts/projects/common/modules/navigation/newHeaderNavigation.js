@@ -12,6 +12,25 @@ define([
     var mainMenuEl = $(mainMenuId);
     var burgerLink = $('.js-change-link');
     var burgerIcon = $('.js-animate-menu');
+    var primaryItems = $('.js-close-nav-list');
+
+    function closeAllOtherPrimaryLists(targetItem) {
+        primaryItems.each(function (item) {
+
+            if (item !== targetItem) {
+                item.removeAttribute("open");
+            }
+        });
+    }
+
+    function resetLists() {
+        var mainListItems = $('.main-navigation__item');
+        // Remove possible ordering for the lists
+        mainListItems.removeAttr('style');
+
+        // No targetItem to put in as the parameter. All lists should close.
+        closeAllOtherPrimaryLists();
+    }
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
@@ -68,6 +87,20 @@ define([
         });
     }
 
+    function closeAllOtherPrimaryLists(targetItem) {
+        arrayOfPrimaryItems.forEach(function(item) {
+            if (item !== targetItem) {
+                item.removeAttribute("open");
+            }
+        });
+    }
+
+    function handlePrimaryItemClicks() {
+        arrayOfPrimaryItems.forEach(function(item) {
+            item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
+        });
+    }
+
     function handleHashChange () {
         var shouldShowMenu = window.location.hash === mainMenuId;
         var shouldHideMenu = window.location.hash === '';
@@ -82,7 +115,9 @@ define([
     function init() {
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
+
         editionPicker();
+        handlePrimaryItemClicks();
     }
 
     return init;
