@@ -230,7 +230,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
 
   def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange) = {
 
-    val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
+    val pageSize = 10
     val liveBlogPageModel =
       liveBlog.content.fields.blocks.map { blocks =>
         LiveBlogCurrentPage(
