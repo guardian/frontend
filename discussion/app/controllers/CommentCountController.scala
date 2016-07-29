@@ -2,10 +2,11 @@ package controllers
 
 import model.Cached
 import common.JsonComponent
+import discussion.DiscussionApiLike
 import play.api.libs.json.{JsArray, JsObject}
 import play.api.mvc.Action
 
-class CommentCountController extends DiscussionController {
+class CommentCountController(val discussionApi: DiscussionApiLike) extends DiscussionController {
 
   def commentCountJson(shortUrls: String) = commentCount(shortUrls)
 
@@ -23,5 +24,3 @@ class CommentCountController extends DiscussionController {
   }
 
 }
-
-object CommentCountController extends CommentCountController

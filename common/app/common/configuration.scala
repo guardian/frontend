@@ -484,6 +484,10 @@ class GuardianConfiguration extends Logging {
     lazy val host = configuration.getStringProperty("memcached.host")
   }
 
+  object redis {
+    lazy val endpoint = configuration.getStringProperty("redis.host")
+  }
+
   object aws {
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")

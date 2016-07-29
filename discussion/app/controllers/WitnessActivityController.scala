@@ -1,11 +1,12 @@
 package controllers
 
-import play.api.mvc.{Controller, AnyContent, Action}
+import play.api.mvc.{Action, AnyContent, Controller}
 import model.Cached
 import common.{ExecutionContexts, JsonComponent}
 import discussion.model._
 import discussion.api.WitnessApi
 import conf.Configuration
+import play.api.libs.ws.WSClient
 
 trait WitnessActivityController extends WitnessApi with Controller with ExecutionContexts with implicits.Requests {
 
@@ -17,8 +18,6 @@ trait WitnessActivityController extends WitnessApi with Controller with Executio
   }
 }
 
-class WitnessActivityControllerImpl extends WitnessActivityController {
+class WitnessActivityControllerImpl(val wsClient: WSClient) extends WitnessActivityController {
   protected val witnessApiRoot: String = Configuration.witness.witnessApiRoot
 }
-
-object WitnessActivityController extends WitnessActivityControllerImpl

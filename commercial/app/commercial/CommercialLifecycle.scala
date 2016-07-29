@@ -21,7 +21,9 @@ object CommercialMetrics {
 class CommercialLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  akkaAsync: AkkaAsync,
+  feedsFetcher: FeedsFetcher,
+  feedsParser: FeedsParser)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -110,7 +112,7 @@ class CommercialLifecycle(
 
     val jobRefreshStep = 15
 
-    for (fetcher <- FeedFetcher.all) {
+    for (fetcher <- feedsFetcher.all) {
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
       jobs.deschedule(jobName)
@@ -119,7 +121,7 @@ class CommercialLifecycle(
       }
     }
 
-    for (parser <- FeedParser.all) {
+    for (parser <- feedsParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
       jobs.deschedule(jobName)
@@ -148,11 +150,11 @@ class CommercialLifecycle(
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 
-      for (fetcher <- FeedFetcher.all) {
+      for (fetcher <- feedsFetcher.all) {
         fetchFeed(fetcher)
       }
 
-      for (parser <- FeedParser.all) {
+      for (parser <- feedsParser.all) {
         parseFeed(parser)
       }
     }
@@ -161,11 +163,11 @@ class CommercialLifecycle(
   def stop(): Unit = {
     refreshJobs foreach (_.stop())
 
-    for (fetcher <- FeedFetcher.all) {
+    for (fetcher <- feedsFetcher.all) {
       jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
     }
 
-    for (parser <- FeedParser.all) {
+    for (parser <- feedsParser.all) {
       jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
   }

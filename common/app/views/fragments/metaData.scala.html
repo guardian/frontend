@@ -7,7 +7,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, LiveBlogAmpSwitch, UseLinkPreconnect, GoogleAnalyticsSwitch, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
+@import conf.switches.Switches.{AmpSwitch, LiveBlogAmpSwitch, UseLinkPreconnect, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
 
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -24,10 +24,7 @@
     <link rel="dns-prefetch" href="//j.ophan.co.uk" />
     <link rel="dns-prefetch" href="//ophan.theguardian.com" />
     <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
-
-    @if(GoogleAnalyticsSwitch.isSwitchedOn) {
-        <link rel="dns-prefetch" href="//www.google-analytics.com" />
-    }
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
 
     @if(ComscoreSwitch.isSwitchedOn) {
         <link rel="dns-prefetch" href="//sb.scorecardresearch.com" />
@@ -41,10 +38,7 @@
         <link rel="preconnect" crossorigin href="//j.ophan.co.uk" />
         <link rel="preconnect" crossorigin href="//ophan.theguardian.com" />
         <link rel="preconnect" crossorigin href="@Configuration.debug.beaconUrl" />
-
-        @if(GoogleAnalyticsSwitch.isSwitchedOn) {
-            <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
-        }
+        <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
 
         @if(ComscoreSwitch.isSwitchedOn) {
             <link rel="preconnect" href="//sb.scorecardresearch.com" />

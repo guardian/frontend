@@ -15,12 +15,11 @@ case class HostedArticlePage(
   cta: HostedCallToAction,
   ctaBanner: String,
   mainPicture: String,
-  twitterTxt: String,
-  emailTxt: String,
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
-  customData: CustomData
+  customData: CustomData,
+  nextPage: Option[HostedPage] = None
 )
   extends HostedPage {
 
@@ -67,5 +66,7 @@ case class CustomData(
    deskClerkPic: String,
    deskClerkPoster: String,
    gazellePic: String,
-   gazellePoster: String
+   gazellePoster: String,
+   posterPdf: String,
+   colouringPdf: String
 )

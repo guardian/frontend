@@ -2,8 +2,7 @@ package formstack
 
 import com.gu.contentapi.client.GuardianContentApiError
 import common.ExecutionContexts
-import play.api.Play.current
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
 
@@ -13,9 +12,9 @@ trait FormstackHttp {
 
 case class FormstackHttpResponse(body: String, status: Int, statusText: String)
 
-class WsFormstackHttp extends FormstackHttp with ExecutionContexts {
+class WsFormstackHttp(wsClient: WSClient) extends FormstackHttp with ExecutionContexts {
   override def GET(url: String, parameters: Seq[(String, String)] = Nil): Future[FormstackHttpResponse] = {
-    WS.url(url)
+    wsClient.url(url)
       .withRequestTimeout(2000)
       .withQueryString(parameters:_*)
       .get()

@@ -4,7 +4,7 @@ import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
 import play.api.{Mode, Play}
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WS, WSClient, WSResponse}
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -73,10 +73,11 @@ private[conf] case class HealthCheckResult(url: String,
 }
 
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
-  import play.api.Play.current
+
+  def wsClient: WSClient
 
   protected def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
-    WS.url(s"$baseUrl${healthCheck.path}")
+    wsClient.url(s"$baseUrl${healthCheck.path}")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(4.seconds.toMillis).get()
       .map {
@@ -108,7 +109,7 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 
 }
 
-private[conf] trait HealthCheckCache extends HealthCheckFetcher {
+private[conf] class HealthCheckCache(val wsClient: WSClient) extends HealthCheckFetcher {
 
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get(): List[HealthCheckResult] = cache.get()
@@ -135,9 +136,9 @@ trait HealthCheckController extends Controller {
   def healthCheck(): Action[AnyContent]
 }
 
-class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, healthChecks: SingleHealthCheck*) extends HealthCheckController with Results with ExecutionContexts with Logging {
+class CachedHealthCheck(policy: HealthCheckPolicy, wsClient: WSClient, testPort: Int, healthChecks: SingleHealthCheck*) extends HealthCheckController with Results with ExecutionContexts with Logging {
 
-  private[conf] val cache: HealthCheckCache = new HealthCheckCache {}
+  private[conf] val cache: HealthCheckCache = new HealthCheckCache(wsClient)
 
   private def allSuccessful(results: List[HealthCheckResult]): Boolean = {
     results match {
@@ -165,11 +166,11 @@ class CachedHealthCheck(policy: HealthCheckPolicy, testPort: Int, healthChecks: 
   def runChecks: Future[Unit] = cache.refresh(testPort, healthChecks:_*).map(_ => Nil)
 }
 
-case class AllGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthCheck*)
-  extends CachedHealthCheck(HealthCheckPolicy.All, testPort, healthChecks:_*)
+case class AllGoodCachedHealthCheck(wsClient: WSClient, testPort: Int, healthChecks: SingleHealthCheck*)
+  extends CachedHealthCheck(HealthCheckPolicy.All, wsClient, testPort, healthChecks:_*)
 
-case class AnyGoodCachedHealthCheck(testPort: Int, healthChecks: SingleHealthCheck*)
-  extends CachedHealthCheck(HealthCheckPolicy.Any, testPort, healthChecks:_*)
+case class AnyGoodCachedHealthCheck(wsClient: WSClient, testPort: Int, healthChecks: SingleHealthCheck*)
+  extends CachedHealthCheck(HealthCheckPolicy.Any, wsClient, testPort, healthChecks:_*)
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,

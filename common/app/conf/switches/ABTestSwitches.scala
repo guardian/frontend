@@ -20,7 +20,7 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = true
   )
 
@@ -51,6 +51,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 1),
+    exposeClientSide = true
+  )
+
+  val ABParticipationDiscussionOrdering = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-discussion-ordering",
+    "Test to see whether ordering comments by recommends increases the number of people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = true
   )
 }

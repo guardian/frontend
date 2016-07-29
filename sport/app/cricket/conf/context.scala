@@ -10,7 +10,8 @@ import scala.concurrent.{Future, ExecutionContext}
 class CricketLifecycle(
   appLifeCycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync
+  akkaAsync: AkkaAsync,
+  cricketStatsJob: CricketStatsJob
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
@@ -19,7 +20,7 @@ class CricketLifecycle(
 
   private def scheduleJobs() {
     jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
-      CricketStatsJob.run()
+      cricketStatsJob.run()
     }
   }
 
@@ -32,7 +33,7 @@ class CricketLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      CricketStatsJob.run()
+      cricketStatsJob.run()
     }
   }
 }

@@ -14,6 +14,7 @@ import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import services.ConfigAgentLifecycle
 import router.Routes
 
@@ -22,6 +23,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers extends AdminJobsControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
 }
 

@@ -37,7 +37,8 @@ define([
 
     function HostedGallery() {
         // CONFIG
-        this.useSwipe = detect.hasTouchScreen();
+        var breakpoint = detect.getBreakpoint();
+        this.useSwipe = detect.hasTouchScreen() && (breakpoint === 'mobile' || breakpoint === 'tablet');
         this.swipeThreshold = 0.05;
         this.index = this.index || 1;
         this.imageRatios = [];
