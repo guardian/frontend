@@ -18,7 +18,6 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) {
   val subscriber = system.actorOf(Props(new Subscriber(client)))
 
   subscriber ! Register(callback)
-  client.setConfig("notify-keyspace-events", "Ex")
   sub(List(expiredKeyEventChannel))
 
   def sub(channels: List[String]) = {
