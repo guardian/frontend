@@ -27,7 +27,7 @@ import play.api.libs.ws.{WS, WSClient}
     override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 
-  val testPlugin = new TestPlugin(wsClient)
+  lazy val testPlugin = new TestPlugin(wsClient)
 
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {
 

@@ -19,7 +19,7 @@ import test._
     )
   }
 
-  val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
+  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val articleUrl = "music"
 
   it should "Include organisation metadata" in {
