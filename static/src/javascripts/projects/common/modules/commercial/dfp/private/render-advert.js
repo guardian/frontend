@@ -9,7 +9,8 @@ define([
     'common/modules/commercial/dfp/private/apply-creative-template',
     'common/modules/commercial/dfp/private/render-advert-label',
     'common/modules/onward/geo-most-popular',
-    'common/modules/ui/toggles'
+    'common/modules/ui/toggles',
+    'common/modules/commercial/ads/user-ad-feedback'
 ], function (
     bonzo,
     qwery,
@@ -21,7 +22,8 @@ define([
     applyCreativeTemplate,
     renderAdvertLabel,
     geoMostPopular,
-    Toggles
+    Toggles,
+    userAdFeedback
 ) {
     /**
      * ADVERT RENDERING
@@ -123,6 +125,7 @@ define([
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return renderAdvertLabel(advert.node)
                 .then(addFeedbackDropdownToggle())
+                .then(applyFeedbackOnClickListener())
                 .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
@@ -147,6 +150,15 @@ define([
                     if (!bonzo(advert.node).hasClass('js-toggle-ready')){
                         new Toggles(advert.node).init();
                     }
+                }) : Promise.resolve();
+            }
+
+            function applyFeedbackOnClickListener() {
+                return isRendered ? fastdom.write(function () {
+                    var clickables = bonzo(qwery('.popup__item-problem--option'));
+                    clickables.each(function(el, num) {
+                        el.addEventListener('click', userAdFeedback(advert, el.attributes["problem"]));
+                    });
                 }) : Promise.resolve();
             }
         }).catch(raven.captureException);
