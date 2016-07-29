@@ -632,7 +632,7 @@ final case class Tags(
 
   lazy val keywordIds = keywords.map { _.id }
 
-  lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
+  lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
@@ -647,7 +647,7 @@ final case class Tags(
     ("toneIds", JsString(tones.map(_.id).mkString(","))),
     ("blogs", JsString(blogs.map { _.name }.mkString(","))),
     ("blogIds", JsString(blogs.map(_.id).mkString(","))),
-    ("commissioningDesk", JsString(commissioningDesk.getOrElse("")))
+    ("commissioningDesks", JsString(commissioningDesks.mkString(",")))
   )
 }
 
