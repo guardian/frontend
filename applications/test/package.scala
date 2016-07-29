@@ -2,7 +2,7 @@ package test
 
 import java.util.{ List => JList }
 import controllers.HealthCheck
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import services.NewspaperControllerTest
 import collection.JavaConversions._
 
@@ -37,7 +37,9 @@ class ApplicationsTestSuite extends Suites (
   new ShareLinksTest,
   new CrosswordDataTest,
   new NewspaperControllerTest
-) with SingleServerSuite {
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  override lazy val port: Int = new HealthCheck().testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

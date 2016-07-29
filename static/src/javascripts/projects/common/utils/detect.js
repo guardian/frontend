@@ -256,6 +256,14 @@ define([
         }
     }
 
+    /**
+     *     Usage:
+     *     detect.isBreakpoint({min: 'tablet', max: 'leftCol'}) // Will return true for tablet, desktop, leftCol
+     *     detect.isBreakpoint({min: 'tablet'}) // Will return true for tablet, desktop, leftCol, wide
+     *     detect.isBreakpoint({max: 'tablet'}) // Will return true for mobile, mobileLandscape, tablet and phablet
+     *
+     *     
+     */
     function isBreakpoint(criteria) {
         criteria.min = criteria.min || breakpoints[0].name;
         criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;

@@ -8,12 +8,11 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/clever-friend-brexit',
-    'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
-    'common/modules/experiments/tests/video-caption'
+    'common/modules/experiments/tests/video-caption',
+    'common/modules/experiments/tests/habit-forming-digest-promo',
+    'common/modules/experiments/tests/participation-discussion-ordering'
 ], function (
     reportError,
     config,
@@ -24,22 +23,20 @@ define([
     memoize,
     noop,
     LiveBlogChromeNotificationsProd,
-    CleverFriendBrexit,
-    ParticipationDiscussionTest,
-    JoinDiscussionAfterPoll,
     HostedAutoplay,
     Giraffe,
-    VideoCaption
+    VideoCaption,
+    HabitFormingDigestPromo,
+    ParticipationDiscussionOrdering
 ) {
 
     var TESTS = [
         new LiveBlogChromeNotificationsProd(),
-        new CleverFriendBrexit(),
-        new ParticipationDiscussionTest(),
-        new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
-        new VideoCaption()
+        new HabitFormingDigestPromo(),
+        new VideoCaption(),
+        new ParticipationDiscussionOrdering()
     ];
 
     var participationsKey = 'gu.ab.participations';

@@ -120,6 +120,7 @@ object ContainerCommercialOptions {
         isSponsored = dfpTag.paidForType == Sponsored,
         isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
         isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+        hasPaidForContent = false,
         sponsor,
         sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
         sponsorshipType = Some(dfpTag.paidForType.name),
@@ -157,6 +158,7 @@ object ContainerCommercialOptions {
           isSponsored = dfpTag.paidForType == Sponsored,
           isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
           isFoundationSupported = dfpTag.paidForType == FoundationFunded,
+          hasPaidForContent = false,
           sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
           sponsorshipTag,
           sponsorshipType = Some(dfpTag.paidForType.name),
@@ -170,10 +172,22 @@ object ContainerCommercialOptions {
     collection.items.headOption flatMap mkFromFirstItemInCollection getOrElse empty
   }
 
+  val multi = ContainerCommercialOptions(
+    isSponsored = false,
+    isPaidContainer = false,
+    isFoundationSupported = false,
+    hasPaidForContent = true,
+    sponsor = None,
+    sponsorshipTag = None,
+    sponsorshipType = None,
+    omitMPU = false
+  )
+
   val empty = ContainerCommercialOptions(
     isSponsored = false,
     isPaidContainer = false,
     isFoundationSupported = false,
+    hasPaidForContent = false,
     sponsor = None,
     sponsorshipTag = None,
     sponsorshipType = None,
@@ -187,12 +201,13 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isPaidContainer: Boolean,
   isFoundationSupported: Boolean,
+  hasPaidForContent: Boolean,
   sponsor: Option[String],
   sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String],
   omitMPU: Boolean
 ) {
-  val isPaidFor = isSponsored || isPaidContainer || isFoundationSupported
+  val isPaidFor = isSponsored || isPaidContainer || isFoundationSupported || hasPaidForContent
 }
 
 object FaciaContainer {
@@ -255,7 +270,7 @@ object FaciaContainer {
     container match {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
       case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
-      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.empty
+      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.multi
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader),

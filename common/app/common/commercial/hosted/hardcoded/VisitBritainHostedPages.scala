@@ -1,6 +1,7 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
+import conf.Configuration.site.host
 import conf.switches.Switches
 
 object VisitBritainHostedPages {
@@ -32,13 +33,13 @@ object VisitBritainHostedPages {
     ),
     HostedGalleryImage(
       url = "https://media.guim.co.uk/1baa14c86fc9672a92a2bdbaf1646b391313f873/0_0_1299_1813/716.jpg",
-      title = "Hop aboard the Hogwart Express in North Yorkshire",
+      title = "Hop aboard the Hogwarts Express in North Yorkshire",
       caption = "Goathland, North York Moors, Yorkshire, England",
       credit = "© Alan Pratt_NYMR"
     ),
     HostedGalleryImage(
       url = "https://media.guim.co.uk/2209a44365a70bcadac9b3b5eedd38deb443352b/0_171_5616_3370/2000.jpg",
-      title = "Swap the pool for a wild swimming in a tranquil lake",
+      title = "Swap the pool for wild swimming in a tranquil lake",
       caption = "Lake District, Cumbria, England",
       credit = "© VisitEngland / Blacks"
     ),
@@ -71,7 +72,7 @@ object VisitBritainHostedPages {
     ),
     HostedGalleryImage(
       url = "https://media.guim.co.uk/6d65859087baf6907e0b78d772605c59db2460f0/0_0_5130_3078/2000.jpg",
-      title = "Crank your neck for the eye-popping International Balloon Fiesta",
+      title = "Crane your neck for the eye-popping International Balloon Fiesta",
       caption = "Bristol International Balloon Fiesta, Bristol, Avon, England",
       credit = "© Destination Bristol"
     ),
@@ -194,26 +195,26 @@ object VisitBritainHostedPages {
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = activityImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/activities",
+    pageUrl = s"$host/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
     title = "Don’t be a sloth this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
+    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriesactivities&utm_campaign=display",
+    ctaButtonText = "Find more inspiration",
     nextGalleryNames = List(cityPageName, coastPageName),
-    shareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
+    twitterShareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
     standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
   )
 
   val cityGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = cityImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/city",
+    pageUrl = s"$host/advertiser-content/visit-britain/city",
     pageName = cityPageName,
     title = "Take a city break from the norm",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
+    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescity&utm_campaign=display",
+    ctaButtonText = "Find more inspiration",
     nextGalleryNames = List(coastPageName, countrysidePageName),
     standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and hotly-tipped comedy acts at Edinburgh Fringe."
   )
@@ -221,12 +222,12 @@ object VisitBritainHostedPages {
   private val coastGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = coastImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/coast",
+    pageUrl = s"$host/advertiser-content/visit-britain/coast",
     pageName = coastPageName,
     title = "Find cool-on-sea this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
+    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescoast&utm_campaign=display",
+    ctaButtonText = "Find more inspiration",
     nextGalleryNames = List(countrysidePageName, activitiesPageName),
     standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical climes and join the party at the Whitby Regatta."
   )
@@ -234,12 +235,12 @@ object VisitBritainHostedPages {
   private val countrysideGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = countrysideImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/countryside",
+    pageUrl = s"$host/advertiser-content/visit-britain/countryside",
     pageName = countrysidePageName,
     title = "Mend your relationship with Mother Nature",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
+    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
+    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescountryside&utm_campaign=display",
+    ctaButtonText = "Find more inspiration",
     nextGalleryNames = List(activitiesPageName, cityPageName),
     standfirst = "Switch off and soak up the country air as you ramble through the heather-coated North York Moors or explore the dramatic scenery of Glen Coe."
   )

@@ -23,6 +23,7 @@
 /* Creative styles */
 @import '_creatives';
 @import 'creatives/_fabric-video';
+@import 'creatives/_revealer';
 
 /* GU styled commercial content */
 @import 'gustyle/_gu-comcontent';
@@ -52,5 +53,4 @@
 @import '_frame';
 
 /* Glabs Awesome component */
-@import 'glabs/_hosted.scss';
 @import 'glabs/_hosted-thrasher.scss';

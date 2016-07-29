@@ -3,7 +3,9 @@ define([
     'qwery',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/steady-page',
     'common/modules/article/space-filler',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
@@ -14,7 +16,9 @@ define([
     qwery,
     config,
     detect,
+    steadyPage,
     spaceFiller,
+    adSizes,
     addSlot,
     trackAdRender,
     createSlot,
@@ -23,14 +27,16 @@ define([
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
-     * inserted dynamically. It is used to give each MPU its own ID. */
+     * inserted dynamically. */
     var bodyAds;
+    var inlineAd;
     var replaceTopSlot;
     var inlineMerchRules;
     var longArticleRules;
 
     function boot() {
         bodyAds = 0;
+        inlineAd = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
     }
 
@@ -47,7 +53,7 @@ define([
                 ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
             },
             filter: function(slot) {
-                if (!prevSlot || Math.abs(slot.top - prevSlot.top) >= this.selectors[' .ad-slot'].minBelow) {
+                if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
                     prevSlot = slot;
                     return true;
                 }
@@ -70,7 +76,7 @@ define([
         if (!longArticleRules) {
             longArticleRules = getRules();
             longArticleRules.selectors[' .ad-slot'].minAbove =
-            longArticleRules.selectors[' .ad-slot'].minBelow = 1300;
+            longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         }
         return longArticleRules;
     }
@@ -81,7 +87,8 @@ define([
         }, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true
+            waitForInteractives: true,
+            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
         });
     }
 
@@ -90,31 +97,67 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true
+            waitForInteractives: true,
+            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
         });
 
         function insertInlineAds(paras) {
             var countAdded = 0;
+            var insertionArr = [];
             while(countAdded < count && paras.length) {
+                var para = paras.shift();
+                var adDefinition;
+                if (replaceTopSlot && bodyAds === 0) {
+                    adDefinition = 'top-above-nav';
+                } else {
+                    inlineAd += 1;
+                    adDefinition = 'inline' + inlineAd;
+                }
+                insertionArr.push(insertAdAtPara(para, adDefinition, 'inline'));
                 bodyAds += 1;
                 countAdded += 1;
-                var para = paras.shift();
-                var adDefinition = 'inline' + bodyAds;
-                insertAdAtPara(para, replaceTopSlot && countAdded === 1 ? 'top-above-nav' : adDefinition, 'inline');
             }
-            return countAdded;
+
+            return Promise.all(insertionArr).then(function(){
+                return countAdded;
+            });
         }
     }
 
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
-        para.parentNode.insertBefore(ad, para);
+
+        function insertion (ad, para) {
+            para.parentNode.insertBefore(ad, para);
+        }
+
+        // If on mobile we will
+        // insert ad using steady page
+        // to avoid jumping the user
+        if (detect.isBreakpoint({max: 'tablet'})) {
+            return steadyPage.insert(ad, function(){
+                insertion(ad, para);
+            });
+        } else {
+            // If we're not on mobile we insert and resolve the promise immediately
+            return new Promise(function(resolve){
+                insertion(ad, para);
+                resolve();
+            });
+        }
     }
 
     function addSlots(countAdded) {
         if (countAdded > 0) {
             qwery('.ad-slot--inline').forEach(addSlot);
         }
+    }
+
+    // If we're on mobile, we want to use steady-page right before dom insertion
+    // when we have the adslot so we provide a non-fastdom writer as
+    // fastdom is handled in steady-page
+    function writerOverride (writerCallback) {
+        return writerCallback();
     }
 
     // If a merchandizing component has been rendered but is empty,

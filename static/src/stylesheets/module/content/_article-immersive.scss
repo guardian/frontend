@@ -387,7 +387,7 @@
     }
 
     .section-title,
-    .from-content-api h2 {
+    .from-content-api > h2 {
         @include fs-headline(5);
         font-weight: 200;
 
@@ -665,4 +665,3 @@
         }
     }
 }
-

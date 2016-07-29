@@ -9,8 +9,8 @@ import scala.concurrent.Future
 
 class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends ExecutionContexts with Logging {
 
-  def run(): Future[Unit] = Future {
-    AkkaAsync {
+  def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
+    akkaAsync {
       val adUnits = DfpApi.readActiveAdUnits(rootAdUnit.toString)
       if (adUnits.nonEmpty) {
         val rows = adUnits.map(adUnit => s"${adUnit.id},${adUnit.path.mkString(",")}")

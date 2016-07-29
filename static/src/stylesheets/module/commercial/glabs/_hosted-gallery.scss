@@ -122,7 +122,6 @@
 
 .hosted-gallery__oj-sub-header {
     @include f-headlineSans;
-    color: $omgbColor;
     font-size: 14px;
 }
 
@@ -134,7 +133,7 @@
 .hosted-gallery__oj-next-gallery {
     flex: 1;
     margin: 10px 10px 0;
-    border-top: 1px solid $omgbColor;
+    border-top: 1px solid;
 }
 
 .has-no-flex {
@@ -188,6 +187,7 @@
     padding: 50px $gs-gutter * 3 0 $gs-gutter * 5;
     font-weight: bold;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#B4333333');
     @include mq($until: tablet) {
         padding: 50px $gs-gutter * 2 0 $gs-gutter;
     }
@@ -197,13 +197,11 @@
     @include circular;
     @include f-headlineSans;
     position: relative;
-    display: block;
-    width: 160px;
-    padding: 8px 8px 8px 12px;
+    display: inline-block;
+    padding: 8px 12px;
     margin: 16px 0;
     color: #ffffff;
     font-weight: bold;
-    background-color: $omgbColor;
     &:hover {
         text-decoration: none;
     }
@@ -233,6 +231,8 @@
 .show-cta .hosted-gallery__cta,
 .show-oj .hosted-gallery__oj {
     opacity: 1;
+    transition-delay: 500ms;
+    transition-duration: 500ms;
     visibility: visible;
     .hosted-gallery__cta-link {
         pointer-events: auto;
@@ -256,23 +256,8 @@
     height: 100%;
 }
 
-.hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $omgbColor;
-        color: #ffffff;
-
-        .site-message__close-btn {
-            border-color: #ffffff;
-
-            .inline-cross {
-                fill: #ffffff;
-            }
-        }
-    }
-}
 
 .hosted-gallery-page.visit-britain .hostedbadge__info {
-    background: $omgbColor;
     color: #ffffff;
 }
 
@@ -284,6 +269,7 @@
     color: #ffffff;
     padding: 20px;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#B4333333');
     @include mq($until: tablet) {
         padding: 20px 70px 10px 20px;
     }
@@ -379,6 +365,13 @@
     position: relative;
     align-self: flex-end;
     padding-bottom: 3px;
+}
+
+.has-no-flex .hosted-gallery__captions {
+    width: calc(100% - 170px);
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .hosted-gallery__caption {
@@ -511,12 +504,12 @@ $progressColor: #ffffff;
 
     .inline-arrow-up {
         top: -31px;
-        transform: rotate(-90deg)
+        transform: rotate(-90deg);
     }
 
     .inline-arrow-down {
         bottom: -31px;
-        transform: rotate(90deg)
+        transform: rotate(90deg);
     }
 
     .hosted-gallery__progress-border {
@@ -552,6 +545,7 @@ $progressColor: #ffffff;
 .hosted-gallery__lower-bar {
     background: $neutral-1;
     z-index: 1;
+    position: relative;
     @include mq($until: desktop) {
         padding: 0;
     }

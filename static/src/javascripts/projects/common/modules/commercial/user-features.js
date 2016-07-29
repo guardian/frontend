@@ -1,17 +1,15 @@
 define([
-    'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/storage',
-    'common/modules/identity/api',
-    'lodash/utilities/noop'
+    'common/modules/identity/api'
 ], function (
-    ajaxPromise,
     cookies,
     config,
+    fetchJson,
     storage,
-    identity,
-    noop
+    identity
 ) {
     var PERSISTENCE_KEYS = {
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
@@ -24,7 +22,7 @@ define([
         this._deleteOldData = deleteOldData;
         this._persistResponse = persistResponse;
     }
-    
+
     /**
      * Updates the user's data in a lazy fashion
      */
@@ -62,12 +60,12 @@ define([
     };
 
     function requestNewData() {
-        ajaxPromise({
-            url : config.page.userAttributesApiUrl + '/me/features',
-            crossOrigin : true,
-            withCredentials : true,
-            error : function () {}
-        }).then(persistResponse, noop);
+        fetchJson(config.page.userAttributesApiUrl + '/me/features', {
+            mode: 'cors',
+            credentials: 'include'
+        })
+        .then(persistResponse)
+        .catch(function () {});
     }
 
     function persistResponse(JsonResponse) {

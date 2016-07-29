@@ -7,7 +7,7 @@ import scala.collection.JavaConversions._
 import com.amazonaws.auth.AWS4Signer
 import com.amazonaws.{AmazonWebServiceRequest, DefaultRequest}
 import java.net.URI
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import com.amazonaws.util.StringInputStream
 import scala.concurrent.Future
 
@@ -18,7 +18,7 @@ sealed trait Destination {
 case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
-trait DynamoDB extends Logging with ExecutionContexts {
+class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
   import play.api.Play.current
   private val tableName = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
@@ -51,7 +51,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
 
       val headers = signedHeaders(DynamoDbGet, bodyContent)
 
-      val asyncRequest = WS.url(s"http://${AwsEndpoints.dynamoDb}")
+      val asyncRequest = wsClient.url(s"http://${AwsEndpoints.dynamoDb}")
         .withRequestTimeout(1000)
         .withHeaders(headers:_*)
 
@@ -62,5 +62,3 @@ trait DynamoDB extends Logging with ExecutionContexts {
     }.getOrElse(Future.successful(None))
   }
 }
-
-object DynamoDB extends DynamoDB

@@ -1,12 +1,12 @@
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
-import controllers.{OnwardControllers, HealthCheck}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import model.ApplicationIdentity
@@ -15,6 +15,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -22,6 +23,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers extends OnwardControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 }

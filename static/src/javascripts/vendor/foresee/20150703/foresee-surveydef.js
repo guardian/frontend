@@ -245,6 +245,18 @@ FSR.properties = {
                 var tester = test.length > 11 ? test.substring(7, test.length - 4) : "";
                 return tester;
             }
+        },
+        GA_UID: {
+            source: 'function',
+            value: function () {
+                var out = "";
+                if (typeof ga != 'undefined' && ga != null) {
+                    if (typeof ga.getAll === 'function' && ga.getAll()[0] != null) {
+                        out += ga.getAll()[0].get('clientId');
+                    }
+                }
+                return out;
+            }
         }
     },
     

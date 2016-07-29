@@ -6,6 +6,9 @@ GET            /surveys/*file                                                   
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
+GET            /survey/mydigest                                                                                                  controllers.SurveyPageController.renderMyDigestExplainerPage()
+GET            /survey/mydigest/404                                                                                              controllers.SurveyPageController.renderMyDigest404Page()
+GET            /survey/weekendreading                                                                                            controllers.SurveyPageController.renderWeekendReading404Page()
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
@@ -19,7 +22,11 @@ GET            /assets/*path                                                    
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.postOptions
+OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
+POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
+OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
+POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
+OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
 OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 

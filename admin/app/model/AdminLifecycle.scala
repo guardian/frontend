@@ -15,12 +15,19 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(appLifecycle: ApplicationLifecycle,
+                     jobs: JobScheduler,
+                     akkaAsync: AkkaAsync,
+                     emailService: EmailService,
+                     fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
+                     r2PagePressJob: R2PagePressJob,
+                     videoEncodingsJob: VideoEncodingsJob,
+                     matchDayRecorder: MatchDayRecorder)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
     CloudWatch.shutdown()
-    EmailService.shutdown()
+    emailService.shutdown()
   }}
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
@@ -43,11 +50,11 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
     jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
-      FastlyCloudwatchLoadJob.run()
+      fastlyCloudwatchLoadJob.run()
     }
 
     jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
-      R2PagePressJob.run()
+      r2PagePressJob.run()
     }
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
@@ -56,17 +63,17 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(HighFrequency)
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
-      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(StandardFrequency)
+      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(LowFrequency)
+      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency)
       Future.successful(())
     }
 
@@ -76,28 +83,28 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
     jobs.schedule("MatchDayRecorderJob", "22 * * * * ?") {
-      MatchDayRecorder.record()
+      matchDayRecorder.record()
     }
 
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
       jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
-        AdsStatusEmailJob.run()
+        AdsStatusEmailJob(emailService).run()
       }
       jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
-        ExpiringAdFeaturesEmailJob.run()
+        ExpiringAdFeaturesEmailJob(emailService).run()
       }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
-        ExpiringSwitchesEmailJob.run()
+        ExpiringSwitchesEmailJob(emailService).run()
       }
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
     jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
-      VideoEncodingsJob.run()
+      videoEncodingsJob.run(akkaAsync)
     }
 
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
@@ -132,7 +139,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akk
 
     akkaAsync.after1s {
       RebuildIndexJob.run()
-      VideoEncodingsJob.run()
+      videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
     }
   }

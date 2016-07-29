@@ -17,9 +17,9 @@ define([
     'qwery',
     'common/utils/report-error',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fetch-json',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/analytics/omniture',
@@ -31,9 +31,9 @@ define([
     qwery,
     reportError,
     $,
-    ajaxPromise,
     config,
     detect,
+    fetchJson,
     mediator,
     template,
     omniture,
@@ -74,11 +74,8 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajaxPromise({
-                url: url,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
+            return fetchJson(url, {
+                mode: 'cors'
             });
         },
 

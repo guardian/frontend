@@ -3,46 +3,50 @@ package controllers.admin
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
-import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.Json
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent.Future
 
-@DoNotDiscover class DeploysNotifyControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
+@DoNotDiscover class DeploysNotifyControllerTest
+  extends WordSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with ExecutionContexts
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   val existingBuild = "1629"
   val fakeApiKey = "fake-api-key"
 
-  val RecordingHttpClient = new HttpClient {
+  class RecordingHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
       DeploysTestHttpRecorder.load(url, extentedHeaders) {
-        WS.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
-  class DeploysNotifyControllerStub extends DeploysNotifyController {
+
+
+  class DeploysNotifyControllerStub(override val wsClient: WSClient) extends DeploysNotifyController {
     lazy val apiKey = fakeApiKey
 
-    override val teamcity = new TeamcityService {
-      override val httpClient: HttpClient = RecordingHttpClient
-    }
-
-    override val riffRaff = new RiffRaffService {
-      override val httpClient: HttpClient = RecordingHttpClient
-    }
+    val recordingHttpClient = new RecordingHttpClient(wsClient)
+    override val teamcity = new TeamcityService(recordingHttpClient)
+    override val riffRaff = new RiffRaffService(recordingHttpClient)
 
     override protected def sendNotice(step: NoticeStep, notice: Notice): Future[NoticeResponse] = {
       Future.successful(NoticeResponse(notice, "Fake response"))
     }
   }
 
-  val controller = new DeploysNotifyControllerStub()
+  val controller = new DeploysNotifyControllerStub(wsClient)
 
     s"POST /deploys-radiator/api/builds/${existingBuild}/notify" when {
 

@@ -13,9 +13,9 @@ import model.{Cors, NoCache, Cached}
 import play.api.libs.json.{JsString, JsArray, JsObject}
 import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
+import play.api.libs.ws.WSClient
 
-
-class PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
+class PlayerController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient with Requests {
 
   def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {

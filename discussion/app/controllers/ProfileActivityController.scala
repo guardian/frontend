@@ -1,11 +1,12 @@
 package controllers
 
 import common.JsonComponent
+import discussion.DiscussionApiLike
 import discussion.model.Profile
 import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.Action
 
-class ProfileActivityController extends DiscussionController {
+class ProfileActivityController(val discussionApi: DiscussionApiLike) extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = SimplePage(
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",
@@ -63,5 +64,3 @@ class ProfileActivityController extends DiscussionController {
     }
   }
 }
-
-object ProfileActivityController extends ProfileActivityController

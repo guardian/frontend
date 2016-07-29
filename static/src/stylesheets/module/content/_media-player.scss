@@ -702,7 +702,7 @@ $ima-controls-height: 70px;
 
 .vjs-title-bar {
     @include fs-textSans(3);
-    position: fixed;
+    position: absolute;
     width: 100%;
     height: $gs-baseline*4;
     box-sizing: border-box;

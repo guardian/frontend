@@ -29,7 +29,7 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
         case (headerName, headerValues) => (headerName, headerValues.mkString(","))
       }
       val whitelistedHeaders = allHeadersFields.filterKeys(whitelistedHeaderNames.contains(_))
-      val guardianSpecificHeaders = allHeadersFields.filterKeys(_.startsWith("X-GU-"))
+      val guardianSpecificHeaders = allHeadersFields.filterKeys(_.toUpperCase.startsWith("X-GU-"))
       (whitelistedHeaders ++ guardianSpecificHeaders).toList.map(t => LogFieldString(s"req.header.${t._1}", t._2))
     }
     private lazy val customFields: List[LogField] = List(

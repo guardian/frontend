@@ -6,11 +6,11 @@ import conf.switches.{SwitchState, Switches}
 import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
-import services.Notification
+import services.SwitchNotification
 import tools.Store
 import model.NoCache
 
-class SwitchboardPlistaController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
     log("loaded plista Switchboard", request)
@@ -41,7 +41,7 @@ class SwitchboardPlistaController extends Controller with AuthLogging with Loggi
       if (alterationMade) {
         val update = Switches.PlistaForOutbrainAU.name + "=" + newState
 
-        Notification.onSwitchChanges(requester, Configuration.environment.stage, List() :+ update)
+        SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, List() :+ update)
         log.info(s"Switch change by ${requester}: ${update}")
       }
 
