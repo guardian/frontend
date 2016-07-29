@@ -33,6 +33,10 @@ case class AmpAd(article: Article, uri: String, edition: String) {
       )
     )
   }
+
+  override def toString(): String = {
+    toJson().toString()
+  }
 }
 case class AmpAdDataSlot(article: Article) {
   override def toString(): String = {
