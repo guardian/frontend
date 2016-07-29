@@ -1,13 +1,14 @@
 define([
     'bonzo',
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/storage',
     'common/modules/ui/relativedates',
-    'common/utils/template',
-    'common/utils/mediator',
+    'common/utils/$',
+    'common/utils/chain',
     'common/utils/detect',
     'common/utils/fastdom-promise',
+    'common/utils/fetch-json',
+    'common/utils/mediator',
+    'common/utils/storage',
+    'common/utils/template',
     'text!facia/views/liveblog-block.html',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',
@@ -15,18 +16,18 @@ define([
     'lodash/functions/debounce',
     'lodash/collections/filter',
     'lodash/objects/isEmpty',
-    'lodash/collections/map',
-    'common/utils/chain'
+    'lodash/collections/map'
 ], function (
     bonzo,
-    $,
-    ajax,
-    storage,
     relativeDates,
-    template,
-    mediator,
+    $,
+    chain,
     detect,
     fastdomPromise,
+    fetchJson,
+    mediator,
+    storage,
+    template,
     blockTemplate,
     compact,
     isUndefined,
@@ -34,8 +35,7 @@ define([
     debounce,
     filter,
     isEmpty,
-    map,
-    chain
+    map
 ) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
@@ -174,10 +174,8 @@ define([
                 oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
                 forEach(elementsById, function (elements, articleId) {
-                    ajax({
-                        url: '/' + articleId + '.json?rendered=false',
-                        type: 'json',
-                        crossOrigin: true
+                    fetchJson('/' + articleId + '.json?rendered=false', {
+                        mode: 'cors'
                     })
                     .then(function (response) {
                         var blocks = response && sanitizeBlocks(response.blocks);
@@ -187,7 +185,8 @@ define([
                             oldBlockDates[articleId] = blocks[0].publishedDateTime;
                             storage.session.set(sessionStorageKey, oldBlockDates);
                         }
-                    });
+                    })
+                    .catch(function () {});
                 });
 
                 if (refreshMaxTimes) {
