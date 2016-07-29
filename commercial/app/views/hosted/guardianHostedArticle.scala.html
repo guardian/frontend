@@ -1,64 +1,26 @@
 @import common.commercial.hosted.HostedArticlePage
 @import views.html.hosted.guardianHostedHeader
 @(page: HostedArticlePage)(implicit request: RequestHeader)
-@import java.net.URLEncoder
+@import layout.ContentWidths.GalleryMedia
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@import views.html.hosted.guardianHostedShareButtons
 
 @main(page, Some("commercial")) { } {
     @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
-            <div class="media-primary media-content media-primary--showcase">
-                <img src="@{page.mainPicture}" alt="@{page.campaign.owner}">
+            <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
                 <h2 class="title">Meet the characters of Zootropolis</h2>
-                <span class="caption hosted-tone--zootropolis">Felske uses stencils for the wheels to save time. Photograph: Jake Curtis for the Guardian</span>
             </div><!--End of top banner !-->
             <div class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
                             <div class="meta__extras" data-component="share">
-                                <ul class="social social--top u-unstyled u-cf" data-component="social">
-                                    <li class="social__item social__item--facebook" data-link-name="facebook">
-                                        <a class="social__action social-icon-wrapper"
-                                        data-link-name="facebook-social-share-1"
-                                        href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.pageUrl}&redirect_uri=@{page.pageUrl}"
-                                        target="_blank"
-                                        title="facebook">
-                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
-                                            @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon social-icon social-icon--facebook"))
-                                        </a>
-                                    </li>
-                                    <li class="social__item social__item--twitter" data-link-name="twitter">
-                                        <a class="social__action social-icon-wrapper"
-                                        data-link-name="twitter-social-share-1"
-                                        href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterTxt, "utf-8")}&url=@{page.pageUrl}"
-                                        target="_blank"
-                                        title="twitter">
-                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
-                                            @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon social-icon social-icon--twitter"))
-                                        </a>
-                                    </li>
-                                    <li class="social__item social__item--email" data-link-name="email">
-                                        <a class="social__action social-icon-wrapper"
-                                        data-link-name="email-social-share-1"
-                                        href="mailto:?subject=@{page.emailTxt}&body=@{page.pageUrl}"
-                                        target="_blank"
-                                        title="email">
-                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
-                                            @fragments.inlineSvg("share-email", "icon", List("rounded-icon social-icon social-icon--email"))
-                                        </a>
-                                    </li>
-                                    <li class="social__item social__item--pinterest" data-link-name="pinterest">
-                                        <a  class="social__action social-icon-wrapper"
-                                        data-link-name="Pinterest-social-share-1"
-                                        href="http://www.pinterest.com/pin/create/button/?url=@{page.pageUrl}&description=@{page.pageTitle}&media=@{page.ctaBanner}"
-                                        target="_blank"
-                                        title="pinterest">
-                                            <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
-                                            @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon social-icon social-icon--pinterest"))
-                                        </a>
-                                    </li>
-                                </ul>
+                                @guardianHostedShareButtons(page)
                             </div><!--End of social media icons !-->
                         </div>
 
@@ -66,111 +28,210 @@
                             <p class="intro">
                                 Zootropolis is a city like no other. But when optimistic Judy Hopps arrives, she discovers that being a bunny on a police force of big, tough animals isn’t so easy.
                             </p>
-                            <p>
+                            <p class="text">
                                 <span class="drop-cap hosted-tone-bg--zootropolis">D</span> etermined to prove herself, she jumps at the opportunity to crack a case, even if it means partnering with a fast-talking fox, Nick Wilde. Walt Disney Animation Studios’ “Zootropolis,” is a comedy-adventure directed by Tangled’s Byron Howard.
                             </p>
 
                             <!--Beginning of the Con Artist - fox !-->
                             <div class="animal con-artist">
-                                <p class="animal__stripe-odd">
-                                    <img src="@{page.customData.conArtistPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-odd">
+                                    @fragments.image(
+                                        ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.conArtistPic)), 0))),
+                                        Seq("animal__stripe-character"),
+                                        GalleryMedia.inline,
+                                        "Zootropolis Con Artist"
+                                    )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.conArtistPoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Con Artist</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Nick - The con artist</h3>
+                                        <p class="text">
+                                            <i>“It’s called a hustle.“</i>
+                                        </p>
+                                        <p class="text">
+                                            Nick Wilde is a slick hustler who uses a combination of charm, wit and cunning in his work as a con artist. This sly fox is always on the move and claims to know everyone in Zootropolis, which makes him a valuable asset to Judy in her search for a missing mammal.
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Nick - The con artist - download poster">Download character poster (18MB)</a>
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.colouringPdf}" class="animal__download" target="_blank" data-link-name="Nick - The con artist - download colouring images">Download the colouring images (2.6MB)</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Beginning of the Rookie - bunny !-->
                             <div class="animal rookie">
-                                <p class="animal__stripe-even">
-                                    <img src="@{page.customData.rookiePic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-even">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.rookiePic)), 0))),
+                                    Seq("animal__stripe-character"),
+                                    GalleryMedia.inline,
+                                    "Zootropolis Rookie"
+                                )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.rookiePoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Rookie</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Judy - The rookie</h3>
+                                        <p class="text">
+                                            <i>“In Zootropolis, anyone can be anything!“</i>
+                                        </p>
+                                        <p class="text">
+                                            Judy Hopps is an idealistic, optimistic and extremely resolute bunny! She had dreamed of becoming a police officer since she was little and living in Bunnyburrow. She finished at the top of her class at the Police Academy and would be the first rabbit police officer in the ZPD. Judy is ambitious, and more than anything wants to make the world a better place. She might be small compared to the other officers, but she is very brave and never hesitates to chase a bad guy or help a friend in danger.
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Judy - The rookie - download poster">Download character poster (18MB)</a>
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.colouringPdf}" class="animal__download" target="_blank" data-link-name="Judy - The rookie - download colouring images">Download the colouring images (2.6MB)</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Beginning of the Chief - bison !-->
                             <div class="animal buffalo">
-                                <p class="animal__stripe-odd">
-                                    <img src="@{page.customData.chiefPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-odd">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.chiefPic)), 0))),
+                                    Seq("animal__stripe-character"),
+                                    GalleryMedia.inline,
+                                    "Zootropolis Chief Bogo"
+                                )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.chiefPoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Chief</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Bogo - The chief</h3>
+                                        <p class="text">
+                                            <i>“Throw your paws in the air!“</i>
+                                        </p>
+                                        <p class="text">
+                                            According to safari experts, elephants never forget, but Cape Buffalo never forgive - which pretty much sums up Chief Bogo. A quick thinker with a steady hand, Bogo is the chief of Zootropolis police force. He likes to joke around, but he expects a lot from the cops on his squad - specifically speed, strength and size. So when idealistic bunny Judy Hopps reports to work Bogo decides she’s not exactly cut out for field work and assigns her to meter-maid duty instead. Gruff and demanding, Bogo will give credit where it is due - but he doubts that little bunny will ever be able to prove herself.
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Bogo - The chief - download poster">Download character poster (18MB)</a>
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.colouringPdf}" class="animal__download" target="_blank" data-link-name="Bogo - The chief - download colouring images">Download the colouring images (2.6MB)</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Beginning of the DMV Employee - sloth !-->
                             <div class="animal dmv-employee">
-                                <p class="animal__stripe-even">
-                                    <img src="@{page.customData.slothPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-even">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.slothPic)), 0))),
+                                    Seq("animal__stripe-character"),
+                                    GalleryMedia.inline,
+                                    "Zootropolis DMV Employee"
+                                )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.slothPoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The DMV Employee</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Flash - The DMV employee</h3>
+                                        <p class="text">
+                                            <i>“You want it when?“</i>
+                                        </p>
+                                        <p class="text">
+                                            Flash is the fastest sloth working at the DMV - of course, that’s not saying much. As a sloth, Flash tends to do everything - like talking - at his own particular pace. He’s as helpful as he can be and when his pal needs a rush job, Flash springs into action (as much as this sloth can spring, anyway).
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Flash - The DMV employee - download poster">Download character poster (18MB)</a>
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.colouringPdf}" class="animal__download" target="_blank" data-link-name="Flash - The DMV employee - download colouring images">Download the colouring images (2.6MB)</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Beginning of the Desk Clerk - tiger !-->
                             <div class="animal desk-clerk">
-                                <p class="animal__stripe-odd">
-                                    <img src="@{page.customData.deskClerkPic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-odd">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.deskClerkPic)), 0))),
+                                    Seq("animal__stripe-character"),
+                                    GalleryMedia.inline,
+                                    "Zootropolis The desk clerk"
+                                )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.deskClerkPoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Desk Clerk</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Benjamin Clawhauser - The desk clerk</h3>
+                                        <p class="text">
+                                            <i>“You are even cuter than I thought you’d be!“</i>
+                                        </p>
+                                        <p class="text">
+                                            Everyone thinks he is just a flabby, donut-loving cop, and officer Benjamin Clawhauser is … exactly like that! But he is also a gentle, honest cheetah and the first friend Judy makes at the ZPD.
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Benjamin Clawhauser - The desk clerk - download poster">Download character poster (18MB)</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Beginning of the Pop Star - gazelle !-->
                             <div class="animal pop-star">
-                                <p class="animal__stripe-even">
-                                    <img src="@{page.customData.gazellePic}" class="animal__stripe-character" alt="@{page.campaign.owner}">
-                                </p>
+                                <div class="animal__stripe-even">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.customData.gazellePic)), 0))),
+                                    Seq("animal__stripe-character"),
+                                    GalleryMedia.inline,
+                                    "Zootropolis The pop star"
+                                )
+                                </div>
                                 <div class="animal__info">
-                                    <div class="animal__info-poster">
+                                    <div class="animal__poster">
                                         <img src="@{page.customData.gazellePoster}" alt="@{page.campaign.owner}">
                                     </div>
-                                    <div class="animal__info-about">
-                                        <h3 class="animal__info-about-header hosted-tone--zootropolis">The Pop Star</h3>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget velit efficitur, viverra velit vel, vehicula sapien. Duis eu ligula augue. Donec sed ligula at massa bibendum sodales. Aenean quis lorem auctor, semper sem at, interdum ligula. Mauris lacinia pharetra augue ac gravida.</span>
-                                        <a href="#" class="animal__info-about-download">Download character poster</a>
+                                    <div class="animal__about">
+                                        <h3 class="animal__header hosted-tone--zootropolis">Gazelle - The pop star</h3>
+                                        <p class="text">
+                                            <i>“Try everything.“</i>
+                                        </p>
+                                        <p class="text">
+                                            Gazelle is very popular in the world of Zootropolis, having many fans, including Judy Hopps and Clawhauser. Her importance and popularity stem from the fact that she is very socially minded and is all about acceptance and equality for all.
+                                        </p>
+                                        <p>
+                                            <a href="@{page.customData.posterPdf}" class="animal__download" target="_blank" data-link-name="Gazelle - The pop star - download poster">Download character poster (18MB)</a>
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!--End of animals !-->
+
+                            <div class="hide-on-desktop">
+                            @for(nextPage <- page.nextPage) {
+                                <div class="hosted__next-video">
+                                    <div class="hosted__next-video--header">
+                                        <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+                                        <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
+                                    </div>
+                                    <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                                        <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
+                                        <p class="hosted__next-video-title">@{nextPage.title}</p>
+                                    </a>
+                                </div>
+                            }
+                            </div><!--End of secondary column; this will not be visible on mobile !-->
                         </div><!--End of article body !-->
                         <div class="hosted__standfirst">
                             <div class="hosted__terms">​@{page.standfirst}
@@ -181,7 +242,19 @@
                         </div>
                     </div>
                     <div class="content__secondary-column js-secondary-column">
-                    </div><!--End of secondary column !-->
+                    @for(nextPage <- page.nextPage) {
+                        <div class="hosted__next-video">
+                            <div class="hosted__next-video--header">
+                                <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+                                <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
+                            </div>
+                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
+                                <p class="hosted__next-video-title">@{nextPage.title}</p>
+                            </a>
+                        </div>
+                    }
+                    </div><!--End of secondary column; this will not be visible on mobile !-->
                 </div>
             </div>
         </article>

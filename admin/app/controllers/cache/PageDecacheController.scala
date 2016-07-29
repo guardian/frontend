@@ -8,13 +8,14 @@ import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
 import controllers.admin.AuthActions
 import model.NoCache
+import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc.{AnyContent, Controller}
 import purge.CdnPurge
 
 import scala.concurrent.Future.successful
 
-class PageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class PageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def renderPageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.cache.pageDecacheForm()))
@@ -23,7 +24,7 @@ class PageDecacheController extends Controller with Logging with AuthLogging wit
   def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
-      CdnPurge.hard(SurrogateKey(urlToDecache.getPath))
+      new CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
       successful(NoCache(Ok(views.html.cache.pageDecacheForm())))
     }.getOrElse(successful(BadRequest("No image submitted")))
 

@@ -2,7 +2,7 @@ package controllers
 
 import discussion.util.Http
 import play.api.libs.json.JsValue
-import play.api.libs.ws.WSResponse
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Controller, Action}
 import model.Cached
 import common.{ExecutionContexts, JsonComponent}
@@ -11,7 +11,7 @@ import conf.Configuration
 import scala.concurrent.Future
 import conf.switches.Switches
 
-class CtaController extends Controller with ExecutionContexts with Http with implicits.Requests {
+class CtaController(val wsClient: WSClient) extends Controller with ExecutionContexts with Http with implicits.Requests {
   private lazy val ctaApiRoot: String = Configuration.open.ctaApiRoot
 
   private def getTopComments(key: DiscussionKey): Future[List[Comment]] = {
@@ -40,5 +40,3 @@ class CtaController extends Controller with ExecutionContexts with Http with imp
     }
   }
 }
-
-object CtaController extends CtaController

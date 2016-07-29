@@ -8,6 +8,7 @@ define([
     config
 ) {
     // This should no longer be used. Prefer the new 'ajax-promise' library instead, which is es6 compliant.
+    // Even better, use 'common/utils/fetch' or 'common/utils/fetch-json'
     var ajaxHost = config.page.ajaxUrl || '';
 
     function ajax(params) {

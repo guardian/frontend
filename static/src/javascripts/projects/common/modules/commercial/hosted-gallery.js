@@ -37,7 +37,8 @@ define([
 
     function HostedGallery() {
         // CONFIG
-        this.useSwipe = detect.hasTouchScreen();
+        var breakpoint = detect.getBreakpoint();
+        this.useSwipe = detect.hasTouchScreen() && (breakpoint === 'mobile' || breakpoint === 'tablet');
         this.swipeThreshold = 0.05;
         this.index = this.index || 1;
         this.imageRatios = [];
@@ -56,8 +57,8 @@ define([
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
         this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
-        this.$ctaFloat = $('.js-hosted-gallery-cta-float', this.$galleryEl)[0];
-        this.$ojFloat = $('.js-hosted-gallery-oj-float', this.$galleryEl)[0];
+        this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
+        this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');

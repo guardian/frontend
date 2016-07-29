@@ -14,7 +14,7 @@ import common.Logging
 import conf.Configuration
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.{WS, WSRequest}
+import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
 
 import scala.io.{Codec, Source}
@@ -168,8 +168,7 @@ object S3FrontsApi extends S3 {
     getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
 }
 
-trait SecureS3Request extends implicits.Dates with Logging {
-  import play.api.Play.current
+class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
   val algorithm: String = "HmacSHA1"
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
@@ -196,7 +195,7 @@ trait SecureS3Request extends implicits.Dates with Logging {
 
 
 
-    WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
+    wsClient.url(s"$frontendStore/$id").withHeaders(headers:_*)
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
@@ -222,8 +221,6 @@ trait SecureS3Request extends implicits.Dates with Logging {
     }
   }
 }
-
-object SecureS3Request extends SecureS3Request
 
 object S3Archive extends S3 {
  override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"

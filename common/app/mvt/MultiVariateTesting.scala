@@ -49,27 +49,17 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
-object ABNewHeaderDummyTestControl extends TestDefinition(
-  name = "ab-new-header-dummy-test-control",
-  description = "New header dummy test control",
-  owners = Seq(Owner.withGithub("nataliaLKB")),
-  sellByDate = new LocalDate(2016, 8, 2) // Tuesday
-) {
+object CommercialClientLoggingVariant extends TestDefinition(
+  name = "commercial-client-logging",
+  description = "A slice of the audience who will post their commercial js performance data",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  sellByDate = new LocalDate(2016, 9, 1)
+  ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-control")
+    request.headers.get("X-GU-ccl").contains("ccl-A")
   }
 }
 
-object ABNewHeaderDummyTestVariant extends TestDefinition(
-  name = "ab-new-header-dummy-test-variant",
-  description = "New header dummy test variant",
-  owners = Seq(Owner.withGithub("nataliaLKB")),
-  sellByDate = new LocalDate(2016, 8, 2) // Tuesday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header-dummy").contains("new-header-variant")
-  }
-}
 
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
@@ -87,8 +77,7 @@ object ActiveTests extends ServerSideABTests {
     ABNewHeaderVariant,
     ABHeadlinesTestControl,
     ABHeadlinesTestVariant,
-    ABNewHeaderDummyTestControl,
-    ABNewHeaderDummyTestVariant
+    CommercialClientLoggingVariant
   )
 }
 

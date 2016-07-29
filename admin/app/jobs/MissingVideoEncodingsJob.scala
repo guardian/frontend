@@ -1,21 +1,20 @@
 package jobs
 
-import common.{Edition, Logging, ExecutionContexts, AkkaAgent}
+import common.{AkkaAgent, AkkaAsync, Edition, ExecutionContexts, Logging}
 import conf.switches.Switches
 import model.{Content, Video}
 import scala.language.postfixOps
 import contentapi.ContentApiClient
 import ContentApiClient.getResponse
-import scala.concurrent.{Future, Await}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import play.api.libs.ws.WS
-import play.api.Play.current
+import play.api.libs.ws.WSClient
 import services.MissingVideoEncodings
 import model.diagnostics.video.DynamoDbStore
 
 
-object VideoEncodingsJob extends ExecutionContexts with Logging  {
+class VideoEncodingsJob(wsClient: WSClient) extends ExecutionContexts with Logging  {
 
   private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
@@ -24,17 +23,17 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
 
   def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
      val sanitizedUrl = encodingUrl.filter( _ != '\n')    //For octopus
-     val response = WS.url(sanitizedUrl).head()
+     val response = wsClient.url(sanitizedUrl).head()
      response.map { r => r.status == 404 || r.status == 500}
   }
 
-  def run () {
+  def run(akkaAsync: AkkaAsync) {
       if( Switches.MissingVideoEndcodingsJobSwitch.isSwitchedOn ) {
-          checkForMissingEncodings()
+          checkForMissingEncodings(akkaAsync)
       }
   }
 
-  private def checkForMissingEncodings() {
+  private def checkForMissingEncodings(akkaAsync: AkkaAsync) {
      log.info("Checking for missing video encodings")
 
      val apiVideoResponse = getResponse(ContentApiClient.search(Edition.defaultEdition)
@@ -70,7 +69,7 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
                case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
                case false =>
                  log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
-                 MissingVideoEncodings.sendMessage(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
+                 MissingVideoEncodings.sendMessage(akkaAsync)(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
                  DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
              }
            }
