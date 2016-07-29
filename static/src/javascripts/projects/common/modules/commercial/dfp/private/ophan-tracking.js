@@ -1,9 +1,10 @@
 define([
     'raven',
+    'common/utils/config',
     'common/utils/user-timing',
     'common/modules/analytics/beacon',
     'common/modules/commercial/dfp/private/get-advert-by-id'
-], function (raven, userTiming, beacon, getAdvertById) {
+], function (raven, config, userTiming, beacon, getAdvertById) {
 
     var performanceLog = {
             viewId: 'unknown',
@@ -163,11 +164,13 @@ define([
     }
 
     function reportTrackingData() {
-        require(['ophan/ng'], function (ophan) {
-            performanceLog.viewId = ophan.viewId;
+        if (config.tests.commercialClientLogging) {
+            require(['ophan/ng'], function (ophan) {
+                performanceLog.viewId = ophan.viewId;
 
-            beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
-        });
+                beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
+            });
+        }
     }
 
     return {
