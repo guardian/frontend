@@ -3,11 +3,13 @@
 
 define([
     'bean',
+    'qwery',
     'reqwest',
     'fastdom',
     'common/utils/$'
 ], function (
     bean,
+    qwery,
     reqwest,
     fastdom,
     $
@@ -21,7 +23,6 @@ define([
                 data: formQueryString,
                 error: function (err) {
                     // TODO: display the error
-                    print(err.message);
                 },
                 success: function (response) {
                     var subscriptionState;
@@ -38,7 +39,7 @@ define([
                             subscriptionState = response.subscriptions[0].subscribedTo;
                         }
                     } catch (err) {
-                        print(err.message);
+                        console.log(err.message);
                     } finally {
                         updateButton(buttonEl, subscriptionState);
                     }
@@ -78,12 +79,21 @@ define([
         }
     }
 
+    function getHTMLPref() {
+        if(qwery('#htmlPreference_HTML')[0].checked) {
+          return 'HTML';
+      } else if(qwery('#htmlPreference_Text')[0].checked) {
+          return 'Text';
+        }
+    }
+
     function submitFormData(buttonEl) {
         var formEl = $.ancestor(buttonEl, 'form');
         var csrfToken = (formEl.elements.csrfToken.value).toString();
         var buttonVal = buttonEl.value.toString();
-        // TODO: Grab the HTML pref from the DOM
-        var htmlPreference = 'HTML'.toString();
+        // TODO: add otherSubscriptions into form... if buttonVal.beginsWith('unsubscribe-') push to button list?
+        var otherSubscriptions = {};
+        var htmlPreference = getHTMLPref();
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
 
     }
