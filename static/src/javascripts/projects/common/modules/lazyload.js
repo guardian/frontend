@@ -43,11 +43,12 @@ define([
                     crossOrigin: true
                 })
                 .then(function (resp) {
-                    steadyPage.insert($container[0], function(){
+                    return steadyPage.insert($container[0], function(){
                         $container.html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');
+                    }).then(function(){
+                        options.success(resp);    
                     });
-                    options.success(resp);
                 })
                 .catch(options.error)
                 .always(options.always);
