@@ -261,7 +261,7 @@ define([
             try {
                 onTestComplete(recordTestComplete(test, variantId));
             } catch(err) {
-               reportError(err, false); 
+               reportError(err, false, false); 
             }    
         }
     }
