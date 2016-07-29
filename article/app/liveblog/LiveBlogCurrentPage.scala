@@ -4,7 +4,7 @@ import model.liveblog.{Blocks, BodyBlock}
 
 sealed trait BlockRange { def query: Option[Seq[String]] }
 case object Canonical extends BlockRange {
-  val firstPage = "body:latest:30"
+  val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
   // this only makes sense for liveblogs at the moment, but article use field body not blocks anyway
