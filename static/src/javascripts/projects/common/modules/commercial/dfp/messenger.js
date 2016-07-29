@@ -6,6 +6,10 @@ define([
     var listeners = {};
     var registeredListeners = 0;
 
+    var error400 = 'Bad request';
+    var error405 = 'Service %% not implemented';
+    var error418 = 'I\'m a teapot';
+
     return {
         register: register,
         unregister: unregister
@@ -46,19 +50,29 @@ define([
     function onMessage(event) {
         // We only allow communication with ads created by DFP
         if (event.origin !== currentHost) {
+            respond(error400, null);
             return;
         }
 
         try {
-            var data = typeof event.data === 'string' ? JSON.parse(event.data) : data;
+            // Even though the postMessage API allows passing objects as-is, the
+            // serialisation/deserialisation is slower than using JSON
+            // Source: https://bugs.chromium.org/p/chromium/issues/detail?id=536620#c11
+            var data = JSON.parse(event.data);
         } catch( ex ) {
+            respond(error418, null);
             return;
         }
 
-        // Admittedly the level of verification here is very low and I intend to
-        // improve that with some clever cryptographic kung-fu. HAAAAAAaaaaa-yah!
-        if (!(data.type && listeners[data.type] && listeners[data.type].length)) {
-            // should we keep messages in memory in case listeners are added later on?
+        if (!isValidPayload(data)) {
+            respond(error400, null);
+            return;
+        }
+
+        // If there is no routine attached to this event type, we just answer
+        // with an error code
+        if (!listeners[data.type].length) {
+            respond(format(error405, data.type), null);
             return;
         }
 
@@ -84,9 +98,45 @@ define([
         }, Promise.resolve(true));
 
         promise.then(function (response) {
-            event.source.postMessage(response, currentHost);
+            respond(null, response);
         }).catch(function (ex) {
             reportError(ex, { feature: 'native-ads' });
         });
+
+        function respond(error, result) {
+            event.source.postMessage(JSON.stringify({ error: error, result: result }), currentHost);
+        }
+    }
+
+    // Until DFP provides a way for us to identify with 100% certainty our
+    // in-house creatives, we are left with doing some basic tests
+    // such as validating the anatomy of the payload and whitelisting
+    // event type
+    function isValidPayload(payload) {
+        return 'type' in payload &&
+            'value' in payload &&
+            payload.type in listeners;
+    }
+
+    // Cheap string formatting function. It accepts as its first argument
+    // a string where each occurence of %% will be replaced by the following
+    // arguments
+    function format() {
+        if (!arguments.length) {
+            return '';
+        }
+
+        var message = arguments[0];
+        var i = 1;
+        var ii = arguments.length;
+
+        while (i < ii) {
+            // Keep in mind that when the pattern is a string, String.replace
+            // only replaces the first occurence
+            message = message.replace('%%', arguments[i]);
+            i += 1;
+        }
+
+        return message;
     }
 });
