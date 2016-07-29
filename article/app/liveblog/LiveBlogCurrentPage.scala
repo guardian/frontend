@@ -4,6 +4,8 @@ import model.liveblog.{Blocks, BodyBlock}
 
 sealed trait BlockRange { def query: Option[Seq[String]] }
 case object Canonical extends BlockRange {
+  // sport pagesize is 30 so the first page could be 30+29 if it's one block away from splitting off a page
+  // plus we need an extra one to be able to reference the second page if necessary making 30+29+1=60
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
