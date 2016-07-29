@@ -13,7 +13,7 @@ case class Advert(
   dfpReceived: Option[Double],
   dfpRendered: Option[Double],
   id: Option[String],
-  isEmpty: Option[String],
+  isEmpty: Option[Boolean],
   lazyWaitComplete: Option[Double],
   loadingMethod: Option[String],
   startLoading: Option[Double],
