@@ -19,7 +19,7 @@
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName');
     }
 
-    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
+    @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {
         ga('@{trackerName}.set', 'forceSSL', true);
 
         ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
@@ -43,6 +43,9 @@
         ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
         ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
         ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
+    }
+
+    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
 
         ga('@{trackerName}.send', 'pageview', {
             hitCallback: function() {
