@@ -40,7 +40,7 @@ import scala.concurrent.duration._
     override val riffRaff = new RiffRaffService(httpClient)
   }
 
-  val controller = new DeploysRadiatorControllerStub()
+  lazy val controller = new DeploysRadiatorControllerStub()
 
   "GET /deploys-radiator/api/deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys-radiator/api/deploys")
