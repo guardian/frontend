@@ -8,7 +8,6 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/ui/selection-sharing.html',
-    'text!common/views/ui/comment-box.html',
     'text!common/views/ui/results-box.html',
     'text!common/views/ui/social-icons.html',
     'common/views/svgs',
@@ -26,19 +25,16 @@ define([
     mediator,
     template,
     sharingTemplate,
-    commentTemplate,
     resultsTemplate,
     socialIconsTemplate,
     svgs,
     debounce,
     throttle,
-    some,
-    storage
+    some
 ) {
 
     var $body = bonzo(document.body),
         wikiIcon = svgs('searchWiki', ['icon']),
-        commentIcon = svgs('commentInline', ['icon']),
         shareIcon = svgs('shareSmall', ['icon']),
         searchIcon = svgs('search', ['icon']),
         flagIcon = svgs('flag', ['icon']),
@@ -47,7 +43,6 @@ define([
         emailIcon = svgs('shareEmail', ['icon']),
         selectionSharing = template(sharingTemplate, {
             wikiIcon: wikiIcon,
-            commentIcon: commentIcon,
             shareIcon: shareIcon,
             searchIcon: searchIcon,
             flagIcon: flagIcon,
@@ -56,8 +51,6 @@ define([
             emailIcon: emailIcon
         }),
         $selectionSharing = $.create(selectionSharing),
-        commentBox = template(commentTemplate, {}),
-        $commentBox = $.create(commentBox),
         socialIconsBox = template(socialIconsTemplate, {
           twitterIcon: twitterIcon,
           emailIcon: emailIcon
@@ -70,15 +63,14 @@ define([
         $emailAction,
         wikiHrefTemplate = 'https://en.wikipedia.org/wiki/<%=text%>',
         googleHrefTemplate = 'https://www.google.co.uk/search?q=<%=text%>',
-        flagHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D%20...Are you sure about that @guardian?&url=<%=url%>',
-        twitterShortUrl = config.page.shortUrl + '/stw',
+        flagHrefTemplate = 'mailto:userhelp@theguardian.com?subject=Issue spotted on %E2%80%9C<%=subject%>%E2%80%9D&body=Dear Guardian User Help, %0A%0AI noticed an issue while reading the following article: %0A%0A%E2%80%9C<%=subject%>%E2%80%9D, seen at <%=url%> %0A%0ASee pasted below the section in question: %0A%0A%E2%80%9C<%=selection%>%E2%80%9D%0A%0ACould this be checked for accuracy please?%0A%0AYours,%0A%0AA concerned reader',
+        twitterUrl = 'https://www.' + config.page.publication + '/' + config.page.pageId + '?CMP=share_btn_link',
         twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>',
         twitterMessageLimit = 114, // 140 - t.co length - 3 chars for quotes and url spacing
-        emailShortUrl = config.page.shortUrl + '/sbl',
+        emailUrl = 'https://www.' + config.page.publication + '/' + config.page.pageId + '?CMP=share_btn_link',
+        emailFlagUrl = 'https://www.' + config.page.publication + '/' + config.page.pageId,
         emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>',
         validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'],
-        lastSelection,
-        lastRange,
 
     isValidSelection = function (range) {
         // commonAncestorContainer is buggy, can't use it here.
@@ -99,31 +91,6 @@ define([
         }
     },
 
-    toggleCommentBox = function (e) {
-        var selection = window.getSelection && document.createRange && window.getSelection(),
-            range,
-            rect,
-            top;
-
-        if (!$commentBox.hasClass('u-h')) {
-            $commentBox.addClass('u-h');
-        } else {
-            range = selection.getRangeAt(0);
-            rect = clientRects.getBoundingClientRect(range);
-            top = $body.scrollTop() + rect.top - 60;
-            $commentBox.removeClass('u-h');
-            $commentBox.css({
-                top: top + 'px',
-                left: rect.left + 180 + 'px'
-            });
-        }
-        e.preventDefault();
-    },
-
-    hideCommentBox = function () {
-        $commentBox.addClass('u-h');
-    },
-
     updateSelection = function () {
         var selection = window.getSelection && document.createRange && window.getSelection(),
             range,
@@ -141,8 +108,6 @@ define([
             rect = clientRects.getBoundingClientRect(range);
             top = $body.scrollTop() + rect.top;
             twitterMessage = range.toString();
-            lastSelection = selection.toString();
-            lastRange = range.cloneRange();
 
             if (!isValidSelection(range)) {
                 hideSelection();
@@ -162,16 +127,17 @@ define([
             });
             twitterHref = template(twitterHrefTemplate, {
                 text: encodeURIComponent(twitterMessage),
-                url: encodeURI(twitterShortUrl)
+                url: encodeURI(twitterUrl)
             });
             flagHref = template(flagHrefTemplate, {
-                text: encodeURIComponent(twitterMessage),
-                url: encodeURI(twitterShortUrl)
+                subject: encodeURI(config.page.webTitle),
+                selection: encodeURI(range.toString()),
+                url: encodeURI(emailFlagUrl)
             });
             emailHref = template(emailHrefTemplate, {
                 subject: encodeURI(config.page.webTitle),
                 selection: encodeURI(range.toString()),
-                url: encodeURI(emailShortUrl)
+                url: encodeURI(emailUrl)
             });
 
             $wikiAction.attr('href', wikiHref);
@@ -197,40 +163,6 @@ define([
         }
     },
 
-    showComment = function (selection) {
-        var resultsBox = template(resultsTemplate, {
-                comment: storage.local.get(selection)
-            }),
-            $resultsBox = $.create(resultsBox),
-            clientRect = $('.commented-phase')[0].getBoundingClientRect(),
-            top = $body.scrollTop() + clientRect.top - 60,
-            right = clientRect.right - 300;
-
-        $body.append($resultsBox);
-        $resultsBox.css({
-            top: top + 'px',
-            right: right + 'px'
-        });
-        $('.d-comment-box-results').removeClass('u-h');
-    },
-
-    submitComment = function () {
-        if (lastSelection && lastRange) {
-            storage.local.set(lastSelection, $('.d-comment-box__body')[0].value);
-            $commentBox.addClass('u-h');
-
-            var newNode = document.createElement('span');
-            newNode.setAttribute('style', 'background-color: pink;');
-            newNode.setAttribute('class', 'commented-phase');
-            newNode.setAttribute('data-selection', lastSelection);
-            lastRange.surroundContents(newNode);
-
-            bean.on($('.commented-phase')[0], 'click', function () {
-                showComment($('.commented-phase').data('selection'));
-            });
-        }
-    },
-
     toggleShareIcons = function(e) {
       if (!$socialIconsBox.hasClass('u-h')) {
           $socialIconsBox.addClass('u-h');
@@ -249,11 +181,9 @@ define([
         // and the UI is generally fiddly on touch.
         if (!detect.hasTouchScreen()) {
             $body.append($selectionSharing);
-            $body.append($commentBox);
             $('.selection-sharing').append($socialIconsBox);
             $socialIconsBox.addClass('u-h');
             $wikiAction = $('.js-selection-wiki');
-            //$commentAction = $('.js-selection-comment');
             $googleAction = $('.js-selection-google');
             $twitterAction = $('.js-selection-twitter');
             $flagAction = $('.js-selection-flag');
@@ -263,9 +193,6 @@ define([
             bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
-            bean.on($('.js-selection-comment')[0], 'click', toggleCommentBox);
-            bean.on($('.js-article__body')[0], 'click', hideCommentBox);
-            bean.on($('.d-comment-box__submit')[0], 'click', submitComment);
             bean.on($('.js-selection-share')[0], 'click', toggleShareIcons);
             mediator.on('window:resize', throttle(updateSelection, 50));
         }

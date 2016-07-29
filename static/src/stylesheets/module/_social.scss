@@ -174,21 +174,14 @@ category: Common
 
 .social_icons-tool {
     position: absolute;
-    top: -40px;
-    left: 20px;
+    top: -35px;
+    left: -18px;
 }
 
 .social-icon--wiki {
     background-color: $social-wiki;
     &:hover {
         background-color: lighten($social-wiki, 20%);
-    }
-}
-
-.social-icon--comment {
-    background-color: $social-comment;
-    &:hover {
-        background-color: lighten($social-comment, 20%);
     }
 }
 
