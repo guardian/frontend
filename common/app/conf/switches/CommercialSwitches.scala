@@ -355,4 +355,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
   )
+
+  val hostedSingaporeF1Article = Switch(
+    group = CommercialLabs,
+    name = "hosted-article-singapore-grand-prix",
+    description = "Show Singapore Grand Prix hosted article or 404.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 17),
+    exposeClientSide = false
+  )
 }
