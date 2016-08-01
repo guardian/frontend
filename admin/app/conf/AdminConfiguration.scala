@@ -8,7 +8,6 @@ case class OmnitureCredentials(userName: String, secret: String)
 
 object AdminConfiguration {
   import GuardianConfiguration._
-//  val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
 
   object pa {
     lazy val footballApiKey = configuration.getStringProperty("pa.api.key")
