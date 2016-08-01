@@ -6,13 +6,15 @@ define([
     'qwery',
     'reqwest',
     'fastdom',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/fastdom-promise'
 ], function (
     bean,
     qwery,
     reqwest,
     fastdom,
-    $
+    $,
+    fastdomPromise
 ) {
     function useReqwest(buttonEl) {
         bean.on(buttonEl, 'click', function () {
@@ -23,6 +25,7 @@ define([
                 data: formQueryString,
                 error: function (err) {
                     // TODO: display the error
+                    renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
                     var subscriptionState;
@@ -41,6 +44,7 @@ define([
                     } catch (err) {
                         console.log(err.message);
                     } finally {
+                        renderErrorMessage(buttonEl);
                         updateButton(buttonEl, subscriptionState);
                     }
                 }
@@ -53,10 +57,22 @@ define([
     }
 
     function encodeFormData(csrfToken, buttonVal, htmlPreference) {
-        // reqwest.toQueryString()
-        return 'csrfToken=' + csrfToken + '&' +
-        'addEmailSubscription=' + buttonVal + '&' +
-        'htmlPreference=' + htmlPreference;
+        return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
+        'addEmailSubscription=' + encodeURIComponent(buttonVal) + '&' +
+        'htmlPreference=' + encodeURIComponent(htmlPreference);
+    }
+
+    function renderErrorMessage(buttonEl) {
+        // appends an error message on the parent div of the button
+        var errorMessage = 'Sorry, an error has occurred, please refresh the page and try again';
+        return fastdomPromise.write(function () {
+            var insertionPoint = $.ancestor(buttonEl, 'email-subscription u-cf');
+            var errorMessageDiv = document.createElement('div');
+            errorMessageDiv.innerHTML = errorMessage;
+            errorMessageDiv.classList.add('form__error');
+            errorMessageDiv.style.cssText = 'margin-top:1.5rem;display:block;clear:both;';
+            insertionPoint.appendChild(errorMessageDiv);
+        });
     }
 
     function updateButton(buttonEl, subscriptionState) {
@@ -91,9 +107,7 @@ define([
         var formEl = $.ancestor(buttonEl, 'form');
         var csrfToken = (formEl.elements.csrfToken.value).toString();
         var buttonVal = buttonEl.value.toString();
-        // TODO: add otherSubscriptions into form... if buttonVal.beginsWith('unsubscribe-') push to button list?
-        var otherSubscriptions = {};
-        var htmlPreference = getHTMLPref();
+        var htmlPreference = getHTMLPref().toString();
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
 
     }
