@@ -103,7 +103,7 @@ define([
             return promise.then(promiseCallback);
         }, Promise.resolve(true));
 
-        promise.then(function (response) {
+        return promise.then(function (response) {
             respond(null, response);
         }).catch(function (ex) {
             reportError(ex, { feature: 'native-ads' });
