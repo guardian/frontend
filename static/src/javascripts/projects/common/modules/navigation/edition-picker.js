@@ -15,7 +15,7 @@ define([
         button.addClass('edition-picker__button js-click');
         button.attr('id', 'edition-picker');
         button.attr('aria-controls', 'edition-picker__dropdown');
-        button.attr('aria-expanded', 'true');
+        button.attr('aria-expanded', 'false');
 
         fastdomPromise.write(function() {
             checkBox.remove();
@@ -34,9 +34,11 @@ define([
                 fastdomPromise.write(function() {
                     if (button.hasClass('open')) {
                         button.removeClass('open');
-                        dropdown.attr('hidden');
+                        button.attr('aria-expanded', 'false');
+                        dropdown.attr('hidden', '');
                     } else {
                         button.addClass('open');
+                        button.attr('aria-expanded', 'true');
                         dropdown.removeAttr('hidden');
                     }
                 });
