@@ -82,7 +82,10 @@ define([
             return;
         }
 
-        var promise = listeners[data.type]
+        // Because any listener can have side-effects (by unregistering itself),
+        // we run the promise chain on a copy of the `listeners` array.
+        // Hat tip @piuccio
+        var promise = listeners[data.type].slice()
         // We offer, but don't impose, the possibility that a listener returns
         // a value that must be sent back to the calling frame. To do this,
         // we pass the cumulated returned value as a second argument to each
