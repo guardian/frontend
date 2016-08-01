@@ -12,7 +12,7 @@ define([
 
         var module = this;
 
-        this.id = 'ParticipationDiscussionOrdering';
+        this.id = 'ParticipationDiscussionOrderingTake2';
         this.start = '2016-07-25';
         this.expiry = '2016-08-26';
         this.author = 'Nathaniel Bennett';
@@ -34,7 +34,12 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {}
+                test: function () {},
+                success: function(complete) {
+                    if(module.canRun()) {
+                        mediator.on('discussion:comments:get-more-replies', complete);
+                    }
+                }
             },
             {
                 id: 'order-by-oldest',
@@ -70,7 +75,5 @@ define([
                 }
             }
         ];
-
-
     };
 });

@@ -54,9 +54,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionOrdering = Switch(
+  val ABParticipationDiscussionOrderingTake2 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering",
+    "ab-participation-discussion-ordering-take-2",
     "Test to see whether ordering comments by recommends increases the number of people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,

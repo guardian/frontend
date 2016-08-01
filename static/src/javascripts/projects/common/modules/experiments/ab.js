@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/habit-forming-digest-promo',
-    'common/modules/experiments/tests/participation-discussion-ordering'
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2'
 ], function (
     reportError,
     config,
@@ -27,7 +27,7 @@ define([
     Giraffe,
     VideoCaption,
     HabitFormingDigestPromo,
-    ParticipationDiscussionOrdering
+    ParticipationDiscussionOrderingTake2
 ) {
 
     var TESTS = [
@@ -36,7 +36,7 @@ define([
         new Giraffe(),
         new HabitFormingDigestPromo(),
         new VideoCaption(),
-        new ParticipationDiscussionOrdering()
+        new ParticipationDiscussionOrderingTake2()
     ];
 
     var participationsKey = 'gu.ab.participations';
