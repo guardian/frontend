@@ -125,7 +125,7 @@ define([
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return renderAdvertLabel(advert.node)
                 .then(addFeedbackDropdownToggle())
-                .then(applyFeedbackOnClickListener())
+                .then(applyFeedbackOnClickListener(slotRenderEvent.creativeId))
                 .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
@@ -153,11 +153,11 @@ define([
                 }) : Promise.resolve();
             }
 
-            function applyFeedbackOnClickListener() {
+            function applyFeedbackOnClickListener(creativeId) {
                 return isRendered ? fastdom.write(function () {
                     bonzo(qwery('.popup__item-problem--option')).each(function(el) {
                         el.addEventListener('click', function() {
-                            userAdFeedback(el.attributes['slot'].nodeValue, el.attributes['problem'].nodeValue)
+                            userAdFeedback(el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue)
                         });
                     });
                 }) : Promise.resolve();

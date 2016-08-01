@@ -1,17 +1,22 @@
 define([
-    'common/modules/commercial/dfp/private/ophan-tracking'
+    'bonzo',
+    'qwery'
 ], function (
-    ophanTracking
+    bonzo,
+    qwery
 ) {
 
-    function userAdFeedback(adSlot, reason) {
-        console.log('feedback received for slot: ' + adSlot + ' reason: ' + reason);
-        // TODO: Activate this ophan call when this handler is correctly attached to the controls
-        //       In the meantime, shut up, eslint!
-        var ophan = false;
-        if (ophan) {
-            ophanTracking.updateAdvertMetric(adSlot, 'user-feedback', reason);
-        }
+    function userAdFeedback(adSlotId, creativeid, reason) {
+        console.log('feedback received: ' + adSlotId + '.' + creativeid + ' reason: ' + reason);
+        // TODO: Activate some ophan call when we work out what to do!
+        var adSlot = bonzo(qwery('#' + adSlotId));
+        adSlot.each(function (ad) {
+            for (i = 0; i < ad.children.length; i++) {
+                if (ad.children[i].classList.contains('ad-slot__label')) {
+                    ad.children[i].innerHTML = 'Advertisement (Thanks for your feedback)';
+                }
+            }
+        });
     }
 
     return userAdFeedback;
