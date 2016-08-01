@@ -155,9 +155,10 @@ define([
 
             function applyFeedbackOnClickListener() {
                 return isRendered ? fastdom.write(function () {
-                    var clickables = bonzo(qwery('.popup__item-problem--option'));
-                    clickables.each(function(el) {
-                        el.addEventListener('click', userAdFeedback(advert, el.attributes['problem']));
+                    bonzo(qwery('.popup__item-problem--option')).each(function(el) {
+                        el.addEventListener('click', function() {
+                            userAdFeedback(el.attributes['slot'].nodeValue, el.attributes['problem'].nodeValue)
+                        });
                     });
                 }) : Promise.resolve();
             }
