@@ -102,7 +102,8 @@ define([
                 expect(response.error.message).toBe('Internal server error\n\ncatch this if you can!');
                 messenger.unregister('this', routines.thrower, mockWindow);
             })
-            .then(done);
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should respond with the routine\'s return value', function (done) {
@@ -114,7 +115,8 @@ define([
                 expect(response.result).toBe('hello johnny!');
                 messenger.unregister('this', routines.respond, mockWindow);
             })
-            .then(done);
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should resond with the listeners cumulative result', function (done) {
@@ -128,7 +130,8 @@ define([
                 messenger.unregister('this', routines.add1, mockWindow);
                 messenger.unregister('this', routines.add2, mockWindow);
             })
-            .then(done);
+            .then(done)
+            .catch(done.fail);
         });
     });
 });
