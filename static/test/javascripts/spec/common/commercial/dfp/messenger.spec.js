@@ -9,7 +9,7 @@ define([
         var routines = {
             noop: function() {},
             thrower: function() {
-                throw 'catch this if you can!'
+                throw 'catch this if you can!';
             },
             respond: function(value) {
                 return value + ' johnny!';
@@ -96,7 +96,7 @@ define([
             var payload = { type: 'this', value: 'hello' };
             messenger.register('this', routines.thrower, mockWindow);
             onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payload), source: mockFrame })
-            .then(function (ex) {
+            .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.error.code).toBe(500);
                 expect(response.error.message).toBe('Internal server error\n\ncatch this if you can!');

@@ -4,8 +4,8 @@ define([
     'qwery',
     'Promise',
     'common/utils/$',
-    'common/utils/ajax-promise',
-    'lodash/collections/forEach',
+    'common/utils/fetch-json',
+    'common/utils/url',
     'lodash/arrays/range'
 ], function (
     bean,
@@ -13,8 +13,8 @@ define([
     qwery,
     Promise,
     $,
-    ajaxPromise,
-    forEach,
+    fetchJson,
+    urlUtil,
     range
 ) {
     // This size effectively determines how many calls this module needs to make.
@@ -52,7 +52,7 @@ define([
 
             var initialItems = items.splice(0, concurrentLimit);
 
-            forEach(initialItems, start);
+            initialItems.forEach(start);
         });
     }
 
@@ -112,12 +112,10 @@ define([
             queryParams.maxResponses = this.params.maxResponses;
         }
 
-        return ajaxPromise({
-            url: '/discussion/' + this.discussionId + '.json',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            data: queryParams
+        var url = '/discussion/' + this.discussionId + '.json?' + urlUtil.constructQuery(queryParams);
+
+        return fetchJson(url, {
+            mode: 'cors'
         });
     };
 

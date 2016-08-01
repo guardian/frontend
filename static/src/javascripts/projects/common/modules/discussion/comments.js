@@ -3,10 +3,12 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/mediator',
+    'common/utils/report-error',
     'common/utils/scroller',
+    'common/utils/url',
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
@@ -19,10 +21,12 @@ define([
     bonzo,
     qwery,
     $,
-    ajaxPromise,
     config,
+    fetchJson,
     mediator,
+    reportError,
     scroller,
+    urlUtil,
     Component,
     DiscussionApi,
     CommentBox,
@@ -148,7 +152,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var url = '/discussion/' +
         (options.comment ? 'comment-context/' + options.comment : this.options.discussionId) +
-        '.json?' + (options.page ? '&page=' + options.page : '');
+        '.json';
 
     var orderBy = options.order || this.options.order;
     if (orderBy === 'recommendations') {
@@ -161,36 +165,37 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
+    if (options.page) {
+        queryParams.page = options.page;
+    }
+
     if (!options.comment && this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
     }
 
     var promise,
-        ajaxParams = {
-            url: url,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            data: queryParams
-        };
+        ajaxParams = { mode: 'cors' };
+
     if (this.isAllPageSizeActive()) {
         promise = new WholeDiscussion({
             discussionId: this.options.discussionId,
             orderBy: queryParams.orderBy,
             displayThreaded: queryParams.displayThreaded,
             maxResponses: queryParams.maxResponses
-        }).loadAllComments().catch(function() {
+        })
+        .loadAllComments()
+        .catch(function() {
             this.wholeDiscussionErrors = true;
             queryParams.pageSize = 100;
-            return ajaxPromise(ajaxParams);
-            }.bind(this));
+            return fetchJson(url + '?' + urlUtil.constructQuery(queryParams), ajaxParams);
+        }.bind(this));
     } else {
         // It is possible that the user has chosen to view all comments,
         // but the WholeDiscussion module has failed. Fall back to 100 comments.
         if (queryParams.pageSize === 'All') {
             queryParams.pageSize = 100;
         }
-        promise = ajaxPromise(ajaxParams);
+        promise = fetchJson(url + '?' + urlUtil.constructQuery(queryParams), ajaxParams);
     }
     return promise.then(this.renderComments.bind(this));
 };
@@ -263,13 +268,10 @@ Comments.prototype.getMoreReplies = function(event) {
     li.innerHTML = 'Loading…';
 
     var source = bonzo(event.target).data('source-comment');
+    var commentId = event.currentTarget.getAttribute('data-comment-id');
 
-    ajaxPromise({
-        url: '/discussion/comment/' + event.currentTarget.getAttribute('data-comment-id') + '.json',
-        type: 'json',
-        method: 'get',
-        data: {displayThreaded: true},
-        crossOrigin: true
+    fetchJson('/discussion/comment/' + commentId + '.json?displayThreaded=true', {
+        mode: 'cors'
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
             replies = qwery(this.getClass('reply'), comment);
@@ -282,7 +284,12 @@ Comments.prototype.getMoreReplies = function(event) {
         if (shouldMakeTimestampsRelative()) {
             this.relativeDates();
         }
-    }.bind(this));
+    }.bind(this))
+    .catch(function (ex) {
+        reportError(ex, {
+            feature: 'comments-more-replies'
+        });
+    });
 };
 
 Comments.prototype.isReadOnly = function() {

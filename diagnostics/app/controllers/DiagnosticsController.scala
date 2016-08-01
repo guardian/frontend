@@ -55,9 +55,7 @@ class DiagnosticsController extends Controller with Logging {
   def cspOptions = postOptions
 
   def commercialReport = Action(jsonParser) { implicit request =>
-    if (mvt.CommercialClientLoggingVariant.isParticipating(request)) {
-      Report.report(request.body)
-    }
+    Report.report(request.body)
 
     TinyResponse.noContent()
   }

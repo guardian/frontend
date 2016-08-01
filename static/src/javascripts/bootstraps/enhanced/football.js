@@ -2,11 +2,12 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fetch-json',
     'common/utils/mediator',
     'common/utils/page',
+    'common/utils/report-error',
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
@@ -18,11 +19,12 @@ define([
     bean,
     bonzo,
     $,
-    ajax,
     config,
     detect,
+    fetchJson,
     mediator,
     page,
+    reportError,
     Doughnut,
     football,
     MatchInfo,
@@ -252,9 +254,8 @@ define([
         bean.on(document.body, 'click', '.js-show-more-football-matches', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
-            ajax({
-                url: el.getAttribute('href') + '.json'
-            }).then(function (resp) {
+            fetchJson(el.getAttribute('href') + '.json')
+            .then(function (resp) {
                 $.create(resp.html).each(function (html) {
                     $('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]')
                         .append($(el.getAttribute('data-shows-more'), html));
@@ -265,6 +266,11 @@ define([
                     } else {
                         bonzo(el).remove();
                     }
+                });
+            })
+            .catch(function (ex) {
+                reportError(ex, {
+                    feature: 'football-show-more'
                 });
             });
         });

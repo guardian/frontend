@@ -11,7 +11,6 @@ case class HostedVideoPage(
   standfirst: String,
   video: HostedVideo,
   cta: HostedCallToAction,
-  ctaBanner: String,
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
@@ -63,6 +62,7 @@ case class HostedVideo(
 
 case class HostedCallToAction(
   url: String,
+  image: String,
   label: String,
   trackingCode: String,
   btnText: String
