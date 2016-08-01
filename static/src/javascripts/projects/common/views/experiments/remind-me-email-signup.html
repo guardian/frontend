@@ -1,0 +1,12 @@
+<div class="remind-me">
+    <% if (subtitle) { %>
+    <h2 class="remind-me__subtitle"><%= subtitle %></h2>
+    <% } %>
+    <h1 class="remind-me__title"><%= title %></h1>
+    <p class="remind-me__description"><%= description %></p>
+    <button id="remind-me-signup"
+            class="email-sub__submit-input button button--tertiary button--large email-sub__submit-input--solo button--remind-me"
+            data-link-name="<%= dataLinkName %>">
+        <%= svg %> <%= cta %>
+    </button>
+</div>

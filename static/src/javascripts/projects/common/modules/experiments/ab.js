@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/participation-discussion-ordering-take-2',
+    'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/contributions-header'
 ], function (
@@ -28,6 +29,7 @@ define([
     Giraffe,
     VideoCaption,
     ParticipationDiscussionOrderingTake2,
+    RemindMeEmail,
     HostedZootropolisCta,
     ContributionsHeader
 ) {
@@ -38,6 +40,7 @@ define([
         new Giraffe(),
         new VideoCaption(),
         new ParticipationDiscussionOrderingTake2(),
+        new RemindMeEmail(),
         new HostedZootropolisCta(),
         new ContributionsHeader()
     ];

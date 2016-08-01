@@ -1,0 +1,41 @@
+$remind-me-color: $features-support-1;
+.remind-me {
+    background-color: $remind-me-color;
+    padding: $gs-baseline/4 $gs-gutter/2 $gs-baseline/2;
+    border-top: 3px solid $features-support-3;
+    color: #ffffff;
+}
+
+.remind-me__subtitle {
+    @include fs-textSans(5);
+    font-weight: bold;
+    color: $features-support-3;
+}
+
+.remind-me__title {
+    @include fs-header(5);
+    font-weight: normal;
+    padding-bottom: $gs-baseline;
+}
+
+.remind-me__cta {
+    @include fs-textSans(5);
+    font-weight: bold;
+}
+.remind-me__description {
+    font-size: 18px;
+}
+
+.button--remind-me {
+    @include fs-textSans(5, true);
+    @include button-colour(
+        $remind-me-color,
+        #ffffff,
+        $features-support-3
+    );
+    @include button-hover-colour(
+        darken($remind-me-color, 5%),
+        $features-support-3
+    );
+    width: auto;
+}
