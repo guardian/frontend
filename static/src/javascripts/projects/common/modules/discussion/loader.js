@@ -68,6 +68,7 @@ Loader.prototype.initTopComments = function() {
             this.$topCommentsContainer.html(resp.html);
             this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
             if (this.topCommentCount !== 0) {
+                $('.js-discussion-comment-box--bottom').removeClass('discussion__comment-box--bottom--hidden');
                 this.setState('has-top-comments');
             }
         }.bind(this)
