@@ -284,7 +284,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews && config.page.section !== 'identity') {
+                if (config.switches.breakingNews && config.page.section !== 'identity' && config.page.tones !== 'Hosted') {
                     breakingNews();
                 }
             },
