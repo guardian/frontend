@@ -157,7 +157,7 @@ define([
                 return isRendered ? fastdom.write(function () {
                     bonzo(qwery('.popup__item-problem--option')).each(function(el) {
                         el.addEventListener('click', function() {
-                            userAdFeedback(el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue);
+                            userAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue);
                         });
                     });
                 }) : Promise.resolve();

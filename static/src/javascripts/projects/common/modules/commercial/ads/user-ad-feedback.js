@@ -6,9 +6,9 @@ define([
     qwery
 ) {
 
-    function userAdFeedback(adSlotId, creativeid, reason) {
-        // TODO: swap console.log for ophan (or other) call. Commented to silence eslint's gripes while WIP
-        //console.log('feedback received: ' + adSlotId + '.' + creativeid + ' reason: ' + reason);
+    function userAdFeedback(pagePath, adSlotId, creativeid, reason) {
+        // TODO: swap console.log for ophan (or other) call.
+        console.log('feedback received: ' + pagePath + '.' + adSlotId + '.' + creativeid + ' reason: ' + reason);
         // TODO: Activate some ophan call when we work out what to do!
         var adSlot = bonzo(qwery('#' + adSlotId));
         adSlot.each(function (ad) {
