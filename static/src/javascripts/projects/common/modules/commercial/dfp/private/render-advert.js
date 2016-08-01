@@ -156,8 +156,8 @@ define([
             function applyFeedbackOnClickListener() {
                 return isRendered ? fastdom.write(function () {
                     var clickables = bonzo(qwery('.popup__item-problem--option'));
-                    clickables.each(function(el, num) {
-                        el.addEventListener('click', userAdFeedback(advert, el.attributes["problem"]));
+                    clickables.each(function(el) {
+                        el.addEventListener('click', userAdFeedback(advert, el.attributes['problem']));
                     });
                 }) : Promise.resolve();
             }
