@@ -1,0 +1,36 @@
+/* Tooltip Box
+   Box that sits on top of the content, absolutely positioned
+   Larger than a standard tooltip and allows a close icon */
+
+.tooltip-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: $zindex-content;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
+}
+
+.tooltip-box-hidden {
+    display: none;
+}
+
+.tooltip-box--neutral {
+    color: $neutral-1;
+    border: 2px solid $neutral-6;
+    background: #FFF;
+}
+
+.tooltip-box--width4 {
+    width: gs-span(4);
+}
+
+.tooltip-box__close {
+    float: right;
+    margin-bottom: $gs-baseline / 2;
+    width: auto;
+}
+
+.tooltip-box__p {
+    margin-top: $gs-baseline / 2;
+    text-align: left;
+}

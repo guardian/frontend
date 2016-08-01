@@ -104,7 +104,7 @@ Comments.prototype.ready = function() {
     this.emit('ready');
 
     this.on('click', '.js-report-comment-close', function() {
-        $('.js-report-comment-form').addClass('u-h');
+        $('.js-report-comment-form').addClass('tooltip-box-hidden');
     });
 };
 
@@ -441,11 +441,11 @@ Comments.prototype.reportComment = function(e) {
         });
     }).appendTo(
         $('#comment-' + commentId + ' .js-report-comment-container').first()
-    ).removeClass('u-h');
+    ).removeClass('tooltip-box-hidden');
 };
 
 Comments.prototype.reportCommentSuccess = function(form) {
-    bonzo(form).addClass('u-h');
+    bonzo(form).addClass('tooltip-box-hidden');
 };
 
 Comments.prototype.reportCommentFailure = function() {
