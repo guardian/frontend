@@ -5,7 +5,7 @@ Sometimes you want to mess around testing something complex (untestable locally 
 The simplest way to do that is to spin up a new Auto scaling Group in environment TEST, and deploy your build there.
 
 ## deploy your stuff for testing
-1. build your branch of platform/your ami/whatever it is you plan to test.  If you want to test frontend itself, we don't produce artifacts for a PR build.  See below for some pointers.
+1. build your branch of platform/your ami/whatever it is you plan to test.  If you want to test frontend itself, we don't produce artifacts for a PR build so follow the instructions at the bottom to build artifacts.
 1. deploy platform to stage TEST
 1. deploy a build of frontend to TEST if necessary (this will copy the file but won't be able to find the ASG)
 
@@ -28,10 +28,8 @@ The simplest way to do that is to spin up a new Auto scaling Group in environmen
 1. delete the ASG and Launch config
 
 ## Building a branch with frontend
-1. copy the dotcom:frontend master build in teamcity and give it a name e.g. john-test-frontend
-1. change the branch in the git definition
-1. make sure you select copy the git definition rather than editing the master one
-1. run the build - it will create the build under build id 1
-1. deploy build 1 with riffraff to TEST
-1. delete the build definition/git definition again
+1. click the ... icon next to Run in dotcom master build
+1. change the BranchName in the parameters screen to your branch
+1. run the build - it will create the build and upload to riffraff
+1. deploy the build with riffraff to TEST
 
