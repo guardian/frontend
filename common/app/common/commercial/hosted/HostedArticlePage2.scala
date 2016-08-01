@@ -4,22 +4,24 @@ import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.JsString
 
-case class HostedVideoPage(
+case class HostedArticlePage2(
   campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
+  title: String,
   standfirst: String,
-  video: HostedVideo,
   cta: HostedCallToAction,
+  mainPicture: String,
+  mainPictureCaption: String,
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
   nextPage: Option[HostedPage] = None
-) extends HostedPage {
+)
+  extends HostedPage {
 
-  val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
-  val title = video.title
-  val imageUrl = video.posterUrl
+  val pageTitle = s"Advertiser content hosted by the Guardian: $title"
+  val imageUrl = mainPicture
 
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"
@@ -28,8 +30,8 @@ case class HostedVideoPage(
       id = s"commercial/advertiser-content/${campaign.id}/$pageName",
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaign.id)),
-      contentType = Video,
-      analyticsName = s"GFE:${campaign.id}:$Video:$pageName",
+      contentType = Article,
+      analyticsName = s"GFE:${campaign.id}:$Article:$pageName",
       description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
@@ -42,28 +44,9 @@ case class HostedVideoPage(
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
-        "og:image" -> video.posterUrl,
+        "og:image" -> mainPicture,
         "fb:app_id" -> "180444840287"
       )
     )
   }
 }
-
-case class HostedVideo(
-  mediaId: String,
-  title: String,
-  duration: Int,
-  posterUrl: String,
-  srcUrlMp4: String,
-  srcUrlWebm: String,
-  srcUrlOgg: String,
-  srcM3u8: String
-)
-
-case class HostedCallToAction(
-  url: String,
-  image: String,
-  label: String,
-  trackingCode: String,
-  btnText: String
-)
