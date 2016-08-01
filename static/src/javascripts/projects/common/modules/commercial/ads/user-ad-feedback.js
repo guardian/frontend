@@ -7,11 +7,12 @@ define([
 ) {
 
     function userAdFeedback(adSlotId, creativeid, reason) {
-        console.log('feedback received: ' + adSlotId + '.' + creativeid + ' reason: ' + reason);
+        // TODO: swap console.log for ophan (or other) call. Commented to silence eslint's gripes while WIP
+        //console.log('feedback received: ' + adSlotId + '.' + creativeid + ' reason: ' + reason);
         // TODO: Activate some ophan call when we work out what to do!
         var adSlot = bonzo(qwery('#' + adSlotId));
         adSlot.each(function (ad) {
-            for (i = 0; i < ad.children.length; i++) {
+            for (var i = 0; i < ad.children.length; i++) {
                 if (ad.children[i].classList.contains('ad-slot__label')) {
                     ad.children[i].innerHTML = 'Advertisement (Thanks for your feedback)';
                 }
