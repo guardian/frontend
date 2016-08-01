@@ -138,7 +138,9 @@ trait Prototypes {
       {
         val buildNumber = Option(System.getenv().get("BUILD_NUMBER")).map(_.replaceAll("\"",""))
         val branch = Option(System.getenv().get("BUILD_VCS_BRANCH")).filterNot(_ == "master")
-        Seq(branch, buildNumber.orElse(Some("0"))).flatten.mkString("_")
+        val id = Seq(branch, buildNumber.orElse(Some("0"))).flatten.mkString("_")
+        println(s"id: $id")
+        id
       },
     riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
     riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
