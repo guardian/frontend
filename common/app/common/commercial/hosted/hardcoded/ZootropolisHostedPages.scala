@@ -20,6 +20,7 @@ object ZootropolisHostedPages {
   private val cta = HostedCallToAction(
     url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
     label = "",
+    image = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
   )
@@ -44,7 +45,6 @@ object ZootropolisHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/07/18/HLS/160718GLZootropolisSpot_h264_mezzanine.m3u8"
       ),
       cta,
-      ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
       twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
     )
   }
