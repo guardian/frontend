@@ -123,7 +123,9 @@
         </div>
     </article>
 
-    @fragments.contentFooter(article, model.related)
+    @if(!amp) {
+        @fragments.contentFooter(article, model.related)
+    }
 
 </div>
 }
