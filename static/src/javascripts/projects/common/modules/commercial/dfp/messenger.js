@@ -6,9 +6,10 @@ define([
     var listeners = {};
     var registeredListeners = 0;
 
-    var error400 = 'Bad request';
-    var error405 = 'Service %% not implemented';
-    var error418 = 'I\'m a teapot';
+    var error400 = { code: 400, message: 'Bad request' };
+    var error405 = { code: 405, message: 'Service %% not implemented' };
+    var error418 = { code: 418, message: 'I\'m a teapot' };
+    var error500 = { code: 500, message: 'Internal server error\n\n%%' };
 
     return {
         register: register,
@@ -72,7 +73,7 @@ define([
         // If there is no routine attached to this event type, we just answer
         // with an error code
         if (!listeners[data.type].length) {
-            respond(format(error405, data.type), null);
+            respond(formatError(error405, data.type), null);
             return;
         }
 
@@ -101,6 +102,7 @@ define([
             respond(null, response);
         }).catch(function (ex) {
             reportError(ex, { feature: 'native-ads' });
+            respond(formatError(error500, ex), null);
         });
 
         function respond(error, result) {
@@ -121,22 +123,22 @@ define([
     // Cheap string formatting function. It accepts as its first argument
     // a string where each occurence of %% will be replaced by the following
     // arguments
-    function format() {
+    function formatError() {
         if (!arguments.length) {
             return '';
         }
 
-        var message = arguments[0];
+        var error = arguments[0];
         var i = 1;
         var ii = arguments.length;
 
         while (i < ii) {
             // Keep in mind that when the pattern is a string, String.replace
             // only replaces the first occurence
-            message = message.replace('%%', arguments[i]);
+            error.message = error.message.replace('%%', arguments[i]);
             i += 1;
         }
 
-        return message;
+        return error;
     }
 });
