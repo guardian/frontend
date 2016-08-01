@@ -75,6 +75,14 @@ $hosted-video-height: 540px;
             height: 50px;
         }
     }
+
+    @include mq(leftCol) {
+        margin-right: 90px;
+    }
+
+    @include mq(wide) {
+        margin-right: 170px;
+    }
 }
 
 .hosted__glogotext {
