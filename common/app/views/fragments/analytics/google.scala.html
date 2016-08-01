@@ -4,6 +4,17 @@
 
 <script id='google_analytics'>
 
+(function() {
+
+    // Remove spaces from content type and convert it to lower case
+    function convertContentType(contentType) {
+        var result = contentType;
+        if (typeof contentType === 'string') {
+            result = contentType.toLowerCase().split(' ').join('');
+        }
+        return result;
+    }
+
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
     ***************************************************************************************@
@@ -19,7 +30,7 @@
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName');
     }
 
-    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
+    @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {
         ga('@{trackerName}.set', 'forceSSL', true);
 
         ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
@@ -36,13 +47,16 @@
         * Some of these will be undefined for non-content pages, but that's fine.              *
         ***************************************************************************************@
         ga('@{trackerName}.set', 'dimension4', guardian.config.page.section);
-        ga('@{trackerName}.set', 'dimension5', guardian.config.page.contentType);
-        ga('@{trackerName}.set', 'dimension6', guardian.config.page.commissioningDesk);
+        ga('@{trackerName}.set', 'dimension5', convertContentType(guardian.config.page.contentType));
+        ga('@{trackerName}.set', 'dimension6', guardian.config.page.commissioningDesks);
         ga('@{trackerName}.set', 'dimension7', guardian.config.page.contentId);
         ga('@{trackerName}.set', 'dimension8', guardian.config.page.authorIds);
         ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
         ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
         ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
+    }
+
+    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
 
         ga('@{trackerName}.send', 'pageview', {
             hitCallback: function() {
@@ -75,6 +89,9 @@
         } catch (e) { }
 
     }
+
+})();
+
 </script>
 
 @*
