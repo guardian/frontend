@@ -125,7 +125,7 @@ define([
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return renderAdvertLabel(advert.node)
                 .then(addFeedbackDropdownToggle())
-                .then(applyFeedbackOnClickListener(slotRenderEvent.creativeId))
+                .then(applyFeedbackOnClickListeners(slotRenderEvent.creativeId))
                 .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
@@ -153,12 +153,23 @@ define([
                 }) : Promise.resolve();
             }
 
-            function applyFeedbackOnClickListener(creativeId) {
+            function applyFeedbackOnClickListeners(creativeId) {
                 return isRendered ? fastdom.write(function () {
+                    bonzo(qwery(bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')))).each(function(el) {
+                        if (!bonzo(el).hasClass('js-onclick-ready')) {
+                            el.addEventListener('click', function() {
+                                userAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
+                            });
+                            bonzo(el).addClass('js-onclick-ready');
+                        }
+                    });
                     bonzo(qwery('.popup__item-problem--option')).each(function(el) {
-                        el.addEventListener('click', function() {
-                            userAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue);
-                        });
+                        if (!bonzo(el).hasClass('js-onclick-ready')) {
+                            el.addEventListener('click', function() {
+                                userAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue);
+                            });
+                            bonzo(el).addClass('js-onclick-ready');
+                        }
                     });
                 }) : Promise.resolve();
             }

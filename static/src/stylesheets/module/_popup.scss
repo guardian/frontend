@@ -309,7 +309,7 @@ $control-offset: 36 + $gs-gutter/2;
         margin-left: 4px;
         border-left: $popup-toggle-arrow-size solid transparent;
         border-right: $popup-toggle-arrow-size solid transparent;
-        border-top: $popup-toggle-arrow-size solid #dcdcdc;
+        border-top: $popup-toggle-arrow-size solid #005689;
     }
 
     // When active (the menu is open)...
@@ -330,14 +330,14 @@ $control-offset: 36 + $gs-gutter/2;
             margin-left: 4px;
             border-left: $popup-toggle-arrow-size solid transparent;
             border-right: $popup-toggle-arrow-size solid transparent;
-            border-bottom: $popup-toggle-arrow-size solid #dcdcdc;
+            border-bottom: $popup-toggle-arrow-size solid #005689;
         }
     }
 
 }
 
 .ad-feedback.popup {
-    width: 225px;
+    width: 180px;
     top: 18px;
     left: inherit;
     background: $neutral-8;
@@ -347,15 +347,18 @@ $control-offset: 36 + $gs-gutter/2;
     ul {
         margin-left: 2px;
     }
+    h3 {
+        color: #333333;
+        padding-top: 5px;
+        padding-bottom: 2px;
+        border-bottom-width: 1px;
+    }
     .popup__group-header {
         padding: 5px 2px;
     }
     .popup__group-header:last-of-type {
         border-top: 0;
         border-bottom: 1px solid #dcdcdc;
-    }
-    .popup__item:first-of-type {
-        margin-top: 2px;
     }
     .popup__item {
         font-size: 13px;
@@ -374,7 +377,7 @@ $control-offset: 36 + $gs-gutter/2;
         text-decoration: none;
     }
     .popup__item:last-of-type {
-        margin-bottom: 2px;
+        border: 0;
     }
 }
 
