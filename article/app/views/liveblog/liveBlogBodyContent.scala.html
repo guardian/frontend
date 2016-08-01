@@ -1,76 +1,27 @@
-@import model.Article
-
-@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 
 @import common.Edition
-@import views.support.{AmpAd, AmpAdDataSlot}
-@import org.joda.time.DateTimeZone
-
-@liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
-    @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
-        @views.html.liveblog.liveBlogBlocks(blockGroup, article, timezone, amp)
-
-        @* Add advert every 5 blog posts, up to a maximum of 8 *@
-        @if(blockGroup.length == 5 && index < 8) {
-            @* AMP requires children of `<div items>` to have an `id` and a `data-sort-time` *@
-            <div id="amp-ad-@index" data-sort-time="1" class="block amp-ad-container amp-ad-container--live-blog">
-                <amp-ad width="300" height="250" type="doubleclick"
-                json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
-                data-slot=@AmpAdDataSlot(article).toString()>
-                </amp-ad>
-            </div>
-        }
-    }
-}
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
     <div class="js-article__container" data-component="body">
-        @if(!amp) {
-            <div class="toast__space-reserver">
-                <div id="toast__tofix" class="toast__container">
-                    <button class="toast__button toast__button--closed button button--large">
-                        <span class="toast__text"></span>
-                        @fragments.inlineSvg("refresh", "icon", List(""))
-                    </button>
-                </div>
+        <div class="toast__space-reserver">
+            <div id="toast__tofix" class="toast__container">
+                <button class="toast__button toast__button--closed button button--large">
+                    <span class="toast__text"></span>
+                    @fragments.inlineSvg("refresh", "icon", List(""))
+                </button>
             </div>
-        }
+        </div>
         @if(model.currentPage.currentPage.isArchivePage) {
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
         }
-            @if(amp) {
-                <amp-live-list id="live-list" data-poll-interval="15000" data-max-items-per-page="20"
-                    class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
-                        _root_.liveblog.LatestBlock(article.blocks)
-                    }" data-test-id="live-blog-blocks"
-                    itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                    <div update on="tap:live-list.update" class="toast__space-reserver">
-                        <div id="toast__tofix" class="toast__container">
-                            <button class="toast__button toast__button--closed button button--large">
-                                <span class="toast__text">New updates</span>
-                                @fragments.inlineSvg("refresh", "icon", List(""))
-                            </button>
-                        </div>
-                    </div>
-                    <div items>
-                        @liveBlogBlocksAMP(article, timezone)
-                    </div>
-                </amp-live-list>
-            } else {
-                <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
-                    _root_.liveblog.LatestBlock(article.blocks)
-                }" data-test-id="live-blog-blocks"
-                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                    @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone, amp)
-                </div>
-            }
+        <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
+            _root_.liveblog.LatestBlock(article.blocks)
+        }" data-test-id="live-blog-blocks"
+        itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
+            @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
+        </div>
         @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
         @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
     </div>
-
-    @fragments.submeta(article)
-
-    <div class="after-article js-after-article"></div>
-
-    <div class="js-bottom-marker"></div>
 }
