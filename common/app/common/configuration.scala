@@ -2,6 +2,7 @@ package common
 
 import java.io.{File, FileInputStream}
 import java.util.Map.Entry
+import java.util.{Properties => JavaProperties}
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
@@ -24,7 +25,11 @@ object GuardianConfiguration extends Logging {
   import com.typesafe.config.Config
   lazy val configuration = {
 
-    val stage = new CM(List(FileConfigurationSource(s"/etc/gu/install_vars")), PlayDefaultLogger).load.getStringProperty("STAGE").getOrElse("DEV")
+    val stage = {
+      val p = new JavaProperties()
+      p.load(new FileInputStream(s"/etc/gu/install_vars"))
+      p.getProperty("STAGE", "DEV")
+    }
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
     lazy val opsPrivate = FileConfigurationSource(s"/etc/gu/frontend.properties")
     lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
