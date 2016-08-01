@@ -134,14 +134,7 @@ trait Prototypes {
     topLevelDirectory in Universal := Some(application),
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
     riffRaffPackageType := (packageBin in Universal).value,
-    riffRaffBuildIdentifier :=
-      {
-        val buildNumber = Option(System.getenv().get("BUILD_NUMBER")).map(_.replaceAll("\"",""))
-        val branch = Option(System.getenv().get("BUILD_VCS_BRANCH")).filterNot(_ == "master")
-        val id = Seq(branch, buildNumber.orElse(Some("0"))).flatten.mkString("_")
-        println(s"id: $id")
-        id
-      },
+    riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
     riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
     riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
     riffRaffArtifactPublishPath := application,
