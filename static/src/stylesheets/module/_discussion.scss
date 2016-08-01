@@ -722,7 +722,6 @@ $comment-recommend-button-size: 19px;
     right: 0;
     top: $gs-baseline / 2;
     height: $comment-recommend-button-size;
-    z-index: 1;
 
     @include mq(desktop) {
         min-width: 28px;
@@ -975,21 +974,6 @@ $comment-recommend-button-size: 19px;
 /* Report
    ======================================================= */
 
-.d-report-comment-form {
-    top: 0;
-    right: 0;
-    z-index: $zindex-content;
-    width: gs-span(4);
-    color: $neutral-1;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid $neutral-6;
-    background: #ffffff;
-}
-
-.d-comment .d-report-comment-form {
-    position: absolute;
-}
-
 .d-report-comment__label,
 .d-report-comment__field {
     box-sizing: border-box;
@@ -1241,7 +1225,7 @@ $comment-recommend-button-size: 19px;
         display: inline-block;
         margin-left: $gs-gutter * 1.2;
 
-        .d-report-comment-form & {
+        .tooltip-box & {
             margin-left: 0;
             margin-bottom: .25rem;
         }
