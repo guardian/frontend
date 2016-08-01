@@ -44,13 +44,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionOrdering = Switch(
+  val ABParticipationDiscussionOrderingTake2 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering",
+    "ab-participation-discussion-ordering-take-2",
     "Test to see whether ordering comments by recommends increases the number of people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 }

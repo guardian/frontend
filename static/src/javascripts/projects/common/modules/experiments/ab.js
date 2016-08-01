@@ -11,7 +11,7 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/participation-discussion-ordering'
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2'
 ], function (
     reportError,
     config,
@@ -25,7 +25,7 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    ParticipationDiscussionOrdering
+    ParticipationDiscussionOrderingTake2
 ) {
 
     var TESTS = [
@@ -33,7 +33,7 @@ define([
         new HostedAutoplay(),
         new Giraffe(),
         new VideoCaption(),
-        new ParticipationDiscussionOrdering()
+        new ParticipationDiscussionOrderingTake2()
     ];
 
     var participationsKey = 'gu.ab.participations';
