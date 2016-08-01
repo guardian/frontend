@@ -22,8 +22,10 @@ define([
         }
 
         listeners[type] || (listeners[type] = []);
-        listeners[type].push(callback);
-        registeredListeners += 1;
+        if (listeners[type].indexOf(callback) === -1) {
+            listeners[type].push(callback);
+            registeredListeners += 1;
+        }
     }
 
     function unregister(type, callback, _window) {
@@ -31,8 +33,11 @@ define([
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
         } else {
-            registeredListeners -= 1;
-            listeners[type].splice(listeners[type].indexOf(callback), 1);
+            var idx = listeners[type].indexOf(callback);
+            if (idx > -1) {
+                registeredListeners -= 1;
+                listeners[type].splice(idx, 1);
+            }
         }
 
         if (registeredListeners === 0) {
