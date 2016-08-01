@@ -90,17 +90,14 @@ define([
         // value ourselves, this would only make the solution more complex.
         // That means a listener can ignore the cumulated return value and
         // return something else entirely—life is unfair.
-        .map(function (listener) {
-            return function promiseCallback(ret) {
-                var thisRet = listener(data.value, ret);
-                return thisRet === undefined ? ret : thisRet;
-            };
-        })
         // We don't know what each callack will be made of, we don't want to.
         // And so we wrap each call in a promise chain, in case one drops the
         // occasional fastdom bomb in the middle.
-        .reduce(function (promise, promiseCallback) {
-            return promise.then(promiseCallback);
+        .reduce(function (promise, listener) {
+            return promise.then(function promiseCallback(ret) {
+                var thisRet = listener(data.value, ret);
+                return thisRet === undefined ? ret : thisRet;
+            });
         }, Promise.resolve(true));
 
         return promise.then(function (response) {
