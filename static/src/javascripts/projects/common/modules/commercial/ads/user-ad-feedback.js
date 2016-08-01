@@ -7,7 +7,9 @@ define([
     function userAdFeedback(advert, reason) {
         alert('feedback accepted' + advert.id + ' ' + reason);
         // TODO: Activate this ophan call when this handler is correctly attached to the controls
-        if (false == true) {
+        //       In the meantime, shut up, eslint!
+        var ophan = false;
+        if (ophan) {
             ophanTracking.updateAdvertMetric(advert, 'user-feedback', reason);
         }
     }
