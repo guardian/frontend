@@ -18,9 +18,9 @@ object Formula1HostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.firststopsingapore.com/singapore-airlines-singapore-grand-prix-packages/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix",
     image = "https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg",
-    label = "Discover the 2016 Singapore Grand Prix",
+    label = "Sort your flights, hotel and GP ticket for less at",
     trackingCode = "singapore-grand-prix",
-    btnText = "Book now"
+    btnText = "sianightrace.com"
   )
 
   val overviewPageName = "overview"
@@ -31,8 +31,8 @@ object Formula1HostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$overviewPageName",
     pageName = overviewPageName,
-    title = "Overview",
-    standfirst = "Singapore has been the proud host of the world's only Formula One night race since 2008. The backdrop of heritage buildings, modern architecture and breathtaking skyline culminates in an unparalleled combination of sights, sounds and a festive atmosphere.",
+    title = "Get revved up for the Singapore Grand Prix",
+    standfirst = "‘This race is always a highlight of the season: a great city, which looks really spectacular under the lights with the tricky street circuit below – my favourite kind of track to drive.’ Lewis Hamilton, 3-time Formula1 World Champion, Mercedes AMG Petronas F1 Team",
     cta,
     mainPicture = "http://media.guim.co.uk/18ad0d659d2cf5b961b7c7c9548283cc6e4559e1/0_346_5184_3110/2000.jpg",
     mainPictureCaption = "A bird's eye view of the illuminated Marina Bay Street Circuit"
@@ -42,8 +42,8 @@ object Formula1HostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$packagesPageName",
     pageName = packagesPageName,
-    title = "Packages",
-    standfirst = "Singapore has been the proud host of the world's only Formula One night race since 2008. The backdrop of heritage buildings, modern architecture and breathtaking skyline culminates in an unparalleled combination of sights, sounds and a festive atmosphere.",
+    title = "Singapore Airlines Singapore Grand Prix packages",
+    standfirst = "‘This is such a special race. The whole weekend feels different – there’s a buzz to the F1 Paddock when you first walk in on Thursday afternoon and it never goes away. You can feel the vibe – and the tension and anticipation climb higher and higher as we get closer to the race itself on Sunday night.’ Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
     cta,
     mainPicture = "http://media.guim.co.uk/7570a34e5556dfdaeb17af6bee54168c0c9bdc15/0_0_4240_2832/2000.jpg",
     mainPictureCaption = "Crowd along the Jubilee Bridge, an excellent vantage point of the fireworks display on Sunday "
@@ -53,8 +53,8 @@ object Formula1HostedPages {
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$offtrackPageName",
     pageName = offtrackPageName,
-    title = "Offtrack",
-    standfirst = "Singapore has been the proud host of the world's only Formula One night race since 2008. The backdrop of heritage buildings, modern architecture and breathtaking skyline culminates in an unparalleled combination of sights, sounds and a festive atmosphere.",
+    title = "Get the most out of the Singapore Grand Prix",
+    standfirst = "‘Singapore is definitely one of the highlights of the year. There’s an amazing atmosphere and the\nwhole city really comes to life for the race weekend. It’s just unreal – I would really recommend\nanybody to come because it’s a fantastic experience. The circuit, the city, the atmosphere –\neverything!’ Nico Rosberg, Formula 1 driver, Mercedes AMG Petronas F1 Team",
     cta,
     mainPicture = "http://media.guim.co.uk/797e2c3ecf6631e647f31978073404e1b78974a7/0_0_5184_3456/2000.jpg",
     mainPictureCaption = "Take a break from the action and cool off within the Circuit Park"
