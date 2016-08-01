@@ -47,21 +47,7 @@ define([
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
-        messenger.register('set-ad-height', function onSetAdHeight(data) {
-            var $iframe = getAdIframe();
-            var isEventForTopAdBanner = data.id === $iframe[0].id;
-            if (isEventForTopAdBanner) {
-                messenger.unregister('set-ad-height', onSetAdHeight);
-                fastdom.read(function () {
-                    var padding = parseInt($adBannerInner.css('padding-top'))
-                        + parseInt($adBannerInner.css('padding-bottom'));
-                    var clientHeight = parseInt(data.height) + padding;
-                    resolve(clientHeight);
-                });
-            }
-        });
-    });
+    var newRubiconAdHeightPromise;
 
     var getLatestAdHeight = function () {
         var $iframe = getAdIframe();
@@ -175,6 +161,24 @@ define([
         });
     };
 
+    function setupListeners() {
+        newRubiconAdHeightPromise = new Promise(function (resolve) {
+            messenger.register('set-ad-height', function onSetAdHeight(data) {
+                var $iframe = getAdIframe();
+                var isEventForTopAdBanner = data.id === $iframe[0].id;
+                if (isEventForTopAdBanner) {
+                    messenger.unregister('set-ad-height', onSetAdHeight);
+                    fastdom.read(function () {
+                        var padding = parseInt($adBannerInner.css('padding-top'))
+                            + parseInt($adBannerInner.css('padding-bottom'));
+                        var clientHeight = parseInt(data.height) + padding;
+                        resolve(clientHeight);
+                    });
+                }
+            });
+        });
+    }
+
     var reducer = function (previousState, action) {
         switch (action.type) {
             case 'SCROLL':
@@ -209,6 +213,7 @@ define([
         // Although we check as much config as possible to decide whether to run sticky-top-banner,
         // it is still entirely possible for the ad slot to be closed.
         if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
+            setupListeners();
             return getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 
