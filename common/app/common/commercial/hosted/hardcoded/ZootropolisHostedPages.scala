@@ -20,6 +20,7 @@ object ZootropolisHostedPages {
   private val cta = HostedCallToAction(
     url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
     label = "",
+    image = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     trackingCode = "disney-zootropolis",
     btnText = "Out now on digital download"
   )
@@ -44,7 +45,6 @@ object ZootropolisHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/07/18/HLS/160718GLZootropolisSpot_h264_mezzanine.m3u8"
       ),
       cta,
-      ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
       twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
     )
   }
@@ -75,15 +75,15 @@ object ZootropolisHostedPages {
     title = "Meet the characters of Zootropolis",
     standfirst = "Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our",
     standfirstLink = "commercial content explainer.",
-    // todo: this is going to change
     facebookImageUrl = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
     cta,
-    ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_banner.jpg",
+    ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
-    twitterTxt = "Disney Zootropolis asset pack on the Guardian #ad",
-    emailTxt = "Disney Zootropolis asset pack on the Guardian",
-    twitterShareText = Some("Disney Zootropolis asset pack on the Guardian"),
-    emailSubjectText = Some("Disney Zootropolis asset pack on the Guardian"),
+    facebookShareText = Some("Get to know the colourful characters of Disney’s Zootropolis with these printable colouring-in sheets and " +
+      "character posters! Zootropolis is packed with snappy action, witty dialogue & belly laughs.  It’s an adorable movie that shouldn’t be missed." +
+      " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
+    twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
+    emailSubjectText = Some("Get to know the residents of Zootropolis!"),
     customData = customData
   )
 

@@ -5,6 +5,8 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         position: relative;
         height: 378px;
         margin-bottom: 10px;
+        background-size: cover;
+        background-position: center center;
 
         &:after {
             content: '';
@@ -92,6 +94,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             width: 77px;
             height: 77px;
             margin-right: 14px;
+            text-align: center;
         }
         .text {
             line-height: 20px;

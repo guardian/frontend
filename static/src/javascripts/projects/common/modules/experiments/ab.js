@@ -258,8 +258,11 @@ define([
         if (variantId !== 'notintest') {
             var variant = getVariant(test, variantId);
             var onTestComplete = variant.success || noop;
-
-            onTestComplete(recordTestComplete(test, variantId));
+            try {
+                onTestComplete(recordTestComplete(test, variantId));
+            } catch(err) {
+               reportError(err, false, false); 
+            }    
         }
     }
 

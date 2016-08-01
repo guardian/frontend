@@ -42,6 +42,22 @@
 .fc-container--outbrain {
     background-color: $neutral-8;
     display: none;
+
+    .fc-container__inner {
+        /* The values here are defined by the height of the external Outbrain contents */
+
+        @include mq($from: mobile) {
+            min-height: 621px;
+        }
+
+        @include mq($from: tablet) {
+            min-height: 455px;
+        }
+
+        @include mq($from: desktop) {
+            min-height: 390px;
+        }
+    }
 }
 
 .fc-container--thrasher {
