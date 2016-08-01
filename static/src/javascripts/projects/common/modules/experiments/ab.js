@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/habit-forming-digest-promo',
     'common/modules/experiments/tests/participation-discussion-ordering-take-2'
 ], function (
     reportError,
@@ -26,7 +25,6 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    HabitFormingDigestPromo,
     ParticipationDiscussionOrderingTake2
 ) {
 
@@ -34,7 +32,6 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),
-        new HabitFormingDigestPromo(),
         new VideoCaption(),
         new ParticipationDiscussionOrderingTake2()
     ];

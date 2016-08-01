@@ -44,16 +44,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHabitFormingDigestPromo = Switch(
-    SwitchGroup.ABTests,
-    "ab-habit-forming-digest-promo",
-    "Show infrequent users a banner offering a curated digest",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
-    exposeClientSide = true
-  )
-
   val ABParticipationDiscussionOrderingTake2 = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-ordering-take-2",
