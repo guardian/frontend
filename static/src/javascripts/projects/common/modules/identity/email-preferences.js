@@ -1,35 +1,37 @@
 // This is a workaround for the email preferences page https://profile.thegulocal.com/email-prefs
 // We want to submit subscribe/unsubscribe requests without a full page refresh
+// Hopefully this will be short-lived; if it is still alive in 2017, git blame and cry
 
 define([
     'bean',
     'qwery',
     'reqwest',
     'fastdom',
-    'common/utils/$',
-    'common/utils/fastdom-promise'
+    'common/utils/$'
 ], function (
     bean,
     qwery,
     reqwest,
     fastdom,
-    $,
-    fastdomPromise
+    $
 ) {
     function useReqwest(buttonEl) {
+        fastdom.write(function () {
+            buttonEl.type = 'button';
+        });
         bean.on(buttonEl, 'click', function () {
-            var formQueryString = submitFormData(buttonEl);
+            buttonEl.disabled = true;
+            buttonEl.classList.add('loading');
+            var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
                 method: 'POST',
                 data: formQueryString,
                 error: function (err) {
-                    // TODO: display the error
                     renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
                     var subscriptionState;
-                    // lets be super careful of falsy values... yay JavaScript!
                     try {
                         // Why array.length rather than typeof; there are multiple circumstances where the value could be undefined:
                         // nothing came back at all
@@ -42,7 +44,7 @@ define([
                             subscriptionState = response.subscriptions[0].subscribedTo;
                         }
                     } catch (err) {
-                        console.log(err.message);
+                        renderErrorMessage(buttonEl);
                     } finally {
                         renderErrorMessage(buttonEl);
                         updateButton(buttonEl, subscriptionState);
@@ -52,7 +54,7 @@ define([
         });
     }
 
-    function addButtonClickEvents() {
+    function enhanceEmailPreferences() {
         $.forEachElement('.email-subscription__button', useReqwest);
     }
 
@@ -65,13 +67,15 @@ define([
     function renderErrorMessage(buttonEl) {
         // appends an error message on the parent div of the button
         var errorMessage = 'Sorry, an error has occurred, please refresh the page and try again';
-        return fastdomPromise.write(function () {
+        return fastdom.write(function () {
             var insertionPoint = $.ancestor(buttonEl, 'email-subscription u-cf');
-            var errorMessageDiv = document.createElement('div');
-            errorMessageDiv.innerHTML = errorMessage;
-            errorMessageDiv.classList.add('form__error');
-            errorMessageDiv.style.cssText = 'margin-top:1.5rem;display:block;clear:both;';
-            insertionPoint.appendChild(errorMessageDiv);
+            // Only append an error message once for each email subscription DIV
+            if (qwery('.form__error', insertionPoint).length < 1) {
+                var errorMessageDiv = document.createElement('div');
+                errorMessageDiv.innerHTML = errorMessage;
+                errorMessageDiv.classList.add('form__error');
+                insertionPoint.appendChild(errorMessageDiv);
+            }
         });
     }
 
@@ -83,15 +87,17 @@ define([
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
                 $.ancestor(buttonEl, 'email-subscription').classList.add('email-subscription--subscribed');
+                buttonEl.disabled = false;
             });
         } else if (subscriptionState === false) {
             fastdom.write(function () {
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
                 $.ancestor(buttonEl, 'email-subscription').classList.remove('email-subscription--subscribed');
+                buttonEl.disabled = false;
             });
         } else {
-            throw('Something odd has happened');
+            renderErrorMessage(buttonEl);
         }
     }
 
@@ -100,21 +106,23 @@ define([
           return 'HTML';
       } else if(qwery('#htmlPreference_Text')[0].checked) {
           return 'Text';
-        }
+      } else {
+          return '';
+      }
     }
 
-    function submitFormData(buttonEl) {
+    function generateFormQueryString(buttonEl) {
         var formEl = $.ancestor(buttonEl, 'form');
         var csrfToken = (formEl.elements.csrfToken.value).toString();
         var buttonVal = buttonEl.value.toString();
-        var htmlPreference = getHTMLPref().toString();
+        var htmlPreference = getHTMLPref() || '';
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
 
     }
 
     return {
         init: function () {
-            addButtonClickEvents();
+            enhanceEmailPreferences();
         }
     };
 });
