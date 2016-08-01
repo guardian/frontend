@@ -123,23 +123,23 @@ define([
     }
 
     // Cheap string formatting function. It accepts as its first argument
-    // a string where each occurence of %% will be replaced by the following
-    // arguments
+    // an object `{ code, message }`. `message` is a string where successive
+    // occurences of %% will be replaced by the following arguments. e.g.
+    //
+    // formatError({ message: "%%, you are so %%" }, "Regis", "lovely")
+    //
+    // returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
     function formatError() {
-        if (!arguments.length) {
-            return '';
+        if (arguments.length < 2) {
+            return arguments[0] || '';
         }
 
         var error = arguments[0];
-        var i = 1;
-        var ii = arguments.length;
-
-        while (i < ii) {
-            // Keep in mind that when the pattern is a string, String.replace
-            // only replaces the first occurence
-            error.message = error.message.replace('%%', arguments[i]);
-            i += 1;
-        }
+        Array.prototype.slice.call(arguments, 1).forEach(function (arg) {
+            // Keep in mind that when the first argument is a string,
+            // String.replace only replaces the first occurence
+            error.message = error.message.replace('%%', arg);
+        });
 
         return error;
     }
