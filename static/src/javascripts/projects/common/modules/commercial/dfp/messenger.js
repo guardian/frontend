@@ -16,9 +16,9 @@ define([
         unregister: unregister
     };
 
-    function register(type, callback) {
+    function register(type, callback, _window) {
         if( registeredListeners === 0 ) {
-            on();
+            on(_window || window);
         }
 
         listeners[type] || (listeners[type] = []);
@@ -26,7 +26,7 @@ define([
         registeredListeners += 1;
     }
 
-    function unregister(type, callback) {
+    function unregister(type, callback, _window) {
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
@@ -36,15 +36,15 @@ define([
         }
 
         if (registeredListeners === 0) {
-            off();
+            off(_window || window);
         }
     }
 
-    function on() {
+    function on(window) {
         window.addEventListener('message', onMessage);
     }
 
-    function off() {
+    function off(window) {
         window.removeEventListener('message', onMessage);
     }
 
