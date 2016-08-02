@@ -104,7 +104,7 @@ Comments.prototype.ready = function() {
     this.emit('ready');
 
     this.on('click', '.js-report-comment-close', function() {
-        $('.js-report-comment-form').addClass('u-h');
+        document.querySelector('.js-report-comment-form').setAttribute('hidden', '');
     });
 };
 
@@ -424,6 +424,7 @@ Comments.prototype.reportComment = function(e) {
         commentId = e.currentTarget.getAttribute('data-comment-id');
 
     $('.js-report-comment-form').first().each(function(form) {
+        form.removeAttribute('hidden');
         bean.one(form, 'submit', function(e) {
             e.preventDefault();
             var category = form.elements.category,
@@ -441,16 +442,16 @@ Comments.prototype.reportComment = function(e) {
         });
     }).appendTo(
         $('#comment-' + commentId + ' .js-report-comment-container').first()
-    ).removeClass('u-h');
+    );
 };
 
 Comments.prototype.reportCommentSuccess = function(form) {
-    bonzo(form).addClass('u-h');
+    form.setAttribute('hidden', '');
 };
 
 Comments.prototype.reportCommentFailure = function() {
-    $('.js-discussion__report-comment-error').removeClass('d-discussion__error--hidden');
-    $('.d-report-comment__close').addClass('d-report-comment__close--error');
+    document.querySelector('.js-discussion__report-comment-error').removeAttribute('hidden');
+    document.querySelector('.d-report-comment__close').classList.add('d-report-comment__close--error');
 };
 
 Comments.prototype.addUser = function(user) {
