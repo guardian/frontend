@@ -4,7 +4,7 @@ import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
-import test.{SingleServerSuite, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -13,7 +13,7 @@ import scala.concurrent.Future
   extends FlatSpec
   with Matchers
   with ScalaFutures
-  with SingleServerSuite
+  with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient {
 
