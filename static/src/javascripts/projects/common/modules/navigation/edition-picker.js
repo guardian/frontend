@@ -51,7 +51,7 @@ define([
 
         if (label) {
             label.onkeypress =  function clickOnEnter(event) {
-                if((event.keyCode ? event.keyCode : event.which) == 13) {
+                if((event.keyCode ? event.keyCode : event.which) === 13) {
                     fastdomPromise.write(function() {
                         label.click();
                     });
