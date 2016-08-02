@@ -3,7 +3,7 @@
 @import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
 @import conf.switches.Switches.LiveUpdateAmpSwitch
-@import views.support.{OmnitureAnalyticsData, GoogleAnalyticsAccount}
+@import views.support.OmnitureAnalyticsData
 @import views.support.FBPixel
 
 <!doctype html>
@@ -31,6 +31,13 @@
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
+        @*
+        Baseline pageview confidence pixel.
+        This, along with the corresponding pixels for GA/Omniture/Ophan,
+        are used to generate the confidence graphs on the frontend dashboard.
+        *@
+        <amp-pixel src="//beacon.guim.co.uk/count/pv.gif"></amp-pixel>
+
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
                 val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
@@ -38,43 +45,14 @@
                 s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
             }) { omnitureCall =>
                 <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
+                @* Omniture pageview confidence pixel *@
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
             }
         }
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
 
-        <amp-analytics type="googleanalytics" id="google-analytics">
-            <script type="application/json">
-            {
-              "requests": {
-                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}"
-              },
-              "vars": {
-                "account": "@{GoogleAnalyticsAccount.editorialTracker.trackingId}"
-              },
-              "triggers": {
-                "trackPageview": {
-                  "on": "visible",
-                  "request": "pageviewWithCustomDims",
-                  "vars": {
-                    "title": "@{content.metadata.webTitle}",
-                    "platform": "AMP",
-                    "sectionId": "@{content.metadata.sectionId}",
-                    "contentType": "@{content.metadata.normalisedContentType}",
-                    "commissioningDesks": "@{content.tags.commissioningDesks.mkString(",")}",
-                    "contentId": "@{content.metadata.id}",
-                    "contributorIds": "@{content.tags.contributors.map(_.id).mkString(",")}",
-                    "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
-                    "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
-                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}"
-                  }
-                }
-              }
-            }
-            </script>
-        </amp-analytics>
-        <amp-pixel src="//beacon.guim.co.uk/count/pvg.gif"></amp-pixel>
+        @fragments.amp.googleAnalytics(content)
 
         <div class="main-body">
 
