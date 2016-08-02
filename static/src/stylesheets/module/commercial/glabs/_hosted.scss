@@ -523,7 +523,17 @@ $hosted-video-height: 540px;
 }
 
 .hosted__cta-label {
+    display: block;
     color: #ffffff;
+    line-height: 30px;
+
+    @include mq(tablet) {
+        line-height: 44px;
+    }
+
+    @include mq(desktop) {
+        line-height: 58px;
+    }
 }
 
 .hosted__cta-btn-text {

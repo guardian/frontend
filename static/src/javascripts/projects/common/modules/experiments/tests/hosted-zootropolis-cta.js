@@ -1,13 +1,19 @@
 define([
     'bean',
+    'fastdom',
     'qwery',
     'common/utils/$',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect',
+    'lodash/collections/contains'
 ], function (
     bean,
+    fastdom,
     qwery,
     $,
-    config
+    config,
+    detect,
+    contains
 ) {
     return function () {
         this.id = 'HostedZootropolisCta';
@@ -38,7 +44,12 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    $('.hosted__cta-label').text('Disney’s Zootropolis: Download and keep today!');
+                    fastdom.write(function () {
+                        $('.hosted__cta-label').text('Disney’s Zootropolis: Download and keep today!');
+                        if (!contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                            $('.hosted__cta-btn-wrapper').css('padding-top', '70px');
+                        }
+                    });
                 },
                 success: function (complete) {
                     bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
