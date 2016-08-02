@@ -8,7 +8,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 }
 
 .new-header__logo-wrapper {
-    padding-top: 6px;
+    padding-top: $gs-baseline / 2;
     position: absolute;
     right: 0;
 }
