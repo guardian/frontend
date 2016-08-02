@@ -106,7 +106,7 @@ define([
         });
 
         function respond(error, result) {
-            event.source.postMessage(JSON.stringify({ error: error, result: result }), currentHost);
+            event.source.postMessage(JSON.stringify({ id: data.id, error: error, result: result }), currentHost);
         }
     }
 
@@ -115,9 +115,15 @@ define([
     // such as validating the anatomy of the payload and whitelisting
     // event type
     function isValidPayload(payload) {
-        return 'type' in payload &&
+        return 'id' in payload &&
+            'type' in payload &&
             'value' in payload &&
-            payload.type in listeners;
+            payload.type in listeners &&
+            isValidId(payload.id);
+
+        function isValidId(id) {
+            return /^[a-f0-9]{8}-([a-f0-9]-){3}[a-f0-9]{12}$/.test(id);
+        }
     }
 
     // Cheap string formatting function. It accepts as its first argument
