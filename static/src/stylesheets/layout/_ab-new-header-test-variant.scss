@@ -9,7 +9,8 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__logo-wrapper {
     padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
+    position: absolute;
+    right: 0;
 }
 
 .new-header__logo__svg {
@@ -39,48 +40,12 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     }
 }
 
-.new-header__edition-button {
-    @include fs-textSans(3);
-    order: -1;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    // TODO: Use reset util?
-    // Unset button from user agent stylesheet
-    background: none;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    padding: ($gs-baseline) ($gs-gutter / 2);
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-
-    svg {
-        fill: currentColor;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 1em;
-        min-height: 1em;
-    }
-
-    &:hover,
-    &:focus {
-        outline: none;
-        color: #ffffff;
-
-        path {
-            fill: #ffffff;
-        }
-    }
-}
-
 .new-header__nav {
     @include fs-textSans(6);
     display: flex;
     align-items: center;
     width: 100%;
+    margin-top: $gs-baseline;
 
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
@@ -239,6 +204,105 @@ $gutter-medium: 37px;
     // Optically aligns slashes
     padding-left: 2px;
     padding-right: 3px;
+}
+
+/*****************
+ * Edition Picker
+ *****************/
+
+.edition-picker {
+    @include fs-textSans(3);
+    order: -1;
+    color: $news-support-1;
+    // Override from fs-textSans mixin
+    line-height: 1;
+    padding-left: 7px;
+    padding-top: $gs-baseline/2;
+    width: gs-span(2);
+    z-index: 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+.inline-world__svg {
+    fill: $news-support-1;
+    vertical-align: middle;
+    min-width: 1em;
+    min-height: 1em;
+
+    &:hover {
+        fill: #ffffff;
+    }
+}
+
+.edition-picker__dropdown {
+    display: none;
+    position: absolute;
+    top: 33px;
+    left: 7px;
+    // overriding default styling
+    width: gs-span(2);
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    overflow: hidden;
+    z-index: 3;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+}
+
+.edition-picker__dropdown__item {
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    padding-left: $gs-gutter;
+}
+
+.edition-picker__dropdown-item-link {
+    color: $news-support-1;
+}
+
+.edition-picker__current-edition {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    width: gs-span(2) - 4px;
+    padding-left: 4px;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    display: block;
+}
+
+.edition-picker__checkbox, .edition-picker__button {
+    display: none;
+
+    &:checked, &.open {
+        & ~ .edition-picker__dropdown {
+            display: block;
+            background-color: lighten($guardian-brand, 5%);
+
+            .edition-picker__dropdown__item {
+                display: block;
+            }
+        }
+        & ~ .edition-picker__current-edition {
+            background-color: $guardian-brand-dark;
+            z-index: 3;
+            color: #ffffff;
+
+            .inline-world__svg {
+                fill: #ffffff;
+            }
+        }
+    }
 }
 
 /****************
