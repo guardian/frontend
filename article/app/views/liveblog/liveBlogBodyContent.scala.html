@@ -21,7 +21,6 @@
         itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
         </div>
-        @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
         @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
     </div>
 }
