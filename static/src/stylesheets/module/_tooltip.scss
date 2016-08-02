@@ -10,14 +10,10 @@
     padding: $gs-baseline / 2 $gs-gutter / 2;
 }
 
-.tooltip-box-hidden {
-    display: none;
-}
-
 .tooltip-box--neutral {
     color: $neutral-1;
     border: 2px solid $neutral-6;
-    background: #FFF;
+    background: #ffffff;
 }
 
 .tooltip-box--width4 {

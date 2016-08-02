@@ -88,10 +88,16 @@
                     </div>
 
                     @if(amp) {
-                        @views.html.liveblog.liveBlogBodyContent(model, amp)
+                        @views.html.liveblog.liveBlogBodyContentAMP(model)
+                        @fragments.submeta(article)
+                        <div class="after-article js-after-article"></div>
+                        <div class="js-bottom-marker"></div>
                     } else {
                         @fragments.dropdown("Live feed", Some("live-feed"), true) {
-                            @views.html.liveblog.liveBlogBodyContent(model, amp)
+                            @views.html.liveblog.liveBlogBodyContent(model)
+                            @fragments.submeta(article)
+                            <div class="after-article js-after-article"></div>
+                            <div class="js-bottom-marker"></div>
                         }
                     }
                 </div>

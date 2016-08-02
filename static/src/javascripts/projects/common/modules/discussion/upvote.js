@@ -11,7 +11,6 @@ define([
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
-    var HIDE_TOOLTIP_CLASS = 'tooltip-box-hidden';
 
     function handle (target, container, user, discussionApi) {
         if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
@@ -62,15 +61,31 @@ define([
 
     function showSignInTooltip (target) {
         var tooltip = document.querySelector('.' + TOOLTIP_CLASS);
+        var links = tooltip.querySelectorAll('.js-rec-tooltip-link');
+
         return fastdom.write(function () {
-            tooltip.classList.remove(HIDE_TOOLTIP_CLASS);
+            updateReturnUrl(links, target.getAttribute('data-comment-url'));
+            tooltip.removeAttribute('hidden');
             target.appendChild(tooltip);
         });
     }
 
+    function updateReturnUrl (links, returnLink) {
+        for (var i = 0, len = links.length; i < len; i += 1) {
+            var url = links[i].getAttribute('href');
+            var baseUrl = url.split('?')[0];
+            var query = urlUtil.getUrlVars({
+                query: url.split('?')[1] || '&'
+            });
+            links[i].setAttribute('href', baseUrl + '?' + urlUtil.constructQuery(assign(query, {
+                returnUrl: returnLink
+            })));
+        }
+    }
+
     function closeTooltip () {
         return fastdom.write(function () {
-            document.querySelector('.' + TOOLTIP_CLASS).classList.add(HIDE_TOOLTIP_CLASS);
+            document.querySelector('.' + TOOLTIP_CLASS).setAttribute('hidden', '');
         });
     }
 
