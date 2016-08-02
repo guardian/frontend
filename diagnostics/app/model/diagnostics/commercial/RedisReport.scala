@@ -31,7 +31,7 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
     }
     case Message(_, message) => log.logger.info(s"generic redis message received: $message")
     case Unsubscribed(_, _) =>
-    case Subscribed(_, _) =>
+    case Subscribed(channel, _) => log.logger.info(s"subscribed to redis channel: $channel")
     case Error(_) =>
   }
 
