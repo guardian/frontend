@@ -313,6 +313,12 @@
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
+
+    .form__error {
+        margin-top: 1.5rem;
+        display: block;
+        clear: both;
+    }
 }
 .email-subscription--subscribed {
     opacity: .8;

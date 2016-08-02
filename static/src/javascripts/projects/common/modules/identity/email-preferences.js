@@ -27,7 +27,7 @@ define([
                 url: '/email-prefs',
                 method: 'POST',
                 data: formQueryString,
-                error: function (err) {
+                error: function () {
                     renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
@@ -38,7 +38,7 @@ define([
                         // stuff came back but that one field is undefined
                         // the data came back in the format expected as above, but with the subscribeTo value undefined
                         if (response.subscriptions.length < 1) {
-                            // response can back as expected, but the user is not subscribed:
+                            // response came back as expected, but the user is not subscribed:
                             subscriptionState = false;
                         } else {
                             subscriptionState = response.subscriptions[0].subscribedTo;
@@ -46,7 +46,6 @@ define([
                     } catch (err) {
                         renderErrorMessage(buttonEl);
                     } finally {
-                        renderErrorMessage(buttonEl);
                         updateButton(buttonEl, subscriptionState);
                     }
                 }
@@ -68,7 +67,7 @@ define([
         // appends an error message on the parent div of the button
         var errorMessage = 'Sorry, an error has occurred, please refresh the page and try again';
         return fastdom.write(function () {
-            var insertionPoint = $.ancestor(buttonEl, 'email-subscription u-cf');
+            var insertionPoint = $.ancestor(buttonEl, 'email-subscription');
             // Only append an error message once for each email subscription DIV
             if (qwery('.form__error', insertionPoint).length < 1) {
                 var errorMessageDiv = document.createElement('div');
