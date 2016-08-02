@@ -20,6 +20,9 @@ import scala.concurrent.Future.successful
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
+  // This will be overwritten by fastly anyway for 404s
+  val notFoundCacheSeconds = 10
+
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   val frontJsonFapi: FrontJsonFapi
@@ -125,7 +128,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             }
           }
         )
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
+      case None => successful(Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
@@ -177,8 +180,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           if (request.isJson)
             Cached(60) {JsonCollection(html)}
           else
-            Cached(60)(WithoutRevalidationResult(NotFound("containers are only available as json")))
-      }.getOrElse(Cached(60)(WithoutRevalidationResult(NotFound(s"collection id $collectionId does not exist"))))
+            Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound("containers are only available as json")))
+      }.getOrElse(Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound(s"collection id $collectionId does not exist"))))
     }
   }
 
@@ -194,8 +197,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             successful{Cached(pressedPage) {
             JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
-        maybeResponse getOrElse successful(Cached(60)(WithoutRevalidationResult(NotFound)))
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}}
+        maybeResponse getOrElse successful(Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound)))
+      case None => successful(Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound)))}}
 
 
   private object JsonCollection{
@@ -237,7 +240,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             RevalidatableResult(Ok(body).as("text/xml; charset=utf8"), body)
           }
         }
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
+      case None => successful(Cached(notFoundCacheSeconds)(WithoutRevalidationResult(NotFound)))}
   }
 
 
