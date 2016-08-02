@@ -125,8 +125,18 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             margin-top: 76px;
         }
     }
+    .from-content-api {
+        ul > li:before {
+            border-radius: 0;
+            width: 8px;
+            height: 8px;
+            margin: 1px 8px;
+        }
+        h2 {
+            @include f-headlineSans;
+        }
+    }
 }
-
 
 .hosted-article-page.zootropolis {
     @mixin animal-stripe {

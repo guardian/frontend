@@ -1,4 +1,10 @@
 @import common.commercial.hosted.HostedPage
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@import layout.ContentWidths.ImageContentMedia
+@import com.gu.contentapi.client.model.v1.AssetFields
 @(page: HostedPage)(implicit request: RequestHeader)
 
 
@@ -7,7 +13,9 @@
         page.brandBackgroundCssClass
     }
     ">W</span>
-         ondering which turn on the Marina Bay street circuit to position yourself by, or whether one grandstand trumps another? Here’s our guide to the Singapore GP ticket types – you can pick from the bunch by going to sianightrace.com. P.S. We’ve got the skinny on where to eat and drink – as picked by the locals – too…
+         ondering which turn on the Marina Bay street circuit to position yourself by, or whether one grandstand trumps another? Here’s our guide to the Singapore GP ticket types – you can pick from the bunch by going to
+    <a href="http://sianightrace.com" target="_blank">sianightrace.com</a>.
+    P.S. We’ve got the skinny on where to eat and drink – as picked by the locals – too…
 </p>
 <h2>
     1) Bay Grandstand (included)
@@ -16,7 +24,11 @@
     Zone access: 3, 4
 </p>
 <p>
-    All packages purchased from sianightrace.com include 3-Day access to the Bay Grandstand in Zones 3 and 4. Spectators at the Bay Grandstand get a panoramic view of the Marina Bay skyline. Because this section of track requires the drivers to negotiate four angled turns (16 to 19) in quick succession, it has proven to be an Achilles’ heel for many of them, so expect to see plenty of action.
+    All packages purchased from <a href="http://sianightrace.com" target="_blank">sianightrace.com</a>
+    include 3-Day access to the Bay Grandstand in Zones 3 and 4.
+    Spectators at the Bay Grandstand get a panoramic view of the Marina Bay skyline.
+    Because this section of track requires the drivers to negotiate four angled turns (16 to 19) in quick succession,
+    it has proven to be an Achilles’ heel for many of them, so expect to see plenty of action.
 </p>
 <h2>
 
@@ -26,7 +38,10 @@
     Zone access: 1,2, 3, 4
 </p>
 <p>
-    If you are coming for all three days and like a bit of variety, consider a Premier Walkabout ticket. This allows you to move around and witness the action from special bleachers or stands at the side of the track. A good one is Esplanade Drive and Raffles Avenue, which is around Turn 14 on the race track. Alternatively head to Turn 3 at the top end of the track, where you can watch the cars join the pack as they exit the Pit Lane.
+    If you are coming for all three days and like a bit of variety, consider a Premier Walkabout ticket.
+    This allows you to move around and witness the action from special bleachers or stands at the side of the track.
+    A good one is Esplanade Drive and Raffles Avenue, which is around Turn 14 on the race track.
+    Alternatively head to Turn 3 at the top end of the track, where you can watch the cars join the pack as they exit the Pit Lane.
 </p>
 <h2>
      3) Singapore Airlines Lounge&#64;Turn 3 Hospitality Suite (top up from SGD 3,157) 
@@ -35,7 +50,12 @@
     Zone access: 1, 2, 3, 4  
 </p>
 <p>
-    Feast your eyes on prime views of the race, enjoyed in maximum comfort, with this ticket. You’ll get the best of both worlds: a luxurious respite from the bustle of the race, plus unrivalled view of cars braking to 80km/h as they tackle the turn, before going full throttle down Republic Boulevard. Ticket-holders can indulge in a free flow of premium food and an open bar with wine, beers and soft drinks in air-conditioned comfort between races, or head outdoors to the Turn 3 Premier Grandstand to enjoy assigned seating with wider cushioned seats.
+    Feast your eyes on prime views of the race, enjoyed in maximum comfort, with this ticket.
+    You’ll get the best of both worlds: a luxurious respite from the bustle of the race,
+    plus unrivalled view of cars braking to 80km/h as they tackle the turn, before going full throttle down Republic Boulevard.
+    Ticket-holders can indulge in a free flow of premium food and an open bar with wine,
+    beers and soft drinks in air-conditioned comfort between races, or head outdoors to the Turn 3 Premier Grandstand
+    to enjoy assigned seating with wider cushioned seats.
 </p>
 <p>
     PPS Club and KrisFlyer members will also receive: 
@@ -47,6 +67,13 @@
     <li>Exclusive access to the lounge from 3pm to midnight on Fri and Sat; 3pm–11.30pm, Sun</li>
     <li>Access to Zone 1’s F1 Village and all zones within the Circuit Park</li>
 </ul>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/f14ac9b8146b1cbcdb40846e7b2e1d4508eaf09f/0_0_5184_3456/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+
 <h2>
     4) Stamford Grandstand (top up from SGD 295)  
 </h2>
@@ -54,8 +81,9 @@
     Zone access: 4  
 </p>
 <p>
-    The Stamford Grandstand offers several excellent vantage points that include views of the cars negotiating Turns 7 and 8 and, from some seats, Turn 14. The Memorial at Turn 7 serves up potential overtaking opportunities and has seen its fair share of exhilarating action.
-    PPS Club and KrisFlyer members will also receive:
+    The Stamford Grandstand offers several excellent vantage points that include views of the cars negotiating
+    Turns 7 and 8 and, from some seats, Turn 14. The Memorial at Turn 7 serves up potential overtaking opportunities
+    and has seen its fair share of exhilarating action. PPS Club and KrisFlyer members will also receive:
 </p>
 <ul>
     <li>2,500 KrisFlyer miles</li>
@@ -114,6 +142,12 @@
     <li>10% off all official Singapore GP merchandise and selected F&B outlets (SGP Grid bars)</li>
     <li>A chance to win a pair of drivers' autograph session passes</li>
 </ul>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/e95732fd6c04fb2c9d6d24607baff7e8aceff704/0_0_1035_400/1000.jpg"), typeData = Some(AssetFields(width = Some(1035), height = Some(400)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
 
 <h2>
     What the locals say…

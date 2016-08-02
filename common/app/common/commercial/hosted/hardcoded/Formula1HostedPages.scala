@@ -18,9 +18,9 @@ object Formula1HostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.firststopsingapore.com/singapore-airlines-singapore-grand-prix-packages/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix",
     image = "https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg",
-    label = "Sort your flights, hotel and GP ticket for less at",
+    label = "Discover the 2016 Singapore Grand Prix",
     trackingCode = "singapore-grand-prix",
-    btnText = "sianightrace.com"
+    btnText = "Book now"
   )
 
   val overviewPageName = "overview"

@@ -1,4 +1,10 @@
 @import common.commercial.hosted.HostedPage
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@import layout.ContentWidths.ImageContentMedia
+@import com.gu.contentapi.client.model.v1.AssetFields
 @(page: HostedPage)(implicit request: RequestHeader)
 
 
@@ -44,6 +50,12 @@
     (Zone 4). American disco kings KC and the Sunshine Band perform at the Village Stage (Zone 1).
 </p>
 
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4577c1e1cc0c66cc42f11a081b6a70de81c58059/0_0_4933_3289/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+
 <h2>
     Saturday 17 September:
 </h2>
@@ -76,6 +88,12 @@
     Pentatonix will be live at the Village Stage in Zone 1.
 </p>
 
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4dcd87d123903b37f1817babecc6fddfed6cf07b/0_0_4928_3280/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+
 <h2>
     Sunday 18 September:
 </h2>
@@ -97,6 +115,12 @@
 
     weekend with smash-hit anthems, including ‘Radioactive’, &#39;Demons&#39; and ‘Gold’.
 </p>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/ac5dd9df5948674ebd0e3e828b5e689c8fdb54b5/0_0_5184_3456/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
 
 <h2>
     Five to try: essential items for your tourist checklist
