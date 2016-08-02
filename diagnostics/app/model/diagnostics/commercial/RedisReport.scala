@@ -41,6 +41,7 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
 
     (maybeRedisClient, maybeReportData) match {
       case (Some(redisClient), Some(reportData)) => try {
+          log.logger.info(s"writing report to s3 bucket, view id: $id")
           S3CommercialReports.putPublic(id, reportData, "text/plain")
         } catch {
           case e:Exception => log.logger.error(e.getMessage)
