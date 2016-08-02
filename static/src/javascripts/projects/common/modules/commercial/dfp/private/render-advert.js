@@ -155,7 +155,7 @@ define([
 
             function applyFeedbackOnClickListeners(creativeId) {
                 return isRendered ? fastdom.write(function () {
-                    bonzo(qwery(bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')))).each(function(el) {
+                    bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
                         if (!bonzo(el).hasClass('js-onclick-ready')) {
                             el.addEventListener('click', function() {
                                 userAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
