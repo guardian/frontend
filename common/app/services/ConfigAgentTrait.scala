@@ -25,13 +25,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
   def getClient: ApiClient = {
-    if (Switches.FaciaPressCrossAccountStorage.isSwitchedOn) {
-      log.info("Config agent is using cross account client")
-      FrontsApi.crossAccountClient
-    } else {
-      log.info("Config agent is using same account client")
-      FrontsApi.amazonClient
-    }
+    FrontsApi.crossAccountClient
   }
 
   def refresh() = {
