@@ -13,16 +13,9 @@
 
 @defining(ABHeadlines.upgrade(item)) { item =>
     <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(item.hasImage && !item.hasInlineSnapHtml) {js-snappable}"
-        @if(item.discussionSettings.isCommentable) {
-            @item.discussionSettings.discussionId.map { id =>
-            data-discussion-id="@id"
-            }
-            data-discussion-closed="@item.discussionSettings.isClosedForComments"
-            data-discussion-url="@item.header.url.get(request)#comments"
-        }
-    data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
-    data-item-visibility="@visibilityDataAttribute"
-    data-test-id="facia-card"
+        data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
+        data-item-visibility="@visibilityDataAttribute"
+        data-test-id="facia-card"
         @item.id.map { id => data-id="@id" }
         @item.snapStuff.map(_.dataAttributes)
         @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
@@ -181,4 +174,3 @@
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
-

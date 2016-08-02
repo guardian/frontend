@@ -30,4 +30,19 @@
             </button>
         }
     }
+
+    @if(item.discussionSettings.isCommentable) {
+        <a class="fc-trail__count fc-trail__count--commentcount"
+            href="@item.header.url.get(request)#comments"
+            data-link-name="Comment count"
+        >
+            @fragments.inlineSvg("comment-16", "icon", List("inline-tone-fill"))
+            <comment-count
+                @item.discussionSettings.discussionId.map { id =>
+                discussion="@id"
+                }
+                @{if (item.discussionSettings.isClosedForComments) "closed"}
+            ></comment-count>
+        </a>
+    }
 </aside>
