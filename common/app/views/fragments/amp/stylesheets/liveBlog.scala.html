@@ -207,3 +207,108 @@
     left: 0;
     right: 0;
 }
+
+/* Pagination
+========================================= */
+
+.liveblog-navigation {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    display: flex;
+    padding-bottom: .75rem;
+    margin: 0 20px;
+}
+
+.liveblog-navigation__detail {
+    text-align: center;
+    order: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liveblog-navigation__newer {
+    float: left;
+}
+
+.liveblog-navigation__older {
+    float: right;
+    order: 2;
+}
+
+.liveblog-navigation__link {
+    display: inline-block;
+    position: relative;
+    color: #333;
+    border: 0.0625rem solid #dcdcdc;
+    height: 2.25rem;
+    line-height: 2.375rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.liveblog-navigation__link--disabled {
+    cursor: default;
+    color: #dfdfdf;
+    border-color: #eaeaea;
+}
+
+.liveblog-navigation__link--primary {
+    width: 2.25rem;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.liveblog-navigation__link--secondary {
+    border-radius: 1.3125rem;
+    padding: 0 0.625rem;
+}
+
+.liveblog-navigation__link--secondary--newer {
+    margin-right: 0.625rem;
+    padding-left: 1.875rem;
+}
+
+.liveblog-navigation__link--secondary--older {
+    margin-left: 0.3125rem;
+    padding-right: 1.875rem;
+}
+
+.inline-arrow-left-double__svg, .inline-arrow-right-double__svg, .inline-arrow-left__svg, .inline-chevron-right__svg {
+    fill: #767676;
+    position: absolute;
+}
+
+.inline-arrow-left-double__svg, .inline-arrow-right-double__svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    top: 0.6875rem;
+}
+
+.inline-arrow-left__svg, .inline-chevron-right__svg {
+    top: 0.625rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.inline-arrow-left__svg {
+    left: 0.5625rem;
+}
+
+.inline-arrow-left-double__svg {
+    left: 0.625rem;
+}
+
+.inline-chevron-right__svg {
+    right: 0.5625rem;
+}
+
+.inline-arrow-right-double__svg {
+    right: 0.625rem;
+}
+
+.liveblog-navigation__link--disabled__svg {
+    fill: #dfdfdf;
+}
