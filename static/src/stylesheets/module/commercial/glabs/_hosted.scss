@@ -86,13 +86,25 @@ $hosted-video-height: 540px;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted-video-page .hosted__container.adverts {
-    position: relative;
-    background: transparent;
-    color: #ffffff;
+.hosted-video-page {
+    .hosted__container.adverts {
+        position: relative;
+        background: transparent;
+        color: #ffffff;
 
-    @include mq($until: desktop) {
-        padding: 0;
+        @include mq($until: desktop) {
+            padding: 0;
+        }
+    }
+
+    .hosted__glogo {
+        @include mq(leftCol) {
+            margin-right: 90px;
+        }
+
+        @include mq(wide) {
+            margin-right: 170px;
+        }
     }
 }
 
