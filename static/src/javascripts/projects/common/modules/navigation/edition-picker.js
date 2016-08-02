@@ -47,13 +47,13 @@ define([
     }
 
     function clickMenuOnEnter() {
-        var label = document.getElementsByClassName('js-on-enter-click')[0];
+        var label = document.getElementsByClassName('js-on-enter-click');
 
-        if (label) {
-            label.onkeypress =  function clickOnEnter(event) {
+        if (label.length > 0) {
+            label[0].onkeypress =  function clickOnEnter(event) {
                 if((event.keyCode ? event.keyCode : event.which) === 13) {
                     fastdomPromise.write(function() {
-                        label.click();
+                        label[0].click();
                     });
                 }
             };
