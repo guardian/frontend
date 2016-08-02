@@ -1,20 +1,23 @@
 define([
     'common/utils/fastdom-promise',
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/navigation/edition-picker'
 ], function (
     fastdomPromise,
-    $
+    $,
+    editionPicker
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
     var burgerLink = $('.js-change-link');
+    var burgerIcon = $('.js-animate-menu');
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            burgerLink.addClass('new-header__nav__menu-button--open');
+            burgerIcon.addClass('new-header__burger-icon--open');
             burgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
@@ -38,7 +41,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerLink.removeClass('new-header__nav__menu-button--open');
+                burgerIcon.removeClass('new-header__burger-icon--open');
                 burgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
@@ -79,6 +82,7 @@ define([
     function init() {
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
+        editionPicker();
     }
 
     return init;
