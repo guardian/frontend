@@ -35,8 +35,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                },
+                test: function () {},
                 success: function (complete) {
                     bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
                 }
