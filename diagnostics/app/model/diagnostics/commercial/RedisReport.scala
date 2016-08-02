@@ -36,11 +36,16 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
   }
 
   private def uploadReportToS3(id: String): Unit = {
-    for {
-      client <- RedisReport.redisClient
-      reportData <- client.get(RedisReport.dataKeyFromId(id))
-    } {
-      S3CommercialReports.putPublic(id, reportData, "text/plain")
+    val maybeRedisClient = RedisReport.redisClient
+    val maybeReportData = client.get(RedisReport.dataKeyFromId(id))
+
+    (maybeRedisClient, maybeReportData) match {
+      case (Some(redisClient), Some(reportData)) => try {
+          S3CommercialReports.putPublic(id, reportData, "text/plain")
+        } catch {
+          case e:Exception => log.logger.error(e.getMessage)
+        }
+      case (_, _) => log.logger.error(s"A problem was encountered when logging commercial report: Missing objects: $maybeRedisClient $maybeReportData")
     }
   }
 }
