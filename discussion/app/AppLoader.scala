@@ -7,12 +7,14 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CommonFilters, CachedHealthCheckLifeCycle}
 import controllers.{DiscussionControllers, HealthCheck}
+import discussion.DiscussionApi
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -20,8 +22,15 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers extends DiscussionControllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
+}
+
+trait DiscussionServices {
+  def wsClient: WSClient
+
+  lazy val discussionApi = wire[DiscussionApi]
 }
 
 trait AppLifecycleComponents {
@@ -35,7 +44,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with DiscussionServices {
 
   lazy val router: Router = wire[Routes]
 

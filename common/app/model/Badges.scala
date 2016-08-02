@@ -18,7 +18,9 @@ object Badges {
   val euBriefing = Badge("politics/series/eu-referendum-morning-briefing", euSvg)
   val euSparrow = Badge("politics/series/eu-referendum-live-with-andrew-sparrow", euSvg)
 
-  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, euElection, euRealityCheck, euBriefing, euSparrow)
+  val rio2016 = Badge("sport/rio-2016", Static("images/badges/rio-2016.svg"), Some("rio-2016"))
+
+  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
 
   def badgeFor(c: ContentType) = c.tags.tags.map(_.id).foldLeft(None: Option[Badge]) { (maybeBadge, tag) =>
       maybeBadge orElse allBadges.find(b => b.seriesTag == tag)

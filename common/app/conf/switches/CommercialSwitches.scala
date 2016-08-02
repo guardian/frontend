@@ -246,16 +246,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val FixedTechTopSlot = Switch(
-    SwitchGroup.Commercial,
-    "fixed-tech-top-slot",
-    "Height of the top banner is fixed at 250px in the Tech section",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = false
-  )
-
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "optimise-high-merchandising",
@@ -349,7 +339,17 @@ trait CommercialSwitches {
   val hostedArticle = Switch(
     group = CommercialLabs,
     name = "hosted-article",
-    description = "Show hosted article or 404.",
+    description = "Show Zootropolis hosted article or 404.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 17),
+    exposeClientSide = false
+  )
+
+  val hostedSingaporeF1Article = Switch(
+    group = CommercialLabs,
+    name = "hosted-article-singapore-grand-prix",
+    description = "Show Singapore Grand Prix hosted article or 404.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 17),

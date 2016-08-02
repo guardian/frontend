@@ -20,7 +20,7 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = true
   )
 
@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 8, 3),
     exposeClientSide = true
   )
 
@@ -44,13 +44,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHabitFormingDigestPromo = Switch(
+  val ABParticipationDiscussionOrderingTake2 = Switch(
     SwitchGroup.ABTests,
-    "ab-habit-forming-digest-promo",
-    "Show infrequent users a banner offering a curated digest",
-    owners = Seq(Owner.withGithub("katebee")),
+    "ab-participation-discussion-ordering-take-2",
+    "Test to see whether ordering comments by recommends increases the number of people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 }

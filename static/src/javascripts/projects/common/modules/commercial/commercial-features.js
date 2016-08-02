@@ -34,6 +34,8 @@ define([
 
         var isLiveBlog = config.page.isLiveBlog;
 
+        var isHosted = config.page.tones === 'Hosted';
+
         var isMatchReport = config.hasTone('Match reports');
 
         var isIdentityPage =
@@ -59,6 +61,7 @@ define([
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
+            !isHosted &&
             switches.standardAdverts;
 
         this.articleAsideAdverts =

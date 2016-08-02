@@ -26,16 +26,6 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val GoogleAnalyticsSwitch = Switch(
-    SwitchGroup.Monitoring,
-    "google-analytics",
-    "If this switch is on, then Google Analytics is enabled",
-    owners = Seq(Owner.withGithub("gklopper")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
-    exposeClientSide = true
-  )
-
   val ComscoreSwitch = Switch(
     SwitchGroup.Monitoring,
     "comscore",

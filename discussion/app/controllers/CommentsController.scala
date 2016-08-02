@@ -2,21 +2,19 @@ package controllers
 
 import common.{ExecutionContexts, JsonComponent}
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
-import discussion.{DiscussionParams, ThreadedCommentPage, UnthreadedCommentPage}
+import discussion.{DiscussionApiLike, DiscussionParams, ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
 import model.{Cached, MetaData, NoCache, SectionSummary, SimplePage, TinyResponse}
-import play.api.Play.current
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
-import play.api.libs.ws.{WS, WSResponse}
-import play.api.mvc.{Action, Cookie, RequestHeader, Result}
-import play.filters.csrf.{CSRFConfig, CSRFAddToken, CSRFCheck}
+import play.api.mvc.{Action, RequestHeader, Result}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController with ExecutionContexts {
+class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionApiLike) extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(
@@ -96,22 +94,6 @@ class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController wi
     }
   }
 
-  def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
-  Map("categoryId" -> Seq(abuseReport.categoryId.toString),
-          "commentId" -> Seq(abuseReport.commentId.toString),
-          "reason" -> abuseReport.reason.toSeq,
-          "email" -> abuseReport.email.toSeq)
-  }
-
-
-  def postAbuseReportToDiscussionApi(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie]): Future[WSResponse] = {
-    val url = s"${conf.Configuration.discussion.apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
-    val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, "GU-Client" -> conf.Configuration.discussion.apiClientHeader)
-    if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).post(abuseReportToMap(abuseReport))
-
-  }
-
   object ReportAbuseFormValidation {
     val validCategory = (_: Int) match {
       case 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 => Valid
@@ -129,7 +111,7 @@ class CommentsController(csrfConfig: CSRFConfig) extends DiscussionController wi
       userForm.bindFromRequest.fold(
         formWithErrors => Future.successful(BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors))),
         userData => {
-          postAbuseReportToDiscussionApi(userData, scGuU).map {
+          discussionApi.postAbuseReport(userData, scGuU).map {
             case success if success.status == 200 => NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
             case error => InternalServerError(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm.fill(userData), errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage)))
           }.recover({

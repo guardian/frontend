@@ -2,11 +2,11 @@ $hosted-stripe: 28px;
 $hosted-video-width: 960px;
 $hosted-video-height: 540px;
 
-@import '_hosted-colours.scss';
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
 @import '_hosted-article.scss';
 @import '_hosted-header.scss';
+@import '_hosted-colours.scss';
 
 @mixin hosted-fade-in {
     visibility: visible;
@@ -86,13 +86,25 @@ $hosted-video-height: 540px;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted-video-page .hosted__container.adverts {
-    position: relative;
-    background: transparent;
-    color: #ffffff;
+.hosted-video-page {
+    .hosted__container.adverts {
+        position: relative;
+        background: transparent;
+        color: #ffffff;
 
-    @include mq($until: desktop) {
-        padding: 0;
+        @include mq($until: desktop) {
+            padding: 0;
+        }
+    }
+
+    .hosted__glogo {
+        @include mq(leftCol) {
+            margin-right: 90px;
+        }
+
+        @include mq(wide) {
+            margin-right: 170px;
+        }
     }
 }
 
@@ -254,7 +266,7 @@ $hosted-video-height: 540px;
         }
     }
 
-    .vjs-play-control {
+    .vjs-play-control.vjs-control {
         width: 50px;
         height: 50px;
         margin: 12px 16px;
@@ -619,103 +631,6 @@ $hosted-video-height: 540px;
     }
 }
 
-//Hosted thrasher
-.creative--hosted-video {
-    .hosted-video__body {
-        position: relative;
-        height: 100%;
-        padding-top: 0;
-    }
-
-    .hosted-video_layer {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        background-repeat: no-repeat;
-    }
-
-    .hosted__heading {
-        @include mq(desktop) {
-            font-size: 32px;
-            line-height: 34px;
-            margin-bottom: 10px;
-        }
-    }
-
-    .hosted__meta {
-        display: block;
-        left: $gs-gutter/2;
-        bottom: 60px;
-        @include mq($until: desktop) {
-            bottom: 15%;
-        }
-    }
-
-    .hosted-video--image-container {
-        height: 339px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative;
-    }
-
-    .hostedbadge {
-        top: 0;
-        left: $gs-gutter/2;
-        position: absolute;
-        margin: 0;
-        @include mq(leftCol) {
-            top: 210px;
-            left: - $left-column - $gs-gutter;
-            width: 112px;
-        }
-        @include mq(wide) {
-            left: - $left-column-wide - $gs-gutter;
-        }
-    }
-
-    .hosted-banner {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
-        border-top: 1px solid transparent;
-    }
-
-    .hosted__faux-controls {
-        @include f-headlineSans;
-        position: absolute;
-        bottom: 0;
-        font-size: 16px;
-        font-weight: bold;
-
-        .hosted__video-timer {
-            color: #ffffff;
-            @include mq(desktop) {
-                margin-bottom: 10px;
-            }
-        }
-    }
-
-    .play-button {
-        @include icon(play-32--tone-media);
-        @include mq(desktop) {
-            padding: 9px;
-        }
-        margin: 10px;
-    }
-
-    .play-button, .hosted__video-timer {
-        display: inline-block;
-        vertical-align: bottom;
-    }
-}
-
 .hosted__label.paidfor-label {
     float: left;
     margin-left: 10px;
@@ -842,6 +757,7 @@ $hosted-video-height: 540px;
     height: 72px;
     width: 120px;
     align-self: flex-start;
+    object-fit: cover;
 
     @include mq($until: phablet) {
         height: 54px;

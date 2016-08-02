@@ -11,10 +11,13 @@ GET        /counts.gif                      controllers.DiagnosticsController.an
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
 
 POST       /css                             controllers.DiagnosticsController.css
-OPTIONS    /css                             controllers.DiagnosticsController.postOptions
+OPTIONS    /css                             controllers.DiagnosticsController.cssOptions
 
 POST       /csp-report                      controllers.DiagnosticsController.csp
-OPTIONS    /css                             controllers.DiagnosticsController.postOptions
+OPTIONS    /csp-report                      controllers.DiagnosticsController.cspOptions
+
+POST       /commercial-report               controllers.DiagnosticsController.commercialReport
+OPTIONS    /commercial-report               controllers.DiagnosticsController.commercialOptions
 
 POST       /accept-beacon                   controllers.DiagnosticsController.acceptBeacon
 OPTIONS    /accept-beacon                   controllers.DiagnosticsController.acceptBeaconOptions

@@ -1,9 +1,11 @@
 package model.deploys
 
 import conf.Configuration
-import ApiResults.{ApiErrors, ApiError, ApiResponse}
+import ApiResults.{ApiError, ApiErrors, ApiResponse}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.ws.WSClient
+
 import scala.concurrent.Future
 import scala.language.postfixOps
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -49,9 +51,7 @@ object TeamCityBuild {
     )(TeamCityBuild.apply _)
 }
 
-trait TeamcityService {
-
-  val httpClient: HttpClient
+class TeamcityService(httpClient: HttpLike) {
 
   def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
     val apiPath = "/guestAuth/app/rest"
@@ -75,7 +75,3 @@ trait TeamcityService {
   }
 
 }
-object TeamcityService extends TeamcityService {
-  override val httpClient = HttpClient
-}
-

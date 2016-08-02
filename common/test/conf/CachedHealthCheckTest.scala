@@ -2,17 +2,25 @@ package conf
 
 import common.ExecutionContexts
 import org.joda.time.DateTime
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.SingleServerSuite
+import test.{SingleServerSuite, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 
-class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuite with ScalaFutures with ExecutionContexts {
+class CachedHealthCheckTest
+  extends WordSpec
+  with Matchers
+  with SingleServerSuite
+  with ScalaFutures
+  with ExecutionContexts
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   //Helper method to construct mock Results
   def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {
@@ -29,8 +37,8 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
     val mockTestPort: Int = 9100
-    val controller = new CachedHealthCheck(policy, mockTestPort, mockHealthChecks:_*) {
-      override val cache = new HealthCheckCache {
+    val controller = new CachedHealthCheck(policy, wsClient, mockTestPort, mockHealthChecks:_*) {
+      override val cache = new HealthCheckCache(wsClient) {
         override def fetchResults(testPort: Int, paths: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
           Future.successful(mockResults)
         }

@@ -1,11 +1,9 @@
-@import model.liveblog.BodyBlock
-@import model.Article
 @import org.joda.time.DateTimeZone
+@import model.Article
+@import model.liveblog.{LiveBlogDate,BodyBlock}
+@import views.BodyCleaner
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
-
-@import views.BodyCleaner
-@import model.liveblog.{LiveBlogDate}
 
 @blocks.map { block =>
     <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
@@ -33,3 +31,4 @@
         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
 }
+

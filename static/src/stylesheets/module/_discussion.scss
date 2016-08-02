@@ -1321,6 +1321,10 @@ $comment-recommend-button-size: 19px;
     }
 }
 
+.discussion__comment-box--bottom--hidden {
+    display: none !important;
+}
+
 .d-comment-box__content {
     position: relative;
     clear: both;

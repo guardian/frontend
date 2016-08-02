@@ -6,6 +6,107 @@ $zootropolisColor: #2ec869;
 $zootropolisLight: #d5f4e1;
 $leffeColor: #dec190;
 $leffeLight: #f8f2e9;
+$singaporef1Colour: #063666;
+$singaporef1SecondColour: #f0a93f;
+
+
+.hosted-tone--test {
+    color: #a00000;
+}
+
+.hosted-tone-bg--test {
+    background-color: #a00000;
+}
+
+.hosted-tone-border--test {
+    border-color: #a00000;
+}
+
+.hosted-tone--visit-britain {
+    color: $omgbColor;
+}
+
+.hosted-tone-bg--visit-britain {
+    background-color: $omgbColor;
+}
+
+.hosted-tone-border--visit-britain {
+    border-color: $omgbColor;
+}
+
+.hosted-page.visit-britain ~ .survey-overlay-simple {
+    .survey-text__header {
+        background-color: $omgbColor;
+        color: #ffffff;
+
+        .site-message__close-btn {
+            border-color: #ffffff;
+
+            .inline-cross {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
+.hosted-tone--f1-singapore {
+    color: $singaporef1Colour;
+}
+
+.hosted-tone-bg--f1-singapore {
+    background-color: $singaporef1Colour;
+}
+
+.hosted-tone-border--f1-singapore {
+    border-color: $singaporef1Colour;
+}
+
+
+.hosted-tone-btn--f1-singapore {
+    &.hosted-tone-btn--f1-singapore,
+    &:focus,
+    &:hover {
+        background-color: $singaporef1Colour;
+        border-color: $singaporef1Colour;
+        color: #ffffff;
+        svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.f1-singapore {
+    .hosted__next-video .hosted__next-video--tile {
+        border-top-color: $singaporef1Colour;
+        background: lighten($singaporef1Colour, 20%);
+    }
+}
+
+.hostedbadge.hosted-tone-bg--f1-singapore {
+    .hostedbadge__info {
+        color: #ffffff;
+    }
+}
+
+.hosted-page.f1-singapore {
+    .hosted__link {
+        color: $singaporef1Colour;
+    }
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            background-color: $singaporef1Colour;
+            color: #ffffff;
+
+            .site-message__close-btn {
+                border-color: #ffffff;
+
+                .inline-cross {
+                    fill: #ffffff;
+                }
+            }
+        }
+    }
+}
 
 
 .hosted-tone--renault {
