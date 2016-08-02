@@ -1,7 +1,9 @@
 define([
+    'common/utils/config',
     'common/utils/fastdom-promise',
     'common/utils/report-error'
 ], function (
+    config,
     fastdom,
     reportError
 ) {
@@ -10,9 +12,9 @@ define([
     var HIDE_TOOLTIP_CLASS = 'tooltip-box-hidden';
 
     function handle (target, container, user, discussionApi) {
-        if (!user) {
+        if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
             return showSignInTooltip(target);
-        } else if (isOpenForRecommendations(container)) {
+        } else if ((config.switches.discussionAllowAnonymousRecommendsSwitch || user) && isOpenForRecommendations(container)) {
             var id = target.getAttribute('data-comment-id');
 
             return Promise.all([

@@ -337,6 +337,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val DiscussionAllowAnonymousRecommendsSwitch = Switch(
+    SwitchGroup.Feature,
+    "discussion-allow-anonymous-recommends-switch",
+    "if this is switched on, comments can be recommended by signed out users",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+
+  )
+
   val MissingVideoEndcodingsJobSwitch = Switch(
     SwitchGroup.Feature,
     "check-for-missing-video-encodings",
