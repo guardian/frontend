@@ -381,7 +381,6 @@ class GuardianConfiguration extends Logging {
 
   object faciatool {
     lazy val crossAccountSourceBucket = configuration.getMandatoryStringProperty("aws.cmsFronts.frontCollections.bucket")
-    lazy val sameAccountSourceBucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val outputBucket = configuration.getMandatoryStringProperty("aws.bucket")
 
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
