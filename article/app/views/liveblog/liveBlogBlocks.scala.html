@@ -2,11 +2,12 @@
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
+@import conf.switches.Switches.LiveUpdateAmpSwitch
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
 @blocks.map { block =>
-    <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <div id="block-@block.id" @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" } class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
         <p class="block-time published-time">
             <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
             @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
@@ -31,4 +32,3 @@
         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
 }
-
