@@ -22,7 +22,7 @@ function (
                         'icon',
                     '</div>',
                     // Tooltip
-                    '<div class="js-rec-tooltip tooltip-box-hidden">',
+                    '<div class="js-rec-tooltip" hidden>',
                         '<a class="js-rec-tooltip-link" href="http://theguardian.com/test/signin?keep=this">Sign in</a>',
                     '</div>',
                     // Comment list, used to understand if we're open for recommendations
@@ -95,13 +95,13 @@ function (
             .then(function () {
                 expect(discussionApi.recommendComment).not.toHaveBeenCalled();
                 expect(target.classList.contains('d-comment__recommend--recommended')).toBe(false, 'clicked classList');
-                expect(tooltip.classList.contains('tooltip-box-hidden')).toBe(false, 'hidden classList');
+                expect(tooltip.hasAttribute('hidden')).toBe(false, 'hidden attribute');
                 expect(link.getAttribute('href')).toBe('http://theguardian.com/test/signin?keep=this&returnUrl=http://theguardian.com/comment-1');
 
                 return upvote.closeTooltip();
             })
             .then(function () {
-                expect(tooltip.classList.contains('tooltip-box-hidden')).toBe(true, 'hidden classList');
+                expect(tooltip.hasAttribute('hidden')).toBe(true, 'hidden attribute');
             })
             .then(done)
             .catch(done.fail);

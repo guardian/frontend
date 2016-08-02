@@ -11,7 +11,6 @@ define([
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
-    var HIDE_TOOLTIP_CLASS = 'tooltip-box-hidden';
 
     function handle (target, container, user, discussionApi) {
         if (!user) {
@@ -66,7 +65,7 @@ define([
 
         return fastdom.write(function () {
             updateReturnUrl(links, target.getAttribute('data-comment-url'));
-            tooltip.classList.remove(HIDE_TOOLTIP_CLASS);
+            tooltip.removeAttribute('hidden');
             target.appendChild(tooltip);
         });
     }
@@ -86,7 +85,7 @@ define([
 
     function closeTooltip () {
         return fastdom.write(function () {
-            document.querySelector('.' + TOOLTIP_CLASS).classList.add(HIDE_TOOLTIP_CLASS);
+            document.querySelector('.' + TOOLTIP_CLASS).setAttribute('hidden', '');
         });
     }
 
