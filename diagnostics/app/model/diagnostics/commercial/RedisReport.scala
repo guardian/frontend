@@ -11,7 +11,7 @@ import services.S3
 ExpiredKeyEventSubscriber listens to Redis notifications. When a key expires, it gathers
 all the known data for that surrogate key from Redis, and writes a single loggable report object into S3.
 */
-class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) {
+class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extends Logging {
 
   val expiredKeyEventChannel = "__keyevent@0__:expired"
 
@@ -26,10 +26,12 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) {
 
   def callback(pubsub: PubSubMessage) = pubsub match {
     case Message(`expiredKeyEventChannel`, id) if !id.endsWith("-data") => {
-      uploadReportToS3(id)
+        log.logger.info(s"expired key event received for $id")
+        uploadReportToS3(id)
     }
+    case Message(_, message) => log.logger.info(s"generic redis message received: $message")
     case Unsubscribed(_, _) =>
-    case Subscribed(_, _) =>
+    case Subscribed(channel, _) => log.logger.info(s"subscribed to redis channel: $channel")
     case Error(_) =>
   }
 

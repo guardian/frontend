@@ -11,7 +11,7 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/participation-discussion-ordering',
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2',
     'common/modules/experiments/tests/hosted-zootropolis-cta'
 ], function (
     reportError,
@@ -26,7 +26,7 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    ParticipationDiscussionOrdering,
+    ParticipationDiscussionOrderingTake2,
     HostedZootropolisCta
 ) {
 
@@ -35,7 +35,7 @@ define([
         new HostedAutoplay(),
         new Giraffe(),
         new VideoCaption(),
-        new ParticipationDiscussionOrdering(),
+        new ParticipationDiscussionOrderingTake2(),
         new HostedZootropolisCta()
     ];
 

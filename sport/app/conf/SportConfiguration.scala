@@ -1,17 +1,11 @@
 package conf
 
-import com.gu.conf.ConfigurationFactory
-import common.BadConfigurationException
+import common.GuardianConfiguration
 import pa.PaClientConfig
 
 object SportConfiguration {
 
-  val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
-
-  private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
-    def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
-      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
-  }
+  import GuardianConfiguration._
 
   object pa {
     lazy val footballHost = PaClientConfig.baseUrl

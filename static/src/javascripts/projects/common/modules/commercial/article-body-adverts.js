@@ -83,7 +83,7 @@ define([
 
     function addInlineMerchAd(rules) {
         spaceFiller.fillSpace(rules, function (paras) {
-            insertAdAtPara(paras[0], 'im', 'im');
+            return insertAdAtPara(paras[0], 'im', 'im');
         }, {
             waitForImages: true,
             waitForLinks: true,
