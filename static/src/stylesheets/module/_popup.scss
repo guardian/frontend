@@ -337,7 +337,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .ad-feedback.popup {
-    width: 180px;
+    width: 240px;
     top: 18px;
     left: inherit;
     background: $neutral-8;
@@ -365,7 +365,7 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .popup__item {
         font-size: 13px;
-        line-height: 35px;
+        line-height: 30px;
         //text-decoration: none;
         border-bottom: 1px solid #dcdcdc;
         .popup__item-option-text {

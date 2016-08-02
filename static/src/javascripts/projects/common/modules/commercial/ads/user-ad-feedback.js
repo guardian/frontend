@@ -7,11 +7,9 @@ define([
 ) {
 
     function userAdFeedback(pagePath, adSlotId, creativeid, reason) {
-        // TODO: swap console.log for ophan (or other) call.
-        console.log('feedback received: ' + pagePath + '.' + adSlotId + '.' + creativeid + ' reason: ' + reason);
-        // TODO: Activate some ophan call when we work out what to do!
+        recordUserAdFeedback(pagePath, adSlotId, creativeid, reason);
         // TODO: This. Better.
-        if (reason != 'ad-feedback-menu-opened') {
+        if (reason !== 'ad-feedback-menu-opened') {
             var adSlot = bonzo(qwery('#' + adSlotId));
             adSlot.each(function (ad) {
                 for (var i = 0; i < ad.children.length; i++) {
@@ -21,6 +19,11 @@ define([
                 }
             });
         }
+    }
+
+    function recordUserAdFeedback(pagePath, adSlotId, creativeId, feedbackType) {
+        // TODO: swap console.log for AWS lambda call.
+        console.log('feedback received: ' + pagePath + '.' + adSlotId + '.' + creativeId + ' reason: ' + feedbackType);
     }
 
     return userAdFeedback;
