@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/participation-discussion-ordering-take-2'
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2',
+    'common/modules/experiments/tests/hosted-zootropolis-cta'
 ], function (
     reportError,
     config,
@@ -25,7 +26,8 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    ParticipationDiscussionOrderingTake2
+    ParticipationDiscussionOrderingTake2,
+    HostedZootropolisCta
 ) {
 
     var TESTS = [
@@ -33,7 +35,8 @@ define([
         new HostedAutoplay(),
         new Giraffe(),
         new VideoCaption(),
-        new ParticipationDiscussionOrderingTake2()
+        new ParticipationDiscussionOrderingTake2(),
+        new HostedZootropolisCta()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -258,8 +261,8 @@ define([
             try {
                 onTestComplete(recordTestComplete(test, variantId));
             } catch(err) {
-               reportError(err, false, false); 
-            }    
+               reportError(err, false, false);
+            }
         }
     }
 
