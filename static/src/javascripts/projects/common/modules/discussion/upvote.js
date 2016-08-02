@@ -1,10 +1,12 @@
 define([
     'common/utils/assign',
+    'common/utils/config',
     'common/utils/fastdom-promise',
     'common/utils/report-error',
     'common/utils/url'
 ], function (
     assign,
+    config,
     fastdom,
     reportError,
     urlUtil
