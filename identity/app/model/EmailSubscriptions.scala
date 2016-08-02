@@ -203,6 +203,16 @@ object EmailSubscriptions {
       exampleUrl = Some("http://www.theguardian.com/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
+      "Lab notes",
+      "news",
+      "Science",
+      "Get a weekly round-up of the biggest stories in science, insider knowledge from our network of bloggers, and some distractingly good fun and games.",
+      "Every Friday",
+      "3701",
+      subscribedTo = subscribedListIds.exists{ x => x == "3701" },
+      exampleUrl = Some("https://www.theguardian.com/science/series/lab-notes/latest/email")
+    ),
+    EmailSubscription(
       "Poverty matters",
       "news",
       "Global development",
