@@ -1,11 +1,13 @@
 define([
-    'common/utils/config',
+    'common/utils/assign',
     'common/utils/fastdom-promise',
-    'common/utils/report-error'
+    'common/utils/report-error',
+    'common/utils/url'
 ], function (
-    config,
+    assign,
     fastdom,
-    reportError
+    reportError,
+    urlUtil
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
@@ -13,6 +15,7 @@ define([
 
     function handle (target, container, user, discussionApi) {
         if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
+            target.setAttribute('data-link-name', 'Recommend comment anonymous');
             return showSignInTooltip(target);
         } else if ((config.switches.discussionAllowAnonymousRecommendsSwitch || user) && isOpenForRecommendations(container)) {
             var id = target.getAttribute('data-comment-id');
