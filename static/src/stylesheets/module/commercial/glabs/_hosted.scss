@@ -465,8 +465,9 @@ $hosted-video-height: 540px;
 
 .hosted__cta-btn-wrapper {
     padding-top: 90px;
+
     @include mq(desktop) {
-        padding-top: 220px;
+        padding-top: 236px;
     }
 }
 
