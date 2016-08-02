@@ -345,20 +345,23 @@ $control-offset: 36 + $gs-gutter/2;
     text-align: left;
     z-index: $zindex-overlay;
     ul {
-        margin-left: 2px;
+        margin: 0;
     }
     h3 {
         color: #333333;
-        padding-top: 5px;
-        padding-bottom: 2px;
+        padding-top: 3px;
+        padding-bottom: 3px;
         border-bottom-width: 1px;
     }
     .popup__group-header {
-        padding: 5px 2px;
+        padding: 2px 2px;
     }
     .popup__group-header:last-of-type {
         border-top: 0;
         border-bottom: 1px solid #dcdcdc;
+    }
+    .popup__group {
+        padding: 5px;
     }
     .popup__item {
         font-size: 13px;
@@ -371,7 +374,7 @@ $control-offset: 36 + $gs-gutter/2;
         }
     }
     .popup__item:hover {
-        background: $neutral-3;
+        background: #bdbdbd;
     }
     .popup__item a, &:hover {
         text-decoration: none;
