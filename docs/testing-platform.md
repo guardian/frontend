@@ -28,7 +28,7 @@ The simplest way to do that is to spin up a new Auto scaling Group in environmen
 1. delete the ASG and Launch config
 
 ## Building a branch with frontend
-1. click the ... icon next to Run in dotcom master build
+1. click the ... icon next to Run in [dotcom master](http://teamcity.gu-web.net:8111/viewType.html?buildTypeId=dotcom_master) build
 1. change the BranchName in the parameters screen to your branch
 1. run the build - it will create the build and upload to riffraff
 1. deploy the build with riffraff to TEST
