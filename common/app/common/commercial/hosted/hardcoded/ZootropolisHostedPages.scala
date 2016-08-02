@@ -26,7 +26,7 @@ object ZootropolisHostedPages {
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {
-    val videoTitle = "Disney’s Zootropolis: Download & keep today!"
+    val videoTitle = "Disney’s Zootropolis: Download and keep today!"
     HostedVideoPage(
       campaign,
       pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName",
