@@ -170,6 +170,31 @@ define([
         });
     }
 
+    function isGeoBlocked(el) {
+        var source = el.currentSrc;
+
+        // we currently only block to the uk
+        // these files are placed in a special location
+        if (source.indexOf('/ukonly/') !== -1) {
+            return new Promise(function(resolve) {
+                ajax({
+                    url: source,
+                    crossOrigin: true,
+                    method: 'head'
+                }).then(function() {
+                    resolve(false);
+                }, function (response) {
+                    // videos are blocked at the CDN level
+                    resolve(response.status === 403);
+                });
+            });
+        } else {
+            return new Promise(function (resolve) {
+                resolve(false);
+            });
+        }
+    }
+
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
@@ -240,21 +265,8 @@ define([
                     player.controlBar.dispose();
                 });
             } else {
-                var geoBlocked = new Promise(function(resolve) {
-                    ajax({
-                        url: $el[0].currentSrc,
-                        crossOrigin: true,
-                        method: 'head'
-                    }).then(function() {
-                        resolve(false);
-                    }, function (response) {
-                        // videos are blocked at the CDN level
-                        resolve(response.status === 403);
-                    });
-                });
-
-                geoBlocked.then(function (isGeoBlocked) {
-                    if(isGeoBlocked) {
+                isGeoBlocked($el[0]).then(function (isVideoGeoBlocked) {
+                    if (isVideoGeoBlocked) {
                         player.ready(function() {
                             player.error({
                                 code: 0,
@@ -371,7 +383,6 @@ define([
                                 player.play();
                             }
                         });
-
                     }
                 });
             }
