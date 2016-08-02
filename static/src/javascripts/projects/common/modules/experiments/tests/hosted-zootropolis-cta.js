@@ -19,7 +19,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'People will click on the CTA banner more often.';
         this.audienceCriteria = 'All users on the hosted Zootropolis pages';
-        this.dataLinkNames = '';
+        this.dataLinkNames = 'disney-zootropolis';
         this.idealOutcome = 'People will click on the CTA banner more often.';
 
         this.canRun = function () {
