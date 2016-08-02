@@ -1,14 +1,19 @@
 package test
 
-import feed.{CompetitionSupport, Competitions, CompetitionAgent}
+import feed.CompetitionsService
 import model.Competition
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
-import org.joda.time.{LocalDate, DateTime, DateTimeUtils}
+import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
 
 
-@DoNotDiscover class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually with ConfiguredTestSuite with BeforeAndAfterAll {
+@DoNotDiscover class CompetitionAgentTest
+  extends FlatSpec
+  with Matchers
+  with implicits.Football
+  with Eventually
+  with FootballTestSuite {
 
   override def beforeAll() = {
     // Tests in this suite are time dependent:
@@ -23,66 +28,43 @@ import org.joda.time.{LocalDate, DateTime, DateTimeUtils}
 
   lazy val seasonStart = Some(new LocalDate(2012, 8, 1))
 
+  def testCompetitionsService(competition: Competition) = new CompetitionsService(testFootballClient, Seq(competition))
+
   "CompetitionAgentTest" should "load fixtures" in {
 
-    object TestCompetitions extends Competitions {
-      override val competitionAgents = Seq(
-        CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
-      )
-
-      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
-    }
-
-    TestCompetitions.competitionAgents.foreach(_.refreshFixtures())
+    val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
+    comps.competitionAgents.foreach(_.refreshFixtures())
 
     eventually(
-      TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3925232")
+      comps.matches.filter(_.isFixture).map(_.id) should contain ("3925232")
     )
   }
 
   it should "load results" in {
 
-    object TestCompetitions extends Competitions {
-      override val competitionAgents = Seq(
-        CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, startDate = seasonStart))
-      )
-      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
-    }
-
-    TestCompetitions.competitionAgents.foreach(_.refreshResults())
+    val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, startDate = seasonStart))
+    comps.competitionAgents.foreach(_.refreshResults())
 
     eventually(
-      TestCompetitions.matches.filter(_.isResult).map(_.id) should contain ("3528302")
+      comps.matches.filter(_.isResult).map(_.id) should contain ("3528302")
     )
   }
 
   it should "load live matches" in {
 
-    object TestCompetitions extends Competitions {
-      override val competitionAgents = Seq(
-        CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
-      )
-      def matches = CompetitionSupport(competitionAgents.map(_.competition)).matches
-    }
+    val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
+    comps.refreshMatchDay()
 
-    TestCompetitions.refreshMatchDay()
-
-    eventually(TestCompetitions.matches.filter(_.isLive).map(_.id) should contain ("3518286"))
+    eventually(comps.matches.filter(_.isLive).map(_.id) should contain ("3518286"))
 
   }
 
   it should "load league tables" in {
 
-    object TestCompetitions extends Competitions {
-      override val competitionAgents = Seq(
-        CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
-      )
-      override def competitions = competitionAgents.map(_.competition)
-    }
+    val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
+    comps.competitionAgents.foreach(_.refresh())
 
-    TestCompetitions.competitionAgents.foreach(_.refresh())
-
-    eventually(TestCompetitions.competitions(0).leagueTable(0).team.id should be ("23"))
+    eventually(comps.competitions(0).leagueTable(0).team.id should be ("23"))
   }
 
 }

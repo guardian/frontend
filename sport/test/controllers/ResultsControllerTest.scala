@@ -6,14 +6,20 @@ import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.ConfiguredTestSuite
+import test.FootballTestSuite
+
 import scala.concurrent.Future
 
-@DoNotDiscover class ResultsControllerTest extends WordSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ResultsControllerTest
+  extends WordSpec
+  with Matchers
+  with FootballTestSuite {
+
+  val resultsController = new ResultsController(competitionsService)
 
   "GET all results" should {
     val request = FakeRequest(method = "GET", path = "/football/results.json")
-    val action = ResultsController.allResultsJson()
+    val action = resultsController.allResultsJson()
     lazy val response: Future[Result] = call(action, request)
     "200" in {
       status(response) should be(200)
@@ -22,7 +28,7 @@ import scala.concurrent.Future
   "GET all results for a specific date" when {
     "date is correct" should {
       val request = FakeRequest(method = "GET", path = "/football/results/2016/May/3.json")
-      val action = ResultsController.allResultsForJson("2016", "May", "3")
+      val action = resultsController.allResultsForJson("2016", "May", "3")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -32,7 +38,7 @@ import scala.concurrent.Future
   }
   "GET more results for a specific date" should {
     val request = FakeRequest(method = "GET", path = "/football/results/more/2016/May/3.json")
-    val action = ResultsController.moreResultsForJson("2016", "May", "3")
+    val action = resultsController.moreResultsForJson("2016", "May", "3")
     lazy val response: Future[Result] = call(action, request)
     "200" in {
       status(response) should be(200)
@@ -41,7 +47,7 @@ import scala.concurrent.Future
   "GET results for a specific tag" when {
     "tag (competition) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/premierleague/results.json")
-      val action = ResultsController.tagResultsJson("premierleague")
+      val action = resultsController.tagResultsJson("premierleague")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -49,7 +55,7 @@ import scala.concurrent.Future
     }
     "tag (team) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/liverpool/results.json")
-      val action = ResultsController.tagResultsJson("liverpool")
+      val action = resultsController.tagResultsJson("liverpool")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -57,7 +63,7 @@ import scala.concurrent.Future
     }
     "tag doesn't exist" should {
       val request = FakeRequest(method = "GET", path = "/football/DONOTEXIST/results.json")
-      val action = ResultsController.tagResultsJson("DONOTEXIST")
+      val action = resultsController.tagResultsJson("DONOTEXIST")
       lazy val response: Future[Result] = call(action, request)
       "404" in {
         status(response) should be(404)
@@ -67,7 +73,7 @@ import scala.concurrent.Future
   "GET results for a specific tag and date" when {
     "tag (competition) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/premierleague/results.json")
-      val action = ResultsController.tagResultsForJson("2016", "May", "3", "premierleague")
+      val action = resultsController.tagResultsForJson("2016", "May", "3", "premierleague")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -75,7 +81,7 @@ import scala.concurrent.Future
     }
     "tag (team) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/liverpool/results.json")
-      val action = ResultsController.tagResultsForJson("2016", "May", "3", "liverpool")
+      val action = resultsController.tagResultsForJson("2016", "May", "3", "liverpool")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -83,7 +89,7 @@ import scala.concurrent.Future
     }
     "tag doesn't exist" should {
       val request = FakeRequest(method = "GET", path = "/football/DONOTEXIST/results.json")
-      val action = ResultsController.moreTagResultsForJson("2016", "May", "3", "DONOTEXIST")
+      val action = resultsController.moreTagResultsForJson("2016", "May", "3", "DONOTEXIST")
       lazy val response: Future[Result] = call(action, request)
       "404" in {
         status(response) should be(404)
@@ -93,7 +99,7 @@ import scala.concurrent.Future
   "GET more results for a specific tag" when {
     "tag (competition) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/premierleague/results.json")
-      val action = ResultsController.moreTagResultsForJson("2016", "May", "3", "premierleague")
+      val action = resultsController.moreTagResultsForJson("2016", "May", "3", "premierleague")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -101,7 +107,7 @@ import scala.concurrent.Future
     }
     "tag (team) exists" should {
       val request = FakeRequest(method = "GET", path = "/football/liverpool/results.json")
-      val action = ResultsController.moreTagResultsForJson("2016", "May", "3", "liverpool")
+      val action = resultsController.moreTagResultsForJson("2016", "May", "3", "liverpool")
       lazy val response: Future[Result] = call(action, request)
       "200" in {
         status(response) should be(200)
@@ -109,7 +115,7 @@ import scala.concurrent.Future
     }
     "tag doesn't exist" should {
       val request = FakeRequest(method = "GET", path = "/football/DONOTEXIST/results.json")
-      val action = ResultsController.moreTagResultsForJson("2016", "May", "3", "DONOTEXIST")
+      val action = resultsController.moreTagResultsForJson("2016", "May", "3", "DONOTEXIST")
       lazy val response: Future[Result] = call(action, request)
       "404" in {
         status(response) should be(404)

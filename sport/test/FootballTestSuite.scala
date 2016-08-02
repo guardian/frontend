@@ -4,9 +4,19 @@ import org.scala_tools.time.Imports._
 import org.joda.time.DateTime
 import pa._
 import model.{Competition, Tag, TagProperties, TeamMap}
-import feed.Competitions
+import feed.CompetitionsService
+import org.scalatest.{BeforeAndAfterAll, Suite}
 
-trait FootballTestData {
+trait FootballTestSuite
+  extends Suite
+  with ConfiguredTestSuite
+  with WithTestFootballClient
+  with BeforeAndAfterAll
+  with WithTestWsClient {
+
+  override def beforeAll() = loadTestData()
+
+  lazy val competitionsService = new CompetitionsService(testFootballClient, competitions)
 
   private val zone = DateTimeZone.forID("Europe/London")
 
@@ -26,7 +36,7 @@ trait FootballTestData {
     None, None, None)
 
 
-  val competitions = Seq(
+  private val competitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
       showInTeamsList = true,
       startDate = Some((today - 2.months).toLocalDate),
@@ -70,7 +80,7 @@ trait FootballTestData {
     )
   )
 
-  val teamTags: Map[String, Tag] = Map(
+  private val teamTags: Map[String, Tag] = Map(
       "Liverpool" -> Tag(
         TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
           "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
@@ -106,9 +116,9 @@ trait FootballTestData {
     LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 
-  def loadTestData() {
-    if (Competitions().matches.isEmpty) {
-      Competitions.competitionAgents.foreach { agent =>
+  private def loadTestData() {
+    if (competitionsService.matches.isEmpty) {
+      competitionsService.competitionAgents.foreach { agent =>
         competitions.filter(_.id == agent.competition.id).map { comp =>
           agent.update(comp)
           agent.addMatches(comp.matches)

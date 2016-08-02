@@ -1,8 +1,8 @@
 package football.model
 
-import org.joda.time.{DateTimeZone, LocalDate, DateTime}
+import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import pa._
-import feed.CompetitionSupport
+import feed.Competitions
 import model.Competition
 
 
@@ -51,5 +51,5 @@ trait MatchTestData {
   val competition1 = Competition("500", "/football/test", "Test competition", "Test comp", "English", Some(today.minusDays(50)), matches1, leagueTable1, showInTeamsList = true)
   val competition2 = Competition("100", "/football/test2", "Test competition 2", "Test comp 2", "Scottish", Some(today.minusDays(50)), matches2, leagueTable2, showInTeamsList = true)
 
-  val competitions = CompetitionSupport(Seq(competition1, competition2))
+  val competitions = Competitions(Seq(competition1, competition2))
 }

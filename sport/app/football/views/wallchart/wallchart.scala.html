@@ -1,4 +1,4 @@
-@(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+@(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStageLike])(implicit request: RequestHeader)
 
 @competitionStages.map {
     case knockoutStage: _root_.football.model.KnockoutSpider => {

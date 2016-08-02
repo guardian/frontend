@@ -1,20 +1,22 @@
 package football.containers
 
+import common.Edition
 import feed.Competitions
-import football.model.{TeamResultsList, TeamFixturesList}
+import football.model.{TeamFixturesList, TeamResultsList}
 import implicits.Football
 import layout._
 import model._
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import slices.{FixedContainers, Fixed}
+import slices.{Fixed, FixedContainers}
+import common.Seqs._
+import org.joda.time.LocalDate
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
-import common.Seqs._
 
 import scalaz.syntax.std.boolean._
 
-object CompetitionAndGroup {
+class CompetitionAndGroupFinder(competitions: Competitions) {
   def windowed(group: Group, teamId: String) = {
     group.entries.around(1, 10)(_.team.id == teamId) match {
       case Some(windowedItems) => group.copy(entries = windowedItems)
@@ -24,7 +26,7 @@ object CompetitionAndGroup {
 
   def bestForTeam(teamId: String) = {
     for {
-      competition <- Competitions().mostPertinentCompetitionForTeam(teamId)
+      competition <- competitions.mostPertinentCompetitionForTeam(teamId)
       table = Table(competition)
       group <- table.groups.find(_.entries.exists(_.team.id == teamId)) orElse
         table.groups.headOption
@@ -34,13 +36,12 @@ object CompetitionAndGroup {
 
 case class CompetitionAndGroup(competition: Competition, group: Group)
 
-object FixturesAndResults extends Football {
+class FixturesAndResults(competitions: Competitions) extends Football {
   def makeContainer(tagId: String)(implicit request: RequestHeader) = {
-    val competitions = Competitions()
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
-      teamName <- TeamName.fromId(teamId)
+      teamName <- new TeamNameBuilder(competitions).withId(teamId)
     } yield {
       val relevantMatches = competitions.matches.filter({ theMatch =>
         theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
@@ -54,15 +55,16 @@ object FixturesAndResults extends Football {
       val cssClasses = Seq("facia-snap--football", "facia-snap-embed")
       val missingComponentClasses = Seq("football-component-missing")
 
-      val maybeCompetitionAndGroup = CompetitionAndGroup.bestForTeam(teamId).filter(_ => leagueTableExists)
+      val maybeCompetitionAndGroup = new CompetitionAndGroupFinder(competitions).bestForTeam(teamId).filter(_ => leagueTableExists)
 
+      val now = LocalDate.now(Edition.defaultEdition.timezone)
       val fixturesComponent = fixtureExists option matchesComponent(
-        TeamFixturesList.forTeamId(teamId),
-        customLink = Some((s"Show more $teamName fixtures", s"/football/$tagId/fixtures"))
+        new TeamFixturesList(now, competitions.competitions, teamId, 2),
+        Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures")
       )
       val resultsComponent = resultExists option matchesComponent(
-        TeamResultsList.forTeamId(teamId),
-        customLink = Some((s"Show more $teamName results", s"/football/$tagId/results"))
+        new TeamResultsList(now, competitions.competitions, teamId),
+        Some(s"Show more $teamName results", s"/football/$tagId/results")
       )
 
       Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty option {

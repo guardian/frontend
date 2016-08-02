@@ -1,49 +1,57 @@
 package football.model
 
-import org.scalatest.{DoNotDiscover, OptionValues, FreeSpec, ShouldMatchers}
-import pa.{Fixture, Round, Stage}
+import org.scalatest._
+import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
-import org.scalatest.exceptions.TestFailedException
 import implicits.Collections
-import test.ConfiguredTestSuite
+import test.FootballTestSuite
 
-@DoNotDiscover class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValues with CompetitionTestData with Collections with ConfiguredTestSuite {
+@DoNotDiscover class CompetitionStageTest
+  extends FreeSpec
+  with ShouldMatchers
+  with OptionValues
+  with CompetitionTestData
+  with Collections
+  with FootballTestSuite {
+
+  val competitionStage = new CompetitionStage(competitionsService.competitions)
+
   "stagesFromCompetition" - {
     "will generate a League" in {
-      val stages = CompetitionStage.stagesFromCompetition(league)
+      val stages = competitionStage.stagesFromCompetition(league)
       stages.length should equal(1)
       stages(0) should be (instanceOf[League])
     }
 
     "can generate a knockout tournament" in {
-      val stages = CompetitionStage.stagesFromCompetition(tournament)
+      val stages = competitionStage.stagesFromCompetition(tournament)
       stages.length should equal(1)
       stages(0) should be (instanceOfKnockout)
     }
 
     "can generate a group stage" in {
-      val stages = CompetitionStage.stagesFromCompetition(groupStage)
+      val stages = competitionStage.stagesFromCompetition(groupStage)
       stages.length should equal(1)
       stages(0).isInstanceOf[Groups] should equal(true)
     }
 
     "will generate nothing for a competition that doesn't have useful stages" in {
-      val stages = CompetitionStage.stagesFromCompetition(stageless)
+      val stages = competitionStage.stagesFromCompetition(stageless)
       stages.length should equal(0)
     }
 
     "for multiple stages" - {
 
       "will correctly extract group and knockout stage" in {
-        val stages = CompetitionStage.stagesFromCompetition(groupsThenKnockout).toSet
+        val stages = competitionStage.stagesFromCompetition(groupsThenKnockout).toSet
         stages.size should equal(2)
         stages.exists(_.isInstanceOf[Groups]) should equal(true)
         stages.exists(_.isInstanceOf[Knockout]) should equal(true)
       }
 
       "will correctly extract league and knockout stage" in {
-        val stages = CompetitionStage.stagesFromCompetition(leagueWithPlayoffs).toSet
+        val stages = competitionStage.stagesFromCompetition(leagueWithPlayoffs).toSet
         stages.size should equal(2)
         stages.exists(_.isInstanceOf[League]) should equal(true)
         stages.exists(_.isInstanceOf[Knockout]) should equal(true)
@@ -54,7 +62,7 @@ import test.ConfiguredTestSuite
           leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
           matches = (currentLeagueMatches ++ futureKnockoutMatches(Stage("2"))).sortBy(_.date)
         )
-        val stages = CompetitionStage.stagesFromCompetition(inFirstStageOfLeagueKnockout)
+        val stages = competitionStage.stagesFromCompetition(inFirstStageOfLeagueKnockout)
         stages(0) should be (instanceOf[League])
         stages(1) should be (instanceOfKnockout)
       }
@@ -64,7 +72,7 @@ import test.ConfiguredTestSuite
           leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
           matches = (pastLeagueMatches ++ currentKnockoutMatches(Stage("2"))).sortBy(_.date)
         )
-        val stages = CompetitionStage.stagesFromCompetition(inSecondStageOfLeagueKnockout)
+        val stages = competitionStage.stagesFromCompetition(inSecondStageOfLeagueKnockout)
         stages(0) should be (instanceOfKnockout)
         stages(1) should be (instanceOf[League])
       }
@@ -72,7 +80,7 @@ import test.ConfiguredTestSuite
 
     "for groups" - {
       "adds leagueTableEntries for groups to group stage" in {
-        val stages = CompetitionStage.stagesFromCompetition(groupStage)
+        val stages = competitionStage.stagesFromCompetition(groupStage)
         stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet should equal (groupStage.leagueTable.toSet)
       }
 
@@ -81,7 +89,7 @@ import test.ConfiguredTestSuite
           leagueTable = groupTables(Stage("1")) ++ groupTables(Stage("2")),
           matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
         )
-        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val stages = competitionStage.stagesFromCompetition(comp)
         val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
         val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
 
@@ -104,7 +112,7 @@ import test.ConfiguredTestSuite
 
     "for league" - {
       "adds leagueTableEntries for the league stage" in {
-        val stages = CompetitionStage.stagesFromCompetition(league)
+        val stages = competitionStage.stagesFromCompetition(league)
         stages(0).asInstanceOf[League].leagueTable should equal (league.leagueTable)
       }
 
@@ -113,7 +121,7 @@ import test.ConfiguredTestSuite
           leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))) ++ leagueTable(Stage("2"), Round("1", Some("League"))),
           matches = (pastLeagueMatches ++ futureLeagueMatches(Stage("2"))).sortBy(_.date)
         )
-        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val stages = competitionStage.stagesFromCompetition(comp)
         val leagueTable0 = stages(0).asInstanceOf[League].leagueTable.toSet
         val leagueTable1 = stages(1).asInstanceOf[League].leagueTable.toSet
 
@@ -131,7 +139,7 @@ import test.ConfiguredTestSuite
 
     "for knockout" - {
       "adds rounds for the stage" in {
-        val stages = CompetitionStage.stagesFromCompetition(tournament)
+        val stages = competitionStage.stagesFromCompetition(tournament)
         stages(0).asInstanceOf[Knockout].rounds.toSet should equal(tournament.matches.filter(_.stage == Stage("1")).map(_.round).distinct.toSet)
       }
 
@@ -140,7 +148,7 @@ import test.ConfiguredTestSuite
           leagueTable = Nil,
           matches = pastKnockoutMatches(Stage("1")) ++ futureKnockoutMatches(Stage("2"))
         )
-        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val stages = competitionStage.stagesFromCompetition(comp)
         val rounds0 = stages(0).asInstanceOf[Knockout].rounds.toSet
         val rounds1 = stages(1).asInstanceOf[Knockout].rounds.toSet
 
@@ -157,7 +165,7 @@ import test.ConfiguredTestSuite
 
       "will work out active round as" - {
         "first round if none have started" in {
-          val ko = KnockoutList(futureKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(competitionsService.competitions, futureKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(quarterFinals)
           ko.isActiveRound(quarterFinals) should equal(true)
           ko.isActiveRound(semiFinals) should equal(false)
@@ -166,19 +174,19 @@ import test.ConfiguredTestSuite
         }
 
         "last round if all have finished" in {
-          val ko = KnockoutList(pastKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(competitionsService.competitions, pastKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(`final`)
           ko.isActiveRound(`final`) should equal(true)
         }
 
         "current round if we're halfway through one" in {
-          val ko = KnockoutList(currentKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(competitionsService.competitions, currentKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(semiFinals)
           ko.isActiveRound(semiFinals) should equal(true)
         }
 
         "next round if we're between rounds" in {
-          val ko = KnockoutList(betweenRoundsKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(competitionsService.competitions, betweenRoundsKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(thirdPlacePlayoff)
           ko.isActiveRound(thirdPlacePlayoff) should equal(true)
         }
@@ -187,13 +195,13 @@ import test.ConfiguredTestSuite
       "will create a spider if a suitable ordering is available" in {
         val matchDates = List(DateTime.now, DateTime.now.plusDays(1))
         val orderings = Map("1" -> matchDates)
-        val stages = CompetitionStage.stagesFromCompetition(tournament, orderings)
+        val stages = competitionStage.stagesFromCompetition(tournament, orderings)
         stages(0) should be (instanceOf[KnockoutSpider])
         stages(0).asInstanceOf[KnockoutSpider].matchDates should equal(matchDates)
       }
 
       "creates a knockout list in the absence of a suitable ordering for the competition" in {
-        val stages = CompetitionStage.stagesFromCompetition(tournament)
+        val stages = competitionStage.stagesFromCompetition(tournament)
         stages(0) should be (instanceOf[KnockoutList])
       }
 
@@ -204,7 +212,7 @@ import test.ConfiguredTestSuite
         val matches = futureKnockoutMatches(Stage("1"))
         val reissuedMatches = List(matches(0).copy(id="1235"), matches(1).copy(id="1236"), matches(2).copy(id="1237"), matches(3).copy(id="1238"))
         val comp = testCompetition(leagueTable = Nil, matches = futureKnockoutMatches(Stage("1")) ++ reissuedMatches)
-        val stages = CompetitionStage.stagesFromCompetition(comp, Map("1" -> Nil))
+        val stages = competitionStage.stagesFromCompetition(comp, Map("1" -> Nil))
         val ko = stages(0).asInstanceOf[KnockoutSpider]
         ko should be (instanceOf[KnockoutSpider])
         val qfMatches = ko.roundMatches(quarterFinals)

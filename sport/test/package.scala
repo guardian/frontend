@@ -36,13 +36,26 @@ class SportTestSuite extends Suites (
   new MatchFeatureTest,
   new ResultsFeatureTest,
   new rugby.model.MatchParserTest
-) with SingleServerSuite with FootballTestData with BeforeAndAfterAll with WithTestWsClient {
-
+) with SingleServerSuite with BeforeAndAfterAll with WithTestWsClient {
   override lazy val port: Int = new HealthCheck(wsClient).testPort
+}
 
-  // Inject stub api.
-  FootballClient.http = new TestHttp(wsClient)
-  loadTestData()
+trait WithTestFootballClient {
+  self: WithTestFootballClient with BeforeAndAfterAll with WithTestWsClient =>
+
+  lazy val testFootballClient = new FootballClient(wsClient) {
+    override def GET(url: String): Future[PaResponse] = {
+      FootballHttpRecorder.load(url) {
+        wsClient.url(url)
+          .withRequestTimeout(10000)
+          .get()
+          .map { wsResponse =>
+            pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
+          }
+      }
+    }
+  }
+
 }
 
 private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {

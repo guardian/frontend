@@ -1,11 +1,17 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest._
 import football.controllers.MoreOnMatchController
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 
-@DoNotDiscover class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MoreOnMatchFeatureTest
+  extends FeatureSpec
+  with GivenWhenThen
+  with Matchers
+  with FootballTestSuite {
+
+  val moreOnMatchController = new MoreOnMatchController(competitionsService)
 
   feature("Match Nav") {
 
@@ -16,7 +22,7 @@ import play.api.test.FakeRequest
       {
         val request = FakeRequest("GET", "/football/api/match-nav/2012/12/01/1006/65?callback=call").withHeaders("host" -> "localhost:9000")
 
-        val result = MoreOnMatchController.matchNav("2012", "12", "01", "1006", "65")(request)
+        val result = moreOnMatchController.matchNav("2012", "12", "01", "1006", "65")(request)
 
         status(result) should be(200)
 
@@ -37,7 +43,7 @@ import play.api.test.FakeRequest
       {
         val request = FakeRequest("GET", "football/api/match-nav/2010/01/01/1/2?callback=call").withHeaders("host" -> "localhost:9000")
 
-        val result = MoreOnMatchController.matchNav("2010", "01", "01", "1", "2")(request)
+        val result = moreOnMatchController.matchNav("2010", "01", "01", "1", "2")(request)
 
         status(result) should be(404)
       }
@@ -53,7 +59,7 @@ import play.api.test.FakeRequest
       {
         val request = FakeRequest("GET", "/football/api/match-nav/1010?callback=call").withHeaders("host" -> "localhost:9000")
 
-        val result = MoreOnMatchController.moreOn("1010")(request)
+        val result = moreOnMatchController.moreOn("1010")(request)
 
         status(result) should be(200)
 
@@ -74,7 +80,7 @@ import play.api.test.FakeRequest
       {
         val request = FakeRequest("GET", "/football/api/match-nav/bad-id?callback=call").withHeaders("host" -> "localhost:9000")
 
-        val result = MoreOnMatchController.moreOn("bad-id")(request)
+        val result = moreOnMatchController.moreOn("bad-id")(request)
 
         status(result) should be(404)
       }
