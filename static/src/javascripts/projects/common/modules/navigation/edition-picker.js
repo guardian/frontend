@@ -12,7 +12,7 @@ define([
         var checkBox = $('.js-enhance-checkbox');
         var button = $.create('<button>');
 
-        button.addClass('edition-picker__button js-click');
+        button.addClass('edition-picker__button js-open-edition-picker');
         button.attr('id', 'edition-picker');
         button.attr('aria-controls', 'edition-picker__dropdown');
         button.attr('aria-expanded', 'false');
@@ -26,7 +26,7 @@ define([
     }
 
     function openMenuOnClick() {
-        var button = $('.js-click');
+        var button = $('.js-open-edition-picker');
 
         if (button.length > 0) {
             button[0].addEventListener('click', function() {
