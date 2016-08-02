@@ -3,20 +3,20 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
-    'common/utils/ajax-promise',
-    'common/utils/config',
     'fastdom',
     'Promise',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/fetch',
     'common/utils/mediator',
+    'common/utils/template',
+    'common/utils/robust',
     'lodash/functions/debounce',
     'lodash/collections/contains',
-    'common/utils/template',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
     'text!common/views/ui/close-button.html',
-    'common/utils/robust',
-    'common/utils/detect',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/arrays/uniq'
@@ -25,20 +25,20 @@ define([
     bean,
     bonzo,
     qwery,
-    $,
-    ajax,
-    config,
     fastdom,
     Promise,
+    $,
+    config,
+    detect,
+    fetch,
     mediator,
+    template,
+    robust,
     debounce,
     contains,
-    template,
     svgs,
     successHtml,
     closeHtml,
-    robust,
-    detect,
     Id,
     userPrefs,
     uniq
@@ -266,12 +266,16 @@ define([
                         return getOmniture().then(function (omniture) {
                             omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe clicked'));
 
-                            return ajax({
-                                url: url,
+                            return fetch(config.page.ajaxUrl + url, {
                                 method: 'post',
-                                data: data,
+                                body: data,
                                 headers: {
                                     'Accept': 'application/json'
+                                }
+                            })
+                            .then(function (response) {
+                                if (!response.ok) {
+                                    throw new Error('Fetch error: ' + response.status + ' ' + response.statusText);
                                 }
                             })
                             .then(function () {

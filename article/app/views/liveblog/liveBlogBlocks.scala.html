@@ -1,11 +1,9 @@
-@import model.liveblog.BodyBlock
-@import model.Article
 @import org.joda.time.DateTimeZone
-
-@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone)(implicit request: RequestHeader)
-
+@import model.Article
+@import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
-@import model.liveblog.{LiveBlogDate}
+
+@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
 @blocks.map { block =>
     <div id="block-@block.id" class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
@@ -23,13 +21,14 @@
             }
         }
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-        @BodyCleaner(article, block.bodyHtml, amp = false)
+        @BodyCleaner(article, block.bodyHtml, amp)
         </div>
         @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
         <p class="block-time updated-time">Updated
             <time datetime="@republishedDate">at @ampm @gmt</time>
         </p>
         }
-        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType)
+        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
 }
+

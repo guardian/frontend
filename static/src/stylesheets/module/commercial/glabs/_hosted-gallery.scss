@@ -122,7 +122,6 @@
 
 .hosted-gallery__oj-sub-header {
     @include f-headlineSans;
-    color: $omgbColor;
     font-size: 14px;
 }
 
@@ -134,7 +133,7 @@
 .hosted-gallery__oj-next-gallery {
     flex: 1;
     margin: 10px 10px 0;
-    border-top: 1px solid $omgbColor;
+    border-top: 1px solid;
 }
 
 .has-no-flex {
@@ -203,7 +202,6 @@
     margin: 16px 0;
     color: #ffffff;
     font-weight: bold;
-    background-color: $omgbColor;
     &:hover {
         text-decoration: none;
     }
@@ -258,23 +256,8 @@
     height: 100%;
 }
 
-.hosted-gallery-page.visit-britain ~ .survey-overlay-simple {
-    .survey-text__header {
-        background-color: $omgbColor;
-        color: #ffffff;
-
-        .site-message__close-btn {
-            border-color: #ffffff;
-
-            .inline-cross {
-                fill: #ffffff;
-            }
-        }
-    }
-}
 
 .hosted-gallery-page.visit-britain .hostedbadge__info {
-    background: $omgbColor;
     color: #ffffff;
 }
 

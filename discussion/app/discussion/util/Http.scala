@@ -1,11 +1,14 @@
 package discussion.util
 
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WS, WSClient, WSResponse}
 import play.api.libs.json.{JsValue, Json}
 import common.{ExecutionContexts, Logging, StopWatch}
+
 import scala.concurrent.Future
 
 trait Http extends Logging with ExecutionContexts {
+
+  val wsClient: WSClient
 
   protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*): Future[JsValue] = {
     val stopWatch = new StopWatch
@@ -25,8 +28,7 @@ trait Http extends Logging with ExecutionContexts {
   }
 
   protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
-    import play.api.Play.current
-    WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
+    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
   }
 
 }

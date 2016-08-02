@@ -1,11 +1,11 @@
 package controllers.commercial
 
 import common.commercial.hosted.hardcoded.{HostedPages, LegacyHostedPages}
-import common.commercial.hosted.{HostedArticlePage, HostedGalleryPage, HostedPage, HostedVideoPage}
+import common.commercial.hosted._
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
 import play.api.mvc.{Action, Controller}
-import views.html.hosted.{guardianHostedArticle, guardianHostedGallery, guardianHostedVideo}
+import views.html.hosted.{guardianHostedArticle, guardianHostedArticle2, guardianHostedGallery, guardianHostedVideo}
 
 class HostedContentController extends Controller {
 
@@ -18,6 +18,7 @@ class HostedContentController extends Controller {
       case Some(page: HostedVideoPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedVideo(page)))
       case Some(page: HostedGalleryPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedGallery(page)))
       case Some(page: HostedArticlePage) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle(page)))
+      case Some(page: HostedArticlePage2) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle2(page)))
       case _ => NoCache(NotFound)
     }
   }

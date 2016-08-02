@@ -3,12 +3,19 @@ package test
 import controllers.ArchiveController
 import play.api.mvc.Result
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+
 import scala.concurrent.Future
+import services.DynamoDB
 
-@DoNotDiscover class ArchiveControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ArchiveControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  lazy val archiveController = new ArchiveController
+  lazy val archiveController = new ArchiveController(new DynamoDB(wsClient))
 
   it should "return a normalised r1 path" in {
     val tests = List(

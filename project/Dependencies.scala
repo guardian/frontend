@@ -25,6 +25,7 @@ object Dependencies {
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
+  val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
   val contentApiClient = "com.gu" %% "content-api-client" % "8.12"
@@ -33,7 +34,8 @@ object Dependencies {
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
-  val guardianConfiguration = "com.gu" %% "configuration" % "4.1"
+  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.0"
+  val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
@@ -47,6 +49,7 @@ object Dependencies {
   val paClient = "com.gu" %% "pa-client" % "6.0.2"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.7"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
+  val redisClient = "net.debasishg" %% "redisclient" % "3.1"
   val rome = "rome" % "rome" % "1.0"
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"

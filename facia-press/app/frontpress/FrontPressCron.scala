@@ -10,7 +10,7 @@ import conf.Configuration
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-object FrontPressCron extends JsonQueueWorker[SNSNotification] {
+class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker) extends JsonQueueWorker[SNSNotification] {
   val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
   override val deleteOnFailure: Boolean = true
 
@@ -32,12 +32,12 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
       log.info(s"Cron pressing path $path")
       val stopWatch = new StopWatch
 
-      val pressFuture = LiveFapiFrontPress.pressByPathId(path)
+      val pressFuture = liveFapiFrontPress.pressByPathId(path)
 
       pressFuture onComplete {
         case Success(_) =>
           if (Edition.all.map(_.id.toLowerCase).contains(path)) {
-            ToolPressQueueWorker.metricsByPath.get(path) foreach { metric =>
+            toolPressQueueWorker.metricsByPath.get(path) foreach { metric =>
               metric.recordDuration(stopWatch.elapsed)
             }
           } else {

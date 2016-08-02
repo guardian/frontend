@@ -6,9 +6,7 @@ import layout.Front
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 
-class DedupedController extends Controller with Logging with ExecutionContexts {
-
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
+class DedupedController(frontJsonFapi: FrontJsonFapiLive) extends Controller with Logging with ExecutionContexts {
 
   def getDedupedForPath(path: String) = Action.async { request =>
     frontJsonFapi.get(path).map {
@@ -20,5 +18,3 @@ class DedupedController extends Controller with Logging with ExecutionContexts {
     }
   }
 }
-
-object DedupedController extends DedupedController

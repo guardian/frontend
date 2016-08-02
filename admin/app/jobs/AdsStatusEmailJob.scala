@@ -8,7 +8,7 @@ import tools.Store
 
 import scala.concurrent.Future
 
-object AdsStatusEmailJob extends Logging with ExecutionContexts {
+case class AdsStatusEmailJob(emailService: EmailService) extends Logging with ExecutionContexts {
 
   private val subject = "NGW Ad Targeting Status"
 
@@ -21,7 +21,7 @@ object AdsStatusEmailJob extends Logging with ExecutionContexts {
       adOpsUs <- adOpsUsTeam
       adOpsAu <- adOpsAuTeam
     } yield {
-      EmailService.send(
+      emailService.send(
         from = adTech,
         to = Seq(adOps, adOpsUs, adOpsAu),
         cc = Seq(adTech),

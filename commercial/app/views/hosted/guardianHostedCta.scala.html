@@ -1,0 +1,26 @@
+@import common.commercial.hosted.HostedPage
+
+@import common.commercial.hosted.HostedCallToAction
+@(page: HostedPage, cta: HostedCallToAction)
+    <section class="adverts hosted__container--full">
+        <div class="hosted__banner" style="background-image: url(@{cta.image});">
+            <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
+                <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown @{page.brandBackgroundCssClass}">
+                    <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                </div>
+                @if(cta.btnText.length == 0) {
+                    <div class="hosted__cta-wrapper">
+                        <span class="hosted__cta-text @{page.brandColourCssClass}">@{cta.label}</span>
+                        @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta", page.brandBtnCssClass))
+                    </div>
+                } else {
+                    <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                        <span class="hosted__cta-label">@{cta.label}</span>
+                        <br/>
+                        <span class="hosted__cta-btn-text @page.brandBtnCssClass">@{cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
+                    </div>
+                }
+            </a>
+        </div>
+    </section>
+

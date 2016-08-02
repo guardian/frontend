@@ -17,11 +17,6 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 
-.discussion--hidden {
-    display: none;
-}
-
-
 .discussion--closed.discussion--empty {
     display: none;
 }
@@ -1324,6 +1319,10 @@ $comment-recommend-button-size: 19px;
             padding-top: 0;
         }
     }
+}
+
+.discussion__comment-box--bottom--hidden {
+    display: none !important;
 }
 
 .d-comment-box__content {

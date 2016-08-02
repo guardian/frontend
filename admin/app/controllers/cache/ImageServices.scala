@@ -5,12 +5,11 @@ import java.net.URI
 import common.ExecutionContexts
 import conf.AdminConfiguration.{fastly, imgix}
 import play.api.libs.json.{JsObject, JsString}
-import play.api.libs.ws.{WS, WSAuthScheme}
-import play.api.Play.current
+import play.api.libs.ws.{WSAuthScheme, WSClient}
 import views.support.ImgSrc.tokenFor
 import views.support.ImageUrlSigner.sign
 
-object ImageServices extends ExecutionContexts {
+class ImageServices(wsClient: WSClient) extends ExecutionContexts {
 
   // none of the stuff here is a state secret.
   // it is all authenticated
@@ -44,7 +43,7 @@ object ImageServices extends ExecutionContexts {
     val url = s"$http://$imgixHost$path"
     val bodyJson = JsObject(Seq("url" -> JsString(url)))
 
-    WS.url("https://api.imgix.com/v2/image/purger")
+    wsClient.url("https://api.imgix.com/v2/image/purger")
       // yeah, they just use the first part of basic auth
       .withAuth(imgix.key, "", WSAuthScheme.BASIC)
       .post(bodyJson)
@@ -54,7 +53,7 @@ object ImageServices extends ExecutionContexts {
     fastlyServiceIdsforOrigin(originUri.getHost).foreach { serviceId =>
       // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
       // https://www.fastly.com/blog/surrogate-keys-part-1/
-      WS.url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
+      wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
         .withHeaders("Fastly-Key" -> fastly.key)
         .post("")
     }

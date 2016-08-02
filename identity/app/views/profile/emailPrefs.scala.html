@@ -11,7 +11,7 @@
                 "email-subscription" -> true,
                 "email-subscription--subscribed" -> subscription.subscribedTo,
                 "email-subscription--first" -> row.isFirst))">
-                @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[@row.rowNum]" value="@subscription.listId" />}
+                @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
                 <div class="email-subscription__name">@subscription.name</div>
 
                 <div class="email-subscription__description">@subscription.description @if(subscription.exampleUrl.isDefined){<br><a href="@subscription.exampleUrl" target="preview-email-@subscription.listId">See the latest email</a>}</div>
@@ -38,6 +38,7 @@
 }{
     <div class="identity-wrapper monocolumn-wrapper">
         <h1 class="identity-title">Email preferences</h1>
+        <h4 class="email-subscription__meta">For any problems managing email preferences please contact <a href="mailto:userhelp@@theguardian.com?subject=Email%20preferences%20help" data-link-name="Email Userhelp">userhelp@@theguardian.com</a></h4>
         <form class="form" novalidate action="@formActionUrl" role="main" method="post">
             @views.html.helper.CSRF.formField
             @if(emailPrefsForm.globalError.isDefined) {

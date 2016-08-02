@@ -1,0 +1,5 @@
+@(model: LiveBlogPage)(implicit request: RequestHeader)
+
+@mainAMP(model, model.related, model.article.content){
+    @views.html.liveblog.liveBlogBody(model, amp = true)
+}

@@ -2,11 +2,13 @@ package controllers
 
 import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import contentapi.SectionsLookUp
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent}
 
 import scala.concurrent.Future
 
-class HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+  wsClient,
   9002,
   NeverExpiresSingleHealthCheck("/books"),
   NeverExpiresSingleHealthCheck("/books/harrypotter"),

@@ -1,6 +1,7 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
+import conf.Configuration.site.host
 import conf.switches.Switches
 
 object VisitBritainHostedPages {
@@ -194,21 +195,21 @@ object VisitBritainHostedPages {
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = activityImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/activities",
+    pageUrl = s"$host/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
     title = "Don’t be a sloth this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
     ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriesactivities&utm_campaign=display",
     ctaButtonText = "Find more inspiration",
     nextGalleryNames = List(cityPageName, coastPageName),
-    shareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
+    twitterShareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
     standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
   )
 
   val cityGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = cityImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/city",
+    pageUrl = s"$host/advertiser-content/visit-britain/city",
     pageName = cityPageName,
     title = "Take a city break from the norm",
     ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
@@ -221,7 +222,7 @@ object VisitBritainHostedPages {
   private val coastGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = coastImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/coast",
+    pageUrl = s"$host/advertiser-content/visit-britain/coast",
     pageName = coastPageName,
     title = "Find cool-on-sea this summer",
     ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
@@ -234,7 +235,7 @@ object VisitBritainHostedPages {
   private val countrysideGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = countrysideImages,
-    pageUrl = "https://www.theguardian.com/advertiser-content/visit-britain/countryside",
+    pageUrl = s"$host/advertiser-content/visit-britain/countryside",
     pageName = countrysidePageName,
     title = "Mend your relationship with Mother Nature",
     ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
