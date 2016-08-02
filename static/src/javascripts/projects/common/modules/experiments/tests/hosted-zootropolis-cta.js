@@ -1,13 +1,13 @@
 define([
     'bean',
     'qwery',
-    'common/utils/config',
-    'common/utils/mediator'
+    'common/utils/$',
+    'common/utils/config'
 ], function (
     bean,
     qwery,
-    config,
-    mediator
+    $,
+    config
 ) {
     return function () {
         this.id = 'HostedZootropolisCta';
@@ -30,23 +30,18 @@ define([
             {
                 id: 'control',
                 test: function () {
-                    console.log('inside control');
                 },
                 success: function (complete) {
-                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
-                    bean.on(qwery('.hosted__container--full')[0], 'click', complete);
+                    bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
                 }
             },
             {
                 id: 'variant',
                 test: function () {
-                    console.log('inside variant');
+                    $('.hosted__cta-label').text('Disney’s Zootropolis: Download and keep today!');
                 },
                 success: function (complete) {
-                    bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
-                    bean.on(qwery('.hosted__container--full')[0], 'click', complete);
-                    bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', complete);
-                    mediator.on('hosted video: autoredirect', complete);
+                    bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
                 }
             }
         ];
