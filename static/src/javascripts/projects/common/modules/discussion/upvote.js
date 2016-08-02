@@ -1,9 +1,13 @@
 define([
+    'common/utils/assign',
     'common/utils/fastdom-promise',
-    'common/utils/report-error'
+    'common/utils/report-error',
+    'common/utils/url'
 ], function (
+    assign,
     fastdom,
-    reportError
+    reportError,
+    urlUtil
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
@@ -11,6 +15,7 @@ define([
 
     function handle (target, container, user, discussionApi) {
         if (!user) {
+            target.setAttribute('data-link-name', 'Recommend comment anonymous');
             return showSignInTooltip(target);
         } else if (isOpenForRecommendations(container)) {
             var id = target.getAttribute('data-comment-id');
@@ -57,10 +62,26 @@ define([
 
     function showSignInTooltip (target) {
         var tooltip = document.querySelector('.' + TOOLTIP_CLASS);
+        var links = tooltip.querySelectorAll('.js-rec-tooltip-link');
+
         return fastdom.write(function () {
+            updateReturnUrl(links, target.getAttribute('data-comment-url'));
             tooltip.classList.remove(HIDE_TOOLTIP_CLASS);
             target.appendChild(tooltip);
         });
+    }
+
+    function updateReturnUrl (links, returnLink) {
+        for (var i = 0, len = links.length; i < len; i += 1) {
+            var url = links[i].getAttribute('href');
+            var baseUrl = url.split('?')[0];
+            var query = urlUtil.getUrlVars({
+                query: url.split('?')[1] || '&'
+            });
+            links[i].setAttribute('href', baseUrl + '?' + urlUtil.constructQuery(assign(query, {
+                returnUrl: returnLink
+            })));
+        }
     }
 
     function closeTooltip () {
