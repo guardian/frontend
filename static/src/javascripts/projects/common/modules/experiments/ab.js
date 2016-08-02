@@ -11,8 +11,7 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/habit-forming-digest-promo',
-    'common/modules/experiments/tests/participation-discussion-ordering'
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2'
 ], function (
     reportError,
     config,
@@ -26,17 +25,15 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    HabitFormingDigestPromo,
-    ParticipationDiscussionOrdering
+    ParticipationDiscussionOrderingTake2
 ) {
 
     var TESTS = [
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),
-        new HabitFormingDigestPromo(),
         new VideoCaption(),
-        new ParticipationDiscussionOrdering()
+        new ParticipationDiscussionOrderingTake2()
     ];
 
     var participationsKey = 'gu.ab.participations';

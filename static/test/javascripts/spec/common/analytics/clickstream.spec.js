@@ -3,7 +3,7 @@ define(['common/modules/ui/clickstream', 'bean', 'common/utils/mediator', 'helpe
 
     describe('Clickstream', function () {
         var fixtureId = 'clickstream-fixture',
-        clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-external'];
+        clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-internal-http', 'click-me-internal-https', 'click-me-external'];
 
         beforeEach(function () {
 
@@ -25,6 +25,8 @@ define(['common/modules/ui/clickstream', 'bean', 'common/utils/mediator', 'helpe
                                 '<button id="click-me-button" data-link-name="the button">Span Link</button>' +
                                 '<p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph Link</p>' +
                                 '<a href="/foo" id="click-me-internal" data-link-name="internal link">Same-host link</a>' +
+                                '<a href="http://www.theguardian.com/foo" id="click-me-internal-http" data-link-name="internal link (HTTP)">Same-host HTTP link</a>' +
+                                '<a href="https://www.theguardian.com/foo" id="click-me-internal-https" data-link-name="internal link (HTTPS)">Same-host HTTPS link</a>' +
                                 '<a href="http://google.com/foo" id="click-me-external" data-link-name="external link">Other-host link</a>' +
                                 '<span data-link-context="the outer context">' +
                                     '<span data-link-context-path="the inner context path" data-link-context-name="the inner context name">' +
@@ -148,6 +150,54 @@ define(['common/modules/ui/clickstream', 'bean', 'common/utils/mediator', 'helpe
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | internal link',
+                    customEventProperties: {}
+                };
+
+            mediator.on('module:clickstream:click', spy);
+
+            bean.fire(el, 'click');
+        });
+
+        it('should indicate if a click emanates from an absolute same-host HTTP link when the current page is on HTTPS', function (done) {
+
+            new Clickstream({ filter: ['a'], withEvent: false, location: { protocol: 'https:', hostname: 'www.theguardian.com' } });
+
+            var object = { method: function (p) {
+                    clickSpec.target = p.target;
+                    expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+                    done();
+                }},
+                spy = sinon.spy(object, 'method'),
+                el = document.getElementById('click-me-internal-http'),
+                clickSpec = {
+                    samePage: false,
+                    sameHost: true,
+                    validTarget: true,
+                    tag: 'outer div | internal link (HTTP)',
+                    customEventProperties: {}
+                };
+
+            mediator.on('module:clickstream:click', spy);
+
+            bean.fire(el, 'click');
+        });
+
+        it('should indicate if a click emanates from an absolute same-host HTTPS link when the current page is on HTTP', function (done) {
+
+            new Clickstream({ filter: ['a'], withEvent: false, location: { protocol: 'http:', hostname: 'www.theguardian.com' } });
+
+            var object = { method: function (p) {
+                    clickSpec.target = p.target;
+                    expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+                    done();
+                }},
+                spy = sinon.spy(object, 'method'),
+                el = document.getElementById('click-me-internal-https'),
+                clickSpec = {
+                    samePage: false,
+                    sameHost: true,
+                    validTarget: true,
+                    tag: 'outer div | internal link (HTTPS)',
                     customEventProperties: {}
                 };
 
