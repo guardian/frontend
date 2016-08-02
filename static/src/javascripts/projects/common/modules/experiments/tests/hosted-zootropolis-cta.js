@@ -29,7 +29,7 @@ define([
         this.idealOutcome = 'People will click on the CTA banner more often.';
 
         this.canRun = function () {
-            return config.page.tones === 'Hosted' && config.page.section === 'disney-zootropolis';
+            return config.isHosted && config.page.section === 'disney-zootropolis';
         };
 
         this.variants = [
