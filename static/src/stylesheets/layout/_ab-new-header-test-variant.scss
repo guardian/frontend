@@ -225,6 +225,11 @@ $gutter-medium: 37px;
     width: gs-span(2);
     z-index: 2;
 
+    // Smaller size compensates for how big the word "Australia" is
+    @include mq($until: $mobile-medium) {
+        font-size: 13px;
+    }
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
