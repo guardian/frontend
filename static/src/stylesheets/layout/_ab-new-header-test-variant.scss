@@ -31,7 +31,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         height: calc(3/16 * 225px);
     }
 
-    @include mq($from: mobileLandscape) {
+    @include mq(mobileLandscape) {
         width: 260px;
         // height: auto doesn't work in Safari
         height: calc(3/16 * 260px);
@@ -46,6 +46,10 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     align-items: center;
     width: 100%;
     margin-top: $gs-baseline;
+
+    @include mq($mobile-medium) {
+        margin-top: $gs-baseline * 2;
+    }
 
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
@@ -63,7 +67,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 // Specific values for menu button breakpoints
 $veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
-$gutter-small: 30px;
+$gutter-small: 29px;
 $gutter-medium: 37px;
 
 .new-header__nav__menu-button {
