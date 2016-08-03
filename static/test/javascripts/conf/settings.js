@@ -8,7 +8,6 @@ module.exports = function (config) {
         frameworks: ['jasmine', 'requirejs', 'phantomjs-shim'],
 
         files: [
-            { pattern: 'node_modules/guardian-comment-count/**/*.js', included: false, watched: false },
             { pattern: 'static/test/javascripts/components/sinonjs/sinon.js', included: true },
             { pattern: 'static/test/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
             { pattern: 'static/test/javascripts/setup.js', included: true },
