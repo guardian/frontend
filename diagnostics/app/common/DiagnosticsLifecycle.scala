@@ -29,7 +29,11 @@ class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
   }
 
   // Construct the singleton subscriber class when the DiagnosticsLifecycle class is instantiated.
-  val subscriber: Option[ExpiredKeyEventSubscriber] = RedisReport.redisClient.map { client =>
-    new ExpiredKeyEventSubscriber(client, system)
+  val subscriber: Option[ExpiredKeyEventSubscriber] = {
+    RedisReport.redisClient.map { client =>
+      log.logger.info("Creating ExpiredKeyEventSubscriber to listen to redis key events")
+      new ExpiredKeyEventSubscriber(client, system)
+
+    }
   }
 }

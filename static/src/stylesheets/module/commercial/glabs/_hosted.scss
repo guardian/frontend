@@ -465,8 +465,9 @@ $hosted-video-height: 540px;
 
 .hosted__cta-btn-wrapper {
     padding-top: 90px;
+
     @include mq(desktop) {
-        padding-top: 220px;
+        padding-top: 236px;
     }
 }
 
@@ -523,7 +524,17 @@ $hosted-video-height: 540px;
 }
 
 .hosted__cta-label {
+    display: block;
     color: #ffffff;
+    line-height: 30px;
+
+    @include mq(tablet) {
+        line-height: 44px;
+    }
+
+    @include mq(desktop) {
+        line-height: 58px;
+    }
 }
 
 .hosted__cta-btn-text {
@@ -550,7 +561,13 @@ $hosted-video-height: 540px;
 }
 
 .hosted__cta-link {
-    padding-bottom: 5%;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+        background-color: rgba(#333333, .2);
+    }
 }
 
 .hosted__cta-link,

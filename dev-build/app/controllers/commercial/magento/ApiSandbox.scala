@@ -19,7 +19,7 @@ class ApiSandbox(wsClient: WSClient) extends Controller with ExecutionContexts {
   private val domain = magento.domain.getOrElse(throw new RuntimeException("Unable to get [magento.domain] property. Is it set in the configuration?"))
   private val oauth = {
     val key = ConsumerKey(magento.consumerKey.get, magento.consumerSecret.get)
-    val accessToken = RequestToken(magento.accessToken.get, magento.accessTokenSecret.get)
+    val accessToken = RequestToken(magento.accessToken.getOrElse(throw new RuntimeException("update frontend.properties in your .gu folder - change \"magento.access.token\" to \"magento.access.token.key\"")), magento.accessTokenSecret.get)
     OAuthCalculator(key, accessToken)
   }
 

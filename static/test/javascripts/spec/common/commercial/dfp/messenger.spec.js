@@ -51,33 +51,28 @@ define([
             expect(mockWindow.removeEventListener).toHaveBeenCalled();
         });
 
-        it('should respond with a 400 code when origin is not whitelisted', function () {
+        it('should not respond when origin is not whitelisted', function () {
             onMessage({ origin: 'http://google.com', source: mockFrame });
-            expect(mockFrame.postMessage).toHaveBeenCalled();
-            expect(response.error.code).toBe(400);
+            expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
-        it('should respond with a 418 code when sending malformed JSON', function () {
+        it('should not respond when sending malformed JSON', function () {
             onMessage({ origin: 'http://localhost:9876', data: '{', source: mockFrame });
-            expect(mockFrame.postMessage).toHaveBeenCalled();
-            expect(response.error.code).toBe(418);
+            expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
-        it('should respond with a 400 code when sending incomplete payload', function () {
+        it('should not respond when sending incomplete payload', function () {
             var payloads = [
                 { type: 'missing data' },
                 { value: 'missing type' },
                 { type: 'unregistered', value: 'type' }
             ];
             onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[0]), source: mockFrame });
-            expect(mockFrame.postMessage).toHaveBeenCalled();
-            expect(response.error.code).toBe(400);
+            expect(mockFrame.postMessage).not.toHaveBeenCalled();
             onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[1]), source: mockFrame });
-            expect(mockFrame.postMessage).toHaveBeenCalled();
-            expect(response.error.code).toBe(400);
+            expect(mockFrame.postMessage).not.toHaveBeenCalled();
             onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[2]), source: mockFrame });
-            expect(mockFrame.postMessage).toHaveBeenCalled();
-            expect(response.error.code).toBe(400);
+            expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
         it('should respond with a 405 code when no listener is attached to a message type', function () {

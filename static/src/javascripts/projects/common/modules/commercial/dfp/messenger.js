@@ -6,9 +6,7 @@ define([
     var listeners = {};
     var registeredListeners = 0;
 
-    var error400 = { code: 400, message: 'Bad request' };
     var error405 = { code: 405, message: 'Service %% not implemented' };
-    var error418 = { code: 418, message: 'I\'m a teapot' };
     var error500 = { code: 500, message: 'Internal server error\n\n%%' };
 
     return {
@@ -56,7 +54,6 @@ define([
     function onMessage(event) {
         // We only allow communication with ads created by DFP
         if (event.origin !== currentHost) {
-            respond(error400, null);
             return;
         }
 
@@ -66,12 +63,10 @@ define([
             // Source: https://bugs.chromium.org/p/chromium/issues/detail?id=536620#c11
             var data = JSON.parse(event.data);
         } catch( ex ) {
-            respond(error418, null);
             return;
         }
 
         if (!isValidPayload(data)) {
-            respond(error400, null);
             return;
         }
 

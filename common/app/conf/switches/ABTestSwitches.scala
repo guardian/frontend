@@ -24,13 +24,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHostedZootropolisCta = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-zootropolis-cta",
+    "Additional text on the Zootropolis CTA banner",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 24),
+    exposeClientSide = true
+  )
+
   val giraffe = Switch(
     SwitchGroup.ABTests,
     "ab-giraffe-article",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 3),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 

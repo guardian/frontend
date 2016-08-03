@@ -12,6 +12,7 @@ define([
     robust
 ) {
     var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+    var loc = document.location;
 
     function addHandlers() {
         mediator.on('module:clickstream:interaction', trackNonClickInteraction);
@@ -59,6 +60,7 @@ define([
         // then Omniture will remove it from storage.
         var storeObj = {
             pageName: this.s.pageName,
+            path: loc.pathname,
             tag: spec.tag || 'untracked',
             time: new Date().getTime()
         };
@@ -73,7 +75,11 @@ define([
         omniture.trackExternalLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
     }
 
-    function init() {
+    function init(options) {
+        options = options || {};
+        if (options.location) {
+            loc = options.location; // allow a fake location to be passed in for testing
+        }
         omniture.go();
         addHandlers();
         mediator.emit('analytics:ready');
