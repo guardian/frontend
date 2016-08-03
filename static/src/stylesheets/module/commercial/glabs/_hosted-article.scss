@@ -143,6 +143,31 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             @include f-headlineSans;
         }
     }
+    .hosted__next-page-header--border {
+        width: 100%;
+        height: 10px;
+        margin-bottom: 4px;
+    }
+    .hosted__next-page-title {
+        font-size: 16px;
+        line-height: 18px;
+        padding: 10px;
+        margin: 0;
+
+        @include mq($until: phablet) {
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+    .hosted__next-video .hosted__next-video--tile {
+        background: transparent;
+        border-top: 2px solid #e0e0e0;
+        margin-bottom: 10px;
+    }
+    .hosted__next-video .hosted__next-video--header {
+        border: 0;
+        padding: 0;
+    }
 }
 
 .hosted-article-page.zootropolis {

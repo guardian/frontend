@@ -18,13 +18,13 @@
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
                             <div class="meta__extras" data-component="share">
-                                @guardianHostedShareButtons(page)
+                            @guardianHostedShareButtons(page)
                             </div>
                         </div>
 
                         <div class="content__article-body from-content-api js-article__body">
                             <p class="intro">
-                                @page.standfirst
+                            @page.standfirst
                             </p>
 
                             @if(page.pageName == "overview"){
@@ -40,13 +40,14 @@
                             <div class="hide-on-desktop">
                                 <div class="hosted__next-video">
                                     <div class="hosted__next-video--header">
+                                        <div class="hosted__next-page-header--border @page.brandBackgroundCssClass"></div>
                                         <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                                         <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                                     </div>
                                     @for(nextPage <- page.nextPages) {
                                         <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
                                             <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
-                                            <p class="hosted__next-video-title">@{nextPage.title}</p>
+                                            <p class="hosted__next-page-title">@{nextPage.title}</p>
                                         </a>
                                     }
                                 </div>
@@ -63,13 +64,14 @@
                     <div class="content__secondary-column js-secondary-column">
                         <div class="hosted__next-video">
                             <div class="hosted__next-video--header">
+                                <div class="hosted__next-page-header--border @page.brandBackgroundCssClass"></div>
                                 <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                                 <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                             </div>
                             @for(nextPage <- page.nextPages) {
-                                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
-                                    <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
-                                    <p class="hosted__next-video-title">@{nextPage.title}</p>
+                                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
+                                    <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
+                                    <p class="hosted__next-page-title">@{nextPage.title}</p>
                                 </a>
                             }
                         </div>
