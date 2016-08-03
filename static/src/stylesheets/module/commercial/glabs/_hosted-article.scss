@@ -151,7 +151,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .hosted__next-page-title {
         font-size: 16px;
         line-height: 18px;
-        padding: 10px;
+        padding: 6px;
         margin: 0;
 
         @include mq($until: phablet) {
