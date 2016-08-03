@@ -315,6 +315,7 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
+    line-height: 1;
     z-index: $zindex-modal;
 
     .js-on & {
@@ -354,8 +355,6 @@ $gutter-medium: 37px;
     font-family: $f-sans-serif-text;
     font-size: 20px;
     text-transform: lowercase;
-    // TODO: Remove
-    padding-top: 10px;
     overflow: auto;
 
     will-change: transform;
@@ -376,6 +375,7 @@ $gutter-medium: 37px;
 
 .main-menu-container__profile-container {
     @include fs-textSans(5);
+    margin-top: $gs-baseline / 2;
     margin-bottom: $gs-row-height;
 }
 
@@ -389,6 +389,7 @@ $gutter-medium: 37px;
     margin-left: $gs-gutter/2;
 
     svg {
+        margin-top: 3px;
         height: 23px;
         width: 23px;
     }
@@ -401,54 +402,58 @@ $gutter-medium: 37px;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-    padding-bottom: 16px;
     text-transform: lowercase;
 }
 
 .main-navigation__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
+    color: $news-support-1;
 }
 
 $navigation-horizontal-padding: 38px;
 
 .main-navigation__item__button {
-    // padding-left: $navigation-horizontal-padding;
+    position: relative;
+    padding-top: $gs-baseline / 2;
+    padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
-    padding-bottom: 6px;
+    padding-bottom: $gs-baseline * 1.5;
     font-size: 26px;
 
     &:focus {
         // Unset a:focus from user agent stylesheet
         outline: 0;
-        background-color: darken($guardian-brand, 5%);
     }
 
     &::-webkit-details-marker {
         display: none;
     }
 
-    // TODO: Why both?
-    .inline-icon, svg {
-        vertical-align: middle;
+    // Arrow icon
+    &:before {
+        content: '';
+        position: absolute;
+        top: $gs-baseline - 2px;
+        left: $gs-gutter / 1.5;
+        width: 10px;
+        height: 10px;
+        border: 2px solid $news-support-2;
+        transform: rotate(-45deg);
+        border-top: 0;
+        border-right: 0;
     }
 
-    svg {
-        fill: hsla(0, 0%, 100%, .3);
-        margin-left: ($navigation-horizontal-padding - 15px) / 2;
-        margin-right: ($navigation-horizontal-padding - 15px) / 2 - 6px;
-        width: 15px;
-        height: auto;
-
-        details[open] & {
-            transform: rotate(180deg);
-        }
+    details[open] &:before {
+        top: $gs-baseline + $gs-baseline / 2;
+        transform: rotate(135deg);
     }
 }
 
 .main-navigation__secondary {
     background-color: darken($guardian-brand, 3%);
-    color: $news-support-1;
+    color: #ffffff;
+    padding-bottom: $gs-baseline;
 }
 
 .navigation-border {
@@ -456,7 +461,9 @@ $navigation-horizontal-padding: 38px;
         content: '';
         display: block;
         height: 1px;
-        background: $guardian-brand-dark;
+        background: darken($guardian-brand, 3%);
+        // Creates a seamless line when section has dark background
+        margin-top: -1px;
         margin-left: $navigation-horizontal-padding;
     }
 }
@@ -468,18 +475,19 @@ $navigation-horizontal-padding: 38px;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-    padding-bottom: 10px;
 }
 
 .navigation-group__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
+    position: relative;
 
     a {
         display: block;
+        padding-top: $gs-baseline / 2;
         padding-left: $navigation-horizontal-padding;
         padding-right: $navigation-horizontal-padding;
-        padding-bottom: 6px;
+        padding-bottom: $gs-baseline;
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -487,24 +495,40 @@ $navigation-horizontal-padding: 38px;
         &:focus {
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: darken($guardian-brand, 5%);
+            background-color: $guardian-brand-dark;
         }
     }
 }
 
+.secondary-navigation {
+    margin-top: $gs-baseline + 2px;
+
+    &:last-child {
+        margin-bottom: $gs-baseline * 3;
+    }
+}
+
 .navigation-group__social-icon {
-    fill: hsla(0, 0%, 100%, .3);
+    fill: $news-support-2;
     position: absolute;
+    top: -2px;
     left: 0;
 
     svg {
         width: 36px;
         height: 36px;
     }
+}
 
-    &.inline-instagram svg {
-        width: 17px;
-        height: 17px;
+.navigation-group__search-icon {
+    fill: $news-support-2;
+    position: absolute;
+    top: $gs-baseline / 2;
+    left: $gs-gutter / 2;
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
 }
 
