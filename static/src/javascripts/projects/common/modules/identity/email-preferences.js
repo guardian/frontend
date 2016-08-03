@@ -16,9 +16,6 @@ define([
     $
 ) {
     function useReqwest(buttonEl) {
-        fastdom.write(function () {
-            buttonEl.type = 'button';
-        });
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
             buttonEl.classList.add('loading');
@@ -38,7 +35,6 @@ define([
                         // stuff came back but that one field is undefined
                         // the data came back in the format expected as above, but with the subscribeTo value undefined
                         if (response.subscriptions.length < 1) {
-                            // response came back as expected, but the user is not subscribed:
                             subscriptionState = false;
                         } else {
                             subscriptionState = response.subscriptions[0].subscribedTo;
@@ -116,7 +112,6 @@ define([
         var buttonVal = buttonEl.value.toString();
         var htmlPreference = getHTMLPref() || '';
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
-
     }
 
     return {
