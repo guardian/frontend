@@ -35,6 +35,9 @@ module.exports = function (grunt, options) {
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg',
 
+                //
+                'comment-count':      '../../../node_modules/guardian-comment-count/dist/comment-count.amd',
+
                 'react':              'empty:',
                 'ophan/ng':           'empty:'
             },

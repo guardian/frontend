@@ -3,14 +3,6 @@
 @import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 <@element class="trail trail--headline t@rowNum"
-    @if(trail.discussion.isCommentable) {
-        @trail.discussion.discussionId.map{ id =>
-            data-discussion-id="@id"
-        }
-        data-discussion-closed="@trail.discussion.isClosedForComments"
-    }
-    data-link-name="trail">
-
     @fragments.relativeDate(trail.webPublicationDate, trail.card.isLive, isFront=true)
 
     <h@headingLevel class="trail__headline">

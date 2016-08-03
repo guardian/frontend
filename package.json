@@ -8,6 +8,8 @@
     ]
   },
   "dependencies": {
+    "fastdom": "^0.8.5",
+    "guardian-comment-count": "2.1.3",
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
