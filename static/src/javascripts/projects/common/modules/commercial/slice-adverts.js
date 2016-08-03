@@ -91,7 +91,7 @@ define([
                 }
 
                 if (isMobile) {
-                    className.push('mobile');
+                    classNames.push('mobile');
                 }
 
                 adSlot = replaceTopSlot && index === 0 ?
