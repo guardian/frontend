@@ -1,35 +1,40 @@
 define([
     'common/modules/commercial/dfp/messenger'
 ], function (messenger) {
-    var matches = 'matches' in Element.prototype ? 'matches' : 'msMatchesSelector';
     var aProto = Array.prototype;
 
-    messenger.register('get-styles', getStyles);
+    messenger.register('get-styles', function(specs) {
+        return getStyles(specs, document.styleSheets, 'matches' in Element.prototype ? 'matches' : 'msMatchesSelector');
+    });
     return getStyles;
 
-    function getStyles(specs) {
+    function getStyles(specs, styleSheets, matches) {
+        if (!specs || typeof specs.selector !== 'string') {
+            return null;
+        }
+
         var i = 0;
-        var ii = document.styleSheets.length;
-        var ret = [];
+        var ii = styleSheets.length;
+        var result = [];
         while (i < ii) {
-            var sheet = document.styleSheets[i++];
-            if (!sheet.ownerNode) {
+            var sheet = styleSheets[i++];
+            if (!sheet.ownerNode || !sheet.ownerNode[matches]) {
                 continue;
             }
 
-            if (specs.selector && !sheet.ownerNode[matches](specs.selector)) {
+            if (!sheet.ownerNode[matches](specs.selector)) {
                 continue;
             }
 
             if (sheet.ownerNode.tagName === 'STYLE') {
-                ret.push(sheet.ownerNode.textContent);
+                result.push(sheet.ownerNode.textContent);
             } else {
-                ret.push(aProto.reduce.call(sheet.cssRules, function (res, input) {
+                result.push(aProto.reduce.call(sheet.cssRules, function (res, input) {
                     return res + input.cssText;
                 }, ''));
             }
         }
 
-        return ret;
+        return result;
     }
 });
