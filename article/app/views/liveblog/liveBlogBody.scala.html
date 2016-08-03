@@ -70,13 +70,19 @@
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
-                                @if(article.hasKeyEvents && !amp) {
+                                @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
-                                            @fragments.dropdown("Key events", Some("key-events"), true) {
+                                            @if(amp) {
                                                 <ul class="timeline js-live-blog__timeline u-unstyled">
-                                                    @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
                                                 </ul>
+                                            } else {
+                                                @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                    <ul class="timeline js-live-blog__timeline u-unstyled">
+                                                    @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                    </ul>
+                                                }
                                             }
                                         </div>
                                     </div>

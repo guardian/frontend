@@ -2,6 +2,9 @@
     background: rgba(200,200,200,0.26);
 }
 
+/* Blocks
+========================================= */
+
 .blocks {
     margin: 0.75rem 0.625rem;
 }
@@ -71,6 +74,52 @@
     padding: 0;
     position: absolute;
     width: 0.0625rem;
+}
+
+/* Key Events
+========================================= */
+
+.timeline {
+    position: relative;
+    padding: 0;
+    margin: 0 20px;
+}
+
+.timeline__item {
+    display: table;
+    width: 100%;
+    overflow: hidden;
+    min-height: 2.5rem;
+    border-bottom: 0.0625rem solid #dcdcdc;
+}
+
+.timeline__link {
+    display: block;
+    padding: 0.125rem 0 0.375rem;
+    text-decoration: none;
+}
+
+.timeline__date {
+    color: #333333;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    display: table-cell;
+    width: 3.75rem;
+    font-weight: bold;
+}
+
+.timezone {
+    display: none;
+}
+
+.timeline__title {
+    color: #333333;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    display: table-cell;
+    border-color: #f6f6f6;
 }
 
 /* Social
