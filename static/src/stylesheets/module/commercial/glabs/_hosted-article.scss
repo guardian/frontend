@@ -19,32 +19,21 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             z-index: 2;
             background: linear-gradient(to top, rgba(51, 51, 51, .4) 0%, rgba(51, 51, 51, .4) 2%, transparent 100%);
         }
+        .gs-container {
+            height: 100%;
+        }
     }
     .title {
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
         bottom: 38px;
-        left: 10px;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
         font-weight: bold;
-
-        @include mq(tablet) {
-            left: $gs-gutter * 1.5;
-        }
-
-        @include mq(desktop) {
-            left: $gs-column-width + 20;
-        }
-
-        @include mq(leftCol) {
-            left: $gs-column-width * 3;
-        }
-
-        @include mq(wide) {
-            left: $gs-column-width * 4 + 20;
+        @include mq(tablet, desktop) {
+            padding-right: gs-span(1) + $gs-gutter;
         }
     }
     .caption {

@@ -10,7 +10,9 @@
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
-                <h2 class="title">@{page.title}</h2>
+                <div class="gs-container">
+                    <h2 class="title content__main-column">@{page.title}</h2>
+                </div>
                 <span class="caption @page.brandColourCssClass">@{page.mainPictureCaption}</span>
             </div>
             <div class="content__main">
