@@ -88,7 +88,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             display: inline-block;
             float: left;
             color: #ffffff;
-            padding: 10px;
+            padding: 10px 0;
             font-size: 480%;
             line-height: 68px;
             width: 77px;
@@ -115,18 +115,35 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         .hosted__next-video {
             margin-top: 30px;
         }
-        .hosted__next-video--header,
-        .hosted__next-video--tile {
+        .hosted__next-video--header {
             margin: 0;
+        }
+        .hosted__next-video--tile {
+            margin: 10px 0;
         }
     }
     .content__secondary-column {
         .hosted__next-video {
+            width: auto;
             margin-top: 76px;
+            .hosted__next-video--header,
+            .hosted__next-video--tile {
+                margin-right: 0;
+            }
+        }
+    }
+    .from-content-api {
+        ul > li:before {
+            border-radius: 0;
+            width: 8px;
+            height: 8px;
+            margin: 1px 8px;
+        }
+        h2 {
+            @include f-headlineSans;
         }
     }
 }
-
 
 .hosted-article-page.zootropolis {
     @mixin animal-stripe {

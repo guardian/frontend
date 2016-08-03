@@ -79,10 +79,7 @@ window.curlConfig = {
 
             // plugins
             text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg',
-
-            // external guardian libraries
-            'comment-count':               '@{Configuration.assets.path}guardian-comment-count/dist/comment-count.amd.js'
+            inlineSvg:    'projects/common/utils/inlineSvg'
         }
     }
 };

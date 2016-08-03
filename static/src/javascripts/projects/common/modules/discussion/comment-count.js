@@ -1,71 +1,137 @@
 define([
-    'comment-count',
-    'Promise',
-    'common/utils/assign',
-    'common/utils/config',
-    'common/utils/fastdom-promise',
-    'common/utils/fetch',
+    'bonzo',
+    'fastdom',
+    'qwery',
+    'common/utils/$',
+    'common/utils/ajax',
     'common/utils/formatters',
     'common/utils/mediator',
-    'common/utils/report-error'
+    'common/utils/template',
+    'common/views/svgs',
+    'text!common/views/discussion/comment-count.html',
+    'text!common/views/discussion/comment-count--content.html',
+    'text!common/views/discussion/comment-count--content-immersive.html',
+    'lodash/collections/groupBy',
+    'lodash/collections/forEach',
+    'lodash/collections/sortBy',
+    'lodash/arrays/uniq',
+    'lodash/objects/keys',
+    'common/utils/chain'
 ], function (
-    commentCountWidget,
-    Promise,
-    assign,
-    config,
+    bonzo,
     fastdom,
-    fetch,
+    qwery,
+    $,
+    ajax,
     formatters,
     mediator,
-    reportError
+    template,
+    svgs,
+    commentCountTemplate,
+    commentCountContentTemplate,
+    commentCountContentImmersiveTemplate,
+    groupBy,
+    forEach,
+    sortBy,
+    uniq,
+    keys,
+    chain
 ) {
-    function remove (node) {
-        // Comment count widgets are inside a <a> tag
-        const container = node.parentNode;
-        return fastdom.write(function () {
-            // because Node.remove() doesn't exist on IE
-            container.parentNode.removeChild(container);
+    var attributeName = 'data-discussion-id',
+        countUrl = '/discussion/comment-counts.json?shortUrls=',
+        templates = {
+            content: commentCountContentTemplate,
+            contentImmersive: commentCountContentImmersiveTemplate
+        },
+        defaultTemplate = commentCountTemplate;
+
+    function getElementsIndexedById(context) {
+        var elements = qwery('[' + attributeName + ']', context);
+
+        return groupBy(elements, function (el) {
+            return bonzo(el).attr(attributeName);
         });
     }
 
-    function init(overrideConfig) {
-        var base = config.page.ajaxUrl || '';
-        var widgetConfig = assign({
-            apiBase: base + '/discussion/comment-counts.json',
-            apiQuery: 'shortUrls',
-            onupdate: function (node, count) {
-                if (count === 0 && node.hasAttribute('closed')) {
-                    return remove(node);
+    function getContentIds(indexedElements) {
+        return chain(indexedElements).and(keys).and(uniq).and(sortBy).join(',').value();
+    }
+
+    function getContentUrl(node) {
+        var a = node.getElementsByTagName('a')[0];
+        return (a ? a.pathname : '') + '#comments';
+    }
+
+    function renderCounts(counts, indexedElements) {
+        counts.forEach(function (c) {
+            forEach(indexedElements[c.id], function (node) {
+                var format,
+                    $node = bonzo(node),
+                    url = $node.attr('data-discussion-url') || getContentUrl(node),
+                    $container,
+                    meta,
+                    html;
+
+                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+                    return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
-            },
-            format: formatters.integerCommas,
-            fetch: fetch,
-            Promise: Promise
-        }, overrideConfig);
+
+                format = $node.data('commentcount-format');
+                html = template(templates[format] || defaultTemplate, {
+                    url: url,
+                    icon: svgs('commentCount16icon', ['inline-tone-fill']),
+                    count: formatters.integerCommas(c.count)
+                });
+
+                meta = qwery('.js-item__meta', node);
+                $container = meta.length ? bonzo(meta) : $node;
+
+                fastdom.write(function () {
+                    $container.append(html);
+                    $node.removeAttr(attributeName);
+                    $node.removeClass('u-h');
+                });
+            });
+        });
+
+        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+        // the DOM.
+        fastdom.write(function () {
+            mediator.emit('modules:commentcount:loaded', counts);
+        });
+    }
+
+    function getCommentCounts(context) {
+        fastdom.read(function () {
+            var indexedElements = getElementsIndexedById(context || document.body),
+                ids = getContentIds(indexedElements);
+            ajax({
+                url: countUrl + ids,
+                type: 'json',
+                method: 'get',
+                crossOrigin: true,
+                success: function (response) {
+                    if (response && response.counts) {
+                        renderCounts(response.counts, indexedElements);
+                    }
+                }
+            });
+        });
+    }
+
+    function init() {
+        if (document.body.querySelector('[data-discussion-id]')) {
+            getCommentCounts(document.body);
+        }
 
         //Load new counts when more trails are loaded
-        mediator.on('modules:related:loaded', function () {
-            commentCountWidget.update(widgetConfig)
-            .then(function () {
-                mediator.emit('modules:commentcount:loaded');
-            })
-            .catch(report);
-        });
-
-        return commentCountWidget.load(widgetConfig)
-        .then(function () {
-            mediator.emit('modules:commentcount:loaded');
-        })
-        .catch(report);
-    }
-
-    function report (error) {
-        reportError(error, {
-            feature: 'comment-count'
-        }, false);
+        mediator.on('modules:related:loaded', getCommentCounts);
     }
 
     return {
-        init: init
+        init: init,
+        getCommentCounts: getCommentCounts,
+        getContentIds: getContentIds,
+        getElementsIndexedById: getElementsIndexedById
     };
 });

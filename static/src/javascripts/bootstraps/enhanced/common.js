@@ -79,7 +79,7 @@ define([
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
-    CommentCountWidget,
+    CommentCount,
     AutoSignin,
     CookieRefresh,
     navigation,
@@ -247,7 +247,7 @@ define([
 
             initDiscussion: function () {
                 if (config.switches.discussion) {
-                    CommentCountWidget.init();
+                    CommentCount.init();
                 }
             },
 

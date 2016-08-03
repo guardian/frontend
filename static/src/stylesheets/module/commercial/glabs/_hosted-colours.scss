@@ -78,7 +78,7 @@ $singaporef1SecondColour: #f0a93f;
 .f1-singapore {
     .hosted__next-video .hosted__next-video--tile {
         border-top-color: $singaporef1Colour;
-        background: lighten($singaporef1Colour, 20%);
+        background: lighten($singaporef1Colour, 70%);
     }
 }
 
@@ -105,6 +105,9 @@ $singaporef1SecondColour: #f0a93f;
                 }
             }
         }
+    }
+    .from-content-api ul > li:before {
+        background-color: $singaporef1Colour;
     }
 }
 
