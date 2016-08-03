@@ -387,6 +387,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val LiveUpdateAmpSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-update-amp",
+    "If this switch is on, amp-live-list will be included in live blogs",
+    owners = Seq(Owner.withGithub("SiAdcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 2),
+    exposeClientSide = false
+  )
+
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",
@@ -490,6 +500,17 @@ trait FeatureSwitches {
     "sharing-comments",
     "When ON, the user will be able to share comments",
     owners = Seq(Owner.withGithub("marialivia16")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Gareth Trufitt
+  val SteadyPageUtil = Switch(
+    SwitchGroup.Feature,
+    "steady-page-util",
+    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

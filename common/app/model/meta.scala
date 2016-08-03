@@ -11,6 +11,7 @@ import cricketPa.CricketTeams
 import model.liveblog.{Blocks, BodyBlock}
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
+import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
@@ -344,6 +345,13 @@ final case class MetaData (
   )).getOrElse(Nil))
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
+
+  /**
+    * Content type, lowercased and with spaces removed.
+    * This is used for Google Analytics, to be consistent with what the mobile apps do.
+    */
+  def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
+
 }
 
 object Page {
@@ -632,7 +640,7 @@ final case class Tags(
 
   lazy val keywordIds = keywords.map { _.id }
 
-  lazy val commissioningDesk = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }.headOption
+  lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
@@ -647,7 +655,7 @@ final case class Tags(
     ("toneIds", JsString(tones.map(_.id).mkString(","))),
     ("blogs", JsString(blogs.map { _.name }.mkString(","))),
     ("blogIds", JsString(blogs.map(_.id).mkString(","))),
-    ("commissioningDesk", JsString(commissioningDesk.getOrElse("")))
+    ("commissioningDesks", JsString(commissioningDesks.mkString(",")))
   )
 }
 

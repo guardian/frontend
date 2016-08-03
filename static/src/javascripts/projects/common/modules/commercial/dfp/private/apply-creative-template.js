@@ -22,7 +22,6 @@ define([
     'common/modules/commercial/creatives/fabric-video',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
-    'common/modules/commercial/creatives/hosted-thrasher',
     'common/modules/commercial/creatives/hosted-thrasher-multi',
     'common/modules/commercial/creatives/scrollable-mpu',
     'common/modules/commercial/creatives/scrollable-mpu-v2',

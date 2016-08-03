@@ -3,10 +3,11 @@ define([
     'qwery',
     'Promise',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fetch-json',
     'common/utils/mediator',
+    'common/utils/report-error',
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
@@ -17,10 +18,11 @@ define([
     qwery,
     Promise,
     $,
-    ajax,
     config,
     detect,
+    fetchJson,
     mediator,
+    reportError,
     template,
     spaceFiller,
     imagesModule,
@@ -32,9 +34,8 @@ define([
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
-            return ajax({
-                url: '/embed/card' + matches[1] + '.json',
-                crossOrigin: true
+            return fetchJson('/embed/card' + matches[1] + '.json', {
+                mode: 'cors'
             }).then(function (resp) {
                 if (resp.html) {
                     fastdom.write(function () {
@@ -46,6 +47,11 @@ define([
                         mediator.emit('rich-link:loaded', el);
                     });
                 }
+            })
+            .catch(function (ex) {
+                reportError(ex, {
+                    feature: 'rich-links'
+                });
             });
         } else {
             return Promise.resolve(null);

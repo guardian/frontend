@@ -1,8 +1,10 @@
 package controllers
 
 import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
+import play.api.libs.ws.WSClient
 
-class HealthCheck extends AllGoodCachedHealthCheck(
- 9017,
- NeverExpiresSingleHealthCheck("/world/2012/sep/11/barcelona-march-catalan-independence")
+class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+  wsClient,
+  9017,
+  NeverExpiresSingleHealthCheck("/world/2012/sep/11/barcelona-march-catalan-independence")
 )

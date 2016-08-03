@@ -1,12 +1,12 @@
 package model.deploys
 
 import java.net.URI
-import model.deploys.NoticeSteps.{DeployFinishedProd, DeployFinishedCode, BuildStarted, BuildFinished}
+
+import model.deploys.NoticeSteps.{BuildFinished, BuildStarted, DeployFinishedCode, DeployFinishedProd}
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.Future
-import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
 
 sealed trait NoticeStep
@@ -45,7 +45,7 @@ object NoticeResponse {
 }
 
 abstract class Notice(build: TeamCityBuild) {
-  def send(step: NoticeStep): Future[NoticeResponse]
+  def send(wsClient:WSClient)(step: NoticeStep): Future[NoticeResponse]
   val desc: String
 }
 object Notice {
@@ -75,8 +75,8 @@ case class SlackNotice(build: TeamCityBuild,
 
   override val desc = s"Slack notification: ${hookUrl}"
 
-  override def send(step: NoticeStep) = {
-    WS.url(hookUrl.toString)
+  override def send(wsClient: WSClient)(step: NoticeStep) = {
+    wsClient.url(hookUrl.toString)
       .withHeaders("Content-Type" -> "application/json")
       .withRequestTimeout(5000)
       .post(jsonBodyForStep(step))

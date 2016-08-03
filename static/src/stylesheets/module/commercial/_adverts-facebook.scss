@@ -48,4 +48,12 @@
     .inline-icon {
         fill: $neutral-1;
     }
+
+    .advert__brand {
+        position: absolute;
+        bottom: $gs-baseline;
+        right: $gs-gutter / 2;
+        width: $gs-baseline * 4;
+        height: $gs-baseline * 4;
+    }
 }

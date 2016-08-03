@@ -4,18 +4,19 @@ define([
     'qwery',
     'raven',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/scroller',
     'common/utils/fastdom-promise',
+    'common/utils/fetch-json',
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
+    'common/modules/discussion/upvote',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/objects/isNumber'
@@ -25,18 +26,19 @@ define([
     qwery,
     raven,
     $,
-    ajaxPromise,
     config,
     detect,
     mediator,
     scroller,
     fastdom,
+    fetchJson,
     DiscussionAnalytics,
     register,
     Component,
     DiscussionApi,
     CommentBox,
     Comments,
+    upvote,
     Id,
     userPrefs,
     isNumber
@@ -61,16 +63,14 @@ Loader.prototype.initTopComments = function() {
         this.gotoComment(commentId);
     });
 
-    return ajaxPromise({
-        url: '/discussion/top-comments/' + this.getDiscussionId() + '.json',
-        type: 'json',
-        method: 'get',
-        crossOrigin: true
+    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json', {
+        mode: 'cors'
     }).then(
         function render(resp) {
             this.$topCommentsContainer.html(resp.html);
             this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
             if (this.topCommentCount !== 0) {
+                $('.js-discussion-comment-box--bottom').removeClass('discussion__comment-box--bottom--hidden');
                 this.setState('has-top-comments');
             }
         }.bind(this)
@@ -79,13 +79,16 @@ Loader.prototype.initTopComments = function() {
 
 Loader.prototype.initMainComments = function() {
 
-    var commentId = this.getCommentIdFromHash();
+    var self = this,
+        commentId = this.getCommentIdFromHash();
+
 
     if (commentId) {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
+    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
@@ -101,8 +104,12 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page',
-        this.removeTruncation.bind(this));
+    this.on('click,', '.js-discussion-author-link, .js-discussion-change-page', this.removeTruncation.bind(this));
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function () {
+        mediator.emit('discussion:comments:get-more-replies');
+        self.removeTruncation();
+    });
+
 
     this.comments.on('rendered', function(paginationHtml) {
         var newPagination = bonzo.create(paginationHtml),
@@ -241,26 +248,12 @@ Loader.prototype.initToolbar = function() {
     }
 };
 
-Loader.prototype.isOpenForRecommendations = function() {
-    return qwery('.d-discussion--recommendations-open', this.elem).length !== 0;
-};
-
 Loader.prototype.initRecommend = function() {
     this.on('click', '.js-recommend-comment', function(e) {
-        if (this.user && this.isOpenForRecommendations()) {
-            var elem = e.currentTarget,
-                $el = bonzo(elem);
-
-            $el.removeClass('js-recommend-comment');
-
-            var id = elem.getAttribute('data-comment-id'),
-                result = DiscussionApi.recommendComment(id);
-
-            $el.addClass('d-comment__recommend--clicked');
-            return result.then(
-                $el.addClass.bind($el, 'd-comment__recommend--recommended')
-            );
-        }
+        upvote.handle(e.currentTarget, this.elem, this.user, DiscussionApi);
+    });
+    this.on('click', '.js-rec-tooltip-close', function() {
+        upvote.closeTooltip();
     });
 };
 
@@ -355,32 +348,30 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function() {
-    ajaxPromise({
-        url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
-        type: 'json',
-        method: 'get',
-        crossOrigin: true,
-        success: function(response) {
-            if(response && response.counts && response.counts.length) {
-                var commentCount = response.counts[0].count;
-                if (commentCount > 0) {
-                    // Remove non-JS links
-                    bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
+    fetchJson('/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(), {
+        mode: 'cors'
+    })
+    .then(function (response) {
+        if(response && response.counts && response.counts.length) {
+            var commentCount = response.counts[0].count;
+            if (commentCount > 0) {
+                // Remove non-JS links
+                bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
 
-                    var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                        html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
-                               '  <i class="i"></i>' + commentCount +
-                               '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
-                               '</a>';
-                    $('.js-comment-count').html(html);
+                var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
+                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
+                           '  <i class="i"></i>' + commentCount +
+                           '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
+                           '</a>';
+                $('.js-comment-count').html(html);
 
-                    $('.js-discussion-comment-count').text('(' + commentCount + ')');
-                } else {
-                    this.setState('empty');
-                }
+                $('.js-discussion-comment-count').text('(' + commentCount + ')');
+            } else {
+                this.setState('empty');
             }
-        }.bind(this)
-    });
+        }
+    }.bind(this))
+    .catch(this.logError.bind(this, 'CommentCount'));
 };
 
 Loader.prototype.getCommentIdFromHash = function() {

@@ -21,7 +21,8 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      emailService: EmailService,
                      fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
                      r2PagePressJob: R2PagePressJob,
-                     videoEncodingsJob: VideoEncodingsJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+                     videoEncodingsJob: VideoEncodingsJob,
+                     matchDayRecorder: MatchDayRecorder)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -82,7 +83,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
     jobs.schedule("MatchDayRecorderJob", "22 * * * * ?") {
-      MatchDayRecorder.record()
+      matchDayRecorder.record()
     }
 
     if (environment.isProd) {

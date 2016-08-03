@@ -21,6 +21,7 @@ object RenaultHostedPages {
   private val cta = HostedCallToAction(
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
     label = "Discover Zoe",
+    image = Static("images/commercial/ren_commercial_banner.jpg"),
     trackingCode = "explore-renault-zoe-button",
     btnText = ""
   )
@@ -43,9 +44,7 @@ object RenaultHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/05/17/HLS/160516GlabsTestSD.m3u8"
       ),
       cta,
-      ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }
@@ -68,9 +67,7 @@ object RenaultHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/05/23/HLS/160523GlabsRenaultTestHD.m3u8"
       ),
       cta,
-      ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }
@@ -93,9 +90,7 @@ object RenaultHostedPages {
         srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/03/HLS/160603GlabsRenaultTest3.m3u8"
       ),
       cta,
-      ctaBanner = Static("images/commercial/ren_commercial_banner.jpg"),
-      twitterTxt = videoTitle + " #ad Watch full film: ",
-      emailTxt = videoTitle,
+      twitterShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None
     )
   }

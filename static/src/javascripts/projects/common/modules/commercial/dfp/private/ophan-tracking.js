@@ -1,10 +1,13 @@
 define([
     'raven',
+    'common/utils/config',
     'common/utils/user-timing',
+    'common/modules/analytics/beacon',
     'common/modules/commercial/dfp/private/get-advert-by-id'
-], function (raven, userTiming, getAdvertById) {
+], function (raven, config, userTiming, beacon, getAdvertById) {
 
     var performanceLog = {
+            viewId: 'unknown',
             modules: [],
             adverts: [],
             baselines: []
@@ -96,6 +99,8 @@ define([
                             adServer: 'DFP'
                         }]
                     });
+
+                    reportTrackingData();
                 });
             }));
 
@@ -158,12 +163,23 @@ define([
         return index > -1 ? performanceLog.baselines[index].time : 0;
     }
 
+    function reportTrackingData() {
+        if (config.tests.commercialClientLogging) {
+            require(['ophan/ng'], function (ophan) {
+                performanceLog.viewId = ophan.viewId;
+
+                beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
+            });
+        }
+    }
+
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
         updateAdvertMetric : updateAdvertMetric,
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
-        secondaryBaseline: secondaryBaseline
+        secondaryBaseline: secondaryBaseline,
+        reportTrackingData: reportTrackingData
     };
 });
