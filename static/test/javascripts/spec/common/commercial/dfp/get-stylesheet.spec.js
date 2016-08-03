@@ -10,15 +10,13 @@ define([
     describe('Cross-frame messenger: get stylesheets', function () {
         var getStyles, styleSheets;
 
-        var id = '01234567-89ab-cdef-fedc-ba9876543210';
-
         var fixturesConfig = {
             id: 'page',
             fixtures: [
                 '<style class="webfont"></style>',
                 '<style class="webfont" data-cache-name="GuardianSansWeb"></style>',
                 '<style class="webfont" data-cache-name="GuardianSansTextWeb"></style>',
-                '<style class="notawebfont"></style>',
+                '<style class="notawebfont"></style>'
             ]
         };
 
