@@ -83,11 +83,20 @@ define([
                 var adName = replaceTopSlot ?
                     'inline' + index :
                     'inline' + (index + 1);
-                var adSlot = replaceTopSlot && index === 0 ?
-                    createSlot('top-above-nav', 'container-inline') :
-                    createSlot(adName, 'container-inline');
+                var classNames = ['container-inline'];
+                var adSlot;
 
-                adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
+                if (config.page.isAdvertisementFeature) {
+                    classNames.push('adfeature');
+                }
+
+                if (isMobile) {
+                    className.push('mobile');
+                }
+
+                adSlot = replaceTopSlot && index === 0 ?
+                    createSlot('top-above-nav', classNames) :
+                    createSlot(adName, classNames);
 
                 return {
                     anchor: isMobile ? item.container : item.adSlice,
