@@ -12,11 +12,11 @@ define([
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
 
-    function handle (target, container, user, discussionApi) {
-        if (!user) {
+    function handle (target, container, user, discussionApi, allowAnonymousRecommends) {
+        if (!allowAnonymousRecommends && !user) {
             target.setAttribute('data-link-name', 'Recommend comment anonymous');
             return showSignInTooltip(target);
-        } else if (isOpenForRecommendations(container)) {
+        } else if ((allowAnonymousRecommends || user) && isOpenForRecommendations(container)) {
             var id = target.getAttribute('data-comment-id');
 
             return Promise.all([
