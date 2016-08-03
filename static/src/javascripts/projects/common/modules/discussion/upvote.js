@@ -1,10 +1,12 @@
 define([
     'common/utils/assign',
+    'common/utils/config',
     'common/utils/fastdom-promise',
     'common/utils/report-error',
     'common/utils/url'
 ], function (
     assign,
+    config,
     fastdom,
     reportError,
     urlUtil
@@ -13,10 +15,10 @@ define([
     var TOOLTIP_CLASS = 'js-rec-tooltip';
 
     function handle (target, container, user, discussionApi) {
-        if (!user) {
+        if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
             target.setAttribute('data-link-name', 'Recommend comment anonymous');
             return showSignInTooltip(target);
-        } else if (isOpenForRecommendations(container)) {
+        } else if ((config.switches.discussionAllowAnonymousRecommendsSwitch || user) && isOpenForRecommendations(container)) {
             var id = target.getAttribute('data-comment-id');
 
             return Promise.all([

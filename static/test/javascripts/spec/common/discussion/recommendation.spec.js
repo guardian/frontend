@@ -1,17 +1,28 @@
 define([
     'common/utils/$',
-    'common/modules/discussion/upvote'
+    'helpers/injector'
 ],
 function (
     $,
-    upvote
+    Injector
 ) {
     describe('Recommendations of comments', function () {
         var discussionApi = {
             recommendComment: function () {}
-        };
+        },
+        injector = new Injector(), config, upvote;
 
-        beforeEach(function () {
+        beforeEach( function (done) {
+
+            injector.require(['common/modules/discussion/upvote', 'common/utils/config'], function() {
+                upvote = arguments[0];
+                config = arguments[1];
+
+                config.switches = {};
+                config.switches.discussionAllowAnonymousRecommendsSwitch = false;
+                done();
+            });
+
             // The contract to keep in mind is that comments loader calls
             // `upvote.handle` when clicking on a recommendation
             // `upvote.closeTooltip` when clicking on the tooltip close
@@ -36,6 +47,7 @@ function (
         });
 
         it('should send a request to discussion API if the user is logged in', function (done) {
+            config.switches.discussionAllowAnonymousRecommendsSwitch = false;
             spyOn(discussionApi, 'recommendComment').and.callFake(function () {
                 return Promise.resolve();
             });
@@ -56,7 +68,31 @@ function (
             .catch(done.fail);
         });
 
+        it ('should send an anonymous swithch to the discussion API if the the allow anonoymous recommends is switched on', function(done) {
+
+            config.switches.discussionAllowAnonymousRecommendsSwitch = true;
+            spyOn(discussionApi, 'recommendComment').and.callFake(function () {
+                return Promise.resolve();
+            });
+            var target = document.querySelector('.js-recommend-comment');
+
+            upvote.handle(
+                target,
+                document.querySelector('.recommendation-test'),
+                null,
+                discussionApi
+            )
+            .then(function() {
+                expect(discussionApi.recommendComment).toHaveBeenCalled();
+                expect(target.classList.contains('d-comment__recommend--recommended')).toBe(true, 'clicked classList');
+                expect(target.classList.contains('js-recommend-comment')).toBe(false, 'action classList');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
         it('should allow retry if the discussion api returns an error', function (done) {
+            config.switches.discussionAllowAnonymousRecommendsSwitch = false;
             spyOn(discussionApi, 'recommendComment').and.callFake(function () {
                 return Promise.reject(new Error('discussion api error'));
             });
@@ -79,6 +115,7 @@ function (
         });
 
         it('should show a tooltip with a return link to the upvoted comment', function (done) {
+            config.switches.discussionAllowAnonymousRecommendsSwitch = false;
             spyOn(discussionApi, 'recommendComment').and.callFake(function () {
                 return Promise.reject(new Error('discussion api error'));
             });
