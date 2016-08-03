@@ -28,7 +28,7 @@ class NewsAlertController(breakingNewsApi: BreakingNewsApi) extends Controller w
   // Actor is useful here to prevent race condition
   // when accessing or updating the content of Breaking News
   // since actor's mailbox acts as a queue
-  val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props(breakingNewsApi))
+  lazy val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props(breakingNewsApi))
   implicit val actorTimeout = Timeout(30.seconds)
 
   case class NewsAlertError(error: String)

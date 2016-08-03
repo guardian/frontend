@@ -30,7 +30,7 @@ import test.ConfiguredTestSuite
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
     val fakeApi = new BreakingNewsApi(new S3BreakingNews(app.mode)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
     new NewsAlertController(fakeApi) {
-      override val breakingNewsUpdater = updaterActor
+      override lazy val breakingNewsUpdater = updaterActor
       override lazy val apiKey = testApiKey
     }
   }
