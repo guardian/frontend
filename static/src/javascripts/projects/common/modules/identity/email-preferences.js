@@ -18,7 +18,7 @@ define([
     function useReqwest(buttonEl) {
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
-            buttonEl.classList.add('loading');
+            buttonEl.innerHTML = 'Loading...';
             var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
