@@ -57,6 +57,7 @@ define([
             // so do session storage rather than an omniture track.
             storeObj = {
                 pageName: this.s.pageName,
+                path: document.location.pathname,
                 tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };

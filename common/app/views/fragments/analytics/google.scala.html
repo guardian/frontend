@@ -82,7 +82,7 @@
                 var d = new Date().getTime();
                 if (d - referrerVars.value.time < 60 * 1000) { // One minute
                     ga('guardianTestPropertyTracker.send', 'event', 'Click', 'Internal', referrerVars.value.tag, {
-                        dimension12: referrerVars.value.pageName
+                        dimension12: referrerVars.value.path
                     });
                 }
             }
