@@ -1,14 +1,24 @@
 define([
     'bean',
-    'raven',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/fetch-json',
     'common/utils/mediator',
+    'common/utils/report-error',
     'common/modules/analytics/omniture',
     'lodash/collections/forEach',
     'lodash/arrays/initial',
     'common/utils/chain'
-], function (bean, raven, $, ajax, mediator, omniture, forEach, initial, chain) {
+], function (
+    bean,
+    $,
+    fetchJson,
+    mediator,
+    reportError,
+    omniture,
+    forEach,
+    initial,
+    chain
+) {
     function SearchTool(options) {
         var $list      = null,
             $input     = null,
@@ -143,14 +153,15 @@ define([
             },
 
             fetchData: function () {
-                return ajax({
-                    url: apiUrl + newQuery,
-                    type: 'json',
-                    crossOrigin: true
+                return fetchJson(apiUrl + newQuery, {
+                    mode: 'cors'
                 }).then(function (positions) {
                     this.renderList(positions, 5);
                     oldQuery = newQuery;
-                }.bind(this));
+                }.bind(this))
+                .catch(function (ex) {
+                    reportError(ex, { feature: 'search-tool' });
+                });
             },
 
             handleKeyEvents: function (e) {
