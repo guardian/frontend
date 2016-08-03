@@ -44,7 +44,7 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
         reportData <- redisClient.get(RedisReport.dataKeyFromId(id))
       } {
         log.logger.info(s"writing report to s3 bucket, view id: $id")
-        S3CommercialReports.putPublic(id, reportData, "text/plain")
+        S3CommercialReports.putPublic(s"commercial-client-logs/$id", reportData, "text/plain")
       }
     } catch {
       case e:Exception => log.logger.error(e.getMessage)
@@ -53,7 +53,7 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
 }
 
 object S3CommercialReports extends S3 {
-  override lazy val bucket = "commercial-client-logs"
+  override lazy val bucket = "aws-frontend-logs"
 }
 
 /*
