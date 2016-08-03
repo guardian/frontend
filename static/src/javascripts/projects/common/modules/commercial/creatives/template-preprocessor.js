@@ -162,8 +162,7 @@ define([
             manualContainerCtaMembershipTpl || (manualContainerCtaMembershipTpl = template(manualContainerCtaMembershipStr));
             tpl.params.blurb = tpl.params.title;
             tpl.params.title = tpl.params.logomembership + '<span class="u-h">The Guardian Membership</span>';
-            tpl.params.ctas = manualContainerCtaMembershipTpl(tpl.params);
-
+            tpl.params.ctas = tpl.params.type === 'inline' ? null : manualContainerCtaMembershipTpl(tpl.params);
         } else if (tpl.params.type !== 'inline'){
             manualContainerCtaTpl || (manualContainerCtaTpl = template(manualContainerCtaStr));
             tpl.params.title = tpl.params.marque54icon + tpl.params.logoguardian + '<span class="u-h">The Guardian</span>' + tpl.params.title;
