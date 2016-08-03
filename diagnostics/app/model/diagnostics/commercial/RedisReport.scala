@@ -36,8 +36,6 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
   }
 
   private def uploadReportToS3(id: String): Unit = {
-    log.logger.info(s"attempting s3 bucket upload, view id: $id")
-
     try {
       for {
         redisClient <- RedisReport.redisClient
