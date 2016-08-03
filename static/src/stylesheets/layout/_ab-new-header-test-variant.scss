@@ -123,7 +123,7 @@ $gutter-medium: 37px;
         width: $gs-gutter;
         height: $gs-baseline / 6;
         background-color: #ffffff;
-        transition: all .2s ease;
+        transition: all .3s cubic-bezier(.23, 1, .32, 1);
     }
 
     &:before {
@@ -326,12 +326,13 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
-    transition: opacity .2s cubic-bezier(0, 0, .3, 1);
+    transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
     z-index: -1;
 
     .main-menu-container.off-screen & {
         opacity: 0;
+        transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 
@@ -346,7 +347,7 @@ $gutter-medium: 37px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .2s  cubic-bezier(0, 0, .3, 1);
+    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
@@ -358,6 +359,7 @@ $gutter-medium: 37px;
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
+        transition: transform .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 
