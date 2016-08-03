@@ -31,7 +31,7 @@ import test.ConfiguredTestSuite
     val fakeApi = new BreakingNewsApi(new S3BreakingNews(app.mode)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
     new NewsAlertController(fakeApi) {
       override val breakingNewsUpdater = updaterActor
-      override val apiKey = testApiKey
+      override lazy val apiKey = testApiKey
     }
   }
 
