@@ -1,0 +1,33 @@
+@()(implicit request: RequestHeader)
+
+@import common.{Edition, LinkTo}
+
+<div class="edition-picker js-edition-picker-container">
+
+    <input class="edition-picker__checkbox js-enhance-checkbox"
+        type="checkbox"
+        id="edition-picker"
+        aria-controls="edition-picker__dropdown">
+
+    <label class="edition-picker__current-edition js-on-enter-click" for="edition-picker" tabindex="0">
+        @fragments.inlineSvg("world", "icon")
+        <span class="u-h"> Change editions from the </span>
+        @Edition(request).displayName
+    </label>
+
+    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" hidden>
+        @Edition.others(request).map { edition =>
+            <li class="edition-picker__dropdown__item">
+                <a class="edition-picker__dropdown-item-link"
+                data-edition="@edition.id"
+                data-link-name="new header switch to @edition.id edition"
+                value="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                title="Switch to the @edition.id edition"
+                tabindex="0">
+                    <span class="u-h"> switch to the </span>
+                    <span> @edition.displayName </span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

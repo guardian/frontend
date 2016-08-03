@@ -1,32 +1,75 @@
 package common
 
 import java.io.{File, FileInputStream}
+import java.util.Map.Entry
+import java.util.{Properties => JavaProperties}
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.conf.ConfigurationFactory
+import com.gu.cm.{PlayDefaultLogger, ClassPathConfigurationSource, FileConfigurationSource, Logger}
+import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 
-import scala.util.Try
+import scala.collection.JavaConversions._
+import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
+object GuardianConfiguration extends Logging {
+
+  import com.gu.cm.{Configuration => CM}
+  import com.typesafe.config.Config
+  lazy val configuration = {
+
+    val stage = {
+      val p = new JavaProperties()
+      p.load(new FileInputStream(s"/etc/gu/install_vars"))
+      p.getProperty("STAGE", "DEV")
+    }
+    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
+    lazy val opsPrivate = FileConfigurationSource(s"/etc/gu/frontend.properties")
+    lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
+    new CM(List(userPrivate, opsPrivate, public), PlayDefaultLogger).load
+  }
+
+  implicit class ScalaConvertProperties(conf: Config) {
+
+    def getStringProperty = getProperty(conf.getString)_
+    def getMandatoryStringProperty = getMandatoryProperty(conf.getString)_
+    def getIntegerProperty = getProperty(conf.getInt)_
+
+    def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
+    def getStringPropertiesSplitByComma(propertyName: String): List[String] = {
+      getStringProperty(propertyName) match {
+        case Some(property) => (property split ",").toList
+        case None => Nil
+      }
+    }
+
+    def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
+      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
+    def getProperty[T](get: String => T)(property: String): Option[T] = Try(get(property)) match {
+      case Success(value) => Some(value)
+      case Failure(e: ConfigException.Missing) => None
+      case Failure(e) =>
+        log.error(s"couldn't retrive $property", e)
+        None
+    }
+
+  }
+
+}
+
 class GuardianConfiguration extends Logging {
+  import GuardianConfiguration._
   implicit private lazy val app = Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
-
-  protected val configuration = ConfigurationFactory.getNonLoggingConfiguration("frontend", "env")
-
-  private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
-    def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
-      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
-  }
 
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
@@ -322,7 +365,7 @@ class GuardianConfiguration extends Logging {
       lazy val domain = configuration.getStringProperty("magento.domain")
       lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
       lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
-      lazy val accessToken = configuration.getStringProperty("magento.access.token")
+      lazy val accessToken = configuration.getStringProperty("magento.access.token.key")
       lazy val accessTokenSecret = configuration.getStringProperty("magento.access.token.secret")
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
       lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
@@ -381,7 +424,6 @@ class GuardianConfiguration extends Logging {
 
   object faciatool {
     lazy val crossAccountSourceBucket = configuration.getMandatoryStringProperty("aws.cmsFronts.frontCollections.bucket")
-    lazy val sameAccountSourceBucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val outputBucket = configuration.getMandatoryStringProperty("aws.bucket")
 
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")

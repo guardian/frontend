@@ -9,7 +9,8 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__logo-wrapper {
     padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
+    position: absolute;
+    right: 0;
 }
 
 .new-header__logo__svg {
@@ -39,48 +40,12 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     }
 }
 
-.new-header__edition-button {
-    @include fs-textSans(3);
-    order: -1;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    // TODO: Use reset util?
-    // Unset button from user agent stylesheet
-    background: none;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    padding: ($gs-baseline) ($gs-gutter / 2);
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-
-    svg {
-        fill: currentColor;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 1em;
-        min-height: 1em;
-    }
-
-    &:hover,
-    &:focus {
-        outline: none;
-        color: #ffffff;
-
-        path {
-            fill: #ffffff;
-        }
-    }
-}
-
 .new-header__nav {
     @include fs-textSans(6);
     display: flex;
     align-items: center;
     width: 100%;
+    margin-top: $gs-baseline;
 
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
@@ -111,7 +76,6 @@ $gutter-medium: 37px;
     border-radius: 100%;
     z-index: $zindex-modal;
     background-color: $news-main-2;
-    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
     @include mq($until: $mobile-medium) {
         //Smaller menu button
@@ -143,55 +107,56 @@ $gutter-medium: 37px;
 }
 
 .new-header__burger-icon {
-    position: absolute;
-    width: $gs-gutter;
-    height: 14px;
-    top: 2px;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    display: block;
+    margin-top: -($gs-baseline / 6) / 2;
     left: 0;
-    margin: auto;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    transition-duration: .3s;
+    transition-timing-function: cubic-bezier(.55, .055, .675, .19);
 
-    transform: rotate(0deg);
-    transition: 300ms cubic-bezier(.25, .46, .45, .94);
-
-    span {
+    &,
+    &:before,
+    &:after {
+        content: '';
         position: absolute;
-        height: 2px;
-        width: 100%;
+        width: $gs-gutter;
+        height: $gs-baseline / 6;
         background-color: #ffffff;
-
-        opacity: 1;
-        transform: rotate(0deg);
-        transition: .2s ease-in-out;
-
-        &:nth-child(1) {
-            top: 0;
-        }
-        &:nth-child(2), &:nth-child(3) {
-            top: 5px;
-        }
-        &:nth-child(4) {
-            top: 10px;
-        }
     }
-}
 
-.new-header__nav__menu-button--open {
-    transform: scale(1.1);
+    &:before {
+        top: -$gs-gutter / 4;
+        transition: top .1s .34s ease-in,
+        opacity .1s ease-in;
+    }
 
-    span {
-        &:nth-child(1) {
+    &:after {
+        bottom: -$gs-gutter / 4;
+        // The first time value is open animation, second is close animation
+        transition: bottom .1s .34s ease-in,
+        transform .3s cubic-bezier(.55, .055, .675, .19);
+    }
+
+    &--open {
+        transform: rotate(225deg);
+        transition-delay: .14s;
+        transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+
+        &:before {
+            top: 0;
             opacity: 0;
+            transition: top .1s ease-out,
+            opacity .1s .14s ease-out;
         }
-        &:nth-child(2) {
-            transform: rotate(45deg);
-        }
-        &:nth-child(3) {
-            transform: rotate(-45deg);
-        }
-        &:nth-child(4) {
-            opacity: 0;
+
+        &:after {
+            bottom: 0;
+            transform: rotate(-90deg);
+            transition: bottom .1s ease-out,
+            transform .3s .14s cubic-bezier(.215, .61, .355, 1);
         }
     }
 }
@@ -241,6 +206,105 @@ $gutter-medium: 37px;
     padding-right: 3px;
 }
 
+/*****************
+ * Edition Picker
+ *****************/
+
+.edition-picker {
+    @include fs-textSans(3);
+    order: -1;
+    color: $news-support-1;
+    // Override from fs-textSans mixin
+    line-height: 1;
+    padding-left: 7px;
+    padding-top: $gs-baseline/2;
+    width: gs-span(2);
+    z-index: 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+.inline-world__svg {
+    fill: $news-support-1;
+    vertical-align: middle;
+    min-width: 1em;
+    min-height: 1em;
+
+    &:hover {
+        fill: #ffffff;
+    }
+}
+
+.edition-picker__dropdown {
+    display: none;
+    position: absolute;
+    top: 33px;
+    left: 7px;
+    // overriding default styling
+    width: gs-span(2);
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    overflow: hidden;
+    z-index: 3;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+}
+
+.edition-picker__dropdown__item {
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    padding-left: $gs-gutter;
+}
+
+.edition-picker__dropdown-item-link {
+    color: $news-support-1;
+}
+
+.edition-picker__current-edition {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    width: gs-span(2) - 4px;
+    padding-left: 4px;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    display: block;
+}
+
+.edition-picker__checkbox, .edition-picker__button {
+    display: none;
+
+    &:checked, &.open {
+        & ~ .edition-picker__dropdown {
+            display: block;
+            background-color: lighten($guardian-brand, 5%);
+
+            .edition-picker__dropdown__item {
+                display: block;
+            }
+        }
+        & ~ .edition-picker__current-edition {
+            background-color: $guardian-brand-dark;
+            z-index: 3;
+            color: #ffffff;
+
+            .inline-world__svg {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
 /****************
  * Menu Styling
  ****************/
@@ -251,8 +315,7 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
-    // TODO: Why 3?
-    z-index: 3;
+    z-index: $zindex-modal;
 
     .js-on & {
         &:not(.shown) {
@@ -275,6 +338,8 @@ $gutter-medium: 37px;
     bottom: 0;
     left: 0;
     transition: opacity .2s;
+    // Without this, in Safari/IOS this element appears above the menu
+    z-index: -1;
 
     .main-menu-container.off-screen & {
         opacity: 0;
@@ -294,7 +359,7 @@ $gutter-medium: 37px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .2s ease-out;
+    transition: transform .3s ease-out;
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);

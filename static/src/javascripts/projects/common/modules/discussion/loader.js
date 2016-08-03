@@ -16,6 +16,7 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
+    'common/modules/discussion/upvote',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/objects/isNumber'
@@ -37,6 +38,7 @@ define([
     DiscussionApi,
     CommentBox,
     Comments,
+    upvote,
     Id,
     userPrefs,
     isNumber
@@ -68,6 +70,7 @@ Loader.prototype.initTopComments = function() {
             this.$topCommentsContainer.html(resp.html);
             this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
             if (this.topCommentCount !== 0) {
+                $('.js-discussion-comment-box--bottom').removeClass('discussion__comment-box--bottom--hidden');
                 this.setState('has-top-comments');
             }
         }.bind(this)
@@ -245,26 +248,12 @@ Loader.prototype.initToolbar = function() {
     }
 };
 
-Loader.prototype.isOpenForRecommendations = function() {
-    return qwery('.d-discussion--recommendations-open', this.elem).length !== 0;
-};
-
 Loader.prototype.initRecommend = function() {
     this.on('click', '.js-recommend-comment', function(e) {
-        if (this.user && this.isOpenForRecommendations()) {
-            var elem = e.currentTarget,
-                $el = bonzo(elem);
-
-            $el.removeClass('js-recommend-comment');
-
-            var id = elem.getAttribute('data-comment-id'),
-                result = DiscussionApi.recommendComment(id);
-
-            $el.addClass('d-comment__recommend--clicked');
-            return result.then(
-                $el.addClass.bind($el, 'd-comment__recommend--recommended')
-            );
-        }
+        upvote.handle(e.currentTarget, this.elem, this.user, DiscussionApi);
+    });
+    this.on('click', '.js-rec-tooltip-close', function() {
+        upvote.closeTooltip();
     });
 };
 

@@ -12,9 +12,9 @@ define([
 
         var module = this;
 
-        this.id = 'ParticipationDiscussionOrdering';
-        this.start = '2016-07-25';
-        this.expiry = '2016-08-26';
+        this.id = 'ParticipationDiscussionOrderingTake2';
+        this.start = '2016-08-01';
+        this.expiry = '2016-08-28';
         this.author = 'Nathaniel Bennett';
         this.description = 'Changes the default ordering of comments so we can determine whether sorting by recommended causes more users to view comments';
         this.audience = 0.1;
@@ -34,7 +34,12 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {}
+                test: function () {},
+                success: function(complete) {
+                    if(module.canRun()) {
+                        mediator.on('discussion:comments:get-more-replies', complete);
+                    }
+                }
             },
             {
                 id: 'order-by-oldest',
@@ -70,7 +75,5 @@ define([
                 }
             }
         ];
-
-
     };
 });

@@ -24,13 +24,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHostedZootropolisCta = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-zootropolis-cta",
+    "Additional text on the Zootropolis CTA banner",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 24),
+    exposeClientSide = true
+  )
+
   val giraffe = Switch(
     SwitchGroup.ABTests,
     "ab-giraffe-article",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
@@ -44,13 +54,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionOrdering = Switch(
+  val ABParticipationDiscussionOrderingTake2 = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering",
+    "ab-participation-discussion-ordering-take-2",
     "Test to see whether ordering comments by recommends increases the number of people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 }
