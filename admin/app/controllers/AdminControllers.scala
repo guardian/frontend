@@ -14,7 +14,7 @@ trait AdminControllers {
   def wsClient: WSClient
   def videoEncodingsJob: VideoEncodingsJob
   def mode: Mode.Mode
-  lazy val oAuthLoginController = wire[OAuthLoginController]
+  lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
   lazy val adminIndexController = wire[AdminIndexController]

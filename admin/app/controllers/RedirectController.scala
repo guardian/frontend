@@ -2,7 +2,7 @@ package controllers.admin
 
 import java.io.File
 
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.Logging
 import play.api.data._
 import play.api.data.Forms._
@@ -17,11 +17,11 @@ class RedirectController  extends Controller with Logging {
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 
-  def redirect() = AuthActions.AuthActionTest { implicit request =>
+  def redirect() = Action { implicit request =>
     Ok(views.html.redirects(redirectForm))
   }
 
-  def redirectPost() = AuthActions.AuthActionTest { implicit request =>
+  def redirectPost() = Action { implicit request =>
 
     redirectForm.bindFromRequest().get.trim match {
       case PageRedirect(from, "") if from.nonEmpty  => Redirects.remove(from)
@@ -32,7 +32,7 @@ class RedirectController  extends Controller with Logging {
     SeeOther(routes.RedirectController.redirect().url)
   }
 
-  def redirectBatchPost() = AuthActions.AuthActionTest { implicit request =>
+  def redirectBatchPost() = Action { implicit request =>
 
     val body = request.body
     val uploadedFile = body.asMultipartFormData.flatMap { files =>

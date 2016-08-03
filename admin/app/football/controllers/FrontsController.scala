@@ -134,13 +134,13 @@ class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
   def chooseMatchForCompAndTeam(competitionId: String, team1Id: String) = chooseMatch(competitionId, Some(team1Id), None)
   def chooseMatchForCompAndTeams(competitionId: String, team1Id: String, team2Id: String) = chooseMatch(competitionId, Some(team1Id), Some(team2Id))
-  private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) =AuthActions.AuthActionTest.async { implicit request =>
+  private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) = Action.async { implicit request =>
     for {
       (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team1IdOpt, team2IdOpt)
     } yield Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
   }
 
-  def bigMatchSpecial(matchId: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def bigMatchSpecial(matchId: String) = Action.async { implicit request =>
     for {
       matchInfo <- client.matchInfo(matchId)
       trailText = {

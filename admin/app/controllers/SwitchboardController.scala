@@ -15,7 +15,7 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with AuthLo
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = AuthActions.AuthActionTest.async { implicit request =>
+  def renderSwitchboard() = Action.async { implicit request =>
     log("loaded Switchboard", request)
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
@@ -34,7 +34,7 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with AuthLo
     }
   }
 
-  def save() = AuthActions.AuthActionTest.async { implicit request =>
+  def save() = Action.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong

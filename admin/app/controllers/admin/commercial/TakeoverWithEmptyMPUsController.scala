@@ -2,26 +2,25 @@ package controllers.admin.commercial
 
 import common.dfp.TakeoverWithEmptyMPUs
 import conf.Configuration.environment
-import controllers.admin.AuthActions
 import play.api.Play.current
 import play.api.i18n.Messages.Implicits._
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 
 class TakeoverWithEmptyMPUsController extends Controller {
 
-  def viewList() = AuthActions.AuthActionTest { implicit request =>
+  def viewList() = Action { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUs(
       environment.stage, TakeoverWithEmptyMPUs.fetchSorted())
     )
   }
 
-  def viewForm() = AuthActions.AuthActionTest { implicit request =>
+  def viewForm() = Action { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUsCreate(
       environment.stage, TakeoverWithEmptyMPUs.form)
     )
   }
 
-  def create() = AuthActions.AuthActionTest { implicit request =>
+  def create() = Action { implicit request =>
     TakeoverWithEmptyMPUs.form.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.commercial.takeoverWithEmptyMPUsCreate(
@@ -35,7 +34,7 @@ class TakeoverWithEmptyMPUsController extends Controller {
     )
   }
 
-  def remove(url: String) = AuthActions.AuthActionTest { implicit request =>
+  def remove(url: String) = Action { implicit request =>
     TakeoverWithEmptyMPUs.remove(url)
     Redirect(routes.TakeoverWithEmptyMPUsController.viewList())
   }

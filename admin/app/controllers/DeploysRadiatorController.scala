@@ -15,15 +15,15 @@ trait DeploysRadiatorController extends Controller with Logging with AuthLogging
   val riffRaff: RiffRaffService
   val teamcity: TeamcityService
 
-  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = AuthActions.AuthActionTest.async {
+  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = Action.async {
     riffRaff.getRiffRaffDeploys(pageSize, projectName, stage).map(ApiResults(_))
   }
 
-  def getBuild(number: String) = AuthActions.AuthActionTest.async {
+  def getBuild(number: String) = Action.async {
     teamcity.getTeamCityBuild(number).map(ApiResults(_))
   }
 
-  def renderDeploysRadiator() = AuthActions.AuthActionTest {
+  def renderDeploysRadiator() = Action {
     NoCache(Ok(views.html.deploysRadiator.main()))
   }
 
