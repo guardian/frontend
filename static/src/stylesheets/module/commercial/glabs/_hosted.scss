@@ -561,7 +561,13 @@ $hosted-video-height: 540px;
 }
 
 .hosted__cta-link {
-    padding-bottom: 5%;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+        background-color: rgba(#333333, .2);
+    }
 }
 
 .hosted__cta-link,
