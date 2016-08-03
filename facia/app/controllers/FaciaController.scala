@@ -20,8 +20,6 @@ import scala.concurrent.Future.successful
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
-  val EditionalisedKey = """^\w\w(/.*)?$""".r
-
   val frontJsonFapi: FrontJsonFapi
 
   private def getEditionFromString(edition: String) = {
