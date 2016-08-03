@@ -115,9 +115,11 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         .hosted__next-video {
             margin-top: 30px;
         }
-        .hosted__next-video--header,
-        .hosted__next-video--tile {
+        .hosted__next-video--header {
             margin: 0;
+        }
+        .hosted__next-video--tile {
+            margin: 10px 0;
         }
     }
     .content__secondary-column {
