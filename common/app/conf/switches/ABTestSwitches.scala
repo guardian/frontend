@@ -34,7 +34,7 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val giraffe = Switch(
+  val ABGiraffeArticle20160802 = Switch(
     SwitchGroup.ABTests,
     "ab-giraffe-article",
     "Test effectiveness of inline CTA for contributions.",

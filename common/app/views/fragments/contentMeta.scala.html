@@ -42,11 +42,9 @@
             <div class="meta__numbers modern-visible">
                 <div class="u-h meta__number js-sharecount">
                 </div>
-                <div class="meta__number js-commentcount">
-                    <a href="#comments" data-link-name="Comment count" class="commentcount2 tone-colour">
-                        <h3 class="commentcount2__heading">@fragments.inlineSvg("comment-16", "icon", List("inline-tone-fill")) Comments</h3>
-                        <comment-count class="commentcount2__value tone-colour" discussion="@item.content.discussionId" @{if (!item.trail.isCommentable) "closed"}></comment-count>
-                    </a>
+                <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                    !item.trail.isCommentable
+                }">
                 </div>
             </div>
             @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {

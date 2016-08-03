@@ -1,0 +1,177 @@
+@import common.commercial.hosted.HostedPage
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@import layout.ContentWidths.ImageContentMedia
+@import com.gu.contentapi.client.model.v1.AssetFields
+@(page: HostedPage)(implicit request: RequestHeader)
+
+
+<p class="text">
+    <span class="drop-cap @{
+        page.brandBackgroundCssClass
+    }
+    ">S</span>
+    ingapore aglitter with lights by night, breath taking racing, famous drivers, multi-platinum artists
+
+    performing across five stages, a whole city’s worth of delicious food and drink, tropical weather, a
+
+    series of support races and some very glamorous afterparties – buckle your seat belts for the
+
+    Singapore Grand Prix; you’re in for a ride. To get you started, here’s a brief overview of the key GP
+
+    events from Friday to Sunday…
+</p>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4577c1e1cc0c66cc42f11a081b6a70de81c58059/0_0_4933_3289/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+<br/>
+
+<h2>
+    Friday 16 September:
+</h2>
+
+<p class="text">
+    During the two sessions of Free Practice, the teams check out the track
+
+    and evaluate how their cars behave in current set-up. Strategy for the race will be planned based
+
+    on the information gained, such as the settings for the aerodynamics, how long each type of tyre
+
+    will last (teams have to use two different types of Pirelli tyre during a race – one harder than the
+
+    other – which adds a tactical element to the race) and therefore when to make their pit-stops.
+</p>
+
+<h2>
+    Music:
+</h2>
+
+<p class="text">
+    Australian singing sensation Kylie Minogue opens the festivities on the Padang Stage
+
+    (Zone 4). American disco kings KC and the Sunshine Band perform at the Village Stage (Zone 1).
+</p>
+
+<h2>
+    Saturday 17 September:
+</h2>
+
+<p class="text">
+    Qualifying is where the drivers try to set the fastest single lap time
+
+    possible to determine in which position they will start the race. After the first 18-minute session, the
+
+    slowest six drivers will be eliminated; they will start at the back of the grid in the order of their best
+
+    lap time. The second 15-minute session will see the remaining 16 drivers reduced to 10, who will
+
+    then go on to a 10-minute final &#39;shoot out&#39; to determine their starting positions and, of course,
+
+    decide who will secure the all-important Pole Position.
+</p>
+
+<h2>
+    Music:
+</h2>
+
+<p class="text">
+    Multi-award- winning English indie rock band Bastille will perform, followed by Queen +
+
+    Adam Lambert at the Padang Stage (Zone 4), while KC and The Sunshine Band will perform their
+
+    disco hits at the Esplanade Outdoor Stage (Zone 4). Grammy-winning American a cappella group
+
+    Pentatonix will be live at the Village Stage in Zone 1.
+</p>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4dcd87d123903b37f1817babecc6fddfed6cf07b/0_0_4928_3280/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+<br/>
+
+<h2>
+    Sunday 18 September:
+</h2>
+
+<p class="text">
+    Race day! Feel the tension and anticipation in the city rise to a crescendo
+
+    for the main event at 8pm.
+</p>
+
+<h2>
+    Music:
+</h2>
+
+<p class="text">
+    Edgy American singer-songwriter Halsey will belt out gritty electro-pop tunes from her sell-
+
+    out global Badlands tour. Multi-platinum alternative rock band Imagine Dragons will close the
+
+    weekend with smash-hit anthems, including ‘Radioactive’, &#39;Demons&#39; and ‘Gold’.
+</p>
+
+@fragments.imageFigure(
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/ac5dd9df5948674ebd0e3e828b5e689c8fdb54b5/0_0_5184_3456/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    lightboxIndex = None,
+    widthsByBreakpoint = ImageContentMedia.inline
+)
+
+<h2>
+    Five to try: essential items for your tourist checklist
+</h2>
+
+<p class="text">
+    See Singapore in style, during the GP
+</p>
+<p class="text">
+
+    1) Get an aerial view of the Marina Bay Street Circuit from the Singapore Flyer, a 165-metre
+
+    observation wheel – the largest in Asia (and the second largest in the world). 2016 Formula 1
+
+    Singapore Airlines Grand Prix Zone 1 ticketholders enjoy free rides on the observation wheel over
+
+    the race weekend.
+</p>
+<p class="text">
+    2) Enjoy a Singapore Sling where it was first created – in the Long Bar of the iconic Raffles Hotel –
+
+    and throw your peanut shells on the floor (the only place in super-clean Singapore where &#39;littering&#39;
+
+    is permitted)
+</p>
+<p class="text">
+    3) Ride the tram or take a stroll in one of the trails at the Night Safari, the world&#39;s first nocturnal zoo
+</p>
+<p class="text">
+    4) Escape the noise of the F1 action by taking a bus or cable car to Sentosa, where you can go
+
+    back in time at the Images of Singapore LIVE, located at the Imbiah Lookout, and see what life
+
+    was like during the Japanese occupation of Singapore in WWII. If you are feeling adventurous, visit
+
+    the Universal Studios theme park and check out the adrenalin-pumping roller coaster rides. For
+
+    those seeking a more relaxed experience, take pictures with the towering Merlion (the mythical
+
+    creature that is the symbol of Singapore) or just kick up your feet and just relax on one of the
+
+    beaches on this island.
+</p>
+<p class="text">
+    5) Get your retail kicks on charmingly narrow Haji Lane, which is lined with former 19th-century
+
+    shophouses that have been transformed into fashionable and eclectic boutiques
+</p>
+
+<h1>
+    Sort your flights, hotel and GP ticket for less at <a href="http://sianightrace.com" target="_blank">sianightrace.com</a>
+</h1>
