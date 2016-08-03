@@ -82,6 +82,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             font-size: 26px;
             line-height: 30px;
             font-weight: 100;
+            @include mq($until: tablet) {
+                font-size: 20px;
+                line-height: 24px;
+            }
         }
         .drop-cap {
             @include fs-textSans(4);
@@ -98,6 +102,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .text {
             line-height: 20px;
+        }
+        h1 {
+            line-height: 28px;
         }
     }
     .hosted__standfirst {
