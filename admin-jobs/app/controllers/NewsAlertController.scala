@@ -1,12 +1,11 @@
 package controllers
 
-import akka.actor.ActorRef
 import akka.pattern.ask
 import akka.util.Timeout
 import authentication.AuthenticationSupport
 import common.ExecutionContexts
 import conf.Configuration
-import controllers.BreakingNews.{BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
+import controllers.BreakingNews.{BreakingNewsApi, BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
 import model.Cached.RevalidatableResult
 import model.{Cors, Cached}
 import models.NewsAlertNotification
@@ -16,9 +15,11 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-trait NewsAlertController extends Controller with AuthenticationSupport with ExecutionContexts {
+class NewsAlertController(breakingNewsApi: BreakingNewsApi) extends Controller with AuthenticationSupport with ExecutionContexts {
 
-  val apiKey: String
+  val apiKey: String = Configuration.NewsAlert.apiKey.getOrElse(
+    throw new RuntimeException("News Alert API Key not set")
+  )
 
   override def validApiKey(key: String): Boolean = {
     key == apiKey
@@ -27,7 +28,7 @@ trait NewsAlertController extends Controller with AuthenticationSupport with Exe
   // Actor is useful here to prevent race condition
   // when accessing or updating the content of Breaking News
   // since actor's mailbox acts as a queue
-  val breakingNewsUpdater: ActorRef
+  val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props(breakingNewsApi))
   implicit val actorTimeout = Timeout(30.seconds)
 
   case class NewsAlertError(error: String)
@@ -52,13 +53,3 @@ trait NewsAlertController extends Controller with AuthenticationSupport with Exe
     }
   }
 }
-
-class NewsAlertControllerImpl extends NewsAlertController {
-  lazy val breakingNewsUpdater = actorSystem.actorOf(BreakingNewsUpdater.props())
-  lazy val apiKey = Configuration.NewsAlert.apiKey.getOrElse(
-    throw new RuntimeException("News Alert API Key not set")
-  )
-}
-
-object NewsAlertController extends NewsAlertControllerImpl
-
