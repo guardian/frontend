@@ -114,8 +114,6 @@ $gutter-medium: 37px;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(.55, .055, .675, .19);
 
     &,
     &:before,
@@ -129,34 +127,23 @@ $gutter-medium: 37px;
 
     &:before {
         top: -$gs-gutter / 4;
-        transition: top .1s .34s ease-in,
-        opacity .1s ease-in;
     }
 
     &:after {
         bottom: -$gs-gutter / 4;
-        // The first time value is open animation, second is close animation
-        transition: bottom .1s .34s ease-in,
-        transform .3s cubic-bezier(.55, .055, .675, .19);
     }
 
     &--open {
         transform: rotate(225deg);
-        transition-delay: .14s;
-        transition-timing-function: cubic-bezier(.215, .61, .355, 1);
 
         &:before {
             top: 0;
             opacity: 0;
-            transition: top .1s ease-out,
-            opacity .1s .14s ease-out;
         }
 
         &:after {
             bottom: 0;
             transform: rotate(-90deg);
-            transition: bottom .1s ease-out,
-            transform .3s .14s cubic-bezier(.215, .61, .355, 1);
         }
     }
 }
@@ -338,7 +325,7 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
-    transition: opacity .2s;
+    transition: opacity .2s cubic-bezier(0, 0, .3, 1);
     // Without this, in Safari/IOS this element appears above the menu
     z-index: -1;
 
@@ -358,7 +345,7 @@ $gutter-medium: 37px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .3s ease-out;
+    transition: transform .2s  cubic-bezier(0, 0, .3, 1);
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
