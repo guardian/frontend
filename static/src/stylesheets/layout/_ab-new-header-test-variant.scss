@@ -123,6 +123,7 @@ $gutter-medium: 37px;
         width: $gs-gutter;
         height: $gs-baseline / 6;
         background-color: #ffffff;
+        transition: all .2s ease;
     }
 
     &:before {
@@ -134,16 +135,16 @@ $gutter-medium: 37px;
     }
 
     &--open {
-        transform: rotate(225deg);
+        background-color: transparent;
 
         &:before {
             top: 0;
-            opacity: 0;
+            transform: rotate(-45deg);
         }
 
         &:after {
             bottom: 0;
-            transform: rotate(-90deg);
+            transform: rotate(45deg);
         }
     }
 }
