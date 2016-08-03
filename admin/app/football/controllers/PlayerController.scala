@@ -2,6 +2,7 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
+import play.api.Mode
 import football.services.GetPaClient
 import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
 import implicits.Requests
@@ -15,7 +16,7 @@ import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient with Requests {
+class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient with Requests {
 
   def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {

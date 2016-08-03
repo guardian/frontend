@@ -8,9 +8,10 @@ import java.net.URLDecoder
 import scala.language.postfixOps
 import model.{Cached, NoCache}
 import play.api.libs.ws.WSClient
+import play.api.Mode
 
 
-class PaBrowserController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient {
+class PaBrowserController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
 
   def browserSubstitution() =AuthActions.AuthActionTest { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }

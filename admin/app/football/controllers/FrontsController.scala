@@ -4,6 +4,7 @@ import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
+import play.api.Mode
 import common.{Logging, ExecutionContexts}
 import football.services.GetPaClient
 import football.model.{SnapFields, PA}
@@ -16,12 +17,10 @@ import org.joda.time.LocalDate
 import football.model.SnapFields
 import pa.Season
 import pa.Fixture
-import pa.Result
 import pa.LiveMatch
-import play.api.libs.json.JsResultException
 
 
-class FrontsController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient with Logging {
+class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 

@@ -9,10 +9,10 @@ import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
 import play.api.libs.ws.WSClient
+import play.api.Mode
 import scala.concurrent.Future
 
-
-class TablesController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient {
+class TablesController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
 
   def tablesIndex = AuthActions.AuthActionTest.async { implicit request =>
     for {
