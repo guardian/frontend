@@ -36,7 +36,7 @@ trait ABTestSwitches {
 
   val ABGiraffeArticle20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-Giraffe-Article-20160802",
+    "ab-giraffe-article-20160802",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,

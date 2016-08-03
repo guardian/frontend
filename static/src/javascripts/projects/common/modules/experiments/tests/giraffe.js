@@ -83,7 +83,7 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. Contribute to the Guardian ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Please support the Guardian and independent journalism');
+                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Contribute to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -92,7 +92,7 @@ define([
             {
                 id: 'complex',
                 test: function () {
-                    writer('The world is complex. We\'ll give our all to help you understand it. Will you give something to help us help you? Please contribute to the Guardian ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_complex', 'Please support the Guardian and independent journalism');
+                    writer('The world is complex. We\'ll give our all to help you understand it. Will you give something to help us help you? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_complex', 'Please contribute to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);
