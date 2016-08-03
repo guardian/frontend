@@ -18,7 +18,7 @@ object Badges {
   val euBriefing = Badge("politics/series/eu-referendum-morning-briefing", euSvg)
   val euSparrow = Badge("politics/series/eu-referendum-live-with-andrew-sparrow", euSvg)
 
-  val rio2016 = Badge("sport/rio-2016", Static("images/badges/rio-2016.svg"), Some("rio-2016"))
+  val rio2016 = Badge("sport/rio-2016", Static("images/badges/rio-2016.svg"))
 
   val allBadges = Seq(usElection, ausElection, voicesOfAmerica, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
 
