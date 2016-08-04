@@ -65,7 +65,7 @@ define([
             {
                 id: 'everyone',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_everyone', 'Please support the Guardian and independent journalism');
+                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_everyone', '');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -74,7 +74,7 @@ define([
             {
                 id: 'honest',
                 test: function () {
-                    writer('Be honest. When was the last time you paid for quality news online? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_honest', 'Please support the Guardian and independent journalism');
+                    writer('Be honest. When was the last time you paid for quality news online? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_honest', '');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -83,7 +83,7 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Contribute to the Guardian');
+                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Please support the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);

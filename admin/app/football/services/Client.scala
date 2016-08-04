@@ -3,12 +3,13 @@ package football.services
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WSClient
 import play.api.Play.current
+import play.api.Mode
 import org.joda.time.LocalDate
 import java.io.File
 import scala.util.{Failure, Success}
 import play.Logger
 import common.ExecutionContexts
-import pa.{PaClient, Http, Response}
+import pa.{Http, PaClient, Response}
 import conf.AdminConfiguration
 
 
@@ -80,5 +81,6 @@ private case class TestClient(wsClient: WSClient) extends Client {
 }
 trait GetPaClient {
   val wsClient: WSClient
-  lazy val client: Client = if (play.Play.isTest) TestClient(wsClient) else RealClient(wsClient)
+  val mode: Mode.Mode
+  lazy val client: Client = if (mode == Mode.Test) TestClient(wsClient) else RealClient(wsClient)
 }
