@@ -14,9 +14,7 @@ case class SportsSurging(
                           id: String,
                           pageViewCount: Int,
                           content: Option[ContentType]) {
-
-  content.map(_.content).map(_.metadata.webUrl)
-
+  
   val sportsTargetedKeywords = List("sport/sport","sport/rio-2016","sport/olympics-general")
 
   private val matchesKeyword = content.exists(_.tags.keywordIds.exists(keyword =>
