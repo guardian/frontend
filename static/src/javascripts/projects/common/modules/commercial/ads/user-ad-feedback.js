@@ -21,7 +21,7 @@ define([
 
     function recordUserAdFeedback(pagePath, adSlotId, creativeId, feedbackType) {
         var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
-        var stage = config.page.isProd ? "PROD" : "CODE";
+        var stage = config.page.isProd ? 'PROD' : 'CODE';
         var data = '{"stage":"'+stage+'", "adPage":"'+pagePath+'", "adSlotId":"'+adSlotId+'", "adCreativeId":"'+creativeId+'", "adFeedback":"'+feedbackType+'"}';
         return fetch(feedbackUrl, {
             method: 'post',
