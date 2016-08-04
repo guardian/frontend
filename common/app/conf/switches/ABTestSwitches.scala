@@ -64,9 +64,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val AB3x3Header = Switch(
+  val ABGiraffeHeader20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-3x3-header",
+    "ab-giraffe-header-20160802",
     "Test effectiveness of header for driving contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = On,
