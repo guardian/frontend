@@ -8,12 +8,12 @@ import business.{StocksData, Stocks}
 import scala.concurrent.duration._
 import conf.switches.Switches.StocksWidgetSwitch
 
-class StocksController extends Controller {
+class StocksController(stocksData: StocksData) extends Controller {
   def stocks = Action { implicit request =>
     if (StocksWidgetSwitch.isSwitchedOff) {
       Cached(1.minute)(JsonComponent.forJsValue(Json.toJson(Stocks(Seq.empty))))
     } else {
-      StocksData.get match {
+      stocksData.get match {
         case None => InternalServerError("Business data not loaded")
         case Some(stocks) =>
           Cached(1.minute)(JsonComponent.forJsValue(Json.toJson(stocks)))
@@ -21,5 +21,3 @@ class StocksController extends Controller {
     }
   }
 }
-
-object StocksController extends StocksController

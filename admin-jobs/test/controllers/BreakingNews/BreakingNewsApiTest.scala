@@ -10,7 +10,7 @@ import scala.io.Codec
 
 @DoNotDiscover class BreakingNewsApiTest extends WordSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
-  trait MockS3DoNothing extends S3BreakingNews {
+  class MockS3DoNothing extends S3BreakingNews(app.mode) {
     override def get(key: String)(implicit codec: Codec): Option[String] = None
     override def getWithLastModified(key: String): Option[(String, DateTime)] = None
     override def getLastModified(key: String): Option[DateTime] = None
@@ -27,19 +27,15 @@ import scala.io.Codec
     override def putPublic(key: String, value: String, contentType: String) = {throw new FakeS3Exception("put: Something bad happened")}
   }
 
-  case class breakingNewsApiWith(s3Instance: S3BreakingNews) extends BreakingNewsApi {
-    lazy val s3: S3BreakingNews = s3Instance
-  }
-
   "Fetching Breaking News json file" when {
     "an exception is thrown while accessing S3" should {
       "throw the exception" in {
-        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3ThrowException).getBreakingNews)
+        an [Exception] should be thrownBy(new BreakingNewsApi(MockS3ThrowException).getBreakingNews)
       }
     }
     "empty content is fetched from S3" should {
       "throw an exception" in {
-        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3DoNothing).getBreakingNews)
+        an [Exception] should be thrownBy(new BreakingNewsApi(MockS3DoNothing).getBreakingNews)
       }
     }
     "non json content is fetched from S3" should {
@@ -47,7 +43,7 @@ import scala.io.Codec
         override def get(key: String)(implicit codec: Codec): Option[String] = { Some("This is not some json content!") }
       }
       "throw a JsonParseException" in {
-        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3GetNonJsonContent).getBreakingNews)
+        an [Exception] should be thrownBy(new BreakingNewsApi(MockS3GetNonJsonContent).getBreakingNews)
       }
     }
     "json content is fetched from S3" should {
@@ -55,7 +51,7 @@ import scala.io.Codec
         override def get(key: String)(implicit codec: Codec): Option[String] = { Some("""{"field": "value"}""") }
       }
       "return json" in {
-        val result = breakingNewsApiWith(MockS3GetJsonContent).getBreakingNews
+        val result = new BreakingNewsApi(MockS3GetJsonContent).getBreakingNews
         result match {
           case Some(json) => json shouldBe an [JsValue]
           case _ => fail("A json value should have been returned")
@@ -68,13 +64,13 @@ import scala.io.Codec
     val validJson = Json.toJson("{}")
     "an exception is thrown while accessing S3" should {
       "throw the excpetion" in {
-        an [Exception] should be thrownBy(breakingNewsApiWith(MockS3ThrowException).putBreakingNews(validJson))
+        an [Exception] should be thrownBy(new BreakingNewsApi(MockS3ThrowException).putBreakingNews(validJson))
       }
     }
 
     "S3 put was successful" should {
       "have not failed" in {
-        noException should be thrownBy(breakingNewsApiWith(MockS3DoNothing).putBreakingNews(validJson))
+        noException should be thrownBy(new BreakingNewsApi(MockS3DoNothing).putBreakingNews(validJson))
       }
     }
 

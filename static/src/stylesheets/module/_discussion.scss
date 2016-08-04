@@ -17,11 +17,6 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 
-.discussion--hidden {
-    display: none;
-}
-
-
 .discussion--closed.discussion--empty {
     display: none;
 }
@@ -727,7 +722,6 @@ $comment-recommend-button-size: 19px;
     right: 0;
     top: $gs-baseline / 2;
     height: $comment-recommend-button-size;
-    z-index: 1;
 
     @include mq(desktop) {
         min-width: 28px;
@@ -956,7 +950,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .comment-share-icon svg {
-    vertical-align: text-top;
+    vertical-align: middle;
 }
 
 .sharing-buttons {
@@ -980,21 +974,6 @@ $comment-recommend-button-size: 19px;
 /* Report
    ======================================================= */
 
-.d-report-comment-form {
-    top: 0;
-    right: 0;
-    z-index: $zindex-content;
-    width: gs-span(4);
-    color: $neutral-1;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid $neutral-6;
-    background: #ffffff;
-}
-
-.d-comment .d-report-comment-form {
-    position: absolute;
-}
-
 .d-report-comment__label,
 .d-report-comment__field {
     box-sizing: border-box;
@@ -1016,6 +995,7 @@ $comment-recommend-button-size: 19px;
     margin-bottom: $gs-baseline / 2;
     width: auto;
 }
+
 
 /* Top Comments
    ========================================================================== */
@@ -1238,6 +1218,12 @@ $comment-recommend-button-size: 19px;
     .d-discussion__error-text {
         display: inline-block;
         margin-left: $gs-gutter * 1.2;
+
+        .tooltip-box & {
+            margin-left: 0;
+            margin-bottom: .25rem;
+        }
+
     }
     .i-alert { position: absolute; }
 }
@@ -1307,6 +1293,10 @@ $comment-recommend-button-size: 19px;
             padding-top: 0;
         }
     }
+}
+
+.discussion__comment-box--bottom--hidden {
+    display: none !important;
 }
 
 .d-comment-box__content {

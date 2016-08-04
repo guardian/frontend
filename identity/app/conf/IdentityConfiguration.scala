@@ -7,6 +7,8 @@ import utils.SafeLogging
 
 class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
 
+  import GuardianConfiguration._
+
   object exacttarget {
     lazy val factory = for {
       accountName <- configuration.getStringProperty("exacttarget.accountname")

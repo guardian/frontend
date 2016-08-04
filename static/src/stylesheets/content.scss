@@ -1,3 +1,10 @@
+/* ==========================================================================
+   Styles in this file are loaded asynchronously so should NOT
+   be critical to the initial rendering of the page.
+
+   Above-the-fold styles which should block rendering belong in head.*.scss
+   ========================================================================== */
+
 @charset 'UTF-8';
 
 /* ==========================================================================
@@ -101,6 +108,10 @@
 /* ==========================================================================
    Experiments
    ========================================================================== */
+
+// Styles in this file will not block rendering, so if your experiment takes
+// over the whole page, this file probably isn't where you want to put your styles.
+// Consider head.*.scss instead
 
 @import 'module/experiments/_affix';
 @import 'module/experiments/_giraffe';

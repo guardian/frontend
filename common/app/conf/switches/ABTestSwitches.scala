@@ -14,63 +14,33 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABCleverFriend = Switch(
-    SwitchGroup.ABTests,
-    "ab-clever-friend-brexit",
-    "Switch to trigger segmentation for clever friend exposure",
-    owners = Seq(Owner.withGithub("annebyrne")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
-    exposeClientSide = true
-  )
-
-  val ABParticipationDiscussionTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-discussion-test",
-    "We are going to hide comments on a random half of articles",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
-    exposeClientSide = true
-  )
-
-  val ABJoinDiscussionAfterPoll = Switch(
-    SwitchGroup.ABTests,
-    "ab-join-discussion-after-poll",
-    "Does 'join discussion' message after poll participation increase comments",
-    owners = Seq(Owner.withGithub("GHaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 27),
-    exposeClientSide = true
-  )
-
-  val ABSamplingTest = Switch(
-    SwitchGroup.ABTests,
-    "ab-sampling-test",
-    "Tests the sampling",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 22),
-    exposeClientSide = true
-  )
-
   val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-autoplay",
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = true
   )
 
-  val giraffe = Switch(
+  val ABHostedZootropolisCta = Switch(
     SwitchGroup.ABTests,
-    "ab-giraffe-article",
+    "ab-hosted-zootropolis-cta",
+    "Additional text on the Zootropolis CTA banner",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 24),
+    exposeClientSide = true
+  )
+
+  val ABGiraffeArticle20160802 = Switch(
+    SwitchGroup.ABTests,
+    "ab-giraffe-article-20160802",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
@@ -80,7 +50,17 @@ trait ABTestSwitches {
     "Testing if increasing prominence of video caption drives plays.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 25),
+    sellByDate = new LocalDate(2016, 8, 9),
+    exposeClientSide = true
+  )
+
+  val ABParticipationDiscussionOrderingTake2 = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-discussion-ordering-take-2",
+    "Test to see whether ordering comments by recommends increases the number of people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 

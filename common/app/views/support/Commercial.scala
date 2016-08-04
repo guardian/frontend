@@ -4,7 +4,7 @@ import common.Edition
 import common.editions.Uk
 import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
 import common.dfp._
-import conf.switches.Switches.{FixedTechTopSlot, containerBrandingFromCapi}
+import conf.switches.Switches.containerBrandingFromCapi
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag, Tags}
@@ -29,17 +29,12 @@ object Commercial {
 
   object topAboveNavSlot {
 
-    private def isUKTechFront(metaData: MetaData) = {
-      metaData.id == "uk/technology"
-    }
-
     def adSizes(metaData: MetaData, edition: Edition, maybeTags: Option[Tags]): Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
-      val leaderboardAdvertsTop = if (FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) None else Some("728,90")
       Map(
-        "tablet" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70") ++ leaderboardAdvertsTop ++ Seq("940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "tablet" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
     }
 
@@ -53,11 +48,7 @@ object Commercial {
       classes mkString " "
     }
 
-    def slotCssClasses(metaData: MetaData): Seq[String] = {
-        val classes = Seq("top-banner-ad", "top-banner-ad-desktop")
-        val fixedTechSlotClass = if(FixedTechTopSlot.isSwitchedOn && isUKTechFront(metaData)) Some("h250") else None
-        classes ++ fixedTechSlotClass
-    }
+    val slotCssClasses = Seq("top-banner-ad", "top-banner-ad-desktop")
   }
 
   object container {

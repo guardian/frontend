@@ -6,14 +6,14 @@ import commercial.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import play.api.Play.current
-import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-object LiveEventAgent extends ExecutionContexts with Logging {
+class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Seq.empty)
 
@@ -39,7 +39,7 @@ object LiveEventAgent extends ExecutionContexts with Logging {
     def fetchAndParseLiveEventsMembershipInfo: Future[Seq[LiveEventMembershipInfo]] = {
 
       def requestLiveEventsMembershipInfo: Future[WSResponse] =
-        WS.url(Configuration.commercial.liveEventsMembershipUrl)
+        wsClient.url(Configuration.commercial.liveEventsMembershipUrl)
           .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
           .get()
 

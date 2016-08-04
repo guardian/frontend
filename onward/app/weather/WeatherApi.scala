@@ -1,21 +1,20 @@
 package weather
 
 import java.net.{URI, URLEncoder}
-
 import common.{ExecutionContexts, ResourcesHelper}
 import conf.Configuration
-import play.api.Play
-import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import weather.geo.LatitudeLongitude
 import weather.models.CityId
 import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherResponse}
 import dispatch._, Defaults._
 import java.util.concurrent.{TimeoutException, TimeUnit}
 import scala.concurrent.duration.Duration
+import play.api.Environment
+import play.api.Mode
 
-object WeatherApi extends ExecutionContexts with ResourcesHelper {
+class WeatherApi(wsClient: WSClient, environment: Environment) extends ExecutionContexts with ResourcesHelper {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
@@ -39,7 +38,7 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   }
 
   private def getJson(url: String): Future[JsValue] = {
-    if (Play.isTest) {
+    if (environment.mode == Mode.Test) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
     } else {
       getJsonWithRetry(url)
@@ -47,7 +46,7 @@ object WeatherApi extends ExecutionContexts with ResourcesHelper {
   }
 
   private def getJsonWithRetry(url: String): Future[JsValue] = {
-    val fetchRequest = () => WS.url(url).withRequestTimeout(requestTimeout).get().filter(_.status == 200)
+    val fetchRequest = () => wsClient.url(url).withRequestTimeout(requestTimeout).get().filter(_.status == 200)
       .map { response =>
         Right(response.json)
       }

@@ -65,6 +65,7 @@ define([
                     devicePixelRatio: window.devicePixelRatio,
                     ophanId: config.ophan.pageViewId,
                     gu_u: cookies.get('GU_U'),
+                    payingMember: cookies.get('gu_paying_member'),
                     abTests : summariseAbTests(ab.getParticipations())
                 };
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'

@@ -1,9 +1,9 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
-import common.{EmailSubsciptionMetrics, ContentApiMetrics, ApplicationMetrics, CloudWatchMetricsLifecycle}
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
 import common.Logback.LogstashLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
 import controllers._
@@ -15,9 +15,10 @@ import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -26,6 +27,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait Controllers extends ApplicationsControllers {
   self: FrontendComponents =>
+  def wsClient: WSClient
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val assets = wire[Assets]

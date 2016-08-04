@@ -8,12 +8,11 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/clever-friend-brexit',
-    'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/join-discussion-after-poll',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
+    'common/modules/experiments/tests/participation-discussion-ordering-take-2',
+    'common/modules/experiments/tests/hosted-zootropolis-cta'
     'common/modules/experiments/tests/ad-feedback'
 ], function (
     reportError,
@@ -25,23 +24,21 @@ define([
     memoize,
     noop,
     LiveBlogChromeNotificationsProd,
-    CleverFriendBrexit,
-    ParticipationDiscussionTest,
-    JoinDiscussionAfterPoll,
     HostedAutoplay,
     Giraffe,
     VideoCaption,
+    ParticipationDiscussionOrderingTake2,
+    HostedZootropolisCta,
     AdFeedback
 ) {
 
     var TESTS = [
         new LiveBlogChromeNotificationsProd(),
-        new CleverFriendBrexit(),
-        new ParticipationDiscussionTest(),
-        new JoinDiscussionAfterPoll(),
         new HostedAutoplay(),
         new Giraffe(),
         new VideoCaption(),
+        new ParticipationDiscussionOrderingTake2(),
+        new HostedZootropolisCta(),
         new AdFeedback()
     ];
 
@@ -264,8 +261,11 @@ define([
         if (variantId !== 'notintest') {
             var variant = getVariant(test, variantId);
             var onTestComplete = variant.success || noop;
-
-            onTestComplete(recordTestComplete(test, variantId));
+            try {
+                onTestComplete(recordTestComplete(test, variantId));
+            } catch(err) {
+               reportError(err, false, false);
+            }
         }
     }
 

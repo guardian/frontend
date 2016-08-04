@@ -2,6 +2,7 @@ define([
     'common/utils/fastdom-promise',
     'Promise',
     'common/modules/commercial/dfp/track-ad-render',
+    'common/modules/commercial/dfp/messenger',
     'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',
@@ -13,6 +14,7 @@ define([
     fastdom,
     Promise,
     trackAdRender,
+    messenger,
     adSizes,
     $,
     createStore,
@@ -45,30 +47,7 @@ define([
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
-        window.addEventListener('message', function (event) {
-            var data;
-            // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
-            try {
-                data = JSON.parse(event.data);
-            } catch (e) {/**/}
-
-            if (data) {
-                var $iframe = getAdIframe();
-                var isRubiconAdEvent = data.type === 'set-ad-height';
-                var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
-
-                if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.value.height) + padding;
-                        resolve(clientHeight);
-                    });
-                }
-            }
-        });
-    });
+    var newRubiconAdHeightPromise;
 
     var getLatestAdHeight = function () {
         var $iframe = getAdIframe();
@@ -182,6 +161,24 @@ define([
         });
     };
 
+    function setupListeners() {
+        newRubiconAdHeightPromise = new Promise(function (resolve) {
+            messenger.register('set-ad-height', function onSetAdHeight(data) {
+                var $iframe = getAdIframe();
+                var isEventForTopAdBanner = data.id === $iframe[0].id;
+                if (isEventForTopAdBanner) {
+                    messenger.unregister('set-ad-height', onSetAdHeight);
+                    fastdom.read(function () {
+                        var padding = parseInt($adBannerInner.css('padding-top'))
+                            + parseInt($adBannerInner.css('padding-bottom'));
+                        var clientHeight = parseInt(data.height) + padding;
+                        resolve(clientHeight);
+                    });
+                }
+            });
+        });
+    }
+
     var reducer = function (previousState, action) {
         switch (action.type) {
             case 'SCROLL':
@@ -216,6 +213,7 @@ define([
         // Although we check as much config as possible to decide whether to run sticky-top-banner,
         // it is still entirely possible for the ad slot to be closed.
         if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
+            setupListeners();
             return getInitialState().then(function (initialState) {
                 var store = createStore(reducer, initialState);
 

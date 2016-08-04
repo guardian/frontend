@@ -1,15 +1,16 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonGzipFilter, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{Assets, DiagnosticsControllers, HealthCheck}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.libs.ws.WSClient
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -18,6 +19,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait Controllers extends DiagnosticsControllers {
   self: BuiltInComponents =>
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val assets = wire[Assets]
 }

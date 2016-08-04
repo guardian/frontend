@@ -1,11 +1,12 @@
-import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import conf.{StandaloneFilters, CachedHealthCheckLifeCycle}
-import controllers.{ResponsiveViewerController, StandaloneControllerComponents, HealthCheck}
+import conf.{CachedHealthCheckLifeCycle, StandaloneFilters}
+import controllers.{HealthCheck, ResponsiveViewerController, StandaloneControllerComponents}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpErrorHandler
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
@@ -15,11 +16,17 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait Controllers {
+  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
 }
 
-trait AppComponents extends FrontendComponents with StandaloneControllerComponents with Controllers with StandaloneLifecycleComponents {
+trait AppComponents
+  extends FrontendComponents
+  with StandaloneControllerComponents
+  with Controllers
+  with StandaloneLifecycleComponents
+  with AdminJobsServices {
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 

@@ -1,9 +1,7 @@
 define([
-    'bonzo',
     'bean',
     'common/utils/$',
     'common/utils/template',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/page',
@@ -12,11 +10,9 @@ define([
     'common/modules/sport/score-board',
     'common/modules/ui/rhc'
 ], function (
-    bonzo,
     bean,
     $,
     template,
-    ajax,
     config,
     detect,
     page,

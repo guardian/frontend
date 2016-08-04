@@ -16,6 +16,9 @@ define([
 
         opts = opts || {};
 
+        // Allow a fake window.location to be passed in for testing
+        var location = opts.location || window.location;
+
         var filters = opts.filter || [],
             filterSource = function (element) {
                 return filters.filter(function (f) {
@@ -24,27 +27,24 @@ define([
             },
             compareHosts = function (url) {
                 var urlHost,
-                    urlProtocol,
-                    host,
-                    protocol;
+                    host;
 
                 url = url || '';
                 urlHost = url.match(/:\/\/(.[^\/]+)/);
 
                 if (urlHost) {
                     urlHost = urlHost[1];
-                    urlProtocol = url.match(/^(https?:)\/\//);
-                    urlProtocol = urlProtocol ? urlProtocol[1] : undefined;
-                    host = window.location.hostname;
-                    protocol = window.location.protocol;
+                    host = location.hostname;
                 }
 
                 if (url.indexOf('mailto:') === 0) {
                     return false;
                 }
 
-                // Lack of a urlHost implies a relative url
-                return !urlHost || (urlHost === host && urlProtocol === protocol);
+                // Lack of a urlHost implies a relative url.
+                // For absolute urls we are protocol-agnostic,
+                // e.g. we should treat https://gu.com/foo -> http://gu.com/bar as a same-host link.
+                return !urlHost || urlHost === host;
             },
             getClickSpec = function (spec, forceValid) {
                 if (!spec.el) {

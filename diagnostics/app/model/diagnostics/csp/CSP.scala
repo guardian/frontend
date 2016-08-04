@@ -39,7 +39,10 @@ object CSPReport {
 object CSP extends Logging {
   def report(requestBody: JsValue): Unit = {
     (requestBody \ "csp-report").validate[CSPReport] match {
-      case JsSuccess(report, _) => if (report.isHTTP) log.logger.info(appendRaw("csp", Json.toJson(report).toString()), "csp report")
+      case JsSuccess(report, _) => report match {
+        case CSPReport(None, None, None, None, None, None) => // Do not log if there is no data
+        case _ if report.isHTTP => log.logger.info(appendRaw("csp", Json.toJson(report).toString()), "csp report")
+      }
       case JsError(e) => throw new Exception(JsError.toJson(e).toString())
     }
   }

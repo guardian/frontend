@@ -6,29 +6,24 @@
 @fragments.nav.newHeaderMenu()
 <header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
-        <a href="@LinkTo{/}" class="new-header__logo" tabindex="0">
+        <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
-            @fragments.inlineSvg("guardian-logo-160", "logo")
+            @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
         </a>
-        <button class="new-header__edition-button">
-            @fragments.inlineSvg("world", "icon")
-            <span>UK Edition</span>
-        </button>
+
+        @fragments.nav.editionPicker()
+
         <nav class="new-header__nav">
             <a href="#main-menu" class="new-header__nav__menu-button js-change-link" tabindex="0">
-                <div class="new-header__burger-icon js-animate-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <i class="new-header__burger-icon js-animate-menu">
+                </i>
                 <span class="u-h">Menu</span>
             </a>
             <ul class="new-header__nav__list">
                 @* TODO: Should open a menu *@
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/}">news</a></li>
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/commentisfree}">opinion</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/sport}">sports</a></li>
+                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/sport}">sport</a></li>
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/culture}">arts</a></li>
                 <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/lifeandstyle}">life</a></li>
             </ul>

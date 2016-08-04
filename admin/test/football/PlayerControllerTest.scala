@@ -1,15 +1,15 @@
 package football
 
 import common.ExecutionContexts
-import org.scalatest.{DoNotDiscover, ShouldMatchers, FreeSpec}
-import play.api.libs.json.{JsString, JsObject}
-import play.api.mvc.{AnyContentAsFormUrlEncoded}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, ShouldMatchers}
+import play.api.libs.json.{JsObject, JsString}
+import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import football.services.GetPaClient
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
-@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts with ConfiguredTestSuite {
+@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   "test redirects player card form submission to correct player page" in {
     val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("attack")))))

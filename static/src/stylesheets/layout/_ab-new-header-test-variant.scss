@@ -1,3 +1,5 @@
+$mobile-medium: 375px; // Breakpoint for our most common device sizes
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -5,66 +7,36 @@
     align-items: flex-start;
 }
 
-.new-header__logo {
-
-    svg {
-        // Removes extra spacing
-        display: block;
-
-        // Aspect ratio: 16:3
-        @include mq($until: mobileLandscape) {
-            width: 50vw;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 46vw);
-            padding: ($gs-baseline / 2) 0;
-            min-width: 147px;
-            min-height: 28px;
-        }
-
-        @include mq(mobileLandscape) {
-            width: 240px;
-            // height: auto doesn't work in Safari
-            height: calc(3/16 * 240px);
-            padding: ($gs-baseline / 2) ($gs-gutter / 2);
-        }
-
-        @include mq(phablet) {
-            padding-bottom: 0;
-        }
-    }
+.new-header__logo-wrapper {
+    padding-top: $gs-baseline / 2;
+    position: absolute;
+    right: 0;
 }
 
-.new-header__edition-button {
-    @include fs-textSans(2);
-    order: -1;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    // TODO: Use reset util?
-    // Unset button from user agent stylesheet
-    background: none;
-    // Unset button from user agent stylesheet
-    border: 0;
-    // Override button from user agent stylesheet
-    padding: ($gs-gutter / 2);
+.new-header__logo__svg {
+    // Removes extra spacing
+    display: block;
+    height: auto;
+    padding-right: $gs-gutter / 2;
 
-    @include mq($until: mobileLandscape) {
-        font-size: 3.8vw;
+    // Aspect ratio: 16:3
+    @include mq($until: $mobile-medium) {
+        width: 170px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 170px);
     }
 
-    svg {
-        fill: currentColor;
-        // Spacing also due to inline elements
-        margin-right: 1px;
-        vertical-align: middle;
-        margin-top: -2px;
-        min-width: 14px;
-        min-height: 14px;
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        width: 225px;
+        height: calc(3/16 * 225px);
+    }
 
-        @include mq($until: mobileLandscape) {
-            width: 4vw;
-            height: 4vw;
-        }
+    @include mq(mobileLandscape) {
+        width: 260px;
+        // height: auto doesn't work in Safari
+        height: calc(3/16 * 260px);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+        margin-right: $gs-gutter / 2;
     }
 }
 
@@ -73,82 +45,110 @@
     display: flex;
     align-items: center;
     width: 100%;
+    margin-top: $gs-baseline;
+
+    @include mq($mobile-medium) {
+        margin-top: $gs-baseline * 2;
+    }
 
     @include mq($until: mobileLandscape) {
-        font-size: 5vw;
-        padding-left: ($gs-gutter / 2);
-        padding-right: ($gs-gutter / 2);
+        font-size: 5.2vw;
+        line-height: 1.6;
         // Position after pseudo element which forces line break
         order: 1;
         justify-content: space-between;
     }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+    }
 }
+
+// Specific values for menu button breakpoints
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
+$gutter-small: 29px;
+$gutter-medium: 37px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
-    background-color: $news-main-2;
+    position: relative;
     // Unset button from user agent stylesheet
     border: 0;
+    outline: none;
     // Override button from user agent stylesheet
-    // Must be square
-    padding: $gs-gutter * .6;
     border-radius: 100%;
     z-index: $zindex-modal;
-    height: 18px;
-    width: 18px;
-    margin: (-$gs-baseline) ($gs-gutter / 2) (-$gs-baseline/2);
+    background-color: $news-main-2;
 
-    @include mq($until: mobileLandscape) {
-        margin-right: 4vw;
-        margin-top: -2vw;
-        margin-bottom: -2vw;
+    @include mq($until: $mobile-medium) {
+        //Smaller menu button
+        height: $veggie-burger-small;
+        width: $veggie-burger-small;
+        margin-top: -$gs-baseline;
+        margin-bottom: -$gs-baseline;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-small;
+    }
+
+    @include mq($mobile-medium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-medium;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 1.5;
+        margin-left: $gs-gutter -$gs-gutter / 4;
     }
 }
 
 .new-header__burger-icon {
-    position: relative;
-    margin-top: 3px;
-    cursor: pointer;
+    top: 50%;
+    display: block;
+    margin-top: -($gs-baseline / 6) / 2;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 
-    transform: rotate(0deg);
-    transition: .4s ease-in-out;
-
-    span {
-        display: block;
+    &,
+    &:before,
+    &:after {
+        content: '';
         position: absolute;
-        height: 2px;
-        width: 100%;
+        width: $gs-gutter;
+        height: $gs-baseline / 6;
         background-color: #ffffff;
-
-        opacity: 1;
-        transform: rotate(0deg);
-        transition: .2s ease-in-out;
-
-        &:nth-child(1) {
-            top: 0;
-        }
-        &:nth-child(2), &:nth-child(3) {
-            top: 5px;
-        }
-        &:nth-child(4) {
-            top: 10px;
-        }
+        transition: all .3s cubic-bezier(.23, 1, .32, 1);
     }
-}
 
-.new-header__burger-icon--open {
-    span {
-        &:nth-child(1) {
-            opacity: 0;
-        }
-        &:nth-child(2) {
-            transform: rotate(45deg);
-        }
-        &:nth-child(3) {
+    &:before {
+        top: -$gs-gutter / 4;
+    }
+
+    &:after {
+        bottom: -$gs-gutter / 4;
+    }
+
+    &--open {
+        background-color: transparent;
+
+        &:before {
+            top: 0;
             transform: rotate(-45deg);
         }
-        &:nth-child(4) {
-            opacity: 0;
+
+        &:after {
+            bottom: 0;
+            transform: rotate(45deg);
         }
     }
 }
@@ -161,10 +161,15 @@
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
-    margin-bottom: 3px;
+    margin-bottom: 0;
 
     @include mq($until: mobileLandscape) {
         order: -1;
+        margin-left: $gs-gutter / 2;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
     }
 }
 
@@ -172,6 +177,10 @@
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+
+    &:first-child .new-header__nav__link {
+        padding-left: 0;
+    }
 
     &:not(:last-child) {
         &:after {
@@ -184,7 +193,120 @@
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    padding: 2px;
+    // Optically aligns slashes
+    padding-left: 2px;
+    padding-right: 3px;
+}
+
+/*****************
+ * Edition Picker
+ *****************/
+
+.edition-picker {
+    @include fs-textSans(3);
+    order: -1;
+    color: $news-support-1;
+    // Override from fs-textSans mixin
+    line-height: 1;
+    padding-left: 7px;
+    padding-top: $gs-baseline/2;
+    width: gs-span(2);
+    z-index: 2;
+
+    // Smaller size compensates for how big the word "Australia" is
+    @include mq($until: $mobile-medium) {
+        font-size: 13px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+}
+
+.inline-world__svg {
+    fill: $news-support-1;
+    vertical-align: middle;
+    min-width: 14px;
+    min-height: 14px;
+    margin-right: 1px;
+    margin-top: -$gs-baseline/4;
+}
+
+.edition-picker__dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: $gs-gutter/2;
+    // overriding default styling
+    width: gs-span(2);
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    z-index: 3;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: -10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 10px 10px;
+        border-color: transparent transparent $guardian-brand-dark;
+    }
+}
+
+.edition-picker__dropdown-item-link {
+    color: #ffffff;
+    display: block;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    padding-left: $gs-gutter;
+
+    &:hover {
+        background-color: darken($guardian-brand-dark, 3%);
+    }
+}
+
+.edition-picker__current-edition {
+    width: gs-span(2) - 4px;
+    padding-left: 4px;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
+    display: block;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffffff;
+
+        .inline-world__svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.edition-picker__checkbox, .edition-picker__button {
+    display: none;
+
+    &:checked, &.open {
+        & ~ .edition-picker__dropdown {
+            display: block;
+            background-color: $guardian-brand-dark;
+
+            .edition-picker__dropdown__item {
+                display: block;
+            }
+        }
+        & ~ .edition-picker__current-edition {
+            z-index: 3;
+        }
+    }
 }
 
 /****************
@@ -197,8 +319,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    // TODO: Why 3?
-    z-index: 3;
+    line-height: 1;
+    z-index: $zindex-modal;
 
     .js-on & {
         &:not(.shown) {
@@ -220,36 +342,46 @@
     right: 0;
     bottom: 0;
     left: 0;
-    transition: opacity .2s;
+    transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
+    // Without this, in Safari/IOS this element appears above the menu
+    z-index: -1;
 
     .main-menu-container.off-screen & {
         opacity: 0;
+        transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 
 .main-menu-container__menu {
     height: 100%;
-    width: 90%;
     background-color: $guardian-brand;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
     font-size: 20px;
     text-transform: lowercase;
-    // TODO: Remove
-    padding-top: 10px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .2s ease-out;
+    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
+
+    @include mq($until: $mobile-medium) {
+        margin-right: $gutter-small + ($veggie-burger-small / 2);
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+    }
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
+        transition: transform .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 
 .main-menu-container__profile-container {
     @include fs-textSans(5);
+    margin-top: $gs-baseline / 2;
     margin-bottom: $gs-row-height;
 }
 
@@ -263,6 +395,7 @@
     margin-left: $gs-gutter/2;
 
     svg {
+        margin-top: 3px;
         height: 23px;
         width: 23px;
     }
@@ -275,54 +408,58 @@
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-    padding-bottom: 16px;
     text-transform: lowercase;
 }
 
 .main-navigation__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
+    color: $news-support-1;
 }
 
 $navigation-horizontal-padding: 38px;
 
 .main-navigation__item__button {
-    // padding-left: $navigation-horizontal-padding;
+    position: relative;
+    padding-top: $gs-baseline / 2;
+    padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
-    padding-bottom: 6px;
+    padding-bottom: $gs-baseline * 1.5;
     font-size: 26px;
 
     &:focus {
         // Unset a:focus from user agent stylesheet
         outline: 0;
-        background-color: darken($guardian-brand, 5%);
     }
 
     &::-webkit-details-marker {
         display: none;
     }
 
-    // TODO: Why both?
-    .inline-icon, svg {
-        vertical-align: middle;
+    // Arrow icon
+    &:before {
+        content: '';
+        position: absolute;
+        top: $gs-baseline - 2px;
+        left: $gs-gutter / 1.5;
+        width: 10px;
+        height: 10px;
+        border: 2px solid $news-support-2;
+        transform: rotate(-45deg);
+        border-top: 0;
+        border-right: 0;
     }
 
-    svg {
-        fill: hsla(0, 0%, 100%, .3);
-        margin-left: ($navigation-horizontal-padding - 15px) / 2;
-        margin-right: ($navigation-horizontal-padding - 15px) / 2 - 6px;
-        width: 15px;
-        height: auto;
-
-        details[open] & {
-            transform: rotate(180deg);
-        }
+    details[open] &:before {
+        top: $gs-baseline + $gs-baseline / 2;
+        transform: rotate(135deg);
     }
 }
 
 .main-navigation__secondary {
     background-color: darken($guardian-brand, 3%);
-    color: $news-support-1;
+    color: #ffffff;
+    padding-bottom: $gs-baseline;
 }
 
 .navigation-border {
@@ -330,7 +467,9 @@ $navigation-horizontal-padding: 38px;
         content: '';
         display: block;
         height: 1px;
-        background: $guardian-brand-dark;
+        background: darken($guardian-brand, 3%);
+        // Creates a seamless line when section has dark background
+        margin-top: -1px;
         margin-left: $navigation-horizontal-padding;
     }
 }
@@ -342,18 +481,19 @@ $navigation-horizontal-padding: 38px;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-    padding-bottom: 10px;
 }
 
 .navigation-group__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
+    position: relative;
 
     a {
         display: block;
+        padding-top: $gs-baseline / 2;
         padding-left: $navigation-horizontal-padding;
         padding-right: $navigation-horizontal-padding;
-        padding-bottom: 6px;
+        padding-bottom: $gs-baseline;
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -361,24 +501,40 @@ $navigation-horizontal-padding: 38px;
         &:focus {
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: darken($guardian-brand, 5%);
+            background-color: $guardian-brand-dark;
         }
     }
 }
 
+.secondary-navigation {
+    margin-top: $gs-baseline + 2px;
+
+    &:last-child {
+        margin-bottom: $gs-baseline * 3;
+    }
+}
+
 .navigation-group__social-icon {
-    fill: hsla(0, 0%, 100%, .3);
+    fill: $news-support-2;
     position: absolute;
+    top: -2px;
     left: 0;
 
     svg {
         width: 36px;
         height: 36px;
     }
+}
 
-    &.inline-instagram svg {
-        width: 17px;
-        height: 17px;
+.navigation-group__search-icon {
+    fill: $news-support-2;
+    position: absolute;
+    top: $gs-baseline / 2;
+    left: $gs-gutter / 2;
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
 }
 

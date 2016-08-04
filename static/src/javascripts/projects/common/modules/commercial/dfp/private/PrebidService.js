@@ -30,7 +30,7 @@ define([
         window.pbjs = {que: []};
         require(['js!prebid.js']);
 
-        window.pbjs.que.push(setDFPTargeting);
+        window.pbjs.que.push(setDFPTargeting, enableAnalytics);
 
         // Prebid.js can only run one auction at a time. We only tender one
         // advert per auction to prevent network congestion. Each advert can
@@ -162,6 +162,19 @@ define([
         var bucketValue = bucketCount * bucket;
 
         return bucketValue / 100;
+    }
+
+    function enableAnalytics() {
+        if (config.switches.googleAnalytics) {
+            pbjs.enableAnalytics({
+                provider: 'ga',
+                options: {
+                    global: 'ga',
+                    trackerName: 'headerBiddingPropertyTracker',
+                    enableDistribution: true
+                }
+            });
+        }
     }
 
     function logError(e) {

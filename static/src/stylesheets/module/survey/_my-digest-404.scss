@@ -1,0 +1,133 @@
+
+.inline-my-digest {
+    display: inline;
+    position: absolute;
+    z-index: 9;
+
+    width: map-get($mq-breakpoints, mobile);
+    height: 15.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    .inline-my-digest__svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.my-digest-header h1 {
+    @include fs-header(5);
+    color: $news-main-1;
+}
+
+.my-digest-main {
+    margin: 0 auto;
+}
+
+.my-digest-main:before {
+    content: '';
+    background-color: #ffffff;
+    height: 26px;
+    display: block;
+}
+
+.main__column--horizontal-bar::before {
+    content: '';
+    display: block;
+    border-bottom: 2px solid #5ab0f4;
+
+}
+
+.email-signup-main {
+    .main__column--horizontal-bar::before {
+        margin: 0 .3rem;
+    }
+}
+
+.my-digest-header::after {
+    content: '';
+    border-bottom: thin solid $neutral-6;
+    display: block;
+}
+
+.my-digest-header__digest {
+    color: $news-main-2;
+}
+
+.my-digest-bottom-margin {
+    border-bottom: 2px solid #5ab0f4;
+    margin: 26px auto 0;
+}
+
+.my-digest-steps {
+    counter-reset: digest-steps;
+}
+
+.my-digest-steps__step {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+
+    float: left;
+    clear: both;
+
+    position: relative;
+    min-height: 3.5rem;
+    border-left: thin dotted $news-main-2;
+}
+
+.my-digest-steps__step:last-child {
+    border: 0;
+}
+
+.my-digest-steps__text::before {
+    counter-increment: digest-steps;
+    content: counter(digest-steps);
+    position: absolute;
+    text-align: center;
+    line-height: 2rem;
+    background-color: #ffffff;
+    border: thin solid $news-main-2;
+    border-radius: 1rem;
+    color: $news-main-1;
+    float: left;
+    width: 2rem;
+    height: 2rem;
+    left: -1.1rem;
+}
+
+.my-digest-steps__text {
+    @include fs-textSans(4);
+    display: block;
+    line-height: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.my-digest-steps__create-button {
+    @include fs-textSans(4);
+    position: relative;
+    color: $guardian-brand;
+    border: thin solid $news-main-2;
+    background-color: transparent;
+    height: 32px;
+    line-height: 28px;
+    border-radius: 100px;
+    padding-left: 12px;
+    padding-right: 32px;
+    margin-left: -16px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: darken($news-main-2, 15%);
+    }
+    .inline-arrow-right {
+        fill: $guardian-brand;
+        position: absolute;
+        right: 2px;
+        top: 1px;
+    }
+}

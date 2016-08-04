@@ -24,7 +24,9 @@ object Frontend extends Build with Prototypes {
       awsSqs,
       contentApiClient,
       filters,
-      guardianConfiguration,
+      commonsLang,
+      configMagic,
+      configMagicPlay,
       jodaConvert,
       jodaTime,
       jSoup,
@@ -105,7 +107,8 @@ object Frontend extends Build with Prototypes {
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources
+      uaDetectorResources,
+      redisClient
     ),
     RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )

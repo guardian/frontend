@@ -18,24 +18,24 @@ trait Notification extends Logging with ExecutionContexts {
     client
   }
 
-  def send(subject: String, message: String) {
+  def send(akkaAsync: AkkaAsync)(subject: String, message: String) {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withSubject(subject)
       .withMessage(message)
 
-    sendAsync(request)
+    sendAsync(akkaAsync)(request)
   }
 
-  def sendWithoutSubject(message: String) {
+  def sendWithoutSubject(akkaAsync: AkkaAsync)(message: String) {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withMessage(message)
 
-    sendAsync(request)
+    sendAsync(akkaAsync)(request)
   }
 
-  private def sendAsync(request: PublishRequest) = AkkaAsync {
+  private def sendAsync(akkaSync: AkkaAsync)(request: PublishRequest) = akkaSync.after1s {
     sns match {
       case Some(client) =>
           log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
@@ -52,10 +52,10 @@ trait Notification extends Logging with ExecutionContexts {
   }
 }
 
-object Notification extends Notification {
+object SwitchNotification extends Notification {
   lazy val topic: String = Configuration.aws.notificationSns
 
-  def onSwitchChanges(requester: String, stage: String, changes: Seq[String]) {
+  def onSwitchChanges(akkaAsync: AkkaAsync)(requester: String, stage: String, changes: Seq[String]) {
     val subject = s"${stage.toUpperCase}: Switch changes by ${requester}"
     val message =
       s"""
@@ -65,7 +65,7 @@ object Notification extends Notification {
           |
         """.stripMargin
 
-    send(subject, message)
+    send(akkaAsync)(subject, message)
   }
 }
 
@@ -84,7 +84,7 @@ object R2PressedPageTakedownNotification extends Notification {
 object MissingVideoEncodings extends Notification {
   lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:frontend-missingVideoEncodingsNotificationTopic"
 
-  def sendMessage(encoding: String, url: String, webTitle: String): Unit = {
+  def sendMessage(akkaAsync: AkkaAsync)(encoding: String, url: String, webTitle: String): Unit = {
     val subject = "Missing video encoding found"
     val message =
         s"""
@@ -93,7 +93,7 @@ object MissingVideoEncodings extends Notification {
            |Its location is supposed to be: $encoding
          """.stripMargin
 
-    super.send(subject, message)
+    super.send(akkaAsync)(subject, message)
   }
 
 }

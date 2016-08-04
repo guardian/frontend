@@ -13,10 +13,7 @@ define([
     'common/modules/onward/history',
     'common/modules/identity/api',
     'lodash/objects/assign',
-    'lodash/collections/forEach',
-    'lodash/arrays/uniq',
-    'lodash/collections/map',
-    'common/utils/robust'
+    'lodash/collections/forEach'
 ], function (
     $,
     config,
@@ -32,10 +29,7 @@ define([
     history,
     id,
     assign,
-    forEach,
-    uniq,
-    map,
-    robust
+    forEach
 ) {
     var NG_STORAGE_KEY = 'gu.analytics.referrerVars',
         standardProps = 'channel,prop1,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop38,prop47,' +
@@ -44,23 +38,10 @@ define([
 
     function Omniture() {
         this.s = window.s;
-        this.pageviewSent = false;
-        this.addHandlers();
     }
 
     Omniture.prototype.getStandardProps = function () {
         return standardProps;
-    };
-
-    Omniture.prototype.addHandlers = function () {
-        mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
-
-        var logTag = this.logTag.bind(this);
-        mediator.on('module:clickstream:click', function (spec) {
-            // We don't want tracking errors to terminate the event emitter, as
-            // this will mean other event listeners will not be called.
-            robust.catchErrorsAndLog('c-analytics', function () { logTag(spec); });
-        });
     };
 
     Omniture.prototype.logTag = function (spec) {
@@ -76,6 +57,7 @@ define([
             // so do session storage rather than an omniture track.
             storeObj = {
                 pageName: this.s.pageName,
+                path: document.location.pathname,
                 tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
@@ -125,10 +107,17 @@ define([
         });
     };
 
+    Omniture.prototype.trackSamePageLinkClick = function (target, tag, options) {
+        this.trackLink(true, tag, options);
+    };
+
+    Omniture.prototype.trackExternalLinkClick = function (target, tag, options) {
+        this.trackLink(target, tag, options);
+    };
+
     Omniture.prototype.go = function () {
         this.s.linkTrackVars = standardProps;
         this.s.linkTrackEvents = 'None';
-        mediator.emit('analytics:ready');
     };
 
     // A single Omniture instance for the whole application.

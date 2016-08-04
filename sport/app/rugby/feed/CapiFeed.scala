@@ -16,16 +16,12 @@ case class MatchNavigation(
 
 object CapiFeed extends ExecutionContexts with Logging {
 
-  def getMatchArticles() : Future[Map[String, MatchNavigation]] = {
+  def getMatchArticles(matches: Seq[Match]) : Future[Map[String, MatchNavigation]] = {
     Future.sequence(
-      RugbyStatsJob.getAllResults().map { rugbyMatch =>
+      matches.map { rugbyMatch =>
         loadNavigation(rugbyMatch).map( _.map( (rugbyMatch.key, _) ) )
       }
     ).map(_.flatten.toMap)
-  }
-
-  def findMatchArticle(rugbyMatch: Match) : Option[MatchNavigation] = {
-    RugbyStatsJob.getMatchNavContent(rugbyMatch)
   }
 
   private def loadNavigation(rugbyMatch: Match): Future[Option[MatchNavigation]] = {

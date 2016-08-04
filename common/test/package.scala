@@ -3,13 +3,16 @@ package test
 import java.io.File
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
-import common.ExecutionContexts
+import common.{ExecutionContexts, Lazy}
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 import play.api._
+import play.api.libs.ws.WSClient
+import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 
@@ -120,4 +123,13 @@ object TestRequest {
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
+}
+
+trait WithTestWsClient {
+  self: WithTestWsClient with BeforeAndAfterAll =>
+
+  private val lazyWsClient = Lazy(NingWSClient(NingWSClientConfig(maxRequestRetry = 0)))
+  lazy val wsClient: WSClient = lazyWsClient
+
+  override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
 }

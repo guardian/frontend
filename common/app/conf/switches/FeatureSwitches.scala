@@ -337,6 +337,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val DiscussionAllowAnonymousRecommendsSwitch = Switch(
+    SwitchGroup.Feature,
+    "discussion-allow-anonymous-recommends-switch",
+    "if this is switched on, comments can be recommended by signed out users",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+
+  )
+
   val MissingVideoEndcodingsJobSwitch = Switch(
     SwitchGroup.Feature,
     "check-for-missing-video-encodings",
@@ -374,6 +385,26 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("NataliaLKB")),
     safeState = On,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val LiveBlogAmpSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-blog-amp",
+    "If this switch is on, link to amp pages will be in the metadata for live blogs",
+    owners = Seq(Owner.withGithub("SiAdcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 26),
+    exposeClientSide = false
+  )
+
+  val LiveUpdateAmpSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-update-amp",
+    "If this switch is on, amp-live-list will be included in live blogs",
+    owners = Seq(Owner.withGithub("SiAdcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 2),
     exposeClientSide = false
   )
 
@@ -480,6 +511,17 @@ trait FeatureSwitches {
     "sharing-comments",
     "When ON, the user will be able to share comments",
     owners = Seq(Owner.withGithub("marialivia16")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Gareth Trufitt
+  val SteadyPageUtil = Switch(
+    SwitchGroup.Feature,
+    "steady-page-util",
+    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

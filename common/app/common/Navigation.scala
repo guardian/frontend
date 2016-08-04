@@ -47,8 +47,8 @@ trait Navigation {
   val uk = SectionLink("uk-news", "UK", "UK News", "/uk-news")
   val us = SectionLink("us-news", "US", "US News", "/us-news")
   val usElection2016 = SectionLink("us-elections-2016", "election 2016", "Election 2016", "/us-news/us-elections-2016")
-  val auElection2016 = SectionLink("au-elections-2016", "election 2016", "Election 2016", "/australia-news/australian-election-2016")
   val politics = SectionLink("politics", "politics", "Politics", "/politics")
+  val australiaPolitics = SectionLink("politics", "politics", "Politics", "/australia-news/australian-politics")
   val technology = SectionLink("technology", "tech", "Technology", "/technology")
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
   val media = SectionLink("media", "media", "Media", "/media")
@@ -100,6 +100,7 @@ trait Navigation {
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
   val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
   val racing = SectionLink("sport", "racing", "Racing", "/sport/horse-racing")
+  val rioOlympics = SectionLink("sport", "olympics", "Olympics", "/sport/rio-2016")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
