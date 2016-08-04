@@ -15,7 +15,7 @@ define([
     fastdom,
     $
 ) {
-    function useReqwest(buttonEl) {
+    function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
             buttonEl.innerHTML = 'Loading...';
@@ -30,10 +30,6 @@ define([
                 success: function (response) {
                     var subscriptionState;
                     try {
-                        // Why array.length rather than typeof; there are multiple circumstances where the value could be undefined:
-                        // nothing came back at all
-                        // stuff came back but that one field is undefined
-                        // the data came back in the format expected as above, but with the subscribeTo value undefined
                         if (response.subscriptions.length < 1) {
                             subscriptionState = false;
                         } else {
@@ -50,7 +46,9 @@ define([
     }
 
     function enhanceEmailPreferences() {
-        $.forEachElement('.email-subscription__button', useReqwest);
+        $.forEachElement('.email-subscription__button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
+
     }
 
     function encodeFormData(csrfToken, buttonVal, htmlPreference) {
@@ -60,11 +58,10 @@ define([
     }
 
     function renderErrorMessage(buttonEl) {
-        // appends an error message on the parent div of the button
+        clearErrorMessages();
         var errorMessage = 'Sorry, an error has occurred, please refresh the page and try again';
         return fastdom.write(function () {
             var insertionPoint = $.ancestor(buttonEl, 'email-subscription');
-            // Only append an error message once for each email subscription DIV
             if (qwery('.form__error', insertionPoint).length < 1) {
                 var errorMessageDiv = document.createElement('div');
                 errorMessageDiv.innerHTML = errorMessage;
@@ -74,8 +71,16 @@ define([
         });
     }
 
-    function updateButton(buttonEl, subscriptionState) {
-        // do this after successful POST request to update the appearance and value of the button
+    // clear any error messages from the page
+    function clearErrorMessages() {
+        if (qwery('.form__error')) {
+            $.forEachElement('.form__error', function (errorEl) {
+                errorEl.remove();
+            });
+        }
+    }
+
+    function updateSubscriptionButton(buttonEl, subscriptionState) {
         var buttonVal = buttonEl.value;
         if (subscriptionState === true) {
             fastdom.write(function () {
@@ -96,6 +101,20 @@ define([
         }
     }
 
+    function updateSaveButton(buttonEl) {
+        buttonEl.innerHTML = 'Save';
+        buttonEl.disabled = false;
+        renderErrorMessage(buttonEl);
+    }
+
+    function updateButton(buttonEl, subscriptionState) {
+        if (buttonEl.classList.contains('email-subscription__button')) {
+            updateSubscriptionButton(buttonEl, subscriptionState);
+        } else {
+            updateSaveButton(buttonEl);
+        }
+    }
+
     function getHTMLPref() {
         if(qwery('#htmlPreference_HTML')[0].checked) {
           return 'HTML';
@@ -109,7 +128,7 @@ define([
     function generateFormQueryString(buttonEl) {
         var formEl = $.ancestor(buttonEl, 'form');
         var csrfToken = (formEl.elements.csrfToken.value).toString();
-        var buttonVal = buttonEl.value.toString();
+        var buttonVal = buttonEl.value.toString() || '';
         var htmlPreference = getHTMLPref() || '';
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
     }
