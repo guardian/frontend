@@ -4,7 +4,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonGzipFilter}
+import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import http.AdminHttpErrorHandler
@@ -66,5 +66,5 @@ trait AppComponents extends FrontendComponents with AdminLifecycleComponents wit
   lazy val appIdentity = ApplicationIdentity("frontend-admin")
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters
+  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters ++ wire[AdminFilters].filters
 }
