@@ -1,7 +1,6 @@
 package controllers.admin
 
 import common.Logging
-import controllers.AuthLogging
 import implicits.Requests
 import model.NoCache
 import model.deploys.{RiffRaffService, ApiResults}
@@ -10,7 +9,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import model.deploys._
 import play.api.libs.ws.WSClient
 
-trait DeploysRadiatorController extends Controller with Logging with AuthLogging with Requests {
+trait DeploysRadiatorController extends Controller with Logging with Requests {
 
   val riffRaff: RiffRaffService
   val teamcity: TeamcityService

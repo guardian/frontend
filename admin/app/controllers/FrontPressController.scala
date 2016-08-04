@@ -4,7 +4,7 @@ import common.{AkkaAsync, ExecutionContexts, Logging}
 import jobs.{HighFrequency, LowFrequency, RefreshFrontsJob, StandardFrequency}
 import play.api.mvc.{Action, Controller}
 
-class FrontPressController(akkaAsync: AkkaAsync) extends Controller with Logging with AuthLogging with ExecutionContexts {
+class FrontPressController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
 
   def press() = Action { implicit request =>
     Ok(views.html.press())

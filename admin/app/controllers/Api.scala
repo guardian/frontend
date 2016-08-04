@@ -2,13 +2,12 @@ package controllers.admin
 
 import conf.Configuration
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WSClient
 import model.NoCache
 
-class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
+class Api(wsClient: WSClient) extends Controller with Logging with ExecutionContexts with Strings {
 
   def proxy(path: String, callback: String) = Action.async { request =>
     val queryString = request.queryString.map { p =>
@@ -17,7 +16,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
 
     val url = s"${Configuration.contentApi.contentApiHost}/$path?$queryString${Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse("")}"
 
-    log("Proxying tag API query to: %s" format url, request)
+    log.info("Proxying tag API query to: %s" format url)
 
     wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
@@ -32,7 +31,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
       q.javascriptEscaped.urlEncoded
     )
 
-    log("Proxying tag API query to: %s" format url, request)
+    log.info("Proxying tag API query to: %s" format url)
 
     wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
@@ -47,7 +46,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
       callback.javascriptEscaped.urlEncoded
     )
 
-    log("Proxying item API query to: %s" format url, request)
+    log.info("Proxying item API query to: %s" format url)
 
     wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/javascript"))
@@ -55,7 +54,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
   }
 
   def json(url: String) = Action.async { request =>
-    log("Proxying json request to: %s" format url, request)
+    log.info("Proxying json request to: %s" format url)
 
     wsClient.url(url).get().map { response =>
       NoCache(Ok(response.body).as("application/json"))

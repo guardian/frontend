@@ -4,7 +4,6 @@ import contentapi.PreviewContentApi
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
-import controllers.AuthLogging
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
 
@@ -19,7 +18,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
   def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))

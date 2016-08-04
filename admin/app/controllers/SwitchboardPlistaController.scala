@@ -3,17 +3,16 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common._
 import conf.switches.{SwitchState, Switches}
-import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
 import services.SwitchNotification
 import tools.Store
 import model.NoCache
 
-class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
 
   def renderSwitchboard() = Action { implicit request =>
-    log("loaded plista Switchboard", request)
+    log.info("loaded plista Switchboard")
 
     val switchesWithLastModified = Store.getSwitchesWithLastModified
     val switchStates = Properties(switchesWithLastModified map {_._1} getOrElse "")
@@ -63,7 +62,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with 
     if (remoteSwitches.map(_._2).exists(_.getMillis > localLastModified)) {
         NoCache(Redirect("/dev/switchboard-plista").flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
     } else {
-      log("saving plista switchboard", request)
+      log.info("saving plista switchboard")
       val plistaSetting = form.get(Switches.PlistaForOutbrainAU.name).head
 
       // for switches not present on this page, we need to persist their current values
