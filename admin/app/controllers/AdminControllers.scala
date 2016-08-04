@@ -7,12 +7,14 @@ import controllers.admin.commercial.{DfpDataController, SlotController, Takeover
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import jobs.VideoEncodingsJob
 import play.api.libs.ws.WSClient
+import play.api.Mode
 
 trait AdminControllers {
   def akkaAsync: AkkaAsync
   def wsClient: WSClient
   def videoEncodingsJob: VideoEncodingsJob
-  lazy val oAuthLoginController = wire[OAuthLoginController]
+  def mode: Mode.Mode
+  lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
   lazy val adminIndexController = wire[AdminIndexController]
