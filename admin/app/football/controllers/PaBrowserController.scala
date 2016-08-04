@@ -8,12 +8,11 @@ import java.net.URLDecoder
 import scala.language.postfixOps
 import model.{Cached, NoCache}
 import play.api.libs.ws.WSClient
-import play.api.Mode
 
 
-class PaBrowserController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
+class PaBrowserController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient {
 
-  def browserSubstitution() = Action { implicit request =>
+  def browserSubstitution() =AuthActions.AuthActionTest { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
     val query = getOneOrFail(submission, "query")
     val replacements = """(\{.*?\})""".r.findAllIn(query).toList.filter("{apiKey}"!=)
@@ -31,11 +30,11 @@ class PaBrowserController(val wsClient: WSClient, val mode: Mode.Mode) extends C
     NoCache(SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==))))
   }
 
-  def browse = Action { implicit request =>
+  def browse =AuthActions.AuthActionTest { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.football.browse()))
   }
 
-  def browser(query: String) = Action.async { implicit request =>
+  def browser(query: String) =AuthActions.AuthActionTest.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
     client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)

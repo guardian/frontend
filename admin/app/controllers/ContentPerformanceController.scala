@@ -13,7 +13,7 @@ class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob) extends
 
   val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 
-  def renderVideoEncodingsDashboard() = Action { implicit request =>
+  def renderVideoEncodingsDashboard() = AuthActions.AuthActionTest { implicit request =>
 
     val videoEncodingsReport = videoEncodingsJob.getReport("missing-encodings")
 

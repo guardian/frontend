@@ -9,11 +9,11 @@ import play.api.mvc.{Action, AnyContent, Controller}
 
 class DfpDataController extends Controller with ExecutionContexts {
 
-  def renderCacheFlushPage(): Action[AnyContent] = Action { implicit request =>
+  def renderCacheFlushPage(): Action[AnyContent] = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.dfpFlush(environment.stage)))
   }
 
-  def flushCache(): Action[AnyContent] = Action { implicit request =>
+  def flushCache(): Action[AnyContent] = AuthActions.AuthActionTest { implicit request =>
     DfpDataCacheJob.refreshAllDfpData()
     NoCache(Redirect(routes.DfpDataController.renderCacheFlushPage()))
       .flashing("triggered" -> "true")

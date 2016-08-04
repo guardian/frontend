@@ -16,8 +16,6 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  override lazy val mode = app.mode
-
   "test index page loads" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football"))
     status(result) should equal(OK)

@@ -5,16 +5,16 @@ import java.io.File
 import common.{AkkaAsync, ExecutionContexts, Logging}
 import controllers.AuthLogging
 import model.R2PressMessage
-import play.api.mvc.{Action, AnyContent, Controller}
-import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
+import play.api.mvc.{AnyContent, Controller}
+import services.{R2PressedPageTakedownNotifier, R2PagePressNotifier}
 
 class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = Action { implicit request =>
+  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))
   }
 
-  def batchUpload() = Action { implicit request =>
+  def batchUpload() = AuthActions.AuthActionTest { implicit request =>
     val body = request.body
     val uploadedFile = body.asMultipartFormData.flatMap { files =>
       files.file("r2urlfile").map { theFile =>
@@ -62,7 +62,7 @@ class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging wi
     }
   }
 
-  def press() = Action { implicit request =>
+  def press() = AuthActions.AuthActionTest { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
       form("r2url").map { r2Url =>

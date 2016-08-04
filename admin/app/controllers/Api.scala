@@ -10,7 +10,7 @@ import model.NoCache
 
 class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
-  def proxy(path: String, callback: String) = Action.async { request =>
+  def proxy(path: String, callback: String) = AuthActions.AuthActionTest.async { request =>
     val queryString = request.queryString.map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
@@ -24,7 +24,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
     }
   }
 
-  def tag(q: String, callback: String) = Action.async { request =>
+  def tag(q: String, callback: String) = AuthActions.AuthActionTest.async { request =>
     val url = "%s/tags?format=json&page-size=50%s&callback=%s&q=%s".format(
       Configuration.contentApi.contentApiHost,
       Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse(""),
@@ -39,7 +39,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
     }
   }
 
-  def item(path: String, callback: String) = Action.async { request =>
+  def item(path: String, callback: String) = AuthActions.AuthActionTest.async { request =>
     val url = "%s/%s?format=json&page-size=1%s&callback=%s".format(
       Configuration.contentApi.contentApiHost,
       path.javascriptEscaped.urlEncoded,
@@ -54,7 +54,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with AuthLogging w
     }
   }
 
-  def json(url: String) = Action.async { request =>
+  def json(url: String) = AuthActions.AuthActionTest.async { request =>
     log("Proxying json request to: %s" format url, request)
 
     wsClient.url(url).get().map { response =>
