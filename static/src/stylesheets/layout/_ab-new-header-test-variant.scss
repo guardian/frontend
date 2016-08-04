@@ -211,7 +211,7 @@ $gutter-medium: 37px;
     padding-left: 7px;
     padding-top: $gs-baseline/2;
     width: gs-span(2);
-    z-index: 2;
+    z-index: 3;
 
     // Smaller size compensates for how big the word "Australia" is
     @include mq($until: $mobile-medium) {
@@ -242,7 +242,6 @@ $gutter-medium: 37px;
     margin: 0;
     list-style: none;
     padding: 0;
-    z-index: 3;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter;
