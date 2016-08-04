@@ -232,7 +232,7 @@ object EmailSubscriptions {
       "Every Thursday",
       "1902",
       10,
-      subscribedTo = subscribedListIds.exists{ x => x == "10" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1902" }
     ),
     EmailSubscription(
       "The Flyer",
