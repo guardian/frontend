@@ -68,7 +68,7 @@ object BodyCleaner {
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
-      ListIf(amp && shouldShowAds)(AmpAdCleaner(edition, request.uri, article))
+      ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
 
     withJsoup(BulletCleaner(html))(cleaners :_*)
   }

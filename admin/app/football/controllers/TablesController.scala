@@ -9,12 +9,12 @@ import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
 import play.api.libs.ws.WSClient
+import play.api.Mode
 import scala.concurrent.Future
 
+class TablesController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
 
-class TablesController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient {
-
-  def tablesIndex = AuthActions.AuthActionTest.async { implicit request =>
+  def tablesIndex = Action.async { implicit request =>
     for {
       allCompetitions <- client.competitions
     } yield {
@@ -23,7 +23,7 @@ class TablesController(override val wsClient: WSClient) extends Controller with 
     }
   }
 
-  def redirectToTable = AuthActions.AuthActionTest { implicit request =>
+  def redirectToTable = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competitionId").get.head
     val url = submission.get("focus").get.head match {
@@ -43,7 +43,7 @@ class TablesController(override val wsClient: WSClient) extends Controller with 
     NoCache(SeeOther(url))
   }
 
-  def leagueTableFragment(competitionId: String, focus: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTableFragment(competitionId: String, focus: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -60,7 +60,7 @@ class TablesController(override val wsClient: WSClient) extends Controller with 
     }
   }
 
-  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -78,7 +78,7 @@ class TablesController(override val wsClient: WSClient) extends Controller with 
     }
   }
 
-  def leagueTable(competitionId: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTable(competitionId: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>

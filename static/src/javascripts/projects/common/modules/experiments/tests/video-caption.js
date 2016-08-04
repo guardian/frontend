@@ -13,7 +13,7 @@ define([
     {
         this.id = 'VideoCaption';
         this.start = '2016-07-26';
-        this.expiry = '2016-08-03';
+        this.expiry = '2016-08-09';
         this.author = 'Gideon Goldberg';
         this.description = 'Increase the prominence of the video caption on in-article videos.';
         this.audience = 0.21;

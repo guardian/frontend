@@ -2,22 +2,20 @@ package controllers.BreakingNews
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import play.Play
 import play.api.libs.json._
 import services.S3
+import play.api.Mode
 
-trait S3BreakingNews extends S3 {
+class S3BreakingNews(mode: Mode.Mode) extends S3 {
   override lazy val bucket = Configuration.aws.bucket
-  lazy val stage = if (Play.isTest) "TEST" else Configuration.environment.stage.toUpperCase
+  lazy val stage = if(mode == Mode.Test) "TEST" else Configuration.environment.stage.toUpperCase
   val namespace = "notifications"
   lazy val location = s"$stage/$namespace"
   def getKeyForPath(path: String): String = s"$location/$path.json"
 }
-object S3BreakingNews extends S3BreakingNews
 
-trait BreakingNewsApi extends Logging with ExecutionContexts {
+class BreakingNewsApi(s3: S3BreakingNews) extends Logging with ExecutionContexts {
 
-  val s3: S3BreakingNews
   val breakingNewskey = s3.getKeyForPath("breaking-news")
 
   @throws[Exception]
@@ -50,8 +48,4 @@ trait BreakingNewsApi extends Logging with ExecutionContexts {
     }
   }
 
-}
-
-object BreakingNewsApi extends BreakingNewsApi {
-  lazy val s3 = S3BreakingNews
 }

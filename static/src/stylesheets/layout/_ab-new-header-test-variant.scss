@@ -31,7 +31,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         height: calc(3/16 * 225px);
     }
 
-    @include mq($from: mobileLandscape) {
+    @include mq(mobileLandscape) {
         width: 260px;
         // height: auto doesn't work in Safari
         height: calc(3/16 * 260px);
@@ -46,6 +46,10 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     align-items: center;
     width: 100%;
     margin-top: $gs-baseline;
+
+    @include mq($mobile-medium) {
+        margin-top: $gs-baseline * 2;
+    }
 
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
@@ -63,7 +67,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 // Specific values for menu button breakpoints
 $veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
-$gutter-small: 30px;
+$gutter-small: 29px;
 $gutter-medium: 37px;
 
 .new-header__nav__menu-button {
@@ -114,8 +118,6 @@ $gutter-medium: 37px;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(.55, .055, .675, .19);
 
     &,
     &:before,
@@ -125,38 +127,28 @@ $gutter-medium: 37px;
         width: $gs-gutter;
         height: $gs-baseline / 6;
         background-color: #ffffff;
+        transition: all .3s cubic-bezier(.23, 1, .32, 1);
     }
 
     &:before {
         top: -$gs-gutter / 4;
-        transition: top .1s .34s ease-in,
-        opacity .1s ease-in;
     }
 
     &:after {
         bottom: -$gs-gutter / 4;
-        // The first time value is open animation, second is close animation
-        transition: bottom .1s .34s ease-in,
-        transform .3s cubic-bezier(.55, .055, .675, .19);
     }
 
     &--open {
-        transform: rotate(225deg);
-        transition-delay: .14s;
-        transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+        background-color: transparent;
 
         &:before {
             top: 0;
-            opacity: 0;
-            transition: top .1s ease-out,
-            opacity .1s .14s ease-out;
+            transform: rotate(-45deg);
         }
 
         &:after {
             bottom: 0;
-            transform: rotate(-90deg);
-            transition: bottom .1s ease-out,
-            transform .3s .14s cubic-bezier(.215, .61, .355, 1);
+            transform: rotate(45deg);
         }
     }
 }
@@ -219,66 +211,83 @@ $gutter-medium: 37px;
     padding-left: 7px;
     padding-top: $gs-baseline/2;
     width: gs-span(2);
-    z-index: 2;
+    z-index: 3;
+
+    // Smaller size compensates for how big the word "Australia" is
+    @include mq($until: $mobile-medium) {
+        font-size: 13px;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
-    }
-
-    &:hover {
-        color: #ffffff;
     }
 }
 
 .inline-world__svg {
     fill: $news-support-1;
     vertical-align: middle;
-    min-width: 1em;
-    min-height: 1em;
-
-    &:hover {
-        fill: #ffffff;
-    }
+    min-width: 14px;
+    min-height: 14px;
+    margin-right: 1px;
+    margin-top: -$gs-baseline/4;
 }
 
 .edition-picker__dropdown {
     display: none;
     position: absolute;
-    top: 33px;
-    left: 7px;
+    top: 40px;
+    left: $gs-gutter/2;
     // overriding default styling
     width: gs-span(2);
     margin: 0;
     list-style: none;
     padding: 0;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    overflow: hidden;
-    z-index: 3;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter;
     }
-}
 
-.edition-picker__dropdown__item {
-    padding-top: $gs-baseline/2;
-    padding-bottom: $gs-baseline/2;
-    padding-left: $gs-gutter;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: -10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 10px 10px;
+        border-color: transparent transparent $guardian-brand-dark;
+    }
 }
 
 .edition-picker__dropdown-item-link {
-    color: $news-support-1;
+    color: #ffffff;
+    display: block;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    padding-left: $gs-gutter;
+
+    &:hover {
+        background-color: darken($guardian-brand-dark, 3%);
+    }
 }
 
 .edition-picker__current-edition {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
     width: gs-span(2) - 4px;
     padding-left: 4px;
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline/2;
     display: block;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #ffffff;
+
+        .inline-world__svg {
+            fill: #ffffff;
+        }
+    }
 }
 
 .edition-picker__checkbox, .edition-picker__button {
@@ -287,20 +296,11 @@ $gutter-medium: 37px;
     &:checked, &.open {
         & ~ .edition-picker__dropdown {
             display: block;
-            background-color: lighten($guardian-brand, 5%);
-
-            .edition-picker__dropdown__item {
-                display: block;
-            }
-        }
-        & ~ .edition-picker__current-edition {
             background-color: $guardian-brand-dark;
-            z-index: 3;
-            color: #ffffff;
+        }
 
-            .inline-world__svg {
-                fill: #ffffff;
-            }
+        & ~ .edition-picker__current-edition {
+            z-index: 3;
         }
     }
 }
@@ -338,12 +338,13 @@ $gutter-medium: 37px;
     right: 0;
     bottom: 0;
     left: 0;
-    transition: opacity .2s;
+    transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
     z-index: -1;
 
     .main-menu-container.off-screen & {
         opacity: 0;
+        transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 
@@ -358,7 +359,7 @@ $gutter-medium: 37px;
     overflow: auto;
 
     will-change: transform;
-    transition: transform .3s ease-out;
+    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
@@ -370,6 +371,7 @@ $gutter-medium: 37px;
 
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
+        transition: transform .4s cubic-bezier(.23, 1, .32, 1);
     }
 }
 

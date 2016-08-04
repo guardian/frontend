@@ -1,9 +1,8 @@
 package controllers.admin
 
 import implicits.Requests
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.Logging
-import controllers.AuthLogging
 import tools.CloudWatch
 import play.api.libs.ws.{WSAuthScheme, WSClient}
 import play.api.libs.concurrent.Execution.Implicits._
@@ -12,7 +11,7 @@ import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
 
-class RadiatorController(wsClient: WSClient) extends Controller with Logging with AuthLogging with Requests{
+class RadiatorController(wsClient: WSClient) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -28,13 +27,13 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
   }
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def commitDetail(hash: String) = Action.async { implicit request =>
     val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
-  def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+  def renderRadiator() = Action.async { implicit request =>
 
     for {
       user50x <- CloudWatch.user50x
@@ -51,7 +50,7 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
     }
   }
 
-  def pingdom() = AuthActions.AuthActionTest.async { implicit request =>
+  def pingdom() = Action.async { implicit request =>
     val url = Configuration.pingdom.url + "/checks"
     val user = Configuration.pingdom.user
     val password = Configuration.pingdom.password

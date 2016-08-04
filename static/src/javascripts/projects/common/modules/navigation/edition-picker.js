@@ -35,11 +35,11 @@ define([
                     if (button.hasClass('open')) {
                         button.removeClass('open');
                         button.attr('aria-expanded', 'false');
-                        dropdown.attr('hidden', '');
+                        dropdown.attr('aria-hidden', 'true');
                     } else {
                         button.addClass('open');
                         button.attr('aria-expanded', 'true');
-                        dropdown.removeAttr('hidden');
+                        dropdown.attr('aria-hidden', 'false');
                     }
                 });
             });

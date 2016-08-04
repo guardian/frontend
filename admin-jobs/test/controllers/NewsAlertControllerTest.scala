@@ -6,6 +6,7 @@ import java.util.UUID
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, Props}
 import common.ExecutionContexts
+import controllers.BreakingNews.{BreakingNewsApi, S3BreakingNews}
 import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
@@ -27,9 +28,10 @@ import test.ConfiguredTestSuite
 
   def controllerWithActorReponse(mockResponse: Any) = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
-    new NewsAlertController {
-      override val breakingNewsUpdater = updaterActor
-      override val apiKey = testApiKey
+    val fakeApi = new BreakingNewsApi(new S3BreakingNews(app.mode)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
+    new NewsAlertController(fakeApi) {
+      override lazy val breakingNewsUpdater = updaterActor
+      override lazy val apiKey = testApiKey
     }
   }
 
