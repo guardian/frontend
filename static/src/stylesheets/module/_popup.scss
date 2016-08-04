@@ -347,6 +347,9 @@ $control-offset: 36 + $gs-gutter/2;
     ul {
         margin: 0;
     }
+    li.popup__item::before {
+        content: none;
+    }
     h3 {
         color: #333333;
         padding-top: 3px;

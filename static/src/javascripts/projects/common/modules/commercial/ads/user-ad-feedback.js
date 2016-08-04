@@ -1,11 +1,13 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/fetch'
+    'common/utils/fetch',
+    'common/utils/config'
 ], function (
     bonzo,
     qwery,
-    fetch
+    fetch,
+    config
 ) {
 
     function userAdFeedback(pagePath, adSlotId, creativeid, reason) {
@@ -19,8 +21,8 @@ define([
 
     function recordUserAdFeedback(pagePath, adSlotId, creativeId, feedbackType) {
         var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
-        // TODO: get stage from config?
-        var data = '{"stage":"CODE", "adPage":"'+pagePath+'", "adSlotId":"'+adSlotId+'", "adCreativeId":"'+creativeId+'", "adFeedback":"'+feedbackType+'"}';
+        var stage = config.page.isProd ? "PROD" : "CODE";
+        var data = '{"stage":"'+stage+'", "adPage":"'+pagePath+'", "adSlotId":"'+adSlotId+'", "adCreativeId":"'+creativeId+'", "adFeedback":"'+feedbackType+'"}';
         return fetch(feedbackUrl, {
             method: 'post',
             body: data,

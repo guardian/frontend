@@ -158,13 +158,8 @@ define([
                     bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
                         if (!bonzo(el).hasClass('js-onclick-ready')) {
                             el.addEventListener('click', function() {
-                                if(!bonzo(el).hasClass('state__open')) {
+                                if(bonzo(el).hasClass('is-active')) {
                                     userAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
-                                    bonzo(el).removeClass('state__closed');
-                                    bonzo(el).addClass('state__open');
-                                } else {
-                                    bonzo(el).removeClass('state__open');
-                                    bonzo(el).addClass('state__closed');
                                 }
                             });
                             bonzo(el).addClass('js-onclick-ready');
