@@ -1,12 +1,11 @@
 package controllers.admin
 
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import tools._
 
-class AnalyticsConfidenceController extends Controller with Logging with AuthLogging with ExecutionContexts {
-  def renderConfidence() = AuthActions.AuthActionTest.async { implicit request =>
+class AnalyticsConfidenceController extends Controller with Logging with ExecutionContexts {
+  def renderConfidence() = Action.async { implicit request =>
     for {
       omniture <- CloudWatch.omnitureConfidence
       ophan <- CloudWatch.ophanConfidence
