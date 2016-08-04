@@ -1,18 +1,17 @@
 package controllers.admin
 
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.Logging
 import conf.Configuration
-import controllers.AuthLogging
 import model.NoCache
 
-class SportTroubleshooterController extends Controller with Logging with AuthLogging {
+class SportTroubleshooterController extends Controller with Logging {
 
-  def renderFootballTroubleshooter() = AuthActions.AuthActionTest { implicit request =>
+  def renderFootballTroubleshooter() = Action { implicit request =>
     NoCache(Ok(views.html.footballTroubleshooter(Configuration.environment.stage)))
   }
 
-  def renderCricketTroubleshooter() = AuthActions.AuthActionTest { implicit request =>
+  def renderCricketTroubleshooter() = Action { implicit request =>
     NoCache(Ok(views.html.cricketTroubleshooter(Configuration.environment.stage)))
   }
 }

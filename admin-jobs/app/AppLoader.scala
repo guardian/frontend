@@ -26,7 +26,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait AdminJobsServices {
   def environment: Environment
-  lazy val mode = environment.mode
+  def mode: Mode.Mode
   lazy val s3BreakingNews = wire[S3BreakingNews]
   lazy val breakingNewsApi = wire[BreakingNewsApi]
 }

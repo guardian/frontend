@@ -7,8 +7,8 @@ define([
     reqwest,
     config
 ) {
-    // This should no longer be used. Prefer the new 'ajax-promise' library instead, which is es6 compliant.
-    // Even better, use 'common/utils/fetch' or 'common/utils/fetch-json'
+    // This should no longer be used.
+    // Prefer the new 'common/utils/fetch' or 'common/utils/fetch-json' library instead, which are es6 compliant.
     var ajaxHost = config.page.ajaxUrl || '';
 
     function ajax(params) {
