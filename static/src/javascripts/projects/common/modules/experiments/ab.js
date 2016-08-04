@@ -13,7 +13,7 @@ define([
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/participation-discussion-ordering-take-2',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
-    'common/modules/experiments/tests/giraffe-header',
+    'common/modules/experiments/tests/giraffe-header'
 ], function (
     reportError,
     config,
