@@ -84,7 +84,7 @@ define([
             }).then(function () {
                 module.tracking(widgetCodes.code || widgetCodes.image);
                 require(['js!' + outbrainUrl]);
-            });   
+            });
         }
     }
 
@@ -118,9 +118,8 @@ define([
         if (!emailSignupPromise) {
             emailSignupPromise = new Promise(function (resolve) {
                 if (config.switches.emailInArticleOutbrain &&
-                    emailRunChecks.getEmailInserted() &&
-                    emailRunChecks.getEmailShown() === 'theGuardianToday') {
-                    // The Guardian today email is already there
+                    emailRunChecks.getEmailInserted()) {
+                    // There is an email sign-up
                     // so load the merchandising component
                     resolve('email');
                 } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {

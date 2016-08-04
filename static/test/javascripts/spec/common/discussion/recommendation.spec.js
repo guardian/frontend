@@ -45,7 +45,30 @@ function (
                 target,
                 document.querySelector('.recommendation-test'),
                 'fabio',
-                discussionApi
+                discussionApi,
+                false
+            )
+            .then(function () {
+                expect(discussionApi.recommendComment).toHaveBeenCalled();
+                expect(target.classList.contains('d-comment__recommend--recommended')).toBe(true, 'clicked classList');
+                expect(target.classList.contains('js-recommend-comment')).toBe(false, 'action classList');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should send an anonymous request to the discussion API when permitted', function (done) {
+            spyOn(discussionApi, 'recommendComment').and.callFake(function () {
+                return Promise.resolve();
+            });
+            var target = document.querySelector('.js-recommend-comment');
+
+            upvote.handle(
+                target,
+                document.querySelector('.recommendation-test'),
+                null,
+                discussionApi,
+                true
             )
             .then(function () {
                 expect(discussionApi.recommendComment).toHaveBeenCalled();
@@ -66,7 +89,8 @@ function (
                 target,
                 document.querySelector('.recommendation-test'),
                 'fabio',
-                discussionApi
+                discussionApi,
+                false
             )
             .then(done.fail)
             .catch(function () {
@@ -90,7 +114,8 @@ function (
                 target,
                 document.querySelector('.recommendation-test'),
                 null,
-                discussionApi
+                discussionApi,
+                false
             )
             .then(function () {
                 expect(discussionApi.recommendComment).not.toHaveBeenCalled();

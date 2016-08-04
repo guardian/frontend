@@ -21,7 +21,12 @@ trait Controllers {
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
 }
 
-trait AppComponents extends FrontendComponents with StandaloneControllerComponents with Controllers with StandaloneLifecycleComponents {
+trait AppComponents
+  extends FrontendComponents
+  with StandaloneControllerComponents
+  with Controllers
+  with StandaloneLifecycleComponents
+  with AdminJobsServices {
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 

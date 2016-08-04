@@ -96,6 +96,11 @@ define([
         }
     }
 
+    function obWidgetIsShown() {
+        var $outbrain = $('.js-outbrain-container');
+        return $outbrain && $outbrain.length > 0;
+    }
+
     var canRunList = {
         theCampaignMinute: function () {
             return (page.keywordExists(['US elections 2016']) || config.page.isMinuteArticle)
@@ -157,6 +162,7 @@ define([
             !userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
+            !obWidgetIsShown() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
