@@ -11,9 +11,9 @@ define([
     function userAdFeedback(pagePath, adSlotId, creativeid, reason) {
         // TODO: This. Better.
         if (reason !== 'ad-feedback-menu-opened') {
-            return recordUserAdFeedback(pagePath, adSlotId, creativeid, reason)
+            return recordUserAdFeedback(pagePath, adSlotId, creativeid, reason);
         } else {
-            return recordUserAdFeedback(pagePath, adSlotId, creativeid, 'ad-feedback-menu-opened')
+            return recordUserAdFeedback(pagePath, adSlotId, creativeid, 'ad-feedback-menu-opened');
         }
     }
 
