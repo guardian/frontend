@@ -1,39 +1,34 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/ajax-promise'
+    'common/utils/fetch'
 ], function (
     bonzo,
     qwery,
-    ajax
+    fetch
 ) {
 
     function userAdFeedback(pagePath, adSlotId, creativeid, reason) {
         // TODO: This. Better.
         if (reason !== 'ad-feedback-menu-opened') {
             return recordUserAdFeedback(pagePath, adSlotId, creativeid, reason)
+        } else {
+            return recordUserAdFeedback(pagePath, adSlotId, creativeid, 'ad-feedback-menu-opened')
         }
     }
 
     function recordUserAdFeedback(pagePath, adSlotId, creativeId, feedbackType) {
         var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
         // TODO: get stage from config?
-        var data = JSON.parse('{"stage":"CODE", "adPage":"'+pagePath+'", "adSlotId":"'+adSlotId+'", "adCreativeId":"'+creativeId+'", "adFeedback":"'+feedbackType+'"}');
-        return ajax({
-            url: feedbackUrl,
+        var data = '{"stage":"CODE", "adPage":"'+pagePath+'", "adSlotId":"'+adSlotId+'", "adCreativeId":"'+creativeId+'", "adFeedback":"'+feedbackType+'"}';
+        return fetch(feedbackUrl, {
             method: 'post',
-            data: data,
-            type: 'html',
-            crossOrigin: true,
-            error: function(err) {
-                // TODO: remove this
-                console.log('feedback write failed for ' + pagePath + '.' + adSlotId + '.' + creativeId + ': '  + err)
-            },
-            success: function(resp) {
-                // TODO: remove this
-                console.log('feedback write succeeded for ' + pagePath + '.' + adSlotId + '.' + creativeId + ': ' + resp)
-            },
-            complete: function(resp) {
+            body: data,
+            mode: 'cors'
+        }).then(function() {    // ignore the response
+        }).catch(function() {    // ignore any errors
+        }).then(function(resp) {    // we're complete - update the UI
+            if (feedbackType !== 'ad-feedback-menu-opened') {
                 var adSlot = bonzo(qwery('#' + adSlotId));
                 adSlot.each(function (ad) {
                     for (var i = 0; i < ad.children.length; i++) {

@@ -158,7 +158,14 @@ define([
                     bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
                         if (!bonzo(el).hasClass('js-onclick-ready')) {
                             el.addEventListener('click', function() {
-                                userAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
+                                if(!bonzo(el).hasClass('state__open')) {
+                                    userAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
+                                    bonzo(el).removeClass('state__closed');
+                                    bonzo(el).addClass('state__open');
+                                } else {
+                                    bonzo(el).removeClass('state__open');
+                                    bonzo(el).addClass('state__closed');
+                                }
                             });
                             bonzo(el).addClass('js-onclick-ready');
                         }
