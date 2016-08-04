@@ -49,6 +49,7 @@ trait FrontendComponents
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
+  lazy val mode = environment.mode
 
   // this is a workaround to make wsapi and the actorsystem available to the injector.
   // I'm forced to do that as we still use Ws.url and Akka.system(app) *everywhere*, and both directly get the reference from the injector
