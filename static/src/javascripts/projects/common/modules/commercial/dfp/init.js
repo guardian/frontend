@@ -9,7 +9,8 @@ define([
     'common/modules/commercial/dfp/private/dfp-env',
     'common/modules/commercial/dfp/private/on-slot-render',
     'common/modules/commercial/dfp/private/PrebidService',
-    'common/modules/commercial/dfp/private/ophan-tracking'
+    'common/modules/commercial/dfp/private/ophan-tracking',
+    'common/modules/commercial/dfp/private/get-stylesheet'
 ], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
 
 
