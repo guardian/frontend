@@ -69,7 +69,7 @@ trait ABTestSwitches {
     "ab-giraffe-header-20160802",
     "Test effectiveness of header for driving contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )

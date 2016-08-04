@@ -13,7 +13,7 @@ define([
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/participation-discussion-ordering-take-2',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
-    'common/modules/experiments/tests/giraffe-header'
+    'common/modules/experiments/tests/contributions-header'
 ], function (
     reportError,
     config,
@@ -29,7 +29,7 @@ define([
     VideoCaption,
     ParticipationDiscussionOrderingTake2,
     HostedZootropolisCta,
-    GiraffeHeader
+    ContributionsHeader
 ) {
 
     var TESTS = [
@@ -39,7 +39,7 @@ define([
         new VideoCaption(),
         new ParticipationDiscussionOrderingTake2(),
         new HostedZootropolisCta(),
-        new GiraffeHeader()
+        new ContributionsHeader()
     ];
 
     var participationsKey = 'gu.ab.participations';
