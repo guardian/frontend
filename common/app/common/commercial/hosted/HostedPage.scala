@@ -17,7 +17,7 @@ trait HostedPage extends StandalonePage {
 
   def twitterText = twitterShareText.getOrElse(if(standfirst.length < 136) standfirst else title) + " #ad"
   def facebookText = facebookShareText.getOrElse(standfirst)
-  def emailText = "Advertiser Content hosted by the Guardian " + emailSubjectText.getOrElse(title)
+  def emailText = emailSubjectText.getOrElse(title) + " - Advertiser Content hosted by the Guardian"
 
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
