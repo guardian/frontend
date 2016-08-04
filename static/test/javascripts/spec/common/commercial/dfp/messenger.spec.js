@@ -15,7 +15,8 @@ define([
                 return value + ' johnny!';
             },
             add1: function(value) { return value + 1; },
-            add2: function(_, ret) { return ret + 2; }
+            add2: function(_, ret) { return ret + 2; },
+            rubicon: function() { return 'rubicon'; }
         };
 
         var injector = new Injector();
@@ -114,7 +115,7 @@ define([
             .catch(done.fail);
         });
 
-        it('should resond with the listeners cumulative result', function (done) {
+        it('should respond with the listeners cumulative result', function (done) {
             var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 1 };
             messenger.register('this', routines.add1, mockWindow);
             messenger.register('this', routines.add2, mockWindow);
@@ -124,6 +125,19 @@ define([
                 expect(response.result).toBe(4);
                 messenger.unregister('this', routines.add1, mockWindow);
                 messenger.unregister('this', routines.add2, mockWindow);
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should respond to Rubicon messages with no IDs', function (done) {
+            var payload = { type: 'set-ad-height', value: { id: 'test', height: '20px' } };
+            messenger.register('set-ad-height', routines.rubicon, mockWindow);
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
+            .then(function () {
+                expect(mockFrame.postMessage).toHaveBeenCalled();
+                expect(response.result).toBe('rubicon');
+                messenger.unregister('set-ad-height', routines.respond, mockWindow);
             })
             .then(done)
             .catch(done.fail);

@@ -115,14 +115,20 @@ define([
     // such as validating the anatomy of the payload and whitelisting
     // event type
     function isValidPayload(payload) {
-        return 'id' in payload &&
-            'type' in payload &&
+        return 'type' in payload &&
             'value' in payload &&
             payload.type in listeners &&
-            isValidId(payload.id);
+            (isStandardMessage() || isRubiconMessage());
 
-        function isValidId(id) {
-            return /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(id);
+        function isStandardMessage() {
+            return 'id' in payload &&
+                /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
+        }
+
+        function isRubiconMessage() {
+            return payload.type === 'set-ad-height' &&
+                'id' in payload.value &&
+                'height' in payload.value;
         }
     }
 
