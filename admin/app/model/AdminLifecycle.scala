@@ -111,6 +111,13 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       AssetMetricsCache.run()
     }
 
+
+
+    //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
+    jobs.scheduleEveryNMinutes("surgingContentEmail","5 0/2 * * * ?"){
+      SurgingSportEmailJob(emailService).run()
+    }
+
   }
 
   private def descheduleJobs(): Unit = {
