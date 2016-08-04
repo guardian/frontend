@@ -10,14 +10,14 @@ import controllers.admin.AuthActions
 import model.NoCache
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc.{AnyContent, Controller}
 import purge.CdnPurge
 
 import scala.concurrent.Future.successful
 
 class PageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def renderPageDecacheForm() = Action { implicit request =>
+  def renderPageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.cache.pageDecacheForm()))
   }
 

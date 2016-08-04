@@ -200,10 +200,10 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json  
 GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                                                        rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
 
 # Admin
-GET            /login                                                                                                            controllers.admin.OAuthLoginAdminController.login
-POST           /login                                                                                                            controllers.admin.OAuthLoginAdminController.loginAction
-GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginAdminController.oauth2Callback
-GET            /logout                                                                                                           controllers.admin.OAuthLoginAdminController.logout
+GET            /login                                                                                                            controllers.admin.OAuthLoginController.login
+POST           /login                                                                                                            controllers.admin.OAuthLoginController.loginAction
+GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginController.oauth2Callback
+GET            /logout                                                                                                           controllers.admin.OAuthLoginController.logout
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
 GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
 GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)

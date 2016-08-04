@@ -9,10 +9,10 @@ GET        /assets/*path                                                        
 
 #Login
 # authentication endpoints
-GET           /login                                                                           controllers.OAuthLoginStandaloneController.login
-POST          /login                                                                           controllers.OAuthLoginStandaloneController.loginAction
-GET           /oauth2callback                                                                  controllers.OAuthLoginStandaloneController.oauth2Callback
-GET           /logout                                                                          controllers.OAuthLoginStandaloneController.logout
+GET           /login                                                                           controllers.OAuthLoginController.login
+POST          /login                                                                           controllers.OAuthLoginController.loginAction
+GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
+GET           /logout                                                                          controllers.OAuthLoginController.logout
 
 # Crossword
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)

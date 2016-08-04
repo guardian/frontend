@@ -11,8 +11,6 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
 
 @DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
-  override lazy val mode = app.mode
-
   "test redirects player card form submission to correct player page" in {
     val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("attack")))))
     status(result) should equal(SEE_OTHER)

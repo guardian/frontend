@@ -1,31 +1,32 @@
 package controllers
 
 import common.{AkkaAsync, ExecutionContexts, Logging}
+import controllers.admin.AuthActions
 import jobs.{HighFrequency, LowFrequency, RefreshFrontsJob, StandardFrequency}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.Controller
 
 class FrontPressController(akkaAsync: AkkaAsync) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def press() = Action { implicit request =>
+  def press() = AuthActions.AuthActionTest { implicit request =>
     Ok(views.html.press())
   }
 
-  def queueAllFrontsForPress() = Action { implicit request =>
+  def queueAllFrontsForPress() = AuthActions.AuthActionTest { implicit request =>
     RefreshFrontsJob.runAll(akkaAsync) match {
       case Some(l) => Ok(s"Pushed ${l.length} fronts to the SQS queue")
       case None => InternalServerError("Could not push to the SQS queue, is there an SNS topic set? (frontPressSns)")
     }
   }
 
-  def queueHighFrequencyFrontsForPress() = Action { implicit request =>
+  def queueHighFrequencyFrontsForPress() = AuthActions.AuthActionTest { implicit request =>
     runJob(RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency), "high frequency")
   }
 
-  def queueStandardFrequencyFrontsForPress() = Action { implicit request =>
+  def queueStandardFrequencyFrontsForPress() = AuthActions.AuthActionTest { implicit request =>
     runJob(RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency), "standard frequency")
   }
 
-  def queueLowFrequencyFrontsForPress() = Action { implicit request =>
+  def queueLowFrequencyFrontsForPress() = AuthActions.AuthActionTest { implicit request =>
     runJob(RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency), "low frequency")
   }
 
