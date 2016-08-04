@@ -99,9 +99,14 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
-      jobs.scheduleEveryNMinutes("surgingContentEmail", 5){
-        SurgingSportEmailJob(emailService).run()
-      }
+//      jobs.scheduleEveryNMinutes("surgingContentEmail", 5){
+//        SurgingSportEmailJob(emailService).run()
+//      }
+    }
+
+    jobs.scheduleEveryNSeconds("surgingContentEmail", 10){
+      println("sending email")
+      SurgingSportEmailJob(emailService).run()
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)

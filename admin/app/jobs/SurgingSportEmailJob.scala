@@ -1,15 +1,32 @@
 package jobs
 
-import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.commercial._
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient._
-import model.{ContentType, Content}
+import model.{Content, ContentType}
 import ophan.SurgingContentAgent
 import services.EmailService
 
 import scala.concurrent.Future
+
+case class SportsSurging(
+                          id: String,
+                          pageViewCount: Int,
+                          content: Option[ContentType]) {
+
+  content.map(_.content).map(_.metadata.webUrl)
+
+  val sportsTargetedKeywords = List("sport/sport","sport/rio-2016","sport/olympics-general")
+
+  private val matchesKeyword = content.exists(_.tags.keywordIds.exists(keyword =>
+    sportsTargetedKeywords.contains(keyword)
+  ))
+
+
+
+  val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 100
+}
 
 case class SurgingSportEmailJob(emailService: EmailService) extends Logging with ExecutionContexts {
 
@@ -18,33 +35,50 @@ case class SurgingSportEmailJob(emailService: EmailService) extends Logging with
   def run() : Future[Unit] = {
     val futureEmail: Option[Future[Unit]] = for {
       adTech <- adTechTeam
-      surgingContent <- surgingContentTeam
+      surgingContentEmail <- surgingContentTeam
     } yield {
-      emailService.send(
-        from = adTech,
-        to = surgingContent.split(","),
-        subject = subject,
-        htmlBody = Some(htmlBody)).map( _ => ())
 
+      getAllSportsSurgingContent
+        .map( surgingContent => {
+          val sportsSurgingEmailBody = surgingContent.filter(_.isSportsSurgingContent)
+          if(sportsSurgingEmailBody.nonEmpty){
+            emailService.send(
+              from = adTech,
+              to = surgingContentEmail.split(","),
+              subject = subject,
+              htmlBody = Some(htmlBody(sportsSurgingEmailBody)))
+          } else{
+            Future.successful(())
+          }
+
+        })
+        .map( _ => ())
     }
+
 
     futureEmail.getOrElse(Future.successful( () ))
   }
 
-  private def htmlBody: String = {
+  def getAllSportsSurgingContent: Future[Seq[SportsSurging]] = {
     val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.sortedSurges
 
-    val response: Future[ItemResponse] = getResponse(ContentApiClient.item("/sport/sdomsdf/sadfasf", Edition.defaultEdition))
+    Future.sequence(surging.map(Function.tupled(getContentFromId)))
+  }
 
-    val futureContent: Future[Option[ContentType]] = response.map { response => response.content.map(Content(_))  }
+  def getContentFromId(id: String, viewCount: Int): Future[SportsSurging] = {
+    getResponse(ContentApiClient.item(id, Edition.defaultEdition))
+        .map(response =>
+          SportsSurging(
+            id = id,
+            pageViewCount = viewCount,
+            content = response.content.map(Content(_))
+          )
+        )
+  }
 
-    futureContent.map( maybeContent =>
-      maybeContent.map ( (content: ContentType) =>
-        content.tags.keywordIds.contains("rio")
-      )
-    )
 
-    views.html.commercial.email.surgingSportContent().body.trim()
+  private def htmlBody(surgingContent: Seq[SportsSurging]): String = {
+    views.html.commercial.email.surgingSportContent(surgingContent).body.trim()
   }
 
 }
