@@ -27,7 +27,7 @@ define([
             mode: 'cors'
         }).then(function() {    // ignore the response
         }).catch(function() {    // ignore any errors
-        }).then(function(resp) {    // we're complete - update the UI
+        }).then(function() {    // we're complete - update the UI
             if (feedbackType !== 'ad-feedback-menu-opened') {
                 var adSlot = bonzo(qwery('#' + adSlotId));
                 adSlot.each(function (ad) {
