@@ -74,9 +74,12 @@
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
                                             @if(amp) {
-                                                <ul class="timeline js-live-blog__timeline u-unstyled">
-                                                @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
-                                                </ul>
+                                                <div class="timeline">
+                                                    <h2 class="timeline__header">Key events</h2>
+                                                    <ul class="timeline__items">
+                                                        @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                    </ul>
+                                                </div>
                                             } else {
                                                 @fragments.dropdown("Key events", Some("key-events"), true) {
                                                     <ul class="timeline js-live-blog__timeline u-unstyled">
