@@ -15,7 +15,7 @@
         @fragments.mostPopularPlaceholder(content.metadata.sectionId)
     } {
         @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
-            <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh()</div>
+            <div class="fc-container fc-container--commercial-high">@fragments.commercial.commercialComponentHigh(content.commercial.isAdvertisementFeature)</div>
         }
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
