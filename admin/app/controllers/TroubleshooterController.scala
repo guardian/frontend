@@ -1,7 +1,7 @@
 package controllers.admin
 
 import contentapi.PreviewContentApi
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
 import controllers.AuthLogging
@@ -21,11 +21,11 @@ object TestFailed{
 
 class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = AuthActions.AuthActionTest{ implicit request =>
+  def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ implicit request =>
+  def test(id: String, testPath: String) = Action.async{ implicit request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 

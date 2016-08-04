@@ -10,7 +10,7 @@ import controllers.admin.AuthActions
 import model.NoCache
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{AnyContent, Controller}
+import play.api.mvc.{AnyContent, Controller, Action}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -23,7 +23,7 @@ class ImageDecacheController(wsClient: WSClient) extends Controller with Logging
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
-  def renderImageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
+  def renderImageDecacheForm() = Action { implicit request =>
     NoCache(Ok(views.html.cache.imageDecacheForm()))
   }
 

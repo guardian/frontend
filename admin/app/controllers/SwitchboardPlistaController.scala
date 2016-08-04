@@ -12,7 +12,7 @@ import model.NoCache
 
 class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with AuthLogging with Logging with ExecutionContexts {
 
-  def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
+  def renderSwitchboard() = Action { implicit request =>
     log("loaded plista Switchboard", request)
 
     val switchesWithLastModified = Store.getSwitchesWithLastModified
@@ -27,7 +27,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with 
     NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, Switches.PlistaForOutbrainAU, lastModified)))
   }
 
-  def save() = AuthActions.AuthActionTest { implicit request =>
+  def save() = Action { implicit request =>
 
     def saveSwitchesOrError(updates: Seq[String], newState: String) = try {
 
