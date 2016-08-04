@@ -36,17 +36,22 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
   }
 
   private def uploadReportToS3(id: String): Unit = {
-    for {
-      client <- RedisReport.redisClient
-      reportData <- client.get(RedisReport.dataKeyFromId(id))
-    } {
-      S3CommercialReports.putPublic(id, reportData, "text/plain")
+    try {
+      for {
+        redisClient <- RedisReport.redisClient
+        reportData <- redisClient.get(RedisReport.dataKeyFromId(id))
+      } {
+        log.logger.info(s"writing report to s3 bucket, view id: $id")
+        S3CommercialReports.putPublic(s"commercial-client-logs/$id", reportData, "text/plain")
+      }
+    } catch {
+      case e:Exception => log.logger.error(e.getMessage)
     }
   }
 }
 
 object S3CommercialReports extends S3 {
-  override lazy val bucket = "commercial-client-logs"
+  override lazy val bucket = "aws-frontend-logs"
 }
 
 /*

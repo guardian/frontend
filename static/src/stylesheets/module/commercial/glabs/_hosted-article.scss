@@ -19,32 +19,21 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             z-index: 2;
             background: linear-gradient(to top, rgba(51, 51, 51, .4) 0%, rgba(51, 51, 51, .4) 2%, transparent 100%);
         }
+        .gs-container {
+            height: 100%;
+        }
     }
     .title {
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
         bottom: 38px;
-        left: 10px;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
         font-weight: bold;
-
-        @include mq(tablet) {
-            left: $gs-gutter * 1.5;
-        }
-
-        @include mq(desktop) {
-            left: $gs-column-width + 20;
-        }
-
-        @include mq(leftCol) {
-            left: $gs-column-width * 3;
-        }
-
-        @include mq(wide) {
-            left: $gs-column-width * 4 + 20;
+        @include mq(tablet, desktop) {
+            padding-right: gs-span(1) + $gs-gutter;
         }
     }
     .caption {
@@ -82,13 +71,17 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             font-size: 26px;
             line-height: 30px;
             font-weight: 100;
+            @include mq($until: tablet) {
+                font-size: 20px;
+                line-height: 24px;
+            }
         }
         .drop-cap {
             @include fs-textSans(4);
             display: inline-block;
             float: left;
             color: #ffffff;
-            padding: 10px;
+            padding: 10px 0;
             font-size: 480%;
             line-height: 68px;
             width: 77px;
@@ -98,6 +91,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .text {
             line-height: 20px;
+        }
+        h1 {
+            line-height: 28px;
         }
     }
     .hosted__standfirst {
@@ -115,18 +111,60 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         .hosted__next-video {
             margin-top: 30px;
         }
-        .hosted__next-video--header,
-        .hosted__next-video--tile {
+        .hosted__next-video--header {
             margin: 0;
+        }
+        .hosted__next-video--tile {
+            margin: 10px 0;
         }
     }
     .content__secondary-column {
         .hosted__next-video {
+            width: auto;
             margin-top: 76px;
+            .hosted__next-video--header,
+            .hosted__next-video--tile {
+                margin-right: 0;
+            }
         }
     }
-}
+    .from-content-api {
+        ul > li:before {
+            border-radius: 0;
+            width: 8px;
+            height: 8px;
+            margin: 1px 8px;
+        }
+        h2 {
+            @include f-headlineSans;
+        }
+    }
+    .hosted__next-page-header--border {
+        width: 100%;
+        height: 10px;
+        margin-bottom: 4px;
+    }
+    .hosted__next-page-title {
+        font-size: 16px;
+        line-height: 18px;
+        padding: 6px;
+        margin: 0;
 
+        @include mq($until: phablet) {
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+    .hosted__next-video .hosted__next-video--tile {
+        background: transparent;
+        border-top: 2px solid #e0e0e0;
+        margin-bottom: 10px;
+    }
+    .hosted__next-video .hosted__next-video--header {
+        border: 0;
+        padding: 0;
+    }
+}
 
 .hosted-article-page.zootropolis {
     @mixin animal-stripe {

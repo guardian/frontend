@@ -1,0 +1,36 @@
+@(content: model.Content)
+
+@import views.support.GoogleAnalyticsAccount
+
+<amp-analytics type="googleanalytics" id="google-analytics">
+    <script type="application/json">
+            {
+              "requests": {
+                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}"
+              },
+              "vars": {
+                "account": "@{GoogleAnalyticsAccount.editorialTracker.trackingId}"
+              },
+              "triggers": {
+                "trackPageview": {
+                  "on": "visible",
+                  "request": "pageviewWithCustomDims",
+                  "vars": {
+                    "title": "@{content.metadata.webTitle}",
+                    "platform": "AMP",
+                    "sectionId": "@{content.metadata.sectionId}",
+                    "contentType": "@{content.metadata.normalisedContentType}",
+                    "commissioningDesks": "@{content.tags.commissioningDesks.mkString(",")}",
+                    "contentId": "@{content.metadata.id}",
+                    "contributorIds": "@{content.tags.contributors.map(_.id).mkString(",")}",
+                    "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
+                    "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
+                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}"
+                  }
+                }
+              }
+            }
+            </script>
+</amp-analytics>
+@* GA pageview confidence pixel *@
+<amp-pixel src="//beacon.guim.co.uk/count/pvg.gif"></amp-pixel>

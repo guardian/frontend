@@ -1,7 +1,9 @@
 package controllers
 
 import com.softwaremill.macwire._
+import controllers.BreakingNews.BreakingNewsApi
 
 trait AdminJobsControllers {
-  lazy val newsAlertController = wire[NewsAlertControllerImpl]
+  def breakingNewsApi: BreakingNewsApi
+  lazy val newsAlertController = wire[NewsAlertController]
 }

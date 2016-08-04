@@ -119,7 +119,7 @@ define([
 
         return player;
     }
-    
+
     function removeCaptionLink(){
         bonzo($('.caption--main a')).remove();
     }
@@ -168,6 +168,31 @@ define([
                 enhanceVideo(el, false, withPreroll);
             });
         });
+    }
+
+    function isGeoBlocked(el) {
+        var source = el.currentSrc;
+
+        // we currently only block to the uk
+        // these files are placed in a special location
+        if (source.indexOf('/ukonly/') !== -1) {
+            return new Promise(function(resolve) {
+                ajax({
+                    url: source,
+                    crossOrigin: true,
+                    method: 'head'
+                }).then(function() {
+                    resolve(false);
+                }, function (response) {
+                    // videos are blocked at the CDN level
+                    resolve(response.status === 403);
+                });
+            });
+        } else {
+            return new Promise(function (resolve) {
+                resolve(false);
+            });
+        }
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
@@ -240,109 +265,124 @@ define([
                     player.controlBar.dispose();
                 });
             } else {
-                blockVideoAds = videoInfo.shouldHideAdverts;
-                withPreroll = shouldPreroll && !blockVideoAds;
-
-                // Location of this is important.
-                events.bindErrorHandler(player);
-                player.guMediaType = mediaType;
-
-                playerSetupComplete = new Promise(function (resolve) {
-                    player.ready(function () {
-                        var vol;
-
-                        deferToAnalytics(function () {
-                            events.initOmnitureTracking(player, mediaId);
-                            events.initOphanTracking(player, mediaId);
-
-                            events.bindGlobalEvents(player);
-                            events.bindContentEvents(player);
-                            if (withPreroll) {
-                                events.bindPrerollEvents(player);
-                            }
+                isGeoBlocked($el[0]).then(function (isVideoGeoBlocked) {
+                    if (isVideoGeoBlocked) {
+                        player.ready(function() {
+                            player.error({
+                                code: 0,
+                                type: 'Video Unavailable',
+                                message: 'Sorry, this video is not available in your region.'
+                            });
+                            player.bigPlayButton.dispose();
+                            player.errorDisplay.open();
+                            player.controlBar.dispose();
                         });
+                    } else {
+                        blockVideoAds = videoInfo.shouldHideAdverts;
+                        withPreroll = shouldPreroll && !blockVideoAds;
 
-                        initLoadingSpinner(player);
-                        upgradeVideoPlayerAccessibility(player);
+                        // Location of this is important.
+                        events.bindErrorHandler(player);
+                        player.guMediaType = mediaType;
 
-                        player.one('playing', function() {
-                            beacon.counts('video-tech-html5');
-                        });
+                        playerSetupComplete = new Promise(function (resolve) {
+                            player.ready(function () {
+                                var vol;
 
-                        // unglitching the volume on first load
-                        vol = player.volume();
-                        if (vol) {
-                            player.volume(0);
-                            player.volume(vol);
-                        }
+                                deferToAnalytics(function () {
+                                    events.initOmnitureTracking(player, mediaId);
+                                    events.initOphanTracking(player, mediaId);
 
-                        player.persistvolume({namespace: 'gu.vjs'});
+                                    events.bindGlobalEvents(player);
+                                    events.bindContentEvents(player);
+                                    if (withPreroll) {
+                                        events.bindPrerollEvents(player);
+                                    }
+                                });
 
-                        // preroll for videos only
-                        if (mediaType === 'video') {
-                            player.fullscreener();
+                                initLoadingSpinner(player);
+                                upgradeVideoPlayerAccessibility(player);
 
-                            if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                                initEndSlate(player, endSlateUri);
-                            }
+                                player.one('playing', function() {
+                                    beacon.counts('video-tech-html5');
+                                });
 
-                            if (withPreroll) {
-                                raven.wrap(
-                                    { tags: { feature: 'media' } },
-                                    function () {
-                                        player.ima({
-                                            id: mediaId,
-                                            adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000,
-                                            // We set this sightly higher so contrib-ads never timeouts before ima.
-                                            contribAdsSettings: {
-                                                timeout: 2000
+                                // unglitching the volume on first load
+                                vol = player.volume();
+                                if (vol) {
+                                    player.volume(0);
+                                    player.volume(vol);
+                                }
+
+                                player.persistvolume({namespace: 'gu.vjs'});
+
+                                // preroll for videos only
+                                if (mediaType === 'video') {
+                                    player.fullscreener();
+
+                                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                                        initEndSlate(player, endSlateUri);
+                                    }
+
+                                    if (withPreroll) {
+                                        raven.wrap(
+                                            { tags: { feature: 'media' } },
+                                            function () {
+                                                player.ima({
+                                                    id: mediaId,
+                                                    adTagUrl: getAdUrl(),
+                                                    prerollTimeout: 1000,
+                                                    // We set this sightly higher so contrib-ads never timeouts before ima.
+                                                    contribAdsSettings: {
+                                                        timeout: 2000
+                                                    }
+                                                });
+                                                player.on('adstart', function() {
+                                                    player.skipAd(mediaType, 15);
+                                                });
+                                                player.ima.requestAds();
+
+                                                // Video analytics event.
+                                                player.trigger(events.constructEventName('preroll:request', player));
+                                                resolve();
                                             }
-                                        });
-                                        player.on('adstart', function() {
-                                            player.skipAd(mediaType, 15);
-                                        });
-                                        player.ima.requestAds();
-
-                                        // Video analytics event.
-                                        player.trigger(events.constructEventName('preroll:request', player));
+                                        )();
+                                    } else {
                                         resolve();
                                     }
-                                )();
-                            } else {
-                                resolve();
-                            }
-                        } else {
-                            player.playlist({
-                                mediaType: 'audio',
-                                continuous: false
-                            });
-                            resolve();
-                        }
+                                } else {
+                                    player.playlist({
+                                        mediaType: 'audio',
+                                        continuous: false
+                                    });
+                                    resolve();
+                                }
 
-                        // built in vjs-user-active is buggy so using custom implementation
-                        player.on('mousemove', function () {
-                            clearTimeout(mouseMoveIdle);
-                            fastdom.write(function () {
-                                player.addClass('vjs-mousemoved');
-                            });
+                                // built in vjs-user-active is buggy so using custom implementation
+                                player.on('mousemove', function () {
+                                    clearTimeout(mouseMoveIdle);
+                                    fastdom.write(function () {
+                                        player.addClass('vjs-mousemoved');
+                                    });
 
-                            mouseMoveIdle = setTimeout(function () {
-                                fastdom.write(function () {
-                                    player.removeClass('vjs-mousemoved');
+                                    mouseMoveIdle = setTimeout(function () {
+                                        fastdom.write(function () {
+                                            player.removeClass('vjs-mousemoved');
+                                        });
+                                    }, 500);
                                 });
-                            }, 500);
+                            });
                         });
-                    });
-                });
 
-                playerSetupComplete.then(function () {
-                    if(ab.isInVariant('VideoCaption','caption-overlay')) {
-                        addTitleBar();
-                    }
+                        playerSetupComplete.then(function () {
+                            if(ab.isInVariant('VideoCaption','caption-overlay')) {
+                                addTitleBar();
+                            }
 
-                    if (autoplay) {
-                        player.play();
+                            if (autoplay) {
+                                player.play();
+                            }
+                        });
                     }
                 });
             }

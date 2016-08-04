@@ -20,7 +20,7 @@ define([
                     trackExternalLinkClick: sinon.spy()
                 })
                 .require([
-                    'common/utils/mediator', 
+                    'common/utils/mediator',
                     'common/modules/analytics/google',
                     'common/modules/analytics/omniture',
                     'common/modules/analytics/interaction-tracking'
@@ -29,7 +29,7 @@ define([
                     google = arguments[1];
                     omniture = arguments[2];
                     interactionTracking = arguments[3];
-                    
+
                     done();
                 });
         });
@@ -42,7 +42,7 @@ define([
 
         it('should log a clickstream event for an in-page link', function () {
             interactionTracking.init();
-            
+
             var clickSpec = {
                 target: document.documentElement,
                 samePage: true,
@@ -52,14 +52,14 @@ define([
             };
 
             mediator.emit('module:clickstream:click', clickSpec);
-        
+
             expect(google.trackSamePageLinkClick).toHaveBeenCalledOnce();
             expect(omniture.trackSamePageLinkClick).toHaveBeenCalledOnce();
         });
 
         it('should not log clickstream events with an invalidTarget', function () {
             interactionTracking.init();
-            
+
             var clickSpec = {
                 target: document.documentElement,
                 samePage: true,
@@ -75,7 +75,7 @@ define([
         });
 
         it('should use local storage for same-host links', function () {
-            interactionTracking.init();
+            interactionTracking.init({ location: { pathname: '/foo/bar' }});
 
             var el        = document.createElement('a'),
                 clickSpec = {
@@ -89,6 +89,7 @@ define([
             mediator.emit('module:clickstream:click', clickSpec);
 
             expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
+            expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.path).toEqual('/foo/bar');
         });
 
         it('should log a clickstream event for an external link', function () {

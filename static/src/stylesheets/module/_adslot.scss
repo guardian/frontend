@@ -67,7 +67,6 @@
 }
 
 .sticky-top-banner-ad {
-    overflow: hidden;
     z-index: $zindex-popover;
     width: 100%;
     position: relative;
@@ -287,6 +286,10 @@
     @include mq(desktop) {
         display: block;
     }
+}
+
+.ad-slot--adfeature {
+    background-color: $paid-article-mpu;
 }
 
 /**

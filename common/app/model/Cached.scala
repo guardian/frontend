@@ -21,6 +21,8 @@ object CacheTime {
   object Default extends CacheTime(60)
   object LiveBlogActive extends CacheTime(5)
   object RecentlyUpdated extends CacheTime(60)
+  object Facia extends CacheTime(300)
+  object NotFound extends CacheTime(10) // This will be overwritten by fastly
 
   def LastDayUpdated = CacheTime(extended(60))
   def NotRecentlyUpdated = CacheTime(extended(300))
@@ -56,6 +58,10 @@ object Cached extends implicits.Dates {
 
   def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
     apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
+  }
+
+  def apply(cacheTime: CacheTime)(result: CacheableResult)(implicit request: RequestHeader): Result = {
+    apply(cacheTime.cacheSeconds, result, request.headers.get("If-None-Match"))
   }
 
   def apply(duration: Duration)(result: CacheableResult)(implicit request: RequestHeader): Result = {

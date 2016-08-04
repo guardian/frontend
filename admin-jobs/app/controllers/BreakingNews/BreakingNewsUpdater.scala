@@ -62,5 +62,5 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 }
 
 object BreakingNewsUpdater {
-  def props(b: BreakingNewsApi = BreakingNewsApi): Props = Props(new BreakingNewsUpdater(b))
+  def props(b: BreakingNewsApi): Props = Props(new BreakingNewsUpdater(b))
 }
