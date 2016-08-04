@@ -9,7 +9,7 @@
 @import views.html.hosted.guardianHostedShareButtons
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
+    @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, if(page.campaign.logoLink.length == 0) {page.cta.url} else {page.campaign.logoLink})
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">

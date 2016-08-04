@@ -14,7 +14,8 @@ object ZootropolisHostedPages {
     name = "Zootropolis",
     owner = "Disney",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg"),
-    cssClass = "zootropolis"
+    cssClass = "zootropolis",
+    logoLink = ""
   )
 
   private val cta = HostedCallToAction(

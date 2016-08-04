@@ -56,7 +56,8 @@ object HostedGalleryTestPage {
       name = "hosted-gallery",
       owner = "test",
       logo = HostedLogo("https://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"),
-      cssClass = "test"
+      cssClass = "test",
+      logoLink = ""
     ),
     images = demoImages,
     pageUrl = "https://m.code.dev-theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
