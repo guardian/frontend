@@ -15,7 +15,7 @@
         @Edition(request).displayName
     </label>
 
-    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" hidden>
+    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" aria-hidden="true">
         @Edition.others(request).map { edition =>
             <li class="edition-picker__dropdown__item">
                 <a class="edition-picker__dropdown-item-link"
