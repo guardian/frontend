@@ -42,10 +42,9 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [['GiraffeArticle20160802', 'everyone'], ['GiraffeArticle20160802', 'honest'], ['GiraffeArticle20160802', 'like'], ['GiraffeArticle20160802', 'complex'] ];
-
-        return some(clashingTests, function(test) {
-            return ab.isInVariant(test[0], test[1]);
+        var clashingTests = {name: "GiraffeArticle20160802", variants: ['everyone', 'honest', 'like', 'complex'] };
+        return some(clashingTests.variants, function(variant) {
+            return ab.isInVariant(clashingTests.name, variant);
         });
     }
 
