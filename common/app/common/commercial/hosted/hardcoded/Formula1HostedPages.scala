@@ -13,7 +13,7 @@ object Formula1HostedPages {
     owner = "First Stop Singapore",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/2016_TrackLogo_RGB_FullColour.png"),
     cssClass = "f1-singapore",
-    logoLink = ""
+    logoLink = None
   )
 
   private val cta = HostedCallToAction(

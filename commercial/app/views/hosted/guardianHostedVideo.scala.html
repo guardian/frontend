@@ -5,7 +5,7 @@
 @import views.html.hosted.guardianHostedCta
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, if(page.campaign.logoLink.length == 0) {page.cta.url} else {page.campaign.logoLink})
+    @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
         <section class="hosted-tone--dark">
             <div class="adverts hosted__container--full">

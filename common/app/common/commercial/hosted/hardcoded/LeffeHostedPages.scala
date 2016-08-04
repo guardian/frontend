@@ -19,7 +19,7 @@ object LeffeHostedPages {
     owner = "Leffe",
     logo = HostedLogo(Static("images/commercial/leffe.jpg")),
     cssClass = "leffe",
-    logoLink = ""
+    logoLink = None
   )
 
   private val cta = HostedCallToAction(

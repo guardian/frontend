@@ -16,7 +16,7 @@ object VisitBritainHostedPages {
     owner = "OMGB",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
     cssClass = "visit-britain",
-    logoLink = ""
+    logoLink = None
   )
 
   private val activityImages: List[HostedGalleryImage] = List(

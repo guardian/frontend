@@ -16,7 +16,7 @@ object RenaultHostedPages {
     owner = "Renault",
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
     cssClass = "renault",
-    logoLink = ""
+    logoLink = None
   )
 
   private val cta = HostedCallToAction(
