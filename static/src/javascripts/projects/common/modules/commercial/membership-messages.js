@@ -107,6 +107,8 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide',
+            siteMessageComponentName: message.campaign,
+            trackDisplay: true,
             cssModifierClass: cssModifierClass
         }).show(template(messageTemplate, data));
     }
