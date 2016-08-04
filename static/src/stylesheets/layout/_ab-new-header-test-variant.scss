@@ -167,7 +167,7 @@ $gutter-large: 55px;
     white-space: nowrap;
 
     &:first-child .new-header__nav__link {
-        padding-left: 0;
+        margin-left: 0;
     }
 
     &:not(:last-child) {
@@ -182,8 +182,8 @@ $gutter-large: 55px;
     // Override a from _lists.scss
     color: #ffffff;
     // Optically aligns slashes
-    padding-left: 2px;
-    padding-right: 3px;
+    margin-left: 2px;
+    margin-right: -1px;
 }
 
 /*****************
@@ -397,12 +397,15 @@ $gutter-large: 55px;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     text-transform: lowercase;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .main-navigation__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
     color: $news-support-1;
+    width: 100%;
 }
 
 $navigation-horizontal-padding: 38px;

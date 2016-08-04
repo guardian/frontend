@@ -1,7 +1,18 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Atomise
-@import common.LinkTo
+@import common.{LinkTo, NewNavigation}
+
+@primaryLinks(sectionName: String) = {
+    <li class="new-header__nav__primary-item">
+        <a class="new-header__nav__link js-open-section-in-menu"
+            tabindex="0"
+            aria-controls="primary-list-@sectionName"
+            href="@LinkTo{#main-menu}">
+                @sectionName
+        </a>
+    </li>
+}
 
 @fragments.nav.newHeaderMenu()
 <header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
@@ -20,11 +31,9 @@
                 <span class="u-h">Menu</span>
             </a>
             <ul class="new-header__nav__list">
-                <li class="new-header__nav__primary-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{#main-menu}">news</a></li>
-                <li class="new-header__nav__primary-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{#main-menu}">opinion</a></li>
-                <li class="new-header__nav__primary-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{#main-menu}">sport</a></li>
-                <li class="new-header__nav__primary-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{#main-menu}">arts</a></li>
-                <li class="new-header__nav__primary-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{#main-menu}">life</a></li>
+                @NewNavigation.topLevelSections.map { section =>
+                    @primaryLinks(section.name)
+                }
             </ul>
         </nav>
     </div>

@@ -18,18 +18,9 @@ define([
         primaryItems.each(function (item) {
 
             if (item !== targetItem) {
-                item.removeAttribute("open");
+                item.removeAttribute('open');
             }
         });
-    }
-
-    function resetLists() {
-        var mainListItems = $('.main-navigation__item');
-        // Remove possible ordering for the lists
-        mainListItems.removeAttr('style');
-
-        // No targetItem to put in as the parameter. All lists should close.
-        closeAllOtherPrimaryLists();
     }
 
     function animateMenuOpen() {
@@ -76,6 +67,12 @@ define([
                             mainMenuEl.removeClass('shown');
                         }).then(function () {
                             return fastdomPromise.write(function () {
+                                var mainListItems = $('.main-navigation__item');
+                                // Remove possible ordering for the lists
+                                mainListItems.removeAttr('style');
+                                // No targetItem to put in as the parameter. All lists should close.
+                                closeAllOtherPrimaryLists();
+
                                 $('.new-header__nav__menu-button').focus();
                                 // Users should be able to scroll again
                                 html.css('overflow', '');
@@ -87,16 +84,49 @@ define([
         });
     }
 
-    function closeAllOtherPrimaryLists(targetItem) {
-        arrayOfPrimaryItems.forEach(function(item) {
-            if (item !== targetItem) {
-                item.removeAttribute("open");
-            }
+    function moveTargetListToTop(targetListId) {
+        primaryItems.each(function (listItem, index) {
+
+            fastdomPromise.read(function () {
+                return listItem.getAttribute('id');
+            }).then(function (itemId) {
+
+                if (itemId === targetListId) {
+                    fastdomPromise.write(function () {
+                        var parent = listItem.parentNode;
+
+                        // Using flexbox to reorder lists based on what is clicked.
+                        parent.style.order = '-' + index;
+                    });
+                }
+            });
+        });
+    }
+
+    function openTargetListOnClick() {
+        var primaryLinks = $('.js-open-section-in-menu');
+
+        primaryLinks.each(function (primaryLink) {
+
+            primaryLink.addEventListener('click', function () {
+
+                fastdomPromise.read(function () {
+                    return primaryLink.getAttribute('aria-controls');
+                }).then(function (id) {
+                    var menuToOpen = $('#' + id);
+
+                       fastdomPromise.write(function () {
+                        menuToOpen.attr('open', '');
+                        return id;
+                    }).then(moveTargetListToTop.bind(id));
+                });
+            });
         });
     }
 
     function handlePrimaryItemClicks() {
-        arrayOfPrimaryItems.forEach(function(item) {
+        primaryItems.each(function (item) {
+
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
@@ -116,8 +146,10 @@ define([
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 
-        editionPicker();
         handlePrimaryItemClicks();
+        openTargetListOnClick();
+
+        editionPicker();
     }
 
     return init;
