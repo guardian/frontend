@@ -133,7 +133,7 @@ define([
         it('should respond to Rubicon messages with no IDs', function (done) {
             var payload = { type: 'set-ad-height', value: { id: 'test', height: '20px' } };
             messenger.register('set-ad-height', routines.rubicon, mockWindow);
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: location.protocol + '//' + location.host, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe('rubicon');
