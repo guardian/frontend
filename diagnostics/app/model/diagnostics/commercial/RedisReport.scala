@@ -81,6 +81,8 @@ object RedisReport extends Logging with ExecutionContexts {
 
   def dataKeyFromId(viewId: String): String = viewId + "-data"
 
+  def reportsKeyFromDate(dateTime: String): String = dateTime + "-views"
+
   // The number of seconds to wait before triggering the data collection process for a page view.
   private val PAGE_VIEW_DATA_COLLECTION_PERIOD = 5L
   // The time to keep the data associated with a page view.
@@ -95,9 +97,20 @@ object RedisReport extends Logging with ExecutionContexts {
       client.setex(dataKeyFromId(report.viewId), PAGE_VIEW_DATA_EXPIRY, Json.toJson(report).toString)
 
       // Use a time key-value which holds an array of all the view data recorded for a given time period (minute periods).
-      val timeKey = "views-" + dateTimeFormat.print(DateTime.now())
+      val timeKey = reportsKeyFromDate(dateTimeFormat.print(DateTime.now()))
       client.rpush(timeKey, Json.toJson(report).toString)
       client.expire(timeKey, PAGE_VIEW_DATA_EXPIRY.toInt)
     }
+  }
+
+  def getReports(dateTime: String): List[String] = {
+
+    val maybeReports = for {
+      client <- redisClient
+      reports <- client.lrange(reportsKeyFromDate(dateTime), 0, -1)
+    } yield {
+      reports.flatten
+    }
+    maybeReports.getOrElse(List.empty)
   }
 }

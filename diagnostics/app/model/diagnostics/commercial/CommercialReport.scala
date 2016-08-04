@@ -1,6 +1,6 @@
 package model.diagnostics.commercial
 
-import play.api.libs.json.{JsError, Json, JsSuccess, JsValue}
+import play.api.libs.json._
 
 case class Module(
   duration: Double,
@@ -45,5 +45,12 @@ object Report extends common.Logging {
       case JsSuccess(report, _) => RedisReport.report(report)
       case error: JsError => log.logger.error(JsError.toJson(error).toString)
     }
+  }
+
+  def getReports(dateTime: String): JsValue = {
+    val reports: List[JsValue] = RedisReport.getReports(dateTime).map { rawReport =>
+      Json.parse(rawReport)
+    }
+    JsArray(reports)
   }
 }

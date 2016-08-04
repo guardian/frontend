@@ -6,7 +6,7 @@ import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
 import model.diagnostics.commercial.Report
-import model.TinyResponse
+import model.{NoCache, TinyResponse}
 
 class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
@@ -58,6 +58,12 @@ class DiagnosticsController extends Controller with Logging {
     Report.report(request.body)
 
     TinyResponse.noContent()
+  }
+
+  def commercialReports(dateTime: String) = Action { implicit request =>
+    JsonComponent(
+      "reports" -> Report.getReports(dateTime)
+    ).result
   }
 
   def commercialOptions = postOptions
