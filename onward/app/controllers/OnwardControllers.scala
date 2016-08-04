@@ -5,9 +5,11 @@ import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
 import weather.WeatherApi
 import play.api.libs.ws.WSClient
+import play.api.Environment
 
 trait OnwardServices {
   def wsClient: WSClient
+  def environment: Environment
   lazy val stocksData = wire[StocksData]
   lazy val weatherApi = wire[WeatherApi]
 }

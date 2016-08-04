@@ -23,7 +23,7 @@ define([
         this.id = 'GiraffeArticle20160802';
         this.start = '2016-08-02';
         this.expiry = '2016-08-22';
-        this.author = 'Alex Ware';
+        this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
         this.audience = 0.10;
@@ -65,7 +65,34 @@ define([
             {
                 id: 'everyone',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=article-1-everyone', 'Please support the Guardian and independent journalism');
+                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_everyone', '');
+                },
+                success: function (complete) {
+                    completer(complete);
+                }
+            },
+            {
+                id: 'honest',
+                test: function () {
+                    writer('Be honest. When was the last time you paid for quality news online? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_honest', '');
+                },
+                success: function (complete) {
+                    completer(complete);
+                }
+            },
+            {
+                id: 'like',
+                test: function () {
+                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Please support the Guardian');
+                },
+                success: function (complete) {
+                    completer(complete);
+                }
+            },
+            {
+                id: 'complex',
+                test: function () {
+                    writer('The world is complex. We\'ll give our all to help you understand it. Will you give something to help us help you? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_complex', 'Please contribute to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);

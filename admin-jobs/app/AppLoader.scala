@@ -5,6 +5,8 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CommonFilters, CachedHealthCheckLifeCycle}
 import contentapi.SectionsLookUpLifecycle
+import controllers.BreakingNews.BreakingNewsApi
+import controllers.BreakingNews.S3BreakingNews
 import controllers.{AdminJobsControllers, HealthCheck}
 import dev.DevParametersHttpRequestHandler
 import model.ApplicationIdentity
@@ -20,6 +22,13 @@ import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+}
+
+trait AdminJobsServices {
+  def environment: Environment
+  lazy val mode = environment.mode
+  lazy val s3BreakingNews = wire[S3BreakingNews]
+  lazy val breakingNewsApi = wire[BreakingNewsApi]
 }
 
 trait Controllers extends AdminJobsControllers {
@@ -41,7 +50,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with AdminJobsServices {
 
   lazy val router: Router = wire[Routes]
 
