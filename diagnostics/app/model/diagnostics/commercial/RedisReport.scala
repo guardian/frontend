@@ -42,7 +42,10 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
         reportData <- redisClient.get(RedisReport.dataKeyFromId(id))
       } {
         log.logger.info(s"writing report to s3 bucket, view id: $id")
-        S3CommercialReports.putPublic(s"commercial-client-logs/$id", reportData, "text/plain")
+
+        if (Configuration.environment.isProd) {
+          S3CommercialReports.putPublic(s"commercial-client-logs/$id", reportData, "text/plain")
+        }
       }
     } catch {
       case e:Exception => log.logger.error(e.getMessage)
