@@ -26,7 +26,7 @@
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
     <div class="js-article__container" data-component="body">
         @if(model.currentPage.currentPage.isArchivePage) {
-            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, amp = true)
         }
         @if(LiveUpdateAmpSwitch.isSwitchedOn) {
             <amp-live-list
@@ -58,6 +58,6 @@
                 @liveBlogBlocksAMP(article, timezone)
             </div>
         }
-        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, amp = true)
     </div>
 }
