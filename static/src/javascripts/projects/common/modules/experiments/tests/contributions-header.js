@@ -45,7 +45,7 @@ define([
             return fastdom.write(function () {
                 var a = $('.brand-bar__item--register');
                 a.replaceWith($newThing);
-                mediator.emit('contributions-Header:insert');
+                mediator.emit('contributions-header:insert');
             });
         };
 
