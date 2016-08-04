@@ -69,8 +69,8 @@ trait ABTestSwitches {
     "ab-ad-feedback",
     "Solicit feedback for ad impressions",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // TODO - Set SafeState OFF!
-    sellByDate = new LocalDate(2016, 8, 25),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
     exposeClientSide = true
   )
 }
