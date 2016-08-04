@@ -5,6 +5,7 @@
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
+@import conf.Configuration
 @import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
@@ -77,7 +78,7 @@
                                                 <div class="timeline">
                                                     <h2 class="timeline__header">Key events</h2>
                                                     <ul class="timeline__items">
-                                                        @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
+                                                        @views.html.liveblog.keyEvents(Configuration.site.host + "/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
                                                     </ul>
                                                 </div>
                                             } else {
