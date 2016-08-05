@@ -15,7 +15,12 @@
             <meta http-equiv="refresh" content="60">
         }
 
-        <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon.ico")" />
+        @if(Play.isDev){
+            <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon-dev.ico")" />
+        } else {
+            <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon.ico")" />
+        }
+
 
         <link rel="apple-touch-icon" sizes="144x144" href="@UncachedAssets.at("images/144x144.png")" />
         <link rel="apple-touch-icon" sizes="114x114" href="@UncachedAssets.at("images/114x114.png")" />

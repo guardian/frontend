@@ -34,6 +34,7 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
     }
   }
   def renderRadiator() = Action.async { implicit request =>
+    val apiKey = Configuration.riffraff.apiKey
 
     for {
       user50x <- CloudWatch.user50x
@@ -45,7 +46,7 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
       val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
       NoCache(Ok(views.html.radiator(
         graphs, multiLineGraphs, cost, switchesExpiringSoon,
-        Configuration.environment.stage
+        Configuration.environment.stage, apiKey
       )))
     }
   }

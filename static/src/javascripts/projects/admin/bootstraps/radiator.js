@@ -49,8 +49,9 @@ define([
         );
 
         // riff raff - requires you to be on the guardian network
+        var apiKey = document.getElementById('riffraff-api-key').value;
         ajax({
-            url: 'https://riffraff.gutools.co.uk/api/history?projectName=dotcom%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
+            url: 'https://riffraff.gutools.co.uk/api/history?projectName=dotcom%3A&key=' + apiKey + '&pageSize=200',
             type: 'jsonp',
             crossOrigin: true
         }).then(
@@ -99,13 +100,12 @@ define([
 
                         var link = document.createElement('a');
                         link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
-                        target.appendChild(link);
 
                         var li = document.createElement('li');
                         li.className = d.status;
                         li.innerHTML = nameAbbreviation + ' ' + d.build;
                         li.setAttribute('title', d.projectName);
-                        link.appendChild(li);
+                        li.appendChild(link);
 
                         if (latestDeployments.CODE[deployment] && stage === 'PROD' && d.status === 'Completed') {
                             var codeBuild = (latestDeployments.CODE[deployment] || {}).build;
@@ -117,11 +117,12 @@ define([
                         if (d.status !== 'Completed') {
                             renderDeployer(stage, d.tags.vcsRevision, d.deployer);
                         }
+
+                        target.appendChild(li);
                     });
                 }
-                /*global riffraffCODE, riffraffPROD*/
-                renderDeploys('CODE', riffraffCODE);
-                renderDeploys('PROD', riffraffPROD);
+                renderDeploys('CODE', document.getElementById('riffraffCODE'));
+                renderDeploys('PROD', document.getElementById('riffraffPROD'));
             }
         );
 

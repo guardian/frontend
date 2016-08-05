@@ -122,15 +122,6 @@ define([
                     // There is an email sign-up
                     // so load the merchandising component
                     resolve('email');
-                } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
-                    // We need to check the user's email subscriptions
-                    // so we don't insert the sign-up if they've already subscribed.
-                    // This is an async API request and returns a promise.
-                    emailRunChecks.getUserEmailSubscriptions().then(function () {
-                        // Check if the Guardian today list can run, if it can then load
-                        // the merchandising (non-compliant) version of Outbrain
-                        emailRunChecks.listCanRun({listName: 'theGuardianToday', listId: 37 }) ? resolve('email') : resolve();
-                    });
                 } else {
                     resolve();
                 }

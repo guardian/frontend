@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/participation-discussion-ordering-take-2',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
+    'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback'
 ], function (
     reportError,
@@ -29,6 +30,7 @@ define([
     VideoCaption,
     ParticipationDiscussionOrderingTake2,
     HostedZootropolisCta,
+    ContributionsHeader,
     AdFeedback
 ) {
 
@@ -39,6 +41,7 @@ define([
         new VideoCaption(),
         new ParticipationDiscussionOrderingTake2(),
         new HostedZootropolisCta(),
+        new ContributionsHeader(),
         new AdFeedback()
     ];
 

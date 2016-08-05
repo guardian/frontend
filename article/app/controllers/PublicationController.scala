@@ -10,8 +10,8 @@ import services._
 import scala.concurrent.Future
 
 class PublicationController(
-  bookAgent: NewspaperBookTagAgent = NewspaperBookTagAgent,
-  bookSectionAgent: NewspaperBookSectionTagAgent = NewspaperBookSectionTagAgent,
+  bookAgent: NewspaperBookTagAgent,
+  bookSectionAgent: NewspaperBookSectionTagAgent,
   articleController: ArticleController
 ) extends Controller
   with ExecutionContexts
