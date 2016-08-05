@@ -65,7 +65,7 @@ When the key expires, the ExpiredKeyEventSubscriber object will be notified.
 */
 object RedisReport extends Logging with ExecutionContexts {
 
-  val dateTimeFormat: DateTimeFormatter = DateTimeFormat.forPattern("ddMMYYYY-HH:mm").withZoneUTC()
+  val dateTimeFormat: DateTimeFormatter = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
 
   // Make a client for each usage, otherwise there may be protocol errors.
   def redisClient: Option[RedisClient] = {
