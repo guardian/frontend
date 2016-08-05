@@ -4,15 +4,11 @@
 
 define([
     'bean',
-    'bonzo',
-    'qwery',
     'reqwest',
     'fastdom',
     'common/utils/$'
 ], function (
     bean,
-    bonzo,
-    qwery,
     reqwest,
     fastdom,
     $
@@ -30,21 +26,12 @@ define([
                     renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
-                    var subscriptionState;
+                    var isSubscribed = false;
                     if (response && response.subscriptions && response.subscriptions.length) {
-                        subscriptionState = response.subscriptions[0].subscribedTo;
+                        isSubscribed = true;
                     }
-                    try {
-                        if (response.subscriptions.length < 1) {
-                            subscriptionState = false;
-                        } else {
-                            subscriptionState = response.subscriptions[0].subscribedTo;
-                        }
-                    } catch (err) {
-                        renderErrorMessage(buttonEl);
-                    } finally {
-                        updateButton(buttonEl, subscriptionState);
-                    }
+                    updateButton(buttonEl, isSubscribed);
+                    renderErrorMessage(buttonEl);
                 }
             });
         });
@@ -64,37 +51,37 @@ define([
     function renderErrorMessage(buttonEl) {
         return fastdom.write(function () {
             clearErrorMessages();
-            var errorMessage = bonzo(bonzo.create(
+            var errorMessage = $.create(
                 '<div class="form__error">' +
                     'Sorry, an error has occurred, please refresh the page and try again' +
                 '</div>'
-            ));
-            bonzo(errorMessage).insertAfter(buttonEl.parentNode);
+            );
+            $(errorMessage).insertAfter(buttonEl.parentNode);
         });
     }
 
     function clearErrorMessages() {
-        if (qwery('.form__error')) {
+        if ($('.form__error')) {
             $.forEachElement('.form__error', function (errorEl) {
-                errorEl.remove();
+                errorEl.parentNode.removeChild(errorEl);
             });
         }
     }
 
-    function updateSubscriptionButton(buttonEl, subscriptionState) {
+    function updateSubscriptionButton(buttonEl, isSubscribed) {
         var buttonVal = buttonEl.value;
-        if (subscriptionState === true) {
+        if (isSubscribed) {
             fastdom.write(function () {
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
-                bonzo($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
+                $($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
-        } else if (subscriptionState === false) {
+        } else if (!isSubscribed) {
             fastdom.write(function () {
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
-                bonzo($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
+                $($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
         } else {
@@ -107,9 +94,9 @@ define([
         buttonEl.disabled = false;
     }
 
-    function updateButton(buttonEl, subscriptionState) {
-        if (bonzo(buttonEl).hasClass('email-subscription__button')) {
-            updateSubscriptionButton(buttonEl, subscriptionState);
+    function updateButton(buttonEl, isSubscribed) {
+        if ($(buttonEl).hasClass('email-subscription__button')) {
+            updateSubscriptionButton(buttonEl, isSubscribed);
         } else {
             updateSaveButton(buttonEl);
         }
