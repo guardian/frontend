@@ -76,19 +76,22 @@
 
 .timeline {
     position: relative;
-    padding: 0;
-    margin: 0 20px;
+    margin: 0 0.625rem;
 }
 
 .timeline__header {
     font-size: 20px;
-    line-height: 24px;
+    line-height: 32px;
     font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
     font-weight: 900;
+    background-color: #ffffff;
+    padding: 0.75rem 0.625rem 0;
+    border: 0;
 }
 
 .timeline__items {
     padding: 0;
+    margin: 0.75rem 0.625rem;
 }
 
 .timeline__item {
@@ -115,10 +118,6 @@
     font-weight: bold;
 }
 
-.timezone {
-    display: none;
-}
-
 .timeline__title {
     color: #333333;
     font-size: 0.875rem;
@@ -126,6 +125,18 @@
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     display: table-cell;
     border-color: #f6f6f6;
+}
+
+.inline-dropdown-mask {
+    float: right;
+}
+
+.inline-dropdown-mask__svg {
+    background-color: #767676;
+}
+
+.timezone {
+    display: none;
 }
 
 /* Social
