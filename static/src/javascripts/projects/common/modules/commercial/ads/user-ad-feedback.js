@@ -24,7 +24,7 @@ define([
             method: 'post',
             body: data,
             mode: 'cors'
-        }).then(onComplete(adSlotId, feedbackType), function(){})
+        }).then(onComplete(adSlotId, feedbackType), function(){});
     };
 
     function onComplete(adSlotId, feedbackType) {    // we're complete - update the UI
