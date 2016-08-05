@@ -1,11 +1,13 @@
 define([
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/fetch',
     'common/utils/config'
 ], function (
     bonzo,
     qwery,
+    fastdom,
     fetch,
     config
 ) {
@@ -24,12 +26,17 @@ define([
             method: 'post',
             body: data,
             mode: 'cors'
-        }).then(onComplete(adSlotId, feedbackType), function(){});
+        }).then(
+            function () { return onComplete(adSlotId, feedbackType); },
+            function () { return onComplete(adSlotId, feedbackType); }
+        );
     };
 
     function onComplete(adSlotId, feedbackType) {    // we're complete - update the UI
         if (feedbackType !== 'ad-feedback-menu-opened') {
-            bonzo(qwery('#' + adSlotId + '>.ad-slot__label')).text('Advertisement (Thanks for your feedback)');
+            fastdom.write(function() {
+                bonzo(qwery('#' + adSlotId + '>.ad-slot__label')).text('Advertisement (Thanks for your feedback)');
+            });
         }
     }
 
