@@ -6,12 +6,20 @@
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
+@import common.LinkTo
+
 @blocks.map { block =>
     <div id="block-@block.id" @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" } class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
         <p class="block-time published-time">
-            <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-            @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
-            </a>
+            @if(amp){
+                <a href="@LinkTo{/@article.metadata.id?page=with:block-@block.id#block-@block.id}" itemprop="url" class="block-time__link">
+                    @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
+                </a>
+            } else {
+                <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
+                    @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
+                </a>
+            }
         </p>
         @block.title.map { title =>
             <h2 class="block-title" itemprop="headline">@title</h2>

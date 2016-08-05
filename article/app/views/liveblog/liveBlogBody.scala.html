@@ -70,13 +70,27 @@
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
-                                @if(article.hasKeyEvents && !amp) {
+                                @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
-                                            @fragments.dropdown("Key events", Some("key-events"), true) {
-                                                <ul class="timeline js-live-blog__timeline u-unstyled">
+                                            @if(amp) {
+                                                <amp-accordion class="timeline">
+                                                    <section>
+                                                        <h2 class="timeline__header">
+                                                            Key events
+                                                            @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
+                                                        </h2>
+                                                        <ul class="timeline__items">
+                                                            @views.html.liveblog.keyEvents(LinkTo{"/" + article.metadata.id}, KeyEventData(article.content.fields.blocks, timezone))
+                                                        </ul>
+                                                    </section>
+                                                </amp-accordion>
+                                            } else {
+                                                @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                    <ul class="timeline js-live-blog__timeline u-unstyled">
                                                     @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
-                                                </ul>
+                                                    </ul>
+                                                }
                                             }
                                         </div>
                                     </div>
