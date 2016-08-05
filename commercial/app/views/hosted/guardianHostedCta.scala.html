@@ -2,7 +2,7 @@
 
 @import common.commercial.hosted.HostedCallToAction
 @(page: HostedPage, cta: HostedCallToAction)
-    <section class="adverts hosted__container--full">
+    <section class="host hosted__container--full">
         <div class="hosted__banner" style="background-image: url(@{cta.image});">
             <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
                 <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown @{page.brandBackgroundCssClass}">
