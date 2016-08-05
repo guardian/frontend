@@ -142,7 +142,6 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
           )
         }
 
-        // TODO: refactor for more functional style
         if (form.hasErrors) {
           val errorsAsJson = Json.toJson(
             form.errors.groupBy(_.key).map { case (key, errors) =>
