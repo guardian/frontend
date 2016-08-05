@@ -1,5 +1,6 @@
 package conf
 
+import akka.stream.Materializer
 import com.gu.googleauth.FilterExemption
 import googleAuth.GoogleAuthFilters
 import play.api.Environment
@@ -18,12 +19,13 @@ object FilterExemptions {
 }
 
 class AdminFilters(
-                         environment: Environment
-                       ) extends HttpFilters {
+                    mat: Materializer,
+                    environment: Environment
+                  ) extends HttpFilters {
 
   val adminAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions)(environment)
+    FilterExemptions.exemptions)(mat, environment)
 
-  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common
+  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common(mat)
 }
