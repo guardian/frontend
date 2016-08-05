@@ -58,7 +58,7 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
+                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh, adSizes.fluid)
             }
         },
         spbadge: badgeDefinition,
