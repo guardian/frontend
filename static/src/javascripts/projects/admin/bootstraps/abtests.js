@@ -1,14 +1,10 @@
 define([
     'common/modules/experiments/ab',
-    'qwery',
-    'bean',
     'admin/modules/abtests/abtest-report',
     'admin/modules/abtests/abtest-report-item',
     'admin/modules/abtests/audience'
 ], function (
     abTests,
-    qwery,
-    bean,
     Report,
     ReportItem,
     Audience
@@ -21,29 +17,29 @@ define([
 
     function initialise() {
 
-        renderTests(abTests.getActiveTests(), true, qwery('.abtests-report__data'));
-        var expiredTestItems = renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
+        renderTests(abTests.getActiveTests(), true, document.querySelector('.abtests-report__data'));
+        var expiredTestItems = renderTests(abTests.getExpiredTests(), false, document.querySelector('.abtests-expired'));
 
         // Display audience breakdown.
         var audience = new Audience({tests: abTests.getActiveTests()});
-        audience.render(qwery('.abtests-audience'));
+        audience.render(document.querySelector('.abtests-audience'));
 
-        var $expired = qwery('.abtests-expired')[0];
+        var expired = document.querySelector('.abtests-expired');
 
-        bean.on(qwery('.abtests-expired-title a')[0], 'click', function (e) {
+        document.querySelectory('.abtests-expired-title a').addEventListener('click', function (e) {
             e.preventDefault();
-            if (e.currentTarget.textContent === 'show') {
-                e.currentTarget.textContent = 'hide';
-                $expired.style.display = 'block';
+            if (e.target.textContent === 'show') {
+                e.target.textContent = 'hide';
+                expired.style.display = 'block';
                 expiredTestItems.forEach(function (t) {t.renderChart(); });
             } else {
-                e.currentTarget.textContent = 'show';
-                $expired.style.display = 'none';
+                e.target.textContent = 'show';
+                expired.style.display = 'none';
             }
         });
 
         // timeout on this to allow google charts to render before hiding the container
-        setTimeout(function () { $expired.style.display = 'none'; }, 0);
+        setTimeout(function () { expired.style.display = 'none'; }, 0);
     }
 
     return {
