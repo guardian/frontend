@@ -15,7 +15,7 @@ $remind-me-color: $features-support-1;
 .remind-me__title {
     @include fs-header(5);
     font-weight: normal;
-    padding-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline;
 }
 
 .remind-me__cta {
