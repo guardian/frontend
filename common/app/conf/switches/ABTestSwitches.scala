@@ -54,10 +54,20 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionOrderingTake2 = Switch(
+  val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering-take-2",
-    "Test to see whether ordering comments by recommends increases the number of people who read them",
+    "ab-participation-discussion-ordering-live-blog",
+    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 31),
+    exposeClientSide = true
+  )
+
+  val ABParticipationDiscussionOrderingNonLive = Switch(
+    SwitchGroup.ABTests,
+    "ab-participation-discussion-ordering-non-live",
+    "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 31),

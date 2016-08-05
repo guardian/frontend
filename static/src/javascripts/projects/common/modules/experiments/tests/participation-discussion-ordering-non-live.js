@@ -12,13 +12,13 @@ define([
 
         var module = this;
 
-        this.id = 'ParticipationDiscussionOrderingTake2';
-        this.start = '2016-08-01';
+        this.id = 'ParticipationDiscussionOrderingNonLive';
+        this.start = '2016-08-05';
         this.expiry = '2016-08-28';
         this.author = 'Nathaniel Bennett';
-        this.description = 'Changes the default ordering of comments so we can determine whether sorting by recommended causes more users to view comments';
+        this.description = 'Changes the default ordering of comments on non live-blog content so we can determine whether sorting by recommended causes more users to view comments';
         this.audience = 0.1;
-        this.audienceOffset = 0.6;
+        this.audienceOffset = 0.7;
         this.successMeasure = '';
         this.showForSensitive = true;
         this.audienceCriteria = 'All';
@@ -28,7 +28,7 @@ define([
         this.canRun = function() {
             //If a user has already ordered comments, let's not knob them about
             var preferredOrdering = userPrefs.get('discussion.order') || 'none';
-            return config.page.commentable && preferredOrdering === 'none';
+            return config.page.commentable && !config.page.isLiveBlog && preferredOrdering === 'none';
         };
 
         this.variants = [
