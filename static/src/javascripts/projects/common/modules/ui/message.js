@@ -5,6 +5,7 @@ define([
     'common/modules/user-prefs',
     'common/utils/mediator',
     'common/utils/detect',
+    'common/modules/analytics/register',
     'lodash/functions/debounce',
     'lodash/arrays/uniq'
 ], function (
@@ -14,6 +15,7 @@ define([
     userPrefs,
     mediator,
     detect,
+    register,
     debounce,
     uniq
 ) {
@@ -74,9 +76,7 @@ define([
         if (this.siteMessageComponentName) {
             siteMessage.attr('data-component', this.siteMessageComponentName);
             if (this.trackDisplay) {
-                require(['ophan/ng'], function (ophan) {
-                    ophan.trackComponentAttention(this.siteMessageComponentName, siteMessage);
-                });
+                register.begin(this.siteMessageComponentName);
             }
         }
         if (this.siteMessageLinkName) {
