@@ -1,17 +1,19 @@
 package googleAuth
 
+import akka.stream.Materializer
 import play.api.Environment
 import play.api.mvc.RequestHeader
 import play.api.Mode
-import com.gu.googleauth.{UserIdentity, FilterExemption}
+import com.gu.googleauth.{FilterExemption, UserIdentity}
 import play.api.mvc.{Filter, Result}
 import play.api.mvc.Results.Redirect
+
 import scala.concurrent.Future
 
 object GoogleAuthFilters {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   class AuthFilterWithExemptions( loginUrl: FilterExemption,
-                                  exemptions: Seq[FilterExemption])(implicit environment: Environment) extends Filter {
+                                  exemptions: Seq[FilterExemption])(implicit val mat: Materializer, environment: Environment) extends Filter {
 
     private def doNotAuthenticate(request: RequestHeader) = environment.mode == Mode.Test ||
       request.path.startsWith(loginUrl.path) ||

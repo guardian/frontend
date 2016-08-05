@@ -5,8 +5,9 @@ import googleAuth.OAuthLoginController
 import play.api.mvc.{Action, AnyContent, Request}
 import conf.Configuration
 import conf.Configuration.environment.projectName
+import play.api.libs.ws.WSClient
 
-class OAuthLoginStandaloneController extends OAuthLoginController {
+class OAuthLoginStandaloneController(val wsClient: WSClient) extends OAuthLoginController {
   override def login = Action { request =>
     Ok(views.html.standalone_auth(projectName, "Dev", UserIdentity.fromRequest(request)))
   }
