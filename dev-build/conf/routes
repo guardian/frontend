@@ -27,6 +27,7 @@ POST           /csp-report                                                      
 OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
 OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
+GET            /commercial-reports/:dateTime                                                                                     controllers.DiagnosticsController.commercialReports(dateTime)
 POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
 OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
