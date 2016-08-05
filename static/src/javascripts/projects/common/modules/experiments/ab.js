@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/video-caption',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
+    'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/contributions-header'
 ], function (
@@ -30,6 +31,7 @@ define([
     VideoCaption,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
+    RemindMeEmail,
     HostedZootropolisCta,
     ContributionsHeader
 ) {
@@ -41,6 +43,7 @@ define([
         new VideoCaption(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
+        new RemindMeEmail(),
         new HostedZootropolisCta(),
         new ContributionsHeader()
     ];

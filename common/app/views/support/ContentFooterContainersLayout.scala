@@ -17,15 +17,18 @@ object ContentFooterContainersLayout {
            (standardCommercialComponent: => Html)
            (externalContentPlaceholder: Html): Html = {
 
+    def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
+
     val htmlBlocks = if (isAdvertisementFeature) {
 
       // majority of footer components we don't want to appear on advertisement feature articles
-      if (showPaidSeriesContainer.isSwitchedOn) Seq(storyPackagePlaceholder, onwardPlaceholder)
-      else Seq(storyPackagePlaceholder)
+      Seq(
+          optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
+          Some(storyPackagePlaceholder),
+          optional(showPaidSeriesContainer.isSwitchedOn, onwardPlaceholder)
+      ).flatten
 
     } else {
-
-      def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
 
       def includeExternalContentPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
         if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {

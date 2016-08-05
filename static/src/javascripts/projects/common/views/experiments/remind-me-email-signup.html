@@ -1,0 +1,11 @@
+<div class="remind-me">
+    <% if (subtitle) { %>
+    <h4 class="remind-me__subtitle"><%= subtitle %></h4>
+    <% } %>
+    <h3 class="remind-me__title"><%= title %></h3>
+    <p class="remind-me__description"><%= description %></p>
+    <button class="js-remind-me-signup email-sub__submit-input button button--tertiary button--large email-sub__submit-input--solo button--remind-me"
+            data-link-name="<%= trackingCode %>">
+        <%= svg %> <%= cta %>
+    </button>
+</div>

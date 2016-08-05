@@ -171,28 +171,3 @@ a {
 .buildTypeIcon {
    width: 32px;
 }
-
-.buildConfigurationName a {
-    color: #999;
-    text-decoration: none;
-}
-
-.buildConfigurationName .success {
-    background-color: #B8FAA0;
-    padding: 3px 3px 3px 3px;
-    margin-right: 5px;
-    width: 30px;
-    height: 30px;
-    font-size: 0;
-}
-
-.buildConfigurationName .failure {
-    background-color: red;
-    padding: 3px 3px 3px 3px;
-    margin-right: 5px;
-    height: 30px;
-    color: white;
-}
-
-
-
