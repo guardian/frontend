@@ -21,7 +21,7 @@ case class SurgingContent(
     sportsTargetedKeywords.contains(keyword)
   ))
 
-  val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 100
+  val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 500
 }
 
 case class SurgingSportEmailJob(emailService: EmailService) extends Logging with ExecutionContexts {
