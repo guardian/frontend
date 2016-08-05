@@ -2,14 +2,13 @@ package controllers.admin.commercial
 
 import common.dfp.LineItemReport
 import conf.Configuration.environment
-import controllers.admin.AuthActions
 import play.api.libs.json.Json
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import tools.Store
 
 class SlotController extends Controller {
 
-  def viewSlot(slotName: String) = AuthActions.AuthActionTest { implicit request =>
+  def viewSlot(slotName: String) = Action { implicit request =>
     val maybeResult = for {
       jsonString <- Store.getSlotTakeoversReport(slotName)
       report = Json.parse(jsonString).as[LineItemReport]

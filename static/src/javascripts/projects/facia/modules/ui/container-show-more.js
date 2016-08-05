@@ -2,11 +2,12 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/utils/report-error',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/mediator',
+    'common/utils/report-error',
+    'common/utils/timeout',
     'common/modules/user-prefs',
     'lodash/collections/groupBy',
     'lodash/collections/filter',
@@ -17,11 +18,12 @@ define([
     bonzo,
     fastdom,
     qwery,
-    reportError,
     $,
-    ajax,
     config,
+    fetchJson,
     mediator,
+    reportError,
+    timeout,
     userPrefs,
     groupBy,
     filter,
@@ -96,11 +98,10 @@ define([
     }
 
     function loadShowMore(pageId, containerId) {
-        return ajax({
-            url: '/' + pageId + '/show-more/' + containerId + '.json',
-            crossOrigin: true,
-            timeout: REQUEST_TIMEOUT
-        });
+        var url = '/' + pageId + '/show-more/' + containerId + '.json';
+        return timeout(REQUEST_TIMEOUT, fetchJson(url, {
+            mode: 'cors'
+        }));
     }
 
     function dedupShowMore($container, html) {
@@ -145,7 +146,9 @@ define([
             });
 
             showErrorMessage(button);
-            reportError(new Error('Error retrieving show more (' + err + ')'), false);
+            reportError(err, {
+                feature: 'container-show-more'
+            }, false);
         });
     }
 

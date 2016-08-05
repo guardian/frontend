@@ -32,21 +32,6 @@
 
     @if(UseLinkPreconnect.isSwitchedOn) {
         <link rel="preconnect" crossorigin href="@Configuration.assets.path" />
-        <link rel="preconnect" crossorigin href="@Configuration.images.path" />
-        <link rel="preconnect" crossorigin href="@Configuration.ajax.url" />
-        <link rel="preconnect" crossorigin href="@AnalyticsHost()" />
-        <link rel="preconnect" crossorigin href="//j.ophan.co.uk" />
-        <link rel="preconnect" crossorigin href="//ophan.theguardian.com" />
-        <link rel="preconnect" crossorigin href="@Configuration.debug.beaconUrl" />
-        <link rel="preconnect" crossorigin href="//www.google-analytics.com" />
-
-        @if(ComscoreSwitch.isSwitchedOn) {
-            <link rel="preconnect" href="//sb.scorecardresearch.com" />
-        }
-
-        @if(CommercialSwitch.isSwitchedOn) {
-            <link rel="preconnect" crossorigin href="@Configuration.googletag.jsLocation" />
-        }
     }
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />

@@ -94,6 +94,12 @@ case object OlympicsDailyBriefing extends EmailContent {
   def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
 }
 
+case object MediaBriefing extends EmailContent {
+  val name = "Media Briefing"
+  val banner = "media-briefing.png"
+  def test(c: ContentType) = c.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -111,7 +117,8 @@ object EmailAddons {
     AusBriefing,
     EuReferendum,
     LabNotes,
-    OlympicsDailyBriefing)
+    OlympicsDailyBriefing,
+    MediaBriefing)
 
   implicit class EmailContentType(c: ContentType) {
     val email = allEmails.find(_.test(c))

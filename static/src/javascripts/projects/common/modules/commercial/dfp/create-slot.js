@@ -15,32 +15,34 @@ define([
         }
     };
 
+    var inlineDefinition = {
+        sizeMappings: {
+            mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
+        }
+    };
+
+    var rightMappings = {
+        mobile: compile(
+            adSizes.outOfPage,
+            adSizes.mpu,
+            adSizes.halfPage,
+            config.page.edition === 'US' ? adSizes.portrait : null,
+            adSizes.fluid
+        )
+    };
+
     var adSlotDefinitions = {
         right: {
-            sizeMappings: {
-                mobile: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
-                    adSizes.halfPage,
-                    config.page.edition === 'US' ? adSizes.portrait : null
-                )
-            }
+            sizeMappings: rightMappings
         },
         'right-sticky': {
             name: 'right',
-            sizeMappings: {
-                mobile: compile(
-                    adSizes.outOfPage,
-                    adSizes.mpu,
-                    adSizes.halfPage,
-                    config.page.edition === 'US' ? adSizes.portrait : null
-                )
-            }
+            sizeMappings: rightMappings
         },
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu)
+                mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
             }
         },
         im: {
@@ -50,16 +52,8 @@ define([
                 mobile: compile(adSizes.outOfPage, adSizes.inlineMerchandising)
             }
         },
-        inline: {
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
-            }
-        },
-        mostpop: {
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu)
-            }
-        },
+        inline: inlineDefinition,
+        mostpop: inlineDefinition,
         'merchandising-high': {
             label: false,
             refresh: false,
@@ -70,11 +64,7 @@ define([
         spbadge: badgeDefinition,
         adbadge: badgeDefinition,
         fobadge: badgeDefinition,
-        comments: {
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu)
-            }
-        },
+        comments: inlineDefinition,
         'top-above-nav': {
             sizeMappings: {
                 mobile: compile(

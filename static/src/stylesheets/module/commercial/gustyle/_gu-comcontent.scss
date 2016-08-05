@@ -221,9 +221,13 @@ $mobile-max-container-width: gs-span(8);
     .gu-display__content {
         position: relative;
         width: auto;
-        min-height: 110px;
+        min-height: 74px;
         padding-top: $gs-gutter / 2;
         background-color: #fffcf4;
+
+        @include mq(desktop) {
+            min-height: 110px;
+        }
     }
 
     .gu-display__content-title--hosted {

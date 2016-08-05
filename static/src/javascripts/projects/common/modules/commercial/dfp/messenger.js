@@ -2,7 +2,10 @@ define([
     'Promise',
     'common/utils/report-error'
 ], function (Promise, reportError) {
-    var currentHost = location.protocol + '//' + location.host;
+    var allowedHosts = [
+        'http://tpc.googlesyndication.com',
+        location.protocol + '//' + location.host
+    ];
     var listeners = {};
     var registeredListeners = 0;
 
@@ -53,7 +56,7 @@ define([
 
     function onMessage(event) {
         // We only allow communication with ads created by DFP
-        if (event.origin !== currentHost) {
+        if (allowedHosts.indexOf(event.origin) === -1) {
             return;
         }
 
@@ -106,7 +109,7 @@ define([
         });
 
         function respond(error, result) {
-            event.source.postMessage(JSON.stringify({ error: error, result: result }), currentHost);
+            event.source.postMessage(JSON.stringify({ id: data.id, error: error, result: result }), event.origin);
         }
     }
 
@@ -117,7 +120,19 @@ define([
     function isValidPayload(payload) {
         return 'type' in payload &&
             'value' in payload &&
-            payload.type in listeners;
+            payload.type in listeners &&
+            (isStandardMessage() || isRubiconMessage());
+
+        function isStandardMessage() {
+            return 'id' in payload &&
+                /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
+        }
+
+        function isRubiconMessage() {
+            return payload.type === 'set-ad-height' &&
+                'id' in payload.value &&
+                'height' in payload.value;
+        }
     }
 
     // Cheap string formatting function. It accepts as its first argument

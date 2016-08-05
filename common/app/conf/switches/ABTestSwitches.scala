@@ -34,9 +34,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val giraffe = Switch(
+  val ABGiraffeArticle20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-giraffe-article",
+    "ab-giraffe-article-20160802",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Testing if increasing prominence of video caption drives plays.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 3),
+    sellByDate = new LocalDate(2016, 8, 9),
     exposeClientSide = true
   )
 
@@ -61,6 +61,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 31),
+    exposeClientSide = true
+  )
+
+  val ABContributionsHeader20160802 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-header-20160802",
+    "Test effectiveness of header for driving contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 }

@@ -15,7 +15,8 @@ define([
                 return value + ' johnny!';
             },
             add1: function(value) { return value + 1; },
-            add2: function(_, ret) { return ret + 2; }
+            add2: function(_, ret) { return ret + 2; },
+            rubicon: function() { return 'rubicon'; }
         };
 
         var injector = new Injector();
@@ -57,7 +58,7 @@ define([
         });
 
         it('should not respond when sending malformed JSON', function () {
-            onMessage({ origin: 'http://localhost:9876', data: '{', source: mockFrame });
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: '{', source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
@@ -67,20 +68,20 @@ define([
                 { value: 'missing type' },
                 { type: 'unregistered', value: 'type' }
             ];
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[0]), source: mockFrame });
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[0]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[1]), source: mockFrame });
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[1]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payloads[2]), source: mockFrame });
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[2]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
         it('should respond with a 405 code when no listener is attached to a message type', function () {
-            var payload = { type: 'that', value: 'hello' };
+            var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'that', value: 'hello' };
             messenger.register('this', routines.noop, mockWindow);
             messenger.register('that', routines.noop, mockWindow);
             messenger.unregister('that', routines.noop, mockWindow);
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payload), source: mockFrame });
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame });
             expect(mockFrame.postMessage).toHaveBeenCalled();
             expect(response.error.code).toBe(405);
             expect(response.error.message).toBe('Service that not implemented');
@@ -88,9 +89,9 @@ define([
         });
 
         it('should throw when the listener fails', function (done) {
-            var payload = { type: 'this', value: 'hello' };
+            var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 'hello' };
             messenger.register('this', routines.thrower, mockWindow);
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.error.code).toBe(500);
@@ -102,9 +103,9 @@ define([
         });
 
         it('should respond with the routine\'s return value', function (done) {
-            var payload = { type: 'this', value: 'hello' };
+            var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 'hello' };
             messenger.register('this', routines.respond, mockWindow);
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe('hello johnny!');
@@ -114,16 +115,29 @@ define([
             .catch(done.fail);
         });
 
-        it('should resond with the listeners cumulative result', function (done) {
-            var payload = { type: 'this', value: 1 };
+        it('should respond with the listeners cumulative result', function (done) {
+            var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 1 };
             messenger.register('this', routines.add1, mockWindow);
             messenger.register('this', routines.add2, mockWindow);
-            onMessage({ origin: 'http://localhost:9876', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe(4);
                 messenger.unregister('this', routines.add1, mockWindow);
                 messenger.unregister('this', routines.add2, mockWindow);
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should respond to Rubicon messages with no IDs', function (done) {
+            var payload = { type: 'set-ad-height', value: { id: 'test', height: '20px' } };
+            messenger.register('set-ad-height', routines.rubicon, mockWindow);
+            onMessage({ origin: location.protocol + '//' + location.host, data: JSON.stringify(payload), source: mockFrame })
+            .then(function () {
+                expect(mockFrame.postMessage).toHaveBeenCalled();
+                expect(response.result).toBe('rubicon');
+                messenger.unregister('set-ad-height', routines.respond, mockWindow);
             })
             .then(done)
             .catch(done.fail);
