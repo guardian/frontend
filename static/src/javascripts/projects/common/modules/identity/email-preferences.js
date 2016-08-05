@@ -21,7 +21,6 @@ define([
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
             buttonEl.innerHTML = 'Loading...';
-            // remove error messages
             var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
@@ -31,10 +30,10 @@ define([
                     renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
+                    var subscriptionState;
                     if (response && response.subscriptions && response.subscriptions.length) {
                         subscriptionState = response.subscriptions[0].subscribedTo;
                     }
-                    var subscriptionState;
                     try {
                         if (response.subscriptions.length < 1) {
                             subscriptionState = false;
@@ -64,16 +63,14 @@ define([
     }
 
     function renderErrorMessage(buttonEl) {
-        clearErrorMessages();
-        var errorMessage = 'Sorry, an error has occurred, please refresh the page and try again';
         return fastdom.write(function () {
-            var insertionPoint = $.ancestor(buttonEl, 'email-subscription');
-            if (qwery('.form__error', insertionPoint).length < 1) {
-                var errorMessageDiv = document.createElement('div');
-                errorMessageDiv.innerHTML = errorMessage;
-                bonzo(errorMessageDiv).addClass('form__error');
-                insertionPoint.appendChild(errorMessageDiv);
-            }
+            clearErrorMessages();
+            var errorMessage = bonzo(bonzo.create(
+                '<div class="form__error">' +
+                    'Sorry, an error has occurred, please refresh the page and try again' +
+                '</div>'
+            ));
+            bonzo(errorMessage).insertAfter(buttonEl.parentNode);
         });
     }
 
