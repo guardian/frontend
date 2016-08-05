@@ -6,6 +6,7 @@ define([
     'common/views/svg',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
+    'common/utils/config',
     'text!common/views/experiments/remind-me-email-signup.html',
     'inlineSvg!svgs/icon/envelope',
     'lodash/objects/defaults'
@@ -16,6 +17,7 @@ define([
              svg,
              fastdom,
              mediator,
+             config,
              remindMeEmailSignup,
              envelope,
              defaults
@@ -110,11 +112,11 @@ define([
         };
 
         function isBlindDate() {
-            return window.guardian.config.page.series === 'Blind date';
+            return config.page.series === 'Blind date';
         }
 
         function isExperience() {
-            return window.guardian.config.page.series === 'Experience';
+            return config.page.series === 'Experience';
         }
 
         function insertSignupBox(templateData) {
@@ -133,7 +135,7 @@ define([
 
 
         function getTemplateData(data) {
-            return window.guardian.config.page.series === 'Blind date' ? data.blindDate : data.experience;
+            return config.page.series === 'Blind date' ? data.blindDate : data.experience;
         }
 
 
