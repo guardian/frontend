@@ -9,8 +9,8 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__logo-wrapper {
     padding-top: $gs-baseline / 2;
-    position: absolute;
-    right: 0;
+    padding-bottom: $gs-baseline / 2;
+    margin-left: auto;
 }
 
 .new-header__logo__svg {
@@ -42,26 +42,20 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__nav {
     @include fs-textSans(6);
+    line-height: 1.6;
     display: flex;
     align-items: center;
     width: 100%;
-    margin-top: $gs-baseline;
     // Position after pseudo element which forces line break
     order: 1;
     justify-content: space-between;
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
-        margin-top: 20px;
-    }
-
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
-        line-height: 1.6;
     }
 
     @include mq(mobileLandscape) {
         font-size: 24px;
-        margin-top: 30px;
     }
 }
 
@@ -198,12 +192,13 @@ $gutter-large: 55px;
 
 .edition-picker {
     @include fs-textSans(3);
-    order: -1;
+    position: absolute;
+    left: 0;
     color: $news-support-1;
     // Override from fs-textSans mixin
     line-height: 1;
-    padding-left: 7px;
     padding-top: $gs-baseline/2;
+    padding-left: $gs-gutter / 2;
     width: gs-span(2);
     z-index: 3;
 
@@ -267,8 +262,7 @@ $gutter-large: 55px;
 }
 
 .edition-picker__current-edition {
-    width: gs-span(2) - 4px;
-    padding-left: 4px;
+    width: gs-span(2);
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline/2;
     display: block;
