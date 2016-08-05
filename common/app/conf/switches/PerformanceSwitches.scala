@@ -224,7 +224,7 @@ trait PerformanceSwitches {
     "If this switch is on then content api calls will be requested in thrift format, instead of json format.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 5),
+    sellByDate = never,
     exposeClientSide = false
   )
 
