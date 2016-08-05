@@ -2,12 +2,13 @@ define([
     'common/utils/ajax',
     'admin/bootstraps/abtests',
     'admin/bootstraps/radiator',
+    'admin/bootstraps/commercial-browser-performance',
     'domReady'
 ], function (
     ajax,
     abTests,
-    adunitapproval,
     radiator,
+    commercialBrowserPerformance,
     domReady
 ) {
 
@@ -21,6 +22,10 @@ define([
 
             case '/radiator':
                 radiator.init();
+                break;
+
+            case '/commercial/performance/browser-dashboard':
+                commercialBrowserPerformance.init();
                 break;
         }
     });
