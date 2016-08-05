@@ -48,14 +48,14 @@ define([
                         title: '<b>&lsquo;She didn’t judge me for talking about giraffes&rsquo; necks&rsquo;</b>',
                         description: 'Did digital communications consultant Lucy, 23, click with waitress Charlie, 20?',
                         cta: 'Remind me',
-                        dataLinkName: 'one-off_coming-up_blind-date'
+                        trackingCode: 'one-off_coming-up_blind-date'
                     },
                     experience: {
                         subtitle: 'Coming up in next week&rsquo;s Experience',
                         title: '<b>I was stranded in the wilderness for nine days</b>',
                         description: '&lsquo;I had lost so much weight that I looked like walking skeleton. I was ready to give up&rsquo;',
                         cta: 'Remind me',
-                        dataLinkName: 'one-off_coming-up_experience'
+                        trackingCode: 'one-off_coming-up_experience'
                     }
                 },
                 seriesDescription: {
@@ -64,14 +64,14 @@ define([
                         title: 'What is <b>Blind Date?</b>',
                         description: 'Every Saturday we fix up two Guardian readers',
                         cta: 'Remind me next Saturday',
-                        dataLinkName: 'one-off_series-description_blind-date'
+                        trackingCode: 'one-off_series-description_blind-date'
                     },
                     experience: {
                         subtitle: null,
                         title: 'What is <b>Experience?</b>',
                         description: 'Every Saturday a Guardian reader shares their unique story',
                         cta: 'Remind me next Saturday',
-                        dataLinkName: 'one-off_series-description_experience'
+                        trackingCode: 'one-off_series-description_experience'
                     }
                 }
             },
@@ -82,14 +82,14 @@ define([
                         title: '<b>&lsquo;She didn’t judge me for talking about giraffes&rsquo; necks&rsquo;</b>',
                         description: 'Did digital communications consultant Lucy, 23, click with waitress Charlie, 20?',
                         cta: 'Get a weekly reminder',
-                        dataLinkName: 'weekly_coming-up_blind-date'
+                        trackingCode: 'weekly_coming-up_blind-date'
                     },
                     experience: {
                         subtitle: 'Coming up in next week&rsquo;s Experience',
                         title: '<b>I was stranded in the wilderness for nine days</b>',
                         description: '&lsquo;I had lost so much weight that I looked like walking skeleton. I was ready to give up&rsquo;',
                         cta: 'Get a weekly reminder',
-                        dataLinkName: 'weekly_coming-up_experience'
+                        trackingCode: 'weekly_coming-up_experience'
                     }
                 },
                 seriesDescription: {
@@ -98,14 +98,14 @@ define([
                         title: 'What is <b>Blind Date?</b>',
                         description: 'Every Saturday we fix up two Guardian readers',
                         cta: 'Get a weekly reminder',
-                        dataLinkName: 'weekly_series-description_blind-date'
+                        trackingCode: 'weekly_series-description_blind-date'
                     },
                     experience: {
                         subtitle: null,
                         title: 'What is <b>Experience?</b>',
                         description: 'Every Saturday a Guardian reader shares their unique story',
                         cta: 'Get a weekly reminder',
-                        dataLinkName: 'weekly_series-description_experience'
+                        trackingCode: 'weekly_series-description_experience'
                     }
                 }
             }
@@ -141,6 +141,9 @@ define([
             return fastdom.write(function () {
                 var tags = $('.submeta');
                 $signupBox.insertBefore(tags);
+                require(['ophan/ng'], function (ophan) {
+                    ophan.trackComponentAttention(params.trackingCode, $signupBox[0]);
+                });
                 mediator.emit('remind-me-email:insert');
             });
         }
