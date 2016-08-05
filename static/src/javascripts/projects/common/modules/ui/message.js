@@ -30,6 +30,7 @@ define([
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
         this.siteMessageComponentName = opts.siteMessageComponentName || '';
@@ -72,6 +73,11 @@ define([
 
         if (this.siteMessageComponentName) {
             siteMessage.attr('data-component', this.siteMessageComponentName);
+            if (this.trackDisplay) {
+                require(['ophan/ng'], function (ophan) {
+                    ophan.trackComponentAttention(this.siteMessageComponentName, siteMessage);
+                });
+            }
         }
         if (this.siteMessageLinkName) {
             siteMessage.attr('data-link-name', this.siteMessageLinkName);
