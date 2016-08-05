@@ -7,8 +7,9 @@ import model.Competition
 
 
 trait MatchTestData {
-  val now = DateTime.now(DateTimeZone.forID("Europe/London"))
-  val today = LocalDate.now(DateTimeZone.forID("Europe/London"))
+  // Set a fixed date and time to ensure repeatibility of the tests
+  val now = new DateTime(2016, 8, 4, 10, 30, DateTimeZone.forID("Europe/London"))
+  val today = now.toLocalDate
 
   val spurs = MatchDayTeam("19", "Spurs", Some(4), Some(1), None, Some("Emmanuel Adebayor (19),Joe Paulo Paulinho (53),Emmanuel Adebayor (82),Nacer Chadli (88)"))
   val arsenal = MatchDayTeam("1006", "Arsenal", Some(0), Some(0), None, None)
