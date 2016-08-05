@@ -1,7 +1,6 @@
 package controllers.admin
 
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import play.api.libs.ws.WSClient
 import play.api.mvc.Controller
 import play.api.mvc.Action
@@ -13,7 +12,7 @@ import play.api.Play.current
 
 import scala.concurrent.Future
 
-class MetricsController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
+class MetricsController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
   // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase

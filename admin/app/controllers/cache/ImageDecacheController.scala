@@ -5,7 +5,6 @@ import java.util.UUID
 
 import com.gu.googleauth.UserIdentity
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import controllers.admin.AuthActions
 import model.NoCache
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -15,7 +14,7 @@ import play.api.mvc.{AnyContent, Controller, Action}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class ImageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
+class ImageDecacheController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
   import ImageDecacheController._
 
   val imageServices = new ImageServices(wsClient)

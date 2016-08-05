@@ -2,13 +2,12 @@ package controllers.admin
 
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import model.NoCache
 
 import scala.concurrent.Future
 import model.quality.QualityData
 
-class AnalyticsController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class AnalyticsController extends Controller with Logging with ExecutionContexts {
   def abtests() = Action.async { implicit request =>
     Future(NoCache(Ok(views.html.abtests("PROD"))))
   }

@@ -3,7 +3,6 @@ package controllers.admin
 import implicits.Requests
 import play.api.mvc.{Action, Controller}
 import common.Logging
-import controllers.AuthLogging
 import tools.CloudWatch
 import play.api.libs.ws.{WSAuthScheme, WSClient}
 import play.api.libs.concurrent.Execution.Implicits._
@@ -12,7 +11,7 @@ import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
 
-class RadiatorController(wsClient: WSClient) extends Controller with Logging with AuthLogging with Requests{
+class RadiatorController(wsClient: WSClient) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting

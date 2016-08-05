@@ -297,11 +297,8 @@ $gutter-medium: 37px;
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: $guardian-brand-dark;
-
-            .edition-picker__dropdown__item {
-                display: block;
-            }
         }
+
         & ~ .edition-picker__current-edition {
             z-index: 3;
         }

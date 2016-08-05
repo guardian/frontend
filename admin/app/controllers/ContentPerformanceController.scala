@@ -1,7 +1,6 @@
 package controllers.admin
 
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import jobs.VideoEncodingsJob
 import model.NoCache
 import org.joda.time.DateTime
@@ -9,7 +8,7 @@ import org.joda.time.format.DateTimeFormat
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 
-class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob) extends Controller with AuthLogging with Logging with ExecutionContexts {
+class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob) extends Controller with Logging with ExecutionContexts {
 
   val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 

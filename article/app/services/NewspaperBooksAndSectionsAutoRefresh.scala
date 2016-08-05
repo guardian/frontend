@@ -11,10 +11,12 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-class NewspaperBooksAndSectionsAutoRefresh extends LifecycleComponent {
+class NewspaperBooksAndSectionsAutoRefresh(newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
+                                           newspaperBookTagAgent: NewspaperBookTagAgent)
+  extends LifecycleComponent {
   override def start(): Unit = {
-    NewspaperBookTagAgent.start()
-    NewspaperBookSectionTagAgent.start()
+    newspaperBookTagAgent.start()
+    newspaperBookSectionTagAgent.start()
   }
 }
 
@@ -37,8 +39,6 @@ class NewspaperBookTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[Tag
   }
 }
 
-object NewspaperBookTagAgent extends NewspaperBookTagAgent(Akka.system())
-
 class NewspaperBookSectionTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
   override val source = "newspaper_book_sections"
   override protected def refresh(): Future[TagIndexListings] = Future {
@@ -47,5 +47,3 @@ class NewspaperBookSectionTagAgent(actorSystem: => ActorSystem) extends AutoRefr
     }
   }
 }
-
-object NewspaperBookSectionTagAgent extends NewspaperBookSectionTagAgent(Akka.system())

@@ -4,7 +4,6 @@ import common.dfp.{GuCreativeTemplate, LineItemReport}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.environment
-import controllers.AuthLogging
 import dfp.{CreativeTemplateAgent, DfpApi}
 import model._
 import ophan.SurgingContentAgent
@@ -23,7 +22,7 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-class CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class CommercialController extends Controller with Logging with ExecutionContexts {
 
   def renderCommercialMenu() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))

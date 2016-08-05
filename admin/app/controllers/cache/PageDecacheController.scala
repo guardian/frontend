@@ -5,7 +5,6 @@ import java.net.URI
 import cache.SurrogateKey
 import com.gu.googleauth.UserIdentity
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import controllers.admin.AuthActions
 import model.NoCache
 import play.api.libs.ws.WSClient
@@ -15,7 +14,7 @@ import purge.CdnPurge
 
 import scala.concurrent.Future.successful
 
-class PageDecacheController(wsClient: WSClient) extends Controller with Logging with AuthLogging with ExecutionContexts {
+class PageDecacheController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
   def renderPageDecacheForm() = Action { implicit request =>
     NoCache(Ok(views.html.cache.pageDecacheForm()))
