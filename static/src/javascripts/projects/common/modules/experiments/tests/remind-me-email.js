@@ -37,7 +37,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.canRun = function () {
-            return isBlindDate() || isExperience();
+            return (isBlindDate() && blindDateIsPublished()) || (isExperience() && experienceIsPublished());
         };
 
         var copy = {
@@ -115,8 +115,20 @@ define([
             return config.page.series === 'Blind date';
         }
 
+        function blindDateIsPublished() {
+            var isPublishDateInThePast = Date.parse('2016-08-06 06:00:00') < Date.now();
+            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/06/blind-date-rosie-rodney';
+            return isPublishDateInThePast || isViewingTheLatestArticle;
+        }
+
         function isExperience() {
             return config.page.series === 'Experience';
+        }
+
+        function experienceIsPublished() {
+            var isPublishDateInThePast = Date.parse('2016-08-05 14:00:00') < Date.now();
+            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/05/playing-pokemon-go-crashed-car-experience';
+            return isPublishDateInThePast || isViewingTheLatestArticle;
         }
 
         function insertSignupBox(templateData) {
