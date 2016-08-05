@@ -46,21 +46,22 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     align-items: center;
     width: 100%;
     margin-top: $gs-baseline;
+    // Position after pseudo element which forces line break
+    order: 1;
+    justify-content: space-between;
 
-    @include mq($mobile-medium) {
-        margin-top: $gs-baseline * 2;
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-top: 20px;
     }
 
     @include mq($until: mobileLandscape) {
         font-size: 5.2vw;
         line-height: 1.6;
-        // Position after pseudo element which forces line break
-        order: 1;
-        justify-content: space-between;
     }
 
     @include mq(mobileLandscape) {
         font-size: 24px;
+        margin-top: 30px;
     }
 }
 
@@ -69,6 +70,7 @@ $veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
 $gutter-small: 29px;
 $gutter-medium: 37px;
+$gutter-large: 55px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
@@ -94,9 +96,6 @@ $gutter-medium: 37px;
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
-    }
-
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
         margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 1.5;
         //Align with the 'i' in 'theguardian'
@@ -104,9 +103,8 @@ $gutter-medium: 37px;
     }
 
     @include mq(mobileLandscape) {
-        margin-top: -$gs-baseline / 1.5;
-        margin-bottom: -$gs-baseline / 1.5;
-        margin-left: $gs-gutter -$gs-gutter / 4;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-large;
     }
 }
 
@@ -156,20 +154,16 @@ $gutter-medium: 37px;
 .new-header__nav__list {
     display: flex;
     flex-wrap: wrap;
-    // Unset ul from _lists.scss
-    margin-left: 0;
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
 
-    @include mq($until: mobileLandscape) {
-        order: -1;
-        margin-left: $gs-gutter / 2;
-    }
+    order: -1;
+    margin-left: $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
+        margin-left: $gs-gutter;
     }
 }
 
@@ -370,6 +364,10 @@ $gutter-medium: 37px;
 
     @include mq($from: $mobile-medium, $until: mobileLandscape) {
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 
     .main-menu-container.off-screen & {
