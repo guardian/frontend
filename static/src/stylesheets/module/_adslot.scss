@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: hidden;
+    overflow: initial;
 
     .js-off & {
         display: none;
@@ -47,7 +47,7 @@
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $neutral-5;
     color: $neutral-2-contrasted;
-    text-align: right;
+    text-align: left;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
 
@@ -83,7 +83,6 @@
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
-        text-align: left;
         border-top: 0;
         padding: 0;
         height: $gs-row-height/2;

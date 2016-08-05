@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
     'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
-    'common/modules/experiments/tests/contributions-header'
+    'common/modules/experiments/tests/contributions-header',
+    'common/modules/experiments/tests/ad-feedback'
 ], function (
     reportError,
     config,
@@ -33,7 +34,8 @@ define([
     ParticipationDiscussionOrderingNonLive,
     RemindMeEmail,
     HostedZootropolisCta,
-    ContributionsHeader
+    ContributionsHeader,
+    AdFeedback
 ) {
 
     var TESTS = [
@@ -45,7 +47,8 @@ define([
         new ParticipationDiscussionOrderingNonLive(),
         new RemindMeEmail(),
         new HostedZootropolisCta(),
-        new ContributionsHeader()
+        new ContributionsHeader(),
+        new AdFeedback()
     ];
 
     var participationsKey = 'gu.ab.participations';
