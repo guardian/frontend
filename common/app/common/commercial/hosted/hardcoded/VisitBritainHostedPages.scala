@@ -192,6 +192,11 @@ object VisitBritainHostedPages {
     )
   )
 
+  private val cta = HostedCallToAction(
+    label = Some("Explore our collection of unique experiences from all over Great Britain & Northern Ireland"),
+    btnText = Some("Find more inspiration"),
+    url = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleries&utm_campaign=display"
+  )
 
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
@@ -199,9 +204,7 @@ object VisitBritainHostedPages {
     pageUrl = s"$host/advertiser-content/visit-britain/activities",
     pageName = activitiesPageName,
     title = "Don’t be a sloth this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
-    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriesactivities&utm_campaign=display",
-    ctaButtonText = "Find more inspiration",
+    cta = cta,
     nextPageNames = List(cityPageName, coastPageName),
     twitterShareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
     standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
@@ -213,9 +216,7 @@ object VisitBritainHostedPages {
     pageUrl = s"$host/advertiser-content/visit-britain/city",
     pageName = cityPageName,
     title = "Take a city break from the norm",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
-    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescity&utm_campaign=display",
-    ctaButtonText = "Find more inspiration",
+    cta = cta,
     nextPageNames = List(coastPageName, countrysidePageName),
     standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and hotly-tipped comedy acts at Edinburgh Fringe."
   )
@@ -226,9 +227,7 @@ object VisitBritainHostedPages {
     pageUrl = s"$host/advertiser-content/visit-britain/coast",
     pageName = coastPageName,
     title = "Find cool-on-sea this summer",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
-    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescoast&utm_campaign=display",
-    ctaButtonText = "Find more inspiration",
+    cta = cta,
     nextPageNames = List(countrysidePageName, activitiesPageName),
     standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical climes and join the party at the Whitby Regatta."
   )
@@ -239,9 +238,7 @@ object VisitBritainHostedPages {
     pageUrl = s"$host/advertiser-content/visit-britain/countryside",
     pageName = countrysidePageName,
     title = "Mend your relationship with Mother Nature",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain & Northern Ireland",
-    ctaLink = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleriescountryside&utm_campaign=display",
-    ctaButtonText = "Find more inspiration",
+    cta = cta,
     nextPageNames = List(activitiesPageName, cityPageName),
     standfirst = "Switch off and soak up the country air as you ramble through the heather-coated North York Moors or explore the dramatic scenery of Glen Coe."
   )

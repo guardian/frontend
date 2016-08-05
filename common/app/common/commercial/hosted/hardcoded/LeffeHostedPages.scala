@@ -24,10 +24,10 @@ object LeffeHostedPages {
 
   private val cta = HostedCallToAction(
     url = "https://www.facebook.com/Leffe.uk/",
-    label = "Rediscover Time",
-    image = Static("images/commercial/leffe_banner.png"),
-    trackingCode = "leffe-rediscover-time",
-    btnText = "Visit Leffe on Facebook"
+    label = Some("Rediscover Time"),
+    image = Some(Static("images/commercial/leffe_banner.png")),
+    trackingCode = Some("leffe-rediscover-time"),
+    btnText = Some("Visit Leffe on Facebook")
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {

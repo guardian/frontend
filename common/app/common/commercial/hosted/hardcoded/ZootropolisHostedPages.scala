@@ -20,10 +20,9 @@ object ZootropolisHostedPages {
 
   private val cta = HostedCallToAction(
     url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
-    label = "",
-    image = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
-    trackingCode = "disney-zootropolis",
-    btnText = "Out now on digital download"
+    image = Some("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg"),
+    trackingCode = Some("disney-zootropolis"),
+    btnText = Some("Out now on digital download")
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {
