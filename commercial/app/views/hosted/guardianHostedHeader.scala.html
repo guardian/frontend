@@ -1,9 +1,11 @@
-@(pageCssClass: String, brandCssClass: String, logoUrl: String)
+@(pageCssClass: String, brandCssClass: String, logoUrl: String, owner: String, logoLink: String)
     <div class="hosted__header @pageCssClass">
         <div class="hosted__headerwrap js-hosted-headerwrap">
             <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--@brandCssClass">
                 <p class="hostedbadge__info">Advertiser content</p>
-                 <img class="hostedbadge__logo" src="@{logoUrl}"/>
+                <a href="@{logoLink}" data-link-name="hosted-logo-top-left" target="_blank">
+                    <img class="hostedbadge__logo" src="@{logoUrl}" alt="logo @{owner}"/>
+                </a>
             </div>
             <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
                 <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
