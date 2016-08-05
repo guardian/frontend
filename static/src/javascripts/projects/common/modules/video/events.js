@@ -38,7 +38,8 @@ define([
             'content:ready',
             'content:play',
             'content:end'
-        ];
+        ],
+        ga = window.ga;
 
 
     /**
@@ -109,36 +110,50 @@ define([
         bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
     }
 
+    function getGoogleAnalyticsEventAction(mediaEvent) {
+        var action = mediaEvent.mediaType + ' ';
+        if (mediaEvent.isPreroll) {
+            action += 'preroll';
+        } else {
+            action += 'content';
+        }
+        return action;
+    }
+
+    function buildGoogleAnalyticsEvent(mediaEvent, metrics) {
+        var category = 'Media';
+        var playerName = 'guardian-videojs';
+        var action = getGoogleAnalyticsEventAction(mediaEvent);
+        var fieldsObject = {
+            eventCategory: category,
+            eventAction: action,
+            eventLabel: mediaEvent.eventType,
+            dimension19: mediaEvent.mediaId,
+            dimension20: playerName
+        };
+        // Increment the appropriate metric based on the event type
+        var metricId = metrics[mediaEvent.eventType];
+        if (metricId) {
+            fieldsObject[metricId] = 1;
+        }
+        return fieldsObject;
+    }
 
     function bindGoogleAnalyticsEvents(player) {
-        var allEvents = [
-            'ready',
-            'play',
-            'end',
-            'skip',
-            'watched25',
-            'watched50',
-            'watched75'
-        ];
-        var category = 'media';
+        var events = {
+            'play': 'metric1',
+            'skip': 'metric2',
+            'watched25': 'metric3',
+            'watched50': 'metric4',
+            'watched75': 'metric5',
+            'end': 'metric6'
+        };
 
-        // see ga() api here:
-        // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#implementation
-        // ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
-        allEvents.map(function(eventName) {
+        Object.keys(events).map(function(eventName) {
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                var gaEvent = {
-                    eventCategory: category,
-                    eventAction: mediaEvent.eventAction,
-                    eventLabel: mediaEvent.mediaId,
-                    mediaType: mediaEvent.mediaType,
-                    preroll: mediaEvent.preroll,
-                    player: 'guardian-videojs'
-                };
-                return gaEvent;
-                // gaGlobal('guardianTestPropertyTracker.send', gaEvent);
+                ga('guardianTestPropertyTracker.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events));
             });
         });
     }
