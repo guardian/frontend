@@ -53,7 +53,6 @@ define([
     function enhanceEmailPreferences() {
         $.forEachElement('.email-subscription__button', reqwestEmailSubscriptionUpdate);
         $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
-
     }
 
     function encodeFormData(csrfToken, buttonVal, htmlPreference) {
@@ -74,7 +73,6 @@ define([
         });
     }
 
-    // clear any error messages from the page
     function clearErrorMessages() {
         if (qwery('.form__error')) {
             $.forEachElement('.form__error', function (errorEl) {
@@ -107,7 +105,6 @@ define([
     function updateSaveButton(buttonEl) {
         buttonEl.innerHTML = 'Save';
         buttonEl.disabled = false;
-        renderErrorMessage(buttonEl);
     }
 
     function updateButton(buttonEl, subscriptionState) {
@@ -118,21 +115,11 @@ define([
         }
     }
 
-    function getHTMLPref() {
-        if(qwery('#htmlPreference_HTML')[0].checked) {
-          return 'HTML';
-      } else if(qwery('#htmlPreference_Text')[0].checked) {
-          return 'Text';
-      } else {
-          return '';
-      }
-    }
-
     function generateFormQueryString(buttonEl) {
         var formEl = $.ancestor(buttonEl, 'form');
         var csrfToken = (formEl.elements.csrfToken.value).toString();
         var buttonVal = buttonEl.value.toString() || '';
-        var htmlPreference = getHTMLPref() || '';
+        var htmlPreference = $('[name="htmlPreference"]:checked').val();
         return encodeFormData(csrfToken, buttonVal, htmlPreference);
     }
 
