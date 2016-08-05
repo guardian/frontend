@@ -141,7 +141,7 @@ define([
 
         function completer(complete) {
             mediator.on('remind-me-email:insert', function () {
-                bean.on(qwery('#remind-me-signup')[0], 'click', function (){
+                bean.on(qwery('.js-remind-me-signup')[0], 'click', function (){
                     var html404 =
                         '<p class="remind-me__cta">' +
                             'Yessss! Another click! Thanks for your interest in this feature, we’re testing demand. ' +
