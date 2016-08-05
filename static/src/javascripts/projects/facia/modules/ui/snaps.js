@@ -3,12 +3,13 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/detect',
+    'common/utils/fetch',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
     'common/utils/proximity-loader',
+    'common/utils/report-error',
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps',
     'lodash/functions/once',
@@ -19,12 +20,13 @@ define([
     bonzo,
     fastdom,
     $,
-    ajax,
     detect,
+    fetch,
     mediator,
     template,
     toArray,
     proximityLoader,
+    reportError,
     relativeDates,
     FootballSnaps,
     once,
@@ -123,17 +125,25 @@ define([
     }
 
     function fetchFragment(el, asJson) {
-        ajax({
-            url: el.getAttribute('data-snap-uri'),
-            type: asJson ? 'json' : 'html',
-            crossOrigin: true
+        fetch(el.getAttribute('data-snap-uri'), {
+            mode: 'cors'
         }).then(function (resp) {
-            $.create(asJson ? resp.html : resp).each(function (html) {
+            if (resp.ok) {
+                return asJson ? resp.json().then(function (json) {
+                    return json.html;
+                }) : resp.text();
+            } else {
+                return Promise.reject(new Error('Fetch error: ' + resp.statusText));
+            }
+        }).then(function (resp) {
+            $.create(resp).each(function (html) {
                 fastdom.write(function () {
                     bonzo(el).html(html);
                 });
             });
             relativeDates.init(el);
+        }).catch(function (ex){
+            reportError(ex, { feature: 'snaps' });
         });
     }
 

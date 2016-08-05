@@ -5,8 +5,9 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'common/utils/ajax',
     'common/utils/config',
+    'common/utils/fetch-json',
+    'common/utils/report-error',
     'common/utils/storage',
     'common/utils/template',
     'common/modules/ui/relativedates',
@@ -24,8 +25,9 @@ define([
     fastdom,
     qwery,
     Promise,
-    ajax,
     config,
+    fetchJson,
+    reportError,
     storage,
     template,
     relativeDates,
@@ -75,10 +77,8 @@ define([
     }
 
     function fetchBreakingNews() {
-        return ajax({
-            url: breakingNewsURL,
-            type: 'json',
-            crossOrigin: true
+        return fetchJson(breakingNewsURL, {
+            mode: 'cors'
         });
     }
 
@@ -161,7 +161,7 @@ define([
 
             // if its the first time we've seen this alert, we wait 3 secs to show it
             // otherwise we show it immediately
-            var alertDelay = has(knownAlertIDs, alert.id) ? 0 : 3000;
+            var alertDelay = has(knownAlertIDs, alert.id) ? 0 : init.DEFAULT_DELAY;
 
             // $breakingNews is hidden, so this won't trigger layout etc
             $breakingNews.append(renderAlert(alert));
@@ -209,7 +209,7 @@ define([
             .removeClass('breaking-news--fade-in breaking-news--hidden');
     }
 
-    return function () {
+    function init () {
         if (userCanDismissAlerts()) {
             knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
 
@@ -220,9 +220,15 @@ define([
                 .then(filterAlertsByDismissed)
                 .then(filterAlertsByAge)
                 .then(pickNewest)
-                .then(alert);
+                .then(alert)
+                .catch(function (ex) {
+                    reportError(ex, { feature: 'breaking-news' });
+                });
         } else {
             return Promise.reject('cannot dismiss');
         }
-    };
+    }
+
+    init.DEFAULT_DELAY = 3000;
+    return init;
 });
