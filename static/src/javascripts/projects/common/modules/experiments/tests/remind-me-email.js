@@ -30,8 +30,8 @@ define([
         this.author = 'Joseph Smith';
         this.description = 'Add a signup for a reminder email at the bottom of series articles';
         this.showForSensitive = false;
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.2;
+        this.audienceOffset = 0.7;
         this.successMeasure = 'Greatest clickthrough rate';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
