@@ -22,11 +22,11 @@ These principles apply to all requests on `www.theguardian.com` and `api.nextgen
 * Requests that take longer than two seconds will be terminated.
 
 # New developers
-Welcome! To get set up, please follow [the installation guide](https://github.com/guardian/frontend/docs/01-start-here/installation-steps.md).
+Welcome! To get set up, please follow [the installation guide](docs/01-start-here/installation-steps.md).
 
-[The best place to start is here](https://github.com/guardian/frontend/docs/01-start-here)
+[The best place to start is here](docs/01-start-here)
 
-Fixes for common problems can be found [here](https://github.com/guardian/frontend/docs/01-start-here/troubleshooting.md).
+Fixes for common problems can be found [here](docs/01-start-here/troubleshooting.md).
 
 ## Client-side development
 ### watch/reload
