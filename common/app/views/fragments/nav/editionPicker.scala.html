@@ -15,15 +15,15 @@
         @Edition(request).displayName
     </label>
 
-    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" hidden>
+    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" aria-hidden="true">
         @Edition.others(request).map { edition =>
             <li class="edition-picker__dropdown__item">
                 <a class="edition-picker__dropdown-item-link"
                 data-edition="@edition.id"
                 data-link-name="new header switch to @edition.id edition"
-                value="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                 title="Switch to the @edition.id edition"
-                tabindex="0">
+                tabindex="0"
+                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
                     <span class="u-h"> switch to the </span>
                     <span> @edition.displayName </span>
                 </a>

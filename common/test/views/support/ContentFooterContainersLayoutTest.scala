@@ -68,9 +68,9 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
     html.toString shouldBe "storyPackageHtml onwardHtml commentsHtml mostPopularHtml "
   }
 
-  it should "just show the story package and onward placeholder on ad features" in {
+  it should "just show the story package, commercial container and onward placeholder on ad features" in {
     val html = buildHtml(contentItem(), isAdFeature = true)
-    html.toString shouldBe "storyPackageHtml onwardHtml "
+    html.toString shouldBe "highRelevanceCommercialHtml storyPackageHtml onwardHtml "
   }
 
   it should "omit comments when article won't allow them" in {

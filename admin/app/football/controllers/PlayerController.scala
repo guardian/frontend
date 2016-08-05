@@ -2,6 +2,7 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
+import play.api.Mode
 import football.services.GetPaClient
 import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
 import implicits.Requests
@@ -15,9 +16,9 @@ import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(override val wsClient: WSClient) extends Controller with ExecutionContexts with GetPaClient with Requests {
+class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient with Requests {
 
-  def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
+  def playerIndex = Action.async { implicit request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
@@ -27,7 +28,7 @@ class PlayerController(override val wsClient: WSClient) extends Controller with 
     }
   }
 
-  def redirectToCard = AuthActions.AuthActionTest { request =>
+  def redirectToCard = Action { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
@@ -44,7 +45,7 @@ class PlayerController(override val wsClient: WSClient) extends Controller with 
   def playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, competitionId: String)
         = playerCardCompetition(cardType, playerId, teamId, competitionId)
 
-  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
       competitions.find(_.competitionId == competitionId).fold(Future.successful(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))) { competition =>
         for {
@@ -63,7 +64,7 @@ class PlayerController(override val wsClient: WSClient) extends Controller with 
       = playerCardDate(cardType, playerId, teamId, startDateStr)
 
 
-  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = Action.async { implicit request =>
     val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
     for {
       playerProfile <- client.playerProfile(playerId)
@@ -101,7 +102,7 @@ class PlayerController(override val wsClient: WSClient) extends Controller with 
     }
   }
 
-  def squad(teamId: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def squad(teamId: String) = Action.async { implicit request =>
     for {
       squad <- client.squad(teamId)
     } yield {

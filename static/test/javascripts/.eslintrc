@@ -12,5 +12,6 @@
         "camelcase": 2,
         "no-shadow": 2
     },
-    "globals": { "sinon": true }
+    "globals": { "sinon": true },
+    "extends": "plugin:jasmine/recommended"
 }

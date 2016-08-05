@@ -90,9 +90,9 @@ define([
                 listId: '3698',
                 listName: 'euRef',
                 campaignCode: 'eu_ref_article_signup',
-                headline: 'EU referendum morning briefing',
-                description: 'Sign up for a round-up of the most recent EU referendum developments, the biggest talking points, and what to look out for each day.',
-                successHeadline: 'Thank you for signing up for the EU referendum morning briefing',
+                headline: 'Brexit weekly briefing',
+                description: 'Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.',
+                successHeadline: 'Thank you for signing up for the Brexit weekly briefing',
                 successDescription: 'You\'ll receive an email every morning.',
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle

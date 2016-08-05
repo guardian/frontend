@@ -25,6 +25,7 @@ define([
     var membershipEndpoints = {
         UK:   'https://membership.theguardian.com/supporter',
         US:   'https://membership.theguardian.com/us/supporter',
+        AU:   'https://membership.theguardian.com/au/supporter',
         INT:   'https://membership.theguardian.com/supporter'
     };
 
@@ -50,6 +51,15 @@ define([
             minVisited:    10,
             data: {
                 messageText: 'Support open, independent journalism. Become a Supporter for just $4.99 per month.',
+                linkText: 'Find out more'
+            }
+        },
+        AU: {
+            campaign:      'MEMBERSHIP_SUPPORTER_BANNER_AU',
+            code:          'membership-message-au-2016-08-01',
+            minVisited:    10,
+            data: {
+                messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
                 linkText: 'Find out more'
             }
         },
@@ -97,6 +107,8 @@ define([
             pinOnHide: false,
             siteMessageLinkName: 'membership message',
             siteMessageCloseBtn: 'hide',
+            siteMessageComponentName: message.campaign,
+            trackDisplay: true,
             cssModifierClass: cssModifierClass
         }).show(template(messageTemplate, data));
     }

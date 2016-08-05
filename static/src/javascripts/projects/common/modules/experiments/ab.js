@@ -11,8 +11,11 @@ define([
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/participation-discussion-ordering-take-2',
-    'common/modules/experiments/tests/hosted-zootropolis-cta'
+    'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
+    'common/modules/experiments/tests/participation-discussion-ordering-non-live',
+    'common/modules/experiments/tests/remind-me-email',
+    'common/modules/experiments/tests/hosted-zootropolis-cta',
+    'common/modules/experiments/tests/contributions-header'
 ], function (
     reportError,
     config,
@@ -26,8 +29,11 @@ define([
     HostedAutoplay,
     Giraffe,
     VideoCaption,
-    ParticipationDiscussionOrderingTake2,
-    HostedZootropolisCta
+    ParticipationDiscussionOrderingLiveBlog,
+    ParticipationDiscussionOrderingNonLive,
+    RemindMeEmail,
+    HostedZootropolisCta,
+    ContributionsHeader
 ) {
 
     var TESTS = [
@@ -35,8 +41,11 @@ define([
         new HostedAutoplay(),
         new Giraffe(),
         new VideoCaption(),
-        new ParticipationDiscussionOrderingTake2(),
-        new HostedZootropolisCta()
+        new ParticipationDiscussionOrderingLiveBlog(),
+        new ParticipationDiscussionOrderingNonLive(),
+        new RemindMeEmail(),
+        new HostedZootropolisCta(),
+        new ContributionsHeader()
     ];
 
     var participationsKey = 'gu.ab.participations';
