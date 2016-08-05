@@ -1,18 +1,18 @@
 /*eslint no-console: 0*/
 define([
-    'common/utils/config',
     'helpers/injector',
     'common/utils/$',
+    'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/storage',
-    'common/utils/ajax',
     'lodash/objects/defaults',
     'Promise'
 ], function (
-    config,
     Injector,
     $,
+    config,
+    fetchJson,
     storage,
-    ajax,
     defaults,
     Promise
 ) {
@@ -43,8 +43,9 @@ define([
             return new Promise(function (resolve, reject) {
                 injector.mock({
                     'common/utils/storage': storage,
-                    'common/utils/ajax': ajax
+                    'common/utils/fetch-json': fetchJson
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
+                    breakingNews.DEFAULT_DELAY = 100;
                     server = sinon.fakeServer.create();
                     server.respondImmediately = true;
                     server.autoRespond = true;
@@ -56,9 +57,9 @@ define([
                         return breakingNews();
                     }).then(function(result) {
                         // make sure the DOM has finished updating
-                        requestAnimationFrame(function () {
+                        setTimeout(function () {
                             resolve(result);
-                        });
+                        }, 20);
                     }).catch(reject).then(function () {
                         server.restore();
                     });
@@ -69,12 +70,16 @@ define([
         }
 
         beforeAll(function () {
-            ajax = jasmine.createSpy().and.callFake(ajax);
+            fetchJson = jasmine.createSpy().and.callFake(fetchJson);
             config.page.edition = 'UK';
         });
 
         beforeEach(function (done) {
             $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
+            requestAnimationFrame(done);
+        });
+        afterEach(function (done) {
+            $('.js-breaking-news-placeholder').remove();
             requestAnimationFrame(done);
         });
 
@@ -87,7 +92,7 @@ define([
                 mockBreakingNewsWith([]).then(function () {
                     done.fail('user cannot use local storage, but we seem to think things are okish');
                 }, function (res) {
-                    expect(ajax).not.toHaveBeenCalled();
+                    expect(fetchJson).not.toHaveBeenCalled();
                     expect(res).toEqual('cannot dismiss');
                     expect($('.js-breaking-news-placeholder:not(:empty)').length).toBe(0);
                 }).then(done).catch(done.fail);
@@ -108,7 +113,7 @@ define([
 
             it('should try and fetch the json', function (done) {
                 mockBreakingNewsWith([]).then(function () {
-                    expect(ajax).toHaveBeenCalled();
+                    expect(fetchJson).toHaveBeenCalled();
                 }).then(done).catch(done.fail);
             });
 
@@ -129,7 +134,7 @@ define([
                         expect($('.breaking-news--hidden').length).toBe(0);
                         expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBe(false);
                         done();
-                    }, 3000);
+                    }, 120);
                 }).catch(done.fail);
             });
 
@@ -237,4 +242,3 @@ define([
         });
     });
 });
-
