@@ -120,14 +120,14 @@ define([
         return action;
     }
 
-    function buildGoogleAnalyticsEvent(mediaEvent, metrics) {
+    function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl) {
         var category = 'Media';
         var playerName = 'guardian-videojs';
         var action = getGoogleAnalyticsEventAction(mediaEvent);
         var fieldsObject = {
             eventCategory: category,
             eventAction: action,
-            eventLabel: mediaEvent.eventType,
+            eventLabel: canonicalUrl,
             dimension19: mediaEvent.mediaId,
             dimension20: playerName
         };
@@ -139,7 +139,7 @@ define([
         return fieldsObject;
     }
 
-    function bindGoogleAnalyticsEvents(player) {
+    function bindGoogleAnalyticsEvents(player, canonicalUrl) {
         var events = {
             'play': 'metric1',
             'skip': 'metric2',
@@ -153,7 +153,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga('guardianTestPropertyTracker.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events));
+                ga('guardianTestPropertyTracker.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl));
             });
         });
     }

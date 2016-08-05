@@ -247,7 +247,7 @@ define([
         }));
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
-        events.bindGoogleAnalyticsEvents(player);
+        events.bindGoogleAnalyticsEvents(player, canonicalUrl);
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
