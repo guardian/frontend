@@ -4,12 +4,14 @@
 
 define([
     'bean',
+    'bonzo',
     'qwery',
     'reqwest',
     'fastdom',
     'common/utils/$'
 ], function (
     bean,
+    bonzo,
     qwery,
     reqwest,
     fastdom,
@@ -19,6 +21,7 @@ define([
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
             buttonEl.innerHTML = 'Loading...';
+            // remove error messages
             var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
@@ -28,6 +31,9 @@ define([
                     renderErrorMessage(buttonEl);
                 },
                 success: function (response) {
+                    if (response && response.subscriptions && response.subscriptions.length) {
+                        subscriptionState = response.subscriptions[0].subscribedTo;
+                    }
                     var subscriptionState;
                     try {
                         if (response.subscriptions.length < 1) {
@@ -65,7 +71,7 @@ define([
             if (qwery('.form__error', insertionPoint).length < 1) {
                 var errorMessageDiv = document.createElement('div');
                 errorMessageDiv.innerHTML = errorMessage;
-                errorMessageDiv.classList.add('form__error');
+                bonzo(errorMessageDiv).addClass('form__error');
                 insertionPoint.appendChild(errorMessageDiv);
             }
         });
@@ -86,14 +92,14 @@ define([
             fastdom.write(function () {
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
-                $.ancestor(buttonEl, 'email-subscription').classList.add('email-subscription--subscribed');
+                bonzo($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
         } else if (subscriptionState === false) {
             fastdom.write(function () {
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
-                $.ancestor(buttonEl, 'email-subscription').classList.remove('email-subscription--subscribed');
+                bonzo($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
         } else {
@@ -108,7 +114,7 @@ define([
     }
 
     function updateButton(buttonEl, subscriptionState) {
-        if (buttonEl.classList.contains('email-subscription__button')) {
+        if (bonzo(buttonEl).hasClass('email-subscription__button')) {
             updateSubscriptionButton(buttonEl, subscriptionState);
         } else {
             updateSaveButton(buttonEl);
