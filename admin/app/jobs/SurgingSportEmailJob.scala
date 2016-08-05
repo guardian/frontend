@@ -10,7 +10,7 @@ import services.EmailService
 
 import scala.concurrent.Future
 
-case class SportsSurging(
+case class SurgingContent(
                           id: String,
                           pageViewCount: Int,
                           content: Option[ContentType]) {
@@ -21,7 +21,7 @@ case class SportsSurging(
     sportsTargetedKeywords.contains(keyword)
   ))
 
-  val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 500
+  val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 100
 }
 
 case class SurgingSportEmailJob(emailService: EmailService) extends Logging with ExecutionContexts {
@@ -29,42 +29,37 @@ case class SurgingSportEmailJob(emailService: EmailService) extends Logging with
   private val subject = "New surging sports content"
 
   def run() : Future[Unit] = {
-    val futureEmail: Option[Future[Unit]] = for {
+
+    for {
       adTech <- adTechTeam
       surgingContentEmail <- surgingContentTeam
     } yield {
-
-      getAllSportsSurgingContent
-        .map( surgingContent => {
-          val sportsSurgingEmailBody = surgingContent.filter(_.isSportsSurgingContent)
-          if(sportsSurgingEmailBody.nonEmpty){
-            emailService.send(
-              from = adTech,
-              to = surgingContentEmail.split(","),
-              subject = subject,
-              htmlBody = Some(htmlBody(sportsSurgingEmailBody)))
-          } else{
-            Future.successful(())
-          }
-
-        })
-        .map( _ => ())
+      getAllSurgingContent onSuccess { case surgingContent =>
+        val sportsSurgingEmailBody = surgingContent.filter(_.isSportsSurgingContent)
+        if (sportsSurgingEmailBody.nonEmpty) {
+          emailService.send(
+            from = adTech,
+            to = surgingContentEmail.split(","),
+            subject = subject,
+            htmlBody = Some(extractHtmlBody(sportsSurgingEmailBody)))
+        }
+      }
     }
-
-
-    futureEmail.getOrElse(Future.successful( () ))
+    Future.successful(())
   }
 
-  def getAllSportsSurgingContent: Future[Seq[SportsSurging]] = {
+
+
+  def getAllSurgingContent: Future[Seq[SurgingContent]] = {
     val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.sortedSurges
 
     Future.sequence(surging.map(Function.tupled(getContentFromId)))
   }
 
-  def getContentFromId(id: String, viewCount: Int): Future[SportsSurging] = {
+  def getContentFromId(id: String, viewCount: Int): Future[SurgingContent] = {
     getResponse(ContentApiClient.item(id, Edition.defaultEdition))
         .map(response =>
-          SportsSurging(
+          SurgingContent(
             id = id,
             pageViewCount = viewCount,
             content = response.content.map(Content(_))
@@ -73,7 +68,7 @@ case class SurgingSportEmailJob(emailService: EmailService) extends Logging with
   }
 
 
-  private def htmlBody(surgingContent: Seq[SportsSurging]): String = {
+  private def extractHtmlBody(surgingContent: Seq[SurgingContent]): String = {
     views.html.commercial.email.surgingSportContent(surgingContent).body.trim()
   }
 
