@@ -14,14 +14,12 @@ case class SportsSurging(
                           id: String,
                           pageViewCount: Int,
                           content: Option[ContentType]) {
-  
+
   val sportsTargetedKeywords = List("sport/sport","sport/rio-2016","sport/olympics-general")
 
   private val matchesKeyword = content.exists(_.tags.keywordIds.exists(keyword =>
     sportsTargetedKeywords.contains(keyword)
   ))
-
-
 
   val isSportsSurgingContent: Boolean = matchesKeyword && pageViewCount > 100
 }

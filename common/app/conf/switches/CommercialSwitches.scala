@@ -355,4 +355,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2016, 8, 17),
     exposeClientSide = false
   )
+
+  val surgingContentEmail = Switch(
+    SwitchGroup.Commercial,
+    "surging-sports-content-email",
+    "If on email will be sent to Rio Olympic surging content team every 30 minutes with update on surging content.",
+    owners = Seq(Owner.withGithub("Calum Campbell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016,8,23),
+    exposeClientSide = false
+  )
 }

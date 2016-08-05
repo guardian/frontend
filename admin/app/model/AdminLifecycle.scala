@@ -99,8 +99,14 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
+
+
+      //Running every 30 minutes
       jobs.scheduleEveryNMinutes("surgingContentEmail", 30){
-        SurgingSportEmailJob(emailService).run()
+        if(surgingContentEmail.isSwitchedOn) {
+          SurgingSportEmailJob(emailService).run()
+        }
+        Future.successful(())
       }
     }
 
