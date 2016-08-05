@@ -10,8 +10,7 @@
     "rules": {
         // Overrides old
         "camelcase": 2,
-        "no-shadow": 2,
-        "no-focused-tests": 2
+        "no-shadow": 2
     },
     "globals": { "sinon": true }
 }
