@@ -1,0 +1,13 @@
+@(surgingcontent: Seq[jobs.SurgingContent])
+
+<h1>Surging Content Update</h1>
+<h2>Currently surging content : </h2>
+<ul>
+    @for(content <- surgingcontent) {
+        <li>
+            <p>@content.content.map(_.content).map(_.metadata.webUrl).getOrElse("No Web Url")</p>
+            <p>Page views/min : @content.pageViewCount</p>
+        </li>
+
+    }
+</ul>
