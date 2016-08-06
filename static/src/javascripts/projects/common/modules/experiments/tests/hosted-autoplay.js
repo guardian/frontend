@@ -33,9 +33,9 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    var nextVideo = qwery('.hosted__next-video--tile')[0];
-                    if (nextVideo) {
-                        bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    var nextVideo = qwery('.hosted__next-video--tile');
+                    if (nextVideo.length) {
+                        bean.on(nextVideo[0], 'click', complete);
                         bean.on(qwery('.hosted__container--full')[0], 'click', complete);
                     }
                 }
@@ -44,9 +44,9 @@ define([
                 id: 'variant1',
                 test: function () {},
                 success: function (complete) {
-                    var nextVideo = qwery('.hosted__next-video--tile')[0];
-                    if (nextVideo) {
-                        bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    var nextVideo = qwery('.hosted__next-video--tile');
+                    if (nextVideo.length) {
+                        bean.on(nextVideo[0], 'click', complete);
                         bean.on(qwery('.hosted__container--full')[0], 'click', complete);
                         bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', complete);
                         mediator.on('hosted video: autoredirect', complete);
@@ -57,9 +57,9 @@ define([
                 id: 'variant2',
                 test: function () {},
                 success: function (complete) {
-                    var nextVideo = qwery('.hosted__next-video--tile')[0];
-                    if (nextVideo) {
-                        bean.on(qwery('.hosted__next-video--tile')[0], 'click', complete);
+                    var nextVideo = qwery('.hosted__next-video--tile');
+                    if (nextVideo.length) {
+                        bean.on(nextVideo[0], 'click', complete);
                         bean.on(qwery('.hosted__container--full')[0], 'click', complete);
                         bean.on(qwery('.hosted-next-autoplay__poster')[0], 'click', complete);
                         bean.on(qwery('.hosted-next-autoplay__tile')[0], 'click', complete);
