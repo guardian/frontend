@@ -196,8 +196,6 @@ class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   private def previewFrontsComponent(snapFields: SnapFields)(implicit requestHeader: RequestHeader): Future[PlayResult] = {
     import play.api.Play.current
 
-    println(snapFields.uri)
-
     val result = (for {
       previewResponse <- wsClient.url(snapFields.uri).get()
     } yield {
