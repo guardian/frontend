@@ -6,10 +6,10 @@ import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
-import football.services.GetPaClient
+import football.services.PaFootballClient
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
-@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
+@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with PaFootballClient with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
   override lazy val mode = app.mode
 

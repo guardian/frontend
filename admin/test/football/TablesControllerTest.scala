@@ -11,13 +11,13 @@ import play.twirl.api.HtmlFormat
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.annotation.tailrec
-import football.services.GetPaClient
+import football.services.PaFootballClient
 
 import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest
   extends FreeSpec
-    with GetPaClient
+    with PaFootballClient
     with ExecutionContexts
     with ShouldMatchers
     with ConfiguredTestSuite

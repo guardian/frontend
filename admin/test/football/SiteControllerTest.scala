@@ -4,12 +4,12 @@ import common.ExecutionContexts
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, ShouldMatchers}
 import play.api.test._
 import play.api.test.Helpers._
-import football.services.GetPaClient
+import football.services.PaFootballClient
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
 @DoNotDiscover class SiteControllerTest
   extends FreeSpec
-  with GetPaClient
+  with PaFootballClient
   with ExecutionContexts
   with ShouldMatchers
   with ConfiguredTestSuite
