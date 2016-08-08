@@ -98,7 +98,7 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-minute",
     "Testing if minute teasers drive video plays.",
-    owners = Seq(Owner.withGithub("guardian/multimedia")),
+    owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
