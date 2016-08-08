@@ -17,14 +17,11 @@ import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest
   extends FreeSpec
-    with PaFootballClient
     with ExecutionContexts
     with ShouldMatchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithTestWsClient {
-
-  override lazy val mode = app.mode
 
   "test tables index page loads with leagues" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables"))
@@ -80,7 +77,7 @@ import scala.language.postfixOps
   }
 
   "the internal surroundingItems function should work OK" in {
-    val tablesController = new TablesController(wsClient, mode)
+    val tablesController = new TablesController(wsClient, app.mode)
     tablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
     tablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
     tablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))

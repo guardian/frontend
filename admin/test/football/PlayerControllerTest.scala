@@ -9,9 +9,7 @@ import play.api.test.Helpers._
 import football.services.PaFootballClient
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
-@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with PaFootballClient with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
-
-  override lazy val mode = app.mode
+@DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with ExecutionContexts with ConfiguredTestSuite {
 
   "test redirects player card form submission to correct player page" in {
     val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("attack")))))

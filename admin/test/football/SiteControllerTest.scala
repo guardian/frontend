@@ -9,14 +9,10 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
 
 @DoNotDiscover class SiteControllerTest
   extends FreeSpec
-  with PaFootballClient
   with ExecutionContexts
   with ShouldMatchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+  with ConfiguredTestSuite {
 
-  override lazy val mode = app.mode
 
   "test index page loads" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football"))
