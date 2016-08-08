@@ -124,7 +124,7 @@ define([
         });
     }
 
-    function handlePrimaryItemClicks() {
+    function bindPrimaryItemClickEvents() {
         primaryItems.each(function (item) {
 
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
@@ -146,7 +146,7 @@ define([
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 
-        handlePrimaryItemClicks();
+        bindPrimaryItemClickEvents();
         openTargetListOnClick();
 
         editionPicker();
