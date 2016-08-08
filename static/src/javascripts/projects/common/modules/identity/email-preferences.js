@@ -76,15 +76,13 @@ define([
                 $($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
-        } else if (!isSubscribed) {
+        } else {
             fastdom.write(function () {
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
                 $($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
                 buttonEl.disabled = false;
             });
-        } else {
-            renderErrorMessage(buttonEl);
         }
     }
 
