@@ -9,7 +9,7 @@ import play.api.libs.ws.{WSResponse, WSRequest, WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+import scala.util.{Try, Failure, Success}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
@@ -48,7 +48,14 @@ class FeedReader(wsClient: WSClient) extends Logging {
             val body: String = request.responseEncoding map {
               response.underlying[AHCResponse].getResponseBody
             } getOrElse response.body
-            parse(body)
+
+            Try(parse(body)) match {
+              case Success(parsedBody) => parsedBody
+              case Failure(throwable) =>
+                log.error(s"Could not parse body: $throwable (Body: $body)")
+                throw throwable
+            }
+
           case invalid =>
             log.error(s"Invalid status code: ${response.status} (Response StatusText: ${response.statusText}")
             throw FeedReadException(request, response.status, response.statusText)
