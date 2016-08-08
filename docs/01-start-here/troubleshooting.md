@@ -13,7 +13,7 @@ directory).
 Check that you own your own .npm directory `ls -ld ~/.npm`
 
 If it is owned by root, then take ownership of it
-`sudo chown -R username:username ~/.npm`
+`sudo chown -R $(whoami) ~/.npm`
 
 ## Global install permissions errors
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
