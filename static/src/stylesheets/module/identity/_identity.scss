@@ -366,6 +366,9 @@
 .email-subscription__button {
     @include fs-textSans(2);
     background: $guardian-brand;
+    width: $gs-baseline * 9;
+    height: $gs-gutter * 2;
+    border-radius: 62.5rem;
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -377,11 +380,21 @@
     }
 
     .email-subscription--subscribed & {
-        background: $neutral-2-contrasted;
+        background-color: $neutral-2-contrasted;
     }
 }
 
+.save__button {
+    float: none;
+}
 
+.js-button-updating {
+    background-color: $neutral-5 !important;
+    background-image: url(/assets/images/auto-update-activity.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2.5rem;
+}
 
 /* Saved-content
    ========================================================================== */
