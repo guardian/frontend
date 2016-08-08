@@ -27,9 +27,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html',
-    'common/utils/template'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -57,9 +55,7 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl,
-    titlebarTmpl,
-    template
+    loadingTmpl
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -118,22 +114,6 @@ define([
         });
 
         return player;
-    }
-
-    function removeCaptionLink(){
-        bonzo($('.caption--main a')).remove();
-    }
-
-    function addTitleBar() {
-        var videoTitleElement = document.querySelector('.caption--main a');
-
-        var data = {
-            webTitle: videoTitleElement.textContent,
-            pageId: videoTitleElement.getAttribute('href'),
-            icon: null
-        };
-        $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
-        removeCaptionLink();
     }
 
     function initPlayButtons(root) {
@@ -373,9 +353,6 @@ define([
                         });
 
                         playerSetupComplete.then(function () {
-                            if(ab.isInVariant('VideoCaption','caption-overlay')) {
-                                addTitleBar();
-                            }
 
                             if (autoplay) {
                                 player.play();
