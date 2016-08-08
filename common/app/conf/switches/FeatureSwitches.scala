@@ -398,6 +398,17 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // see https://github.com/guardian/frontend/pull/13916
+  val AmpLiveBlogNewsArticleSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-blog-amp-news-article",
+    "If this switch is on, amp live blog articles have an itemtype of NewsArticle, and thus appear in Google's AMP carousel",
+    owners = Seq(Owner.withGithub("SiAdcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 9),
+    exposeClientSide = false
+  )
+
   val LiveUpdateAmpSwitch = Switch(
     SwitchGroup.Feature,
     "live-update-amp",
