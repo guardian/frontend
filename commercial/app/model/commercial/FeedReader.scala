@@ -3,11 +3,13 @@ package model.commercial
 import com.ning.http.client.{Response => AHCResponse}
 import commercial.CommercialMetrics
 import common.Logging
+import conf.switches.Switch
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
@@ -48,18 +50,28 @@ class FeedReader(wsClient: WSClient) extends Logging {
             } getOrElse response.body
             parse(body)
           case invalid =>
+            log.error(s"Invalid status code: ${response.status} (Response StatusText: ${response.statusText}")
             throw FeedReadException(request, response.status, response.statusText)
         }
       }
 
       contents onFailure {
-        case NonFatal(e) => recordLoad(-1)
+        case NonFatal(e) =>
+          log.error(s"NonFatal exception: $e")
+          recordLoad(-1)
       }
 
       contents
     }
 
-    request.switch.onInitialized flatMap { switch =>
+    val initializedSwitch: Future[Switch] = request.switch.onInitialized
+
+    initializedSwitch.onComplete {
+      case Success(switch) => log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
+      case Failure(throwable) => log.info(s"Failed to initialize switch: $throwable")
+    }
+
+    initializedSwitch flatMap { switch =>
       if (switch.isSwitchedOn) readUrl()
       else Future.failed(FeedSwitchOffException(request.feedName))
     }
