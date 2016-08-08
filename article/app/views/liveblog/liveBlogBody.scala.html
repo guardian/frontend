@@ -14,9 +14,15 @@
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
+
+    @*
+        TODO: We override itemtype if amp as Google's AMP Carousel currently only
+            supports articles of type NewsArticle. We should remove this conditional
+            when LiveBlogPosting support is implemented
+    *@
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
-        itemscope itemtype="@article.metadata.schemaType" role="main">
+        itemscope itemtype="@if(amp){http://schema.org/NewsArticle} else {@article.metadata.schemaType}" role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
