@@ -1,4 +1,5 @@
 
+@import model.ArticleSchemas
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
@@ -8,7 +9,7 @@
 
 @* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
 @schemaType(page: ArticlePage) = @{
-    if (amp) "http://schema.org/NewsArticle" else page.article.metadata.schemaType
+    if (amp) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
 }
 
 @bodyType(page: ArticlePage) = @{

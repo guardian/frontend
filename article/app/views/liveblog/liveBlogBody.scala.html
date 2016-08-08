@@ -1,7 +1,8 @@
 @import _root_.liveblog.KeyEventData
 @import model.Badges.badgeFor
-
+@import model.ArticleSchemas
 @import _root_.liveblog.Canonical
+
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
@@ -9,19 +10,20 @@
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
+@import _root_.liveblog.SinceBlockId
+
+@* Aug 2016: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
+@schemaType(page: LiveBlogPage) = @{
+    if (amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
+}
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
 
-    @*
-        TODO: We override itemtype if amp as Google's AMP Carousel currently only
-            supports articles of type NewsArticle. We should remove this conditional
-            when LiveBlogPosting support is implemented
-    *@
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
-        itemscope itemtype="@if(amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn){@ArticleSchemas.NewsArticle} else {@article.metadata.schemaType}" role="main">
+        itemscope itemtype="@schemaType(model)" role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
 
