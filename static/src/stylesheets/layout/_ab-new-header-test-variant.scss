@@ -41,7 +41,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 }
 
 .new-header__nav {
-    @include fs-textSans(6);
+    @include fs-textSans(5);
     line-height: 1.6;
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     justify-content: space-between;
 
     @include mq($until: mobileLandscape) {
-        font-size: 5.2vw;
+        font-size: 5.1vw;
     }
 
     @include mq(mobileLandscape) {
