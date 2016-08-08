@@ -31,7 +31,6 @@ define([
                         isSubscribed = true;
                     }
                     updateButton(buttonEl, isSubscribed);
-                    renderErrorMessage(buttonEl);
                 }
             });
         });
@@ -90,8 +89,10 @@ define([
     }
 
     function updateSaveButton(buttonEl) {
-        buttonEl.innerHTML = 'Save';
-        buttonEl.disabled = false;
+        fastdom.write(function () {
+            buttonEl.innerHTML = 'Save';
+            buttonEl.disabled = false;
+        });
     }
 
     function updateButton(buttonEl, isSubscribed) {
