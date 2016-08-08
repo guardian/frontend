@@ -397,6 +397,8 @@ $gutter-large: 55px;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     text-transform: lowercase;
+    // flexbox is being used for reordering the lists on click. Ordering is added by JS
+    // See PR: https://github.com/guardian/frontend/pull/13905
     display: flex;
     flex-wrap: wrap;
 }
