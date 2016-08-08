@@ -27,7 +27,9 @@ class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   def index = Action.async { implicit request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
-      competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
+      competitionTeams <- Future.traverse(competitions){comp =>
+        client.teams(comp.competitionId, comp.startDate, comp.endDate).recover{case e: Exception => Nil}
+      }
       allTeams = competitionTeams.flatten.distinct
     } yield {
       Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, allTeams)))
@@ -193,6 +195,7 @@ class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
 
   private def previewFrontsComponent(snapFields: SnapFields)(implicit requestHeader: RequestHeader): Future[PlayResult] = {
     import play.api.Play.current
+
     val result = (for {
       previewResponse <- wsClient.url(snapFields.uri).get()
     } yield {
