@@ -5,7 +5,7 @@ import commercial.CommercialMetrics
 import common.Logging
 import conf.switches.Switch
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{WSClient, WSSignatureCalculator}
+import play.api.libs.ws.{WSResponse, WSRequest, WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,28 +24,28 @@ class FeedReader(wsClient: WSClient) extends Logging {
     def readUrl(): Future[T] = {
 
       def recordLoad(duration: Long): Unit = {
-        val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
-        val key = s"$feedName-feed-load-time"
+        val feedName: String = request.feedName.toLowerCase.replaceAll("\\s+", "-")
+        val key: String = s"$feedName-feed-load-time"
         CommercialMetrics.metrics.put(Map(s"$key" -> duration.toDouble))
       }
 
-      val start = System.currentTimeMillis
+      val start: Long = System.currentTimeMillis
 
-      val requestHolder = {
-        val unsignedRequestHolder = wsClient.url(request.url)
+      val requestHolder: WSRequest = {
+        val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
           .withRequestTimeout(request.timeout.toMillis.toInt)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
       }
-      val futureResponse = requestHolder.get()
+      val futureResponse: Future[WSResponse] = requestHolder.get()
 
-      val contents = futureResponse map { response =>
+      val contents: Future[T] = futureResponse map { response =>
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
-            val body = request.responseEncoding map {
+            val body: String = request.responseEncoding map {
               response.underlying[AHCResponse].getResponseBody
             } getOrElse response.body
             parse(body)
