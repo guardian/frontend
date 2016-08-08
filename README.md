@@ -69,7 +69,7 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
-If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontend.
+If you're new, you'll want to see what [libraries we use](docs/02-architecture/libraries.md) in frontend.
 
 Further documentation notes and useful items can be found in [docs](docs).
 
