@@ -2,8 +2,8 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
-import football.services.GetPaClient
-import common.ExecutionContexts
+import football.services.PaFootballClient
+import common.{ExecutionContexts, Logging}
 import java.net.URLDecoder
 import scala.language.postfixOps
 import model.{Cached, NoCache}
@@ -11,7 +11,7 @@ import play.api.libs.ws.WSClient
 import play.api.Mode
 
 
-class PaBrowserController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
+class PaBrowserController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
   def browserSubstitution() = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
