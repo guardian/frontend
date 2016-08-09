@@ -49,6 +49,8 @@ for dir in */; do
     echo ""
 done
 
+echo ""
+echo "---"
 cat how-to-create-a-doc-file.md
 
 popd > /dev/null
