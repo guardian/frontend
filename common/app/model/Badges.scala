@@ -59,5 +59,5 @@ object Badges {
       maybeBadge orElse allBadges.find(b => b.isBadgeTag(tag)).map(badge => (badge, tag))
   }
 
-  def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => href == badge.isBadgeTag(href)))
+  def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => badge.isBadgeTag(href)))
 }
