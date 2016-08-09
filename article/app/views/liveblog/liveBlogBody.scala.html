@@ -125,7 +125,7 @@
 
                 <div class="content__secondary-column" aria-hidden="true">
                     <div class="ad-slot-container js-ad-slot-container"></div>
-                    @if(model.related.hasStoryPackage) {
+                    @if(model.related.hasStoryPackage && !amp) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
