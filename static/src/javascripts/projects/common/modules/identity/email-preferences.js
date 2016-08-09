@@ -17,6 +17,31 @@ define([
         bean.on(buttonEl, 'click', function () {
             buttonEl.disabled = true;
             buttonEl.innerHTML = 'Loading...';
+            var formQueryString = generateFormQueryString([buttonEl]);
+            reqwest({
+                url: '/email-prefs',
+                method: 'POST',
+                data: formQueryString,
+                error: function () {
+                    renderErrorMessage(buttonEl);
+                },
+                success: function (response) {
+                    var isSubscribed = false;
+                    if (response && response.subscriptions && response.subscriptions.length) {
+                        isSubscribed = true;
+                    }
+                    updateButton(buttonEl, isSubscribed);
+                    getAllButtons();
+                }
+            });
+        });
+    }
+
+    function reqwestUnsubscribeFromAll(buttonEl) {
+        // iterate over buttons appending button id to qstring
+        bean.on(buttonEl, 'click', function () {
+            buttonEl.disabled = true;
+            buttonEl.innerHTML = 'Loading...';
             var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
@@ -36,9 +61,21 @@ define([
         });
     }
 
+    function getAllButtons() {
+        var buttons = [];
+        $.forEachElement('.email-subscription__button', function (buttonEl) {
+            var buttonVal = buttonEl.value;
+            console.log('found a button ' + buttonVal);
+            buttons.push(buttonVal);
+            updateSubscriptionButton(buttonEl, false);
+        });
+        return buttons;
+    }
+
     function enhanceEmailPreferences() {
         $.forEachElement('.email-subscription__button', reqwestEmailSubscriptionUpdate);
         $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-unsubscribe', reqwestUnsubscribeFromAll);
     }
 
     function encodeFormData(csrfToken, buttonVal, htmlPreference) {
@@ -101,12 +138,17 @@ define([
         }
     }
 
-    function generateFormQueryString(buttonEl) {
-        var formEl = $.ancestor(buttonEl, 'form');
-        var csrfToken = (formEl.elements.csrfToken.value).toString();
-        var buttonVal = buttonEl.value.toString() || '';
+    function generateFormQueryString(buttons) {
+        // takes an array of button values and adds each button to the form
+        var formEl = $('.form')[0];
+        var csrfToken = ($('.form')[0].elements.csrfToken.value).toString();
         var htmlPreference = $('[name="htmlPreference"]:checked').val();
-        return encodeFormData(csrfToken, buttonVal, htmlPreference);
+        var buttonString = '';
+        for (var i = 0; i < buttons.length; i++) {
+            buttonString += 'addEmailSubscription=' + encodeURIComponent(buttons[i].value.toString()) + '&';
+        }
+        return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
+        buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);
     }
 
     return {
