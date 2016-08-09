@@ -35,32 +35,19 @@ define([
         });
     }
 
-    function reqwestUnsubscribeFromAll(buttonEl) {
+    function unsubscribeFromAll(buttonEl) {
         bean.on(buttonEl, 'click', function () {
-            var buttons = getAllButtons();
-            var isSubscribed = false;
-            var formQueryString = generateFormQueryString(buttons);
-            addUpdatingState(buttonEl);
-            reqwest({
-                url: '/email-prefs',
-                method: 'POST',
-                data: formQueryString,
-                error: function () {
-                    renderErrorMessage(buttonEl);
-                },
-                success: function (response) {
-                    for (var i = 0; i < buttons.length; i++) {
-                        updateSubscriptionButton(buttons[i], isSubscribed);
-                    }
-                    updateButton(buttonEl, isSubscribed);
-                }
-            });
+            var subscribedButtons = getAllSubscribedButtons();
+            for (var i = 0; i < subscribedButtons.length; i++) {
+                subscribedButtons[i].click();
+            }
+            updateButton(buttonEl);
         });
     }
 
-    function getAllButtons() {
+    function getAllSubscribedButtons() {
         var buttons = [];
-        $.forEachElement('.email-subscription__button', function (buttonEl) {
+        $.forEachElement('.js-subscription-button', function (buttonEl) {
             if (buttonEl.value.indexOf('unsubscribe') !== -1) {
                 buttons.push(buttonEl);
             }
@@ -69,9 +56,9 @@ define([
     }
 
     function enhanceEmailPreferences() {
-        $.forEachElement('.email-subscription__button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
         $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
-        $.forEachElement('.js-unsubscribe', reqwestUnsubscribeFromAll);
+        $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
     }
 
     function encodeFormData(csrfToken, buttonVal, htmlPreference) {
@@ -103,7 +90,6 @@ define([
     function addUpdatingState(buttonEl) {
         fastdom.write(function() {
             buttonEl.disabled = true;
-            buttonEl.innerHTML = '';
             $(buttonEl).addClass('is-updating is-updating-subscriptions');
         });
     }
@@ -129,18 +115,14 @@ define([
         }
     }
 
-    function updateSaveButton(buttonEl) {
-        fastdom.write(function () {
-            buttonEl.innerHTML = 'Save';
-            buttonEl.disabled = false;
-        });
-    }
-
     function updateButton(buttonEl, isSubscribed) {
-        if ($(buttonEl).hasClass('save__button')) {
-            updateSaveButton(buttonEl);
-        } else {
+        if ($(buttonEl).hasClass('js-subscription-button')) {
             updateSubscriptionButton(buttonEl, isSubscribed);
+        } else {
+            fastdom.write(function () {
+                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
+                buttonEl.disabled = false;
+            });
         }
     }
 

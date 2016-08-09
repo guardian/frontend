@@ -386,6 +386,7 @@
     &.is-updating-subscriptions {
         display: inherit;
         margin-top: 0;
+        font-size: 0;
         background-color: $neutral-5;
         background-repeat: no-repeat;
         background-position: center;

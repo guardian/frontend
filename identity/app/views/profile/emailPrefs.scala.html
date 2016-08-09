@@ -17,7 +17,7 @@
                 <div class="email-subscription__description">@subscription.description @if(subscription.exampleUrl.isDefined){<br><a href="@subscription.exampleUrl" target="preview-email-@subscription.listId">See the latest email</a>}</div>
 
                 <div class="email-subscription__meta u-cf">
-                    <button class="email-subscription__button"
+                    <button class="email-subscription__button js-subscription-button"
                             data-link-name="@if(subscription.subscribedTo){Unsubscribe}else{Subscribe} to @subscription.name"
                             name="addEmailSubscription"
                             type="button"
