@@ -361,6 +361,10 @@ $gutter-large: 55px;
         margin-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 
+    @include mq($mobile-medium) {
+        font-size: 23px;
+    }
+
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
         transition: transform .4s cubic-bezier(.23, 1, .32, 1);
@@ -397,6 +401,10 @@ $navigation-horizontal-padding: 38px;
     padding-right: $navigation-horizontal-padding;
     padding-bottom: $gs-baseline * 1.5;
     font-size: 26px;
+
+    @include mq($mobile-medium) {
+        font-size: 28px;
+    }
 
     &:focus {
         // Unset a:focus from user agent stylesheet
