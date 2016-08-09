@@ -1,7 +1,6 @@
 #!/bin/bash
-#
-# ensure npm-shrinkwrap is committed with package.json changes
 
+# ensure npm-shrinkwrap is committed with package.json changes
 readonly staged=$(git diff --name-only --cached)
 
 if [[ $staged == package.json* && $staged != *"npm-shrinkwrap.json"* ]]; then
@@ -10,7 +9,9 @@ if [[ $staged == package.json* && $staged != *"npm-shrinkwrap.json"* ]]; then
 fi
 
 # Update Documentations Table of Content if needed
-docs=$(git rev-parse --show-toplevel)/docs
-readme=$docs/README.md
-$docs/generate-toc.sh > $readme
-git add $readme
+if [[ $staged == docs/* ]]; then
+    docs=$(git rev-parse --show-toplevel)/docs
+    readme=$docs/README.md
+    $docs/generate-toc.sh > $readme
+    git add $readme
+fi
