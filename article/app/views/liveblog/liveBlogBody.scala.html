@@ -29,7 +29,7 @@
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
                       @if(ArticleBadgesSwitch.isSwitchedOn) {
-                          @badgeFor(article).map { badge => content__head--is-badged
+                          @badgeFor(article).map { case (badge, _) => content__head--is-badged
                               @badge.classModifier.map(modifier => s"content__head--$modifier")
                           }
                       }">
