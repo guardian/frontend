@@ -5,6 +5,7 @@ import conf.{Configuration, Static}
 import layout.FaciaContainer
 import java.security.MessageDigest
 import java.math.BigInteger
+import scala.util.control.NonFatal
 
 
 trait BaseBadge{
@@ -30,7 +31,7 @@ case class SpecialBadge(hashedTag: String, classModifier: Option[String] = None)
 
         Option(new BigInteger(1, digest.digest()).toString(16))
       } catch {
-        case _: Throwable => None
+        case NonFatal(_) => None
       }
     }
 }
