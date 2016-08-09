@@ -78,14 +78,14 @@ define([
                     var d  = latestDeployments[stage][deployment];
                     var nameAbbreviation = d.projectName.substr(7, 4); //start at 7 to drop 'dotcom: '
 
-                    var link = document.createElement('a');
-                    link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
-
                     var li = document.createElement('li');
                     li.className = d.status;
                     li.innerHTML = nameAbbreviation + ' ' + d.build;
                     li.setAttribute('title', d.projectName);
-                    li.appendChild(link);
+
+                    var link = document.createElement('a');
+                    link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
+                    link.appendChild(li);
 
                     if (latestDeployments.CODE[deployment] && stage === 'PROD' && d.status === 'Completed') {
                         var codeBuild = (latestDeployments.CODE[deployment] || {}).build;
@@ -98,7 +98,7 @@ define([
                         renderDeployer(stage, d.tags.vcsRevision, d.deployer);
                     }
 
-                    target.appendChild(li);
+                    target.appendChild(link);
                 });
             }
             renderDeploys('CODE', document.getElementById('riffraffCODE'));
