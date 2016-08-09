@@ -5,7 +5,9 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
-    'text!common/views/experiments/recommended-for-you.html'
+    'common/views/svg',
+    'text!common/views/experiments/recommended-for-you.html',
+    'inlineSvg!svgs/icon/profile-36'
 ], function (
     bean,
     fastdom,
@@ -13,7 +15,9 @@ define([
     $,
     config,
     template,
-    recommendedForYouTemplate
+    svg,
+    recommendedForYouTemplate,
+    profileIcon
 ) {
     return function () {
         this.id = 'RecommendedForYou';
@@ -39,7 +43,9 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {}));
+                    var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
+                        profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper'])
+                    }));
 
                     return fastdom.write(function() {
                         $recommendedForYouSection.insertBefore($opinionSection);

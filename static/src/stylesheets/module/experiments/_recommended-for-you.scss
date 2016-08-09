@@ -1,0 +1,16 @@
+.rfy-light-blue {
+    color: $news-main-2 !important;
+}
+
+.rfy-profile-icon {
+    background-color: $neutral-3;
+    margin-right: $gs;
+
+    svg {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        left: 4px;
+        bottom: -1px;
+    }
+}
