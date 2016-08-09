@@ -23,6 +23,7 @@ trait PageWithStoryPackage extends ContentPage {
   def article: Article
   def related: RelatedContent
   override lazy val item = article
+  val articleSchemas = ArticleSchemas
 }
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage

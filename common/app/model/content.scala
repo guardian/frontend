@@ -364,7 +364,9 @@ object Content {
   }
 }
 
-private object ArticleSchemas {
+object ArticleSchemas {
+  val NewsArticle = "http://schema.org/NewsArticle"
+
   def apply(articleTags: Tags): String = {
     // http://schema.org/NewsArticle
     // http://schema.org/Review
@@ -373,7 +375,7 @@ private object ArticleSchemas {
     else if (articleTags.isLiveBlog)
       "http://schema.org/LiveBlogPosting"
     else
-      "http://schema.org/NewsArticle"
+      NewsArticle
   }
 }
 
