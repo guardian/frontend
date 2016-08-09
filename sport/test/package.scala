@@ -41,7 +41,7 @@ class SportTestSuite extends Suites (
 }
 
 trait WithTestFootballClient {
-  self: WithTestFootballClient with BeforeAndAfterAll with WithTestWsClient =>
+  self: WithTestFootballClient with WithTestWsClient =>
 
   lazy val testFootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
