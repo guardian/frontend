@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
-    'common/modules/experiments/tests/minute'
+    'common/modules/experiments/tests/minute',
+    'common/modules/experiments/tests/recommended-for-you'
 ], function (
     reportError,
     config,
@@ -37,7 +38,8 @@ define([
     HostedArticleOnwardJourney,
     ContributionsHeader,
     AdFeedback,
-    Minute
+    Minute,
+    RecommendedForYou
 ) {
 
     var TESTS = [
@@ -51,7 +53,8 @@ define([
         new HostedArticleOnwardJourney(),
         new ContributionsHeader(),
         new AdFeedback(),
-        new Minute()
+        new Minute(),
+        new RecommendedForYou()
     ];
 
     var participationsKey = 'gu.ab.participations';
