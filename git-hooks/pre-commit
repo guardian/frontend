@@ -8,3 +8,9 @@ if [[ $staged == package.json* && $staged != *"npm-shrinkwrap.json"* ]]; then
   node tools/messages.js should-shrinkwrap;
   exit 1;
 fi
+
+# Update Documentations Table of Content if needed
+docs=$(git rev-parse --show-toplevel)/docs
+readme=$docs/README.md
+$docs/generate-toc.sh > $readme
+git add $readme
