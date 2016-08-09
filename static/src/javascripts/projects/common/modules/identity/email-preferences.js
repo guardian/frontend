@@ -29,7 +29,7 @@ define([
                     if (response && response.subscriptions && response.subscriptions.length) {
                         isSubscribed = true;
                     }
-                    $(buttonEl).removeClass('js-button-updating');
+                    $(buttonEl).removeClass('is-updating-subscriptions');
                     updateButton(buttonEl, isSubscribed);
                 }
             });
@@ -71,7 +71,7 @@ define([
         fastdom.write(function() {
             buttonEl.disabled = true;
             buttonEl.innerHTML = '';
-            $(buttonEl).addClass('js-button-updating');
+            $(buttonEl).addClass('is-updating-subscriptions');
         });
     }
 

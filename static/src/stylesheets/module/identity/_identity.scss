@@ -368,7 +368,7 @@
     background: $guardian-brand;
     width: $gs-baseline * 9;
     height: $gs-gutter * 2;
-    border-radius: 62.5rem;
+    border-radius: 100px;
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -388,12 +388,12 @@
     float: none;
 }
 
-.js-button-updating {
+.is-updating-subscriptions {
     background-color: $neutral-5 !important;
     background-image: url(/assets/images/auto-update-activity.gif);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 2.5rem;
+    background-size: 40px;
 }
 
 /* Saved-content
