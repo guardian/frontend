@@ -27,8 +27,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'common/modules/accessibility/main'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -56,8 +55,7 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl,
-    accessibility
+    loadingTmpl
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -431,14 +429,6 @@ define([
         }
     }
 
-    function initMinute() {
-        if(ab.isInVariant('Minute','minute') && accessibility.isOn('flashing-elements')) {
-            // This is our minute account number
-            window._min = {_publisher: 'MIN-21000'};
-            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
-        }
-    }
-
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -467,7 +457,6 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
-        initMinute();
     }
 
     return {
