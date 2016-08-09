@@ -33,6 +33,7 @@ docs="$root/docs"
 pushd $docs > /dev/null
 
 echo "#Table Of Content"
+echo "*(Do NOT edit manually. Generated automatically)*"
 echo ""
 for dir in */; do
     dirname=$(cleanDirectoryName $dir)

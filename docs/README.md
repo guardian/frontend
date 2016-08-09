@@ -1,4 +1,5 @@
 #Table Of Content
+*(Do NOT edit manually. Generated automatically)*
 
 ##[Start here](01-start-here/)
 - [Quick start guide](01-start-here/01-installation-steps.md)
