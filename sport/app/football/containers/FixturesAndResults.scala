@@ -37,11 +37,15 @@ class CompetitionAndGroupFinder(competitions: Competitions) {
 case class CompetitionAndGroup(competition: Competition, group: Group)
 
 class FixturesAndResults(competitions: Competitions) extends Football {
+
+  lazy val competitionAndGroupFinder = new CompetitionAndGroupFinder(competitions)
+  lazy val teamNameBuilder = new TeamNameBuilder(competitions)
+
   def makeContainer(tagId: String)(implicit request: RequestHeader) = {
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
-      teamName <- new TeamNameBuilder(competitions).withId(teamId)
+      teamName <- teamNameBuilder.withId(teamId)
     } yield {
       val relevantMatches = competitions.matches.filter({ theMatch =>
         theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
@@ -55,7 +59,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
       val cssClasses = Seq("facia-snap--football", "facia-snap-embed")
       val missingComponentClasses = Seq("football-component-missing")
 
-      val maybeCompetitionAndGroup = new CompetitionAndGroupFinder(competitions).bestForTeam(teamId).filter(_ => leagueTableExists)
+      val maybeCompetitionAndGroup = competitionAndGroupFinder.bestForTeam(teamId).filter(_ => leagueTableExists)
 
       val now = LocalDate.now(Edition.defaultEdition.timezone)
       val fixturesComponent = fixtureExists option matchesComponent(
