@@ -164,6 +164,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         border: 0;
         padding: 0;
     }
+    .from-content-api > ul li {
+        margin-bottom: 0;
+    }
 }
 
 .hosted-article-page.zootropolis {
