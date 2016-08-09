@@ -173,11 +173,11 @@ object LeffeHostedPages {
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
-      case `willardWiganPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(willardWiganPage)
-      case `adrienneTreebyPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(adrienneTreebyPage)
-      case `peteLawrencePageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(peteLawrencePage)
-      case `susanDergesPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(susanDergesPage)
-      case `quayBrothersPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(quayBrothersPage)
+      case `willardWiganPageName` => Some(willardWiganPage)
+      case `adrienneTreebyPageName` => Some(adrienneTreebyPage)
+      case `peteLawrencePageName` => Some(peteLawrencePage)
+      case `susanDergesPageName` => Some(susanDergesPage)
+      case `quayBrothersPageName` => Some(quayBrothersPage)
       case _ => None
     }
   }

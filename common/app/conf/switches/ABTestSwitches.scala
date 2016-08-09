@@ -93,4 +93,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
     exposeClientSide = true
   )
+
+  val ABMinute = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute",
+    "Testing if minute teasers drive video plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
+    exposeClientSide = true
+  )
 }

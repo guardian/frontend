@@ -272,7 +272,7 @@ trait CommercialSwitches {
     "If on, all badges are served server side",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 10),
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = true
   )
 
@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Serve container branding from capi",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 10),
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = true
   )
 
@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "Show series containers on paid content pages.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 10),
+    sellByDate = new LocalDate(2016, 8, 26),
     exposeClientSide = false
   )
 
@@ -302,57 +302,7 @@ trait CommercialSwitches {
     "If on, test page for gallery content is available",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 12),
-    exposeClientSide = false
-  )
-
-  val hostedGalleryVisitBritain = Switch(
-    group = CommercialLabs,
-    "hosted-gallery-visit-britain",
-    "If on, gallery pages for Visit Britain are available",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 12),
-    exposeClientSide = false
-  )
-
-  val hostedVideoDisneyZootropolis = Switch(
-    group = CommercialLabs,
-    "hosted-video-zootropolis",
-    "If on, video page for Zootropolis is available",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 12),
-    exposeClientSide = false
-  )
-
-  val hostedLeffeShowVideo1 = Switch(
-    group = CommercialLabs,
-    name = "hosted-leffe-show-video-1",
-    description = "Show video or else 404.",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 10),
-    exposeClientSide = false
-  )
-
-  val hostedArticle = Switch(
-    group = CommercialLabs,
-    name = "hosted-article",
-    description = "Show Zootropolis hosted article or 404.",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 17),
-    exposeClientSide = false
-  )
-
-  val hostedSingaporeF1Article = Switch(
-    group = CommercialLabs,
-    name = "hosted-article-singapore-grand-prix",
-    description = "Show Singapore Grand Prix hosted article or 404.",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 17),
+    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = false
   )
 
