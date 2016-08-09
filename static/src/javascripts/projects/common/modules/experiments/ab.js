@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/contributions-header',
-    'common/modules/experiments/tests/ad-feedback'
+    'common/modules/experiments/tests/ad-feedback',
+    'common/modules/experiments/tests/minute'
 ], function (
     reportError,
     config,
@@ -33,7 +34,8 @@ define([
     RemindMeEmail,
     HostedZootropolisCta,
     ContributionsHeader,
-    AdFeedback
+    AdFeedback,
+    Minute
 ) {
 
     var TESTS = [
@@ -45,7 +47,8 @@ define([
         new RemindMeEmail(),
         new HostedZootropolisCta(),
         new ContributionsHeader(),
-        new AdFeedback()
+        new AdFeedback(),
+        new Minute()
     ];
 
     var participationsKey = 'gu.ab.participations';
