@@ -1,51 +1,63 @@
 #Table Of Content
+*(Do NOT edit manually. Generated automatically)*
 
-##[Start Here](01-start-here/)
-- [Guardian Glossary](01-start-here/guardian-visual-glossary.md)
-- [Installation Steps](01-start-here/installation-steps.md)
-- [Troubleshooting the Guardian website](01-start-here/troubleshooting.md)
+##[Start here](01-start-here/)
+- [Quick start guide](01-start-here/01-installation-steps.md)
+- [Visual glossary of the Guardian.com](01-start-here/02-guardian-visual-glossary.md)
+- [Troubleshooting](01-start-here/03-troubleshooting.md)
 
 ##[Architecture](02-architecture/)
-- [The different applications composing the Guardian website](02-architecture/applications-architecture.md)
-- [Fronts Architecture](02-architecture/fronts.md)
-- [The librairies we use](02-architecture/libraries.md)
-- [Archiving](02-architecture/archiving.md)
-- [Architecture principle for CSS](02-architecture/smacss-architecture-principles-for-css.md)
+- [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
+- [Fronts Architecture](02-architecture/02-fronts-architecture.md)
+- [Libraries we use](02-architecture/03-libraries-we-use.md)
+- [Archiving](02-architecture/04-archiving.md)
+- [Architecture principles for CSS](02-architecture/05-architecture-principles-for-css.md)
 
-##[Developers How-Tos](03-dev-how-tos/)
-- [Setup an A/B test](03-dev-how-tos/ab-testing.md)
-- [Deployment errors](03-dev-how-tos/deployment-errors.md)
-- [Embeds](03-dev-how-tos/embeds.md)
-- [Inline SVGs](03-dev-how-tos/inline-svgs.md)
-- [Interactives](03-dev-how-tos/interactives.md)
-- [Repressing](03-dev-how-tos/repressing.md)
-- [Sprites](03-dev-how-tos/sprite-production.md)
-- [Template deduping](03-dev-how-tos/template-deduping.md)
-- [testing-externally-on-localhost.md](03-dev-how-tos/testing-externally-on-localhost.md)
-- [Testing platform changes](03-dev-how-tos/testing-platform.md)
-- [Http access logs for your local dev environment.md](03-dev-how-tos/access-logs-for-your-localhost.md)
+##[Dev howtos](03-dev-howtos/)
+- [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
+- [What to do when a deployment breaks](03-dev-howtos/02-deployment-errors.md)
+- [Guardian embeds](03-dev-howtos/03-embeds.md)
+- [Inline SVGs](03-dev-howtos/04-inline-svgs.md)
+- [Interactives](03-dev-howtos/05-interactives.md)
+- [Repressing fronts](03-dev-howtos/06-repressing.md)
+- [Sprite production](03-dev-howtos/07-sprite-production.md)
+- [Template Deduping](03-dev-howtos/08-template-deduping.md)
+- [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
+- [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
+- [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
 
-##[QA](04-quality/)
-- [Browsers support](04-quality/browser-support.md)
-- [Browsers support principles](04-quality/browser-support-principles.md)
+##[Quality](04-quality/)
+- [Browsers support](04-quality/01-browser-support.md)
+- [Browser support principles](04-quality/02-browser-support-principles.md)
 
 ##[Commercial](05-commercial/)
-- [DFP Advertising](05-commercial/DFP-Advertising.md)
-- [Integration of commercial components](05-commercial/commercial-components.md)
-- [Commercial Javascript](05-commercial/commercial-javascript.md)
+- [How do DFP adverts work?](05-commercial/01-DFP-Advertising.md)
+- [Integration of commercial components](05-commercial/02-commercial-components.md)
+- [Commercial javascript](05-commercial/03-commercial-javascript.md)
 
-##[Features and Components](06-features-and-components/)
-- [SteadyPage JS utility](06-features-and-components/steadypage_js_utility.md)
+##[Features and components](06-features-and-components/)
+- [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
 
 ##[Performance](07-performance/)
-- [Performance reading list](07-performance/performance-reading.md)
+- [Performance reading list](07-performance/01-performance-reading.md)
 
 ##[Design](08-design/)
-- [Colour chart](99-archives/colour-chart.md)
 
 ##[Archives](99-archives/)
-- [How to make crepes](99-archives/crepes.md)
-- [Benchmark (July 2012)](07-performance/performance.md)
-- [CSS guidelines](99-archives/css-guidelines.md)
-- [Javascript guidelines](99-archives/javascript-guidelines.md)
-- [Web font rendering tests (2013)](99-archives/web-font-rendering-tests.md)
+- [Recipe for Breton crêpes](99-archives/crepes.md)
+- [CSS guideline (out-of-date)](99-archives/css-guidelines.md)
+- [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
+- [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
+- [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
+
+
+---
+# META: How to create a new documentation file
+
+## Documentation conventions
+
+- Find the correct subdirectory your new documentation file belongs to.
+- Every documentation file should be markdown (with .md extension).
+- First line of every documentation file should contain its title (used to generated the table of content).
+- Store all the images in an `/images` subfolder in the same directory the document referencing them will be.
+- Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
