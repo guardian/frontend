@@ -35,7 +35,7 @@ POST           /notification/delete                                             
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
-GET        /email/form/$emailType<article|footer|plain>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer|plain>/:listId                 controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()

@@ -12,6 +12,16 @@ define([
     var mainMenuEl = $(mainMenuId);
     var burgerLink = $('.js-change-link');
     var burgerIcon = $('.js-animate-menu');
+    var primaryItems = $('.js-close-nav-list');
+
+    function closeAllOtherPrimaryLists(targetItem) {
+        primaryItems.each(function (item) {
+
+            if (item !== targetItem) {
+                item.removeAttribute('open');
+            }
+        });
+    }
 
     function animateMenuOpen() {
         return fastdomPromise.write(function () {
@@ -57,6 +67,12 @@ define([
                             mainMenuEl.removeClass('shown');
                         }).then(function () {
                             return fastdomPromise.write(function () {
+                                var mainListItems = $('.main-navigation__item');
+                                // Remove possible ordering for the lists
+                                mainListItems.removeAttr('style');
+                                // No targetItem to put in as the parameter. All lists should close.
+                                closeAllOtherPrimaryLists();
+
                                 $('.new-header__nav__menu-button').focus();
                                 // Users should be able to scroll again
                                 html.css('overflow', '');
@@ -65,6 +81,53 @@ define([
                     });
                 }
             }
+        });
+    }
+
+    function moveTargetListToTop(targetListId) {
+        primaryItems.each(function (listItem, index) {
+
+            fastdomPromise.read(function () {
+                return listItem.getAttribute('id');
+            }).then(function (itemId) {
+
+                if (itemId === targetListId) {
+                    fastdomPromise.write(function () {
+                        var parent = listItem.parentNode;
+
+                        // Using flexbox to reorder lists based on what is clicked.
+                        parent.style.order = '-' + index;
+                    });
+                }
+            });
+        });
+    }
+
+    function openTargetListOnClick() {
+        var primaryLinks = $('.js-open-section-in-menu');
+
+        primaryLinks.each(function (primaryLink) {
+
+            primaryLink.addEventListener('click', function () {
+
+                fastdomPromise.read(function () {
+                    return primaryLink.getAttribute('aria-controls');
+                }).then(function (id) {
+                    var menuToOpen = $('#' + id);
+
+                       fastdomPromise.write(function () {
+                        menuToOpen.attr('open', '');
+                        return id;
+                    }).then(moveTargetListToTop.bind(id));
+                });
+            });
+        });
+    }
+
+    function bindPrimaryItemClickEvents() {
+        primaryItems.each(function (item) {
+
+            item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
 
@@ -82,6 +145,10 @@ define([
     function init() {
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
+
+        bindPrimaryItemClickEvents();
+        openTargetListOnClick();
+
         editionPicker();
     }
 

@@ -3,28 +3,24 @@ package controllers.admin
 import model.Cached.RevalidatableResult
 import play.api.mvc._
 import play.api.Mode
-import football.services.GetPaClient
-import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
+import football.services.PaFootballClient
+import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
-import common.{JsonComponent, ExecutionContexts}
+import common.{ExecutionContexts, JsonComponent, Logging}
 import org.joda.time.LocalDate
 import football.model.PA
 import scala.concurrent.Future
-import model.{Cors, NoCache, Cached}
-import play.api.libs.json.{JsString, JsArray, JsObject}
+import model.{Cached, Cors, NoCache}
+import play.api.libs.json.{JsArray, JsObject, JsString}
 import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient with Requests {
+class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
 
   def playerIndex = Action.async { implicit request =>
-    for {
-      competitions <- client.competitions.map(PA.filterCompetitions)
-      competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
-      allTeams = competitionTeams.flatten.distinct
-    } yield {
-      Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, allTeams)))
+    fetchCompetitionsAndTeams.map {
+      case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
     }
   }
 
