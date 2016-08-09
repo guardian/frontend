@@ -104,7 +104,7 @@ define([
         fastdom.write(function() {
             buttonEl.disabled = true;
             buttonEl.innerHTML = '';
-            $(buttonEl).addClass('is-updating-subscriptions');
+            $(buttonEl).addClass('is-updating is-updating-subscriptions');
         });
     }
 
@@ -112,7 +112,7 @@ define([
         var buttonVal = buttonEl.value;
         if (isSubscribed) {
             fastdom.write(function () {
-                $(buttonEl).removeClass('is-updating-subscriptions');
+                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
                 $($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
@@ -120,7 +120,7 @@ define([
             });
         } else {
             fastdom.write(function () {
-                $(buttonEl).removeClass('is-updating-subscriptions');
+                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
                 $($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
