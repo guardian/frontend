@@ -68,9 +68,9 @@ object Formula1HostedPages {
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
-      case `overviewPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(overviewArticlePage)
-      case `packagesPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(packagesArticlePage)
-      case `offtrackPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(offtrackArticlePage)
+      case `overviewPageName` => Some(overviewArticlePage)
+      case `packagesPageName` => Some(packagesArticlePage)
+      case `offtrackPageName` => Some(offtrackArticlePage)
       case _ => None
     }
   }
