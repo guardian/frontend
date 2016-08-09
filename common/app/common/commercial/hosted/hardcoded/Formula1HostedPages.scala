@@ -17,10 +17,10 @@ object Formula1HostedPages {
 
   private def cta(pageName: String) = HostedCallToAction(
     url = "https://www.firststopsingapore.com/singapore-airlines-singapore-grand-prix-packages/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix",
-    image = "https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg",
-    label = "Discover the 2016 Singapore Grand Prix",
-    trackingCode = s"singapore-grand-prix:$pageName",
-    btnText = "Book now"
+    image = Some("https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg"),
+    label = Some("Discover the 2016 Singapore Grand Prix"),
+    trackingCode = Some(s"singapore-grand-prix:$pageName"),
+    btnText = Some("Book now")
   )
 
   val overviewPageName = "overview"

@@ -62,8 +62,8 @@ case class HostedVideo(
 
 case class HostedCallToAction(
   url: String,
-  image: String,
-  label: String,
-  trackingCode: String,
-  btnText: String
+  image: Option[String] = None,
+  label: Option[String] = None,
+  trackingCode: Option[String] = None,
+  btnText: Option[String] = None
 )
