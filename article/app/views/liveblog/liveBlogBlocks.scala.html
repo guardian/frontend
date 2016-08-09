@@ -2,14 +2,26 @@
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
-@import conf.switches.Switches.LiveUpdateAmpSwitch
+@import conf.switches.Switches.{LiveUpdateAmpSwitch,AmpLiveBlogNewsArticleSwitch}
 
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
+@* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
+@isNewsArticle() = @{
+    amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
+}
+
 @blocks.map { block =>
-    <div id="block-@block.id" @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" } class="block block--content@block.eventClass" itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <div
+        id="block-@block.id"
+        @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" }
+        class="block block--content@block.eventClass"
+        @if(!isNewsArticle()){ itemprop="liveBlogUpdate" }
+        itemscope=""
+        @if(!isNewsArticle()){ itemtype="http://schema.org/BlogPosting" }
+    >
         <p class="block-time published-time">
             @if(amp){
                 <a href="@LinkTo{/@article.metadata.id?page=with:block-@block.id#block-@block.id}" itemprop="url" class="block-time__link">
