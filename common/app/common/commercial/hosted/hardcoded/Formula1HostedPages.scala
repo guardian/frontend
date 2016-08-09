@@ -44,7 +44,8 @@ object Formula1HostedPages {
     pageUrl = s"$host/advertiser-content/${campaign.id}/$packagesPageName",
     pageName = packagesPageName,
     title = "Singapore Airlines Singapore Grand Prix packages",
-    standfirst = "‘This is such a special race. The whole weekend feels different – there’s a buzz to the F1 Paddock when you first walk in on Thursday afternoon and it never goes away. You can feel the vibe – and the tension and anticipation climb higher and higher as we get closer to the race itself on Sunday night.’ Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
+    standfirst = "'This is such a special race. The whole weekend feels\n\ndifferent – there’s a buzz to the F1 " +
+                 "Paddock when you first walk in on Thursday afternoon \n\nand it never goes away.' Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
     cta(packagesPageName),
     nextPageNames = List(offtrackPageName, overviewPageName),
     mainPicture = "http://media.guim.co.uk/7570a34e5556dfdaeb17af6bee54168c0c9bdc15/0_0_4240_2832/2000.jpg",
