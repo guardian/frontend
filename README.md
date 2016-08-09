@@ -26,7 +26,7 @@ Welcome! To get set up, please follow [the installation guide](docs/01-start-her
 
 [The best place to start is here](docs/01-start-here)
 
-Fixes for common problems can be found [here](docs/01-start-here/03-troubleshooting.md).
+Fixes for common problems can be found [here](docs/01-start-here/04-troubleshooting.md).
 
 ## Client-side development
 ### watch/reload
