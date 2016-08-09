@@ -22,9 +22,11 @@ These principles apply to all requests on `www.theguardian.com` and `api.nextgen
 * Requests that take longer than two seconds will be terminated.
 
 # New developers
-Welcome! To get set up, please follow [the installation guide](https://github.com/guardian/frontend/wiki/Installation-steps).
+Welcome! To get set up, please follow [the installation guide](docs/01-start-here/01-installation-steps.md).
 
-Fixes for common problems can be found [here](https://github.com/guardian/frontend/wiki/Troubleshooting).
+[The best place to start is here](docs/01-start-here)
+
+Fixes for common problems can be found [here](docs/01-start-here/03-troubleshooting.md).
 
 ## Client-side development
 ### watch/reload
@@ -67,7 +69,7 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
-If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontend.
+If you're new, you'll want to see what [libraries we use](docs/02-architecture/03-libraries-we-use.md) in frontend.
 
 Further documentation notes and useful items can be found in [docs](docs).
 
