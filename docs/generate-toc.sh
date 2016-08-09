@@ -30,7 +30,7 @@ capitalize() {
 
 root=$(git rev-parse --show-toplevel)
 docs="$root/docs"
-pushd $docs
+pushd $docs > /dev/null
 
 echo "#Table Of Content"
 echo ""
@@ -51,4 +51,4 @@ done
 
 cat how-to-create-a-doc-file.md
 
-popd
+popd > /dev/null

@@ -1,4 +1,3 @@
-~/Code/Guardian/frontend/docs ~/Code/Guardian/frontend
 #Table Of Content
 
 ##[Start here](01-start-here/)
@@ -58,4 +57,3 @@
 - Every documentation file should be markdown (with .md extension).
 - First line of every documentation file should contain its title (used to generated the table of content).
 - Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
-~/Code/Guardian/frontend
