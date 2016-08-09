@@ -1,3 +1,5 @@
+# **The different applications composing the Guardian website**
+
 The Guardian frontend is a set of Play Framework 2 Scala applications.
 
 A Nginx **router** sits in front of all the applications and dispatches requests to the appropriate service based on the requested path.

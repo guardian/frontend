@@ -1,4 +1,4 @@
-## What to do when a deployment breaks
+# What to do when a deployment breaks
 
 ```
 com.amazonaws.AmazonServiceException Status Code: 400, AWS Service:

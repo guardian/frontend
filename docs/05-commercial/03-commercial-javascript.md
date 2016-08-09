@@ -1,3 +1,4 @@
+# Commercial javascript
 * Commercial scripts run under their own bundle, with the root script /bootstraps/commercial.js
 * The commercial bundle only runs if the browser passes the `isModernBrowser` check (i.e. not IE8)
 * We interface with Doubleclick for Publishers using the `dfp-api.js` module. Most advertising on The Guardian involves a roundtrip to DFP somehow.

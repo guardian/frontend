@@ -1,3 +1,5 @@
+# Browsers support
+
 We aim to be readable and navigable on anything capable of making an HTTP request, and to run a full feature set, unless technically impossible, in all browsers used for +0.5% of visits.
 
 ### 2016-07-18

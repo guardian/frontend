@@ -1,6 +1,6 @@
-This document explains how to create interactive content on theguardian.com.
+# Interactives
 
-## Interactives
+This document explains how to create interactive content on theguardian.com.
 
 An interactive comprises of a stand-alone javascript application wrapped in an AMD interface compatible with the next-gen project.
 

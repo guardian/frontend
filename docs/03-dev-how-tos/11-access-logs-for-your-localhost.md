@@ -1,5 +1,4 @@
-Getting http access logs for your localhost 
-===========================================
+# Accessing HTTP access logs for your localhost 
 
 Occasionally it's useful to look at the incoming access logs.
 

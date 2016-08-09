@@ -1,5 +1,4 @@
-Sprite production
-----------------
+# Sprite production
 
 The production of sprite .png images can now be generated automatically using the "Spricon" helper tools inside toosl/sprites.
 

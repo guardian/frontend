@@ -1,4 +1,4 @@
-# Quick visual glossary of the Guardian dot com 
+#Visual glossary of the Guardian.com
 
 ## Content Types
 

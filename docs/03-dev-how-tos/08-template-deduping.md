@@ -1,4 +1,4 @@
-## Template Deduping
+# Template Deduping
 
 Deduping of items in the template work through a shared instance of `TemplateDeduping` for each request.
 

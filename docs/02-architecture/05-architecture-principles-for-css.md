@@ -1,3 +1,5 @@
+# Architecture principles for CSS
+
 We're aiming to stick to Jonathan Snook's [SMACSS](http://www.smacss.com) principles for structuring our CSS. This is already in use in Pasteup and it makes good sense to use it here, too.
 
 Here's a summary of the SMACSS principles, divided by its rule types (base, layout, module, state and theme). Note: this is written by me (Matt) based on Jonathan's book.

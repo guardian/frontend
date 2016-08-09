@@ -1,4 +1,4 @@
-# **Quick-start guide**
+# **Quick start guide**
 
 1. [Ensure your disk is encrypted] (#security)
 1. [Obtain AWS credentials] (#obtain-aws-credentials)

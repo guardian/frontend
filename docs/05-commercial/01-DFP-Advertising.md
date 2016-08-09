@@ -1,4 +1,5 @@
-## How do DFP adverts work?
+# How do DFP adverts work?
+
 * We use the DFP client library (a.k.a. "Googletag") to dispatch all of our ad requests
 * When the commercial code starts, we set up page-level targeting, including keywords, audience data and A/B test parameters.
 * Adverts are individually registered for whichever sizes they support across each breakpoint

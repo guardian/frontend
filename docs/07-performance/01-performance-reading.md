@@ -1,3 +1,5 @@
+# Performance reading list
+
 Here are a load of background reading for understanding jank and other perf problems.
 
 Please add any links you find useful, but delete any which aren't useful any more or out of date.

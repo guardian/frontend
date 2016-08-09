@@ -1,4 +1,4 @@
-This explains how to run an A/B test in frontend.
+# How to setup and run A/B tests
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
 
