@@ -451,11 +451,18 @@ $minute-layout-margin-nudge: gs-span(1);
 
 // Quote Layout
 
-.block--minute-article.block--quote {
+.block--minute-article.block--minute-article--quote {
+    background-color: $us-minute-main-colour;
+
+    .inline-quote svg {
+        width: 50px;
+        height: auto;
+    }
 
     .quoted__contents {
         @include fs-headline(4);
         font-style: normal;
+        font-weight: 100;
     }
 
     @include mq($from: tablet) {
@@ -481,13 +488,18 @@ $minute-layout-margin-nudge: gs-span(1);
             width: gs-span(10);
         }
 
+        .inline-quote {
+            position: relative;
+            display: block;
+        }
+
         .quoted__contents {
-            @include fs-headline(6, true);
+            margin-left: 0;
         }
     }
 }
 
-.block--minute-article--alt-layout.block--quote {
+.block--minute-article--alt-layout.block--minute-article--quote {
     @include mq($from: tablet) {
         &:before {
             left: 0;
