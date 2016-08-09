@@ -7,7 +7,8 @@ define([
     'common/utils/template',
     'common/views/svg',
     'text!common/views/experiments/recommended-for-you.html',
-    'inlineSvg!svgs/icon/profile-36'
+    'inlineSvg!svgs/icon/profile-36',
+    'inlineSvg!svgs/icon/arrow-right'
 ], function (
     bean,
     fastdom,
@@ -17,7 +18,8 @@ define([
     template,
     svg,
     recommendedForYouTemplate,
-    profileIcon
+    profileIcon,
+    rightArrowIcon
 ) {
     return function () {
         this.id = 'RecommendedForYou';
@@ -44,7 +46,8 @@ define([
                 id: 'variant',
                 test: function () {
                     var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
-                        profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper'])
+                        profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                        rightArrowIcon: svg(rightArrowIcon, ['i-right'])
                     }));
 
                     return fastdom.write(function() {

@@ -4,7 +4,7 @@
 
 .rfy-profile-icon {
     background-color: $neutral-3;
-    margin-right: $gs;
+    margin-right: $gs-gutter / 4;
 
     svg {
         width: 25px;
@@ -12,5 +12,73 @@
         position: absolute;
         left: 4px;
         bottom: -1px;
+    }
+}
+
+.fc-item--rfy {
+    .fc-item__container {
+        padding-bottom: $gs-baseline * 5;
+    }
+
+    .fc-item__content {
+        @include mq(desktop) {
+            margin-left: $gs-gutter / 4;
+            margin-right: $gs-gutter / 4;
+        }
+    }
+}
+
+.fc-item--rfy-feedback {
+    .fc-item__container {
+        background-color: $news-main-1;
+        color: #ffffff;
+    }
+
+    h2 {
+        @include fs-header(4);
+        line-height: get-line-height(header, 2);
+
+        margin: $gs-baseline/2 0;
+    }
+
+    p {
+        @include fs-headline(2);
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: $gs-baseline / 2;
+        color: #ffffff;
+        border: $news-main-2 1px solid;
+
+
+    }
+
+    .button--get-started {
+        @include button-colour(
+                $news-main-2,
+                #ffffff
+        );
+
+        font-weight: bold;
+
+        @include button-hover-colour(
+                darken($news-main-2, 5%)
+        );
+    }
+
+    .button--no-thanks {
+        @include button-colour(
+                $news-main-1, // fill
+                #ffffff, // text
+                $news-main-2 //border
+        );
+
+        font-weight: normal;
+
+        @include button-hover-colour(
+                darken($news-main-1, 5%),
+                $news-main-2
+        );
     }
 }
