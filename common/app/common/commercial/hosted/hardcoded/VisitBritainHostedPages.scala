@@ -244,8 +244,6 @@ object VisitBritainHostedPages {
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
-    if (!Switches.hostedGalleryVisitBritain.isSwitchedOn) None
-    else
       pageName match {
         case `activitiesPageName` => Some(activitiesGallery)
         case `cityPageName` => Some(cityGallery)

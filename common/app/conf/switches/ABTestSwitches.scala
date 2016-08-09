@@ -20,7 +20,7 @@ trait ABTestSwitches {
     "An autoplay overlay with the next video on a hosted page",
     owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 12),
+    sellByDate = new LocalDate(2016, 8, 19),
     exposeClientSide = true
   )
 
@@ -91,6 +91,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
+    exposeClientSide = true
+  )
+
+  val ABMinute = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute",
+    "Testing if minute teasers drive video plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 }

@@ -15,8 +15,7 @@ define([
 ) {
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
-            buttonEl.disabled = true;
-            buttonEl.innerHTML = 'Loading...';
+            addUpdatingState(buttonEl);
             var formQueryString = generateFormQueryString(buttonEl);
             reqwest({
                 url: '/email-prefs',
@@ -30,6 +29,7 @@ define([
                     if (response && response.subscriptions && response.subscriptions.length) {
                         isSubscribed = true;
                     }
+                    $(buttonEl).removeClass('is-updating-subscriptions');
                     updateButton(buttonEl, isSubscribed);
                 }
             });
@@ -67,6 +67,14 @@ define([
         }
     }
 
+    function addUpdatingState(buttonEl) {
+        fastdom.write(function() {
+            buttonEl.disabled = true;
+            buttonEl.innerHTML = '';
+            $(buttonEl).addClass('is-updating-subscriptions');
+        });
+    }
+
     function updateSubscriptionButton(buttonEl, isSubscribed) {
         var buttonVal = buttonEl.value;
         if (isSubscribed) {
@@ -94,10 +102,10 @@ define([
     }
 
     function updateButton(buttonEl, isSubscribed) {
-        if ($(buttonEl).hasClass('email-subscription__button')) {
-            updateSubscriptionButton(buttonEl, isSubscribed);
-        } else {
+        if ($(buttonEl).hasClass('save__button')) {
             updateSaveButton(buttonEl);
+        } else {
+            updateSubscriptionButton(buttonEl, isSubscribed);
         }
     }
 
