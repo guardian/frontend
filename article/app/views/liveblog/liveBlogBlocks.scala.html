@@ -18,9 +18,7 @@
         id="block-@block.id"
         @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" }
         class="block block--content@block.eventClass"
-        @if(!isNewsArticle()){ itemprop="liveBlogUpdate" }
-        itemscope=""
-        @if(!isNewsArticle()){ itemtype="http://schema.org/BlogPosting" }
+        @if(!isNewsArticle()){ itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting" }
     >
         <p class="block-time published-time">
             @if(amp){
