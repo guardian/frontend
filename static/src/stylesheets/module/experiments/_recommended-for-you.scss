@@ -32,6 +32,10 @@
     .fc-item__container {
         background-color: $news-main-1;
         color: #ffffff;
+
+        @include mq($until: tablet) {
+            padding: 0 !important;
+        }
     }
 
     h2 {
@@ -43,6 +47,7 @@
 
     p {
         @include fs-headline(2);
+        padding-top: $gs-baseline/2;
     }
 
     button {
@@ -50,7 +55,6 @@
         margin-bottom: $gs-baseline / 2;
         color: #ffffff;
         border: $news-main-2 1px solid;
-
 
     }
 
