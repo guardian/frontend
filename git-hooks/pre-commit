@@ -9,7 +9,7 @@ if [[ $staged == package.json* && $staged != *"npm-shrinkwrap.json"* ]]; then
 fi
 
 # Update Documentations Table of Content if needed
-if [[ $staged == docs/* ]]; then
+if [[ $staged == *"docs/"* ]]; then
     docs=$(git rev-parse --show-toplevel)/docs
     readme=$docs/README.md
     $docs/generate-toc.sh > $readme
