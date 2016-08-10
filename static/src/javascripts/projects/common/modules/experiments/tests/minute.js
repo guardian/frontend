@@ -19,7 +19,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.canRun = function() {
-            return config.page.contentType === 'Article' && qwery('[data-component="main video"]').length > 0;
+            return (config.page.contentType === 'Section' || config.page.contentType === 'Network Front') || config.page.contentType === 'Article'  && qwery('[data-component="main video"]').length > 0;
         };
 
         this.variants = [
