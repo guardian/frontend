@@ -56,6 +56,17 @@
     );
 }
 
+.content--media.tonal--tone-special-report .button--secondary {
+    @include button-colour(
+        $neutral-2,
+        $neutral-1
+    );
+
+    @include button-hover-colour(
+        darken($neutral-2, 10%)
+    );
+}
+
 .button--tertiary {
     @include button-colour(
         transparent,
