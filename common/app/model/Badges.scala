@@ -16,22 +16,23 @@ case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[Stri
   def maybeThisBadge(tag: String) = if (seriesTag == tag) Some(this) else None
 }
 case class SpecialBadge(hashedTag: String) extends BaseBadge {
-  def maybeThisBadge(tag: String) = if (md5(salt + tag).contains(hashedTag)) {
-    Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
-  } else None
+  def maybeThisBadge(tag: String) =
+    if (md5(salt + tag).contains(hashedTag)) {
+      Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
+    } else None
 
-  private val salt = "a-public-salt3W#ywHav!p+?r+W2$E6="
-    private val digest = MessageDigest.getInstance("MD5")
+  private val salt = "arbitrary-salt-ho}v]eip0Engee7Gu8oo"
+  private val digest = MessageDigest.getInstance("MD5")
 
-    private def md5(input: String): Option[String] = {
-      try {
-        digest.update(input.getBytes(), 0, input.length)
+  private def md5(input: String): Option[String] = {
+    try {
+      digest.update(input.getBytes(), 0, input.length)
 
-        Option(new BigInteger(1, digest.digest()).toString(16))
-      } catch {
-        case NonFatal(_) => None
-      }
+      Option(new BigInteger(1, digest.digest()).toString(16))
+    } catch {
+      case NonFatal(_) => None
     }
+  }
 }
 
 object Badges {
@@ -49,9 +50,9 @@ object Badges {
 
   val rio2016 = Badge("sport/rio-2016", Static("images/badges/rio-2016.svg"))
 
-  val special = SpecialBadge("4dae5700e6b6fdf66d1567769b41c1c2")
+  val nauru = Badge("news/series/nauru-files", Static("images/badges/nauru-files.svg"))
 
-  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, special, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
+  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, nauru, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
 
   def badgeFor(c: ContentType) = {
     badgeForTags(c.tags.tags.map(_.id))
