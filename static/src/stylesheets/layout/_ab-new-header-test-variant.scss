@@ -419,7 +419,7 @@ $navigation-horizontal-padding: 38px;
     &:before {
         content: '';
         position: absolute;
-        top: $gs-baseline - 2px;
+        top: $gs-baseline;
         left: $gs-gutter / 1.5;
         width: 10px;
         height: 10px;
@@ -509,7 +509,7 @@ $navigation-horizontal-padding: 38px;
 }
 
 .navigation-group__social-icon {
-    top: -3px;
+    top: -2px;
 
     svg {
         width: 36px;
