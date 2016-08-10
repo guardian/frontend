@@ -43,21 +43,37 @@ define([
             return config.page.isFront && $opinionSection.length;
         };
 
+        function insertSection(description, variant) {
+            var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
+                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
+                guardianLogo: svg(guardianLogo),
+                description: description,
+                variant: variant
+            }));
+
+            return fastdom.write(function() {
+                $recommendedForYouSection.insertBefore($opinionSection);
+            });
+        }
+
         this.variants = [
             {
-                id: 'variant',
+                id: 'user-choice',
                 test: function () {
-                    var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
-                        profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                        rightArrowIcon: svg(rightArrowIcon, ['i-right']),
-                        guardianLogo: svg(guardianLogo)
-                    }));
-
-                    return fastdom.write(function() {
-                        $recommendedForYouSection.insertBefore($opinionSection);
-                    });
+                    insertSection('Tell us what you’re interested in and we’ll recommend you a set of unique stories', 'user-choice');
                 },
                 success: function (complete) {
+
+                }
+            },
+            {
+                id: 'user-history',
+                test: function () {
+                    insertSection('We can recommend you a set of unique stories based on your reading history', 'user-history');
+                },
+                success: function (complete) {
+
                 }
             }
         ];
