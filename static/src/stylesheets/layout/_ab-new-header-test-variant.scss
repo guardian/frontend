@@ -497,12 +497,11 @@ $navigation-horizontal-padding: 38px;
     fill: $news-support-2;
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
-    display: block;
     text-align: center;
     line-height: 2;
     width: $navigation-horizontal-padding;
-    height: $gs-baseline * 3;
 
     svg {
         display: inline-block;
@@ -527,7 +526,11 @@ $navigation-horizontal-padding: 38px;
 
 .navigation-group__profile-icon svg {
     height: 20px;
-    width: 20px;
+    width: 22px;
+    fill: $guardian-brand;
+    background-color: $news-support-2;
+    border-radius: 100%;
+    padding-top: 2px;
 }
 
 
