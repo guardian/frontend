@@ -8,13 +8,13 @@ import org.scalatest._
 @DoNotDiscover class FixturesControllerTest
   extends FreeSpec
   with ShouldMatchers
-  with FootballTestSuite {
+  with FootballTestData {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"
   val tag = "premierleague"
 
-  val fixturesController = new FixturesController(competitionsService)
+  val fixturesController = new FixturesController(testCompetitionsService)
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())

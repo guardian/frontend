@@ -8,9 +8,9 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
   with Matchers
-  with FootballTestSuite {
+  with FootballTestData {
 
-  val leagueTableController = new LeagueTableController(competitionsService)
+  val leagueTableController = new LeagueTableController(testCompetitionsService)
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTable()(TestRequest())

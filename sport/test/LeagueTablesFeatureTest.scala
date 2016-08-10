@@ -9,7 +9,8 @@ import org.scalatest._
   extends FeatureSpec
   with GivenWhenThen
   with Matchers
-  with FootballTestSuite {
+  with ConfiguredTestSuite
+  with FootballTestData {
 
   feature("League Tables") {
 
@@ -57,7 +58,7 @@ import org.scalatest._
     }
 
     scenario("Should redirect when no competition table data found") {
-      val leagueTableController = new LeagueTableController(competitionsService)
+      val leagueTableController = new LeagueTableController(testCompetitionsService)
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }

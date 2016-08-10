@@ -2,14 +2,17 @@ package test
 
 import football.controllers.MatchController
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class MatchControllerTest
   extends FlatSpec
   with Matchers
-  with FootballTestSuite {
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestFootballClient
+  with FootballTestData {
 
-  val matchController = new MatchController(competitionsService, testFootballClient)
+  val matchController = new MatchController(testCompetitionsService, testFootballClient)
 
   "MatchController" should "redirect to results when match is not found" in {
     val result = matchController.renderMatchId("12345")(TestRequest())

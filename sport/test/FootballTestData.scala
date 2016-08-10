@@ -1,22 +1,40 @@
 package test
 
+import conf.FootballClient
 import org.scala_tools.time.Imports._
 import org.joda.time.DateTime
 import pa._
 import model.{Competition, Tag, TagProperties, TeamMap}
 import feed.CompetitionsService
-import org.scalatest.{BeforeAndAfterAll, Suite}
+import org.scalatest.mock.MockitoSugar
+import play.api.libs.ws.WSClient
 
-trait FootballTestSuite
-  extends Suite
-  with ConfiguredTestSuite
-  with WithTestFootballClient
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+trait FootballTestData extends MockitoSugar {
 
-  override def beforeAll() = loadTestData()
+  lazy val testCompetitionsService = {
+    val service = new CompetitionsService(new FootballClient(mock[WSClient]), FootballTestData.competitions)
+    service.loadTestData()
+    service
+  }
 
-  lazy val competitionsService = new CompetitionsService(testFootballClient, competitions)
+  implicit class TestCompetitionsService(competitionsService: CompetitionsService) {
+    def loadTestData() {
+      if (competitionsService.matches.isEmpty) {
+        competitionsService.competitionAgents.foreach { agent =>
+          FootballTestData.competitions.filter(_.id == agent.competition.id).map { comp =>
+            agent.update(comp)
+            agent.addMatches(comp.matches)
+          }
+        }
+      }
+      if (TeamMap.teamAgent.get.isEmpty) {
+        TeamMap.teamAgent.send(old => old ++ FootballTestData.teamTags)
+      }
+    }
+  }
+}
+
+object FootballTestData {
 
   private val zone = DateTimeZone.forID("Europe/London")
 
@@ -35,8 +53,7 @@ trait FootballTestSuite
     MatchDayTeam("65", "", None, None, None, None),
     None, None, None)
 
-
-  private val competitions = Seq(
+  val competitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
       showInTeamsList = true,
       startDate = Some((today - 2.months).toLocalDate),
@@ -80,14 +97,14 @@ trait FootballTestSuite
     )
   )
 
-  private val teamTags: Map[String, Tag] = Map(
-      "Liverpool" -> Tag(
-        TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
-          "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
-        None,
-        None,
-        None)
-    )
+  val teamTags: Map[String, Tag] = Map(
+    "Liverpool" -> Tag(
+      TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
+        "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
+      None,
+      None,
+      None)
+  )
 
 
   private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
@@ -116,17 +133,6 @@ trait FootballTestSuite
     LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 
-  private def loadTestData() {
-    if (competitionsService.matches.isEmpty) {
-      competitionsService.competitionAgents.foreach { agent =>
-        competitions.filter(_.id == agent.competition.id).map { comp =>
-          agent.update(comp)
-          agent.addMatches(comp.matches)
-        }
-      }
-    }
-    if (TeamMap.teamAgent.get.isEmpty) {
-      TeamMap.teamAgent.send(old => old ++ teamTags)
-    }
-  }
 }
+
+

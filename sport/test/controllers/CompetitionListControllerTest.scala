@@ -8,10 +8,10 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 @DoNotDiscover class CompetitionListControllerTest
   extends FlatSpec
   with Matchers
-  with FootballTestSuite {
+  with FootballTestData {
 
   val url = "/football/competitionsService"
-  lazy val competitionListController = new CompetitionListController(competitionsService)
+  lazy val competitionListController = new CompetitionListController(testCompetitionsService)
 
   "Competition List Controller" should "200 when content type is competition list" in {
     val result = competitionListController.renderCompetitionList()(TestRequest())

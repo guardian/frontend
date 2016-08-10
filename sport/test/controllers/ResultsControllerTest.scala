@@ -6,16 +6,16 @@ import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.FootballTestSuite
+import test.FootballTestData
 
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
   extends WordSpec
   with Matchers
-  with FootballTestSuite {
+  with FootballTestData {
 
-  val resultsController = new ResultsController(competitionsService)
+  val resultsController = new ResultsController(testCompetitionsService)
 
   "GET all results" should {
     val request = FakeRequest(method = "GET", path = "/football/results.json")

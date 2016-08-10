@@ -2,7 +2,7 @@ package test
 
 import feed.CompetitionsService
 import model.Competition
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
 import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
@@ -13,7 +13,10 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   with Matchers
   with implicits.Football
   with Eventually
-  with FootballTestSuite {
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestFootballClient
+  with FootballTestData {
 
   override def beforeAll() = {
     // Tests in this suite are time dependent:

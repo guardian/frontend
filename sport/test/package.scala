@@ -13,6 +13,8 @@ import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import play.api.libs.ws.{WSClient, WSResponse}
 import conf.FootballClient
+import football.model._
+import football.collections.RichListTest
 import pa.{Http, Response => PaResponse}
 
 import scala.concurrent.Future
@@ -23,12 +25,12 @@ class SportTestSuite extends Suites (
   new LeagueTableControllerTest,
   new MatchControllerTest,
   new MoreOnMatchFeatureTest,
-  new football.collections.RichListTest,
-  new football.model.CompetitionStageTest,
-  new football.model.FixturesListTest,
-  new football.model.MatchDayListTest,
-  new football.model.ResultsListTest,
-  new football.model.TeamColoursTest,
+  new RichListTest,
+  new CompetitionStageTest,
+  new FixturesListTest,
+  new MatchDayListTest,
+  new ResultsListTest,
+  new TeamColoursTest,
   new CompetitionAgentTest,
   new FixturesFeatureTest,
   new LeagueTablesFeatureTest,

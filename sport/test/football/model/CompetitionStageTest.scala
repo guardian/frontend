@@ -5,7 +5,7 @@ import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
 import implicits.Collections
-import test.FootballTestSuite
+import test.FootballTestData
 
 @DoNotDiscover class CompetitionStageTest
   extends FreeSpec
@@ -13,9 +13,9 @@ import test.FootballTestSuite
   with OptionValues
   with CompetitionTestData
   with Collections
-  with FootballTestSuite {
+  with FootballTestData {
 
-  val competitionStage = new CompetitionStage(competitionsService.competitions)
+  val competitionStage = new CompetitionStage(testCompetitionsService.competitions)
 
   "stagesFromCompetition" - {
     "will generate a League" in {
@@ -165,7 +165,7 @@ import test.FootballTestSuite
 
       "will work out active round as" - {
         "first round if none have started" in {
-          val ko = KnockoutList(competitionsService.competitions, futureKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(testCompetitionsService.competitions, futureKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(quarterFinals)
           ko.isActiveRound(quarterFinals) should equal(true)
           ko.isActiveRound(semiFinals) should equal(false)
@@ -174,19 +174,19 @@ import test.FootballTestSuite
         }
 
         "last round if all have finished" in {
-          val ko = KnockoutList(competitionsService.competitions, pastKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(testCompetitionsService.competitions, pastKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(`final`)
           ko.isActiveRound(`final`) should equal(true)
         }
 
         "current round if we're halfway through one" in {
-          val ko = KnockoutList(competitionsService.competitions, currentKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(testCompetitionsService.competitions, currentKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(semiFinals)
           ko.isActiveRound(semiFinals) should equal(true)
         }
 
         "next round if we're between rounds" in {
-          val ko = KnockoutList(competitionsService.competitions, betweenRoundsKnockoutMatches(Stage("1")), knockoutRounds)
+          val ko = KnockoutList(testCompetitionsService.competitions, betweenRoundsKnockoutMatches(Stage("1")), knockoutRounds)
           ko.activeRound.value should equal(thirdPlacePlayoff)
           ko.isActiveRound(thirdPlacePlayoff) should equal(true)
         }
