@@ -26,6 +26,17 @@
             margin-right: $gs-gutter / 4;
         }
     }
+
+    .fc-item__media-wrapper {
+        display: flex !important;
+
+        background-color: $neutral-3;
+        height: 136px;
+
+        span {
+            margin: auto;
+        }
+    }
 }
 
 .fc-item--rfy-feedback {

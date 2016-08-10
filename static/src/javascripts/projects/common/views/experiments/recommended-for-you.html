@@ -31,11 +31,11 @@
                         </div>
                     </li>
 
-
+                    <% for(var i = 0; i < 3; i++) { %>
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
-                        <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable" data-link-name="news | group-1 | card-3" data-item-visibility="all" data-test-id="facia-card" data-id="uk-news/2016/aug/09/pictures-appear-to-show-british-special-forces-on-syrian-front-line" data-loyalty-short-url="/p/4q4mp">
+                        <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy js-snappable">
                             <div class="fc-item__container">
-                                <div class="fc-item__media-wrapper">Some image</div>
+                                <div class="fc-item__media-wrapper"><%= guardianLogo %></div>
                                 <div class="fc-item__content">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title">Title</h2>
@@ -44,32 +44,7 @@
                             </div>
                         </div>
                     </li>
-
-                    <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
-                        <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable" data-link-name="news | group-1 | card-3" data-item-visibility="all" data-test-id="facia-card" data-id="uk-news/2016/aug/09/pictures-appear-to-show-british-special-forces-on-syrian-front-line" data-loyalty-short-url="/p/4q4mp">
-                            <div class="fc-item__container">
-                                <div class="fc-item__media-wrapper">Some image</div>
-                                <div class="fc-item__content">
-                                    <div class="fc-item__header">
-                                        <h2 class="fc-item__title">Title</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
-                        <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable" data-link-name="news | group-1 | card-3" data-item-visibility="all" data-test-id="facia-card" data-id="uk-news/2016/aug/09/pictures-appear-to-show-british-special-forces-on-syrian-front-line" data-loyalty-short-url="/p/4q4mp">
-                            <div class="fc-item__container">
-                                <div class="fc-item__media-wrapper">Some image</div>
-                                <div class="fc-item__content">
-                                    <div class="fc-item__header">
-                                        <h2 class="fc-item__title">Title</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    <% } %>
 
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link hide-until-tablet">
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy fc-item--rfy-feedback js-snappable">

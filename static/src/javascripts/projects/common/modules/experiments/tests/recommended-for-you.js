@@ -8,7 +8,8 @@ define([
     'common/views/svg',
     'text!common/views/experiments/recommended-for-you.html',
     'inlineSvg!svgs/icon/profile-36',
-    'inlineSvg!svgs/icon/arrow-right'
+    'inlineSvg!svgs/icon/arrow-right',
+    'inlineSvg!svgs/icon/marque-36'
 ], function (
     bean,
     fastdom,
@@ -19,7 +20,8 @@ define([
     svg,
     recommendedForYouTemplate,
     profileIcon,
-    rightArrowIcon
+    rightArrowIcon,
+    guardianLogo
 ) {
     return function () {
         this.id = 'RecommendedForYou';
@@ -47,7 +49,8 @@ define([
                 test: function () {
                     var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                         profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                        rightArrowIcon: svg(rightArrowIcon, ['i-right'])
+                        rightArrowIcon: svg(rightArrowIcon, ['i-right']),
+                        guardianLogo: svg(guardianLogo)
                     }));
 
                     return fastdom.write(function() {
