@@ -4,7 +4,9 @@
 ##[Start here](01-start-here/)
 - [Quick start guide](01-start-here/01-installation-steps.md)
 - [Visual glossary of the Guardian.com](01-start-here/02-guardian-visual-glossary.md)
-- [Troubleshooting](01-start-here/03-troubleshooting.md)
+- [How to deploy](01-start-here/03-how-to-deploy.md)
+- [Troubleshooting](01-start-here/04-troubleshooting.md)
+- [Development tips](01-start-here/05-development-tips.md)
 
 ##[Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)

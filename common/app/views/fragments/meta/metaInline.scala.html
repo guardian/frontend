@@ -11,13 +11,13 @@
     ), "content__labels")
 ">
     @if(ArticleBadgesSwitch.isSwitchedOn) {
-        @badgeFor(item).map { badge =>
+        @badgeFor(item).map { case (badge, tag) =>
             <div class="badge-slot">
-                <a href="@LinkTo {/@badge.seriesTag}">
+                <a href="@LinkTo {/@tag}">
                     @if(isAmp) {
-                        <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
+                        <amp-img class="badge-slot__img" src="@badge.imageUrl(tag)" layout="fixed" height="33" width="33"></amp-img>
                     } else {
-                        <img class="badge-slot__img" src="@badge.imageUrl"/>
+                        <img class="badge-slot__img" src="@badge.imageUrl(tag)"/>
                     }
                 </a>
             </div>
