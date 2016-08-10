@@ -249,7 +249,7 @@ define([
                             player.error({
                                 code: 0,
                                 type: 'Video Unavailable',
-                                message: 'Sorry, this video is not available in your region.'
+                                message: 'Sorry, this video is not available in your region due to rights restrictions.'
                             });
                             player.bigPlayButton.dispose();
                             player.errorDisplay.open();
