@@ -393,22 +393,27 @@
         background-size: 40px;
     }
 
-    &.unsub__button {
+    &.email-unsubscribe {
         float: none;
         color: $guardian-brand;
         background-color: #ffffff;
         border: 2px solid $guardian-brand;
         min-width: $gs-baseline * 14;
     }
+
+    &.email-unsubscribe--confirm {
+        color: $error;
+        font-weight: bold;
+        border: 2px solid $error;
+    }
 }
 
-.email-subscription__unsubscribe,
-.email-subscription__unsubscribe--confirm {
+.email-unsubscribe-all__label {
     display: inline;
-}
 
-.email-subscription__unsubscribe--confirm {
-    color: $error !important;
+    &.hide {
+        display: none;
+    }
 }
 
 .save__button {

@@ -35,14 +35,29 @@ define([
         });
     }
 
+    function confirmUnsubscriptionFromAll(buttonEl) {
+        fastdom.write(function () {
+            $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
+            $('.email-unsubscribe-all__label').toggleClass('hide');
+        });
+        setTimeout(function () {
+            resetUnsubscribeFromAll(buttonEl);
+        }, 2000);
+    }
+
     function unsubscribeFromAll(buttonEl) {
         bean.on(buttonEl, 'click', function () {
-            addUpdatingState(buttonEl);
-            var subscribedButtons = getAllSubscribedButtons();
-            for (var i = 0; i < subscribedButtons.length; i++) {
-                subscribedButtons[i].click();
+            if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
+                addUpdatingState(buttonEl);
+                resetUnsubscribeFromAll(buttonEl);
+                var subscribedButtons = getAllSubscribedButtons();
+                for (var i = 0; i < subscribedButtons.length; i++) {
+                    subscribedButtons[i].click();
+                }
+                updateButton(buttonEl, true);
+            } else {
+                confirmUnsubscriptionFromAll(buttonEl);
             }
-            updateButton(buttonEl, true);
         });
     }
 
@@ -54,6 +69,14 @@ define([
             }
         });
         return buttons;
+    }
+
+    function resetUnsubscribeFromAll(buttonEl) {
+        fastdom.write(function () {
+            $(buttonEl).removeClass('email-unsubscribe--confirm js-confirm-unsubscribe');
+            $('.js-unsubscribe--confirm').addClass('hide');
+            $('.js-unsubscribe--basic').removeClass('hide');
+        });
     }
 
     function renderErrorMessage(buttonEl) {
