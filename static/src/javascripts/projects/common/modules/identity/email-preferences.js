@@ -37,11 +37,12 @@ define([
 
     function unsubscribeFromAll(buttonEl) {
         bean.on(buttonEl, 'click', function () {
+            addUpdatingState(buttonEl);
             var subscribedButtons = getAllSubscribedButtons();
             for (var i = 0; i < subscribedButtons.length; i++) {
                 subscribedButtons[i].click();
             }
-            updateButton(buttonEl);
+            updateButton(buttonEl, true);
         });
     }
 
@@ -53,18 +54,6 @@ define([
             }
         });
         return buttons;
-    }
-
-    function enhanceEmailPreferences() {
-        $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
-        $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
-        $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
-    }
-
-    function encodeFormData(csrfToken, buttonVal, htmlPreference) {
-        return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
-        'addEmailSubscription=' + encodeURIComponent(buttonVal) + '&' +
-        'htmlPreference=' + encodeURIComponent(htmlPreference);
     }
 
     function renderErrorMessage(buttonEl) {
@@ -120,15 +109,16 @@ define([
             updateSubscriptionButton(buttonEl, isSubscribed);
         } else {
             fastdom.write(function () {
-                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
-                buttonEl.disabled = false;
+                setTimeout(function () {
+                    $(buttonEl).removeClass('is-updating is-updating-subscriptions');
+                    buttonEl.disabled = false;
+                }, 1000);
+
             });
         }
     }
 
     function generateFormQueryString(buttons) {
-        // takes an array of button values and adds each button to the form
-        var formEl = $('.form')[0];
         var csrfToken = ($('.form')[0].elements.csrfToken.value).toString();
         var htmlPreference = $('[name="htmlPreference"]:checked').val();
         var buttonString = '';
@@ -137,6 +127,12 @@ define([
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
         buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);
+    }
+
+    function enhanceEmailPreferences() {
+        $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
     }
 
     return {

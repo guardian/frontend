@@ -392,10 +392,17 @@
         background-position: center;
         background-size: 40px;
     }
+
+    &.unsub__button {
+        float: none;
+        min-width: $gs-baseline * 14;
+        margin-top: $gs-gutter * 2;
+    }
 }
 
 .save__button {
     float: none;
+    min-width: $gs-baseline * 14;
 }
 
 /* Saved-content
