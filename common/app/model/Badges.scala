@@ -53,10 +53,20 @@ object Badges {
 
   val allBadges = Seq(usElection, ausElection, voicesOfAmerica, special, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
 
-  def badgeFor(c: ContentType) = c.tags.tags.map(_.id).foldLeft(None: Option[Badge]) { (maybeBadge, tag) =>
-      maybeBadge orElse allBadges.flatMap(b => b.maybeThisBadge(tag)).headOption
+  def badgeFor(c: ContentType) = {
+    badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.flatMap(b => b.maybeThisBadge(href)).headOption)
+  def badgeForTags(tags: Traversable[String]) = {
+
+    val badgesForTags = tags.flatMap {
+      case tagId => allBadges.flatMap {
+        case baseBadge => baseBadge.maybeThisBadge(tagId)
+      }
+    }
+    badgesForTags.headOption
+  }
+
+  def badgeFor(fc: FaciaContainer) = badgeForTags(fc.href)
 
 }
