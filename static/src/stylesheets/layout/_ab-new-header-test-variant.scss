@@ -184,6 +184,12 @@ $gutter-large: 55px;
     // Optically aligns slashes
     margin-left: 2px;
     margin-right: -1px;
+
+    &:focus,
+    &:hover {
+        color: $news-support-1;
+        text-decoration: none;
+    }
 }
 
 /*****************
@@ -257,6 +263,7 @@ $gutter-large: 55px;
     padding-left: $gs-gutter;
 
     &:hover {
+        text-decoration: none;
         background-color: darken($guardian-brand-dark, 3%);
     }
 }
@@ -403,9 +410,11 @@ $navigation-horizontal-padding: 38px;
     padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
     padding-bottom: $gs-baseline * 1.5;
+    cursor: pointer;
     font-size: 1em;
 
-    &:focus {
+    &:focus,
+    &:hover {
         // Unset a:focus from user agent stylesheet
         outline: 0;
     }
@@ -489,10 +498,12 @@ $navigation-horizontal-padding: 38px;
         color: inherit;
 
         // TODO: Share with large nav?
-        &:focus {
+        &:focus,
+        &:hover {
+            text-decoration: none;
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: $guardian-brand-dark;
+            background-color: rgba(0, 0, 0, .1);
         }
     }
 }
