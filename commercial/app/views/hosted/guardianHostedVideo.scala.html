@@ -8,7 +8,7 @@
     @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
         <section class="hosted-tone--dark">
-            <div class="adverts hosted__container--full">
+            <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <video
                     data-duration="@{page.video.duration}"
@@ -64,13 +64,13 @@
                 </div>
             </div>
         </section>
-        <section class="adverts adverts--legacy hosted__container hosted__container--content">
-            <header class="adverts__header hosted__social">
+        <section class="host host--legacy hosted__container hosted__container--content">
+            <header class="host__header hosted__social">
                 <div class="meta__social hosted__social-wrapper" data-component="share">
                     @guardianHostedShareButtons(page)
                 </div>
             </header>
-            <div class="adverts__body">
+            <div class="host__body">
                 <div class="hosted__meta">
                     <h1 class="hosted__heading @{page.brandColourCssClass}">@{page.video.title}</h1>
                 </div>
