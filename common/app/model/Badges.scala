@@ -15,13 +15,15 @@ trait BaseBadge {
 case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[String] = None) extends BaseBadge {
   def maybeThisBadge(tag: String) = if (seriesTag == tag) Some(this) else None
 }
-case class SpecialBadge(hashedTag: String) extends BaseBadge {
+
+// for salt use a random unique string - e.g. some string from running in terminal: pwgen -n -y 20
+// it's fine to commit that, it just stops people using previously calculated tables to reverse the hash
+case class SpecialBadge(salt: String, hashedTag: String) extends BaseBadge {
   def maybeThisBadge(tag: String) =
     if (md5(salt + tag).contains(hashedTag)) {
       Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
     } else None
 
-  private val salt = "arbitrary-salt-ho}v]eip0Engee7Gu8oo"
   private val digest = MessageDigest.getInstance("MD5")
 
   private def md5(input: String): Option[String] = {
