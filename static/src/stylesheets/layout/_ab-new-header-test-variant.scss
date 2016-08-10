@@ -336,6 +336,8 @@ $gutter-large: 55px;
     }
 }
 
+$master-font-size: 30px;
+
 .main-menu-container__menu {
     height: 100%;
     background-color: $guardian-brand;
@@ -344,11 +346,11 @@ $gutter-large: 55px;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
-    font-size: 30px;
+    font-size: calc(#{$master-font-size} * .8);
 
-    @include mq($until: $mobile-medium) {
+    @include mq($mobile-medium) {
         //Smaller font/icon size for smaller devices
-        font-size: 26px;
+        font-size: $master-font-size;
     }
 
     will-change: transform;
