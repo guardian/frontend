@@ -8,19 +8,17 @@ import java.math.BigInteger
 import scala.util.control.NonFatal
 
 
-trait BaseBadge{
-  def imageUrl(id: String): String
-  def classModifier: Option[String]
-  def isBadgeTag(tag: String):Boolean
+trait BaseBadge {
+  def maybeThisBadge(tag: String): Option[Badge]
 }
 
-case class Badge(seriesTag: String, staticImageUrl: String, classModifier: Option[String] = None) extends BaseBadge {
-  def isBadgeTag(tag: String) = seriesTag == tag
-  def imageUrl(id: String) = staticImageUrl
+case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[String] = None) extends BaseBadge {
+  def maybeThisBadge(tag: String) = if (seriesTag == tag) Some(this) else None
 }
-case class SpecialBadge(hashedTag: String, classModifier: Option[String] = None) extends BaseBadge {
-  def isBadgeTag(tag: String) = md5(salt + tag).contains(hashedTag)
-  def imageUrl(id: String) = s"https://assets.guim.co.uk/special/$id/special-badge.svg"
+case class SpecialBadge(hashedTag: String) extends BaseBadge {
+  def maybeThisBadge(tag: String) = if (md5(salt + tag).contains(hashedTag)) {
+    Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
+  } else None
 
   private val salt = "a-public-salt3W#ywHav!p+?r+W2$E6="
     private val digest = MessageDigest.getInstance("MD5")
@@ -55,9 +53,21 @@ object Badges {
 
   val allBadges = Seq(usElection, ausElection, voicesOfAmerica, special, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
 
-  def badgeFor(c: ContentType) = c.tags.tags.map(_.id).foldLeft(None: Option[(BaseBadge, String)]) { (maybeBadge, tag) =>
-      maybeBadge orElse allBadges.find(b => b.isBadgeTag(tag)).map(badge => (badge, tag))
+  def badgeFor(c: ContentType) = {
+    badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeFor(fc: FaciaContainer) = fc.href.flatMap(href => allBadges.find(badge => badge.isBadgeTag(href)))
+  def badgeForTags(tags: Traversable[String]) = {
+
+    val badgesForTags =
+      for {
+        tagId <- tags
+        baseBadge <- allBadges
+        maybeBadge <- baseBadge.maybeThisBadge(tagId)
+      } yield maybeBadge
+    badgesForTags.headOption
+  }
+
+  def badgeFor(fc: FaciaContainer) = badgeForTags(fc.href)
+
 }
