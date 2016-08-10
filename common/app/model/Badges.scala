@@ -15,9 +15,9 @@ trait BaseBadge {
 case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[String] = None) extends BaseBadge {
   def maybeThisBadge(tag: String) = if (seriesTag == tag) Some(this) else None
 }
-case class SpecialBadge(hashedTag: String, classModifier: Option[String] = None) extends BaseBadge {
+case class SpecialBadge(hashedTag: String) extends BaseBadge {
   def maybeThisBadge(tag: String) = if (md5(salt + tag).contains(hashedTag)) {
-    Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg", classModifier))
+    Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
   } else None
 
   private val salt = "a-public-salt3W#ywHav!p+?r+W2$E6="
