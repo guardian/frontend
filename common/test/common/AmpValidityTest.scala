@@ -14,7 +14,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite {
     * @param url url of the amp page to validate - the amp query string parameter need not be included
     */
   def testAmpPageValidity(url: String): Unit = {
-    val ampUrl = formatAmpUrl(url)
+    val ampUrl = ampifyUrl(url)
 
     s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
 
@@ -39,7 +39,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   // This is too simplistic, but all we need for now.
   // It should be replaced if support for urls with existing params is needed.
-  private def formatAmpUrl(url: String): String = {
+  private def ampifyUrl(url: String): String = {
     url + "?amp"
   }
 }
