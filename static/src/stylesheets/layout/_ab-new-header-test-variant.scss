@@ -349,7 +349,7 @@ $master-font-size: 30px;
     font-size: calc(#{$master-font-size} * .8);
 
     @include mq($mobile-medium) {
-        //Smaller font/icon size for smaller devices
+        //Larger font/icon size for larger devices
         font-size: $master-font-size;
     }
 
