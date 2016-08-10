@@ -292,3 +292,98 @@ $control-offset: 36 + $gs-gutter/2;
         margin-bottom: -1px;
     }
 }
+
+/* Ad feedback menu
+   ========================================================================== */
+.ad-feedback.popup__toggle {
+    // Display the down-pointing arrow to show it's a (currently closed) drop-down menu
+    &:after {
+        content: '';
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-bottom: 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        margin-left: 4px;
+        border-left: $popup-toggle-arrow-size solid transparent;
+        border-right: $popup-toggle-arrow-size solid transparent;
+        border-top: $popup-toggle-arrow-size solid #005689;
+    }
+
+    // When active (the menu is open)...
+    &.is-active {
+        &:before {
+            // We don't want to inherit the behaviour of the arrow that points back up to the link that opened it
+            display: none;
+        }
+        // We just want draw the up arrow instead of the down arrow, to show the (currently open) menu can be closed
+        &:after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 0;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-left: 4px;
+            border-left: $popup-toggle-arrow-size solid transparent;
+            border-right: $popup-toggle-arrow-size solid transparent;
+            border-bottom: $popup-toggle-arrow-size solid #005689;
+        }
+    }
+
+}
+
+.ad-feedback.popup {
+    width: 240px;
+    top: 18px;
+    left: inherit;
+    background: $neutral-8;
+    border: 1px solid #dcdcdc;
+    text-align: left;
+    z-index: $zindex-overlay;
+    ul {
+        margin: 0;
+    }
+    li.popup__item::before {
+        content: none;
+    }
+    h3 {
+        color: #333333;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-bottom-width: 1px;
+    }
+    .popup__group-header {
+        padding: 2px;
+    }
+    .popup__group-header:last-of-type {
+        border-top: 0;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    .popup__group {
+        padding: 5px;
+    }
+    .popup__item {
+        font-size: 13px;
+        line-height: 30px;
+        //text-decoration: none;
+        border-bottom: 1px solid #dcdcdc;
+        .popup__item-option-text {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .popup__item:hover {
+        background: #bdbdbd;
+    }
+    .popup__item a, &:hover {
+        text-decoration: none;
+    }
+    .popup__item:last-of-type {
+        border: 0;
+    }
+}
+

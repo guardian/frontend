@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedGalleryPage
-@(ctaText: String, ctaLink: String, buttonText: String, nextGalleries: List[HostedGalleryPage], backgroundCss: String = "",  borderCss: String = "", textCss: String = "")
+@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextGalleries: List[HostedGalleryPage], backgroundCss: String = "",  borderCss: String = "", textCss: String = "")
     <div class="hosted-gallery__oj js-hosted-gallery-oj">
         <div class="hosted-gallery__oj-cta @borderCss">
             <div class="hosted-gallery__cta-title">

@@ -313,6 +313,12 @@
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
+
+    .form__error {
+        margin-top: 1.5rem;
+        display: block;
+        clear: both;
+    }
 }
 .email-subscription--subscribed {
     opacity: .8;
@@ -360,6 +366,9 @@
 .email-subscription__button {
     @include fs-textSans(2);
     background: $guardian-brand;
+    width: $gs-baseline * 9;
+    height: $gs-gutter * 2;
+    border-radius: 100px;
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -371,11 +380,21 @@
     }
 
     .email-subscription--subscribed & {
-        background: $neutral-2-contrasted;
+        background-color: $neutral-2-contrasted;
     }
 }
 
+.save__button {
+    float: none;
+}
 
+.is-updating-subscriptions {
+    background-color: $neutral-5 !important;
+    background-image: url(/assets/images/auto-update-activity.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px;
+}
 
 /* Saved-content
    ========================================================================== */

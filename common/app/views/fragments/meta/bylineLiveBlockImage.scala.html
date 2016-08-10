@@ -1,9 +1,11 @@
 @(profileTag: Tag)(implicit request: RequestHeader)
-    <div class="liveblog-block-byline">
-    @profileTag.contributorImagePath.map{ src =>
-        <img class="liveblog-block-byline__img" src="@ImgSrc(src, Item300)" alt="@profileTag.name" />
+<div class="liveblog-block-byline">
+    @profileTag.contributorImagePath.map { src =>
+        @if(request.isAmp) {
+            <amp-img class="liveblog-block-byline__img" src="@ImgSrc(src, Item300)" alt="@profileTag.name" width="36" height="36"></amp-img>
+        } else {
+            <img class="liveblog-block-byline__img" src="@ImgSrc(src, Item300)" alt="@profileTag.name" />
+        }
     }
     <p class="liveblog-block-byline__name" itemprop="author">@profileTag.name</p>
 </div>
-
-

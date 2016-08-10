@@ -1,10 +1,7 @@
+@import com.gu.contentapi.client.model.v1.{Asset, AssetFields, AssetType}
 @import common.commercial.hosted.HostedPage
-@import model.ImageMedia
-@import model.ImageAsset
-@import com.gu.contentapi.client.model.v1.Asset
-@import com.gu.contentapi.client.model.v1.AssetType
 @import layout.ContentWidths.ImageContentMedia
-@import com.gu.contentapi.client.model.v1.AssetFields
+@import model.{ImageAsset, ImageMedia}
 @(page: HostedPage)(implicit request: RequestHeader)
 
 
@@ -13,19 +10,19 @@
         page.brandBackgroundCssClass
     }
     ">S</span>
-    ingapore aglitter with lights by night, breath taking racing, famous drivers, multi-platinum artists
+    ingapore aglitter with lights by night, breathtaking racing, famous drivers, multi-platinum artists
 
-    performing across five stages, a whole city’s worth of delicious food and drink, tropical weather, a
+    performing across five stages, a whole city's worth of delicious food and drink, tropical weather, a
 
     series of support races and some very glamorous afterparties – buckle your seat belts for the
 
-    Singapore Grand Prix; you’re in for a ride. To get you started, here’s a brief overview of the key GP
+    Singapore Grand Prix; you're in for a ride. To get you started, here's a brief overview of the key GP
 
     events from Friday to Sunday…
 </p>
 
 @fragments.imageFigure(
-    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4577c1e1cc0c66cc42f11a081b6a70de81c58059/0_0_4933_3289/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("https://media.guim.co.uk/4577c1e1cc0c66cc42f11a081b6a70de81c58059/0_0_4933_3289/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
     lightboxIndex = None,
     widthsByBreakpoint = ImageContentMedia.inline
 )
@@ -54,7 +51,7 @@
 <p class="text">
     Australian singing sensation Kylie Minogue opens the festivities on the Padang Stage
 
-    (Zone 4). American disco kings KC and the Sunshine Band perform at the Village Stage (Zone 1).
+    (Zone 4). American disco kings KC and the Sunshine Band perform at the Espanade Outdoor Theatre (Zone 4).
 </p>
 
 <h2>
@@ -84,13 +81,13 @@
 
     Adam Lambert at the Padang Stage (Zone 4), while KC and The Sunshine Band will perform their
 
-    disco hits at the Esplanade Outdoor Stage (Zone 4). Grammy-winning American a cappella group
+    disco hits at the Village Stage (Zone 1). Grammy-winning American a cappella group
 
-    Pentatonix will be live at the Village Stage in Zone 1.
+    Pentatonix will be live at the Esplanade Outdoor Theatre (Zone 4).
 </p>
 
 @fragments.imageFigure(
-    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/4dcd87d123903b37f1817babecc6fddfed6cf07b/0_0_4928_3280/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("https://media.guim.co.uk/4dcd87d123903b37f1817babecc6fddfed6cf07b/0_0_4928_3280/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
     lightboxIndex = None,
     widthsByBreakpoint = ImageContentMedia.inline
 )
@@ -113,13 +110,19 @@
 <p class="text">
     Edgy American singer-songwriter Halsey will belt out gritty electro-pop tunes from her sell-out
 
-    global Badlands tour. Multi-platinum alternative rock band Imagine Dragons will close the
+    global Badlands tour. Pentatonix perform again, this time at the Village Stage (Zone 1),
 
-    weekend with smash-hit anthems, including ‘Radioactive’, &#39;Demons&#39; and ‘Gold’.
+    before the Formula 1® Race. Multi-platinum alternative rock band Imagine Dragons will close the
+
+    weekend with smash-hit anthems, including ‘Radioactive', &#39;Demons&#39; and ‘Gold'.
+</p>
+
+<p>
+    Read more <a href="https://www.firststopsingapore.com/day-by-day-guide-to-the-singapore-grand-prix/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix#DFBZE7vpCeT4eHbM.97" rel="nofollow" target="_blank" data-link-name="read more">here</a>.
 </p>
 
 @fragments.imageFigure(
-    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("http://media.guim.co.uk/ac5dd9df5948674ebd0e3e828b5e689c8fdb54b5/0_0_5184_3456/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some("https://media.guim.co.uk/ac5dd9df5948674ebd0e3e828b5e689c8fdb54b5/0_0_5184_3456/2000.jpg"), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
     lightboxIndex = None,
     widthsByBreakpoint = ImageContentMedia.inline
 )
@@ -172,6 +175,11 @@
     shophouses that have been transformed into fashionable and eclectic boutiques
 </p>
 
+<p>
+    Find your A-Z guide for the Singapore Grand Prix
+    <a href="https://www.firststopsingapore.com/z-tips-2016-formula-1-singapore-airlines-grand-prix-weekend/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix#ktsqVdG75WYc67Mc.97" rel="nofollow" target="_blank" data-link-name="a-z guide">here</a>.
+</p>
+
 <h1>
-    Sort your flights, hotel and GP ticket for less at <a href="http://sianightrace.com" rel="nofollow" target="_blank">sianightrace.com</a>
+    Sort your flights, hotel and GP ticket for less at <a href="https://sianightrace.com/f1-deals/" rel="nofollow" target="_blank" data-link-name="sianightrace.com">sianightrace.com</a>
 </h1>

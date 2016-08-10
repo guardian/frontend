@@ -134,9 +134,11 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
                   log.warn(s"MagentoService could not find isbn $isbn")
                   None
                 case Some(me) =>
+                  log.warn(s"MegentoException: $me")
                   throw FeedReadException(request, me.code, me.message)
                 case None =>
                   val jsonErr = JsError.toJson(e).toString()
+                  log.warn(s"Unable to validate Book: $jsonErr")
                   throw FeedParseException(request, jsonErr)
               }
             case JsSuccess(book, _) => Some(bookJson)

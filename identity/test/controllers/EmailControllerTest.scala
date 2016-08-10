@@ -93,13 +93,6 @@ import actions.AuthenticatedActions
           emailController.savePreferences()(authRequest)
           verify(api).updateUserEmails(userId, Subscriber(emailFormat, Nil), testAuth, trackingData)
         }
-
-        "re-render the form" in {
-          val result = emailController.savePreferences()(authRequest)
-          status(result) should be(200)
-          val content = contentAsString(result)
-          content should include( """<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
-        }
       }
 
       "user email API call failed" should {

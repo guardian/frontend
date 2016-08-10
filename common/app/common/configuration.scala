@@ -376,6 +376,7 @@ class GuardianConfiguration extends Logging {
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+    lazy val surgingContentTeam = configuration.getStringProperty("email.surgingContentTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }

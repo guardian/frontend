@@ -15,15 +15,15 @@ object RenaultHostedPages {
     name = "Discover your Renault Zoe",
     owner = "Renault",
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
-    cssClass = "renault"
+    cssClass = "renault",
+    logoLink = None
   )
 
   private val cta = HostedCallToAction(
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
-    label = "Discover Zoe",
-    image = Static("images/commercial/ren_commercial_banner.jpg"),
-    trackingCode = "explore-renault-zoe-button",
-    btnText = ""
+    label = Some("Discover Zoe"),
+    image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
+    trackingCode = Some("explore-renault-zoe-button")
   )
 
   private val teaserWithoutNextPage: HostedVideoPage = {

@@ -34,7 +34,8 @@ case class HostedCampaign(
   name: String,
   owner: String,
   logo: HostedLogo,
-  cssClass: String
+  cssClass: String,
+  logoLink: Option[String] = None
 )
 
 case class HostedLogo(
