@@ -395,9 +395,20 @@
 
     &.unsub__button {
         float: none;
+        color: $guardian-brand;
+        background-color: #ffffff;
+        border: 2px solid $guardian-brand;
         min-width: $gs-baseline * 14;
-        margin-top: $gs-gutter * 2;
     }
+}
+
+.email-subscription__unsubscribe,
+.email-subscription__unsubscribe--confirm {
+    display: inline;
+}
+
+.email-subscription__unsubscribe--confirm {
+    color: $error !important;
 }
 
 .save__button {

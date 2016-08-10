@@ -53,7 +53,6 @@
             <fieldset class="fieldset">
                 <div class="fieldset__heading">
                     <h2 class="form__heading">Edit your email preferences</h2>
-                    <div class="form__note">All fields required.</div>
                 </div>
 
                 <div class="fieldset__fields">
@@ -74,14 +73,30 @@
                         <li>
                             <button type="button" class="email-subscription__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
                         </li>
-                        <li>
-                            <button type="button" class="email-subscription__button unsub__button js-unsubscribe" data-link-name="Unsubscribe from all emails">Unsubscribe from all</button>
-                        </li>
-
                     </ul>
                 </div>
 
             </fieldset>
+
+            <fieldset class="fieldset">
+                <div class="fieldset__heading">
+                    <h2 class="form__heading"></h2>
+                </div>
+                <div class="fieldset__fields">
+                    <ul class="u-unstyled">
+
+                        <li class="form-field">
+                            <label class="label">No longer want to receive any of these emails?</label>
+                        </li>
+
+                        <li>
+                            <button type="button" class="email-subscription__button unsub__button js-unsubscribe" data-link-name="Unsubscribe from all emails">Unsubscribe from all</button>
+                        </li>
+                    </ul>
+                </div>
+
+            </fieldset>
+
             <ul class="nav nav--registration identity-section" data-link-name="Email prefs footer">
                 <li class="nav__item"><a class="nav__link" href="@controllers.routes.EditProfileController.displayPrivacyForm" data-link-name="Privacy and marketing settings">Privacy &amp; marketing settings</a></li>
             </ul>
