@@ -3,7 +3,7 @@
 @import conf.switches.Switches.AmpLiveBlogNewsArticleSwitch
 
 @* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
-@isNewsArticle() = @{
+@isAmpAndStructuredAsNewsArticle() = @{
     request.isAmp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
 }
 
@@ -17,7 +17,7 @@
         }
     </time>
     @* Aug 2016: disable coverage start time for AMP Live Blogs, which currently have an article type of NewsArticle *@
-    @if(isLiveBlog && !isNewsArticle()) {
+    @if(isLiveBlog && !isAmpAndStructuredAsNewsArticle()) {
         <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
     @if(hasBeenModified && !isMinute) {
@@ -26,7 +26,8 @@
             Last modified on @Format(lastModified, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(lastModified)</span>
         </time>
     }
-    @if(isLiveBlog && !isLive && !isNewsArticle()) {
+    @* Aug 2016: disable coverage end time for AMP Live Blogs, which currently have an article type of NewsArticle *@
+    @if(isLiveBlog && !isLive && !isAmpAndStructuredAsNewsArticle()) {
         <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 </p>

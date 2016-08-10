@@ -9,7 +9,7 @@
 @import common.LinkTo
 
 @* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
-@isNewsArticle() = @{
+@isAmpAndStructuredAsNewsArticle() = @{
     amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
 }
 
@@ -18,7 +18,7 @@
         id="block-@block.id"
         @if(amp && LiveUpdateAmpSwitch.isSwitchedOn){ data-sort-time="@block.publishedCreatedTimestamp()" }
         class="block block--content@block.eventClass"
-        @if(!isNewsArticle()){ itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting" }
+        @if(!isAmpAndStructuredAsNewsArticle()){ itemprop="liveBlogUpdate" itemscope="" itemtype="http://schema.org/BlogPosting" }
     >
         <p class="block-time published-time">
             @if(amp){

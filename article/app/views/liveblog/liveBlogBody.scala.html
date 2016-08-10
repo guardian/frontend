@@ -13,11 +13,11 @@
 @import _root_.liveblog.SinceBlockId
 
 @* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
-@isNewsArticle() = @{
+@isAmpAndStructuredAsNewsArticle() = @{
     amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
 }
 @schemaType(page: LiveBlogPage) = @{
-    if(isNewsArticle()) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
+    if(isAmpAndStructuredAsNewsArticle()) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
 }
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
@@ -29,7 +29,7 @@
         itemscope itemtype="@schemaType(model)" role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
-        @if(isNewsArticle()) {
+        @if(isAmpAndStructuredAsNewsArticle()) {
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
                 <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
