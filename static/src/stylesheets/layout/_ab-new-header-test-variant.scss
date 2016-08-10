@@ -342,9 +342,14 @@ $gutter-large: 55px;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
-    font-size: 20px;
     text-transform: lowercase;
     overflow: auto;
+    font-size: 30px;
+
+    @include mq($until: $mobile-medium) {
+        //Smaller font/icon size for smaller devices
+        font-size: 26px;
+    }
 
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
@@ -364,28 +369,6 @@ $gutter-large: 55px;
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
         transition: transform .4s cubic-bezier(.23, 1, .32, 1);
-    }
-}
-
-.main-menu-container__profile-container {
-    @include fs-textSans(5);
-    margin-top: $gs-baseline / 2;
-    margin-bottom: $gs-row-height;
-}
-
-.main-menu-container__profile-icon {
-    background-color: darken($guardian-brand, 3%);
-    text-align: center;
-    fill: $news-support-1;
-    height: 23px;
-    width: 23px;
-    overflow: hidden;
-    margin-left: $gs-gutter/2;
-
-    svg {
-        margin-top: 3px;
-        height: 23px;
-        width: 23px;
     }
 }
 
@@ -418,7 +401,7 @@ $navigation-horizontal-padding: 38px;
     padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
     padding-bottom: $gs-baseline * 1.5;
-    font-size: 26px;
+    font-size: 1em;
 
     &:focus {
         // Unset a:focus from user agent stylesheet
@@ -428,15 +411,16 @@ $navigation-horizontal-padding: 38px;
     &::-webkit-details-marker {
         display: none;
     }
+}
 
-    // Arrow icon
+.main-navigation__icon {
+    top: .04em;
+
     &:before {
         content: '';
-        position: absolute;
-        top: $gs-baseline - 2px;
-        left: $gs-gutter / 1.5;
-        width: 10px;
-        height: 10px;
+        display: inline-block;
+        width: .4em;
+        height: .4em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
@@ -444,9 +428,20 @@ $navigation-horizontal-padding: 38px;
     }
 
     details[open] &:before {
-        top: $gs-baseline + $gs-baseline / 2;
         transform: rotate(135deg);
     }
+
+    details[open] & {
+        top: .3em;
+    }
+}
+
+.main-navigation__icon,
+.navigation-group__icon {
+    position: absolute;
+    left: 0;
+    text-align: center;
+    width: $navigation-horizontal-padding;
 }
 
 .main-navigation__secondary {
@@ -480,6 +475,7 @@ $navigation-horizontal-padding: 38px;
     // Override inherited ul from user agent stylesheet
     list-style: none;
     position: relative;
+    font-size: .7em;
 
     a {
         display: block;
@@ -507,28 +503,37 @@ $navigation-horizontal-padding: 38px;
     }
 }
 
-.navigation-group__social-icon {
+.navigation-group__icon {
     fill: $news-support-2;
-    position: absolute;
-    top: -2px;
-    left: 0;
 
     svg {
-        width: 36px;
-        height: 36px;
+        display: inline-block;
     }
 }
 
-.navigation-group__search-icon {
-    fill: $news-support-2;
-    position: absolute;
-    top: $gs-baseline / 2;
-    left: $gs-gutter / 2;
+.navigation-group__social-icon {
+    top: -.2em;
 
     svg {
-        width: 20px;
-        height: 20px;
+        width: 1.9em;
+        height: 1.9em;
     }
+}
+
+.navigation-group__search-icon svg {
+    width: 1.1em;
+    height: 1.1em;
+    //Optical alignment
+    margin-right: -.1em;
+}
+
+.navigation-group__profile-icon svg {
+    height: 1em;
+    width: 1.1em;
+    fill: $guardian-brand;
+    background-color: $news-support-2;
+    border-radius: 100%;
+    padding-top: .1em;
 }
 
 .no-text-transform {
