@@ -59,11 +59,12 @@ object Badges {
 
   def badgeForTags(tags: Traversable[String]) = {
 
-    val badgesForTags = tags.flatMap {
-      case tagId => allBadges.flatMap {
-        case baseBadge => baseBadge.maybeThisBadge(tagId)
-      }
-    }
+    val badgesForTags =
+      for {
+        tagId <- tags
+        baseBadge <- allBadges
+        maybeBadge <- baseBadge.maybeThisBadge(tagId)
+      } yield maybeBadge
     badgesForTags.headOption
   }
 
