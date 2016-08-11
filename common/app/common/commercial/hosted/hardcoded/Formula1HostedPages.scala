@@ -48,7 +48,7 @@ object Formula1HostedPages {
                  "Paddock when you first walk in on Thursday afternoon \n\nand it never goes away.' Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
     cta(packagesPageName),
     nextPageNames = List(offtrackPageName, overviewPageName),
-    mainPicture = "http://media.guim.co.uk/cabec8c6e33920a06a989d2d87d0013c9d67a32e/0_0_7273_4000/2000.jpg",
+    mainPicture = "https://media.guim.co.uk/cabec8c6e33920a06a989d2d87d0013c9d67a32e/0_0_7273_4000/2000.jpg",
     mainPictureCaption = ""
   )
 
