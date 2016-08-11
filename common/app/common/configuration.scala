@@ -20,32 +20,32 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
+case class InstallVars(stack: String, app: String, guStage: String, awsRegion: String, configBucket: String)
+
 object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
   lazy val configuration = {
 
-    val (stage, bucket) = {
+    val installVars = {
       val p = new JavaProperties()
       p.load(new FileInputStream(s"/etc/gu/install_vars"))
-      (p.getProperty("STAGE", "DEV"), Option(p.getProperty("configBucket")))
+      InstallVars(p.getProperty("stack", "frontend"), p.getProperty("app", "dev-build"), p.getProperty("STAGE", "DEV"), p.getProperty("region", "eu-west-1"), p.getProperty("configBucket", "aws-frontend-store"))
     }
+    println(s"install vars: $installVars")
     val test = true//TODO remove this
-    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
+    //lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.properties")
-    lazy val identity = if (!test) Identity.whoAmI("dev-build", stage match {
-      case "CODE" =>  Mode.Prod
-      case "PROD" => Mode.Prod
-      case _ => Mode.Dev
-    }) else new AwsApplication("frontend","dev-build","DEV","eu-west-1")
-    lazy val commonS3Config = if (!test) bucket.map(S3ConfigurationSource(identity, _))
-    else Some(FileConfigurationSource("/Users/jduffell/Downloads/eu-west-1-frontend.conf"))
-    lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
-    val config = new CM(List(userPrivate, runtimeOnly) ++ commonS3Config ++ List(public), PlayDefaultLogger).load.resolve
+    lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
+    lazy val commonS3Config = if (!test) S3ConfigurationSource(identity, installVars.configBucket)
+    else FileConfigurationSource("/Users/jduffell/Downloads/eu-west-1-frontend.conf")
+    //lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
+    val config = new CM(List(runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
-    config.getConfig(identity.app + "." + identity.stage)
-
+    val appConfig = config.getConfig(identity.app + "." + identity.stage)
+    println(s"appConfig: $appConfig")
+    appConfig
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
