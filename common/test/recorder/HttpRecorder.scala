@@ -84,7 +84,7 @@ HttpRecorder[A] extends ExecutionContexts {
 trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
 
   val errorPrefix = "Error:"
-  def toResponse(str: String) = {
+  override def toResponse(str: String) = {
     if (str.startsWith(errorPrefix)) {
       NingWSResponse(Response("", str.replace(errorPrefix, "").toInt))
     } else {
@@ -92,7 +92,7 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     }
   }
 
-  def fromResponse(response: WSResponse) = {
+  override def fromResponse(response: WSResponse) = {
     if (response.status == 200) {
       response.body
     } else {
