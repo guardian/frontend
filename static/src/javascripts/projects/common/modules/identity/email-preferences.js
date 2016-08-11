@@ -35,10 +35,21 @@ define([
         });
     }
 
-    function confirmUnsubscriptionFromAll(buttonEl) {
-        fastdom.write(function () {
-            $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
-            $('.email-unsubscribe-all__label').toggleClass('hide');
+    function reqwestUnsubscribeFromAll(buttonEl, subscribedButtons) {
+        var formQueryString = generateFormQueryString(subscribedButtons);
+        reqwest({
+            url: '/email-prefs',
+            method: 'POST',
+            data: formQueryString,
+            error: function () {
+                renderErrorMessage(buttonEl);
+            },
+            success: function (response) {
+                for (var i = 0; i < subscribedButtons.length; i++) {
+                    updateSubscriptionButton(subscribedButtons[i], false);
+                }
+                updateButton(buttonEl, false);
+            }
         });
     }
 
@@ -47,25 +58,18 @@ define([
             if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
                 addUpdatingState(buttonEl);
                 resetUnsubscribeFromAll(buttonEl);
-                var subscribedButtons = getAllSubscribedButtons();
-                for (var i = 0; i < subscribedButtons.length; i++) {
-                    subscribedButtons[i].click();
-                }
-                updateButton(buttonEl, true);
+                reqwestUnsubscribeFromAll(buttonEl, $('[value^="unsubscribe"]'));
             } else {
                 confirmUnsubscriptionFromAll(buttonEl);
             }
         });
     }
 
-    function getAllSubscribedButtons() {
-        var buttons = [];
-        $.forEachElement('.js-subscription-button', function (buttonEl) {
-            if (buttonEl.value.indexOf('unsubscribe') !== -1) {
-                buttons.push(buttonEl);
-            }
+    function confirmUnsubscriptionFromAll(buttonEl) {
+        fastdom.write(function () {
+            $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
+            $('.email-unsubscribe-all__label').toggleClass('hide');
         });
-        return buttons;
     }
 
     function resetUnsubscribeFromAll(buttonEl) {
