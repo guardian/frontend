@@ -160,7 +160,7 @@ $renaultColor: #ffc421;
     .hosted-thrasher__body--3-elems,
     .hosted-thrasher__body--4-elems {
         .hosted-thrasher__meta {
-            width: $gs-column-width * 4;
+            width: 320px;
             @include mq(tablet) {
                 bottom: 15%;
                 font-size: 24px;

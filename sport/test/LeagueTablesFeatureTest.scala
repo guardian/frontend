@@ -1,10 +1,16 @@
 package test
 
+import football.controllers.LeagueTableController
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest._
 
-@DoNotDiscover class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class LeagueTablesFeatureTest
+  extends FeatureSpec
+  with GivenWhenThen
+  with Matchers
+  with ConfiguredTestSuite
+  with FootballTestData {
 
   feature("League Tables") {
 
@@ -52,7 +58,8 @@ import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
     }
 
     scenario("Should redirect when no competition table data found") {
-      val result = football.controllers.LeagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
+      val leagueTableController = new LeagueTableController(testCompetitionsService)
+      val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }
 

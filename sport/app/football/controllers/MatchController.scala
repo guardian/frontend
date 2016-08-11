@@ -2,7 +2,7 @@ package football.controllers
 
 import common._
 import conf._
-import feed._
+import feed.{Competitions, CompetitionsService}
 import implicits.{Football, Requests}
 import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
@@ -46,29 +46,29 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController(competitionsService: CompetitionsService, footballClient: FootballClient) extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
   def renderMatchIdJson(matchId: String) = renderMatchId(matchId)
-  def renderMatchId(matchId: String) = render(Competitions().findMatch(matchId))
+  def renderMatchId(matchId: String) = render(competitionsService.findMatch(matchId))
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
   def renderMatch(year: String, month: String, day: String, home: String, away: String) =
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
         val date = dateFormat.parseDateTime(year + month + day).toLocalDate
-        render(Competitions().matchFor(date, homeId, awayId))
+        render(competitionsService.matchFor(date, homeId, awayId))
       case _ => render(None)
     }
 
   private def render(maybeMatch: Option[FootballMatch]) = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = FootballClient.lineUp(theMatch.id).recover(FootballClient.logErrors)
+      val lineup: Future[LineUp] = footballClient.lineUp(theMatch.id).recover(footballClient.logErrors)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>
-        val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, Competitions().competitionForMatch(theMatch.id))
+        val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
         val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
         renderFormat(htmlResponse, jsonResponse, page)
       }
@@ -78,5 +78,3 @@ class MatchController extends Controller with Football with Requests with Loggin
     response.getOrElse(Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results")))))
   }
 }
-
-object MatchController extends MatchController
