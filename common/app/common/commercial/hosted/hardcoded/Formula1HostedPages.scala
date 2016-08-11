@@ -17,10 +17,10 @@ object Formula1HostedPages {
 
   private def cta(pageName: String) = HostedCallToAction(
     url = "https://www.firststopsingapore.com/singapore-airlines-singapore-grand-prix-packages/?utm_source=guardian&utm_medium=editorial&utm_campaign=singaporegrandprix",
-    image = "https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg",
-    label = "Discover the 2016 Singapore Grand Prix",
-    trackingCode = s"singapore-grand-prix:$pageName",
-    btnText = "Book now"
+    image = Some("https://static.theguardian.com/commercial/hosted/formula1-singapore/SGPGuardianImage.jpg"),
+    label = Some("Discover the 2016 Singapore Grand Prix"),
+    trackingCode = Some(s"singapore-grand-prix:$pageName"),
+    btnText = Some("Book now")
   )
 
   val overviewPageName = "overview"
@@ -35,7 +35,7 @@ object Formula1HostedPages {
     standfirst = "‘This race is always a highlight of the season: a great city, which looks really spectacular under the lights with the tricky street circuit below – my favourite kind of track to drive.' Lewis Hamilton, 3-time Formula1 World Champion, Mercedes AMG Petronas F1 Team",
     cta(overviewPageName),
     nextPageNames = List(packagesPageName, offtrackPageName),
-    mainPicture = "http://media.guim.co.uk/18ad0d659d2cf5b961b7c7c9548283cc6e4559e1/0_346_5184_3110/2000.jpg",
+    mainPicture = "https://media.guim.co.uk/18ad0d659d2cf5b961b7c7c9548283cc6e4559e1/0_346_5184_3110/2000.jpg",
     mainPictureCaption = "A bird's eye view of the illuminated Marina Bay Street Circuit"
   )
 
@@ -48,8 +48,8 @@ object Formula1HostedPages {
                  "Paddock when you first walk in on Thursday afternoon \n\nand it never goes away.' Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
     cta(packagesPageName),
     nextPageNames = List(offtrackPageName, overviewPageName),
-    mainPicture = "http://media.guim.co.uk/7570a34e5556dfdaeb17af6bee54168c0c9bdc15/0_0_4240_2832/2000.jpg",
-    mainPictureCaption = "Crowd along the Jubilee Bridge, an excellent vantage point of the fireworks display on Sunday "
+    mainPicture = "https://media.guim.co.uk/b77d7b65b89fc0cc9dec0ce0ccb4250044b9367e/0_47_1504_902/1000.png",
+    mainPictureCaption = ""
   )
 
   val offtrackArticlePage = HostedArticlePage2(
@@ -62,15 +62,15 @@ object Formula1HostedPages {
                  "recommend anybody to come because it's a \n\nfantastic experience.' Nico Rosberg, Formula 1 driver, Mercedes AMG Petronas F1 Team",
     cta(offtrackPageName),
     nextPageNames = List(overviewPageName, packagesPageName),
-    mainPicture = "http://media.guim.co.uk/797e2c3ecf6631e647f31978073404e1b78974a7/0_0_5184_3456/2000.jpg",
+    mainPicture = "https://media.guim.co.uk/797e2c3ecf6631e647f31978073404e1b78974a7/0_0_5184_3456/2000.jpg",
     mainPictureCaption = "Take a break from the action and cool off within the Circuit Park"
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
-      case `overviewPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(overviewArticlePage)
-      case `packagesPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(packagesArticlePage)
-      case `offtrackPageName` if Switches.hostedSingaporeF1Article.isSwitchedOn => Some(offtrackArticlePage)
+      case `overviewPageName` => Some(overviewArticlePage)
+      case `packagesPageName` => Some(packagesArticlePage)
+      case `offtrackPageName` => Some(offtrackArticlePage)
       case _ => None
     }
   }

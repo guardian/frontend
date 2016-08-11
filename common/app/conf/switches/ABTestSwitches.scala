@@ -34,13 +34,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABGiraffeArticle20160802 = Switch(
+  val ABContributionsArticle20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-giraffe-article-20160802",
+    "ab-contributions-article-20160810",
     "Test effectiveness of inline CTA for contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
+    owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 8, 16),
     exposeClientSide = true
   )
 
@@ -91,6 +91,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
+    exposeClientSide = true
+  )
+
+  val ABMinute = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute",
+    "Testing if minute teasers drive video plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 }

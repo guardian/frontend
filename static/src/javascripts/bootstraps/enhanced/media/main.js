@@ -249,7 +249,7 @@ define([
                             player.error({
                                 code: 0,
                                 type: 'Video Unavailable',
-                                message: 'Sorry, this video is not available in your region.'
+                                message: 'Sorry, this video is not available in your region due to rights restrictions.'
                             });
                             player.bigPlayButton.dispose();
                             player.errorDisplay.open();
@@ -429,6 +429,14 @@ define([
         }
     }
 
+    function initMinute() {
+        if(ab.isInVariant('Minute','minute')) {
+            // This is our minute account number
+            window._min = {_publisher: 'MIN-21000'};
+            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
+        }
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -457,6 +465,7 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+        initMinute();
     }
 
     return {
