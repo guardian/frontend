@@ -4,11 +4,12 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballLifecycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballClient, FootballLifecycle}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import cricketPa.PaFeed
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
@@ -31,6 +32,9 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
+  lazy val footballClient = wire[FootballClient]
+  lazy val competitionDefinitions = CompetitionsProvider.allCompetitions
+  lazy val competitionsService = wire[CompetitionsService]
   lazy val cricketPaFeed = wire[PaFeed]
   lazy val cricketStatsJob = wire[CricketStatsJob]
   lazy val rugbyFeed = wire[OptaFeed]
