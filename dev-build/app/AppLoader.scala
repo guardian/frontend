@@ -5,7 +5,7 @@ import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.DiagnosticsLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{AdminFilters, FootballLifecycle}
+import conf.FootballLifecycle
 import contentapi.SectionsLookUpLifecycle
 import controllers._
 import controllers.commercial._
@@ -87,7 +87,7 @@ trait AppComponents
     wire[ABHeadlinesLifecycle]
   )
 
-  override lazy val httpFilters = wire[DevFilters].filters ++ wire[AdminFilters].filters
+  override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
 }
