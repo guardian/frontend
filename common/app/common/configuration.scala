@@ -243,7 +243,7 @@ class GuardianConfiguration extends Logging {
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
-    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com/supporter")
+    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
