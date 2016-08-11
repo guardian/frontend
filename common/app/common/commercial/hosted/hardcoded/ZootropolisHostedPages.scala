@@ -20,10 +20,9 @@ object ZootropolisHostedPages {
 
   private val cta = HostedCallToAction(
     url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
-    label = "",
-    image = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
-    trackingCode = "disney-zootropolis",
-    btnText = "Out now on digital download"
+    image = Some("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg"),
+    trackingCode = Some("disney-zootropolis"),
+    btnText = Some("Out now on digital download")
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {
@@ -88,16 +87,14 @@ object ZootropolisHostedPages {
     customData = customData
   )
 
-  private lazy val videoPage = if (Switches.hostedArticle.isSwitchedOn) videoPageWithoutNextPage
-    .copy(nextPage = Some(articlePageWithoutNextPage)) else videoPageWithoutNextPage
+  private lazy val videoPage = videoPageWithoutNextPage.copy(nextPage = Some(articlePageWithoutNextPage))
 
-  private lazy val articlePage = if (Switches.hostedVideoDisneyZootropolis.isSwitchedOn) articlePageWithoutNextPage
-    .copy(nextPage = Some(videoPageWithoutNextPage)) else articlePageWithoutNextPage
+  private lazy val articlePage = articlePageWithoutNextPage.copy(nextPage = Some(videoPageWithoutNextPage))
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
-      case `articlePageName` if Switches.hostedArticle.isSwitchedOn => Some(articlePage)
-      case `videoPageName` if Switches.hostedVideoDisneyZootropolis.isSwitchedOn => Some(videoPage)
+      case `articlePageName` => Some(articlePage)
+      case `videoPageName` => Some(videoPage)
       case _ => None
     }
   }

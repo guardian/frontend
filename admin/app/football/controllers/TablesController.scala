@@ -1,8 +1,8 @@
 package controllers.admin
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
 import football.model.PA
-import football.services.GetPaClient
+import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
 import model.{Cors, Cached, NoCache}
 import org.joda.time.LocalDate
@@ -12,7 +12,7 @@ import play.api.libs.ws.WSClient
 import play.api.Mode
 import scala.concurrent.Future
 
-class TablesController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient {
+class TablesController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
   def tablesIndex = Action.async { implicit request =>
     for {

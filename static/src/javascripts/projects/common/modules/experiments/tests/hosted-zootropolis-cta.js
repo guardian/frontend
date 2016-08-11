@@ -37,7 +37,10 @@ define([
                 id: 'control',
                 test: function () {},
                 success: function (complete) {
-                    bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
+                    var hostedBanner = qwery('.hosted__cta-btn-wrapper');
+                    if (hostedBanner.length) {
+                        bean.on(hostedBanner[0], 'click', complete);
+                    }
                 }
             },
             {
@@ -51,7 +54,10 @@ define([
                     });
                 },
                 success: function (complete) {
-                    bean.on(qwery('.hosted__cta-btn-wrapper')[0], 'click', complete);
+                    var hostedBanner = qwery('.hosted__cta-btn-wrapper');
+                    if (hostedBanner.length) {
+                        bean.on(hostedBanner[0], 'click', complete);
+                    }
                 }
             }
         ];

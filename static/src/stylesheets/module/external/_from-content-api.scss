@@ -169,10 +169,6 @@
     color: $neutral-2;
 }
 
-.caption--large {
-    font-size: 18px;
-}
-
 .caption--img {
     @include mq(leftCol) {
         padding-bottom: $gs-baseline * 2;

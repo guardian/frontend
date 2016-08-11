@@ -24,10 +24,10 @@ object LeffeHostedPages {
 
   private val cta = HostedCallToAction(
     url = "https://www.facebook.com/Leffe.uk/",
-    label = "Rediscover Time",
-    image = Static("images/commercial/leffe_banner.png"),
-    trackingCode = "leffe-rediscover-time",
-    btnText = "Visit Leffe on Facebook"
+    label = Some("Rediscover Time"),
+    image = Some(Static("images/commercial/leffe_banner.png")),
+    trackingCode = Some("leffe-rediscover-time"),
+    btnText = Some("Visit Leffe on Facebook")
   )
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
@@ -173,11 +173,11 @@ object LeffeHostedPages {
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
-      case `willardWiganPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(willardWiganPage)
-      case `adrienneTreebyPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(adrienneTreebyPage)
-      case `peteLawrencePageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(peteLawrencePage)
-      case `susanDergesPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(susanDergesPage)
-      case `quayBrothersPageName` if Switches.hostedLeffeShowVideo1.isSwitchedOn => Some(quayBrothersPage)
+      case `willardWiganPageName` => Some(willardWiganPage)
+      case `adrienneTreebyPageName` => Some(adrienneTreebyPage)
+      case `peteLawrencePageName` => Some(peteLawrencePage)
+      case `susanDergesPageName` => Some(susanDergesPage)
+      case `quayBrothersPageName` => Some(quayBrothersPage)
       case _ => None
     }
   }

@@ -9,8 +9,8 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__logo-wrapper {
     padding-top: $gs-baseline / 2;
-    position: absolute;
-    right: 0;
+    padding-bottom: $gs-baseline / 2;
+    margin-left: auto;
 }
 
 .new-header__logo__svg {
@@ -41,22 +41,17 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 }
 
 .new-header__nav {
-    @include fs-textSans(6);
+    @include fs-textSans(5);
+    line-height: 1.6;
     display: flex;
     align-items: center;
     width: 100%;
-    margin-top: $gs-baseline;
-
-    @include mq($mobile-medium) {
-        margin-top: $gs-baseline * 2;
-    }
+    // Position after pseudo element which forces line break
+    order: 1;
+    justify-content: space-between;
 
     @include mq($until: mobileLandscape) {
-        font-size: 5.2vw;
-        line-height: 1.6;
-        // Position after pseudo element which forces line break
-        order: 1;
-        justify-content: space-between;
+        font-size: 5.1vw;
     }
 
     @include mq(mobileLandscape) {
@@ -69,6 +64,7 @@ $veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
 $gutter-small: 29px;
 $gutter-medium: 37px;
+$gutter-large: 55px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
@@ -94,9 +90,6 @@ $gutter-medium: 37px;
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
-    }
-
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
         margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 1.5;
         //Align with the 'i' in 'theguardian'
@@ -104,9 +97,8 @@ $gutter-medium: 37px;
     }
 
     @include mq(mobileLandscape) {
-        margin-top: -$gs-baseline / 1.5;
-        margin-bottom: -$gs-baseline / 1.5;
-        margin-left: $gs-gutter -$gs-gutter / 4;
+        //Align with the 'i' in 'theguardian'
+        margin-right: $gutter-large;
     }
 }
 
@@ -156,30 +148,26 @@ $gutter-medium: 37px;
 .new-header__nav__list {
     display: flex;
     flex-wrap: wrap;
-    // Unset ul from _lists.scss
-    margin-left: 0;
     // Unset ul from user agent stylesheet
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
 
-    @include mq($until: mobileLandscape) {
-        order: -1;
-        margin-left: $gs-gutter / 2;
-    }
+    order: -1;
+    margin-left: $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
+        margin-left: $gs-gutter;
     }
 }
 
-.new-header__nav__list-item {
+.new-header__nav__primary-item {
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
 
     &:first-child .new-header__nav__link {
-        padding-left: 0;
+        margin-left: 0;
     }
 
     &:not(:last-child) {
@@ -194,8 +182,8 @@ $gutter-medium: 37px;
     // Override a from _lists.scss
     color: #ffffff;
     // Optically aligns slashes
-    padding-left: 2px;
-    padding-right: 3px;
+    margin-left: 2px;
+    margin-right: -1px;
 }
 
 /*****************
@@ -204,12 +192,13 @@ $gutter-medium: 37px;
 
 .edition-picker {
     @include fs-textSans(3);
-    order: -1;
+    position: absolute;
+    left: 0;
     color: $news-support-1;
     // Override from fs-textSans mixin
     line-height: 1;
-    padding-left: 7px;
     padding-top: $gs-baseline/2;
+    padding-left: $gs-gutter / 2;
     width: gs-span(2);
     z-index: 3;
 
@@ -273,8 +262,7 @@ $gutter-medium: 37px;
 }
 
 .edition-picker__current-edition {
-    width: gs-span(2) - 4px;
-    padding-left: 4px;
+    width: gs-span(2);
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline/2;
     display: block;
@@ -354,9 +342,14 @@ $gutter-medium: 37px;
     color: #ffffff;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
-    font-size: 20px;
     text-transform: lowercase;
     overflow: auto;
+    font-size: 30px;
+
+    @include mq($until: $mobile-medium) {
+        //Smaller font/icon size for smaller devices
+        font-size: 26px;
+    }
 
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
@@ -369,31 +362,13 @@ $gutter-medium: 37px;
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
     }
 
+    @include mq(mobileLandscape) {
+        margin-right: $gutter-large + ($veggie-burger-medium / 2);
+    }
+
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
         transition: transform .4s cubic-bezier(.23, 1, .32, 1);
-    }
-}
-
-.main-menu-container__profile-container {
-    @include fs-textSans(5);
-    margin-top: $gs-baseline / 2;
-    margin-bottom: $gs-row-height;
-}
-
-.main-menu-container__profile-icon {
-    background-color: darken($guardian-brand, 3%);
-    text-align: center;
-    fill: $news-support-1;
-    height: 23px;
-    width: 23px;
-    overflow: hidden;
-    margin-left: $gs-gutter/2;
-
-    svg {
-        margin-top: 3px;
-        height: 23px;
-        width: 23px;
     }
 }
 
@@ -405,12 +380,17 @@ $gutter-medium: 37px;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     text-transform: lowercase;
+    // flexbox is being used for reordering the lists on click. Ordering is added by JS
+    // See PR: https://github.com/guardian/frontend/pull/13905
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .main-navigation__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
     color: $news-support-1;
+    width: 100%;
 }
 
 $navigation-horizontal-padding: 38px;
@@ -421,7 +401,7 @@ $navigation-horizontal-padding: 38px;
     padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
     padding-bottom: $gs-baseline * 1.5;
-    font-size: 26px;
+    font-size: 1em;
 
     &:focus {
         // Unset a:focus from user agent stylesheet
@@ -431,15 +411,16 @@ $navigation-horizontal-padding: 38px;
     &::-webkit-details-marker {
         display: none;
     }
+}
 
-    // Arrow icon
+.main-navigation__icon {
+    top: .04em;
+
     &:before {
         content: '';
-        position: absolute;
-        top: $gs-baseline - 2px;
-        left: $gs-gutter / 1.5;
-        width: 10px;
-        height: 10px;
+        display: inline-block;
+        width: .4em;
+        height: .4em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
@@ -447,9 +428,20 @@ $navigation-horizontal-padding: 38px;
     }
 
     details[open] &:before {
-        top: $gs-baseline + $gs-baseline / 2;
         transform: rotate(135deg);
     }
+
+    details[open] & {
+        top: .3em;
+    }
+}
+
+.main-navigation__icon,
+.navigation-group__icon {
+    position: absolute;
+    left: 0;
+    text-align: center;
+    width: $navigation-horizontal-padding;
 }
 
 .main-navigation__secondary {
@@ -483,6 +475,7 @@ $navigation-horizontal-padding: 38px;
     // Override inherited ul from user agent stylesheet
     list-style: none;
     position: relative;
+    font-size: .7em;
 
     a {
         display: block;
@@ -510,28 +503,37 @@ $navigation-horizontal-padding: 38px;
     }
 }
 
-.navigation-group__social-icon {
+.navigation-group__icon {
     fill: $news-support-2;
-    position: absolute;
-    top: -2px;
-    left: 0;
 
     svg {
-        width: 36px;
-        height: 36px;
+        display: inline-block;
     }
 }
 
-.navigation-group__search-icon {
-    fill: $news-support-2;
-    position: absolute;
-    top: $gs-baseline / 2;
-    left: $gs-gutter / 2;
+.navigation-group__social-icon {
+    top: -.2em;
 
     svg {
-        width: 20px;
-        height: 20px;
+        width: 1.9em;
+        height: 1.9em;
     }
+}
+
+.navigation-group__search-icon svg {
+    width: 1.1em;
+    height: 1.1em;
+    //Optical alignment
+    margin-right: -.1em;
+}
+
+.navigation-group__profile-icon svg {
+    height: 1em;
+    width: 1.1em;
+    fill: $guardian-brand;
+    background-color: $news-support-2;
+    border-radius: 100%;
+    padding-top: .1em;
 }
 
 .no-text-transform {

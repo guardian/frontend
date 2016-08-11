@@ -3,7 +3,7 @@ define([
     'common/utils/report-error'
 ], function (Promise, reportError) {
     var allowedHosts = [
-        'http://tpc.googlesyndication.com',
+        location.protocol + '//tpc.googlesyndication.com',
         location.protocol + '//' + location.host
     ];
     var listeners = {};

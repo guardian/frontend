@@ -342,13 +342,15 @@ define([
 
     //--Create container link click handlers
     SaveForLater.prototype.createSaveFaciaItemHandler = function (link, id, shortUrl) {
-        bean.one(link, 'click',
-            this.save.bind(this,
-                id,
-                shortUrl,
-                this.onSaveFaciaItem.bind(this, link, id, shortUrl)
-            )
-        );
+        if (link) {
+            bean.one(link, 'click',
+                this.save.bind(this,
+                    id,
+                    shortUrl,
+                    this.onSaveFaciaItem.bind(this, link, id, shortUrl)
+                )
+            );
+        }
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
