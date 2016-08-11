@@ -338,8 +338,7 @@ define([
                         email.init(el);
                     });
                 });
-            },
-
+            }
         };
 
     return {
