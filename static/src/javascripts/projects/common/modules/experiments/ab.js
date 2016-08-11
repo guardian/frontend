@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
     'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
+    'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
     'common/modules/experiments/tests/minute'
@@ -33,6 +34,7 @@ define([
     ParticipationDiscussionOrderingNonLive,
     RemindMeEmail,
     HostedZootropolisCta,
+    HostedArticleOnwardJourney,
     ContributionsHeader,
     AdFeedback,
     Minute
@@ -46,6 +48,7 @@ define([
         new ParticipationDiscussionOrderingNonLive(),
         new RemindMeEmail(),
         new HostedZootropolisCta(),
+        new HostedArticleOnwardJourney(),
         new ContributionsHeader(),
         new AdFeedback(),
         new Minute()

@@ -34,6 +34,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHostedArticleOnwardJourney = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-article-onward-journey",
+    "Vertical positioning of the onward journey links",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 16),
+    exposeClientSide = true
+  )
+
   val ABContributionsArticle20160802 = Switch(
     SwitchGroup.ABTests,
     "ab-contributions-article-20160810",
