@@ -28,6 +28,7 @@ requirejs.config({
         raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
         analytics:    'projects/common/modules/analytics/analytics',
+        'comment-count': '/base/node_modules/guardian-comment-count/dist/comment-count.amd',
         // Test specific paths
         omniture:     'vendor/omniture',
         stripe:       'vendor/stripe/stripe.min',
