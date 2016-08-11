@@ -20,9 +20,9 @@ define([
 ) {
     return function () {
 
-        this.id = 'GiraffeArticle20160802';
-        this.start = '2016-08-02';
-        this.expiry = '2016-08-22';
+        this.id = 'ContributionsArticle20160810';
+        this.start = '2016-08-10';
+        this.expiry = '2016-08-16';
         this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
@@ -37,11 +37,11 @@ define([
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
-        var writer = function (linkText, linkHref, copy) {
+        var writer = function (linkText, cmpCode, copy) {
             var $newThing = $.create(template(giraffeMessage, {
-                linkText:linkText,
+                linkText: linkText,
                 linkName: 'contribute',
-                linkHref: linkHref,
+                linkHref: 'https://contribute.theguardian.com?INTCMP=' + cmpCode,
                 copy: copy,
                 svg: svg(arrowRight, ['button--giraffe__icon'])
             }));
@@ -63,18 +63,18 @@ define([
 
         this.variants = [
             {
-                id: 'everyone',
+                id: 'always',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_everyone', '');
+                    writer('You\'re always reading it. So make sure it\'s always here. It\'s only fair. ', 'co_uk_inarticle_always', 'Give to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);
                 }
             },
             {
-                id: 'honest',
+                id: 'can',
                 test: function () {
-                    writer('Be honest. When was the last time you paid for quality news online? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_honest', '');
+                    writer('There are some things you should do just because you can. Give to the Guardian. ', 'co_uk_inarticle_can', 'It\'s only fair');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -83,16 +83,16 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Please support the Guardian');
+                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'co_uk_inarticle_like', 'Contribute to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);
                 }
             },
             {
-                id: 'complex',
+                id: 'backing',
                 test: function () {
-                    writer('The world is complex. We\'ll give our all to help you understand it. Will you give something to help us help you? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_complex', 'Please contribute to the Guardian');
+                    writer('Some things are worth backing, like your principles. ', 'co_uk_inarticle_backing', 'Give to the Guardian');
                 },
                 success: function (complete) {
                     completer(complete);
