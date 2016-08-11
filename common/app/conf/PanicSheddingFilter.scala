@@ -72,7 +72,7 @@ class PanicSheddingFilter extends Filter with Logging {
       true
     } else if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
       logWithStats(Some(
-        s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
+        s"""Increased latency detected, serving anyway as in progress requests ($requestsInProgress)
             | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
             | """.stripMargin))
       true
