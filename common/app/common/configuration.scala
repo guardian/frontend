@@ -34,29 +34,18 @@ object GuardianConfiguration extends Logging {
     val test = true//TODO remove this
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.properties")
-    lazy val identity = if (!test) Identity.whoAmI("appname", stage match {
+    lazy val identity = if (!test) Identity.whoAmI("dev-build", stage match {
       case "CODE" =>  Mode.Prod
       case "PROD" => Mode.Prod
       case _ => Mode.Dev
-    }) else new AwsApplication("frontend","article","CODE","eu-west-1")
+    }) else new AwsApplication("frontend","dev-build","DEV","eu-west-1")
     lazy val commonS3Config = if (!test) bucket.map(S3ConfigurationSource(identity, _))
     else Some(FileConfigurationSource("/Users/jduffell/Downloads/eu-west-1-frontend.conf"))
     lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
     val config = new CM(List(userPrivate, runtimeOnly) ++ commonS3Config ++ List(public), PlayDefaultLogger).load.resolve
 
     config.getConfig(identity.app + "." + identity.stage)
-//
-//    val appsInOrder = config.root().toList.collect{
-//      case (key, value: ConfigObject) if key.split('-').contains(identity.app.replaceAllLiterally("-", "")) => (key.split('-').length, value)
-//    }.sortBy(_._1).map(_._2)
-//    val appConfig = appsInOrder.tail.foldLeft(appsInOrder.head){ case (overall, next) => overall.withFallback(next)}
-//
-//    val stagesInOrder = appConfig.toList.collect{
-//      case (key, value: ConfigObject) if key.split('-').contains(identity.stage) => (key.split('-').length, value)
-//    }.sortBy(_._1).map(_._2)
-//    val chained = stagesInOrder.tail.foldLeft(stagesInOrder.head){ case (overall, next) => overall.withFallback(next)}
-//
-//    chained
+
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
