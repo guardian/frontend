@@ -2,19 +2,20 @@ package test
 
 import conf.Configuration
 import controllers.HealthCheck
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
-import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
-import com.ning.http.client.uri.Uri;
-import play.api.libs.ws.{WS, WSResponse}
+import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response => NingResponse}
+import com.ning.http.client.uri.Uri
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.Application
 import java.util
 import java.net.URI
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
+
 import play.api.Plugin
-import discussion.DiscussionApi
+import discussion.{DiscussionApi, DiscussionApiLike}
 
 private case class Resp(getResponseBody: String) extends NingResponse {
   def getContentType: String = "application/json"
@@ -56,8 +57,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class DiscussionApiStub extends DiscussionApi {
-  import play.api.Play.current
+class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
   protected val clientHeaderValue: String =""
 
   protected val apiRoot =
@@ -69,7 +69,7 @@ class DiscussionApiStub extends DiscussionApi {
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    WS.url(url).withRequestTimeout(2000).get()
+    wsClient.url(url).withRequestTimeout(2000).get()
   }
 }
 
@@ -82,9 +82,8 @@ class DiscussionTestSuite extends Suites (
   new discussion.DiscussionApiTest,
   new CommentCountControllerTest,
   new ProfileTest
-  ) with SingleServerSuite {
-  override lazy val port: Int = HealthCheck.testPort
-
-  // Inject stub api.
-  controllers.delegate.api = new DiscussionApiStub()
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

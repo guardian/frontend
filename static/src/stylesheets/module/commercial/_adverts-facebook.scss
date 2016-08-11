@@ -2,39 +2,58 @@
     display: none;
     font-size: .75rem;
     line-height: 1rem;
-    height: 250px;
+    min-height: 250px;
     position: relative;
     text-align: left;
-    width: 300px;
 }
 
 .advert--facebook {
+    @include f-headlineSans;
+    background: $neutral-6;
+    padding-bottom: $gs-baseline;
+
     .advert__image-container {
         height: 157px;
+    }
+
+    .advert__title {
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin-bottom: .25em;
+    }
+
+    .advert__meta {
+        font-size: 1rem;
+        margin-bottom: 1em;
+    }
+
+    .advert__meta,
+    .advert__title {
+        line-height: 1.2;
+    }
+
+    .advert__more svg {
+        width: 14px;
+        height: 10px;
     }
 
     .advert__title,
     .advert__meta,
     .advert__more {
+        color: $neutral-1;
         margin-left: $gs-gutter / 2;
         margin-right: $gs-gutter / 2;
     }
 
-    .button {
-        @include button-colour(
-            $features-main-2,
-            null
-        );
+    .inline-icon {
+        fill: $neutral-1;
     }
 
-    &:hover,
-    &:focus,
-    &:active {
-        .button {
-            @include button-colour(
-                darken($features-main-2, 5%),
-                null
-            );
-        }
+    .advert__brand {
+        position: absolute;
+        bottom: $gs-baseline;
+        right: $gs-gutter / 2;
+        width: $gs-baseline * 4;
+        height: $gs-baseline * 4;
     }
 }

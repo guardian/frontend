@@ -13,7 +13,7 @@
         <a href="/admin/football/player/card/@player.id">
             <div class='player-image'>
                 <p>@player.name</p>
-                <img src="http://pads6.pa-sport.com/api/football/player/image/<key>/@player.id" alt="@player.name" />
+                <img src="@{conf.AdminConfiguration.pa.footballHost}/player/image/@{conf.AdminConfiguration.pa.footballApiKey}/@player.id" alt="@player.name" />
             </div>
         </a>
     }

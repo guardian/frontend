@@ -16,7 +16,8 @@ define([
     'text!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
-    'lodash/arrays/without'
+    'lodash/arrays/without',
+    'common/modules/analytics/omniture'
 ], function (
     bonzo,
     qwery,
@@ -35,7 +36,8 @@ define([
     permissionsTemplate,
     some,
     uniq,
-    without
+    without,
+    omniture
 ) {
     var explainerDismissed = 'gu.notificationsExplainerDismissed',
         modules = {
@@ -45,6 +47,8 @@ define([
         },
 
         getSub: function () {
+            //This function can change Notification.permission
+            //by asking the user if it is in 'default' state.
             return modules.getReg().then(function (reg) {return reg.pushManager.getSubscription();});
         },
 
@@ -105,10 +109,17 @@ define([
         },
 
         subscribeHandler: function () {
+            var wasNotGranted = Notification.permission !== 'granted';
             modules.subscribe().then(modules.follow)
-                .catch( function () {
+                .then(function() {
+                    var isNowGranted = Notification.permission === 'granted';
+                    if (wasNotGranted && isNowGranted) {
+                        omniture.trackLinkImmediate('browser-notifications-granted');
+                    }
+                }) .catch( function () {
                     if (Notification.permission === 'denied') {
                         modules.notificationsDeniedMessage();
+                        omniture.trackLinkImmediate('browser-notifications-denied');
                     }
                 });
         },
@@ -166,14 +177,15 @@ define([
 
         updateSubscription: function (notificationsEndpoint) {
             return modules.getSub().then(function (sub) {
-                var endpoint = sub.endpoint,
-                    request = ajax({
+                var endpoint = sub && sub.endpoint;
+                if (endpoint) {
+                    return ajax({
                         url: notificationsEndpoint,
                         method: 'POST',
                         contentType: 'application/x-www-form-urlencoded',
                         data: {browserEndpoint: endpoint, notificationTopicId: config.page.pageId}
                     });
-                return request;
+                }
             });
         },
 

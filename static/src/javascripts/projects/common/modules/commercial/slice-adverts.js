@@ -4,7 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
@@ -13,11 +13,11 @@ define([
     config,
     detect,
     fastdom,
-    createAdSlot,
+    createSlot,
     userPrefs,
     commercialFeatures
 ) {
-    var maxAdsToShow = config.page.showMpuInAllContainers ? 999 : 3;
+    var maxAdsToShow = 3;
     var containerSelector = '.fc-container';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
     var containerGap = 1;
@@ -28,15 +28,16 @@ define([
 
     function init() {
         if (!commercialFeatures.sliceAdverts) {
-            return false;
+            return Promise.resolve(false);
         }
 
         var adSlots;
         var prefs               = userPrefs.get('container-states') || {};
         var isMobile            = detect.getBreakpoint() === 'mobile';
         var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        // Mobile doesn't have a top slot, so we substitute a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s)
-        // that take the top slot in responsive takeovers.
+        // The server-rendered top slot is above nav. For mobile, we remove that server-rendered top slot,
+        // and substitute it with a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s) that take the
+        // top slot in responsive takeovers. Beware, this substitute slot is still called 'top-above-nav'.
         var replaceTopSlot      = (config.page.isFront && detect.isBreakpoint({max : 'phablet'}));
         // We must keep a small bit of state in the filtering logic
         var lastIndex           = -1;
@@ -49,12 +50,12 @@ define([
                     adSlice: container.querySelector(sliceSelector)
                 };
             })
-            // pull out closed, empty (no slice) or first on front containers,
-            // keeping containers only if they are $containerGap nodes apart
+            // filter out any container candidates where:
+            // - the container is closed (collapsed) through user preferences, or
+            // - the container is first on a network front, or
+            // - the container does not contain an adslice candidate, or
+            // - the minimum number of containers (check the containerGap) from the last viable advert container has not been satisfied.
             .filter(function (item, index) {
-                if (config.page.showMpuInAllContainers) {
-                    return true;
-                }
 
                 var isThrasher = bonzo(item.container).hasClass('fc-container--thrasher');
                 if (replaceTopSlot && index === 0 && !isThrasher) {
@@ -79,10 +80,23 @@ define([
             .slice(0, maxAdsToShow)
             // create ad slots for the selected slices
             .map(function (item, index) {
-                var adName = 'inline' + (index + 1);
-                var adSlot = createAdSlot(adName, 'container-inline');
+                var adName = replaceTopSlot ?
+                    'inline' + index :
+                    'inline' + (index + 1);
+                var classNames = ['container-inline'];
+                var adSlot;
 
-                adSlot.className += ' ' + (isMobile ? 'ad-slot--mobile' : 'container-inline');
+                if (config.page.isAdvertisementFeature) {
+                    classNames.push('adfeature');
+                }
+
+                if (isMobile) {
+                    classNames.push('mobile');
+                }
+
+                adSlot = replaceTopSlot && index === 0 ?
+                    createSlot('top-above-nav', classNames) :
+                    createSlot(adName, classNames);
 
                 return {
                     anchor: isMobile ? item.container : item.adSlice,

@@ -1,21 +1,17 @@
 package controllers.admin
 
 import implicits.Requests
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.Logging
-import controllers.AuthLogging
 import tools.CloudWatch
-import play.api.libs.ws.WS
-import play.api.libs.ws.WSAuthScheme
+import play.api.libs.ws.{WSAuthScheme, WSClient}
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
-import org.joda.time.LocalDate
-import play.api.Play.current
 
-object RadiatorController extends Controller with Logging with AuthLogging with Requests{
+class RadiatorController(wsClient: WSClient) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -31,13 +27,14 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
   }
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = AuthActions.AuthActionTest.async { implicit request =>
-    val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
+  def commitDetail(hash: String) = Action.async { implicit request =>
+    val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
-  def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+  def renderRadiator() = Action.async { implicit request =>
+    val apiKey = Configuration.riffraff.apiKey
 
     for {
       user50x <- CloudWatch.user50x
@@ -49,18 +46,18 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
       val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
       NoCache(Ok(views.html.radiator(
         graphs, multiLineGraphs, cost, switchesExpiringSoon,
-        Configuration.environment.stage
+        Configuration.environment.stage, apiKey
       )))
     }
   }
 
-  def pingdom() = AuthActions.AuthActionTest.async { implicit request =>
+  def pingdom() = Action.async { implicit request =>
     val url = Configuration.pingdom.url + "/checks"
     val user = Configuration.pingdom.user
     val password = Configuration.pingdom.password
     val apiKey = Configuration.pingdom.apiKey
 
-    WS.url(url)
+    wsClient.url(url)
       .withAuth(user, password,  WSAuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>

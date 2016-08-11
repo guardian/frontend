@@ -230,9 +230,11 @@ Hence why a greater depth of selector specificity is needed.
 
 .fc-container--dynamic-slow-mpu {
     .ad-slot--container-inline {
-        width: gs-span(9);
-        background: $neutral-8;
-        border-bottom: $gs-baseline / 2 solid $neutral-8;
+        width: gs-span(4);
+        padding-bottom: $gs-baseline / 2;
+        @include mq(tablet) {
+            width: gs-span(9);
+        }
     }
     .ad-slot__label {
         text-align: left;

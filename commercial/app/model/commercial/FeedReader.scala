@@ -1,17 +1,19 @@
 package model.commercial
 
 import com.ning.http.client.{Response => AHCResponse}
+import commercial.CommercialMetrics
 import common.Logging
-import play.api.Play.current
+import conf.switches.Switch
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{WS, WSSignatureCalculator}
+import play.api.libs.ws.{WSResponse, WSRequest, WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Try, Failure, Success}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-object FeedReader extends Logging {
+class FeedReader(wsClient: WSClient) extends Logging {
 
   def read[T](request: FeedRequest,
               signature: Option[WSSignatureCalculator] = None,
@@ -22,44 +24,61 @@ object FeedReader extends Logging {
     def readUrl(): Future[T] = {
 
       def recordLoad(duration: Long): Unit = {
-        val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
-        val key = s"$feedName-feed-load-time"
+        val feedName: String = request.feedName.toLowerCase.replaceAll("\\s+", "-")
+        val key: String = s"$feedName-feed-load-time"
         CommercialMetrics.metrics.put(Map(s"$key" -> duration.toDouble))
       }
 
-      val start = System.currentTimeMillis
+      val start: Long = System.currentTimeMillis
 
-      val requestHolder = {
-        val unsignedRequestHolder = WS.url(request.url)
+      val requestHolder: WSRequest = {
+        val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
           .withRequestTimeout(request.timeout.toMillis.toInt)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
       }
-      val futureResponse = requestHolder.get()
+      val futureResponse: Future[WSResponse] = requestHolder.get()
 
-      val contents = futureResponse map { response =>
+      val contents: Future[T] = futureResponse map { response =>
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
-            val body = request.responseEncoding map {
+            val body: String = request.responseEncoding map {
               response.underlying[AHCResponse].getResponseBody
             } getOrElse response.body
-            parse(body)
+
+            Try(parse(body)) match {
+              case Success(parsedBody) => parsedBody
+              case Failure(throwable) =>
+                log.error(s"Could not parse body: $throwable (Body: $body)")
+                throw throwable
+            }
+
           case invalid =>
+            log.error(s"Invalid status code: ${response.status} (Response StatusText: ${response.statusText}")
             throw FeedReadException(request, response.status, response.statusText)
         }
       }
 
       contents onFailure {
-        case NonFatal(e) => recordLoad(-1)
+        case NonFatal(e) =>
+          log.error(s"NonFatal exception: $e")
+          recordLoad(-1)
       }
 
       contents
     }
 
-    request.switch.onInitialized flatMap { switch =>
+    val initializedSwitch: Future[Switch] = request.switch.onInitialized
+
+    initializedSwitch.onComplete {
+      case Success(switch) => log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
+      case Failure(throwable) => log.info(s"Failed to initialize switch: $throwable")
+    }
+
+    initializedSwitch flatMap { switch =>
       if (switch.isSwitchedOn) readUrl()
       else Future.failed(FeedSwitchOffException(request.feedName))
     }

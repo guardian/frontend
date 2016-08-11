@@ -26,39 +26,34 @@ define([
             detect;
 
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
+            injector.mock('common/modules/commercial/dfp/track-ad-render', function trackAdRender(id) {
                 return Promise.resolve(ads[id]);
             });
-            injector.mock('common/modules/commercial/dfp/dfp-api', function() {
-                return {
-                    addSlot: function () { /* noop */ }
-                };
+
+            injector.mock('common/modules/commercial/dfp/add-slot', function () {
+                /* noop */
             });
             injector.require([
-                /* load mocks */
-                'common/modules/commercial/dfp/track-ad-load',
-                'common/modules/commercial/dfp/dfp-api',
-
                 'common/modules/commercial/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
             ], function () {
-                articleBodyAdverts = arguments[2];
+                articleBodyAdverts = arguments[0];
 
-                commercialFeatures = arguments[3];
+                commercialFeatures = arguments[1];
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[4];
+                spaceFiller = arguments[2];
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                config = arguments[5];
+                config = arguments[3];
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[6];
+                detect = arguments[4];
 
                 done();
             });
@@ -72,11 +67,13 @@ define([
             expect(articleBodyAdverts).toBeDefined();
         });
 
-        it('should exit if commercial feature disabled', function () {
+        it('should exit if commercial feature disabled', function (done) {
             commercialFeatures.articleBodyAdverts = false;
-            var executionResult = articleBodyAdverts.init();
-            expect(executionResult).toBe(false);
-            expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
+            articleBodyAdverts.init().then(function(executionResult){
+                expect(executionResult).toBe(false);
+                expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
+                done();
+            });
         });
 
         it('should call space-filler`s insertion method with the correct arguments', function (done) {
@@ -122,10 +119,13 @@ define([
                         writer = firstCall.args[1];
                     writer([paragraph]);
 
-                    var expectedAd = fixture.querySelector('#dfp-ad--im');
-                    expect(expectedAd).toBeTruthy();
+                    // Wait until fastdom has written before checking
+                    fastdom.read(function(){
+                        var expectedAd = fixture.querySelector('#dfp-ad--im');
+                        expect(expectedAd).toBeTruthy();
+                        done();
+                    });
 
-                    done();
                 });
             });
 

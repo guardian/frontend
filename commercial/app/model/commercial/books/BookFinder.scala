@@ -1,28 +1,31 @@
 package model.commercial.books
 
+import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
 import model.commercial.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
-import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.WSSignatureCalculator
-import shade.memcached.{Configuration => MemcachedConfiguration, Memcached, MemcachedCodecs}
+import play.api.libs.ws.WSClient
+import shade.memcached.{Memcached, MemcachedCodecs, Configuration => MemcachedConfiguration}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object BookFinder extends Logging {
+class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
 
-  private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
+  private implicit lazy val executionContext = actorSystem.dispatchers.lookup("akka.actor.memcached")
+
+  private lazy val defaultBookDataCache = new MemcachedBookDataCache(actorSystem)
 
   def findByIsbn(isbn: String,
-                 cache: BookDataCache = MemcachedBookDataCache,
-                 lookup: String => Future[Option[JsValue]] = MagentoService.findByIsbn):
+                 cache: BookDataCache = defaultBookDataCache,
+                 lookup: String => Future[Option[JsValue]] = magentoService.findByIsbn):
   Future[Option[Book]] = {
 
     def cachedBook(bookData: JsValue): Future[Option[Book]] = {
@@ -61,9 +64,11 @@ object BookFinder extends Logging {
 }
 
 
-object MagentoService extends Logging {
+class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Logging {
 
   private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
+
+  private val feedReader = new FeedReader(wsClient)
 
   private val magentoProperties = {
     for {
@@ -83,10 +88,10 @@ object MagentoService extends Logging {
   }
 
   private implicit val bookLookupExecutionContext: ExecutionContext =
-    Akka.system.dispatchers.lookup("akka.actor.book-lookup")
+    actorSystem.dispatchers.lookup("akka.actor.book-lookup")
 
   private final val circuitBreaker = new CircuitBreaker(
-    scheduler = Akka.system.scheduler,
+    scheduler = actorSystem.scheduler,
     maxFailures = 10,
     callTimeout = 5.seconds,
     resetTimeout = 1.minute
@@ -118,7 +123,7 @@ object MagentoService extends Logging {
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
-        FeedReader.read(request,
+        feedReader.read(request,
           signature = Some(props.oauth),
           validResponseStatuses = Seq(200, 404)) { responseBody =>
           val bookJson = Json.parse(responseBody)
@@ -129,9 +134,11 @@ object MagentoService extends Logging {
                   log.warn(s"MagentoService could not find isbn $isbn")
                   None
                 case Some(me) =>
+                  log.warn(s"MegentoException: $me")
                   throw FeedReadException(request, me.code, me.message)
                 case None =>
                   val jsonErr = JsError.toJson(e).toString()
+                  log.warn(s"Unable to validate Book: $jsonErr")
                   throw FeedParseException(request, jsonErr)
               }
             case JsSuccess(book, _) => Some(bookJson)
@@ -156,9 +163,9 @@ trait BookDataCache {
   def add(isbn: String, json: JsValue): Future[Boolean]
 }
 
-object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedCodecs {
+class MemcachedBookDataCache(actorSystem: ActorSystem) extends BookDataCache with Logging with MemcachedCodecs {
 
-  private implicit lazy val executionContext = Akka.system.dispatchers.lookup("akka.actor.memcached")
+  private implicit lazy val executionContext = actorSystem.dispatchers.lookup("akka.actor.memcached")
   private implicit val stringCodec = StringBinaryCodec
 
   private lazy val maybeCache: Option[Memcached] = {

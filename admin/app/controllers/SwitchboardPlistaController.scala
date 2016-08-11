@@ -3,17 +3,16 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common._
 import conf.switches.{SwitchState, Switches}
-import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
-import services.Notification
+import services.SwitchNotification
 import tools.Store
 import model.NoCache
 
-object SwitchboardPlistaController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
 
-  def renderSwitchboard() = AuthActions.AuthActionTest { implicit request =>
-    log("loaded plista Switchboard", request)
+  def renderSwitchboard() = Action { implicit request =>
+    log.info("loaded plista Switchboard")
 
     val switchesWithLastModified = Store.getSwitchesWithLastModified
     val switchStates = Properties(switchesWithLastModified map {_._1} getOrElse "")
@@ -27,7 +26,7 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
     NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, Switches.PlistaForOutbrainAU, lastModified)))
   }
 
-  def save() = AuthActions.AuthActionTest { implicit request =>
+  def save() = Action { implicit request =>
 
     def saveSwitchesOrError(updates: Seq[String], newState: String) = try {
 
@@ -41,7 +40,7 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
       if (alterationMade) {
         val update = Switches.PlistaForOutbrainAU.name + "=" + newState
 
-        Notification.onSwitchChanges(requester, Configuration.environment.stage, List() :+ update)
+        SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, List() :+ update)
         log.info(s"Switch change by ${requester}: ${update}")
       }
 
@@ -63,7 +62,7 @@ object SwitchboardPlistaController extends Controller with AuthLogging with Logg
     if (remoteSwitches.map(_._2).exists(_.getMillis > localLastModified)) {
         NoCache(Redirect("/dev/switchboard-plista").flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
     } else {
-      log("saving plista switchboard", request)
+      log.info("saving plista switchboard")
       val plistaSetting = form.get(Switches.PlistaForOutbrainAU.name).head
 
       // for switches not present on this page, we need to persist their current values

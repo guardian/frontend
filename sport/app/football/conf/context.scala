@@ -1,5 +1,6 @@
 package conf
 
+import app.LifecycleComponent
 import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
@@ -8,7 +9,10 @@ import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WS
 import scala.concurrent.{ExecutionContext, Future}
 
-class FootballLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class FootballLifecycle(
+  appLifeCycle: ApplicationLifecycle,
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     descheduleJobs()
@@ -21,43 +25,43 @@ class FootballLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: Executi
       val minutes = index * 5 / 60 % 5
       val cron = s"$seconds $minutes/5 * * * ?"
 
-      Jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
+      jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
         Competitions.refreshCompetitionAgent(id)
       }
     }
 
-    Jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
+    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
       Competitions.refreshMatchDay()
     }
 
-    Jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
+    jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
       Competitions.refreshCompetitionData()
     }
 
-    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
+    jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
       LiveBlogAgent.refresh()
     }
 
-    Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
+    jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
       TeamMap.refresh()
     }
   }
 
   private def descheduleJobs() {
-    Competitions.competitionIds map { id =>
-      Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
+    Competitions.competitionIds foreach { id =>
+      jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
-    Jobs.deschedule("MatchDayAgentRefreshJob")
-    Jobs.deschedule("CompetitionRefreshJob")
-    Jobs.deschedule("LiveBlogRefreshJob")
-    Jobs.deschedule("TeamMapRefreshJob")
+    jobs.deschedule("MatchDayAgentRefreshJob")
+    jobs.deschedule("CompetitionRefreshJob")
+    jobs.deschedule("LiveBlogRefreshJob")
+    jobs.deschedule("TeamMapRefreshJob")
   }
 
   override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 
-    AkkaAsync {
+    akkaAsync.after1s {
       val competitionUpdate = Competitions.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
       Competitions.refreshMatchDay()
@@ -70,8 +74,6 @@ class FootballLifecycle(appLifeCycle: ApplicationLifecycle)(implicit ec: Executi
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
 
   import play.api.Play.current
-
-  override lazy val base = SportConfiguration.pa.host
 
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
@@ -90,7 +92,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   def http = _http
   def http_=(delegateHttp: Http) = _http = delegateHttp
 
-  lazy val apiKey = SportConfiguration.pa.apiKey
+  lazy val apiKey = SportConfiguration.pa.footballKey
 
   override def GET(urlString: String): Future[pa.Response] = {
     _http.GET(urlString)

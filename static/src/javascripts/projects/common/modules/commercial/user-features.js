@@ -1,17 +1,15 @@
 define([
-    'common/utils/ajax-promise',
     'common/utils/cookies',
     'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/storage',
-    'common/modules/identity/api',
-    'lodash/utilities/noop'
+    'common/modules/identity/api'
 ], function (
-    ajaxPromise,
     cookies,
     config,
+    fetchJson,
     storage,
-    identity,
-    noop
+    identity
 ) {
     var PERSISTENCE_KEYS = {
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
@@ -24,18 +22,6 @@ define([
         this._deleteOldData = deleteOldData;
         this._persistResponse = persistResponse;
     }
-
-    UserFeatures.prototype.isAdfree = function() {
-        // Defer to the value set by the preflight scripts
-        // They need to determine how the page will appear before it starts rendering
-
-        // This field might not be added if the feature switch is off
-        if (config.commercial === undefined || config.commercial.showingAdfree === undefined || config.commercial.showingAdfree === null) {
-            return false;
-        } else {
-            return config.commercial.showingAdfree;
-        }
-    };
 
     /**
      * Updates the user's data in a lazy fashion
@@ -74,12 +60,12 @@ define([
     };
 
     function requestNewData() {
-        ajaxPromise({
-            url : config.page.userAttributesApiUrl + '/me/features',
-            crossOrigin : true,
-            withCredentials : true,
-            error : function () {}
-        }).then(persistResponse, noop);
+        fetchJson(config.page.userAttributesApiUrl + '/me/features', {
+            mode: 'cors',
+            credentials: 'include'
+        })
+        .then(persistResponse)
+        .catch(function () {});
     }
 
     function persistResponse(JsonResponse) {

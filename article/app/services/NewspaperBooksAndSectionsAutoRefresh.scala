@@ -1,17 +1,22 @@
 package services
 
-import common.{LifecycleComponent, AutoRefresh}
+import akka.actor.ActorSystem
+import app.LifecycleComponent
+import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}
+import play.libs.Akka
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-object NewspaperBooksAndSectionsAutoRefresh extends LifecycleComponent {
+class NewspaperBooksAndSectionsAutoRefresh(newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
+                                           newspaperBookTagAgent: NewspaperBookTagAgent)
+  extends LifecycleComponent {
   override def start(): Unit = {
-    NewspaperBookTagAgent.start()
-    NewspaperBookSectionTagAgent.start()
+    newspaperBookTagAgent.start()
+    newspaperBookSectionTagAgent.start()
   }
 }
 
@@ -25,7 +30,7 @@ trait NewspaperTags {
   }
 }
 
-class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+class NewspaperBookTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
   override val source = "newspaper_books"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -34,9 +39,7 @@ class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 m
   }
 }
 
-object NewspaperBookTagAgent extends NewspaperBookTagAgent
-
-class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
+class NewspaperBookSectionTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
   override val source = "newspaper_book_sections"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -44,5 +47,3 @@ class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 secon
     }
   }
 }
-
-object NewspaperBookSectionTagAgent extends NewspaperBookSectionTagAgent

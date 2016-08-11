@@ -8,16 +8,15 @@ import services.EmailService
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
+case class ExpiringSwitchesEmailJob(emailService: EmailService) extends ExecutionContexts with Logging {
 
   def run(): Future[Unit] = {
     (for (webEngineers <- webEngineersEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
-        val (imminent, soon) = expiringSwitches.partition(Switch.expiry(_).daysToExpiry.get < 2)
-        val htmlBody = views.html.email.expiringSwitches(imminent, soon).body.trim()
-        val eventualResult = EmailService.send(
+        val htmlBody = views.html.email.expiringSwitches(expiringSwitches).body.trim()
+        val eventualResult = emailService.send(
           from = webEngineers,
           to = Seq(webEngineers),
           subject = "Expiring Feature Switches",
@@ -40,6 +39,29 @@ object ExpiringSwitchesEmailJob extends ExecutionContexts with Logging {
       Future {
         log.warn("Recipient not configured")
       }
+    )
+  }
+}
+
+case class ExpiringSwitchesGroup(switches: Seq[Switch], description: String)
+
+case class ExpiringSwitches(switches: Seq[Switch]) {
+
+  // Return switches group ordered by expiration priority
+  def groupByPriority: Seq[ExpiringSwitchesGroup] = {
+
+    val expiredSwitches = switches.filter(Switch.expiry(_).hasExpired)
+    val expiringTodaySwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 0))
+    val expiringTomorrowSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 1))
+    val expiringInTwoDaysSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 2))
+    val otherSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(expiration => expiration > 2 && expiration < 8))
+
+    Seq(
+      ExpiringSwitchesGroup(expiredSwitches, "already expired"),
+      ExpiringSwitchesGroup(expiringTodaySwitches, "expiring today"),
+      ExpiringSwitchesGroup(expiringTomorrowSwitches, "expiring tomorrow"),
+      ExpiringSwitchesGroup(expiringInTwoDaysSwitches, "expiring in 2 days"),
+      ExpiringSwitchesGroup(otherSwitches, "expiring within a week")
     )
   }
 }

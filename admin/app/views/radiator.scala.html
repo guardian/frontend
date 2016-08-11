@@ -3,7 +3,8 @@
     hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
-    env: String)(implicit request: RequestHeader)
+    env: String,
+    apiKey: String)(implicit request: RequestHeader)
 
 @import org.joda.time.{DateTime, Days}
 
@@ -37,7 +38,7 @@
         <ul id="sell-by-date">
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
-                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}">" title="@switch.name - expires in @days days">
+                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}" title="@switch.name - expires in @days days">
                         @switch.name
                     </li>
                 }
@@ -51,6 +52,9 @@
     </div>
 
     <div class="monitoring-wrapper">
+        <form hidden>
+            <input id="riffraff-api-key" type="hidden" value="@apiKey">
+        </form>
         <div class="riffraff-wrapper">
             <h2>CODE Deployments</h2>
             <ul class="riffraff" id="riffraffCODE"></ul>

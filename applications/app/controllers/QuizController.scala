@@ -4,9 +4,9 @@ import common._
 import conf.Configuration
 import contentapi.ContentApiClient
 import model._
-import model.content.{Quiz, Atoms}
+import model.content.{Atoms, Quiz}
+import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import quiz.form
-import play.api.mvc.{Result, RequestHeader, Action, Controller}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -15,7 +15,7 @@ case class QuizAnswersPage(
   inputs: form.Inputs,
   contentPage: String,
   quiz: Quiz) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", "quizzes", quiz.title, "GFE: Quizzes")
+  override val metadata = MetaData.make("quiz atom", Some(SectionSummary.fromId("quizzes")), quiz.title, "GFE: Quizzes")
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 
@@ -40,7 +40,7 @@ case class QuizAnswersPage(
   val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
 }
 
-object QuizController extends Controller with ExecutionContexts with Logging {
+class QuizController extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
@@ -75,3 +75,5 @@ object QuizController extends Controller with ExecutionContexts with Logging {
   }
 
 }
+
+object QuizController extends QuizController

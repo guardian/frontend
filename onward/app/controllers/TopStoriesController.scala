@@ -3,7 +3,6 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import common._
 import contentapi.ContentApiClient
-import conf._
 import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
@@ -11,7 +10,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
@@ -50,7 +49,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
   private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val page = SimplePage( MetaData.make(
       "top-stories",
-      "top-stories",
+      Some(SectionSummary.fromId("top-stories")),
       "Top Stories",
       "GFE:Top Stories"
     ))
@@ -78,3 +77,5 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     renderFormat(response, response, 900)
   }
 }
+
+object TopStoriesController extends TopStoriesController

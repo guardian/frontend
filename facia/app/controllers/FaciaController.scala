@@ -20,8 +20,6 @@ import scala.concurrent.Future.successful
 
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
-  val EditionalisedKey = """^\w\w(/.*)?$""".r
-
   val frontJsonFapi: FrontJsonFapi
 
   private def getEditionFromString(edition: String) = {
@@ -52,48 +50,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderContainerJson(id: String) = renderContainer(id, false)
 
-  def renderSomeFrontContainers(path: String, rawNum: String, rawOffset: String, sectionNameToFilter: String, edition: String) = Action.async { implicit request =>
-
-    def returnContainers(num: Int, offset: Int) = getSomeCollections(Editionalise(path, getEditionFromString(edition)), num, offset, sectionNameToFilter).map { collections =>
-
-        val containers = collections.getOrElse(List()).zipWithIndex.map { case (collection: PressedCollection, index) =>
-
-          val containerLayout = if(collection.collectionType.contains("mpu")) {
-              Fixed(FixedContainers.frontsOnArticles)
-            } else {
-              Container.resolve(collection.collectionType)
-            }
-
-          val containerDefinition = FaciaContainer(
-            index,
-            containerLayout,
-            CollectionConfigWithId("", CollectionConfig.empty),
-            CollectionEssentials.fromPressedCollection(collection).copy(treats = Nil)
-          )
-
-          container(containerDefinition, FrontProperties.empty)
-        }
-
-        if(request.isJson) {
-          Cached(60) {JsonCollection(Html(containers.mkString))}
-        } else {
-          Cached(60)(WithoutRevalidationResult(NotFound))
-        }
-    }
-
-    (rawNum, rawOffset) match {
-      case (Int(num), Int(offset)) => returnContainers(num, offset)
-      case _ => Future.successful(Cached(600) {
-        WithoutRevalidationResult(BadRequest)
-      })
-    }
-  }
-
   def renderSomeFrontContainersMf2(count: Int, offset: Int, section: String = "", edition: String = "") = Action.async { implicit request =>
     val e = if(edition.isEmpty) Edition(request) else getEditionFromString(edition)
     val collectionsPath = if(section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
     getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
-      Cached(60) {
+      Cached(CacheTime.Facia) {
         JsonComponent(
           "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
         )
@@ -134,14 +95,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
     val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
-    Cached(60)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
+    Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
   }
 
   def renderFrontJsonLite(path: String) = Action.async { implicit request =>
-    val cacheTime = 60
     frontJsonFapi.get(path).map {
-        case Some(pressedPage) => Cached(cacheTime)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
-        case None => Cached(cacheTime)(JsonComponent(JsObject(Nil)))}
+        case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
+        case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
@@ -150,19 +110,19 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         successful(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
-            Cached(faciaPage) {
+            Cached(CacheTime.Facia) {
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             }
           }
           else if (request.isJson)
-            Cached(faciaPage)(JsonFront(faciaPage))
+            Cached(CacheTime.Facia)(JsonFront(faciaPage))
           else {
-            Cached(faciaPage) {
+            Cached(CacheTime.Facia) {
               RevalidatableResult.Ok(views.html.front(faciaPage))
             }
           }
         )
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
+      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
@@ -212,10 +172,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
           val html = container(containerDefinition, FrontProperties.empty)
           if (request.isJson)
-            Cached(60) {JsonCollection(html)}
+            Cached(CacheTime.Facia) {JsonCollection(html)}
           else
-            Cached(60)(WithoutRevalidationResult(NotFound("containers are only available as json")))
-      }.getOrElse(Cached(60)(WithoutRevalidationResult(NotFound(s"collection id $collectionId does not exist"))))
+            Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound("containers are only available as json")))
+      }.getOrElse(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(s"collection id $collectionId does not exist"))))
     }
   }
 
@@ -228,11 +188,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout}
           yield
-            successful{Cached(pressedPage) {
+            successful{Cached(CacheTime.Facia) {
             JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
-        maybeResponse getOrElse successful(Cached(60)(WithoutRevalidationResult(NotFound)))
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}}
+        maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}}
 
 
   private object JsonCollection{
@@ -267,14 +227,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     getPressedCollection(id).flatMap {
       case Some(collection) =>
         successful{
-          Cached(60) {
+          Cached(CacheTime.Facia) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
             val body = TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated.flatMap(_.properties.maybeContent), "", None)
             RevalidatableResult(Ok(body).as("text/xml; charset=utf8"), body)
           }
         }
-      case None => successful(Cached(60)(WithoutRevalidationResult(NotFound)))}
+      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
   }
 
 
@@ -283,14 +243,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 }
 
-object Int {
-  def unapply(s : String) : Option[Int] = try {
-    Some(s.toInt)
-  } catch {
-    case _ : java.lang.NumberFormatException => None
-  }
-}
+class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive) extends FaciaController
 
-object FaciaController extends FaciaController {
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
-}

@@ -37,15 +37,13 @@ define([
 
     describe('Outbrain', function () {
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-load', function(id) {
-                return Promise.resolve(ads[id]);
-            });
             injector.mock('common/modules/email/run-checks', function() {
                 return Promise.resolve(false);
             });
+            injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
+                return Promise.resolve(ads[id]);
+            });
             injector.require([
-                'common/modules/commercial/dfp/track-ad-load',
-                'common/modules/email/run-checks',
                 'common/modules/commercial/third-party-tags/outbrain',
                 'common/modules/commercial/third-party-tags/outbrain-sections',
                 'common/utils/config',
@@ -53,12 +51,12 @@ define([
                 'common/utils/detect',
                 'common/modules/commercial/commercial-features'
             ], function () {
-                sut      = arguments[2];
-                getSection = arguments[3];
-                config   = arguments[4];
-                identity = arguments[5];
-                detect   = arguments[6];
-                commercialFeatures = arguments[7];
+                sut      = arguments[0];
+                getSection = arguments[1];
+                config   = arguments[2];
+                identity = arguments[3];
+                detect   = arguments[4];
+                commercialFeatures = arguments[5];
 
                 config.switches.outbrain = true;
                 config.switches.emailInArticleOutbrain = false;

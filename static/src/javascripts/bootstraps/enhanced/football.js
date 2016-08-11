@@ -2,36 +2,36 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/fetch-json',
     'common/utils/mediator',
     'common/utils/page',
+    'common/utils/report-error',
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/tag-page-stats',
     'common/modules/sport/score-board',
-    'common/modules/ui/rhc',
-    'lodash/functions/debounce'
+    'common/modules/ui/rhc'
 ], function (
     bean,
     bonzo,
     $,
-    ajax,
     config,
     detect,
+    fetchJson,
     mediator,
     page,
+    reportError,
     Doughnut,
     football,
     MatchInfo,
     MatchListLive,
     tagPageStats,
     ScoreBoard,
-    rhc,
-    debounce
+    rhc
 ) {
 
     function renderNav(match, callback) {
@@ -254,9 +254,8 @@ define([
         bean.on(document.body, 'click', '.js-show-more-football-matches', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
-            ajax({
-                url: el.getAttribute('href') + '.json'
-            }).then(function (resp) {
+            fetchJson(el.getAttribute('href') + '.json')
+            .then(function (resp) {
                 $.create(resp.html).each(function (html) {
                     $('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]')
                         .append($(el.getAttribute('data-shows-more'), html));
@@ -268,51 +267,17 @@ define([
                         bonzo(el).remove();
                     }
                 });
+            })
+            .catch(function (ex) {
+                reportError(ex, {
+                    feature: 'football-show-more'
+                });
             });
         });
 
         bean.on(document.body, 'change', $('form.football-leagues')[0], function () {
             window.location = this.value;
         });
-
-        if (!config.page.isFootballWorldCup2014) {
-            bean.on(document.body, 'click', '.table tr[data-link-to]', function (e) {
-                if (!e.target.getAttribute('href')) {
-                    window.location = this.getAttribute('data-link-to');
-                }
-            });
-        }
-
-        // World Cup content
-        // config.switches.worldCupWallchartEmbed
-        // Remove this content below when you remove the switch as it's specific to World Cup 2014
-        if (config.page.isFootballWorldCup2014) {
-            $('a').attr('target', '_top');
-
-            (function () {
-                var t, h, i, resize;
-
-                // This stops the SecurityError from halting the execution any further.
-                try {
-                    i = $('.interactive iframe', window.parent.document).get(0);
-                } catch (e) {/**/}
-
-                resize = (function r() {
-                    if (!t) {
-                        // if this isn't timed out, it triggers another resize
-                        h = $('#js-context').offset().height + 50;
-
-                        if (i) { i.height = h; }
-                        t = setTimeout(function () {
-                            clearTimeout(t); t = null;
-                        }, 200);
-                    }
-                    return r;
-                })();
-                mediator.on('window:resize', debounce(resize, 200));
-                bean.on(document, 'click', '.dropdown__button', resize);
-            })();
-        }
 
         tagPageStats();
     }

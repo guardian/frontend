@@ -13,4 +13,11 @@ class AssetsTest extends FlatSpec with Matchers with OneAppPerSuite {
     static("zen3").toString should be("simon says" + "the quieter you become the more you are able to hear.")
   }
 
+  "CssMap" should "collect css maps" in {
+    val static = new CssMap("assets/testclass-map.json")
+
+    static("el1").toString should be("el1 e f")
+    static("el2").toString should be("el2 h")
+  }
+
 }

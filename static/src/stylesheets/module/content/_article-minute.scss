@@ -24,24 +24,50 @@ $minute-layout-margin-nudge: gs-span(1);
    Header
    ========================================================================== */
 
-.content__head--minute-article {
-    .content__head--mobile,
-    .content__head--desktop {
+// Header background overlay
+.content--minute-article--overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 90%);
+    width: 100%;
+}
 
-        // Header background overlay
-        &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, .4);
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 90%);
-            width: 100%;
-        }
+.content__headline--minute {
+    @include fs-headline(8, true);
+    color: #ffffff;
+    padding-top: $gs-baseline / 2;
+    position: relative;
 
+    @include mq(desktop) {
+        font-size: 3.5rem;
     }
 
+    @include mq(phablet) {
+        &:after {
+            @include rule($us-minute-highlight-colour, $gs-baseline*2);
+            position: absolute;
+            left: 0;
+            top: -$gs-baseline*2;
+            width: gs-span(4) + $gs-gutter * 2;
+        }
+    }
+
+    &:after {
+        @include mq(desktop) {
+            height: $gs-baseline*3;
+            top: -$gs-baseline*3;
+            width: gs-span(7);
+        }
+        @include mq(wide) {
+            width: gs-span(8);
+        }
+    }
+}
+
+.content--minute-article {
     // Logo Styles
     .logo--us-election,
     .logo--minute-article {
@@ -83,46 +109,6 @@ $minute-layout-margin-nudge: gs-span(1);
 
             @include mq($from: desktop) {
                 max-width: 257px;
-            }
-        }
-    }
-
-    .content__wrapper {
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    .content__headline {
-        @include fs-headline(8);
-        color: #ffffff;
-        font-weight: 200;
-        line-height: 1;
-        padding-top: $gs-baseline / 2;
-        padding-bottom: 1.5rem;
-        position: relative;
-
-        @include mq(desktop) {
-            font-size: 3.5rem;
-        }
-
-        @include mq(phablet) {
-            &:after {
-                @include rule($us-minute-highlight-colour, $gs-baseline*2);
-                position: absolute;
-                left: 0;
-                top: -$gs-baseline*2;
-                width: gs-span(4) + $gs-gutter * 2;
-            }
-        }
-
-        &:after {
-            @include mq(desktop) {
-                height: $gs-baseline*3;
-                top: -$gs-baseline*3;
-                width: gs-span(7);
-            }
-            @include mq(wide) {
-                width: gs-span(8);
             }
         }
     }
@@ -433,7 +419,7 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     .svg  & .caption--img:before {
-        @extend %svg-i-camera-white-large;
+        @extend %svg-i-camera-white-large !optional;
         margin-right: 5px;
     }
 
@@ -555,9 +541,11 @@ $minute-layout-margin-nudge: gs-span(1);
             }
 
             .element--inline {
-                bottom: 0;
                 position: absolute;
+                top: 0;
+                bottom: 0;
                 z-index: 1;
+                margin-top: 0;
 
                 // Background overlay
                 &:after {
@@ -572,11 +560,11 @@ $minute-layout-margin-nudge: gs-span(1);
                 }
 
                 .element--inline__image-wrapper {
-                    height: 100vh;
+                    height: 100%;
                 }
 
                 .gu-image {
-                    height: 100%;
+                    height: 100vh;
                     width: 100vw;
                     object-fit: cover;
                 }
@@ -585,12 +573,10 @@ $minute-layout-margin-nudge: gs-span(1);
             .caption__minute-article {
                 background-color: transparent;
                 min-height: $gs-baseline*2;
-                position: relative;
+                position: absolute;
+                bottom: 0;
                 z-index: 2;
             }
         }
     }
 }
-
-
-

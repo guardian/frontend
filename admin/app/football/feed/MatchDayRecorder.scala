@@ -4,14 +4,13 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.switches.Switches
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import services.S3
 import conf.AdminConfiguration.pa
 
 import scala.concurrent.ExecutionContext
-import play.api.Play.current
 
-object MatchDayRecorder extends ExecutionContexts with Logging {
+case class MatchDayRecorder(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private val feedDateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(Edition.defaultEdition.timezone)
   private val fileDateFormat = DateTimeFormat.forPattern("yyyy/MM/dd/HH-mm-ss").withZone(Edition.defaultEdition.timezone)
@@ -21,9 +20,9 @@ object MatchDayRecorder extends ExecutionContexts with Logging {
   def record(): Unit = if (Switches.FootballFeedRecorderSwitch.isSwitchedOn) {
 
     val now = DateTime.now
-    val feedUrl = s"${pa.footballHost}/api/football/competitions/matchDay/${pa.footballApiKey}/${now.toString(feedDateFormat)}"
+    val feedUrl = s"${pa.footballHost}/competitions/matchDay/${pa.footballApiKey}/${now.toString(feedDateFormat)}"
     val fileName = s"football-feeds/match-day/${now.toString(fileDateFormat)}.xml"
-    val result = WS.url(feedUrl).get()
+    val result = wsClient.url(feedUrl).get()
 
     result.onFailure {
       case t: Throwable => log.info(s"match day recorder failed $feedUrl", t)

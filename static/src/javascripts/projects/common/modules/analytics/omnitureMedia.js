@@ -13,6 +13,17 @@ define([
             return player.el().getAttribute(attributeName);
         }
 
+        /*
+         * prop71 tracks referring section.  It's kept in cookie 's_prev_ch'.
+         * Page load event sets the cookie value to the current section, so this sets it back again.
+         * It's safe for the next page load though.
+         */
+        function resetProp71Cookie() {
+            if (config.isHosted) {
+                s.getPreviousValue(s.prop71, 's_prev_ch');
+            }
+        }
+
         var pageId = config.page.pageId,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
@@ -45,6 +56,10 @@ define([
                 'prop39'    // media id
             ];
 
+        if (config.isHosted) {
+            trackingVars.push('prop71');    // previous site section
+        }
+
         this.getDuration = function () {
             return parseInt(getAttribute('data-duration'), 10) || undefined;
         };
@@ -54,6 +69,9 @@ define([
         };
 
         this.sendEvent = function (event, eventName, ad) {
+
+            resetProp71Cookie();
+
             omniture.populateEventProperties(eventName || event);
             s.eVar74 = ad ?  mediaType + ' ad' : mediaType + ' content';
 
@@ -61,7 +79,7 @@ define([
             s.eVar43 = s.prop43 = mediaType.charAt(0).toUpperCase() + mediaType.slice(1);
             s.eVar44 = s.prop44 = pageId;
             s.prop39 = mediaId;
-            
+
             if (prerollPlayed) {
                 // Any event after 'video:preroll:play' should be tagged with this value.
                 s.prop41 = 'PrerollMilestone';
@@ -78,6 +96,9 @@ define([
         };
 
         this.omnitureInit = function () {
+
+            resetProp71Cookie();
+
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;

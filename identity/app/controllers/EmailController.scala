@@ -1,7 +1,6 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.google.inject.{Inject, Singleton}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
@@ -9,22 +8,21 @@ import common.ExecutionContexts
 import utils.SafeLogging
 import play.api.mvc._
 import scala.concurrent.Future
-import model.{EmailSubscriptions, IdentityPage}
+import model.{EmailSubscription, EmailSubscriptions, IdentityPage}
 import play.api.data._
-import client.{Error}
-import net.liftweb.json.JsonDSL._
+import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
 import play.api.i18n.{MessagesApi, I18nSupport}
+import play.api.libs.json._
 
-@Singleton
-class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
-                                conf: IdentityConfiguration,
-                                api: IdApiClient,
-                                idRequestParser: IdRequestParser,
-                                idUrlBuilder: IdentityUrlBuilder,
-                                authenticatedActions: AuthenticatedActions,
-                                val messagesApi: MessagesApi)
+class EmailController(returnUrlVerifier: ReturnUrlVerifier,
+                      conf: IdentityConfiguration,
+                      api: IdApiClient,
+                      idRequestParser: IdRequestParser,
+                      idUrlBuilder: IdentityUrlBuilder,
+                      authenticatedActions: AuthenticatedActions,
+                      val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
   import EmailPrefsData._
   import authenticatedActions.authAction
@@ -130,7 +128,31 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
             }
           }
       }).map{ case (form, emailSubscriptions) =>
-        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), emailSubscriptions))
+        implicit val subscriptionWrites = new Writes[EmailSubscription] {
+          def writes(emailSubscription: EmailSubscription) = Json.obj(
+            "name" -> emailSubscription.name,
+            "theme" -> emailSubscription.theme,
+            "about" -> emailSubscription.about,
+            "description" -> emailSubscription.description,
+            "frequency" -> emailSubscription.frequency,
+            "listId" -> emailSubscription.listId,
+            "popularity" -> emailSubscription.popularity,
+            "subscribedTo" -> emailSubscription.subscribedTo,
+            "exampleUrl" -> emailSubscription.exampleUrl
+          )
+        }
+
+        if (form.hasErrors) {
+          val errorsAsJson = Json.toJson(
+            form.errors.groupBy(_.key).map { case (key, errors) =>
+              val nonEmptyKey = if (key.isEmpty) "global" else key
+              (nonEmptyKey, errors.map(e => play.api.i18n.Messages(e.message, e.args: _*)))
+            }
+          )
+          Forbidden(errorsAsJson)
+        } else {
+          Ok(Json.obj("subscriptions" -> emailSubscriptions.subscriptions.filter(_.subscribedTo)))
+        }
       }
     }
   }

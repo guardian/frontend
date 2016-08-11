@@ -36,7 +36,7 @@
         @if(isMain) {
             <meta itemprop="representativeOfPage" content="true">
         }
-        <meta itemprop="url" content="@ImgSrc.getFallbackUrl(picture)">
+        <meta itemprop="url" content="@ImgSrc.findNearestSrc(picture, Item700)">
         <meta itemprop="width" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.width)">
         <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
 
@@ -89,7 +89,7 @@
         @lightboxIndex.map { index =>
         <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
             @imageHtml
-            @fragments.inlineSvg("expand-image", "icon", List("centered-icon rounded-icon article__fullscreen modern-visible"))
+            @fragments.inlineSvg("expand-image", "icon", List("centered-icon", "rounded-icon", "article__fullscreen", "modern-visible"))
         </a>
 
         @shareInfo.map { case (shareLinks, contentType) =>

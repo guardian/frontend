@@ -3,20 +3,19 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common._
 import conf.switches.Switches
-import controllers.AuthLogging
 import conf.Configuration
 import play.api.mvc._
 import scala.concurrent.Future
-import services.Notification
+import services.SwitchNotification
 import tools.Store
 import model.NoCache
 
-object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
+class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = AuthActions.AuthActionTest.async { implicit request =>
-    log("loaded Switchboard", request)
+  def renderSwitchboard() = Action.async { implicit request =>
+    log.info("loaded Switchboard")
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
       val configuration = switchesWithLastModified.map(_._1)
@@ -34,7 +33,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
   }
 
-  def save() = AuthActions.AuthActionTest.async { implicit request =>
+  def save() = Action.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
@@ -45,7 +44,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
         NoCache(Redirect(routes.SwitchboardController.renderSwitchboard()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again."))
       }
     } else {
-      log("saving switchboard", request)
+      log.info("saving switchboard")
 
       val requester = UserIdentity.fromRequest(request).get.fullName
       val updates = request.body.asFormUrlEncoded.map { params =>
@@ -70,7 +69,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     log.info("switches successfully updated")
 
     val changes = updates filterNot { current contains _ }
-    Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
+    SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
       log.info(s"Switch change by ${requester}: ${change}")
     }

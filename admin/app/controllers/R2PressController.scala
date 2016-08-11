@@ -2,19 +2,18 @@ package controllers.admin
 
 import java.io.File
 
-import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import model.R2PressMessage
-import play.api.mvc.{AnyContent, Controller}
-import services.{R2PressedPageTakedownNotifier, R2PagePressNotifier}
+import play.api.mvc.{Action, AnyContent, Controller}
+import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
 
-object R2PressController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
 
-  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = AuthActions.AuthActionTest { implicit request =>
+  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = Action { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))
   }
 
-  def batchUpload() = AuthActions.AuthActionTest { implicit request =>
+  def batchUpload() = Action { implicit request =>
     val body = request.body
     val uploadedFile = body.asMultipartFormData.flatMap { files =>
       files.file("r2urlfile").map { theFile =>
@@ -48,9 +47,9 @@ object R2PressController extends Controller with Logging with AuthLogging with E
         if (line.nonEmpty) {
           //TODO: other validation?
           if (isTakedown) {
-            R2PressedPageTakedownNotifier.enqueue(line)
+            R2PressedPageTakedownNotifier.enqueue(akkaAsync)(line)
           } else {
-            R2PagePressNotifier.enqueue(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
+            R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
         } else {
           "* empty line *"
@@ -62,7 +61,7 @@ object R2PressController extends Controller with Logging with AuthLogging with E
     }
   }
 
-  def press() = AuthActions.AuthActionTest { implicit request =>
+  def press() = Action { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
       form("r2url").map { r2Url =>
@@ -70,9 +69,9 @@ object R2PressController extends Controller with Logging with AuthLogging with E
           // TODO: other validation?
           case url if url.nonEmpty => {
             if (isTakedown(body)) {
-              R2PressedPageTakedownNotifier.enqueue(url)
+              R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
             } else {
-              R2PagePressNotifier.enqueue(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
+              R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
           }
           case _ => "URL was not specified"

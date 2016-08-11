@@ -1,7 +1,6 @@
 .hostedbadge {
-    position: absolute;
-    top: -27px;
-    left: $gs-gutter;
+    position: relative;
+    margin-left: $gs-gutter;
     width: 80px;
     z-index: $zindex-content;
 
@@ -13,13 +12,7 @@
 
 .hostedbadge--shouldscale {
     @include mq(desktop) {
-        top: -28px;
-        left: calc(50% - 490px + #{$gs-gutter});
         width: 132px;
-    }
-
-    @include mq(wide) {
-        left: calc(50% - 630px);
     }
 }
 
@@ -39,7 +32,6 @@
 
     @include mq(desktop) {
         .hostedbadge--shouldscale & {
-            height: 28px;
             padding: 0;
             font-size: 16px;
             line-height: 28px;
@@ -47,7 +39,11 @@
     }
 }
 
-.hostedbadge__logo {
+.hostedbadge .hostedbadge__logo {
+    position: absolute;
     display: block;
-    width: 100%;
+    width: calc(100% - 16px);
+    padding: 8px;
+    top: 100%;
+    background-color: #ffffff;
 }

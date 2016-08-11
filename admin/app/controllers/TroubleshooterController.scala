@@ -1,12 +1,12 @@
 package controllers.admin
 
 import contentapi.PreviewContentApi
-import play.api.mvc.Controller
+import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
-import controllers.AuthLogging
+import play.api.libs.ws.WSClient
 import tools.LoadBalancer
-import play.api.libs.ws.WS
+
 import scala.concurrent.Future
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
@@ -18,13 +18,13 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
-  def index() = AuthActions.AuthActionTest{ implicit request =>
+  def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ implicit request =>
+  def test(id: String, testPath: String) = Action.async{ implicit request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
@@ -113,7 +113,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def httpGet(testName: String, url: String) =  {
     import play.api.Play.current
-    WS.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
+    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {
           TestPassed(testName)

@@ -3,17 +3,25 @@ package football
 import common.ExecutionContexts
 import controllers.admin.TablesController
 import football.model.PA
-import org.scalatest.{DoNotDiscover, ShouldMatchers, FreeSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, ShouldMatchers}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
-import play.twirl.api.{HtmlFormat, Formats}
-import test.ConfiguredTestSuite
+import play.twirl.api.HtmlFormat
+import test.{ConfiguredTestSuite, WithTestWsClient}
+
 import scala.annotation.tailrec
-import football.services.GetPaClient
+import football.services.PaFootballClient
+
 import scala.language.postfixOps
 
-@DoNotDiscover class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionContexts with ShouldMatchers with ConfiguredTestSuite {
+@DoNotDiscover class TablesControllerTest
+  extends FreeSpec
+    with ExecutionContexts
+    with ShouldMatchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   "test tables index page loads with leagues" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables"))
@@ -55,7 +63,7 @@ import scala.language.postfixOps
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables/league/100"))
     status(result) should equal(OK)
     val content = contentAsString(result)
-    content should include("Spurs")
+    content should include("Tottenham Hotspur")
     countSubstring(content, "<tr") should equal(21)
   }
 
@@ -69,8 +77,9 @@ import scala.language.postfixOps
   }
 
   "the internal surroundingItems function should work OK" in {
-    TablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
-    TablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
-    TablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))
+    val tablesController = new TablesController(wsClient, app.mode)
+    tablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
+    tablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
+    tablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))
   }
 }

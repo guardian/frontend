@@ -1,62 +1,65 @@
 package commercial
 
+import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries
 import model.commercial.events.MasterclassTagsAgent
-import model.commercial.money.BestBuysAgent
 import model.commercial.travel.Countries
+import metrics.MetricUploader
+
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Random
 import scala.util.control.NonFatal
 
-private [commercial] object CommercialLifecycleMetrics {
 
-  val metricMap = Map(
-    "fetch-failure" -> AkkaAgent(0.0),
-    "fetch-success" -> AkkaAgent(0.0),
-    "parse-failure" -> AkkaAgent(0.0),
-    "parse-success" -> AkkaAgent(0.0)
-  )
+object CommercialMetrics {
+  val metrics = MetricUploader("Commercial")
 }
 
-class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class CommercialLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync,
+  feedsFetcher: FeedsFetcher,
+  feedsParser: FeedsParser)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
   }}
 
+  private def toLogFields(feed: String,
+                          action: String,
+                          success: Boolean,
+                          maybeDuration: Option[Long] = None,
+                          maybeSize: Option[Int] = None) = {
+
+    val prefix = "commercial-feed"
+
+    val defaultFields: List[LogField] = List(
+      prefix -> feed,
+      s"$prefix-action" -> action,
+      s"$prefix-result" -> (if (success) "success" else "failure")
+    )
+
+    val optionalFields: List[Option[LogField]] = List(
+      maybeDuration map (LogFieldLong(s"$prefix-duration", _)),
+      maybeSize map (LogFieldLong(s"$prefix-size", _))
+    )
+
+    defaultFields ::: optionalFields.flatten
+  }
+
   private val refreshJobs: List[RefreshJob] = List(
-    MasterClassTagsRefresh,
-    CountriesRefresh,
-    IndustriesRefresh,
-    MoneyBestBuysRefresh
+    new MasterclassTagsRefresh(jobs),
+    new CountriesRefresh(jobs),
+    new IndustriesRefresh(jobs)
   )
-
-  private def recordEvent(eventName:String, outcome:String): Unit = {
-    val keyName = s"$eventName-$outcome"
-    CommercialLifecycleMetrics.metricMap
-      .get(keyName)
-      .foreach(agent => agent.send(_ +1.0))
-  }
-
-  private def updateMetrics(): Unit = {
-    CommercialLifecycleMetrics.metricMap.foreach{
-      case (metricName, agent) => {
-        agent send {currentCount =>
-          log.info(s"uploading $metricName with count of : $currentCount")
-          CommercialMetrics.metrics.put(Map(metricName -> currentCount))
-          0
-        }
-      }
-    }
-  }
 
   override def start(): Unit = {
 
-    def randomStartSchedule(minsLater: Int = 0) = s"0 ${Random.nextInt(15) + minsLater}/15 * * * ?"
+    def delayedStartSchedule(delayedStart: Int = 0, refreshStep: Int = 15) = s"0 $delayedStart/$refreshStep * * * ?"
 
     def fetchFeed(fetcher: FeedFetcher): Future[Unit] = {
 
@@ -69,14 +72,15 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("fetch","failure")
-          log.error(s"$msgPrefix failed: ${e.getMessage}", e)
+          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
+                                   e,
+                                   toLogFields(feedName, "fetch", false))
       }
       eventualResponse onSuccess {
         case response =>
           S3FeedStore.put(feedName, response.feed)
-          recordEvent("fetch","success")
-          log.info(s"$msgPrefix succeeded in ${response.duration}")
+          logInfoWithCustomFields(s"$msgPrefix succeeded in ${response.duration}",
+                                  toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)))
       }
       eventualResponse.map(_ => ())
     }
@@ -92,55 +96,47 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          recordEvent("parse","failure")
-          log.error(s"$msgPrefix failed: ${e.getMessage}", e)
+          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
+                                   e,
+                                   toLogFields(feedName, "parse", false))
       }
       parsedFeed onSuccess {
         case feed =>
-          recordEvent("parse","success")
-          log.info(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}")
+          logInfoWithCustomFields(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}",
+                                  toLogFields(feedName, "parse", true, Some(feed.parseDuration.toSeconds), Some(feed.contents.size)))
       }
       parsedFeed.map(_ => ())
     }
 
     def mkJobName(feedName: String, task: String): String = s"${feedName.replaceAll("/", "-")}-$task-job"
 
-    for (fetcher <- FeedFetcher.all) {
+    val jobRefreshStep = 15
+
+    for (fetcher <- feedsFetcher.all) {
       val feedName = fetcher.feedMetaData.name
       val jobName = mkJobName(feedName, "fetch")
-      Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      jobs.deschedule(jobName)
+      jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         fetchFeed(fetcher)
       }
     }
 
-    for (parser <- FeedParser.all) {
+    for (parser <- feedsParser.all) {
       val feedName = parser.feedMetaData.name
       val jobName = mkJobName(feedName, "parse")
-      Jobs.deschedule(jobName)
-      Jobs.scheduleEveryNMinutes(jobName, 15) {
+      jobs.deschedule(jobName)
+      jobs.scheduleEveryNMinutes(jobName, jobRefreshStep) {
         parseFeed(parser)
       }
     }
 
-    val jobName = "update-metrics"
-    Jobs.deschedule(jobName)
-    Jobs.scheduleEveryNMinutes(jobName, 15){
-      updateMetrics
-      Future.successful(())
-    }
-
-    Jobs.deschedule("cloudwatchUpload")
-    Jobs.scheduleEveryNMinutes("cloudwatchUpload", 15) {
-      CommercialMetrics.metrics.upload()
-      Future.successful(())
-    }
+    val refreshJobDelay = jobRefreshStep / refreshJobs.size
 
     refreshJobs.zipWithIndex foreach {
-      case (job, i) => job.start(randomStartSchedule(minsLater = i))
+      case (job, i) => job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
 
       MasterclassTagsAgent.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
@@ -154,13 +150,11 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 
-      BestBuysAgent.refresh()
-
-      for (fetcher <- FeedFetcher.all) {
+      for (fetcher <- feedsFetcher.all) {
         fetchFeed(fetcher)
       }
 
-      for (parser <- FeedParser.all) {
+      for (parser <- feedsParser.all) {
         parseFeed(parser)
       }
     }
@@ -169,14 +163,12 @@ class CommercialLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Execu
   def stop(): Unit = {
     refreshJobs foreach (_.stop())
 
-    for (fetcher <- FeedFetcher.all) {
-      Jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
+    for (fetcher <- feedsFetcher.all) {
+      jobs.deschedule(s"${fetcher.feedMetaData.name}FetchJob")
     }
 
-    for (parser <- FeedParser.all) {
-      Jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
+    for (parser <- feedsParser.all) {
+      jobs.deschedule(s"${parser.feedMetaData.name}ParseJob")
     }
-
-    Jobs.deschedule("cloudwatchUpload")
   }
 }

@@ -17,9 +17,7 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/onward/fronts-containers',
-    'common/modules/social/share-count',
-    'common/modules/experiments/ab'
+    'common/modules/social/share-count'
 ], function (
     fastdom,
     qwery,
@@ -37,14 +35,8 @@ define([
     Popular,
     Related,
     TonalComponent,
-    FrontsContainers,
-    shareCount,
-    ab
+    shareCount
 ) {
-    // messy but removed within a week
-    var blogIdsCheck = (ab.getParticipations().FrontsOnArticles2 &&
-    (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
-    ab.testCanBeRun('FrontsOnArticles2')) ? (config.page.blogIds && !(config.page.blogIds.indexOf('commentisfree') > -1)) : config.page.blogIds;
 
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -67,7 +59,7 @@ define([
     }
 
     function initRelated() {
-        if (!(config.page.seriesId || blogIdsCheck)) {
+        if (!(config.page.seriesId || config.page.blogIds)) {
             insertOrProximity('.js-related', function () {
                 var opts = {
                     excludeTags: []
@@ -89,28 +81,14 @@ define([
 
     function initOnwardContent() {
         insertOrProximity('.js-onward', function () {
-            if ((config.page.seriesId || blogIdsCheck) && config.page.showRelatedContent) {
+            if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
-                if (!(ab.getParticipations().FrontsOnArticles2 &&
-                    (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
-                    ab.testCanBeRun('FrontsOnArticles2'))) {
-                    $('.js-onward').each(function (c) {
-                        new TonalComponent().fetch(c, 'html');
-                    });
-                }
+                $('.js-onward').each(function (c) {
+                    new TonalComponent().fetch(c, 'html');
+                });
             }
         });
-    }
-
-    function initFrontsContainers() {
-        if (config.page.section !== 'childrens-books-site' && config.page.contentType !== 'LiveBlog' && ab.getParticipations().FrontsOnArticles2 &&
-            (ab.getParticipations().FrontsOnArticles2.variant === 'oneAndThree' || ab.getParticipations().FrontsOnArticles2.variant === 'twoAndTwo') &&
-            ab.testCanBeRun('FrontsOnArticles2')) {
-            insertOrProximity('.js-onward', function () {
-                new FrontsContainers();
-            });
-        }
     }
 
     function initDiscussion() {
@@ -124,8 +102,13 @@ define([
 
     function repositionComments() {
         if (!identityApi.isUserLoggedIn()) {
+            var $comments = $('.js-comments');
             fastdom.write(function () {
-                $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
+                $comments.appendTo(qwery('.js-repositioned-comments'));
+                if (window.location.hash === '#comments') {
+                    var top = $comments.offset().top;
+                    $(document.body).scrollTop(top);
+                }
             });
         }
     }
@@ -134,7 +117,6 @@ define([
         robust.catchErrorsAndLogAll([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
-            ['c-fronts-containers', initFrontsContainers],
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],

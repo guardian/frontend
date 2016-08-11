@@ -3,7 +3,7 @@ package conf.switches
 import java.util.concurrent.TimeoutException
 
 import common._
-import org.joda.time.{DateTime, Days, LocalDate}
+import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
 import play.api.Play
 
 import scala.concurrent.duration._
@@ -21,6 +21,10 @@ object SwitchGroup {
   val Commercial = SwitchGroup("Commercial")
   val CommercialFeeds = SwitchGroup("Commercial: Feeds",
                             Some("These switches enable the fetching and parsing of the commercial merchandising components."))
+  val CommercialLabs = SwitchGroup(
+    name = "Commercial: Labs",
+    description = Some("Features of, and experiments with, branded content.")
+  )
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
@@ -49,10 +53,20 @@ trait Initializable[T] extends ExecutionContexts with Logging {
   def onInitialized: Future[T] = initialized.future
 }
 
+case class Owner(name: Option[String], github: Option[String], email: Option[String])
+object Owner {
+  def apply(name: String, github: String) = new Owner(Some(name), Some(github), None)
+  def withGithub(githubAccount: String) = new Owner(None, Some(githubAccount), None)
+  def withName(name: String) = new Owner(Some(name), None, None)
+  def withEmail(email: String) = new Owner(None, None, Some(email))
+  def group(switchGroup: SwitchGroup): Seq[Owner] = Seq(withName(switchGroup.name))
+}
+
 case class Switch(
   group: SwitchGroup,
   name: String,
   description: String,
+  owners: Seq[Owner],
   safeState: SwitchState,
   sellByDate: Option[LocalDate],
   exposeClientSide: Boolean
@@ -98,6 +112,7 @@ object Switch {
     group: SwitchGroup,
     name: String,
     description: String,
+    owners: Seq[Owner],
     safeState: SwitchState,
     sellByDate: LocalDate,
     exposeClientSide: Boolean
@@ -105,6 +120,7 @@ object Switch {
     group,
     name,
     description,
+    owners,
     safeState,
     Some(sellByDate),
     exposeClientSide
@@ -118,7 +134,7 @@ object Switch {
 
   case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
 
-  def expiry(switch: Switch, today: LocalDate = new DateTime().toLocalDate) = {
+  def expiry(switch: Switch, today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate) = { // We assume expiration datetime is set to London time
     val daysToExpiry = switch.sellByDate.map {
       Days.daysBetween(today, _).getDays
     }

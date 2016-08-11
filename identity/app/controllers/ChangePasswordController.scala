@@ -1,8 +1,6 @@
 package controllers
 
 import common.ExecutionContexts
-import com.google.inject.Inject
-import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
 import play.api.mvc._
 import play.api.data.{Forms, Form}
@@ -18,13 +16,12 @@ import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 import tracking.Omniture
 
-@Singleton
-class ChangePasswordController @Inject()( api: IdApiClient,
-                                          authenticatedActions: AuthenticatedActions,
-                                          authenticationService: AuthenticationService,
-                                          idRequestParser: IdRequestParser,
-                                          idUrlBuilder: IdentityUrlBuilder,
-                                          val messagesApi: MessagesApi)
+class ChangePasswordController( api: IdApiClient,
+                                authenticatedActions: AuthenticatedActions,
+                                authenticationService: AuthenticationService,
+                                idRequestParser: IdRequestParser,
+                                idUrlBuilder: IdentityUrlBuilder,
+                                val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction

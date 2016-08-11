@@ -68,12 +68,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 expect(features.dfpAdvertising).toBe(true);
             });
 
-            it('Is disabled under SSL', function () {
-                config.page.isSSL = true;
-                features = new CommercialFeatures;
-                expect(features.dfpAdvertising).toBe(false);
-            });
-
             it('Is disabled on sensitive pages', function () {
                 // Like all newspapers, the Guardian must sometimes cover disturbing and graphic content.
                 // Showing adverts on these pages would be crass - callous, even.
@@ -250,12 +244,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 expect(features.outbrain).toBe(true);
             });
 
-            it('Is disabled under SSL', function () {
-                config.page.isSSL = true;
-                features = new CommercialFeatures;
-                expect(features.outbrain).toBe(false);
-            });
-
             it('Is disabled under perf tests', function () {
                 location.getHash = function () {return '#noads';};
                 features = new CommercialFeatures;
@@ -343,11 +331,11 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 });
             });
 
-            it('Does not display messages on mobile', function (done) {
+            it('Does display messages on mobile', function (done) {
                 detect.getBreakpoint = function () { return 'mobile'; };
                 features = new CommercialFeatures;
                 features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(false);
+                    expect(flag).toBe(true);
                     done();
                 });
             });

@@ -1,6 +1,7 @@
 package services
 
-import common.{LifecycleComponent, AutoRefresh}
+import app.LifecycleComponent
+import common.AutoRefresh
 import model.TagIndexListings
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -8,7 +9,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-object IndexListingsLifecycle extends LifecycleComponent {
+class IndexListingsLifecycle extends LifecycleComponent {
   override def start(): Unit = {
     KeywordSectionIndexAutoRefresh.start()
     KeywordAlphaIndexAutoRefresh.start()

@@ -12,7 +12,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.Random
 
-object Multi
+class Multi(bestsellersAgent: BestsellersAgent)
   extends Controller
   with ExecutionContexts
   with implicits.Collections
@@ -45,16 +45,16 @@ object Multi
           }
         }
       case ("books", isbn) if isbn.nonEmpty =>
-        BestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
+        bestsellersAgent.getSpecificBooks(Seq(isbn)) map { books =>
           books.headOption orElse {
-            BestsellersAgent.bestsellersTargetedAt(segment).headOption
+            bestsellersAgent.bestsellersTargetedAt(segment).headOption
           } map {
             views.html.books.booksBlended(_, clickMacro)
           }
         }
       case ("books", _) =>
         Future.successful {
-          BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
+          bestsellersAgent.bestsellersTargetedAt(segment).headOption map {
             views.html.books.booksBlended(_, clickMacro)
           }
         }

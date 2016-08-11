@@ -1,8 +1,10 @@
 @(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
 
-@import common.{AnalyticsHost, LinkTo, CanonicalLink}
+@import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
+@import conf.switches.Switches.LiveUpdateAmpSwitch
 @import views.support.OmnitureAnalyticsData
+@import views.support.FBPixel
 
 <!doctype html>
 <html AMP>
@@ -18,6 +20,12 @@
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
+        @if(content.tags.isLiveBlog) {
+            <script custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async></script>
+            @if(LiveUpdateAmpSwitch.isSwitchedOn) {
+                <script custom-element="amp-live-list" src="https://cdn.ampproject.org/v0/amp-live-list-0.1.js" async></script>
+            }
+        }
         <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
         @* Required for outbrain served in an amp-iframe *@
         <script custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js" async></script>
@@ -26,6 +34,13 @@
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body class="guardian-egyptian-loading">
+        @*
+        Baseline pageview confidence pixel.
+        This, along with the corresponding pixels for GA/Omniture/Ophan,
+        are used to generate the confidence graphs on the frontend dashboard.
+        *@
+        <amp-pixel src="//beacon.guim.co.uk/count/pv.gif"></amp-pixel>
+
         @defining(s"${request.host}${request.path}") { path =>
             @defining({
                 val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
@@ -33,10 +48,14 @@
                 s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
             }) { omnitureCall =>
                 <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
+                @* Omniture pageview confidence pixel *@
                 <amp-pixel src="//beacon.guim.co.uk/count/pva.gif"></amp-pixel>
             }
         }
+        <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+
+        @fragments.amp.googleAnalytics(content)
 
         <div class="main-body">
 
@@ -57,7 +76,7 @@
                     </a>
                 </div>
 
-            @if(content.metadata.section != "childrens-books-site") {
+            @if(content.metadata.sectionId != "childrens-books-site") {
                 @if(content.hasStoryPackage) {
                     @fragments.amp.storyPackageAmp(related)
                 }
@@ -85,10 +104,10 @@
                                     "education", "culture", "business", "technology", "politics", "environment", "travel",
                                     "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
                                     "tv-and-radio", "artanddesign", "global-development")
-                    whitelistedSections.contains(page.metadata.section)
+                    whitelistedSections.contains(page.metadata.sectionId)
                 }) { isWhitelistedSection =>
                     @if(isWhitelistedSection) {
-                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.section}/mf2.json")
+                        @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.sectionId}/mf2.json")
                     } else {
                         @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
                     }

@@ -1,28 +1,26 @@
 define([
-    'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
-    'bonzo',
-    'qwery'
+    'common/utils/fetch-json',
+    'common/utils/report-error'
 ], function (
-    $,
-    ajax,
-    config
+    config,
+    fetchJson,
+    reportError
 ) {
     return function () {
-        var $firstContainer = $('.js-insert-team-stats-after');
+        var firstContainer = document.querySelector('.js-insert-team-stats-after');
 
-        if ($firstContainer.length) {
-            ajax({
-                url: '/' + config.page.pageId + '/fixtures-and-results-container',
-                type: 'json',
-                method: 'get',
-                crossOrigin: 'true',
-                success: function (container) {
-                    if (container.html) {
-                        $firstContainer.after(container.html);
-                    }
+        if (firstContainer) {
+            fetchJson('/' + config.page.pageId + '/fixtures-and-results-container', {
+                mode: 'cors'
+            })
+            .then(function (container) {
+                if (container.html) {
+                    firstContainer.insertAdjacentHTML('afterend', container.html);
                 }
+            })
+            .catch(function (ex) {
+                reportError(ex, { feature: 'tag-fixtures' });
             });
         }
     };

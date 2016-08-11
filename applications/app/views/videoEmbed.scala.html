@@ -1,9 +1,10 @@
-@(page: EmbedPage)(implicit request: RequestHeader)
+@(page: model.EmbedPage)(implicit request: RequestHeader)
 
 @import model.{Video, VideoPlayer}
 @import views.support.Video640
 @import conf.Static
 @import conf.Configuration
+@import templates.inlineJS.blocking.js.curlConfig
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">
@@ -68,8 +69,20 @@
                 )
             ),
             config: @Html(templates.js.javaScriptConfig(model.SimpleContentPage(video)).body),
-            adBlockers: {}
+            adBlockers: { onDetect: [] }
         };
+        @* Decide the Ophan PV ID here so we can share it with Google Analytics *@
+        guardian.config.ophan = {
+            // This is duplicated from
+            // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+            // Please do not change this without talking to the Ophan project first.
+            pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
+                return Math.floor(Math.random() * 36).toString(36);
+            })
+        };
+        @* Find the Ophan browser ID as well, for sharing with GA *@
+        @Html(templates.inlineJS.nonBlocking.js.ophanConfig().body)
+
         var docClass = document.documentElement.className;
 
         @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
@@ -94,19 +107,16 @@
         </script>
 
         <script>
-            var curl = {
-                baseUrl: '@{Configuration.assets.path}javascripts',
-                apiName: 'require',
-                paths: {
-                    text: 'text', // noop
-                    inlineSvg: 'inlineSvg', // noop
-                    'bootstraps/video-embed': '@Static("javascripts/bootstraps/video-embed.js")',
-                    'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-                }
-            };
+            @Html(curlConfig().body)
 
+            @if(Configuration.assets.useHashedBundles) {
+                window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            } else {
+                window.curl.paths['bootstraps/video-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/video-embed.js';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            }
             @Html(common.Assets.js.curl)
-
             require(['bootstraps/video-embed'], function(bootstrap) {
                 bootstrap.init();
             });

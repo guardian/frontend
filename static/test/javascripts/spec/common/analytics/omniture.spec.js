@@ -23,36 +23,36 @@ define([
                     omniture = arguments[0];
                     mediator = arguments[1];
 
+
                     config.page = {
-                    analyticsName:   'the_page_name',
-                    beaconUrl:       '',
-                    contentType:     'Article',
-                    commentable:     true,
-                    edition:         'NOT-US',
-                    omnitureAccount: 'the_account'
-                };
+                        analyticsName:   'the_page_name',
+                        beaconUrl:       '',
+                        contentType:     'Article',
+                        commentable:     true,
+                        edition:         'NOT-US',
+                        omnitureAccount: 'the_account'
+                    };
 
                     s = {
-                    t: function () {},
-                    tl: function () {},
-                    apl: function (x, y, z) {
-                        return [x, y]
-                            .filter(function (a) {
-                                return a;
-                            })
-                            .join(z);
-                    },
-                    Util: { getQueryParam: function () { return 'test'; } },
-                    getValOnce: function () { return 'test'; },
-                    getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
-                    getParamValue: function () { return ''; }
-                };
+                        t: function () {},
+                        tl: function () {},
+                        apl: function (x, y, z) {
+                            return [x, y]
+                                .filter(function (a) {
+                                    return a;
+                                })
+                                .join(z);
+                        },
+                        Util: { getQueryParam: function () { return 'test'; } },
+                        getValOnce: function () { return 'test'; },
+                        getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
+                        getParamValue: function () { return ''; }
+                    };
                     sinon.spy(s, 't');
                     sinon.spy(s, 'tl');
                     sinon.spy(s, 'apl');
 
                     omniture.s = s;
-                    omniture.addHandlers();
                     done();
                 });
         });
@@ -101,80 +101,18 @@ define([
             expect(s.t).not.toHaveBeenCalled();
         });
 
-        it('should log a clickstream event', function () {
-            var clickSpec = {
-                    target: document.documentElement,
-                    samePage: true,
-                    sameHost: true,
-                    validTarget: true,
-                    tag: true
-                };
-
-            omniture.go();
-            mediator.emit('module:clickstream:click', clickSpec);
-
-            expect(s.tl).toHaveBeenCalledOnce();
-        });
-
-        it('should not log clickstream events with an invalidTarget', function () {
-            var clickSpec = {
-                target: document.documentElement,
-                samePage: true,
-                sameHost: true,
-                validTarget: false,
-                tag: true
-            };
-
-            omniture.go();
-            mediator.emit('module:clickstream:click', clickSpec);
-
-            expect(s.tl.callCount).toBe(0);
-        });
-
         it('should make a non-delayed s.tl call for same-page links', function () {
-            var el                = document.createElement('a'),
-                clickSpecSamePage = {
-                    target: el,
-                    samePage: true,
-                    sameHost: true,
-                    validTarget: true,
-                    tag: 'tag'
-                };
+            var el = document.createElement('a');
             omniture.go();
-            // same page  (non-delayed s.tl call)
-            mediator.emit('module:clickstream:click', clickSpecSamePage);
+            omniture.trackSamePageLinkClick(el, 'tag', {});
 
             expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
         });
 
-        it('should use local storage for same-host links', function () {
-            var el        = document.createElement('a'),
-                clickSpec = {
-                    target: el,
-                    samePage: false,
-                    sameHost: true,
-                    validTarget: true,
-                    tag: 'tag in localstorage'
-                };
-
-            omniture.go();
-            mediator.emit('module:clickstream:click', clickSpec);
-
-            expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
-        });
-
         it('should make a delayed s.tl call for other-host links', function () {
-            var el        = document.createElement('a'),
-                clickSpec = {
-                    target: el,
-                    samePage: false,
-                    sameHost: false,
-                    validTarget: true,
-                    tag: 'tag'
-                };
-
+            var el = document.createElement('a');
             omniture.go();
-            mediator.emit('module:clickstream:click', clickSpec);
+            omniture.trackExternalLinkClick(el, 'tag', {});
 
             expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
         });

@@ -1,30 +1,30 @@
 define([
     'bonzo',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
-    'common/modules/commercial/create-ad-slot',
+    'common/utils/fastdom-promise',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
 ], function (
     bonzo,
+    Promise,
     $,
     config,
-    createAdSlot,
+    fastdom,
+    createSlot,
     commercialFeatures
 ) {
 
     function init() {
 
-        if (config.page.hasHighMerchandisingTarget) {
-         return false;
-        }
-
         if (!commercialFeatures.frontCommercialComponents) {
-            return false;
+            return Promise.resolve(false);
         }
 
         var containerIndex,
             $adSlotWrapper = $.create('<div class="fc-container"></div>'),
-            $adSlot        = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
+            $adSlot        = bonzo(createSlot('merchandising-high', 'commercial-component-high')),
             $containers    = $('.fc-container');
 
         if ($containers.length >= 2) {
@@ -34,11 +34,14 @@ define([
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
             }
 
-            return $adSlotWrapper
-                .append($adSlot)
-                .insertAfter($containers[containerIndex]);
+            return fastdom.write(function () {
+                $adSlotWrapper
+                    .append($adSlot)
+                    .insertAfter($containers[containerIndex]);
+            });
         }
 
+        return Promise.resolve(false);
     }
 
     return {

@@ -5,6 +5,7 @@ define([
     'common/modules/user-prefs',
     'common/utils/mediator',
     'common/utils/detect',
+    'common/modules/analytics/register',
     'lodash/functions/debounce',
     'lodash/arrays/uniq'
 ], function (
@@ -14,6 +15,7 @@ define([
     userPrefs,
     mediator,
     detect,
+    register,
     debounce,
     uniq
 ) {
@@ -30,8 +32,10 @@ define([
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
+        this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
@@ -69,6 +73,12 @@ define([
         this.updateMessageOnWidth();
         mediator.on('window:resize', debounce(this.updateMessageOnWidth, 200).bind(this));
 
+        if (this.siteMessageComponentName) {
+            siteMessage.attr('data-component', this.siteMessageComponentName);
+            if (this.trackDisplay) {
+                register.begin(this.siteMessageComponentName);
+            }
+        }
         if (this.siteMessageLinkName) {
             siteMessage.attr('data-link-name', this.siteMessageLinkName);
         }

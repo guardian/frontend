@@ -9,9 +9,8 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 
-case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-object EmbedController extends Controller with Logging with ExecutionContexts {
+class EmbedController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
@@ -51,3 +50,5 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
     Cached(600)(RevalidatableResult.Ok(views.html.videoEmbed(model)))
   }
 }
+
+object EmbedController extends EmbedController

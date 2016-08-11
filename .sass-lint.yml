@@ -10,7 +10,6 @@ files:
     - 'static/src/stylesheets/module/commercial/_adverts-soulmates.scss'
     - 'static/src/stylesheets/module/commercial/_advert.scss'
     - 'static/src/stylesheets/module/commercial/_adverts.scss'
-    - 'static/src/stylesheets/module/commercial/_commercial--v-high.scss'
     - 'static/src/stylesheets/module/content/_article-minute.scss'
     - 'static/src/stylesheets/module/email/_form.scss'
     - 'static/src/stylesheets/module/facia/_item.scss'
@@ -35,7 +34,7 @@ rules:
     - ignore-single-line-rulesets: true
 
   # Disallows
-  no-color-keyword: 1
+  no-color-keywords: 1
   no-css-comments: 0
   no-debug: 1
   no-duplicate-properties: 1

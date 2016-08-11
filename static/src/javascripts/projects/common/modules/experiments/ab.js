@@ -7,18 +7,16 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/fronts-on-articles2',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-internal',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/facebook-share-params',
-    'common/modules/experiments/tests/participation-low-fric-recipes',
-    'common/modules/experiments/tests/participation-low-fric-fashion',
-    'common/modules/experiments/tests/participation-low-fric-sport',
-    'common/modules/experiments/tests/clever-friend-brexit',
-    'common/modules/experiments/tests/welcome-header',
-    'common/modules/experiments/tests/participation-discussion-test',
-    'common/modules/experiments/tests/new-user-adverts-disabled',
-    'common/modules/experiments/tests/video-teaser'
+    'common/modules/experiments/tests/hosted-autoplay',
+    'common/modules/experiments/tests/giraffe',
+    'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
+    'common/modules/experiments/tests/participation-discussion-ordering-non-live',
+    'common/modules/experiments/tests/remind-me-email',
+    'common/modules/experiments/tests/hosted-zootropolis-cta',
+    'common/modules/experiments/tests/contributions-header',
+    'common/modules/experiments/tests/ad-feedback',
+    'common/modules/experiments/tests/minute'
 ], function (
     reportError,
     config,
@@ -28,33 +26,29 @@ define([
     mvtCookie,
     memoize,
     noop,
-    FrontsOnArticles2,
-    LiveBlogChromeNotificationsInternal,
     LiveBlogChromeNotificationsProd,
-    FacebookShareParams,
-    ParticipationLowFricRecipes,
-    ParticipationLowFricFashion,
-    ParticipationLowFricSport,
-    CleverFriendBrexit,
-    WelcomeHeader,
-    ParticipationDiscussionTest,
-    NewUserAdvertsDisabled,
-    VideoTeaser
+    HostedAutoplay,
+    Giraffe,
+    ParticipationDiscussionOrderingLiveBlog,
+    ParticipationDiscussionOrderingNonLive,
+    RemindMeEmail,
+    HostedZootropolisCta,
+    ContributionsHeader,
+    AdFeedback,
+    Minute
 ) {
 
     var TESTS = [
-        new FrontsOnArticles2(),
-        new LiveBlogChromeNotificationsInternal(),
         new LiveBlogChromeNotificationsProd(),
-        new FacebookShareParams(),
-        new ParticipationLowFricRecipes(),
-        new ParticipationLowFricFashion(),
-        new ParticipationLowFricSport(),
-        new CleverFriendBrexit(),
-        new WelcomeHeader(),
-        new ParticipationDiscussionTest(),
-        new NewUserAdvertsDisabled(),
-        new VideoTeaser()
+        new HostedAutoplay(),
+        new Giraffe(),
+        new ParticipationDiscussionOrderingLiveBlog(),
+        new ParticipationDiscussionOrderingNonLive(),
+        new RemindMeEmail(),
+        new HostedZootropolisCta(),
+        new ContributionsHeader(),
+        new AdFeedback(),
+        new Minute()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -127,6 +121,7 @@ define([
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
             isSensitive = config.page.shouldHideAdverts;
+
         return ((isSensitive ? test.showForSensitive : true)
                 && test.canRun() && !expired && isTestSwitchedOn(test));
     }
@@ -275,8 +270,11 @@ define([
         if (variantId !== 'notintest') {
             var variant = getVariant(test, variantId);
             var onTestComplete = variant.success || noop;
-
-            onTestComplete(recordTestComplete(test, variantId));
+            try {
+                onTestComplete(recordTestComplete(test, variantId));
+            } catch(err) {
+               reportError(err, false, false);
+            }
         }
     }
 
@@ -338,6 +336,16 @@ define([
             });
         },
 
+        forceRegisterCompleteEvent: function(testId, variantId) {
+            var test = getTest(testId);
+            var variant = test && test.variants.filter(function (v) {
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
+            var onTestComplete = variant && variant.success || noop;
+
+            onTestComplete(recordTestComplete(test, variantId));
+        },
+
         segmentUser: function () {
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -349,6 +357,7 @@ define([
                     test = abParam[0];
                     variant = abParam[1];
                     ab.forceSegment(test, variant);
+                    ab.forceRegisterCompleteEvent(test, variant);
                 });
             } else {
                 ab.segment();

@@ -47,6 +47,7 @@ node_modules
 screenshots
 
 common/conf/assets
+atomic-map.json
 
 dev/gems
 dev/casperjs
@@ -75,6 +76,4 @@ bower_components
 # Scala test framework #
 local.conf
 
-#Node Version Manager
-.nvmrc
 static/src/stylesheets/pasteup/.npmrc

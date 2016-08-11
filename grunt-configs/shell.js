@@ -1,7 +1,7 @@
 module.exports = function () {
     return {
         spriteGeneration: {
-            command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
+            command: 'node spricon',
             options: {
                 execOptions: {
                     cwd: 'tools/sprites'
@@ -37,16 +37,11 @@ module.exports = function () {
         },
 
         makeDeploysRadiator: {
-            command: [
-                'npm run build',
-                'mkdir -p ../../target/deploys-radiator',
-                'cp ./target/** ../../target/deploys-radiator'
-            ].join(' && '),
-            options: {
-                execOptions: {
-                    cwd: 'static/src/deploys-radiator'
-                }
-            }
+            command: 'npm run compile-deploy-radiator'
+        },
+
+        atomiseCSS: {
+            command: 'make atomise-css'
         }
     };
 };

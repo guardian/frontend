@@ -5,8 +5,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
+    'common/utils/steady-page',
     'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-load',
+    'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/third-party-tags/outbrain-codes',
     'text!common/views/commercial/outbrain.html',
@@ -18,8 +19,9 @@ define([
     config,
     detect,
     template,
+    steadyPage,
     identity,
-    trackAd,
+    trackAdRender,
     commercialFeatures,
     getCode,
     outbrainStr,
@@ -72,16 +74,18 @@ define([
             breakpoint: breakpoint
         });
         widgetHtml = build(widgetCodes, breakpoint);
-        return fastdom.write(function () {
-            if (slot === 'merchandising') {
-                $(selectors[slot].widget).replaceWith($outbrain[0]);
-            }
-            $container.append(widgetHtml);
-            $outbrain.css('display', 'block');
-        }).then(function () {
-            module.tracking(widgetCodes.code || widgetCodes.image);
-            require(['js!' + outbrainUrl]);
-        });
+        if ($container.length) {
+            return steadyPage.insert($container[0], function() {
+                if (slot === 'merchandising') {
+                    $(selectors[slot].widget).replaceWith($outbrain[0]);
+                }
+                $container.append(widgetHtml);
+                $outbrain.css('display', 'block');
+            }).then(function () {
+                module.tracking(widgetCodes.code || widgetCodes.image);
+                require(['js!' + outbrainUrl]);
+            });
+        }
     }
 
     function tracking(widgetCode) {
@@ -114,20 +118,10 @@ define([
         if (!emailSignupPromise) {
             emailSignupPromise = new Promise(function (resolve) {
                 if (config.switches.emailInArticleOutbrain &&
-                    emailRunChecks.getEmailInserted() &&
-                    emailRunChecks.getEmailShown() === 'theGuardianToday') {
-                    // The Guardian today email is already there
+                    emailRunChecks.getEmailInserted()) {
+                    // There is an email sign-up
                     // so load the merchandising component
                     resolve('email');
-                } else if (config.switches.emailInArticleOutbrain && emailRunChecks.allEmailCanRun()) {
-                    // We need to check the user's email subscriptions
-                    // so we don't insert the sign-up if they've already subscribed.
-                    // This is an async API request and returns a promise.
-                    emailRunChecks.getUserEmailSubscriptions().then(function () {
-                        // Check if the Guardian today list can run, if it can then load
-                        // the merchandising (non-compliant) version of Outbrain
-                        emailRunChecks.listCanRun({listName: 'theGuardianToday', listId: 37 }) ? resolve('email') : resolve();
-                    });
                 } else {
                     resolve();
                 }
@@ -151,14 +145,14 @@ define([
                 });
             }
 
-            return trackAd('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+            return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
                 // if the high-priority merch component has loaded, we wait until
                 // the low-priority one has loaded to decide if an outbrain widget is loaded
                 // if it hasn't loaded, the outbrain widget is loaded at its default
                 // location right away
                 return Promise.all([
                     isHiResLoaded,
-                    isHiResLoaded ? trackAd('dfp-ad--merchandising') : true
+                    isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
                 ]);
             }).then(function (args) {
                 var isHiResLoaded = args[0];

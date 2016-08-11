@@ -9,10 +9,10 @@ GET        /assets/*path                                                        
 
 #Login
 # authentication endpoints
-GET           /login                                                                           controllers.OAuthLoginController.login
-POST          /login                                                                           controllers.OAuthLoginController.loginAction
-GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
-GET           /logout                                                                          controllers.OAuthLoginController.logout
+GET           /login                                                                           controllers.OAuthLoginStandaloneController.login
+POST          /login                                                                           controllers.OAuthLoginStandaloneController.loginAction
+GET           /oauth2callback                                                                  controllers.OAuthLoginStandaloneController.oauth2Callback
+GET           /logout                                                                          controllers.OAuthLoginStandaloneController.logout
 
 # Crossword
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
@@ -28,13 +28,6 @@ GET        /commercial/masterclasses.json                                       
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-
-# Money offers
-GET        /commercial/money/bestbuys.json                                                     controllers.commercial.MoneyOffers.renderBestBuys
-GET        /commercial/money/savings/:savingsType                                              controllers.commercial.MoneyOffers.savings(savingsType)
-GET        /commercial/money/current-accounts/:currentAccountType                              controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
-GET        /commercial/money/credit-cards/:creditCardType                                      controllers.commercial.MoneyOffers.creditCards(creditCardType)
-GET        /commercial/money/loans/:loanType                                                   controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
 GET        /commercial/books/book.json                                                         controllers.commercial.BookOffersController.renderBook
@@ -67,8 +60,8 @@ GET        /embed/card/*path.json                                               
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET        /sport/cricket/match/:matchDate/:teamId.json                                        controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
-GET        /sport/cricket/match/:matchDate/:teamId                                             controllers.CricketMatchController.renderMatchId(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId.json                                        cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET        /sport/cricket/match/:matchDate/:teamId                                             cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)
@@ -142,7 +135,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   
 
 # Facia
 GET        /                                                                                   controllers.FaciaDraftController.rootEditionRedirect()
-GET        /rss                                                                                controllers.FaciaController.renderRootFrontRss()
+GET        /rss                                                                                controllers.FaciaControllerImpl.renderRootFrontRss()
 GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.renderFront(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)

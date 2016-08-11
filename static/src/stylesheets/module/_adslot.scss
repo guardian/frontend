@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: hidden;
+    overflow: initial;
 
     .js-off & {
         display: none;
@@ -47,7 +47,7 @@
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $neutral-5;
     color: $neutral-2-contrasted;
-    text-align: right;
+    text-align: left;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
 
@@ -62,73 +62,14 @@
  * Banner ads
  */
 
-.top-banner-ad-container--mobile {
-    background-color: #f0f0f0;
-}
-.top-banner-ad-container--ab-mobile {
-    display: none;
-}
-.top-banner-ad-container--desktop {
+.top-banner-ad-container {
     background-color: $neutral-8;
-    display: none;
-
-    .sticky-ad-banner & {
-        z-index: 1022;
-        width: 100%;
-        transform: translateZ(0);
-        will-change: transform;
-        position: relative;
-    }
-
-    &.top-banner-ad-container--below-nav {
-        border-bottom-width: 1px;
-
-        .ad-slot--top-banner-ad {
-            width: 980px;
-            padding-left: 0;
-        }
-
-        .ad-slot__label {
-            width: 980px;
-        }
-    }
-
-    .ad-slot__label {
-        /* this is the minimum width of possible ads sizes */
-        width: 728px;
-        text-align: left;
-        border-top: 0;
-        padding: 0;
-        height: $gs-row-height/2;
-
-        @include mq(wide) {
-            margin: 0;
-        }
-    }
-
-    /*
-     * Sometimes we have ads which needs to be allowed to escape container in the top slot (for example video ads)
-     * We are giving this ad priority 5 so it will go over everything except lightbox
-     */
-    .ad-slot {
-        overflow: visible;
-        z-index: $zindex-popover;
-    }
 }
 
-.top-banner-ad-container--above-nav {
-    @include mq(tablet) {
-        .js-on:not(.is-adfree) & {
-            display: block;
-        }
-    }
-}
-.top-banner-ad-container--below-nav {
-    @include mq(desktop) {
-        .js-on:not(.is-adfree) & {
-            display: block;
-        }
-    }
+.sticky-top-banner-ad {
+    z-index: $zindex-popover;
+    width: 100%;
+    position: relative;
 }
 
 .ad-slot--top-banner-ad {
@@ -139,47 +80,15 @@
         padding-left: $left-column-wide + $gs-gutter;
     }
 
-    .top-banner-ad-container--mobile & {
-        height: 50px;
-        padding: $gs-baseline 0;
+    .ad-slot__label {
+        /* this is the minimum width of possible ads sizes */
+        width: 728px;
+        border-top: 0;
+        padding: 0;
+        height: $gs-row-height/2;
 
-        @include mq(tablet) {
-            display: none;
-        }
-    }
-    .top-banner-ad-container--desktop & {
-        margin: 0 auto;
-        display: none;
-        min-height: 90px;
-        padding-bottom: $gs-row-height / 2;
-        padding-top: $gs-row-height / 2;
-
-        /* Oh horrible code, I'm looking at you. One day, you'll disappear.
-           One day, I'll fucking rip you apart.
-         */
-        &.ad-slot--h250 {
-            height: 250px;
-        }
-
-        .ad-slot__label {
-            margin-top: (-1) * $gs-row-height / 2;
-        }
-
-        .ad-below-nav & {
-            min-height: 0;
-            padding-bottom: 0;
-
-            > div:last-of-type {
-                margin-bottom: $gs-row-height / 2;
-            }
-        }
-        @include mq(tablet) {
-            .js-on & {
-                display: block;
-            }
-        }
         @include mq(wide) {
-            text-align: left;
+            margin: 0;
         }
     }
 
@@ -196,9 +105,60 @@
         }
     }
 }
-/* horrible, but to centre align new doubleclick studio ads */
-.ad-slot--top > div > div {
+
+.ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
+    min-height: 90px;
+    padding-bottom: $gs-row-height / 2;
+    padding-top: $gs-row-height / 2;
+
+    @include mq($until: tablet) {
+        display: none;
+    }
+
+    /* Oh horrible code, I'm looking at you. One day, you'll disappear.
+       One day, I'll [redacted].
+     */
+    &.ad-slot--h250 {
+        height: 250px;
+    }
+
+    &.ad-slot--fluid {
+        > .ad-slot__label {
+            box-sizing: content-box;
+            // Copying stuff from _mixins.scss because I don't want to
+            // use @extend and no, I am not modifying the markup
+            margin-left: $gs-gutter / 2;
+            margin-right: $gs-gutter / 2;
+
+            @include mq(mobileLandscape) {
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+            }
+            @include mq(containerWidestMobile) {
+                margin-left: auto;
+                margin-right: auto;
+                width: $mobile-max-container-width;
+            }
+            @include mq(tablet) {
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+            }
+            @each $breakpoint, $container-width in $breakpoints {
+                @include mq($breakpoint) {
+                    width: $container-width;
+                }
+            }
+        }
+    }
+
+    .ad-slot__label {
+        margin-top: (-1) * $gs-row-height / 2;
+    }
+
+    @include mq(wide) {
+        text-align: left;
+    }
 }
 
 /**
@@ -260,6 +220,11 @@
     }
 }
 .ad-slot--container-inline {
+    /* I don't know wtf that is but it has no place in JS, so I moved it here */
+    &.ad-slot--not-mobile {
+        display: flex;
+    }
+
     .ad-slot__content {
         margin: 0 auto;
     }
@@ -320,6 +285,10 @@
     @include mq(desktop) {
         display: block;
     }
+}
+
+.ad-slot--adfeature {
+    background-color: $paid-article-mpu;
 }
 
 /**
@@ -401,11 +370,18 @@
 }
 .ad-slot--im {
     float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
 
-    @include mq($until: mobileLandscape) {
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
+    &:not(.ad-slot--rendered) {
+        width: 0;
+        height: 0;
+    }
+
+    &.ad-slot--rendered > * {
+        margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
+        @include mq(mobileLandscape) {
+            margin-bottom: $gs-baseline;
+            margin-right: $gs-gutter;
+        }
     }
 }
 .ad-slot--fobadge.ad-slot--im {
@@ -653,4 +629,28 @@
  */
 .ad-slot--fluid {
     width: auto;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.ad-slot--fabric-v1 {
+    min-height: 250px;
+}
+
+.ad-slot--fabric-v1,
+.ad-slot--fluid250 {
+    width: auto;
+    margin-left: 0;
+    padding: 0;
+
+    .ad-slot__label {
+        display: none;
+    }
+}
+
+.ad-slot--fluid250 {
+    @include mq(desktop) {
+        min-height: 250px;
+    }
 }

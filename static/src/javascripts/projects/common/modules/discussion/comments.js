@@ -3,10 +3,12 @@ define([
     'bonzo',
     'qwery',
     'common/utils/$',
-    'common/utils/ajax-promise',
     'common/utils/config',
+    'common/utils/fetch-json',
     'common/utils/mediator',
+    'common/utils/report-error',
     'common/utils/scroller',
+    'common/utils/url',
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
@@ -19,10 +21,12 @@ define([
     bonzo,
     qwery,
     $,
-    ajaxPromise,
     config,
+    fetchJson,
     mediator,
+    reportError,
     scroller,
+    urlUtil,
     Component,
     DiscussionApi,
     CommentBox,
@@ -100,7 +104,7 @@ Comments.prototype.ready = function() {
     this.emit('ready');
 
     this.on('click', '.js-report-comment-close', function() {
-        $('.js-report-comment-form').addClass('u-h');
+        document.querySelector('.js-report-comment-form').setAttribute('hidden', '');
     });
 };
 
@@ -148,7 +152,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var url = '/discussion/' +
         (options.comment ? 'comment-context/' + options.comment : this.options.discussionId) +
-        '.json?' + (options.page ? '&page=' + options.page : '');
+        '.json';
 
     var orderBy = options.order || this.options.order;
     if (orderBy === 'recommendations') {
@@ -161,51 +165,42 @@ Comments.prototype.fetchComments = function(options) {
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
+    if (options.page) {
+        queryParams.page = options.page;
+    }
+
     if (!options.comment && this.options.threading === 'collapsed') {
         queryParams.maxResponses = 3;
     }
 
     var promise,
-        ajaxParams = {
-            url: url,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            data: queryParams
-        };
+        ajaxParams = { mode: 'cors' };
+
     if (this.isAllPageSizeActive()) {
         promise = new WholeDiscussion({
             discussionId: this.options.discussionId,
             orderBy: queryParams.orderBy,
             displayThreaded: queryParams.displayThreaded,
             maxResponses: queryParams.maxResponses
-        }).loadAllComments().catch(function() {
+        })
+        .loadAllComments()
+        .catch(function() {
             this.wholeDiscussionErrors = true;
             queryParams.pageSize = 100;
-            return ajaxPromise(ajaxParams);
-            }.bind(this));
+            return fetchJson(url + '?' + urlUtil.constructQuery(queryParams), ajaxParams);
+        }.bind(this));
     } else {
         // It is possible that the user has chosen to view all comments,
         // but the WholeDiscussion module has failed. Fall back to 100 comments.
         if (queryParams.pageSize === 'All') {
             queryParams.pageSize = 100;
         }
-        promise = ajaxPromise(ajaxParams);
+        promise = fetchJson(url + '?' + urlUtil.constructQuery(queryParams), ajaxParams);
     }
-    return promise.then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
+    return promise.then(this.renderComments.bind(this));
 };
 
-Comments.prototype.goToPermalink = function(commentId) {
-    if (commentId) {
-        this.showHiddenComments();
-        $('.d-discussion__show-all-comments').addClass('u-h');
-        // First we have to clear the existing # as replacing
-        // it with the same one doesn't trigger the hashchange event
-        // Using location.replace prevents changing history
-        window.location.replace('#');
-        window.location.replace('#comment-' + commentId);
-    }
-};
+
 
 Comments.prototype.renderComments = function(resp) {
 
@@ -233,6 +228,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.emit('first-load');
+    $('.js-discussion-main-comments').css('display', 'block');
     if (shouldMakeTimestampsRelative()) {
         this.relativeDates();
     }
@@ -272,13 +268,10 @@ Comments.prototype.getMoreReplies = function(event) {
     li.innerHTML = 'Loading…';
 
     var source = bonzo(event.target).data('source-comment');
+    var commentId = event.currentTarget.getAttribute('data-comment-id');
 
-    ajaxPromise({
-        url: '/discussion/comment/' + event.currentTarget.getAttribute('data-comment-id') + '.json',
-        type: 'json',
-        method: 'get',
-        data: {displayThreaded: true},
-        crossOrigin: true
+    fetchJson('/discussion/comment/' + commentId + '.json?displayThreaded=true', {
+        mode: 'cors'
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
             replies = qwery(this.getClass('reply'), comment);
@@ -291,7 +284,12 @@ Comments.prototype.getMoreReplies = function(event) {
         if (shouldMakeTimestampsRelative()) {
             this.relativeDates();
         }
-    }.bind(this));
+    }.bind(this))
+    .catch(function (ex) {
+        reportError(ex, {
+            feature: 'comments-more-replies'
+        });
+    });
 };
 
 Comments.prototype.isReadOnly = function() {
@@ -422,27 +420,38 @@ Comments.prototype.replyToComment = function(e) {
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
 
-    var commentId = e.currentTarget.getAttribute('data-comment-id');
+    var self = this,
+        commentId = e.currentTarget.getAttribute('data-comment-id');
 
     $('.js-report-comment-form').first().each(function(form) {
+        form.removeAttribute('hidden');
         bean.one(form, 'submit', function(e) {
             e.preventDefault();
             var category = form.elements.category,
                 comment = form.elements.comment.value;
 
             if (category.value !== '0') {
-                DiscussionApi.reportComment(commentId, {
+                DiscussionApi
+                    .reportComment(commentId, {
                     emailAddress: form.elements.email.value,
                     categoryId: category.value,
                     reason: comment
-                });
+                })
+                .then(self.reportCommentSuccess.bind(self, form), self.reportCommentFailure.bind(self) );
             }
-
-            bonzo(form).addClass('u-h');
         });
     }).appendTo(
         $('#comment-' + commentId + ' .js-report-comment-container').first()
-    ).removeClass('u-h');
+    );
+};
+
+Comments.prototype.reportCommentSuccess = function(form) {
+    form.setAttribute('hidden', '');
+};
+
+Comments.prototype.reportCommentFailure = function() {
+    document.querySelector('.js-discussion__report-comment-error').removeAttribute('hidden');
+    document.querySelector('.d-report-comment__close').classList.add('d-report-comment__close--error');
 };
 
 Comments.prototype.addUser = function(user) {

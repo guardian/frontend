@@ -1,0 +1,62 @@
+
+.hosted__header {
+    width: 100%;
+    background-color: $neutral-1;
+    position: relative;
+
+    @include mq(mobile) {
+        height: 48px;
+    }
+
+    @include mq(tablet) {
+        height: 58px;
+    }
+}
+
+.has-no-flex .hosted__header {
+    .hostedbadge {
+        position: absolute;
+        top: 0;
+        margin-top: 30px;
+    }
+
+    .hosted__label {
+        position: absolute;
+        top: 0;
+        left: 140px;
+    }
+
+    .hosted__glogo {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.hosted__headerwrap {
+    margin: 0 auto;
+    text-align: right;
+    height: 100%;
+    position: relative;
+    display: flex;
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
+    }
+
+    .hostedbadge {
+        align-self: flex-end;
+    }
+}
+
+.hosted-header__spacer {
+    flex: 1;
+}

@@ -1,22 +1,20 @@
 package test
 
 import com.ning.http.client.FluentCaseInsensitiveStringsMap
-import com.ning.http.client.uri.Uri;
+import com.ning.http.client.uri.Uri
 import common.ExecutionContexts
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
-import java.net.URI
 import java.util
+
 import football.controllers.HealthCheck
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
-import play.api.libs.ws.WSResponse
-import play.api.{Application => PlayApplication}
-import conf.{SportConfiguration, FootballClient, Configuration}
-import pa.Http
-import io.Source
-import org.joda.time.LocalDate
+import play.api.libs.ws.{WSClient, WSResponse}
+import conf.FootballClient
+import pa.{Http, Response => PaResponse}
+
 import scala.concurrent.Future
 
 class SportTestSuite extends Suites (
@@ -38,12 +36,12 @@ class SportTestSuite extends Suites (
   new MatchFeatureTest,
   new ResultsFeatureTest,
   new rugby.model.MatchParserTest
-) with SingleServerSuite with FootballTestData {
+) with SingleServerSuite with FootballTestData with BeforeAndAfterAll with WithTestWsClient {
 
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 
   // Inject stub api.
-  FootballClient.http = TestHttp
+  FootballClient.http = new TestHttp(wsClient)
   loadTestData()
 }
 
@@ -84,28 +82,24 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
 }
 
 // Stubs data for Football stats integration tests
-object TestHttp extends Http with ExecutionContexts {
+class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
-  val today = new LocalDate()
-
-  val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
-
-  def GET(url: String) = {
-
-    val fileName = {
-      val file = base + (url.replace(SportConfiguration.pa.apiKey, "APIKEY")
-        .replace(s"${SportConfiguration.pa.host}/", "")
-        .replace("/", "__"))
-      // spoof todays date
-      file.replace(today.toString("yyyyMMdd"), "20121020")
-    }
-
-    try {
-      // spoof todays date
-      val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))
-      Future(pa.Response(200, xml, "ok"))
-    } catch {
-      case t: Throwable => Future(pa.Response(404, "not found", "not found"))
+  def GET(url: String): Future[PaResponse] = {
+    FootballHttpRecorder.load(url) {
+      wsClient.url(url)
+        .withRequestTimeout(10000)
+        .get()
+        .map { wsResponse =>
+          pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
+        }
     }
   }
+}
+
+object FootballHttpRecorder extends HttpRecorder[PaResponse] {
+  override lazy val baseDir = new File(s"${getClass.getClassLoader.getResource("testdata").getFile}/")
+
+  def toResponse(str: String) = PaResponse(200, str, "ok")
+
+  def fromResponse(response: PaResponse) = response.body
 }

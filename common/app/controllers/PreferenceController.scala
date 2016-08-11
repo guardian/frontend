@@ -1,5 +1,6 @@
 package controllers
 
+import java.net.URI
 import common.LinkTo
 import conf.Configuration.site
 import model.NoCache
@@ -10,7 +11,7 @@ trait PreferenceController extends Results {
   // we do not want people redirecting to arbitrary domains
   def allowedUrl(url: String)(implicit request: RequestHeader) = site.host match {
     case "" => url.startsWith("/") && !url.startsWith("//")
-    case host => LinkTo(url) startsWith host
+    case host => URI.create(LinkTo(url)).getHost == URI.create(host).getHost
   }
 
   protected def getShortenedDomain(domain: String) = {

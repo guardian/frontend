@@ -1,8 +1,12 @@
 $hosted-stripe: 28px;
 $hosted-video-width: 960px;
 $hosted-video-height: 540px;
-$renaultColor: #ffc421;
-$renaultLight: #fff9e9;
+
+@import '_hosted-video.scss';
+@import '_hosted-gallery.scss';
+@import '_hosted-article.scss';
+@import '_hosted-header.scss';
+@import '_hosted-colours.scss';
 
 @mixin hosted-fade-in {
     visibility: visible;
@@ -16,29 +20,122 @@ $renaultLight: #fff9e9;
     transition: opacity 1s linear, visibility 1s;
 }
 
-.hosted-tone--renault {
-    color: $renaultColor;
+@mixin hosted-slide-in {
+    right: 0;
+    transition: right 2s linear;
 }
 
-.hosted-tone-bg--renault {
-    background-color: $renaultColor;
+@mixin hosted-slide-out {
+    right: -242px;
+    transition: right 2s linear;
 }
 
 .hosted-tone--dark {
     background-color: #3e3e3e;
 }
 
-.hosted__header {
-    width: 100%;
-    background-color: $neutral-1;
-
-    @include mq(mobile) {
-        height: 48px;
-    }
+.host {
+    padding: 0 $gs-gutter / 2;
+    position: relative;
 
     @include mq(tablet) {
-        height: 58px;
+        padding: 0 calc(50% - 370px);
     }
+
+    @include mq(desktop) {
+        padding: 0 calc(50% - 490px);
+    }
+
+    @include mq(leftCol) {
+        padding: 0 calc(50% - 570px);
+    }
+
+    @include mq(wide) {
+        padding: 0 calc(50% - 650px);
+    }
+}
+
+.host--legacy {
+    @include mq($until: tablet) {
+        padding: 0;
+    }
+
+    @include mq(mobileLandscape, desktop) {
+        > .host__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    @include mq(leftCol) {
+        display: flex;
+
+        > .host__header {
+            box-sizing: border-box;
+            padding: $gs-baseline $gs-gutter / 5 * 2;
+            width: 160px;
+        }
+
+        > .host__body {
+            flex: 1;
+        }
+
+        .has-no-flex & {
+            display: table;
+
+            &::before,
+            &::after,
+            > .host__body,
+            > .host__header {
+                display: table-cell;
+                vertical-align: top;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        > .host__header {
+            padding: $gs-baseline $gs-gutter;
+            width: 240px;
+        }
+    }
+
+    > .host__header {
+        @include mq($until: mobileLandscape) {
+            padding: $gs-baseline / 2 $gs-gutter / 2;
+        }
+
+        @include mq(mobileLandscape, leftCol) {
+            padding: $gs-baseline / 2 $gs-gutter;
+        }
+    }
+
+    > .host__body {
+        @include mq(mobileLandscape) {
+            box-sizing: border-box;
+            max-width: gs-span(8) + ($gs-gutter * 2);
+        }
+        @include mq(tablet) {
+            max-width: gs-span(9) + ($gs-gutter * 2);
+            padding-bottom: $gs-baseline;
+        }
+        @include mq(desktop) {
+            max-width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
+}
+
+.host__header {
+    display: flex;
+    flex-direction: column;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter;
+    }
+}
+
+.host__body {
+    position: relative;
 }
 
 .hosted__side {
@@ -50,21 +147,8 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__headerwrap {
-    margin: 0 auto;
-    text-align: right;
-
-    @include mq(desktop) {
-        max-width: gs-span(12) + $gs-gutter * 2;
-    }
-
-    @include mq(leftCol) {
-        max-width: gs-span(14) + $gs-gutter * 2;
-    }
-
-    @include mq(wide) {
-        max-width: gs-span($gs-max-columns) + $gs-gutter * 2;
-    }
+.hosted-page + footer {
+    display: none;
 }
 
 .hosted__glogo {
@@ -106,13 +190,25 @@ $renaultLight: #fff9e9;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted__container.adverts {
-    position: relative;
-    background: transparent;
-    color: #ffffff;
+.hosted-video-page {
+    .hosted__container.host {
+        position: relative;
+        background: transparent;
+        color: #ffffff;
 
-    @include mq($until: desktop) {
-        padding: 0;
+        @include mq($until: desktop) {
+            padding: 0;
+        }
+    }
+
+    .hosted__glogo {
+        @include mq(leftCol) {
+            margin-right: 90px;
+        }
+
+        @include mq(wide) {
+            margin-right: 170px;
+        }
     }
 }
 
@@ -121,14 +217,14 @@ $renaultLight: #fff9e9;
         display: flex;
         flex-direction: column;
 
-        .adverts__header {
+        .host__header {
             padding-top: 0;
             padding-bottom: 0;
         }
     }
 }
 
-.hosted__container--full.adverts {
+.hosted__container--full.host {
     @include mq($until: desktop) {
         padding: 0;
     }
@@ -140,6 +236,7 @@ $renaultLight: #fff9e9;
             width: $hosted-video-width;
             padding-bottom: $hosted-video-height;
             margin: 0 auto;
+            overflow: hidden;
         }
     }
 }
@@ -148,14 +245,17 @@ $renaultLight: #fff9e9;
     vertical-align: top;
 
     .vjs-big-play-button .vjs-control-text {
-        margin-left: -40px;
-        margin-top: -40px;
+        @include fs-textSans(4);
+        margin-left: 16px;
+        margin-top: 0;
         width: 136px;
         height: 48px;
         text-indent: -999px;
-
-        @include mq(mobileLandscape) {
-            margin-left: -70px;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        border-radius: 30px;
+        @include mq(desktop) {
+            margin-left: 0;
         }
 
         &:before {
@@ -170,63 +270,47 @@ $renaultLight: #fff9e9;
         }
 
         &:after {
-            top: 16px;
-            left: 16px;
+            top: 50%;
+            left: 20%;
             border-width: 8px 8px 8px 18px;
+            border-color: transparent transparent transparent $neutral-7;
         }
-
-        @include fs-textSans(4);
-        color: #ffffff;
-        border: 2px solid #ffffff;
-        border-radius: 30px;
     }
 
-    &.vjs-playing .vjs-time-control,
-    .vjs-fullscreen-control,
-    .vjs-volume-menu-button,
-    .vjs-progress-control {
+    .vjs-control,
+    .vjs-control-bar:before {
         @include hosted-fade-out;
-        transition-delay: 1500ms;
     }
 
+    .vjs-time-control,
     .vjs-big-play-button {
         @include hosted-fade-in;
     }
 
-    .vjs-control-bar {
-        background-color: unset;
-        transition: background-color 1s linear 1500ms;
-    }
-
-    &.vjs-playing:hover {
-        .vjs-time-control,
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control {
-            @include hosted-fade-in;
-            transition-delay: 0s;
-        }
-
+    &.vjs-playing {
         .vjs-big-play-button {
-            @include hosted-fade-out;
             display: block !important; //I know this is ugly but I need to overwrite display:none to show the animation
-            transition-delay: 0s;
         }
 
-        .vjs-control-bar {
-            background-color: rgba(25, 25, 25, .8);
-            transition-delay: 0s;
+        .vjs-big-play-button,
+        .vjs-time-control {
+            @include hosted-fade-out;
+        }
+
+        &:hover {
+            .vjs-control-bar:before,
+            .vjs-control,
+            .vjs-time-control {
+                @include hosted-fade-in;
+            }
         }
     }
 
-    &.vjs-paused,
-    &.vjs-paused:hover {
+    &.vjs-playing:not(:hover) {
         .vjs-time-control,
-        .vjs-fullscreen-control,
-        .vjs-volume-menu-button,
-        .vjs-progress-control,
-        .vjs-control-bar {
-            transition-delay: 0s;
+        .vjs-control,
+        .vjs-control-bar:before {
+            transition-delay: 1500ms;
         }
     }
 
@@ -235,11 +319,27 @@ $renaultLight: #fff9e9;
         background-color: unset;
         font-size: 16px;
         padding-top: 2px;
-        height: 48px;
+        height: auto;
+        display: flex;
+        align-items: center;
+        &:before {
+            content: '';
+            position: absolute;
+            background-image: -webkit-linear-gradient(top, rgba(56, 56, 56, 0), #383838);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
     }
-
     .vjs-fullscreen-control {
         margin-top: 12px;
+    }
+
+    .vjs-time-control {
+        line-height: 40px;
+        align-self: flex-end;
     }
 
     .vjs-volume-menu-button {
@@ -247,6 +347,7 @@ $renaultLight: #fff9e9;
             margin-right: $gs-column-width * 1.5;
         }
         height: auto;
+        margin-top: 16px;
     }
 
     .vjs-menu-button {
@@ -257,32 +358,63 @@ $renaultLight: #fff9e9;
         }
     }
 
-    &.vjs {
-        .vjs-play-control {
-            display: none; //We have a 'watch now' in the middle so don't need this one
-        }
-
-        .vjs-current-time {
-            margin-left: 20px;
-
-            @include mq(desktop) {
-                margin-left: $gs-column-width * 1.5;
+    .vjs-volume-menu-button {
+        margin-top: 0;
+        margin-right: 20px;
+        order: 1;
+        @include mq($until: mobileLandscape) {
+            margin-right: 10px;
+            .vjs-menu {
+                display: none;
             }
         }
     }
 
-    &.vjs-using-native-controls .vjs-control-bar {
-        display: block;
+    .vjs-play-control.vjs-control {
+        width: 50px;
+        height: 50px;
+        margin: 12px 16px;
+        flex-shrink: 0;
+        @include mq($until: mobileLandscape) {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    .vjs-current-time {
+        margin-left: 7px;
+    }
+
+    .vjs-duration {
+        flex: 1;
     }
 
     .vjs-error-display {
         z-index: 1016;
     }
+
+    .vjs-progress-control {
+        left: 90px;
+        right: 210px;
+        top: auto;
+        width: auto;
+        bottom: 35px;
+        @include mq($until: mobileLandscape) {
+            left: 74px;
+            right: 110px;
+        }
+    }
+
+    .vjs-progress-holder:before,
+    .vjs-load-progress,
+    .vjs-play-progress {
+        height: 3px;
+    }
 }
 
 .hosted__meta {
     position: absolute;
-    left: 20px;
+    left: 88px;
     width: 100%;
     bottom: 44px;
     color: #ffffff;
@@ -290,13 +422,9 @@ $renaultLight: #fff9e9;
     @include mq($until: tablet) {
         display: none;
     }
-
-    @include mq(desktop) {
-        left: $gs-column-width * 1.5;
-    }
 }
 
-.adverts__body .hosted__meta {
+.host__body .hosted__meta {
     display: none;
     position: relative;
     width: auto;
@@ -317,13 +445,9 @@ $renaultLight: #fff9e9;
 
 .vjs-playing + .hosted-fading {
     .hosted__meta,
+    .hostedbadge__logo,
     .hosted__video-overlay {
         @include hosted-fade-out;
-    }
-    @include mq($until: tablet) {
-        .hostedbadge__logo {
-            @include hosted-fade-out;
-        }
     }
 }
 
@@ -347,9 +471,15 @@ $renaultLight: #fff9e9;
         height: 100%;
     }
 
-    .hostedbadge__logo {
-        margin-top: 27px;
+    .hostedbadge {
+        position: absolute;
+    }
+    .hostedbadge__logo.hostedbadge__logo {
         position: relative;
+        display: none;
+        @include mq($until: tablet) {
+            display: block;
+        }
     }
 }
 
@@ -423,13 +553,13 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__cta-wrapper {
+    padding-top: 140px;
     position: relative;
     z-index: 1;
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    @include mq(desktop) {
+        padding-top: 270px;
+    }
 
     a {
         // hack stop the link underline
@@ -437,38 +567,46 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__cta.button {
-    padding: 0;
+.hosted__cta-btn-wrapper {
+    padding-top: 90px;
 
+    @include mq(desktop) {
+        padding-top: 236px;
+    }
+}
+
+.hosted__cta.button {
     &,
     &:focus,
     &:hover {
-        background-color: $renaultColor;
-        border-color: $renaultColor;
         color: $neutral-1;
     }
 
     @include mq(mobile) {
+        padding: 4px;
         height: 26px;
+        width: 26px;
         margin: 6px;
         font-size: 14px;
         line-height: 26px;
 
         svg {
             fill: $neutral-1;
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
         }
     }
 
     @include mq(tablet) {
+        padding: 8px;
         height: 38px;
+        width: 38px;
         margin: 8px;
         line-height: 1;
 
         svg {
-            width: 37px;
-            height: 37px;
+            width: 20px;
+            height: 20px;
         }
     }
 
@@ -477,20 +615,63 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__cta-text {
+.hosted__cta-text,
+.hosted__cta-label {
     @include f-headlineSans;
 
     font-size: 25px;
     font-weight: bold;
-    color: $renaultColor;
 
     @include mq(tablet) {
         font-size: 38px;
     }
 }
 
+.hosted__cta-label {
+    display: block;
+    color: #ffffff;
+    line-height: 30px;
+
+    @include mq(tablet) {
+        line-height: 44px;
+    }
+
+    @include mq(desktop) {
+        line-height: 58px;
+    }
+}
+
+.hosted__cta-btn-text {
+    @include circular;
+    @include f-headlineSans;
+    position: relative;
+    display: inline-block;
+    padding: 6px 45px 6px 14px;
+    color: #000000;
+    font-weight: bold;
+    background-color: #ffffff;
+
+    .inline-icon {
+        fill: #000000;
+        position: absolute;
+        top: 6px;
+        right: 16px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
 .hosted__cta-link {
-    padding-bottom: 5%;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+        background-color: rgba(#333333, .2);
+    }
 }
 
 .hosted__cta-link,
@@ -529,10 +710,6 @@ $renaultLight: #fff9e9;
     color: #767676;
 }
 
-.hosted__link {
-    color: $renaultColor;
-}
-
 .hosted__standfirst {
     width: auto;
     padding: $gs-baseline $gs-gutter 0;
@@ -542,7 +719,7 @@ $renaultLight: #fff9e9;
     }
 }
 
-.hosted__social.adverts__header {
+.hosted__social.host__header {
     @include mq($until: leftCol) {
         padding: $gs-baseline $gs-gutter 0;
         order: 2;
@@ -553,12 +730,13 @@ $renaultLight: #fff9e9;
 }
 
 .hosted__social-wrapper {
+    border: 0;
+    padding: $gs-gutter / 2 0;
+
     @include mq($until: leftCol) {
         border-top: 1px solid #eeeeee;
         width: 100%;
     }
-    padding: $gs-gutter / 2 0;
-
     @include mq(leftCol) {
         padding-top: 0;
         padding-left: $gs-gutter / 2;
@@ -574,103 +752,9 @@ $renaultLight: #fff9e9;
     }
 }
 
-//Hosted thrasher
-.creative--hosted-video {
-    .hosted-video__body {
-        position: relative;
-        height: 100%;
-        padding-top: 0;
-    }
-
-    .hosted-video_layer {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        background-repeat: no-repeat;
-    }
-
-    .hosted__heading {
-        @include mq(desktop) {
-            font-size: 32px;
-            line-height: 34px;
-            margin-bottom: 10px;
-        }
-    }
-
-    .hosted__meta {
-        left: $gs-gutter/2;
-        bottom: 60px;
-        @include mq($until: desktop) {
-            bottom: 15%;
-        }
-    }
-
-    .hosted-video--image-container {
-        height: 339px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative;
-    }
-
-    .hostedbadge {
-        top: 0;
-        left: $gs-gutter/2;
-        @include mq(leftCol) {
-            top: 210px;
-            left: - $left-column - $gs-gutter;
-            width: 112px;
-        }
-        @include mq(wide) {
-            left: - $left-column-wide - $gs-gutter;
-        }
-    }
-
-    .hosted-banner {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
-        border-top: 1px solid transparent;
-    }
-
-    .hosted__faux-controls {
-        @include f-headlineSans;
-        position: absolute;
-        bottom: 0;
-        font-size: 16px;
-        font-weight: bold;
-
-        .hosted__video-timer {
-            color: #ffffff;
-            @include mq(desktop) {
-                margin-bottom: 10px;
-            }
-        }
-    }
-
-    .play-button {
-        @include icon(play-32--tone-media);
-        @include mq(desktop) {
-            padding: 9px;
-        }
-        margin: 10px;
-    }
-
-    .play-button, .hosted__video-timer {
-        display: inline-block;
-        vertical-align: bottom;
-    }
-}
-
 .hosted__label.paidfor-label {
     float: left;
-    margin-left: 110px;
+    margin-left: 10px;
     color: #ffffff;
     border: 0;
 
@@ -683,26 +767,17 @@ $renaultLight: #fff9e9;
     }
 
     @include mq(desktop) {
-        margin-left: 170px;
+        margin-left: 20px;
     }
 
     @include mq(leftCol) {
-        margin-left: 250px;
-    }
-
-    @include mq(wide) {
-        margin-left: 180px;
+        margin-left: 30px;
     }
 }
 
 .hosted__label-btn.paidfor-label__btn {
     @include f-headlineSans;
-
     font-size: 16px;
-
-    .inline-icon {
-        padding-left: 2px;
-    }
 
     &.popup__toggle {
         border: 0;
@@ -761,7 +836,7 @@ $renaultLight: #fff9e9;
     border-bottom: 1px solid #eeeeee;
 }
 
-.hosted__container .adverts__body {
+.hosted__container .host__body {
     @include mq($until: leftCol) {
         order: 1;
     }
@@ -789,9 +864,8 @@ $renaultLight: #fff9e9;
 
 .hosted__next-video .hosted__next-video--tile {
     display: flex;
-    background: $renaultLight;
     color: #333333;
-    border-top: 2px solid $renaultColor;
+    border-top: 2px solid;
     margin: 0 $gs-gutter $gs-gutter;
     text-decoration: none;
 
@@ -804,6 +878,7 @@ $renaultLight: #fff9e9;
     height: 72px;
     width: 120px;
     align-self: flex-start;
+    object-fit: cover;
 
     @include mq($until: phablet) {
         height: 54px;
@@ -820,5 +895,183 @@ $renaultLight: #fff9e9;
     @include mq($until: phablet) {
         font-size: 18px;
         line-height: 20px;
+    }
+}
+
+.vjs-ended + .hosted-fading.hosted-autoplay-ab {
+    .hosted__meta {
+        width: 60%;
+    }
+}
+
+//Variant 1 of AB test
+.hosted-next-autoplay {
+    @include f-textSans;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    height: 394px;
+    width: 100%;
+    background-color: #333333;
+    padding-top: 94px;
+
+    @include mq(desktop) { //on desktop it's visible just hidden on the right
+        visibility: visible;
+        opacity: 1;
+        width: 242px;
+        background-color: rgba(#333333, .4);
+        right: -242px;
+        height: 100%;
+        justify-content: flex-end;
+        padding-top: 0;
+    }
+
+    .hosted-next-autoplay__cancel {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 8px;
+
+        .site-message__close-btn {
+            border: 0;
+            font-size: 16px;
+            color: #999999;
+            position: static;
+        }
+
+        svg {
+            position: static;
+            margin-top: 5px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .hosted-next-autoplay__video {
+        margin: 6px;
+    }
+
+    .hosted-next-autoplay__subheader {
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: normal;
+        line-height: 26px;
+    }
+
+    .hosted-next-autoplay__poster {
+        display: none;
+        position: relative;
+        height: 130px;
+        margin-top: 20px;
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+
+    .hosted-next-autoplay__poster-img {
+        width: 230px;
+        height: 130px;
+        position: static;
+    }
+
+    .hosted-next-autoplay__poster-timer {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        width: 22px;
+        padding: 10px;
+        color: #000000;
+        border-radius: 100%;
+        font-weight: bold;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .hosted__next-video--mobile {
+        @include circular;
+        position: relative;
+        display: block;
+        padding: 4px 6px 4px 40px;
+        margin: 16px 0;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        width: 30%;
+        font-weight: bold;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent $neutral-7;
+            border-width: .5rem .5rem .5rem 1.125rem;
+            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+        }
+
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+
+    &.js-autoplay-start {
+        @include hosted-fade-in;
+        @include mq(desktop) {
+            @include hosted-slide-in;
+        }
+    }
+
+    &.hosted-slide-out {
+        @include mq(desktop) {
+            @include hosted-slide-out;
+        }
+    }
+
+    .hosted-next-autoplay__next-in-series {
+        display: none;
+    }
+
+    //Variant 2 of AB test
+    &.hosted-next-autoplay--variant2 {
+        .hosted-next-autoplay__next-in-series {
+            @include clearfix;
+            @include f-headlineSans;
+            display: block;
+            margin: 6px;
+            padding-top: 6px;
+        }
+        .hosted-next-autoplay__tile {
+            @include clearfix;
+            @include circular;
+            display: block;
+            float: left;
+            color: #333333;
+            line-height: 30px;
+            margin: 12px 0;
+            font-weight: 600;
+            padding: 4px 6px 4px 16px;
+
+            @include mq(desktop) {
+                margin: 24px 0;
+            }
+
+            .inline-arrow-right {
+                display: block;
+                float: right;
+                height: 30px;
+                width: 30px;
+                margin-left: 40px;
+            }
+
+            svg {
+                position: static;
+                fill: #333333;
+            }
+        }
     }
 }

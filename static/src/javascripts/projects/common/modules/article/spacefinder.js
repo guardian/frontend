@@ -14,7 +14,7 @@ define([
     fastdom,
     config,
     mediator,
-    trackAdLoaded,
+    trackAdLoad,
     memoize
 ) {
     // total_hours_spent_maintaining_this = 64
@@ -120,6 +120,7 @@ define([
 
                         var iframe = records[0].addedNodes[0];
                         if (isIframeLoaded(iframe)) {
+                            instance.disconnect();
                             resolve();
                         } else {
                             iframe.addEventListener('load', function () {
@@ -136,16 +137,20 @@ define([
         }
 
         function isIframeLoaded(iframe) {
-            return iframe.contentWindow &&
-                iframe.contentWindow.document &&
-                iframe.contentWindow.document.readyState === 'complete';
+           try {
+               return iframe.contentWindow &&
+                   iframe.contentWindow.document &&
+                   iframe.contentWindow.document.readyState === 'complete';
+           } catch(err) {
+               return true;
+           }
         }
     }, getFuncId);
 
     var onAdsLoaded = memoize(function (rules) {
         return Promise.all(qwery('.js-ad-slot', rules.body)
             .map(function (ad) { return ad.id; })
-            .map(trackAdLoaded)
+            .map(trackAdLoad)
         );
     }, getFuncId);
 

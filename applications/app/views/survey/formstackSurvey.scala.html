@@ -1,0 +1,29 @@
+@(formName: String, surveyPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+@import conf.Configuration.Survey.formStackAccountName
+
+    @surveyMain(surveyPage){
+        <div class="l-side-margins">
+
+            <div class="wrapper" data-link-name="formstack survey">
+
+                <div class="wrapper-inner">
+
+
+                    <div class="formstack-survey-wrapper">
+
+                        <h1>Thank you</h1>
+
+                        <p>Got a minute to spare? We would like to hear your thoughts on this feature while we are still finalising it.</p>
+
+                        <script type="text/javascript" src="https://@{formStackAccountName}.formstack.com/forms/js.php/@formName"></script><noscript><a href="https://@{formStackAccountName}.formstack.com/forms/@formName" title="Online Form">Online Form - @formName</a></noscript>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }

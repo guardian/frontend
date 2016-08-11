@@ -3,14 +3,15 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.BrandHunter
+import common.commercial.{BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.BodyBlock
+import model.liveblog.{Blocks, BodyBlock}
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
+import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
@@ -20,7 +21,7 @@ object Commercial {
 
   private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
 
-    val section = Some(metadata.section)
+    val section = Some(metadata.sectionId)
 
     val isInappropriateForSponsorship =
       maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
@@ -100,7 +101,7 @@ final case class Commercial(
   }
 
   def isSponsored(maybeEdition: Option[Edition]): Boolean =
-    DfpAgent.isSponsored(tags.tags, Some(metadata.section), maybeEdition)
+    DfpAgent.isSponsored(tags.tags, Some(metadata.sectionId), maybeEdition)
 
   def needsHighMerchandisingSlot(edition:Edition): Boolean = {
     DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
@@ -124,7 +125,7 @@ object Fields {
       standfirst = apiContent.fields.flatMap(_.standfirst),
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
-      blocks = BodyBlock.make(apiContent.blocks),
+      blocks = apiContent.blocks.map(Blocks.make),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
@@ -141,7 +142,7 @@ final case class Fields(
   standfirst: Option[String],
   main: String,
   body: String,
-  blocks: Seq[BodyBlock],
+  blocks: Option[Blocks],
   lastModified: DateTime,
   displayHint: String,
   isLive: Boolean,
@@ -162,7 +163,7 @@ object MetaData {
 
   def make(
     id: String,
-    section: String,
+    section: Option[SectionSummary],
     webTitle: String,
     analyticsName: String,
     url: Option[String] = None,
@@ -190,7 +191,7 @@ object MetaData {
       webTitle = webTitle,
       section = section,
       analyticsName = analyticsName,
-      adUnitSuffix = adUnitSuffix getOrElse section,
+      adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -200,6 +201,7 @@ object MetaData {
       isPressedPage = isPressedPage,
       contentType = contentType,
       customSignPosting = customSignPosting,
+      iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
@@ -208,17 +210,18 @@ object MetaData {
   def make(fields: Fields, apiContent: contentapi.Content) = {
     val id = apiContent.id
     val url = s"/$id"
-    val section = apiContent.sectionId.getOrElse("")
+    val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
+    val sectionId = sectionSummary map (_.id) getOrElse ""
 
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
-      section = section,
+      sectionSummary,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}",
-      adUnitSuffix = section,
+      analyticsName = s"GFE:$sectionId:${id.substring(id.lastIndexOf("/") + 1)}",
+      adUnitSuffix = sectionId,
       description = apiContent.fields.flatMap(_.trailText),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
@@ -234,7 +237,7 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  section: String,
+  section: Option[SectionSummary],
   webTitle: String,
   analyticsName: String,
   adUnitSuffix: String,
@@ -259,6 +262,7 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
+  val sectionId = section map (_.id) getOrElse ""
 
   def hasPageSkin(edition: Edition) = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -269,9 +273,6 @@ final case class MetaData (
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   } else Nil
-  def hasAdInBelowTopNavSlot(edition: Edition) = if (isPressedPage) {
-    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
-  } else false
   def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
@@ -282,7 +283,11 @@ final case class MetaData (
     conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
   }
 
-  val hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity" || contentType.toLowerCase == "gallery"
+  val hasSlimHeader: Boolean =
+    contentType == "Interactive" ||
+      sectionId == "identity" ||
+      contentType.toLowerCase == "gallery" ||
+      contentType.toLowerCase == "survey"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -295,7 +300,7 @@ final case class MetaData (
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("pageId", JsString(id)),
-    ("section", JsString(section)),
+    ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
     ("buildNumber", JsString(buildNumber)),
@@ -303,7 +308,6 @@ final case class MetaData (
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf"))),
     ("contentType", JsString(contentType))
   )
 
@@ -341,6 +345,13 @@ final case class MetaData (
   )).getOrElse(Nil))
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
+
+  /**
+    * Content type, lowercased and with spaces removed.
+    * This is used for Google Analytics, to be consistent with what the mobile apps do.
+    */
+  def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
+
 }
 
 object Page {
@@ -417,13 +428,14 @@ trait StandalonePage extends Page {
 
 case class SimplePage(override val metadata: MetaData) extends StandalonePage
 
-case class CommercialExpiryPage(
-  id: String,
-  section: String = "global",
-  webTitle: String = "This page has been removed",
-  analyticsName: String = "GFE:Gone") extends StandalonePage {
-
-  override val metadata: MetaData = MetaData.make(id, section, webTitle, analyticsName, shouldGoogleIndex = false)
+case class CommercialExpiryPage(id: String) extends StandalonePage {
+  override val metadata: MetaData = MetaData.make(
+    id,
+    section = Some(SectionSummary.fromId("global")),
+    webTitle = "This page has been removed",
+    analyticsName = "GFE:Gone",
+    shouldGoogleIndex = false
+  )
 }
 
 case class GalleryPage(
@@ -434,6 +446,8 @@ case class GalleryPage(
   override lazy val item = gallery
   val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
+
+case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 case class TagCombiner(
   id: String,
@@ -446,7 +460,7 @@ case class TagCombiner(
     id,
     leftTag.metadata.section,
     s"${leftTag.name} + ${rightTag.name}",
-    s"GFE:${leftTag.metadata.section}:${leftTag.name} + ${rightTag.name}",
+    s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex)
   )
@@ -604,9 +618,8 @@ final case class Tags(
   lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
-  lazy val isFoodAndDrink: Boolean = tags.exists {_.id == "lifeandstyle/food-and-drink"}
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").filter(_.properties.contributorLargeImagePath.nonEmpty).nonEmpty
+  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
@@ -622,12 +635,17 @@ final case class Tags(
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
   lazy val isElection = isUSElection || isAusElection
 
+  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
+
   lazy val keywordIds = keywords.map { _.id }
+
+  lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))),
+    ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("openModule", JsString(openModule.getOrElse(""))),
@@ -636,7 +654,8 @@ final case class Tags(
     ("tones", JsString(tones.map(_.name).mkString(","))),
     ("toneIds", JsString(tones.map(_.id).mkString(","))),
     ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-    ("blogIds", JsString(blogs.map(_.id).mkString(",")))
+    ("blogIds", JsString(blogs.map(_.id).mkString(","))),
+    ("commissioningDesks", JsString(commissioningDesks.mkString(",")))
   )
 }
 
@@ -687,6 +706,8 @@ object Tags {
   val reviewMappings = Seq(
     "tone/reviews"
   )
+
+  val CommissioningDesk = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content) = {
     Tags(apiContent.tags.toList map { Tag.make(_) })

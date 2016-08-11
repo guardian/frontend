@@ -1,0 +1,22 @@
+.join-discussion-after-poll {
+    @include fs-textSans(5);
+    max-height: 0;
+    transition: max-height 1s ease-in;
+    font-weight: bold;
+    background: $neutral-8;
+    padding: 18px 12px 2px;
+    margin-top: -23px;
+
+    p {
+        opacity: 0;
+        transition: opacity 1s ease-in;
+    }
+
+    &--open {
+        max-height: 350px;
+
+        p {
+            opacity: 1;
+        }
+    }
+}

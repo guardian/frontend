@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import conf.switches.SwitchGroup.CommercialLabs
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -9,24 +10,27 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
 
   val HeaderBiddingUS = Switch(
-     SwitchGroup.Commercial,
-     "header-bidding-us",
-     "Auction adverts on the client before calling DFP (US edition only)",
-     safeState = Off,
-     sellByDate = never,
-     exposeClientSide = true
+    SwitchGroup.Commercial,
+    "header-bidding-us",
+    "Auction adverts on the client before calling DFP (US edition only)",
+    owners = Seq(Owner.withGithub("regiskuckaertz ")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   val CommercialSwitch = Switch(
     SwitchGroup.Commercial,
     "commercial",
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -36,6 +40,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "standard-adverts",
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -45,6 +50,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "commercial-components",
     "Display commercial components, e.g. jobs, soulmates.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -54,15 +60,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "video-adverts",
     "Show adverts on videos.",
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val SponsoredSwitch = Switch(
-    SwitchGroup.Commercial,
-    "sponsored",
-    "Show sponsored badges, logos, etc.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -72,6 +70,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "liveblog-adverts",
     "Show inline adverts on liveblogs",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -81,6 +80,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -90,6 +90,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -99,6 +100,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -108,6 +110,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux",
     "Enable Krux Control Tag",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -117,6 +120,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "remarketing",
     "Enable Remarketing tracking",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -126,6 +130,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",
     "If this switch is on, cached travel offers feed will be updated from external source.",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -135,6 +140,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-parse",
     "If this switch is on, commercial components will be fed by travel offers feed.",
+    owners = Seq(Owner.withGithub("kelvin-chappell")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -144,6 +150,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -153,6 +160,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -162,6 +170,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-events",
     "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -171,15 +180,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val MoneysupermarketFeedsSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "moneysupermarket",
-    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -189,6 +190,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -198,6 +200,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "book-lookup",
     "If this switch is on, book data will be looked up using a third-party service.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -207,16 +210,8 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "gu-members-area",
     "If this switch is on, content flagged with membershipAccess will be protected",
+    owners = Seq(Owner.withGithub("JonNorman")),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val LCMortgageFeedSwitch = Switch(
-    SwitchGroup.Commercial,
-    "lc-mortgages",
-    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
@@ -225,6 +220,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "adblock",
     "Switch for the Adblock Message.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -234,6 +230,7 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux-video-tracking",
     "If this switch is ON, there will be a Krux pixel fired to track particular videos",
+    owners = Seq(Owner.withGithub("commercial team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -243,62 +240,79 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "british-council-beacon",
     "British Council's beacon",
+    owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 1),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = false
-  )
-
-  val FluidAdverts = Switch(
-    SwitchGroup.Commercial,
-    "fluid-adverts",
-    "Request fluid adverts from DFP",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = true
-  )
-
-  val FixedTechTopSlot = Switch(
-    SwitchGroup.Commercial,
-    "fixed-tech-top-slot",
-    "Height of the top banner is fixed at 250px in the Tech section",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
-    exposeClientSide = false
-  )
-
-  val staticBadgesSwitch = Switch(
-    SwitchGroup.Commercial,
-    "static-badges",
-    "If on, all badges are served server side",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 22),
-    exposeClientSide = true
   )
 
   val highMerchandisingComponentSwitch = Switch(
     SwitchGroup.Commercial,
     "optimise-high-merchandising",
     "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
+    owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,6,8),
+    sellByDate = new LocalDate(2016,10,12),
     exposeClientSide = false
   )
 
-  val reportEmptyDfpResponsesSwitch = Switch(
-    SwitchGroup.Commercial,
-    "report-empty-dfp-responses",
-    "If on, the client will report empty dfp ad responses.",
-    safeState = Off,
-    sellByDate = new LocalDate(2016,6,8),
+  val SponsoredSwitch = Switch(
+    group = CommercialLabs,
+    "sponsored",
+    "Show sponsored badges, logos, etc.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
-  val hostedEpisode2Content = Switch(
-    SwitchGroup.Commercial,
-    "hosted-episode2-content",
-    "If on, third page of hosted content is available",
+  val staticBadgesSwitch = Switch(
+    group = CommercialLabs,
+    "static-badges",
+    "If on, all badges are served server side",
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 12),
+    sellByDate = new LocalDate(2016, 8, 26),
+    exposeClientSide = true
+  )
+
+  val containerBrandingFromCapi = Switch(
+    group = CommercialLabs,
+    "static-container-badges",
+    "Serve container branding from capi",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 26),
+    exposeClientSide = true
+  )
+
+  val showPaidSeriesContainer = Switch(
+    group = CommercialLabs,
+    "show-paid-series-containers",
+    "Show series containers on paid content pages.",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 26),
+    exposeClientSide = false
+  )
+
+  val hostedGalleryTest = Switch(
+    group = CommercialLabs,
+    "hosted-gallery-test",
+    "If on, test page for gallery content is available",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 24),
+    exposeClientSide = false
+  )
+
+  val surgingContentEmail = Switch(
+    SwitchGroup.Commercial,
+    "surging-sports-content-email",
+    "If on email will be sent to Rio Olympic surging content team every 30 minutes with update on surging content.",
+    owners = Seq(Owner.withGithub("Calum Campbell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016,8,23),
     exposeClientSide = false
   )
 }

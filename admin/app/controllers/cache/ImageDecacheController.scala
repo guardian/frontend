@@ -5,29 +5,24 @@ import java.util.UUID
 
 import com.gu.googleauth.UserIdentity
 import common.{ExecutionContexts, Logging}
-import controllers.AuthLogging
 import controllers.admin.AuthActions
 import model.NoCache
-import play.api.Play.current
-import play.api.libs.ws.{WS, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{AnyContent, Controller}
+import play.api.mvc.{AnyContent, Controller, Action}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-object ImageDecacheController extends Controller with Logging with AuthLogging with ExecutionContexts {
+class ImageDecacheController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
+  import ImageDecacheController._
 
-  sealed trait MessageType
-  case object ImageStillOnOrigin extends MessageType
-  case object DefaultMessage extends MessageType
-  case object Cleared extends MessageType
-  case object Error extends MessageType
+  val imageServices = new ImageServices(wsClient)
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
-  def renderImageDecacheForm() = AuthActions.AuthActionTest { implicit request =>
+  def renderImageDecacheForm() = Action { implicit request =>
     NoCache(Ok(views.html.cache.imageDecacheForm()))
   }
 
@@ -45,10 +40,10 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
 
       val originUri = new URI(originUrl)
 
-      ImageServices.clearFastly(originUri)
-      ImageServices.clearImgix(originUri)
+      imageServices.clearFastly(originUri)
+      imageServices.clearImgix(originUri)
 
-      val decacheRequest: Future[WSResponse] = WS.url(s"$originUrl?cachebust=$cacheBust").get
+      val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
       decacheRequest.map(_.status).map{
         case NOT_FOUND => Ok(views.html.cache.imageDecacheForm(
           messageType = Cleared,
@@ -78,4 +73,12 @@ object ImageDecacheController extends Controller with Logging with AuthLogging w
     .flatMap(_.headOption)
     .map(_.trim)
 
+}
+
+object ImageDecacheController {
+  sealed trait MessageType
+  case object ImageStillOnOrigin extends MessageType
+  case object DefaultMessage extends MessageType
+  case object Cleared extends MessageType
+  case object Error extends MessageType
 }

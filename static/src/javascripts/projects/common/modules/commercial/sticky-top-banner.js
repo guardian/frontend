@@ -1,7 +1,9 @@
 define([
     'common/utils/fastdom-promise',
     'Promise',
-    'common/modules/commercial/dfp/track-ad-load',
+    'common/modules/commercial/dfp/track-ad-render',
+    'common/modules/commercial/dfp/messenger',
+    'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',
     'common/utils/mediator',
@@ -11,7 +13,9 @@ define([
 ], function (
     fastdom,
     Promise,
-    trackAd,
+    trackAdRender,
+    messenger,
+    adSizes,
     $,
     createStore,
     mediator,
@@ -33,58 +37,38 @@ define([
     // Rubicon ads may resize asynchronously. They have a resize event we can
     // subscribe to.
 
-    var $adBanner = $('.top-banner-ad-container--above-nav');
-    var $adBannerInner = $('.ad-slot--top-above-nav', $adBanner);
+    var $adBanner = $('.js-top-banner');
+    var $adBannerInner = $('.ad-slot', $adBanner);
     var $header = $('.js-header');
 
-    var topAdRenderedPromise = trackAd('dfp-ad--top-above-nav');
+    var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
 
     var getAdIframe = function () { return $('iframe', $adBanner); };
 
     // Rubicon ads are loaded via DFP like all other ads, but they can
     // render themselves again at any time
-    var newRubiconAdHeightPromise = new Promise(function (resolve) {
-        window.addEventListener('message', function (event) {
-            var data;
-            // other DFP events get caught by this listener, but if they're not json we don't want to parse them or use them
-            try {
-                data = JSON.parse(event.data);
-            } catch (e) {/**/}
-
-            if (data) {
-                var $iframe = getAdIframe();
-                var isRubiconAdEvent = data.type === 'set-ad-height';
-                var isEventForTopAdBanner = isRubiconAdEvent && data.value.id === $iframe[0].id;
-
-                if (isRubiconAdEvent && isEventForTopAdBanner) {
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.value.height) + padding;
-                        resolve(clientHeight);
-                    });
-                }
-            }
-        });
-    });
+    var newRubiconAdHeightPromise;
 
     var getLatestAdHeight = function () {
         var $iframe = getAdIframe();
         var slotWidth = $iframe.attr('width');
         var slotHeight = $iframe.attr('height');
-        var slotSize = [slotWidth, slotHeight].join(',');
+        var slotSize = slotWidth + ',' + slotHeight;
         // iframe may not have been injected at this point
-        var isFluid250 = slotSize === '88,70';
-        var isFabricV1 = slotSize === '88,71';
+        var isFluid250 = adSizes.fluid250.toString() === slotSize;
+        var isFabricV1 = adSizes.fabric.toString() === slotSize;
         var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
-        // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
-        // injected asynchronously, so we can't be sure when they will be in the dom
-        var fluidAdInnerHeight = 250;
-        var fluidAdPadding = 18;
-        var fluidAdHeight = fluidAdInnerHeight + fluidAdPadding;
 
         if (isFluidAd) {
-            return Promise.resolve(fluidAdHeight);
+            // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
+            // injected asynchronously, so we can't be sure when they will be in the dom
+            var fluidAdInnerHeight = 250;
+            return fastdom.read(function () {
+                var label = $adBannerInner[0].getElementsByClassName('ad-slot__label');
+                return label.length ? label[0].offsetHeight : 0;
+            }).then(function (fluidAdPadding) {
+                return fluidAdInnerHeight + fluidAdPadding;
+            });
         } else {
             var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
             // We can't calculate the height of Rubicon ads because they transition
@@ -119,8 +103,6 @@ define([
     };
 
     var render = function (els, state) {
-        els.$document.addClass('sticky-ad-banner');
-
         var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
         var transitionDuration = '1s';
 
@@ -134,6 +116,7 @@ define([
         var pageYOffset = state.scrollCoords[1];
         var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
 
+        els.$adBanner.addClass('sticky-top-banner-ad');
         els.$adBanner.css({
             'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
             'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
@@ -178,6 +161,24 @@ define([
         });
     };
 
+    function setupListeners() {
+        newRubiconAdHeightPromise = new Promise(function (resolve) {
+            messenger.register('set-ad-height', function onSetAdHeight(data) {
+                var $iframe = getAdIframe();
+                var isEventForTopAdBanner = data.id === $iframe[0].id;
+                if (isEventForTopAdBanner) {
+                    messenger.unregister('set-ad-height', onSetAdHeight);
+                    fastdom.read(function () {
+                        var padding = parseInt($adBannerInner.css('padding-top'))
+                            + parseInt($adBannerInner.css('padding-bottom'));
+                        var clientHeight = parseInt(data.height) + padding;
+                        resolve(clientHeight);
+                    });
+                }
+            });
+        });
+    }
+
     var reducer = function (previousState, action) {
         switch (action.type) {
             case 'SCROLL':
@@ -209,34 +210,40 @@ define([
     };
 
     var initialise = function () {
-        getInitialState().then(function (initialState) {
-            var store = createStore(reducer, initialState);
+        // Although we check as much config as possible to decide whether to run sticky-top-banner,
+        // it is still entirely possible for the ad slot to be closed.
+        if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
+            setupListeners();
+            return getInitialState().then(function (initialState) {
+                var store = createStore(reducer, initialState);
 
-            setupDispatchers(store.dispatch);
+                setupDispatchers(store.dispatch);
 
-            var elements = {
-                $document: $(document.body),
-                $adBanner: $adBanner,
-                $adBannerInner: $adBannerInner,
-                $header: $header,
-                window: window
-            };
-            var update = function () {
-                return fastdom.write(function () {
-                    render(elements, store.getState());
+                var elements = {
+                    $adBanner: $adBanner,
+                    $adBannerInner: $adBannerInner,
+                    $header: $header,
+                    window: window
+                };
+                var update = function () {
+                    return fastdom.write(function () {
+                        render(elements, store.getState());
+                    });
+                };
+                // Initial update
+                // Ensure we only start listening after the first update
+                update().then(function () {
+                    // Update when actions occur
+                    store.subscribe(update);
                 });
-            };
-            // Initial update
-            // Ensure we only start listening after the first update
-            update().then(function () {
-                // Update when actions occur
-                store.subscribe(update);
             });
-        });
+        } else {
+            return Promise.resolve();
+        }
     };
 
     return {
-        initialise: initialise,
+        init: initialise,
         // Needed for testing
         render: render
     };

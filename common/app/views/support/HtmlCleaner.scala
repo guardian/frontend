@@ -107,8 +107,8 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isImmersive) ImmersiveMedia
         else if (article.isUSMinute) MinuteMedia
+        else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
 
@@ -209,7 +209,6 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
-        link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
       }
       if (amp && link.hasAttr("style")) {
@@ -416,6 +415,26 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
+//
+
+case class HeroicVideos(isHeroic: Boolean) extends HtmlCleaner{
+  override def clean(document: Document): Document = {
+    if(isHeroic){
+      val videoCaptionSvg = views.html.fragments.inlineSvg("videoCaption", "membership", List("video-caption-bubble")).toString()
+      //gets the videos and adds a new class
+      document.getElementsByTag("figure").filter(_.hasClass("element-video"))foreach{ elementVideo =>
+          elementVideo.addClass("element-video--heroic");
+          //gets the figcaption of the video and adds a new class
+          elementVideo.children().filter(_.hasClass("caption"))foreach{ elementVideoCaption =>
+            elementVideoCaption.addClass("caption-heroic")
+            elementVideoCaption.prepend(videoCaptionSvg)
+          }
+      }
+    }
+    document
+  }
+}
+
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
@@ -592,5 +611,16 @@ case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeade
       }
     }
     document
+  }
+}
+
+object setSvgClasses {
+  def apply(svg: String, classes: Seq[String] = List()) = {
+    val document = Jsoup.parse(svg)
+    val svgHtml = document.getElementsByTag("svg")
+    val modifiedClasses = classes.map(_.concat("__svg")).mkString(" ")
+
+    svgHtml.addClass(modifiedClasses)
+    svgHtml.toString
   }
 }

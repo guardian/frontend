@@ -8,6 +8,7 @@ import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import common._
+import common.commercial.Branding
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
@@ -15,14 +16,13 @@ import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
-import play.api.Play.current
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
 
-object LiveFapiFrontPress extends FapiFrontPress {
+class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
@@ -50,7 +50,7 @@ object LiveFapiFrontPress extends FapiFrontPress {
     FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
-object DraftFapiFrontPress extends FapiFrontPress {
+class DraftFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
@@ -92,6 +92,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
   implicit val apiClient: ApiClient
+  val wsClient: WSClient
   def pressByPathId(path: String): Future[Unit]
 
   def collectionContentWithSnaps(
@@ -99,7 +100,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]]
 
-  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
+  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showFields(showFields)
@@ -151,7 +152,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         embedType <- content.properties.embedType if embedType == "json.html"
         embedUri <- content.properties.embedUri
       } yield {
-        val maybeUpdate = WS.url(embedUri).get().map { response =>
+        val maybeUpdate = wsClient.url(embedUri).get().map { response =>
           Json.parse(response.body).validate[EmbedJsonHtml] match {
             case JsSuccess(embed, _) => {
               beforeEnrichment.copy(embedHtml = Some(embed.html))
@@ -220,8 +221,12 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         .copy(
           editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
           activeBrandings = itemResp.flatMap { response =>
-            val sectionBrandings = response.section.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
-            val tagBrandings = response.tag.flatMap(_.activeSponsorships.map(_.map(Branding.make)))
+            val sectionBrandings = response.section.flatMap { section =>
+              section.activeSponsorships.map(_.map(Branding.make(section.webTitle)))
+            }
+            val tagBrandings = response.tag.flatMap { tag =>
+              tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
+            }
             val brandings = sectionBrandings.toList.flatten ++ tagBrandings.toList.flatten
             if (brandings.isEmpty) None else Some(brandings)
           }
@@ -280,7 +285,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       // Discard all elements except the main video.
       // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
       val slimElements = Elements.apply(content.elements.mainVideo.toList)
-      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = Nil)
+      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = None)
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.

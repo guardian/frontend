@@ -12,6 +12,7 @@ object Metric extends Logging {
     // page views
     ("pv", CountMetric("kpis-page-views", "raw page views - simple <img> in body, no javascript involved")),
     ("pva", CountMetric("kpis-analytics-page-views", "page view fires after analytics")),
+    ("pvg", CountMetric("kpis-analytics-page-views-google", "page view fires after Google Analytics")),
     ("omniture-pageview-error", CountMetric("omniture-pageview-error", "omniture-pageview-error")),
 
     ("ads-blocked", CountMetric("ads-blocked", "ads-blocked")),
@@ -28,7 +29,6 @@ object Metric extends Logging {
     ("404", CountMetric("kpis-user-404", "beacon on the 404 page that tells us that real users are getting 404 not found")),
 
     // video
-    ("video-tech-flash", CountMetric("video-tech-flash", "video-tech-flash")),
     ("video-tech-html5", CountMetric("video-tech-html5", "video-tech-html5")),
 
     ("sm-page-view", CountMetric("sm-page-view", "sm-page-view")),

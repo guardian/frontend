@@ -2,7 +2,7 @@ package common.commercial
 
 import common.Edition
 import model.pressed.PressedContent
-import model.{Branding, ContentType, ImageMedia, ImageOverride}
+import model.{ContentType, ImageMedia, ImageOverride}
 import views.support.ImgSrc
 
 case class CardContent(
@@ -28,7 +28,7 @@ object CardContent {
       lazy val videoImageMedia = maybeContent flatMap (_.elements.mainVideo.map(_.images))
       lazy val imageOverride = properties.image flatMap ImageOverride.createImageMedia
       lazy val defaultTrailPicture = maybeContent flatMap (_.trail.trailPicture)
-      videoImageMedia.orElse(imageOverride).orElse(defaultTrailPicture)
+      imageOverride.orElse(videoImageMedia).orElse(defaultTrailPicture)
     }
 
     val fallbackImageUrl = image flatMap ImgSrc.getFallbackUrl

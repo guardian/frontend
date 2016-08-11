@@ -1,12 +1,14 @@
 package test
 
-import org.scalatest.{Suites, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest._
 
 class TrainingTestSuite extends Suites (
   new TrainingServerTest
-) with SingleServerSuite {
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  override lazy val port: Int = controllers.HealthCheck.testPort
+  override lazy val port: Int = new controllers.HealthCheck(wsClient).testPort
 }
 
 @DoNotDiscover class TrainingServerTest extends FlatSpec with Matchers with ConfiguredTestSuite {

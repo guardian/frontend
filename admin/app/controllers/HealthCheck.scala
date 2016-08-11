@@ -1,5 +1,9 @@
 package controllers
 
-import conf.AllGoodCachedHealthCheck
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
+import play.api.libs.ws.WSClient
 
-object HealthCheck extends AllGoodCachedHealthCheck(9001, "/login")
+class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+  wsClient,
+  9001,
+  NeverExpiresSingleHealthCheck("/login"))

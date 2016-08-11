@@ -5,6 +5,13 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
+GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
+GET            /survey/mydigest                                                                                                  controllers.SurveyPageController.renderMyDigestExplainerPage()
+GET            /survey/mydigest/404                                                                                              controllers.SurveyPageController.renderMyDigest404Page()
+GET            /survey/weekendreading                                                                                            controllers.SurveyPageController.renderWeekendReading404Page()
+GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
+GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
+
 # For dev machines
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
@@ -15,7 +22,11 @@ GET            /assets/*path                                                    
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.postOptions
+OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
+POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
+OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
+POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
+OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
 OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
@@ -119,8 +130,8 @@ GET            /info/tech-feedback                                              
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
-GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
-GET            /sport/cricket/match/:matchDate/:teamId                                                                           controllers.CricketMatchController.renderMatchId(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
+GET            /sport/cricket/match/:matchDate/:teamId                                                                           cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/more/:year/:month/:day                                                                         football.controllers.FixturesController.moreFixturesFor(year, month, day)
@@ -188,10 +199,10 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json  
 GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                                                        rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
 
 # Admin
-GET            /login                                                                                                            controllers.admin.OAuthLoginController.login
-POST           /login                                                                                                            controllers.admin.OAuthLoginController.loginAction
-GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginController.oauth2Callback
-GET            /logout                                                                                                           controllers.admin.OAuthLoginController.logout
+GET            /login                                                                                                            controllers.admin.OAuthLoginAdminController.login
+POST           /login                                                                                                            controllers.admin.OAuthLoginAdminController.loginAction
+GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginAdminController.oauth2Callback
+GET            /logout                                                                                                           controllers.admin.OAuthLoginAdminController.logout
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
 GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
 GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)
@@ -281,11 +292,6 @@ GET            /commercial/soulmates-test/$subgroup<\w+>.json                   
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
 GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent
-GET            /commercial/money/bestbuys.json                                                                                   controllers.commercial.MoneyOffers.renderBestBuys
-GET            /commercial/money/savings/:savingsType                                                                            controllers.commercial.MoneyOffers.savings(savingsType)
-GET            /commercial/money/current-accounts/:currentAccountType                                                            controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
-GET            /commercial/money/credit-cards/:creditCardType                                                                    controllers.commercial.MoneyOffers.creditCards(creditCardType)
-GET            /commercial/money/loans/:loanType                                                                                 controllers.commercial.MoneyOffers.loans(loanType)
 GET            /commercial/capi.json                                                                                             controllers.commercial.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      controllers.commercial.ContentApiOffersController.itemJson
@@ -295,8 +301,9 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /commercial/advertiser-content/renault-car-of-the-future/:pageName                                                controllers.commercial.HostedContentController.renderHostedPage(pageName)
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
+GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
@@ -395,7 +402,6 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
-GET            /container/*path/some/:num/:offset/:containerNameToFilter/:edition.json                                           controllers.FaciaController.renderSomeFrontContainers(path, num, offset, containerNameToFilter, edition)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

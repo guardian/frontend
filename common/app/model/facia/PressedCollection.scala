@@ -2,8 +2,8 @@ package model.facia
 
 import com.gu.facia.api.{models => fapi}
 import common.Edition
+import common.commercial.Branding
 import implicits.CollectionsOps._
-import model.Branding
 import model.pressed._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId

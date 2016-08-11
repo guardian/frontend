@@ -121,4 +121,8 @@ object GetClasses {
       case (kls, true) => kls
     }) ++ extraClasses: _*)
   }
+
+  def forFrontId(frontId: Option[String]) = RenderClasses(Seq(
+    "fc-container--video-no-fill-sides" -> frontId.contains("video")
+  ) collect { case (kls, true) => kls }: _*)
 }

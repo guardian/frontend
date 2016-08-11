@@ -4,19 +4,18 @@ import actions.AuthenticatedActions
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{IdRequestParser, ReturnUrlVerifier}
-import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
 import conf.IdentityConfiguration
-import play.api.libs.ws._
-import exacttarget.{SubscriptionDef, DataExtId}
+import play.api.libs.ws.WSClient
+import exacttarget.SubscriptionDef
 
-@Singleton
-class ExactTargetController @Inject()(
-                                       conf: IdentityConfiguration,
-                                       returnUrlVerifier: ReturnUrlVerifier,
-                                       idRequestParser: IdRequestParser,
-                                       authenticatedActions: AuthenticatedActions)
+class ExactTargetController(
+                           conf: IdentityConfiguration,
+                           returnUrlVerifier: ReturnUrlVerifier,
+                           idRequestParser: IdRequestParser,
+                           authenticatedActions: AuthenticatedActions,
+                           wsClient: WSClient)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import play.api.Play.current
@@ -41,7 +40,7 @@ class ExactTargetController @Inject()(
             val triggeredEmailRequest =
               exactTargetFactory.createRequest(emailAddress, parameters, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
 
-            WS.url(exactTargetFactory.endPoint.toString).withHeaders(
+            wsClient.url(exactTargetFactory.endPoint.toString).withHeaders(
               "Content-Type" -> "text/xml; charset=utf-8",
               "SOAPAction" -> triggeredEmailRequest.getSoapAction
             ).post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {

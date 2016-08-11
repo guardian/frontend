@@ -52,22 +52,6 @@
                 @player.video.videos.encodings.map { encoding =>
                     <source src="@VideoEncodingUrlCleaner(encoding.url)" type="@encoding.format" />
                 }
-
-                @player.video.videos.encodings.find(_.format == "video/mp4").map { encoding =>
-                    <object type="application/x-shockwave-flash" data="@Static("flash/components/mediaelement/flashmediaelement-cdn.swf")" width="@player.width" height="@player.height">
-                        <param name="allowFullScreen" value="true" />
-                        <param name="movie" value="@Static("flash/components/mediaelement/flashmediaelement.swf")" />
-                        <param name="flashvars" value="controls=true&file=@encoding.url&@if(showPoster){poster=@player.poster}" />
-                        @if(showPoster) {
-                            <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
-                        }
-                        <div class="vjs-error-display">
-                            <div>Sorry, your browser is unable to play this video.<br/>
-                                Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.
-                                Alternatively <a href="http://whatbrowser.org/">upgrade</a> to a modern browser.</div>
-                        </div>
-                    </object>
-                }
             </video>
             @if(showOverlay){
             <div class="video-overlay">

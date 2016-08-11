@@ -5,11 +5,10 @@ import model.commercial.books.{BestsellersAgent, Book, BookFinder, CacheNotConfi
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
 import play.api.mvc._
-
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-object BookOffersController
+class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent)
   extends Controller
   with ExecutionContexts
   with Logging
@@ -18,7 +17,7 @@ object BookOffersController
 
   def renderBook = Action.async { implicit request =>
     specificId map { isbn =>
-      BookFinder.findByIsbn(isbn) map {
+      bookFinder.findByIsbn(isbn) map {
         _ map { book =>
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
@@ -68,8 +67,8 @@ object BookOffersController
     }
 
     val isbns = request.queryString.getOrElse("t", Nil)
-    BestsellersAgent.getSpecificBooks(isbns) map { specificBooks =>
-      result(specificBooks ++ BestsellersAgent.bestsellersTargetedAt(segment))
+    bestsellersAgent.getSpecificBooks(isbns) map { specificBooks =>
+      result(specificBooks ++ bestsellersAgent.bestsellersTargetedAt(segment))
     }
   }
 }

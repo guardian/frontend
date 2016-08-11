@@ -3,7 +3,7 @@ package model
 import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
-import model.liveblog.{BlockAttributes, BodyBlock}
+import model.liveblog.{BlockAttributes, Blocks, BodyBlock}
 import model.pressed._
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
@@ -97,33 +97,33 @@ object MetaDataFormat {
 
     // Combine a Builder[Reads] to a function that can create MetaData results in a Reads[MetaData].
     (metadata1stPart and metadata2ndPart) { (part1: MetaDataPart1, part2: MetaDataPart2) => MetaData(
-        part1.id,
-        part1.url,
-        part1.webUrl,
-        part1.section,
-        part1.webTitle,
-        part1.analyticsName,
-        part1.adUnitSuffix,
-        part1.iosType,
-        part1.pagination,
-        part1.description,
-        part1.rssPath,
-        part2.contentType,
-        part2.hasHeader,
-        part2.schemaType,
-        part2.cacheTime,
-        part2.openGraphImages,
-        part2.membershipAccess,
-        part2.isFront,
-        part2.isPressedPage,
-        part2.hideUi,
-        part2.canonicalUrl,
-        part2.shouldGoogleIndex,
-        part2.title,
-        part2.customSignPosting,
-        part2.javascriptConfigOverrides,
-        part2.opengraphPropertiesOverrides,
-        part2.twitterPropertiesOverrides
+      part1.id,
+      part1.url,
+      part1.webUrl,
+      Some(SectionSummary.fromId(part1.section)),
+      part1.webTitle,
+      part1.analyticsName,
+      part1.adUnitSuffix,
+      part1.iosType,
+      part1.pagination,
+      part1.description,
+      part1.rssPath,
+      part2.contentType,
+      part2.hasHeader,
+      part2.schemaType,
+      part2.cacheTime,
+      part2.openGraphImages,
+      part2.membershipAccess,
+      part2.isFront,
+      part2.isPressedPage,
+      part2.hideUi,
+      part2.canonicalUrl,
+      part2.shouldGoogleIndex,
+      part2.title,
+      part2.customSignPosting,
+      part2.javascriptConfigOverrides,
+      part2.opengraphPropertiesOverrides,
+      part2.twitterPropertiesOverrides
       )
     }
   }
@@ -137,7 +137,7 @@ object MetaDataFormat {
           meta.id,
           meta.url,
           meta.webUrl,
-          meta.section,
+          meta.sectionId,
           meta.webTitle,
           meta.analyticsName,
           meta.adUnitSuffix,
@@ -190,6 +190,7 @@ object ContentTypeFormat {
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
+  implicit val blocksFormat = Json.format[Blocks]
   val fieldsFormat = Json.format[Fields]
   val elementsFormat = ElementsFormat.format
   implicit val tweetFormat = Json.format[Tweet]
@@ -569,7 +570,6 @@ object FaciaImageFormat {
   implicit val cutoutFormat = Json.format[Cutout]
   implicit val replaceFormat = Json.format[Replace]
   implicit val slideshowFormat = Json.format[ImageSlideshow]
-  implicit val imageReplaceFormat = Json.format[ImageReplace]
 
   object format extends Format[Image] {
     def reads(json: JsValue) = {
@@ -577,7 +577,6 @@ object FaciaImageFormat {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
         case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
         case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
-        case JsSuccess(JsString("ImageReplace"), _) => (json \ "item").validate[ImageReplace](imageReplaceFormat)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
@@ -585,7 +584,6 @@ object FaciaImageFormat {
     def writes(faciaImage: Image) = faciaImage match {
       case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
       case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
-      case image: ImageReplace => JsObject(Seq("type" -> JsString("ImageReplace"), "item" -> Json.toJson(image)(imageReplaceFormat)))
       case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
     }
   }

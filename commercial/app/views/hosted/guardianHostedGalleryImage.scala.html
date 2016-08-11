@@ -1,0 +1,19 @@
+@import common.commercial.hosted.HostedGalleryImage
+@import layout.ContentWidths.GalleryMedia
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@(image: HostedGalleryImage, content: String = "")
+    <div class="js-hosted-gallery-image hosted-gallery__image hosted-tone--dark">
+        <div class="hosted-gallery__image-sizer js-hosted-gallery-image-sizer">
+            @fragments.image(
+                ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(image.url)), 0))),
+                Seq("gallery__img"),
+                GalleryMedia.inline,
+                image.title
+            )
+            @Html(content)
+        </div>
+    </div>
+

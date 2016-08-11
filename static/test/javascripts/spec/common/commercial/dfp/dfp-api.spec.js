@@ -1,7 +1,6 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
     'qwery',
     'Promise',
     'common/utils/$',
@@ -10,7 +9,6 @@ define([
 ], function (
     bean,
     bonzo,
-    fastdom,
     qwery,
     Promise,
     $,
@@ -27,8 +25,7 @@ define([
                     '<div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>\
                     <div id="dfp-ad-script-slot" class="js-ad-slot" data-name="script-slot" data-mobile="300,50|320,50" data-refresh="false"></div>\
                     <div id="dfp-ad-already-labelled" class="js-ad-slot ad-label--showing" data-name="already-labelled" data-mobile="300,50|320,50"  data-tablet="728,90"></div>\
-                    <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>\
-                    <div id="dfp-ad-gu-style" class="gu-style" data-name="gu-style" data-mobile="300,250" data-desktop="300,250"></div>'
+                    <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>'
                 ]
             },
             makeFakeEvent = function (id, isEmpty) {
@@ -43,7 +40,15 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, config, detect, commercialFeatures;
+            dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
+
+        function reset() {
+            dfpEnv.firstAdDisplayed = false;
+            dfpEnv.firstAdRendered = false;
+            dfpEnv.advertIds = {};
+            dfpEnv.adverts = [];
+            dfpEnv.advertsToRefresh = [];
+        }
 
         beforeEach(function (done) {
 
@@ -51,18 +56,34 @@ define([
                 // No implementation
             });
 
+            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
             injector.require([
-                'common/modules/commercial/dfp/dfp-api',
+                'common/modules/commercial/dfp/init',
+                'common/modules/commercial/dfp/load',
+                'common/modules/commercial/dfp/get-adverts',
+                'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
-                'common/modules/commercial/dfp/ophan-tracking',
+                'common/modules/commercial/dfp/private/ophan-tracking',
                 'common/modules/commercial/commercial-features',
-                'common/utils/detect'
+                'common/utils/detect',
+                'common/modules/commercial/close-disabled-slots',
+                'common/modules/commercial/dfp/private/dfp-env'
             ], function () {
-                dfp = arguments[0];
-                config = arguments[1];
-                var ophanTracking = arguments[2];
-                commercialFeatures = arguments[3];
-                detect = arguments[4];
+                dfp = {
+                    init: arguments[0],
+                    load: arguments[1],
+                    getAdverts: arguments[2],
+                    getCreativeIDs: arguments[3]
+                };
+                config = arguments[4];
+                var ophanTracking = arguments[5];
+                commercialFeatures = arguments[6];
+                detect = arguments[7];
+                closeDisabledSlots = arguments[8];
+                dfpEnv = arguments[9];
 
                 config.switches = {
                     commercialComponents: true,
@@ -80,6 +101,9 @@ define([
                 };
                 config.images = {
                     commercial: {}
+                };
+                config.ophan = {
+                    pageViewId: 'dummyOphanPageViewId'
                 };
 
                 fixtures.render(fixturesConfig);
@@ -106,7 +130,14 @@ define([
                     })
                 };
                 window.googletag = {
-                    cmd: [],
+                    cmd: {
+                        push: function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            args.forEach(function(command) {
+                                command();
+                            });
+                        }
+                    },
                     pubads: function () {
                         return pubAds;
                     },
@@ -132,10 +163,10 @@ define([
         });
 
         afterEach(function () {
-            dfp.reset();
+            reset();
             fixtures.clean(fixturesConfig.id);
             $style.remove();
-            window.googletag = null;
+            // window.googletag = null;
         });
 
         it('should exist', function () {
@@ -157,26 +188,25 @@ define([
         });
 
         it('should get the slots', function (done) {
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
+            dfp.init().then(dfp.load).then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
-                var slots = dfp.getAdverts();
-                expect(Object.keys(slots).length).toBe(3);
-                for (var slotId in slots) {
-                    expect(slotId).not.toBe('dfp-ad-html-slot');
-                }
-                done();
-            });
-            window.googletag.cmd.forEach(function (func) { func(); });
+            closeDisabledSlots.init()
+                .then(dfp.init)
+                .then(dfp.load)
+                .then(function () {
+                    var slots = dfp.getAdverts();
+                    expect(Object.keys(slots).length).toBe(3);
+                    for (var slotId in slots) {
+                        expect(slotId).not.toBe('dfp-ad-html-slot');
+                    }
+                    done();
+                });
         });
 
         it('should set listeners', function (done) {
@@ -184,13 +214,10 @@ define([
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should define slots', function (done) {
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
-
+            dfp.init().then(dfp.load).then(function () {
                 [
                     ['dfp-ad-html-slot', [[300, 50]], [[[0, 0], [[300, 50]]]], 'html-slot'],
                     ['dfp-ad-script-slot', [[300, 50], [320, 50]], [[[0, 0], [[300, 50], [320, 50]]]], 'script-slot'],
@@ -208,7 +235,6 @@ define([
 
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should display ads', function (done) {
@@ -216,35 +242,30 @@ define([
             detect.getBreakpoint = function () {
                 return 'wide';
             };
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
+            dfp.init().then(dfp.load).then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
                 expect(window.googletag.enableServices).toHaveBeenCalled();
                 expect(window.googletag.display).toHaveBeenCalled('dfp-ad-html-slot');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
+            dfp.init().then(dfp.load).then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         it('should expose ads IDs', function (done) {
-            var fakeEventOne = makeFakeEvent('dfp-ad-slot1'),
-                fakeEventTwo = makeFakeEvent('dfp-ad-slot2');
+            var fakeEventOne = makeFakeEvent('dfp-ad-html-slot'),
+                fakeEventTwo = makeFakeEvent('dfp-ad-script-slot');
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
-            dfp.init().then(dfp.loadAds).then(function () {
-                window.googletag.cmd.forEach(function (func) { func(); });
+            dfp.init().then(dfp.load).then(function () {
                 window.googletag.pubads().listener(fakeEventOne);
                 window.googletag.pubads().listener(fakeEventTwo);
 
@@ -255,19 +276,18 @@ define([
                 expect(result[1]).toEqual('2');
                 done();
             });
-            window.googletag.cmd.forEach(function (func) { func(); });
         });
 
         describe('pageskin loading', function () {
 
             it('should lazy load ads when there is no pageskin', function () {
                 config.page.hasPageSkin = false;
-                expect(dfp.shouldLazyLoad()).toBe(true);
+                expect(dfpEnv.shouldLazyLoad()).toBe(true);
             });
 
             it('should not lazy load ads when there is a pageskin', function () {
                 config.page.hasPageSkin = true;
-                expect(dfp.shouldLazyLoad()).toBe(false);
+                expect(dfpEnv.shouldLazyLoad()).toBe(false);
             });
 
         });
@@ -276,129 +296,16 @@ define([
 
             it('should send page level keywords', function () {
                 dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
                 expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
             });
 
             it('should send container level keywords', function (done) {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.init().then(dfp.loadAds).then(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
+                dfp.init().then(dfp.load).then(function () {
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 }).then(done).catch(done.fail);
-                window.googletag.cmd.forEach(function (func) { func(); });
             });
 
-        });
-
-        describe('labelling', function () {
-            var slotId = 'dfp-ad-html-slot';
-
-            afterEach(function () {
-                dfp.checkForBreakout.restore();
-            });
-
-            it('should be added', function (done) {
-                var $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve(''));
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent(slotId));
-                    fastdom.defer(10, function () {
-                        expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
-                        done();
-                    });
-                });
-            });
-
-            it('should not be added if data-label attribute is false', function () {
-                var $slot = $('#' + slotId).attr('data-label', false);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                window.googletag.pubads().listener(makeFakeEvent(slotId));
-                expect($('.ad-slot__label', $slot[0]).length).toBe(0);
-            });
-
-            it('should be added only once', function (done) {
-                var fakeEvent = makeFakeEvent(slotId),
-                    $slot = $('#' + slotId);
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('#' + slotId));
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(fakeEvent);
-                    window.googletag.pubads().listener(fakeEvent);
-
-                    fastdom.defer(10, function () {
-                        expect($('.ad-slot__label', $slot[0]).length).toBe(1);
-                        done();
-                    });
-                });
-            });
-
-            it('should not be added when ad is gu style type', function (done) {
-                var $slot = $('#dfp-ad-gu-style');
-                sinon.stub(dfp, 'checkForBreakout').returns(Promise.resolve('gu-style'));
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent('dfp-ad-gu-style'));
-                    fastdom.defer(10, function () {
-                        expect($('.ad-slot__label', $slot[0]).length).toBe(0);
-                        done();
-                    });
-                });
-            });
-        });
-
-        describe('breakout', function () {
-
-            var slotId = 'dfp-ad-html-slot',
-                createTestIframe = function (id, html) {
-                    var $frame = $.create('<iframe></iframe>')
-                        .attr({
-                            id: 'mock_frame',
-                            /*eslint-disable no-script-url*/
-                            src: 'javascript:"<html><body style="background:transparent"></body></html>"'
-                            /*eslint-enable no-script-url*/
-                        });
-                    $frame[0].onload = function () {
-                        this.contentDocument.body.innerHTML = html;
-                    };
-                    $frame.appendTo(qwery('#' + id)[0]);
-                };
-
-            it('should insert html', function (done) {
-                var html = '<div class="dfp-iframe-content">Some content</div>';
-                $('#' + slotId).attr('data-label', false);
-                createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
-                dfp.init();
-
-                fastdom.defer(function () {
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    window.googletag.pubads().listener(makeFakeEvent(slotId));
-
-                    fastdom.defer(function () {
-                        expect($('iframe', '#' + slotId).css('display')).toBe('none');
-                        done();
-                    });
-                });
-            });
-
-            // TODO: find a nice way to test this
-            xit('should run javascript', function () {
-                var str = 'This came from an iframe';
-                createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
-                dfp.init();
-                window.googletag.cmd.forEach(function (func) { func(); });
-                window.googletag.pubads().listener(makeFakeEvent(slotId));
-                expect(window.dfpModuleTestVar).toBe(str);
-            });
         });
     });
 });

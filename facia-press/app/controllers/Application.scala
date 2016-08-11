@@ -11,7 +11,8 @@ import services.ConfigAgent
 
 import scala.concurrent.Future
 
-object Application extends Controller with ExecutionContexts {
+class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress) extends Controller with ExecutionContexts {
+
   def index = Action {
     NoCache(Ok("Hello, I am the Facia Press."))
   }
@@ -21,7 +22,7 @@ object Application extends Controller with ExecutionContexts {
   }
 
   def generateLivePressedFor(path: String) = Action.async { request =>
-    LiveFapiFrontPress.getPressedFrontForPath(path)
+    liveFapiFrontPress.getPressedFrontForPath(path)
       .map(Json.toJson(_))
       .map(Json.prettyPrint)
       .map(Ok.apply(_))
@@ -41,17 +42,17 @@ object Application extends Controller with ExecutionContexts {
       Future.successful(NoCache(ServiceUnavailable(s"This service has been disabled by the switch: ${FaciaPressOnDemand.name}")))}
 
   def pressLiveForPath(path: String) = Action.async {
-    handlePressRequest(path, "live")(LiveFapiFrontPress.pressByPathId)
+    handlePressRequest(path, "live")(liveFapiFrontPress.pressByPathId)
   }
 
   def pressDraftForPath(path: String) = Action.async {
-    handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
+    handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)
   }
 
   def pressDraftForAll() = Action.async {
     ConfigAgent.getPathIds.foldLeft(Future.successful(List[(String, Result)]())){ case (lastFuture, path) =>
       lastFuture
-        .flatMap(resultList => handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
+        .flatMap(resultList => handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)
           .map(path -> _)
           .map(resultList :+ _))
     }.map { pressedPaths =>

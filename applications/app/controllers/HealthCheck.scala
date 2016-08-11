@@ -1,18 +1,20 @@
 package controllers
 
-import conf.AllGoodCachedHealthCheck
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import contentapi.SectionsLookUp
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent}
 
 import scala.concurrent.Future
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+  wsClient,
   9002,
-  "/books",
-  "/books/harrypotter",
-  "/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
-  "/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum?index=2",
-  "/world/video/2012/nov/20/australian-fake-bomber-sentenced-sydney-teenager-video"
+  NeverExpiresSingleHealthCheck("/books"),
+  NeverExpiresSingleHealthCheck("/books/harrypotter"),
+  NeverExpiresSingleHealthCheck("/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum"),
+  NeverExpiresSingleHealthCheck("/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum?index=2"),
+  NeverExpiresSingleHealthCheck("/world/video/2012/nov/20/australian-fake-bomber-sentenced-sydney-teenager-video")
 ) {
   override def healthCheck(): Action[AnyContent] = Action.async { request =>
     if (!SectionsLookUp.isLoaded()) {

@@ -2,11 +2,11 @@ package views
 
 import common.Edition
 import layout.ContentWidths
-import layout.ContentWidths.{Inline, Showcase, MainMedia, LiveBlogMedia}
+import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpEmbedCleaner, VideoEmbedCleaner, CmpParamCleaner, AmpAdCleaner}
+import views.support.cleaner.{AmpAdCleaner, AmpEmbedCleaner, CmpParamCleaner, VideoEmbedCleaner}
 
 object MainMediaWidths {
 
@@ -38,7 +38,7 @@ object BodyCleaner {
   def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
     implicit val edition = Edition(request)
 
-    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.section != "childrens-books-site"
+    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
 
     val cleaners = List(
@@ -61,13 +61,14 @@ object BodyCleaner {
       ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
+      HeroicVideos(article.isHeroic),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
-      ListIf(amp && shouldShowAds)(AmpAdCleaner(edition, request.uri, article))
+      ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
 
     withJsoup(BulletCleaner(html))(cleaners :_*)
   }

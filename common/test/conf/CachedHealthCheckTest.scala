@@ -2,20 +2,28 @@ package conf
 
 import common.ExecutionContexts
 import org.joda.time.DateTime
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.SingleServerSuite
+import test.{SingleServerSuite, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Random
 
-class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuite with ScalaFutures with ExecutionContexts {
+class CachedHealthCheckTest
+  extends WordSpec
+  with Matchers
+  with SingleServerSuite
+  with ScalaFutures
+  with ExecutionContexts
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   //Helper method to construct mock Results
-  def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: Duration = 10.seconds): HealthCheckResult = {
+  def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
       case 200 => new HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
@@ -27,11 +35,11 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
   def getHealthCheck(mockResults: List[HealthCheckResult], policy: HealthCheckPolicy)(testBlock: Future[Result] => Unit) = {
 
     // Create a CachedHealthCheck controller with mock results
-    val mockPaths: Seq[String] = mockResults.map(_.url)
+    val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
     val mockTestPort: Int = 9100
-    val controller = new CachedHealthCheck(policy, mockTestPort, mockPaths:_*) {
-      override val cache = new HealthCheckCache {
-        override def fetchResults(testPort: Int, paths: String*): Future[Seq[HealthCheckResult]] = {
+    val controller = new CachedHealthCheck(policy, wsClient, mockTestPort, mockHealthChecks:_*) {
+      override val cache = new HealthCheckCache(wsClient) {
+        override def fetchResults(testPort: Int, paths: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
           Future.successful(mockResults)
         }
       }
@@ -59,8 +67,8 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
       "cached result is expired" should {
         "503" in {
           val expiration = 5.seconds
-          val date = DateTime.now.minus(expiration.toMillis + 1)
-          val mockResults = List(mockResult(200, date, expiration))
+          val resultDate = DateTime.now.minus(expiration.toMillis + 1)
+          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Duration(expiration)))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be (503)
           }
@@ -82,6 +90,15 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
           }
         }
       }
+      "results which are never expiring" should {
+        "200" in {
+          val resultDate = DateTime.now.minus(scala.util.Random.nextLong) // random date in the past
+          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Never))
+          getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
+            status(response) should be (200)
+          }
+        }
+      }
     }
     "at least one request must be successful" when {
       "cache result is empty" should {
@@ -94,8 +111,8 @@ class CachedHealthCheckTest extends WordSpec with Matchers with SingleServerSuit
       "one cached result is successful but expired" should {
         "503" in {
           val expiration = 5.seconds
-          val date = DateTime.now.minus(expiration.toMillis + 1)
-          val mockResults = List(mockResult(200, date, expiration), mockResult(404))
+          val resultDate = DateTime.now.minus(expiration.toMillis + 1)
+          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Duration(expiration)), mockResult(404))
           getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
           }

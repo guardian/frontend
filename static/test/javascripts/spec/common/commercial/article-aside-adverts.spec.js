@@ -77,16 +77,19 @@ define([
 
         it('should have the correct size mappings', function (done) {
             articleAsideAdverts.init().then(function () {
-                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
+                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,600|fluid');
                 done();
             });
         });
 
-        it('should not display ad slot if disabled in commercial-feature-switches', function () {
+        it('should not display ad slot if disabled in commercial-feature-switches', function (done) {
             commercialFeatures.articleAsideAdverts = false;
 
-            expect(articleAsideAdverts.init()).toBe(false);
-            expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+            articleAsideAdverts.init().then(function (returned) {
+                expect(returned).toBe(false);
+                expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+                done();
+            });
         });
     });
 });

@@ -45,6 +45,7 @@
         max-height: 90%;
         background-color: #ffffff;
         box-sizing: border-box;
+        overflow-y: scroll;
 
         @include mq(tablet) {
             left: 50%;
@@ -53,6 +54,7 @@
             height: auto;
             margin-left: -$gs-column-width * 5;
             margin-top: 40px;
+            overflow-y: auto;
         }
     }
 
@@ -68,19 +70,18 @@
     }
 
     .survey-icon {
-        display: none;
         text-align: center;
         padding-top: 40px;
         background-color: #e3e3e3;
         line-height: 10px;
 
-        @include mq(tablet) {
-            display: block;
-        }
-
         svg {
-            width: 350px;
-            height: 226px;
+            width: 240px;
+            height: 154px;
+            @include mq(tablet) {
+                width: 350px;
+                height: 226px;
+            }
         }
     }
 

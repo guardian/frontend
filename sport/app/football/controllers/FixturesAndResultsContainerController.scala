@@ -7,7 +7,7 @@ import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
 import views.html.fragments.containers.facia_cards.{container => containerHtml}
 
-object FixturesAndResultsContainerController extends Controller {
+class FixturesAndResultsContainerController extends Controller {
   def renderContainer(teamId: String) = Action { implicit request =>
     Cached(60) {
       FixturesAndResults.makeContainer(teamId) match {
@@ -20,3 +20,5 @@ object FixturesAndResultsContainerController extends Controller {
     }
   }
 }
+
+object FixturesAndResultsContainerController extends FixturesAndResultsContainerController

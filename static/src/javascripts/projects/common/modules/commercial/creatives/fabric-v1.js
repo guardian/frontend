@@ -1,7 +1,7 @@
 define([
     'qwery',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/detect',
     'common/utils/template',
     'common/utils/mediator',
@@ -39,7 +39,7 @@ define([
     };
 
     FabricV1.prototype.create = function () {
-        this.$adSlot.addClass('ad-slot__fabric-v1 content__mobile-full-width');
+        this.$adSlot.addClass('ad-slot--fabric-v1 content__mobile-full-width');
 
         if (!fabricV1Tpl) {
             fabricV1Tpl = template(fabricV1Html);
@@ -68,7 +68,19 @@ define([
                 false
         };
 
-        fastdom.write(function () {
+        if (templateOptions.scrollbg) {
+            // update bg position
+            fastdom.read(this.updateBgPosition, this);
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
+        }
+
+        if (this.params.trackingPixel) {
+            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+        }
+
+        return fastdom.write(function () {
             this.$adSlot.append(fabricV1Tpl({data: merge(this.params, templateOptions)}));
             this.scrollingBg = $('.ad-scrolling-bg', this.$adSlot[0]);
             this.layer2 = $('.hide-until-tablet .fabric-v1_layer2', this.$adSlot[0]);
@@ -84,19 +96,8 @@ define([
                 bonzo(this.scrollingBg).css('background-attachment', 'fixed');
             }
 
+            return true;
         }, this);
-
-        if (templateOptions.scrollbg) {
-            // update bg position
-            fastdom.read(this.updateBgPosition, this);
-            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
-            // to be safe, also update on window resize
-            mediator.on('window:resize', this.updateBgPosition.bind(this));
-        }
-
-        if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-        }
     };
 
     FabricV1.prototype.updateBgPosition = function () {

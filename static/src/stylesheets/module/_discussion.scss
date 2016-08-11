@@ -17,11 +17,6 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 
-.discussion--hidden {
-    display: none;
-}
-
-
 .discussion--closed.discussion--empty {
     display: none;
 }
@@ -114,7 +109,8 @@ $avatarPadding: $gs-gutter / 2;
     margin: 0;
 }
 
-.d-discussion__size-message {
+.d-discussion__size-message,
+.d-discussion__message {
     @include fs-textSans(2);
     margin-bottom: $gs-baseline * 2 / 3;
     border-top: 1px solid $neutral-4;
@@ -124,6 +120,10 @@ $avatarPadding: $gs-gutter / 2;
     & + .d-comment {
         border-top: 0;
     }
+}
+
+.d-discussion__message--error {
+    color: $status-negative;
 }
 
 .discussion__heading {
@@ -692,9 +692,9 @@ $avatarPadding: $gs-gutter / 2;
     padding-left: $gs-baseline * 2;
     svg {
         fill: $guardian-brand;
-        height: 16px;
-        width: 16px;
-        left: 4px;
+        height: 14px;
+        width: 14px;
+        left: $gs-gutter / 2;
     }
 }
 
@@ -722,7 +722,6 @@ $comment-recommend-button-size: 19px;
     right: 0;
     top: $gs-baseline / 2;
     height: $comment-recommend-button-size;
-    z-index: 1;
 
     @include mq(desktop) {
         min-width: 28px;
@@ -836,12 +835,27 @@ $comment-recommend-button-size: 19px;
     position: absolute;
     bottom: $gs-baseline;
     .discussion--closed & {
-        display: none;
+        .d-comment__action--reply,
+        .d-comment__action-separator,
+        .d-comment__action-pick {
+            display: none;
+        }
+        .d-comment__action--share {
+            margin: 0;
+        }
     }
 }
 
+.d-comment__actions:hover {
+    opacity: 1;
+}
+
+.d-comment__actions--left {
+    bottom: .5rem;
+}
+
 .d-comment__action {
-    @include fs-textSans(1);
+    @include fs-textSans(3);
     display: inline-block;
     color: $news-default;
     font-weight: bold;
@@ -851,6 +865,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--reply {
     cursor: pointer;
+    margin-right: $gs-gutter / 4;
 
     &:hover {
         text-decoration: underline;
@@ -898,23 +913,66 @@ $comment-recommend-button-size: 19px;
     }
 }
 
+.d-comment__action--share {
+    vertical-align: middle;
+    margin-left: $gs-gutter / 4;
+
+    &:hover {
+        .sharing-text span:nth-child(2) {
+            text-decoration: underline;
+        }
+
+        .comment-facebook-icon,
+        .comment-twitter-icon {
+            transform: scale(1);
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .comment-facebook-icon {
+            transition: all .2s ease-in-out;
+        }
+
+        .comment-twitter-icon {
+            transition: all .2s .1s ease-in-out;
+        }
+    }
+}
+
+.sharing-text {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: $gs-gutter / 4;
+}
+
+.comment-share-icon {
+    fill: $guardian-brand;
+}
+
+.comment-share-icon svg {
+    vertical-align: middle;
+}
+
+.sharing-buttons {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.comment-facebook-icon,
+.comment-twitter-icon {
+    transform: scale(0);
+}
+
+.comment-facebook-icon {
+    transition: all .2s .1s ease-in-out;
+}
+
+.comment-twitter-icon {
+    transition: all .2s ease-in-out;
+}
+
 /* Report
    ======================================================= */
-
-.d-report-comment-form {
-    top: 0;
-    right: 0;
-    z-index: $zindex-content;
-    width: gs-span(4);
-    color: $neutral-1;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
-    border: 2px solid $neutral-6;
-    background: #ffffff;
-}
-
-.d-comment .d-report-comment-form {
-    position: absolute;
-}
 
 .d-report-comment__label,
 .d-report-comment__field {
@@ -937,6 +995,7 @@ $comment-recommend-button-size: 19px;
     margin-bottom: $gs-baseline / 2;
     width: auto;
 }
+
 
 /* Top Comments
    ========================================================================== */
@@ -1159,6 +1218,12 @@ $comment-recommend-button-size: 19px;
     .d-discussion__error-text {
         display: inline-block;
         margin-left: $gs-gutter * 1.2;
+
+        .tooltip-box & {
+            margin-left: 0;
+            margin-bottom: .25rem;
+        }
+
     }
     .i-alert { position: absolute; }
 }
@@ -1228,6 +1293,10 @@ $comment-recommend-button-size: 19px;
             padding-top: 0;
         }
     }
+}
+
+.discussion__comment-box--bottom--hidden {
+    display: none !important;
 }
 
 .d-comment-box__content {

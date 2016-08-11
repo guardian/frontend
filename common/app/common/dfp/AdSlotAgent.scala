@@ -62,30 +62,6 @@ trait AdSlotAgent {
     lineItems flatMap (_.creativeSizes)
   }
 
-  def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-
-    def targetsTopBelowNavSlot(lineItem: GuLineItem) = {
-      lineItem.targeting.customTargetSets exists { targetSet =>
-        targetSet.targets exists (_.isSlot("top-below-nav"))
-      }
-    }
-
-    def targetsEdition(lineItem: GuLineItem, edition: Edition) = {
-      val editions = lineItem.targeting.editions
-      editions.isEmpty || editions.contains(edition)
-    }
-
-    val isFront = adUnitWithoutRoot.endsWith("/front") || adUnitWithoutRoot.endsWith("/front/ng")
-
-    isFront && lineItemsBySlot.getOrElse(TopBelowNavSlot, Nil).exists { lineItem =>
-      isCurrent(lineItem) &&
-        targetsTopBelowNavSlot(lineItem) &&
-        targetsEdition(lineItem, edition) &&
-        targetsAdUnit(lineItem, adUnitWithoutRoot) &&
-        !(environmentIsProd && targetsAdTest(lineItem))
-    }
-  }
-
   def omitMPUsFromContainers(pageId: String, edition: Edition): Boolean = {
 
     def toPageId(url: String): String = new URI(url).getPath.tail
@@ -104,7 +80,3 @@ trait AdSlotAgent {
 sealed abstract class AdSlot(val name: String)
 
 case object TopAboveNavSlot extends AdSlot("top-above-nav")
-
-case object TopBelowNavSlot extends AdSlot("top-below-nav")
-
-case object TopSlot extends AdSlot("top")

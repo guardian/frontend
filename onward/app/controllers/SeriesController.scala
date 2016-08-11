@@ -27,7 +27,7 @@ case class Series(id: String, tag: Tag, trails: RelatedContent) {
  }
 }
 
-object SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)
@@ -108,6 +108,8 @@ object SeriesController extends Controller with Logging with Paging with Executi
       properties
     )(request)
 
-    renderFormat(response, response, 1)
+    renderFormat(response, response, 900)
   }
 }
+
+object SeriesController extends SeriesController

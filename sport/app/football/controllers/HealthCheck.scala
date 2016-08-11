@@ -1,9 +1,11 @@
 package football.controllers
 
-import conf.AllGoodCachedHealthCheck
+import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
+import play.api.libs.ws.WSClient
 
-object HealthCheck extends AllGoodCachedHealthCheck(
+class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+  wsClient,
   9013,
-  "/football/live",
-  "/football/premierleague/results"
+  NeverExpiresSingleHealthCheck("/football/live"),
+  NeverExpiresSingleHealthCheck("/football/premierleague/results")
 )

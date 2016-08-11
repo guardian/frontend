@@ -4,26 +4,23 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import layout.DedupedFrontResult
 import model.Cached.RevalidatableResult
-import model.{NoCache, Cached}
-import play.Play
+import model.{Cached, NoCache}
 import play.api.libs.json.{JsError, JsSuccess}
-import play.api.libs.ws.WS
-import play.api.mvc.Controller
+import play.api.libs.ws.WSClient
+import play.api.mvc.{Action, Controller}
 import services.ConfigAgent
 
-object WhatIsDeduped extends Controller with Logging with ExecutionContexts {
+class WhatIsDeduped(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
- import play.api.Play.current
-
-   def index() = AuthActions.AuthActionTest { implicit request =>
+   def index() = Action { implicit request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted
      Cached(60)(RevalidatableResult.Ok(views.html.dedupePathsList(Configuration.environment.stage, paths)))
    }
 
-   def dedupedFor(path: String) = AuthActions.AuthActionTest.async { implicit request =>
-     val domain = if (Play.isDev) "http://localhost:9000" else Configuration.ajax.url
+   def dedupedFor(path: String) = Action.async { implicit request =>
+     val domain = Configuration.ajax.url
      val url = s"$domain/$path/deduped.json"
-     WS.url(url).get().map { response =>
+     wsClient.url(url).get().map { response =>
        response.json.validate[DedupedFrontResult] match {
          case JsSuccess(dedupedFrontResult, _) =>
            Cached(60)(RevalidatableResult.Ok(views.html.dedupedOnPath(Configuration.environment.stage, dedupedFrontResult)))

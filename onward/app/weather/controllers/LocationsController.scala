@@ -13,9 +13,10 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 import scalaz.std.option.optionInstance.tuple3
 
-object LocationsController extends Controller with ExecutionContexts with Logging {
+class LocationsController(weatherApi: WeatherApi) extends Controller with ExecutionContexts with Logging {
+
   def findCity(query: String) = Action.async { implicit request =>
-    WeatherApi.searchForLocations(query) map { locations =>
+    weatherApi.searchForLocations(query) map { locations =>
       Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
     }
   }
@@ -49,7 +50,7 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
           case Some(latitudeLongitude) =>
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
-            WeatherApi.getNearestCity(latitudeLongitude) map { location =>
+            weatherApi.getNearestCity(latitudeLongitude) map { location =>
               Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
                 // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
                 // given how fuzzy geolocation by IP is.
@@ -59,7 +60,7 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
 
           case None =>
             log.warn(s"Could not find $city, $region, $country in database, trying text search")
-            WeatherApi.searchForLocations(city) map { locations =>
+            weatherApi.searchForLocations(city) map { locations =>
               val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
               val weatherCity = cities.headOption.getOrElse(cityFromRequestEdition)
 

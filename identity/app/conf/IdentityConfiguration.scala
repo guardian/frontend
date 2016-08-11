@@ -5,7 +5,9 @@ import com.gu.email.exacttarget.ExactTargetFactory
 import java.net.URI
 import utils.SafeLogging
 
-class IdentityConfiguration extends GuardianConfiguration("frontend", webappConfDirectory = "env") with SafeLogging {
+class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
+
+  import GuardianConfiguration._
 
   object exacttarget {
     lazy val factory = for {

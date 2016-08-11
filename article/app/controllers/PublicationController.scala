@@ -1,24 +1,23 @@
 package controllers
 
-import com.google.inject.Inject
 import common.{ExecutionContexts, Logging}
 import implicits.{Dates, ItemResponses}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller}
 import services._
-import javax.inject.Singleton
 
 import scala.concurrent.Future
 
-@Singleton
-class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = NewspaperBookTagAgent,
-                                       bookSectionAgent: NewspaperBookSectionTagAgent = NewspaperBookSectionTagAgent)
-                              extends Controller
-                              with ExecutionContexts
-                              with ItemResponses
-                              with Dates
-                              with Logging {
+class PublicationController(
+  bookAgent: NewspaperBookTagAgent,
+  bookSectionAgent: NewspaperBookSectionTagAgent,
+  articleController: ArticleController
+) extends Controller
+  with ExecutionContexts
+  with ItemResponses
+  with Dates
+  with Logging {
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
@@ -51,9 +50,8 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
       } else {
         s"$publication/${urlFormat(reqDate)}"
       }
-      ArticleController.renderItem(newPath)
+      articleController.renderItem(newPath)
     }
-
   }
 
   private def bookSectionTagExists(publication: String, tag: String) = {
@@ -66,5 +64,3 @@ class PublicationController @Inject() (bookAgent: NewspaperBookTagAgent = Newspa
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }
-
-object PublicationController extends PublicationController(NewspaperBookTagAgent, NewspaperBookSectionTagAgent)

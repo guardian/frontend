@@ -1,32 +1,54 @@
-@import model.liveblog.KeyEventData
-@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import _root_.liveblog.KeyEventData
+@import model.Badges.badgeFor
+@import model.ArticleSchemas
+@import _root_.liveblog.Canonical
+
+@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
 @import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
 @import views.support.TrailCssClasses.toneClass
+@import _root_.liveblog.SinceBlockId
+
+@* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
+@isAmpAndStructuredAsNewsArticle() = @{
+    amp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
+}
+@schemaType(page: LiveBlogPage) = @{
+    if(isAmpAndStructuredAsNewsArticle()) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
+}
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
+
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
-        itemscope itemtype="@article.metadata.schemaType" role="main">
+        itemscope itemtype="@schemaType(model)" role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
+        @if(isAmpAndStructuredAsNewsArticle()) {
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                    <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
+                </div>
+            </div>
+        }
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
                       @if(ArticleBadgesSwitch.isSwitchedOn) {
-                          @if(article.content.tags.isElection) { content__head--election }
-                          @if(article.content.tags.isUSElection) { us-election }
-                          @if(article.content.tags.isAusElection) { aus-election }
+                          @badgeFor(article).map { badge => content__head--is-badged
+                              @badge.classModifier.map(modifier => s"content__head--$modifier")
+                          }
                       }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-                        @fragments.meta.metaInline(article)
+                        @fragments.meta.metaInline(article, amp)
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
                     </div>
                 </div>
@@ -37,9 +59,14 @@
                     <div class="content__main-column content__main-column--liveblog">
                         @fragments.standfirst(article)
 
-                        <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.fields.isLive) {<span class="blog__live live-pulse-icon flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
-                        </div>
+                        @if(!amp) {
+                            <div class="content__updated-container content__updated-container--liveblog">
+                                @if(article.fields.isLive) {
+                                    <span class="blog__live live-pulse-icon flashing-image">LIVE</span>
+                                }
+                                Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -50,7 +77,7 @@
                     <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
                     <div class="js-cricket-score"></div>
 
-                    @fragments.mainMedia(article)
+                    @fragments.mainMedia(article, amp)
 
                     @fragments.witnessCallToAction(article.content)
 
@@ -64,10 +91,24 @@
                                 @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
-                                            @fragments.dropdown("Key events", Some("key-events"), true) {
-                                                <ul class="timeline js-live-blog__timeline u-unstyled">
+                                            @if(amp) {
+                                                <amp-accordion class="timeline">
+                                                    <section>
+                                                        <h2 class="timeline__header">
+                                                            Key events
+                                                            @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
+                                                        </h2>
+                                                        <ul class="timeline__items">
+                                                            @views.html.liveblog.keyEvents(LinkTo{"/" + article.metadata.id}, KeyEventData(article.content.fields.blocks, timezone))
+                                                        </ul>
+                                                    </section>
+                                                </amp-accordion>
+                                            } else {
+                                                @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                    <ul class="timeline js-live-blog__timeline u-unstyled">
                                                     @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
-                                                </ul>
+                                                    </ul>
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -78,38 +119,24 @@
                         <div class="js-components-container"></div>
                     </div>
 
-                    @fragments.dropdown("Live feed", Some("live-feed"), true) {
-                        <div class="js-article__container" data-component="body">
-                            <div class="toast__space-reserver">
-                                <div id="toast__tofix" class="toast__container">
-                                    <button class="toast__button toast__button--closed button button--large">
-                                        <span class="toast__text"></span>
-                                        @fragments.inlineSvg("refresh", "icon", List(""))
-                                    </button>
-                                </div>
-                            </div>
-                            @if(model.currentPage.currentPage.isArchivePage) {
-                                @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-                            }
-                            <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="@article.mostRecentBlock" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                                @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
-                            </div>
-                            @* Remove LiveFilter and the fragment once Toast comes out of AB test status *@
-                            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-                        </div>
-
+                    @if(amp) {
+                        @views.html.liveblog.liveBlogBodyContentAMP(model)
                         @fragments.submeta(article)
-
                         <div class="after-article js-after-article"></div>
-
                         <div class="js-bottom-marker"></div>
+                    } else {
+                        @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                            @views.html.liveblog.liveBlogBodyContent(model)
+                            @fragments.submeta(article)
+                            <div class="after-article js-after-article"></div>
+                            <div class="js-bottom-marker"></div>
+                        }
                     }
                 </div>
 
                 <div class="content__secondary-column" aria-hidden="true">
                     <div class="ad-slot-container js-ad-slot-container"></div>
-                    @if(model.related.hasStoryPackage) {
+                    @if(model.related.hasStoryPackage && !amp) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
@@ -134,7 +161,9 @@
         </div>
     </article>
 
-    @fragments.contentFooter(article, model.related)
-
+    @if(!amp) {
+        @fragments.contentFooter(article, model.related)
     }
+
 </div>
+}

@@ -1,0 +1,26 @@
+@import common.commercial.hosted.HostedGalleryPage
+@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextGalleries: List[HostedGalleryPage], backgroundCss: String = "",  borderCss: String = "", textCss: String = "")
+    <div class="hosted-gallery__oj js-hosted-gallery-oj">
+        <div class="hosted-gallery__oj-cta @borderCss">
+            <div class="hosted-gallery__cta-title">
+                @{ctaText}
+            </div>
+            <a class="hosted-gallery__cta-link @backgroundCss" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
+                @{buttonText} @fragments.inlineSvg("external-link", "icon")
+            </a>
+        </div>
+        @for(gallery <- nextGalleries){
+            <a href="@{gallery.pageUrl}" class="hosted-gallery__oj-next-gallery @borderCss">
+                <div class="hosted-gallery__next-gallery-title">
+                    <div class="hosted-gallery__oj-sub-header @textCss">
+                        More
+                    </div>
+                    <div class="hosted-gallery__cta-title">
+                        @{gallery.title}
+                    </div>
+                </div>
+                <img class="hosted-gallery__next-gallery-image" src="@gallery.images.head.url"/>
+            </a>
+        }
+    </div>
+

@@ -1,129 +1,121 @@
 /*global google*/
 define([
-    'common/utils/ajax',
-    'common/utils/$',
+    'common/utils/fetch-json',
     'lodash/collections/groupBy',
     'lodash/arrays/flatten',
     'lodash/collections/pluck',
     'lodash/arrays/first',
     'lodash/arrays/last',
-    'lodash/collections/forEach',
-    'lodash/collections/reduce',
     'lodash/objects/values'
 ], function (
-    ajax,
-    $,
+    fetchJson,
     groupBy,
     flatten,
     pluck,
     first,
     last,
-    forEach,
-    reduce,
     values
 ) {
     function initialise() {
-        var pingdom = document.getElementById('pingdom');
-        ajax({
-            url: '/radiator/pingdom',
-            type: 'json',
-            crossOrigin: false
-        }).then(
-            function (status) {
-                status.checks.filter(function (check) {
-                    return /elb|host|cdn|rss/.test(check.name.toLowerCase());
-                }).forEach(function (check) {
-                    var li = document.createElement('li');
-                    li.className = check.status;
-                    li.textContent = check.name;
-                    li.setAttribute('title', check.name);
-                    pingdom.appendChild(li);
-                });
-            }
-        );
+        fetchJson('//' + location.host + '/radiator/pingdom', {
+            mode: 'cors'
+        })
+        .then(function (status) {
+            var pingdom = document.getElementById('pingdom');
+            status.checks.filter(function (check) {
+                return /elb|host|cdn|rss/.test(check.name.toLowerCase());
+            }).forEach(function (check) {
+
+                var li = document.createElement('li');
+                li.className = check.status;
+                li.textContent = check.name;
+                li.setAttribute('title', check.name);
+
+                var link = document.createElement('a');
+                link.href = 'https://my.pingdom.com/reports/uptime#check=' + check.id;
+                link.appendChild(li);
+
+                pingdom.appendChild(link);
+            });
+        });
 
         // riff raff - requires you to be on the guardian network
-        ajax({
-            url: 'https://riffraff.gutools.co.uk/api/history?projectName=dotcom%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
-            type: 'jsonp',
-            crossOrigin: true
-        }).then(
-            function (deployments) {
-
-                // a hash of the last deployment each project
-                var latestDeployments = { 'CODE': {}, 'PROD': {}};
-                deployments.response.results.filter(function (deployment) {
-
-                    return /^dotcom:/.test(deployment.projectName);
-
-                }).forEach(function (deploy) {
-
-                    var project = deploy.projectName;
-                    var stage = deploy.stage;
-                    if (stage && latestDeployments[stage] && !latestDeployments[stage].hasOwnProperty(project)) {
-                        latestDeployments[stage][project] = deploy;
-                    }
-                });
-
-                function renderDeployer(stage, revision, deployer) {
-                    var targetId = stage + '-' + revision;
-
-                    if (!document.getElementById(targetId)) {
-                        var list = document.getElementById('deployers' + stage);
-                        var li = document.createElement('li');
-                        li.setAttribute('id', targetId);
-                        list.appendChild(li);
-                        ajax({
-                            url: '/radiator/commit/' + revision,
-                            type: 'json'
-                        }).then(
-                            function (rev) {
-                                if (rev.commit) {
-                                    li.innerHTML = rev.commit.author.name + ' <small>(deployed by ' + deployer + ')</small>';
-                                }
-                            }
-                        );
-                    }
+        var apiKey = document.getElementById('riffraff-api-key').value;
+        var callback = 'stupidJSONP' + Math.floor(Math.random() * 1000);
+        window[callback] = function (deployments) {
+            // a hash of the last deployment each project
+            var latestDeployments = { 'CODE': {}, 'PROD': {}};
+            deployments.response.results.filter(function (deployment) {
+                return deployment.projectName.indexOf('dotcom:') === 0;
+            }).forEach(function (deploy) {
+                var project = deploy.projectName;
+                var stage = deploy.stage;
+                if (stage && latestDeployments[stage] && !latestDeployments[stage].hasOwnProperty(project)) {
+                    latestDeployments[stage][project] = deploy;
                 }
+            });
 
-                function renderDeploys(stage, target) {
-                    Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
-                        var d  = latestDeployments[stage][deployment];
-                        var nameAbbreviation = d.projectName.substr(7, 4); //start at 7 to drop 'dotcom: '
+            function renderDeployer(stage, revision, deployer) {
+                var targetId = stage + '-' + revision;
 
-                        var link = document.createElement('a');
-                        link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
-                        target.appendChild(link);
-
-                        var li = document.createElement('li');
-                        li.className = d.status;
-                        li.innerHTML = nameAbbreviation + ' ' + d.build;
-                        li.setAttribute('title', d.projectName);
-                        link.appendChild(li);
-
-                        if (latestDeployments.CODE[deployment] && stage === 'PROD' && d.status === 'Completed') {
-                            var codeBuild = (latestDeployments.CODE[deployment] || {}).build;
-                            if (codeBuild !== d.build) {
-                                li.className = 'Behind';
+                if (!document.getElementById(targetId)) {
+                    var list = document.getElementById('deployers' + stage);
+                    var li = document.createElement('li');
+                    li.setAttribute('id', targetId);
+                    list.appendChild(li);
+                    fetchJson('//' + location.host + '/radiator/commit/' + revision).then(
+                        function (rev) {
+                            if (rev.commit) {
+                                li.innerHTML = rev.commit.author.name + ' <small>(deployed by ' + deployer + ')</small>';
                             }
                         }
-
-                        if (d.status !== 'Completed') {
-                            renderDeployer(stage, d.tags.vcsRevision, d.deployer);
-                        }
-                    });
+                    );
                 }
-                /*global riffraffCODE, riffraffPROD*/
-                renderDeploys('CODE', riffraffCODE);
-                renderDeploys('PROD', riffraffPROD);
             }
-        );
+
+            function renderDeploys(stage, target) {
+                Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
+                    var d  = latestDeployments[stage][deployment];
+                    var nameAbbreviation = d.projectName.substr(7, 4); //start at 7 to drop 'dotcom: '
+
+                    var link = document.createElement('a');
+                    link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
+                    link.innerHTML = nameAbbreviation + ' ' + d.build;
+
+                    var li = document.createElement('li');
+                    li.className = d.status;
+                    li.setAttribute('title', d.projectName);
+                    li.appendChild(link);
+
+                    if (latestDeployments.CODE[deployment] && stage === 'PROD' && d.status === 'Completed') {
+                        var codeBuild = (latestDeployments.CODE[deployment] || {}).build;
+                        if (codeBuild !== d.build) {
+                            li.className = 'Behind';
+                        }
+                    }
+
+                    if (d.status !== 'Completed') {
+                        renderDeployer(stage, d.tags.vcsRevision, d.deployer);
+                    }
+
+                    target.appendChild(li);
+                });
+            }
+            renderDeploys('CODE', document.getElementById('riffraffCODE'));
+            renderDeploys('PROD', document.getElementById('riffraffPROD'));
+        };
+        var jsonpScript = document.createElement('script');
+        jsonpScript.src = 'https://riffraff.gutools.co.uk/api/history?' + [
+            'projectName=dotcom' + encodeURIComponent(':'),
+            'key=' + apiKey,
+            'pageSize=200',
+            'callback=' + callback
+        ].join('&');
+        document.body.appendChild(jsonpScript);
+
 
         // Page views
-        ajax({
-            url: '/ophan/pageviews',
-            type: 'json'
-        }).then(
+        fetchJson('//' + location.host + '/ophan/pageviews').then(
             function (data) {
 
                 var todayData = groupBy(flatten(pluck(data.seriesData, 'data')),
@@ -138,16 +130,19 @@ define([
                 // Build Graph
                 var graphData = [['time', 'pageviews']];
 
-                forEach(todayData, function (viewsBreakdown, timestamp) {
+                Object.keys(todayData).reduce(function (graphData, timestamp) {
                     var epoch = parseInt(timestamp, 10),
                         time  = new Date(epoch),
                         hours = ('0' + time.getHours()).slice(-2),
                         mins  = ('0' + time.getMinutes()).slice(-2),
                         formattedTime = hours + ': ' + mins,
-                        totalViews = reduce(viewsBreakdown, function (memo, entry) { return entry.count + memo; }, 0);
+                        totalViews = todayData[timestamp].reduce(function (memo, entry) {
+                            return entry.count + memo;
+                        }, 0);
 
                     graphData.push([formattedTime, totalViews]);
-                });
+                    return graphData;
+                }, graphData);
 
                 new google.visualization.LineChart(document.getElementById('pageviews'))
                     .draw(google.visualization.arrayToDataTable(graphData), {
@@ -166,23 +161,13 @@ define([
                     });
 
                 // Average pageviews now
-                var lastOphanEntry = reduce(last(values(todayData)),
-                    function (memo, entry) { return entry.count + memo; }, 0);
+                var lastOphanEntry = last(values(todayData)).reduce(function (memo, entry) {
+                    return entry.count + memo;
+                }, 0);
                 var viewsPerSecond = Math.round(lastOphanEntry / 60);
-                $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
+                document.querySelector('.pageviews-per-second').textContent = '(' + viewsPerSecond + ' views/sec)';
             }
         );
-
-        // "upgrade" build icons
-        $('.buildConfigurationName').each(function (build) {
-            var icon = $('img', build);
-            var success = icon.attr('src').indexOf('success.png') >= 0;
-            var link = $('a', build);
-            var buildName = link[0].innerText;
-            var status = success ? 'success' : 'failure';
-            icon.replaceWith('<div title="' + buildName + '" class="' + status + '">' + buildName + '</div>');
-            link.remove();
-        });
     }
 
     return {

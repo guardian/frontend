@@ -1,16 +1,15 @@
 define([
     'raven',
     'reqwest',
-    'common/utils/config',
-    'common/utils/get-property'
+    'common/utils/config'
 ], function (
     raven,
     reqwest,
-    config,
-    getProperty
+    config
 ) {
-    // This should no longer be used. Prefer the new 'ajax-promise' library instead, which is es6 compliant.
-    var ajaxHost = getProperty(config, 'page.ajaxUrl', '');
+    // This should no longer be used.
+    // Prefer the new 'common/utils/fetch' or 'common/utils/fetch-json' library instead, which are es6 compliant.
+    var ajaxHost = config.page.ajaxUrl || '';
 
     function ajax(params) {
         var r;
@@ -18,14 +17,6 @@ define([
         if (!params.url.match('^(https?:)?//')) {
             params.url = ajaxHost + params.url;
             params.crossOrigin = true;
-        }
-
-        if (!!config && config.page.section === 'money' && config.switches.imgix) {
-            if (params.data) {
-                params.data.inImgixTest = true;
-            } else {
-                params.data = { inImgixTest: true };
-            }
         }
 
         r = reqwest(params);

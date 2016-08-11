@@ -3,6 +3,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/template',
+    'text!common/views/commercial/badge.html',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -10,6 +11,7 @@ define([
     qwery,
     $,
     template,
+    badgeTpl,
     fixtures,
     Injector
 ) {
@@ -43,10 +45,7 @@ define([
                         header = 'Supported by';
                 }
                 return template(
-                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +
-                    '    <h3 class="ad-slot--paid-for-badge__header"><%=header%></h3>\n' +
-                    '    <p class="ad-slot--paid-for-badge__header"><%=sponsor%></p>\n' +
-                    '</div>',
+                    badgeTpl,
                     {
                         header: header,
                         sponsor: sponsor
@@ -58,9 +57,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/commercial/dfp/dfp-api': {
-                    addSlot: function () {}
-                }
+                'common/modules/commercial/dfp/add-slot': function () {}
             });
             injector.require([
                 'common/modules/commercial/badges',
@@ -94,10 +91,12 @@ define([
             expect(badges).toBeDefined();
         });
 
-        it('should not display ad slot if badges disabled in commercial features', function () {
+        it('should not display ad slot if badges disabled in commercial features', function (done) {
             commercialFeatures.badges = false;
-            expect(badges.init()).toBe(false);
-            expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            badges.init().then(function (res) {
+                expect(res).toBe(false);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
+            }).then(done);
         });
 
         describe('sponsored pages', function () {

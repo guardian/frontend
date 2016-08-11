@@ -13,7 +13,7 @@ import slices.Fixed
 
 import scala.concurrent.Future.{successful => unit}
 
-object MostViewedSocialController extends Controller with ExecutionContexts {
+class MostViewedSocialController extends Controller with ExecutionContexts {
   def renderMostViewed(socialContext: String) = Action.async { implicit request =>
     val mostPopularSocial = MostPopularSocialAutoRefresh.get
 
@@ -60,7 +60,7 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
             properties
           )(request)
 
-          renderFormat(facebookResponse, facebookResponse, 1)
+          renderFormat(facebookResponse, facebookResponse, 900)
         }
 
       case _ =>
@@ -68,3 +68,5 @@ object MostViewedSocialController extends Controller with ExecutionContexts {
     }
   }
 }
+
+object MostViewedSocialController extends MostViewedSocialController

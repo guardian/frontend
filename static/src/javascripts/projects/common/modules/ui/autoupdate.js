@@ -57,10 +57,10 @@ define([
         var toastContainer = qwery('.toast__container')[0];
 
         // Warning: these are re-assigned over time
-        var newBlocks;
         var currentUpdateDelay = options.minUpdateDelay;
-        var latestBlockId = 'block-' + $liveblogBody.data('most-recent-block');
-        var updating = false;
+        var latestBlockId = $liveblogBody.data('most-recent-block');
+        var unreadBlocksNo = 0;
+        var updateTimeoutId = undefined;
 
 
         var updateDelay = function (delay) {
@@ -85,13 +85,13 @@ define([
             });
         };
 
-        var toastButtonRefresh = function (count) {
+        var toastButtonRefresh = function () {
             fastdom.write(function () {
-                if (count > 0) {
-                    var updateText = (count > 1) ? ' new updates' : ' new update';
+                if (unreadBlocksNo > 0) {
+                    var updateText = (unreadBlocksNo > 1) ? ' new updates' : ' new update';
                     $toastButton.removeClass('toast__button--closed');
                     $(toastContainer).addClass('toast__container--open');
-                    $toastText.html(count + updateText);
+                    $toastText.html(unreadBlocksNo + updateText);
                 } else {
                     $toastButton.removeClass('loading').addClass('toast__button--closed');
                     $(toastContainer).removeClass('toast__container--open');
@@ -99,50 +99,92 @@ define([
             });
         };
 
-        var injectNewBlocks = function () {
-            if (!updating && newBlocks) {
-                updating = true;
-                // Clean up blocks before insertion
-                var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
-                var elementsToAdd;
+        var injectNewBlocks = function (newBlocks) {
+            // Clean up blocks before insertion
+            var resultHtml = $.create('<div>' + newBlocks + '</div>')[0];
+            var elementsToAdd;
 
-                fastdom.write(function () {
-                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
+            fastdom.write(function () {
+                bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                elementsToAdd = toArray(resultHtml.children);
 
-                    // Insert new blocks and animate
-                    $liveblogBody.prepend(elementsToAdd);
+                // Insert new blocks
+                $liveblogBody.prepend(elementsToAdd);
 
-                    if (detect.pageVisible()) {
-                        revealInjectedElements();
-                    }
+                mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
-                    toastButtonRefresh(0);
+                RelativeDates.init();
+                twitter.enhanceTweets();
+            });
+        };
 
-                    mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
-                    latestBlockId = $('.block').first().attr('id');
-
-                    newBlocks = '';
-
-                    RelativeDates.init();
-                    twitter.enhanceTweets();
-                }).then(function () {
-                    updating = false;
-                });
+        var displayNewBlocks = function () {
+            if (detect.pageVisible()) {
+                revealInjectedElements();
             }
+
+            unreadBlocksNo = 0;
+            toastButtonRefresh();
+        };
+
+        var checkForUpdates = function () {
+
+            if (updateTimeoutId != undefined) {
+                clearTimeout(updateTimeoutId);
+            }
+
+            var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
+            var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
+            var count = 0;
+
+            return ajax({
+                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
+                type: 'json',
+                method: 'get',
+                crossOrigin: true
+            }).then(function (resp) {
+                count = resp.numNewBlocks;
+
+                if (count > 0) {
+                    unreadBlocksNo += count;
+
+                    // updates notification bar with number of unread blocks
+                    mediator.emit('modules:autoupdate:unread', unreadBlocksNo);
+
+                    latestBlockId = resp.mostRecentBlockId;
+
+                    if (isLivePage) {
+                        injectNewBlocks(resp.html);
+                        if (scrolledPastTopBlock()) {
+                            toastButtonRefresh();
+                        } else {
+                            displayNewBlocks();
+                        }
+                    } else {
+                        toastButtonRefresh();
+                    }
+                }
+            }).always(function () {
+                if (count == 0 || currentUpdateDelay > 0) {
+                    updateDelay(currentUpdateDelay);
+                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+                } else {
+                    // might have been cached so check straight away
+                    updateTimeoutId = setTimeout(checkForUpdates, 1);
+                }
+            });
         };
 
         var setUpListeners = function () {
             bean.on(document.body, 'click', '.toast__button', function () {
                 if (isLivePage) {
                     fastdom.read(function () {
-                        scroller.scrollToElement(qwery('.block')[0], 300, 'easeOutQuad');
+                        scroller.scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
 
                         fastdom.write(function () {
                             $toastButton.addClass('loading');
                         }).then(function () {
-                            injectNewBlocks();
+                            displayNewBlocks();
                         });
                     });
                 } else {
@@ -151,51 +193,21 @@ define([
             });
 
             mediator.on('modules:toast__tofix:unfixed', function () {
-                if (isLivePage && newBlocks) {
+                if (isLivePage && unreadBlocksNo > 0) {
                     fastdom.write(function () {
                         $toastButton.addClass('loading');
                     }).then(function () {
-                        injectNewBlocks();
+                        displayNewBlocks();
                     });
                 }
             });
 
             mediator.on('modules:detect:pagevisibility:visible', function () {
-                revealInjectedElements();
-                currentUpdateDelay = options.minUpdateDelay;
-            });
-        };
-
-        var checkForUpdates = function () {
-            var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
-            var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
-
-            return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
-            }).then(function (resp) {
-                var count = resp.numNewBlocks;
-
-                if (count > 0) {
-                    // updates notification bar with number of unread blocks
-                    mediator.emit('modules:autoupdate:unread', count);
-
-                    if (isLivePage) {
-                        newBlocks = resp.html;
-                        if (scrolledPastTopBlock()) {
-                            toastButtonRefresh(count);
-                        } else {
-                            injectNewBlocks();
-                        }
-                    } else {
-                        toastButtonRefresh(count);
-                    }
+                if (unreadBlocksNo == 0) {
+                    revealInjectedElements();
                 }
-            }).then(function () {
-                updateDelay(currentUpdateDelay);
-                setTimeout(checkForUpdates, currentUpdateDelay);
+                currentUpdateDelay = 0; // means please get us fully up to date
+                checkForUpdates();
             });
         };
 

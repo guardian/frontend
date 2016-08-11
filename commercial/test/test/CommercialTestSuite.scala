@@ -3,7 +3,7 @@ package test
 import controllers.HealthCheck
 import model.commercial._
 import model.commercial.books._
-import org.scalatest.Suites
+import org.scalatest.{BeforeAndAfterAll, Suites}
 
 class CommercialTestSuite extends Suites (
   new controllers.commercial.TravelOffersControllerTest,
@@ -12,14 +12,13 @@ class CommercialTestSuite extends Suites (
   new jobs.JobTest,
   new events.EventbriteMasterclassFeedParsingTest,
   new events.SingleEventbriteMasterclassParsingTest,
-  new money.CreditCardsFeedTest,
-  new money.CurrentAccountsFeedTest,
-  new money.SavingsFeedTest,
   new soulmates.SoulmatesFeedTest,
   new LookupTest,
   new BookFinderTest,
   new BookTest
-  ) with SingleServerSuite {
+) with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  override lazy val port: Int = HealthCheck.testPort
+  override lazy val port: Int = new HealthCheck(wsClient).testPort
 }

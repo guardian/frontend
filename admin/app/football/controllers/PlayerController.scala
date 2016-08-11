@@ -2,32 +2,29 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
-import football.services.GetPaClient
-import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
+import play.api.Mode
+import football.services.PaFootballClient
+import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
-import common.{JsonComponent, ExecutionContexts}
+import common.{ExecutionContexts, JsonComponent, Logging}
 import org.joda.time.LocalDate
 import football.model.PA
 import scala.concurrent.Future
-import model.{Cors, NoCache, Cached}
-import play.api.libs.json.{JsString, JsArray, JsObject}
+import model.{Cached, Cors, NoCache}
+import play.api.libs.json.{JsArray, JsObject, JsString}
 import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
+import play.api.libs.ws.WSClient
 
+class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
 
-object PlayerController extends Controller with ExecutionContexts with GetPaClient with Requests {
-
-  def playerIndex = AuthActions.AuthActionTest.async { implicit request =>
-    for {
-      competitions <- client.competitions.map(PA.filterCompetitions)
-      competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
-      allTeams = competitionTeams.flatten.distinct
-    } yield {
-      Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, allTeams)))
+  def playerIndex = Action.async { implicit request =>
+    fetchCompetitionsAndTeams.map {
+      case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
     }
   }
 
-  def redirectToCard = AuthActions.AuthActionTest { request =>
+  def redirectToCard = Action { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
@@ -44,7 +41,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
   def playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, competitionId: String)
         = playerCardCompetition(cardType, playerId, teamId, competitionId)
 
-  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
       competitions.find(_.competitionId == competitionId).fold(Future.successful(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))) { competition =>
         for {
@@ -63,7 +60,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       = playerCardDate(cardType, playerId, teamId, startDateStr)
 
 
-  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = Action.async { implicit request =>
     val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
     for {
       playerProfile <- client.playerProfile(playerId)
@@ -101,7 +98,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def squad(teamId: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def squad(teamId: String) = Action.async { implicit request =>
     for {
       squad <- client.squad(teamId)
     } yield {

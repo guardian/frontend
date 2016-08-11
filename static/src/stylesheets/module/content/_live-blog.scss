@@ -229,6 +229,10 @@ $block-padding-right: $gs-gutter;
 .blog .from-content-api {
 
     .block-title {
+        @include fs-header(2);
+        @include mq(tablet) {
+            @include fs-header(3, true);
+        }
         margin-top: ($gs-baseline/4)*-1;
         margin-bottom: $gs-baseline;
 

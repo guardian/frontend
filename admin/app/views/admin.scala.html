@@ -41,6 +41,7 @@
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear images</a></li>
                         <li><a href="@controllers.cache.routes.PageDecacheController.renderPageDecacheForm()">Clear page (content)</a></li>
                         <li><a href="@controllers.admin.routes.CssReportController.entry()">CSS Selector Usage</a></li>
+                        <li><a href="@Configuration.Elk.elasticsearchHeadUrl">Elasticsearch Head</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,7 +53,7 @@
                 <div class="panel-heading">Ops metrics (is the site healthy?).</div>
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@Configuration.Kibana.url">Kibana (Server side logs)</a></li>
+                        <li><a href="@Configuration.Elk.kibanaUrl">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>

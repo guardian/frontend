@@ -16,12 +16,10 @@ define([
             ]
         };
 
-        var $stickyAdBannerTestEl;
         var elements;
         beforeEach(function () {
-            $stickyAdBannerTestEl = fixtures.render(fixture);
+            fixtures.render(fixture);
             elements = {
-                $document: $stickyAdBannerTestEl,
                 $adBanner: $('.ad-banner'),
                 $adBannerInner: $('.ad-banner-inner'),
                 $header: $('.header'),
@@ -77,8 +75,8 @@ define([
 
                 // Stop the ad from overflowing while we transition
                 expect(elements.$adBanner.css('overflow')).toEqual('hidden');
-                expect(elements.$adBanner.css('transition')).toEqual('height 1s cubic-bezier(0, 0, 0, .985)');
-                expect(elements.$header.css('transition')).toEqual('margin-top 1s cubic-bezier(0, 0, 0, .985)');
+                expect(elements.$adBanner.css('transition')).toEqual('height 1s cubic-bezier(0, 0, 0, 0.985)');
+                expect(elements.$header.css('transition')).toEqual('margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
 
                 expect(elements.window.scrollTo.callCount).toEqual(0);
             });
@@ -93,8 +91,8 @@ define([
                 };
                 newSticky.render(elements, state);
 
-                expect(elements.$adBanner.css('transition')).toEqual(undefined);
-                expect(elements.$header.css('transition')).toEqual(undefined);
+                expect(elements.$adBanner.css('transition')).toEqual('all 0s ease 0s');
+                expect(elements.$header.css('transition')).toEqual('all 0s ease 0s');
 
                 expect(elements.window.scrollTo).toHaveBeenCalledWith(0, 201);
             });

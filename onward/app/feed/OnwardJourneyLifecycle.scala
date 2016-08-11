@@ -1,22 +1,26 @@
 package feed
 
-import common.{LifecycleComponent, AkkaAsync, Jobs}
+import app.LifecycleComponent
+import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class OnwardJourneyLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class OnwardJourneyLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     stop()
   }}
 
   override def start(): Unit = {
-    Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
-    Jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
+    jobs.deschedule("OnwardJourneyAgentsRefreshJob")
+    jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
 
     // fire every min
-    Jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
+    jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
       GeoMostPopularAgent.refresh()
@@ -26,11 +30,11 @@ class OnwardJourneyLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Ex
     }
 
     // fire every hour
-    Jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
+    jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
       DayMostPopularAgent.refresh()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
       GeoMostPopularAgent.refresh()
@@ -42,7 +46,7 @@ class OnwardJourneyLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: Ex
   }
 
   def stop(): Unit = {
-    Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
-    Jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
+    jobs.deschedule("OnwardJourneyAgentsRefreshJob")
+    jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
   }
 }

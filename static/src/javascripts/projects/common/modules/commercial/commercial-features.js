@@ -17,15 +17,10 @@ define([
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
     function CommercialFeatures() {
-        var isSSL =
-            config.page.isSSL &&
-            config.page.section !== 'admin';
-
         // this is used for SpeedCurve tests
         var noadsUrl = location.getHash().match(/[#&]noads(&.*)?$/);
 
         var externalAdvertising =
-            !isSSL &&
             !noadsUrl &&
             !userPrefs.isOff('adverts');
 
@@ -38,6 +33,8 @@ define([
         var isArticle = config.page.contentType === 'Article';
 
         var isLiveBlog = config.page.isLiveBlog;
+
+        var isHosted = config.page.tones === 'Hosted';
 
         var isMatchReport = config.hasTone('Match reports');
 
@@ -57,7 +54,6 @@ define([
 
         this.topBannerAd =
             this.dfpAdvertising &&
-            !userFeatures.isAdfree() &&
             !isMinuteArticle;
 
         this.articleBodyAdverts =
@@ -65,7 +61,7 @@ define([
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
-            !userFeatures.isAdfree() &&
+            !isHosted &&
             switches.standardAdverts;
 
         this.articleAsideAdverts =
@@ -73,24 +69,20 @@ define([
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            !userFeatures.isAdfree() &&
             switches.standardAdverts;
 
         this.sliceAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
-            !userFeatures.isAdfree() &&
             switches.standardAdverts;
 
         this.popularContentMPU =
             this.dfpAdvertising &&
-            !userFeatures.isAdfree() &&
             !isMinuteArticle;
 
         this.videoPreRolls =
             externalAdvertising &&
             !sensitiveContent &&
-            !userFeatures.isAdfree() &&
             switches.videoAdverts;
 
         this.frontCommercialComponents =
@@ -120,7 +112,6 @@ define([
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
-            !userFeatures.isAdfree() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
@@ -130,7 +121,6 @@ define([
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
                 return !adblockUsed &&
-                    detect.getBreakpoint() !== 'mobile' &&
                     isArticle &&
                     !userFeatures.isPayingMember();
             })

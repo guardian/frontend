@@ -4,7 +4,7 @@ import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-object TravelOffersController extends Controller with implicits.Requests {
+class TravelOffersController extends Controller with implicits.Requests {
 
   def renderTravel = Action { implicit request =>
 

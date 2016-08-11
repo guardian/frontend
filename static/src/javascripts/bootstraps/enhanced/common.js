@@ -16,7 +16,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
-    'common/modules/analytics/omniture',
+    'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
@@ -28,8 +28,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/commercial/sticky-top-banner',
-    'common/modules/commercial/hosted-about',
+    'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -52,7 +51,6 @@ define([
     'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
-    'common/modules/onward/mobile-labs-alerts',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach'
 ], function (
@@ -71,7 +69,7 @@ define([
     storage,
     Foresee,
     mediaListener,
-    omniture,
+    interactionTracking,
     register,
     ScrollDepth,
     logCss,
@@ -83,8 +81,7 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    stickyAdBanner,
-    hostedAbout,
+    newHeaderNavigation,
     Profile,
     Search,
     history,
@@ -97,7 +94,7 @@ define([
     Message,
     cookiesBanner,
     RelativeDates,
-    smartAppBanner,
+    customSmartAppBanner,
     Tabs,
     Toggles,
     userPrefs,
@@ -107,7 +104,6 @@ define([
     membershipMessages,
     email,
     emailArticle,
-    mobileLabAlerts,
     identity,
     forEach
 ) {
@@ -131,27 +127,7 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
-            },
-
-            initialiseStickyAdBanner: function () {
-                if (!(config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile')
-                    && !config.page.shouldHideAdverts
-                    && config.page.section !== 'childrens-books-site'
-                    && !config.tests.abNewHeaderVariant
-                    && (config.page.hasSuperStickyBanner
-                        || config.page.contentType !== 'Interactive'
-                        && config.page.contentType !== 'Crossword'
-                        && config.page.contentType !== 'Hosted'
-                        && !config.page.isImmersive
-                        && !config.page.isUsMinute
-                        && !config.page.isAdvertisementFeature
-                        )
-                ) {
-                    stickyAdBanner.initialise();
-                    config.page.hasStickyAdBanner = true;
-                } else {
-                    config.page.hasStickyAdBanner = false;
-                }
+                newHeaderNavigation();
             },
 
             showTabs: function () {
@@ -184,7 +160,7 @@ define([
             },
 
             loadAnalytics: function () {
-                omniture.go();
+                interactionTracking.init();
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
                         if (config.switches.scrollDepth) {
@@ -199,7 +175,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
             },
 
             cleanupLocalStorage : function () {
@@ -306,7 +282,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews && config.page.section !== 'identity') {
+                if (config.switches.breakingNews && config.page.section !== 'identity' && config.page.tones !== 'Hosted') {
                     breakingNews();
                 }
             },
@@ -364,15 +340,6 @@ define([
                 });
             },
 
-            mobileLabsAlertBanner: function () {
-                mobileLabAlerts();
-            },
-
-            initHostedAboutLightbox: function () {
-                if (config.page.contentType === 'Hosted') {
-                    hostedAbout.init();
-                }
-            }
         };
 
     return {
@@ -394,7 +361,6 @@ define([
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
                 ['c-init-nav', modules.initialiseNavigation],
-                ['c-sticky-ad-banner', modules.initialiseStickyAdBanner],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
@@ -405,7 +371,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner.init],
+                ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
@@ -420,9 +386,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh],
-                ['c-mobile-labs-banner', modules.mobileLabsAlertBanner],
-                ['c-hosted-about-lightbox', modules.initHostedAboutLightbox]
+                ['c-user-features', userFeatures.refresh]
+
             ]), function (fn) {
                 fn();
             });

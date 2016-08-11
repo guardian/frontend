@@ -7,7 +7,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object LiveEventsController
+class LiveEventsController(liveEventAgent: LiveEventAgent)
   extends Controller
   with ExecutionContexts
   with implicits.Requests {
@@ -17,7 +17,7 @@ object LiveEventsController
         Future {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          val selectedLiveEvents = LiveEventAgent.specificLiveEvent(eventId)
+          val selectedLiveEvents = liveEventAgent.specificLiveEvent(eventId)
 
           selectedLiveEvents match {
             case Some(event) =>

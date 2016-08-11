@@ -42,12 +42,9 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [
-            ['ParticipationLowFricSport', 'variant-1']
-        ];
-
-        return some(clashingTests, function(test) {
-            return ab.isInVariant(test[0], test[1]);
+        var clashingTests = {name: 'GiraffeArticle20160802', variants: ['everyone', 'honest', 'like', 'complex'] };
+        return some(clashingTests.variants, function(variant) {
+            return ab.isInVariant(clashingTests.name, variant);
         });
     }
 
@@ -92,10 +89,15 @@ define([
 
         if ($articleBody.length) {
             var allArticleEls = $('> *', $articleBody);
-            return every([].slice.call(allArticleEls, allArticleEls.length - 3), isParagraph);
+            return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
         } else {
             return false;
         }
+    }
+
+    function obWidgetIsShown() {
+        var $outbrain = $('.js-outbrain-container');
+        return $outbrain && $outbrain.length > 0;
     }
 
     var canRunList = {
@@ -112,18 +114,14 @@ define([
         labNotes: function () {
             return config.page.section === 'science' && config.switches.emailSignupLabNotes;
         },
+        euRef: function () {
+            return config.switches.emailSignupEuRef &&
+                    page.keywordExists(['EU referendum']) &&
+                    allowedArticleStructure();
+        },
         usBriefing: function () {
             return (config.page.section === 'us-news' && allowedArticleStructure()) ||
                 config.page.series === 'Guardian US briefing';
-        },
-        ausCampaignCatchup: function () {
-            return page.keywordExists([
-                'Australia news',
-                'Australian politics',
-                'Australian election 2016',
-                'Guardian Australia\'s Morning Mail',
-                'Australian election briefing'
-            ]);
         },
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
@@ -163,6 +161,7 @@ define([
             !userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
+            !obWidgetIsShown() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 

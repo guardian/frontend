@@ -1,0 +1,39 @@
+.giraffe {
+    width: 100%;
+    padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+    background: $multimedia-main-2;
+    box-sizing: border-box;
+}
+
+.giraffe__heading {
+    @include fs-header(5);
+    color: $neutral-1;
+    display: inline;
+}
+
+.button--giraffe__icon {
+    float: right;
+}
+
+.giraffe__copy {
+    @include fs-header(5);
+    color: #ffffff;
+    display: inline;
+}
+
+.button--giraffe {
+    @include button-colour(
+        $maps-main-2,
+        #ffffff
+    );
+    @include button-hover-colour(
+        mix($maps-main-2, $neutral-1, 60%)
+    );
+    margin-top: $gs-baseline;
+}
+
+.inline-coin svg {
+    width: 26px;
+    height: 26px;
+    padding-top: 4px;
+}

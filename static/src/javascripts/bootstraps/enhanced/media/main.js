@@ -16,9 +16,10 @@ define([
     'common/modules/commercial/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/video/events',
-    'common/modules/video/fullscreener',
-    'common/modules/video/tech-order',
+    'common/modules/media/videojs-plugins/fullscreener',
+    'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
@@ -45,9 +46,10 @@ define([
     buildPageTargeting,
     commercialFeatures,
     Component,
+    ab,
     events,
     fullscreener,
-    techOrder,
+    skipAd,
     videoContainer,
     onwardContainer,
     moreInSeriesContainer,
@@ -79,7 +81,6 @@ define([
 
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
-        // It doesn't matter what kind of tech this is, flash or html5.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
         // Hide superfluous controls, and label useful buttons.
@@ -95,13 +96,10 @@ define([
     }
 
     function createVideoPlayer(el, options) {
-
-        var player = videojs(el, options),
-            $el = $(el),
-            duration = parseInt($el.attr('data-duration'), 10);
+        var player = videojs(el, options);
+        var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
-
             if (!isNaN(duration)) {
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
@@ -113,27 +111,12 @@ define([
             // need to explicitly set the dimensions for the ima plugin.
             player.height(bonzo(player.el()).parent().dim().height);
             player.width(bonzo(player.el()).parent().dim().width);
-
-            if (events.handleInitialMediaError(player)) {
-                player.dispose();
-                options.techOrder = techOrder(el).reverse();
-                player = videojs(el, options);
-            }
         });
 
         return player;
     }
 
-    // Apologies for the slightly hacky nature of this.
-    // Improvements welcomed...
-    function isFlash(event) {
-        return event.target.firstChild &&
-            event.target.firstChild.id &&
-            event.target.firstChild.id.indexOf('flash_api') > 0;
-    }
-
     function initPlayButtons(root) {
-
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el) {
                 var $el = bonzo(el);
@@ -157,11 +140,7 @@ define([
     }
 
     function initPlayer(withPreroll) {
-        // When possible, use our CDN instead of a third party (zencoder).
-        if (config.page.videoJsFlashSwf) {
-            videojs.options.flash.swf = config.page.videoJsFlashSwf;
-        }
-        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
+        videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
 
         fastdom.read(function () {
@@ -169,16 +148,36 @@ define([
                 enhanceVideo(el, false, withPreroll);
             });
         });
+    }
 
-        initPlayButtons(document.body);
+    function isGeoBlocked(el) {
+        var source = el.currentSrc;
 
-        mediator.on('modules:related:loaded', initPlayButtons);
-        mediator.on('page:media:moreinloaded', initPlayButtons);
+        // we currently only block to the uk
+        // these files are placed in a special location
+        if (source.indexOf('/ukonly/') !== -1) {
+            return new Promise(function(resolve) {
+                ajax({
+                    url: source,
+                    crossOrigin: true,
+                    method: 'head'
+                }).then(function() {
+                    resolve(false);
+                }, function (response) {
+                    // videos are blocked at the CDN level
+                    resolve(response.status === 403);
+                });
+            });
+        } else {
+            return new Promise(function (resolve) {
+                resolve(false);
+            });
+        }
     }
 
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
-            $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+            $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
             showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
@@ -186,7 +185,6 @@ define([
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
             shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
-            techPriority = techOrder(el),
             player,
             mouseMoveIdle,
             playerSetupComplete,
@@ -220,7 +218,6 @@ define([
         });
 
         player = createVideoPlayer(el, videojsOptions({
-            techOrder: techPriority,
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
@@ -228,6 +225,9 @@ define([
                 }
             }
         }));
+        events.addContentEvents(player, mediaId, mediaType);
+        events.addPrerollEvents(player, mediaId, mediaType);
+        events.bindGoogleAnalyticsEvents(player, canonicalUrl);
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -240,107 +240,124 @@ define([
                     });
                     player.bigPlayButton.dispose();
                     player.errorDisplay.open();
+                    player.controlBar.dispose();
                 });
             } else {
-                blockVideoAds = videoInfo.shouldHideAdverts;
-                withPreroll = shouldPreroll && !blockVideoAds;
-
-                // Location of this is important.
-                events.bindErrorHandler(player);
-                player.guMediaType = mediaType;
-
-                playerSetupComplete = new Promise(function (resolve) {
-                    player.ready(function () {
-                        var vol;
-
-                        deferToAnalytics(function () {
-                            events.initOmnitureTracking(player, mediaId);
-                            events.initOphanTracking(player, mediaId);
-
-                            events.bindGlobalEvents(player);
-                            events.bindContentEvents(player);
-                            if (withPreroll) {
-                                events.bindPrerollEvents(player);
-                            }
+                isGeoBlocked($el[0]).then(function (isVideoGeoBlocked) {
+                    if (isVideoGeoBlocked) {
+                        player.ready(function() {
+                            player.error({
+                                code: 0,
+                                type: 'Video Unavailable',
+                                message: 'Sorry, this video is not available in your region due to rights restrictions.'
+                            });
+                            player.bigPlayButton.dispose();
+                            player.errorDisplay.open();
+                            player.controlBar.dispose();
                         });
+                    } else {
+                        blockVideoAds = videoInfo.shouldHideAdverts;
+                        withPreroll = shouldPreroll && !blockVideoAds;
 
-                        initLoadingSpinner(player);
-                        upgradeVideoPlayerAccessibility(player);
+                        // Location of this is important.
+                        events.bindErrorHandler(player);
+                        player.guMediaType = mediaType;
 
-                        player.one('playing', function (e) {
-                            if (isFlash(e)) {
-                                beacon.counts('video-tech-flash');
-                            } else {
-                                beacon.counts('video-tech-html5');
-                            }
-                        });
+                        playerSetupComplete = new Promise(function (resolve) {
+                            player.ready(function () {
+                                var vol;
 
-                        // unglitching the volume on first load
-                        vol = player.volume();
-                        if (vol) {
-                            player.volume(0);
-                            player.volume(vol);
-                        }
+                                deferToAnalytics(function () {
+                                    events.initOmnitureTracking(player, mediaId);
+                                    events.initOphanTracking(player, mediaId);
 
-                        player.persistvolume({namespace: 'gu.vjs'});
+                                    events.bindGlobalEvents(player);
+                                    events.bindContentEvents(player);
+                                    if (withPreroll) {
+                                        events.bindPrerollEvents(player);
+                                    }
+                                });
 
-                        // preroll for videos only
-                        if (mediaType === 'video') {
-                            player.fullscreener();
+                                initLoadingSpinner(player);
+                                upgradeVideoPlayerAccessibility(player);
 
-                            if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                                initEndSlate(player, endSlateUri);
-                            }
+                                player.one('playing', function() {
+                                    beacon.counts('video-tech-html5');
+                                });
 
-                            if (withPreroll) {
-                                raven.wrap(
-                                    { tags: { feature: 'media' } },
-                                    function () {
-                                        player.ima({
-                                            id: mediaId,
-                                            adTagUrl: getAdUrl(),
-                                            prerollTimeout: 1000
-                                        });
-                                        player.on('adstart', function() {
-                                            player.adSkipCountdown(15);
-                                        });
-                                        player.ima.requestAds();
+                                // unglitching the volume on first load
+                                vol = player.volume();
+                                if (vol) {
+                                    player.volume(0);
+                                    player.volume(vol);
+                                }
 
-                                        // Video analytics event.
-                                        player.trigger(events.constructEventName('preroll:request', player));
+                                player.persistvolume({namespace: 'gu.vjs'});
+
+                                // preroll for videos only
+                                if (mediaType === 'video') {
+                                    player.fullscreener();
+
+                                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                                        initEndSlate(player, endSlateUri);
+                                    }
+
+                                    if (withPreroll) {
+                                        raven.wrap(
+                                            { tags: { feature: 'media' } },
+                                            function () {
+                                                player.ima({
+                                                    id: mediaId,
+                                                    adTagUrl: getAdUrl(),
+                                                    prerollTimeout: 1000,
+                                                    // We set this sightly higher so contrib-ads never timeouts before ima.
+                                                    contribAdsSettings: {
+                                                        timeout: 2000
+                                                    }
+                                                });
+                                                player.on('adstart', function() {
+                                                    player.skipAd(mediaType, 15);
+                                                });
+                                                player.ima.requestAds();
+
+                                                // Video analytics event.
+                                                player.trigger(events.constructEventName('preroll:request', player));
+                                                resolve();
+                                            }
+                                        )();
+                                    } else {
                                         resolve();
                                     }
-                                )();
-                            } else {
-                                resolve();
-                            }
-                        } else {
-                            player.playlist({
-                                mediaType: 'audio',
-                                continuous: false
-                            });
-                            resolve();
-                        }
+                                } else {
+                                    player.playlist({
+                                        mediaType: 'audio',
+                                        continuous: false
+                                    });
+                                    resolve();
+                                }
 
-                        // built in vjs-user-active is buggy so using custom implementation
-                        player.on('mousemove', function () {
-                            clearTimeout(mouseMoveIdle);
-                            fastdom.write(function () {
-                                player.addClass('vjs-mousemoved');
-                            });
+                                // built in vjs-user-active is buggy so using custom implementation
+                                player.on('mousemove', function () {
+                                    clearTimeout(mouseMoveIdle);
+                                    fastdom.write(function () {
+                                        player.addClass('vjs-mousemoved');
+                                    });
 
-                            mouseMoveIdle = setTimeout(function () {
-                                fastdom.write(function () {
-                                    player.removeClass('vjs-mousemoved');
+                                    mouseMoveIdle = setTimeout(function () {
+                                        fastdom.write(function () {
+                                            player.removeClass('vjs-mousemoved');
+                                        });
+                                    }, 500);
                                 });
-                            }, 500);
+                            });
                         });
-                    });
-                });
 
-                playerSetupComplete.then(function () {
-                    if (autoplay) {
-                        player.play();
+                        playerSetupComplete.then(function () {
+
+                            if (autoplay) {
+                                player.play();
+                            }
+                        });
                     }
                 });
             }
@@ -390,8 +407,11 @@ define([
         }
 
         var mediaType = getMediaType();
-        var el = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular')[0];
-        onwardContainer.init(el, mediaType);
+        var els = $(mediaType === 'video' ? '.js-video-components-container' : '.js-media-popular');
+
+        els.each(function(el) {
+            onwardContainer.init(el, mediaType);
+        });
     }
 
     function initWithRaven(withPreroll) {
@@ -403,7 +423,17 @@ define([
 
     function initFacia() {
         if (config.page.isFront) {
-            videoContainer();
+            $('.js-video-playlist').each(function(el) {
+                videoContainer.init(el);
+            });
+        }
+    }
+
+    function initMinute() {
+        if(ab.isInVariant('Minute','minute')) {
+            // This is our minute account number
+            window._min = {_publisher: 'MIN-21000'};
+            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
         }
     }
 
@@ -426,9 +456,16 @@ define([
                 initWithRaven();
             }
         }
+
+        // Setup play buttons
+        initPlayButtons(document.body);
+        mediator.on('modules:related:loaded', initPlayButtons);
+        mediator.on('page:media:moreinloaded', initPlayButtons);
+
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+        initMinute();
     }
 
     return {

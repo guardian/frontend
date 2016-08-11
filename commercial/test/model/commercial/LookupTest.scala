@@ -2,6 +2,7 @@ package model.commercial
 
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import test.ConfiguredTestSuite
+
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
@@ -20,7 +21,7 @@ import scala.concurrent.duration._
   }
 
   "contentByShortUrls" should "find content for genuine URLs" in {
-    val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "http://gu.com/p/4vf6t")
+    val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "https://gu.com/p/4vf6t")
     contents.map(_.metadata.webTitle) should be(Seq(
       "Wikipedia: meet the man who has edited 3m articles",
       "A book for the beach: In the Woods by Tana French",
@@ -28,15 +29,24 @@ import scala.concurrent.duration._
     ))
   }
 
-  "contentByShortUrls" should "not find content for fake URLs" in {
-    contentsOf("http://gu.com/p/3qeqmjlkk", "http://gu.com/p/4gfshstv86p") should be(Nil)
+  it should "find content for short URL ids with campaign suffixes" in {
+    contentsOf("p/4z2fv/stw", "p/4nx5n/stw").map(_.metadata.webTitle) should be(
+      Seq(
+        "Papua New Guinea unveiled: exclusive photos of the nation’s tribal culture",
+        "Defining Moment: a photographer's snap decision in the face of danger"
+      )
+    )
   }
 
-  "contentByShortUrls" should "not find content for badly-formed URLs" in {
+  it should "not find content for fake URLs" in {
+    contentsOf("http://gu.com/p/3qeqmjlkk", "https://gu.com/p/4gfshstv86p") should be(Nil)
+  }
+
+  it should "not find content for badly-formed URLs" in {
     contentsOf("abc", "def") should be(Nil)
   }
 
-  "contentByShortUrls" should "not find content for empty seq of URLs" in {
+  it should "not find content for empty seq of URLs" in {
     contentsOf() should be(Nil)
   }
 

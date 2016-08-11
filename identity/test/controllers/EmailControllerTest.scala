@@ -3,14 +3,14 @@ package controllers
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
-import org.scalatest.{ShouldMatchers, WordSpec}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
+import org.scalatestplus.play.ConfiguredServer
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
-import test.{FakeCSRFRequest, TestRequest}
+import test._
 import play.api.mvc.RequestHeader
 import scala.concurrent.Future
 import com.gu.identity.model.User
@@ -22,9 +22,8 @@ import services.IdentityRequest
 import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
 
-class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with OneAppPerSuite {
+@DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]
@@ -51,7 +50,7 @@ class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
-  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, applicationMessagesApi)
+  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi)
 
   "The preferences method" when {
     val testRequest = TestRequest()
@@ -81,36 +80,27 @@ class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar
 
   "The save preferences method" when {
     "the form submission is valid" when {
-      running(app) {
-        val emailFormat = "Text"
-        val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
-          .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
-        val authRequest = new AuthRequest(authenticatedUser, fakeRequest)
+      val emailFormat = "Text"
+      def fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
+        .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
+      def authRequest = new AuthRequest(authenticatedUser, fakeRequest)
 
-        "api call is successful" should {
-          // Crazy Unit return type!
-          when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
+      "api call is successful" should {
+        // Crazy Unit return type!
+        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
 
-          "call updateUser and updateUserEmails" in {
-            emailController.savePreferences()(authRequest)
-            verify(api).updateUserEmails(userId, Subscriber(emailFormat, Nil), testAuth, trackingData)
-          }
-
-          "re-render the form" in {
-            val result = emailController.savePreferences()(authRequest)
-            status(result) should be(200)
-            val content = contentAsString(result)
-            content should include( """<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
-          }
+        "call updateUser and updateUserEmails" in {
+          emailController.savePreferences()(authRequest)
+          verify(api).updateUserEmails(userId, Subscriber(emailFormat, Nil), testAuth, trackingData)
         }
+      }
 
-        "user email API call failed" should {
-          when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Left(errors))
+      "user email API call failed" should {
+        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Left(errors))
 
-          "include the error message on the page" in {
-            val result = emailController.savePreferences()(authRequest)
-            contentAsString(result).contains(error.description) should equal(true)
-          }
+        "include the error message on the page" in {
+          val result = emailController.savePreferences()(authRequest)
+          contentAsString(result).contains(error.description) should equal(true)
         }
       }
     }

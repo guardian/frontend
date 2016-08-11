@@ -83,7 +83,7 @@ object ShareLinks {
 
   val defaultShares = List(Facebook, Twitter, PinterestBlock)
 
-  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String]): ShareLink = {
+  private[model] def create(platform: SharePlatform, href: String, title: String, mediaPath: Option[String], quote: Option[String] = None): ShareLink = {
 
     val encodedHref = href.urlEncoded
     val fullMediaPath: Option[String] = mediaPath.map { originalPath =>
@@ -93,7 +93,7 @@ object ShareLinks {
     lazy val facebookParams = List(
       Some("app_id" -> facebookAppId),
       Some("href" -> encodedHref),
-      Some("redirect_uri" -> encodedHref),
+      quote.map(q => "quote" -> q),
       mediaPath.map(path => "picture" -> path.urlEncoded)
     ).flatten.toMap
 
@@ -121,8 +121,13 @@ object ShareLinks {
     create(platform, campaignHref, title, mediaPath)
   }
 
-  def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String]): Seq[ShareLink] = {
-    platforms.map(create(_, href, title, mediaPath))
+  // TODO: Use campaign codes
+  def createShareLinkForComment(platform: SharePlatform, href: String, text: String, quote: Option[String] = None): ShareLink = {
+    create(platform, href, text, None, quote)
+  }
+
+  def createShareLinks(platforms: Seq[SharePlatform], href: String, title: String, mediaPath: Option[String], quote: Option[String] = None): Seq[ShareLink] = {
+    platforms.map(create(_, href, title, mediaPath, quote))
   }
 }
 
@@ -144,46 +149,25 @@ final case class ShareLinks(
     List(Facebook, Twitter, PinterestBlock)
   }
 
-  private def createShortUrlWithCampaign(platform: SharePlatform): String = platform.campaign match {
-    case Some(campaign) => s"${fields.shortUrl}/$campaign"
-    case _ => fields.shortUrl
+  private def campaignParams(platform: SharePlatform): Map[String, String] = {
+    platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => Map("CMP" -> campaign)).getOrElse(Map.empty)
   }
 
   def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
-
-    // Currently, only element shares on live blogs will use fully expanded urls. These urls take a CMP parameter.
-    // Everything else uses short urls with campaign codes.
-    val href = if (tags.isLiveBlog) {
-      val webUrlParams = List(
-        Some("page" -> s"with:$elementId"),
-        sharePlatform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => "CMP" -> campaign)
-      ).flatten.toMap
-
-      metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams)
-    } else {
-      createShortUrlWithCampaign(sharePlatform).addFragment(elementId)
-    }
-
+    val webUrlParams = campaignParams(sharePlatform)
+    val href = metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams + ("page" -> s"with:$elementId"))
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  import play.api.mvc.RequestHeader
+  val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
+    val webUrlParams = campaignParams(sharePlatform)
+    val href = metadata.webUrl.appendQueryParams(webUrlParams)
 
-  def pageShares(implicit request: RequestHeader): Seq[ShareLink] = {
-    
-    /* AMP does not support yet fb-messenger protocol */
-    val platforms = if (request.isAmp) pageShareOrder.filter(p => p != Messenger) else pageShareOrder
+    val contentTitle = sharePlatform match {
+      case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
+      case _ => metadata.webTitle
+    }
 
-    platforms.map( sharePlatform => {
-      val contentTitle = sharePlatform match {
-        case Twitter if tags.isClimateChangeSeries => s"${metadata.webTitle} #keepitintheground"
-        case _ => metadata.webTitle
-      }
-
-      val href = createShortUrlWithCampaign(sharePlatform)
-
-      ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
-    })
-
-  }
+    ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+  })
 }

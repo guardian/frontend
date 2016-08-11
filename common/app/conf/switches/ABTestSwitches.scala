@@ -4,112 +4,103 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  // Owner: Dotcom Reach
-  val ABFrontsOnArticles2 = Switch(
+  val ABLiveBlogChromeNotificationsProd2 = Switch(
     SwitchGroup.ABTests,
-    "ab-fronts-on-articles2",
-    "Injects fronts on articles for the test",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 5),
-    exposeClientSide = true
-  )
-
-  val ABLiveBlogChromeNotificationsInternal = Switch(
-    SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-internal",
-    "Live blog chrome notifications - Internal",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
-    exposeClientSide = true
-  )
-
-  val ABLiveBlogChromeNotificationsProd = Switch(
-    SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-prod",
+    "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 4),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricRecipes = Switch(
+  val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-recipes",
-    "AB test switch to insert low friction participation into recipes",
+    "ab-hosted-autoplay",
+    "An autoplay overlay with the next video on a hosted page",
+    owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
+    sellByDate = new LocalDate(2016, 8, 19),
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricFashion = Switch(
+  val ABHostedZootropolisCta = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-fashion",
-    "AB test switch to insert low friction participation into fashion",
+    "ab-hosted-zootropolis-cta",
+    "Additional text on the Zootropolis CTA banner",
+    owners = Seq(Owner.withGithub("Calanthe")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
+    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = true
   )
 
-  val ABCleverFriend = Switch(
+  val ABGiraffeArticle20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-clever-friend-brexit",
-    "Switch to trigger segmentation for clever friend exposure",
+    "ab-giraffe-article-20160802",
+    "Test effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler"), Owner.withGithub("AWare")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 29),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
-  val ABWelcomeHeader = Switch(
+  val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
-    "ab-welcome-header",
-    "Welcome header for first time users test",
+    "ab-participation-discussion-ordering-live-blog",
+    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionTest = Switch(
+  val ABParticipationDiscussionOrderingNonLive = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-test",
-    "We are going to hide comments on a random half of articles",
+    "ab-participation-discussion-ordering-non-live",
+    "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
+    owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 21),
+    sellByDate = new LocalDate(2016, 8, 31),
     exposeClientSide = true
   )
 
-  val ABFacebookShareParams = Switch(
+  val ABRemindMeEmail = Switch(
     SwitchGroup.ABTests,
-    "ab-facebook-share-params",
-    "Switch to add a query parameter to the url sent to Facebook when a user clicks the share button",
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 30),
+    "ab-remind-me-email",
+    "Sign up for an email to remind you about the next item in a series",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 8, 12),
     exposeClientSide = true
   )
 
-  val ABNewUserAdvertsDisabled = Switch(
+  val ABContributionsHeader20160802 = Switch(
     SwitchGroup.ABTests,
-    "ab-new-user-adverts-disabled",
-    "Enable adfree experience for 3 days for new users",
+    "ab-contributions-header-20160802",
+    "Test effectiveness of header for driving contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 7, 1),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
-  val ABParticipationLowFricSport = Switch(
+  val ABAdFeedback = Switch(
     SwitchGroup.ABTests,
-    "ab-participation-low-fric-sport",
-    "AB test switch to insert low friction participation into sport",
+    "ab-ad-feedback",
+    "Solicit feedback for ad impressions",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 15),
+    sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
     exposeClientSide = true
   )
 
-  val ABVideoTeaser = Switch(
+  val ABMinute = Switch(
     SwitchGroup.ABTests,
-    "ab-video-teaser",
-    "Show video teaser",
+    "ab-minute",
+    "Testing if minute teasers drive video plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 6, 8),
+    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 }

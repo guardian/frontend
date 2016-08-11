@@ -17,6 +17,14 @@ installed() {
   hash "$1" 2>/dev/null
 }
 
+nvm_installed() {
+  if [ -d '/usr/local/Cellar/nvm' ] || [ -d "$HOME/.nvm" ]; then
+    true
+  else
+    false
+  fi
+}
+
 create_install_vars() {
   local path="/etc/gu"
   local filename="install_vars"
@@ -48,8 +56,17 @@ create_frontend_properties() {
     if [[ ! -d "$path" ]]; then
       mkdir "$path"
     fi
-
-    aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+    
+    if linux; then
+        EXTRA_STEPS+=("Sorry, can't check if your hard disk is encryped so won't download frontend.properties.  Please check (applies to both portable and Desktop machines) and download from s3://aws-frontend-store/template-frontend.properties")
+    elif mac; then
+      if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
+        EXTRA_STEPS+=("won't download frontend.properties as your hard disk is not encrypted! Follow these instructions: https://support.apple.com/en-gb/HT204837")
+      else
+        aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
+      fi
+    fi
+    
   fi
 }
 
@@ -62,7 +79,7 @@ create_aws_config() {
       mkdir "$path"
     fi
 
-    echo "[profile nextgen]
+    echo "[profile frontend]
 region = eu-west-1" > "$path/$filename"
   fi
 }
@@ -84,17 +101,19 @@ install_jdk() {
 }
 
 install_node() {
-  if ! installed node || ! installed npm; then
-    if ! installed curl; then
-      sudo apt-get install -y curl
+  if ! nvm_installed; then
+    if linux; then
+      if ! installed curl; then
+        sudo apt-get install -y curl
+      fi
+
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+    elif mac && installed brew; then
+      brew install nvm
     fi
 
-    if linux; then
-      curl -sL https://deb.nodesource.com/setup | sudo bash -
-      sudo apt-get install -y nodejs
-    elif mac && installed brew; then
-      brew install node
-    fi
+    nvm install
+    EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
   fi
 }
 
@@ -115,15 +134,13 @@ install_gcc() {
 }
 
 install_libpng() {
-  if linux; then
-    sudo apt-get install -y libpng-dev
-  elif mac; then
-    brew install libpng
+  if ! installed libpng-config; then
+    if linux; then
+      sudo apt-get install -y libpng-dev
+    elif mac; then
+      brew install libpng
+    fi
   fi
-}
-
-install_dependencies() {
-  $BASEDIR/install-dependencies.sh
 }
 
 compile() {
@@ -132,8 +149,7 @@ compile() {
 
 report() {
   if [[ ${#EXTRA_STEPS[@]} -gt 0 ]]; then
-    echo -e
-    echo "Remaining tasks: "
+    node ./tools/messages.js install-steps
     for i in "${!EXTRA_STEPS[@]}"; do
       echo "  $((i+1)). ${EXTRA_STEPS[$i]}"
     done
@@ -151,7 +167,6 @@ main() {
   install_gcc
   install_grunt
   install_libpng
-  install_dependencies
   compile
   report
 }

@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, LongCacheSwitch}
+import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay, HeroicTemplateSwitch}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -19,7 +19,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ChaptersLinksCleaner, FacebookOpenGraphImage, ImgSrc, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support._
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -80,8 +80,9 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery
-  lazy val isFoodAndDrink: Boolean = tags.isFoodAndDrink
+  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
+  lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -104,9 +105,26 @@ final case class Content(
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
+  lazy val signedArticleImage: String = {
+    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+  }
+
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage, isFoodAndDrink)
+    if (isAdvertisementFeature && FacebookShareImageLogoOverlay.isSwitchedOn) {
+      ImgSrc(rawOpenGraphImage, Item700)
+    } else {
+      ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
+    }
+  }
+
+  // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
+  lazy val twitterCardImage: String = {
+    if (isAdvertisementFeature && TwitterShareImageLogoOverlay.isSwitchedOn) {
+      ImgSrc(rawOpenGraphImage, Item700)
+    } else {
+      ImgSrc(rawOpenGraphImage, TwitterImage)
+    }
   }
 
   lazy val syndicationType = {
@@ -130,8 +148,8 @@ final case class Content(
   lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.section))) {
-      metadata.section
+    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+      metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
       case _ => ""
@@ -171,6 +189,7 @@ final case class Content(
   val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
 
   def javascriptConfig: Map[String, JsValue] = Map(
+    ("contentId", JsString(metadata.id)),
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
     ("hasStoryPackage", JsBoolean(hasStoryPackage)),
@@ -180,7 +199,8 @@ final case class Content(
     ("references", JsArray(javascriptReferences)),
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
-    ("isImmersive", JsBoolean(isImmersive))
+    ("isImmersive", JsBoolean(isImmersive)),
+    ("isHeroic", JsBoolean(isHeroic))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -223,11 +243,32 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
+    // There are many checks that might disable sticky top banner, listed below.
+    // But if we are in the super sticky banner campaign, we must ignore them!
+    val canDisableStickyTopBanner =
+      metadata.shouldHideHeaderAndTopAds ||
+      commercial.isAdvertisementFeature ||
+      metadata.contentType == "Interactive" ||
+      metadata.contentType == "Crossword" ||
+      metadata.contentType == "Hosted"
+
+    // These conditions must always disable sticky banner.
+    val alwaysDisableStickyTopBanner =
+      shouldHideAdverts ||
+      metadata.sectionId == "childrens-books-site"
+
+    val maybeDisableSticky = canDisableStickyTopBanner match {
+      case true if !tags.hasSuperStickyBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ => None
+    }
+
     val meta: List[Option[(String, JsValue)]] = List(
       rugbyMeta,
       articleMeta,
       trackingMeta,
-      atomsMeta
+      atomsMeta,
+      maybeDisableSticky
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }
@@ -240,7 +281,7 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> rawOpenGraphImage
+    "twitter:image" -> twitterCardImage
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
@@ -323,7 +364,9 @@ object Content {
   }
 }
 
-private object ArticleSchemas {
+object ArticleSchemas {
+  val NewsArticle = "http://schema.org/NewsArticle"
+
   def apply(articleTags: Tags): String = {
     // http://schema.org/NewsArticle
     // http://schema.org/Review
@@ -332,7 +375,7 @@ private object ArticleSchemas {
     else if (articleTags.isLiveBlog)
       "http://schema.org/LiveBlogPosting"
     else
-      "http://schema.org/NewsArticle"
+      NewsArticle
   }
 }
 
@@ -346,7 +389,7 @@ object Article {
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
@@ -393,7 +436,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = content.tags.isUSMinuteSeries || content.isImmersive
+      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
     )
   }
 
@@ -437,6 +480,7 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isUSMinute: Boolean = content.tags.isUSMinuteSeries
   val isImmersive: Boolean = content.isImmersive
+  val isHeroic: Boolean = content.isHeroic
   val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -466,7 +510,6 @@ final case class Article (
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = content.fields.blocks
-  lazy val mostRecentBlock: Option[String] = blocks.headOption.map(_.id)
 }
 
 object Audio {
@@ -475,7 +518,7 @@ object Audio {
     val contentType = GuardianContentTypes.Audio
     val fields = content.fields
     val id = content.metadata.id
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
@@ -511,7 +554,7 @@ object Video {
     val contentType = GuardianContentTypes.Video
     val fields = content.fields
     val elements = content.elements
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
@@ -579,7 +622,7 @@ object Gallery {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GalleryLightboxProperties(
       id = id,
@@ -774,7 +817,7 @@ object Interactive {
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val twitterProperties: Map[String, String] = Map(
       "twitter:title" -> fields.linkText,
@@ -799,7 +842,7 @@ object ImageContent {
   def make(content: Content): ImageContent = {
     val contentType = GuardianContentTypes.ImageContent
     val fields = content.fields
-    val section = content.metadata.section
+    val section = content.metadata.sectionId
     val id = content.metadata.id
     val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 940,
@@ -842,7 +885,7 @@ object CrosswordContent {
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      section = "crosswords",
+      section = Some(SectionSummary.fromId("crosswords")),
       analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,

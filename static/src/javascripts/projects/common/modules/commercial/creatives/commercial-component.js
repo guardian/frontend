@@ -4,11 +4,11 @@
  */
 define([
     'fastdom',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/lazyload',
-    'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
     'lodash/objects/pick',
@@ -17,11 +17,11 @@ define([
     'lodash/collections/reduce'
 ], function (
     fastdom,
+    Promise,
     $,
     config,
     mediator,
     lazyload,
-    Tabs,
     Toggles,
     isArray,
     pick,
@@ -30,7 +30,6 @@ define([
     reduce
 ) {
     var urlBuilders = {
-        bestbuy:        defaultUrlBuilder('money/bestbuys'),
         soulmates:      defaultUrlBuilder('soulmates/mixed'),
         soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
@@ -167,38 +166,33 @@ define([
     }
 
     CommercialComponent.prototype.create = function () {
-        if (this.url) {
-            lazyload({
-                url: this.url,
-                container: this.adSlot,
-                success: onSuccess.bind(this),
-                error: onError.bind(this)
-            });
-        } else {
-            this.adSlot.style.display = 'none';
-        }
-
-        return this;
-
-        function onSuccess() {
-            if (this.postLoadEvents[this.type]) {
-                this.postLoadEvents[this.type](this.adSlot);
+        return new Promise(function (resolve) {
+            if (this.url) {
+                lazyload({
+                    url: this.url,
+                    container: this.adSlot,
+                    success: onSuccess.bind(this),
+                    error: onError.bind(this)
+                });
+            } else {
+                resolve(false);
             }
 
-            mediator.emit('modules:commercial:creatives:commercial-component:loaded');
-        }
+            function onSuccess() {
+                if (this.postLoadEvents[this.type]) {
+                    this.postLoadEvents[this.type](this.adSlot);
+                }
 
-        function onError() {
-            fastdom.write(function () {
-                this.adSlot.style.display = 'none';
-            }, this);
-        }
+                resolve(true);
+            }
+
+            function onError() {
+                resolve(false);
+            }
+        }.bind(this));
     };
 
     CommercialComponent.prototype.postLoadEvents = {
-        bestbuy: function (el) {
-            new Tabs().init(el);
-        },
         capi: createToggle,
         capiSingle: createToggle,
         paidforCard: function (el) {

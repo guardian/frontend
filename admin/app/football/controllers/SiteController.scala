@@ -6,9 +6,9 @@ import model.Cached.RevalidatableResult
 import play.api.mvc._
 
 
-object SiteController extends Controller with ExecutionContexts {
+class SiteController extends Controller with ExecutionContexts {
 
-  def index =AuthActions.AuthActionTest { implicit request =>
+  def index = Action { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.football.index()))
   }
 

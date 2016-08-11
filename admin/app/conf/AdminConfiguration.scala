@@ -1,13 +1,13 @@
 package conf
 
-import com.gu.conf.ConfigurationFactory
+import common.GuardianConfiguration
 import conf.Configuration.OAuthCredentialsWithMultipleCallbacks
+import pa.PaClientConfig
 
 case class OmnitureCredentials(userName: String, secret: String)
 
 object AdminConfiguration {
-
-  val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
+  import GuardianConfiguration._
 
   object pa {
     lazy val footballApiKey = configuration.getStringProperty("pa.api.key")
@@ -16,9 +16,9 @@ object AdminConfiguration {
     lazy val cricketApiKey = configuration.getStringProperty("pa.cricket.api.key")
         .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
 
-    lazy val footballHost = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
+    lazy val footballHost = PaClientConfig.baseUrl
     lazy val cricketHost = "http://cricket.api.press.net/v1"
-    lazy val cricketExplorer = "http://developer.press.net/io-docs"
+    lazy val apiExplorer = "http://developer.press.net/io-docs"
   }
 
   lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))

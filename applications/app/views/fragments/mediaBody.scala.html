@@ -69,8 +69,10 @@
                                             <meta itemprop="width" content="@mv.videos.width" />
                                         }
                                         <meta itemprop="requiresSubscription" content="false" />
-                                        <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
-                                        @video.elements.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
+                                        <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
+                                        @video.elements.thumbnail.map{ img =>
+                                            <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" />
+                                            <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
                                         @video.elements.mainVideo.map { videoElement =>
                                             @fragments.media.video(VideoPlayer(
                                                 videoElement,
@@ -126,7 +128,7 @@
                     case a: Audio if a.fields.body.nonEmpty => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
                             aria-hidden="true">
-                            @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250")))
+                            @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "fluid")))
                         </div>
                     }
                     case _ => { }

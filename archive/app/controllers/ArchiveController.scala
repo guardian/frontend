@@ -9,7 +9,7 @@ import java.net.URLDecoder
 import model.Cached
 import scala.concurrent.Future
 
-object ArchiveController extends Controller with Logging with ExecutionContexts {
+class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with ExecutionContexts {
 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
@@ -93,7 +93,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Destination]] = DynamoDB.destinationFor(normalise(path))
+  private def destinationFor(path: String): Future[Option[Destination]] = dynamoDB.destinationFor(normalise(path))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {

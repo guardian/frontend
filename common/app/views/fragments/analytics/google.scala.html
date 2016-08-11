@@ -1,37 +1,108 @@
 @(page: model.Page)
-@import implicits.Strings.string2encodings
 @import views.support.GoogleAnalyticsAccount
-@import conf.switches.Switches.GoogleAnalyticsSwitch
+@import conf.Configuration
 
-@if(GoogleAnalyticsSwitch.isSwitchedOn) {
-    <script id='google_analytics'>
-        @***************************************************************************************
-        * Standard copy 'n paste Google Analytics code                                         *
-        ***************************************************************************************@
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<script id='google_analytics'>
+
+(function() {
+
+    // Remove spaces from content type and convert it to lower case
+    function convertContentType(contentType) {
+        var result = contentType;
+        if (typeof contentType === 'string') {
+            result = contentType.toLowerCase().split(' ').join('');
+        }
+        return result;
+    }
+
+    @***************************************************************************************
+    * Standard copy 'n paste Google Analytics code                                         *
+    ***************************************************************************************@
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    @***************************************************************************************
+    * Code that is customised by us                                                        *
+    ***************************************************************************************@
+    @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest, GoogleAnalyticsAccount.headerBidding)) {
+        ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName');
+    }
+
+    @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {
+        ga('@{trackerName}.set', 'forceSSL', true);
+
+        ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
 
         @***************************************************************************************
-        * Code that is customised by us                                                        *
+        * Custom dimensions common to all platforms across the whole Guardian estate           *
         ***************************************************************************************@
-        ga('create', '@GoogleAnalyticsAccount.account', 'auto', {
-            'sampleRate': @GoogleAnalyticsAccount.sampleRate
+        ga('@{trackerName}.set', 'dimension1', guardian.config.ophan.pageViewId);
+        ga('@{trackerName}.set', 'dimension2', guardian.config.ophan.browserId);
+        ga('@{trackerName}.set', 'dimension3', 'theguardian.com'); @* Platform *@
+
+        @***************************************************************************************
+        * Custom dimensions for 'editorial' platforms (this site, the mobile apps, etc.)       *
+        * Some of these will be undefined for non-content pages, but that's fine.              *
+        ***************************************************************************************@
+        ga('@{trackerName}.set', 'dimension4', guardian.config.page.section);
+        ga('@{trackerName}.set', 'dimension5', convertContentType(guardian.config.page.contentType));
+        ga('@{trackerName}.set', 'dimension6', guardian.config.page.commissioningDesks);
+        ga('@{trackerName}.set', 'dimension7', guardian.config.page.contentId);
+        ga('@{trackerName}.set', 'dimension8', guardian.config.page.authorIds);
+        ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
+        ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
+        ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
+    }
+
+    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
+
+        ga('@{trackerName}.send', 'pageview', {
+            hitCallback: function() {
+                var image = new Image();
+                image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
+            }
         });
 
-        ga('set', 'forceSSL', true);
+        @*
+        If there is internal link click data in session storage, send a click event.?:
 
-        ga('send', {
-            hitType: 'pageview',
-            title: '@Html(page.metadata.webTitle.javascriptEscaped)'
-        });
-    </script>
+        We rely on the fact that this inline JS runs before the Omniture code.
+        The Omniture code removes the entry from session storage after it has read it.
 
-    @*
-    If at some point in the future this goes live, please somebody think of the "noscript" for Google Analytics
-    *@
-}
+        TODO: When we get rid of Omniture, we should delete the entry from session storage here.
+        *@
+
+        try {
+            var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+            var referrerVarsData = window.sessionStorage.getItem(NG_STORAGE_KEY);
+            var referrerVars = JSON.parse(referrerVarsData);
+            if (referrerVars && referrerVars.value) {
+                var d = new Date().getTime();
+                if (d - referrerVars.value.time < 60 * 1000) { // One minute
+                    ga('guardianTestPropertyTracker.send', 'event', 'Click', 'Internal', referrerVars.value.tag, {
+                        dimension12: referrerVars.value.path
+                    });
+                }
+            }
+        } catch (e) { }
+
+    }
+
+})();
+
+</script>
+
+@*
+TODO For now we only include a confidence beacon in the noscript.
+If this brings our confidence up, we should also request a pixel
+from a Fastly/frontend endpoint that can make a server-side call to GA to record the pageview.
+*@
+<noscript id="googleNoScript">
+  <img id="googleConfidenceNoScriptImage" alt=""
+    src="@{Configuration.debug.beaconUrl}/count/pvg.gif" width="1" height="1" class="u-h" />
+</noscript>
 
 
 

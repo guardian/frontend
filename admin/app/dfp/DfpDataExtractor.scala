@@ -57,14 +57,6 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems filter (_.isSuitableForTopAboveNavSlot)
   }
 
-  val topBelowNavSlotTakeovers: Seq[GuLineItem] = dateSort {
-    lineItems filter (_.isSuitableForTopBelowNavSlot)
-  }
-
-  val topSlotTakeovers = dateSort {
-    lineItems filter (_.isSuitableForTopSlot)
-  }
-
   def editionsTargeted(lineItem: GuLineItem): Seq[Edition] = {
     for {
       targetSet <- lineItem.targeting.customTargetSets

@@ -3,19 +3,20 @@ package test
 import java.io.File
 
 import com.gargoylesoftware.htmlunit.BrowserVersion
-import common.ExecutionContexts
+import common.{ExecutionContexts, Lazy}
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
-import play.api.GlobalSettings
+import play.api._
+import play.api.libs.ws.WSClient
+import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
-  def globalSettingsOverride: Option[GlobalSettings] = None
-
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
@@ -99,17 +100,22 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  implicit override lazy val app = FakeApplication(
-      withGlobal = globalSettingsOverride,
-      additionalConfiguration = Map(
-        ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
-        ("guardian.projectName", "test-project"),
-        ("ws.compressionEnabled", true),
-        ("ws.timeout.connection", "10000"),// when running healthchecks on a cold app it can time out
-        ("ws.timeout.idle", "10000"),
-        ("ws.timeout.request", "10000")
-      )
-  )
+  lazy val initialSettings: Map[String, AnyRef] = Map(
+    ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
+    ("guardian.projectName", "test-project"),
+    ("ws.compressionEnabled", Boolean.box(true)),
+    ("ws.timeout.connection", "10000"), // when running healthchecks on a cold app it can time out
+    ("ws.timeout.idle", "10000"),
+    ("ws.timeout.request", "10000"))
+
+  implicit override lazy val app: Application = {
+    val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val context = ApplicationLoader.createContext(
+      environment = environment,
+      initialSettings = initialSettings
+    )
+    ApplicationLoader.apply(context).load(context)
+  }
 }
 
 object TestRequest {
@@ -117,4 +123,13 @@ object TestRequest {
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
+}
+
+trait WithTestWsClient {
+  self: WithTestWsClient with BeforeAndAfterAll =>
+
+  private val lazyWsClient = Lazy(NingWSClient(NingWSClientConfig(maxRequestRetry = 0)))
+  lazy val wsClient: WSClient = lazyWsClient
+
+  override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
 }

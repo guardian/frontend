@@ -1,22 +1,16 @@
 package conf
 
-import com.gu.conf.ConfigurationFactory
-import common.BadConfigurationException
+import common.GuardianConfiguration
+import pa.PaClientConfig
 
 object SportConfiguration {
 
-  val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
-
-  private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
-    def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
-      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
-  }
+  import GuardianConfiguration._
 
   object pa {
-    lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val footballHost = PaClientConfig.baseUrl
+    lazy val footballKey = configuration.getMandatoryStringProperty("pa.api.key")
     lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
-
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
   object optaRugby {

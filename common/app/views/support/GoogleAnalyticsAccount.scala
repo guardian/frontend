@@ -4,15 +4,21 @@ import conf.Configuration.environment
 
 object GoogleAnalyticsAccount {
 
-  private val prod = "UA-33592456-1"
-  private val test = "UA-75852724-1"
-  private val useMainAccount = environment.isProd && !environment.isPreview
+  case class Tracker(trackingId: String, trackerName: String)
 
-  val account: String = if (useMainAccount) prod else test
+  // The "All editorial" property in the main GA account ("GNM Universal")
+  val editorialProd = Tracker("UA-78705427-1", "allEditorialPropertyTracker")
 
-  // Percentage of traffic to track
-  // Note there are rate limits in the free version
-  // https://developers.google.com/analytics/devguides/collection/ios/v3/limits-quotas
-  val sampleRate: Int = if (useMainAccount) 1 else 100
+  // The "Guardian Test" property in the "Guardian Test" account.
+  // I recommend using this until you're sure your GA events are working as intended,
+  // to avoid polling the production GA property with incorrect data.
+  val editorialTest = Tracker("UA-33592456-1", "guardianTestPropertyTracker")
+
+  // Dedicated property just for header bidding events
+  val headerBidding = Tracker("UA-78705427-6", "headerBiddingPropertyTracker")
+
+  private val useProdTracker = environment.isProd && !environment.isPreview
+
+  val editorialTracker: Tracker = if (useProdTracker) editorialProd else editorialTest
 
 }

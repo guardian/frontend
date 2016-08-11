@@ -2,7 +2,7 @@ package views.support.commercial
 
 import common.Edition
 import common.commercial.{CardContent, ContainerModel}
-import conf.switches.Switches.staticBadgesSwitch
+import conf.switches.Switches.containerBrandingFromCapi
 import play.api.mvc.RequestHeader
 
 object TrackingCodeBuilder extends implicits.Requests {
@@ -12,7 +12,7 @@ object TrackingCodeBuilder extends implicits.Requests {
                                 container: ContainerModel,
                                 card: CardContent)(implicit request: RequestHeader): String = {
     val sponsor = {
-      if (staticBadgesSwitch.isSwitchedOn) {
+      if (containerBrandingFromCapi.isSwitchedOn) {
         container.branding.map(_.sponsorName) orElse card.branding.map(_.sponsorName) getOrElse ""
       } else {
         container.brandingAttributes.flatMap(_.sponsor) getOrElse ""

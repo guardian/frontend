@@ -1,6 +1,5 @@
 package dev
 
-import com.google.inject.Inject
 import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
 import play.api.routing.Router
 import play.api.Play
@@ -8,7 +7,7 @@ import play.api.mvc.RequestHeader
 import Play.isProd
 import common.CanonicalLink
 
-class DevParametersHttpRequestHandler @Inject() (
+class DevParametersHttpRequestHandler(
     router: Router,
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,
@@ -42,7 +41,9 @@ class DevParametersHttpRequestHandler @Inject() (
     "pageSize",
     "projectName",
     "stage",
-    "amp" // used in dev to request the amp version of a specific url
+    "amp", // used in dev to request the amp version of a specific url
+    "__amp_source_origin", // used by amp-live-list to enforce CORS
+    "amp_latest_update_time" // used by amp-live-list to check for latest updates
   )
 
   val commercialParams = Seq(

@@ -1,20 +1,20 @@
 package controllers.admin
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
 import football.model.PA
-import football.services.GetPaClient
+import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
 import model.{Cors, Cached, NoCache}
 import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
-
+import play.api.libs.ws.WSClient
+import play.api.Mode
 import scala.concurrent.Future
 
+class TablesController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
-object TablesController extends Controller with ExecutionContexts with GetPaClient {
-
-  def tablesIndex = AuthActions.AuthActionTest.async { implicit request =>
+  def tablesIndex = Action.async { implicit request =>
     for {
       allCompetitions <- client.competitions
     } yield {
@@ -23,7 +23,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def redirectToTable = AuthActions.AuthActionTest { implicit request =>
+  def redirectToTable = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competitionId").get.head
     val url = submission.get("focus").get.head match {
@@ -43,7 +43,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     NoCache(SeeOther(url))
   }
 
-  def leagueTableFragment(competitionId: String, focus: String) =AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTableFragment(competitionId: String, focus: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -60,7 +60,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -78,7 +78,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def leagueTable(competitionId: String) = AuthActions.AuthActionTest.async { implicit request =>
+  def leagueTable(competitionId: String) = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>

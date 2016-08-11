@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -12,8 +12,7 @@ define([
     'text!common/views/commercial/creatives/fabric-expanding-video.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
-    'common/modules/commercial/creatives/add-tracking-pixel',
-    'Promise'
+    'common/modules/commercial/creatives/add-tracking-pixel'
 ], function (
     bean,
     bonzo,
@@ -28,8 +27,7 @@ define([
     fabricExpandingVideoHtml,
     bindAll,
     merge,
-    addTrackingPixel,
-    Promise
+    addTrackingPixel
 ) {
     // Forked from expandable-v3.js
 
@@ -195,23 +193,6 @@ define([
         };
         var $fabricExpandingV1 = $.create(template(fabricExpandingV1Html, { data: merge(this.params, showmoreArrow, showmorePlus, videoDesktop, videoMobile, scrollingbg) }));
 
-        var domPromise = new Promise(function (resolve) {
-            fastdom.write(function () {
-
-                this.$ad     = $('.ad-exp--expand', $fabricExpandingV1).css('height', this.closedHeight);
-                this.$button = $('.ad-exp__open', $fabricExpandingV1);
-
-                $('.ad-exp-collapse__slide', $fabricExpandingV1).css('height', this.closedHeight);
-
-                if (this.params.trackingPixel) {
-                    addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-                }
-
-                $fabricExpandingV1.appendTo(this.$adSlot);
-                resolve();
-            }.bind(this));
-        }.bind(this));
-
         mediator.on('window:throttledScroll', this.listener);
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
@@ -238,7 +219,20 @@ define([
             mediator.on('window:resize', this.updateBgPosition);
         }
 
-        return domPromise;
+        return fastdom.write(function () {
+
+            this.$ad     = $('.ad-exp--expand', $fabricExpandingV1).css('height', this.closedHeight);
+            this.$button = $('.ad-exp__open', $fabricExpandingV1);
+
+            $('.ad-exp-collapse__slide', $fabricExpandingV1).css('height', this.closedHeight);
+
+            if (this.params.trackingPixel) {
+                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            }
+
+            $fabricExpandingV1.appendTo(this.$adSlot);
+            return true;
+        }, this);
     };
 
     return FabricExpandingV1;

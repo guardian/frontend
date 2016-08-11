@@ -5,12 +5,12 @@ define([
     'common/modules/identity/formstack', // oldskool inside
     'common/modules/identity/formstack-iframe', // oldskool outside
     'common/modules/identity/formstack-iframe-embed', // newskool inside
-    'common/modules/identity/password-strength',
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
     'common/modules/identity/public-profile',
     'common/modules/identity/saved-for-later',
+    'common/modules/identity/email-preferences',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
     'common/modules/ui/tabs'
@@ -21,12 +21,12 @@ define([
     Formstack,
     FormstackIframe,
     FormstackEmbedIframe,
-    PasswordStrength,
     ValidationEmail,
     Id,
     AccountProfile,
     PublicProfile,
     SavedForLater,
+    EmailPreferences,
     UserAvatars,
     mediator,
     Tabs
@@ -61,13 +61,6 @@ define([
         forgottenPassword: function () {
             mediator.on('page:identity:ready', function (config) {
                 Identity.forgottenPassword(config);
-            });
-        },
-        passwordStrength: function () {
-            mediator.on('page:identity:ready', function (config) {
-                $('.js-password-strength').each(function (el) {
-                    new PasswordStrength(el, config).init();
-                });
             });
         },
         passwordToggle: function () {
@@ -105,6 +98,12 @@ define([
             mediator.on('page:identity:ready', function () {
                 savedForLater.init();
             });
+        },
+
+        emailPreferences: function () {
+            mediator.on('page:identity:ready', function () {
+                EmailPreferences.init();
+            });
         }
     };
 
@@ -113,18 +112,16 @@ define([
             modules.initFormstack();
             modules.forgottenEmail();
             modules.forgottenPassword();
-            modules.passwordStrength();
             modules.passwordToggle();
             modules.userAvatars();
             modules.validationEmail();
             modules.tabs();
             modules.accountProfile();
             modules.savedForLater();
+            modules.emailPreferences();
             PublicProfile.init();
 
             mediator.emit('page:identity:ready', config);
         }
     };
 });
-
-

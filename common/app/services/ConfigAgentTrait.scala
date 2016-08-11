@@ -1,6 +1,7 @@
 package services
 
 import akka.util.Timeout
+import app.LifecycleComponent
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
@@ -24,13 +25,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
   def getClient: ApiClient = {
-    if (Switches.FaciaPressCrossAccountStorage.isSwitchedOn) {
-      log.info("Config agent is using cross account client")
-      FrontsApi.crossAccountClient
-    } else {
-      log.info("Config agent is using same account client")
-      FrontsApi.amazonClient
-    }
+    FrontsApi.crossAccountClient
   }
 
   def refresh() = {
@@ -154,20 +149,25 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
 object ConfigAgent extends ConfigAgentTrait
 
-class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class ConfigAgentLifecycle(
+  appLifecycle: ApplicationLifecycle,
+  jobs: JobScheduler,
+  akkaAsync: AkkaAsync)
+  (implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
-    Jobs.deschedule("ConfigAgentJob")
+    jobs.deschedule("ConfigAgentJob")
   }}
 
   override def start() = {
-    Jobs.deschedule("ConfigAgentJob")
-    Jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
+    jobs.deschedule("ConfigAgentJob")
+    jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()
     }
 
-    AkkaAsync {
+    akkaAsync.after1s {
       ConfigAgent.refresh()
     }
   }
 }
+

@@ -1,7 +1,7 @@
 package views.support
 
 import common.Localisation
-import common.commercial.HostedPage
+import common.commercial.hosted.HostedPage
 import model._
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -27,7 +27,7 @@ object Title {
         s"${Localisation(hostedPage.pageTitle)}"
       case _          =>
         page.metadata.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
-          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.section))}"
+          s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.sectionId))}"
         )
     }
     s"${title.trim} | The Guardian"

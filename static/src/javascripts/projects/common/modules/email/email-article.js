@@ -86,14 +86,14 @@ define([
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },
-            ausCampaignCatchup: {
-                listId: '3689',
-                listName: 'ausCampaignCatchup',
-                campaignCode: 'AU_campaign_signup_page',
-                headline: 'Sign up for the Campaign catchup',
-                description: 'Get the day\'s top election news and commentary coverage delivered to your inbox every afternoon',
-                successHeadline: 'Thank you for signing up',
-                successDescription: 'We will send you the latest Campaign catchup every weekday afternoon',
+            euRef: {
+                listId: '3698',
+                listName: 'euRef',
+                campaignCode: 'eu_ref_article_signup',
+                headline: 'Brexit weekly briefing',
+                description: 'Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.',
+                successHeadline: 'Thank you for signing up for the Brexit weekly briefing',
+                successDescription: 'You\'ll receive an email every morning.',
                 modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             },

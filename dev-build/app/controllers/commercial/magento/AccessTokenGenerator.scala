@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller, Result}
  * For one-off generation of Magento access tokens.
  * The bookshop is a Magento service.
  */
-object AccessTokenGenerator extends Controller {
+class AccessTokenGenerator extends Controller {
 
   private lazy val authService = for {
     domain <- Configuration.commercial.magento.domain
@@ -66,3 +66,5 @@ object AccessTokenGenerator extends Controller {
     NoCache(result)
   }
 }
+
+object AccessTokenGenerator extends AccessTokenGenerator

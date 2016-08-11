@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/utils/config',
     'common/utils/template',
     'common/utils/fastdom-promise',
     'common/views/svgs',
@@ -7,13 +8,13 @@ define([
 
     // require templates, so they're bundled up as part of the build
     'text!common/views/commercial/creatives/logo.html',
-    'text!common/views/commercial/creatives/manual-inline.html',
     'text!common/views/commercial/creatives/gimbap.html',
     'text!common/views/commercial/creatives/gimbap-simple.html',
     'text!common/views/commercial/creatives/gimbap-richmedia.html',
     'text!common/views/commercial/creatives/manual-container.html'
 ], function (
     Promise,
+    config,
     template,
     fastdom,
     svgs,
@@ -57,18 +58,30 @@ define([
             if( this.params.creative === 'manual-single') {
                 this.params.type = 'single';
                 this.params.creative = 'manual-container';
-                this.params.creativeCard = 'manual-card-large';
                 this.params.classNames = ['legacy', 'legacy-single', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+                this.params.prominent = false;
             } else if (this.params.creative === 'manual-multiple') {
                 // harmonise attribute names until we do this on the DFP side
                 this.params.toneClass = this.params.Toneclass;
                 this.params.baseUrl = this.params.base__url;
                 this.params.offerLinkText = this.params.offerlinktext;
+                this.params.prominent = this.params.prominent === 'true';
 
                 this.params.type = 'multiple';
                 this.params.creative = 'manual-container';
-                this.params.creativeCard = 'manual-card';
                 this.params.classNames = ['legacy', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
+            } else if (this.params.creative === 'manual-inline') {
+                this.params.omnitureId = this.params.omniture_id;
+                this.params.toneClass = this.params.Toneclass;
+                this.params.baseUrl = this.params.base_url;
+                this.params.offerTitle = this.params.offer_title;
+                this.params.offerUrl = this.params.offer_url;
+                this.params.offerImage = this.params.offer_image;
+                this.params.offerText = this.params.offer_meta;
+
+                this.params.creative = 'manual-container';
+                this.params.type = 'inline';
+                this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             } else if (this.params.creative === 'logo-ad-feature') {
                 this.params.creative = 'logo';
                 this.params.type = 'ad-feature';
@@ -84,10 +97,10 @@ define([
 
                 var creativeHtml = template(creativeTpl, this.params);
 
-                fastdom.write(function () {
+                resolve(fastdom.write(function () {
                     this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);
-                    resolve();
-                }, this);
+                    return true;
+                }, this));
             }.bind(this));
         }.bind(this));
     };

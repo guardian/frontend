@@ -145,8 +145,7 @@
         }
 
         &[class*='fc-item--has-sublinks'] {
-            .fc-item__standfirst,
-            .fc-item__media-wrapper {
+            .fc-item__standfirst {
                 display: none;
             }
         }
