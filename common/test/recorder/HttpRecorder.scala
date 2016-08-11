@@ -70,6 +70,10 @@ trait HttpRecorder[A] extends ExecutionContexts {
     val headersString = headersFormat(headers)
     DigestUtils.sha256Hex(url +  headersString)
   }
+
+  def fileLocation(url: String, headers: Map[String, String] = Map.empty): String = {
+    new File(baseDir, name(url, headers)).getAbsolutePath
+  }
 }
 
 trait ContentApiHttpRecorder extends HttpRecorder[Response] {
