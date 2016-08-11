@@ -70,17 +70,15 @@ class PanicSheddingFilter extends Filter with Logging {
       false
     } else if (latency <= NORMAL_LATENCY_LIMIT) {
       true
+    } else if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
+      logWithStats(Some(
+        s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
+            | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
+            | """.stripMargin))
+      true
     } else if (latency > CRITICAL_LATENCY_LIMIT) {
-      if (requestsInProgress <= TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS) {
-        logWithStats(Some(
-          s"""Excessive latency detected, serving anyway as in progress requests ($requestsInProgress)
-             | is less than the minimum ($TRICKLE_RECOVERY_CONCURRENT_CONNECTIONS).
-             | """.stripMargin))
-        true
-      } else {
-        logWithStats(Some("Excessive previous latency detected, won't serve this request."))
-        false
-      }
+      logWithStats(Some("Excessive previous latency detected, won't serve this request."))
+      false
     } else {
       val openingRange = CRITICAL_LATENCY_LIMIT - NORMAL_LATENCY_LIMIT
       val msAwayFromFullyOff = CRITICAL_LATENCY_LIMIT - latency
