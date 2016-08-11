@@ -343,7 +343,7 @@ $gutter-large: 55px;
     }
 }
 
-$master-font-size: 30px;
+$master-font-size: 24px;
 
 .main-menu-container__menu {
     height: 100%;
@@ -353,6 +353,7 @@ $master-font-size: 30px;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
+    padding-top: $gs-baseline / 2;
     font-size: calc(#{$master-font-size} * .8);
 
     @include mq($mobile-medium) {
@@ -384,8 +385,8 @@ $master-font-size: 30px;
 .main-navigation {
     // Unset ul from _lists.scss
     margin-left: 0;
-    // Unset ul from user agent stylesheet
-    margin-top: 0;
+    // Unset ul from user agent stylesheet / Hides the line above the first 'pillar'
+    margin-top: -1px;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     text-transform: lowercase;
@@ -393,6 +394,7 @@ $master-font-size: 30px;
     // See PR: https://github.com/guardian/frontend/pull/13905
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
 .main-navigation__item {
@@ -402,14 +404,14 @@ $master-font-size: 30px;
     width: 100%;
 }
 
-$navigation-horizontal-padding: 38px;
+$navigation-horizontal-padding: $gs-gutter * 2;
 
 .main-navigation__item__button {
     position: relative;
     padding-top: $gs-baseline / 2;
     padding-left: $navigation-horizontal-padding;
     padding-right: $navigation-horizontal-padding;
-    padding-bottom: $gs-baseline * 1.5;
+    padding-bottom: $gs-baseline + ($gs-baseline / 3);
     cursor: pointer;
     font-size: 1em;
 
@@ -417,6 +419,7 @@ $navigation-horizontal-padding: 38px;
     &:hover {
         // Unset a:focus from user agent stylesheet
         outline: 0;
+        background-color: darken($guardian-brand, 2%);
     }
 
     &::-webkit-details-marker {
@@ -425,13 +428,13 @@ $navigation-horizontal-padding: 38px;
 }
 
 .main-navigation__icon {
-    top: .04em;
+    top: .14em;
 
     &:before {
         content: '';
         display: inline-block;
-        width: .4em;
-        height: .4em;
+        width: .41em;
+        height: .41em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
@@ -443,7 +446,7 @@ $navigation-horizontal-padding: 38px;
     }
 
     details[open] & {
-        top: .3em;
+        top: .35em;
     }
 }
 
@@ -462,14 +465,17 @@ $navigation-horizontal-padding: 38px;
 }
 
 .navigation-border {
+    margin-top: -1px;
+    position: relative;
+
     &:before {
         content: '';
-        display: block;
+        position: absolute;
+        top: 0;
+        left: $navigation-horizontal-padding;
+        right: 0;
         height: 1px;
-        background: darken($guardian-brand, 3%);
-        // Creates a seamless line when section has dark background
-        margin-top: -1px;
-        margin-left: $navigation-horizontal-padding;
+        background: darken($guardian-brand, 2%);
     }
 }
 
@@ -486,7 +492,7 @@ $navigation-horizontal-padding: 38px;
     // Override inherited ul from user agent stylesheet
     list-style: none;
     position: relative;
-    font-size: .7em;
+    font-size: 1em;
 
     a {
         display: block;
@@ -503,7 +509,14 @@ $navigation-horizontal-padding: 38px;
             text-decoration: none;
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: rgba(0, 0, 0, .1);
+            background: darken($guardian-brand, 2%);
+        }
+
+        .main-navigation__secondary & {
+            &:focus,
+            &:hover {
+                background: $guardian-brand-dark;
+            }
         }
     }
 }
@@ -518,6 +531,7 @@ $navigation-horizontal-padding: 38px;
 
 .navigation-group__icon {
     fill: $news-support-2;
+    top: .4em;
 
     svg {
         display: inline-block;
@@ -525,28 +539,32 @@ $navigation-horizontal-padding: 38px;
 }
 
 .navigation-group__social-icon {
-    top: -.2em;
+    top: -.1em;
 
     svg {
-        width: 1.9em;
-        height: 1.9em;
+        width: 1.6em;
+        height: 1.6em;
     }
 }
 
 .navigation-group__search-icon svg {
-    width: 1.1em;
-    height: 1.1em;
+    width: .9em;
+    height: .9em;
     //Optical alignment
     margin-right: -.1em;
 }
 
 .navigation-group__profile-icon svg {
-    height: 1em;
-    width: 1.1em;
+    height: .8em;
+    width: .9em;
     fill: $guardian-brand;
     background-color: $news-support-2;
     border-radius: 100%;
     padding-top: .1em;
+
+    .navigation-group__item a:hover & {
+        fill: darken($guardian-brand, 2%);
+    }
 }
 
 .no-text-transform {
