@@ -1,25 +1,20 @@
 package test
 
-import java.io.{File, InputStream, OutputStream}
-import java.nio.ByteBuffer
-import java.util
+import java.io.{File, OutputStream}
 
-import com.ning.http.client.uri.Uri
-import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
-import play.api.libs.ws.WSResponse
-import play.api.libs.ws.ning.NingWSResponse
-import recorder.HttpRecorder
+import recorder.DefaultHttpRecorder
 
 import scala.sys.process._
 
 
 trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
 
-  val VALIDATOR_URI = "https://cdn.ampproject.org/v0/validator.js"
+  val validatorUri = "https://cdn.ampproject.org/v0/validator.js"
 
   /**
     * Passes the result of hitting the given url to the amphtml-validator.
+    *
     * @param url url of the amp page to validate - the amp query string parameter need not be included
     */
   def testAmpPageValidity(url: String): Unit = {
@@ -42,10 +37,10 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
   }
 
   private def fetchValidator(): String = {
-    recorder.load(VALIDATOR_URI) {
-      wsClient.url(VALIDATOR_URI).get()
+    recorder.load(validatorUri) {
+      wsClient.url(validatorUri).get()
     }
-    recorder.fileLocation(VALIDATOR_URI)
+    recorder.fileLocation(validatorUri)
   }
 
   private def writeToProcess(str: String)(out: OutputStream): Unit = {
@@ -59,38 +54,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
     url + "?amp"
   }
 
-  val recorder = new HttpRecorder[WSResponse] {
+  val recorder = new DefaultHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/amp-validator")
-
-    def toResponse(str: String) = NingWSResponse(Resp(str, 200))
-
-    def fromResponse(response: WSResponse) = {
-      if (response.status == 200) {
-        response.body
-      } else {
-        s"Error:${response.status}"
-      }
-    }
-  }
-
-  private case class Resp(getResponseBody: String, status: Int) extends Response {
-    def getContentType: String = "application/json"
-    def getResponseBody(charset: String): String = getResponseBody
-    def getStatusCode: Int = status
-    def getResponseBodyAsBytes: Array[Byte] = getResponseBody.getBytes
-    def getResponseBodyAsByteBuffer: ByteBuffer = throw new NotImplementedError()
-    def getResponseBodyAsStream: InputStream = throw new NotImplementedError()
-    def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
-    def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
-    def getStatusText: String = throw new NotImplementedError()
-    def getUri: Uri = throw new NotImplementedError()
-    def getHeader(name: String): String = throw new NotImplementedError()
-    def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
-    def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
-    def isRedirected: Boolean = throw new NotImplementedError()
-    def getCookies = throw new NotImplementedError()
-    def hasResponseStatus: Boolean = throw new NotImplementedError()
-    def hasResponseHeaders: Boolean = throw new NotImplementedError()
-    def hasResponseBody: Boolean = throw new NotImplementedError()
   }
 }
