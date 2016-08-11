@@ -35,7 +35,7 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
     cd frontend
     ```
 
-2. Get janus credentials for frontend
+2. Get janus credentials for frontend and CMS fronts
 2. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
 
 3. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
