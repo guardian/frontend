@@ -21,7 +21,6 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -75,7 +74,6 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -340,12 +338,7 @@ define([
                         email.init(el);
                     });
                 });
-            },
-
-            headlinesTestAnalytics: function () {
-                HeadlinesTestAnalytics.init();
             }
-
         };
 
     return {
@@ -392,8 +385,8 @@ define([
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
+                ['c-user-features', userFeatures.refresh]
+
             ]), function (fn) {
                 fn();
             });
