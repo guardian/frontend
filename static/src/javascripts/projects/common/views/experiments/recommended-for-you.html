@@ -1,19 +1,10 @@
-<section id="recommended-for-you" class="fc-container fc-container--has-show-more fc-container--has-toggle" data-link-name="recommended-for-you" aria-expanded="true">
+<section id="recommended-for-you" class="fc-container fc-container--has-show-more js-container--toggle" data-component="recommended-for-you" data-link-name="recommended-for-you" aria-expanded="true">
     <div class="fc-container__inner">
         <div class="fc-container__header js-container__header ">
             <div class="fc-container__header__title">
                 <%= profileIcon %>
                 <span class="fc-container__title__text">recommended <span class="rfy-light-blue">for&nbsp;you</span></span>
             </div>
-
-            <button class="fc-container__toggle" data-link-name="Show">
-                <span class="inline-arrow inline-icon">
-                    <svg width="24" height="10" viewBox="0 0 24 10">
-                        <path d="M0 .7l10.5 8.4 1.1.9 1.1-.9 10.5-8.4-.5-.7-11.1 6.3-11-6.3-.6.7z"></path>
-                    </svg>
-                </span>
-                <span class="fc-container__toggle__text">Hide</span>
-            </button>
         </div>
 
         <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden">
@@ -22,10 +13,10 @@
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link hide-from-tablet">
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy fc-item--rfy-feedback js-snappable">
                             <div class="fc-item__container">
-                                <div class="fc-item__content">
+                                <div class="js-feedback fc-item__content">
                                     <p><%= description %></p>
-                                    <button class="js-feedback-button button button--tertiary button--large button--get-started" data-link-name="<%= variant %>-get-started">Get started <%= rightArrowIcon %></button>
-                                    <button class="js-feedback-button button button--tertiary button--large button--no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>
+                                    <button class="js-feedback-button js-feedback-button-yes button button--tertiary button--large button--get-started" data-link-name="<%= variant %>-get-started">Get started <%= rightArrowIcon %></button>
+                                    <button class="js-feedback-button js-feedback-button-no button button--tertiary button--large button--no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>
                                 </div>
                             </div>
                         </div>
@@ -50,11 +41,11 @@
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link hide-until-tablet">
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy fc-item--rfy-feedback js-snappable">
                             <div class="fc-item__container">
-                                <div class="fc-item__content">
+                                <div class="js-feedback fc-item__content">
                                     <h2>recommended <span class="rfy-light-blue">for&nbsp;you</span></h2>
                                     <p><%= description %></p>
-                                    <button class="js-feedback-button button button--tertiary button--large button--get-started" data-link-name="<%= variant %>-get-started">Get started <%= rightArrowIcon %></button>
-                                    <button class="js-feedback-button button button--tertiary button--large button--no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>
+                                    <button class="js-feedback-button js-feedback-button-yes button button--tertiary button--large button--get-started" data-link-name="<%= variant %>-get-started">Get started <%= rightArrowIcon %></button>
+                                    <button class="js-feedback-button js-feedback-button-no button button--tertiary button--large button--no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>
                                 </div>
                             </div>
                         </div>

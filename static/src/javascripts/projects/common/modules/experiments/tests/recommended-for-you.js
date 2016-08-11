@@ -57,6 +57,24 @@ define([
 
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
+
+                $('.js-feedback-button-yes', $recommendedForYouSection[0]).each(function(el) {
+                    bean.on(el, 'click', function () {
+                        $('.js-feedback', $recommendedForYouSection[0]).html(
+                            '<p>' +
+                                'Thanks for your interest in this feature. We’re currently still testing demand. ' +
+                                'If enough of you like the idea, we’ll make it happen. Fingers crossed!' +
+                            '</p>'
+                        );
+                    });
+                });
+
+                $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
+                    bean.on(el, 'click', function () {
+                        $recommendedForYouSection.remove();
+                    });
+                });
+
                 mediator.emit('recommended-for-you:insert');
             });
         }
