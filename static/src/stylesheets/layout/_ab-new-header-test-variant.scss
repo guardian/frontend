@@ -338,12 +338,12 @@ $master-font-size: 24px;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
-    padding-top: $gs-baseline;
     font-size: calc(#{$master-font-size} * .8);
 
     @include mq($mobile-medium) {
         //Larger font/icon size for larger devices
         font-size: $master-font-size;
+        padding-top: $gs-baseline;
     }
 
     will-change: transform;
@@ -351,6 +351,7 @@ $master-font-size: 24px;
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
+        padding-top: $gs-baseline / 3;
     }
 
     @include mq($from: $mobile-medium, $until: mobileLandscape) {
@@ -444,6 +445,7 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 
 .main-navigation__secondary {
     color: #ffffff;
+    background-color: darken($guardian-brand, 3%);
     padding-bottom: $gs-baseline;
 }
 
@@ -497,7 +499,11 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .secondary-navigation {
-    margin-top: $gs-baseline + 2px;
+    margin-top: $gs-baseline;
+
+    &:nth-child(2) {
+        margin-top: $gs-baseline / 2;
+    }
 
     &:last-child {
         margin-bottom: $gs-baseline * 3;
