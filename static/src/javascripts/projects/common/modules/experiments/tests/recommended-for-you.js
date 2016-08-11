@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svg',
+    'common/utils/mediator',
     'text!common/views/experiments/recommended-for-you.html',
     'inlineSvg!svgs/icon/profile-36',
     'inlineSvg!svgs/icon/arrow-right',
@@ -18,6 +19,7 @@ define([
     config,
     template,
     svg,
+    mediator,
     recommendedForYouTemplate,
     profileIcon,
     rightArrowIcon,
@@ -37,6 +39,7 @@ define([
         this.idealOutcome = 'People will click to turn on this section';
 
         var $opinionSection;
+        var $recommendedForYouSection;
 
         this.canRun = function () {
             $opinionSection = $('#opinion');
@@ -44,7 +47,7 @@ define([
         };
 
         function insertSection(description, variant) {
-            var $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
+            $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 rightArrowIcon: svg(rightArrowIcon, ['i-right']),
                 guardianLogo: svg(guardianLogo),
@@ -54,6 +57,17 @@ define([
 
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
+                mediator.emit('recommended-for-you:insert');
+            });
+        }
+
+        function success(complete) {
+            mediator.on('recommended-for-you:insert', function() {
+                $('.js-feedback-button', $recommendedForYouSection[0]).each(function(el) {
+                    bean.on(el, 'click', function() {
+                        complete();
+                    });
+                });
             });
         }
 
@@ -63,18 +77,14 @@ define([
                 test: function () {
                     insertSection('Tell us what you’re interested in and we’ll recommend you a set of unique stories', 'user-choice');
                 },
-                success: function (complete) {
-
-                }
+                success: success
             },
             {
                 id: 'user-history',
                 test: function () {
                     insertSection('We can recommend you a set of unique stories based on your reading history', 'user-history');
                 },
-                success: function (complete) {
-
-                }
+                success: success
             }
         ];
     };
