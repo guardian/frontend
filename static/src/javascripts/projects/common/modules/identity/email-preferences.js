@@ -40,9 +40,6 @@ define([
             $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
             $('.email-unsubscribe-all__label').toggleClass('hide');
         });
-        setTimeout(function () {
-            resetUnsubscribeFromAll(buttonEl);
-        }, 2000);
     }
 
     function unsubscribeFromAll(buttonEl) {
