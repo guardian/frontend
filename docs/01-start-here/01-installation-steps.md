@@ -221,17 +221,3 @@ Memcached `sudo apt-get install memcached` -
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
-
-###Vagrant
-
-You can run the project with the supplied Vagrantfile - make sure you
-understand what Vagrant is http://www.vagrantup.com/
-
-* Make sure you have [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
-and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
-(on Ubuntu `sudo apt-get install virtualbox vagrant`)
-* Change directory into the folder where this README is located
-* `vagrant up` - this will take a while, make some coffee
-* You can now get onto the box by `vagrant ssh`
-* The project is located in /vagrant so `cd /vagrant`
-* `./sbt`
