@@ -65,7 +65,7 @@ define([
             {
                 id: 'always',
                 test: function () {
-                    writer('You\'re always reading it. So make sure it\'s always here. It\'s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_always');
+                    writer('You’re always reading it. So make sure it’s always here. It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_always');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -74,7 +74,7 @@ define([
             {
                 id: 'can',
                 test: function () {
-                    writer('There are some things you should do just because you can.', 'Give to the Guardian. It\'s only fair', 'co_uk_inarticle_can');
+                    writer('There are some things you should do just because you can.', 'Give to the Guardian. It’s only fair', 'co_uk_inarticle_can');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -83,7 +83,7 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_like');
+                    writer('If you use it, if you like it, why not pay for it? It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_like');
                 },
                 success: function (complete) {
                     completer(complete);
