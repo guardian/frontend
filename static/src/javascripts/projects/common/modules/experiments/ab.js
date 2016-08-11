@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/hosted-article-onward-journey',
+    'common/modules/experiments/tests/membership-messages',
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
     'common/modules/experiments/tests/minute'
@@ -35,6 +36,7 @@ define([
     RemindMeEmail,
     HostedZootropolisCta,
     HostedArticleOnwardJourney,
+    MembershipMessages,
     ContributionsHeader,
     AdFeedback,
     Minute
@@ -49,6 +51,7 @@ define([
         new RemindMeEmail(),
         new HostedZootropolisCta(),
         new HostedArticleOnwardJourney(),
+        new MembershipMessages(),
         new ContributionsHeader(),
         new AdFeedback(),
         new Minute()

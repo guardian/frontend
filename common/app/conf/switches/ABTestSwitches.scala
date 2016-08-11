@@ -84,6 +84,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMembershipAndContributionsEngagementBanner20160811 = Switch(
+    SwitchGroup.ABTests,
+    "ab-membership-and-contributions-engagement-banner",
+    "Test effectiveness of header for driving contributions vs membership.",
+    owners = Seq(Owner.withGithub("rtyley")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 8, 17),
+    exposeClientSide = true
+  )
+
   val ABContributionsHeader20160802 = Switch(
     SwitchGroup.ABTests,
     "ab-contributions-header-20160802",

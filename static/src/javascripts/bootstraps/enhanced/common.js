@@ -48,7 +48,6 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
-    'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
@@ -101,7 +100,6 @@ define([
     breakingNews,
     pinterest,
     SaveForLater,
-    membershipMessages,
     email,
     emailArticle,
     identity,
@@ -314,10 +312,6 @@ define([
                 }
             },
 
-            showMembershipMessages: function () {
-                membershipMessages.init();
-            },
-
             initEmail: function () {
                 // Initalise email embedded in page
                 email.init();
@@ -383,7 +377,6 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
-                ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh]
 
