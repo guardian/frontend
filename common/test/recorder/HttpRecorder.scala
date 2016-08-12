@@ -16,13 +16,16 @@ import scala.concurrent.Future
 import scala.io.Source
 
 
-trait
-HttpRecorder[A] extends ExecutionContexts {
+trait HttpRecorder[A] extends ExecutionContexts {
 
   def baseDir: File
 
+  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
+    loadFile(url, headers)(fetch).map(toResponse _ compose contentFromFile _)
+
+
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]):Future[A] = {
+  final def loadFile(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[File] = {
 
     val fileName = name(url, headers)
 
@@ -32,14 +35,12 @@ HttpRecorder[A] extends ExecutionContexts {
       throw new IllegalStateException(s"Data file has not been checked in for: $url, file: $fileName, headers: ${headersFormat(headers)}")
     }
 
-    get(fileName).map { f =>
-      val response = toResponse(f)
-      Future(response)
-    }.getOrElse {
-      val response = fetch
-      response.foreach(r => put(fileName, fromResponse(r)))
-      response
-    }
+    get(fileName)
+      .map(Future(_))
+      .getOrElse {
+        val response = fetch
+        response.map(r => put(fileName, fromResponse(r)))
+      }
   }
 
   if (!baseDir.exists()) {
@@ -47,21 +48,24 @@ HttpRecorder[A] extends ExecutionContexts {
     baseDir.mkdir()
   }
 
-  private [recorder] def put(name: String, value: String) {
+  private def put(name: String, value: String): File = {
     val file = new File(baseDir, name)
     val out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")
     out.write(value)
     out.close()
+    file
   }
 
-  private [recorder] def get(name: String): Option[String] = {
+  private def get(name: String): Option[File] = {
     val file = new File(baseDir, name)
     if (file.exists()) {
-      Some(Source.fromFile(file, "UTF-8").getLines().mkString)
+      Some(file)
     } else {
       None
     }
   }
+
+  private def contentFromFile(file: File): String = Source.fromFile(file, "UTF-8").getLines().mkString
 
   def toResponse(str: String): A
 

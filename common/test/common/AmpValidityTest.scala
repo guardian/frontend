@@ -2,13 +2,15 @@ package test
 
 import java.io.{File, OutputStream}
 
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import recorder.DefaultHttpRecorder
 
+import scala.concurrent.Future
 import scala.sys.process._
 
 
-trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
+trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient with ScalaFutures {
 
   val validatorUri = "https://cdn.ampproject.org/v0/validator.js"
 
@@ -20,27 +22,27 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
   def testAmpPageValidity(url: String): Unit = {
     val ampUrl = ampifyUrl(url)
 
-    s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
-
-      val commandInputWriter: OutputStream => Unit = writeToProcess(content)
-
-      // The process fails when not using stdout/stderr, but these may prove useful for debugging anyway
-      val io = new ProcessIO(commandInputWriter, BasicIO.toStdOut, BasicIO.toStdErr)
-
-      // Pass the content to the command line tool (external process) via stdin ('-' option)
-      val process = s"node_modules/.bin/amphtml-validator --validator_js ${fetchValidator()} -".run(io)
-
-      withClue("AMP validator should complete with exit value 0, the actual exit value of ") {
-        process.exitValue() should be(0)
-      }
-    }
-  }
-
-  private def fetchValidator(): String = {
-    recorder.load(validatorUri) {
+    val future: Future[File] = recorder.loadFile(validatorUri) {
       wsClient.url(validatorUri).get()
     }
-    recorder.fileLocation(validatorUri)
+
+    whenReady(future) { file =>
+      s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
+
+        val commandInputWriter: OutputStream => Unit = writeToProcess(content)
+
+        // Generate a ProcessIO with desired input and no output (error or otherwise)
+        val io: ProcessIO = BasicIO(withIn = false, ProcessLogger((_) => ()))
+          .withInput(commandInputWriter)
+
+        // Pass the content to the command line tool (external process) via stdin ('-' option)
+        val process = s"node_modules/.bin/amphtml-validator --validator_js ${file.getAbsolutePath} -".run(io)
+
+        withClue("AMP validator should complete with exit value 0, the actual exit value of ") {
+          process.exitValue() should be(0)
+        }
+      }
+    }
   }
 
   private def writeToProcess(str: String)(out: OutputStream): Unit = {
