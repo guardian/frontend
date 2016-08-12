@@ -119,7 +119,6 @@ $gutter-large: 55px;
         width: $gs-gutter;
         height: $gs-baseline / 6;
         background-color: #ffffff;
-        transition: all .3s cubic-bezier(.23, 1, .32, 1);
     }
 
     &:before {
@@ -184,6 +183,11 @@ $gutter-large: 55px;
     // Optically aligns slashes
     margin-left: 2px;
     margin-right: -1px;
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 /*****************
@@ -257,6 +261,7 @@ $gutter-large: 55px;
     padding-left: $gs-gutter;
 
     &:hover {
+        text-decoration: none;
         background-color: darken($guardian-brand-dark, 3%);
     }
 }
@@ -344,18 +349,19 @@ $gutter-large: 55px;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
-    font-size: 30px;
-
-    @include mq($until: $mobile-medium) {
-        //Smaller font/icon size for smaller devices
-        font-size: 26px;
-    }
-
+    font-size: 20px;
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
     @include mq($until: $mobile-medium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
+        padding-top: $gs-baseline / 3;
+    }
+
+    @include mq($mobile-medium) {
+        //Larger font/icon size for larger devices
+        font-size: 24px;
+        padding-top: $gs-baseline;
     }
 
     @include mq($from: $mobile-medium, $until: mobileLandscape) {
@@ -375,8 +381,8 @@ $gutter-large: 55px;
 .main-navigation {
     // Unset ul from _lists.scss
     margin-left: 0;
-    // Unset ul from user agent stylesheet
-    margin-top: 0;
+    // Hides the line above the first primary item
+    margin-top: -1px;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
     text-transform: lowercase;
@@ -384,6 +390,7 @@ $gutter-large: 55px;
     // See PR: https://github.com/guardian/frontend/pull/13905
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
 .main-navigation__item {
@@ -393,17 +400,19 @@ $gutter-large: 55px;
     width: 100%;
 }
 
-$navigation-horizontal-padding: 38px;
+//This variable is only used in open menu styling
+$navigation-horizontal-padding: $gs-gutter * 2;
 
 .main-navigation__item__button {
     position: relative;
     padding-top: $gs-baseline / 2;
     padding-left: $navigation-horizontal-padding;
-    padding-right: $navigation-horizontal-padding;
-    padding-bottom: $gs-baseline * 1.5;
+    padding-bottom: $gs-baseline + ($gs-baseline / 3);
+    cursor: pointer;
     font-size: 1em;
 
-    &:focus {
+    &:focus,
+    &:hover {
         // Unset a:focus from user agent stylesheet
         outline: 0;
     }
@@ -414,13 +423,13 @@ $navigation-horizontal-padding: 38px;
 }
 
 .main-navigation__icon {
-    top: .04em;
+    top: .14em;
 
     &:before {
         content: '';
         display: inline-block;
-        width: .4em;
-        height: .4em;
+        width: .41em;
+        height: .41em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
@@ -432,7 +441,7 @@ $navigation-horizontal-padding: 38px;
     }
 
     details[open] & {
-        top: .3em;
+        top: .35em;
     }
 }
 
@@ -445,20 +454,24 @@ $navigation-horizontal-padding: 38px;
 }
 
 .main-navigation__secondary {
-    background-color: darken($guardian-brand, 3%);
     color: #ffffff;
+    background-color: darken($guardian-brand, 3%);
     padding-bottom: $gs-baseline;
 }
 
 .navigation-border {
+    // Creates a seamless line when section has dark background
+    margin-top: -1px;
+    position: relative;
+
     &:before {
         content: '';
-        display: block;
+        position: absolute;
+        top: 0;
+        left: $navigation-horizontal-padding;
+        right: 0;
         height: 1px;
         background: darken($guardian-brand, 3%);
-        // Creates a seamless line when section has dark background
-        margin-top: -1px;
-        margin-left: $navigation-horizontal-padding;
     }
 }
 
@@ -475,7 +488,7 @@ $navigation-horizontal-padding: 38px;
     // Override inherited ul from user agent stylesheet
     list-style: none;
     position: relative;
-    font-size: .7em;
+    font-size: 1em;
 
     a {
         display: block;
@@ -487,16 +500,21 @@ $navigation-horizontal-padding: 38px;
         color: inherit;
 
         // TODO: Share with large nav?
-        &:focus {
+        &:focus,
+        &:hover {
+            text-decoration: none;
             // Unset a:focus from user agent stylesheet
             outline: 0;
-            background-color: $guardian-brand-dark;
         }
     }
 }
 
 .secondary-navigation {
-    margin-top: $gs-baseline + 2px;
+    margin-top: $gs-baseline;
+
+    &:nth-child(2) {
+        margin-top: $gs-baseline / 1.5;
+    }
 
     &:last-child {
         margin-bottom: $gs-baseline * 3;
@@ -505,6 +523,7 @@ $navigation-horizontal-padding: 38px;
 
 .navigation-group__icon {
     fill: $news-support-2;
+    top: .4em;
 
     svg {
         display: inline-block;
@@ -512,24 +531,24 @@ $navigation-horizontal-padding: 38px;
 }
 
 .navigation-group__social-icon {
-    top: -.2em;
+    top: -.1em;
 
     svg {
-        width: 1.9em;
-        height: 1.9em;
+        width: 1.6em;
+        height: 1.6em;
     }
 }
 
 .navigation-group__search-icon svg {
-    width: 1.1em;
-    height: 1.1em;
+    width: .9em;
+    height: .9em;
     //Optical alignment
     margin-right: -.1em;
 }
 
 .navigation-group__profile-icon svg {
-    height: 1em;
-    width: 1.1em;
+    height: .8em;
+    width: .9em;
     fill: $guardian-brand;
     background-color: $news-support-2;
     border-radius: 100%;

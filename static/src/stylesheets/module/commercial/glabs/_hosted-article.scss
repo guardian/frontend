@@ -122,7 +122,8 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         .hosted__next-video {
             width: auto;
             position: absolute;
-            top: 60%;
+            margin: 70px 0;
+            top: 0;
             .hosted__next-video--header,
             .hosted__next-video--tile {
                 margin-right: 0;

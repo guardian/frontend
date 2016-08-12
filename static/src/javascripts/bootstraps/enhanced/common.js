@@ -21,7 +21,6 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/headlines-test-analytics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -49,7 +48,6 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
-    'common/modules/commercial/membership-messages',
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
@@ -75,7 +73,6 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    HeadlinesTestAnalytics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -103,7 +100,6 @@ define([
     breakingNews,
     pinterest,
     SaveForLater,
-    membershipMessages,
     email,
     emailArticle,
     identity,
@@ -316,10 +312,6 @@ define([
                 }
             },
 
-            showMembershipMessages: function () {
-                membershipMessages.init();
-            },
-
             initEmail: function () {
                 // Initalise email embedded in page
                 email.init();
@@ -340,12 +332,7 @@ define([
                         email.init(el);
                     });
                 });
-            },
-
-            headlinesTestAnalytics: function () {
-                HeadlinesTestAnalytics.init();
             }
-
         };
 
     return {
@@ -390,10 +377,9 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
-                ['c-show-membership-messages', modules.showMembershipMessages],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-headlines-test-analytics', modules.headlinesTestAnalytics]
+                ['c-user-features', userFeatures.refresh]
+
             ]), function (fn) {
                 fn();
             });

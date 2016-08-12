@@ -16,28 +16,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABHeadlinesTestVariant extends TestDefinition(
-  "headlines-ab-variant",
-  "To test how much of a difference changing a headline makes (variant group)",
-  owners = Seq(Owner.withGithub("dominickendrick")),
-  new LocalDate(2016, 8, 17) // Wednesday
-  ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-V")
-  }
-}
-
-object ABHeadlinesTestControl extends TestDefinition(
-  "headlines-ab-control",
-  "To test how much of a difference changing a headline makes (control group)",
-  owners = Seq(Owner.withGithub("dominickendrick")),
-  new LocalDate(2016, 8, 17) // Wednesday
-  ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-hlt").contains("hlt-C")
-  }
-}
-
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
   description = "Feature switch (0% test) for the new header",
@@ -60,7 +38,6 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -75,8 +52,6 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
-    ABHeadlinesTestControl,
-    ABHeadlinesTestVariant,
     CommercialClientLoggingVariant
   )
 }
