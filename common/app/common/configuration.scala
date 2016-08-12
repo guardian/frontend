@@ -40,13 +40,10 @@ object GuardianConfiguration extends Logging {
       InstallVars(stack, app, stage, region, configBucket)
     }
     println(s"install vars: $installVars")
-    val test = true//TODO remove this
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
-    lazy val commonS3Config = if (!test) S3ConfigurationSource(identity, installVars.configBucket)
-    else FileConfigurationSource("/Users/jduffell/Downloads/eu-west-1-frontend.conf")
-    //lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
+    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket)
     val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     val appConfig = config.getConfig(identity.app + "." + identity.stage)
