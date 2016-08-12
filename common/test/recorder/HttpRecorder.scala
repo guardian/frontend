@@ -21,7 +21,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
   def baseDir: File
 
   final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
-    loadFile(url, headers)(fetch).map(toResponse _ compose contentFromFile _)
+    loadFile(url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
 
 
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
@@ -38,8 +38,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
     get(fileName)
       .map(Future(_))
       .getOrElse {
-        val response = fetch
-        response.map(r => put(fileName, fromResponse(r)))
+        fetch.map(r => put(fileName, fromResponse(r)))
       }
   }
 
