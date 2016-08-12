@@ -31,12 +31,18 @@ object GuardianConfiguration extends Logging {
     val installVars = {
       val p = new JavaProperties()
       p.load(new FileInputStream(s"/etc/gu/install_vars"))
-      InstallVars(p.getProperty("stack", "frontend"), p.getProperty("app", "dev-build"), p.getProperty("STAGE", "DEV"), p.getProperty("region", "eu-west-1"), p.getProperty("configBucket", "aws-frontend-store"))
+      val stack = p.getProperty("stack", "frontend")
+      // if got config at app startup, we wouldn't need to configure it
+      val app = p.getProperty("app", "dev-build")
+      val stage = p.getProperty("STAGE", "DEV")
+      val region = p.getProperty("region", "eu-west-1")
+      val configBucket = p.getProperty("configBucket", "aws-frontend-store")
+      InstallVars(stack, app, stage, region, configBucket)
     }
     println(s"install vars: $installVars")
     val test = true//TODO remove this
-    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
-    lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.properties")
+    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
+    lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
     lazy val commonS3Config = if (!test) S3ConfigurationSource(identity, installVars.configBucket)
     else FileConfigurationSource("/Users/jduffell/Downloads/eu-west-1-frontend.conf")
@@ -44,7 +50,7 @@ object GuardianConfiguration extends Logging {
     val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     val appConfig = config.getConfig(identity.app + "." + identity.stage)
-    println(s"appConfig: $appConfig")
+    println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
     appConfig
   }
 
