@@ -3,6 +3,7 @@ import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
+import targeting.TargetingLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
@@ -40,7 +41,8 @@ trait AppLifecycleComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[TargetingLifecycle]
   )
 }
 
