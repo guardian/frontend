@@ -23,35 +23,9 @@ trait TestSettings {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  private def verify(property: String, hash: String, message: String) {
-    if (DigestUtils.sha256Hex(property) != hash) {
-
-      // the println makes it easier to spot what is wrong in tests
-      println()
-      println(s"----------- $message -----------")
-      println()
-
-      throw new RuntimeException(message)
-    }
-  }
-
   private def toRecorderHttp(http: Http) = new Http {
 
     val originalHttp = http
-
-    verify(
-      Configuration.contentApi.contentApiHost,
-      "5f755b14e59810c1c7ed8a79dfe9bc132340d22ee255f3b41bd4f3e2af5e5393",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
-    )
-
-    Configuration.contentApi.key.map { k =>
-        verify(
-          k,
-          "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
-          "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
-        )
-    }
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
       recorder.load(url, headers.toMap) {

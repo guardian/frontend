@@ -45,9 +45,13 @@ object GuardianConfiguration extends Logging {
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials)
-    val config = new CM(List(userPrivate, runtimeOnly, devinfra, commonS3Config), PlayDefaultLogger).load.resolve
+    lazy val config = new CM(List(userPrivate, runtimeOnly, devinfra, commonS3Config), PlayDefaultLogger).load.resolve
 
-    val appConfig = if (installVars.guStage == "DEVINFRA") config else config.getConfig(identity.app + "." + identity.stage)
+    // test mode is self contained and won't need to use anything secret
+    lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")
+    lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
+
+    val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
     println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
     appConfig
   }
