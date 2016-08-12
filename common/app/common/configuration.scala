@@ -43,7 +43,7 @@ object GuardianConfiguration extends Logging {
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
-    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket)
+    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials)
     val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     val appConfig = config.getConfig(identity.app + "." + identity.stage)

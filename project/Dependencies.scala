@@ -34,7 +34,7 @@ object Dependencies {
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
-  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.1-SNAPSHOT"
+  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.1"
   val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
