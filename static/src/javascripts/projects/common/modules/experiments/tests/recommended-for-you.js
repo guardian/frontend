@@ -3,6 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/utils/storage',
     'common/utils/config',
     'common/utils/template',
     'common/views/svg',
@@ -16,6 +17,7 @@ define([
     fastdom,
     qwery,
     $,
+    storage,
     config,
     template,
     svg,
@@ -40,11 +42,19 @@ define([
 
         var $opinionSection;
         var $recommendedForYouSection;
-
+        
         this.canRun = function () {
             $opinionSection = $('#opinion');
-            return config.page.isFront && config.page.contentType === 'Network Front' && $opinionSection.length;
+            return config.page.contentType === 'Network Front' && $opinionSection.length && !hasGivenFeedback();
         };
+
+        function hasGivenFeedback() {
+            return !!storage.local.get('gu.hasGivenRecommendedForYouFeedback');
+        }
+
+        function registerFeedback() {
+            storage.local.set('gu.hasGivenRecommendedForYouFeedback', true);
+        }
 
         function insertSection(description, variant) {
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
@@ -66,12 +76,14 @@ define([
                                 'If enough of you like the idea, we’ll make it happen. Fingers crossed!' +
                             '</p>'
                         );
+                        registerFeedback();
                     });
                 });
 
                 $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
                     bean.on(el, 'click', function () {
                         $recommendedForYouSection.remove();
+                        registerFeedback();
                     });
                 });
 
