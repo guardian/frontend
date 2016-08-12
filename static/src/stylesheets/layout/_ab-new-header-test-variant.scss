@@ -204,7 +204,7 @@ $gutter-large: 55px;
     padding-top: $gs-baseline/2;
     padding-left: $gs-gutter / 2;
     width: gs-span(2);
-    z-index: 3;
+    z-index: $zindex-sticky;
 
     // Smaller size compensates for how big the word "Australia" is
     @include mq($until: $mobile-medium) {
