@@ -16,7 +16,6 @@ import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
-import headlines.ABHeadlinesLifecycle
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
@@ -83,8 +82,7 @@ trait AppComponents
     wire[SwitchboardLifecycle],
     wire[FootballLifecycle],
     wire[CricketLifecycle],
-    wire[RugbyLifecycle],
-    wire[ABHeadlinesLifecycle]
+    wire[RugbyLifecycle]
   )
 
   override lazy val httpFilters = wire[DevFilters].filters

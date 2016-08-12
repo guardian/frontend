@@ -1,10 +1,9 @@
 package football.controllers
 
 import common._
-import conf._
 import conf.switches.Switches
-import feed.Competitions
-import play.api.mvc.{ Action, Controller }
+import feed.CompetitionsService
+import play.api.mvc.{Action, Controller}
 import model._
 import model.Page
 
@@ -17,7 +16,7 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-class LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
+class LeagueTableController(val competitionsService: CompetitionsService) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
     val tableOrder = Seq(
         "Premier League",
@@ -45,9 +44,7 @@ class LeagueTableController extends Controller with Logging with CompetitionTabl
         "International friendlies"
     )
 
-  private def competitions = Competitions().competitions
-
-  def sortedCompetitions:Seq[Competition] = tableOrder.map(leagueName => competitions.find(_.fullName == leagueName)).flatten
+  def sortedCompetitions:Seq[Competition] = tableOrder.map(leagueName => competitionsService.competitions.find(_.fullName == leagueName)).flatten
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
@@ -89,7 +86,7 @@ class LeagueTableController extends Controller with Logging with CompetitionTabl
       table.copy(groups = table.groups)
     }
 
-    val comps = competitions.filter(_.showInTeamsList).filter(_.hasTeams)
+    val comps = competitionsService.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
 
     val htmlResponse = () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
     val jsonResponse = () => football.views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)
@@ -152,5 +149,3 @@ class LeagueTableController extends Controller with Logging with CompetitionTabl
     }
   }
 }
-
-object LeagueTableController extends LeagueTableController
