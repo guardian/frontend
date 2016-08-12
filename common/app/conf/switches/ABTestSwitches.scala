@@ -123,4 +123,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
+
+  val ABRecommendedForYou = Switch(
+    SwitchGroup.ABTests,
+    "ab-recommended-for-you",
+    "Test demand for a personalised container on fronts",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 9),
+    exposeClientSide = true
+  )
 }
