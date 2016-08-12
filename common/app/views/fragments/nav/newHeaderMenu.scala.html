@@ -1,8 +1,9 @@
 @()(implicit request: RequestHeader)
 
-@import common.{ NewNavigation, TopLevelSection, LinkTo }
+@import common.{ NewNavigation, LinkTo, Edition }
+@import views.support.RenderClasses
 
-@sectionList(topLevelSection: TopLevelSection) = {
+@sectionList(topLevelSection: NewNavigation.TopLevelSection) = {
     <li class="main-navigation__item navigation-border">
             <!-- TODO: Firefox -->
         <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name">
@@ -10,13 +11,23 @@
                 <i class="main-navigation__icon"></i>
                 @topLevelSection.name
             </summary>
-            <ul class="main-navigation__secondary navigation-group">
-                @NewNavigation.sectionItems(topLevelSection).map { sectionItem =>
-                    <li class = "navigation-group__item" >
-                        <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
-                    </li>
-                }
-            </ul>
+
+            @Edition.all.map { edition =>
+                <ul class="@RenderClasses(Map(
+                    "is-hidden" -> (edition.id.toLowerCase != "uk") // Our default edition is UK
+                ), "main-navigation__secondary",
+                    s"main-navigation__secondary--${edition.id.toLowerCase}",
+                    "navigation-group",
+                    "js-editionlise-secondary-nav"
+                )">
+
+                    @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
+                        <li class = "navigation-group__item" >
+                            <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
+                        </li>
+                    }
+                </ul>
+            }
         </details>
     </li>
 }
