@@ -2,8 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.Static
-import conf.switches.Switches
 
 object ZootropolisHostedPages {
 
@@ -26,26 +24,36 @@ object ZootropolisHostedPages {
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {
+    val pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName"
+    val pageName = videoPageName
+    val standfirst = "The residents of Zootropolis are leading the charge on Digital Download! " +
+                     "Don’t let the sloths slow you down – download instantly through Sky Store, " +
+                     "the fastest way to bring your favourite characters home!"
     val videoTitle = "Disney’s Zootropolis: Download and keep today!"
+    val video = HostedVideo(
+      mediaId = videoPageName,
+      title = videoTitle,
+      duration = 32,
+      posterUrl = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ZOO_1132_130_0_009_00_0091.jpg",
+      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/07/18/160718GLZootropolisSpot_h264_mezzanine_2M_H264" +
+                  ".mp4",
+      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/07/18/160718GLZootropolisSpot_h264_mezzanine_2M_vp8" +
+                   ".webm",
+      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/07/18/160718GLZootropolisSpot_h264_mezzanine" +
+                  "-1_lo.ogv",
+      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/07/18/HLS/160718GLZootropolisSpot_h264_mezzanine.m3u8"
+    )
     HostedVideoPage(
       campaign,
-      pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName",
-      pageName = videoPageName,
-      standfirst = "The residents of Zootropolis are leading the charge on Digital Download! " +
-        "Don’t let the sloths slow you down – download instantly through Sky Store, " +
-        "the fastest way to bring your favourite characters home!",
-      video = HostedVideo(
-        mediaId = videoPageName,
-        title = videoTitle,
-        duration = 32,
-        posterUrl = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/ZOO_1132_130_0_009_00_0091.jpg",
-        srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/07/18/160718GLZootropolisSpot_h264_mezzanine_2M_H264.mp4",
-        srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/07/18/160718GLZootropolisSpot_h264_mezzanine_2M_vp8.webm",
-        srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/07/18/160718GLZootropolisSpot_h264_mezzanine-1_lo.ogv",
-        srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/07/18/HLS/160718GLZootropolisSpot_h264_mezzanine.m3u8"
-      ),
+      pageUrl,
+      pageName,
+      standfirst,
+      video,
       cta,
-      twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly")
+      twitterShareText = Some(
+        "Get to know the residents of Zootropolis and find out where to download the film instantly"
+      ),
+      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
   }
 
