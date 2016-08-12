@@ -43,7 +43,7 @@ define([
 
         this.canRun = function () {
             $opinionSection = $('#opinion');
-            return config.page.isFront && $opinionSection.length;
+            return config.page.isFront && config.page.contentType === 'Network Front' && $opinionSection.length;
         };
 
         function insertSection(description, variant) {
