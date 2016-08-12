@@ -22,11 +22,11 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
   def testAmpPageValidity(url: String): Unit = {
     val ampUrl = ampifyUrl(url)
 
-    val future: Future[File] = recorder.loadFile(validatorUri) {
+    val file: Future[File] = recorder.loadFile(validatorUri) {
       wsClient.url(validatorUri).get()
     }
 
-    whenReady(future) { file =>
+    whenReady(file) { f =>
       s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
 
         val commandInputWriter: OutputStream => Unit = writeToProcess(content)
@@ -36,7 +36,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
           .withInput(commandInputWriter)
 
         // Pass the content to the command line tool (external process) via stdin ('-' option)
-        val process = s"node_modules/.bin/amphtml-validator --validator_js ${file.getAbsolutePath} -".run(io)
+        val process = s"node_modules/.bin/amphtml-validator --validator_js ${f.getAbsolutePath} -".run(io)
 
         withClue("AMP validator should complete with exit value 0, the actual exit value of ") {
           process.exitValue() should be(0)
