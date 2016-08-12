@@ -41,12 +41,13 @@ object GuardianConfiguration extends Logging {
     }
     println(s"install vars: $installVars")
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
+    lazy val devinfra = FileConfigurationSource(s"/etc/gu/frontend.properties")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials)
-    val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
+    val config = new CM(List(userPrivate, runtimeOnly, devinfra, commonS3Config), PlayDefaultLogger).load.resolve
 
-    val appConfig = config.getConfig(identity.app + "." + identity.stage)
+    val appConfig = if (installVars.guStage == "DEVINFRA") config else config.getConfig(identity.app + "." + identity.stage)
     println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
     appConfig
   }
