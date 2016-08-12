@@ -44,6 +44,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABHostedGalleryCallToAction = Switch(
+    SwitchGroup.ABTests,
+    "ab-hosted-gallery-cta",
+    "Test which gallery image to put the call to action link on",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 16),
+    exposeClientSide = true
+  )
+
   val ABContributionsArticle20160802 = Switch(
     SwitchGroup.ABTests,
     "ab-contributions-article-20160810",
