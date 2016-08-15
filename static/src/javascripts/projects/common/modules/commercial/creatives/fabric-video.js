@@ -1,10 +1,12 @@
 define([
     'qwery',
+    'bonzo',
     'common/utils/fastdom-promise',
     'common/utils/detect',
     'common/utils/template',
+    'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/fabric-video.html'
-], function (qwery, fastdom, detect, template, fabricVideoStr) {
+], function (qwery, bonzo, fastdom, detect, template, addTrackingPixel, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
@@ -29,6 +31,9 @@ define([
 
         function create() {
             return fastdom.write(function () {
+                if (params.Trackingpixel) {
+                    addTrackingPixel(bonzo(adSlot), params.Trackingpixel + params.cacheBuster);
+                }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
