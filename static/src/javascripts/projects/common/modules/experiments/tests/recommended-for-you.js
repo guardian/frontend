@@ -33,8 +33,8 @@ define([
         this.expiry = '2016-09-09';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.1;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'Number of clicks to turn on this section';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
