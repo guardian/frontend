@@ -19,9 +19,11 @@
 
 @onward(content: CuratedContent) = {
     <div class="fc-item @TrailCssClasses.toneClass(content)">
-        <div class="fc-item__image-container">
-            <amp-img src="@content.properties.maybeContent.flatMap(_.trail.thumbnailPath)" layout="fixed" width=126 height=75></amp-img>
-        </div>
+        @if(content.properties.maybeContent.flatMap(_.trail.thumbnailPath)) {
+            <div class="fc-item__image-container">
+                <amp-img src="@content.properties.maybeContent.flatMap(_.trail.thumbnailPath)" layout="fixed" width=126 height=75></amp-img>
+            </div>
+        }
         <div class="fc-item__content">
             <div class="fc-item__header">
                 <h2 class="fc-item__title">
