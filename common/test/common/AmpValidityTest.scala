@@ -38,7 +38,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
         // Pass the content to the command line tool (external process) via stdin ('-' option)
         val process = s"node_modules/.bin/amphtml-validator --validator_js ${f.getAbsolutePath} -".run(io)
 
-        withClue("AMP validator should complete with exit value 0, the actual exit value of ") {
+        withClue(s"AMP validator for $url should pass.\nHint: Try checking your browser developer console for errors when appending '#development=1' to the failing URL.\nThe validator process exit value of ") {
           process.exitValue() should be(0)
         }
       }
