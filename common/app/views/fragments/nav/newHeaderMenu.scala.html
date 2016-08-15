@@ -19,8 +19,8 @@
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
-                        <li class = "navigation-group__item" >
-                            <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
+                        <li class="navigation-group__item">
+                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
                         </li>
                     }
                 </ul>
