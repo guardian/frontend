@@ -1,84 +1,103 @@
 package feed
 
 import pa._
-import model._
 import conf.FootballClient
 import org.joda.time.LocalDate
 import common._
-import model.Competition
+import model.{Competition, TeamNameBuilder}
+
 import scala.concurrent.Future
 
 
 trait Lineups extends ExecutionContexts with Logging {
-  def getLineup(theMatch: FootballMatch) = FootballClient.lineUp(theMatch.id).map{ m =>
-    val homeTeam = m.homeTeam.copy(name = TeamName(m.homeTeam))
-    val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
+  def footballClient: FootballClient
+  def competitions: Competitions
+  def teamNameBuilder = new TeamNameBuilder(competitions)
+  def getLineup(theMatch: FootballMatch) = footballClient.lineUp(theMatch.id).map{ m =>
+    val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+    val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
     LineUp(homeTeam, awayTeam, m.homeTeamPossession)
   }
-    .recover(FootballClient.logErrors)
+    .recover(footballClient.logErrors)
 }
 
 trait LiveMatches extends ExecutionContexts with Logging {
-  def getLiveMatches: Future[Map[String, Seq[MatchDay]]] = FootballClient.matchDay(LocalDate.now).map{ todaysMatches: List[MatchDay] =>
+
+  def footballClient: FootballClient
+  def teamNameBuilder: TeamNameBuilder
+
+  def getLiveMatches: Future[Map[String, Seq[MatchDay]]] = footballClient.matchDay(LocalDate.now).map{ todaysMatches: List[MatchDay] =>
 
     val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
     val matchesWithCleanedTeams = matchesWithCompetitions.map{ m =>
-      val homeTeam = m.homeTeam.copy(name = TeamName(m.homeTeam))
-      val awayTeam = m.awayTeam.copy(name = TeamName(m.awayTeam))
+      val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+      val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
       m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
     }
 
     // we have checked above that the competition does exist for these matches
     matchesWithCleanedTeams.groupBy(_.competition.head.id)
   }
-    .recover(FootballClient.logErrors)
+    .recover(footballClient.logErrors)
 }
 
 trait LeagueTables extends ExecutionContexts with Logging {
+
+  def footballClient: FootballClient
+  def teamNameBuilder: TeamNameBuilder
+
   def getLeagueTable(competition: Competition) = {
     log.info(s"refreshing table for ${competition.id}")
-    FootballClient.leagueTable(competition.id, new LocalDate).map {
+    footballClient.leagueTable(competition.id, new LocalDate).map {
       _.map { t =>
-        val team = t.team.copy(name = TeamName(t.team))
+        val team = t.team.copy(name = teamNameBuilder.withTeam(t.team))
         t.copy(team = team)
       }
     }
-      .recover(FootballClient.logErrors)
+      .recover(footballClient.logErrors)
   }
 }
 
 trait Fixtures extends ExecutionContexts with Logging {
+
+  def footballClient: FootballClient
+  def teamNameBuilder: TeamNameBuilder
+
   def getFixtures(competition: Competition) = {
     log.info(s"refreshing fixtures for ${competition.id}")
-    FootballClient.fixtures(competition.id).map {
+    footballClient.fixtures(competition.id).map {
       _.map { f =>
-        val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
-        val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
+        val homeTeam = f.homeTeam.copy(name = teamNameBuilder.withTeam(f.homeTeam))
+        val awayTeam = f.awayTeam.copy(name = teamNameBuilder.withTeam(f.awayTeam))
         f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
-      .recover(FootballClient.logErrors)
+      .recover(footballClient.logErrors)
   }
 }
 
 trait Results extends ExecutionContexts with Logging with implicits.Collections {
+
+  def footballClient: FootballClient
+  def teamNameBuilder: TeamNameBuilder
+
   def getResults(competition: Competition) = {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
     val startDate = competition.startDate.getOrElse(new LocalDate().minusDays(30))
-    FootballClient.results(competition.id, startDate).map { _.map{ r =>
-        val homeTeam = r.homeTeam.copy(name = TeamName(r.homeTeam))
-        val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
+    footballClient.results(competition.id, startDate).map { _.map{ r =>
+        val homeTeam = r.homeTeam.copy(name = teamNameBuilder.withTeam(r.homeTeam))
+        val awayTeam = r.awayTeam.copy(name = teamNameBuilder.withTeam(r.awayTeam))
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
-      .recover(FootballClient.logErrors)
+      .recover(footballClient.logErrors)
   }
 }
 
-class CompetitionAgent(_competition: Competition) extends Fixtures with Results with LeagueTables with implicits.Football {
+class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: TeamNameBuilder, _competition: Competition) extends Fixtures with Results with LeagueTables with implicits.Football {
 
   private lazy val agent = AkkaAgent(_competition)
 
@@ -119,8 +138,4 @@ class CompetitionAgent(_competition: Competition) extends Fixtures with Results 
     refreshResults()
     refreshLeagueTable()
   }
-}
-
-object CompetitionAgent {
-  def apply(competition: Competition) = new CompetitionAgent(competition)
 }

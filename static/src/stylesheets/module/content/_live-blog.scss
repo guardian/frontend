@@ -617,6 +617,11 @@ $timeline-width: 15px;
     }
 }
 
+/* prevent toast from dropping behind first post when not fixed */
+.toast__container:not(.is-sticky) {
+    position: absolute;
+}
+
 .toast__container--open {
     z-index: $zindex-content;
 }

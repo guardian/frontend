@@ -37,7 +37,7 @@ define([
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
-        var writer = function (linkText, cmpCode, copy) {
+        var writer = function (linkText, copy, cmpCode) {
             var $newThing = $.create(template(giraffeMessage, {
                 linkText: linkText,
                 linkName: 'contribute',
@@ -65,7 +65,7 @@ define([
             {
                 id: 'always',
                 test: function () {
-                    writer('You\'re always reading it. So make sure it\'s always here. It\'s only fair. ', 'co_uk_inarticle_always', 'Give to the Guardian');
+                    writer('You’re always reading it. So make sure it’s always here. It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_always');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -74,7 +74,7 @@ define([
             {
                 id: 'can',
                 test: function () {
-                    writer('There are some things you should do just because you can. Give to the Guardian. ', 'co_uk_inarticle_can', 'It\'s only fair');
+                    writer('There are some things you should do just because you can.', 'Give to the Guardian. It’s only fair', 'co_uk_inarticle_can');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -83,7 +83,7 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'co_uk_inarticle_like', 'Contribute to the Guardian');
+                    writer('If you use it, if you like it, why not pay for it? It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_like');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -92,7 +92,7 @@ define([
             {
                 id: 'backing',
                 test: function () {
-                    writer('Some things are worth backing, like your principles. ', 'co_uk_inarticle_backing', 'Give to the Guardian');
+                    writer('Some things are worth backing, like your principles. ', 'Give to the Guardian', 'co_uk_inarticle_backing');
                 },
                 success: function (complete) {
                     completer(complete);

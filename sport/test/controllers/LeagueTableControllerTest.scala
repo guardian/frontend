@@ -1,13 +1,19 @@
 package test
 
+import football.controllers.LeagueTableController
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
-@DoNotDiscover class LeagueTableControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class LeagueTableControllerTest
+  extends FlatSpec
+  with Matchers
+  with FootballTestData {
+
+  val leagueTableController = new LeagueTableController(testCompetitionsService)
 
   "League Table Controller" should "200 when content type is table" in {
-    val result = football.controllers.LeagueTableController.renderLeagueTable()(TestRequest())
+    val result = leagueTableController.renderLeagueTable()(TestRequest())
     status(result) should be(200)
   }
 
@@ -16,14 +22,14 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = football.controllers.LeagueTableController.renderLeagueTableJson()(fakeRequest)
+    val result = leagueTableController.renderLeagueTableJson()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "200 when content type is teams" in {
-    val result = football.controllers.LeagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
+    val result = leagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
     status(result) should be(200)
   }
 
@@ -32,7 +38,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = football.controllers.LeagueTableController.renderTeamlist()(fakeRequest)
+    val result = leagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
@@ -41,7 +47,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   val competitionId = "premierleague"
 
   it should "200 when content type is competition table" in {
-    val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(TestRequest())
+    val result = leagueTableController.renderCompetition(competitionId)(TestRequest())
     status(result) should be(200)
   }
 
@@ -50,7 +56,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
+    val result = leagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"html\"")

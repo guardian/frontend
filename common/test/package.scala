@@ -17,6 +17,8 @@ import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 
+import scala.util.{Failure, Success, Try}
+
 trait TestSettings {
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -124,9 +126,13 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
 
   implicit override lazy val app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
+      case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
+      case Failure(_) => initialSettings
+    }
     val context = ApplicationLoader.createContext(
       environment = environment,
-      initialSettings = initialSettings
+      initialSettings = settings
     )
     ApplicationLoader.apply(context).load(context)
   }

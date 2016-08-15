@@ -13,6 +13,7 @@ import implicits.Requests
 import pa.FootballTeam
 
 trait MatchListController extends Controller with Requests {
+  val competitionsService: Competitions
   protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): LocalDate =
     datePattern.parseDateTime(s"$year$month$day").toLocalDate
@@ -44,12 +45,12 @@ trait MatchListController extends Controller with Requests {
   }
 
   protected def lookupCompetition(tag: String): Option[Competition] = {
-    Competitions().withTag(tag).orElse(Competitions().withId(tag))
+    competitionsService.competitionsWithTag(tag).orElse(competitionsService.competitionsWithId(tag))
   }
   protected def lookupTeam(tag: String): Option[FootballTeam] = {
     for {
       teamId <- TeamMap.findTeamIdByUrlName(tag)
-      team <- Competitions().findTeam(teamId)
+      team <- competitionsService.findTeam(teamId)
     } yield team
   }
 }
