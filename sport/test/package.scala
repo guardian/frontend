@@ -1,17 +1,12 @@
 package test
 
-import com.ning.http.client.FluentCaseInsensitiveStringsMap
-import com.ning.http.client.uri.Uri
 import common.ExecutionContexts
-import java.io.{File, InputStream}
-import java.nio.ByteBuffer
-import java.util
+import java.io.File
 
 import football.controllers.HealthCheck
 import org.scalatest.{BeforeAndAfterAll, Suites}
-import play.api.libs.ws.ning.NingWSResponse
-import recorder.HttpRecorder
-import play.api.libs.ws.{WSClient, WSResponse}
+import recorder.{DefaultHttpRecorder, HttpRecorder}
+import play.api.libs.ws.WSClient
 import conf.FootballClient
 import football.model._
 import football.collections.RichListTest
@@ -60,40 +55,8 @@ trait WithTestFootballClient {
 
 }
 
-private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {
-  def getContentType: String = "application/json"
-  def getResponseBody(charset: String): String = getResponseBody
-  def getStatusCode: Int = 200
-  def getResponseBodyAsBytes: Array[Byte] = throw new NotImplementedError()
-  def getResponseBodyAsByteBuffer: ByteBuffer = throw new NotImplementedError()
-  def getResponseBodyAsStream: InputStream = throw new NotImplementedError()
-  def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
-  def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
-  def getStatusText: String = throw new NotImplementedError()
-  def getUri: Uri = throw new NotImplementedError()
-  def getHeader(name: String): String = throw new NotImplementedError()
-  def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
-  def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
-  def isRedirected: Boolean = throw new NotImplementedError()
-  def getCookies = throw new NotImplementedError()
-  def hasResponseStatus: Boolean = throw new NotImplementedError()
-  def hasResponseHeaders: Boolean = throw new NotImplementedError()
-  def hasResponseBody: Boolean = throw new NotImplementedError()
-}
-
-object FeedHttpRecorder extends HttpRecorder[WSResponse] {
-
+object FeedHttpRecorder extends DefaultHttpRecorder {
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/sportfeed")
-
-  def toResponse(str: String) = NingWSResponse(Resp(str))
-
-  def fromResponse(response: WSResponse) = {
-    if (response.status == 200) {
-      response.body
-    } else {
-      s"Error:${response.status}"
-    }
-  }
 }
 
 // Stubs data for Football stats integration tests
