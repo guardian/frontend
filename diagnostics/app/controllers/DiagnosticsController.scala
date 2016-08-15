@@ -7,6 +7,7 @@ import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
 import model.diagnostics.commercial.Report
 import model.{NoCache, TinyResponse}
+import org.joda.time.format.ISODateTimeFormat
 
 class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
@@ -61,8 +62,11 @@ class DiagnosticsController extends Controller with Logging {
   }
 
   def commercialReports(dateTime: String) = Action { implicit request =>
+    // report requests come from browsers, so dateTime is ISO.
+    val date = ISODateTimeFormat.dateTime.parseDateTime(dateTime)
+
     JsonComponent(
-      "reports" -> Report.getReports(dateTime)
+      "reports" -> Report.getReports(date)
     ).result
   }
 

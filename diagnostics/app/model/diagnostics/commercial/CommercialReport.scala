@@ -1,5 +1,6 @@
 package model.diagnostics.commercial
 
+import org.joda.time.DateTime
 import play.api.libs.json._
 
 case class Module(
@@ -47,7 +48,7 @@ object Report extends common.Logging {
     }
   }
 
-  def getReports(dateTime: String): JsValue = {
+  def getReports(dateTime: DateTime): JsValue = {
     val reports: List[JsValue] = RedisReport.getReports(dateTime).map { rawReport =>
       Json.parse(rawReport)
     }
