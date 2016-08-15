@@ -1,7 +1,6 @@
 @()(implicit request: RequestHeader)
 
 @import common.{ NewNavigation, LinkTo, Edition }
-@import views.support.RenderClasses
 
 @sectionList(topLevelSection: NewNavigation.TopLevelSection) = {
     <li class="main-navigation__item navigation-border">
@@ -13,13 +12,11 @@
             </summary>
 
             @Edition.all.map { edition =>
-                <ul class="@RenderClasses(Map(
-                    "is-hidden" -> (edition.id.toLowerCase != "uk") // Our default edition is UK
-                ), "main-navigation__secondary",
-                    s"main-navigation__secondary--${edition.id.toLowerCase}",
-                    "navigation-group",
-                    "js-editionlise-secondary-nav"
-                )">
+                <ul class="main-navigation__secondary
+                    main-navigation__secondary--@{edition.id.toLowerCase}
+                    navigation-group
+                    js-editionlise-secondary-nav"
+                    @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class = "navigation-group__item" >

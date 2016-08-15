@@ -26,9 +26,9 @@ define([
                    fastdomPromise.write(function () {
 
                        if (isListCurrentEdition) {
-                           navList.classList.remove('is-hidden');
+                           navList.removeAttribute('hidden');
                        } else {
-                           navList.classList.add('is-hidden');
+                           navList.setAttribute('hidden', '');
                        }
                    });
                 });
