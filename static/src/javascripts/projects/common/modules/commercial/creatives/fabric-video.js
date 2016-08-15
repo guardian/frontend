@@ -20,9 +20,11 @@ define([
 
         hasVideo = !(detect.isIOS() || detect.isAndroid() || detect.isBreakpoint({ max: 'tablet' }));
         if (hasVideo) {
-            params.video = '<video webkit-playsinline muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+            params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+            params.poster = '';
         } else {
-            params.video = '<div class="poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            params.video = '';
+            params.poster = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
         }
 
         return Object.freeze({
