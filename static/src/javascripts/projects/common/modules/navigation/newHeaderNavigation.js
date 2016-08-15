@@ -1,11 +1,13 @@
 define([
     'common/utils/fastdom-promise',
     'common/utils/$',
-    'common/modules/navigation/edition-picker'
+    'common/modules/navigation/edition-picker',
+    'common/modules/navigation/editionalise-menu'
 ], function (
     fastdomPromise,
     $,
-    editionPicker
+    editionPicker,
+    editionaliseMenu
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
@@ -150,6 +152,7 @@ define([
         openTargetListOnClick();
 
         editionPicker();
+        editionaliseMenu();
     }
 
     return init;
