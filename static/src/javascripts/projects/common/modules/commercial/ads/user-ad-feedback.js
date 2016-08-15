@@ -3,24 +3,33 @@ define([
     'qwery',
     'fastdom',
     'common/utils/fetch',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
     bonzo,
     qwery,
     fastdom,
     fetch,
-    config
+    config,
+    detect
 ) {
 
-    return function recordUserAdFeedback(pagePath, adSlotId, creativeId, feedbackType) {
+    return function recordUserAdFeedback(pagePath, adSlotId, slotRenderEvent, feedbackType) {
         var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
         var stage = config.page.isProd ? 'PROD' : 'CODE';
+        var ua = detect.getUserAgent;
+        var breakPoint = detect.getBreakpoint();
+
         var data = JSON.stringify({
             stage: stage,
             adPage: pagePath,
             adSlotId: adSlotId,
-            adCreativeId: creativeId.toString(),
-            adFeedback: feedbackType
+            adCreativeId: slotRenderEvent.creativeId.toString(),
+            adLineId: slotRenderEvent.lineItemId.toString(),
+            adFeedback: feedbackType,
+            browser: ua.browser.toString() + ua.version.toString(),
+            userAgent: window.navigator.userAgent,
+            breakPoint: breakPoint
         });
         return fetch(feedbackUrl, {
             method: 'post',
