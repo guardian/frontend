@@ -99,7 +99,7 @@ object RedisReport extends Logging with ExecutionContexts {
       // Use a time key-value which holds an array of all the view data recorded for a given time period (minute periods).
       val timeKey = reportsKeyFromDate(DateTime.now())
       client.rpush(timeKey, Json.toJson(report).toString)
-      //client.expire(timeKey, PAGE_VIEW_DATA_EXPIRY.toInt)
+      client.expire(timeKey, PAGE_VIEW_DATA_EXPIRY.toInt)
     }
   }
 
