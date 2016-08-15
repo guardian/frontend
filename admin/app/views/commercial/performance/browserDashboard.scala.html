@@ -2,7 +2,7 @@
 
 @import controllers.admin.routes.UncachedWebAssets
 
-@admin_main("Browser Ad Performance", "Prod", isAuthed = true) {
+@admin_main("Browser Ad Performance", "Prod", isAuthed = true, loadJquery = false) {
 
     <script src="@UncachedWebAssets.at("lib/jquery/jquery.min.js")"></script>
     <script src="@UncachedWebAssets.at("lib/d3/d3.min.js")"></script>

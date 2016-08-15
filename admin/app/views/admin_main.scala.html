@@ -1,4 +1,4 @@
-@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)(implicit request: RequestHeader)
+@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false, loadJquery: Boolean =  true)(content: Html)(implicit request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
@@ -94,7 +94,9 @@
 
             require(['bootstraps/admin']);
         </script>
-
+        @if(loadJquery){
+            <script src="//code.jquery.com/jquery.js"></script>
+        }
         <script type="text/javascript" src="@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
 
     </body>
