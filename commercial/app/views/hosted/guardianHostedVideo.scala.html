@@ -5,6 +5,17 @@
 @import views.html.hosted.guardianHostedCta
 
 @main(page, Some("commercial")) { } {
+    <!--[if (gt IE 9)|(IEMobile)]><!-->
+    <style>
+    .hosted-ton {
+        color: page.campaign.mainColour;
+    }
+
+    .hosted-tone-bg {
+        background-color: page.campaign.mainColour;
+    }
+    </style>
+    <!--<![endif]-->
     @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
         <section class="hosted-tone--dark">
