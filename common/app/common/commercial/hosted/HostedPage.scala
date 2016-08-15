@@ -35,6 +35,9 @@ case class HostedCampaign(
   owner: String,
   logo: HostedLogo,
   cssClass: String,
+  mainColour: String,
+  // todo: this will come through from capi once worked out how it's going to be used
+  secondaryColour: Option[String] = None,
   logoLink: Option[String] = None
 )
 
