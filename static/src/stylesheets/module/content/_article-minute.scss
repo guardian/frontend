@@ -1,6 +1,6 @@
-$us-minute-highlight-colour: #eb1e25;
-$us-minute-main-colour: #104f75;
-$us-minute-contrast-colour: #ffffff;
+$us-minute-highlight-colour: $news-support-4;
+$us-minute-main-colour: $neutral-5;
+$us-minute-contrast-colour: #333333;
 $minute-headline-colour: #ffffff;
 
 $minute-layout-margin-nudge: gs-span(1);
@@ -18,6 +18,26 @@ $minute-layout-margin-nudge: gs-span(1);
 
 .content .gs-container--minute-article {
     padding: 0;
+}
+
+body {
+    position: relative;
+
+    &:before {
+        content: '';
+        background: url(http://i.imgur.com/lGd0PkM.png);
+        background-repeat: repeat-y;
+        width: 1301px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -650px;
+        display: block;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+    }
 }
 
 /* ==========================================================================
@@ -47,18 +67,16 @@ $minute-layout-margin-nudge: gs-span(1);
 
     @include mq(phablet) {
         &:after {
-            @include rule($us-minute-highlight-colour, $gs-baseline*2);
+            @include rule($us-minute-highlight-colour, $gs-baseline/3);
             position: absolute;
+            top: -$gs-baseline/3;
             left: 0;
-            top: -$gs-baseline*2;
             width: gs-span(4) + $gs-gutter * 2;
         }
     }
 
     &:after {
         @include mq(desktop) {
-            height: $gs-baseline*3;
-            top: -$gs-baseline*3;
             width: gs-span(7);
         }
         @include mq(wide) {
@@ -137,7 +155,7 @@ $minute-layout-margin-nudge: gs-span(1);
             margin-left: gs-span(1) - $gs-gutter;
         }
         @include mq(wide) {
-            margin-left: gs-span(2) - $gs-gutter * 2;
+            margin-left: 0;
         }
 
     }
@@ -198,7 +216,7 @@ $minute-layout-margin-nudge: gs-span(1);
     width: 100%;
 
     &:before {
-        @include rule($us-minute-highlight-colour, $gs-baseline*2);
+        @include rule($us-minute-highlight-colour, $gs-baseline/3);
         z-index: 2;
         right: 0;
     }
@@ -267,13 +285,6 @@ $minute-layout-margin-nudge: gs-span(1);
         padding-left: $gs-gutter*1.5;
         padding-top: $gs-baseline;
 
-        &:before {
-            height: $gs-baseline*3;
-            top: 0;
-            width: gs-span(7);
-            position: absolute;
-        }
-
         .block-elements {
             box-sizing: border-box;
             float: right;
@@ -296,7 +307,7 @@ $minute-layout-margin-nudge: gs-span(1);
         padding-left: 0;
 
         &:before {
-            width: gs-span(9);
+            width: gs-span(10);
         }
 
         .block-elements {
@@ -316,7 +327,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
         .block-elements {
             width: gs-span(6);
-            padding-right: gs-span(1) + $gs-gutter;
+            padding-left: gs-span(1) + $gs-gutter;
         }
 
         figure.element-image {
@@ -326,7 +337,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
     // Wide
     @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + gs-span(1);
+        margin-left: $minute-layout-margin-nudge + $gs-gutter * 2;
 
         .block-elements {
             width: gs-span(5);
@@ -358,10 +369,15 @@ $minute-layout-margin-nudge: gs-span(1);
 
     @include mq($from: leftCol) {
         margin-left: $minute-layout-margin-nudge + gs-span(1);
+
+        .block-elements {
+            padding-right: gs-span(1) + $gs-gutter;
+            padding-left: 0;
+        }
     }
 
     @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + gs-span(2);
+        margin-left: $minute-layout-margin-nudge + gs-span(3) - $gs-gutter;
     }
 }
 
@@ -382,8 +398,8 @@ $minute-layout-margin-nudge: gs-span(1);
         color: $us-minute-contrast-colour;
     }
 
-    a {
-        border-bottom: 1px solid rgba(255, 255, 255, .4);
+    p a {
+        border-bottom: 1px solid rgba($us-minute-highlight-colour, .4);
 
         &:hover {
             border-bottom-color: $us-minute-highlight-colour;
@@ -410,7 +426,7 @@ $minute-layout-margin-nudge: gs-span(1);
             bottom: 0;
             padding-left: $gs-gutter/2;
             position: absolute;
-            background-color: rgba(12, 87, 135, .5);
+            background-color: rgba($us-minute-main-colour, .6);
         }
     }
 
@@ -439,7 +455,7 @@ $minute-layout-margin-nudge: gs-span(1);
         color: $us-minute-contrast-colour;
 
         .inline-quote {
-            fill: $us-minute-contrast-colour;
+            fill: $us-minute-highlight-colour;
         }
     }
 
@@ -466,10 +482,6 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     @include mq($from: tablet) {
-        &:before {
-            right: auto;
-        }
-
         .block-elements {
             width: gs-span(7);
         }
@@ -480,12 +492,10 @@ $minute-layout-margin-nudge: gs-span(1);
     }
 
     @include mq($from: desktop) {
-        &:after {
-            left: gs-span(2);
-        }
-
         .block-elements {
             width: gs-span(10);
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .inline-quote {
@@ -522,7 +532,7 @@ $minute-layout-margin-nudge: gs-span(1);
 
     @include mq($from: desktop) {
         .block-elements {
-            width: gs-span(9);
+            width: gs-span(11);
         }
     }
 }
