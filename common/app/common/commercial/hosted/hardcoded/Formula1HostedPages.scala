@@ -10,7 +10,7 @@ object Formula1HostedPages {
     id = "singapore-grand-prix",
     name = "Singapore Grand Prix",
     owner = "First Stop Singapore",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA.jpg"),
+    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
     cssClass = "f1-singapore",
     logoLink = None
   )

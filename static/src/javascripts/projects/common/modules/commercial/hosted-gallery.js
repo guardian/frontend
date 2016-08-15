@@ -151,6 +151,12 @@ define([
         }.bind(this));
     };
 
+    HostedGallery.prototype.ctaIndex = function () {
+        var ctaIndex = config.page.ctaIndex;
+        var images = config.page.images;
+        return (ctaIndex > 0 && ctaIndex < images.length - 1) ? ctaIndex : undefined;
+    };
+
     HostedGallery.prototype.trigger = function (event, data) {
         this.fsm.trigger(event, data);
     };
@@ -191,6 +197,7 @@ define([
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
             ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            ctaIndex = this.ctaIndex(),
             tabletSize = 740,
             imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
         fastdom.write(function () {
@@ -198,7 +205,7 @@ define([
             $sizer.css('height', imageSize.height);
             $sizer.css('top', imageSize.topBottom);
             $sizer.css('left', imageSize.leftRight);
-            if (imgIndex === config.page.ctaIndex) {
+            if (imgIndex === ctaIndex) {
                 bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
@@ -252,7 +259,7 @@ define([
         var fractionProgress = progress % 1;
         var deg = Math.ceil(fractionProgress * 360);
         var newIndex = Math.round(progress + 0.75);
-        var ctaIndex = config.page.ctaIndex;
+        var ctaIndex = this.ctaIndex();
         fastdom.write(function () {
             this.$images.each(function (image, index) {
                 var opacity = (progress - index + 1) * 4 / 3;
@@ -301,7 +308,7 @@ define([
                 if (this.useSwipe) {
                     this.translateContent(this.index, 0, 100);
                     bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
-                    bonzo(this.$galleryEl).toggleClass('show-cta', this.index === config.page.ctaIndex + 1);
+                    bonzo(this.$galleryEl).toggleClass('show-cta', this.index === this.ctaIndex() + 1);
                 }
 
                 url.pushUrl({}, document.title, config.page.pageName + '#img-' + this.index, true);
