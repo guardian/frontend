@@ -24,12 +24,8 @@ define([
                 error: function () {
                     renderErrorMessage(buttonEl);
                 },
-                success: function (response) {
-                    var isSubscribed = false;
-                    if (response && response.subscriptions && response.subscriptions.length) {
-                        isSubscribed = true;
-                    }
-                    updateButton(buttonEl, isSubscribed);
+                success: function () {
+                    updateButton(buttonEl);
                 }
             });
         });
@@ -107,9 +103,11 @@ define([
         });
     }
 
-    function updateSubscriptionButton(buttonEl, isSubscribed) {
+    function updateSubscriptionButton(buttonEl) {
         var buttonVal = buttonEl.value;
-        if (isSubscribed) {
+        var isSubscribing = !/unsubscribe/.test(buttonVal);
+
+        if (isSubscribing) {
             fastdom.write(function () {
                 $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = 'unsubscribe-' + buttonVal;
@@ -128,9 +126,9 @@ define([
         }
     }
 
-    function updateButton(buttonEl, isSubscribed) {
+    function updateButton(buttonEl) {
         if ($(buttonEl).hasClass('js-subscription-button')) {
-            updateSubscriptionButton(buttonEl, isSubscribed);
+            updateSubscriptionButton(buttonEl);
         } else {
             fastdom.write(function () {
                 setTimeout(function () {
@@ -147,7 +145,13 @@ define([
         var htmlPreference = $('[name="htmlPreference"]:checked').val();
         var buttonString = '';
         for (var i = 0; i < buttons.length; i++) {
-            buttonString += 'addEmailSubscription=' + encodeURIComponent(buttons[i].value) + '&';
+            var value = buttons[i].value;
+            var unsubscribeMatches = value.match(/unsubscribe-(.*)/);
+            if (unsubscribeMatches) {
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
+            } else {
+                buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
+            }
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
         buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);
