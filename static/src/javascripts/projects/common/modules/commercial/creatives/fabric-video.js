@@ -16,7 +16,7 @@ define([
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
-        hasVideo = !detect.isIOS();
+        hasVideo = !(detect.isIOS() || detect.isAndroid() || detect.isBreakpoint({ max: 'tablet' }));
         if (hasVideo) {
             params.video = '<video webkit-playsinline muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
         } else {
