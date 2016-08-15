@@ -6,8 +6,20 @@
 
     <script src="@UncachedWebAssets.at("lib/jquery/jquery.min.js")"></script>
     <script src="@UncachedWebAssets.at("lib/d3/d3.min.js")"></script>
-    <script src="@UncachedWebAssets.at("lib/epoch-charting/dist/js/epoch.min.js")"></script>
+    <script src="@UncachedWebAssets.at("lib/epoch-charting/dist/js/epoch.js")"></script>
     <link rel="stylesheet" type="text/css" href="@UncachedWebAssets.at("lib/epoch-charting/dist/css/epoch.min.css")">
 
-    <div id="browser-live-performance-data" class="epoch category10" style="height: 300px;"></div>
+    <header>
+        <h1 class="page-header">Browser Performance Metrics</h1>
+
+        <div class="container-fluid">This data is collected from user browsers live. These performance timings measure the critical parts of our commercial system, in terms of the user-facing delay being experienced by our readers.</div>
+    </header>
+
+    <div class="container-fluid">
+        <h4>Time taken to start the Commercial javascript application</h4>
+
+        <div>This is the delay between the page being executed, and the javascript commercial system starting (known as the commercial bootstrap). This delay is mostly attributed to the client-side's critical path, including the time taken to complete the inital javascript bootstrap (known as standard).</div>
+
+        <div id="browser-live-performance-data" class="epoch category10" style="height: 300px;"></div>
+    </div>
 }
