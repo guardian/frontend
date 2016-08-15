@@ -44,7 +44,7 @@ define([
             error: function () {
                 renderErrorMessage(buttonEl);
             },
-            success: function (response) {
+            success: function () {
                 for (var i = 0; i < subscribedButtons.length; i++) {
                     updateSubscriptionButton(subscribedButtons[i], false);
                 }
