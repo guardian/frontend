@@ -2,19 +2,9 @@
     position: relative;
     height: 250px;
 
-    > .creative__video,
-    > .creative__link {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    > .creative__video {
-        object-fit: cover;
-    }
-
+    > .creative__link,
+    .creative__video,
+    .creative__poster,
     .creative__alt,
     .creative__layer,
     .creative__slide {
@@ -23,6 +13,18 @@
         left: 0;
         width: 100%;
         height: 100%;
+    }
+
+    .creative__video {
+        object-fit: cover;
+    }
+
+    .creative__video--left {
+        width: auto;
+    }
+
+    .creative__alt--mobile .creative__layer {
+        background-repeat: no-repeat;
     }
 
     .creative__layer1 { z-index: 1; }
@@ -80,33 +82,5 @@
     @keyframes fade-in {
         0%    { opacity: 0; }
         100%  { opacity: 1; }
-    }
-
-    #mp4Video {
-        height: 250px;
-        overflow: hidden;
-        clear: both;
-        position: absolute;
-    }
-
-    .mp4Video_centered {
-        left: 50%;
-        margin-left: -960px;
-    }
-
-    @include mq(tablet, leftCol) {
-        #mp4Video {
-            width: auto;
-        }
-
-        .mp4Video_centered {
-            margin-left: -960px;
-        }
-    }
-
-    .poster {
-        position: absolute;
-        width: 100%;
-        height: 250px;
     }
 }
