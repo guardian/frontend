@@ -2,7 +2,8 @@ package test
 
 import java.io.File
 
-import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.gargoylesoftware.htmlunit.html.HtmlPage
+import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
@@ -41,6 +42,7 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
+  lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
@@ -65,6 +67,18 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
       htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
       block(testBrowser)
+  }
+
+  /**
+  * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
+  * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
+  * we can use [[WebResponse.getContentAsString]]
+   */
+  protected def getContentString[T](path: String)(block: String => T): T = {
+    webClient.getOptions.setJavaScriptEnabled(false)
+
+    val page: HtmlPage = webClient.getPage(host + path)
+    block(page.getWebResponse().getContentAsString)
   }
 
   def withHost(path: String) = s"http://localhost:$port$path"
