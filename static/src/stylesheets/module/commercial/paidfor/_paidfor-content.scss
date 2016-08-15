@@ -91,6 +91,12 @@
     padding-bottom: $gs-gutter / 4;
 }
 
+.content--immersive {
+    .paidfor-box--header {
+        color: $multimedia-support-4;
+    }
+}
+
 .paidfor-title {
     font-weight: 400;
     padding-bottom: .5em;
