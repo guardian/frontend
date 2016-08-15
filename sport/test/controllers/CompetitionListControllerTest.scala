@@ -1,15 +1,20 @@
 package test
 
+import football.controllers.CompetitionListController
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
-@DoNotDiscover class CompetitionListControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CompetitionListControllerTest
+  extends FlatSpec
+  with Matchers
+  with FootballTestData {
 
-  val url = "/football/competitions"
+  val url = "/football/competitionsService"
+  lazy val competitionListController = new CompetitionListController(testCompetitionsService)
 
   "Competition List Controller" should "200 when content type is competition list" in {
-    val result = football.controllers.CompetitionListController.renderCompetitionList()(TestRequest())
+    val result = competitionListController.renderCompetitionList()(TestRequest())
     status(result) should be(200)
   }
 
@@ -18,7 +23,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = football.controllers.CompetitionListController.renderCompetitionListJson()(fakeRequest)
+    val result = competitionListController.renderCompetitionListJson()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")

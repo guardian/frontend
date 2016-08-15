@@ -121,7 +121,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .content__secondary-column {
         .hosted__next-video {
             width: auto;
-            margin-top: 76px;
+            position: absolute;
+            margin: 70px 0;
+            top: 0;
             .hosted__next-video--header,
             .hosted__next-video--tile {
                 margin-right: 0;
@@ -163,6 +165,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .hosted__next-video .hosted__next-video--header {
         border: 0;
         padding: 0;
+    }
+    .from-content-api > ul li {
+        margin-bottom: 0;
     }
 }
 

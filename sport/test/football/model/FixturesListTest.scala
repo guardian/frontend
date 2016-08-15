@@ -10,7 +10,7 @@ import test.ConfiguredTestSuite
 
   "the all fixtures list" - {
     "for today" - {
-      val fixtures = new FixturesList(today, competitions)
+      val fixtures = new FixturesList(today, competitions.competitions)
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -22,11 +22,6 @@ import test.ConfiguredTestSuite
         fixtures.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today, today.plusDays(1), today.plusDays(3)))
       }
 
-
-//      "should group matches correctly by date and league, with league ordered correctly" in {
-//        val (_, competitionMatches1) = fixtures.matchesGroupedByDateAndCompetition(0)
-//        competitionMatches1.map { case (comp, matches) => comp.id } should equal(List("100", "500"))
-//      }
 
       "should only contain matches happening on one of next 3 days that have fixtures (includes today)" in {
         val allowedDates = List(today, today.plusDays(1), today.plusDays(3))  // look at the test data to see why
@@ -55,7 +50,7 @@ import test.ConfiguredTestSuite
 
     "for a day in the future (paginated)" - {
       val targetDate = today.plusDays(3)
-      val fixtures = new FixturesList(targetDate, competitions)
+      val fixtures = new FixturesList(targetDate, competitions.competitions)
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -90,7 +85,7 @@ import test.ConfiguredTestSuite
 
     "should paginate correctly" - {
       "for today" - {
-        val fixtures = new FixturesList(today, competitions)
+        val fixtures = new FixturesList(today, competitions.competitions)
 
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(4) // see test data
@@ -103,7 +98,7 @@ import test.ConfiguredTestSuite
       }
 
       "for tomorrow" - {
-        val fixtures = new FixturesList(today.plusDays(1), competitions)
+        val fixtures = new FixturesList(today.plusDays(1), competitions.competitions)
 
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(10) // see test data
@@ -117,7 +112,7 @@ import test.ConfiguredTestSuite
       }
 
       "for a date with no matches" - {
-        val fixtures = new FixturesList(today.plusDays(2), competitions)
+        val fixtures = new FixturesList(today.plusDays(2), competitions.competitions)
 
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(11) // see test data
@@ -129,7 +124,7 @@ import test.ConfiguredTestSuite
 
   "the competition fixtures list" - {
     "given competition 500" - {
-      val fixtures = new CompetitionFixturesList(today, competitions, "500")
+      val fixtures = new CompetitionFixturesList(today, competitions.competitions, "500")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -154,7 +149,7 @@ import test.ConfiguredTestSuite
     }
 
     "given competition 100" - {
-      val fixtures = new CompetitionFixturesList(today, competitions, "100")
+      val fixtures = new CompetitionFixturesList(today, competitions.competitions, "100")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -172,7 +167,7 @@ import test.ConfiguredTestSuite
 
   "the team fixtures list" - {
     "given spurs" - {
-      val fixtures = new TeamFixturesList(today, competitions, spurs.id)
+      val fixtures = new TeamFixturesList(today, competitions.competitions, spurs.id)
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
