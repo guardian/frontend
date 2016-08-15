@@ -96,9 +96,13 @@ define([
                 if (itemId === targetListId) {
                     fastdomPromise.write(function () {
                         var parent = listItem.parentNode;
+                        var menuContainer = $('.js-reset-scroll-on-menu');
 
                         // Using flexbox to reorder lists based on what is clicked.
                         parent.style.order = '-' + index;
+
+                        // Make sure when the menu is open, the user is always scrolled to the top
+                        menuContainer[0].scrollTop = 0;
                     });
                 }
             });
