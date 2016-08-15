@@ -13,18 +13,22 @@ define([
 
     function FabricVideo(adSlot, params) {
         var isUpdating = false;
+        var isMobile = detect.isBreakpoint({ max: 'phablet' });
         var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
-        hasVideo = !(detect.isIOS() || detect.isAndroid() || detect.isBreakpoint({ max: 'tablet' }));
-        if (hasVideo) {
-            params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
-            params.poster = '';
+        hasVideo = !(detect.isIOS() || detect.isAndroid() || isMobile);
+
+        if (isMobile) {
+            params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
         } else {
-            params.video = '';
-            params.poster = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            if (hasVideo) {
+                params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+            } else {
+                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            }
         }
 
         return Object.freeze({
