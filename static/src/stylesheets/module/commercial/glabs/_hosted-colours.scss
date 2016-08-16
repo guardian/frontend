@@ -203,9 +203,9 @@ $singaporef1SecondColour: #f0a93f;
     &:hover {
         background-color: $zootropolisColor;
         border-color: $zootropolisColor;
-        color: #ffffff;
+        color: #ffffff; //contrast related
         svg {
-            fill: #ffffff;
+            fill: #ffffff; //contrast related
         }
     }
 }
@@ -219,7 +219,7 @@ $singaporef1SecondColour: #f0a93f;
 
 .hostedbadge.hosted-tone-bg--zootropolis {
     .hostedbadge__info {
-        color: #ffffff;
+        color: #ffffff; //contrast related
     }
 }
 
@@ -230,13 +230,13 @@ $singaporef1SecondColour: #f0a93f;
     ~ .survey-overlay-simple {
         .survey-text__header {
             background-color: $zootropolisColor;
-            color: #ffffff;
+            color: #ffffff; //contrast related
 
             .site-message__close-btn {
-                border-color: #ffffff;
+                border-color: #ffffff; //contrast related
 
                 .inline-cross {
-                    fill: #ffffff;
+                    fill: #ffffff; //contrast related
                 }
             }
         }

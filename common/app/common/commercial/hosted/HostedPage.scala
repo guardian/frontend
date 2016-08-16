@@ -24,8 +24,8 @@ trait HostedPage extends StandalonePage {
 
   val brandColourCssClass = s"hosted-tone--${campaign.cssClass} hosted-tone"
   val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass} hosted-tone-bg"
-  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass}"
-  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass}"
+  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass} hosted-tone-border"
+  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
 
 }
 
@@ -36,8 +36,7 @@ case class HostedCampaign(
   logo: HostedLogo,
   cssClass: String,
   brandColour: String,
-  // todo: this will come through from capi once worked out how it's going to be used
-  secondaryColour: Option[String] = None,
+  brightFont: Boolean,
   logoLink: Option[String] = None
 )
 

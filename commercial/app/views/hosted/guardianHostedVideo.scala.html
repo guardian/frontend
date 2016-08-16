@@ -15,6 +15,7 @@
         background-color: @{page.campaign.brandColour};
     }
 
+    .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
         background-color: @{page.campaign.brandColour};
@@ -33,15 +34,32 @@
 
     .hosted-page .hosted__next-video .hosted__next-video--tile {
         border-top-color: @{page.campaign.brandColour};
-        background: @{page.campaign.brandColour};
+        background: rgba(@{page.campaign.brandColour}, 0.5); /* TODO transform hex into rgb in js */
     }
 
     .hosted-page .hosted__link {
         color: @{page.campaign.brandColour};
     }
 
-    .hosted-page.survey-overlay-simple .survey-text__header {
+    .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.brandColour};
+    }
+
+    @if(page.campaign.brightFont) {
+        .hosted-tone-btn,
+        .hostedbadge.hosted-tone-bg .hostedbadge__info,
+        .hosted-page ~ .survey-overlay-simple .survey-text__header {
+            color: #ffffff;
+        }
+
+        .hosted-tone-btn svg,
+        .hosted-page ~ .survey-overlay-simple .survey-text__header .site-message__close-btn .inline-cross {
+            fill: #ffffff;
+        }
+
+        .hosted-page ~ .survey-overlay-simple .survey-text__header .site-message__close-btn {
+            border-color: #ffffff;
+        }
     }
     </style>
     <!--<![endif]-->

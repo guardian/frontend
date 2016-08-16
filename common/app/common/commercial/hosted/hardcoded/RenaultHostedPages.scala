@@ -17,6 +17,7 @@ object RenaultHostedPages {
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
     cssClass = "renault",
     brandColour = "#ffc421",
+    brightFont = false,
     logoLink = None
   )
 

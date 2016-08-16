@@ -13,6 +13,7 @@ object Formula1HostedPages {
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
     cssClass = "f1-singapore",
     brandColour = "#063666",
+    brightFont = true,
     logoLink = None
   )
 
