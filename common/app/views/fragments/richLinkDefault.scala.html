@@ -1,0 +1,28 @@
+@(title: String, href: String, showImage: Boolean, showStandfirst: Boolean)
+<div class="rich-link">
+
+    <div class="rich-link__container">
+
+        @if(showImage) {
+            <div class="rich-link__image-container u-responsive-ratio">
+                <img src="/" itemprop="contentURL">
+            </div>
+        }
+
+        <div class="rich-link__header">
+            <h1 class="rich-link__title">@title</h1>
+        </div>
+
+        if (@showStandfirst) { <div class="rich-link__standfirst u-cf"></div> }
+
+        <div class="rich-link__read-more">
+            <div class="rich-link__arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="#005689" fill-rule="evenodd"><path class="rich-link__arrow-icon" d="m12 0c-6.627 0-12 5.373-12 12 0 6.627 5.373 12 12 12 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12m.21 19l-.637-.668 4.888-6.326h-11.465v-1.01h11.465l-4.888-6.333.637-.668 6.79 7.158v.685l-6.79 7.157"/></g></svg>
+            </div>
+            <div class="rich-link__read-more-text">
+                Read more
+            </div>
+        </div>
+        <a class="rich-link__link u-faux-block-link__overlay" href="@href"></a>
+    </div>
+</div>

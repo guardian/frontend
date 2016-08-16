@@ -1,6 +1,7 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
 
 
+
 @import model.pressed.{Comment, DefaultCardstyle, Feature, Media, SpecialReport}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
@@ -43,9 +44,9 @@
                 ) {
                     @fragments.inlineSvg("quote", "icon")
                 }
-                <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
+                @Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)
             </h1>
-            @if(!content.tags.isMedia && (
+            @if(!content.tags.isMedia && (p
                 content.content.cardStyle == Comment ||
                 (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
             )) {
