@@ -380,7 +380,7 @@ Loader.prototype.renderBonzoCommentCount = function() {
 
 Loader.prototype.renderCommentCount = function () {
     if (discussionFrontend.canRun(ab, window.curlConfig)) {
-        return discussionFrontend.load(ab, {
+        return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
             discussionId: this.getDiscussionId(),
             element: document.querySelector('.js-discussion-comment-count').parentNode
