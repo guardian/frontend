@@ -41,13 +41,15 @@ Prerequesites:
 5. Run the container (dev service). The first time you do so the container image would be pulled from the ECR.
     - ./dev.sh
 6. Build and run the app within the container
-    - `make install compile && ./sbt`
+    - `cd frontend`
+    - `make reinstall compile && ./sbt`
     - See [Run the app section](#run-the-app) for more info
 
 
 *Notes:*
 - *Your local machine (host) `~/.gu/` and `~/.aws/` directories are exposed to the container via mounted volumes, so they have access to the properties and aws credentials files*
 - *The `dev` container will be deleted when exited*
+- *Node packages are bound to your machine architecture, so you cannot switch between MacOS and Docker(Linux) in the same local git repo. To avoid this problem, you can run `make reinstall` which will install the correct node binaries for your system*
 
 ### Docker FAQ
 
