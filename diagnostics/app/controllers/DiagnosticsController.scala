@@ -5,8 +5,8 @@ import play.api.mvc._
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
-import model.diagnostics.commercial.Report
-import model.{NoCache, TinyResponse}
+import model.diagnostics.commercial.UserReport
+import model.TinyResponse
 import org.joda.time.format.ISODateTimeFormat
 
 class DiagnosticsController extends Controller with Logging {
@@ -56,7 +56,7 @@ class DiagnosticsController extends Controller with Logging {
   def cspOptions = postOptions
 
   def commercialReport = Action(jsonParser) { implicit request =>
-    Report.report(request.body)
+    UserReport.report(request.body)
 
     TinyResponse.noContent()
   }
@@ -66,7 +66,7 @@ class DiagnosticsController extends Controller with Logging {
     val date = ISODateTimeFormat.dateTime.parseDateTime(dateTime)
 
     JsonComponent(
-      "reports" -> Report.getReports(date)
+      "reports" -> UserReport.getReports(date)
     ).result
   }
 

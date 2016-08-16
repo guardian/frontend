@@ -88,7 +88,7 @@ object RedisReport extends Logging with ExecutionContexts {
   // The time to keep the data associated with a page view.
   private val PAGE_VIEW_DATA_EXPIRY = 600L
 
-  def report(report: Report): Unit = {
+  def report(report: UserReport): Unit = {
     redisClient.foreach { client =>
       // The surrogate key is set to expire first. This causes the expiry notification to be sent
       // on the Redis pub-sub channel, triggering the callback which will forward the data into S3.
