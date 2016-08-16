@@ -2,7 +2,8 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/modules/navigation/edition-picker',
-    'common/modules/navigation/editionalise-menu'
+    'common/modules/navigation/editionalise-menu',
+    'common/utils/details-polyfill'
 ], function (
     fastdomPromise,
     $,
