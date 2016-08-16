@@ -182,7 +182,7 @@ class CachedHealthCheckLifeCycle(
   override def start() = {
     jobs.deschedule("HealthCheckFetch")
     if (healthCheckRequestFrequencyInSec > 0) {
-      jobs.scheduleEveryNSeconds("HealthCheckFetch", healthCheckRequestFrequencyInSec) {
+      jobs.scheduleEvery("HealthCheckFetch", healthCheckRequestFrequencyInSec.seconds) {
         healthCheckController.runChecks
       }
     }
