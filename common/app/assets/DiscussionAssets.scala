@@ -85,7 +85,7 @@ class DiscussionExternalAssetsLifecycle (config: GuardianConfiguration, wsClient
       "DiscussionRefreshAssetsMap",
       config.discussion.frontendAssetsMapRefreshInterval
     ) {
-      refresh()
+      refresh().map(_ => ())
     }
   }
 
