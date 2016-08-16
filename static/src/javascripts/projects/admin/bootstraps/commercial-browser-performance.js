@@ -15,7 +15,7 @@ define([
     map
 ) {
     var chart;
-    var FETCH_INTERVAL = 2000;
+    var FETCH_INTERVAL = 1000;
     var reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
 
     var commercialStartTimes = [];
