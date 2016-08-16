@@ -8,6 +8,7 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import recorder.HttpRecorder
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
 @DoNotDiscover class DeploysRadiatorControllerTest
@@ -18,22 +19,22 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  val existingBuild = "1621"
+  // this needs to be a recent build - TODO make it automatically find the latest build
+  val existingBuild = "3108"
 
-  class TestHttpClient(wsClient: WSClient) extends HttpLike {
+  class TestHttpClient(name: String, wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
-      DeploysTestHttpRecorder.load(url, extentedHeaders) {
+      val normalisedUrl = HttpRecorder.normalise(name, url)
+      DeploysTestHttpRecorder.load(normalisedUrl, extentedHeaders) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
-  val recordingHttpClient = new TestHttpClient(wsClient)
-
   class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = new TeamcityService(recordingHttpClient)
-    override val riffRaff = new RiffRaffService(recordingHttpClient)
+    override val teamcity = new TeamcityService(new TestHttpClient("teamcity", wsClient))
+    override val riffRaff = new RiffRaffService(new TestHttpClient("riffraff", wsClient))
   }
 
   val controller = new DeploysRadiatorControllerStub()
@@ -79,7 +80,7 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
       (jsonResponse \ "status").as[String] should be("ok")
       (jsonResponse \ "response" \ "number").as[String] should be(existingBuild)
       (jsonResponse \ "response" \ "projectName").as[String] should be("dotcom:master")
-      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(7)
+      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(6)
     }
   }
 

@@ -43,7 +43,8 @@ trait WithTestFootballClient {
   lazy val testFootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
       FootballHttpRecorder.load(url) {
-        wsClient.url(url)
+        val normalisedUrl = HttpRecorder.normalise("football", url)
+        wsClient.url(normalisedUrl)
           .withRequestTimeout(10000)
           .get()
           .map { wsResponse =>
@@ -53,25 +54,6 @@ trait WithTestFootballClient {
     }
   }
 
-}
-
-object FeedHttpRecorder extends DefaultHttpRecorder {
-  override lazy val baseDir = new File(System.getProperty("user.dir"), "data/sportfeed")
-}
-
-// Stubs data for Football stats integration tests
-class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
-
-  def GET(url: String): Future[PaResponse] = {
-    FootballHttpRecorder.load(url) {
-      wsClient.url(url)
-        .withRequestTimeout(10000)
-        .get()
-        .map { wsResponse =>
-          pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
-        }
-    }
-  }
 }
 
 object FootballHttpRecorder extends HttpRecorder[PaResponse] {

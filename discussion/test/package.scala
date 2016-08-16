@@ -3,7 +3,7 @@ package test
 import conf.Configuration
 import controllers.HealthCheck
 import org.scalatest.{BeforeAndAfterAll, Suites}
-import recorder.DefaultHttpRecorder
+import recorder.{HttpRecorder, DefaultHttpRecorder}
 import play.api.libs.ws.WSClient
 import java.io.File
 
@@ -16,6 +16,7 @@ object DiscussionApiHttpRecorder extends DefaultHttpRecorder {
 
 class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
   protected val clientHeaderValue: String =""
+  val name = "dapi"
 
   protected val apiRoot =
     if (Configuration.environment.isProd)
@@ -25,8 +26,11 @@ class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
 
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
-  override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    wsClient.url(url).withRequestTimeout(2000).get()
+  override protected def GET(url: String, headers: (String, String)*) = {
+    val normalisedUrl = HttpRecorder.normalise(name, url)
+    DiscussionApiHttpRecorder.load(normalisedUrl, Map.empty){
+      wsClient.url(url).withRequestTimeout(2000).get()
+    }
   }
 }
 

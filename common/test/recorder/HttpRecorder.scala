@@ -1,6 +1,7 @@
 package recorder
 
 import java.io._
+import java.net.URI
 import java.nio.ByteBuffer
 import java.util
 
@@ -15,6 +16,15 @@ import play.api.libs.ws.ning.NingWSResponse
 import scala.concurrent.Future
 import scala.io.Source
 
+object HttpRecorder {
+
+  def normalise(key: String, url: String) = {
+    // need to only use the relevant parts of the url
+    val uri = URI.create(url)
+    key + ":" + uri.getPath + uri.getQuery
+  }
+
+}
 
 trait HttpRecorder[A] extends ExecutionContexts {
 

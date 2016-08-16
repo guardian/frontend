@@ -1,6 +1,7 @@
 package test
 
 import java.io.File
+import java.net.URI
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
@@ -15,7 +16,7 @@ import play.api._
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
-import recorder.ContentApiHttpRecorder
+import recorder.{HttpRecorder, ContentApiHttpRecorder}
 
 import scala.util.{Failure, Success, Try}
 
@@ -29,7 +30,8 @@ trait TestSettings {
     val originalHttp = http
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      recorder.load(url, headers.toMap) {
+      val normalisedUrl = HttpRecorder.normalise("capi", url).replaceAll("api-key=[^&]*", "api-key=none")
+      recorder.load(normalisedUrl, headers.toMap) {
         originalHttp.GET(url, headers)
       }
     }
