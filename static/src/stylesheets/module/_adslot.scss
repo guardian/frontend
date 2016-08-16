@@ -602,6 +602,7 @@
  */
 .ad-slot--page-skin {
     height: 0;
+    overflow: hidden;
 }
 @include mq(mobile, $until: wide) {
     .has-page-skin {
