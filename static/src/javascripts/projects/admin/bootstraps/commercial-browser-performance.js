@@ -40,7 +40,7 @@ define([
 
     function fetchData() {
         var currentDate = new Date();
-        currentDate.setSeconds(currentDate.getSeconds() - 10);
+        currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
         var fetchUrl = template(reportTemplateUrl, {
             isoDate: currentDate.toISOString()
         });
