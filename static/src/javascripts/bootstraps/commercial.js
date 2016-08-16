@@ -13,6 +13,7 @@ define([
     'common/modules/commercial/dfp/load',
     'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/gallery-adverts',
     'common/modules/commercial/hosted-about',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/hosted-gallery',
@@ -37,6 +38,7 @@ define([
     dfpLoad,
     sponsorships,
     frontCommercialComponents,
+    galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
@@ -52,6 +54,7 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
