@@ -29,18 +29,18 @@ define([
     return function () {
         var self = this;
 
-        this.id = 'MembershipAndContributionsEngagementBanner';
+        this.id = 'MembershipEngagementBanner';
         this.start = '2016-08-11';
-        this.expiry = '2016-08-17';
+        this.expiry = '2017-08-07';
         this.author = 'Roberto Tyley';
-        this.description = 'Show contributions as well as membership messages.';
+        this.description = 'Show membership messages. Sometimes used to show Contribution messages as well';
         this.showForSensitive = false;
         this.audience = 1.0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Conversion for contributions';
+        this.successMeasure = 'Conversion';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Conversion for contributions beats commercial component conversion by 3x.';
+        this.idealOutcome = '';
 
         var minVisited= 10;
 
@@ -159,24 +159,6 @@ define([
 
                         showMessageIfAsyncChecksPermit(message, data, cssModifierClass);
                     }
-                },
-                success: completer
-            },
-            {
-                id: 'contributions',
-                test: function () {
-                    var message ={
-                        campaign: 'CONTRIBUTIONS_ENGAGEMENT_BANNER',
-                            // increment the number at the end of the code to redisplay banners
-                            // to everyone who has previously closed them
-                            code: 'contributions-engagement-banner-2016-08-08',
-                        data: {
-                            messageText: 'If you use it, if you like it, why not pay for it? It\'s only fair. Contribute to the Guardian.'
-                        }
-                    };
-
-                    var data = defaults({linkHref: 'https://contribute.theguardian.com/uk?INTCMP='+message.campaign}, message.data, defaultData);
-                    showMessageIfAsyncChecksPermit(message, data, 'contributions-message');
                 },
                 success: completer
             }
