@@ -15,7 +15,8 @@ define([
     map
 ) {
     var chart;
-    var FETCH_INTERVAL = 1000;
+    var FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
+    var FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
     var reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
 
     var commercialStartTimes = [];
@@ -39,6 +40,7 @@ define([
 
     function fetchData() {
         var currentDate = new Date();
+        currentDate.setSeconds(currentDate.getSeconds() - 10);
         var fetchUrl = template(reportTemplateUrl, {
             isoDate: currentDate.toISOString()
         });
