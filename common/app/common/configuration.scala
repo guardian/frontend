@@ -7,7 +7,7 @@ import java.util.{Properties => JavaProperties}
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.cm.{PlayDefaultLogger, ClassPathConfigurationSource, FileConfigurationSource, Logger}
+import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, PlayDefaultLogger}
 import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils
 import play.api.Play
 
 import scala.collection.JavaConversions._
+import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
@@ -307,6 +308,8 @@ class GuardianConfiguration extends Logging {
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
+    lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
+    lazy val frontendAssetsMapRefreshInterval = 5.seconds
   }
 
   object witness {

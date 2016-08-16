@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
+    'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
@@ -30,6 +31,7 @@ define([
     mvtCookie,
     memoize,
     noop,
+    DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
     HostedAutoplay,
     Giraffe,
@@ -47,6 +49,7 @@ define([
 ) {
 
     var TESTS = [
+        new DiscussionExternalFrontend(),
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),
