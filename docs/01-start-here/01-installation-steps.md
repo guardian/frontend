@@ -1,10 +1,10 @@
 # **Quick start guide**
 
 1. [Ensure your disk is encrypted] (#security)
-1. [Obtain AWS credentials] (#obtain-aws-credentials)
-* [Local Test Server setup](#local-test-server-setup)
-* [IDE Setup](#ide-setup)
-* [Optional steps](#optional-steps)
+2. [Obtain AWS credentials] (#obtain-aws-credentials)
+3. [Local Test Server setup](#local-test-server-setup)
+4. [IDE Setup](#ide-setup)
+5. [Optional steps](#optional-steps)
 
 # Security
 All development laptops must be encrypted. If you are not 100% sure, please ask for help.
@@ -23,11 +23,46 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 3. Submit a PR
 
 # Local Test Server setup
+
+## Docker
+
+Prerequesites:
+- Docker. See [Install documentation](https://docs.docker.com/engine/installation/)
+- AWS CLI. See [documentation](https://aws.amazon.com/cli/)
+
+1. Clone repository
+    - `git clone git@github.com:guardian/frontend.git && cd frontend`
+2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend and CMS fronts 
+3. Get properties file
+    - `aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "~/.gu/frontend.properties"`
+4. Log into the EC2 Container Registry
+    - `aws ecr get-login --region eu-west-1 --profile frontend`
+    - Run the docker login command returned in the previous step
+5. Run the container (dev service). The first time you do so the container image would be pulled from the ECR.
+    - ./dev.sh
+6. Build and run the app within the container
+    - `make install compile && ./sbt`
+    - See [Run the app section](#run-the-app) for more info
+
+
+*Notes:*
+- *Your local machine (host) `~/.gu/` and `~/.aws/` directories are exposed to the container via mounted volumes, so they have access to the properties and aws credentials files*
+- *The `dev` container will be deleted when exited*
+
+### Docker FAQ
+
+#### Removing containers
+
+Containers can be thrown away very easily. To do so:
+- `docker ps -a` to get the ID of the container you want to remove
+- `docker rm ID`. Use `-f` option to force deletion when the container is still in used.
+
+## Local machine
 You need a Mac or Linux PC (Ubuntu).
 
 Before checking out the repository you may need to [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 
-## Automatic (recommended)
+### Automatic 
 1. Check out the repository:
 
     ```
@@ -35,15 +70,16 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
     cd frontend
     ```
 
-2. Get janus credentials for frontend and CMS fronts
-2. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
+2. Get janus credentials for frontend
 
-3. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
+3. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
-## Manual
+4. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
+
+### Manual
 Install each of the things listed below:
 
-### Configuration files
+#### Configuration files
 
 You need 3 files on your machine.
 
@@ -54,7 +90,7 @@ STAGE=DEV
 
 * `~/.gu/frontend.properties`
 
-  S3 has the content under template-frontend.properties.
+  S3 has the content at `s3://aws-frontend-store/template-frontend.properties`.
 
 * `~/.aws/config`
 
@@ -63,7 +99,7 @@ STAGE=DEV
 region = eu-west-1
 ```
 
-### [Homebrew](http://brew.sh/)
+#### [Homebrew](http://brew.sh/)
 
 This is needed on Mac only:
 ```bash
@@ -83,7 +119,7 @@ sudo apt-get -y install oracle-java8-installer
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+#### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet). 
 
@@ -101,14 +137,14 @@ Mac:
 brew install node@6
 ```
 
-### Grunt (build tool)
+#### Grunt (build tool)
 
 Ubuntu/Mac:
 ```
 npm -g install grunt-cli
 ```
 
-### Xcode (if on a Mac, one of the Node modules requires it)
+#### Xcode (if on a Mac, one of the Node modules requires it)
 
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
@@ -120,18 +156,8 @@ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 ```
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
-### [libpng](http://libpng.org/pub/png/libpng.html)
 
-Ubuntu:
-```
-sudo apt-get install libpng-dev
-```
-Mac:
-```
-brew install libpng
-```
-
-### The frontend code
+#### The frontend code
 Note: Remember to see [Troubleshooting](#troubleshooting) below if you have any issues.
 
 ```
@@ -150,8 +176,6 @@ Install additional dependencies:
 make install
 ```
 
-npm is also run by `install-dependencies.sh`.
-
 If you get an error related to `node` try using a version of `node` <= `4.xx`. You can use [`nvm`](https://github.com/creationix/nvm) to set a node version per project.
 ```
 brew install nvm
@@ -161,6 +185,7 @@ After this, you can compile the assets:
 ```
 make compile
 ```
+
 ## Run the app
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
 ```
@@ -221,17 +246,3 @@ Memcached `sudo apt-get install memcached` -
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
-
-###Vagrant
-
-You can run the project with the supplied Vagrantfile - make sure you
-understand what Vagrant is http://www.vagrantup.com/
-
-* Make sure you have [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
-and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
-(on Ubuntu `sudo apt-get install virtualbox vagrant`)
-* Change directory into the folder where this README is located
-* `vagrant up` - this will take a while, make some coffee
-* You can now get onto the box by `vagrant ssh`
-* The project is located in /vagrant so `cd /vagrant`
-* `./sbt`
