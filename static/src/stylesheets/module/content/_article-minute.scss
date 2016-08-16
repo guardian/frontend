@@ -152,10 +152,7 @@ body {
         }
         @include mq(desktop) {
             max-width: gs-span(6);
-            margin-left: gs-span(1) - $gs-gutter;
-        }
-        @include mq(wide) {
-            margin-left: 0;
+            margin-left: gs-span(3) + $gs-gutter;
         }
 
     }
@@ -222,7 +219,7 @@ body {
     }
 
     .block-elements {
-        padding: $gs-baseline*3 $gs-gutter/2 0;
+        padding: $gs-baseline $gs-gutter/2 0;
     }
 
     figure.element-image {
@@ -288,7 +285,7 @@ body {
         .block-elements {
             box-sizing: border-box;
             float: right;
-            padding: $gs-baseline*2.5 0 0 $gs-gutter;
+            padding-left: $gs-gutter;
             width: gs-span(4);
         }
 
@@ -313,7 +310,7 @@ body {
         .block-elements {
             width: gs-span(6);
             padding-left: 0;
-            padding-right: $gs-gutter;
+            padding-right: 0;
         }
 
         figure.element-image {
@@ -333,6 +330,24 @@ body {
         figure.element-image {
             width: gs-span(6);
         }
+
+        // Big first image
+        &:first-of-type {
+            margin-left: $gs-gutter;
+
+            .block-elements {
+                width: gs-span(4);
+                padding-left: 0;
+            }
+
+            &:before {
+                width: gs-span(13);
+            }
+
+            figure.element-image {
+                width: gs-span(12);
+            }
+        }
     }
 
     // Wide
@@ -345,6 +360,25 @@ body {
 
         figure.element-image {
             width: gs-span(7);
+        }
+
+        // Big first image
+        &:first-of-type {
+            max-width: gs-span(16);
+            margin-left: $gs-gutter;
+
+            .block-elements {
+                width: gs-span(4);
+                padding-left: 0;
+            }
+
+            &:before {
+                width: gs-span(13);
+            }
+
+            figure.element-image {
+                width: gs-span(12);
+            }
         }
     }
 }
