@@ -39,6 +39,7 @@
 
 ##[Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
+- [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
 
 ##[Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)

@@ -81,8 +81,8 @@ $gutter-large: 55px;
         //Smaller menu button
         height: $veggie-burger-small;
         width: $veggie-burger-small;
-        margin-top: -$gs-baseline;
-        margin-bottom: -$gs-baseline;
+        margin-top: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-small;
     }
@@ -90,8 +90,7 @@ $gutter-large: 55px;
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
-        margin-top: -$gs-baseline / 1.5;
-        margin-bottom: -$gs-baseline / 1.5;
+        margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-medium;
     }
@@ -102,7 +101,7 @@ $gutter-large: 55px;
     }
 }
 
-.new-header__burger-icon {
+.new-header__veggie-burger-icon {
     top: 50%;
     display: block;
     margin-top: -($gs-baseline / 6) / 2;

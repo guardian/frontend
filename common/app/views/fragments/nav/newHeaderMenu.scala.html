@@ -19,8 +19,8 @@
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
-                        <li class = "navigation-group__item" >
-                            <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
+                        <li class="navigation-group__item">
+                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
                         </li>
                     }
                 </ul>
@@ -33,7 +33,7 @@
         <!-- TODO: Provide tabbable alternative -->
     <a href="#" class="main-menu-container__overlay" aria-hidden="true"></a>
 
-    <div class="main-menu-container__menu">
+    <div class="main-menu-container__menu js-reset-scroll-on-menu">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)

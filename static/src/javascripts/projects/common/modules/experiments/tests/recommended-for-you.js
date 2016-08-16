@@ -3,6 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/utils/storage',
     'common/utils/config',
     'common/utils/template',
     'common/views/svg',
@@ -16,6 +17,7 @@ define([
     fastdom,
     qwery,
     $,
+    storage,
     config,
     template,
     svg,
@@ -31,8 +33,8 @@ define([
         this.expiry = '2016-09-09';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.1;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'Number of clicks to turn on this section';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -43,38 +45,57 @@ define([
 
         this.canRun = function () {
             $opinionSection = $('#opinion');
-            return config.page.isFront && $opinionSection.length;
+            return config.page.contentType === 'Network Front' && $opinionSection.length && !hasGivenFeedback();
         };
 
-        function insertSection(description, variant) {
+        function hasGivenFeedback() {
+            return !!storage.local.get('gu.hasGivenRecommendedForYouFeedback');
+        }
+
+        function registerFeedback() {
+            storage.local.set('gu.hasGivenRecommendedForYouFeedback', true);
+        }
+
+        function bindButtonEvents() {
+            $('.js-feedback-button-yes', $recommendedForYouSection[0]).each(function(el) {
+                bean.on(el, 'click', function () {
+                    $('.js-feedback', $recommendedForYouSection[0]).html(
+                        '<p>' +
+                            'Thanks for your interest in this feature. We’re currently still testing demand. ' +
+                            'If enough of you like the idea, we’ll make it happen. Fingers crossed!' +
+                        '</p>'
+                    );
+                    registerFeedback();
+                });
+            });
+
+            $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
+                bean.on(el, 'click', function () {
+                    $recommendedForYouSection.remove();
+                    registerFeedback();
+                });
+            });
+        }
+
+        function setupComponentAttentionTracking(trackingCode) {
+            require(['ophan/ng'], function (ophan) {
+                ophan.trackComponentAttention(trackingCode, $recommendedForYouSection[0]);
+            });
+        }
+
+        function insertSection(description, variant, yesCta) {
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
                 guardianLogo: svg(guardianLogo),
                 description: description,
-                variant: variant
+                variant: variant,
+                yesCta: yesCta
             }));
 
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
-
-                $('.js-feedback-button-yes', $recommendedForYouSection[0]).each(function(el) {
-                    bean.on(el, 'click', function () {
-                        $('.js-feedback', $recommendedForYouSection[0]).html(
-                            '<p>' +
-                                'Thanks for your interest in this feature. We’re currently still testing demand. ' +
-                                'If enough of you like the idea, we’ll make it happen. Fingers crossed!' +
-                            '</p>'
-                        );
-                    });
-                });
-
-                $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
-                    bean.on(el, 'click', function () {
-                        $recommendedForYouSection.remove();
-                    });
-                });
-
+                setupComponentAttentionTracking('recommended-for-you_' + variant);
+                bindButtonEvents();
                 mediator.emit('recommended-for-you:insert');
             });
         }
@@ -93,14 +114,22 @@ define([
             {
                 id: 'user-choice',
                 test: function () {
-                    insertSection('Tell us what you’re interested in and we’ll recommend you a set of unique stories', 'user-choice');
+                    insertSection(
+                        'Tell us what you’re interested in and we’ll recommend you a set of unique stories',
+                        'user-choice',
+                        'Get started ' + svg(rightArrowIcon, ['i-right'])
+                    );
                 },
                 success: success
             },
             {
                 id: 'user-history',
                 test: function () {
-                    insertSection('We can recommend you a set of unique stories based on your reading history', 'user-history');
+                    insertSection(
+                        'We can recommend you a set of unique stories based on your reading history',
+                        'user-history',
+                        'Turn on'
+                    );
                 },
                 success: success
             }

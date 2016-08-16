@@ -50,7 +50,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       val youtubeUrl = element.attr("data-canonical-url")
       youtubeUrl.split("v=").lastOption.map { youtubeId =>
         val youtube = document.createElement("amp-youtube")
-        youtube.attr("video-id", youtubeId)
+        youtube.attr("data-videoid", youtubeId)
         youtube.attr("width", "5")
         youtube.attr("height", "3")
         youtube.attr("layout", "responsive")

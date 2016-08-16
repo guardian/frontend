@@ -6,12 +6,13 @@ define([
     $
 ) {
     var dropdown = $('.js-edition-picker-dropdown');
+    var button;
 
     function enhanceToButton() {
         var container = $('.js-edition-picker-container');
         var checkBox = $('.js-enhance-checkbox');
-        var button = $.create('<button>');
 
+        button = $.create('<button>');
         button.addClass('edition-picker__button js-open-edition-picker');
         button.attr('id', 'edition-picker');
         button.attr('aria-controls', 'edition-picker__dropdown');
@@ -20,30 +21,44 @@ define([
         fastdomPromise.write(function() {
             checkBox.remove();
             container.prepend(button);
-
-            openMenuOnClick();
+            bindClickEvents();
         });
     }
 
-    function openMenuOnClick() {
-        var button = $('.js-open-edition-picker');
-
+    function bindClickEvents() {
         if (button.length > 0) {
             button[0].addEventListener('click', function() {
-
-                fastdomPromise.write(function() {
-                    if (button.hasClass('open')) {
-                        button.removeClass('open');
-                        button.attr('aria-expanded', 'false');
-                        dropdown.attr('aria-hidden', 'true');
-                    } else {
-                        button.addClass('open');
-                        button.attr('aria-expanded', 'true');
-                        dropdown.attr('aria-hidden', 'false');
-                    }
-                });
+                if (button.hasClass('open')) {
+                    closeMenuAndRemoveListener();
+                } else {
+                    openMenu().then(function() {
+                        document.addEventListener('click', closeMenuAndRemoveListener, false);
+                    });
+                }
             });
         }
+    }
+
+    function openMenu() {
+        return fastdomPromise.write(function() {
+            button.addClass('open');
+            button.attr('aria-expanded', 'true');
+            dropdown.attr('aria-hidden', 'false');
+        });
+    }
+
+    function closeMenu() {
+        return fastdomPromise.write(function() {
+            button.removeClass('open');
+            button.attr('aria-expanded', 'false');
+            dropdown.attr('aria-hidden', 'true');
+        });
+    }
+
+    function closeMenuAndRemoveListener() {
+        return closeMenu().then(function() {
+            document.removeEventListener('click', closeMenuAndRemoveListener, false);
+        });
     }
 
     function clickMenuOnEnter() {
