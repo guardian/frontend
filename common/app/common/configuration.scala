@@ -52,7 +52,7 @@ object GuardianConfiguration extends Logging {
     lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
 
     val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
-    println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
+//    println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
     appConfig
   }
 
