@@ -41,7 +41,6 @@ Prerequesites:
 5. Run the container (dev service). The first time you do so the container image would be pulled from the ECR.
     - ./dev.sh
 6. Build and run the app within the container
-    - `cd frontend`
     - `make reinstall compile && ./sbt`
     - See [Run the app section](#run-the-app) for more info
 

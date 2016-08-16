@@ -4,4 +4,4 @@
 docker push 642631414762.dkr.ecr.eu-west-1.amazonaws.com/frontend-dev:latest
 
 # Run dev container
-docker-compose run --rm --service-ports dev
+docker-compose run --rm --service-ports --workdir="/frontend" dev
