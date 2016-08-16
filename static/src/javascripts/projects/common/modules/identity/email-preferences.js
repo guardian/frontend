@@ -42,9 +42,9 @@ define([
             },
             success: function () {
                 for (var i = 0; i < subscribedButtons.length; i++) {
-                    updateSubscriptionButton(subscribedButtons[i], false);
+                    updateSubscriptionButton(subscribedButtons[i]);
                 }
-                updateButton(buttonEl, false);
+                updateButton(buttonEl);
             }
         });
     }
@@ -148,9 +148,9 @@ define([
             var value = buttons[i].value;
             var unsubscribeMatches = value.match(/unsubscribe-(.*)/);
             if (unsubscribeMatches) {
-                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
+                buttonString += 'removeEmailSubscriptions=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
             } else {
-                buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
+                buttonString += 'addEmailSubscriptions=' + encodeURIComponent(value) + '&';
             }
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
