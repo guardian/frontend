@@ -1,9 +1,21 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Atomise
-@import common.LinkTo
+@import common.{LinkTo, NewNavigation}
+
+@primaryLinks(sectionName: String) = {
+    <li class="new-header__nav__primary-item">
+        <a class="new-header__nav__link js-open-section-in-menu"
+            tabindex="0"
+            aria-controls="primary-list-@sectionName"
+            href="@LinkTo{#main-menu}">
+                @sectionName
+        </a>
+    </li>
+}
 
 @fragments.nav.newHeaderMenu()
+
 <header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
         <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0">
@@ -20,12 +32,9 @@
                 <span class="u-h">Menu</span>
             </a>
             <ul class="new-header__nav__list">
-                @* TODO: Should open a menu *@
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/}">news</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/commentisfree}">opinion</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/sport}">sport</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/culture}">arts</a></li>
-                <li class="new-header__nav__list-item"><a class="new-header__nav__link" tabindex="0" href="@LinkTo{/lifeandstyle}">life</a></li>
+                @NewNavigation.topLevelSections.map { section =>
+                    @primaryLinks(section.name)
+                }
             </ul>
         </nav>
     </div>

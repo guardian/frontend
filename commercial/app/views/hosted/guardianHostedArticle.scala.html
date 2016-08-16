@@ -6,10 +6,10 @@
 @import model.ImageAsset
 @import com.gu.contentapi.client.model.v1.Asset
 @import com.gu.contentapi.client.model.v1.AssetType
-@import views.html.hosted.guardianHostedShareButtons
+@import views.html.hosted.{guardianHostedShareButtons, guardianHostedCta}
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url)
+    @guardianHostedHeader("hosted-article-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
@@ -260,25 +260,6 @@
                 </div>
             </div>
         </article>
-        <section class="adverts hosted__container--full">
-            <div class="hosted__banner" style="background-image: url(@{page.ctaBanner});">
-                <a href="@{page.cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{page.cta.trackingCode}" target="_blank">
-                    <div class="hostedbadge hostedbadge--shouldscale hostedbadge--pushdown hosted-tone-bg--@{page.campaign.owner.toLowerCase}">
-                        <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
-                    </div>
-                    @if(page.cta.btnText.length == 0) {
-                        <div class="hosted__cta-wrapper">
-                            <span class="hosted__cta-text hosted-tone--@{page.campaign.owner.toLowerCase}">@{page.cta.label}</span>
-                            @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta","hosted-tone-btn--" + page.campaign.owner.toLowerCase))
-                        </div>
-                    } else {
-                        <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
-                            <span class="hosted__cta-label">@{page.cta.label}</span>
-                            <span class="hosted__cta-btn-text">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
-                        </div>
-                    }
-                </a>
-            </div>
-        </section>
+        @guardianHostedCta(page, page.cta)
     </div>
 }

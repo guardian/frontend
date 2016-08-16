@@ -18,10 +18,15 @@
 </div>
 
 @onward(content: CuratedContent) = {
-    <div class="fc-item @TrailCssClasses.toneClass(content)">
-        <div class="fc-item__image-container">
-            <amp-img src="@content.properties.maybeContent.flatMap(_.trail.thumbnailPath)" layout="fixed" width=126 height=75></amp-img>
-        </div>
+    @defining({
+        content.properties.maybeContent.flatMap(_.trail.thumbnailPath)
+    }) { thumbnailPath =>
+        <div class="fc-item @TrailCssClasses.toneClass(content)">
+            @if(!thumbnailPath.isEmpty) {
+                <div class="fc-item__image-container">
+                    <amp-img src="@thumbnailPath" layout="fixed" width=126 height=75></amp-img>
+                </div>
+            }
         <div class="fc-item__content">
             <div class="fc-item__header">
                 <h2 class="fc-item__title">
@@ -52,5 +57,6 @@
             </aside>
         </div>
         <a href="@{host}@content.header.url" class="fc-item__link">@content.header.headline</a>
-    </div>
+        </div>
+    }
 }

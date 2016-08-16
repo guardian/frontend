@@ -1,17 +1,23 @@
 package test
 
+import football.controllers.FixturesController
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest._
 
-@DoNotDiscover class FixturesControllerTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite {
+@DoNotDiscover class FixturesControllerTest
+  extends FreeSpec
+  with ShouldMatchers
+  with FootballTestData {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"
   val tag = "premierleague"
 
+  val fixturesController = new FixturesController(testCompetitionsService)
+
   "can load the all fixtures page" in {
-    val result = football.controllers.FixturesController.allFixtures()(TestRequest())
+    val result = fixturesController.allFixtures()(TestRequest())
     status(result) should be(200)
   }
 
@@ -19,7 +25,7 @@ import org.scalatest._
     val fakeRequest = FakeRequest(GET, s"$fixturesUrl.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-    val result = football.controllers.FixturesController.allFixtures()(fakeRequest)
+    val result = fixturesController.allFixtures()(fakeRequest)
 
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
@@ -27,7 +33,7 @@ import org.scalatest._
   }
 
   "can load fixtures for a given date" in {
-    val result = football.controllers.FixturesController.allFixturesFor("2012", "oct", "20")(TestRequest())
+    val result = fixturesController.allFixturesFor("2012", "oct", "20")(TestRequest())
     status(result) should be(200)
   }
 
@@ -35,7 +41,7 @@ import org.scalatest._
     val fakeRequest = FakeRequest(GET, s"$fixtureForUrl.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-    val result = football.controllers.FixturesController.allFixturesFor("2012", "oct", "20")(fakeRequest)
+    val result = fixturesController.allFixturesFor("2012", "oct", "20")(fakeRequest)
 
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
@@ -43,7 +49,7 @@ import org.scalatest._
   }
 
   "can load the tag fixtures page" in {
-    val result = football.controllers.FixturesController.tagFixtures(tag)(TestRequest())
+    val result = fixturesController.tagFixtures(tag)(TestRequest())
     status(result) should be(200)
   }
 
@@ -51,7 +57,7 @@ import org.scalatest._
     val fakeRequest = FakeRequest(GET, s"/football/$tag/fixtures.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-    val result = football.controllers.FixturesController.tagFixtures(tag)(fakeRequest)
+    val result = fixturesController.tagFixtures(tag)(fakeRequest)
 
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
@@ -59,7 +65,7 @@ import org.scalatest._
   }
 
   "can load tag fixtures for a given date" in {
-    val result = football.controllers.FixturesController.tagFixturesFor("2012", "oct", "20", tag)(TestRequest())
+    val result = fixturesController.tagFixturesFor("2012", "oct", "20", tag)(TestRequest())
     status(result) should be(200)
   }
 
@@ -67,7 +73,7 @@ import org.scalatest._
     val fakeRequest = FakeRequest(GET, s"$fixtureForUrl.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-    val result = football.controllers.FixturesController.tagFixturesFor("2012", "oct", "20", tag)(fakeRequest)
+    val result = fixturesController.tagFixturesFor("2012", "oct", "20", tag)(fakeRequest)
 
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")

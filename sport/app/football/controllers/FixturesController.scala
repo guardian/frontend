@@ -1,7 +1,7 @@
 package football.controllers
 
 import common.Edition
-import feed.Competitions
+import feed.CompetitionsService
 import football.model._
 import model._
 import org.joda.time.LocalDate
@@ -9,9 +9,9 @@ import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent}
 
 
-class FixturesController extends MatchListController with CompetitionFixtureFilters {
+class FixturesController(val competitionsService: CompetitionsService) extends MatchListController with CompetitionFixtureFilters {
 
-  private def fixtures(date: LocalDate) = new FixturesList(date, Competitions())
+  private def fixtures(date: LocalDate) = new FixturesList(date, competitionsService.competitions)
   private val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
 
   def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
@@ -54,21 +54,22 @@ class FixturesController extends MatchListController with CompetitionFixtureFilt
   }
 
   private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: LocalDate) = Action { implicit request =>
-    val fixtures = new CompetitionFixturesList(date, Competitions(), competition.id)
+    val fixtures = new CompetitionFixturesList(date, competitionsService.competitions, competition.id)
     val page = new FootballPage(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures")
     renderMatchList(page, fixtures, filters)
   }
 
   private def renderTeamFixtures(teamName: String, team: FootballTeam, date: LocalDate) = Action { implicit request =>
-    val fixtures = new TeamFixturesList(date, Competitions(), team.id)
+    val fixtures = new TeamFixturesList(date, competitionsService.competitions, team.id)
     val page = new FootballPage(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures")
     renderMatchList(page, fixtures, filters)
   }
 
   def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
   def teamFixturesComponent(teamId: String) = Action { implicit request =>
-    Competitions().findTeam(teamId).map { team =>
-      val fixtures = TeamFixturesList.forTeamId(teamId)
+    competitionsService.findTeam(teamId).map { team =>
+      val now = LocalDate.now(Edition.defaultEdition.timezone)
+      val fixtures = new TeamFixturesList(now, competitionsService.competitions, teamId)
       val page = new FootballPage(
         s"football/${team.id}/fixtures",
         "football",
@@ -79,5 +80,3 @@ class FixturesController extends MatchListController with CompetitionFixtureFilt
     }.getOrElse(NotFound)
   }
 }
-
-object FixturesController extends FixturesController

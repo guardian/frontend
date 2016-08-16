@@ -245,7 +245,7 @@ class GuardianConfiguration extends Logging {
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
-    lazy val membersDataApiUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://members-data-api.theguardian.com")
+    lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
@@ -376,6 +376,7 @@ class GuardianConfiguration extends Logging {
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+    lazy val surgingContentTeam = configuration.getStringProperty("email.surgingContentTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }

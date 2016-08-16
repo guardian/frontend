@@ -13,6 +13,7 @@ import play.api.inject.ApplicationLifecycle
 import services.EmailService
 import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
+import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class AdminLifecycle(appLifecycle: ApplicationLifecycle,
@@ -53,7 +54,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       fastlyCloudwatchLoadJob.run()
     }
 
-    jobs.scheduleEveryNSeconds("R2PagePressJob", r2PagePressRateInSeconds) {
+    jobs.scheduleEvery("R2PagePressJob", r2PagePressRateInSeconds.seconds) {
       r2PagePressJob.run()
     }
 
@@ -98,6 +99,15 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
+      }
+
+
+      //Running every 30 minutes
+      jobs.scheduleEveryNMinutes("surgingContentEmail", 30){
+        if(surgingContentEmail.isSwitchedOn) {
+          SurgingSportEmailJob(emailService).run()
+        }
+        Future.successful(())
       }
     }
 

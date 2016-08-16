@@ -1,10 +1,10 @@
 @import common.commercial.hosted.HostedGalleryPage
 @(page: HostedGalleryPage)(implicit request: RequestHeader)
-@import views.html.hosted.{guardianHostedGalleryImage, guardianHostedHeader, guardianHostedGalleryCta, guardianHostedGalleryOj, guardianHostedShareButtons}
+@import views.html.hosted._
 
 @main(page, Some("commercial"))  { }  {
     <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @{page.campaign.cssClass}">
-        @guardianHostedHeader("hosted-gallery-page", page.campaign.cssClass, page.campaign.logo.url)
+        @guardianHostedHeader("hosted-gallery-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
                 <div class="js-hosted-gallery-container hosted-gallery__gallery-container">
@@ -26,9 +26,7 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    @if(page.ctaIndex.isDefined){
-                        @guardianHostedGalleryCta(page.ctaText, page.ctaLink, page.ctaButtonText, page.brandBackgroundCssClass)
-                    }
+                    @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText, page.brandBackgroundCssClass)
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">
@@ -42,10 +40,10 @@
                         </div>
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                     </div>
-                    @guardianHostedGalleryOj(page.ctaText, page.ctaLink, page.ctaButtonText, page.nextGalleries, page.brandBackgroundCssClass,  page.brandBorderCssClass, page.brandColourCssClass)
+                    @guardianHostedGalleryOj(page.cta.label, page.cta.url, page.cta.btnText, page.nextGalleries, page.brandBackgroundCssClass,  page.brandBorderCssClass, page.brandColourCssClass)
                 </div>
                 <div class="hosted__container hosted__container--content hosted-gallery__lower-bar js-gallery-caption-bar">
-                    <header class="adverts__header hosted__social">
+                    <header class="host__header hosted__social">
                         <div class="meta__social hosted__social-wrapper" data-component="share">
                             @guardianHostedShareButtons(page)
                         </div>

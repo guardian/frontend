@@ -20,7 +20,7 @@
                     <button class="email-subscription__button"
                             data-link-name="@if(subscription.subscribedTo){Unsubscribe}else{Subscribe} to @subscription.name"
                             name="addEmailSubscription"
-                            type="submit"
+                            type="button"
                             value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">
                         @if(subscription.subscribedTo){Unsubscribe}else{Subscribe}
                     </button>
@@ -72,7 +72,7 @@
                         </li>
 
                         <li>
-                            <button type="submit" class="submit-input" data-link-name="Save email preferences">Save</button>
+                            <button type="button" class="email-subscription__button save__button" data-link-name="Save email preferences">Save</button>
                         </li>
 
                     </ul>

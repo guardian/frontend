@@ -1,14 +1,14 @@
 package controllers.admin
 
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
-import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import play.api.mvc.{Action, Controller, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
 import play.api.Mode
-import common.{Logging, ExecutionContexts}
-import football.services.GetPaClient
-import football.model.{SnapFields, PA}
-import model.{NoCache, Cached}
+import common.{ExecutionContexts, Logging}
+import football.services.PaFootballClient
+import football.model.PA
+import model.{Cached, NoCache}
 import conf.Configuration
 import scala.concurrent.Future
 import pa._
@@ -20,17 +20,13 @@ import pa.Fixture
 import pa.LiveMatch
 
 
-class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with GetPaClient with Logging {
+class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
   def index = Action.async { implicit request =>
-    for {
-      competitions <- client.competitions.map(PA.filterCompetitions)
-      competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
-      allTeams = competitionTeams.flatten.distinct
-    } yield {
-      Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, allTeams)))
+    fetchCompetitionsAndTeams.map {
+      case (competitions, teams) => Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
     }
   }
 

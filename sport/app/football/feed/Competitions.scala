@@ -3,47 +3,44 @@ package feed
 import common._
 import conf.FootballClient
 import java.util.Comparator
-import model.{Table, Competition, TeamFixture}
-import org.joda.time.{ DateTimeComparator, LocalDate }
+
+import model.{Competition, Table, TeamFixture, TeamNameBuilder}
+import org.joda.time.{DateTimeComparator, LocalDate}
 import org.scala_tools.time.Imports._
 import pa._
-import model.Competition
 
 
-trait CompetitionSupport extends implicits.Football {
+trait Competitions extends implicits.Football {
 
   private implicit val localDateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[LocalDate]]
   )
 
-  val competitions: Seq[Competition]
+  def competitions: Seq[Competition]
 
-  def withCompetitionFilter(path: String) = CompetitionSupport(
+  def competitionsWithCompetitionFilter(path: String) = Competitions(
     competitions.filter(_.url == path)
   )
 
-  def withTag(tag: String) = competitions.find(_.url.endsWith(tag))
+  def competitionsWithTag(tag: String) = competitions.find(_.url.endsWith(tag))
 
-  def withId(compId: String) = competitions.find(_.id == compId)
+  def competitionsWithId(compId: String) = competitions.find(_.id == compId)
 
-  lazy val withTodaysMatchesAndFutureFixtures = CompetitionSupport {
-    val today = new LocalDate
-    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
-  }
+  lazy val competitionsWithTodaysMatchesAndFutureFixtures = Competitions(
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(new LocalDate)))).filter(_.hasMatches)
+  )
 
-  lazy val withTodaysMatchesAndPastResults = CompetitionSupport {
-    val today = new LocalDate
-    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today)))).filter(_.hasMatches)
-  }
+  lazy val competitionsWithTodaysMatchesAndPastResults = Competitions(
+    competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(new LocalDate)))).filter(_.hasMatches)
+  )
 
-  lazy val withTodaysMatches = CompetitionSupport {
-    val today = new LocalDate
-    competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
-  }
+  lazy val withTodaysMatches = Competitions(
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(new LocalDate)))).filter(_.hasMatches)
+  )
 
-  def withTeam(team: String) = CompetitionSupport {
+  def withTeam(team: String) = Competitions(
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
-  }
+  )
 
   def mostPertinentCompetitionForTeam(teamId: String) =
     withTeam(teamId).competitions.sortBy({ competition =>
@@ -61,7 +58,7 @@ trait CompetitionSupport extends implicits.Football {
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
   def competitionForMatch(matchId: String): Option[Competition] =
-    Competitions().competitions.find(_.matches.exists(_.id == matchId))
+    competitions.find(_.matches.exists(_.id == matchId))
 
   def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
     c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortByDate.map { m =>
@@ -81,31 +78,18 @@ trait CompetitionSupport extends implicits.Football {
     .filter(m => interval.contains(m.date))
     .find(m => m.hasTeam(team1) && m.hasTeam(team2))
 
-  lazy val matches = competitions.flatMap(_.matches).sortByDate
+  def matches = competitions.flatMap(_.matches).sortByDate
 
 }
 
-object CompetitionSupport{
-  def apply(comps: Seq[Competition]): CompetitionSupport = new CompetitionSupport {
+object Competitions {
+  def apply(comps: Seq[Competition]): Competitions = new Competitions {
     val competitions = comps
   }
 }
 
-trait Competitions extends LiveMatches with Logging with implicits.Collections with implicits.Football {
-
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
-  )
-
-  private def mostRecentCompetitionSeasons(competitions: List[Season]): List[Season] = {
-    competitionDefinitions.flatMap{ compDef =>
-      competitions.filter(_.competitionId == compDef.id)
-        .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
-        .take(2)
-    }
-  }
-
-  val competitionDefinitions = Seq(
+object CompetitionsProvider {
+  val allCompetitions: Seq[Competition] = Seq(
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, tableDividers = List(4, 5, 17)),
     Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
@@ -130,22 +114,42 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
     Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
     Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2))
+  )
+}
 
+class CompetitionsService(val footballClient: FootballClient, competitionDefinitions: Seq[Competition])
+  extends Competitions
+    with LiveMatches
+    with Logging
+    with implicits.Collections
+    with implicits.Football {
+
+  private implicit val dateOrdering = Ordering.comparatorToOrdering(
+    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
+  private def mostRecentCompetitionSeasons(competitions: List[Season]): List[Season] = {
+    competitionDefinitions.flatMap{ compDef =>
+      competitions.filter(_.competitionId == compDef.id)
+        .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
+        .take(2)
+    }
+  }
+
+  override val teamNameBuilder = new TeamNameBuilder(this)
+
+  val competitionAgents = competitionDefinitions map { new CompetitionAgent(footballClient, teamNameBuilder, _) }
   val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
-  protected def competitions = competitionAgents.map(_.competition)
+  override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
   def refreshCompetitionAgent(id: String) {
     competitionAgents find { _.competition.id == id } map { _.refresh() }
   }
 
-  //one http call updates all competitions
   def refreshCompetitionData() = {
     log.info("Refreshing competition data")
-    FootballClient.competitions.map { allComps =>
+    footballClient.competitions.map { allComps =>
       mostRecentCompetitionSeasons(allComps).map { season =>
         competitionAgents.find(_.competition.id == season.id).map { agent =>
           val newCompetition = agent.competition.startDate match {
@@ -161,10 +165,9 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
           }
         }
       }
-    }.recover(FootballClient.logErrors)
+    }.recover(footballClient.logErrors)
   }
 
-  //one http call updates all competitions
   def refreshMatchDay() = {
     log.info("Refreshing match day data")
     getLiveMatches.foreach(_.map{ case (compId, newMatches) =>
@@ -175,6 +178,3 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   }
 }
 
-object Competitions extends Competitions {
-  def apply() = CompetitionSupport(competitions)
-}

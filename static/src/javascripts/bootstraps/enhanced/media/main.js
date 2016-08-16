@@ -27,9 +27,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html',
-    'common/utils/template'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -57,9 +55,7 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl,
-    titlebarTmpl,
-    template
+    loadingTmpl
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -118,22 +114,6 @@ define([
         });
 
         return player;
-    }
-
-    function removeCaptionLink(){
-        bonzo($('.caption--main a')).remove();
-    }
-
-    function addTitleBar() {
-        var videoTitleElement = document.querySelector('.caption--main a');
-
-        var data = {
-            webTitle: videoTitleElement.textContent,
-            pageId: videoTitleElement.getAttribute('href'),
-            icon: null
-        };
-        $('[data-component="main video"] .vjs-control-bar').after(template(titlebarTmpl, data));
-        removeCaptionLink();
     }
 
     function initPlayButtons(root) {
@@ -247,9 +227,7 @@ define([
         }));
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
-        if (window.location.hash === '#gaMediaEvents') {
-            events.bindGoogleAnalyticsEvents(player);
-        }
+        events.bindGoogleAnalyticsEvents(player, canonicalUrl);
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -271,7 +249,7 @@ define([
                             player.error({
                                 code: 0,
                                 type: 'Video Unavailable',
-                                message: 'Sorry, this video is not available in your region.'
+                                message: 'Sorry, this video is not available in your region due to rights restrictions.'
                             });
                             player.bigPlayButton.dispose();
                             player.errorDisplay.open();
@@ -375,9 +353,6 @@ define([
                         });
 
                         playerSetupComplete.then(function () {
-                            if(ab.isInVariant('VideoCaption','caption-overlay')) {
-                                addTitleBar();
-                            }
 
                             if (autoplay) {
                                 player.play();
@@ -454,6 +429,14 @@ define([
         }
     }
 
+    function initMinute() {
+        if(ab.isInVariant('Minute','minute')) {
+            // This is our minute account number
+            window._min = {_publisher: 'MIN-21000'};
+            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
+        }
+    }
+
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
@@ -482,6 +465,7 @@ define([
         initFacia();
         initMoreInSection();
         initOnwardContainer();
+        initMinute();
     }
 
     return {

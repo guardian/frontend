@@ -10,10 +10,17 @@ define([
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
-    'common/modules/experiments/tests/video-caption',
-    'common/modules/experiments/tests/participation-discussion-ordering-take-2',
+    'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
+    'common/modules/experiments/tests/participation-discussion-ordering-non-live',
+    'common/modules/experiments/tests/remind-me-email',
     'common/modules/experiments/tests/hosted-zootropolis-cta',
-    'common/modules/experiments/tests/contributions-header'
+    'common/modules/experiments/tests/hosted-article-onward-journey',
+    'common/modules/experiments/tests/hosted-gallery-cta',
+    'common/modules/experiments/tests/membership-messages',
+    'common/modules/experiments/tests/contributions-header',
+    'common/modules/experiments/tests/ad-feedback',
+    'common/modules/experiments/tests/minute',
+    'common/modules/experiments/tests/recommended-for-you'
 ], function (
     reportError,
     config,
@@ -26,20 +33,34 @@ define([
     LiveBlogChromeNotificationsProd,
     HostedAutoplay,
     Giraffe,
-    VideoCaption,
-    ParticipationDiscussionOrderingTake2,
+    ParticipationDiscussionOrderingLiveBlog,
+    ParticipationDiscussionOrderingNonLive,
+    RemindMeEmail,
     HostedZootropolisCta,
-    ContributionsHeader
+    HostedArticleOnwardJourney,
+    HostedGalleryCallToAction,
+    MembershipMessages,
+    ContributionsHeader,
+    AdFeedback,
+    Minute,
+    RecommendedForYou
 ) {
 
     var TESTS = [
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),
-        new VideoCaption(),
-        new ParticipationDiscussionOrderingTake2(),
+        new ParticipationDiscussionOrderingLiveBlog(),
+        new ParticipationDiscussionOrderingNonLive(),
+        new RemindMeEmail(),
         new HostedZootropolisCta(),
-        new ContributionsHeader()
+        new HostedArticleOnwardJourney(),
+        new HostedGalleryCallToAction(),
+        new MembershipMessages(),
+        new ContributionsHeader(),
+        new AdFeedback(),
+        new Minute(),
+        new RecommendedForYou()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -114,7 +135,7 @@ define([
             isSensitive = config.page.shouldHideAdverts;
 
         return ((isSensitive ? test.showForSensitive : true)
-                && test.canRun() && !expired && isTestSwitchedOn(test));
+        && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getId(test) {
@@ -248,7 +269,7 @@ define([
     function allocateUserToTest(test) {
         // Only allocate the user if the test is valid and they're not already participating.
         if (testCanBeRun(test) && !isParticipating(test)) {
-             addParticipation(test, variantIdFor(test));
+            addParticipation(test, variantIdFor(test));
         }
     }
 
@@ -264,7 +285,7 @@ define([
             try {
                 onTestComplete(recordTestComplete(test, variantId));
             } catch(err) {
-               reportError(err, false, false);
+                reportError(err, false, false);
             }
         }
     }
@@ -330,8 +351,8 @@ define([
         forceRegisterCompleteEvent: function(testId, variantId) {
             var test = getTest(testId);
             var variant = test && test.variants.filter(function (v) {
-                return v.id.toLowerCase() === variantId.toLowerCase();
-            })[0];
+                    return v.id.toLowerCase() === variantId.toLowerCase();
+                })[0];
             var onTestComplete = variant && variant.success || noop;
 
             onTestComplete(recordTestComplete(test, variantId));
@@ -379,8 +400,8 @@ define([
             return eventTag && getActiveTests().filter(function (test) {
                     var testEvents = test.events;
                     return testEvents && testEvents.some(function (testEvent) {
-                        return eventTag.indexOf(testEvent) === 0;
-                    });
+                            return eventTag.indexOf(testEvent) === 0;
+                        });
                 }).map(getId);
         },
 

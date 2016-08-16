@@ -15,20 +15,17 @@
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    @if(Edition(request) == Uk) {
-                        <div class="brand-bar__item brand-bar__item--profile
+                    <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register
                                     hide-until-mobile-landscape">
-                            <a href="@Configuration.id.membershipUrl?INTCMP=DOTCOM_HEADER_BECOMEMEMBER"
-                                data-link-name="Register link"
-                                class="brand-bar__item--action">
-                                    @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
-                                <span class="control__info js-control-info control__info--supporting">become a member</span>
-                            </a>
-                        </div>
-                    }
+                        <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
+                        data-link-name="Register link"
+                        class="brand-bar__item--action">
+                            @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                            <span class="control__info js-control-info control__info--supporting">become a supporter</span>
+                        </a>
+                    </div>
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
                                     has-popup js-profile-nav"

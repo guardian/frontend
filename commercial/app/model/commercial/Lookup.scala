@@ -1,13 +1,14 @@
 package model.commercial
 
-import com.gu.contentapi.client.model.v1.Tag
+import com.gu.contentapi.client.model.v1.{Tag, Content => ApiContent}
 import common.Edition.defaultEdition
-import common.{ExecutionContexts, Logging}
+import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import ContentApiClient.getResponse
-import model.{ImageElement, ContentType, Content}
+import contentapi.ContentApiClient.getResponse
+import model.{Content, ContentType, ImageElement}
 
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 
 object Lookup extends ExecutionContexts with Logging {
 
@@ -24,6 +25,18 @@ object Lookup extends ExecutionContexts with Logging {
         log.info(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
         None
     }
+  }
+
+  def content[T](itemId: String, edition: Edition)(transform: ApiContent => Option[T]): Future[Option[T]] = {
+    val query = ContentApiClient.item(itemId, edition)
+                .showFields("all")
+                .showTags("all")
+                .showAtoms("all")
+    val result = ContentApiClient.getResponse(query) map { response => response.content flatMap transform }
+    result.onFailure {
+      case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}")
+    }
+    result
   }
 
   def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[ContentType]] = {

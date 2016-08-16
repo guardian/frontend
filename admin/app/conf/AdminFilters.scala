@@ -12,7 +12,8 @@ object FilterExemptions {
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
-    FilterExemption("/_healthcheck")
+    FilterExemption("/_healthcheck"),
+    FilterExemption("/deploys-notify") // This endpoint is authenticated via api-key (to be accessible to riffraff hook for instance)
   )
 }
 

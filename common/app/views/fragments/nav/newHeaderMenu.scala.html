@@ -1,21 +1,30 @@
 @()(implicit request: RequestHeader)
 
-@import common.{ NewNavigation, TopLevelSection, LinkTo }
+@import common.{ NewNavigation, LinkTo, Edition }
 
-@sectionList(topLevelSection: TopLevelSection) = {
+@sectionList(topLevelSection: NewNavigation.TopLevelSection) = {
     <li class="main-navigation__item navigation-border">
             <!-- TODO: Firefox -->
-        <details>
+        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name">
             <summary class="main-navigation__item__button">
+                <i class="main-navigation__icon"></i>
                 @topLevelSection.name
             </summary>
-            <ul class="main-navigation__secondary navigation-group">
-                @NewNavigation.sectionItems(topLevelSection).map { sectionItem =>
-                    <li class = "navigation-group__item" >
-                        <a href="@LinkTo { sectionItem.url }">@sectionItem.name</a>
-                    </li>
-                }
-            </ul>
+
+            @Edition.all.map { edition =>
+                <ul class="main-navigation__secondary
+                    main-navigation__secondary--@{edition.id.toLowerCase}
+                    navigation-group
+                    js-editionlise-secondary-nav"
+                    @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
+
+                    @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
+                        <li class="navigation-group__item">
+                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
+                        </li>
+                    }
+                </ul>
+            }
         </details>
     </li>
 }
@@ -24,21 +33,19 @@
         <!-- TODO: Provide tabbable alternative -->
     <a href="#" class="main-menu-container__overlay" aria-hidden="true"></a>
 
-    <div class="main-menu-container__menu">
-
-        <div class="main-menu-container__profile-container">
-            @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "main-menu-container__profile-icon"))
-            Sign in/up
-        </div>
-
+    <div class="main-menu-container__menu js-reset-scroll-on-menu">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)
             }
         </ul>
         <ul class="navigation-group navigation-border secondary-navigation">
+            <li class="navigation-group__item"><a href="https://profile.theguardian.com/signin?INTCMP=DOTCOM_HEADER_SIGNIN">
+                @fragments.inlineSvg("profile-36", "icon", List("navigation-group__icon", "navigation-group__profile-icon"))
+                Sign in
+            </a></li>
             <li class="navigation-group__item"><a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com">
-                @fragments.inlineSvg("search-36", "icon", List("navigation-group__icon navigation-group__search-icon"))
+                @fragments.inlineSvg("search-36", "icon", List("navigation-group__icon", "navigation-group__search-icon"))
                 Search
             </a></li>
         </ul>
@@ -57,11 +64,11 @@
         </ul>
         <ul class="navigation-group navigation-border secondary-navigation">
             <li class="navigation-group__item"><a href="https://www.facebook.com/theguardian">
-                @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__social-icon navigation-group__social-icon"))
+                @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
                 Facebook
             </a></li>
             <li class="navigation-group__item"><a href="https://twitter.com/guardian">
-                @fragments.inlineSvg("share-twitter", "icon", List("navigation-group__icon navigation-group__social-icon"))
+                @fragments.inlineSvg("share-twitter", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
                 Twitter
             </a></li>
         </ul>

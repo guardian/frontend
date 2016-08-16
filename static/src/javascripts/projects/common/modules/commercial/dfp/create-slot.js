@@ -58,7 +58,15 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh)
+                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh, adSizes.fluid)
+            }
+        },
+        'merchandising-high-ad-feature': {
+            name: 'merchandising-high',
+            label: false,
+            refresh: false,
+            sizeMappings: {
+                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHighAdFeature, adSizes.fluid)
             }
         },
         spbadge: badgeDefinition,
