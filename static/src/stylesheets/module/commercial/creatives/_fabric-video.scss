@@ -20,7 +20,12 @@
     }
 
     .creative__video--left {
-        width: auto;
+        object-position: left;
+    }
+
+    .creative__poster {
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .creative__alt--mobile .creative__layer {
