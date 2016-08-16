@@ -82,7 +82,7 @@ object HostedVideoPage extends Logging {
           ),
           // todo: standardise css so that only colour varies
           cssClass = "renault",
-          mainColour = hostedTag.paidContentCampaignColour getOrElse "",
+          brandColour = hostedTag.paidContentCampaignColour getOrElse "",
           logoLink = None
         ),
         pageUrl,

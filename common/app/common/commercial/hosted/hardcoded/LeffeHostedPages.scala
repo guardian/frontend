@@ -18,7 +18,7 @@ object LeffeHostedPages {
     owner = "Leffe",
     logo = HostedLogo(Static("images/commercial/leffe.jpg")),
     cssClass = "leffe",
-    mainColour = "#dec190",
+    brandColour = "#dec190",
     logoLink = None
   )
 

@@ -7,12 +7,41 @@
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
-    .hosted-ton {
-        color: page.campaign.mainColour;
+    .hosted-tone {
+        color: @{page.campaign.brandColour};
     }
 
     .hosted-tone-bg {
-        background-color: page.campaign.mainColour;
+        background-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        background-color: @{page.campaign.brandColour};
+        border-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted-next-autoplay .hosted-next-autoplay__poster-timer,
+    .hosted-page .hosted-next-autoplay .hosted-next-autoplay__tile {
+        background-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted-next-autoplay .hosted-next-autoplay__video,
+    .hosted-page .hosted-next-autoplay .hosted-next-autoplay__next-in-series {
+        border-top: 1px solid @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted__next-video .hosted__next-video--tile {
+        border-top-color: @{page.campaign.brandColour};
+        background: @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted__link {
+        color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page.survey-overlay-simple .survey-text__header {
+        background-color: @{page.campaign.brandColour};
     }
     </style>
     <!--<![endif]-->
