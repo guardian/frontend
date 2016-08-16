@@ -59,6 +59,7 @@ developer.properties
 static/hash
 static/target
 static/riffraff
+static/abtests.json
 
 static/src/stylesheets/icons/*
 
