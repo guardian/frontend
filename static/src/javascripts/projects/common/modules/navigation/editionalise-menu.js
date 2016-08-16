@@ -36,5 +36,5 @@ define([
         }
     }
 
-    return editionaliseMenu();
+    return editionaliseMenu;
 });

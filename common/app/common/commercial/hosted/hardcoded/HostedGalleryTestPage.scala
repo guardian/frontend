@@ -63,6 +63,7 @@ object HostedGalleryTestPage {
       owner = "test",
       logo = HostedLogo("https://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"),
       cssClass = "test",
+      mainColour = "#2ec869",
       logoLink = None
     ),
     images = demoImages,

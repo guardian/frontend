@@ -1,12 +1,16 @@
 package recorder
 
 import java.io._
-import java.nio.charset.StandardCharsets
+import java.nio.ByteBuffer
+import java.util
 
 import common.ExecutionContexts
 import conf.Configuration
-import contentapi.Response
+import com.ning.http.client.uri.Uri
+import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response => AHCResponse}
 import org.apache.commons.codec.digest.DigestUtils
+import play.api.libs.ws.WSResponse
+import play.api.libs.ws.ning.NingWSResponse
 
 import scala.concurrent.Future
 import scala.io.Source
@@ -16,8 +20,12 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
   def baseDir: File
 
+  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
+    loadFile(url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
+
+
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]):Future[A] = {
+  final def loadFile(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[File] = {
 
     val fileName = name(url, headers)
 
@@ -27,14 +35,11 @@ trait HttpRecorder[A] extends ExecutionContexts {
       throw new IllegalStateException(s"Data file has not been checked in for: $url, file: $fileName, headers: ${headersFormat(headers)}")
     }
 
-    get(fileName).map { f =>
-      val response = toResponse(f)
-      Future(response)
-    }.getOrElse {
-      val response = fetch
-      response.foreach(r => put(fileName, fromResponse(r)))
-      response
-    }
+    get(fileName)
+      .map(Future(_))
+      .getOrElse {
+        fetch.map(r => put(fileName, fromResponse(r)))
+      }
   }
 
   if (!baseDir.exists()) {
@@ -42,21 +47,24 @@ trait HttpRecorder[A] extends ExecutionContexts {
     baseDir.mkdir()
   }
 
-  private [recorder] def put(name: String, value: String) {
+  private def put(name: String, value: String): File = {
     val file = new File(baseDir, name)
     val out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")
     out.write(value)
     out.close()
+    file
   }
 
-  private [recorder] def get(name: String): Option[String] = {
+  private def get(name: String): Option[File] = {
     val file = new File(baseDir, name)
     if (file.exists()) {
-      Some(Source.fromFile(file, "UTF-8").getLines().mkString)
+      Some(file)
     } else {
       None
     }
   }
+
+  private def contentFromFile(file: File): String = Source.fromFile(file, "UTF-8").getLines().mkString
 
   def toResponse(str: String): A
 
@@ -70,23 +78,49 @@ trait HttpRecorder[A] extends ExecutionContexts {
     val headersString = headersFormat(headers)
     DigestUtils.sha256Hex(url +  headersString)
   }
+
+  def fileLocation(url: String, headers: Map[String, String] = Map.empty): String = {
+    new File(baseDir, name(url, headers)).getAbsolutePath
+  }
 }
 
-trait ContentApiHttpRecorder extends HttpRecorder[Response] {
+trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
 
-  def toResponse(str: String) = {
-    if (str.startsWith("Error:")) {
-      Response(Array.empty, str.replace("Error:", "").toInt, "")
+  val errorPrefix = "Error:"
+  override def toResponse(str: String) = {
+    if (str.startsWith(errorPrefix)) {
+      NingWSResponse(Response("", str.replace(errorPrefix, "").toInt))
     } else {
-      Response(str.getBytes(StandardCharsets.UTF_8), 200, "")
+      NingWSResponse(Response(str, 200))
     }
   }
 
-  def fromResponse(response: Response) = {
+  override def fromResponse(response: WSResponse) = {
     if (response.status == 200) {
-      new String(response.body, StandardCharsets.UTF_8)
+      response.body
     } else {
-      s"Error:${response.status}"
+      errorPrefix + response.status
     }
+  }
+
+  private case class Response(getResponseBody: String, status: Int) extends AHCResponse {
+    def getContentType: String = "application/json"
+    def getResponseBody(charset: String): String = getResponseBody
+    def getStatusCode: Int = status
+    def getResponseBodyAsBytes: Array[Byte] = getResponseBody.getBytes
+    def getResponseBodyAsByteBuffer: ByteBuffer = throw new NotImplementedError()
+    def getResponseBodyAsStream: InputStream = throw new NotImplementedError()
+    def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
+    def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
+    def getStatusText: String = throw new NotImplementedError()
+    def getUri: Uri = throw new NotImplementedError()
+    def getHeader(name: String): String = throw new NotImplementedError()
+    def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
+    def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
+    def isRedirected: Boolean = throw new NotImplementedError()
+    def getCookies = throw new NotImplementedError()
+    def hasResponseStatus: Boolean = throw new NotImplementedError()
+    def hasResponseHeaders: Boolean = throw new NotImplementedError()
+    def hasResponseBody: Boolean = throw new NotImplementedError()
   }
 }
