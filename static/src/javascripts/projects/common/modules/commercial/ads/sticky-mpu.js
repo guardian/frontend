@@ -19,7 +19,7 @@ define([
         }
 
         return fastdom.read(function () {
-            return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + $adSlot.offsetHeight;
+            return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + $adSlot[0].offsetHeight;
         }).then(function (newHeight) {
             return fastdom.write(function () {
                 $adSlot.parent().css('height', newHeight + 'px');
