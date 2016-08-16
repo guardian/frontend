@@ -49,6 +49,14 @@ Prerequesites:
 - *Your local machine (host) `~/.gu/` and `~/.aws/` directories are exposed to the container via mounted volumes, so they have access to the properties and aws credentials files*
 - *The `dev` container will be deleted when exited*
 
+### Docker FAQ
+
+#### Removing containers
+
+Containers can be thrown away very easily. To do so:
+- `docker ps -a` to get the ID of the container you want to remove
+- `docker rm ID`. Use `-f` option to force deletion when the container is still in used.
+
 ## Local machine
 You need a Mac or Linux PC (Ubuntu).
 
