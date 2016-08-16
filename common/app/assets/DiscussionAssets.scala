@@ -25,18 +25,26 @@ import scala.util.{Failure, Success, Try}
 class DiscussionExternalAssetsLifecycle (config: GuardianConfiguration, wsClient: WSClient, jobs: JobScheduler)
   extends LifecycleComponent with ExecutionContexts with Logging {
 
-  def refresh(): Future[Unit] = {
+  def refresh(): Future[Map[String, String]] = {
     config.discussion.frontendAssetsMap match {
       case Some(url) if Switches.DiscussionFetchExternalAssets.isSwitchedOn =>
         fetchAssetsMap(url, wsClient).map(
-          parseResponse(_, url).map(DiscussionAssetsMap.alter(_, URI.create(url)))
-        )
+          parseResponse(_, url) match {
+            case Some(parsed) => DiscussionAssetsMap.alter(parsed, URI.create(url))
+            case None =>
+              val errMsg = "Impossible to parse discussion assets map"
+              log.warn(errMsg)
+              Future.failed(new RuntimeException(errMsg))
+          }
+        ).flatMap(identity)
       case Some(_) =>
-        log.info("Fetching discussion external assets is switched off")
-        Future.successful(None)
+        val errMsg = "Fetching discussion external assets is switched off"
+        log.info(errMsg)
+        Future.failed(new RuntimeException(errMsg))
       case None =>
-        log.warn("External discussion frontend endpoint is not configured, you might want to update `discussion.frontend.assetsMap`")
-        Future.successful(None)
+        val errMsg = "External discussion frontend endpoint is not configured, you might want to update `discussion.frontend.assetsMap`"
+        log.warn(errMsg)
+        Future.failed(new RuntimeException(errMsg))
     }
   }
 
