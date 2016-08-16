@@ -22,12 +22,12 @@ define([
         hasVideo = !(detect.isIOS() || detect.isAndroid() || isMobile);
 
         if (isMobile) {
-            params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.Videobackupimage + ')"></div>';
         } else {
             if (hasVideo) {
                 params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
             } else {
-                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
             }
         }
 
