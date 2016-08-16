@@ -13,15 +13,15 @@ define([
 
     function FabricVideo(adSlot, params) {
         var isUpdating = false;
-        var isMobile = detect.isBreakpoint({ max: 'phablet' });
+        var isSmallScreen = detect.isBreakpoint({ max: 'phablet' });
         var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
-        hasVideo = !(detect.isIOS() || detect.isAndroid() || isMobile);
+        hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);
 
-        if (isMobile) {
+        if (isSmallScreen) {
             params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.Videobackupimage + ')"></div>';
         } else {
             if (hasVideo) {
