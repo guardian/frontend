@@ -80,6 +80,8 @@ define([
             return;
         }
 
+        var iframes = getMessengerIframe(event.origin);
+
         // Because any listener can have side-effects (by unregistering itself),
         // we run the promise chain on a copy of the `listeners` array.
         // Hat tip @piuccio
@@ -96,7 +98,7 @@ define([
         // occasional fastdom bomb in the middle.
         .reduce(function (promise, listener) {
             return promise.then(function promiseCallback(ret) {
-                var thisRet = listener(data.value, ret);
+                var thisRet = listener(data.value, iframes[0], ret);
                 return thisRet === undefined ? ret : thisRet;
             });
         }, Promise.resolve(true));
@@ -155,5 +157,11 @@ define([
         });
 
         return error;
+    }
+
+    function getMessengerIframe(origin) {
+        return Array.prototype.filter.call(document.getElementsByTagName('iframe'), function (iframe) {
+            return iframe.src.indexOf(origin) === 0;
+        });
     }
 });
