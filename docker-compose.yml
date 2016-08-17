@@ -5,6 +5,7 @@ services:
     command: bash
     ports: 
         - "9000:9000"
+    working_dir: /frontend
     volumes:
         - .:/frontend
         - ~/.gu:/root/.gu
