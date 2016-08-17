@@ -38,6 +38,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     if (article.isUSMinute) {
       document.getElementsByClass("block").foreach { block =>
         val allElements = block.getAllElements
+        val headings = block.select("h2.block-title")
 
         // Add classes
         block.addClass("block--minute-article js-is-fixed-height")
@@ -49,7 +50,14 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Remove Classes
         block.removeClass("block")
 
-        block.select("h2.block-title").foreach(e => if (e.text() == "Summary" || e.text() == "Key event") e.remove())
+        headings.foreach(heading => {
+          if (heading.text() == "Summary" || heading.text() == "Key event") {
+            heading.remove()
+          } else {
+            val headingHtml = heading.html();
+            headingHtml.replaceFirst("^([0-9]+)[.]*[ ]*", "<span class=\"block--minute-article--counter\">$1 </span>")
+          }
+        })
 
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
