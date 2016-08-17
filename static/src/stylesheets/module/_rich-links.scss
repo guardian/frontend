@@ -2,45 +2,6 @@
 //--------------------------------------
 
 .element-rich-link--not-upgraded {
-    border-top: 1px dotted $neutral-3;
-    border-bottom: 1px dotted $neutral-3;
-    margin-bottom: $gs-baseline / 1.5;
-
-    @include mq(mobileLandscape) {
-        float: left;
-        width: gs-span(3);
-        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
-    }
-
-    span {
-        display: none;
-    }
-
-    p {
-        margin: 0;
-    }
-
-    a {
-        @include fs-headline(2);
-        font-weight: 500;
-        display: block;
-        padding: 0;
-        color: $neutral-1;
-        border: 0;
-        padding-bottom: $gs-baseline * 1.5;
-
-        &:hover {
-            text-decoration: underline !important;
-        }
-
-        &:before {
-            @include fs-textSans(1);
-            content: 'More on this topic';
-            display: block;
-            color: $neutral-2;
-            padding: $gs-baseline/4 0;
-        }
-    }
 
     &.element-rich-link--tag {
         // only display tag based rich links when they are fully upgraded (as we have no link text)
@@ -58,6 +19,7 @@
 
 .rich-link {
     @include stars();
+    background-color: $neutral-6;
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -109,7 +71,10 @@
 
 .rich-link__standfirst {
     @include fs-headline(1);
-    padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: $gs-baseline / 3 0 $gs-baseline;
+    padding: 0  $gs-gutter / 2 0 $gs-gutter / 4;
     ul {
         list-style: none;
         margin-bottom: $gs-baseline / 1.5;
@@ -156,6 +121,10 @@
 }
 
 .rich-link__container {
+    &:before {
+        background-color: $news-main-2;
+    }
+
     &:after {
         content: '';
         display: table;
@@ -213,7 +182,7 @@
 // In-article styles
 //-----------------------
 
-.element-rich-link--upgraded {
+.element-rich-link {
     float: left;
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;

@@ -551,12 +551,20 @@ object MainFigCaptionCleaner extends HtmlCleaner {
 
 object RichLinkCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
+
     val richLinks = document.getElementsByClass("element-rich-link")
+
     richLinks
       .addClass("element-rich-link--not-upgraded")
       .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
-
+      .map( richLink => {
+          val link = richLink.getElementsByTag("a").first()
+          val href = link.attr("href")
+          val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
+          richLink.empty().prepend(html);
+        }
+      )
     document
   }
 }
