@@ -1,0 +1,21 @@
+/*
+Styles for the commercial dashboard: Real-user Advert Performance
+
+commercial/performance/browser-dashboard
+*/
+
+.graph {
+    margin-top: 12px;
+}
+
+/*Align contents vertically centered*/
+.graph--commercial-app-start {
+    display: flex;
+    align-items: center;
+}
+
+.graph__y-axis {
+    padding-right: 0;
+    text-align: right;
+    font-style: italic;
+}
