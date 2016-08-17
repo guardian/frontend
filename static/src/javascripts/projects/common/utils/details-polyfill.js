@@ -1,7 +1,9 @@
 define([
-    'common/utils/fastdom-promise'
-], function (fastdomPromise) {
-    var shouldWePolyfill = !('open' in document.createElement('details'));
+    'common/utils/fastdom-promise',
+    'bean'
+], function (fastdomPromise, bean) {
+    var weShouldPolyfill = !('open' in document.createElement('details'));
+    var boundEvents = {};
 
     function onClick(event) {
         var details = event.target.parentNode;
@@ -17,12 +19,19 @@ define([
         }
     }
 
-    function bindEvents() {
-        document.addEventListener('click', function(event) {
-            if (event.target.tagName.toLowerCase() === 'summary') {
+    function bindEvents(summarySelector) {
+        if (boundEvents[summarySelector]) {
+            return;
+        }
+        bean.on(document, 'click', summarySelector, function(event) {
+            onClick(event);
+        });
+        bean.on(document, 'keypress', summarySelector, function(event) {
+            if (event.keyCode === 0x20 || event.keyCode === 0x0D) {
                 onClick(event);
             }
         });
+        boundEvents[summarySelector] = true;
     }
 
     function appendCss() {
@@ -30,14 +39,18 @@ define([
             var style = document.createElement('style');
 
             style.id = 'details-polyfill-css';
-            style.textContent = 'details:not([open]) > *:not(summary) { display: none; }';
+            style.textContent = 'details:not([open]) > *:not(summary) {display: none;}';
 
             document.head.insertBefore(style, document.head.firstChild);
         }
     }
 
-    if(shouldWePolyfill) {
-        bindEvents();
-        appendCss();
-    }
+    return {
+        init: function (summarySelector) {
+            if(weShouldPolyfill) {
+                bindEvents(summarySelector || 'summary');
+                appendCss();
+            }
+        }
+    };
 });

@@ -8,7 +8,8 @@ define([
     fastdomPromise,
     $,
     editionPicker,
-    editionaliseMenu
+    editionaliseMenu,
+    detailsPolyfill
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
@@ -122,7 +123,7 @@ define([
                 }).then(function (id) {
                     var menuToOpen = $('#' + id);
 
-                       fastdomPromise.write(function () {
+                    fastdomPromise.write(function () {
                         menuToOpen.attr('open', '');
                         return id;
                     }).then(moveTargetListToTop.bind(id));
@@ -133,7 +134,6 @@ define([
 
     function bindPrimaryItemClickEvents() {
         primaryItems.each(function (item) {
-
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
@@ -150,6 +150,8 @@ define([
     }
 
     function init() {
+        detailsPolyfill.init('.main-navigation__item__button');
+
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 
