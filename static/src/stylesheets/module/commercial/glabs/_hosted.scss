@@ -151,6 +151,39 @@ $hosted-video-height: 540px;
     display: none;
 }
 
+.hosted-page--bright {
+    .hosted-tone-btn {
+        &,
+        &:focus,
+        &:hover {
+            color: #ffffff;
+            svg {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .hostedbadge.hosted-tone-bg {
+        .hostedbadge__info {
+            color: #ffffff;
+        }
+    }
+
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            color: #ffffff;
+
+            .site-message__close-btn {
+                border-color: #ffffff;
+
+                .inline-cross {
+                    fill: #ffffff;
+                }
+            }
+        }
+    }
+}
+
 .hosted__glogo {
     display: inline-block;
     padding: 4px $gs-gutter / 2;
