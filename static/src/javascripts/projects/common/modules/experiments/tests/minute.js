@@ -25,7 +25,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Increase interaction with video trails';
         this.canRun = function() {
-            return config.page.isFront &&  document.getElementsByClassName('fc-item__video').length > 0 && detect.getBreakpoint() == 'desktop';
+            return config.page.isFront &&  document.getElementsByClassName('fc-item__video').length > 0 && detect.getBreakpoint() === 'desktop';
         };
 
 
