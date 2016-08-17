@@ -34,13 +34,11 @@ define([
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
-            console.log('matched')
             return fetchJson('/embed/card' + matches[1] + '.json', {
                 mode: 'cors'
             }).then(function (resp) {
                 if (resp.html) {
                     fastdom.write(function () {
-                        console.log(resp.html)
                         $(el).html(resp.html)
                             .removeClass('element-rich-link--not-upgraded')
                             .addClass('element-rich-link--upgraded');
