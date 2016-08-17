@@ -5,20 +5,25 @@ define([
     'common/utils/template',
     'lodash/collections/countBy',
     'lodash/collections/find',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'lodash/collections/reduce',
+    'lodash/collections/filter'
 ], function (
     config,
     fetchJson,
     template,
     countBy,
     find,
-    map
+    map,
+    reduce,
+    filter
 ) {
     var chart;
     var FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
     var FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
     var reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
 
+    // Store the 1000 most recently fetched datapoints.
     var commercialStartTimes = [];
 
     function initialise() {
@@ -34,7 +39,7 @@ define([
             },
             data: [{
                 label: 'Commercial Start Time',
-                values: commercialStartTimes
+                values: []
             }]
         });
 
@@ -59,12 +64,41 @@ define([
                 return primaryBaseline ? primaryBaseline.time : 0;
             });
 
+            // Filter the times array from silly numbers, investigating why Date times are appearing in the array.
+            appStartTimes = filter(appStartTimes, function(startTime) { return startTime < 20000; });
+
+            updateAverageStartTime(appStartTimes);
+
             var heatmapData = {
                 time: currentDate.getTime() / 1000,
                 histogram: countBy(appStartTimes)
             };
             chart.push([heatmapData]);
         });
+    }
+
+    function updateAverageStartTime(startTimes) {
+        // Push the new start times into the stored array to find an average.
+        Array.prototype.push.apply(commercialStartTimes, startTimes);
+        // Limit the size of the array to 1000.
+        commercialStartTimes.splice(1000);
+
+        if (!commercialStartTimes.length) {
+            return;
+        }
+
+        var sum = reduce(commercialStartTimes, function(sum, num) {
+            // Disregard silly numbers, investigating why Date times are appearing in the array.
+            if (num < 20000) {
+                return sum + num;
+            } else {
+                return sum;
+            }
+        });
+
+        var averageStartTime = (sum / commercialStartTimes.length).toFixed([2]);
+
+        $('.graph__average-value').text(averageStartTime);
     }
 
     return {
