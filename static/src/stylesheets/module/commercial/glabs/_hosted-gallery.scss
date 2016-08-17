@@ -329,8 +329,13 @@
     height: calc(100% - 58px);
 }
 
+$headerHeight: 58px;
+$footerHeight: 46px;
+$approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
+
 .hosted-gallery-page {
     .hosted__headerwrap {
+        width: $approxGalleryWidth;
         max-width: 100%;
     }
     .hosted__social.host__header {
@@ -546,6 +551,8 @@ $progressColor: #ffffff;
     background: $neutral-1;
     z-index: 1;
     position: relative;
+    width: $approxGalleryWidth;
+    margin: auto;
     @include mq($until: desktop) {
         padding: 0;
     }
