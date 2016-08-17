@@ -4,8 +4,6 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/messenger'
 ], function (assign, closest, fastdom, messenger) {
-    var aProto = Array.prototype;
-
     messenger.register('resize', function(specs, iframe) {
         return resize(specs, closest(iframe, '.js-ad-slot'));
     });
@@ -33,7 +31,7 @@ define([
     }
 
     function normalise(length) {
-        var lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/
+        var lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
         var defaultUnit = 'px';
         var matches = String(length).match(lengthRegexp);
         if (!matches) {
