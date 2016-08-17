@@ -8,12 +8,6 @@
     }
 }
 
-.commercial-dfp-multi {
-    .fc-item__image-container {
-        display: block;
-    }
-}
-
 .fc-container--advertisement-feature {
     .linkslist__action:visited,
     .fc-item__link:visited,
@@ -44,16 +38,6 @@
     .linkslist__action,
     .fc-sublink__title {
         @include f-headlineSans;
-    }
-
-    &.commercial-dfp-multi {
-        .fc-item__header {
-            @include fs-bodyHeading(2, $size-only: true);
-        }
-
-        .fc-item__title {
-            padding-top: 0;
-        }
     }
 }
 

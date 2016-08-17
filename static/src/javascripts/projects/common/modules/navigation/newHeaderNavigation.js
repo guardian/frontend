@@ -1,17 +1,19 @@
 define([
     'common/utils/fastdom-promise',
     'common/utils/$',
-    'common/modules/navigation/edition-picker'
+    'common/modules/navigation/edition-picker',
+    'common/modules/navigation/editionalise-menu'
 ], function (
     fastdomPromise,
     $,
-    editionPicker
+    editionPicker,
+    editionaliseMenu
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
-    var burgerLink = $('.js-change-link');
-    var burgerIcon = $('.js-animate-menu');
+    var veggieBurgerLink = $('.js-change-link');
+    var veggieBurgerIcon = $('.js-animate-menu');
     var primaryItems = $('.js-close-nav-list');
 
     function closeAllOtherPrimaryLists(targetItem) {
@@ -27,8 +29,8 @@ define([
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            burgerIcon.addClass('new-header__burger-icon--open');
-            burgerLink.attr('href', '#');
+            veggieBurgerIcon.addClass('new-header__veggie-burger-icon--open');
+            veggieBurgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
                 mainMenuEl.removeClass('off-screen');
@@ -51,8 +53,8 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerIcon.removeClass('new-header__burger-icon--open');
-                burgerLink.attr('href', mainMenuId);
+                veggieBurgerIcon.removeClass('new-header__veggie-burger-icon--open');
+                veggieBurgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
                 // We still want to hide this
@@ -94,9 +96,13 @@ define([
                 if (itemId === targetListId) {
                     fastdomPromise.write(function () {
                         var parent = listItem.parentNode;
+                        var menuContainer = $('.js-reset-scroll-on-menu');
 
                         // Using flexbox to reorder lists based on what is clicked.
                         parent.style.order = '-' + index;
+
+                        // Make sure when the menu is open, the user is always scrolled to the top
+                        menuContainer[0].scrollTop = 0;
                     });
                 }
             });
@@ -150,6 +156,7 @@ define([
         openTargetListOnClick();
 
         editionPicker();
+        editionaliseMenu();
     }
 
     return init;

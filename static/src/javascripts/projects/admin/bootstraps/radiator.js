@@ -80,10 +80,10 @@ define([
 
                     var link = document.createElement('a');
                     link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
+                    link.innerHTML = nameAbbreviation + ' ' + d.build;
 
                     var li = document.createElement('li');
                     li.className = d.status;
-                    li.innerHTML = nameAbbreviation + ' ' + d.build;
                     li.setAttribute('title', d.projectName);
                     li.appendChild(link);
 

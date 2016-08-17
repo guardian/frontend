@@ -4,6 +4,7 @@
 @import views.support.ContentOldAgeDescriber
 @import views.support.TrailCssClasses
 @import conf.Configuration.site.host
+@import views.support.{ImgSrc, Item140}
 
 <div class="fc-container__inner">
     <div class="fc-container__header__title">
@@ -18,10 +19,17 @@
 </div>
 
 @onward(content: CuratedContent) = {
-    <div class="fc-item @TrailCssClasses.toneClass(content)">
-        <div class="fc-item__image-container">
-            <amp-img src="@content.properties.maybeContent.flatMap(_.trail.thumbnailPath)" layout="fixed" width=126 height=75></amp-img>
-        </div>
+    @defining(
+        content.properties.maybeContent.flatMap(_.trail.thumbnailPath).getOrElse(
+            ImgSrc(content.properties.maybeContent.flatMap(_.trail.trailPicture.flatMap(_.largestImageUrl)).getOrElse(""), Item140)
+        )
+    ) { thumbnailPath =>
+        <div class="fc-item @TrailCssClasses.toneClass(content)">
+            @if(thumbnailPath != "") {
+                <div class="fc-item__image-container">
+                    <amp-img src="@thumbnailPath" layout="fixed" width=126 height=75></amp-img>
+                </div>
+            }
         <div class="fc-item__content">
             <div class="fc-item__header">
                 <h2 class="fc-item__title">
@@ -52,5 +60,6 @@
             </aside>
         </div>
         <a href="@{host}@content.header.url" class="fc-item__link">@content.header.headline</a>
-    </div>
+        </div>
+    }
 }

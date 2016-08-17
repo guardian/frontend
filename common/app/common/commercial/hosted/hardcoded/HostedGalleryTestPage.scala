@@ -50,6 +50,12 @@ object HostedGalleryTestPage {
     )
   )
 
+  private val cta = HostedCallToAction(
+    url = "http://en.omgb.com/map/",
+    btnText = Some("Visit OMGB now"),
+    label = Some("Explore our collection of unique experiences from all over Great Britain.")
+  )
+
   val demoGallery: HostedGalleryPage = HostedGalleryPage(
     campaign = HostedCampaign(
       id = "hosted-gallery",
@@ -57,15 +63,15 @@ object HostedGalleryTestPage {
       owner = "test",
       logo = HostedLogo("https://static.theguardian.com/commercial/hosted/gallery-prototype/omgb.png"),
       cssClass = "test",
+      brandColour = "#2ec869",
+      brightFont = true,
       logoLink = None
     ),
     images = demoImages,
     pageUrl = "https://m.code.dev-theguardian.com/commercial/advertiser-content/hosted-gallery/gallery-test",
     pageName = galleryTestPageName,
     title = "Great Britain - Home of Amazing Moments #OMGB",
-    ctaText = "Explore our collection of unique experiences from all over Great Britain.",
-    ctaLink = "http://en.omgb.com/map/",
-    ctaButtonText = "Visit OMGB now",
+    cta = cta,
     ctaIndex = Some(5),
     standfirst = "Welcome to Great Britain, a country to be explored, experienced and discovered. See for yourself and discover the moments you'll want to share."
   )

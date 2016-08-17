@@ -122,6 +122,8 @@ object Frontend extends Build with Prototypes {
       jqueryui,
       lodash,
       react,
+      epoch,
+      d3,
       awsElasticloadbalancing,
       awsSes,
       scalaUri

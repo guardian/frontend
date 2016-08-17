@@ -7,13 +7,14 @@ import pa._
 import implicits.Football._
 import scala.util.Try
 
-trait CompetitionStage {
+trait CompetitionStageLike {
   val matches: List[FootballMatch]
   def roundMatches(round: Round): List[FootballMatch] = matches.filter(_.round == round)
 }
-object CompetitionStage {
 
-  def stagesFromCompetition(competition: Competition, orderings: Map[String, List[DateTime]] = Map.empty): List[CompetitionStage] = {
+class CompetitionStage(competitions: Seq[Competition]) {
+
+  def stagesFromCompetition(competition: Competition, orderings: Map[String, List[DateTime]] = Map.empty): List[CompetitionStageLike] = {
     val stagesWithMatches = competition.matches.toList.groupBy(_.stage).toList
     val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matches.exists(_.hasStarted) }
     // if all stages have started, reverse order (typically at most two stages so means "show most recent first")
@@ -37,14 +38,14 @@ object CompetitionStage {
                   .getOrElse(match1.id > match2.id)
               }.headOption
             }
-            KnockoutSpider(dedupedMatches.toList, rounds, matchDates)
-          }.orElse(Some(KnockoutList(stageMatches, rounds)))
+            KnockoutSpider(competitions, dedupedMatches.toList, rounds, matchDates)
+          }.orElse(Some(KnockoutList(competitions, stageMatches, rounds)))
         } else None  // or just a collection of matches (e.g. international friendlies)
       } else {
         if (rounds.size > 1) {
           // multiple rounds and league table entries is a group stage
           val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber)
-          Some(Groups(stageMatches, groupTables))
+          Some(Groups(competitions, stageMatches, groupTables))
         } else if (rounds.size == 1) {
           // single round with table is league
           rounds.headOption.map(League(stageMatches, stageLeagueEntries, _))
@@ -55,13 +56,13 @@ object CompetitionStage {
 }
 
 
-case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry], round: Round) extends CompetitionStage
+case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry], round: Round) extends CompetitionStageLike
 
-case class Groups(matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStage {
-  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+case class Groups(competitions: Seq[Competition], matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStageLike {
+  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
 }
 
-trait Knockout extends CompetitionStage {
+trait Knockout extends CompetitionStageLike {
   val rounds: List[Round]
   def matchesList(competition: Competition, round: Round): MatchesList
   lazy val activeRound: Option[Round] = {
@@ -69,11 +70,11 @@ trait Knockout extends CompetitionStage {
   }
   def isActiveRound(round: Round): Boolean = activeRound.exists(_ == round)
 }
-case class KnockoutList(matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
-  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+case class KnockoutList(competitions: Seq[Competition], matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
+  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
 }
-case class KnockoutSpider(matches: List[FootballMatch], rounds: List[Round], matchDates: List[DateTime]) extends Knockout {
-  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+case class KnockoutSpider(competitions: Seq[Competition], matches: List[FootballMatch], rounds: List[Round], matchDates: List[DateTime]) extends Knockout {
+  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
 
   override def roundMatches(round: Round): List[FootballMatch] =
     super.roundMatches(round).sortWith(lt)

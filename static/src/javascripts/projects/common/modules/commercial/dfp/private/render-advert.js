@@ -125,7 +125,7 @@ define([
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return renderAdvertLabel(advert.node)
                 .then(addFeedbackDropdownToggle)
-                .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent.creativeId); })
+                .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent); })
                 .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
@@ -153,13 +153,13 @@ define([
                 }) : Promise.resolve();
             }
 
-            function applyFeedbackOnClickListeners(creativeId) {
+            function applyFeedbackOnClickListeners(slotRenderEvent) {
                 return isRendered ? fastdom.write(function () {
                     bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
                         if (!bonzo(el).hasClass('js-onclick-ready')) {
                             el.addEventListener('click', function() {
                                 if(bonzo(el).hasClass('is-active')) {
-                                    recordUserAdFeedback(window.location.pathname, advert.node.id, creativeId, 'ad-feedback-menu-opened');
+                                    recordUserAdFeedback(window.location.pathname, advert.node.id, slotRenderEvent, 'ad-feedback-menu-opened');
                                 }
                             });
                             bonzo(el).addClass('js-onclick-ready');
@@ -168,7 +168,7 @@ define([
                     bonzo(qwery('.popup__item-problem--option')).each(function(el) {
                         if (!bonzo(el).hasClass('js-onclick-ready')) {
                             el.addEventListener('click', function() {
-                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, creativeId, el.attributes['problem'].nodeValue);
+                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
                             });
                             bonzo(el).addClass('js-onclick-ready');
                         }

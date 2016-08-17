@@ -10,6 +10,7 @@ class ArticleTestSuite extends Suites (
   new ArticleControllerTest,
   new ArticleMetaDataTest,
   new ArticleFeatureTest,
+  new ArticleAmpValidityTest,
   new CdnHealthCheckTest,
   new SectionsNavigationFeatureTest,
   new MembershipAccessTest,

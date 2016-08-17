@@ -1,22 +1,22 @@
-import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
+import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
+import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
-import common.DiagnosticsLifecycle
-import conf.switches.SwitchboardLifecycle
 import conf.FootballLifecycle
+import conf.switches.SwitchboardLifecycle
 import contentapi.SectionsLookUpLifecycle
 import controllers._
 import controllers.commercial._
-import controllers.commercial.magento.{ApiSandbox, AccessTokenGenerator}
+import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
-import headlines.ABHeadlinesLifecycle
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
@@ -84,7 +84,7 @@ trait AppComponents
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
-    wire[ABHeadlinesLifecycle]
+    wire[DiscussionExternalAssetsLifecycle]
   )
 
   override lazy val httpFilters = wire[DevFilters].filters

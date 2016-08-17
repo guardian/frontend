@@ -1,12 +1,40 @@
 package test
 
+import conf.FootballClient
 import org.scala_tools.time.Imports._
 import org.joda.time.DateTime
 import pa._
 import model.{Competition, Tag, TagProperties, TeamMap}
-import feed.Competitions
+import feed.CompetitionsService
+import org.scalatest.mock.MockitoSugar
+import play.api.libs.ws.WSClient
 
-trait FootballTestData {
+trait FootballTestData extends MockitoSugar {
+
+  lazy val testCompetitionsService = {
+    val service = new CompetitionsService(new FootballClient(mock[WSClient]), FootballTestData.competitions)
+    service.loadTestData()
+    service
+  }
+
+  implicit class TestCompetitionsService(competitionsService: CompetitionsService) {
+    def loadTestData() {
+      if (competitionsService.matches.isEmpty) {
+        competitionsService.competitionAgents.foreach { agent =>
+          FootballTestData.competitions.filter(_.id == agent.competition.id).map { comp =>
+            agent.update(comp)
+            agent.addMatches(comp.matches)
+          }
+        }
+      }
+      if (TeamMap.teamAgent.get.isEmpty) {
+        TeamMap.teamAgent.send(old => old ++ FootballTestData.teamTags)
+      }
+    }
+  }
+}
+
+object FootballTestData {
 
   private val zone = DateTimeZone.forID("Europe/London")
 
@@ -24,7 +52,6 @@ trait FootballTestData {
     MatchDayTeam("1006", "", None, None, None, None),
     MatchDayTeam("65", "", None, None, None, None),
     None, None, None)
-
 
   val competitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
@@ -71,13 +98,13 @@ trait FootballTestData {
   )
 
   val teamTags: Map[String, Tag] = Map(
-      "Liverpool" -> Tag(
-        TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
-          "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
-        None,
-        None,
-        None)
-    )
+    "Liverpool" -> Tag(
+      TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
+        "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
+      None,
+      None,
+      None)
+  )
 
 
   private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
@@ -106,17 +133,6 @@ trait FootballTestData {
     LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 
-  def loadTestData() {
-    if (Competitions().matches.isEmpty) {
-      Competitions.competitionAgents.foreach { agent =>
-        competitions.filter(_.id == agent.competition.id).map { comp =>
-          agent.update(comp)
-          agent.addMatches(comp.matches)
-        }
-      }
-    }
-    if (TeamMap.teamAgent.get.isEmpty) {
-      TeamMap.teamAgent.send(old => old ++ teamTags)
-    }
-  }
 }
+
+

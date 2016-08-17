@@ -34,6 +34,110 @@ $hosted-video-height: 540px;
     background-color: #3e3e3e;
 }
 
+.host {
+    padding: 0 $gs-gutter / 2;
+    position: relative;
+
+    @include mq(tablet) {
+        padding: 0 calc(50% - 370px);
+    }
+
+    @include mq(desktop) {
+        padding: 0 calc(50% - 490px);
+    }
+
+    @include mq(leftCol) {
+        padding: 0 calc(50% - 570px);
+    }
+
+    @include mq(wide) {
+        padding: 0 calc(50% - 650px);
+    }
+}
+
+.host--legacy {
+    @include mq($until: tablet) {
+        padding: 0;
+    }
+
+    @include mq(mobileLandscape, desktop) {
+        > .host__header {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    @include mq(leftCol) {
+        display: flex;
+
+        > .host__header {
+            box-sizing: border-box;
+            padding: $gs-baseline $gs-gutter / 5 * 2;
+            width: 160px;
+        }
+
+        > .host__body {
+            flex: 1;
+        }
+
+        .has-no-flex & {
+            display: table;
+
+            &::before,
+            &::after,
+            > .host__body,
+            > .host__header {
+                display: table-cell;
+                vertical-align: top;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        > .host__header {
+            padding: $gs-baseline $gs-gutter;
+            width: 240px;
+        }
+    }
+
+    > .host__header {
+        @include mq($until: mobileLandscape) {
+            padding: $gs-baseline / 2 $gs-gutter / 2;
+        }
+
+        @include mq(mobileLandscape, leftCol) {
+            padding: $gs-baseline / 2 $gs-gutter;
+        }
+    }
+
+    > .host__body {
+        @include mq(mobileLandscape) {
+            box-sizing: border-box;
+            max-width: gs-span(8) + ($gs-gutter * 2);
+        }
+        @include mq(tablet) {
+            max-width: gs-span(9) + ($gs-gutter * 2);
+            padding-bottom: $gs-baseline;
+        }
+        @include mq(desktop) {
+            max-width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
+}
+
+.host__header {
+    display: flex;
+    flex-direction: column;
+
+    @include mq(tablet) {
+        padding: 0 $gs-gutter;
+    }
+}
+
+.host__body {
+    position: relative;
+}
+
 .hosted__side {
     @include mq($until: desktop) {
         &:before,
@@ -45,6 +149,39 @@ $hosted-video-height: 540px;
 
 .hosted-page + footer {
     display: none;
+}
+
+.hosted-page--bright {
+    .hosted-tone-btn {
+        &,
+        &:focus,
+        &:hover {
+            color: #ffffff;
+            svg {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .hostedbadge.hosted-tone-bg {
+        .hostedbadge__info {
+            color: #ffffff;
+        }
+    }
+
+    ~ .survey-overlay-simple {
+        .survey-text__header {
+            color: #ffffff;
+
+            .site-message__close-btn {
+                border-color: #ffffff;
+
+                .inline-cross {
+                    fill: #ffffff;
+                }
+            }
+        }
+    }
 }
 
 .hosted__glogo {
@@ -87,7 +224,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted-video-page {
-    .hosted__container.adverts {
+    .hosted__container.host {
         position: relative;
         background: transparent;
         color: #ffffff;
@@ -113,14 +250,14 @@ $hosted-video-height: 540px;
         display: flex;
         flex-direction: column;
 
-        .adverts__header {
+        .host__header {
             padding-top: 0;
             padding-bottom: 0;
         }
     }
 }
 
-.hosted__container--full.adverts {
+.hosted__container--full.host {
     @include mq($until: desktop) {
         padding: 0;
     }
@@ -320,7 +457,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.adverts__body .hosted__meta {
+.host__body .hosted__meta {
     display: none;
     position: relative;
     width: auto;
@@ -370,7 +507,7 @@ $hosted-video-height: 540px;
     .hostedbadge {
         position: absolute;
     }
-    .hostedbadge__logo {
+    .hostedbadge__logo.hostedbadge__logo {
         position: relative;
         display: none;
         @include mq($until: tablet) {
@@ -615,7 +752,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.hosted__social.adverts__header {
+.hosted__social.host__header {
     @include mq($until: leftCol) {
         padding: $gs-baseline $gs-gutter 0;
         order: 2;
@@ -732,7 +869,7 @@ $hosted-video-height: 540px;
     border-bottom: 1px solid #eeeeee;
 }
 
-.hosted__container .adverts__body {
+.hosted__container .host__body {
     @include mq($until: leftCol) {
         order: 1;
     }

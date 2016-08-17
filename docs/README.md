@@ -4,7 +4,9 @@
 ##[Start here](01-start-here/)
 - [Quick start guide](01-start-here/01-installation-steps.md)
 - [Visual glossary of the Guardian.com](01-start-here/02-guardian-visual-glossary.md)
-- [Troubleshooting](01-start-here/03-troubleshooting.md)
+- [How to deploy](01-start-here/03-how-to-deploy.md)
+- [Troubleshooting](01-start-here/04-troubleshooting.md)
+- [Development tips](01-start-here/05-development-tips.md)
 
 ##[Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
@@ -25,6 +27,7 @@
 - [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
+- [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
@@ -37,6 +40,7 @@
 
 ##[Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
+- [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
 
 ##[Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)

@@ -2,7 +2,8 @@ package test
 
 import java.io.File
 
-import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.gargoylesoftware.htmlunit.html.HtmlPage
+import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
@@ -15,6 +16,8 @@ import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
+
+import scala.util.{Failure, Success, Try}
 
 trait TestSettings {
   val recorder = new ContentApiHttpRecorder {
@@ -65,6 +68,7 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
+  lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
@@ -91,6 +95,18 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
       block(testBrowser)
   }
 
+  /**
+  * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
+  * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
+  * we can use [[WebResponse.getContentAsString]]
+   */
+  protected def getContentString[T](path: String)(block: String => T): T = {
+    webClient.getOptions.setJavaScriptEnabled(false)
+
+    val page: HtmlPage = webClient.getPage(host + path)
+    block(page.getWebResponse().getContentAsString)
+  }
+
   def withHost(path: String) = s"http://localhost:$port$path"
 
 }
@@ -110,9 +126,13 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
 
   implicit override lazy val app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
+      case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
+      case Failure(_) => initialSettings
+    }
     val context = ApplicationLoader.createContext(
       environment = environment,
-      initialSettings = initialSettings
+      initialSettings = settings
     )
     ApplicationLoader.apply(context).load(context)
   }
