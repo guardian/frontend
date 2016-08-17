@@ -51,11 +51,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     justify-content: space-between;
 
     @include mq($until: mobile) {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 5.1vw;
+        font-size: 5.2vw;
     }
 
     @include mq(mobileLandscape) {
@@ -172,13 +172,17 @@ $gutter-large: 55px;
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+    position: relative;
 
     &:first-child .new-header__nav__link {
-        margin-left: 0;
+        padding-left: 0;
     }
 
     &:before {
+        position: absolute;
         content: '/';
+        //optically aligns slashes
+        left: -.15em;
         color: $news-main-2;
     }
 
@@ -190,9 +194,9 @@ $gutter-large: 55px;
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    // Optically aligns slashes
-    margin-left: -2px;
-    margin-right: 2px;
+    padding-left: .3em;
+    padding-right: .3em;
+    display: inline-block;
 
     &:focus,
     &:hover {
