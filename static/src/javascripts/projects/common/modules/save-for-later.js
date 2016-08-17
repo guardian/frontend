@@ -163,11 +163,7 @@ define([
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
-        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
-
-        return forEach(elements, function (el) {
-            return bonzo(el).attr(this.attributes.containerItemShortUrl);
-        }.bind(this));
+        return qwery('[' + this.attributes.containerItemShortUrl + ']', context);
     };
 
     SaveForLater.prototype.prepareFaciaItemLinks = function (signedIn) {
@@ -206,6 +202,10 @@ define([
                 shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
                 id = item.getAttribute(this.attributes.containerItemDataId),
                 isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
+
+            if ($itemSaveLink.length === 0) {
+                return;
+            }
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
