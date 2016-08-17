@@ -1,4 +1,4 @@
-/*global $*/
+/*global $, Epoch*/
 define([
     'common/utils/config',
     'common/utils/fetch-json',
@@ -25,10 +25,13 @@ define([
 
        chart = $('#browser-live-performance-data').epoch({
             type: 'time.heatmap',
-            buckets: 10,
-            bucketRange: [0, 13000],
+            buckets: 20,
+            bucketRange: [0, 10000],
             axes: ['left', 'right', 'bottom'],
-
+            tickFormats: {
+                left: Epoch.Formats.regular,
+                right: Epoch.Formats.regular
+            },
             data: [{
                 label: 'Commercial Start Time',
                 values: commercialStartTimes
