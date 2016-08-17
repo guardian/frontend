@@ -44,27 +44,10 @@
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.brandColour};
     }
-
-    @if(page.campaign.brightFont) {
-        .hosted-tone-btn,
-        .hostedbadge.hosted-tone-bg .hostedbadge__info,
-        .hosted-page ~ .survey-overlay-simple .survey-text__header {
-            color: #ffffff;
-        }
-
-        .hosted-tone-btn svg,
-        .hosted-page ~ .survey-overlay-simple .survey-text__header .site-message__close-btn .inline-cross {
-            fill: #ffffff;
-        }
-
-        .hosted-page ~ .survey-overlay-simple .survey-text__header .site-message__close-btn {
-            border-color: #ffffff;
-        }
-    }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
+    @guardianHostedHeader(if(page.campaign.brightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.brightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
