@@ -50,8 +50,12 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     order: 1;
     justify-content: space-between;
 
-    @include mq($until: mobileLandscape) {
-        font-size: 5.1vw;
+    @include mq($until: mobile) {
+        font-size: 16px;
+    }
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 5.2vw;
     }
 
     @include mq(mobileLandscape) {
@@ -80,7 +84,7 @@ $gutter-large: 55px;
     @include mq($until: $mobile-medium) {
         //Smaller menu button
         height: $veggie-burger-small;
-        width: $veggie-burger-small;
+        min-width: $veggie-burger-small;
         margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
@@ -90,6 +94,7 @@ $gutter-large: 55px;
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
+        margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-medium;
@@ -150,9 +155,13 @@ $gutter-large: 55px;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-
     order: -1;
     margin-left: $gs-gutter / 2;
+
+    @include mq($until: mobile) {
+        overflow: hidden;
+        height: 1.6em;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -163,25 +172,31 @@ $gutter-large: 55px;
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+    position: relative;
 
     &:first-child .new-header__nav__link {
-        margin-left: 0;
+        padding-left: 0;
     }
 
-    &:not(:last-child) {
-        &:after {
-            content: '/';
-            color: $news-main-2;
-        }
+    &:before {
+        position: absolute;
+        content: '/';
+        //optically aligns slashes
+        left: -.15em;
+        color: $news-main-2;
+    }
+
+    &:first-child:before {
+        content: none;
     }
 }
 
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    // Optically aligns slashes
-    margin-left: 2px;
-    margin-right: -1px;
+    padding-left: .3em;
+    padding-right: .3em;
+    display: inline-block;
 
     &:focus,
     &:hover {
@@ -204,6 +219,10 @@ $gutter-large: 55px;
     padding-left: $gs-gutter / 2;
     width: gs-span(2);
     z-index: $zindex-sticky;
+
+    @include mq($until: mobile) {
+        display: none;
+    }
 
     // Smaller size compensates for how big the word "Australia" is
     @include mq($until: $mobile-medium) {
