@@ -14,6 +14,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABDiscussionExternalFrontend = Switch(
+    SwitchGroup.ABTests,
+    "ab-discussion-external-frontend",
+    "Standalone frontend discussion",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
+
   val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-autoplay",

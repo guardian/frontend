@@ -25,6 +25,7 @@ object SwitchGroup {
     name = "Commercial: Labs",
     description = Some("Features of, and experiments with, branded content.")
   )
+  var Discussion = SwitchGroup("Discussion")
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
@@ -160,6 +161,7 @@ with ServerSideABTestSwitches
 with FaciaSwitches
 with ABTestSwitches
 with CommercialSwitches
+with DiscussionSwitches
 with PerformanceSwitches
 with MonitoringSwitches {
 
