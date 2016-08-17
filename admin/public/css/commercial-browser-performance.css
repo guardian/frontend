@@ -1,0 +1,43 @@
+/*
+Styles for the commercial dashboard: Real-user Advert Performance
+
+commercial/performance/browser-dashboard
+*/
+
+.graph {
+    margin-top: 12px;
+}
+
+/*Align contents vertically centered*/
+.graph--commercial-app-start {
+    display: flex;
+    align-items: center;
+}
+
+.graph__y-axis {
+    padding-right: 0;
+    text-align: right;
+    font-style: italic;
+}
+
+#browser-live-performance-data {
+    height: 350px;
+}
+
+.graph__average {
+    margin-top: 48px;
+}
+
+.graph__average-label {
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+    padding: 3px 3px 0 3px;
+}
+
+.graph__average-value {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 3px 3px 3px;
+}
