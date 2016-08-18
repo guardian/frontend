@@ -8,6 +8,8 @@ function showHelp {
     echo ""
     echo "Options:"
     echo "  -h, --help      Print usage"
+    echo "  -w, --watch     Run container and then 'make watch'"
+    echo "  -p, --port      Specify port mapping. Can be used multiple times. Format: 'host:container'. Ex: '-p 80:9000'".
     echo "  -n, --nopull    Do not try to pull newest Docker image. Use in offline mode for example."
     echo ""
 }
@@ -25,8 +27,12 @@ function pullLatestImage {
 
 #Script starts here
 
-# Handle arguments
+#Defaults
 shouldPullLatestImage=1
+serviceToRun="dev"
+ports=""
+
+# Handle arguments
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -35,8 +41,15 @@ case $key in
     showHelp
     exit 0
     ;;
+    -w|--watch)
+    serviceToRun="watch"
+    ;;
     -n|--nopull)
     shouldPullLatestImage=0
+    ;;
+    -p|--port)
+    ports="$ports -p $2"
+    shift
     ;;
     *)
     # unknown option
@@ -52,4 +65,9 @@ then
 fi
 
 # Run dev container
-docker-compose run --rm --service-ports dev
+if [ -z "$ports" ] #Ports option is empty
+then
+    ports="--service-ports" #Publish all service's port as defined in docker-compose file
+fi
+
+docker-compose run --rm $ports $serviceToRun
