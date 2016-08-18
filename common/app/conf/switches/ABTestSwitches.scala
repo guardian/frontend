@@ -64,13 +64,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsArticle20160802 = Switch(
+  val ABContributionsArticle20160818 = Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-article-20160810",
+    "ab-contributions-article-20160818",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 23),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
