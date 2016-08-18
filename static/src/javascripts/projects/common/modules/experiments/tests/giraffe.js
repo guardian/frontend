@@ -20,13 +20,13 @@ define([
 ) {
     return function () {
 
-        this.id = 'ContributionsArticle20160810';
-        this.start = '2016-08-10';
-        this.expiry = '2016-08-16';
+        this.id = 'ContributionsArticle20160818';
+        this.start = '2016-08-18';
+        this.expiry = '2016-08-22';
         this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
-        this.audience = 0.10;
+        this.audience = 0.13;
         this.audienceOffset = 0;
         this.successMeasure = 'Determine the best message for driving contributions.';
         this.audienceCriteria = 'All users';
@@ -63,18 +63,18 @@ define([
 
         this.variants = [
             {
-                id: 'always',
+                id: 'about',
                 test: function () {
-                    writer('You’re always reading it. So make sure it’s always here. It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_always');
+                    writer('Read all about it, knowing you\'re a part of it. ', 'Please give to the Guardian', 'co_uk_inarticle_about');
                 },
                 success: function (complete) {
                     completer(complete);
                 }
             },
             {
-                id: 'can',
+                id: 'pockets',
                 test: function () {
-                    writer('There are some things you should do just because you can.', 'Give to the Guardian. It’s only fair', 'co_uk_inarticle_can');
+                    writer('You don\'t need deep pockets to support in depth analysis. ', 'Please give to the Guardian', 'co_uk_inarticle_pockets');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -90,9 +90,18 @@ define([
                 }
             },
             {
-                id: 'backing',
+                id: 'love',
                 test: function () {
-                    writer('Some things are worth backing, like your principles. ', 'Give to the Guardian', 'co_uk_inarticle_backing');
+                    writer('If you read it, if you love it, then why not be a part of it? ', 'Please give to the Guardian', 'co_uk_inarticle_love');
+                },
+                success: function (complete) {
+                    completer(complete);
+                }
+            },
+            {
+                id: 'truth',
+                test: function () {
+                    writer('If you value independence. If you value the truth. ', 'Please give to the Guardian', 'co_uk_inarticle_truth');
                 },
                 success: function (complete) {
                     completer(complete);
