@@ -23,7 +23,7 @@ define([
         }
 
         var containerIndex,
-            minContainers  = config.page.isAdvertisementFeature ? 1 : 2;
+            minContainers  = config.page.isAdvertisementFeature ? 1 : 2,
             $adSlotWrapper = $.create('<div class="fc-container"></div>'),
             $adSlot        = bonzo(createSlot(config.page.isAdvertisementFeature ? 'merchandising-high-ad-feature' : 'merchandising-high', 'commercial-component-high')),
             $containers    = $('.fc-container');
