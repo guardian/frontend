@@ -21,7 +21,8 @@ define([
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
     'common/modules/experiments/tests/minute',
-    'common/modules/experiments/tests/recommended-for-you'
+    'common/modules/experiments/tests/recommended-for-you',
+    'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links'
 ], function (
     reportError,
     config,
@@ -45,7 +46,8 @@ define([
     ContributionsHeader,
     AdFeedback,
     Minute,
-    RecommendedForYou
+    RecommendedForYou,
+    DontUpgradeMobileRichLinks
 ) {
 
     var TESTS = [
@@ -63,7 +65,8 @@ define([
         new ContributionsHeader(),
         new AdFeedback(),
         new Minute(),
-        new RecommendedForYou()
+        new RecommendedForYou(),
+        new DontUpgradeMobileRichLinks()
     ];
 
     var participationsKey = 'gu.ab.participations';
