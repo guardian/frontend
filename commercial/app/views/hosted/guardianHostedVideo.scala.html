@@ -34,7 +34,6 @@
 
     .hosted-page .hosted__next-video--tile {
         border-top-color: @{page.campaign.brandColour};
-        background: rgba(@{page.campaign.brandColour}, 0.5); /* TODO transform hex into rgb in js */
     }
 
     .hosted-page .hosted__link {
@@ -130,7 +129,7 @@
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                 </div>
-                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{page.campaign.brandColour}" data-link-name="Next Hosted Video: @{nextPage.title}">
                     <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
                     <p class="hosted__next-video-title">@{nextPage.title}</p>
                 </a>
