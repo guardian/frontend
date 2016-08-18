@@ -16,7 +16,7 @@ define([
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
             addUpdatingState(buttonEl);
-            var formQueryString = generateFormQueryString(buttonEl);
+            var formQueryString = generateFormQueryString([buttonEl]);
             reqwest({
                 url: '/email-prefs',
                 method: 'POST',
@@ -24,27 +24,56 @@ define([
                 error: function () {
                     renderErrorMessage(buttonEl);
                 },
-                success: function (response) {
-                    var isSubscribed = false;
-                    if (response && response.subscriptions && response.subscriptions.length) {
-                        isSubscribed = true;
-                    }
-                    $(buttonEl).removeClass('is-updating is-updating-subscriptions');
-                    updateButton(buttonEl, isSubscribed);
+                success: function () {
+                    updateButton(buttonEl);
                 }
             });
         });
     }
 
-    function enhanceEmailPreferences() {
-        $.forEachElement('.email-subscription__button', reqwestEmailSubscriptionUpdate);
-        $.forEachElement('.save__button', reqwestEmailSubscriptionUpdate);
+    function reqwestUnsubscribeFromAll(buttonEl, subscribedButtons) {
+        var formQueryString = generateFormQueryString(subscribedButtons);
+        reqwest({
+            url: '/email-prefs',
+            method: 'POST',
+            data: formQueryString,
+            error: function () {
+                renderErrorMessage(buttonEl);
+            },
+            success: function () {
+                for (var i = 0; i < subscribedButtons.length; i++) {
+                    updateSubscriptionButton(subscribedButtons[i]);
+                }
+                updateButton(buttonEl);
+            }
+        });
     }
 
-    function encodeFormData(csrfToken, buttonVal, htmlPreference) {
-        return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
-        'addEmailSubscription=' + encodeURIComponent(buttonVal) + '&' +
-        'htmlPreference=' + encodeURIComponent(htmlPreference);
+    function unsubscribeFromAll(buttonEl) {
+        bean.on(buttonEl, 'click', function () {
+            if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
+                addUpdatingState(buttonEl);
+                resetUnsubscribeFromAll(buttonEl);
+                reqwestUnsubscribeFromAll(buttonEl, $('[value^="unsubscribe"]'));
+            } else {
+                confirmUnsubscriptionFromAll(buttonEl);
+            }
+        });
+    }
+
+    function confirmUnsubscriptionFromAll(buttonEl) {
+        fastdom.write(function () {
+            $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
+            $('.email-unsubscribe-all__label').toggleClass('hide');
+        });
+    }
+
+    function resetUnsubscribeFromAll(buttonEl) {
+        fastdom.write(function () {
+            $(buttonEl).removeClass('email-unsubscribe--confirm js-confirm-unsubscribe');
+            $('.js-unsubscribe--confirm').addClass('hide');
+            $('.js-unsubscribe--basic').removeClass('hide');
+        });
     }
 
     function renderErrorMessage(buttonEl) {
@@ -70,15 +99,17 @@ define([
     function addUpdatingState(buttonEl) {
         fastdom.write(function() {
             buttonEl.disabled = true;
-            buttonEl.innerHTML = '';
             $(buttonEl).addClass('is-updating is-updating-subscriptions');
         });
     }
 
-    function updateSubscriptionButton(buttonEl, isSubscribed) {
+    function updateSubscriptionButton(buttonEl) {
         var buttonVal = buttonEl.value;
-        if (isSubscribed) {
+        var isSubscribing = !/unsubscribe/.test(buttonVal);
+
+        if (isSubscribing) {
             fastdom.write(function () {
+                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
                 $($.ancestor(buttonEl, 'email-subscription')).addClass('email-subscription--subscribed');
@@ -86,6 +117,7 @@ define([
             });
         } else {
             fastdom.write(function () {
+                $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
                 $($.ancestor(buttonEl, 'email-subscription')).removeClass('email-subscription--subscribed');
@@ -94,27 +126,41 @@ define([
         }
     }
 
-    function updateSaveButton(buttonEl) {
-        fastdom.write(function () {
-            buttonEl.innerHTML = 'Save';
-            buttonEl.disabled = false;
-        });
-    }
-
-    function updateButton(buttonEl, isSubscribed) {
-        if ($(buttonEl).hasClass('save__button')) {
-            updateSaveButton(buttonEl);
+    function updateButton(buttonEl) {
+        if ($(buttonEl).hasClass('js-subscription-button')) {
+            updateSubscriptionButton(buttonEl);
         } else {
-            updateSubscriptionButton(buttonEl, isSubscribed);
+            fastdom.write(function () {
+                setTimeout(function () {
+                    $(buttonEl).removeClass('is-updating is-updating-subscriptions');
+                    buttonEl.disabled = false;
+                }, 1000);
+
+            });
         }
     }
 
-    function generateFormQueryString(buttonEl) {
-        var formEl = $.ancestor(buttonEl, 'form');
-        var csrfToken = (formEl.elements.csrfToken.value).toString();
-        var buttonVal = buttonEl.value.toString() || '';
+    function generateFormQueryString(buttons) {
+        var csrfToken = ($('.form')[0].elements.csrfToken.value).toString();
         var htmlPreference = $('[name="htmlPreference"]:checked').val();
-        return encodeFormData(csrfToken, buttonVal, htmlPreference);
+        var buttonString = '';
+        for (var i = 0; i < buttons.length; i++) {
+            var value = buttons[i].value;
+            var unsubscribeMatches = value.match(/unsubscribe-(.*)/);
+            if (unsubscribeMatches) {
+                buttonString += 'removeEmailSubscriptions=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
+            } else {
+                buttonString += 'addEmailSubscriptions=' + encodeURIComponent(value) + '&';
+            }
+        }
+        return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
+        buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);
+    }
+
+    function enhanceEmailPreferences() {
+        $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
+        $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
     }
 
     return {
