@@ -23,13 +23,13 @@ const endpoints = [
     '/football/2016/jul/10/france-portugal-euro-2016-match-report' // Match summary
 ];
 
-validatorJs.fetchRelease().then(checkEndpoints).catch(onError);
-validatorJs.fetchPreRelease().then(checkEndpoints).catch(onError);
+validatorJs.fetchRelease().then(checkEndpoints(false)).catch(onError);
+validatorJs.fetchPreRelease().then(checkEndpoints(true)).catch(onError);
 
-function checkEndpoints(filepath) {
-    amphtmlValidator.getInstance(filepath)
+function checkEndpoints(devChannel) {
+    return validatorFilePath => amphtmlValidator.getInstance(validatorFilePath)
         .then(validator => {
-            const tests = endpoints.map(runValidator.bind(this, validator));
+            const tests = endpoints.map(runValidator(validator, devChannel));
 
             Promise.all(tests)
                 .then(values => {
@@ -40,11 +40,11 @@ function checkEndpoints(filepath) {
         });
 }
 
-function runValidator(validator, endpoint) {
-    return fetchPage
+function runValidator(validator, devChannel) {
+    return endpoint => fetchPage
         .get(endpoint)
         .then(res => {
-            console.log(`Checking the AMP validity of the page at ${endpoint}, result is:`);
+            console.log(`Checking the AMP validity (${devChannel ? 'pre-release' : 'release'}) of the page at ${endpoint}, result is:`);
             const result = validator.validateString(res);
 
             const pass = result.status === 'PASS';
