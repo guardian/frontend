@@ -26,14 +26,15 @@ body {
     margin: 0;
     padding: 0 10vw;
     font-family: 'Schoolbell';
-    background-color: #E5F9FF;
+    animation: background linear 7200s;
+    animation-iteration-count: infinite;
 }
 
 #root > h1 {
     font-size: 6vw;
-    margin-top: 0;
+    margin-top: 7vw;
     margin-bottom: 0;
-    padding-bottom: 0;
+    padding-bottom: 2vw;
     font-weight: bold;
     flex-basis: 100%
 }
@@ -113,7 +114,7 @@ h2 {
 .builds ul {
     list-style-type: none;
     text-align: center;
-    background-color: blueviolet;
+    background-color: #ff0332;
     color: white;
     padding: 1vw 0;
 }
