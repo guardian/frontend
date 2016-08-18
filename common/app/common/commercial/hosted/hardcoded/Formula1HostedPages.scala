@@ -12,8 +12,7 @@ object Formula1HostedPages {
     owner = "First Stop Singapore",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
     cssClass = "f1-singapore",
-    brandColour = "#063666",
-    brightFont = true,
+    campaignColour = CampaignColour("#063666"),
     logoLink = None
   )
 
