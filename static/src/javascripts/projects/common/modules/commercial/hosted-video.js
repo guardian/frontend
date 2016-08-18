@@ -36,7 +36,6 @@ define([
     loadingTmpl
 ) {
     var player;
-    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -58,33 +57,6 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function nextVideoTimer(duration, $timer, nextVideoLink) {
-        return setInterval(function () {
-            if (duration === 0) {
-                omniture.trackLinkImmediate('Immediately play the next video');
-                mediator.emit('hosted video: autoredirect');//inform AB framework about the success
-                window.location = nextVideoLink;
-            }
-            fastdom.write(function () {
-                $timer.text(duration + 's');
-                duration = duration - 1;
-            });
-        }, 1000);
-    }
-
-    function cancelAutoplay($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('hosted-slide-out');
-        });
-        clearInterval(nextVideoInterval);
-    }
-
-    function cancelAutoplayMobile($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('u-h');
-        });
-    }
-
     function init() {
         return new Promise(function (resolve) {
             require(['bootstraps/enhanced/media/main'], function () {
@@ -102,8 +74,6 @@ define([
 
                     player.ready(function () {
                         var vol;
-                        var duration = parseInt(this.duration(), 10);
-                        var $hostedNext = $('.js-hosted-next-autoplay');
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
 
