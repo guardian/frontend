@@ -41,7 +41,7 @@ trait TestSettings {
     val originalHttp = http
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      recorder.load("capi", url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
+      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttp.GET(url, headers)
       }
     }

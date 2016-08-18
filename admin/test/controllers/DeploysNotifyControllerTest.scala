@@ -23,11 +23,11 @@ import scala.concurrent.Future
   val existingBuild = "3123"
   val fakeApiKey = "fake-api-key"
 
-  class RecordingHttpClient(key: String, wsClient: WSClient) extends HttpLike {
+  class RecordingHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
-      DeploysTestHttpRecorder.load(key, urlWithParams, headers) {
+      DeploysTestHttpRecorder.load(urlWithParams, headers) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
@@ -38,8 +38,9 @@ import scala.concurrent.Future
   class DeploysNotifyControllerStub(override val wsClient: WSClient) extends DeploysNotifyController {
     lazy val apiKey = fakeApiKey
 
-    override val teamcity = new TeamcityService(new RecordingHttpClient("teamcity", wsClient))
-    override val riffRaff = new RiffRaffService(new RecordingHttpClient("riffraff", wsClient))
+    private val httpClient = new RecordingHttpClient(wsClient)
+    override val teamcity = new TeamcityService(httpClient)
+    override val riffRaff = new RiffRaffService(httpClient)
 
     override protected def sendNotice(step: NoticeStep, notice: Notice): Future[NoticeResponse] = {
       Future.successful(NoticeResponse(notice, "Fake response"))

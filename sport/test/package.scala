@@ -43,7 +43,7 @@ trait WithTestFootballClient {
 
   lazy val testFootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
-      FootballHttpRecorder.load("pa", url.replace(SportConfiguration.pa.footballKey, "apikey")) {
+      FootballHttpRecorder.load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {
         wsClient.url(url)
           .withRequestTimeout(10000)
           .get()
@@ -65,7 +65,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
     val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
-    FootballHttpRecorder.load("pa", sanitisedUrl) {
+    FootballHttpRecorder.load(sanitisedUrl) {
       wsClient.url(url)
         .withRequestTimeout(10000)
         .get()

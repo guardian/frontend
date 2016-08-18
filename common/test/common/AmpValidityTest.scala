@@ -22,7 +22,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
   def testAmpPageValidity(url: String): Unit = {
     val ampUrl = ampifyUrl(url)
 
-    val file: Future[File] = recorder.loadFile("ampvalidator", validatorUri) {
+    val file: Future[File] = recorder.loadFile(validatorUri) {
       wsClient.url(validatorUri).get()
     }
 

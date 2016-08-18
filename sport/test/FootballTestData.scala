@@ -8,7 +8,7 @@ import model.{Competition, Tag, TagProperties, TeamMap}
 import feed.CompetitionsService
 import org.scalatest.mock.MockitoSugar
 
-trait FootballTestData extends MockitoSugar {
+trait FootballTestData {
 
   def testFootballClient: FootballClient
 

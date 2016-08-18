@@ -20,28 +20,26 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
   def baseDir: File
 
-  final def load(key: String, url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
-    loadFile(key, url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
+  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
+    loadFile(url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
 
 
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  final def loadFile(key: String, url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[File] = {
+  final def loadFile(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[File] = {
 
-    val (fileName, components) = name(key, url, headers)
+    val (fileName, components) = name(url, headers)
 
-    val isAutomation = Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")
-
-    if (isAutomation) {
-      // integration test environment
-      // make sure people have checked in test files
-      get(fileName).map(Future(_)).getOrElse {
+    get(fileName).map(Future(_)).getOrElse {
+      if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")) {
+        // integration test environment
+        // make sure people have checked in test files
         throw new IllegalStateException(s"Data file has not been checked in for: $url - $components, file: $fileName, headers: ${headersFormat(headers)}")
+      } else {
+        // always get the new files, this means we'll find out fast when we've broken stuff
+        // otherwise it's impossible to regenerate things because everything's been running off the checked in file
+        // even when it was broken :(
+        fetch.map(r => put(fileName, fromResponse(r)))
       }
-    } else {
-      // always get the new files, this means we'll find out fast when we've broken stuff
-      // otherwise it's impossible to regenerate things because everything's been running off the checked in file
-      // even when it was broken :(
-      fetch.map(r => put(fileName, fromResponse(r)))
     }
 
   }
@@ -78,14 +76,14 @@ trait HttpRecorder[A] extends ExecutionContexts {
     headers.toList.sortBy(_._1).map{ case (key, value) => key + value }.mkString
   }
 
-  private [recorder] def name(key: String, url: String, headers: Map[String, String]): (String, String) = {
-    def normalise(key: String, url: String) = {
+  private [recorder] def name(url: String, headers: Map[String, String]): (String, String) = {
+    def normalise(url: String) = {
       // need to only use the relevant parts of the url
       val uri = URI.create(url)
-      key + ":" + uri.getPath + uri.getQuery
+      uri.getPath + uri.getQuery
     }
 
-    val normalised = normalise(key, url)
+    val normalised = normalise(url)
     val headersString = headersFormat(headers)
     (DigestUtils.sha256Hex(normalised +  headersString), normalised +  headersString)
   }

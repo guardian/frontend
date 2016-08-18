@@ -23,7 +23,7 @@ object `package` {
   class TestFrontJsonFapi(override val wsClient: WSClient) extends FrontJsonFapiLive(wsClient) {
 
     override def getRaw(path: String): Future[Option[String]] = {
-      recorder.load("fapi", path, Map()) {
+      recorder.load(path, Map()) {
         super.getRaw(path)
       }
     }

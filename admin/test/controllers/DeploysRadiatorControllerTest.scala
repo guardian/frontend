@@ -20,19 +20,20 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
 
   val existingBuild = "3123"
 
-  class TestHttpClient(key: String, wsClient: WSClient) extends HttpLike {
+  class TestHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
-      DeploysTestHttpRecorder.load(key, urlWithParams, headers) {
+      DeploysTestHttpRecorder.load(urlWithParams, headers) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
   class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = new TeamcityService(new TestHttpClient("teamcity", wsClient))
-    override val riffRaff = new RiffRaffService(new TestHttpClient("riffraff", wsClient))
+    private val httpClient = new TestHttpClient(wsClient)
+    override val teamcity = new TeamcityService(httpClient)
+    override val riffRaff = new RiffRaffService(httpClient)
   }
 
   val controller = new DeploysRadiatorControllerStub()
