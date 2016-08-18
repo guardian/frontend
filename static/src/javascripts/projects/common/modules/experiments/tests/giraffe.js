@@ -65,7 +65,7 @@ define([
             {
                 id: 'about',
                 test: function () {
-                    writer('Read all about it, knowing you\'re a part of it. ', 'Please give to the Guardian', 'co_uk_inarticle_about');
+                    writer('Read all about it, knowing you’re a part of it. ', 'Please give to the Guardian', 'co_uk_inarticle_about');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -74,7 +74,7 @@ define([
             {
                 id: 'pockets',
                 test: function () {
-                    writer('You don\'t need deep pockets to support in depth analysis. ', 'Please give to the Guardian', 'co_uk_inarticle_pockets');
+                    writer('You don’t need deep pockets to support in depth analysis. ', 'Please give to the Guardian', 'co_uk_inarticle_pockets');
                 },
                 success: function (complete) {
                     completer(complete);
