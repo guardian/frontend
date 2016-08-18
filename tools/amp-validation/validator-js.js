@@ -30,7 +30,7 @@ function fetchValidator(devChannel) {
         const options = Object.assign({}, defaultOptions, devChannel ? devOptions : {});
         const errorMessage = `Unable to retrieve ${options.path} with dev channel ${devChannel ? 'enabled' : 'disabled'}.`;
 
-        const req = https.get(options, (res) => {
+        const req = https.get(options, res => {
             if (res.statusCode !== 200) {
                 res.resume(); // must consume data, see https://nodejs.org/api/http.html#http_class_http_clientrequest
                 reject(new Error(errorMessage + ` Status code was ${res.statusCode}`));
@@ -38,7 +38,7 @@ function fetchValidator(devChannel) {
                 resolve(res);
             }
         });
-        req.on('error', (error) => {
+        req.on('error', error => {
             reject(new Error(errorMessage + ` ${error.message}`));
         });
         req.end();
@@ -50,8 +50,8 @@ function fetchValidator(devChannel) {
 
         return new Promise((resolve, reject) => {
             res.pipe(writeStream)
-                .on('finish', () => { resolve(writeStream.path) })
-                .on('error', (error) => {
+                .on('finish', () => resolve(writeStream.path))
+                .on('error', error => {
                     reject(error);
                     writeStream.close();
                 });
@@ -62,7 +62,7 @@ function fetchValidator(devChannel) {
 function cleanUp() {
     // Just try and remove both files as the cost is low anyway
     // TODO: assumption here that os.tmpdir is fixed during creation/deletion
-    [tempFilenames.preRelease, tempFilenames.release].forEach((filename) => {
+    [tempFilenames.preRelease, tempFilenames.release].forEach(filename => {
         fs.unlinkSync(os.tmpdir() + filename);
     });
 }

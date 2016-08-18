@@ -28,11 +28,11 @@ validatorJs.fetchPreRelease().then(checkEndpoints).catch(onError);
 
 function checkEndpoints(filepath) {
     amphtmlValidator.getInstance(filepath)
-        .then((validator) => {
+        .then(validator => {
             const tests = endpoints.map(runValidator.bind(this, validator));
 
             Promise.all(tests)
-                .then((values) => {
+                .then(values => {
                     const exitValue = values.every(Boolean) ? 0 : 1; // every promise returns true <=> exit value is zero
                     validatorJs.cleanUp();
                     process.exit(exitValue);
@@ -43,13 +43,13 @@ function checkEndpoints(filepath) {
 function runValidator(validator, endpoint) {
     return fetchPage
         .get(endpoint)
-        .then((res) => {
+        .then(res => {
             console.log(`Checking the AMP validity of the page at ${endpoint}, result is:`);
             const result = validator.validateString(res);
 
             const pass = result.status === 'PASS';
             (pass ? console.log : console.error)(result.status);
-            result.errors.forEach((error) => {
+            result.errors.forEach(error => {
                 ((error.severity === 'ERROR') ? console.error : console.warn)(buildErrorMessage(error));
             });
 
