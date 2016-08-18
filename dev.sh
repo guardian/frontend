@@ -21,7 +21,7 @@ function pullLatestImage {
         echo "Please use Janus to get credentials"
         exit 1;
     fi
-    $ecrLoginCmd
+    $ecrLoginCmd &> /dev/null
     docker pull 642631414762.dkr.ecr.eu-west-1.amazonaws.com/frontend-dev:latest
 }
 
