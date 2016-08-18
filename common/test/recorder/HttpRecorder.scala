@@ -78,6 +78,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
   private [recorder] def name(url: String, headers: Map[String, String]): (String, String) = {
     val uri = URI.create(url)
+    // remove the host because it's probably a config value that won't be there in automation
     val key = uri.getPath + uri.getQuery + headersFormat(headers)
     (DigestUtils.sha256Hex(key), key)
   }
