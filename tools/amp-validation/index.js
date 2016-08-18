@@ -7,9 +7,9 @@ const fetchPage = require('./fetch-page');
 /*
     NB: these may be duplicated elsewhere in scala tests
     that extend AmpValidityTest - consider adding any new
-    URLs there as well.
+    URLs there as well.  Not centralising as running full
+    suite in scala tests may be overkill as we add more tests
  */
-// TODO: should we centralise these?
 const endpoints = [
     '/commentisfree/2016/aug/09/jeremy-corbyn-supporters-voters-labour-leader-politics', // Comment tone
     '/politics/2016/aug/09/tom-watson-interview-jeremy-corbyn-labour-rifts-hug-shout', // Feature tone
