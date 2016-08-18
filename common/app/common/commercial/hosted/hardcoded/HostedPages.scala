@@ -10,7 +10,6 @@ object LegacyHostedPages {
   def fromCampaignAndPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {
       case `renaultCampaignName` => RenaultHostedPages.fromPageName(pageName)
-      case `galleryTestCampaignName` => HostedGalleryTestPage.fromPageName(pageName)
       case _ => None;
     }
   }
