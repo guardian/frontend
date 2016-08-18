@@ -1,15 +1,15 @@
 @()
 
 /* Source: https://github.com/remy/polyfills/blob/master/classList.js */
-(function (Element) {
+(function (ElementPrototype) {
 
-    if (!Element.prototype.matches) {
-        Element.prototype.matches =
-            Element.prototype.matchesSelector ||
-            Element.prototype.mozMatchesSelector ||
-            Element.prototype.msMatchesSelector ||
-            Element.prototype.oMatchesSelector ||
-            Element.prototype.webkitMatchesSelector ||
+    if (!ElementPrototype.matches) {
+        ElementPrototype.matches =
+            ElementPrototype.matchesSelector ||
+            ElementPrototype.mozMatchesSelector ||
+            ElementPrototype.msMatchesSelector ||
+            ElementPrototype.oMatchesSelector ||
+            ElementPrototype.webkitMatchesSelector ||
             function(s) {
                 var matches = (this.document || this.ownerDocument).querySelectorAll(s);
                 var ii = matches.length;
@@ -21,4 +21,4 @@
             };
     }
 
-})(window.Element);
+})(window.Element.prototype);
