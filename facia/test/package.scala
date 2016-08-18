@@ -23,7 +23,7 @@ object `package` {
   class TestFrontJsonFapi(override val wsClient: WSClient) extends FrontJsonFapiLive(wsClient) {
 
     override def getRaw(path: String): Future[Option[String]] = {
-      recorder.load(path, Map()) {
+      recorder.load("fapi", path, Map()) {
         super.getRaw(path)
       }
     }
@@ -34,7 +34,7 @@ object `package` {
       //No transformation for now as we only store content that's there.
       override def toResponse(str: String): Option[String] = Some(str)
 
-      override def fromResponse(response: Option[String]): String = response.get // we don't need to test None yet
+      override def fromResponse(response: Option[String]): String = response.getOrElse(throw new RuntimeException("seeing None.get locally? make sure you have S3 credentials"))
     }
   }
 

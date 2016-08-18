@@ -1,19 +1,22 @@
 package controllers
 
 import football.controllers.ResultsController
-import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.FootballTestData
+import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
 
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
   extends WordSpec
-  with Matchers
-  with FootballTestData {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService)
 

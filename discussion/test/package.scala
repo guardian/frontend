@@ -25,7 +25,7 @@ class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
 
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
-  override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load(url, Map.empty){
+  override protected def GET(url: String, headers: (String, String)*) = DiscussionApiHttpRecorder.load("dapi", url, Map.empty){
     wsClient.url(url).withRequestTimeout(2000).get()
   }
 }

@@ -44,8 +44,4 @@ class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCh
   wsClient,
   9016,
   NeverExpiresSingleHealthCheck("/info/developer-blog/2016/apr/14/training-preview-healthcheck")
-) {
-  init()
-
-  def init(): Unit = ContentApiClient.setHttp(new TrainingHttp)
-}
+)

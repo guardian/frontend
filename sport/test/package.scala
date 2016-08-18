@@ -7,7 +7,7 @@ import football.controllers.HealthCheck
 import org.scalatest.{BeforeAndAfterAll, Suites}
 import recorder.{DefaultHttpRecorder, HttpRecorder}
 import play.api.libs.ws.WSClient
-import conf.FootballClient
+import conf.{SportConfiguration, FootballClient}
 import football.model._
 import football.collections.RichListTest
 import pa.{Http, Response => PaResponse}
@@ -38,11 +38,12 @@ class SportTestSuite extends Suites (
 }
 
 trait WithTestFootballClient {
-  self: WithTestFootballClient with WithTestWsClient =>
+
+  def wsClient: WSClient
 
   lazy val testFootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
-      FootballHttpRecorder.load(url) {
+      FootballHttpRecorder.load("pa", url.replace(SportConfiguration.pa.footballKey, "apikey")) {
         wsClient.url(url)
           .withRequestTimeout(10000)
           .get()
@@ -63,7 +64,8 @@ object FeedHttpRecorder extends DefaultHttpRecorder {
 class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
-    FootballHttpRecorder.load(url) {
+    val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
+    FootballHttpRecorder.load("pa", sanitisedUrl) {
       wsClient.url(url)
         .withRequestTimeout(10000)
         .get()
@@ -75,7 +77,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 }
 
 object FootballHttpRecorder extends HttpRecorder[PaResponse] {
-  override lazy val baseDir = new File(s"${getClass.getClassLoader.getResource("testdata").getFile}/")
+  override lazy val baseDir = new File(System.getProperty("user.dir"), "data/football")
 
   def toResponse(str: String) = PaResponse(200, str, "ok")
 

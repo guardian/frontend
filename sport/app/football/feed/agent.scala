@@ -118,7 +118,7 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
     def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
   }
 
-  def addMatches(newMatches: Seq[FootballMatch]) = agent.send{ comp =>
+  def addMatches(newMatches: Seq[FootballMatch]) = agent.alter{ comp =>
 
     //log any changes to the status of the match
     newMatches.foreach{ newMatch =>
