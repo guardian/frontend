@@ -134,53 +134,6 @@ define([
                                 }, false);
                             }
                         });
-
-                        if ($hostedNext.length && ab.getParticipations().HostedAutoplay
-                            && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
-                            if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
-                                fastdom.write(function () {
-                                    $hostedNext.addClass('hosted-next-autoplay--variant2');
-                                });
-                            }
-                            fastdom.write(function () {
-                                $('.js-hosted-fading').addClass('hosted-autoplay-ab');
-                            });
-
-                            //on desktop show the next video link 10 second before the end of the currently watching video
-                            if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-                                player.on('timeupdate', function () {
-                                    var currentTime = parseInt(this.currentTime(), 10);
-                                    var time = 10; //seconds before the end when to show the timer
-
-                                    if (duration - currentTime <= time) {
-                                        player.off('timeupdate');
-
-                                        var $timer = $('.js-autoplay-timer');
-                                        var nextVideoPage;
-
-                                        if ($timer.length) {
-                                            nextVideoPage = $timer.data('next-page');
-                                            nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
-                                            fastdom.write(function () {
-                                                $hostedNext.addClass('js-autoplay-start');
-                                            });
-                                            bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                                cancelAutoplay($hostedNext);
-                                            });
-                                        }
-                                    }
-                                });
-                            } else {
-                                player.one('ended', function () {
-                                    fastdom.write(function () {
-                                        $hostedNext.addClass('js-autoplay-start');
-                                    });
-                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                        cancelAutoplayMobile($hostedNext);
-                                    });
-                                });
-                            }
-                        }
                     });
 
                     resolve();
