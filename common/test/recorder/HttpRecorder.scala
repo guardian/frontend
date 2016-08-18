@@ -77,15 +77,9 @@ trait HttpRecorder[A] extends ExecutionContexts {
   }
 
   private [recorder] def name(url: String, headers: Map[String, String]): (String, String) = {
-    def normalise(url: String) = {
-      // need to only use the relevant parts of the url
-      val uri = URI.create(url)
-      uri.getPath + uri.getQuery
-    }
-
-    val normalised = normalise(url)
-    val headersString = headersFormat(headers)
-    (DigestUtils.sha256Hex(normalised +  headersString), normalised +  headersString)
+    val uri = URI.create(url)
+    val key = uri.getPath + uri.getQuery + headersFormat(headers)
+    (DigestUtils.sha256Hex(key), key)
   }
 
 }
