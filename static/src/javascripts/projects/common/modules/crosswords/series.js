@@ -1,30 +1,21 @@
 define([
-    'qwery',
     'common/utils/config',
     'common/utils/proximity-loader',
-    'common/modules/onward/onward-content',
-    'common/utils/mediator',
-    './thumbnails'
+    'common/modules/onward/onward-content'
 ], function (
-    qwery,
     config,
     proximityLoader,
-    Series,
-    mediator,
-    thumbnails
+    Series
 ) {
     return function () {
 
-        var el = qwery('.js-onward')[0];
+        var el = document.getElementsByClassName('js-onward');
 
-        if (el) {
-            proximityLoader.add(el, 1500, function () {
+        if (el.length > 0) {
+            proximityLoader.add(el[0], 1500, function () {
                 if (config.page.seriesId && config.page.showRelatedContent) {
-                    new Series(qwery('.js-onward'));
+                    new Series(document.getElementsByClassName('js-onward'));
                 }
-            });
-            mediator.once('modules:onward:loaded', function () {
-                thumbnails.init();
             });
         }
     };
