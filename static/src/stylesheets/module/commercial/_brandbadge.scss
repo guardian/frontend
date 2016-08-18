@@ -8,53 +8,54 @@
     iframe {
         display: none;
     }
-    .brandbadge__inner {
-        overflow: hidden;
+}
+.brandbadge__inner {
+    overflow: hidden;
 
-        .content__meta-container--no-byline & {
-            @include mq(leftCol) {
-                padding-top: $gs-baseline / 3;
-            }
+    .content__meta-container--no-byline & {
+        @include mq(leftCol) {
+            padding-top: $gs-baseline / 3;
         }
-    }
-    .brandbadge__header,
-    .brandbadge__help {
-        @include fs-textSans(1);
-        color: $neutral-2;
-    }
-    .brandbadge__help {
-        @include font-size(11, 14);
-    }
-    .brandbadge__header {
-        margin: 0;
-        padding-top: $gs-baseline / 2;
-        font-weight: bold;
-        clear: left;
-
-        &:first-child {
-            padding-top: 0;
-        }
-    }
-    .brandbadge__link,
-    .brandbadge__logo {
-        display: block;
-    }
-    .brandbadge__logo {
-        max-width: 100%;
-        max-height: $gs-baseline * 6;
-    }
-    .brandbadge__link,
-    .brandbadge__help {
-        float: left;
-        clear: left;
-    }
-    .brandbadge__link {
-        margin-top: $gs-row-height / 4;
-    }
-    .brandbadge__help {
-        margin-top: $gs-baseline / 3;
     }
 }
+.brandbadge__header,
+.brandbadge__help {
+    @include fs-textSans(1);
+    color: $neutral-2;
+}
+.brandbadge__help {
+    @include font-size(11, 14);
+}
+.brandbadge__header {
+    margin: 0;
+    padding-top: $gs-baseline / 2;
+    font-weight: bold;
+    clear: left;
+
+    &:first-child {
+        padding-top: 0;
+    }
+}
+.brandbadge__link,
+.brandbadge__logo {
+    display: block;
+}
+.brandbadge__logo {
+    max-width: 100%;
+    max-height: $gs-baseline * 6;
+}
+.brandbadge__link,
+.brandbadge__help {
+    float: left;
+    clear: left;
+}
+.brandbadge__link {
+    margin-top: $gs-row-height / 4;
+}
+.brandbadge__help {
+    margin-top: $gs-baseline / 3;
+}
+
 .ad-slot--adbadge {
     .brandbadge__header,
     .brandbadge__help {
@@ -100,6 +101,38 @@
     }
     .content--media--video & {
         min-height: 0;
+    }
+    .content--gallery:not(.paid-content--advertisement-feature) & {
+        border-top: 1px dotted $media-mute;
+        border-bottom: 0;
+        padding-top: $gs-baseline / 3;
+
+        @include mq(tablet) {
+            float: none;
+        }
+
+        @include mq(desktop) {
+            width: gs-span(3);
+            position: absolute;
+        }
+
+        .content__main-column > & {
+            @include mq(desktop) {
+                top: 100%;
+            }
+
+            @include mq(leftCol) {
+                left: -160px;
+            }
+
+            @include mq(wide) {
+                left: -240px;
+            }
+        }
+
+        .brandbadge__header {
+            font-weight: normal;
+        }
     }
 }
 .brandbadge--interactive {
