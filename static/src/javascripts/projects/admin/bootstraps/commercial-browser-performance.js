@@ -81,7 +81,9 @@ define([
         // Push the new start times into the stored array to find an average.
         Array.prototype.push.apply(commercialStartTimes, startTimes);
         // Limit the size of the array to 1000.
-        commercialStartTimes.splice(1000);
+        if (commercialStartTimes.length > 1000) {
+            commercialStartTimes.splice(0, commercialStartTimes.length - 1000);
+        }
 
         if (!commercialStartTimes.length) {
             return;
