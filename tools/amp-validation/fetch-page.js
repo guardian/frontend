@@ -2,7 +2,7 @@
 
 const https = require('https');
 
-const hostname = 'https://amp.theguardian.com';
+const hostname = 'https://www.theguardian.com';
 
 exports.get = endpoint => makeRequest(endpoint).then(getBody);
 
