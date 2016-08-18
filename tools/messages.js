@@ -4,9 +4,9 @@ function notify(message, options, type) {
 
     // Set the default text colour for info to black as white was hard to see
     if (type === 'info') {
-       Object.assign(options, {
-            colour: 'black'
-        });
+       options = Object.assign({
+           colour: 'black'
+       }, options);
     }
 
     try {
