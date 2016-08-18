@@ -71,7 +71,7 @@ define([
                     $('.js-survey-adblock__close-btn').removeClass('u-h');
                 }
             });
-        })
+        });
     };
 
     return surveyAdBlock;

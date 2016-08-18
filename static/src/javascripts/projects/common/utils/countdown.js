@@ -1,6 +1,4 @@
-define([
-    'common/utils/$'
-], function ($) {
+define([], function () {
     function startTimer(duration, func) {
         var seconds = duration;
         var timer = setInterval(function () {
