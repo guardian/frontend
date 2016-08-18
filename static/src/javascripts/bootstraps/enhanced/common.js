@@ -177,9 +177,7 @@ define([
             },
 
             cleanupLocalStorage : function () {
-                var deprecatedKeys = [
-                    'gu.subscriber'
-                ];
+                var deprecatedKeys = [];    //TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
                 forEach(deprecatedKeys, storage.remove);
             },
 

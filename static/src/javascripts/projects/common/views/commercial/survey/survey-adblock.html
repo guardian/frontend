@@ -1,0 +1,55 @@
+<div class="survey-overlay survey-adblock js-survey-adblock u-h" data-link-name="adblock response overlay" role="dialog" aria-label="take part in our survey">
+    <div class="survey-container">
+        <% if (showCloseBtn) { %>
+        <div class="survey-adblock-close js-survey-adblock-close">
+            <span class="site-message__close-btn js-survey-adblock__delayed-close u-h"><span class="countdown">5</span></span>
+            <button class="site-message__close-btn js-survey-adblock__close-btn u-h" data-link-name="hide survey message">
+                <span class="u-h">Close</span>
+                <%=crossIcon%>
+            </button>
+        </div>
+        <% } %>
+        <% if (marque36icon) { %>
+        <div class="survey-logo">
+            <%=marque36icon%>
+        </div>
+        <% } %>
+        <div class="survey-icon">
+            <%=surveyOverlaySimple%>
+        </div>
+        <h3 class="survey-text__header">
+            <%=surveyHeader%>
+        </h3>
+        <div class="survey-content">
+            <div class="survey-text">
+                <p class="survey-text__info">
+                    <%=surveyText%>
+                </p>
+                <% if (surveyTextSecond) { %>
+                <p class="survey-text__info">
+                    <%=surveyTextSecond%>
+                </p>
+                <% } %>
+                <% if (surveyTextThird) { %>
+                <p class="survey-text__info">
+                    <%=surveyTextThird%>
+                </p>
+                <% } %>
+                <div class="survey-links">
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="<%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
+                    </div>
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
+                    </div>
+                </div>
+                <p class="survey-text__info">
+                    <%=surveyTextMembership%>
+                </p>
+                <p class="survey-text__info">
+                    <%=surveyTextSubscriber%>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -304,6 +304,7 @@ GET            /commercial/multi.json                                           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()

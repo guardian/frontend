@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
     'common/modules/experiments/tests/minute',
-    'common/modules/experiments/tests/recommended-for-you'
+    'common/modules/experiments/tests/recommended-for-you',
+    'common/modules/experiments/tests/adblocking-response'
 ], function (
     reportError,
     config,
@@ -43,10 +44,12 @@ define([
     ContributionsHeader,
     AdFeedback,
     Minute,
-    RecommendedForYou
+    RecommendedForYou,
+    AdBlockingResponse
 ) {
 
     var TESTS = [
+        new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),

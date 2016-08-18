@@ -143,4 +143,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 9),
     exposeClientSide = true
   )
+
+  val ABAdBlockingResponse = Switch(
+    SwitchGroup.ABTests,
+    "ab-ad-blocking-response",
+    "Prominent adblocker response test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    exposeClientSide = true
+  )
 }

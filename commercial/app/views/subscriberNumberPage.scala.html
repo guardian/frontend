@@ -1,0 +1,25 @@
+@(subscriberNumberPage: Page)(implicit request: RequestHeader)
+
+@import model.Page
+
+    @main(subscriberNumberPage) { } {
+        <div class="l-side-margins">
+            <div class="live-events-survey-wrapper" data-link-name="subscriber number page">
+                <div class="live-events-survey-wrapper-inner">
+                    <h1>Please enter your current subscription number below:</h1>
+                    <div class="subscriber-number">
+                        <form class="subscriber-number-form js-subscriber-number-form">
+                            <input type="text" name="number" id="number" class="input-number"/>
+                            <button type="submit" name="submit" class="button--primary">Submit</button>
+                        </form>
+                        <p class="subscriber-number-correct standfirst js-subscriber-number-correct u-h">
+                            Thank you for supplying your subscription number, and for your continued support of the Guardian. Please click any link to continue your visit.
+                        </p>
+                        <p class="subscriber-number-incorrect standfirst js-subscriber-number-incorrect u-h">
+                            Your subscription number appears not to be valid. Please contact <a href="mailto:userhelp@@theguardian.com" data-link-name="user help email">userhelp@@theguardian.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
