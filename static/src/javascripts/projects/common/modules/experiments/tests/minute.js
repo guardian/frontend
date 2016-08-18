@@ -28,13 +28,6 @@ define([
             return config.page.isFront &&  document.getElementsByClassName('fc-item__video').length > 0 && detect.getBreakpoint() === 'desktop';
         };
 
-
-        function initMinute() {
-            // This is our minute account number
-            window._min = {_publisher: 'MIN-21000'};
-            require(['js!https://d2d4r7w8.map2.ssl.hwcdn.net/mi-guardian-prod.js']);
-        }
-
         function success(complete) {
             qwery('.fc-item__video').forEach(function(el) {
                 bean.on(el.parentNode, 'click', complete);
@@ -46,7 +39,6 @@ define([
             {
                 id: 'minute',
                 test: function () {
-                    initMinute();
                 },
 
                 success: success

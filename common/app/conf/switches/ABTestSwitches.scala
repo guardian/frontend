@@ -144,6 +144,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABMinuteLoadJs = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute-load-js",
+    "Load JS for minute test participants on some content pages.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
+    exposeClientSide = true
+  )
+
   val ABRecommendedForYou = Switch(
     SwitchGroup.ABTests,
     "ab-recommended-for-you",
