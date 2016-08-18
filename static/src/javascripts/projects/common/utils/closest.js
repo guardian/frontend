@@ -2,7 +2,6 @@ define(function () {
     /**
      * Adds a wrapper around Element.closest()
      */
-    var matches = 'matches' in Element.prototype ? 'matches' : 'msMatchesSelector';
     return 'closest' in Element.prototype ? closestNative : closestPolyfill;
 
     function closestNative(element, selectors) {
@@ -10,7 +9,7 @@ define(function () {
     }
 
     function closestPolyfill(element, selectors) {
-        while (element && !element[matches](selectors)) {
+        while (element && !element.matches(selectors)) {
             element = element.parentNode;
         }
         return element;

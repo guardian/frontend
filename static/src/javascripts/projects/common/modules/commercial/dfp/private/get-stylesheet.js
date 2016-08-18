@@ -4,7 +4,7 @@ define([
     var aProto = Array.prototype;
 
     messenger.register('get-styles', function(specs) {
-        return getStyles(specs, document.styleSheets, 'matches' in Element.prototype ? 'matches' : 'msMatchesSelector');
+        return getStyles(specs, document.styleSheets, 'matches');
     });
     return getStyles;
 
