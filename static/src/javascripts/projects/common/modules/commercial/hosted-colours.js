@@ -1,7 +1,9 @@
 define([
+    'fastdom',
     'Promise',
     'common/utils/$'
 ], function (
+    fastdom,
     Promise,
     $
 ) {
@@ -22,8 +24,10 @@ define([
             var $nextVideo = $('.js-next-video');
             var colour = removeHash($nextVideo.data('colour'));
 
-            $nextVideo.css({
-                'background': 'rgba(' + hexToRGB(colour) + ', 0.1)'
+            fastdom.write(function () {
+                $nextVideo.css({
+                    'background': 'rgba(' + hexToRGB(colour) + ', 0.1)'
+                });
             });
 
             resolve();
