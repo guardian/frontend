@@ -148,9 +148,9 @@ define([
             var value = buttons[i].value;
             var unsubscribeMatches = value.match(/unsubscribe-(.*)/);
             if (unsubscribeMatches) {
-                buttonString += 'removeEmailSubscriptions=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
             } else {
-                buttonString += 'addEmailSubscriptions=' + encodeURIComponent(value) + '&';
+                buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
