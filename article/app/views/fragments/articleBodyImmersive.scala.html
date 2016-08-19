@@ -6,7 +6,7 @@
 @import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) { article =>
-  @defining(isPaidContent(model.article, model)) { isPaidContent =>
+  @defining(isPaidContent(article, model)) { isPaidContent =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
