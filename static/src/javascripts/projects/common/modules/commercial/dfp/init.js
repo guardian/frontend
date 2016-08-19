@@ -10,11 +10,10 @@ define([
     'common/modules/commercial/dfp/private/on-slot-render',
     'common/modules/commercial/dfp/private/PrebidService',
     'common/modules/commercial/dfp/private/ophan-tracking',
-    'common/modules/commercial/third-party-tags/audience-science-pql',
 
     // These are cross-frame protocol messaging routines:
     'common/modules/commercial/dfp/private/get-stylesheet'
-], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking, audienceSciencePql) {
+], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
 
 
     return init;
@@ -48,7 +47,6 @@ define([
             window.googletag.cmd.push(
                 setListeners,
                 setPageTargeting,
-                setAudienceScienceCallback,
                 resolve
             );
         });
@@ -65,17 +63,5 @@ define([
         Object.keys(targeting).forEach(function (key) {
             pubads.setTargeting(key, targeting[key]);
         });
-    }
-
-    // Remove all Audience Science related targeting keys as soon as we recieve
-    // an AS creative (will get called by the creative itself)
-    function setAudienceScienceCallback() {
-        window.asiDirectPrequal = function () {
-            var pubads = window.googletag.pubads();
-            Object.keys(audienceSciencePql.getSegments()).forEach(removeKey);
-            function removeKey(key) {
-                pubads.clearTargeting(key);
-            }
-        };
     }
 });
