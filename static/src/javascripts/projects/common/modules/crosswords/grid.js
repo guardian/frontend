@@ -40,6 +40,7 @@ define([
                 return React.createElement('rect', {
                     x: left - borderWidth - width,
                     y: top,
+                    key: ['sep', direction, x, y].join('_'),
                     width: width,
                     height: constants.cellSize
                 });
@@ -48,6 +49,7 @@ define([
                 return React.createElement('rect', {
                     x: left,
                     y: top - borderWidth - height,
+                    key: ['sep', direction, x, y].join('_'),
                     width: constants.cellSize,
                     height: height
                 });

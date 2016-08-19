@@ -1,0 +1,23 @@
+{
+  "name": "amp-validation",
+  "version": "0.0.1",
+  "description": "Utility that uses the amphtml-validator to validate AMP endpoints",
+  "license": "Apache-2.0",
+  "scripts": {
+      "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guardian/frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guardian/frontend/issues"
+  },
+  "homepage": "https://github.com/guardian/frontend#readme",
+  "dependencies": {
+    "amphtml-validator": "^1.0.10"
+  },
+  "engines": {
+    "node": ">=6"
+  }
+}

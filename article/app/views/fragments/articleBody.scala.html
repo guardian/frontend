@@ -1,9 +1,9 @@
-
 @import model.ArticleSchemas
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import views.BodyCleaner
+@import views.support.Commercial.isPaidContent
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 
@@ -17,14 +17,15 @@
 }
 
 @defining(model.article) { article =>
+  @defining(isPaidContent(model.article, model)) { isPaidContent =>
 
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
 
         class="@RenderClasses(Map(
-            "content--advertisement-feature" -> article.commercial.isAdvertisementFeature,
+            "content--advertisement-feature" -> isPaidContent,
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
-            "paid-content--advertisement-feature" -> article.commercial.isAdvertisementFeature
+            "paid-content--advertisement-feature" -> isPaidContent
         ),  "content", "content--article", "tonal", s"tonal--${toneClass(article)}", s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}")"
 
         itemscope itemtype="@schemaType(model)" role="main">
@@ -41,11 +42,11 @@
                 }
             </div>
 
-            @if(article.commercial.isAdvertisementFeature){
+            @if(isPaidContent) {
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, model, article.commercial.isAdvertisementFeature, amp = amp)
+            @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
                 @fragments.mainMedia(article, amp)
@@ -105,8 +106,9 @@
 
         @* Currently AMP documents don't support most of what we do in the footer *@
         @if(!amp) {
-            @fragments.contentFooter(article, model.related)
+            @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
         }
 
     </div>
+  }
 }

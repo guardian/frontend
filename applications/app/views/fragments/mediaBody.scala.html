@@ -2,6 +2,7 @@
 
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640}
 
@@ -155,6 +156,6 @@
 </div>
 
 <div class="l-side-margins">
-    @fragments.contentFooter(media, page.related, "media")
+    @fragments.contentFooter(media, page.related, "media", isPaidContent(media, page))
 </div>
 }

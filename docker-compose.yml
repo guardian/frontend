@@ -5,6 +5,7 @@ services:
     command: bash
     ports: 
         - "9000:9000"
+    working_dir: /frontend
     volumes:
         - .:/frontend
         - ~/.gu:/root/.gu
@@ -17,3 +18,12 @@ services:
         #- ~/.npm:/root/.npm
         #- ~/.sbt:/root/.sbt
         #- ~/.ivy2:/root/.ivy2
+  watch:
+    image: 642631414762.dkr.ecr.eu-west-1.amazonaws.com/frontend-dev:latest
+    command: bash -c "make watch"
+    ports: 
+        - "3000:3000"
+        - "3001:3001"
+    working_dir: /frontend
+    volumes:
+        - .:/frontend

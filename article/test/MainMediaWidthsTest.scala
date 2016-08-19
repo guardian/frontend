@@ -9,7 +9,7 @@ import org.scalatest.concurrent.Eventually
 import views.MainMediaWidths
 import model.{Content, Article}
 
-class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually with SingleServerSuite {
+@DoNotDiscover class MainMediaWidthsTest extends FreeSpec with ShouldMatchers with Eventually with ConfiguredTestSuite {
   "should return correct widths" in {
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,

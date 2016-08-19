@@ -35,12 +35,9 @@ Prerequesites:
 2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend and CMS fronts 
 3. Get properties file
     - `aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "~/.gu/frontend.properties"`
-4. Log into the EC2 Container Registry
-    - `aws ecr get-login --region eu-west-1 --profile frontend`
-    - Run the docker login command returned in the previous step
-5. Run the container (dev service). The first time you do so the container image would be pulled from the ECR.
+4. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
     - ./dev.sh
-6. Build and run the app within the container
+5. Build and run the app within the container
     - `make reinstall compile && ./sbt`
     - See [Run the app section](#run-the-app) for more info
 

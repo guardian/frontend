@@ -2,13 +2,11 @@ define([
     'Promise',
     'bean',
     'common/utils/$',
-    'common/utils/config',
     'common/modules/commercial/survey/survey-simple'
 ], function (
     Promise,
     bean,
     $,
-    config,
     SurveySimple
 ) {
     function init() {

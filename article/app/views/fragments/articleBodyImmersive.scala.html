@@ -2,13 +2,15 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) { article =>
+  @defining(isPaidContent(model.article, model)) { isPaidContent =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
+            @if(isPaidContent){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
@@ -34,7 +36,7 @@
                         <div class="content__article-body from-content-api js-article__body" itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
                             data-test-id="article-review-body">
 
-                            @if(article.commercial.isAdvertisementFeature || article.commercial.isSponsored(None) || article.commercial.isFoundationSupported) {
+                            @if(isPaidContent || article.commercial.isSponsored(None) || article.commercial.isFoundationSupported) {
                                 @fragments.commercial.badge(article, model)
                             }
 
@@ -55,7 +57,8 @@
             </div>
         </article>
 
-        @fragments.contentFooter(article, model.related)
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
 
     </div>
+  }
 }

@@ -76,36 +76,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val PanicMonitoringSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-monitoring",
-    "If this switch is on, we monitor latency and requests to see if servers are overloaded",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = false
-  )
-
-  val PanicLoggingSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-logging",
-    "If this switch is on, we log latency when we are monitoring it with panic-monitoring",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = false
-  )
-
-  val PanicSheddingSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-shedding",
-    "If this switch is on, we try to keep response times below 1s by returning Service Unavailable errors if we're busy",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = false
-  )
-
   val RichLinkSwitch = Switch(
     SwitchGroup.Performance,
     "rich-links",

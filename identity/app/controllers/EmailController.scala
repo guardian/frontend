@@ -73,75 +73,30 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
 
       emailPrefsForm.bindFromRequest.fold({
         case formWithErrors: Form[EmailPrefsData] =>
-          Future.successful((formWithErrors, getEmailSubscriptions(formWithErrors)))
+          Future.successful(formWithErrors)
       }, {
         case emailPrefsData: EmailPrefsData =>
           val form = emailPrefsForm.fill(emailPrefsData)
-          emailPrefsData.emailSubscription.map {
-            case listId if listId.startsWith("unsubscribe-") =>
-              val id = listId.replace("unsubscribe-", "")
-              api.deleteSubscription(userId, EmailList(id), auth, trackingParameters).map {
-                case Right(response) =>
-                  (form, getEmailSubscriptions(form, remove = List(id)))
 
-                case Left(response) =>
-                  val formWithErrors = response.foldLeft(form) {
-                    case (formWithErrors, Error(message, description, _, context)) =>
-                      formWithErrors.withError(context.getOrElse(""), description)
-                  }
-                  (formWithErrors, getEmailSubscriptions(form, remove = List(id)))
-              }
+          val unsubscribeResponse = emailPrefsData.removeEmailSubscriptions.map { id =>
+            api.deleteSubscription(userId, EmailList(id), auth, trackingParameters)
+          }
 
-            case listId =>
-              api.addSubscription(userId, EmailList(listId), auth, trackingParameters).map {
-                case Right(response) =>
-                  (form, getEmailSubscriptions(form, add = List(listId)))
+          val subscribeResponse = emailPrefsData.addEmailSubscriptions.map { id =>
+            api.addSubscription(userId, EmailList(id), auth, trackingParameters)
+          }
 
-                case Left(response) =>
-                  val formWithErrors = response.foldLeft(form) {
-                    case (formWithErrors, Error(message, description, _, context)) =>
-                      formWithErrors.withError(context.getOrElse(""), description)
-                  }
-                  (formWithErrors, getEmailSubscriptions(form, add = List(listId)))
-              }
-          }.getOrElse {
-            val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
-            val subscriberFuture = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
+          val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
+          val updatePreferencesResponse = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
 
-            for {
-              subscriber <- subscriberFuture
-            } yield {
-              subscriber match {
-                case Right(s) => {
-                  (form, getEmailSubscriptions(form))
-                }
-
-                case s => {
-                  val errors = s.left.getOrElse(Nil)
-                  val formWithErrors = errors.foldLeft(form) {
-                    case (formWithErrors, Error(message, description, _, context)) =>
-                      formWithErrors.withError(context.getOrElse(""), description)
-                  }
-                  (formWithErrors, getEmailSubscriptions(formWithErrors))
-                }
-              }
+          Future.sequence(updatePreferencesResponse :: unsubscribeResponse ++ subscribeResponse).map { responses =>
+            if (responses.exists(_.isLeft)) {
+              form.withGlobalError("There was an error saving your preferences")
+            } else {
+              form
             }
           }
-      }).map{ case (form, emailSubscriptions) =>
-        implicit val subscriptionWrites = new Writes[EmailSubscription] {
-          def writes(emailSubscription: EmailSubscription) = Json.obj(
-            "name" -> emailSubscription.name,
-            "theme" -> emailSubscription.theme,
-            "about" -> emailSubscription.about,
-            "description" -> emailSubscription.description,
-            "frequency" -> emailSubscription.frequency,
-            "listId" -> emailSubscription.listId,
-            "popularity" -> emailSubscription.popularity,
-            "subscribedTo" -> emailSubscription.subscribedTo,
-            "exampleUrl" -> emailSubscription.exampleUrl
-          )
-        }
-
+      }).map { form  =>
         if (form.hasErrors) {
           val errorsAsJson = Json.toJson(
             form.errors.groupBy(_.key).map { case (key, errors) =>
@@ -151,17 +106,23 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
           )
           Forbidden(errorsAsJson)
         } else {
-          Ok(Json.obj("subscriptions" -> emailSubscriptions.subscriptions.filter(_.subscribedTo)))
+          Ok("updated")
         }
       }
     }
   }
 
   protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
-    EmailSubscriptions(form.data.filter(_._1.startsWith("emailSubscription")).map(_._2).filterNot(remove.toSet) ++ add)
+    EmailSubscriptions(form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add)
 }
 
-case class EmailPrefsData(htmlPreference: String, emailSubscriptions: List[String], emailSubscription: Option[String] = None)
+case class EmailPrefsData(
+  htmlPreference: String,
+  currentEmailSubscriptions: List[String],
+  addEmailSubscriptions: List[String] = List(),
+  removeEmailSubscriptions: List[String] = List()
+)
+
 object EmailPrefsData {
   protected val validPrefs = Set("HTML", "Text")
   def isValidHtmlPreference(pref: String): Boolean =  validPrefs contains pref
@@ -169,8 +130,9 @@ object EmailPrefsData {
   val emailPrefsForm = Form(
     Forms.mapping(
       "htmlPreference" -> Forms.text.verifying(isValidHtmlPreference _),
-      "emailSubscription" -> Forms.list(Forms.text),
-      "addEmailSubscription" -> Forms.optional(Forms.text)
+      "currentEmailSubscriptions" -> Forms.list(Forms.text),
+      "addEmailSubscriptions" -> Forms.list(Forms.text),
+      "removeEmailSubscriptions" -> Forms.list(Forms.text)
     )(EmailPrefsData.apply)(EmailPrefsData.unapply)
   )
 }
