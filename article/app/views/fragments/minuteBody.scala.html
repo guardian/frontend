@@ -1,14 +1,16 @@
 @(model: MinutePage)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.support.TrailCssClasses.toneClass
 @import views.BodyCleaner
+@import views.support.Commercial.isPaidContent
+@import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) {  article =>
+  @defining(isPaidContent(model.article, model)) { isPaidContent =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
         class="content content--article content--minute-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(article.commercial.isAdvertisementFeature){content--advertisement-feature}
+            @if(isPaidContent){content--advertisement-feature}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
         itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
@@ -41,7 +43,8 @@
             </div>
         </article>
 
-        @fragments.contentFooter(article, model.related)
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
 
+    </div>
+  }
 }
-</div>

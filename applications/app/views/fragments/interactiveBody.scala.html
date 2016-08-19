@@ -1,6 +1,7 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.RenderClasses
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 
 @body(page.interactive, page.item.content.isImmersive)
@@ -57,7 +58,7 @@
             </div>
         </article>
 
-        @fragments.contentFooter(interactive, page.related)
+        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent(interactive, page))
 
     </div>
 

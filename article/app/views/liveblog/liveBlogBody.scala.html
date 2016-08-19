@@ -9,6 +9,7 @@
 @import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import _root_.liveblog.SinceBlockId
 
@@ -162,7 +163,7 @@
     </article>
 
     @if(!amp) {
-        @fragments.contentFooter(article, model.related)
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
     }
 
 </div>
