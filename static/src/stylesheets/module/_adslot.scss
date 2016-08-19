@@ -184,7 +184,7 @@
     }
 }
 
-.ad-slot-fabric-expanding-v1 {
+.ad-slot-fabric-expanding-v1, .ad-slot-fabric-video {
     @include mq($until: tablet) {
         width: auto;
         margin-top: 0;
