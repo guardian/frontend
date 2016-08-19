@@ -4,6 +4,7 @@ define([
     'raven',
     'Promise',
     'common/utils/fastdom-promise',
+    'common/utils/insertAfter',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/dfp/private/apply-creative-template',
@@ -17,6 +18,7 @@ define([
     raven,
     Promise,
     fastdom,
+    insertAfterParent,
     adSizes,
     stickyMpu,
     applyCreativeTemplate,
@@ -107,7 +109,13 @@ define([
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
+    sizeCallbacks[adSizes.fabric] = function(event, advert) {
+        var node = advert.node;
+
+        insertAfterParent(node.parentNode.parentNode, node);
+
+        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert)
+    };
 
     /**
      * Commercial components with merch sizing get fluid-250 styling
