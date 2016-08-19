@@ -47,7 +47,7 @@ define([
 
     FabricExpandingV1.addSlotSizeClass = function($adSlot) {
         fastdom.write(function(){
-            $adSlot.addClass('ad-slot__fabric-expanding-v1');
+            $adSlot.addClass('ad-slot-fabric-expanding-v1');
         });
     };
 
