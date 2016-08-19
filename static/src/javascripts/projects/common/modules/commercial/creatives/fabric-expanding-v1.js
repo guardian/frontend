@@ -45,6 +45,12 @@ define([
 
     FabricExpandingV1.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
+    FabricExpandingV1.addSlotSizeClass = function($adSlot) {
+        fastdom.write(function(){
+            $adSlot.addClass('ad-slot-size__88x71');
+        });
+    };
+
     FabricExpandingV1.prototype.updateBgPosition = function () {
         var that = this;
 
@@ -171,6 +177,8 @@ define([
     };
 
     FabricExpandingV1.prototype.create = function () {
+        FabricExpandingV1.addSlotSizeClass(this.$adSlot);
+
         var hasVideo = this.params.videoURL !== '';
         var videoDesktop = {
             videoDesktop: hasVideo ? this.buildVideo('js-fabric-video--desktop') : ''
