@@ -45,8 +45,8 @@ define([
         this.idealOutcome = 'Adblocking users will either pay or allow ads.';
 
         this.canRun = function () {
-            return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
-                //&& config.page.edition === 'UK';
+            return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
+                && config.page.edition === 'UK';
         };
 
         this.variants = [{
