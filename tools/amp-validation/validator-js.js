@@ -1,6 +1,6 @@
 'use strict';
 
-const https = require('https'); // TODO - will we ever need http?
+const https = require('https');
 const os = require('os');
 const fs = require('fs');
 
