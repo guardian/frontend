@@ -61,7 +61,7 @@ define([
     // Remove all Audience Science related targeting keys as soon as we recieve
     // an AS creative (will get called by the creative itself)
     function setAudienceScienceCallback() {
-        window.asiDirectPrequal = function () {
+        window.onAudienceScienceCreativeLoaded = function () {
             var pubads = window.googletag.pubads();
             Object.keys(audienceSciencePql.getSegments()).forEach(removeKey);
             function removeKey(key) {
