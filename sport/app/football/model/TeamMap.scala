@@ -20,7 +20,7 @@ object TeamMap extends ExecutionContexts with Logging {
   val shortNames = Map(
     ("19", "Spurs"),
     ("5", "C Palace"),
-    ("30", "Middlesboro"),
+    ("30", "Middlesbrough"),
     ("84", "Peterboro"),
     ("44", "Wolves"),
     ("20", "MK Dons"),
