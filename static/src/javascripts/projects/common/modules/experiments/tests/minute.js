@@ -25,14 +25,16 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Increase interaction with video trails';
         this.canRun = function() {
-            return config.page.isFront &&  document.getElementsByClassName('fc-item__video').length > 0 && detect.getBreakpoint() === 'desktop';
+            return config.page.isFront &&  (document.getElementsByClassName('fc-item__video').length > 0 || document.getElementsByClassName('fc-container--video').length > 0)  && detect.getBreakpoint() === 'desktop';
         };
 
         function success(complete) {
+            //video trails
             qwery('.fc-item__video').forEach(function(el) {
                 bean.on(el.parentNode, 'click', complete);
             });
-
+            //video carousel
+            bean.on(qwery('.fc-container--video')[0], 'click', complete);
         }
 
         this.variants = [
