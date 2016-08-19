@@ -7,12 +7,13 @@ import pa._
 import model.{Competition, Tag, TagProperties, TeamMap}
 import feed.CompetitionsService
 import org.scalatest.mock.MockitoSugar
-import play.api.libs.ws.WSClient
 
-trait FootballTestData extends MockitoSugar {
+trait FootballTestData {
+
+  def testFootballClient: FootballClient
 
   lazy val testCompetitionsService = {
-    val service = new CompetitionsService(new FootballClient(mock[WSClient]), FootballTestData.competitions)
+    val service = new CompetitionsService(testFootballClient, FootballTestData.competitions)
     service.loadTestData()
     service
   }

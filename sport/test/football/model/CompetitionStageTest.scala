@@ -5,15 +5,18 @@ import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
 import implicits.Collections
-import test.FootballTestData
+import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
 
 @DoNotDiscover class CompetitionStageTest
   extends FreeSpec
-  with ShouldMatchers
-  with OptionValues
-  with CompetitionTestData
-  with Collections
-  with FootballTestData {
+    with ShouldMatchers
+    with OptionValues
+    with CompetitionTestData
+    with Collections
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   val competitionStage = new CompetitionStage(testCompetitionsService.competitions)
 
