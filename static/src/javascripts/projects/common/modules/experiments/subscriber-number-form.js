@@ -40,7 +40,7 @@ define([
 
         var $numberInput = $('.input-number', $form),
             numberVal = $numberInput.val(),
-            isSubscriber = /^(?=\S{8,11}$)(00|GA|A-S)\S+/.test(numberVal), //8-11 characters starting with either 00, GA or A-S
+            isSubscriber = /^(?=\S{8,11}$)(00|GA|A-S)\S+/.test(numberVal),
             $correctNumberInfo = $('.js-subscriber-number-correct'),
             $incorrectNumberInfo = $('.js-subscriber-number-incorrect');
 
