@@ -2,7 +2,7 @@ package views.support
 
 import common.Edition
 import common.Edition.defaultEdition
-import common.commercial._
+import common.commercial.{Sponsored, _}
 import common.dfp._
 import conf.switches.Switches.{containerBrandingFromCapi, staticBadgesSwitch}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
@@ -34,7 +34,7 @@ object Commercial {
 
   def isSponsoredContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
     val edition = Edition(request)
-    isBrandedContent(item.commercial.isSponsored(Some(edition)), page, edition, common.commercial.Sponsored)
+    isBrandedContent(item.commercial.isSponsored(Some(edition)), page, edition, Sponsored)
   }
 
   def isFoundationFundedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
