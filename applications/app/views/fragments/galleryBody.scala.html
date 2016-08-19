@@ -2,6 +2,7 @@
 
 @import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses, GalleryCaptionCleaner}
 
@@ -43,7 +44,7 @@
     }
 </div>
 <div class="l-side-margins">
-    @fragments.contentFooter(page.item, page.related, "media")
+    @fragments.contentFooter(page.item, page.related, "media", isPaidContent(page.item, page))
 </div>
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {

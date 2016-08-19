@@ -31,7 +31,7 @@
         </div>
     </article>
 
-    @fragments.contentFooter(page.gallery, page.related, "media")
+    @fragments.contentFooter(page.gallery, page.related, "media", isPaidContent = true)
 </div>
 
 @galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {

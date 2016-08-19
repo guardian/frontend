@@ -2,6 +2,7 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{ImgSrc, Item140}
 
@@ -42,7 +43,7 @@
             @fragments.labourLiverpoolContact()
         }
 
-        @fragments.contentFooter(article, model.related)
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
 
     </div>
 }

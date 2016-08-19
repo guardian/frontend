@@ -1,4 +1,6 @@
-@(content: model.ContentType, related: model.RelatedContent)(implicit request: RequestHeader)
+@(content: model.ContentType,
+  related: model.RelatedContent,
+  isPaidContent: Boolean)(implicit request: RequestHeader)
 
 @import layout.FaciaContainer
 @import views.html.fragments.containers
@@ -9,7 +11,7 @@
     )(request)
 }
 
-@defining(Seq("related") ++ (if(content.commercial.isAdvertisementFeature) Seq("paid-content--advertisement-feature") else Nil)) { classes =>
+@defining(Seq("related") ++ (if(isPaidContent) Seq("paid-content--advertisement-feature") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
         <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
             @container("more on this story", "more-on-this-story", href = None)
