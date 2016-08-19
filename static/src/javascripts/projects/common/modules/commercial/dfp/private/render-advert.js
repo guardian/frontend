@@ -4,7 +4,7 @@ define([
     'raven',
     'Promise',
     'common/utils/fastdom-promise',
-    'common/utils/insertAfter',
+    'common/utils/closest',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/dfp/private/apply-creative-template',
@@ -18,7 +18,7 @@ define([
     raven,
     Promise,
     fastdom,
-    insertAfterParent,
+    closest,
     adSizes,
     stickyMpu,
     applyCreativeTemplate,
@@ -111,10 +111,13 @@ define([
      */
     sizeCallbacks[adSizes.fabric] = function(event, advert) {
         var node = advert.node;
+        var closestFcContainer = closest(node, '.fc-container');
 
-        insertAfterParent(node.parentNode.parentNode, node);
+        if (closestFcContainer) {
+            bonzo(node).insertAfter(closestFcContainer);
+        }
 
-        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert)
+        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
     };
 
     /**
