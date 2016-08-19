@@ -1,6 +1,6 @@
 @()
 
-/* Source: https://github.com/remy/polyfills/blob/master/classList.js */
+/* Source: https://developer.mozilla.org/en-US/docs/Web/API/Element/matches */
 (function (ElementPrototype) {
 
     if (!ElementPrototype.matches) {
