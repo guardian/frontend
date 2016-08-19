@@ -18,8 +18,6 @@ define([
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
 
-        addSlotSizeClass(adSlot);
-
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
         hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);
@@ -60,12 +58,6 @@ define([
                 fastdom.read(onScroll);
 
                 return true;
-            });
-        }
-
-        function addSlotSizeClass($adSlot) {
-            fastdom.write(function(){
-                bonzo($adSlot).addClass('ad-slot-fabric-video');
             });
         }
 
