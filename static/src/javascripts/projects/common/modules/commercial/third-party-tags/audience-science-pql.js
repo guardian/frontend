@@ -31,7 +31,9 @@ define([
         var asiPlacements = window.asiPlacements;
         var segments = storage.local.get(storageKey) || {};
         // override the global value with our previously stored one
-        window.asiPlacements = segments[section];
+        window.asiPlacements = segments[section] || { TL3gqK: {} };
+        window.asiPlacements.TL3gqK.default = { key: 'test' };
+        window.asiPlacements.TL3gqK.blob = 'test';
         segments[section] = asiPlacements;
         storage.local.set(storageKey, segments);
     }
@@ -54,6 +56,7 @@ define([
                     result[input[0]] = input[1];
                     return result;
                 }, {});
+            segments.pq_TL3gqK = 'T';
             // set up the global asiPlacements var in case dfp returns before asg
             window.asiPlacements = storedSegments[section];
         }

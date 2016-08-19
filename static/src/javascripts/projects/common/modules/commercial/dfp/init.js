@@ -73,10 +73,10 @@ define([
         window.asiDirectPrequal = function () {
             var pubads = window.googletag.pubads();
             Object.keys(audienceSciencePql.getSegments()).forEach(removeKey);
-            console.log('hey guys, I just removed all Audience Science keys. Regis, how do you do this??! I know, right?');
+
             function removeKey(key) {
                 pubads.clearTargeting(key);
             }
-        }
+        };
     }
 });
