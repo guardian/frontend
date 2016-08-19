@@ -4,6 +4,12 @@ import org.scalatest.DoNotDiscover
 
 
 @DoNotDiscover class ArticleAmpValidityTest extends AmpValidityTest {
+
+  /*
+      NB: these may be duplicated in tools/amp-validation - if you add or remove
+      a URL from here, think about whether it should be changed there too. Not
+      centralising as running full suite here may be overkill as we add more tests
+   */
   Seq(
     "/commentisfree/2016/aug/09/jeremy-corbyn-supporters-voters-labour-leader-politics", // Comment tone
     "/politics/2016/aug/09/tom-watson-interview-jeremy-corbyn-labour-rifts-hug-shout", // Feature tone
