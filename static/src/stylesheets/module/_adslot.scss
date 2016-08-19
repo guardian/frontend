@@ -185,7 +185,7 @@
 }
 
 .ad-slot-size__88x71 {
-    @include mq($until:tablet) {
+    @include mq($until: tablet) {
         width: 100%;
         position: relative;
         margin-top: 0;
