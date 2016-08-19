@@ -15,7 +15,7 @@ define([
                 return value + ' johnny!';
             },
             add1: function(value) { return value + 1; },
-            add2: function(_, ret) { return ret + 2; },
+            add2: function(_, _2, ret) { return ret + 2; },
             rubicon: function() { return 'rubicon'; }
         };
 
