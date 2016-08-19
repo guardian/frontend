@@ -60,18 +60,28 @@ define([
     surveyAdBlock.prototype.show = function () {
         fastdom.write(function () {
             $('.js-survey-adblock').removeClass('u-h');
-            $('.js-survey-adblock__delayed-close').removeClass('u-h');
         });
-        countdown.startTimer(5, function(seconds){
-            fastdom.write(function () {
-                if (seconds > 0) {
-                    $('.js-survey-adblock__delayed-close').html('<span class=\'countdown\'>'+seconds+'</span>');
-                } else {
-                    $('.js-survey-adblock__delayed-close').addClass('u-h');
+        if (this.config.showCloseBtn) {
+            if (this.config.showCloseBtn === 'delayed') {
+                fastdom.write(function () {
+                    $('.js-survey-adblock__delayed-close').removeClass('u-h');
+                });
+                countdown.startTimer(5, function(seconds){
+                    fastdom.write(function () {
+                        if (seconds > 0) {
+                            $('.js-survey-adblock__delayed-close').html('<span class=\'countdown\'>'+seconds+'</span>');
+                        } else {
+                            $('.js-survey-adblock__delayed-close').addClass('u-h');
+                            $('.js-survey-adblock__close-btn').removeClass('u-h');
+                        }
+                    });
+                });
+            } else {
+                fastdom.write(function () {
                     $('.js-survey-adblock__close-btn').removeClass('u-h');
-                }
-            });
-        });
+                });
+            }
+        }
     };
 
     return surveyAdBlock;

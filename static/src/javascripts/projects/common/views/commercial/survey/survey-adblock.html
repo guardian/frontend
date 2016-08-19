@@ -2,7 +2,9 @@
     <div class="survey-container">
         <% if (showCloseBtn) { %>
         <div class="survey-adblock-close js-survey-adblock-close">
+            <%if (showCloseBtn === "delayed") { %>
             <span class="site-message__close-btn js-survey-adblock__delayed-close u-h"><span class="countdown">5</span></span>
+            <% } %>
             <button class="site-message__close-btn js-survey-adblock__close-btn u-h" data-link-name="hide survey message">
                 <span class="u-h">Close</span>
                 <%=crossIcon%>
