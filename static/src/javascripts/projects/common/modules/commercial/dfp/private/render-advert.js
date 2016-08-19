@@ -114,7 +114,9 @@ define([
         var closestFcContainer = closest(node, '.fc-container');
 
         if (closestFcContainer) {
-            bonzo(node).insertAfter(closestFcContainer);
+            fastdom.write(function () {
+                bonzo(node).insertAfter(closestFcContainer);
+            });
         }
 
         addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
