@@ -53,7 +53,11 @@ $c-guardian-services-action: #ffffff;
         height: 30px;
     }
 
-    .logo__tagline {
+    .logo-tagline {
+        height: 0;
+    }
+
+    .logo-tagline__link {
         @include fs-textSans(1);
         position: absolute;
         top: 48px;
