@@ -16,7 +16,9 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
+    'common/modules/discussion/discussion-frontend',
     'common/modules/discussion/upvote',
+    'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/objects/isNumber'
@@ -38,7 +40,9 @@ define([
     DiscussionApi,
     CommentBox,
     Comments,
+    discussionFrontend,
     upvote,
+    ab,
     Id,
     userPrefs,
     isNumber
@@ -347,7 +351,7 @@ Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-Loader.prototype.renderCommentCount = function() {
+Loader.prototype.renderBonzoCommentCount = function() {
     fetchJson('/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(), {
         mode: 'cors'
     })
@@ -372,6 +376,18 @@ Loader.prototype.renderCommentCount = function() {
         }
     }.bind(this))
     .catch(this.logError.bind(this, 'CommentCount'));
+};
+
+Loader.prototype.renderCommentCount = function () {
+    if (discussionFrontend.canRun(ab, window.curlConfig)) {
+        return discussionFrontend.load(ab, this, {
+            apiHost: config.page.discussionApiUrl,
+            discussionId: this.getDiscussionId(),
+            element: document.querySelector('.js-discussion-comment-count').parentNode
+        });
+    } else {
+        return this.renderBonzoCommentCount();
+    }
 };
 
 Loader.prototype.getCommentIdFromHash = function() {

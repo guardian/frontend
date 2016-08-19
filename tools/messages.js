@@ -1,6 +1,14 @@
 function notify(message, options, type) {
     options = options || {};
     type = type || 'log';
+
+    // Set the default text colour for info to black as white was hard to see
+    if (type === 'info') {
+       options = Object.assign({
+           colour: 'black'
+       }, options);
+    }
+
     try {
         require('megalog')[type](message, options);
     } catch (e) {

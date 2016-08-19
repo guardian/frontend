@@ -1,7 +1,6 @@
 package test
 
 import java.io.File
-import java.net.URI
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
@@ -16,7 +15,7 @@ import play.api._
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
-import recorder.{HttpRecorder, ContentApiHttpRecorder}
+import recorder.ContentApiHttpRecorder
 
 import scala.util.{Failure, Success, Try}
 
@@ -25,13 +24,24 @@ trait TestSettings {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
+  private def verify(property: String, hash: String, message: String) {
+    if (DigestUtils.sha256Hex(property) != hash) {
+
+      // the println makes it easier to spot what is wrong in tests
+      println()
+      println(s"----------- $message -----------")
+      println()
+
+      throw new RuntimeException(message)
+    }
+  }
+
   private def toRecorderHttp(http: Http) = new Http {
 
     val originalHttp = http
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      val normalisedUrl = HttpRecorder.normalise("capi", url).replaceAll("api-key=[^&]*", "api-key=none")
-      recorder.load(normalisedUrl, headers.toMap) {
+      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttp.GET(url, headers)
       }
     }

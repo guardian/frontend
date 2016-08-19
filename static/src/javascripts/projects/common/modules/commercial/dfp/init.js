@@ -10,6 +10,8 @@ define([
     'common/modules/commercial/dfp/private/on-slot-render',
     'common/modules/commercial/dfp/private/PrebidService',
     'common/modules/commercial/dfp/private/ophan-tracking',
+
+    // These are cross-frame protocol messaging routines:
     'common/modules/commercial/dfp/private/get-stylesheet'
 ], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
 
@@ -51,17 +53,15 @@ define([
     }
 
     function setListeners() {
-
         ophanTracking.trackPerformance(window.googletag);
-
-
         window.googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     }
 
     function setPageTargeting() {
+        var pubads = window.googletag.pubads();
         var targeting = buildPageTargeting();
         Object.keys(targeting).forEach(function (key) {
-            window.googletag.pubads().setTargeting(key, targeting[key]);
+            pubads.setTargeting(key, targeting[key]);
         });
     }
 });

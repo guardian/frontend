@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
+    'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
@@ -20,7 +21,8 @@ define([
     'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/ad-feedback',
     'common/modules/experiments/tests/minute',
-    'common/modules/experiments/tests/recommended-for-you'
+    'common/modules/experiments/tests/recommended-for-you',
+    'common/modules/experiments/tests/minute-load-js'
 ], function (
     reportError,
     config,
@@ -30,6 +32,7 @@ define([
     mvtCookie,
     memoize,
     noop,
+    DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
     HostedAutoplay,
     Giraffe,
@@ -43,10 +46,12 @@ define([
     ContributionsHeader,
     AdFeedback,
     Minute,
-    RecommendedForYou
+    RecommendedForYou,
+    MinuteLoadJs
 ) {
 
     var TESTS = [
+        new DiscussionExternalFrontend(),
         new LiveBlogChromeNotificationsProd(),
         new HostedAutoplay(),
         new Giraffe(),
@@ -60,7 +65,8 @@ define([
         new ContributionsHeader(),
         new AdFeedback(),
         new Minute(),
-        new RecommendedForYou()
+        new RecommendedForYou(),
+        new MinuteLoadJs()
     ];
 
     var participationsKey = 'gu.ab.participations';

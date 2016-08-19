@@ -8,7 +8,6 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import recorder.HttpRecorder
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
 @DoNotDiscover class DeploysRadiatorControllerTest
@@ -19,22 +18,22 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  // this needs to be a recent build - TODO make it automatically find the latest build
-  val existingBuild = "3108"
+  val existingBuild = "3123"
 
-  class TestHttpClient(name: String, wsClient: WSClient) extends HttpLike {
+  class TestHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
-      val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
-      val normalisedUrl = HttpRecorder.normalise(name, url)
-      DeploysTestHttpRecorder.load(normalisedUrl, extentedHeaders) {
+      import implicits.Strings.string2encodings
+      val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
+      DeploysTestHttpRecorder.load(urlWithParams, headers) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
   class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = new TeamcityService(new TestHttpClient("teamcity", wsClient))
-    override val riffRaff = new RiffRaffService(new TestHttpClient("riffraff", wsClient))
+    private val httpClient = new TestHttpClient(wsClient)
+    override val teamcity = new TeamcityService(httpClient)
+    override val riffRaff = new RiffRaffService(httpClient)
   }
 
   val controller = new DeploysRadiatorControllerStub()
@@ -80,7 +79,7 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
       (jsonResponse \ "status").as[String] should be("ok")
       (jsonResponse \ "response" \ "number").as[String] should be(existingBuild)
       (jsonResponse \ "response" \ "projectName").as[String] should be("dotcom:master")
-      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(6)
+      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(2)
     }
   }
 

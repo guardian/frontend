@@ -1,5 +1,11 @@
-define([], function () {
+define([
+    'common/utils/config'
+], function (
+    config
+) {
     var ga = window.ga;
+    var trackerName = config.googleAnalytics.trackers.editorial;
+    var send = trackerName + '.send';
 
     function extractLinkText(el) {
         var text;
@@ -10,20 +16,20 @@ define([], function () {
     }
 
     function trackNonClickInteraction(actionName) {
-        ga('guardianTestPropertyTracker.send', 'event', 'Interaction', actionName, {
+        ga(send, 'event', 'Interaction', actionName, {
             nonInteraction: true // to avoid affecting bounce rate
         });
     }
 
     function trackSamePageLinkClick(target, tag) {
-        ga('guardianTestPropertyTracker.send', 'event', 'Click', 'In Page', tag, {
+        ga(send, 'event', 'Click', 'In Page', tag, {
             nonInteraction: true, // to avoid affecting bounce rate
             dimension13: extractLinkText(target)
         });
     }
 
     function trackExternalLinkClick(target, tag) {
-        ga('guardianTestPropertyTracker.send', 'event', 'Click', 'External', tag, {
+        ga(send, 'event', 'Click', 'External', tag, {
             dimension13: extractLinkText(target)
         });
     }

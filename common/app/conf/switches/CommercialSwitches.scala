@@ -296,16 +296,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val hostedGalleryTest = Switch(
-    group = CommercialLabs,
-    "hosted-gallery-test",
-    "If on, test page for gallery content is available",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = false
-  )
-
   val surgingContentEmail = Switch(
     SwitchGroup.Commercial,
     "surging-sports-content-email",

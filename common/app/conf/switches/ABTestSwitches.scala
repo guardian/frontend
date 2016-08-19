@@ -14,6 +14,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABDiscussionExternalFrontend = Switch(
+    SwitchGroup.ABTests,
+    "ab-discussion-external-frontend",
+    "Standalone frontend discussion",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
+
   val ABHostedAutoplay = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-autoplay",
@@ -54,13 +64,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsArticle20160802 = Switch(
+  val ABContributionsArticle20160818 = Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-article-20160810",
+    "ab-contributions-article-20160818",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 23),
+    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
@@ -128,6 +138,16 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-minute",
     "Testing if minute teasers drive video plays.",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 1),
+    exposeClientSide = true
+  )
+
+  val ABMinuteLoadJs = Switch(
+    SwitchGroup.ABTests,
+    "ab-minute-load-js",
+    "Load JS for minute test participants on some content pages.",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 1),

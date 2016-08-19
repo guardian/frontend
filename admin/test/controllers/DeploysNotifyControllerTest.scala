@@ -8,7 +8,6 @@ import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
-import recorder.HttpRecorder
 import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent.Future
@@ -21,14 +20,14 @@ import scala.concurrent.Future
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  val existingBuild = "3108"
+  val existingBuild = "3123"
   val fakeApiKey = "fake-api-key"
 
-  class RecordingHttpClient(name: String, wsClient: WSClient) extends HttpLike {
+  class RecordingHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
-      val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
-      val normalisedUrl = HttpRecorder.normalise(name, url)
-      DeploysTestHttpRecorder.load(normalisedUrl, extentedHeaders) {
+      import implicits.Strings.string2encodings
+      val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
+      DeploysTestHttpRecorder.load(urlWithParams, headers) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
@@ -39,8 +38,9 @@ import scala.concurrent.Future
   class DeploysNotifyControllerStub(override val wsClient: WSClient) extends DeploysNotifyController {
     lazy val apiKey = fakeApiKey
 
-    override val teamcity = new TeamcityService(new RecordingHttpClient("teamcity", wsClient))
-    override val riffRaff = new RiffRaffService(new RecordingHttpClient("riffraff", wsClient))
+    private val httpClient = new RecordingHttpClient(wsClient)
+    override val teamcity = new TeamcityService(httpClient)
+    override val riffRaff = new RiffRaffService(httpClient)
 
     override protected def sendNotice(step: NoticeStep, notice: Notice): Future[NoticeResponse] = {
       Future.successful(NoticeResponse(notice, "Fake response"))

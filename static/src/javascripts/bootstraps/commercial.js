@@ -16,6 +16,7 @@ define([
     'common/modules/commercial/hosted-about',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/hosted-gallery',
+    'common/modules/commercial/hosted-colours',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/third-party-tags',
@@ -40,6 +41,7 @@ define([
     hostedAbout,
     hostedVideo,
     hostedGallery,
+    hostedColours,
     sliceAdverts,
     stickyTopBanner,
     thirdPartyTags,
@@ -73,7 +75,8 @@ define([
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
-            ['cm-hostedGallery', hostedGallery.init]);
+            ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedColours', hostedColours.init]);
     }
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {

@@ -2,10 +2,11 @@
 import app.FrontendComponents
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import test.FootballTestData
+import test.{WithTestFootballClient, FootballTestData}
 
-trait TestComponents extends FootballTestData {
+trait TestComponents extends FootballTestData with WithTestFootballClient {
   self: SportServices =>
+  override lazy val footballClient = testFootballClient
   override lazy val competitionsService = testCompetitionsService
 }
 
