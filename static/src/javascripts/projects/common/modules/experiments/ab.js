@@ -9,7 +9,6 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
@@ -34,7 +33,6 @@ define([
     noop,
     DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
-    HostedAutoplay,
     Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
@@ -53,7 +51,6 @@ define([
     var TESTS = [
         new DiscussionExternalFrontend(),
         new LiveBlogChromeNotificationsProd(),
-        new HostedAutoplay(),
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
