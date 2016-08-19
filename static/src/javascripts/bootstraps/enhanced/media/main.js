@@ -202,7 +202,7 @@ define([
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
-                var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
+                var ajaxInfoUrl = config.page.ajaxUrl + '/' + canonicalUrl;
 
                 ajax({
                     url: ajaxInfoUrl + '/info.json',

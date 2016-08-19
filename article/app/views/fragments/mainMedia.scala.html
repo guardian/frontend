@@ -26,10 +26,11 @@
                                 showControlsAtStart = true,
                                 endSlatePath = EndSlateComponents.fromContent(article.content).toUriPath,
                                 overrideIsRatioHd = None,
-                                embedPath = article.content.mainVideoCanonicalPath
+                                embedPath = Some(article.content.mainVideoCanonicalPath),
+                                path = article.content.mainVideoCanonicalPath
                             )
                         ) { player =>
-                            @fragments.media.video(player, true, amp = amp)
+                            @fragments.media.video(player, enhance = true, amp = amp)
                             <meta itemprop="name" content="@player.title">
                             <meta itemprop="image" content="@player.poster">
                             <meta itemprop="thumbnail" content="@player.poster">

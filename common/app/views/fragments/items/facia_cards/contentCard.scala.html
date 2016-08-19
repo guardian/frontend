@@ -50,12 +50,13 @@ data-test-id="facia-card"
                     autoPlay = false,
                     showControlsAtStart = false,
                     endSlatePath,
-                    Some(false),
+                    overrideIsRatioHd = Some(false),
                     // We only pass in the ID if this is a video or audio block, as if it's a mainMedia video, the
                     // ID is actually pointing to the article, which is wrong. It would be nice to have the ID on the
                     // ContentCard, but we don't for now. Annoyingly this doesn't allow us to check for if we should
                     // play ads or if the video is expired, but as fronts change really often, this is a non-problem.
-                    if (item.isMediaLink) item.id else None
+                    embedPath = if (item.isMediaLink) item.id else None,
+                    path = item.id.getOrElse("foo")
                 )) { player =>
                     <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">

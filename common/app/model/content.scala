@@ -8,7 +8,7 @@ import com.gu.facia.client.models.TrailMetaData
 import common._
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareUseTrailPicFirstSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay, HeroicTemplateSwitch}
+import conf.switches.Switches.{FacebookShareImageLogoOverlay, FacebookShareUseTrailPicFirstSwitch, HeroicTemplateSwitch, TwitterShareImageLogoOverlay}
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
@@ -175,14 +175,14 @@ final case class Content(
 
   lazy val linkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  lazy val hasMultipleVideosInPage: Boolean = mainVideoCanonicalPath match {
-    case Some(_) => numberOfVideosInTheBody > 0
-    case None => numberOfVideosInTheBody > 1
+  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video")
+
+  lazy val hasMultipleVideosInPage: Boolean = mainMediaVideo.isEmpty match {
+    case true   => numberOfVideosInTheBody > 1
+    case false  => numberOfVideosInTheBody > 0
   }
 
-  lazy val mainVideoCanonicalPath: Option[String] = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").headOption.map { v =>
-    new URL(v.attr("data-canonical-url")).getPath.stripPrefix("/")
-  }
+  lazy val mainVideoCanonicalPath: String = new URL(mainMediaVideo.attr("data-canonical-url")).getPath.stripPrefix("/")
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
