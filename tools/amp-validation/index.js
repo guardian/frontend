@@ -12,7 +12,7 @@ const fetchPage = require('./fetch-page');
  */
 const endpoints = [
     '/commentisfree/2016/aug/09/jeremy-corbyn-supporters-voters-labour-leader-politics', // Comment tone
-    //'/politics/2016/aug/09/tom-watson-interview-jeremy-corbyn-labour-rifts-hug-shout', // Feature tone
+    '/politics/2016/aug/09/tom-watson-interview-jeremy-corbyn-labour-rifts-hug-shout', // Feature tone
     '/travel/2016/aug/09/diggerland-kent-family-day-trips-in-uk', // Review tone
     '/global/2016/aug/09/guardian-weekly-letters-media-statues-predators', // Letters tone
     '/commentisfree/2016/aug/08/the-guardian-view-on-the-southern-train-strike-keep-the-doors-open-for-talks', // Editorials tone
