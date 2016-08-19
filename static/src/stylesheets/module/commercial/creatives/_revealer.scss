@@ -3,9 +3,10 @@
     position: relative;
 
     .creative__cta {
-        background-attachment: fixed;
-        background-size: cover;
-        height: 250px;
+        position: absolute;;
+        height: 100%;
+        width: 100%;
+        clip: rect(0, auto, auto, 0);
     }
 
     .creative__background {
