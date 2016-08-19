@@ -186,8 +186,7 @@
 
 .ad-slot-fabric-expanding-v1 {
     @include mq($until: tablet) {
-        width: 100%;
-        position: relative;
+        width: auto;
         margin-top: 0;
     }
 }
