@@ -109,7 +109,7 @@ define([
 
             function insertOnMobile(item) {
                 // add a mobile advert after the container
-                item.anchor.lastElementChild.appendChild(item.adSlot);
+                bonzo(item.adSlot).insertAfter(item.anchor);
             }
 
             function insertOnTabletPlus(item) {
