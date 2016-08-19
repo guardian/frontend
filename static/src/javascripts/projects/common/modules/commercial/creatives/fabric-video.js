@@ -17,7 +17,6 @@ define([
         var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
-
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
         hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);
