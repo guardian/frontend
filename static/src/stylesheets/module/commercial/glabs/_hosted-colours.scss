@@ -123,16 +123,6 @@ $singaporef1SecondColour: #f0a93f;
 }
 
 .hosted-page.renault {
-    .hosted-next-autoplay {
-        .hosted-next-autoplay__poster-timer,
-        .hosted-next-autoplay__tile {
-            background-color: $renaultColor;
-        }
-        .hosted-next-autoplay__video,
-        .hosted-next-autoplay__next-in-series {
-            border-top: 1px solid $renaultColor;
-        }
-    }
     .hosted__next-video .hosted__next-video--tile {
         border-top-color: $renaultColor;
         background: $renaultLight;
@@ -165,16 +155,6 @@ $singaporef1SecondColour: #f0a93f;
 }
 
 .hosted-page.leffe {
-    .hosted-next-autoplay {
-        .hosted-next-autoplay__poster-timer,
-        .hosted-next-autoplay__tile {
-            background-color: $leffeColor;
-        }
-        .hosted-next-autoplay__video,
-        .hosted-next-autoplay__next-in-series {
-            border-top: 1px solid $leffeColor;
-        }
-    }
     .hosted__next-video .hosted__next-video--tile {
         border-top-color: $leffeColor;
         background: $leffeLight;
