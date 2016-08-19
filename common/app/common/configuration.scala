@@ -440,7 +440,7 @@ class GuardianConfiguration extends Logging {
     lazy val crossAccountMandatoryCredentials = crossAccountCredentials
       .getOrElse(throw new BadConfigurationException("AWS credentials for targeting cross account are not configured"))
 
-    lazy val bucket = configuration.getMandatoryStringProperty("targeting.bucket")
+    lazy val campaignsBucket = configuration.getMandatoryStringProperty("targeting.campaigns.bucket")
   }
 
   object facia {

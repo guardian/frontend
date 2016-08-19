@@ -3,6 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import com.gu.targeting.client.Campaign
 import common.commercial.{BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
@@ -14,7 +15,7 @@ import ophan.SurgingContentAgent
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.libs.json.{JsArray, JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 
 object Commercial {
@@ -391,7 +392,8 @@ trait ContentPage extends Page {
     item.commercial.javascriptConfig ++
     item.content.conditionalConfig ++
     item.content.javascriptConfig ++
-    metadata.javascriptConfigOverrides
+    metadata.javascriptConfigOverrides ++
+    Map("campaigns" -> JsArray(item.content.campaigns.map(Campaign.toJson)))
 
   def getOpenGraphProperties: Map[String, String] =
     metadata.opengraphProperties ++
