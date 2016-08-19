@@ -155,7 +155,7 @@ $gutter-large: 55px;
         bottom: -$gs-gutter / 4;
     }
 
-    .new-header__nav__menu-button & {
+    .new-header__nav__menu-button--open & {
         background-color: transparent;
 
         &:before {

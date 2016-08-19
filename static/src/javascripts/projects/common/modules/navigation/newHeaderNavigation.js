@@ -15,7 +15,6 @@ define([
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
     var veggieBurgerLink = $('.js-change-link');
-    var veggieBurgerIcon = $('.js-animate-menu');
     var primaryItems = $('.js-close-nav-list');
 
     function closeAllOtherPrimaryLists(targetItem) {
