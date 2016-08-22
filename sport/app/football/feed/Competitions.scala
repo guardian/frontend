@@ -9,6 +9,8 @@ import org.joda.time.{DateTimeComparator, LocalDate}
 import org.scala_tools.time.Imports._
 import pa._
 
+import scala.concurrent.Future
+
 
 trait Competitions extends implicits.Football {
 
@@ -170,11 +172,12 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   def refreshMatchDay() = {
     log.info("Refreshing match day data")
-    getLiveMatches.foreach(_.map{ case (compId, newMatches) =>
-      competitionAgents.find(_.competition.id == compId).foreach{ agent =>
+    val result = getLiveMatches.map(_.map{ case (compId, newMatches) =>
+      competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
       }
     })
+    result.map(_.flatten).flatMap(Future.sequence(_))
   }
 }
 

@@ -3,12 +3,15 @@ define(function () {
     var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
     var timings = {};
 
+    // use this time as the start time to resolve Date().getTime() from absolute times to relative times.
+    var startDate = new Date().getTime();
+
     function mark(label) {
 
         if (perf && 'mark' in perf) {
             perf.mark(label);
         } else {
-            timings[label] = new Date();
+            timings[label] = getCurrentTime();
         }
     }
 
@@ -21,8 +24,8 @@ define(function () {
             }
         }
 
-        if (label in timings && 'getTime' in timings[label]) {
-            return timings[label].getTime();
+        if (label in timings) {
+            return timings[label];
         }
     }
 
@@ -30,7 +33,7 @@ define(function () {
         if (perf && 'now' in perf) {
             return perf.now();
         }
-        return new Date().getTime();
+        return new Date().getTime() - startDate;
     }
 
     return {

@@ -17,7 +17,19 @@ define([
             if (resp.ok) {
                 return resp.json();
             } else {
-                throw new Error('Fetch error: ' + resp.statusText);
+                if (!resp.status) {
+                    // IE9 uses XDomainRequest which doesn't set the response status thus failing
+                    // even when the response was actually valid
+                    return resp.text().then(function (responseText) {
+                        try {
+                            return JSON.parse(responseText);
+                        } catch (ex) {
+                            throw new Error('Fetch error: Invalid JSON response');
+                        }
+                    });
+                } else {
+                    throw new Error('Fetch error: ' + resp.statusText);
+                }
             }
         });
     }

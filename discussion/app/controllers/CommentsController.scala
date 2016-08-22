@@ -144,11 +144,11 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
           RevalidatableResult.Ok(views.html.discussionComments.discussionPage(page))
         }
       }
+    } recover {
+      case NonFatal(e) =>
+        log.error(s"Discussion $key cannot be retrieved", e)
+        InternalServerError(s"Discussion $key cannot be retrieved")
     }
-      .recover {
-        case NonFatal(e) =>
-          NotFound(s"Discussion ${key} cannot be retrieved")
-      }
   }
 
   private def getTopComments(key: DiscussionKey)(implicit request: RequestHeader): Future[Result] = {

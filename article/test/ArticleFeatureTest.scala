@@ -136,7 +136,7 @@ import collection.JavaConversions._
 
         And("I should see the image url")
         findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
-          endWith("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=a3609bca562f97c2c3b80fd2d625c132")
+          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=")
 
         And("I should see the image width")
         findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
@@ -383,7 +383,7 @@ import collection.JavaConversions._
 
         And("video meta thumbnailUrl should be set")
         findFirst("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").getAttribute("content") should
-          endWith("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=55&auto=format&usm=12&fit=max&s=d113cafb7eb9b6e05e71352c83f0c4bf")
+          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=55&auto=format&usm=12&fit=max&s=")
 
         And("video meta uploadDate should be set")
         findFirst("[itemprop='associatedMedia video'] [itemprop=uploadDate]").getAttribute("content") should be("2014-05-16T16:09:34.000+01:00")

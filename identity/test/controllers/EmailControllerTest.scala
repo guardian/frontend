@@ -100,7 +100,9 @@ import actions.AuthenticatedActions
 
         "include the error message on the page" in {
           val result = emailController.savePreferences()(authRequest)
-          contentAsString(result).contains(error.description) should equal(true)
+          contentAsString(result)
+          val content = contentAsString(result)
+          content should include("There was an error saving your preferences")
         }
       }
     }

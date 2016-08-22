@@ -50,8 +50,12 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     order: 1;
     justify-content: space-between;
 
-    @include mq($until: mobileLandscape) {
-        font-size: 5.1vw;
+    @include mq($until: mobile) {
+        font-size: 16px;
+    }
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 5.2vw;
     }
 
     @include mq(mobileLandscape) {
@@ -77,22 +81,45 @@ $gutter-large: 55px;
     z-index: $zindex-modal;
     background-color: $news-main-2;
 
+    &--open:before {
+        // Extended hit area for veggie burger close state, for fat fingers
+        content: '';
+        position: absolute;
+    }
+
     @include mq($until: $mobile-medium) {
         //Smaller menu button
         height: $veggie-burger-small;
-        width: $veggie-burger-small;
+        min-width: $veggie-burger-small;
         margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-small;
+
+        &--open:before {
+            height: $veggie-burger-small * 2;
+            width: $veggie-burger-small;
+            top: -$veggie-burger-small / 2;
+            right: $veggie-burger-small / 2;
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+        }
     }
 
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
+        margin-top: -$gs-baseline / 1.5;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-medium;
+
+        &--open:before {
+            height: $veggie-burger-medium * 2;
+            width: $veggie-burger-medium;
+            top: -$veggie-burger-medium / 2;
+            right: $veggie-burger-medium / 2;
+            border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+        }
     }
 
     @include mq(mobileLandscape) {
@@ -101,7 +128,7 @@ $gutter-large: 55px;
     }
 }
 
-.new-header__burger-icon {
+.new-header__veggie-burger-icon {
     top: 50%;
     display: block;
     margin-top: -($gs-baseline / 6) / 2;
@@ -128,7 +155,7 @@ $gutter-large: 55px;
         bottom: -$gs-gutter / 4;
     }
 
-    &--open {
+    .new-header__nav__menu-button--open & {
         background-color: transparent;
 
         &:before {
@@ -150,9 +177,13 @@ $gutter-large: 55px;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-
     order: -1;
     margin-left: $gs-gutter / 2;
+
+    @include mq($until: mobile) {
+        overflow: hidden;
+        height: 1.6em;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -163,25 +194,31 @@ $gutter-large: 55px;
     // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
+    position: relative;
 
     &:first-child .new-header__nav__link {
-        margin-left: 0;
+        padding-left: 0;
     }
 
-    &:not(:last-child) {
-        &:after {
-            content: '/';
-            color: $news-main-2;
-        }
+    &:before {
+        position: absolute;
+        content: '/';
+        //optically aligns slashes
+        left: -.15em;
+        color: $news-main-2;
+    }
+
+    &:first-child:before {
+        content: none;
     }
 }
 
 .new-header__nav__link {
     // Override a from _lists.scss
     color: #ffffff;
-    // Optically aligns slashes
-    margin-left: 2px;
-    margin-right: -1px;
+    padding-left: .3em;
+    padding-right: .3em;
+    display: inline-block;
 
     &:focus,
     &:hover {
@@ -204,6 +241,10 @@ $gutter-large: 55px;
     padding-left: $gs-gutter / 2;
     width: gs-span(2);
     z-index: $zindex-sticky;
+
+    @include mq($until: mobile) {
+        display: none;
+    }
 
     // Smaller size compensates for how big the word "Australia" is
     @include mq($until: $mobile-medium) {
@@ -422,25 +463,28 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .main-navigation__icon {
-    top: .14em;
+    top: .26em;
 
     &:before {
         content: '';
         display: inline-block;
-        width: .41em;
-        height: .41em;
+        width: .4em;
+        height: .4em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
-        border-right: 0;
+        border-left: 0;
+        //optical alignment
+        margin-left: -.2em;
     }
 
     details[open] &:before {
-        transform: rotate(135deg);
+        transform: rotate(45deg);
+        margin-left: 0;
     }
 
     details[open] & {
-        top: .35em;
+        top: .08em;
     }
 }
 

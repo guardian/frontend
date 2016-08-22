@@ -12,7 +12,8 @@ object Formula1HostedPages {
     owner = "First Stop Singapore",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
     cssClass = "f1-singapore",
-    mainColour = "#063666",
+    brandColour = "#063666",
+    brightFont = true,
     logoLink = None
   )
 
@@ -49,7 +50,7 @@ object Formula1HostedPages {
                  "Paddock when you first walk in on Thursday afternoon \n\nand it never goes away.' Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda",
     cta(packagesPageName),
     nextPageNames = List(offtrackPageName, overviewPageName),
-    mainPicture = "https://media.guim.co.uk/b77d7b65b89fc0cc9dec0ce0ccb4250044b9367e/0_47_1504_902/1000.png",
+    mainPicture = "https://media.guim.co.uk/5dfce3ee95c325437fd26d1757a5a9032c514400/0_0_3008_1997/2000.jpg",
     mainPictureCaption = ""
   )
 

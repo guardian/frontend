@@ -3,22 +3,17 @@
     position: relative;
 
     .creative__cta {
-        background-attachment: fixed;
-        background-size: cover;
-        height: 250px;
+        position: absolute;;
+        height: 100%;
+        width: 100%;
+        clip: rect(0, auto, auto, 0);
     }
 
     .creative__background {
         position: fixed;
         height: 100%;
         top: 0;
-        left: $gs-gutter / 2;
-        right: $gs-gutter / 2;
-
-        @include mq(mobileLandscape) {
-            left: $gs-gutter;
-            right: $gs-gutter;
-        }
+        transform: translate(-50%, 0);
     }
 
     .creative__button {

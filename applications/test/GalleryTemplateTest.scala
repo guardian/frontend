@@ -1,3 +1,4 @@
+
 package test
 
 import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
@@ -18,14 +19,6 @@ import scala.collection.JavaConversions._
   it should "render all images in the gallery" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
     $(".gallery__item:not(.gallery__item--advert)").length should be (22)
-  }
-
-  it should "render adverts" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
-    import browser._
-    val ads = $(".gallery__item--advert")
-    ads.length should be (2)
-    ads.get(0).find("#dfp-ad--inline1").length should be (1)
-    ads.get(1).find("#dfp-ad--inline2").length should be (1)
   }
 
   it should "show the twitter card meta-data" in goTo("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>

@@ -392,6 +392,7 @@ define([
         fastdom.write(function () {
             $header.css('width', imageWidth);
             $footer.css('margin', '0 ' + leftRight);
+            $footer.css('width', 'auto');
             $progress.css('right', leftRight);
             bonzo($ctaFloat).css('left', leftRight);
             bonzo($ojFloat).css('left', leftRight);

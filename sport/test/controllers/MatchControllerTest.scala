@@ -12,7 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestFootballClient
   with FootballTestData {
 
-  val matchController = new MatchController(testCompetitionsService, testFootballClient)
+  val matchController = new MatchController(testCompetitionsService)
 
   "MatchController" should "redirect to results when match is not found" in {
     val result = matchController.renderMatchId("12345")(TestRequest())

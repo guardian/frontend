@@ -18,9 +18,6 @@
             border-left: 0;
         }
     }
-    .lineitem--v-high {
-        float: none;
-    }
     .lineitem__link {
         &:hover {
             text-decoration: none;
@@ -77,105 +74,5 @@
     }
     .lineitem__price {
         color: $neutral-1;
-    }
-    /* Line items - high relevance */
-    .lineitem--high {
-        width: 100%;
-        @include mq($until: tablet) {
-            padding-right: 0;
-        }
-    }
-    .lineitem--high__feature {
-        box-sizing: border-box;
-        width: 50%;
-        float: right;
-        padding-left: $gs-gutter/2;
-    }
-    .lineitem--high__offer {
-        box-sizing: border-box;
-        width: 50%;
-        float: left;
-        padding: 0 $gs-gutter/2 0 0;
-    }
-
-    /* Line items - low relevance */
-    .lineitem--low {
-        @include mq($until: tablet) {
-            width: 100%;
-            border-left: 0;
-            border-top: 1px solid $neutral-3;
-            padding: $gs-baseline/2 0;
-            position: relative;
-
-            .lineitem__title {
-                padding-right: $gs-gutter*5;
-            }
-            .lineitem__cta {
-                margin-right: 0;
-                position: absolute;
-                top: $gs-baseline/2;
-                right: 0;
-            }
-        }
-        @include mq(tablet) {
-            width: percentage(1/2);
-            padding: 0 $gs-gutter/2;
-
-            &:first-child {
-                border-left: 1px solid $neutral-4;
-            }
-        }
-    }
-
-    /* High relevance container */
-    .commercial__relevance--high {
-        box-sizing: border-box;
-        @include mq(tablet) {
-            padding-bottom: $gs-baseline;
-        }
-        @include mq(tablet) {
-            width: percentage(1/2);
-            float: left;
-            padding-bottom: 0;
-        }
-
-        .lineitems {
-            margin: 0;
-            @include mq(tablet) {
-                margin-left: $gs-gutter*-.5;
-            }
-        }
-        .lineitem--high {
-            padding-left: 0;
-
-            @include mq($until: tablet) {
-                padding-bottom: $gs-baseline/2;
-            }
-
-            @include mq(tablet) {
-                padding-left: $gs-gutter*.5;
-            }
-
-            .lineitem__title {
-                min-height: 0;
-            }
-        }
-    }
-
-    /* Low relevance container */
-    .commercial__relevance--low {
-        box-sizing: border-box;
-        @include mq(tablet) {
-            padding-left: $gs-gutter/2;
-            width: percentage(1/2);
-            float: left;
-        }
-
-        .lineitems {
-            margin: 0;
-            @include mq(tablet) {
-                margin: 0 $gs-gutter*-.5;
-            }
-        }
     }
 }

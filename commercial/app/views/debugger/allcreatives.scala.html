@@ -43,6 +43,8 @@
         background-attachment: fixed;
         background-position: 50% 0;
     }
+    .adverts--items-3 .advert:nth-child(3) ~ .advert,
+    .adverts--items-2 .advert:nth-child(2) ~ .advert { display: none; }
 </style>
 
 <div class="l-side-margins">
@@ -132,12 +134,12 @@
                     var $number        = $('#dfp-number'),
                         itemNumClasses = ['2', '3', '4']
                             .map(function (num) {
-                                return 'commercial--items-dfp-' + num;
+                                return 'adverts--items-' + num;
                             });
                     bean.on($number[0], 'change', function () {
-                        $('.commercial--dfp-multiple')
+                        $('#multiple1 > .adverts')
                             .removeClass(itemNumClasses.join(' '))
-                            .addClass('commercial--items-dfp-' + $number.val());
+                            .addClass('adverts--items-' + $number.val());
                     });
 
                     var $palette    = $('#dfp-palette'),
