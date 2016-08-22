@@ -55,7 +55,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
             heading.remove()
           } else {
             val headingHtml = heading.html();
-            heading.html(headingHtml.replaceFirst("^([0-9]+)[.]*[ ]*", "<span class=\"block--minute-article--counter\">$1 </span>"))
+            heading.html(headingHtml.replaceFirst("^([0-9]+)[.]{1}[ ]*", "<span class=\"block--minute-article--counter\">$1 </span>"))
           }
         })
 
