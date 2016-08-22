@@ -90,7 +90,7 @@ trait ABTestSwitches {
     "Sign up for an email to remind you about the next item in a series",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 8, 19),
+    sellByDate = new LocalDate(2016, 8, 23),
     exposeClientSide = true
   )
 
