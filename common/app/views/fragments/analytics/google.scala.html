@@ -14,6 +14,14 @@
         return result;
     }
 
+    function getQueryParam(key) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        var pairs = vars.map(function(x) { return x.split('=')});
+        return pairs.filter(function(xs) { return xs.length == 2 && xs[0] == key })
+            .map(function(xs) { return xs[1] })[0];
+    }
+
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
     ***************************************************************************************@
@@ -55,6 +63,7 @@
         ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
         ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
         ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
+        ga('@{trackerName}.set', 'dimension21', getQueryParam('INTCMP')); @* internal campaign code *@
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
