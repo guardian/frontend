@@ -38,6 +38,17 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
+object CommercialSonobiTest extends TestDefinition(
+  name = "commercial-sonobi",
+  description = "A url-based test for testing the sonobi header-bidding integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 10, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.uri.endsWith("politics/2016/aug/22/owen-smith-and-jeremy-corbyn-pledge-to-hand-power-back-to-party-members")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -52,7 +63,8 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
-    CommercialClientLoggingVariant
+    CommercialClientLoggingVariant,
+    CommercialSonobiTest
   )
 }
 
@@ -62,7 +74,7 @@ abstract case class TestDefinition (
   owners: Seq[Owner],
   sellByDate: LocalDate
 ) {
-  val switch: Switch = Switch(
+  val switch: common.Switchable = Switch(
     SwitchGroup.ServerSideABTests,
     name,
     description,
@@ -72,7 +84,7 @@ abstract case class TestDefinition (
     exposeClientSide = true
   )
 
-  private def isSwitchedOn: Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  protected def isSwitchedOn: Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
 
   def canRun(implicit request: RequestHeader): Boolean
   def isParticipating(implicit request: RequestHeader): Boolean = isSwitchedOn && canRun(request)
