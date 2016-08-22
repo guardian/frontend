@@ -179,6 +179,10 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
+  object sonobi {
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//mtrx.go.sonobi.com/morpheus.js")
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
@@ -394,19 +398,19 @@ class GuardianConfiguration extends Logging {
 
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
-    // But does not change across environments
-    // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
+    // But does not change across environments.
     lazy val config: Map[String, String] = Map(
-      "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
-      "idApiUrl" -> id.apiRoot,
-      "idOAuthUrl" -> id.oauthUrl,
-      "discussionApiClientHeader" -> discussion.apiClientHeader,
-      "discussionD2Uid" -> discussion.d2Uid,
+      ("googleSearchUrl", "//www.google.co.uk/cse/cse.js"),
+      ("idApiUrl", id.apiRoot),
+      ("idOAuthUrl", id.oauthUrl),
+      ("discussionApiClientHeader", discussion.apiClientHeader),
+      ("discussionD2Uid", discussion.d2Uid),
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
-      ("stripePublicToken", id.stripePublicToken)
+      ("stripePublicToken", id.stripePublicToken),
+      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
