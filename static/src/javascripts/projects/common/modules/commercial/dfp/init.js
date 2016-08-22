@@ -3,6 +3,7 @@ define([
     'qwery',
     'bonzo',
     'raven',
+    'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/build-page-targeting',
@@ -13,18 +14,25 @@ define([
 
     // These are cross-frame protocol messaging routines:
     'common/modules/commercial/dfp/private/get-stylesheet'
-], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
+], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
 
 
     return init;
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            return setupAdvertising();
+            var initialTag = config.tests.commercialSonobi ? setupTags() : Promise.resolve();
+            return initialTag.then(setupAdvertising());
         }
 
         return fastdom.write(function () {
             bonzo(qwery(dfpEnv.adSlotSelector)).remove();
+        });
+    }
+
+    function setupTags() {
+        return new Promise(function(resolve) {
+             require(['js!sonobi.js']).then(resolve);
         });
     }
 
