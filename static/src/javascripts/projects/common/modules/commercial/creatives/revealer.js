@@ -16,7 +16,6 @@ define([
 
         function create() {
             var markup = revealerTpl(params);
-            var isDesktop = detect.isBreakpoint({ min: 'desktop' });
 
             return fastdom.write(function () {
                 $adSlot[0].insertAdjacentHTML('beforeend', markup);
@@ -29,10 +28,8 @@ define([
                     return $adSlot[0].getBoundingClientRect();
                 });
             }).then(function (adSlotRect) {
-                if( isDesktop ) {
-                    var background = $adSlot[0].getElementsByClassName('creative__background')[0];
-                    background.style.left = adSlotRect.left + 'px';
-                }
+                var background = $adSlot[0].getElementsByClassName('creative__background')[0];
+                background.style.left = (adSlotRect.left + adSlotRect.width / 2) + 'px';
                 return true;
             });
         }
