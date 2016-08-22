@@ -22,7 +22,7 @@ define([
             return Promise.resolve(false);
         }
 
-        var containerSelector = '.js-gallery-slot"';
+        var containerSelector = '.js-gallery-slot';
         var adContainers;
         var isMobile = detect.getBreakpoint() === 'mobile';
         var classNames = ['gallery-inline', 'dark'];
@@ -43,7 +43,7 @@ define([
                 adSlot = createSlot('inline' + (index), classNames);
             }
             else if (!isMobile) {
-                adSlot = createSlot('inline' + (index+1), classNames);
+                adSlot = createSlot('inline' + (index + 1), classNames);
             }
 
             return {
@@ -60,9 +60,9 @@ define([
 
             adContainers.forEach(insertSlot);
 
-        function insertSlot(item) {
-            item.anchor.appendChild(item.adSlot);
-        }
+            function insertSlot(item) {
+                item.anchor.appendChild(item.adSlot);
+            }
 
     });
 
