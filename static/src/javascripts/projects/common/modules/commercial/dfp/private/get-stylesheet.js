@@ -4,11 +4,11 @@ define([
     var aProto = Array.prototype;
 
     messenger.register('get-styles', function(specs) {
-        return getStyles(specs, document.styleSheets, 'matches');
+        return getStyles(specs, document.styleSheets);
     });
     return getStyles;
 
-    function getStyles(specs, styleSheets, matches) {
+    function getStyles(specs, styleSheets) {
         if (!specs || typeof specs.selector !== 'string') {
             return null;
         }
@@ -18,11 +18,11 @@ define([
         var result = [];
         while (i < ii) {
             var sheet = styleSheets[i++];
-            if (!sheet.ownerNode || !sheet.ownerNode[matches]) {
+            if (!sheet.ownerNode || !sheet.ownerNode.matches) {
                 continue;
             }
 
-            if (!sheet.ownerNode[matches](specs.selector)) {
+            if (!sheet.ownerNode.matches(specs.selector)) {
                 continue;
             }
 
