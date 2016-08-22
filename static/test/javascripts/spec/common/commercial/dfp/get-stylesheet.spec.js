@@ -55,20 +55,20 @@ define([
         });
 
         it('should return all webfonts available', function () {
-            var result = getStyles({ selector: '.webfont' }, styleSheets, 'matches');
+            var result = getStyles({ selector: '.webfont' }, styleSheets);
             expect(result).not.toBeNull();
             expect(result.length).toBe($('.webfont').length);
         });
 
         it('should return only the GuardianSansWeb webfont', function () {
-            var result = getStyles({ selector: '.webfont[data-cache-name="GuardianSansWeb"]' }, styleSheets, 'matches');
+            var result = getStyles({ selector: '.webfont[data-cache-name="GuardianSansWeb"]' }, styleSheets);
             expect(result).not.toBeNull();
             expect(result.length).toBe($('.webfont[data-cache-name="GuardianSansWeb"]').length);
         });
 
         it('should return only the GuardianSansWeb and GuardianSansTextWeb webfonts', function () {
             var selector = '.webfont[data-cache-name="GuardianSansWeb"], .webfont[data-cache-name="GuardianSansWeb"]';
-            var result = getStyles({ selector: selector }, styleSheets, 'matches');
+            var result = getStyles({ selector: selector }, styleSheets);
             expect(result).not.toBeNull();
             expect(result.length).toBe($(selector).length);
         });
