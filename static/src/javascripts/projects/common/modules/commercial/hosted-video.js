@@ -36,7 +36,6 @@ define([
     loadingTmpl
 ) {
     var player;
-    var nextVideoInterval;
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -58,33 +57,6 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function nextVideoTimer(duration, $timer, nextVideoLink) {
-        return setInterval(function () {
-            if (duration === 0) {
-                omniture.trackLinkImmediate('Immediately play the next video');
-                mediator.emit('hosted video: autoredirect');//inform AB framework about the success
-                window.location = nextVideoLink;
-            }
-            fastdom.write(function () {
-                $timer.text(duration + 's');
-                duration = duration - 1;
-            });
-        }, 1000);
-    }
-
-    function cancelAutoplay($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('hosted-slide-out');
-        });
-        clearInterval(nextVideoInterval);
-    }
-
-    function cancelAutoplayMobile($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('u-h');
-        });
-    }
-
     function init() {
         return new Promise(function (resolve) {
             require(['bootstraps/enhanced/media/main'], function () {
@@ -102,8 +74,6 @@ define([
 
                     player.ready(function () {
                         var vol;
-                        var duration = parseInt(this.duration(), 10);
-                        var $hostedNext = $('.js-hosted-next-autoplay');
                         initLoadingSpinner(player);
                         upgradeVideoPlayerAccessibility(player);
 
@@ -134,53 +104,6 @@ define([
                                 }, false);
                             }
                         });
-
-                        if ($hostedNext.length && ab.getParticipations().HostedAutoplay
-                            && (ab.getParticipations().HostedAutoplay.variant === 'variant1' || ab.getParticipations().HostedAutoplay.variant === 'variant2')) {
-                            if (ab.getParticipations().HostedAutoplay.variant === 'variant2') {
-                                fastdom.write(function () {
-                                    $hostedNext.addClass('hosted-next-autoplay--variant2');
-                                });
-                            }
-                            fastdom.write(function () {
-                                $('.js-hosted-fading').addClass('hosted-autoplay-ab');
-                            });
-
-                            //on desktop show the next video link 10 second before the end of the currently watching video
-                            if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-                                player.on('timeupdate', function () {
-                                    var currentTime = parseInt(this.currentTime(), 10);
-                                    var time = 10; //seconds before the end when to show the timer
-
-                                    if (duration - currentTime <= time) {
-                                        player.off('timeupdate');
-
-                                        var $timer = $('.js-autoplay-timer');
-                                        var nextVideoPage;
-
-                                        if ($timer.length) {
-                                            nextVideoPage = $timer.data('next-page');
-                                            nextVideoInterval = nextVideoTimer(time, $timer, nextVideoPage);
-                                            fastdom.write(function () {
-                                                $hostedNext.addClass('js-autoplay-start');
-                                            });
-                                            bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                                cancelAutoplay($hostedNext);
-                                            });
-                                        }
-                                    }
-                                });
-                            } else {
-                                player.one('ended', function () {
-                                    fastdom.write(function () {
-                                        $hostedNext.addClass('js-autoplay-start');
-                                    });
-                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                        cancelAutoplayMobile($hostedNext);
-                                    });
-                                });
-                            }
-                        }
                     });
 
                     resolve();

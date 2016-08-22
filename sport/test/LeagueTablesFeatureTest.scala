@@ -10,7 +10,10 @@ import org.scalatest._
   with GivenWhenThen
   with Matchers
   with ConfiguredTestSuite
-  with FootballTestData {
+  with FootballTestData
+  with WithTestFootballClient
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   feature("League Tables") {
 

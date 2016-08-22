@@ -78,7 +78,7 @@ data-test-id="facia-card"
             case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img js-crossword-thumbnail" alt=""
+                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img" alt=""
                         role="presentation" data-crossword-id="@svg.persistenceId" ></object>
                     </div>
                 </div>
@@ -178,4 +178,3 @@ data-test-id="facia-card"
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
-

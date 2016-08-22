@@ -441,25 +441,28 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .main-navigation__icon {
-    top: .14em;
+    top: .26em;
 
     &:before {
         content: '';
         display: inline-block;
-        width: .41em;
-        height: .41em;
+        width: .4em;
+        height: .4em;
         border: 2px solid $news-support-2;
         transform: rotate(-45deg);
         border-top: 0;
-        border-right: 0;
+        border-left: 0;
+        //optical alignment
+        margin-left: -.2em;
     }
 
     details[open] &:before {
-        transform: rotate(135deg);
+        transform: rotate(45deg);
+        margin-left: 0;
     }
 
     details[open] & {
-        top: .35em;
+        top: .08em;
     }
 }
 
