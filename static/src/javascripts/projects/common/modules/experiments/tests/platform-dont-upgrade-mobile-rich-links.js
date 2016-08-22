@@ -1,4 +1,8 @@
-define([], function () {
+define([
+    'common/utils/config'
+], function (
+    config
+) {
     return function () {
         this.id = 'DontUpgradeMobileRichLinks';
         this.start = '2016-08-18';
@@ -11,9 +15,9 @@ define([], function () {
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = 'Happier users & no major drop in article visits per browser per day';
-        
+
         this.canRun = function () {
-            return true;
+            return config.page.isContent;
         };
 
         this.variants = [
