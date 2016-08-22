@@ -86,12 +86,12 @@ define([
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
-                    url: 'https://graph.facebook.com/' + url,
+                    url: 'https://graph.facebook.com/' + url, //TODO: use recent Graph API endpoint format (versioned) https://developers.facebook.com/docs/graph-api/reference/v2.7/url
                     type: 'json',
                     method: 'get',
                     crossOrigin: true
                 }).then(function (resp) {
-                    var count = resp.shares || 0;
+                    var count = resp.share && resp.share.share_count || 0;
                     counts.facebook = count;
                     addToShareCount(count);
                     updateTooltip();

@@ -17,7 +17,7 @@
 }
 
 @defining(model.article) { article =>
-  @defining(isPaidContent(model.article, model)) { isPaidContent =>
+  @defining(isPaidContent(article, model)) { isPaidContent =>
 
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
