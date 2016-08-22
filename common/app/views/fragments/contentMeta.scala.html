@@ -65,7 +65,7 @@
 
 
     @if(
-        (showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) ||
+        (staticBadgesSwitch.isSwitchedOff && showBadge && (item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !item.commercial.isAdvertisementFeature))) ||
             (staticBadgesSwitch.isSwitchedOn && (item.tags.isVideo || item.tags.isAudio))
     ) {
         @fragments.commercial.badge(item, page)

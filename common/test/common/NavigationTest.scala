@@ -34,8 +34,8 @@ class NavigationTest extends FlatSpec with Matchers with OptionValues {
   "US full nav" should "not contain 'membership'" in {
     Us.navigation.filter(_.name.title == "membership").isEmpty shouldEqual true
   }
-  "AU full nav" should "not contain 'membership'" in {
-    Au.navigation.filter(_.name.title == "membership").isEmpty shouldEqual true
+  "AU full nav" should "contain 'membership'" in {
+    Au.navigation.filter(_.name.title == "membership").isEmpty shouldEqual false
   }
   "UK full nav" should "not contain 'education' or 'media'" in {
     Uk.navigation.filter(n => n.name.title == "education" || n.name.title == "media").isEmpty shouldEqual true

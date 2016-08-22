@@ -1,32 +1,33 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.RenderClasses
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 
-@body(page.interactive, page.item.content.isImmersive)
+@body(page.interactive, page.item.content.isImmersive, isPaidContent(page.interactive, page))
 
 @bodyRaw(interactive: model.Interactive) = {
-    @page.interactive.maybeBody.map { body =>
+    @interactive.maybeBody.map { body =>
         @HtmlFormat.raw(body)
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
 }
 
-@body(interactive: model.Interactive, isImmersive: Boolean) = {
+@body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
     <div class="l-side-margins">
         <article id="article" class="@RenderClasses(
                 Map(
-                    "content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature,
+                    "content--advertisement-feature" -> isPaidContent,
                     "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
                     "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
-                    "paid-content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature
+                    "paid-content--advertisement-feature" -> isPaidContent
                 ),
                 "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
             )"
             itemscope itemtype="@interactive.metadata.schemaType" role="main">
 
-            @if(interactive.commercial.isAdvertisementFeature){
+            @if(isPaidContent){
                 @fragments.guBand()
             }
 
@@ -57,15 +58,13 @@
             </div>
         </article>
 
-        @fragments.contentFooter(interactive, page.related)
+        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
 
     </div>
 
     @if(isImmersive) {
-        <div class="@RenderClasses(Map(
-                    "paid-content--advertisement-feature" -> interactive.commercial.isAdvertisementFeature
-                ))">
-                @interactive.figureEl.map(HtmlFormat.raw(_))
+        <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
+          @interactive.figureEl.map(HtmlFormat.raw(_))
         </div>
     }
 }

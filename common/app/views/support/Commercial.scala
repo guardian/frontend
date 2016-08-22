@@ -1,13 +1,14 @@
 package views.support
 
 import common.Edition
-import common.editions.Uk
-import common.commercial.{Branding, CardContent, ContainerModel, PaidContent}
+import common.Edition.defaultEdition
+import common.commercial.{Sponsored, _}
 import common.dfp._
-import conf.switches.Switches.containerBrandingFromCapi
+import conf.switches.Switches.{containerBrandingFromCapi, staticBadgesSwitch}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag, Tags}
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -16,6 +17,28 @@ object Commercial {
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
+  }
+
+  private def isBrandedContent(
+    dfpDependentCondition: => Boolean,
+    page: Page,
+    edition: Edition,
+    sponsorshipType: SponsorshipType
+  ): Boolean = {
+    (staticBadgesSwitch.isSwitchedOff && dfpDependentCondition) ||
+    (staticBadgesSwitch.isSwitchedOn && page.branding(edition).exists(_.sponsorshipType == sponsorshipType))
+  }
+
+  def isPaidContent(item: ContentType, page: Page): Boolean =
+    isBrandedContent(item.commercial.isAdvertisementFeature, page, defaultEdition, PaidContent)
+
+  def isSponsoredContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+    val edition = Edition(request)
+    isBrandedContent(item.commercial.isSponsored(Some(edition)), page, edition, Sponsored)
+  }
+
+  def isFoundationFundedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+    isBrandedContent(item.commercial.isFoundationSupported, page, defaultEdition, Foundation)
   }
 
   private def hasAdOfSize(slot: AdSlot,
