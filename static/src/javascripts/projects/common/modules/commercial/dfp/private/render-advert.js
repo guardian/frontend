@@ -112,10 +112,12 @@ define([
     sizeCallbacks[adSizes.fabric] = function(event, advert) {
         var node = advert.node;
         var closestFcContainer = closest(node, '.fc-container');
+        var sectionContainer = bonzo(bonzo.create('<section>'));
 
         if (closestFcContainer) {
             fastdom.write(function () {
-                bonzo(node).insertAfter(closestFcContainer);
+                sectionContainer.append(node);
+                sectionContainer.insertAfter(closestFcContainer);
             });
         }
 
