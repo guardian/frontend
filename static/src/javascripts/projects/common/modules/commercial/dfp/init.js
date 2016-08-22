@@ -22,7 +22,7 @@ define([
     function init() {
         if (commercialFeatures.dfpAdvertising) {
             var initialTag = config.tests.commercialSonobi ? setupTags() : Promise.resolve();
-            return initialTag.then(setupAdvertising());
+            return initialTag.then(setupAdvertising);
         }
 
         return fastdom.write(function () {
