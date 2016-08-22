@@ -473,9 +473,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--membership-message-deep-purple {
     background: #7d0068;
 }
-.site-message--membership-message-orange {
+.site-message--membership-message-yellow {
     @include site-message-dark-text;
-    background: #ffbb00;
+    background: #fff200;
 }
 .site-message--membership-message-vibrant-blue {
     @include site-message-dark-text;
@@ -488,6 +488,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--membership-message-teal {
     @include site-message-dark-text;
     background: #69d1ca;
+}
+.site-message--contributions-message {
+    @include site-message-dark-text;
+    background: #ffbb00;
 }
 
 /*

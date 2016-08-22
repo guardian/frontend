@@ -8,13 +8,7 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the live matches list" - {
     "for today" - {
-      val matches = new MatchDayList(competitions, today)
-
-//      ignore "should be showing all today's matches from the test data" in {
-//        matches.relevantMatches.map { case (fmatch, _) =>
-//          fmatch.id
-//        }.sortBy(_.toInt) should equal(List("4", "5", "6", "7", "8", "31", "32", "33"))
-//      }
+      val matches = new MatchDayList(competitions.competitions, today)
 
       "matches should be ordered by datetime" in {
         val matchDates = matches.relevantMatches.map { case (fMatch, _) => fMatch.date }
@@ -52,28 +46,8 @@ import test.ConfiguredTestSuite
       }
     }
 
-//    "for a specified day in the future" - {
-//      val matches = new MatchDayList(competitions, today.plusDays(1))
-//
-//      ignore "should be showing all that day's fixtures from the test data" in {
-//        matches.relevantMatches.map { case (fmatch, _) =>
-//          fmatch.id
-//        }.sortBy(_.toInt) should equal(List("9", "34"))
-//      }
-//    }
-
-    "for a specified day in the past" - {
-      val matches = new MatchDayList(competitions, today.minusDays(1))
-
-//       ignore "should be showing all that day's results from the test data" in {
-//        matches.relevantMatches.map { case (fmatch, _) =>
-//          fmatch.id
-//        }.sortBy(_.toInt) should equal(List("3"))
-//      }
-    }
-
     "if there are no matches on the given day" - {
-      val matches = new MatchDayList(competitions, today.minusDays(20))
+      val matches = new MatchDayList(competitions.competitions, today.minusDays(20))
 
       "should be empty" in {
         matches.relevantMatches.size should equal(0)
@@ -82,7 +56,7 @@ import test.ConfiguredTestSuite
   }
 
   "the competition group matches" - {
-    val matches = new CompetitionRoundMatchesList(competitions, competition1, round2)
+    val matches = new CompetitionRoundMatchesList(competitions.competitions, competition1, round2)
 
     "should get all matches for the specified round and competition" in {
       matches.relevantMatches.map { case (fMatch, _) => fMatch.id } should equal(List("3", "8", "12"))

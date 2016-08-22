@@ -18,10 +18,23 @@ installed() {
 }
 
 nvm_installed() {
-  if [ -d '/usr/local/Cellar/nvm' ] || [ -d "$HOME/.nvm" ]; then
+  if [ -d '/usr/local/opt/nvm' ] || [ -d "$HOME/.nvm" ]; then
     true
   else
     false
+  fi
+}
+
+nvm_available() {
+  type -t nvm > /dev/null
+}
+
+source_nvm() {
+  if ! nvm_available; then
+    [ -e "/usr/local/opt/nvm/nvm.sh" ] && source /usr/local/opt/nvm/nvm.sh
+  fi
+  if ! nvm_available; then
+    [ -e "$HOME/.nvm/nvm.sh" ] && source $HOME/.nvm/nvm.sh
   fi
 }
 
@@ -56,7 +69,7 @@ create_frontend_properties() {
     if [[ ! -d "$path" ]]; then
       mkdir "$path"
     fi
-    
+
     if linux; then
         EXTRA_STEPS+=("Sorry, can't check if your hard disk is encryped so won't download frontend.properties.  Please check (applies to both portable and Desktop machines) and download from s3://aws-frontend-store/template-frontend.properties")
     elif mac; then
@@ -66,7 +79,7 @@ create_frontend_properties() {
         aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
       fi
     fi
-    
+
   fi
 }
 
@@ -114,6 +127,11 @@ install_node() {
 
     nvm install
     EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
+  else
+    if ! nvm_available; then
+      source_nvm
+    fi
+    nvm install
   fi
 }
 

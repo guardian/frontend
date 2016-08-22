@@ -7,11 +7,9 @@
  */
 define([
     'common/utils/mediator',
-    'common/modules/experiments/ab',
     'lodash/collections/where'
 ], function (
     mediator,
-    ab,
     where
 ) {
     var register = [],

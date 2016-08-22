@@ -13,6 +13,7 @@ import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
 
 import scala.collection.JavaConversions._
+import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 object SystemMetrics extends implicits.Numbers {
@@ -223,7 +224,7 @@ class CloudWatchMetricsLifecycle(
 
     // Log heap usage every 5 seconds.
     if (Configuration.environment.isProd) {
-      jobs.scheduleEveryNSeconds("LogMetricsJob", 5) {
+      jobs.scheduleEvery("LogMetricsJob", 5.seconds) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
         log.info(s"heap used: ${heapUsed}Mb")
         Future.successful(())

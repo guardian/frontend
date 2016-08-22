@@ -1,5 +1,11 @@
 @(webPublicationDate: org.joda.time.DateTime, lastModified: org.joda.time.DateTime, hasBeenModified: Boolean, isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 @import views.support.AuFriendlyFormat
+@import conf.switches.Switches.AmpLiveBlogNewsArticleSwitch
+
+@* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
+@isAmpAndStructuredAsNewsArticle() = @{
+    request.isAmp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
+}
 
 <p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}" aria-hidden="true">
     <time itemprop="datePublished" datetime='@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
@@ -10,7 +16,8 @@
             @Format(webPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
         }
     </time>
-    @if(isLiveBlog) {
+    @* Aug 2016: disable coverage start time for AMP Live Blogs, which currently have an article type of NewsArticle *@
+    @if(isLiveBlog && !isAmpAndStructuredAsNewsArticle()) {
         <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
     @if(hasBeenModified && !isMinute) {
@@ -19,7 +26,8 @@
             Last modified on @Format(lastModified, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(lastModified)</span>
         </time>
     }
-    @if(isLiveBlog && !isLive) {
+    @* Aug 2016: disable coverage end time for AMP Live Blogs, which currently have an article type of NewsArticle *@
+    @if(isLiveBlog && !isLive && !isAmpAndStructuredAsNewsArticle()) {
         <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 </p>

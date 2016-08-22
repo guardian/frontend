@@ -2,11 +2,11 @@ package football.controllers
 
 import common._
 import conf.Configuration
-import feed.Competitions
+import feed.CompetitionsService
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
-import model.{ContentType, Cached, Content}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.{Cached, Content, ContentType}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
@@ -34,7 +34,7 @@ case class MatchNav(
   lazy val hasPreview = preview.isDefined
 }
 
-class MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts with implicits.Dates {
+class MoreOnMatchController(val competitionsService: CompetitionsService) extends Controller with Football with Requests with Logging with ExecutionContexts with implicits.Dates {
   def interval(contentDate: LocalDate) = new Interval(contentDate.toDateTimeAtStartOfDay - 2.days, contentDate.toDateTimeAtStartOfDay + 3.days)
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
@@ -44,7 +44,7 @@ class MoreOnMatchController extends Controller with Football with Requests with 
   def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
-    val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
+    val maybeResponse: Option[Future[Result]] = competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
       val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
 
@@ -57,7 +57,7 @@ class MoreOnMatchController extends Controller with Football with Requests with 
         Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id), responsive = true),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,
             "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
@@ -72,7 +72,7 @@ class MoreOnMatchController extends Controller with Football with Requests with 
 
   def moreOnJson(matchId: String) = moreOn(matchId)
   def moreOn(matchId: String) = Action.async { implicit request =>
-    val maybeMatch: Option[FootballMatch] = Competitions().findMatch(matchId)
+    val maybeMatch: Option[FootballMatch] = competitionsService.findMatch(matchId)
 
     val maybeResponse: Option[Future[RevalidatableResult]] = maybeMatch map { theMatch =>
       loadMoreOn(request, theMatch) map {
@@ -106,18 +106,18 @@ class MoreOnMatchController extends Controller with Football with Requests with 
   }
 
   def redirectToMatchId(matchId: String) = Action.async { implicit request =>
-    val maybeMatch: Option[FootballMatch] = Competitions().findMatch(matchId)
+    val maybeMatch: Option[FootballMatch] = competitionsService.findMatch(matchId)
     canonicalRedirectForMatch(maybeMatch, request)
   }
 
   def redirectToMatch(year: String, month: String, day: String, home: String, away: String) = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
-    val maybeMatch = Competitions().matchFor(interval(contentDate), home, away)
+    val maybeMatch = competitionsService.matchFor(interval(contentDate), home, away)
     canonicalRedirectForMatch(maybeMatch, request)
   }
 
   def bigMatchSpecial(matchId: String) = Action { implicit request =>
-    val response = Competitions().competitions.find { _.matches.exists(_.id == matchId) }
+    val response = competitionsService.competitions.find { _.matches.exists(_.id == matchId) }
       .fold(JsonNotFound()) { competition =>
         val fMatch = competition.matches.find(_.id == matchId).head
         JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
@@ -128,13 +128,13 @@ class MoreOnMatchController extends Controller with Football with Requests with 
   def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
-    val maybeResponse: Option[Future[Result]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
+    val maybeResponse: Option[Future[Result]] = competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
 
       val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
-          lazy val competition = Competitions().competitionForMatch(theMatch.id)
+          lazy val competition = competitionsService.competitionForMatch(theMatch.id)
           lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
           JsonComponent(
@@ -225,5 +225,3 @@ class MoreOnMatchController extends Controller with Football with Requests with 
     MatchNav(theMatch, matchReport, minByMin, preview, stats, currentPage)
   }
 }
-
-object MoreOnMatchController extends MoreOnMatchController

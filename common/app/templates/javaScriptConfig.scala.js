@@ -2,7 +2,7 @@
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import play.api.libs.json.Json
-@import views.support.{CamelCase, JavaScriptPage}
+@import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 
 @defining(Edition(request)) { edition =>
     {
@@ -23,6 +23,13 @@
                 "hintingAuto": {
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
+            }
+        },
+        "googleAnalytics": {
+            "trackers": {
+                "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
+                "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
+                "editorial": "@{GoogleAnalyticsAccount.editorialTracker.trackerName}"
             }
         }
     }

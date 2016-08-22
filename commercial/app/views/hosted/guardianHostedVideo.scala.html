@@ -5,10 +5,40 @@
 @import views.html.hosted.guardianHostedCta
 
 @main(page, Some("commercial")) { } {
-    @guardianHostedHeader("hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass}">
+    <!--[if (gt IE 9)|(IEMobile)]><!-->
+    <style>
+    .hosted-tone {
+        color: @{page.campaign.brandColour};
+    }
+
+    .hosted-tone-bg {
+        background-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-tone-btn,
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        background-color: @{page.campaign.brandColour};
+        border-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted__next-video--tile {
+        border-top-color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page .hosted__link {
+        color: @{page.campaign.brandColour};
+    }
+
+    .hosted-page ~ .survey-overlay-simple .survey-text__header {
+        background-color: @{page.campaign.brandColour};
+    }
+    </style>
+    <!--<![endif]-->
+    @guardianHostedHeader(if(page.campaign.brightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.brightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
-            <div class="adverts hosted__container--full">
+            <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     <video
                     data-duration="@{page.video.duration}"
@@ -33,49 +63,21 @@
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                         </div>
                     </div>
-                    @for(nextPage <- page.nextPage) {
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">@{page.campaign.name}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="@{page.campaign.name}" target="_blank">
-                                Visit @{page.campaign.owner} now @fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue @{page.brandColourCssClass}">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
-                            </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
-                            </a>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
-                                Watch now
-                            </a>
-                        </div>
-                    </div>
-                    }
                 </div>
             </div>
         </section>
-        <section class="adverts adverts--legacy hosted__container hosted__container--content">
-            <header class="adverts__header hosted__social">
+        <section class="host host--legacy hosted__container hosted__container--content">
+            <header class="host__header hosted__social">
                 <div class="meta__social hosted__social-wrapper" data-component="share">
                     @guardianHostedShareButtons(page)
                 </div>
             </header>
-            <div class="adverts__body">
+            <div class="host__body">
                 <div class="hosted__meta">
                     <h1 class="hosted__heading @{page.brandColourCssClass}">@{page.video.title}</h1>
                 </div>
                 <div class="hosted__standfirst">
-                    <p class="hosted__text">@{page.standfirst}</p>
+                    <p class="hosted__text">@Html(page.standfirst)</p>
                     <div class="hosted__terms">​This content was paid for and produced by @{page.campaign.owner}. For more information click
                         <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
                             <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">here @fragments.inlineSvg("arrow-down", "icon")</button>
@@ -89,7 +91,7 @@
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                 </div>
-                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{page.campaign.brandColour}" data-link-name="Next Hosted Video: @{nextPage.title}">
                     <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
                     <p class="hosted__next-video-title">@{nextPage.title}</p>
                 </a>

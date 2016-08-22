@@ -2,12 +2,11 @@ package football.controllers
 
 import common._
 import conf.switches.Switches
-import model._
-import conf._
-import play.api.mvc.{ Controller, Action }
+import feed.CompetitionsService
+import play.api.mvc.{Action, Controller}
 
 
-class CompetitionListController extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
+class CompetitionListController(val competitionsService: CompetitionsService) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
@@ -28,4 +27,3 @@ class CompetitionListController extends Controller with CompetitionListFilters w
   }
 }
 
-object CompetitionListController extends CompetitionListController

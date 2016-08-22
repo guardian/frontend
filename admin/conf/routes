@@ -67,7 +67,6 @@ GET         /analytics/confidence                                               
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
-GET         /analytics/headlines-test                                                               controllers.admin.MetricsController.renderHeadlinesTest()
 
 # Facia
 GET         /deduped                                                                                controllers.admin.WhatIsDeduped.index()
@@ -88,7 +87,8 @@ GET         /commercial/keyvalues                                               
 GET         /commercial/keyvalues/csv/*key                                                          controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                              controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                   controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/radiator                                                                    controllers.admin.CommercialController.renderCommercialRadiator()
+GET         /commercial/performance/radiator                                                        controllers.admin.CommercialController.renderCommercialRadiator()
+GET         /commercial/performance/browser-dashboard                                               controllers.admin.CommercialController.renderBrowserPerformanceDashboard()
 GET         /commercial/slot/:slotName                                                              controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                  controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()

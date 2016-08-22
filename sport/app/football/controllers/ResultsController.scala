@@ -1,15 +1,15 @@
 package football.controllers
 
 import common.Edition
-import feed.Competitions
-import play.api.mvc.{AnyContent, Action, Result}
+import feed.CompetitionsService
+import play.api.mvc.{Action, AnyContent, Result}
 import org.joda.time.LocalDate
 import model._
 import football.model._
 import pa.FootballTeam
 import model.Competition
 
-class ResultsController extends MatchListController with CompetitionResultFilters {
+class ResultsController(val competitionsService: CompetitionsService) extends MatchListController with CompetitionResultFilters {
 
   private def competitionOrTeam(tag: String): Option[Either[Competition, FootballTeam]] = {
     lookupCompetition(tag).map(Left(_))
@@ -28,9 +28,9 @@ class ResultsController extends MatchListController with CompetitionResultFilter
   }
 
   private def results(date: LocalDate, tag: Option[String] = None): Option[Results] = {
-    def allResults = ResultsList(date, Competitions())
-    def competitionResults = (competition: Competition) => CompetitionResultsList(date, Competitions(), competition.id)
-    def teamResults = (team: FootballTeam) => TeamResultsList(date, Competitions(), team.id, TeamUrl(team))
+    def allResults = ResultsList(date, competitionsService.competitions)
+    def competitionResults = (competition: Competition) => CompetitionResultsList(date, competitionsService.competitions, competition.id)
+    def teamResults = (team: FootballTeam) => TeamResultsList(date, competitionsService.competitions, team.id, TeamUrl(team))
     byType[Results](allResults)(competitionResults)(teamResults)(tag)
   }
 
@@ -80,5 +80,3 @@ class ResultsController extends MatchListController with CompetitionResultFilter
   def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day), Some(tag))
   def moreTagResultsForJson(year: String, month: String, day: String, tag: String) = moreTagResultsFor(year, month, day, tag)
 }
-
-object ResultsController extends ResultsController

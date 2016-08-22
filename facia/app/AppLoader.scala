@@ -9,7 +9,6 @@ import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{Assets, FaciaControllers, HealthCheck}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import headlines.ABHeadlinesLifecycle
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -51,7 +50,6 @@ trait AppLifecycleComponents {
     wire[IndexListingsLifecycle],
     wire[TodaysCrosswordGridLifecycle],
     wire[SwitchboardLifecycle],
-    wire[ABHeadlinesLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
 }

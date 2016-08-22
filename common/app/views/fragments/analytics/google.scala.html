@@ -1,6 +1,5 @@
 @(page: model.Page)
 @import views.support.GoogleAnalyticsAccount
-@import conf.Configuration
 
 <script id='google_analytics'>
 
@@ -27,7 +26,9 @@
     * Code that is customised by us                                                        *
     ***************************************************************************************@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest, GoogleAnalyticsAccount.headerBidding)) {
-        ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName');
+        ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
+            'sampleRate': @{ if (Play.isDev) 100 else tracker.samplePercentage }
+        });
     }
 
     @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {

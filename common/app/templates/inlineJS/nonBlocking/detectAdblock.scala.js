@@ -1,5 +1,9 @@
 try {
     ((document, window) => {
+        if (typeof window.getComputedStyle !== 'function') {
+            // Old browsers not supporting getComputedStyle most likely won't have adBlockers
+            return;
+        }
         var ad = document.createElement('div');
         ad.style.position = 'absolute';
         ad.style.left = '0';

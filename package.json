@@ -14,6 +14,7 @@
     "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
+    "amphtml-validator": "^1.0.10",
     "autoprefixer": "^6.3.7",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -90,7 +91,6 @@
     "postcss-reporter": "^1.4.1",
     "require-dir": "^0.3.0",
     "sass-lint": "^1.8.2",
-    "shoe": "0.0.11",
     "sorted-object": "^1.0.0",
     "svgo": "0.4.5",
     "time-grunt": "1.2.0",

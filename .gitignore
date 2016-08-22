@@ -21,7 +21,6 @@ frontend-applications.properties
 .idea
 .sass-cache
 .tm_properties
-.vagrant
 .node-version
 .sbt
 .sbt.*

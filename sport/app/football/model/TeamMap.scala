@@ -20,7 +20,7 @@ object TeamMap extends ExecutionContexts with Logging {
   val shortNames = Map(
     ("19", "Spurs"),
     ("5", "C Palace"),
-    ("30", "Middlesboro"),
+    ("30", "Middlesbrough"),
     ("84", "Peterboro"),
     ("44", "Wolves"),
     ("20", "MK Dons"),
@@ -128,12 +128,12 @@ object TeamUrl {
   def apply(team: FootballTeam): Option[String] = TeamMap(team).url
 }
 
-object TeamName {
-  def apply(team: FootballTeam) = {
+class TeamNameBuilder(competitions: Competitions) {
+  def withTeam(team: FootballTeam) = {
     TeamMap.shortNames.get(team.id).getOrElse(team.name)
   }
 
-  def fromId(id: String) = Competitions().findTeam(id).map(apply)
+  def withId(id: String) = competitions.findTeam(id).map(withTeam)
 }
 
 // if we have tags for the matches we can make a sensible url for it

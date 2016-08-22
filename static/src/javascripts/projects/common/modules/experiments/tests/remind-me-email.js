@@ -26,12 +26,12 @@ define([
 
         this.id = 'RemindMeEmail';
         this.start = '2016-07-18';
-        this.expiry = '2016-08-10';
+        this.expiry = '2016-08-19';
         this.author = 'Joseph Smith';
         this.description = 'Add a signup for a reminder email at the bottom of series articles';
         this.showForSensitive = false;
-        this.audience = 0.2;
-        this.audienceOffset = 0.7;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Greatest clickthrough rate';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -45,15 +45,15 @@ define([
                 comingUp: {
                     blindDate: {
                         subtitle: 'Coming up in next week&rsquo;s Blind Date',
-                        title: '<b>&lsquo;She didn’t judge me for talking about giraffes&rsquo; necks&rsquo;</b>',
-                        description: 'Did digital communications consultant Lucy, 23, click with waitress Charlie, 20?',
+                        title: '<b>‘Awkward moments? When he mentioned his date the next day’</b>',
+                        description: 'Did furniture designer, Phil, 30, click with receptionist, Rebecca, 27?',
                         cta: 'Remind me',
                         trackingCode: 'one-off_coming-up_blind-date'
                     },
                     experience: {
                         subtitle: 'Coming up in next week&rsquo;s Experience',
-                        title: '<b>I was stranded in the wilderness for nine days</b>',
-                        description: '&lsquo;I had lost so much weight that I looked like walking skeleton. I was ready to give up&rsquo;',
+                        title: '<b>I see words as colours</b>',
+                        description: '‘I see every letter and number in its own unique hue. I can tell someone the colour of their name instantly’',
                         cta: 'Remind me',
                         trackingCode: 'one-off_coming-up_experience'
                     }
@@ -79,15 +79,15 @@ define([
                 comingUp: {
                     blindDate: {
                         subtitle: 'Coming up in next week&rsquo;s Blind Date',
-                        title: '<b>&lsquo;She didn’t judge me for talking about giraffes&rsquo; necks&rsquo;</b>',
-                        description: 'Did digital communications consultant Lucy, 23, click with waitress Charlie, 20?',
+                        title: '<b>‘Awkward moments? When he mentioned his date the next day’</b>',
+                        description: 'Did furniture designer, Phil, 30, click with receptionist, Rebecca, 27?',
                         cta: 'Get a weekly reminder',
                         trackingCode: 'weekly_coming-up_blind-date'
                     },
                     experience: {
                         subtitle: 'Coming up in next week&rsquo;s Experience',
-                        title: '<b>I was stranded in the wilderness for nine days</b>',
-                        description: '&lsquo;I had lost so much weight that I looked like walking skeleton. I was ready to give up&rsquo;',
+                        title: '<b>I see words as colours</b>',
+                        description: '‘I see every letter and number in its own unique hue. I can tell someone the colour of their name instantly’',
                         cta: 'Get a weekly reminder',
                         trackingCode: 'weekly_coming-up_experience'
                     }
@@ -116,8 +116,8 @@ define([
         }
 
         function blindDateIsPublished() {
-            var isPublishDateInThePast = Date.parse('2016-08-06 06:00:00') < Date.now();
-            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/06/blind-date-rosie-rodney';
+            var isPublishDateInThePast = Date.parse('2016-08-13 06:00:00') < Date.now();
+            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/13/blind-date-she-didnt-judge-me-for-talking-about-giraffes-necks';
             return isPublishDateInThePast || isViewingTheLatestArticle;
         }
 
@@ -126,8 +126,8 @@ define([
         }
 
         function experienceIsPublished() {
-            var isPublishDateInThePast = Date.parse('2016-08-05 14:00:00') < Date.now();
-            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/05/playing-pokemon-go-crashed-car-experience';
+            var isPublishDateInThePast = Date.parse('2016-08-12 14:00:00') < Date.now();
+            var isViewingTheLatestArticle = config.page.pageId === 'lifeandstyle/2016/aug/12/stranded-in-wilderness-arizona-nine-days';
             return isPublishDateInThePast || isViewingTheLatestArticle;
         }
 

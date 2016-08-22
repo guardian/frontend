@@ -20,13 +20,13 @@ define([
 ) {
     return function () {
 
-        this.id = 'GiraffeArticle20160802';
-        this.start = '2016-08-02';
+        this.id = 'ContributionsArticle20160818';
+        this.start = '2016-08-18';
         this.expiry = '2016-08-22';
         this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
-        this.audience = 0.10;
+        this.audience = 0.13;
         this.audienceOffset = 0;
         this.successMeasure = 'Determine the best message for driving contributions.';
         this.audienceCriteria = 'All users';
@@ -37,11 +37,11 @@ define([
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
-        var writer = function (linkText, linkHref, copy) {
+        var writer = function (linkText, copy, cmpCode) {
             var $newThing = $.create(template(giraffeMessage, {
-                linkText:linkText,
+                linkText: linkText,
                 linkName: 'contribute',
-                linkHref: linkHref,
+                linkHref: 'https://contribute.theguardian.com?INTCMP=' + cmpCode,
                 copy: copy,
                 svg: svg(arrowRight, ['button--giraffe__icon'])
             }));
@@ -63,18 +63,18 @@ define([
 
         this.variants = [
             {
-                id: 'everyone',
+                id: 'about',
                 test: function () {
-                    writer('If everyone were to chip in, the Guardian\'s future would be more secure. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_everyone', '');
+                    writer('Read all about it, knowing you’re a part of it. ', 'Please give to the Guardian', 'co_uk_inarticle_about');
                 },
                 success: function (complete) {
                     completer(complete);
                 }
             },
             {
-                id: 'honest',
+                id: 'pockets',
                 test: function () {
-                    writer('Be honest. When was the last time you paid for quality news online? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_honest', '');
+                    writer('You don’t need deep pockets to support in depth analysis. ', 'Please give to the Guardian', 'co_uk_inarticle_pockets');
                 },
                 success: function (complete) {
                     completer(complete);
@@ -83,16 +83,25 @@ define([
             {
                 id: 'like',
                 test: function () {
-                    writer('If you use it, if you like it, why not pay for it? It\'s only fair. ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_like', 'Please support the Guardian');
+                    writer('If you use it, if you like it, why not pay for it? It’s only fair. ', 'Give to the Guardian', 'co_uk_inarticle_like');
                 },
                 success: function (complete) {
                     completer(complete);
                 }
             },
             {
-                id: 'complex',
+                id: 'love',
                 test: function () {
-                    writer('The world is complex. We\'ll give our all to help you understand it. Will you give something to help us help you? ', 'https://membership.theguardian.com/contribute?INTCMP=co_uk_inarticle_complex', 'Please contribute to the Guardian');
+                    writer('If you read it, if you love it, then why not be a part of it? ', 'Please give to the Guardian', 'co_uk_inarticle_love');
+                },
+                success: function (complete) {
+                    completer(complete);
+                }
+            },
+            {
+                id: 'truth',
+                test: function () {
+                    writer('If you value independence. If you value the truth. ', 'Please give to the Guardian', 'co_uk_inarticle_truth');
                 },
                 success: function (complete) {
                     completer(complete);

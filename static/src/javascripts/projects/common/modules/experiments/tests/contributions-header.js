@@ -6,6 +6,7 @@ define([
     'common/views/svgs',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
+    'common/utils/cookies',
     'text!common/views/contributions-header.html'
 ], function (bean,
              qwery,
@@ -14,6 +15,7 @@ define([
              svgs,
              fastdom,
              mediator,
+             cookies,
              contributionsHeader
 ) {
     return function () {
@@ -32,7 +34,8 @@ define([
         this.idealOutcome = '';
         this.canRun = function () {
             var pageObj = window.guardian.config.page;
-            return !(pageObj.isLiveBlog || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            var userCookie = cookies.get('GU_U');
+            return !(pageObj.isLiveBlog || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK' && userCookie;
         };
 
         var writer = function (linkText, linkHref) {
@@ -43,8 +46,8 @@ define([
             }));
 
             return fastdom.write(function () {
-                var a = $('.brand-bar__item--register');
-                a.replaceWith($newThing);
+                var a = $('.brand-bar__item--subscribe');
+                $newThing.insertBefore(a);
                 mediator.emit('contributions-header:insert');
             });
         };

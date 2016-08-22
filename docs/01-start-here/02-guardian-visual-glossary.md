@@ -74,6 +74,13 @@
 
 ![image](images/related.jpg)
 
+## Fronts cards
+
+[All combinations](http://preview.gutools.co.uk/all-dynamic-fast#)
+
+## Rich Links
+
+[Lots of examples](http://preview.gutools.co.uk/info/developer-blog/2014/dec/12/rich-link-testing)
 
 ## Content Elements
 

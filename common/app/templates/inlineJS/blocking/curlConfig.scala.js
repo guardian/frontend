@@ -32,6 +32,8 @@ window.curlConfig = {
             react:                               '@Static("javascripts/components/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
+            'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
+            'discussion-frontend-preact':        '@DiscussionAsset("discussion-frontend.preact.amd")',
 
             // plugins
             text:                                'text', // noop
@@ -61,6 +63,8 @@ window.curlConfig = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
+            'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
+            'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',
             svgs:                           '../inline-svgs',
 
             // video

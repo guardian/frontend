@@ -1,24 +1,25 @@
 package football.controllers
 
-import feed.Competitions
+import feed.CompetitionsService
 import model.Cached.RevalidatableResult
-import play.api.mvc.{ Action, Controller }
+import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
-import model.{Cached, Page}
+import model.Cached
 import football.model.CompetitionStage
 
 
-class WallchartController extends Controller with Logging with ExecutionContexts {
+class WallchartController(competitionsService: CompetitionsService) extends Controller with Logging with ExecutionContexts {
+
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>
-    Competitions().withTag(competitionTag).map { competition =>
+    competitionsService.competitionsWithTag(competitionTag).map { competition =>
       val page = new FootballPage(
         competition.url.stripSuffix("/"),
         "football",
         s"${competition.fullName} wallchart",
         "GFE:Football:automatic:wallchart"
       )
-      val competitionStages = CompetitionStage.stagesFromCompetition(competition)
+      val competitionStages = new CompetitionStage(competitionsService.competitions).stagesFromCompetition(competition)
 
       Cached(60) {
         if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
@@ -28,5 +29,3 @@ class WallchartController extends Controller with Logging with ExecutionContexts
   }
 
 }
-
-object WallchartController extends WallchartController

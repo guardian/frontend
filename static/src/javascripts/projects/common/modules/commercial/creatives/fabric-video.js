@@ -1,26 +1,34 @@
 define([
     'qwery',
+    'bonzo',
     'common/utils/fastdom-promise',
     'common/utils/detect',
     'common/utils/template',
+    'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/fabric-video.html'
-], function (qwery, fastdom, detect, template, fabricVideoStr) {
+], function (qwery, bonzo, fastdom, detect, template, addTrackingPixel, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
 
     function FabricVideo(adSlot, params) {
         var isUpdating = false;
+        var isSmallScreen = detect.isBreakpoint({ max: 'phablet' });
         var hasVideo, video, layer2, inView;
 
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
-        hasVideo = !detect.isIOS();
-        if (hasVideo) {
-            params.video = '<video webkit-playsinline muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+        hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);
+
+        if (isSmallScreen) {
+            params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.Videobackupimage + ')"></div>';
         } else {
-            params.video = '<div class="poster" style="background-image:url(' + params.VideoBackupImage + ')"></div>';
+            if (hasVideo) {
+                params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
+            } else {
+                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
+            }
         }
 
         return Object.freeze({
@@ -29,6 +37,9 @@ define([
 
         function create() {
             return fastdom.write(function () {
+                if (params.Trackingpixel) {
+                    addTrackingPixel(bonzo(adSlot), params.Trackingpixel + params.cacheBuster);
+                }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);

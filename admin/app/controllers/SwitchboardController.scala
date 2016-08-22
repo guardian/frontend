@@ -46,12 +46,12 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
     } else {
       log.info("saving switchboard")
 
-      val requester = UserIdentity.fromRequest(request).get.fullName
-      val updates = request.body.asFormUrlEncoded.map { params =>
+      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse("unknown user (dev-build?)")
+      val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
               switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
           }
-      }.get
+      } getOrElse(Nil)
 
       Future {
         saveSwitchesOrError(requester, updates)

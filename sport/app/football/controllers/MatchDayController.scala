@@ -1,14 +1,14 @@
 package football.controllers
 
-import feed.Competitions
-import play.api.mvc.{AnyContent, Action}
+import feed.{Competitions, CompetitionsService}
+import play.api.mvc.{Action, AnyContent}
 import org.joda.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
 
 
-class MatchDayController extends MatchListController with CompetitionLiveFilters {
+class MatchDayController(val competitionsService: CompetitionsService) extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -20,7 +20,7 @@ class MatchDayController extends MatchListController with CompetitionLiveFilters
     matchesFor(year, month, day)
 
   private def renderLiveMatches(date: LocalDate) = Action { implicit request =>
-    val matches = new MatchDayList(Competitions(), date)
+    val matches = new MatchDayList(competitionsService.competitions, date)
     val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezone)) "Live matches" else "Matches"
     val page = new FootballPage("football/live", "football", webTitle, "GFE:Football:automatic:live matches")
     renderMatchList(page, matches, filters)
@@ -39,7 +39,7 @@ class MatchDayController extends MatchListController with CompetitionLiveFilters
     lookupCompetition(competitionTag).map { competition =>
       val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezone)) s"Today's ${competition.fullName} matches" else s" ${competition.fullName} matches"
       val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle, "GFE:Football:automatic:live matches")
-      val matches = new CompetitionMatchDayList(Competitions(), competition.id, date)
+      val matches = new CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
       renderMatchList(page, matches, filters)
     }.getOrElse {
       NotFound
@@ -48,12 +48,10 @@ class MatchDayController extends MatchListController with CompetitionLiveFilters
 
 //  @deprecated("Use JSON version of the normal match list endpoints", "early 2014")
   def matchDayComponent = Action { implicit request =>
-    val matches = new MatchDayList(Competitions(), LocalDate.now(Edition.defaultEdition.timezone))
+    val matches = new MatchDayList(competitionsService.competitions, LocalDate.now(Edition.defaultEdition.timezone))
     val page = new FootballPage("football", "football", "Today's matches", "GFE:Football:automatic:live matches")
     Cached(10) {
       JsonComponent(page, football.views.html.matchList.matchesComponent(matches))
     }
   }
 }
-
-object MatchDayController extends MatchDayController

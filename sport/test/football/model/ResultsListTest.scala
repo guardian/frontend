@@ -9,35 +9,12 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the all results list" - {
     "for today" - {
-      val results = new ResultsList(today, competitions)
-
-//      ignore "should be showing the correct matches from the test data" in {
-//        results.relevantMatches.map { case (fmatch, _) =>
-//          fmatch.id
-//        }.sortBy(_.toInt) should equal(List("2", "3", "4", "30"))
-//      }
-
-//      ignore "should only contain matches that happened on one of previous 3 days that have fixtures (includes today)" in {
-//        val allowedDates = List(today, today.minusDays(1), today.minusDays(2))  // look at the test data to see why
-//
-//        results.relevantMatches.foreach { case (fMatch, _) =>
-//          allowedDates should contain(fMatch.date.toLocalDate)
-//        }
-//      }
+      val results = new ResultsList(today, competitions.competitions)
 
       "matches should be *reverse* ordered by datetime" in {
         val matchDates = results.relevantMatches.map { case (fMatch, _) => fMatch.date }
         matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isAfter(match2Date)))
       }
-
-//      ignore "should group matches correctly by date" in {
-//        results.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today, today.minusDays(1), today.minusDays(2)))
-//      }
-
-//      ignore "should group matches correctly by date and league, with league ordered correctly" in {
-//        val (_, competitionMatches1) = results.matchesGroupedByDateAndCompetition(2)
-//        competitionMatches1.map { case (comp, matches) => comp.id } should equal(List("500", "100"))
-//      }
 
       "should only show results" in {
         results.relevantMatches.foreach(checkIsResult)
@@ -50,37 +27,13 @@ import test.ConfiguredTestSuite
         }
       }
 
-//      ignore "should find correct value for 'nextPage'" in {
-//        val expectedDate = today.minusDays(5) // see test data
-//        results.nextPage.value should equal("/football/results/" + expectedDate.toString("yyyy/MMM/dd"))
-//      }
-
       "should find nothing for 'prevPage'" in {
         results.previousPage should be(None)
       }
     }
 
     "the day after results" - {
-      val results = new ResultsList(today.plusDays(1), competitions)
-
-//      ignore "should be showing the correct matches from the test data" in {
-//        results.relevantMatches.map { case (fmatch, _) =>
-//          fmatch.id
-//        }.sortBy(_.toInt) should equal(List("2", "3", "4", "30"))
-//      }
-
-//      ignore "should only contain matches that happened on one of previous 3 days that have results" in {
-//        val allowedDates = List(today, today.minusDays(1), today.minusDays(2))  // look at the test data to see why
-//
-//        results.relevantMatches.foreach { case (fMatch, _) =>
-//          allowedDates should contain(fMatch.date.toLocalDate)
-//        }
-//      }
-
-//      ignore "should find correct value for 'nextPage'" in {
-//        val expectedDate = today.minusDays(5) // see test data
-//        results.nextPage.value should equal("/football/results/" + expectedDate.toString("yyyy/MMM/dd"))
-//      }
+      val results = new ResultsList(today.plusDays(1), competitions.competitions)
 
       "should find nothing for 'prevPage'" in {
         results.previousPage should be(None)
@@ -90,7 +43,7 @@ import test.ConfiguredTestSuite
 
   "the competition results list" - {
     "given test competition '500'" - {
-      val results = new CompetitionResultsList(today, competitions, "500")
+      val results = new CompetitionResultsList(today, competitions.competitions, "500")
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches.map { case (fmatch, _) =>
@@ -115,7 +68,7 @@ import test.ConfiguredTestSuite
     }
 
     "given test competition '100'" - {
-      val results = new CompetitionResultsList(today, competitions, "100")
+      val results = new CompetitionResultsList(today, competitions.competitions, "100")
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches.map { case (fmatch, _) =>
@@ -132,7 +85,7 @@ import test.ConfiguredTestSuite
   }
 
   "the team results list" - {
-    val results = new TeamResultsList(today, competitions, spurs.id)
+    val results = new TeamResultsList(today, competitions.competitions, spurs.id)
 
     "should be showing the correct matches from the test data" in {
       results.relevantMatches.map { case (fmatch, _) =>

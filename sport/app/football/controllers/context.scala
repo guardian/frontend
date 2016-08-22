@@ -1,43 +1,48 @@
 package football.controllers
 
-import feed.Competitions
+import feed.CompetitionsService
 
 trait CompetitionFixtureFilters {
-  def filters = Competitions().withTodaysMatchesAndFutureFixtures.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+  def competitionsService: CompetitionsService
+  def filters = competitionsService.competitionsWithTodaysMatchesAndFutureFixtures.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
     .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, s"${c.url}/fixtures"))
+      case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/fixtures"))
     }
 }
 
 trait CompetitionResultFilters {
-  def filters = Competitions().withTodaysMatchesAndPastResults.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+  def competitionsService: CompetitionsService
+  def filters = competitionsService.competitionsWithTodaysMatchesAndPastResults.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
     .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, s"${c.url}/results"))
+      case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/results"))
     }
 }
 
 trait CompetitionLiveFilters {
-  def filters = Competitions().withTodaysMatches.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+  def competitionsService: CompetitionsService
+  def filters = competitionsService.withTodaysMatches.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
     .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, s"${c.url}/live"))
+      case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/live"))
     }
 }
 
 trait CompetitionListFilters {
-  def filters = Competitions().competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
+  def competitionsService: CompetitionsService
+  def filters = competitionsService.competitions.filter(_.matches.nonEmpty).groupBy(_.nation)
     .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, c.url))
+      case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, c.url))
     }
 }
 
 trait CompetitionTableFilters {
-  def filters = Competitions().withTodaysMatchesAndFutureFixtures.competitions.filter(_.hasLeagueTable).groupBy(_.nation)
+  def competitionsService: CompetitionsService
+  def filters = competitionsService.competitionsWithTodaysMatchesAndFutureFixtures.competitions.filter(_.hasLeagueTable).groupBy(_.nation)
     .map {
-      case (nation, competitions) =>
-        nation -> competitions.map(c => CompetitionFilter(c.fullName, s"${c.url}/table"))
+      case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/table"))
     }
 }
