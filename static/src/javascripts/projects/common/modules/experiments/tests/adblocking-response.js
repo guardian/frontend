@@ -57,8 +57,7 @@ define([
             id: 'no-close',
             test: function () {
                 detect.adblockInUse.then(function (adblockUsed) {
-                    // TODO: remove "|| !config.page.isProd"
-                    if ((adblockUsed || !config.page.isProd) && !config.page.isFront &&
+                    if (adblockUsed && !config.page.isFront &&
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
                         config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
