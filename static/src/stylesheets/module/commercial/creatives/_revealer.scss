@@ -3,19 +3,17 @@
     position: relative;
 
     .creative__cta {
-        position: absolute;
+        position: absolute;;
         height: 100%;
         width: 100%;
         clip: rect(0, auto, auto, 0);
-        overflow: hidden;
     }
 
     .creative__background {
         position: fixed;
+        height: 100%;
         top: 0;
-        left: 0;
-        background-size: cover;
-        backface-visibility: hidden;
+        transform: translate(-50%, 0);
     }
 
     .creative__button {
