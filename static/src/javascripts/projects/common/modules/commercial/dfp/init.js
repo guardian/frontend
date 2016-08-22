@@ -31,9 +31,7 @@ define([
     }
 
     function setupTags() {
-        return new Promise(function(resolve) {
-             require(['js!sonobi.js']).then(resolve);
-        });
+        return Promise.resolve(require(['js!sonobi.js']));
     }
 
     function setupAdvertising() {
