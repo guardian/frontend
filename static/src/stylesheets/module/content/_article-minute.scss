@@ -3,8 +3,6 @@ $us-minute-main-colour: $neutral-5;
 $us-minute-contrast-colour: #333333;
 $minute-headline-colour: #ffffff;
 
-$minute-layout-margin-nudge: gs-span(1);
-
 @mixin rule($ruleColour, $ruleHeight) {
     background-color: $ruleColour;
     content: '';
@@ -16,7 +14,7 @@ $minute-layout-margin-nudge: gs-span(1);
     border-top: 0 none;
 }
 
-.content .gs-container--minute-article {
+.content .gs-container--minute-n {
     padding: 0;
 }
 
@@ -36,7 +34,7 @@ body {
         display: block;
         z-index: 9999;
         pointer-events: none;
-        opacity: 0;
+        opacity: .1;
     }
 }
 
@@ -148,7 +146,7 @@ body {
         max-width: gs-span(4);
 
         @include mq(tablet) {
-            margin-left: $gs-gutter;
+            margin-left: gs-span(1) + $gs-gutter;
         }
         @include mq(desktop) {
             max-width: gs-span(6);
@@ -219,7 +217,7 @@ body {
     }
 
     .block-elements {
-        padding: $gs-baseline $gs-gutter/2 0;
+        padding: $gs-baseline 0 0;
     }
 
     figure.element-image {
@@ -238,12 +236,13 @@ body {
 
         &:before {
             margin-top: auto;
+            width: gs-span(2);
+            margin-left: $gs-gutter / 2;
 
             @if ($browser-supports-flexbox == false) {
                 position: absolute;
             }
         }
-
 
         &.block--minute-article--embed {
             justify-content: center;
@@ -258,162 +257,174 @@ body {
     @include mq($from: mobileLandscape) {
         margin-top: $gs-baseline;
 
-        &:before {
-            width: gs-span(6);
-            position: absolute;
-        }
-
-        .block-elements {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-
         figure.element-image {
-            display: block;
             position: relative;
         }
     }
 
     // Tablet
     @include mq($from: tablet) {
-        border-top: 0 none;
-        margin: $gs-baseline auto;
-        max-width: gs-span(8);
-        padding-left: $gs-gutter*1.5;
+        max-width: gs-span(10);
         padding-top: $gs-baseline;
+
+        &:before {
+            width: gs-span(8);
+            position: absolute;
+            left: 0;
+        }
 
         .block-elements {
             box-sizing: border-box;
-            float: right;
-            padding-left: $gs-gutter;
             width: gs-span(4);
+            float: left;
         }
 
         figure.element-image {
             margin-top: 0;
-            position: relative;
-            width: gs-span(4);
+            width: gs-span(5);
+            margin-left: $gs-gutter;
+            display: inline-block;
         }
     }
 
     // Desktop
     @include mq($from: desktop) {
         max-width: gs-span(11);
-        margin: $gs-baseline/2 0 $gs-baseline $minute-layout-margin-nudge;
-        margin-top: $gs-baseline * 2;
-        padding-left: 0;
+        margin: $gs-baseline/2 0 $gs-baseline 0;
 
         &:before {
             width: gs-span(10);
         }
 
         .block-elements {
-            width: gs-span(6);
-            padding-left: 0;
-            padding-right: 0;
+            width: gs-span(5);
         }
 
         figure.element-image {
-            width: gs-span(5);
+            width: gs-span(6);
         }
     }
 
     // LeftCol
     @include mq($from: leftCol) {
-        max-width: gs-span(12);
+        margin-left: gs-span(1) + $gs-gutter;
 
         .block-elements {
-            width: gs-span(6);
-            padding-left: gs-span(1) + $gs-gutter;
+            width: gs-span(5);
+            padding-right: gs-span(1);
         }
 
         figure.element-image {
             width: gs-span(6);
         }
 
-        // Big first image
-        &:first-of-type {
-            margin-left: $gs-gutter;
-
-            .block-elements {
-                width: gs-span(4);
-                padding-left: 0;
-            }
-
-            &:before {
-                width: gs-span(13);
-            }
-
-            figure.element-image {
-                width: gs-span(12);
-            }
-        }
+        // // Big first image
+        // &:first-of-type {
+        //     margin-left: $gs-gutter;
+        //
+        //     .block-elements {
+        //         margin-top: auto;
+        //         width: gs-span(4);
+        //         padding-left: 0;
+        //     }
+        //
+        //     &:before {
+        //         width: gs-span(13);
+        //     }
+        //
+        //     figure.element-image {
+        //         width: gs-span(12);
+        //     }
+        // }
     }
 
     // Wide
     @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + $gs-gutter * 2;
-
-        .block-elements {
-            width: gs-span(5);
-        }
+        max-width: gs-span(12);
 
         figure.element-image {
             width: gs-span(7);
         }
 
-        // Big first image
-        &:first-of-type {
-            max-width: gs-span(16);
-            margin-left: $gs-gutter;
-
-            .block-elements {
-                width: gs-span(4);
-                padding-left: 0;
-            }
-
-            &:before {
-                width: gs-span(13);
-            }
-
-            figure.element-image {
-                width: gs-span(12);
-            }
-        }
+        // // Big first image
+        // &:first-of-type {
+        //     max-width: gs-span(16);
+        //     margin-left: $gs-gutter;
+        //
+        //     .block-elements {
+        //         width: gs-span(4);
+        //         padding-left: 0;
+        //     }
+        //
+        //     &:before {
+        //         width: gs-span(13);
+        //     }
+        //
+        //     figure.element-image {
+        //         width: gs-span(12);
+        //     }
+        // }
     }
 }
 
 // Alternative Layout
 .block--minute-article--alt-layout {
-
     &:before {
-        left: 0;
-        right: auto;
+        right: 0;
+        left: auto;
     }
 
     .block-elements {
-        float: left;
+        float: right;;
     }
 
     @include mq($from: tablet) {
+        margin-left: gs-span(1) + $gs-gutter;
+
         figure.element-image {
-            float: right;
+            margin-left: 0;
+            margin-right: $gs-gutter;
         }
     }
 
     @include mq($from: leftCol) {
-        margin-left: $minute-layout-margin-nudge + gs-span(1);
+        margin-left: gs-span(2) + $gs-gutter;
 
         .block-elements {
-            padding-right: gs-span(1) + $gs-gutter;
-            padding-left: 0;
+            padding-left: gs-span(1) + $gs-gutter;
+            padding-right: 0;
         }
     }
 
     @include mq($from: wide) {
-        margin-left: $minute-layout-margin-nudge + gs-span(3) - $gs-gutter;
+        margin-left: gs-span(3) + $gs-gutter;
     }
 }
+
+//Key event styling
+.is-key-event.block--minute-article {
+    @include mq($until: mobileLandscape) {
+        color: #ffffff;
+
+        .caption {
+            color: rgba(255, 255, 255, .5)
+        }
+    }
+}
+
+//Number styling
+.block--minute-article--counter {
+    color: $us-minute-highlight-colour;
+
+    @include mq($from: leftCol) {
+        display: block;
+        font-size: 88px;
+        line-height: 92px;
+        font-weight: 100;
+        margin-bottom: -$gs-baseline;
+    }
+}
+
 
 /* ==========================================================================
    Block Content Overrides
@@ -504,6 +515,11 @@ body {
 .block--minute-article.block--minute-article--quote {
     background-color: $us-minute-main-colour;
 
+    .inline-quote {
+        position: relative;
+        display: block;
+    }
+
     .inline-quote svg {
         width: 50px;
         height: auto;
@@ -513,11 +529,12 @@ body {
         @include fs-headline(4);
         font-style: normal;
         font-weight: 100;
+        margin-left: 0;
     }
 
     @include mq($from: tablet) {
         .block-elements {
-            width: gs-span(7);
+            width: gs-span(9);
         }
 
         .quoted__contents {
@@ -530,15 +547,6 @@ body {
             width: gs-span(10);
             padding-left: 0;
             padding-right: 0;
-        }
-
-        .inline-quote {
-            position: relative;
-            display: block;
-        }
-
-        .quoted__contents {
-            margin-left: 0;
         }
     }
 }
