@@ -13,13 +13,7 @@
         position: fixed;
         height: 100%;
         top: 0;
-        left: $gs-gutter / 2;
-        right: $gs-gutter / 2;
-
-        @include mq(mobileLandscape) {
-            left: $gs-gutter;
-            right: $gs-gutter;
-        }
+        transform: translate(-50%, 0);
     }
 
     .creative__button {
