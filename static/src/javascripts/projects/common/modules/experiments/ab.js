@@ -22,6 +22,7 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/minute-load-js'
+    'common/modules/experiments/tests/contributions-embed'
 ], function (
     reportError,
     config,
@@ -41,11 +42,12 @@ define([
     HostedGalleryCallToAction,
     MembershipMessages,
     ContributionsHeader,
-    AdFeedback,
+   	AdFeedback,
     Minute,
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     MinuteLoadJs
+    ContributionsEmbed
 ) {
 
     var TESTS = [
@@ -59,11 +61,14 @@ define([
         new HostedGalleryCallToAction(),
         new MembershipMessages(),
         new ContributionsHeader(),
-        new AdFeedback(),
+     //   new AdFeedback(),
         new Minute(),
         new RecommendedForYou(),
+        new MinuteLoadJs()
         new DontUpgradeMobileRichLinks(),
         new MinuteLoadJs()
+        new MinuteLoadJs(),
+        new ContributionsEmbed()
     ];
 
     var participationsKey = 'gu.ab.participations';
