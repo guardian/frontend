@@ -5,7 +5,8 @@ define([
     'common/utils/storage',
     'lodash/collections/contains',
     'common/modules/commercial/user-features',
-    'common/modules/commercial/survey/survey-adblock'
+    'common/modules/commercial/survey/survey-adblock',
+    'common/utils/cookies'
 ], function (
     $,
     config,
@@ -13,18 +14,19 @@ define([
     storage,
     contains,
     userFeatures,
-    SurveyAdBlock
+    SurveyAdBlock,
+    cookies
 ) {
     return function () {
         this.id = 'AdBlockingResponse';
         this.start = '2016-08-17';
         this.expiry = '2016-10-18';
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response';
-        this.audience = 0.09;
+        this.description = 'Adblocking response ZERO PERCENT TEST WITH 10 MINUTES GRACE';
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Adblocking users will either pay, prove they have a subscription or turn off their adblocker.';
-        this.audienceCriteria = 'All users with active adblockers.';
+        this.audienceCriteria = 'All non-Firefox users with active adblockers.';
         var variantDataLinkNames = [
             ['adblock whitelist no-close'],
             ['adblock membership no-close'],
@@ -45,8 +47,10 @@ define([
         this.idealOutcome = 'Adblocking users will either pay or allow ads.';
 
         this.canRun = function () {
-            return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
-                && config.page.edition === 'UK';
+            return !contains('firefox', detect.getUserAgent.browser.toLowerCase())
+                && contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
+                && config.page.edition === 'UK'
+                && !cookies.get('gu_abm_x');
         };
 
         this.variants = [{

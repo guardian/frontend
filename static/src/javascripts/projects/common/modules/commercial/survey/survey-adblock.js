@@ -7,7 +7,8 @@ define([
     'common/views/svgs',
     'text!common/views/commercial/survey/survey-adblock.html',
     'lodash/arrays/uniq',
-    'common/utils/countdown'
+    'common/utils/countdown',
+    'common/utils/cookies'
 ], function (
     bean,
     fastdom,
@@ -17,7 +18,8 @@ define([
     svgs,
     surveyAdBlockTemplate,
     uniq,
-    countdown
+    countdown,
+    cookies
 ) {
     var surveyAdBlock = function (config) {
         this.config = config || {};
@@ -52,6 +54,10 @@ define([
             if (this.config.showCloseBtn) {
                 bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
                     $('.survey-adblock').addClass('u-h');
+                    var cookieName = 'gu_abm_x',
+                        cookieLifetimeMinutes = 10,
+                        cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
+                    cookies.addForMinutes(cookieName, cookieCount + 1, cookieLifetimeMinutes);
                 });
             }
         }.bind(this));
