@@ -1,10 +1,9 @@
 define([
     'common/utils/fastdom-promise',
     'common/utils/template',
-    'common/utils/detect',
     'common/modules/commercial/creatives/add-tracking-pixel',
     'text!common/views/commercial/creatives/revealer.html'
-], function(fastdom, template, detect, addTrackingPixel, revealerStr) {
+], function(fastdom, template, addTrackingPixel, revealerStr) {
     var revealerTpl;
 
     function Revealer($adSlot, params) {
