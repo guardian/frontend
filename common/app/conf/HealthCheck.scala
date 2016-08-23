@@ -3,9 +3,9 @@ package conf
 import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
-import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc._
 import play.api.{Mode, Play}
+import play.api.libs.ws.{WS, WSClient, WSResponse}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -112,7 +112,7 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 private[conf] class HealthCheckCache(val wsClient: WSClient) extends HealthCheckFetcher {
 
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
-  def future(): Future[List[HealthCheckResult]] = cache.future()
+  def get(): List[HealthCheckResult] = cache.get()
 
   def refresh(testPort: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {
     val alreadyFetched = noRefreshNeededResults
@@ -153,8 +153,8 @@ class CachedHealthCheck(policy: HealthCheckPolicy, wsClient: WSClient, testPort:
   }
 
   def healthCheck(): Action[AnyContent] = Action.async {
-    val eventualResults = cache.future
-    eventualResults map { results =>
+    Future.successful {
+      val results = cache.get
       val response = results.map {
         case r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
       }
