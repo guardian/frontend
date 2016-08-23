@@ -1,4 +1,4 @@
-$us-minute-highlight-colour: $news-support-4;
+$us-minute-highlight-colour: $news-support-3;
 $us-minute-main-colour: $neutral-5;
 $us-minute-contrast-colour: #333333;
 $minute-headline-colour: #ffffff;
@@ -16,26 +16,6 @@ $minute-headline-colour: #ffffff;
 
 .content .gs-container--minute-n {
     padding: 0;
-}
-
-body {
-    position: relative;
-
-    &:before {
-        content: '';
-        background: url(http://i.imgur.com/lGd0PkM.png);
-        background-repeat: repeat-y;
-        width: 1301px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        margin-left: -650px;
-        display: block;
-        z-index: 9999;
-        pointer-events: none;
-        opacity: 0;
-    }
 }
 
 /* ==========================================================================
@@ -198,6 +178,13 @@ body {
 .article__container--minute-article {
     background-color: $us-minute-main-colour;
     padding-bottom: $gs-baseline;
+
+    @include mq($until: mobileLandscape) {
+        .gs-container--minute-article {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 /* ==========================================================================
@@ -245,6 +232,11 @@ body {
             }
         }
 
+        .block-elements {
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+        }
+
         &.block--minute-article--embed {
             justify-content: center;
 
@@ -265,18 +257,18 @@ body {
 
     // Tablet
     @include mq($from: tablet) {
-        max-width: gs-span(10);
+        max-width: gs-span(8);
         padding-top: $gs-baseline;
 
         &:before {
-            width: gs-span(8);
+            width: gs-span(7);
             position: absolute;
             left: 0;
         }
 
         .block-elements {
             box-sizing: border-box;
-            width: gs-span(4);
+            width: gs-span(3);
             float: left;
         }
 
@@ -296,7 +288,7 @@ body {
         margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
-            width: gs-span(9);
+            width: gs-span(8);
         }
 
         .block-elements {
@@ -334,16 +326,18 @@ body {
 
 // Alternative Layout
 .block--minute-article--alt-layout {
-    &:before {
-        right: 0;
-        left: auto;
-    }
-
-    .block-elements {
-        float: right;
-    }
-
     @include mq($from: tablet) {
+        margin-left: gs-span(1) + $gs-gutter;
+
+        &:before {
+            right: 0;
+            left: auto;
+        }
+
+        .block-elements {
+            float: right;
+        }
+
         figure.element-image {
             margin-left: 0;
             margin-right: $gs-gutter;
@@ -364,6 +358,10 @@ body {
     @include mq($until: mobileLandscape) {
         color: #ffffff;
 
+        a {
+            color: #ffffff;
+        }
+
         .caption {
             color: rgba(255, 255, 255, .5)
         }
@@ -374,12 +372,19 @@ body {
 .block--minute-article--counter {
     color: $us-minute-highlight-colour;
 
-    @include mq($from: leftCol) {
+    @include mq($from: desktop) {
         display: block;
+        font-size: 68px;
+        line-height: 72px;
+        letter-spacing: -3px;
+        font-weight: 100;
+        margin-top: -$gs-baseline;
+    }
+
+    @include mq($from: leftCol) {
         font-size: 88px;
         line-height: 92px;
-        font-weight: 100;
-        margin-bottom: -$gs-baseline;
+        letter-spacing: -5px;
     }
 }
 
@@ -402,7 +407,7 @@ body {
     }
 
     p a {
-        border-bottom: 1px solid rgba($us-minute-highlight-colour, .4);
+        border-bottom: 1px solid rgba($us-minute-highlight-colour, .6);
 
         &:hover {
             border-bottom-color: $us-minute-highlight-colour;
@@ -417,10 +422,9 @@ body {
 
     // Captions
     .caption__minute-article {
-        background-color: $us-minute-highlight-colour;
         box-sizing: border-box;
         color: $us-minute-contrast-colour;
-        padding: $gs-baseline/2 $gs-gutter $gs-baseline $gs-gutter/2;
+        padding: $gs-baseline/4 $gs-gutter $gs-baseline/2 $gs-gutter/2;
         width: 100%;
     }
 
@@ -456,6 +460,8 @@ body {
 
     .from-content-api & blockquote.quoted {
         color: $us-minute-contrast-colour;
+        margin-top: 0;
+        margin-bottom: 0;
 
         .inline-quote {
             fill: $us-minute-highlight-colour;
@@ -471,8 +477,6 @@ body {
 // Quote Layout
 
 .block--minute-article.block--minute-article--quote {
-    background-color: $us-minute-main-colour;
-
     .inline-quote {
         position: relative;
         display: block;
@@ -491,17 +495,21 @@ body {
     }
 
     @include mq($from: tablet) {
-        .block-elements {
-            width: gs-span(9);
-            float: none;
+        &:before {
+            width: gs-span(7);
         }
 
-        .quoted__contents {
-            @include fs-headline(6, true);
+        .block-elements {
+            width: gs-span(8);
+            float: none;
         }
     }
 
     @include mq($from: desktop) {
+        .quoted__contents {
+            @include fs-headline(6, true);
+        }
+
         .block-elements {
             width: gs-span(10);
             padding-left: 0;
@@ -520,9 +528,24 @@ body {
 
 // Video Layout
 .block--minute-article--video {
+    @include mq($until: mobileLandscape) {
+        .element-video {
+            margin-left: -$gs-gutter/2;
+            margin-right: -$gs-gutter/2;
+        }
+    }
+
     @include mq($from: tablet) {
+        width: gs-span(7);
+
+        &:before {
+            width: gs-span(3);
+            left: 0;
+        }
+
         .block-elements {
             width: gs-span(7);
+            float: none;
         }
 
         .caption__minute-article {
@@ -532,6 +555,16 @@ body {
     }
 
     @include mq($from: desktop) {
+        width: gs-span(9);
+
+        .block-elements {
+            width: gs-span(9);
+        }
+    }
+
+    @include mq($from: leftCol) {
+        width: gs-span(11);
+
         .block-elements {
             width: gs-span(11);
         }
@@ -541,14 +574,23 @@ body {
 // Tweet Layout
 .block--minute-article--tweet {
     @include mq($from: tablet) {
+        width: gs-span(5);
+
+        &:before {
+            width: gs-span(3);
+            left: 0;
+        }
+
         .block-elements {
-            width: gs-span(4);
+            width: gs-span(5);
         }
     }
 
     @include mq($from: desktop) {
+        width: gs-span(6);
+
         .block-elements {
-            width: gs-span(7);
+            width: gs-span(6);
         }
     }
 }
