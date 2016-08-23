@@ -6,6 +6,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import recorder.DefaultHttpRecorder
 
+import scala.collection.mutable
 import scala.concurrent.Future
 import scala.sys.process._
 
@@ -30,16 +31,22 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
       s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
 
         val commandInputWriter: OutputStream => Unit = writeToProcess(content)
+        var output = List[String]()
 
         // Generate a ProcessIO with desired input and no output (error or otherwise)
-        val io: ProcessIO = BasicIO(withIn = false, ProcessLogger((_) => ()))
+        val io: ProcessIO = BasicIO(withIn = false, ProcessLogger { line =>
+          output = line :: output // Mutate because we can't return!
+          ()
+        })
           .withInput(commandInputWriter)
 
         // Pass the content to the command line tool (external process) via stdin ('-' option)
         val process = s"node_modules/.bin/amphtml-validator --validator_js ${f.getAbsolutePath} -".run(io)
 
-        withClue(s"AMP validator for $url should pass.\nHint: Try checking your browser developer console for errors when appending '#development=1' to the failing URL.\nThe validator process exit value of ") {
-          process.exitValue() should be(0)
+        val exitValue = process.exitValue() // side effect - await for process to finish
+
+        withClue(s"AMP validator for $url should pass.\nHint: Try checking your browser developer console for errors when appending '#development=1' to the failing URL.\nOutput:\n---------\n${output.reverse.mkString("\n")}\n---------\nThe validator process exit value of ") {
+          exitValue should be(0)
         }
       }
     }
