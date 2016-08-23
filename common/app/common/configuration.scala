@@ -29,6 +29,23 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
 
     val installVars = {
+      if (new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
+        throw new RuntimeException(
+          "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
+            "All secrets are now stored in AWS, not on your laptop.\n  " +
+            "Any non-secret preferences can be added to a new file ~/.gu/frontend.conf. \n" +
+            "See https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L41 for an example")
+        /*
+        ~/.gu/frontend.conf example file:
+
+# local development (DEV stage) config overrides (not secrets)
+devOverrides {
+	switches.key=DEV/config/switches-yournamehere.properties
+	facia.stage=CODE
+}
+
+         */
+      }
       val p = new JavaProperties()
       p.load(new FileInputStream(s"/etc/gu/install_vars"))
       val stack = p.getProperty("stack", "frontend")
@@ -39,7 +56,6 @@ object GuardianConfiguration extends Logging {
       val configBucket = p.getProperty("configBucket", "aws-frontend-store")
       InstallVars(stack, app, stage, region, configBucket)
     }
-    println(s"install vars: $installVars")
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val devinfra = FileConfigurationSource(s"/etc/gu/frontend.properties")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
@@ -52,7 +68,6 @@ object GuardianConfiguration extends Logging {
     lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
 
     val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
-//    println(s"\n\nappConfig:\n\n${appConfig.getPropertyNames.map{case key => s"$key = ${appConfig.getValue(key)}"}.mkString("\n")}\n\n")
     appConfig
   }
 
