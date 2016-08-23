@@ -1,7 +1,8 @@
 package views.support
 
 import conf.Static
-import model.ImageMedia
+import model._
+import model.pressed.PressedContent
 import play.twirl.api.Html
 
 object EmailHelpers {
@@ -31,18 +32,35 @@ object EmailHelpers {
   def paddedRow(inner: Html): Html = row(columns(12, Seq("panel"))(inner))
   def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes ++ Seq("panel"))(inner))
 
+  def imageUrlFromPressedContent(pressedContent: PressedContent): Option[String] = {
+    for {
+      InlineImage(imageMedia) <- InlineImage.fromFaciaContent(pressedContent)
+      url <- EmailImage.bestFor(imageMedia)
+    } yield url
+  }
+
+  def subjectFromPage(page: Page): String = page match {
+    case c: ContentPage => c.item.trail.headline
+    case p: PressedPage => p.metadata.description.getOrElse(p.metadata.webTitle)
+  }
+
+  def introFromPage(page: Page): Option[String] = page match {
+    case c: ContentPage => c.item.trail.byline
+    case p: PressedPage => p.frontProperties.onPageDescription
+  }
+
   def fullRowWithBackground(media: ImageMedia)(inner: Html): Html = {
-    EmailArticleImage.bestFor(media).map { url =>
+    EmailImage.bestFor(media).map { url =>
       Html {
         s"""<table style="background-image: url($url)" class="row background--image">
           <tr>${columns(12)(inner)}</tr>
         </table>"""
       }
-    } getOrElse(fullRow(inner))
+    } getOrElse (fullRow(inner))
   }
 
   def icon(name: String) = Html {
-    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
+    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="float-left icon icon-$name">"""
   }
 
   object Images {

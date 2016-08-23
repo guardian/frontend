@@ -1,11 +1,11 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
-@import views.support.{ImgSrc, EmailArticleImage}
+@import views.support.{ImgSrc, EmailImage}
 @import views.support.EmailHelpers._
 
 @if(!article.elements.hasMainEmbed) {
     @article.elements.mainPicture.map { picture =>
-        @EmailArticleImage.bestFor(picture.images).map { url =>
+        @EmailImage.bestFor(picture.images).map { url =>
             @fullRow {
                 <img width="580" class="media--main" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
             }
