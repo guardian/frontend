@@ -42,7 +42,8 @@ object GuardianConfiguration extends Logging {
           "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
             "All secrets are now stored in AWS, not on your laptop.\n  " +
             "Any non-secret preferences can be added to a new file ~/.gu/frontend.conf. \n" +
-            "See https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L41 for an example")
+            "For an example see https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L48\n" +
+            "For details see https://github.com/guardian/frontend/pull/14081")
         /*
         ~/.gu/frontend.conf example file:
 
