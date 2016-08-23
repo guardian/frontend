@@ -50,6 +50,9 @@ define([
         };
     }
 
+    var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
+    var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
+
     function onFluidAd(event, advert) {
         var node = advert.node;
         var closestFcContainer = closest(node, '.fc-container');
@@ -64,9 +67,6 @@ define([
 
         addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
     }
-
-    var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
-    var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
 
     var sizeCallbacks = {};
 
