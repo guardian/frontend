@@ -7,9 +7,8 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'text!common/views/contributions-embed.html',
-    'text!common/views/contributions-header.html',
-    'common/views/svgs',
-    'common/modules/article/space-filler'
+    'common/utils/robust'
+
 ], function (bean,
              qwery,
              $,
@@ -18,9 +17,7 @@ define([
              fastdom,
              mediator,
              contributionsEmbed,
-             contributionsHeader,
-             svgs,
-             spaceFiller
+             robust
 ) {
 
 
@@ -43,40 +40,43 @@ define([
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
-        var getSpacefinderRules = function () {
-            return {
-                bodySelector: '.js-article__body',
-                slotSelector: ' > p',
-                minAbove: 200,
-                minBelow: 150,
-                clearContentMeta: 50,
-                fromBottom: true,
-                selectors: {
-                    ' .element-rich-link': {minAbove: 100, minBelow: 100},
-                    ' > h2': {minAbove: 200, minBelow: 0},
-                    ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 200},
-                    ' .ad-slot': {minAbove: 150, minBelow: 200}
-                }
-            };
-        };
 
         var writer = function () {
             var $embed = $.create(template(contributionsEmbed, {
-                linkText : 'give to the Guardian',
-                linkHref : 'https://contribute.theguardian.com/uk?INTCMP=co_uk_head_give_coin',
-                coinSvg: svgs('contributionsCoin', ['rounded-icon', 'control__icon-wrapper'])
+                linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
             }));
 
-           return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
-                    $embed.insertBefore(paras[0]);
-                    mediator.emit('contributions-embed:insert');
+            return fastdom.write(function () {
+                var a = $('.submeta');
+                $embed.insertBefore(a);
+                mediator.emit('contributions-embed:insert');
             });
 
         };
 
         var completer = function (complete) {
-            mediator.on('contributions-header:insert', function () {
-                bean.on(qwery('#contributions__header-contribute-link')[0], 'click', complete);
+            mediator.on('contributions-embed:insert', function () {
+                qwery('figure.interactive.contribute-embed').forEach(function (el) {
+                    require([el.getAttribute('data-interactive')], function (interactive) {
+                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
+                            interactive.boot(el, document, window.guardian.config, mediator);
+                        });
+                    });
+
+                    require(['ophan/ng'], function(ophan) {
+                        var a = el.querySelector('a');
+                        var href = a && a.href;
+
+                        if (href) {
+                            ophan.trackComponentAttention(href, el);
+                        }
+                    });
+                });
+
+                bean.on(qwery('#giraffe__contribute-button')[0], 'click', function (){
+                    complete();
+                });
+
             });
         };
 
