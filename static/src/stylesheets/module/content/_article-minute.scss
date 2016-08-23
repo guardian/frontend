@@ -34,7 +34,7 @@ body {
         display: block;
         z-index: 9999;
         pointer-events: none;
-        opacity: .1;
+        opacity: 0;
     }
 }
 
@@ -146,11 +146,12 @@ body {
         max-width: gs-span(4);
 
         @include mq(tablet) {
-            margin-left: gs-span(1) + $gs-gutter;
+            margin-left: 0;
         }
+
         @include mq(desktop) {
             max-width: gs-span(6);
-            margin-left: gs-span(3) + $gs-gutter;
+            margin-left: gs-span(1) + $gs-gutter;
         }
 
     }
@@ -289,15 +290,17 @@ body {
 
     // Desktop
     @include mq($from: desktop) {
-        max-width: gs-span(11);
-        margin: $gs-baseline/2 0 $gs-baseline 0;
+        max-width: gs-span(10);
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+        margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
-            width: gs-span(10);
+            width: gs-span(9);
         }
 
         .block-elements {
-            width: gs-span(5);
+            width: gs-span(4);
         }
 
         figure.element-image {
@@ -307,35 +310,16 @@ body {
 
     // LeftCol
     @include mq($from: leftCol) {
+        max-width: gs-span(11);
         margin-left: gs-span(1) + $gs-gutter;
 
         .block-elements {
             width: gs-span(5);
-            padding-right: gs-span(1);
         }
 
         figure.element-image {
             width: gs-span(6);
         }
-
-        // // Big first image
-        // &:first-of-type {
-        //     margin-left: $gs-gutter;
-        //
-        //     .block-elements {
-        //         margin-top: auto;
-        //         width: gs-span(4);
-        //         padding-left: 0;
-        //     }
-        //
-        //     &:before {
-        //         width: gs-span(13);
-        //     }
-        //
-        //     figure.element-image {
-        //         width: gs-span(12);
-        //     }
-        // }
     }
 
     // Wide
@@ -345,25 +329,6 @@ body {
         figure.element-image {
             width: gs-span(7);
         }
-
-        // // Big first image
-        // &:first-of-type {
-        //     max-width: gs-span(16);
-        //     margin-left: $gs-gutter;
-        //
-        //     .block-elements {
-        //         width: gs-span(4);
-        //         padding-left: 0;
-        //     }
-        //
-        //     &:before {
-        //         width: gs-span(13);
-        //     }
-        //
-        //     figure.element-image {
-        //         width: gs-span(12);
-        //     }
-        // }
     }
 }
 
@@ -375,25 +340,18 @@ body {
     }
 
     .block-elements {
-        float: right;;
+        float: right;
     }
 
     @include mq($from: tablet) {
-        margin-left: gs-span(1) + $gs-gutter;
-
         figure.element-image {
             margin-left: 0;
             margin-right: $gs-gutter;
         }
     }
 
-    @include mq($from: leftCol) {
+    @include mq($from: desktop) {
         margin-left: gs-span(2) + $gs-gutter;
-
-        .block-elements {
-            padding-left: gs-span(1) + $gs-gutter;
-            padding-right: 0;
-        }
     }
 
     @include mq($from: wide) {
@@ -535,6 +493,7 @@ body {
     @include mq($from: tablet) {
         .block-elements {
             width: gs-span(9);
+            float: none;
         }
 
         .quoted__contents {
