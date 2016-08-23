@@ -46,7 +46,12 @@ trait Strings {
     }
   }
 
-  // Note, this method encodes parameter values so you don't have to
+  // UriBuilder will treat '{' and '}' as attempts at variable substition,
+  // leading to surprising errors. To avoid this, parameter values are
+  // url-encoded before being added.
+  //
+  // Note, the queryParam method of UriBuilder also encodes values but is
+  // sensible enough not to double-encode percent-encoded values.
   implicit class String2Uri(uri: String) {
     def appendQueryParams(queryParams: Map[String, String]): String = {
       queryParams.foldLeft(uri)((currentUri, queryParam) => {
