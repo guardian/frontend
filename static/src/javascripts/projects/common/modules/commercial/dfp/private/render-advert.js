@@ -151,6 +151,9 @@ define([
 
             function callSizeCallback() {
                 var size = slotRenderEvent.size.join(',');
+                if (size === '0,0') {
+                    size = 'fluid';
+                }
                 if (sizeCallbacks[size]) {
                     return sizeCallbacks[size](slotRenderEvent, advert);
                 }
