@@ -30,7 +30,7 @@ define([
         this.description = 'Test contributions embed with amount picker.';
         this.showForSensitive = false;
         this.audience = 0.13;
-        this.audienceOffset = 0.13;
+        this.audienceOffset = 0.05;
         this.successMeasure = 'Determine the effectivness of allowing user to pick contribution amount in the cta';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
