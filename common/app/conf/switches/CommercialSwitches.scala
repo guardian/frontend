@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "Show series containers on paid content pages.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = false
   )
 
