@@ -8,45 +8,45 @@
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
     .hosted-tone {
-        color: @{page.campaign.campaignColour.brandColour};
+        color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-tone-bg {
-        background-color: @{page.campaign.campaignColour.brandColour};
+        background-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
-        background-color: @{page.campaign.campaignColour.brandColour};
-        border-color: @{page.campaign.campaignColour.brandColour};
+        background-color: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted-next-autoplay__poster-timer,
     .hosted-page .hosted-next-autoplay__tile {
-        background-color: @{page.campaign.campaignColour.brandColour};
+        background-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted-next-autoplay__video,
     .hosted-page .hosted-next-autoplay__next-in-series {
-        border-top: 1px solid @{page.campaign.campaignColour.brandColour};
+        border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__next-video--tile {
-        border-top-color: @{page.campaign.campaignColour.brandColour};
+        border-top-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__link {
-        color: @{page.campaign.campaignColour.brandColour};
+        color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
-        background-color: @{page.campaign.campaignColour.brandColour};
+        background-color: @{page.campaign.fontColour.brandColour};
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.campaignColour.isBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.campaignColour.isBrightFont) {hosted-page--bright}">
+    @guardianHostedHeader(if(page.campaign.fontColour.isBright) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.fontColour.isBright) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
@@ -129,7 +129,7 @@
                     <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
                     <h2 class="hosted__next-video--client-name @{page.brandColourCssClass}">@{page.campaign.owner}</h2>
                 </div>
-                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{page.campaign.campaignColour.brandColour}" data-link-name="Next Hosted Video: @{nextPage.title}">
+                <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{page.campaign.fontColour.brandColour}" data-link-name="Next Hosted Video: @{nextPage.title}">
                     <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
                     <p class="hosted__next-video-title">@{nextPage.title}</p>
                 </a>

@@ -13,7 +13,7 @@ object ZootropolisHostedPages {
     owner = "Disney",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg"),
     cssClass = "zootropolis",
-    campaignColour = CampaignColour("#2ec869"),
+    fontColour = FontColour("#2ec869"),
     logoLink = None
   )
 

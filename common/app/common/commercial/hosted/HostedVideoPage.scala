@@ -81,7 +81,7 @@ object HostedVideoPage extends Logging {
             url = sponsorship.sponsorLogo
           ),
           cssClass = "renault",
-          campaignColour = CampaignColour(hostedTag.paidContentCampaignColour getOrElse ""),
+          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
         pageUrl,
