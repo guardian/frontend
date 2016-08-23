@@ -12,7 +12,7 @@ header {
     font-size: 18px;
 }
 .navbar { display: none; }
-#pingdom li, #riffraff li, #sell-by-date li { font-size: 30px; line-height: 30px; }
+#pingdom li, #riffraff li { font-size: 30px; line-height: 30px; }
 #pingdom small, #riffraff small { font-size: 20px; }
 
 .down, .Failed { color: red; }
@@ -27,8 +27,7 @@ ul {
 }
 
 #pingdom li,
-.riffraff li,
-#sell-by-date li {
+.riffraff li {
     width: 30px;
     height: 30px;
     font-size: 0;
@@ -53,21 +52,34 @@ ul {
     background-color: red;
 }
 
-.Expiring {
-    background-color: orange;
-}
-
 .riffraff li.Behind {
     background-color: #21fa41;
 }
 
-.expired, .expiry-days-0, .expiry-days-1, .expiry-days-2 {
+#switches {
+    list-style-type: none;
+    padding: 0px;
+}
+#switches li {
+    margin: 3px;
+}
+#switches li span {
+    color: white;
+    padding: 2px;
+    margin: 2px;
+}
+#switches .expired {
     background-color: red;
+}
+#switches .expiry-days-0 {
+    background-color: orangered;
+}
+#switches .expiry-days-1 {
+    background-color: orange;
 }
 
 .riffraff,
-#pingdom,
-#sell-by-date {
+#pingdom {
     overflow: hidden;
     padding: 0;
     margin-bottom: 20px;

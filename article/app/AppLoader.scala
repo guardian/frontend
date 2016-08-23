@@ -1,5 +1,6 @@
 import http.CorsHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
+import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
@@ -42,7 +43,8 @@ trait AppLifecycleComponents {
     wire[SurgingContentAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[TargetingLifecycle]
+    wire[TargetingLifecycle],
+    wire[DiscussionExternalAssetsLifecycle]
   )
 }
 

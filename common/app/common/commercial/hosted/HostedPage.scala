@@ -22,10 +22,10 @@ trait HostedPage extends StandalonePage {
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
 
-  val brandColourCssClass = s"hosted-tone--${campaign.cssClass}"
-  val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass}"
-  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass}"
-  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass}"
+  val brandColourCssClass = s"hosted-tone--${campaign.cssClass} hosted-tone"
+  val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass} hosted-tone-bg"
+  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass} hosted-tone-border"
+  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
 
 }
 
@@ -35,6 +35,8 @@ case class HostedCampaign(
   owner: String,
   logo: HostedLogo,
   cssClass: String,
+  brandColour: String,
+  brightFont: Boolean,
   logoLink: Option[String] = None
 )
 

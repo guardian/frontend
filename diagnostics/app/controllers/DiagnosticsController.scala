@@ -5,8 +5,9 @@ import play.api.mvc._
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
-import model.diagnostics.commercial.Report
+import model.diagnostics.commercial.UserReport
 import model.TinyResponse
+import org.joda.time.format.ISODateTimeFormat
 
 class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
@@ -55,9 +56,18 @@ class DiagnosticsController extends Controller with Logging {
   def cspOptions = postOptions
 
   def commercialReport = Action(jsonParser) { implicit request =>
-    Report.report(request.body)
+    UserReport.report(request.body)
 
     TinyResponse.noContent()
+  }
+
+  def commercialReports(dateTime: String) = Action { implicit request =>
+    // report requests come from browsers, so dateTime is ISO.
+    val date = ISODateTimeFormat.dateTime.parseDateTime(dateTime)
+
+    JsonComponent(
+      "reports" -> UserReport.getReports(date)
+    ).result
   }
 
   def commercialOptions = postOptions

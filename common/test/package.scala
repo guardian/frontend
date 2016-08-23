@@ -2,7 +2,8 @@ package test
 
 import java.io.File
 
-import com.gargoylesoftware.htmlunit.BrowserVersion
+import com.gargoylesoftware.htmlunit.html.HtmlPage
+import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import conf.Configuration
 import contentapi.{ContentApiClient, Http}
@@ -39,22 +40,8 @@ trait TestSettings {
 
     val originalHttp = http
 
-    verify(
-      Configuration.contentApi.contentApiHost,
-      "5f755b14e59810c1c7ed8a79dfe9bc132340d22ee255f3b41bd4f3e2af5e5393",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
-    )
-
-    Configuration.contentApi.key.map { k =>
-        verify(
-          k,
-          "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
-          "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
-        )
-    }
-
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      recorder.load(url, headers.toMap) {
+      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttp.GET(url, headers)
       }
     }
@@ -67,6 +54,7 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
+  lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
@@ -91,6 +79,18 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
       htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
       block(testBrowser)
+  }
+
+  /**
+  * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
+  * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
+  * we can use [[WebResponse.getContentAsString]]
+   */
+  protected def getContentString[T](path: String)(block: String => T): T = {
+    webClient.getOptions.setJavaScriptEnabled(false)
+
+    val page: HtmlPage = webClient.getPage(host + path)
+    block(page.getWebResponse().getContentAsString)
   }
 
   def withHost(path: String) = s"http://localhost:$port$path"

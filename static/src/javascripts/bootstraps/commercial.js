@@ -13,9 +13,11 @@ define([
     'common/modules/commercial/dfp/load',
     'common/modules/commercial/dfp/sponsorships',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/gallery-adverts',
     'common/modules/commercial/hosted-about',
     'common/modules/commercial/hosted-video',
     'common/modules/commercial/hosted-gallery',
+    'common/modules/commercial/hosted-colours',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/sticky-top-banner',
     'common/modules/commercial/third-party-tags',
@@ -37,9 +39,11 @@ define([
     dfpLoad,
     sponsorships,
     frontCommercialComponents,
+    galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
+    hostedColours,
     sliceAdverts,
     stickyTopBanner,
     thirdPartyTags,
@@ -52,6 +56,7 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
@@ -73,7 +78,8 @@ define([
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
-            ['cm-hostedGallery', hostedGallery.init]);
+            ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedColours', hostedColours.init]);
     }
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {

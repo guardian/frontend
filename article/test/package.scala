@@ -6,10 +6,12 @@ import org.scalatest.{BeforeAndAfterAll, Suites, Tag}
 object ArticleComponents extends Tag("article components")
 
 class ArticleTestSuite extends Suites (
+  new MainMediaWidthsTest,
   new AnalyticsFeatureTest,
   new ArticleControllerTest,
   new ArticleMetaDataTest,
   new ArticleFeatureTest,
+  new ArticleAmpValidityTest,
   new CdnHealthCheckTest,
   new SectionsNavigationFeatureTest,
   new MembershipAccessTest,

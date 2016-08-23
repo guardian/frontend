@@ -1,10 +1,12 @@
 define([
     'admin/bootstraps/abtests',
     'admin/bootstraps/radiator',
+    'admin/bootstraps/commercial-browser-performance',
     'domReady'
 ], function (
     abTests,
     radiator,
+    commercialBrowserPerformance,
     domReady
 ) {
     domReady(function () {
@@ -15,6 +17,10 @@ define([
 
             case '/radiator':
                 radiator.init();
+                break;
+
+            case '/commercial/performance/browser-dashboard':
+                commercialBrowserPerformance.init();
                 break;
         }
     });

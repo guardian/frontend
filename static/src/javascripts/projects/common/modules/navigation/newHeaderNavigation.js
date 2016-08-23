@@ -1,17 +1,20 @@
 define([
     'common/utils/fastdom-promise',
     'common/utils/$',
-    'common/modules/navigation/edition-picker'
+    'common/modules/navigation/edition-picker',
+    'common/modules/navigation/editionalise-menu',
+    'common/utils/details-polyfill'
 ], function (
     fastdomPromise,
     $,
-    editionPicker
+    editionPicker,
+    editionaliseMenu,
+    detailsPolyfill
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
-    var burgerLink = $('.js-change-link');
-    var burgerIcon = $('.js-animate-menu');
+    var veggieBurgerLink = $('.js-change-link');
     var primaryItems = $('.js-close-nav-list');
 
     function closeAllOtherPrimaryLists(targetItem) {
@@ -27,8 +30,8 @@ define([
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            burgerIcon.addClass('new-header__burger-icon--open');
-            burgerLink.attr('href', '#');
+            veggieBurgerLink.addClass('new-header__nav__menu-button--open');
+            veggieBurgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
                 mainMenuEl.removeClass('off-screen');
@@ -51,8 +54,8 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                burgerIcon.removeClass('new-header__burger-icon--open');
-                burgerLink.attr('href', mainMenuId);
+                veggieBurgerLink.removeClass('new-header__nav__menu-button--open');
+                veggieBurgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
                 // We still want to hide this
@@ -94,9 +97,13 @@ define([
                 if (itemId === targetListId) {
                     fastdomPromise.write(function () {
                         var parent = listItem.parentNode;
+                        var menuContainer = $('.js-reset-scroll-on-menu');
 
                         // Using flexbox to reorder lists based on what is clicked.
                         parent.style.order = '-' + index;
+
+                        // Make sure when the menu is open, the user is always scrolled to the top
+                        menuContainer[0].scrollTop = 0;
                     });
                 }
             });
@@ -115,7 +122,7 @@ define([
                 }).then(function (id) {
                     var menuToOpen = $('#' + id);
 
-                       fastdomPromise.write(function () {
+                    fastdomPromise.write(function () {
                         menuToOpen.attr('open', '');
                         return id;
                     }).then(moveTargetListToTop.bind(id));
@@ -126,7 +133,6 @@ define([
 
     function bindPrimaryItemClickEvents() {
         primaryItems.each(function (item) {
-
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
@@ -143,6 +149,8 @@ define([
     }
 
     function init() {
+        detailsPolyfill.init('.main-navigation__item__button');
+
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 
@@ -150,6 +158,7 @@ define([
         openTargetListOnClick();
 
         editionPicker();
+        editionaliseMenu();
     }
 
     return init;

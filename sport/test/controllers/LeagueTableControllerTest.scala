@@ -3,12 +3,15 @@ package test
 import football.controllers.LeagueTableController
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
-  with Matchers
-  with FootballTestData {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   val leagueTableController = new LeagueTableController(testCompetitionsService)
 

@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "If this switch is on, main media embeds won't be iframed",
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 9, 22),
     exposeClientSide = false
   )
 
@@ -325,27 +325,6 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val DiscussionAllPageSizeSwitch = Switch(
-    SwitchGroup.Feature,
-    "discussion-all-page-size",
-    "If this is switched on then users will have the option to load all comments",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val DiscussionAllowAnonymousRecommendsSwitch = Switch(
-    SwitchGroup.Feature,
-    "discussion-allow-anonymous-recommends-switch",
-    "if this is switched on, comments can be recommended by signed out users",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-
   )
 
   val MissingVideoEndcodingsJobSwitch = Switch(

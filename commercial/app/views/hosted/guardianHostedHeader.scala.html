@@ -1,7 +1,7 @@
 @(pageCssClass: String, brandCssClass: String, logoUrl: String, owner: String, logoLink: String)
     <div class="hosted__header @pageCssClass">
         <div class="hosted__headerwrap js-hosted-headerwrap">
-            <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--@brandCssClass">
+            <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg--@brandCssClass hosted-tone-bg">
                 <p class="hostedbadge__info">Advertiser content</p>
                 <a href="@{logoLink}" data-link-name="hosted-logo-top-left" target="_blank">
                     <img class="hostedbadge__logo" src="@{logoUrl}" alt="logo @{owner}"/>

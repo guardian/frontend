@@ -27,6 +27,7 @@
 - [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
+- [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
@@ -39,6 +40,7 @@
 
 ##[Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
+- [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
 
 ##[Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)

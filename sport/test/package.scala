@@ -1,18 +1,13 @@
 package test
 
-import com.ning.http.client.FluentCaseInsensitiveStringsMap
-import com.ning.http.client.uri.Uri
 import common.ExecutionContexts
-import java.io.{File, InputStream}
-import java.nio.ByteBuffer
-import java.util
+import java.io.File
 
 import football.controllers.HealthCheck
 import org.scalatest.{BeforeAndAfterAll, Suites}
-import play.api.libs.ws.ning.NingWSResponse
-import recorder.HttpRecorder
-import play.api.libs.ws.{WSClient, WSResponse}
-import conf.FootballClient
+import recorder.{DefaultHttpRecorder, HttpRecorder}
+import play.api.libs.ws.WSClient
+import conf.{SportConfiguration, FootballClient}
 import football.model._
 import football.collections.RichListTest
 import pa.{Http, Response => PaResponse}
@@ -43,11 +38,12 @@ class SportTestSuite extends Suites (
 }
 
 trait WithTestFootballClient {
-  self: WithTestFootballClient with WithTestWsClient =>
+
+  def wsClient: WSClient
 
   lazy val testFootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
-      FootballHttpRecorder.load(url) {
+      FootballHttpRecorder.load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {
         wsClient.url(url)
           .withRequestTimeout(10000)
           .get()
@@ -60,47 +56,16 @@ trait WithTestFootballClient {
 
 }
 
-private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {
-  def getContentType: String = "application/json"
-  def getResponseBody(charset: String): String = getResponseBody
-  def getStatusCode: Int = 200
-  def getResponseBodyAsBytes: Array[Byte] = throw new NotImplementedError()
-  def getResponseBodyAsByteBuffer: ByteBuffer = throw new NotImplementedError()
-  def getResponseBodyAsStream: InputStream = throw new NotImplementedError()
-  def getResponseBodyExcerpt(maxLength: Int, charset: String): String = throw new NotImplementedError()
-  def getResponseBodyExcerpt(maxLength: Int): String = throw new NotImplementedError()
-  def getStatusText: String = throw new NotImplementedError()
-  def getUri: Uri = throw new NotImplementedError()
-  def getHeader(name: String): String = throw new NotImplementedError()
-  def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
-  def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
-  def isRedirected: Boolean = throw new NotImplementedError()
-  def getCookies = throw new NotImplementedError()
-  def hasResponseStatus: Boolean = throw new NotImplementedError()
-  def hasResponseHeaders: Boolean = throw new NotImplementedError()
-  def hasResponseBody: Boolean = throw new NotImplementedError()
-}
-
-object FeedHttpRecorder extends HttpRecorder[WSResponse] {
-
+object FeedHttpRecorder extends DefaultHttpRecorder {
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/sportfeed")
-
-  def toResponse(str: String) = NingWSResponse(Resp(str))
-
-  def fromResponse(response: WSResponse) = {
-    if (response.status == 200) {
-      response.body
-    } else {
-      s"Error:${response.status}"
-    }
-  }
 }
 
 // Stubs data for Football stats integration tests
 class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 
   def GET(url: String): Future[PaResponse] = {
-    FootballHttpRecorder.load(url) {
+    val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
+    FootballHttpRecorder.load(sanitisedUrl) {
       wsClient.url(url)
         .withRequestTimeout(10000)
         .get()
@@ -112,7 +77,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 }
 
 object FootballHttpRecorder extends HttpRecorder[PaResponse] {
-  override lazy val baseDir = new File(s"${getClass.getClassLoader.getResource("testdata").getFile}/")
+  override lazy val baseDir = new File(System.getProperty("user.dir"), "data/football")
 
   def toResponse(str: String) = PaResponse(200, str, "ok")
 

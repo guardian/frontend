@@ -272,7 +272,7 @@ trait CommercialSwitches {
     "If on, all badges are served server side",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )
 
@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Serve container branding from capi",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )
 
@@ -292,17 +292,7 @@ trait CommercialSwitches {
     "Show series containers on paid content pages.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
-    exposeClientSide = false
-  )
-
-  val hostedGalleryTest = Switch(
-    group = CommercialLabs,
-    "hosted-gallery-test",
-    "If on, test page for gallery content is available",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = false
   )
 

@@ -46,7 +46,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController(competitionsService: CompetitionsService, footballClient: FootballClient) extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController(competitionsService: CompetitionsService) extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
@@ -64,7 +64,7 @@ class MatchController(competitionsService: CompetitionsService, footballClient: 
 
   private def render(maybeMatch: Option[FootballMatch]) = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = footballClient.lineUp(theMatch.id).recover(footballClient.logErrors)
+      val lineup: Future[LineUp] = competitionsService.footballClient.lineUp(theMatch.id).recover(competitionsService.footballClient.logErrors)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>

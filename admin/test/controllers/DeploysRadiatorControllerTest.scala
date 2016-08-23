@@ -18,22 +18,22 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  val existingBuild = "1621"
+  val existingBuild = "3123"
 
   class TestHttpClient(wsClient: WSClient) extends HttpLike {
     override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
-      val extentedHeaders = headers + ("X-Url" -> (url + queryString.mkString))
-      DeploysTestHttpRecorder.load(url, extentedHeaders) {
+      import implicits.Strings.string2encodings
+      val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
+      DeploysTestHttpRecorder.load(urlWithParams, headers) {
         wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
       }
     }
   }
 
-  val recordingHttpClient = new TestHttpClient(wsClient)
-
   class DeploysRadiatorControllerStub extends DeploysRadiatorController {
-    override val teamcity = new TeamcityService(recordingHttpClient)
-    override val riffRaff = new RiffRaffService(recordingHttpClient)
+    private val httpClient = new TestHttpClient(wsClient)
+    override val teamcity = new TeamcityService(httpClient)
+    override val riffRaff = new RiffRaffService(httpClient)
   }
 
   val controller = new DeploysRadiatorControllerStub()
@@ -79,7 +79,7 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
       (jsonResponse \ "status").as[String] should be("ok")
       (jsonResponse \ "response" \ "number").as[String] should be(existingBuild)
       (jsonResponse \ "response" \ "projectName").as[String] should be("dotcom:master")
-      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(7)
+      ((jsonResponse \ "response" \ "commits").as[JsArray]).value.size should be(2)
     }
   }
 

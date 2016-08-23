@@ -12,6 +12,7 @@ define(function () {
 
         // guardian proprietary ad sizes
         badge:                  AdSize(140, 90),
+        merchandisingHighAdFeature: AdSize(88, 89),
         merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),
         inlineMerchandising:    AdSize(88, 85),

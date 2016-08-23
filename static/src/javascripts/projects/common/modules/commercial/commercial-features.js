@@ -17,6 +17,8 @@ define([
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
     function CommercialFeatures() {
+        var self = this;
+
         // this is used for SpeedCurve tests
         var noadsUrl = location.getHash().match(/[#&]noads(&.*)?$/);
 
@@ -31,6 +33,8 @@ define([
         var isMinuteArticle = config.page.isMinuteArticle;
 
         var isArticle = config.page.contentType === 'Article';
+
+        var isGallery = config.page.contentType == 'Gallery';
 
         var isLiveBlog = config.page.isLiveBlog;
 
@@ -55,6 +59,10 @@ define([
         this.topBannerAd =
             this.dfpAdvertising &&
             !isMinuteArticle;
+
+        this.galleryAdverts =
+            this.dfpAdvertising &&
+            isGallery;
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
@@ -118,11 +126,13 @@ define([
             this.dfpAdvertising &&
             switches.liveblogAdverts;
 
+        this.syncMembershipMessages =
+            isArticle &&
+            !userFeatures.isPayingMember();
+
         this.async = {
             membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
-                return !adblockUsed &&
-                    isArticle &&
-                    !userFeatures.isPayingMember();
+                return !adblockUsed && self.syncMembershipMessages;
             })
         };
     }

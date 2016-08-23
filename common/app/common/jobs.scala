@@ -5,10 +5,12 @@ import java.util.TimeZone
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import play.api.Mode.Test
+
 import scala.collection.mutable
 import play.api.{Environment, Play}
 
 import scala.concurrent.Future
+import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 object JobsState {
@@ -84,11 +86,12 @@ class JobScheduler(env: Environment) extends Logging {
     }
   }
 
-  def scheduleEveryNSeconds(name: String, intervalInSeconds: Int)(block: => Future[Unit]): Unit = {
+  def scheduleEvery(name: String, interval: Duration)(block: => Future[Unit]): Unit = {
     if (env.mode != Test) {
-      val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(intervalInSeconds)
-      log.info(s"Scheduling $name to run every $intervalInSeconds minutes")
+      val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(interval.toSeconds.toInt)
+      log.info(s"Scheduling $name to run every ${interval.toSeconds} seconds")
       jobs.put(name, () => block)
+
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
         TriggerBuilder.newTrigger().withSchedule(schedule).build()

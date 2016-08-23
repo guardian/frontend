@@ -6,6 +6,8 @@
     @include u-h;
 }
 
+// Hide until
+
 .hide-until-mobile-landscape {
     @include mq($until: mobileLandscape) {
         display: none !important;
@@ -30,11 +32,33 @@
     }
 }
 
+// Hide from
+
+.hide-from-mobile-landscape {
+    @include mq(mobileLandscape) {
+        display: none !important;
+    }
+}
+
+.hide-from-tablet {
+    @include mq(tablet) {
+        display: none !important;
+    }
+}
+
 .hide-from-leftcol {
     @include mq(leftCol) {
         display: none !important;
     }
 }
+
+.hide-from-wide {
+    @include mq(wide) {
+        display: none !important;
+    }
+}
+
+// Other
 
 .is-hidden,
 [hidden] {
