@@ -92,9 +92,9 @@ object ShareLinks {
 
     lazy val facebookParams = List(
       Some("app_id" -> facebookAppId),
-      Some("href" -> encodedHref),
-      quote.map(q => "quote" -> q.urlEncoded),
-      mediaPath.map(path => "picture" -> path.urlEncoded)
+      Some("href" -> href),
+      quote.map(q => "quote" -> q),
+      mediaPath.map(path => "picture" -> path)
     ).flatten.toMap
 
     val fullLink = platform match {

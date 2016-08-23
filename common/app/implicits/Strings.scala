@@ -46,11 +46,12 @@ trait Strings {
     }
   }
 
+  // Note, this method encodes parameter values so you don't have to
   implicit class String2Uri(uri: String) {
     def appendQueryParams(queryParams: Map[String, String]): String = {
       queryParams.foldLeft(uri)((currentUri, queryParam) => {
         javax.ws.rs.core.UriBuilder.fromUri(currentUri)
-          .queryParam(queryParam._1, queryParam._2)
+          .queryParam(queryParam._1, queryParam._2.urlEncoded)
           .build()
           .toString()
       })
