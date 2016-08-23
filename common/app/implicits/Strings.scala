@@ -1,6 +1,8 @@
 package implicits
 
-import java.net.{URLEncoder, URLDecoder}
+import java.net.{URLDecoder, URLEncoder}
+
+import com.sun.jersey.api.uri.UriComponent
 import org.apache.commons.lang.StringEscapeUtils
 
 trait Strings {
@@ -21,7 +23,8 @@ trait Strings {
   }
 
   implicit class string2encodings(s: String) {
-    lazy val urlEncoded = URLEncoder.encode(s, "utf-8")
+    // Note, this is idempotent - i.e. it will not double-encode %-escaped characters
+    lazy val urlEncoded = UriComponent.contextualEncode(s, UriComponent.Type.UNRESERVED, false)
     lazy val javascriptEscaped = StringEscapeUtils.escapeJavaScript(s)
     lazy val encodeURIComponent = {
       // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
