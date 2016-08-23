@@ -51,6 +51,9 @@ ul {
 #pingdom li.down, .riffraff li.Failed {
     background-color: red;
 }
+#pingdom li.paused {
+    background-color: lightgrey;
+}
 
 .riffraff li.Behind {
     background-color: #21fa41;
