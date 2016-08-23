@@ -8,6 +8,21 @@
 
 @import org.joda.time.{DateTime, Days}
 
+@showOwners(switch: conf.switches.Switch) = {
+    @for(owner <- switch.owners) { @showOwner(owner) }
+}
+@showOwner(owner: conf.switches.Owner) = {
+    @if(!owner.github.isEmpty) {
+        <a href="https://github.com/@{owner.github.get}">@{owner.name.getOrElse(owner.github)}</a>
+    } else {
+        @if(!owner.email.isEmpty) {
+            <a href="mailto:@{owner.email.get}">@{owner.name.getOrElse(owner.email)}</a>
+        } else {
+            @owner.name
+        }
+    }
+}
+
 @admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/radiator.css")">
@@ -35,11 +50,11 @@
 
     <div class="expiring-wrapper">
         <h2>Expiring features</h2>
-        <ul id="sell-by-date">
+        <ul id="switches">
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
-                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}" title="@switch.name - expires in @days days">
-                        @switch.name
+                    <li title="@switch.name - expires in @days days">
+                        <span class="expiry-days-@days">@switch.name</span> - <span>@showOwners(switch)</span>
                     </li>
                 }
             }
