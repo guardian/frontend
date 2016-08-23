@@ -74,7 +74,7 @@ abstract case class TestDefinition (
   owners: Seq[Owner],
   sellByDate: LocalDate
 ) {
-  val switch: common.Switchable = Switch(
+  val switch: Switch = Switch(
     SwitchGroup.ServerSideABTests,
     name,
     description,
@@ -84,7 +84,7 @@ abstract case class TestDefinition (
     exposeClientSide = true
   )
 
-  protected def isSwitchedOn: Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
+  private def isSwitchedOn: Boolean = switch.isSwitchedOn && ServerSideTests.isSwitchedOn
 
   def canRun(implicit request: RequestHeader): Boolean
   def isParticipating(implicit request: RequestHeader): Boolean = isSwitchedOn && canRun(request)
