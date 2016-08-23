@@ -29,7 +29,15 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
 
     val installVars = {
-      if (new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
+      val p = new JavaProperties()
+      p.load(new FileInputStream(s"/etc/gu/install_vars"))
+      val stack = p.getProperty("stack", "frontend")
+      // if got config at app startup, we wouldn't need to configure it
+      val app = p.getProperty("app", "dev-build")
+      val stage = p.getProperty("STAGE", "DEV")
+      val region = p.getProperty("region", "eu-west-1")
+      val configBucket = p.getProperty("configBucket", "aws-frontend-store")
+      if (stage == "DEV" && new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
         throw new RuntimeException(
           "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
             "All secrets are now stored in AWS, not on your laptop.\n  " +
@@ -46,14 +54,6 @@ devOverrides {
 
          */
       }
-      val p = new JavaProperties()
-      p.load(new FileInputStream(s"/etc/gu/install_vars"))
-      val stack = p.getProperty("stack", "frontend")
-      // if got config at app startup, we wouldn't need to configure it
-      val app = p.getProperty("app", "dev-build")
-      val stage = p.getProperty("STAGE", "DEV")
-      val region = p.getProperty("region", "eu-west-1")
-      val configBucket = p.getProperty("configBucket", "aws-frontend-store")
       InstallVars(stack, app, stage, region, configBucket)
     }
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
