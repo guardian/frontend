@@ -31,11 +31,11 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
       s"The AMP page at $url" should "pass an AMP validator" in getContentString(ampUrl) { content =>
 
         val commandInputWriter: OutputStream => Unit = writeToProcess(content)
-        var output = List[String]()
+        val output = new StringBuilder
 
         // Generate a ProcessIO with desired input and no output (error or otherwise)
         val io: ProcessIO = BasicIO(withIn = false, ProcessLogger { line =>
-          output = line :: output // Mutate because we can't return!
+          output.append(line + "\n") // Mutate because we can't return!
           ()
         })
           .withInput(commandInputWriter)
@@ -45,7 +45,7 @@ trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite wi
 
         val exitValue = process.exitValue() // side effect - await for process to finish
 
-        withClue(s"AMP validator for $url should pass.\nHint: Try checking your browser developer console for errors when appending '#development=1' to the failing URL.\nOutput:\n---------\n${output.reverse.mkString("\n")}\n---------\nThe validator process exit value of ") {
+        withClue(s"AMP validator for $url should pass.\nHint: Try checking your browser developer console for errors when appending '#development=1' to the failing URL.\nOutput:\n---------\n${output.toString}\n---------\nThe validator process exit value of ") {
           exitValue should be(0)
         }
       }
