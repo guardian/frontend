@@ -55,7 +55,7 @@ object BodyCleaner {
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
-      RichLinkCleaner,
+      RichLinkCleaner(amp),
       MembershipEventCleaner,
       BlockquoteCleaner,
       ChaptersLinksCleaner,
