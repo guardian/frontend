@@ -1,6 +1,8 @@
 package implicits
 
-import java.net.{URLEncoder, URLDecoder}
+import java.net.{URLDecoder, URLEncoder}
+
+import com.sun.jersey.api.uri.UriComponent
 import org.apache.commons.lang.StringEscapeUtils
 
 trait Strings {
@@ -21,7 +23,8 @@ trait Strings {
   }
 
   implicit class string2encodings(s: String) {
-    lazy val urlEncoded = URLEncoder.encode(s, "utf-8")
+    // Note, this is idempotent - i.e. it will not double-encode %-escaped characters
+    lazy val urlEncoded = UriComponent.contextualEncode(s, UriComponent.Type.UNRESERVED, false)
     lazy val javascriptEscaped = StringEscapeUtils.escapeJavaScript(s)
     lazy val encodeURIComponent = {
       // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
@@ -46,11 +49,17 @@ trait Strings {
     }
   }
 
+  // UriBuilder will treat '{' and '}' as attempts at variable substition,
+  // leading to surprising errors. To avoid this, parameter values are
+  // url-encoded before being added.
+  //
+  // Note, the queryParam method of UriBuilder also encodes values but is
+  // sensible enough not to double-encode percent-encoded values.
   implicit class String2Uri(uri: String) {
     def appendQueryParams(queryParams: Map[String, String]): String = {
       queryParams.foldLeft(uri)((currentUri, queryParam) => {
         javax.ws.rs.core.UriBuilder.fromUri(currentUri)
-          .queryParam(queryParam._1, queryParam._2)
+          .queryParam(queryParam._1, queryParam._2.urlEncoded)
           .build()
           .toString()
       })
