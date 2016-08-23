@@ -70,7 +70,7 @@ trait ABTestSwitches {
     "Test contributions embed with amount picker.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 8, 27),
     exposeClientSide = true
   )
 

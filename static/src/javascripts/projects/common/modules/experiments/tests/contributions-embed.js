@@ -24,13 +24,13 @@ define([
     return function () {
 
         this.id = 'ContributionsEmbed20160822';
-        this.start = '2016-08-22';
-        this.expiry = '2016-08-26';
+        this.start = '2016-08-23';
+        this.expiry = '2016-08-27';
         this.author = 'Jonathan Rankin';
         this.description = 'Test contributions embed with amount picker.';
         this.showForSensitive = false;
         this.audience = 0.13;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.13;
         this.successMeasure = 'Determine the effectivness of allowing user to pick contribution amount in the cta';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
