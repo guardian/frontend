@@ -100,7 +100,7 @@ trait ABTestSwitches {
     "Test effectiveness of header for driving contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 8, 30),
     exposeClientSide = true
   )
 
