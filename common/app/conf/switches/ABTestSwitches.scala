@@ -84,16 +84,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRemindMeEmail = Switch(
-    SwitchGroup.ABTests,
-    "ab-remind-me-email",
-    "Sign up for an email to remind you about the next item in a series",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 8, 19),
-    exposeClientSide = true
-  )
-
   val ABMembershipEngagementBanner = Switch(
     SwitchGroup.ABTests,
     "ab-membership-engagement-banner",
@@ -151,6 +141,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 9),
+    exposeClientSide = true
+  )
+
+  val ABDontUpgradeMobileRichLinks = Switch(
+    SwitchGroup.ABTests,
+    "ab-dont-upgrade-mobile-rich-links",
+    "Test whether the loyalty of users decreases with non-enhanced rich links",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 14),
     exposeClientSide = true
   )
 }

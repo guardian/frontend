@@ -22,6 +22,14 @@ define([
                 if (params.trackingPixel) {
                     addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
                 }
+            }).then(function () {
+                return fastdom.read(function () {
+                    return $adSlot[0].getBoundingClientRect();
+                });
+            }).then(function (adSlotRect) {
+                var background = $adSlot[0].getElementsByClassName('creative__background')[0];
+                background.style.left = (adSlotRect.left + adSlotRect.width / 2) + 'px';
+                return true;
             });
         }
     }

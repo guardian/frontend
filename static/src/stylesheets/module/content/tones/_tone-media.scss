@@ -58,12 +58,26 @@
         }
     }
 
-    .caption,
     .brandbadge__header,
     .brandbadge__help,
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help {
         color: $neutral-6;
+    }
+
+    .caption {
+        color: $neutral-4;
+
+        a {
+            color: $neutral-4;
+            border-bottom: 1px solid $neutral-2;
+            transition: border-color .15s ease-out;
+
+            &:hover {
+                border-bottom: 1px solid $neutral-7;
+                text-decoration: none;
+            }
+        }
     }
 
     .byline,
