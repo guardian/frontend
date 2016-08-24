@@ -38,14 +38,14 @@
                 _root_.liveblog.LatestBlock(article.blocks)
             }" data-test-id="live-blog-blocks"
             itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
-                <div update on="tap:live-list.update" class="toast__space-reserver">
+                <button update on="tap:live-list.update" class="toast__space-reserver">
                     <div id="toast__tofix" class="toast__container is-sticky">
-                        <button class="toast__button toast__button--closed button button--large">
+                        <span class="toast__button toast__button--closed button button--large">
                             <span class="toast__text">New updates</span>
                             @fragments.inlineSvg("refresh", "icon", List(""))
-                        </button>
+                        </span>
                     </div>
-                </div>
+                </button>
                 <div items>
                     @liveBlogBlocksAMP(article, timezone)
                 </div>

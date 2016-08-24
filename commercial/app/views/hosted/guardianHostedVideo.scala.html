@@ -22,16 +22,6 @@
         border-color: @{page.campaign.brandColour};
     }
 
-    .hosted-page .hosted-next-autoplay__poster-timer,
-    .hosted-page .hosted-next-autoplay__tile {
-        background-color: @{page.campaign.brandColour};
-    }
-
-    .hosted-page .hosted-next-autoplay__video,
-    .hosted-page .hosted-next-autoplay__next-in-series {
-        border-top: 1px solid @{page.campaign.brandColour};
-    }
-
     .hosted-page .hosted__next-video--tile {
         border-top-color: @{page.campaign.brandColour};
     }
@@ -73,34 +63,6 @@
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                         </div>
                     </div>
-                    @for(nextPage <- page.nextPage) {
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">@{page.campaign.name}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="@{page.campaign.name}" target="_blank">
-                                Visit @{page.campaign.owner} now @fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue @{page.brandColourCssClass}">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
-                            </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
-                            </a>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
-                                Watch now
-                            </a>
-                        </div>
-                    </div>
-                    }
                 </div>
             </div>
         </section>

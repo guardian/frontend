@@ -15,7 +15,6 @@ define([
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
     var veggieBurgerLink = $('.js-change-link');
-    var veggieBurgerIcon = $('.js-animate-menu');
     var primaryItems = $('.js-close-nav-list');
 
     function closeAllOtherPrimaryLists(targetItem) {
@@ -31,7 +30,7 @@ define([
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            veggieBurgerIcon.addClass('new-header__veggie-burger-icon--open');
+            veggieBurgerLink.addClass('new-header__nav__menu-button--open');
             veggieBurgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
@@ -55,7 +54,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                veggieBurgerIcon.removeClass('new-header__veggie-burger-icon--open');
+                veggieBurgerLink.removeClass('new-header__nav__menu-button--open');
                 veggieBurgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
