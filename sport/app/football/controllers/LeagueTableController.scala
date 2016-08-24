@@ -37,7 +37,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
         "Europa League",
         "Champions League",
         "FA Cup",
-        "Capital One Cup",
+        "EFL Cup",
         "Community Shield",
         "Scottish Cup",
         "Scottish League Cup",
