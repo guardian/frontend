@@ -12,24 +12,35 @@ define([
     var error405 = { code: 405, message: 'Service %% not implemented' };
     var error500 = { code: 500, message: 'Internal server error\n\n%%' };
 
+    var iframes = getMessengerIframe(event.origin);
+
     return {
         register: register,
         unregister: unregister
     };
 
-    function register(type, callback, _window) {
+    function register(type, callback, options) {
+        options || (options = {});
+
         if( registeredListeners === 0 ) {
-            on(_window || window);
+            on(options.window || window);
         }
 
-        listeners[type] || (listeners[type] = []);
-        if (listeners[type].indexOf(callback) === -1) {
-            listeners[type].push(callback);
-            registeredListeners += 1;
+        /* Persistent listeners are exclusive */
+        if (options.persist) {
+            listeners[type] = callback;
+        } else {
+            listeners[type] || (listeners[type] = []);
+            if (listeners[type].indexOf(callback) === -1) {
+                listeners[type].push(callback);
+                registeredListeners += 1;
+            }
         }
     }
 
-    function unregister(type, callback, _window) {
+    function unregister(type, callback, options) {
+        options || (options = {});
+
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
@@ -42,7 +53,7 @@ define([
         }
 
         if (registeredListeners === 0) {
-            off(_window || window);
+            off(options.window || window);
         }
     }
 
@@ -80,33 +91,37 @@ define([
             return;
         }
 
-        // Because any listener can have side-effects (by unregistering itself),
-        // we run the promise chain on a copy of the `listeners` array.
-        // Hat tip @piuccio
-        var promise = listeners[data.type].slice()
-        // We offer, but don't impose, the possibility that a listener returns
-        // a value that must be sent back to the calling frame. To do this,
-        // we pass the cumulated returned value as a second argument to each
-        // listener. Notice we don't try some clever way to compose the result
-        // value ourselves, this would only make the solution more complex.
-        // That means a listener can ignore the cumulated return value and
-        // return something else entirely—life is unfair.
-        // We don't know what each callack will be made of, we don't want to.
-        // And so we wrap each call in a promise chain, in case one drops the
-        // occasional fastdom bomb in the middle.
-        .reduce(function (promise, listener) {
-            return promise.then(function promiseCallback(ret) {
-                var thisRet = listener(data.value, ret);
-                return thisRet === undefined ? ret : thisRet;
-            });
-        }, Promise.resolve(true));
+        if (Array.isArray(listeners[data.type])) {
+            // Because any listener can have side-effects (by unregistering itself),
+            // we run the promise chain on a copy of the `listeners` array.
+            // Hat tip @piuccio
+            var promise = listeners[data.type].slice()
+            // We offer, but don't impose, the possibility that a listener returns
+            // a value that must be sent back to the calling frame. To do this,
+            // we pass the cumulated returned value as a second argument to each
+            // listener. Notice we don't try some clever way to compose the result
+            // value ourselves, this would only make the solution more complex.
+            // That means a listener can ignore the cumulated return value and
+            // return something else entirely—life is unfair.
+            // We don't know what each callack will be made of, we don't want to.
+            // And so we wrap each call in a promise chain, in case one drops the
+            // occasional fastdom bomb in the middle.
+            .reduce(function (promise, listener) {
+                return promise.then(function promiseCallback(ret) {
+                    var thisRet = listener(data.value, iframes[0], ret);
+                    return thisRet === undefined ? ret : thisRet;
+                });
+            }, Promise.resolve(true));
 
-        return promise.then(function (response) {
-            respond(null, response);
-        }).catch(function (ex) {
-            reportError(ex, { feature: 'native-ads' });
-            respond(formatError(error500, ex), null);
-        });
+            return promise.then(function (response) {
+                respond(null, response);
+            }).catch(function (ex) {
+                reportError(ex, { feature: 'native-ads' });
+                respond(formatError(error500, ex), null);
+            });
+        } else {
+            listeners[data.type](respond, data.value, iframes[0]);
+        }
 
         function respond(error, result) {
             event.source.postMessage(JSON.stringify({ id: data.id, error: error, result: result }), event.origin);
@@ -155,5 +170,11 @@ define([
         });
 
         return error;
+    }
+
+    function getMessengerIframe(origin) {
+        return Array.prototype.filter.call(document.getElementsByTagName('iframe'), function (iframe) {
+            return iframe.src.indexOf(origin) === 0;
+        });
     }
 });
