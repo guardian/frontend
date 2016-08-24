@@ -626,6 +626,7 @@
  * Fluid ad slots don't have widths
  */
 .ad-slot--fluid {
+    min-height: 250px;
     width: auto;
     padding-left: 0;
     padding-right: 0;
@@ -634,6 +635,10 @@
 
 .ad-slot--fabric-v1 {
     min-height: 250px;
+}
+
+.ad-slot--revealer {
+    min-width: 300px;
 }
 
 .ad-slot--fabric-v1,

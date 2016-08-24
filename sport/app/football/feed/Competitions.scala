@@ -9,6 +9,8 @@ import org.joda.time.{DateTimeComparator, LocalDate}
 import org.scala_tools.time.Imports._
 import pa._
 
+import scala.concurrent.Future
+
 
 trait Competitions extends implicits.Football {
 
@@ -108,7 +110,7 @@ object CompetitionsProvider {
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-    Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
+    Competition("301", "/football/efl-cup", "EFL Cup", "EFL Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
@@ -170,11 +172,12 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   def refreshMatchDay() = {
     log.info("Refreshing match day data")
-    getLiveMatches.foreach(_.map{ case (compId, newMatches) =>
-      competitionAgents.find(_.competition.id == compId).foreach{ agent =>
+    val result = getLiveMatches.map(_.map{ case (compId, newMatches) =>
+      competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
       }
     })
+    result.map(_.flatten).flatMap(Future.sequence(_))
   }
 }
 

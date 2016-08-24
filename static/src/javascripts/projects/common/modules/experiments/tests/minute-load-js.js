@@ -19,7 +19,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Increase interaction with video trails';
         this.canRun = function() {
-            return (config.page.isFront &&  document.getElementsByClassName('fc-item__video').length > 0 || config.page.contentType === 'Article' || config.page.contentType === 'Video') && detect.getBreakpoint() === 'desktop';
+            return (config.page.isFront && (document.getElementsByClassName('fc-item__video').length > 0 || document.getElementsByClassName('fc-container--video').length > 0) || config.page.contentType === 'Article' || config.page.contentType === 'Video') && detect.getBreakpoint() === 'desktop';
         };
 
 
@@ -41,7 +41,6 @@ define([
                 id: 'control',
                 test: function () {
                 }
-
             }
         ];
     };

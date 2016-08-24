@@ -21,9 +21,9 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
   def switchesExpiringSoon = {
-    Switches.all.filter { switch =>
-      Switch.expiry(switch).expiresSoon
-    }
+    Switches.all.filter(Switch.expiry(_).hasExpired) ++ // already expired
+    Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 0)) ++ // expiring today
+    Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 1)) // expiring tomorrow
   }
 
   // proxy call to github so we do not leak the access key

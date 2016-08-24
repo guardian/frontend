@@ -1,14 +1,17 @@
-@(content: model.ContentType, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
+@(content: model.ContentType,
+  related: model.RelatedContent,
+  cssClass: String = "",
+  isPaidContent: Boolean)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
-    @ContentFooterContainersLayout(content.content, related, content.commercial.isAdvertisementFeature) {
-        @fragments.storyPackagePlaceholder(content, related)
+    @ContentFooterContainersLayout(content.content, related, isPaidContent) {
+        @fragments.storyPackagePlaceholder(content, related, isPaidContent)
     } {
-        @fragments.onwardPlaceholder(content.commercial.isAdvertisementFeature)
+        @fragments.onwardPlaceholder(isPaidContent)
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {
@@ -16,7 +19,7 @@
     } {
         @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
             <div class="fc-container fc-container--commercial">
-                @fragments.commercial.commercialComponentHigh(content.commercial.isAdvertisementFeature)
+                @fragments.commercial.commercialComponentHigh(isPaidContent)
             </div>
         }
     } {

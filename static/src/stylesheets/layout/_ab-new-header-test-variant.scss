@@ -81,6 +81,12 @@ $gutter-large: 55px;
     z-index: $zindex-modal;
     background-color: $news-main-2;
 
+    &--open:before {
+        // Extended hit area for veggie burger close state, for fat fingers
+        content: '';
+        position: absolute;
+    }
+
     @include mq($until: $mobile-medium) {
         //Smaller menu button
         height: $veggie-burger-small;
@@ -89,6 +95,14 @@ $gutter-large: 55px;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-small;
+
+        &--open:before {
+            height: $veggie-burger-small * 2;
+            width: $veggie-burger-small;
+            top: -$veggie-burger-small / 2;
+            right: $veggie-burger-small / 2;
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+        }
     }
 
     @include mq($mobile-medium) {
@@ -98,6 +112,14 @@ $gutter-large: 55px;
         margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
         margin-right: $gutter-medium;
+
+        &--open:before {
+            height: $veggie-burger-medium * 2;
+            width: $veggie-burger-medium;
+            top: -$veggie-burger-medium / 2;
+            right: $veggie-burger-medium / 2;
+            border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+        }
     }
 
     @include mq(mobileLandscape) {
@@ -133,7 +155,7 @@ $gutter-large: 55px;
         bottom: -$gs-gutter / 4;
     }
 
-    &--open {
+    .new-header__nav__menu-button--open & {
         background-color: transparent;
 
         &:before {

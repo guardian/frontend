@@ -37,7 +37,6 @@ RUN cd /source && \
     ./sbt compile && \
     rm -rf /source
 
-
 # Add useful info in .bashrc
-ADD dev-help.sh /root/.dev-help.sh
-RUN echo 'source /root/.dev-help.sh' >> /root/.bashrc
+ADD docker-dev-startup.sh /root/.startup.sh
+RUN echo 'source /root/.startup.sh' >> /root/.bashrc

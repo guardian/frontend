@@ -24,16 +24,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHostedAutoplay = Switch(
-    SwitchGroup.ABTests,
-    "ab-hosted-autoplay",
-    "An autoplay overlay with the next video on a hosted page",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 19),
-    exposeClientSide = true
-  )
-
   val ABHostedZootropolisCta = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-zootropolis-cta",
@@ -64,13 +54,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsArticle20160818 = Switch(
+  val ABContributionsArticle20160822 = Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-article-20160818",
+    "ab-contributions-article-20160822",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 8, 31),
+    exposeClientSide = true
+  )
+
+  val ABContributionsEmbed20160823= Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-embed-20160823",
+    "Test contributions embed with amount picker.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 30),
     exposeClientSide = true
   )
 
@@ -94,16 +94,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABRemindMeEmail = Switch(
-    SwitchGroup.ABTests,
-    "ab-remind-me-email",
-    "Sign up for an email to remind you about the next item in a series",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 8, 19),
-    exposeClientSide = true
-  )
-
   val ABMembershipEngagementBanner = Switch(
     SwitchGroup.ABTests,
     "ab-membership-engagement-banner",
@@ -120,7 +110,7 @@ trait ABTestSwitches {
     "Test effectiveness of header for driving contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 8, 30),
     exposeClientSide = true
   )
 
@@ -161,6 +151,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 9),
+    exposeClientSide = true
+  )
+
+  val ABDontUpgradeMobileRichLinks = Switch(
+    SwitchGroup.ABTests,
+    "ab-dont-upgrade-mobile-rich-links",
+    "Test whether the loyalty of users decreases with non-enhanced rich links",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 14),
     exposeClientSide = true
   )
 }
