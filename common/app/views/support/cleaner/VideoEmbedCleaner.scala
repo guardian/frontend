@@ -39,7 +39,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
     document.getElementsByClass("element-video").foreach { figure: Element =>
-      val canonicalUrl = new URL(figure.attr("data-canonical-url")).getPath.stripPrefix("/")
+      val canonicalUrl = figure.attr("data-canonical-url")
 
       figure.attr("data-component", "video-inbody-embed")
       figure.getElementsByClass("gu-video").foreach { element: Element =>
@@ -47,12 +47,14 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           .removeClass("gu-video")
           .addClass("js-gu-media--enhance gu-media gu-media--video")
           .attr("preload", "none")
-          .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
+
+        if (! canonicalUrl.isEmpty) {
+          element.attr("data-canonical-url", canonicalUrl)
+        }
 
         val mediaId = element.attr("data-media-id")
 
-        val asset = findVideoFromId(mediaId)
         val video = findVideoApiElement(mediaId)
 
         element.getElementsByTag("source").remove()
@@ -72,9 +74,9 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         findVideoApiElement(mediaId).foreach { videoElement =>
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
-          if (videoElement.videos.embeddable) {
+          if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
-            element.attr("data-embed-path", canonicalUrl)
+            element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
           } else {
             element.attr("data-embeddable", "false")
           }
