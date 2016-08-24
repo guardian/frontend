@@ -9,7 +9,8 @@ define([
     'text!common/views/contributions-embed.html',
     'common/utils/robust',
     'text!common/views/giraffe-message.html',
-    'inlineSvg!svgs/icon/arrow-right'
+    'inlineSvg!svgs/icon/arrow-right',
+    'common/utils/config'
 
 ], function (bean,
              qwery,
@@ -21,7 +22,8 @@ define([
              contributionsEmbed,
              robust,
              giraffeMessage,
-             arrowRight
+             arrowRight,
+             config
 ) {
 
 
@@ -40,7 +42,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'The interactive embed performs 3x better than the control';
         this.canRun = function () {
-            var pageObj = window.guardian.config.page;
+            var pageObj = config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
@@ -50,31 +52,34 @@ define([
             return fastdom.write(function () {
                 var a = $('.submeta');
                 component.insertBefore(a);
-                mediator.emit('contributions-embed:insert');
+                mediator.emit('contributions-embed:insert', component);
             });
 
         };
 
         var interactiveCompleter = function (complete) {
-            mediator.on('contributions-embed:insert', function () {
-                qwery('figure.interactive.contribute-embed').forEach(function (el) {
-                    require([el.getAttribute('data-interactive')], function (interactive) {
-                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
-                            interactive.boot(el, document, window.guardian.config, mediator);
-                        });
-                    });
-
-                    require(['ophan/ng'], function(ophan) {
-                        var a = el.querySelector('a');
-                        var href = a && a.href;
-
-                        if (href) {
-                            ophan.trackComponentAttention(href, el);
-                        }
+            mediator.on('contributions-embed:insert', function (el) {
+                if (el.length < 1 ) {
+                    return;
+                }
+                var component = el[0];
+                require([component.getAttribute('data-interactive')], function (interactive) {
+                    robust.catchErrorsAndLog('interactive-bootstrap', function () {
+                        interactive.boot(component, document, config, mediator);
                     });
                 });
 
-                bean.on(qwery('#giraffe__contribute-button')[0], 'click', function (){
+                require(['ophan/ng'], function(ophan) {
+                    var a = component.querySelector('a');
+                    var href = a && a.href;
+
+                    if (href) {
+                        ophan.trackComponentAttention(href, component);
+                    }
+                });
+
+
+                bean.on(qwery('#js-giraffe__contribute-button')[0], 'click', function (){
                     complete();
                 });
 
@@ -83,7 +88,7 @@ define([
 
         var controlCompleter = function (complete) {
             mediator.on('giraffe:insert', function () {
-                bean.on(qwery('#giraffe__contribute')[0], 'click', function (){
+                bean.on(qwery('#js-giraffe__contribute')[0], 'click', function (){
                     complete();
                 });
             });
@@ -102,9 +107,7 @@ define([
                     }));
                     writer(component);
                 },
-                success: function (complete) {
-                    controlCompleter(complete);
-                }
+                success: controlCompleter
             },
 
             {
@@ -115,9 +118,7 @@ define([
                     }));
                     writer(component);
                 },
-                success: function (complete) {
-                    interactiveCompleter(complete);
-                }
+                success: interactiveCompleter
             }
         ];
     };
