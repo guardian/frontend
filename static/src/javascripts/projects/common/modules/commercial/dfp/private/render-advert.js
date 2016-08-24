@@ -65,9 +65,9 @@ define([
                     sectionContainer.insertAfter(closestFcContainer);
                 });
             }
-        }
 
-        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
+            addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
+        }
     }
 
     var sizeCallbacks = {};
