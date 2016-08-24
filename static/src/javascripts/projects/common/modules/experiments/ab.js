@@ -21,7 +21,8 @@ define([
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
-    'common/modules/experiments/tests/minute-load-js'
+    'common/modules/experiments/tests/minute-load-js',
+    'common/modules/experiments/tests/contributions-embed'
 ], function (
     reportError,
     config,
@@ -45,7 +46,8 @@ define([
     Minute,
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
-    MinuteLoadJs
+    MinuteLoadJs,
+    ContributionsEmbed
 ) {
 
     var TESTS = [
@@ -63,7 +65,8 @@ define([
         new Minute(),
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
-        new MinuteLoadJs()
+        new MinuteLoadJs(),
+        new ContributionsEmbed()
     ];
 
     var participationsKey = 'gu.ab.participations';

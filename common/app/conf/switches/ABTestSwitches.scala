@@ -64,6 +64,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABContributionsEmbed20160823= Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-embed-20160823",
+    "Test contributions embed with amount picker.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 30),
+    exposeClientSide = true
+  )
+
   val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-ordering-live-blog",
