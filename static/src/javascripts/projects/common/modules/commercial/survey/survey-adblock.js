@@ -53,7 +53,7 @@ define([
             $(document.body).append(this.bannerTmpl);
             if (this.config.showCloseBtn) {
                 bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
-                    $('.survey-adblock').addClass('u-h');
+                    $('.survey-adblock').addClass('is-hidden');
                     var cookieName = 'gu_abm_x',
                         cookieLifetimeMinutes = 10,
                         cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
@@ -65,26 +65,26 @@ define([
 
     surveyAdBlock.prototype.show = function () {
         fastdom.write(function () {
-            $('.js-survey-adblock').removeClass('u-h');
+            $('.js-survey-adblock').removeClass('is-hidden');
         });
         if (this.config.showCloseBtn) {
             if (this.config.showCloseBtn === 'delayed') {
                 fastdom.write(function () {
-                    $('.js-survey-adblock__delayed-close').removeClass('u-h');
+                    $('.js-survey-adblock__delayed-close').removeClass('is-hidden');
                 });
                 countdown.startTimer(5, function(seconds){
                     fastdom.write(function () {
                         if (seconds > 0) {
                             $('.js-survey-adblock__delayed-close').html('<span class=\'countdown\'>'+seconds+'</span>');
                         } else {
-                            $('.js-survey-adblock__delayed-close').addClass('u-h');
-                            $('.js-survey-adblock__close-btn').removeClass('u-h');
+                            $('.js-survey-adblock__delayed-close').addClass('is-hidden');
+                            $('.js-survey-adblock__close-btn').removeClass('is-hidden');
                         }
                     });
                 });
             } else {
                 fastdom.write(function () {
-                    $('.js-survey-adblock__close-btn').removeClass('u-h');
+                    $('.js-survey-adblock__close-btn').removeClass('is-hidden');
                 });
             }
         }
