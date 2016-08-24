@@ -31,10 +31,10 @@ define([
         this.showForSensitive = false;
         this.audience = 0.13;
         this.audienceOffset = 0.05;
-        this.successMeasure = 'Determine the effectivness of allowing user to pick contribution amount in the cta';
+        this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = '';
+        this.idealOutcome = 'The component performs 3x better than the ContributionsArticle20160818 test (like variant)';
         this.canRun = function () {
             var pageObj = window.guardian.config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
