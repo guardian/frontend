@@ -27,7 +27,7 @@
                                 endSlatePath = EndSlateComponents.fromContent(article.content).toUriPath,
                                 overrideIsRatioHd = None,
                                 embedPath = Some(article.content.mainVideoCanonicalPath),
-                                path = article.content.mainVideoCanonicalPath
+                                path = Some(article.content.mainVideoCanonicalPath)
                             )
                         ) { player =>
                             @fragments.media.video(player, enhance = true, amp = amp)

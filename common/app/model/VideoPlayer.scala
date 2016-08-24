@@ -17,7 +17,7 @@ case class VideoPlayer(
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
   endSlatePath: String,
-  path: String,
+  path: Option[String],
   overrideIsRatioHd: Option[Boolean] = None,
   embedPath: Option[String] = None,
   hasFaciaHeader: Boolean = false,
@@ -43,7 +43,7 @@ object VideoPlayer {
     content: model.pressed.PressedContent,
     autoPlay: Boolean,
     showControlsAtStart: Boolean,
-    path: String
+    path: Option[String]
   ) : VideoPlayer = { VideoPlayer(
     video,
     profile,

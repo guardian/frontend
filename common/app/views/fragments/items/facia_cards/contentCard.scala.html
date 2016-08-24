@@ -56,7 +56,7 @@ data-test-id="facia-card"
                     // ContentCard, but we don't for now. Annoyingly this doesn't allow us to check for if we should
                     // play ads or if the video is expired, but as fronts change really often, this is a non-problem.
                     embedPath = if (item.isMediaLink) item.id else None,
-                    path = item.id.getOrElse("foo")
+                    path = if (item.isMediaLink) item.id else None
                 )) { player =>
                     <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
