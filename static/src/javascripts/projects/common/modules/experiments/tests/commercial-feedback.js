@@ -7,7 +7,7 @@ define([
     return function () {
         this.id = 'AdFeedback';
         this.start = '2016-07-21';
-        this.expiry = '2016-08-25';
+        this.expiry = '2016-09-14';
         this.author = 'Justin Pinner';
         this.description = 'Learn which ads attract user feedback.';
         this.audience = 0.02;
