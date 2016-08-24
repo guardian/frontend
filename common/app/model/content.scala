@@ -175,14 +175,19 @@ final case class Content(
 
   lazy val linkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video")
+  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").headOption
 
-  lazy val hasMultipleVideosInPage: Boolean = mainMediaVideo.isEmpty match {
-    case true   => numberOfVideosInTheBody > 1
-    case false  => numberOfVideosInTheBody > 0
+  lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
+    video.attr("data-canonical-url") match {
+      case url if !url.isEmpty => Some(new URL(url).getPath.stripPrefix("/"))
+      case _ => None
+    }
+  })
+
+  lazy val hasMultipleVideosInPage: Boolean = mainMediaVideo match {
+    case Some(_) => numberOfVideosInTheBody > 0
+    case None => numberOfVideosInTheBody > 1
   }
-
-  lazy val mainVideoCanonicalPath: String = new URL(mainMediaVideo.attr("data-canonical-url")).getPath.stripPrefix("/")
 
   lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
