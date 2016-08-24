@@ -31,6 +31,7 @@ define([
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
+    'common/modules/navigation/membership',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
     'common/modules/onward/tech-feedback',
@@ -83,6 +84,7 @@ define([
     newHeaderNavigation,
     Profile,
     Search,
+    membership,
     history,
     MoreTags,
     techFeedback,
@@ -334,7 +336,6 @@ define([
                 });
             }
         };
-
     return {
         init: function () {
             forEach(robust.makeBlocks([
@@ -378,7 +379,8 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh.bind(userFeatures)]
+                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
+                ['c-membership',membership]
 
             ]), function (fn) {
                 fn();
