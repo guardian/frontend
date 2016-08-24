@@ -41,7 +41,7 @@ define([
             config.page.seriesId === 'world/series/guardian-morning-briefing';
     }
 
-    function userIsInAClashingAbTest(f) {
+    function userIsInAClashingAbTest() {
         return checkTestClash(ab.isInVariant);
     }
 
