@@ -17,6 +17,7 @@ case class VideoPlayer(
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
   endSlatePath: String,
+  // TODO make `String` once `path` is available on main media on fronts
   path: Option[String],
   overrideIsRatioHd: Option[Boolean] = None,
   embedPath: Option[String] = None,
