@@ -24,16 +24,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHostedZootropolisCta = Switch(
-    SwitchGroup.ABTests,
-    "ab-hosted-zootropolis-cta",
-    "Additional text on the Zootropolis CTA banner",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = true
-  )
-
   val ABHostedArticleOnwardJourney = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-article-onward-journey",
