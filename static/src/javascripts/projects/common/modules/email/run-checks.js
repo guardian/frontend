@@ -41,7 +41,11 @@ define([
             config.page.seriesId === 'world/series/guardian-morning-briefing';
     }
 
-    function userIsInAClashingAbTest() {
+    function userIsInAClashingAbTest(f) {
+        return checkTestClash(ab.isInVariant);
+    }
+
+    function checkTestClash(f) {
         var contributionsArticle = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
         var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive'] };
 
@@ -49,7 +53,7 @@ define([
 
         return some(clashingTests, function(test) {
             return some(test.variants, function (variant) {
-                return ab.isInVariant(test.name, variant);
+                return f(test.name, variant);
             });
         });
     }
@@ -200,6 +204,7 @@ define([
         getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
-        listCanRun: listCanRun
+        listCanRun: listCanRun,
+        checkTestClash: checkTestClash
     };
 });
