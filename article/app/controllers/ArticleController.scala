@@ -218,6 +218,9 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isUSMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
+        // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
+      case minute: Article if (minute.isLiveBlog && request.isEmail) =>
+        Left(MinutePage(minute, StoryPackages(minute, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {
           createLiveBlogModel(liveBlog, response, _)
