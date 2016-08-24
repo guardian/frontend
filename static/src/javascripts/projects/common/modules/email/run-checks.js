@@ -42,9 +42,15 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
-        return some(clashingTests.variants, function(variant) {
-            return ab.isInVariant(clashingTests.name, variant);
+        var contributionsArticle = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
+        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive'] };
+
+        var clashingTests = [contributionsArticle, contributionsEmbed];
+
+        return some(clashingTests, function(test) {
+            return some(test.variants, function (variant) {
+                return ab.isInVariant(test.name, variant);
+            });
         });
     }
 
