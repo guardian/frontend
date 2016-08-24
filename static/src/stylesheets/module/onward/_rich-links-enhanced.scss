@@ -1,3 +1,14 @@
+.element-rich-link--not-upgraded .element-rich-link--tag {
+    // only display tag based rich links when they are fully upgraded (as we have no link text)
+    // not using `display: none` here so spacefinder still sees it
+    height: 0;
+    width: 0;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
+
+}
+
 // Base rich link styles
 //----------------------------------
 
@@ -34,6 +45,11 @@
     padding-right: $gs-gutter;
 }
 
+.rich-link__byline {
+    @include fs-header(3);
+    padding-right: $gs-gutter;
+}
+
 .rich-link__standfirst {
     @include fs-headline(1);
     overflow: hidden;
@@ -46,14 +62,10 @@
     }
 }
 
-.rich-link__read-more {
-    padding-left: $gs-gutter / 4;
-
-    @include mq(tablet) {
-        .rich-link--has-byline-pic & {
-            position: absolute;
-            bottom: 0;
-        }
+@include mq(tablet) {
+    .rich-link--has-byline-pic .rich-link__read-more {
+        position: absolute;
+        bottom: 0;
     }
 }
 
