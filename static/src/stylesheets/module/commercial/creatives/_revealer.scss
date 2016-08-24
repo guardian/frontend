@@ -8,6 +8,7 @@
         width: 100%;
         clip: rect(0, auto, auto, 0);
         overflow: hidden;
+        z-index: 1;
     }
 
     .creative__background {
