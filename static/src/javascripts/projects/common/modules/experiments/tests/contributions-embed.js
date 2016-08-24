@@ -7,7 +7,9 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'text!common/views/contributions-embed.html',
-    'common/utils/robust'
+    'common/utils/robust',
+    'text!common/views/giraffe-message.html',
+    'inlineSvg!svgs/icon/arrow-right'
 
 ], function (bean,
              qwery,
@@ -17,7 +19,9 @@ define([
              fastdom,
              mediator,
              contributionsEmbed,
-             robust
+             robust,
+             giraffeMessage,
+             arrowRight
 ) {
 
 
@@ -29,32 +33,29 @@ define([
         this.author = 'Jonathan Rankin';
         this.description = 'Test contributions embed with amount picker.';
         this.showForSensitive = false;
-        this.audience = 0.13;
-        this.audienceOffset = 0.05;
+        this.audience = 0.10;
+        this.audienceOffset = 0.13;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'The component performs 3x better than the ContributionsArticle20160818 test (like variant)';
+        this.idealOutcome = 'The interactive embed performs 3x better than the control';
         this.canRun = function () {
             var pageObj = window.guardian.config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
 
-        var writer = function () {
-            var $embed = $.create(template(contributionsEmbed, {
-                linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
-            }));
+        var writer = function (component) {
 
             return fastdom.write(function () {
                 var a = $('.submeta');
-                $embed.insertBefore(a);
+                component.insertBefore(a);
                 mediator.emit('contributions-embed:insert');
             });
 
         };
 
-        var completer = function (complete) {
+        var interactiveCompleter = function (complete) {
             mediator.on('contributions-embed:insert', function () {
                 qwery('figure.interactive.contribute-embed').forEach(function (el) {
                     require([el.getAttribute('data-interactive')], function (interactive) {
@@ -80,14 +81,42 @@ define([
             });
         };
 
+        var controlCompleter = function (complete) {
+            mediator.on('giraffe:insert', function () {
+                bean.on(qwery('#giraffe__contribute')[0], 'click', function (){
+                    complete();
+                });
+            });
+        };
+
         this.variants = [
             {
                 id: 'control',
                 test: function () {
-                    writer();
+                    var component = $.create(template(giraffeMessage, {
+                        linkText: 'If you use it, if you like it, why not pay for it? It’s only fair',
+                        linkName: 'contribute',
+                        linkHref: 'https://contribute.theguardian.com/?INTCMP=co_uk_cobed_like_control',
+                        copy: 'Give to the Guardian',
+                        svg: svg(arrowRight, ['button--giraffe__icon'])
+                    }));
+                    writer(component);
                 },
                 success: function (complete) {
-                    completer(complete);
+                    controlCompleter(complete);
+                }
+            },
+
+            {
+                id: 'interactive',
+                test: function () {
+                    var component = $.create(template(contributionsEmbed, {
+                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
+                    }));
+                    writer(component);
+                },
+                success: function (complete) {
+                    interactiveCompleter(complete);
                 }
             }
         ];
