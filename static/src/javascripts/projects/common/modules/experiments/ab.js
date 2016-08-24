@@ -17,7 +17,7 @@ define([
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-messages',
     'common/modules/experiments/tests/contributions-header',
-    'common/modules/experiments/tests/ad-feedback',
+    'common/modules/experiments/tests/commercial-feedback',
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
