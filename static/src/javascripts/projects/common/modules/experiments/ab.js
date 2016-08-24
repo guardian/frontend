@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
-    'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-messages',
@@ -22,6 +21,7 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/minute-load-js',
+    'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/adblocking-response'
 ], function (
     reportError,
@@ -37,7 +37,6 @@ define([
     Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
-    HostedZootropolisCta,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipMessages,
@@ -47,6 +46,7 @@ define([
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     MinuteLoadJs,
+    ContributionsEmbed,
     AdBlockingResponse
 ) {
 
@@ -57,7 +57,6 @@ define([
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
-        new HostedZootropolisCta(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
         new MembershipMessages(),
@@ -66,7 +65,8 @@ define([
         new Minute(),
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
-        new MinuteLoadJs()
+        new MinuteLoadJs(),
+        new ContributionsEmbed()
     ];
 
     var participationsKey = 'gu.ab.participations';
