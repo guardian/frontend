@@ -14,8 +14,10 @@
         position: fixed;
         top: 0;
         left: 0;
+        width: 100%;
         background-size: cover;
         backface-visibility: hidden;
+        -webkit-transform: translate3d(0,0,0);
     }
 
     .creative__button {
