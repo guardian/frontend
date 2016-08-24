@@ -12,7 +12,8 @@ define([
     'common/modules/commercial/dfp/private/ophan-tracking',
 
     // These are cross-frame protocol messaging routines:
-    'common/modules/commercial/dfp/private/get-stylesheet'
+    'common/modules/commercial/dfp/private/get-stylesheet',
+    'common/modules/commercial/dfp/private/scroll'
 ], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, PrebidService, ophanTracking) {
 
 
