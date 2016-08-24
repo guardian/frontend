@@ -30,7 +30,6 @@ define([
             }).then(function (viewport) {
                 return fastdom.write(function () {
                     var background = $adSlot[0].getElementsByClassName('creative__background')[0];
-                    background.style.width = viewport.width + 'px';
                     // for the height, we need to account for the height of the location bar, which
                     // may or may not be there. 70px padding is not too much.
                     background.style.height = (viewport.height + 70) + 'px';

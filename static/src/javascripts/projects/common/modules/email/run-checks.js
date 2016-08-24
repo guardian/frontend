@@ -42,7 +42,7 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = {name: 'ContributionsArticle20160818', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
+        var clashingTests = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
         return some(clashingTests.variants, function(variant) {
             return ab.isInVariant(clashingTests.name, variant);
         });
