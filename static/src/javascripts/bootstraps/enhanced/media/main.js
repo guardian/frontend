@@ -184,6 +184,7 @@ define([
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null),
+            // the fallback to window.location.pathname should only happen for main media on fronts
             gaEventLabel = canonicalUrl || window.location.pathname,
             shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false',
             player,
