@@ -33,6 +33,8 @@ Prerequesites:
 1. Clone repository
     - `git clone git@github.com:guardian/frontend.git && cd frontend`
 2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend and CMS fronts 
+3. Get properties file
+    - `aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "~/.gu/frontend.properties"`
 4. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
     - ./dev.sh
 5. Build and run the app within the container
@@ -75,9 +77,18 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
 ### Manual
 Install each of the things listed below:
 
-#### Configuration
+#### Configuration files
 
-You need one file on your machine.
+You need 3 files on your machine.
+
+* `/etc/gu/install_vars`
+```
+STAGE=DEV
+```
+
+* `~/.gu/frontend.properties`
+
+  S3 has the content at `s3://aws-frontend-store/template-frontend.properties`.
 
 * `~/.aws/config`
 
