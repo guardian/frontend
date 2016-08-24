@@ -183,8 +183,9 @@ define([
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
-            canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
-            shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
+            canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null),
+            gaEventLabel = canonicalUrl || window.location.pathname,
+            shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false',
             player,
             mouseMoveIdle,
             playerSetupComplete,
@@ -227,7 +228,7 @@ define([
         }));
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
-        events.bindGoogleAnalyticsEvents(player, canonicalUrl);
+        events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
