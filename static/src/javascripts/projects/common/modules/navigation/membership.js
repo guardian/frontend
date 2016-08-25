@@ -2,28 +2,14 @@ define(['common/modules/commercial/user-features', 'common/utils/fastdom-promise
     var LAST_CLASS = 'brand-bar__item--split--last';
 
     function init() {
-        var refreshUser = new Promise(function (resolve) {
-            userFeatures.refresh();
-            resolve(userFeatures.isPayingMember());
-        });
-        refreshUser.then(function (isMember) {
-            if (isMember) {
-                hideSupporterLink();
-            }
-       });
-    }
-
-    function hideSupporterLink() {
-
-        var $becomeMemberLink = $('.js-become-member');
-        var $subscriberLink = $('.js-subscribe');
-
-        fastdom.write(function () {
-            $becomeMemberLink.attr('hidden', 'hidden');
-            $subscriberLink.removeClass(LAST_CLASS);
-        });
-
-
+        if (userFeatures.isPayingMember()) {
+            var $becomeMemberLink = $('.js-become-member');
+            var $subscriberLink = $('.js-subscribe');
+            fastdom.write(function () {
+                $becomeMemberLink.attr('hidden', 'hidden');
+                $subscriberLink.removeClass(LAST_CLASS);
+            });
+        }
     }
 
     return init;

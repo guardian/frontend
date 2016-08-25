@@ -45,21 +45,21 @@
 }
 .brand-bar__item .brand-bar__item--split--first {
     margin-left: $gs-gutter/4;
-    height: 34px;
+    height: 36px; //36px = svg button size
 }
 .brand-bar__item--split--first::after {
     content: '\200B'; //zero width space
     border-right: 1px solid rgba(255, 255, 255, .2);
-    left: 11px;
+    left: $gs-gutter/2;
     position: relative;
-    height: 24px;
-    bottom: -5px;
+    height:  $gs-baseline * 2;
+    bottom: -(36px - ($gs-baseline *2))/2; //36px = svg button size
     display: block;
 }
 
 .brand-bar__item--split--last {
-    padding-left: 11px;
-    height: 34px;
+    padding-left: $gs-gutter / 2;
+    height: 36px;
 }
 
 .brand-bar__item--action {
