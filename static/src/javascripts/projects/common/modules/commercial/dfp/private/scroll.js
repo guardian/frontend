@@ -10,7 +10,7 @@ define([
 
     messenger.register('scroll', function(respond, start, iframe) {
         if( start ) {
-            addScrollListener(iframe.id, iframe.closest('js-ad-slot'), respond);
+            addScrollListener(iframe.id, iframe.closest('.js-ad-slot'), respond);
         } else {
             removeScrollListener(iframe.id);
         }
