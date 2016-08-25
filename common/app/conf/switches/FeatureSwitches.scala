@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "If this switch is on, main media embeds won't be iframed",
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 9, 22),
     exposeClientSide = false
   )
 
@@ -373,7 +373,7 @@ trait FeatureSwitches {
     "If this switch is on, link to amp pages will be in the metadata for live blogs",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
