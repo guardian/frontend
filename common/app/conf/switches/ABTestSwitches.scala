@@ -24,16 +24,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABHostedZootropolisCta = Switch(
-    SwitchGroup.ABTests,
-    "ab-hosted-zootropolis-cta",
-    "Additional text on the Zootropolis CTA banner",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
-    exposeClientSide = true
-  )
-
   val ABHostedArticleOnwardJourney = Switch(
     SwitchGroup.ABTests,
     "ab-hosted-article-onward-journey",
@@ -61,6 +51,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 8, 31),
+    exposeClientSide = true
+  )
+
+  val ABContributionsEmbed20160823= Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-embed-20160823",
+    "Test contributions embed with amount picker.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 30),
     exposeClientSide = true
   )
 

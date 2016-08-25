@@ -108,8 +108,11 @@ define([
             adSlots.forEach(isMobile ? insertOnMobile : insertOnTabletPlus);
 
             function insertOnMobile(item) {
+                var sectionContainer = bonzo(bonzo.create('<section>'));
+                sectionContainer.append(item.adSlot);
+
                 // add a mobile advert after the container
-                item.anchor.lastElementChild.appendChild(item.adSlot);
+                bonzo(sectionContainer).insertAfter(item.anchor);
             }
 
             function insertOnTabletPlus(item) {
