@@ -55,8 +55,10 @@ define([
 
     function setListeners() {
         ophanTracking.trackPerformance(window.googletag);
-        window.googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
-        window.googletag.pubads().addEventListener('slotOnload', raven.wrap(onSlotLoad));
+
+        var pubads = window.googletag.pubads();
+        pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
+        pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
     }
 
     function setPageTargeting() {
