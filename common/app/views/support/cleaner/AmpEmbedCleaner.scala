@@ -61,8 +61,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
   def cleanAmpSoundcloud(document: Document) = {
-    document.getElementsByClass("element-audio").filter { audioElement: Element =>
-      audioElement.getElementsByTag("iframe").length != 0
+    document.getElementsByClass("element-audio").filterNot { audioElement: Element =>
+      audioElement.getElementsByTag("iframe").isEmpty
     }.foreach { audioElementWithIframe: Element =>
       audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
         val soundcloudUrl = iframeElement.attr("src")
