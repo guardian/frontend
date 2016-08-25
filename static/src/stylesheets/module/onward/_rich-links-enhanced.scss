@@ -177,9 +177,9 @@
 
     @include mq(wide) {
         &.element--supporting .rich-link__byline-img {
-                height: $gs-baseline * 12;
-            }
+            height: $gs-baseline * 12;
         }
+    }
 
     .blog & {
         .rich-link__image-container {
