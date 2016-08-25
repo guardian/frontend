@@ -11,7 +11,8 @@ define([
     'common/modules/commercial/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'text!commercial/views/outbrain.html',
-    'common/modules/email/run-checks'
+    'common/modules/email/run-checks',
+    'common/modules/experiments/ab-test-clash'
 ], function (
     Promise,
     fastdom,
@@ -25,7 +26,8 @@ define([
     commercialFeatures,
     getCode,
     outbrainStr,
-    emailRunChecks
+    emailRunChecks,
+    clash
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -46,6 +48,7 @@ define([
     };
 
     var emailSignupPromise;
+    var clashingABTestPromise;
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
@@ -114,6 +117,32 @@ define([
             detect.adblockInUseSync();
     }
 
+
+    function checkDependencies() {
+        return Promise.all([checkEmailSignup(), checkClashingABTest()])
+            .then(function(result) {
+                result.find("email");
+            })
+            .catch(function (err) {
+                return "email";
+            });
+    }
+
+    function checkClashingABTest() {
+        if (!clashingABTestPromise) {
+            clashingABTestPromise = new Promise(function (resolve) {
+                if (clash.userIsInAClashingAbTest()) {
+                    resolve("email");
+                }
+                else {
+                    resolve();
+                }
+            });
+        }
+
+        return clashingABTestPromise;
+    }
+
     function checkEmailSignup() {
         if (!emailSignupPromise) {
             emailSignupPromise = new Promise(function (resolve) {
@@ -139,7 +168,7 @@ define([
         ) {
             // if there is no merch component, load the outbrain widget right away
             if (loadInstantly()) {
-                return checkEmailSignup().then(function (widgetType) {
+                return checkDependencies().then(function (widgetType) {
                     widgetType ? module.load(widgetType) : module.load();
                     return Promise.resolve(true);
                 });
@@ -163,7 +192,7 @@ define([
                         module.load('merchandising');
                     }
                 } else {
-                    checkEmailSignup().then(function (widgetType) {
+                    checkDependencies().then(function (widgetType) {
                         widgetType ? module.load(widgetType) : module.load();
                     });
                 }
