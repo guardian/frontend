@@ -61,7 +61,9 @@ define([
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
                         config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
-                        !storage.local.get('gu.subscriber')) {
+                        storage.local.isStorageAvailable() &&
+                        !storage.local.get('gu.subscriber')
+                    ) {
                         var surveyOverlay = new SurveyAdBlock({
                             surveyHeader: 'We need to talk about adverts',
                             surveyText: 'It looks like you’re trying to browse the Guardian without seeing any adverts.',
@@ -93,6 +95,7 @@ define([
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
                         config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
+                        storage.local.isStorageAvailable() &&
                         !storage.local.get('gu.subscriber')) {
                         var surveyOverlay = new SurveyAdBlock({
                             surveyHeader: 'We need to talk about adverts',
@@ -125,6 +128,7 @@ define([
                         !userFeatures.isPayingMember() &&
                         config.page.webTitle !== 'Subscriber number form' &&
                         config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
+                        storage.local.isStorageAvailable() &&
                         !storage.local.get('gu.subscriber')) {
                         var surveyOverlay = new SurveyAdBlock({
                             surveyHeader: 'We need to talk about adverts',
