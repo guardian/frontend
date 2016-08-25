@@ -12,8 +12,6 @@ define([
     var error405 = { code: 405, message: 'Service %% not implemented' };
     var error500 = { code: 500, message: 'Internal server error\n\n%%' };
 
-    var iframes = getMessengerIframe(event.origin);
-
     return {
         register: register,
         unregister: unregister
@@ -83,6 +81,8 @@ define([
         if (!isValidPayload(data)) {
             return;
         }
+
+        var iframes = getMessengerIframe(event.origin);
 
         // If there is no routine attached to this event type, we just answer
         // with an error code
