@@ -45,11 +45,6 @@
     padding-right: $gs-gutter;
 }
 
-.rich-link__byline {
-    @include fs-header(3);
-    padding-right: $gs-gutter;
-}
-
 .rich-link__standfirst {
     @include fs-headline(1);
     overflow: hidden;
