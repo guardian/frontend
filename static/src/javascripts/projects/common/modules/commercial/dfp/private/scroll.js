@@ -2,7 +2,7 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/messenger'
 ], function (fastdom, messenger) {
-    var useIO = false;
+    var useIO = 'IntersectionObserver' in window;
     var taskQueued = false;
     var listeners = {};
     var slots = {};
@@ -97,8 +97,11 @@ define([
         }
     }
 
-    function onIntersect() {
-
+    function onIntersect(changes) {
+        changes.forEach(_ => {
+            const slot = slots[_.target.id];
+            listeners[slot.iframeId].visible = _.intersectionRatio > 0;
+        });
     }
 
     // Instances of classes bound to the current view are not serialised correctly
