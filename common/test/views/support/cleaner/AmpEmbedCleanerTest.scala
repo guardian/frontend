@@ -41,6 +41,15 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(trackId)
   }
 
+  "AmpEmbedCleaner" should "not create an amp-soundcloud element if trackid missing from iframe src" in {
+    val soundcloudUrl = s"http://www.soundcloud.com/"
+    val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+
+    result.getElementsByTag("amp-soundcloud").size should be(0)
+  }
+
   private def article() = {
     val contentApiItem = contentApi()
     val content = Content.make(contentApiItem)

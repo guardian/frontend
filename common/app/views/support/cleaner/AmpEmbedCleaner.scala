@@ -66,14 +66,14 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }.foreach { audioElementWithIframe: Element =>
       audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
         val soundcloudUrl = iframeElement.attr("src")
-        val pattern = "%2Ftracks%2F(\\d+)".r
-        val trackId = pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
-        val soundcloud = document.createElement("amp-soundcloud")
-        soundcloud.attr("data-trackid", trackId)
-        soundcloud.attr("data-visual", "true")
-        soundcloud.attr("height", "300") // height is necessary if data-visual == true
-        audioElementWithIframe.appendChild(soundcloud)
-        iframeElement.remove()
+        val pattern = ".*%2Ftracks%2F(\\d+).*".r
+        soundcloudUrl match {
+          case pattern(trackId) =>
+            val soundcloud = createAmpSoundcloudElement(document, trackId)
+            audioElementWithIframe.appendChild(soundcloud)
+            iframeElement.remove()
+          case _ =>
+        }
       }
     }
   }
@@ -136,6 +136,13 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       iframe.appendChild(overflowElem)
       interactive.appendChild(iframe)
     }
+  }
+
+  private def createAmpSoundcloudElement(document: Document, trackId: String): Element = {
+    val soundcloud = document.createElement("amp-soundcloud")
+    soundcloud.attr("data-trackid", trackId)
+    soundcloud.attr("data-visual", "true")
+    soundcloud.attr("height", "300") // height is necessary if data-visual == true
   }
 
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
