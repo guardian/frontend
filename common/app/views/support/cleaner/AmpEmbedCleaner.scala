@@ -60,6 +60,24 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
+  def cleanAmpSoundcloud(document: Document) = {
+    document.getElementsByClass("element-audio").filter { audioElement: Element =>
+      audioElement.getElementsByTag("iframe").length != 0
+    }.foreach { audioElementWithIframe: Element =>
+      audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
+        val soundcloudUrl = iframeElement.attr("src")
+        val pattern = "%2Ftracks%2F(\\d+)".r
+        val trackId = pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
+        val soundcloud = document.createElement("amp-soundcloud")
+        soundcloud.attr("data-trackid", trackId)
+        soundcloud.attr("data-visual", "true")
+        soundcloud.attr("height", "300") // height is necessary if data-visual == true
+        audioElementWithIframe.appendChild(soundcloud)
+        iframeElement.remove()
+      }
+    }
+  }
+
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").length != 0)
@@ -126,6 +144,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
+    cleanAmpSoundcloud(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpEmbed(document)
