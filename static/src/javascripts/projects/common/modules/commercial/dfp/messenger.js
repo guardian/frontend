@@ -1,11 +1,9 @@
 define([
     'Promise',
-    'common/utils/report-error'
-], function (Promise, reportError) {
-    var allowedHosts = [
-        location.protocol + '//tpc.googlesyndication.com',
-        location.protocol + '//' + location.host
-    ];
+    'common/utils/report-error',
+    'common/modules/commercial/dfp/private/post-message'
+], function (Promise, reportError, postMessage) {
+    var allowedHost = location.protocol + '//tpc.googlesyndication.com';
     var listeners = {};
     var registeredListeners = 0;
 
@@ -56,7 +54,7 @@ define([
 
     function onMessage(event) {
         // We only allow communication with ads created by DFP
-        if (allowedHosts.indexOf(event.origin) === -1) {
+        if (allowedHost !== event.origin) {
             return;
         }
 
@@ -109,7 +107,7 @@ define([
         });
 
         function respond(error, result) {
-            event.source.postMessage(JSON.stringify({ id: data.id, error: error, result: result }), event.origin);
+            postMessage({ id: data.id, error: error, result: result }, event.source);
         }
     }
 
