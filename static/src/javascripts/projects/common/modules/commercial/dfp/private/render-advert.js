@@ -53,27 +53,12 @@ define([
     var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
     var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
 
-    function onFluidAd(event, advert) {
-        var node = advert.node;
-        var closestFcContainer = closest(node, '.fc-container');
-        var sectionContainer = bonzo(bonzo.create('<section>'));
-
-        if (closestFcContainer) {
-            fastdom.write(function () {
-                sectionContainer.append(node);
-                sectionContainer.insertAfter(closestFcContainer);
-            });
-        }
-
-        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
-    }
-
     var sizeCallbacks = {};
 
     /**
      * DFP fluid ads should use existing fluid-250 styles in the top banner position
      */
-    sizeCallbacks[adSizes.fluid] = onFluidAd;
+    sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
 
     /**
      * Trigger sticky scrolling for MPUs in the right-hand article column
@@ -124,7 +109,7 @@ define([
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = onFluidAd;
+    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
 
     /**
      * Commercial components with merch sizing get fluid-250 styling
