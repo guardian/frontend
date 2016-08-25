@@ -46,7 +46,7 @@ define([
     function removeScrollListener(id) {
         if (listeners[id]) {
             if (useIO) {
-                observer.unobserve(listeners[id]);
+                observer.unobserve(listeners[id].slot);
             }
             listeners[id] = false;
             listenerCounter -= 1;
@@ -75,7 +75,7 @@ define([
                         return _[1].visible;
                     })
                     .map(function (_) {
-                        return [_[0], _[1].getBoundingClientRect()];
+                        return [_[0], _[1].slot.getBoundingClientRect()];
                     });
 
                 if( !useIO ) {
