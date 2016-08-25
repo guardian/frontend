@@ -179,7 +179,11 @@ define([
             },
 
             cleanupLocalStorage : function () {
-                var deprecatedKeys = [];    //TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
+                /*
+                TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
+                      see https://github.com/guardian/frontend/pull/14072
+                */
+                var deprecatedKeys = [];
                 forEach(deprecatedKeys, storage.remove);
             },
 
