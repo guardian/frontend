@@ -42,10 +42,10 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        return checkTestClash(ab.isInVariant);
+        return _testABClash(ab.isInVariant);
     }
 
-    function checkTestClash(f) {
+    function _testABClash(f) {
         var contributionsArticle = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
         var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive'] };
 
@@ -205,6 +205,6 @@ define([
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun,
-        checkTestClash: checkTestClash
+        _testABClash: _testABClash // exposed for unit testing
     };
 });
