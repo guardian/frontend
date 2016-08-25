@@ -1,4 +1,4 @@
-$us-minute-highlight-colour: $news-support-3;
+$us-minute-highlight-colour: $news-main-2;
 $us-minute-main-colour: $neutral-5;
 $us-minute-contrast-colour: #333333;
 $minute-headline-colour: #ffffff;
@@ -14,8 +14,31 @@ $minute-headline-colour: #ffffff;
     border-top: 0 none;
 }
 
-.content .gs-container--minute-n {
-    padding: 0;
+@include mq($until: mobileLandscape) {
+    .content .gs-container--minute-article {
+        padding: 0;
+    }
+}
+
+body {
+    position: relative;
+
+
+    &:before {
+        content: '';
+        background: url(http://i.imgur.com/lGd0PkM.png);
+        background-repeat: repeat-y;
+        width: 1301px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -650px;
+        display: block;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+    }
 }
 
 /* ==========================================================================
@@ -178,13 +201,6 @@ $minute-headline-colour: #ffffff;
 .article__container--minute-article {
     background-color: $us-minute-main-colour;
     padding-bottom: $gs-baseline;
-
-    @include mq($until: mobileLandscape) {
-        .gs-container--minute-article {
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
 }
 
 /* ==========================================================================
@@ -199,13 +215,18 @@ $minute-headline-colour: #ffffff;
     width: 100%;
 
     &:before {
-        @include rule($us-minute-highlight-colour, $gs-baseline/3);
+        @include rule(rgba(0, 181, 218, .6), $gs-baseline/3);
         z-index: 2;
         right: 0;
     }
 
     .block-elements {
-        padding: $gs-baseline 0 0;
+        padding: $gs-baseline/2 0 0;
+
+        .block-title {
+            font-weight: 100;
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     figure.element-image {
@@ -233,8 +254,13 @@ $minute-headline-colour: #ffffff;
         }
 
         .block-elements {
+            padding-top: $gs-baseline/4;
             padding-left: $gs-gutter/2;
             padding-right: $gs-gutter/2;
+
+            .block-title {
+                @include fs-headline(4);
+            }
         }
 
         &.block--minute-article--embed {
@@ -270,6 +296,10 @@ $minute-headline-colour: #ffffff;
             box-sizing: border-box;
             width: gs-span(3);
             float: left;
+
+            .block-title {
+                @include fs-headline(4);
+            }
         }
 
         figure.element-image {
@@ -284,11 +314,11 @@ $minute-headline-colour: #ffffff;
     @include mq($from: desktop) {
         max-width: gs-span(10);
         margin-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline * 2;
         margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
-            width: gs-span(8);
+            width: gs-span(10);
         }
 
         .block-elements {
@@ -372,13 +402,17 @@ $minute-headline-colour: #ffffff;
 .block--minute-article--counter {
     color: $us-minute-highlight-colour;
 
+    @include mq($until: desktop) {
+        font-weight: 700;
+    }
+
     @include mq($from: desktop) {
         display: block;
         font-size: 68px;
         line-height: 72px;
         letter-spacing: -3px;
         font-weight: 100;
-        margin-top: -$gs-baseline;
+        margin-top: -$gs-baseline/3;
     }
 
     @include mq($from: leftCol) {
@@ -387,7 +421,6 @@ $minute-headline-colour: #ffffff;
         letter-spacing: -5px;
     }
 }
-
 
 /* ==========================================================================
    Block Content Overrides
@@ -460,7 +493,7 @@ $minute-headline-colour: #ffffff;
 
     .from-content-api & blockquote.quoted {
         color: $us-minute-contrast-colour;
-        margin-top: 0;
+        margin-top: $gs-baseline/2;
         margin-bottom: 0;
 
         .inline-quote {
@@ -475,7 +508,6 @@ $minute-headline-colour: #ffffff;
    ========================================================================== */
 
 // Quote Layout
-
 .block--minute-article.block--minute-article--quote {
     .inline-quote {
         position: relative;
@@ -495,8 +527,10 @@ $minute-headline-colour: #ffffff;
     }
 
     @include mq($from: tablet) {
+        margin-left: gs-span(2) + $gs-gutter;
+
         &:before {
-            width: gs-span(7);
+            width: gs-span(5);
         }
 
         .block-elements {
@@ -520,6 +554,8 @@ $minute-headline-colour: #ffffff;
 
 .block--minute-article--alt-layout.block--minute-article--quote {
     @include mq($from: tablet) {
+        margin-left: gs-span(3) + $gs-gutter;
+
         &:before {
             left: 0;
         }
@@ -551,6 +587,7 @@ $minute-headline-colour: #ffffff;
         .caption__minute-article {
             background-color: transparent;
             padding-left: 0;
+            padding-bottom: $gs-baseline * 2;
         }
     }
 
@@ -563,10 +600,10 @@ $minute-headline-colour: #ffffff;
     }
 
     @include mq($from: leftCol) {
-        width: gs-span(11);
+        width: gs-span(12);
 
         .block-elements {
-            width: gs-span(11);
+            width: gs-span(12);
         }
     }
 }
@@ -588,9 +625,32 @@ $minute-headline-colour: #ffffff;
 
     @include mq($from: desktop) {
         width: gs-span(6);
+        margin-left:  gs-span(6) + $gs-gutter;
 
         .block-elements {
             width: gs-span(6);
+        }
+    }
+}
+
+.block--minute-article--alt-layout.block--minute-article--tweet {
+    @include mq($from: tablet) {
+        margin-left: gs-span(4) + $gs-gutter;
+    }
+}
+
+// Number to the left of modules
+.block--minute-article.block--minute-article--quote,
+.block--minute-article--tweet,
+.block--minute-article--video {
+
+    //padding-left: gs-span(1) + $gs-gutter;
+
+    @include mq($from: desktop) {
+        .block--minute-article--counter {
+            position: absolute;
+            left: 0;
+            width: gs-span(1);
         }
     }
 }
