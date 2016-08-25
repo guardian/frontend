@@ -111,8 +111,8 @@ define([
                     .html('body:after{ content: "' + breakpoint + '"}')
                     .appendTo('head');
                 var pubAds = {
-                    listener: undefined,
-                    addEventListener: sinon.spy(function (eventName, callback) { this.listener = callback; }),
+                    listeners: [],
+                    addEventListener: sinon.spy(function (eventName, callback) { this.listeners[eventName] = callback; }),
                     setTargeting: sinon.spy(),
                     enableSingleRequest: sinon.spy(),
                     collapseEmptyDivs: sinon.spy(),
@@ -266,8 +266,8 @@ define([
             fakeEventTwo.creativeId = '2';
 
             dfp.init().then(dfp.load).then(function () {
-                window.googletag.pubads().listener(fakeEventOne);
-                window.googletag.pubads().listener(fakeEventTwo);
+                window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
+                window.googletag.pubads().listeners.slotRenderEnded(fakeEventTwo);
 
                 var result = dfp.getCreativeIDs();
 
