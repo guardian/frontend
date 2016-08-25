@@ -20,9 +20,9 @@ define([
 ) {
     return function () {
 
-        this.id = 'ContributionsArticle20160818';
-        this.start = '2016-08-18';
-        this.expiry = '2016-08-22';
+        this.id = 'ContributionsArticle20160822';
+        this.start = '2016-08-22';
+        this.expiry = '2016-08-26';
         this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;
@@ -55,7 +55,7 @@ define([
 
         var completer = function (complete) {
             mediator.on('giraffe:insert', function () {
-                bean.on(qwery('#giraffe-contribute')[0], 'click', function (){
+                bean.on(qwery('#js-giraffe-contribute')[0], 'click', function (){
                     complete();
                 });
             });

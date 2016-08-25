@@ -1,6 +1,7 @@
 @import conf.switches.Switch
-@(  charts: Seq[tools.AwsLineChart],
-    hitMissCharts: Seq[tools.AwsLineChart],
+@(  errorCharts: Seq[tools.AwsLineChart],
+    latencyCharts: Seq[tools.AwsLineChart],
+    fastlyCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
     env: String,
@@ -8,13 +9,28 @@
 
 @import org.joda.time.{DateTime, Days}
 
+@showOwners(switch: conf.switches.Switch) = {
+    @for(owner <- switch.owners) { @showOwner(owner) }
+}
+@showOwner(owner: conf.switches.Owner) = {
+    @if(!owner.github.isEmpty) {
+        <a href="https://github.com/@{owner.github.get}">@{owner.name.getOrElse(owner.github)}</a>
+    } else {
+        @if(!owner.email.isEmpty) {
+            <a href="mailto:@{owner.email.get}">@{owner.name.getOrElse(owner.email)}</a>
+        } else {
+            @owner.name
+        }
+    }
+}
+
 @admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/radiator.css")">
 
     <header>
         <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
-        <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
+        <div class="cost"><a href="https://console.aws.amazon.com/billing/home"><strong>$@cost.max.toLong</strong> this month</a></div>
     </header>
 
     <div class="pingdom-wrapper">
@@ -35,11 +51,11 @@
 
     <div class="expiring-wrapper">
         <h2>Expiring features</h2>
-        <ul id="sell-by-date">
+        <ul id="switches">
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
-                    <li class="Expiring expiry-days-@days @if(Switch.expiry(switch).hasExpired){expired}" title="@switch.name - expires in @days days">
-                        @switch.name
+                    <li title="@switch.name - expires in @days days">
+                        <span class="expiry-days-@days">@switch.name</span> - <span>@showOwners(switch)</span>
                     </li>
                 }
             }
@@ -67,6 +83,15 @@
         </div>
     </div>
 
-    @charts.map{ chart => @fragments.lineChart(chart)  }
-    @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
+    @graph_group("Errors", errorCharts)
+    @graph_group("Latencies", latencyCharts)
+    @graph_group("Fastly", fastlyCharts)
+}
+
+@graph_group(title: String, graphs: Seq[tools.AwsLineChart]) = {
+    <br clear="all"/>
+    <div>
+        <h2>@title</h2>
+        @graphs.map{ chart => @fragments.lineChart(chart) }
+    </div>
 }

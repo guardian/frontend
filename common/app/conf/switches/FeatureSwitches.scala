@@ -10,7 +10,7 @@ trait FeatureSwitches {
     "If this switch is on, main media embeds won't be iframed",
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 9, 22),
     exposeClientSide = false
   )
 
@@ -373,7 +373,7 @@ trait FeatureSwitches {
     "If this switch is on, link to amp pages will be in the metadata for live blogs",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
@@ -448,17 +448,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  //Owner: Dotcom Commercial
-  val ForceOneByOnePxSlotSwitch = Switch(
-    SwitchGroup.Feature,
-    "1x1px-slot",
-    "When ON, we will force the creation of the 1x1px adSlot for surveys and pageskins globally",
-    owners = Seq(Owner.withGithub("Calum Campbell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 25),
     exposeClientSide = true
   )
 
