@@ -1,8 +1,7 @@
 define([
     'common/utils/fastdom-promise',
-    'common/utils/detect',
     'common/modules/commercial/dfp/messenger'
-], function (fastdom, detect, messenger) {
+], function (fastdom, messenger) {
     var useIO = false;
     var taskQueued = false;
     var listeners = {};
@@ -68,7 +67,6 @@ define([
             fastdom.read(function () {
                 taskQueued = false;
 
-                var viewport = detect.getViewport();
                 var slots = Object.keys(listeners)
                     .map(function (id) {
                         return [id, listeners[id]];
@@ -87,7 +85,7 @@ define([
                 }
 
                 slots.forEach(function (slot) {
-                    listeners[slot[0]].respond(null, { viewport: viewport, rect: slot[1] });
+                    listeners[slot[0]].respond(null, domRectToRect(slot[1]));
                 });
             });
         }
@@ -95,5 +93,19 @@ define([
 
     function onIntersect() {
 
+    }
+
+    // Instances of classes bound to the current view are not serialised correctly
+    // by JSON.stringify. That's ok, we don't case if it's a DOMRect or some other
+    // object, as long as the calling view receives the frame coordinates.
+    function domRectToRect(rect) {
+        return {
+            width:  rect.width,
+            height: rect.height,
+            top:    rect.top,
+            bottom: rect.bottom,
+            left:   rect.left,
+            right:  rect.right
+        };
     }
 });
