@@ -5,6 +5,7 @@ define([
     var useIO = false;
     var taskQueued = false;
     var listeners = {};
+    var slots = {};
     var listenerCounter = 0;
     var observer;
 
@@ -31,6 +32,10 @@ define([
             }
         }
 
+        slots[slot.id] = {
+            slot: slot,
+            iframeId: idea
+        };
         listeners[id] = {
             slot: slot,
             visible: !useIO,
@@ -48,6 +53,7 @@ define([
             if (useIO) {
                 observer.unobserve(listeners[id].slot);
             }
+            slots[listeners[id].slot.id] =
             listeners[id] = false;
             listenerCounter -= 1;
         }
