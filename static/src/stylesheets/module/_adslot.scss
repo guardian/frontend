@@ -183,6 +183,12 @@
         background-color: transparent;
     }
 }
+
+.ad-slot--container-inline {
+    @include mq(mobileLandscape) {
+        margin-top: 0;
+    }
+}
 .ad-slot--gallery-inline {
     background-color: $media-background;
 
