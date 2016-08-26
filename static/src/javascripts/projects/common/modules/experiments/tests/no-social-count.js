@@ -12,10 +12,10 @@ define([
         this.start = '2016-08-25';
         this.expiry = '2016-09-07';
         this.author = 'Gareth Trufitt';
-        this.description = 'Test whether the social share counts increase the number of shares an article has';
+        this.description = 'Test whether the social share counts make a difference to the number of clicks on social buttons';
         this.audience = 0.5;
         this.audienceOffset = 0.5;
-        this.successMeasure = 'The control group, that shows social shares, will have 2% more clicks on sharing buttons';
+        this.successMeasure = 'No significant difference in clicks between the variant and control';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = 'Social share counts *do not* cause a significant increase in sharing, so we can remove them';
