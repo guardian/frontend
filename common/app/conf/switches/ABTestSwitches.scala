@@ -16,9 +16,9 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-discussion-external-frontend-count",
+  val ABDiscussionExternalFrontend = Switch(
+    SwitchGroup.ABTests,
+    "ab-discussion-external-frontend",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
