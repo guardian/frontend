@@ -1,6 +1,6 @@
 define([
-    'common/modules/commercial/dfp/private/get-advert-by-id',
-    'common/modules/commercial/dfp/private/post-message'
+    'commercial/modules/dfp/get-advert-by-id',
+    'commercial/modules/messenger/post-message'
 ], function (getAdvertById, postMessage) {
     var nativeAdName = /^\d+-\d+-\d+;\d+;<!DOCTYPE/;
     return onLoad;

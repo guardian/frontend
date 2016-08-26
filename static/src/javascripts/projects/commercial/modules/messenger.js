@@ -1,7 +1,7 @@
 define([
     'Promise',
     'common/utils/report-error',
-    'common/modules/commercial/dfp/private/post-message'
+    'commercial/modules/messenger/post-message'
 ], function (Promise, reportError, postMessage) {
     var allowedHost = location.protocol + '//tpc.googlesyndication.com';
     var listeners = {};

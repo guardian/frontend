@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/dfp/private/dfp-origin'
+    'commercial/modules/dfp/dfp-origin'
 ], function (dfpOrigin) {
     return postMessage;
 
