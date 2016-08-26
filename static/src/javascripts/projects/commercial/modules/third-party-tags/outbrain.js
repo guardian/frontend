@@ -121,10 +121,10 @@ define([
     function checkDependencies() {
         return Promise.all([checkEmailSignup(), checkClashingABTest()])
             .then(function(result) {
-                result.find("email");
+                result.find('email');
             })
-            .catch(function (err) {
-                return "email";
+            .catch(function () {
+                return 'email';
             });
     }
 
@@ -132,7 +132,7 @@ define([
         if (!clashingABTestPromise) {
             clashingABTestPromise = new Promise(function (resolve) {
                 if (clash.userIsInAClashingAbTest()) {
-                    resolve("email");
+                    resolve('email');
                 }
                 else {
                     resolve();
