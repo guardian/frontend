@@ -8,7 +8,6 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-engagement-banner',
@@ -26,7 +25,6 @@ define([
     memoize,
     noop,
     DiscussionExternalFrontend,
-    LiveBlogChromeNotificationsProd,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipEngagementBannerTests,
@@ -39,7 +37,6 @@ define([
     var TESTS = [
         new DiscussionExternalFrontend(),
         new AdBlockingResponse(),
-        new LiveBlogChromeNotificationsProd(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
         new ContributionsEpic(),
