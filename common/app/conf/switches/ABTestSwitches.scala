@@ -8,9 +8,9 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
+    owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 
