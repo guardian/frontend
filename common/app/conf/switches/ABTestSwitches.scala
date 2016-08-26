@@ -8,9 +8,9 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
+    owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 
@@ -21,16 +21,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
     sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = true
-  )
-
-  val ABHostedZootropolisCta = Switch(
-    SwitchGroup.ABTests,
-    "ab-hosted-zootropolis-cta",
-    "Additional text on the Zootropolis CTA banner",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = true
   )
 
@@ -54,13 +44,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsArticle20160818 = Switch(
+  val ABContributionsArticle20160822 = Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-article-20160818",
+    "ab-contributions-article-20160822",
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
+    sellByDate = new LocalDate(2016, 8, 31),
+    exposeClientSide = true
+  )
+
+  val ABContributionsEmbed20160823= Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-embed-20160823",
+    "Test contributions embed with amount picker.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 8, 30),
     exposeClientSide = true
   )
 
@@ -91,16 +91,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
     sellByDate = new LocalDate(2017, 9, 7),
-    exposeClientSide = true
-  )
-
-  val ABContributionsHeader20160802 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-header-20160802",
-    "Test effectiveness of header for driving contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 22),
     exposeClientSide = true
   )
 
@@ -154,12 +144,22 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABAdBlockingResponse = Switch(
+    SwitchGroup.ABTests,
+    "ab-ad-blocking-response",
+    "Prominent adblocker response test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    exposeClientSide = true
+  )
+
   val ABWeekendReadingEmail = Switch(
     SwitchGroup.ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )

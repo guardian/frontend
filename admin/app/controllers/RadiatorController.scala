@@ -21,9 +21,9 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
   def switchesExpiringSoon = {
-    Switches.all.filter { switch =>
-      Switch.expiry(switch).expiresSoon
-    }
+    Switches.all.filter(Switch.expiry(_).hasExpired) ++ // already expired
+    Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 0)) ++ // expiring today
+    Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 1)) // expiring tomorrow
   }
 
   // proxy call to github so we do not leak the access key
@@ -38,14 +38,15 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
 
     for {
       user50x <- CloudWatch.user50x
-      shortLatency <- CloudWatch.shortStackLatency
+      latencyGraphs <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors
-      multiLineGraphs <- CloudWatch.fastlyHitMissStatistics
+      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics
       cost <- CloudWatch.cost
     } yield {
-      val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
+      val errorGraphs = Seq(user50x)
+      val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
       NoCache(Ok(views.html.radiator(
-        graphs, multiLineGraphs, cost, switchesExpiringSoon,
+        errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon,
         Configuration.environment.stage, apiKey
       )))
     }

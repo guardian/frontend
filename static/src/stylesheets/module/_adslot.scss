@@ -183,6 +183,12 @@
         background-color: transparent;
     }
 }
+
+.ad-slot--container-inline {
+    @include mq(mobileLandscape) {
+        margin-top: 0;
+    }
+}
 .ad-slot--gallery-inline {
     background-color: $media-background;
 
@@ -626,6 +632,7 @@
  * Fluid ad slots don't have widths
  */
 .ad-slot--fluid {
+    min-height: 250px;
     width: auto;
     padding-left: 0;
     padding-right: 0;

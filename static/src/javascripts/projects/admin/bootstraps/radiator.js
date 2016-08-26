@@ -74,7 +74,19 @@ define([
             }
 
             function renderDeploys(stage, target) {
-                Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
+                var sortedDeployments = Object.keys(latestDeployments[stage])
+                    .sort(function(firstDeployment, secondDeployment) {
+                        //sorting by build number (higher first) and then project name (alphabetical)
+                        var d1 = latestDeployments[stage][firstDeployment];
+                        var d2 = latestDeployments[stage][secondDeployment];
+                        var buildDiff = d1.build - d2.build;
+                        if (buildDiff !== 0) {
+                            return buildDiff;
+                        }
+                        return d1.projectName.localeCompare(d2.projectName);
+                    });
+
+                sortedDeployments.forEach(function (deployment) {
                     var d  = latestDeployments[stage][deployment];
                     var nameAbbreviation = d.projectName.substr(7, 4); //start at 7 to drop 'dotcom: '
 

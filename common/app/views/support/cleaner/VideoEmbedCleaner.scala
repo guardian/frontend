@@ -40,18 +40,21 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document.getElementsByClass("element-video").foreach { figure: Element =>
       val canonicalUrl = figure.attr("data-canonical-url")
+
       figure.attr("data-component", "video-inbody-embed")
       figure.getElementsByClass("gu-video").foreach { element: Element =>
         element
           .removeClass("gu-video")
           .addClass("js-gu-media--enhance gu-media gu-media--video")
           .attr("preload", "none")
-          .attr("data-canonical-url", canonicalUrl)
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
+
+        if (! canonicalUrl.isEmpty) {
+          element.attr("data-canonical-url", canonicalUrl)
+        }
 
         val mediaId = element.attr("data-media-id")
 
-        val asset = findVideoFromId(mediaId)
         val video = findVideoApiElement(mediaId)
 
         element.getElementsByTag("source").remove()

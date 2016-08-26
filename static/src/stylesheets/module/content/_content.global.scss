@@ -16,20 +16,6 @@
 }
 
 .meta__numbers {
-    border-top: 1px dotted $neutral-5;
-    height: $gs-baseline * 3;
-    padding: $gs-baseline / 2 0;
-
-    @include mq(tablet, leftCol) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: 0;
-    }
-    @include mq(leftCol) {
-        border-bottom: 1px dotted $neutral-5;
-    }
-
     .commentcount2 {
         display: block;
     }
@@ -113,32 +99,6 @@
 }
 
 .meta__save-for-later {
-    // Shown with test
-    display: none;
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
-    margin-bottom: 0;
-    border-top: 1px dotted $neutral-5;
-    position: relative;
-
-    $social-width: 39px;
-
-    @include mq(mobileLandscape) {
-        border-top: 0;
-    }
-
-    @include mq(mobileLandscape, leftCol) {
-        position: absolute;
-        top: 1px;
-    }
-
-    @include mq(mobileLandscape, tablet) {
-        left: $social-width * 7;
-    }
-
-    @include mq(tablet, leftCol) {
-        left: $social-width * 6;
-    }
 
     .content--interactive & {
         @include mq(leftCol) {
