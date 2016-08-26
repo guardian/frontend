@@ -23,7 +23,7 @@ define([
         injector.mock('common/utils/report-error', routines.noop);
 
         beforeEach(function (done) {
-            injector.require(['common/modules/commercial/dfp/messenger'], function($1) {
+            injector.require(['commercial/modules/messenger'], function($1) {
                 messenger = $1;
                 mockWindow = jasmine.createSpyObj('window', ['addEventListener', 'removeEventListener', 'postMessage']);
                 mockWindow.addEventListener.and.callFake(function(_, _onMessage) {

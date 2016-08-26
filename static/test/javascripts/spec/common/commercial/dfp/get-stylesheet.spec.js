@@ -21,7 +21,7 @@ define([
         };
 
         var injector = new Injector();
-        injector.mock('common/modules/commercial/dfp/messenger', {
+        injector.mock('commercial/modules/messenger', {
             register: function () {}
         });
 

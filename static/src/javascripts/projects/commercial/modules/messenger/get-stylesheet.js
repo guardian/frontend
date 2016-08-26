@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/dfp/messenger'
+    'commercial/modules/messenger'
 ], function (messenger) {
     var aProto = Array.prototype;
 

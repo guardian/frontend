@@ -6,12 +6,12 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/closest',
     'common/modules/commercial/ad-sizes',
-    'commercial/modules/ads/sticky-mpu',
+    'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/toggles',
-    'commercial/modules/ads/user-ad-feedback'
+    'commercial/modules/user-ad-feedback'
 ], function (
     bonzo,
     qwery,

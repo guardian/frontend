@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
-    'commercial/modules/gustyle/gustyle',
+    'commercial/modules/creatives/gustyle',
     'text!commercial/views/creatives/gu-style-comcontent.html',
     'text!commercial/views/creatives/gu-style-hosted.html',
     'lodash/objects/merge',

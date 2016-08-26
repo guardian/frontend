@@ -13,7 +13,7 @@ define([
     'common/utils/url',
     'common/utils/ajax',
     'common/modules/analytics/beacon',
-    'common/modules/commercial/build-page-targeting',
+    'commercial/modules/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',

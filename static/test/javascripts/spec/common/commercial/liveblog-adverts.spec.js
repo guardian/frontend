@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/liveblog-adverts',
+    'commercial/modules/liveblog-adverts',
     'common/modules/commercial/commercial-features',
     'common/utils/mediator',
     'helpers/fixtures',

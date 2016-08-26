@@ -23,7 +23,7 @@ define([
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/ophan-tracking',
-    'common/modules/commercial/badges'
+    'commercial/modules/badges'
 ], function (
     Promise,
     config,

@@ -20,7 +20,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                    'common/modules/commercial/build-page-targeting',
+                    'commercial/modules/build-page-targeting',
                     'common/utils/config',
                     'common/utils/cookies',
                     'common/utils/detect',

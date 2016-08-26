@@ -2,7 +2,7 @@ define([
     'common/utils/fastdom-promise',
     'Promise',
     'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/dfp/messenger',
+    'commercial/modules/messenger',
     'common/modules/commercial/ad-sizes',
     'common/utils/$',
     'common/utils/create-store',

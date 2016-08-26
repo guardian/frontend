@@ -5,7 +5,7 @@ define([
     'raven',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
-    'common/modules/commercial/build-page-targeting',
+    'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/PrebidService',

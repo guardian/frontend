@@ -60,7 +60,7 @@ define([
                 'common/modules/commercial/dfp/add-slot': function () {}
             });
             injector.require([
-                'common/modules/commercial/badges',
+                'commercial/modules/badges',
                 'common/utils/config',
                 'common/modules/commercial/commercial-features'
             ], function () {
