@@ -11,6 +11,10 @@
     <script src="@Static("javascripts/es5-html5.js")"></script>
 <![endif]-->
 
+@if(mvt.CommercialSonobiTest.canRun(request)) {
+    <script type="text/javascript" src="http://mtrx.go.sonobi.com/morpheus.theguardian.2919.js"></script>
+}
+
 @* NOTE the order of these includes is important  *@
 <script id="gu">
 
@@ -59,6 +63,9 @@
         // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
         @InlineJs(enableStylesheets().body, "enableStylesheets.js")
     }
+
+
+
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
