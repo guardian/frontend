@@ -10,7 +10,7 @@ define([
 
         this.id = 'NoSocialCount';
         this.start = '2016-08-25';
-        this.expiry = '2016-09-07';
+        this.expiry = '2016-09-21';
         this.author = 'Gareth Trufitt';
         this.description = 'Test whether the social share counts make a difference to the number of clicks on social buttons';
         this.audience = 0.5;
