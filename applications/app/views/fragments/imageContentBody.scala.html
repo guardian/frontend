@@ -1,6 +1,7 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
 @import common.Edition
 @import layout.ContentWidths.ImageContentMedia
+@import views.support.Commercial.isPaidContent
 @import views.support.RenderClasses
 
 @defining(page.image) { image =>
@@ -44,7 +45,7 @@
     </article>
 </div>
 <div class="l-side-margins">
-    @fragments.contentFooter(image, page.related)
+    @fragments.contentFooter(image, page.related, isPaidContent = isPaidContent(image, page))
 </div>
 
 }

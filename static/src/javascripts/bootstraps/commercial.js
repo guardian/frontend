@@ -5,23 +5,25 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
-    'common/modules/commercial/article-aside-adverts',
-    'common/modules/commercial/article-body-adverts',
-    'common/modules/commercial/badges',
-    'common/modules/commercial/close-disabled-slots',
-    'common/modules/commercial/dfp/init',
-    'common/modules/commercial/dfp/load',
-    'common/modules/commercial/dfp/sponsorships',
-    'common/modules/commercial/front-commercial-components',
-    'common/modules/commercial/hosted-about',
-    'common/modules/commercial/hosted-video',
-    'common/modules/commercial/hosted-gallery',
-    'common/modules/commercial/slice-adverts',
-    'common/modules/commercial/sticky-top-banner',
-    'common/modules/commercial/third-party-tags',
-    'common/modules/commercial/paidfor-band',
-    'common/modules/commercial/paid-containers',
-    'common/modules/commercial/dfp/private/ophan-tracking'
+    'commercial/modules/article-aside-adverts',
+    'commercial/modules/article-body-adverts',
+    'commercial/modules/close-disabled-slots',
+    'commercial/modules/dfp/init',
+    'commercial/modules/dfp/load',
+    'commercial/modules/dfp/sponsorships',
+    'commercial/modules/front-commercial-components',
+    'commercial/modules/gallery-adverts',
+    'commercial/modules/hosted/about',
+    'commercial/modules/hosted/video',
+    'commercial/modules/hosted/gallery',
+    'commercial/modules/hosted/colours',
+    'commercial/modules/slice-adverts',
+    'commercial/modules/sticky-top-banner',
+    'commercial/modules/third-party-tags',
+    'commercial/modules/paidfor-band',
+    'commercial/modules/paid-containers',
+    'commercial/modules/dfp/ophan-tracking',
+    'commercial/modules/badges'
 ], function (
     Promise,
     config,
@@ -31,27 +33,30 @@ define([
     userTiming,
     articleAsideAdverts,
     articleBodyAdverts,
-    badges,
     closeDisabledSlots,
     dfpInit,
     dfpLoad,
     sponsorships,
     frontCommercialComponents,
+    galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
+    hostedColours,
     sliceAdverts,
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    ophanTracking
+    ophanTracking,
+    badges
 ) {
     var primaryModules = [
         ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
@@ -73,7 +78,8 @@ define([
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
-            ['cm-hostedGallery', hostedGallery.init]);
+            ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedColours', hostedColours.init]);
     }
 
     if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {

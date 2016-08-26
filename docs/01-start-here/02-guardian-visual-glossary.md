@@ -105,6 +105,11 @@
 ![image](images/video.jpg)
 
 
+### All article embeds
+
+- [Examples of article embeds](https://s3-eu-west-1.amazonaws.com/capi-wpt-querybot/pageElementSamplePages.html)
+
+
 ## Odd body formatting examples
 
 - [Bold in standfirst](http://m.code.dev-theguardian.com/uk/2012/jul/26/ira-northern-ireland-dissident-republican-groups)

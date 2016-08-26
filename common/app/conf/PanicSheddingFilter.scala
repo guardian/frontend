@@ -53,10 +53,6 @@ class PanicSheddingFilter extends Filter with Logging {
       )
     }
 
-    if (Switches.PanicLoggingSwitch.isSwitchedOn) {
-      logWithStats(None)
-    }
-
     if (latency > NORMAL_LATENCY_LIMIT) {
       // need to let AWS know the problem so it can scale up
       RequestMetrics.HighLatencyMetric.increment()
@@ -89,15 +85,10 @@ class PanicSheddingFilter extends Filter with Logging {
   }
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (!Switches.PanicMonitoringSwitch.isSwitchedOn) {
-      nextFilter(request)
-    } else if (available(request)) {
+    if (available(request)) {
       monitor(nextFilter(request))
-    } else if (Switches.PanicSheddingSwitch.isSwitchedOn) {
-      Future.successful(ServiceUnavailable)
     } else {
-      log.warn("panic-shedding switch disabled - having a go at responding anyway")
-      monitor(nextFilter(request))
+      Future.successful(ServiceUnavailable)
     }
   }
 

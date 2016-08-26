@@ -14,6 +14,7 @@ requirejs.config({
         common:       'projects/common',
         facia:        'projects/facia',
         membership:   'projects/membership',
+        commercial:   'projects/commercial',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
         react:        '/base/static/public/javascripts/components/react/react',

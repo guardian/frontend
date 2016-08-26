@@ -130,6 +130,7 @@ object EmailSubscriptions {
       "Weekday afternoons",
       "218",
       10,
+      subscribedTo = subscribedListIds.exists{ x => x == "218" },
       exampleUrl = Some("https://www.theguardian.com/football/series/thefiver/latest/email")
     ),
     EmailSubscription(

@@ -3,12 +3,15 @@ package test
 import football.controllers.CompetitionListController
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class CompetitionListControllerTest
   extends FlatSpec
-  with Matchers
-  with FootballTestData {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   val url = "/football/competitionsService"
   lazy val competitionListController = new CompetitionListController(testCompetitionsService)

@@ -80,9 +80,9 @@ object HostedVideoPage extends Logging {
           logo = HostedLogo(
             url = sponsorship.sponsorLogo
           ),
-          // todo: standardise css so that only colour varies
           cssClass = "renault",
-          mainColour = hostedTag.paidContentCampaignColour getOrElse "",
+          brandColour = hostedTag.paidContentCampaignColour getOrElse "",
+          brightFont = false, //TODO correctly from the hostedTag?
           logoLink = None
         ),
         pageUrl,

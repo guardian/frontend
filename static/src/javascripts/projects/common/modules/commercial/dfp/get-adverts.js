@@ -1,6 +1,6 @@
 define([
-    'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/get-advert-by-id'
+    'commercial/modules/dfp/dfp-env',
+    'commercial/modules/dfp/get-advert-by-id'
 ], function (dfpEnv, getAdvertById) {
     return getAdverts;
 

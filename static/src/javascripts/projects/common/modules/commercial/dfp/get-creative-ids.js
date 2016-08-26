@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/dfp/private/dfp-env'
+    'commercial/modules/dfp/dfp-env'
 ], function (dfpEnv) {
     return getCreativeIDs;
 

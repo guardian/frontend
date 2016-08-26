@@ -2,18 +2,19 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/modules/navigation/edition-picker',
-    'common/modules/navigation/editionalise-menu'
+    'common/modules/navigation/editionalise-menu',
+    'common/utils/details-polyfill'
 ], function (
     fastdomPromise,
     $,
     editionPicker,
-    editionaliseMenu
+    editionaliseMenu,
+    detailsPolyfill
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
     var mainMenuEl = $(mainMenuId);
     var veggieBurgerLink = $('.js-change-link');
-    var veggieBurgerIcon = $('.js-animate-menu');
     var primaryItems = $('.js-close-nav-list');
 
     function closeAllOtherPrimaryLists(targetItem) {
@@ -29,7 +30,7 @@ define([
         return fastdomPromise.write(function () {
             mainMenuEl.addClass('off-screen shown');
 
-            veggieBurgerIcon.addClass('new-header__veggie-burger-icon--open');
+            veggieBurgerLink.addClass('new-header__nav__menu-button--open');
             veggieBurgerLink.attr('href', '#');
         }).then(function () {
             return fastdomPromise.write(function () {
@@ -53,7 +54,7 @@ define([
             if (mainMenuEl.hasClass('shown')) {
                 mainMenuEl.addClass('off-screen');
 
-                veggieBurgerIcon.removeClass('new-header__veggie-burger-icon--open');
+                veggieBurgerLink.removeClass('new-header__nav__menu-button--open');
                 veggieBurgerLink.attr('href', mainMenuId);
 
                 // TODO: Support browsers that don't have transitions
@@ -121,7 +122,7 @@ define([
                 }).then(function (id) {
                     var menuToOpen = $('#' + id);
 
-                       fastdomPromise.write(function () {
+                    fastdomPromise.write(function () {
                         menuToOpen.attr('open', '');
                         return id;
                     }).then(moveTargetListToTop.bind(id));
@@ -132,7 +133,6 @@ define([
 
     function bindPrimaryItemClickEvents() {
         primaryItems.each(function (item) {
-
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
@@ -149,6 +149,8 @@ define([
     }
 
     function init() {
+        detailsPolyfill.init('.main-navigation__item__button');
+
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 
