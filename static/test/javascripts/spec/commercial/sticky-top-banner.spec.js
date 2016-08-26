@@ -1,7 +1,7 @@
 define([
     'helpers/fixtures',
     'common/utils/$',
-    'common/modules/commercial/sticky-top-banner'
+    'commercial/modules/sticky-top-banner'
 ], function (
     fixtures,
     $,

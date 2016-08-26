@@ -61,16 +61,16 @@ define([
             });
 
             injector.require([
-                'common/modules/commercial/dfp/init',
-                'common/modules/commercial/dfp/load',
+                'commercial/modules/dfp/init',
+                'commercial/modules/dfp/load',
                 'common/modules/commercial/dfp/get-adverts',
                 'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
-                'commercial/dfp/ophan-tracking',
+                'commercial/modules/dfp/ophan-tracking',
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
-                'common/modules/commercial/close-disabled-slots',
-                'commercial/dfp/dfp-env'
+                'commercial/modules/close-disabled-slots',
+                'commercial/modules/dfp/dfp-env'
             ], function () {
                 dfp = {
                     init: arguments[0],

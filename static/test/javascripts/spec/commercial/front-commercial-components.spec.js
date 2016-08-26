@@ -28,7 +28,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/front-commercial-components',
+                'commercial/modules/front-commercial-components',
                 'common/modules/commercial/commercial-features',
                 'common/utils/config'
             ], function () {

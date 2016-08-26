@@ -31,7 +31,7 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             injector.require([
-                'common/modules/commercial/article-aside-adverts',
+                'commercial/modules/article-aside-adverts',
                 'common/modules/commercial/commercial-features'
             ], function () {
                 articleAsideAdverts = arguments[0];

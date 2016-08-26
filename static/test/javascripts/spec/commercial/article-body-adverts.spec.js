@@ -34,7 +34,7 @@ define([
                 /* noop */
             });
             injector.require([
-                'common/modules/commercial/article-body-adverts',
+                'commercial/modules/article-body-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',

@@ -10,7 +10,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/third-party-tags',
+                'commercial/modules/third-party-tags',
                 'common/modules/commercial/commercial-features'
             ], function () {
                 tagsContainer = arguments[0];

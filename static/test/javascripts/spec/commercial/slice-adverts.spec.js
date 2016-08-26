@@ -36,7 +36,7 @@ define([
             injector.mock('common/modules/commercial/dfp/create-slot', createSlotSpy);
 
             injector.require([
-                'common/modules/commercial/slice-adverts',
+                'commercial/modules/slice-adverts',
                 'common/modules/commercial/commercial-features',
                 'common/utils/config',
                 'common/utils/detect'
