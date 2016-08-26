@@ -5,6 +5,20 @@
 
 (function() {
 
+    @*
+    TODO Because this JS lives outside of module-land,
+    we can't depend on any of the util modules and thus
+    end up with a lot of copy-pasta here.
+
+    It might be best to just include the GA snippet here
+    and move the pageview event into a module, as long as we
+    can ensure that it loads very early on (because we want to send the pageview asap).
+
+    However, it's tricky to do that while Omniture is still around.
+    I think we should endure the copy-pasta for now
+    and refactor after Omniture has been removed.
+    *@
+
     // Remove spaces from content type and convert it to lower case
     function convertContentType(contentType) {
         var result = contentType;
@@ -21,6 +35,55 @@
         return pairs.filter(function(xs) { return xs.length == 2 && xs[0] == key })
             .map(function(xs) { return xs[1] })[0];
     }
+
+    @* copied from common/util/cookies.js *@
+    function getCookieValues(name) {
+        var cookieVals = [],
+            nameEq = name + '=',
+            cookies = document.cookie.split(';');
+
+        cookies.forEach(function (cookie) {
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1, cookie.length);
+            }
+
+            if (cookie.indexOf(nameEq) === 0) {
+                cookieVals.push(cookie.substring(nameEq.length, cookie.length));
+            }
+        });
+
+        return cookieVals;
+    }
+
+    @* copied from common/util/cookies.js *@
+    function getCookie(name) {
+        var cookieVal = getCookieValues(name);
+
+        if (cookieVal.length > 0) {
+            return cookieVal[0];
+        } else {
+            return null;
+        }
+    }
+
+    @* copied from common/modules/identity/api.js *@
+    function decodeBase64(str) {
+        return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+    }
+
+    @* based on common/modules/identity/api.js *@
+    function getIdentityIdFromCookie() {
+        var cookieData = getCookie('GU_U'),
+            userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
+        if (userData) {
+            return userData[0];
+        } else {
+            return null;
+        }
+    }
+
+    var identityId = getIdentityIdFromCookie();
+    var isLoggedIn = (identityId !== null);
 
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
@@ -63,6 +126,8 @@
         ga('@{trackerName}.set', 'dimension9', guardian.config.page.keywordIds);
         ga('@{trackerName}.set', 'dimension10', guardian.config.page.toneIds);
         ga('@{trackerName}.set', 'dimension11', guardian.config.page.seriesId);
+        ga('@{trackerName}.set', 'dimension15', identityId);
+        ga('@{trackerName}.set', 'dimension16', isLoggedIn);
         ga('@{trackerName}.set', 'dimension21', getQueryParam('INTCMP')); @* internal campaign code *@
     }
 
