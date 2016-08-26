@@ -68,8 +68,11 @@ define([
         },
 
         initNotifications: function() {
-            if ((window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
-                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+            if (config.switches.liveBlogChromeNotificationsProd
+                && !detect.isIOS()
+                && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
+                && detect.getUserAgent.browser === 'Chrome'
+                && config.page.isLive) {
                     notifications.init();
             }
         }
