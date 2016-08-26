@@ -12,7 +12,7 @@
 <![endif]-->
 
 @if(mvt.CommercialSonobiTest.canRun(request)) {
-    <script type="text/javascript" src="http://mtrx.go.sonobi.com/morpheus.theguardian.2919.js"></script>
+    <script type="text/javascript" src="@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}"></script>
 }
 
 @* NOTE the order of these includes is important  *@
