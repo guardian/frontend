@@ -121,7 +121,12 @@ define([
     function checkDependencies() {
         return Promise.all([checkEmailSignup(), checkClashingABTest()])
             .then(function(result) {
-                result.find('email');
+
+                function findEmail(value) {
+                    return value == 'email';
+                }
+
+                return result.find(findEmail);
             })
             .catch(function () {
                 return 'email';
