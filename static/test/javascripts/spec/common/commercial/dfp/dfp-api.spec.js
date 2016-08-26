@@ -66,11 +66,11 @@ define([
                 'common/modules/commercial/dfp/get-adverts',
                 'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
-                'common/modules/commercial/dfp/private/ophan-tracking',
+                'commercial/dfp/ophan-tracking',
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
                 'common/modules/commercial/close-disabled-slots',
-                'common/modules/commercial/dfp/private/dfp-env'
+                'commercial/dfp/dfp-env'
             ], function () {
                 dfp = {
                     init: arguments[0],

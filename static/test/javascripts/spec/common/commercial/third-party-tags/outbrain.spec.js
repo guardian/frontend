@@ -44,8 +44,8 @@ define([
                 return Promise.resolve(ads[id]);
             });
             injector.require([
-                'common/modules/commercial/third-party-tags/outbrain',
-                'common/modules/commercial/third-party-tags/outbrain-sections',
+                'commercial/modules/third-party-tags/outbrain',
+                'commercial/modules/third-party-tags/outbrain-sections',
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',

@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/creatives/expandable-video-v2',
+    'commercial/modules/creatives/expandable-video-v2',
     'helpers/fixtures',
     'common/utils/$'
 ], function (

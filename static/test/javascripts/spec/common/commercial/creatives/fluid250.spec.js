@@ -2,7 +2,7 @@ define([
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
-    'common/modules/commercial/creatives/fluid250'
+    'commercial/modules/creatives/fluid250'
 ], function (
     qwery,
     $,

@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/creatives/expandable',
+    'commercial/modules/creatives/expandable',
     'helpers/fixtures',
     'qwery',
     'fastdom'

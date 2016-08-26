@@ -39,7 +39,7 @@ define([
                 'common/utils/config',
                 'common/modules/identity/api',
                 'common/utils/detect',
-                'common/modules/commercial/third-party-tags/plista',
+                'commercial/modules/third-party-tags/plista',
                 'common/modules/commercial/commercial-features'
             ], function () {
                 config = arguments[0];

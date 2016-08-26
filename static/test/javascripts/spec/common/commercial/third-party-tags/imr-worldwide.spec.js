@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/third-party-tags/imr-worldwide'
+    'commercial/modules/third-party-tags/imr-worldwide'
 ], function (
     imrWorldwide
 ) {

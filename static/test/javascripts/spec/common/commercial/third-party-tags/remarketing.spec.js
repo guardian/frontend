@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/third-party-tags/remarketing'
+    'commercial/modules/third-party-tags/remarketing'
 ], function (
     remarketing
 ) {

@@ -27,7 +27,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/dfp/private/get-stylesheet'
+                'commercial/modules/dfp/get-stylesheet'
             ], function($1) {
                 getStyles = $1;
                 fixtures.render(fixturesConfig);

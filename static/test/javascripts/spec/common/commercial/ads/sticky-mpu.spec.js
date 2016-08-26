@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/ads/sticky-mpu'
+    'commercial/modules/ads/sticky-mpu'
 ], function (
     StickyMpu
 ) {
@@ -11,4 +11,3 @@ define([
 
     });
 });
-

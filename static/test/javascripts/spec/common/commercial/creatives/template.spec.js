@@ -1,7 +1,7 @@
 /*eslint-disable camelcase*/
 define([
     'helpers/fixtures',
-    'common/modules/commercial/creatives/template'
+    'commercial/modules/creatives/template'
 ], function (
     fixtures,
     Template

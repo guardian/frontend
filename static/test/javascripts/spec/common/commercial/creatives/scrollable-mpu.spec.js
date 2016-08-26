@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/creatives/scrollable-mpu'
+    'commercial/modules/creatives/scrollable-mpu'
 ], function (
     ScrollableMpu
 ) {

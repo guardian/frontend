@@ -22,7 +22,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/creatives/commercial-component',
+                'commercial/modules/creatives/commercial-component',
                 'common/utils/config',
                 'common/utils/mediator'], function () {
 

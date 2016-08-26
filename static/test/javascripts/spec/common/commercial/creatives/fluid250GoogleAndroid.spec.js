@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'helpers/fixtures',
-    'common/modules/commercial/creatives/fluid250GoogleAndroid'
+    'commercial/modules/creatives/fluid250GoogleAndroid'
 ], function (
     $,
     fixtures,

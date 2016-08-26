@@ -2,7 +2,7 @@ define([
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
-    'common/modules/commercial/creatives/gu-style-comcontent'
+    'commercial/modules/creatives/gu-style-comcontent'
 ], function (
     qwery,
     $,

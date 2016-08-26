@@ -10,7 +10,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/third-party-tags/audience-science-pql',
+                'commercial/modules/third-party-tags/audience-science-pql',
                 'common/utils/config',
                 'common/utils/storage'], function () {
 

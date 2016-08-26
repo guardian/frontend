@@ -27,8 +27,8 @@ define([
                     'common/modules/identity/api',
                     'common/modules/commercial/user-ad-targeting',
                     'common/modules/experiments/ab',
-                    'common/modules/commercial/third-party-tags/krux',
-                    'common/modules/commercial/third-party-tags/audience-science-pql'],
+                    'commercial/modules/third-party-tags/krux',
+                    'commercial/modules/third-party-tags/audience-science-pql'],
                 function () {
                     buildPageTargeting = arguments[0];
                     config = arguments[1];

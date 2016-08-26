@@ -1,4 +1,4 @@
-define(['common/modules/commercial/dfp/private/ophan-tracking'], function (dfpOphanTracking) {
+define(['commercial/modules/dfp/ophan-tracking'], function (dfpOphanTracking) {
     describe('Performance tracking', function () {
         var mockRenderStart, mockGoogletag, originalLogger;
 

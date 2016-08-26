@@ -25,7 +25,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/gustyle/gustyle',
+                'commercial/gustyle/gustyle',
                 'common/utils/config'
                 ], function () {
                 Sut = arguments[0];

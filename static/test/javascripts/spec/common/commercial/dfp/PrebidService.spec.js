@@ -30,7 +30,7 @@ define([
             );
 
             injector.require([
-                'common/modules/commercial/dfp/private/PrebidService'
+                'commercial/modules/dfp/PrebidService'
             ], function () {
                 prebidService = new arguments[0](mockPageTargeting);
                 done();

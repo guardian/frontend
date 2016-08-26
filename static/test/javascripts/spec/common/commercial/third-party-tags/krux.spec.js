@@ -12,7 +12,7 @@ define([
             krux, config;
 
         beforeEach(function (done) {
-            injector.require(['common/modules/commercial/third-party-tags/krux', 'common/utils/config'], function () {
+            injector.require(['commercial/modules/third-party-tags/krux', 'common/utils/config'], function () {
                 krux = arguments[0];
                 config = arguments[1];
 
