@@ -1,17 +1,12 @@
-// not-upgraded style (no-js / failures)
-//--------------------------------------
+.element-rich-link--not-upgraded.element-rich-link--tag {
+    // only display tag based rich links when they are fully upgraded (as we have no link text)
+    // not using `display: none` here so spacefinder still sees it
+    height: 0;
+    width: 0;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
 
-.element-rich-link--not-upgraded {
-
-    &.element-rich-link--tag {
-        // only display tag based rich links when they are fully upgraded (as we have no link text)
-        // not using `display: none` here so spacefinder still sees it
-        height: 0;
-        width: 0;
-        margin: 0;
-        border: 0;
-        overflow: hidden;
-    }
 }
 
 // Base rich link styles
@@ -19,17 +14,9 @@
 
 .rich-link {
     @include stars();
-    background-color: $neutral-6;
-    margin: 0;
-    position: relative;
-    overflow: hidden;
 
     .stars {
         padding-top: $gs-baseline / 4;
-    }
-
-    a {
-        color: inherit;
     }
 }
 
@@ -51,22 +38,11 @@
             opacity: .8;
         }
     }
-
 }
 
 .rich-link__byline {
     @include fs-header(3);
     padding-right: $gs-gutter;
-}
-
-.rich-link__title {
-    padding: 0;
-}
-
-.rich-link .rich-link__header {
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
-    box-sizing: border-box;
-    min-height: $gs-baseline * 3;
 }
 
 .rich-link__standfirst {
@@ -81,55 +57,15 @@
     }
 }
 
-.rich-link__read-more {
-    padding-left: $gs-gutter / 4;
-
-    @include mq(tablet) {
-        .rich-link--has-byline-pic & {
-            position: absolute;
-            bottom: 0;
-        }
-    }
-}
-
-.rich-link__arrow {
-    height: 24px;
-    width: 24px;
-    display: inline-block;
-}
-
-.rich-link__read-more-text {
-    @include fs-headline(1);
-    display: inline-block;
-    height: 30px;
-    line-height: ($gs-baseline * 2) + 2;
-    padding-left: 2px;
-    vertical-align: top;
-    font-weight: 500;
-}
-
-.rich-link__link {
-    text-decoration: none;
-
-    &.u-faux-block-link__overlay {
-        z-index: 2;
+@include mq(tablet) {
+    .rich-link--has-byline-pic .rich-link__read-more {
+        position: absolute;
+        bottom: 0;
     }
 }
 
 .rich-link__live {
     font-weight: normal;
-}
-
-.rich-link__container {
-    &:before {
-        background-color: $news-main-2;
-    }
-
-    &:after {
-        content: '';
-        display: table;
-        clear: both;
-    }
 }
 
 .rich-link--gallery {
@@ -183,10 +119,6 @@
 //-----------------------
 
 .element-rich-link {
-    float: left;
-    margin: 5px $gs-gutter $gs-baseline 0;
-    clear: both;
-
     .tone-comment--item,
     .rich-link--has-byline-pic {
         .rich-link__standfirst {
@@ -207,23 +139,12 @@
     }
 
     @include mq($until: mobileLandscape) {
-        width: $gs-gutter * 6.5;
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
-
-        .rich-link__header {
-            @include fs-headline(1, true);
-        }
         .rich-link__standfirst {
             display: none;
         }
         .rich-link__byline-img {
             display: none;
         }
-    }
-
-    @include mq(mobileLandscape) {
-        width: gs-span(3);
     }
 
     @include mq(tablet) {
@@ -239,10 +160,7 @@
     }
 
     @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
         &.element--supporting {
-            width: gs-span(4);
-
             .tone-comment--item,
             .rich-link--has-byline-pic {
                 .rich-link__standfirst {
@@ -253,12 +171,8 @@
     }
 
     @include mq(wide) {
-        margin-left: -1 * (gs-span(3) + $gs-gutter);
-        &.element--supporting {
-            width: gs-span(5);
-            .rich-link__byline-img {
-                height: $gs-baseline * 12;
-            }
+        &.element--supporting .rich-link__byline-img {
+            height: $gs-baseline * 12;
         }
     }
 

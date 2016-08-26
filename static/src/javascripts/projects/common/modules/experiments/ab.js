@@ -12,16 +12,16 @@ define([
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
-    'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-messages',
-    'common/modules/experiments/tests/contributions-header',
     'common/modules/experiments/tests/commercial-feedback',
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
-    'common/modules/experiments/tests/minute-load-js'
+    'common/modules/experiments/tests/minute-load-js',
+    'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/adblocking-response'
 ], function (
     reportError,
     config,
@@ -36,34 +36,34 @@ define([
     Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
-    HostedZootropolisCta,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipMessages,
-    ContributionsHeader,
     AdFeedback,
     Minute,
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
-    MinuteLoadJs
+    MinuteLoadJs,
+    ContributionsEmbed,
+    AdBlockingResponse
 ) {
 
     var TESTS = [
         new DiscussionExternalFrontend(),
+        new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
-        new HostedZootropolisCta(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
         new MembershipMessages(),
-        new ContributionsHeader(),
         new AdFeedback(),
         new Minute(),
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
-        new MinuteLoadJs()
+        new MinuteLoadJs(),
+        new ContributionsEmbed()
     ];
 
     var participationsKey = 'gu.ab.participations';
