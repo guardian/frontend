@@ -1,4 +1,4 @@
-.element-rich-link--not-upgraded .element-rich-link--tag {
+.element-rich-link--not-upgraded.element-rich-link--tag {
     // only display tag based rich links when they are fully upgraded (as we have no link text)
     // not using `display: none` here so spacefinder still sees it
     height: 0;
