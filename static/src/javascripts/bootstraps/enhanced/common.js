@@ -52,7 +52,8 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'common/modules/experiments/subscriber-number-form'
 ], function (
     fastdom,
     bean,
@@ -105,7 +106,8 @@ define([
     email,
     emailArticle,
     identity,
-    forEach
+    forEach,
+    subscriberNumberForm
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -179,9 +181,11 @@ define([
             },
 
             cleanupLocalStorage : function () {
-                var deprecatedKeys = [
-                    'gu.subscriber'
-                ];
+                /*
+                TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
+                      see https://github.com/guardian/frontend/pull/14072
+                */
+                var deprecatedKeys = [];
                 forEach(deprecatedKeys, storage.remove);
             },
 
@@ -367,6 +371,7 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
+                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],

@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/minute-load-js',
-    'common/modules/experiments/tests/contributions-embed'
+    'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/adblocking-response'
 ], function (
     reportError,
     config,
@@ -43,11 +44,13 @@ define([
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     MinuteLoadJs,
-    ContributionsEmbed
+    ContributionsEmbed,
+    AdBlockingResponse
 ) {
 
     var TESTS = [
         new DiscussionExternalFrontend(),
+        new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
