@@ -4,7 +4,7 @@ define([
     Injector
 ) {
     describe('Cross-frame messenger', function () {
-        var messenger, mockWindow, mockFrame, onMessage, response;
+        var messenger, dfpOrigin, mockWindow, mockFrame, onMessage, response;
 
         var routines = {
             noop: function() {},
@@ -23,8 +23,12 @@ define([
         injector.mock('common/utils/report-error', routines.noop);
 
         beforeEach(function (done) {
-            injector.require(['commercial/modules/messenger'], function($1) {
+            injector.require([
+                'common/modules/commercial/dfp/messenger',
+                'common/modules/commercial/dfp/private/dfp-origin'
+            ], function($1, $2) {
                 messenger = $1;
+                dfpOrigin = $2;
                 mockWindow = jasmine.createSpyObj('window', ['addEventListener', 'removeEventListener', 'postMessage']);
                 mockWindow.addEventListener.and.callFake(function(_, _onMessage) {
                     onMessage = _onMessage;
@@ -58,7 +62,7 @@ define([
         });
 
         it('should not respond when sending malformed JSON', function () {
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: '{', source: mockFrame });
+            onMessage({ origin: dfpOrigin, data: '{', source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
@@ -68,11 +72,11 @@ define([
                 { value: 'missing type' },
                 { type: 'unregistered', value: 'type' }
             ];
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[0]), source: mockFrame });
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payloads[0]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[1]), source: mockFrame });
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payloads[1]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payloads[2]), source: mockFrame });
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payloads[2]), source: mockFrame });
             expect(mockFrame.postMessage).not.toHaveBeenCalled();
         });
 
@@ -81,7 +85,7 @@ define([
             messenger.register('this', routines.noop, mockWindow);
             messenger.register('that', routines.noop, mockWindow);
             messenger.unregister('that', routines.noop, mockWindow);
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame });
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame });
             expect(mockFrame.postMessage).toHaveBeenCalled();
             expect(response.error.code).toBe(405);
             expect(response.error.message).toBe('Service that not implemented');
@@ -91,7 +95,7 @@ define([
         it('should throw when the listener fails', function (done) {
             var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 'hello' };
             messenger.register('this', routines.thrower, mockWindow);
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.error.code).toBe(500);
@@ -105,7 +109,7 @@ define([
         it('should respond with the routine\'s return value', function (done) {
             var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 'hello' };
             messenger.register('this', routines.respond, mockWindow);
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe('hello johnny!');
@@ -119,7 +123,7 @@ define([
             var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'this', value: 1 };
             messenger.register('this', routines.add1, mockWindow);
             messenger.register('this', routines.add2, mockWindow);
-            onMessage({ origin: 'http://tpc.googlesyndication.com', data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe(4);
@@ -133,7 +137,7 @@ define([
         it('should respond to Rubicon messages with no IDs', function (done) {
             var payload = { type: 'set-ad-height', value: { id: 'test', height: '20px' } };
             messenger.register('set-ad-height', routines.rubicon, mockWindow);
-            onMessage({ origin: location.protocol + '//' + location.host, data: JSON.stringify(payload), source: mockFrame })
+            onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe('rubicon');

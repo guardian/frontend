@@ -94,16 +94,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsHeader20160802 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-header-20160802",
-    "Test effectiveness of header for driving contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 30),
-    exposeClientSide = true
-  )
-
   val ABAdFeedback = Switch(
     SwitchGroup.ABTests,
     "ab-ad-feedback",
@@ -151,6 +141,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),
+    exposeClientSide = true
+  )
+
+  val ABAdBlockingResponse = Switch(
+    SwitchGroup.ABTests,
+    "ab-ad-blocking-response",
+    "Prominent adblocker response test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
     exposeClientSide = true
   )
 }
