@@ -90,7 +90,9 @@ define([
                     section : config.page.section
                 },
                 // Lets us report on targeting
-                keyword : config.page.section
+                keyword : config.page.section,
+                // Let us send the page view ID
+                userId : config.ophan.pageViewId
             }
         }];
     }
