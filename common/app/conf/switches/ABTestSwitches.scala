@@ -4,16 +4,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABLiveBlogChromeNotificationsProd2 = Switch(
-    SwitchGroup.ABTests,
-    "ab-live-blog-chrome-notifications-prod2",
-    "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = true
-  )
-
   val ABDiscussionExternalFrontend = Switch(
     SwitchGroup.ABTests,
     "ab-discussion-external-frontend",

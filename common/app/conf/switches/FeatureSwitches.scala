@@ -506,4 +506,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  // Owner: Francis Carr
+  val LiveBlogChromeNotificationsProd = Switch(
+    SwitchGroup.ABTests,
+    "ab-live-blog-chrome-notifications-prod",
+    "Live blog chrome notifications - prod",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = false
+  )
+
 }
