@@ -24,8 +24,8 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/dfp/messenger',
-                'common/modules/commercial/dfp/private/dfp-origin'
+                'commercial/modules/messenger',
+                'commercial/modules/messenger/dfp-origin'
             ], function($1, $2) {
                 messenger = $1;
                 dfpOrigin = $2;
