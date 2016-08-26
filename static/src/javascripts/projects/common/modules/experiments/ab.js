@@ -8,7 +8,6 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
@@ -32,7 +31,6 @@ define([
     memoize,
     noop,
     DiscussionExternalFrontend,
-    LiveBlogChromeNotificationsProd,
     Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
@@ -51,7 +49,6 @@ define([
     var TESTS = [
         new DiscussionExternalFrontend(),
         new AdBlockingResponse(),
-        new LiveBlogChromeNotificationsProd(),
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
