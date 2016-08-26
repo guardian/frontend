@@ -4,7 +4,7 @@ define([
     Injector
 ) {
     describe('Cross-frame messenger', function () {
-        var messenger, mockWindow, mockFrame, onMessage, response;
+        var messenger, dfpOrigin, mockWindow, mockFrame, onMessage, response;
 
         var routines = {
             noop: function() {},
