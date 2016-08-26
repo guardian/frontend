@@ -42,15 +42,15 @@ case class HostedCampaign(
 
 case class FontColour(brandColour: String) {
 
-  lazy val shouldHaveDarkBackground = !isBright
+  lazy val shouldHaveBrightFont = !isBrandColourBright
 
-  lazy val isBright = {
+  private val isBrandColourBright = {
     val hexColour = brandColour.stripPrefix("#")
     val rgb = Integer.parseInt(hexColour, 16)
     val c = new Color(rgb)
     val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
     val brightness = hsb(2)
-    brightness < 0.5
+    brightness > 0.5
   }
 }
 
