@@ -267,7 +267,9 @@
 }
 
 .email-sub__form--article,
-.email-sub__form--plain {
+.email-sub__form--plain,
+.email-sub__form--plainDark
+{
     .label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
@@ -299,6 +301,26 @@
 
     .email-sub__text-input {
         border-color: $guardian-brand;
+    }
+
+}
+
+// PLAIN-DARK MODS
+.email-sub__form--plainDark {
+    padding: 0;
+
+    .email-sub__submit-input {
+        background-color: #DDDBD7;
+        border-color: #DDDBD7;
+        color: #000000;
+    }
+
+    .email-sub__message {
+        color: #ffffff;
+    }
+
+    .email-sub__message__headline {
+        color: #ffffff;
     }
 }
 
