@@ -3,6 +3,8 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/mediator',
+    'common/utils/assign',
+    'common/utils/config',
     'common/modules/analytics/omniture',
     'common/modules/identity/api',
     'lodash/functions/debounce'
@@ -10,6 +12,8 @@ define([
     bonzo,
     $,
     mediator,
+    assign,
+    config,
     omniture,
     Id,
     debounce
@@ -26,6 +30,18 @@ define([
     var track = {};
     track.seen = false;
 
+    var ga = window.ga;
+    // When ready to go live, change to:
+    // var gaTracker = config.googleAnalytics.trackers.editorial;
+    var gaTracker = 'guardianTestPropertyTracker';
+
+    function sendToGA(action, label, customDimensions) {
+        var fieldsObject = assign({
+            nonInteraction: true // to avoid affecting bounce rate
+        }, (customDimensions || {}));
+        ga(gaTracker + '.send', 'event', 'Discussion', action, label, fieldsObject);
+    }
+
     /**
      * @param {Array.<string>}
      * @return {string}
@@ -37,6 +53,13 @@ define([
     };
 
     track.comment = function (comment) {
+        var commentType = comment.replyTo ? 'response' : 'comment';
+        var parentCommentAuthorId = comment.replyTo ? comment.replyTo.authorId : null;
+
+        sendToGA('Post comment', commentType, {
+           dimension22: parentCommentAuthorId
+        });
+
         // Add extra variables for discussion.
         omniture.populateEventProperties('comment');
         s.events += ',event51';
@@ -44,12 +67,14 @@ define([
         s.linkTrackEvents += ',event51';
 
         s.eVar66 = Id.getUserFromCookie().id || null;
-        s.eVar68 = comment.replyTo ? 'response' : 'comment';
-        s.eVar67 = comment.replyTo ? comment.replyTo.authorId : null;
+        s.eVar68 = commentType;
+        s.eVar67 = parentCommentAuthorId;
         s.tl(true, 'o', 'comment');
     };
 
     track.recommend = function (e) {
+        sendToGA('Engage with comment', 'recommend');
+
         omniture.populateEventProperties('Recommend a comment');
         s.events += ',event72';
         s.linkTrackVars += this.getLinkTrackVars(['eVar65', 'eVar67']);
@@ -63,6 +88,8 @@ define([
 
     track.jumpedToComments = function () {
         if (!track.seen) {
+            sendToGA('Click comments link');
+
             omniture.populateEventProperties('seen jump-to-comments');
             s.events += ',event72';
             s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
@@ -77,6 +104,8 @@ define([
 
     track.commentPermalink = function () {
         if (!track.seen) {
+            sendToGA('Follow permalink');
+
             omniture.populateEventProperties('seen comment-permalink');
             s.events += ',event72';
             s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
@@ -91,6 +120,8 @@ define([
 
     track.scrolledToComments = function () {
         if (!track.seen) {
+            sendToGA('Scroll to comments');
+
             omniture.populateEventProperties('seen scroll-top');
             s.events += ',event72';
             s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
