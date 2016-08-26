@@ -55,7 +55,7 @@ define([
 
         var completer = function (complete) {
             mediator.on('giraffe:insert', function () {
-                bean.on(qwery('#js-giraffe-contribute')[0], 'click', function (){
+                bean.on(qwery('#js-giraffe__contribute')[0], 'click', function (){
                     complete();
                 });
             });
