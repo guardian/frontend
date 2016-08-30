@@ -32,10 +32,6 @@ define([
             arrowWhiteRight: svgs('arrowWhiteRight')
         };
 
-    function getReferrer() {
-        return 'google';
-    }
-
     function canShowPromo() {
         return isSwitchedOn() && UsUser() && isNewToSurvey();
     }
@@ -56,6 +52,7 @@ define([
                 {id: 'reddit', match: 'reddit.com'},
                 {id: 'google', match: 'www.google'},
                 {id: 'theguardian', match: 'theguardian.com'},
+                {id: 'localhost', match: 'localhost'},
                 {id: 'drudge', match: 'drudgereport.com'}
             ],
             matchedRef = referrerTypes.filter(function (referrerType) {
@@ -66,7 +63,7 @@ define([
     };
 
     function isSwitchedOn() {
-        return config.switches.USSurveyBanner;
+        return config.switches.USSurveyBanner
     }
 
     function UsUser() {
