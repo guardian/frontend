@@ -3,7 +3,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/rich-links',
-    'common/modules/commercial/liveblog-adverts',
+    'commercial/modules/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',

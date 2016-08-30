@@ -85,5 +85,16 @@
             background-color: mix($news-support-6, $neutral-1, 70%);
             border-color: mix($news-support-6, $neutral-1, 70%);
         }
+
+        .button--secondary {
+            @include button-colour(
+                $neutral-2,
+                $neutral-1
+            );
+
+            @include button-hover-colour(
+                darken($neutral-2, 10%)
+            );
+        }
     }
 }

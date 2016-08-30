@@ -43,6 +43,7 @@ window.curlConfig = {
             common:                         'projects/common',
             facia:                          'projects/facia',
             membership:                     'projects/membership',
+            commercial:                     'projects/commercial',
             stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
