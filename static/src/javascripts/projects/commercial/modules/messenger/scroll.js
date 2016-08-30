@@ -3,6 +3,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/messenger'
 ], function (closest, fastdom, messenger) {
+    // An intersection observer will allow us to efficiently send slot
+    // coordinates for only those that are in the viewport.
     var useIO = 'IntersectionObserver' in window;
     var taskQueued = false;
     var listeners = {};
@@ -39,6 +41,9 @@ define([
         };
         listeners[id] = {
             slot: slot,
+            // When using IOs, a slot is hidden by default. When the IO starts
+            // observing it, the onIntercept callback will be triggered if it
+            // is already in the viewport
             visible: !useIO,
             respond: respond
         };
@@ -82,6 +87,8 @@ define([
                         return [id, listeners[id].slot.getBoundingClientRect()];
                     });
 
+                // When *not* using IOs, we have no choice but to go through all
+                // slots and find those that are inside the viewport
                 if( !useIO ) {
                     slots = slots.filter(function (_) {
                         return _[1].bottom > 0 && _[1].top < viewport.height;
