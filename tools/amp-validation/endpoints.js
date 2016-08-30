@@ -21,25 +21,26 @@ module.exports = (() => {
         /*
             Embeds
          */
+        // TODO: enable the commented out endpoints once issues with each one have been fixed
         '/world/2016/aug/25/spain-mariano-rajoy-third-general-election-christmas-day', // Guardian Video + Interactive
         '/us-news/live/2016/aug/25/donald-trump-news-hillary-clinton-campaign-live-coverage', // Image
-        '/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper', // Instagram + Twitter
+        //'/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper', // Instagram + Twitter
         '/sport/live/2016/aug/25/county-cricket-surrey-lancashire-live-blog', // Twitter
-        '/sport/blog/2016/aug/25/baseball-olympic-games-2020-tokyo-mlb-team-selection', // Vine
-        '/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
+        //'/sport/blog/2016/aug/25/baseball-olympic-games-2020-tokyo-mlb-team-selection', // Vine
+        //'/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
         '/commentisfree/2016/aug/25/burkini-french-muslim-isis', // Videop
-        '/music/musicblog/2010/sep/02/wiley-ustream', // uStream
-        '/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
+        //'/music/musicblog/2010/sep/02/wiley-ustream', // uStream
+        //'/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
         '/sport/2014/jul/03/tour-de-france-2014-yellow-jersey-contenders-chris-froome-stats-history', // infrostrada
-        '/education/live/2016/aug/25/gcse-results-day-2016-uk-students-get-their-grades-live',  // guardian witness
+        //'/education/live/2016/aug/25/gcse-results-day-2016-uk-students-get-their-grades-live',  // guardian witness
         '/lifeandstyle/2016/jun/04/dont-talk-politics-sex-ex-10-ways-ruin-a-date',  // gif
         '/football/2016/jun/20/ngolo-kante-france-euro-2016-caen-jose-saez', // guardian audio
         '/science/2016/may/25/neanderthals-built-mysterious-cave-structures-175000-years-ago', // dailymotion
-        '/cities/2015/feb/24/private-london-exposed-thames-path-riverside-walking-route', // google maps
-        '/news/2016/may/09/how-mossack-fonseca-missed-warning-signs-of-70-million-boiler-room-scam-panama-papers', // scribd
+        //'/cities/2015/feb/24/private-london-exposed-thames-path-riverside-walking-route', // google maps
+        //'/news/2016/may/09/how-mossack-fonseca-missed-warning-signs-of-70-million-boiler-room-scam-panama-papers', // scribd
         '/sport/2015/nov/18/jonah-lomu-interview-2015-world-cup-audio', // soundcloud
         '/music/musicblog/2016/jul/21/yello-swiss-pop-pioneers-return-with-new-video-limbo', // vevo
-        '/tv-and-radio/2014/nov/07/shelter-refuses-to-take-donations-from-itv-star-dapper-laughs', // vine #2
+        //'/tv-and-radio/2014/nov/07/shelter-refuses-to-take-donations-from-itv-star-dapper-laughs', // vine #2
         '/politics/2016/aug/25/how-has-the-brexit-vote-affected-your-life-share-your-experiences', // formstack
 
         /*
