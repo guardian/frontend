@@ -96,8 +96,8 @@ define([
     }
 
     function onIntersect(changes) {
-        changes.forEach(_ => {
-            const slot = slots[_.target.id];
+        changes.forEach(function (_) {
+            var slot = slots[_.target.id];
             listeners[slot.iframeId].visible = _.intersectionRatio > 0;
         });
     }
