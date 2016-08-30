@@ -28,6 +28,7 @@ define([
         /* Persistent listeners are exclusive */
         if (options.persist) {
             listeners[type] = callback;
+            registeredListeners += 1;
         } else {
             listeners[type] || (listeners[type] = []);
             if (listeners[type].indexOf(callback) === -1) {
@@ -37,17 +38,22 @@ define([
         }
     }
 
-    function unregister(type, callback, options) {
+    function unregister(type, callback) {
         options || (options = {});
 
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
         } else {
-            var idx = listeners[type].indexOf(callback);
-            if (idx > -1) {
+            if (listeners[type] === callback) {
+                listeners[type] = null;
                 registeredListeners -= 1;
-                listeners[type].splice(idx, 1);
+            } else {
+                var idx = listeners[type].indexOf(callback);
+                if (idx > -1) {
+                    registeredListeners -= 1;
+                    listeners[type].splice(idx, 1);
+                }
             }
         }
 
