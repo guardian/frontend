@@ -111,7 +111,7 @@ object EmailTypes {
   val article = "article"
   val landing = "landing"
   val plain = "plain"
-  val plainDark = "plainDark"
+  val plaindark = "plaindark"
 }
 
 class EmailFormService(wsClient: WSClient) {
