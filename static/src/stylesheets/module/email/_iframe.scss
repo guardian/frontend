@@ -144,15 +144,9 @@ body {
 /**
 * IFRAME PLAIN MODS
 */
-.email-sub--plain {
-    .email-sub__header,
-    .email-sub__label,
-    .email-sub__small {
-        display: none;
-    }
-}
-
-.email-sub--plaindark {
+.email-sub--plain,
+.email-sub--plaindark
+{
     .email-sub__header,
     .email-sub__label,
     .email-sub__small {
