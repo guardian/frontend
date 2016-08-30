@@ -52,7 +52,7 @@ body {
     .email-sub__form--footer,
     .email-sub__form--article,
     .email-sub__form--plain,
-    .email-sub__form--plainDark {
+    .email-sub__form--plaindark {
         // Rounded inline input
         .email-sub__text-input {
             border-right: 0;
@@ -87,7 +87,7 @@ body {
 
     .email-sub__form--footer,
     .email-sub__form--plain,
-    .email-sub__form--plainDark {
+    .email-sub__form--plaindark {
         .email-sub__submit-input {
             padding-left: $gs-gutter / 2;
         }
@@ -98,7 +98,7 @@ body {
 @include mq(183px, 183px) {
     .email-sub__form--footer,
     .email-sub__form--plain,
-    .email-sub__form--plainDark {
+    .email-sub__form--plaindark {
         padding-right: $gs-gutter / 2;
 
         .email-sub__text-input {
@@ -152,7 +152,7 @@ body {
     }
 }
 
-.email-sub--plainDark {
+.email-sub--plaindark {
     .email-sub__header,
     .email-sub__label,
     .email-sub__small {
