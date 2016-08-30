@@ -10,7 +10,7 @@ define([
     'common/utils/robust',
     'common/utils/proximity-loader',
     'common/utils/detect',
-    'common/modules/commercial/comment-adverts',
+    'commercial/modules/comment-adverts',
     'common/modules/discussion/loader',
     'common/modules/identity/api',
     'common/modules/onward/onward-content',

@@ -31,6 +31,7 @@ define([
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
+    'common/modules/navigation/membership',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
     'common/modules/onward/tech-feedback',
@@ -51,7 +52,8 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'common/modules/experiments/subscriber-number-form'
 ], function (
     fastdom,
     bean,
@@ -83,6 +85,7 @@ define([
     newHeaderNavigation,
     Profile,
     Search,
+    membership,
     history,
     MoreTags,
     techFeedback,
@@ -103,7 +106,8 @@ define([
     email,
     emailArticle,
     identity,
-    forEach
+    forEach,
+    subscriberNumberForm
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -177,9 +181,11 @@ define([
             },
 
             cleanupLocalStorage : function () {
-                var deprecatedKeys = [
-                    'gu.subscriber'
-                ];
+                /*
+                TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
+                      see https://github.com/guardian/frontend/pull/14072
+                */
+                var deprecatedKeys = [];
                 forEach(deprecatedKeys, storage.remove);
             },
 
@@ -334,7 +340,6 @@ define([
                 });
             }
         };
-
     return {
         init: function () {
             forEach(robust.makeBlocks([
@@ -366,6 +371,7 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
+                ['c-subscriber-number-form', subscriberNumberForm],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
@@ -378,7 +384,8 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh.bind(userFeatures)]
+                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
+                ['c-membership',membership]
 
             ]), function (fn) {
                 fn();

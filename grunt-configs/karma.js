@@ -12,6 +12,9 @@ module.exports = function (grunt, options) {
         },
         membership: {
             configFile: options.testConfDir + 'membership.js'
+        },
+        commercial: {
+            configFile: options.testConfDir + 'commercial.js'
         }
     };
 };

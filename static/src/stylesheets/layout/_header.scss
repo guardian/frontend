@@ -52,8 +52,12 @@ $c-guardian-services-action: #ffffff;
         width: 160px;
         height: 30px;
     }
+    //reseting the default height of the <object> element
+    .logo-tagline {
+        height: 0;
+    }
 
-    .logo__tagline {
+    .logo-tagline__link {
         @include fs-textSans(1);
         position: absolute;
         top: 48px;

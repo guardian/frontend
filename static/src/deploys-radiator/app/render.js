@@ -10,7 +10,7 @@ const ih = (tagName, options, children) => (h(tagName, options, children.toJS())
 // Used in hyperscript because children cannot be booleans
 // https://github.com/Matt-Esch/virtual-dom/issues/326
 const exp = (condition) => condition ? true : undefined;
-const teamCityHost = 'http://teamcity.gu-web.net:8111';
+const teamCityHost = 'https://teamcity.gu-web.net';
 const createBuildLink = (build) => (`${teamCityHost}/viewLog.html?buildNumber=${build}&buildTypeId=dotcom_master&tab=buildResultsDiv`);
 const riffRaffHost = 'https://riffraff.gutools.co.uk';
 const createRiffRaffDeployLink = (uuid) => (`${riffRaffHost}/deployment/view/${uuid}`);
