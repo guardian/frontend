@@ -1,4 +1,5 @@
 define([
+    'fastdom',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/ajax',
@@ -11,6 +12,7 @@ define([
     'text!common/views/content/share-count-immersive.html',
     'common/modules/experiments/ab'
 ], function (
+    fastdom,
     reportError,
     $,
     ajax,
@@ -38,8 +40,10 @@ define([
             var displayCount = shareCount.toFixed(0),
                 formattedDisplayCount = formatters.integerCommas(displayCount),
                 shortDisplayCount = displayCount > 10000 ? Math.round(displayCount / 1000) + 'k' : displayCount;
-            $fullValueEls.text(formattedDisplayCount);
-            $shortValueEls.text(shortDisplayCount);
+            fastdom.write(function() {
+                $fullValueEls.text(formattedDisplayCount);
+                $shortValueEls.text(shortDisplayCount);
+            });
         }
     }
 
@@ -63,21 +67,7 @@ define([
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el
         $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]); // limited to 1 el
 
-        if (detect.isBreakpoint({min: 'tablet'})) {
-            var duration = 250,
-                updateStep = 25,
-                slices = duration / updateStep,
-                amountPerStep = val / slices,
-                currentSlice = 0,
-                interval = window.setInterval(function () {
-                    incrementShareCount(amountPerStep);
-                    if (++currentSlice === slices) {
-                        window.clearInterval(interval);
-                    }
-                }, updateStep);
-        } else {
-            incrementShareCount(val);
-        }
+        incrementShareCount(val);
     }
 
     return function () {
