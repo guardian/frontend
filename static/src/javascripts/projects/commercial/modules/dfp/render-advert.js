@@ -58,7 +58,7 @@ define([
     /**
      * DFP fluid ads should use existing fluid-250 styles in the top banner position
      */
-    sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
+    sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot']);
 
     /**
      * Trigger sticky scrolling for MPUs in the right-hand article column

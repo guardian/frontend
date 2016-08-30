@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'common/utils/fastdom-promise',
+    'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp/add-slot',
@@ -11,6 +12,7 @@ define([
 ], function (
     bonzo,
     fastdom,
+    detect,
     config,
     mediator,
     addSlot,
@@ -23,7 +25,7 @@ define([
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded
     var MAX_ADS = 8;       // maximum number of ads to display
 
-    var slotCounter = 0, windowHeight, firstSlot;
+    var slotCounter = 0, isMobile, windowHeight, firstSlot;
 
     function startListening() {
         mediator.on('modules:autoupdate:updates', onUpdate);
@@ -64,9 +66,14 @@ define([
 
     function insertAds(slots) {
         for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-            var $adSlot = bonzo(createSlot('inline1' + slotCounter++, 'liveblog-inline block'));
+            var slotName = isMobile && slotCounter === 0 ?
+                'top-above-nav' : isMobile ?
+                'inline' + slotCounter :
+                'inline' + (slotCounter + 1);
+            var $adSlot = bonzo(createSlot(slotName, 'liveblog-inline block'));
             $adSlot.insertAfter(slots[i]);
             addSlot($adSlot);
+            slotCounter += 1;
         }
     }
 
@@ -89,8 +96,10 @@ define([
 
     function init() {
         if (!commercialFeatures.liveblogAdverts) {
-            return null;
+            return Promise.resolve();
         }
+
+        isMobile = detect.getBreakpoint() === 'mobile';
 
         return fastdom.read(function () {
             return windowHeight = document.documentElement.clientHeight;

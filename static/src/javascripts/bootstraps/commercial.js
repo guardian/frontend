@@ -18,6 +18,7 @@ define([
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/colours',
     'commercial/modules/slice-adverts',
+    'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
@@ -44,6 +45,7 @@ define([
     hostedGallery,
     hostedColours,
     sliceAdverts,
+    liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
@@ -57,6 +59,7 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
+        ['cm-liveblogAdverts', liveblogAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
