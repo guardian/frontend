@@ -75,14 +75,11 @@ define([
                 taskQueued = false;
 
                 var slots = Object.keys(listeners)
+                    .filter(function (id) {
+                        return listeners[id].visible;
+                    })
                     .map(function (id) {
-                        return [id, listeners[id]];
-                    })
-                    .filter(function (_) {
-                        return _[1].visible;
-                    })
-                    .map(function (_) {
-                        return [_[0], _[1].slot.getBoundingClientRect()];
+                        return [id, listeners[id].slot.getBoundingClientRect()];
                     });
 
                 if( !useIO ) {
