@@ -35,10 +35,6 @@ define([
             }
         }
 
-        slots[slot.id] = {
-            slot: slot,
-            iframeId: id
-        };
         listeners[id] = {
             slot: slot,
             // When using IOs, a slot is hidden by default. When the IO starts
@@ -50,6 +46,10 @@ define([
         listenerCounter += 1;
 
         if (useIO) {
+            slots[slot.id] = {
+                slot: slot,
+                iframeId: id
+            };
             observer.observe(slot);
         }
     }
@@ -58,8 +58,8 @@ define([
         if (listeners[id]) {
             if (useIO) {
                 observer.unobserve(listeners[id].slot);
+                slots[listeners[id].slot.id] = false;
             }
-            slots[listeners[id].slot.id] =
             listeners[id] = false;
             listenerCounter -= 1;
         }
