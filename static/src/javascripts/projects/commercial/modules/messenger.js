@@ -96,6 +96,8 @@ define([
             return;
         }
 
+        var iframe = data.iframeId ? document.getElementById(data.iframeId) : null;
+
         if (Array.isArray(listeners[data.type])) {
             // Because any listener can have side-effects (by unregistering itself),
             // we run the promise chain on a copy of the `listeners` array.
@@ -113,7 +115,7 @@ define([
             // occasional fastdom bomb in the middle.
             .reduce(function (promise, listener) {
                 return promise.then(function promiseCallback(ret) {
-                    var thisRet = listener(data.value, ret, data.iframeId ? document.getElementById(data.iframeId) : null);
+                    var thisRet = listener(data.value, ret, iframe);
                     return thisRet === undefined ? ret : thisRet;
                 });
             }, Promise.resolve(true));
@@ -125,7 +127,7 @@ define([
                 respond(formatError(error500, ex), null);
             });
         } else {
-            listeners[data.type](respond, data.value, data.iframeId ? document.getElementById(data.iframeId) : null);
+            listeners[data.type](respond, data.value, iframe);
         }
 
         function respond(error, result) {
