@@ -39,6 +39,8 @@ define([
     }
 
     function unregister(type, callback) {
+        options || (options = {});
+
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
