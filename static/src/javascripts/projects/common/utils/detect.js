@@ -276,25 +276,14 @@ define([
      *     detect.isBreakpoint({min: 'tablet'}) // Will return true for tablet, desktop, leftCol, wide
      *     detect.isBreakpoint({max: 'tablet'}) // Will return true for mobile, mobileLandscape, tablet and phablet
      *
-     *     
+     *
      */
     function isBreakpoint(criteria) {
-        criteria.min = criteria.min || breakpoints[0].name;
-        criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;
-
-        var currentBreakpoint = getBreakpoint(true);
-        // If, 1. we drop all breakpoints smaller than the breakpoint range (min)
-        //     2. we reverse the array, and...
-        //     3. we drop all breakpoints larger than the breakpoint range (max)
-        // Then, we get the range of matching breakpoints (in reverse order but
-        // it doesn't matter)
-        var algo = compose(
-            dropWhile.bind(undefined, function (_) { return _ !== criteria.max; }),
-            reverseArray,
-            dropWhile.bind(undefined, function (_) { return _ !== criteria.min; })
-        );
-
-        return algo(breakpoints.map(getBreakpointName)).indexOf(currentBreakpoint) !== -1;
+        var bpNames = breakpoints.map(getBreakpointName);
+        var indexMin = criteria.min ? bpNames.indexOf(criteria.min) : 0;
+        var indexMax = criteria.max ? bpNames.indexOf(criteria.max) : bpNames.length - 1;
+        var indexCur = bpNames.indexOf(currentTweakpoint);
+        return indexMin <= indexCur && indexCur <= indexMax;
     }
 
     // Page Visibility
