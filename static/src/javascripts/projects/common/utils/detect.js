@@ -71,6 +71,8 @@ define([
         ],
         detect;
 
+    var breakpointNames = breakpoints.map(getBreakpointName);
+
     var currentBreakpoint;
     var currentTweakpoint;
 
@@ -279,10 +281,9 @@ define([
      *
      */
     function isBreakpoint(criteria) {
-        var bpNames = breakpoints.map(getBreakpointName);
-        var indexMin = criteria.min ? bpNames.indexOf(criteria.min) : 0;
-        var indexMax = criteria.max ? bpNames.indexOf(criteria.max) : bpNames.length - 1;
-        var indexCur = bpNames.indexOf(currentTweakpoint);
+        var indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
+        var indexMax = criteria.max ? breakpointNames.indexOf(criteria.max) : breakpointNames.length - 1;
+        var indexCur = breakpointNames.indexOf(currentTweakpoint);
         return indexMin <= indexCur && indexCur <= indexMax;
     }
 
