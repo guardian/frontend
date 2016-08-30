@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/ui/message',
+    'common/modules/user-prefs',
     'text!common/views/experiments/us-survey-banner.html'
 ],function(
     svgs,
@@ -11,6 +12,7 @@ define([
     detect,
     template,
     Message,
+    userPrefs,
     messageTemplate
 ){
 
@@ -35,8 +37,33 @@ define([
     }
 
     function canShowPromo() {
-        return isSwitchedOn() && UsUser();
+        return isSwitchedOn() && UsUser() && isNewToSurvey();
     }
+
+    function isNewToSurvey() {
+        var prefs = userPrefs.get('us-survey-banner');
+
+        if (prefs === null) {
+            return true;
+        }
+    }
+
+    function getReferrer() {
+        var referrerTypes = [
+                {id: 'facebook', match: 'facebook.com'},
+                {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                {id: 'googleplus', match: 'plus.url.google'},
+                {id: 'reddit', match: 'reddit.com'},
+                {id: 'google', match: 'www.google'},
+                {id: 'theguardian', match: 'theguardian.com'},
+                {id: 'drudge', match: 'drudgereport.com'}
+            ],
+            matchedRef = referrerTypes.filter(function (referrerType) {
+                return detect.getReferrer().indexOf(referrerType.match) > -1;
+            })[0] || {};
+
+        return matchedRef.id;
+    };
 
     function isSwitchedOn() {
         return config.switches.USSurveyBanner;
@@ -48,6 +75,9 @@ define([
 
     function init() {
         if (canShowPromo()) {
+            userPrefs.set('us-survey-banner', {
+                'seen': true
+            });
             new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
         }
     }
