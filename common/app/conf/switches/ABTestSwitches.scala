@@ -153,4 +153,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
     exposeClientSide = true
   )
+
+  val ABNoSocialCount = Switch(
+    SwitchGroup.ABTests,
+    "ab-no-social-count",
+    "Remove social count from articles",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
+    exposeClientSide = true
+  )
 }

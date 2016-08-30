@@ -21,7 +21,8 @@ define([
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/minute-load-js',
     'common/modules/experiments/tests/contributions-embed',
-    'common/modules/experiments/tests/adblocking-response'
+    'common/modules/experiments/tests/adblocking-response',
+    'common/modules/experiments/tests/no-social-count'
 ], function (
     reportError,
     config,
@@ -45,7 +46,8 @@ define([
     DontUpgradeMobileRichLinks,
     MinuteLoadJs,
     ContributionsEmbed,
-    AdBlockingResponse
+    AdBlockingResponse,
+    NoSocialCount
 ) {
 
     var TESTS = [
@@ -63,7 +65,8 @@ define([
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
         new MinuteLoadJs(),
-        new ContributionsEmbed()
+        new ContributionsEmbed(),
+        new NoSocialCount()
     ];
 
     var participationsKey = 'gu.ab.participations';
