@@ -21,7 +21,7 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = false ? setupTags() : Promise.resolve();
+            var initialTag = config.tests.commercialSonobi ? setupTags() : Promise.resolve();
             return initialTag.then(setupAdvertising);
         }
 
