@@ -1,11 +1,11 @@
 define([
     'common/utils/mediator',
-    'common/modules/commercial/dfp/private/dfp-env',
-    'common/modules/commercial/dfp/private/Advert',
-    'common/modules/commercial/dfp/private/queue-advert',
-    'common/modules/commercial/dfp/private/load-advert',
-    'common/modules/commercial/dfp/private/enable-lazy-load',
-    'common/modules/commercial/dfp/private/ophan-tracking'
+    'commercial/modules/dfp/dfp-env',
+    'commercial/modules/dfp/Advert',
+    'commercial/modules/dfp/queue-advert',
+    'commercial/modules/dfp/load-advert',
+    'commercial/modules/dfp/enable-lazy-load',
+    'commercial/modules/dfp/ophan-tracking'
 ], function (mediator, dfpEnv, Advert, queueAdvert, loadAdvert, enableLazyLoad, ophanTracking) {
     return addSlot;
 

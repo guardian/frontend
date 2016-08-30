@@ -53,9 +53,19 @@ define([
         },
 
         init: function() {
-            modules.configureSubscribeButton();
+            var $followElement = modules.configureSubscribeButton();
             if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
                 modules.showExplainer();
+            }
+
+            modules.trackFollowButtonAttention($followElement.get(0));
+        },
+
+        trackFollowButtonAttention: function (followElement) {
+            if (followElement) {
+                require(['ophan/ng'], function (ophan) {
+                    ophan.trackComponentAttention('web-notifications--follow-button', followElement);
+                });
             }
         },
 
@@ -72,6 +82,8 @@ define([
                 $follow.html(src);
                 bean.one($follow[0], 'click', '.js-notifications__button', handler);
             });
+
+            return $follow;
         },
 
         showExplainer: function() {

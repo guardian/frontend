@@ -233,7 +233,7 @@ define([
             var membershipUrl = config.page.membershipUrl,
                 membershipAccess = config.page.membershipAccess,
                 requiresPaidTier = (membershipAccess.indexOf('paid-members-only') !== -1),
-                membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
+                membershipAuthUrl = membershipUrl + '/membership-content?referringContent=' + config.page.contentId + '&membershipAccess=' + membershipAccess;
 
             var redirect = function () {
                 window.location.href = membershipAuthUrl;
