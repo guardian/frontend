@@ -60,19 +60,27 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
-  def cleanAmpSoundcloud(document: Document) = {
-    document.getElementsByClass("element-audio").filterNot { audioElement: Element =>
-      audioElement.getElementsByTag("iframe").isEmpty
-    }.foreach { audioElementWithIframe: Element =>
-      audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
-        val soundcloudUrl = iframeElement.attr("src")
-        val pattern = ".*%2Ftracks%2F(\\d+).*".r
-        soundcloudUrl match {
-          case pattern(trackId) =>
-            val soundcloud = createAmpSoundcloudElement(document, trackId)
-            audioElementWithIframe.appendChild(soundcloud)
-            iframeElement.remove()
-          case _ =>
+  object AmpSoundcloud {
+    def createElement(document: Document, trackId: String): Element = {
+      val soundcloud = document.createElement("amp-soundcloud")
+      soundcloud.attr("data-trackid", trackId)
+      soundcloud.attr("data-visual", "true")
+      soundcloud.attr("height", "300") // height is necessary if data-visual == true
+    }
+    def clean(document: Document) = {
+      document.getElementsByClass("element-audio").filterNot { audioElement: Element =>
+        audioElement.getElementsByTag("iframe").isEmpty
+      }.foreach { audioElementWithIframe: Element =>
+        audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
+          val soundcloudUrl = iframeElement.attr("src")
+          val pattern = ".*%2Ftracks%2F(\\d+).*".r
+          soundcloudUrl match {
+            case pattern(trackId) =>
+              val soundcloud = createElement(document, trackId)
+              audioElementWithIframe.appendChild(soundcloud)
+              iframeElement.remove()
+            case _ =>
+          }
         }
       }
     }
@@ -138,20 +146,13 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
-  private def createAmpSoundcloudElement(document: Document, trackId: String): Element = {
-    val soundcloud = document.createElement("amp-soundcloud")
-    soundcloud.attr("data-trackid", trackId)
-    soundcloud.attr("data-visual", "true")
-    soundcloud.attr("height", "300") // height is necessary if data-visual == true
-  }
-
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
   override def clean(document: Document): Document = {
 
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
-    cleanAmpSoundcloud(document)
+    AmpSoundcloud.clean(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpEmbed(document)
