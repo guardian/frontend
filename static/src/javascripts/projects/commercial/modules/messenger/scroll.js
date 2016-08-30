@@ -1,7 +1,8 @@
 define([
+    'common/utils/closest',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/messenger'
-], function (fastdom, messenger) {
+], function (closest, fastdom, messenger) {
     var useIO = 'IntersectionObserver' in window;
     var taskQueued = false;
     var listeners = {};
@@ -9,15 +10,15 @@ define([
     var listenerCounter = 0;
     var observer;
 
-    messenger.register('scroll', function(respond, start, iframe) {
-        if( start ) {
-            addScrollListener(iframe.id, iframe.closest('.js-ad-slot'), respond);
+    messenger.register('scroll', onMessage, { persist: true });
+
+    function onMessage(respond, start, iframe) {
+        if (start) {
+            addScrollListener(iframe.id, closest(iframe, '.js-ad-slot'), respond);
         } else {
             removeScrollListener(iframe.id);
         }
-    }, {
-        persist: true
-    });
+    }
 
     return {
         addScrollListener: addScrollListener,
@@ -34,7 +35,7 @@ define([
 
         slots[slot.id] = {
             slot: slot,
-            iframeId: idea
+            iframeId: id
         };
         listeners[id] = {
             slot: slot,
