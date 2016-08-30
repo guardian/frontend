@@ -22,7 +22,6 @@ import play.api.libs.json._
 import views.support._
 
 import scala.collection.JavaConversions._
-import scala.language.postfixOps
 import scala.util.Try
 
 sealed trait ContentType {

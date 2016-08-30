@@ -1,6 +1,6 @@
 package services
 
-import java.net.{URL, URLEncoder}
+import java.net.URLEncoder
 
 import common.{BadConfigurationException, ExecutionContexts, Logging}
 import conf.Configuration._
