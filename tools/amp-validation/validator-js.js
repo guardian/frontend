@@ -61,8 +61,8 @@ function fetchValidator(devChannel) {
 
 function cleanUp() {
     // Just try and remove both files as the cost is low anyway
-    // TODO: assumption here that os.tmpdir is fixed during creation/deletion
-    [tempFilenames.preRelease, tempFilenames.release].forEach(filename => {
+    // TODO: re-add tempFilenames.prerelease when/if google provide us with one
+    [tempFilenames.release].forEach(filename => {
         fs.unlinkSync(os.tmpdir() + filename);
     });
 }
