@@ -35,11 +35,11 @@ define([
     // var gaTracker = config.googleAnalytics.trackers.editorial;
     var gaTracker = 'guardianTestPropertyTracker';
 
-    function sendToGA(action, label, customDimensions) {
+    function sendToGA(label, customDimensions) {
         var fieldsObject = assign({
             nonInteraction: true // to avoid affecting bounce rate
         }, (customDimensions || {}));
-        ga(gaTracker + '.send', 'event', 'Discussion', action, label, fieldsObject);
+        ga(gaTracker + '.send', 'event', 'ElementView', 'Onpage item', label, fieldsObject);
     }
 
     /**
@@ -56,10 +56,6 @@ define([
         var commentType = comment.replyTo ? 'response' : 'comment';
         var parentCommentAuthorId = comment.replyTo ? comment.replyTo.authorId : null;
 
-        sendToGA('Post comment', commentType, {
-           dimension22: parentCommentAuthorId
-        });
-
         // Add extra variables for discussion.
         omniture.populateEventProperties('comment');
         s.events += ',event51';
@@ -73,8 +69,6 @@ define([
     };
 
     track.recommend = function (e) {
-        sendToGA('Engage with comment', 'recommend');
-
         omniture.populateEventProperties('Recommend a comment');
         s.events += ',event72';
         s.linkTrackVars += this.getLinkTrackVars(['eVar65', 'eVar67']);
@@ -88,8 +82,6 @@ define([
 
     track.jumpedToComments = function () {
         if (!track.seen) {
-            sendToGA('Click comments link');
-
             omniture.populateEventProperties('seen jump-to-comments');
             s.events += ',event72';
             s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
@@ -104,8 +96,6 @@ define([
 
     track.commentPermalink = function () {
         if (!track.seen) {
-            sendToGA('Follow permalink');
-
             omniture.populateEventProperties('seen comment-permalink');
             s.events += ',event72';
             s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
