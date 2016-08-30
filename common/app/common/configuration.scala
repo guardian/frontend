@@ -465,15 +465,15 @@ class GuardianConfiguration extends Logging {
         new ProfileCredentialsProvider("composer"),
         new STSAssumeRoleSessionCredentialsProvider(role, "frontend"))
 
-        try {
-          val creds = provider.getCredentials
-          Some(provider)
-        } catch {
-          case ex: AmazonClientException =>
-            log.error("amazon client cross account exception", ex)
-            if (Play.isProd) throw ex
-            None
-        }
+      try {
+         val creds = provider.getCredentials
+         Some(provider)
+      } catch {
+        case ex: AmazonClientException =>
+          log.error("amazon client cross account exception", ex)
+          if (Play.isProd) throw ex
+          None
+      }
     }
 
     lazy val crossAccountMandatoryCredentials = crossAccountCredentials
