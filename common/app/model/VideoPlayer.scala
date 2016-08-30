@@ -17,6 +17,8 @@ case class VideoPlayer(
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
   endSlatePath: String,
+  // TODO make `String` once `path` is available on main media on fronts
+  path: Option[String],
   overrideIsRatioHd: Option[Boolean] = None,
   embedPath: Option[String] = None,
   hasFaciaHeader: Boolean = false,
@@ -41,7 +43,8 @@ object VideoPlayer {
     profile: VideoProfile,
     content: model.pressed.PressedContent,
     autoPlay: Boolean,
-    showControlsAtStart: Boolean
+    showControlsAtStart: Boolean,
+    path: Option[String]
   ) : VideoPlayer = { VideoPlayer(
     video,
     profile,
@@ -49,6 +52,7 @@ object VideoPlayer {
     autoPlay,
     showControlsAtStart,
     endSlatePath = SupportedUrl.fromFaciaContent(content),
+    path,
     hasFaciaHeader = true,
     faciaHeaderProperties = Some(VideoFaciaProperties(
       header = FaciaCardHeader.fromTrail(content, None),

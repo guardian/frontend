@@ -15,17 +15,6 @@
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    <div class="brand-bar__item brand-bar__item--profile
-                                    brand-bar__item--has-control brand-bar__item--register
-                                    popup-container has-popup js-profile-register
-                                    hide-until-mobile-landscape">
-                        <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
-                        data-link-name="Register link"
-                        class="brand-bar__item--action">
-                            @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info js-control-info control__info--supporting">become a supporter</span>
-                        </a>
-                    </div>
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
                                     has-popup js-profile-nav"
@@ -63,12 +52,17 @@
                     }
 
                     <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe desktop-only hide-on-slim-header"
+                                popup-container brand-bar__item--subscribe
+                                 hide-on-slim-header hide-on-tablet"
                          data-component="subscribe">
-                        <a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action"
+                        @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                        <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
+                        data-link-name="Register link"
+                        class="brand-bar__item--action brand-bar__item--split--first js-become-member">
+                            <span class="control__info js-control-info control__info--supporting">become a supporter</span>
+                        </a><a href="@SubscribeLink(Edition(request))" class="brand-bar__item--action brand-bar__item--split--last js-subscribe"
                         data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
-                            @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info">subscribe</span>
+                            <span class="control__info js-control-info">subscribe</span>
                         </a>
                     </div>
 

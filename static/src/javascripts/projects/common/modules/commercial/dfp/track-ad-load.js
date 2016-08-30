@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/dfp/private/wait-for-advert'
+    'commercial/modules/dfp/wait-for-advert'
 ], function (waitForAdvert) {
     return trackAdLoad;
     function trackAdLoad(id) {
