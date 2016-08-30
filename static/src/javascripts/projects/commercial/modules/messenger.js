@@ -89,8 +89,6 @@ define([
             return;
         }
 
-        var iframes = getMessengerIframe(event.origin);
-
         // If there is no routine attached to this event type, we just answer
         // with an error code
         if (!listeners[data.type].length) {
@@ -115,7 +113,7 @@ define([
             // occasional fastdom bomb in the middle.
             .reduce(function (promise, listener) {
                 return promise.then(function promiseCallback(ret) {
-                    var thisRet = listener(data.value, iframes[0], ret);
+                    var thisRet = listener(data.value, ret, data.iframeId ? document.getElementById(data.iframeId) : null);
                     return thisRet === undefined ? ret : thisRet;
                 });
             }, Promise.resolve(true));
@@ -127,7 +125,7 @@ define([
                 respond(formatError(error500, ex), null);
             });
         } else {
-            listeners[data.type](respond, data.value, iframes[0]);
+            listeners[data.type](respond, data.value, data.iframeId ? document.getElementById(data.iframeId) : null);
         }
 
         function respond(error, result) {
@@ -177,11 +175,5 @@ define([
         });
 
         return error;
-    }
-
-    function getMessengerIframe(origin) {
-        return Array.prototype.filter.call(document.getElementsByTagName('iframe'), function (iframe) {
-            return iframe.src.indexOf(origin) === 0;
-        });
     }
 });
