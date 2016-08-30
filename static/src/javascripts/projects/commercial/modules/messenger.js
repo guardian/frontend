@@ -38,7 +38,7 @@ define([
         }
     }
 
-    function unregister(type, callback) {
+    function unregister(type, callback, options) {
         options || (options = {});
 
         if (callback === undefined) {
