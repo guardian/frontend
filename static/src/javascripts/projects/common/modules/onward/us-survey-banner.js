@@ -35,8 +35,7 @@ define([
     }
 
     function canShowPromo() {
-        // return isSwitchedOn() && UsUser();
-        return true;
+        return isSwitchedOn() && UsUser();
     }
 
     function isSwitchedOn() {
