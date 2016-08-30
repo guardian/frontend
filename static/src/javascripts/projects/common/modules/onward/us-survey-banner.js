@@ -4,20 +4,17 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/ui/message',
-    'text!common/views/experiments/us-survey-banner.html',
-    'lodash/collections/some'
+    'text!common/views/experiments/us-survey-banner.html'
 ],function(
     svgs,
     config,
     detect,
     template,
     Message,
-    messageTemplate,
-    some
+    messageTemplate
 ){
 
-    var usElectionTag = 'us-news/us-elections-2016',
-        messageId = 'mobile-labs-alert',
+    var messageId = 'mobile-labs-alert',
         messageOptions = {
             siteMessageLinkName: 'mobile labs | message | presidential primary alerts',
             siteMessageCloseButton: 'hide',
@@ -38,7 +35,8 @@ define([
     }
 
     function canShowPromo() {
-        return isSwitchedOn() && UsUser();
+        // return isSwitchedOn() && UsUser();
+        return true;
     }
 
     function isSwitchedOn() {
@@ -50,11 +48,10 @@ define([
     }
 
     function init() {
-        console.log("running");
-        if (true) {
+        if (canShowPromo()) {
             new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
         }
-    };
+    }
 
     return init();
 
