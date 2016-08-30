@@ -18,7 +18,7 @@ define([
         this.successMeasure = 'No significant difference in clicks between the variant and control';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Social share counts *do not* cause a significant increase in sharing, so we can remove them';
+        this.idealOutcome = 'Social sharing in the control group is not more than 2% higher';
 
         this.canRun = function () {
             // We're on content and the page is commentable (so we don't have to fuss with the gap if it wasn't commentable)
