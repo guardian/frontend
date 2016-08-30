@@ -73,7 +73,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       }.foreach { audioElementWithIframe: Element =>
         audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
           val soundcloudUrl = iframeElement.attr("src")
-          val pattern = ".*%2Ftracks%2F(\\d+).*".r
+          val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
           soundcloudUrl match {
             case pattern(trackId) =>
               val soundcloud = createElement(document, trackId)

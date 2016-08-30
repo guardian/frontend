@@ -15,7 +15,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
  "AmpEmbedCleaner" should "replace an iframe in an audio-element with an amp-soundcloud element" in {
-   val soundcloudUrl = "http://www.soundcloud.com/%2Ftracks%2F1234"
+   val soundcloudUrl = "http://www.soundcloud.com%2Ftracks%2F1234"
    val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
    val document: Document = Jsoup.parse(doc)
    val result: Document = clean(document)
@@ -33,7 +33,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src" in {
     val trackId = "1234"
-    val soundcloudUrl = s"http://www.soundcloud.com/%2Ftracks%2F$trackId"
+    val soundcloudUrl = s"http://www.soundcloud.com%2Ftracks%2F$trackId"
     val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
