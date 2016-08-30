@@ -60,10 +60,10 @@ define([
             })[0] || {};
 
         return matchedRef.id;
-    };
+    }
 
     function isSwitchedOn() {
-        return config.switches.USSurveyBanner
+        return config.switches.USSurveyBanner;
     }
 
     function UsUser() {
