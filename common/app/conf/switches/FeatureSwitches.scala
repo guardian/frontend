@@ -517,4 +517,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val RegisterWithPhoneNumber = Switch(
+      SwitchGroup.Feature,
+      "register-with-phone",
+      "When ON, new registering users will be required to provide a mobile number",
+      owners = Seq(Owner.withGithub("NathanielBennett")),
+      safeState = Off,
+      sellByDate = never,
+      exposeClientSide = true
+  )
 }
