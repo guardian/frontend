@@ -50,21 +50,6 @@ define([
         };
     }
 
-    function onFluidAd(event, advert) {
-        var node = advert.node;
-        var closestFcContainer = closest(node, '.fc-container');
-        var sectionContainer = bonzo(bonzo.create('<section>'));
-
-        if (closestFcContainer) {
-            fastdom.write(function () {
-                sectionContainer.append(node);
-                sectionContainer.insertAfter(closestFcContainer);
-            });
-        }
-
-        addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad'])(event, advert);
-    }
-
     var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
     var addFluid    = addClassIfHasClass(['ad-slot--fluid']);
 
