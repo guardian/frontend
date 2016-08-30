@@ -25,7 +25,8 @@ define([
     'common/utils/url',
     'common/utils/cookies',
     'common/utils/robust',
-    'common/utils/user-timing'
+    'common/utils/user-timing',
+    'common/modules/navigation/newHeaderNavigation'
 ], function (
     raven,
     qwery,
@@ -40,7 +41,8 @@ define([
     url,
     cookies,
     robust,
-    userTiming
+    userTiming,
+    newHeaderNavigation
 ) {
     return function () {
         var guardian = window.guardian;
@@ -113,6 +115,11 @@ define([
                 raven.captureException(error);
             }
         });
+
+        //
+        // Render new navigation
+        //
+        newHeaderNavigation();
 
         /*
          *  Interactive bootstraps.
