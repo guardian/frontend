@@ -23,7 +23,7 @@
 // fieldset > legend
 .atom-quiz__question-text {
     margin-bottom: $gs-baseline;
-    display: block;
+    display: inline-block;
 
     &:before {
         counter-increment: quiz-question;

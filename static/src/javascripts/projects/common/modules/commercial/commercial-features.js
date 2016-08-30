@@ -34,6 +34,8 @@ define([
 
         var isArticle = config.page.contentType === 'Article';
 
+        var isGallery = config.page.contentType == 'Gallery';
+
         var isLiveBlog = config.page.isLiveBlog;
 
         var isHosted = config.page.tones === 'Hosted';
@@ -57,6 +59,10 @@ define([
         this.topBannerAd =
             this.dfpAdvertising &&
             !isMinuteArticle;
+
+        this.galleryAdverts =
+            this.dfpAdvertising &&
+            isGallery;
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
@@ -117,6 +123,7 @@ define([
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
+            isLiveBlog &&
             this.dfpAdvertising &&
             switches.liveblogAdverts;
 

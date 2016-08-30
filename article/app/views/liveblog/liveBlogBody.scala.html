@@ -9,6 +9,7 @@
 @import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
+@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import _root_.liveblog.SinceBlockId
 
@@ -29,14 +30,12 @@
         itemscope itemtype="@schemaType(model)" role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
-        @if(isAmpAndStructuredAsNewsArticle()) {
-            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                <meta itemprop="name" content="The Guardian">
-                <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                    <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
-                </div>
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="The Guardian">
+            <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
             </div>
-        }
+        </div>
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
                       @if(ArticleBadgesSwitch.isSwitchedOn) {
@@ -162,7 +161,7 @@
     </article>
 
     @if(!amp) {
-        @fragments.contentFooter(article, model.related)
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
     }
 
 </div>

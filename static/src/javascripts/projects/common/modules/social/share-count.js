@@ -1,4 +1,5 @@
 define([
+    'fastdom',
     'common/utils/report-error',
     'common/utils/$',
     'common/utils/ajax',
@@ -8,8 +9,10 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/content/share-count.html',
-    'text!common/views/content/share-count-immersive.html'
+    'text!common/views/content/share-count-immersive.html',
+    'common/modules/experiments/ab'
 ], function (
+    fastdom,
     reportError,
     $,
     ajax,
@@ -19,7 +22,8 @@ define([
     template,
     svgs,
     shareCountTemplate,
-    shareCountImmersiveTemplate
+    shareCountImmersiveTemplate,
+    ab
 ) {
     var shareCount = 0,
         $shareCountEls = $('.js-sharecount'),
@@ -36,8 +40,10 @@ define([
             var displayCount = shareCount.toFixed(0),
                 formattedDisplayCount = formatters.integerCommas(displayCount),
                 shortDisplayCount = displayCount > 10000 ? Math.round(displayCount / 1000) + 'k' : displayCount;
-            $fullValueEls.text(formattedDisplayCount);
-            $shortValueEls.text(shortDisplayCount);
+            fastdom.write(function() {
+                $fullValueEls.text(formattedDisplayCount);
+                $shortValueEls.text(shortDisplayCount);
+            });
         }
     }
 
@@ -61,37 +67,24 @@ define([
         $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]); // limited to 1 el
         $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]); // limited to 1 el
 
-        if (detect.isBreakpoint({min: 'tablet'})) {
-            var duration = 250,
-                updateStep = 25,
-                slices = duration / updateStep,
-                amountPerStep = val / slices,
-                currentSlice = 0,
-                interval = window.setInterval(function () {
-                    incrementShareCount(amountPerStep);
-                    if (++currentSlice === slices) {
-                        window.clearInterval(interval);
-                    }
-                }, updateStep);
-        } else {
-            incrementShareCount(val);
-        }
+        incrementShareCount(val);
     }
 
     return function () {
         // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview
-        if ($shareCountEls.length && !config.page.isPreview) {
+        // AB test: No social counts - Variant: no-sharing doesn't insert share counts
+        if ($shareCountEls.length && !config.page.isPreview && !ab.isInVariant('NoSocialCount', 'no-sharing')) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
-                    url: 'https://graph.facebook.com/' + url,
+                    url: 'https://graph.facebook.com/' + url, //TODO: use recent Graph API endpoint format (versioned) https://developers.facebook.com/docs/graph-api/reference/v2.7/url
                     type: 'json',
                     method: 'get',
                     crossOrigin: true
                 }).then(function (resp) {
-                    var count = resp.shares || 0;
+                    var count = resp.share && resp.share.share_count || 0;
                     counts.facebook = count;
                     addToShareCount(count);
                     updateTooltip();

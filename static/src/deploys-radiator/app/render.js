@@ -10,7 +10,7 @@ const ih = (tagName, options, children) => (h(tagName, options, children.toJS())
 // Used in hyperscript because children cannot be booleans
 // https://github.com/Matt-Esch/virtual-dom/issues/326
 const exp = (condition) => condition ? true : undefined;
-const teamCityHost = 'http://teamcity.gu-web.net:8111';
+const teamCityHost = 'https://teamcity.gu-web.net';
 const createBuildLink = (build) => (`${teamCityHost}/viewLog.html?buildNumber=${build}&buildTypeId=dotcom_master&tab=buildResultsDiv`);
 const riffRaffHost = 'https://riffraff.gutools.co.uk';
 const createRiffRaffDeployLink = (uuid) => (`${riffRaffHost}/deployment/view/${uuid}`);
@@ -27,7 +27,7 @@ const renderGroupDeployListNode = (deploys) => {
             className: `deploy deploy--${deployGroup.status.split(' ').join('-').toLowerCase()}`
         }, [
             h('h2', [
-                h('a.number', {
+                h('a', {
                     href: createBuildLink(deployGroup.build)
                 }, `${deployGroup.build}`)
             ]),
@@ -85,18 +85,23 @@ const renderGroupDeployListNode = (deploys) => {
     ]);
 };
 const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDeploy], commits) => {
-    const isInSync = oldestProdDeploy.build === latestCodeDeploy.build && !hasDeployStarted(oldestProdDeploy) && !hasDeployStarted(latestCodeDeploy);
-    return h(`${exp(commits.size == 0) ? '.unsynced' : ''}.row#root`, {}, [
+    const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
+    return h('.row#root', {}, [
         h('h1', [
-            `${isInSync ? '🌷👌' : '🔥 ship it!'}`
+            `Status: ${isInSync ? 'in sync.' : 'out of sync – ship it!'}`
         ]),
-        h('.col', [
-            h('h1', 'code'),
-            renderGroupDeployListNode(codeDeploys)
-        ]),
-        exp(commits.size > 0) && h('.col.builds', [
+        h('hr', {}, []),
+        exp(commits.size > 0) && h('.col', [
             h('h1', [
-                'waiting…'
+                'Difference (',
+                h('span', {
+                    title: 'Oldest PROD deploy'
+                }, `${oldestProdDeploy.build}`),
+                '...',
+                h('span', {
+                    title: 'Latest CODE deploy'
+                }, `${latestCodeDeploy.build}`),
+                ')'
             ]),
             ih('ul', {}, (commits
                 .groupBy(commit => commit.authorLogin)
@@ -107,7 +112,11 @@ const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDep
                 .toList()))
         ]),
         h('.col', [
-            h('h1', 'prod'),
+            h('h1', 'CODE'),
+            renderGroupDeployListNode(codeDeploys)
+        ]),
+        h('.col', [
+            h('h1', 'PROD'),
             renderGroupDeployListNode(prodDeploys)
         ])
     ]);

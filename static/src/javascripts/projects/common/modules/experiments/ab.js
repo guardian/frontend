@@ -9,20 +9,20 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/hosted-autoplay',
     'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
-    'common/modules/experiments/tests/remind-me-email',
-    'common/modules/experiments/tests/hosted-zootropolis-cta',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-messages',
-    'common/modules/experiments/tests/contributions-header',
-    'common/modules/experiments/tests/ad-feedback',
+    'common/modules/experiments/tests/commercial-feedback',
     'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/minute-load-js'
+    'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
+    'common/modules/experiments/tests/minute-load-js',
+    'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/adblocking-response',
+    'common/modules/experiments/tests/no-social-count'
 ], function (
     reportError,
     config,
@@ -34,39 +34,39 @@ define([
     noop,
     DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
-    HostedAutoplay,
     Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
-    RemindMeEmail,
-    HostedZootropolisCta,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipMessages,
-    ContributionsHeader,
     AdFeedback,
     Minute,
     RecommendedForYou,
-    MinuteLoadJs
+    DontUpgradeMobileRichLinks,
+    MinuteLoadJs,
+    ContributionsEmbed,
+    AdBlockingResponse,
+    NoSocialCount
 ) {
 
     var TESTS = [
         new DiscussionExternalFrontend(),
+        new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
-        new HostedAutoplay(),
         new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
-        new RemindMeEmail(),
-        new HostedZootropolisCta(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
         new MembershipMessages(),
-        new ContributionsHeader(),
         new AdFeedback(),
         new Minute(),
         new RecommendedForYou(),
-        new MinuteLoadJs()
+        new DontUpgradeMobileRichLinks(),
+        new MinuteLoadJs(),
+        new ContributionsEmbed(),
+        new NoSocialCount()
     ];
 
     var participationsKey = 'gu.ab.participations';

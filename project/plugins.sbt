@@ -20,7 +20,7 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.8")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
 
-addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.10")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.2.0")
 
 addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "0.9.1")
 

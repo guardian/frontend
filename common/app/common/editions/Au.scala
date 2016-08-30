@@ -50,6 +50,7 @@ object Au extends Edition(
       NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
       NavItem(fashion),
       NavItem(science),
+      NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
