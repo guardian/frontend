@@ -7,7 +7,7 @@
     <div class="illustration-container">
         <div class="content">
             <div class="gs-container">
-                <div class="content__main-column my-digest-illustration-wrapper">
+                <div class="content__main-column">
                 @fragments.inlineSvg("my-digest", "illustration")
                 </div>
             </div>
@@ -25,9 +25,9 @@
                     <p class="weekend-read-header__text">Every Saturday, we'll email you our editors' picks of the best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.</p>
 
                 </header>
-                <div class="weekend-reading-email">
+                <div class="weekend-reading">
 
-                    <div class="email-signup">
+                    <div class="email-signup" data-link-component="weekend-reading">
                         <form action="https://www.theguardian.com/email" method="post" class="email-sub__form js-email-sub__form email-sub__form--article" data-email-form-type="article" data-email-list-id="3742">
                           <div class="email-sub__form-wrapper">
                             <div class="email-sub__inline-label js-email-sub__inline-label">
@@ -39,9 +39,12 @@
                                 </span>
                                 Email address
                               </label>
-                              <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" required style="border-color:#ffffff;border-radius:100px;float:left;width:70%;margin-bottom:10px;"/>
+                              <input class="email-sub__lozenge email-sub__text-input js-email-sub__text-input"
+                              data-link-name="weekend-reading-input" type="email" name="email" required/>
                               <input class="js-email-sub__listid-input" type="hidden" name="listId" value="3742"/>
-                              <button type="submit" class="email-sub__submit-input js-email-sub__submit-input button button--tertiary email-sub__text-input" style="border-color:#ffffff;border-radius:100px;float:left;width:25%;margin:0px 0px 10px 3%">
+                              <input class="js-email-sub__campaignCode-input" type="hidden" name="campaignCode" value="HELLOWORLD"/>
+                              <button type="submit" class="email-sub__lozenge email-sub__submit-input js-email-sub__submit-input button button--tertiary"
+                              data-link-name="weekend-reading-submit">
                                   <span class="inline-envelope inline-icon submit-input__icon">
                                       <svg width="44" height="32" viewbox="0 0 44 32" class="submit-input__icon__svg inline-envelope__svg inline-icon__svg">
                                           <path d="M40 28H4V6l16 14h4L40 6v22zM36 4L22 16 8 4h28zm4-4H4L0 4v24l4 4h36l4-4V4l-4-4z"/>
@@ -54,11 +57,11 @@
                           </div>
                         </form>
                         <div class="email-signup__aside-text">
+                            <span>No spam ever. Unsubscribe in one click.</span>
                             <span class="email-signup__aside-text__frequency">
                                 @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
                                 Every Sat
                             </span>
-                            <p>No spam ever. Unsubscribe in one click.</p>
                         </div>
                     </div>
                 </div>
