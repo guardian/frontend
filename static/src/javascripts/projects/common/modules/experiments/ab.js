@@ -16,10 +16,8 @@ define([
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-messages',
     'common/modules/experiments/tests/commercial-feedback',
-    'common/modules/experiments/tests/minute',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
-    'common/modules/experiments/tests/minute-load-js',
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/no-social-count'
@@ -41,10 +39,8 @@ define([
     HostedGalleryCallToAction,
     MembershipMessages,
     AdFeedback,
-    Minute,
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
-    MinuteLoadJs,
     ContributionsEmbed,
     AdBlockingResponse,
     NoSocialCount
@@ -61,10 +57,8 @@ define([
         new HostedGalleryCallToAction(),
         new MembershipMessages(),
         new AdFeedback(),
-        new Minute(),
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
-        new MinuteLoadJs(),
         new ContributionsEmbed(),
         new NoSocialCount()
     ];
