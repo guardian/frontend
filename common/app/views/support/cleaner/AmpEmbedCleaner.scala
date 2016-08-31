@@ -68,22 +68,24 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       soundcloud.attr("height", "300") // height is necessary if data-visual == true
     }
 
-    def getTrackIdFromUrl(soundcloudUrl: String): String = {
+    def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
       val pattern = "soundcloud.com%2Ftracks%2F(\\d+)".r
-      pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
+      val trackId = pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
+
+      Option(trackId)
     }
 
     def clean(document: Document) = {
-      document.getElementsByClass("element-audio").foreach { audioElementWithIframe: Element =>
-        audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
-          val soundcloudUrl = iframeElement.attr("src")
-          Option(getTrackIdFromUrl(soundcloudUrl)) filterNot { _.isEmpty } foreach { trackId =>
-            val soundcloudElement = createElement(document, trackId)
-            audioElementWithIframe.appendChild(soundcloudElement)
-            iframeElement.remove()
-          }
-        }
-      }
+      for {
+        audioElement <- document.getElementsByClass("element-audio")
+        iframeElement <- audioElement.getElementsByTag("iframe")
+        soundcloudUrl = iframeElement.attr("src")
+        trackId <- getTrackIdFromUrl(soundcloudUrl) filterNot { _.isEmpty }
+        soundcloudElement = createElement(document, trackId)
+      } yield (audioElement, iframeElement, soundcloudElement, {
+        audioElement.appendChild(soundcloudElement)
+        iframeElement.remove()
+      })
     }
   }
 
