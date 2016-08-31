@@ -3,7 +3,6 @@ package contentapi
 import java.net.InetAddress
 import java.util.concurrent.TimeoutException
 
-import com.gu.contentapi.client.ContentApiClientLogic
 import common.ContentApiMetrics.{ContentApiErrorMetric, ContentApi404Metric}
 import common.{Logging, ExecutionContexts}
 import conf.Configuration
@@ -12,7 +11,7 @@ import metrics.{CountMetric, TimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Success, Failure, Try}
 
 case class Response(body: Array[Byte], status: Int, statusText: String)

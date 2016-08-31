@@ -7,7 +7,6 @@ import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
-import conf.switches.Switches
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}

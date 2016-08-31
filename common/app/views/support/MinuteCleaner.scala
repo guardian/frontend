@@ -1,6 +1,6 @@
 package views.support
 
-import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.nodes.Document
 import scala.collection.JavaConversions._
 
 case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
