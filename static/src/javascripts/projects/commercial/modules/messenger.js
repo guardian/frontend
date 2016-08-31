@@ -1,10 +1,11 @@
 define([
     'Promise',
     'common/utils/report-error',
+    'commercial/modules/messenger/dfp-origin',
     'commercial/modules/messenger/post-message'
-], function (Promise, reportError, postMessage) {
+], function (Promise, reportError, dfpOrigin, postMessage) {
     var allowedHosts = [
-        location.protocol + '//tpc.googlesyndication.com',
+        dfpOrigin,
         location.protocol + '//' + location.host
     ];
     var listeners = {};
