@@ -2,7 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.switches.Switches
 
 object Formula1HostedPages {
 
@@ -12,8 +11,7 @@ object Formula1HostedPages {
     owner = "First Stop Singapore",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
     cssClass = "f1-singapore",
-    brandColour = "#063666",
-    brightFont = true,
+    fontColour = FontColour("#063666"),
     logoLink = None
   )
 

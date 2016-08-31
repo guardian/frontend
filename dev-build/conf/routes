@@ -44,7 +44,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer|plain>/:listId                                                              controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain|plaindark>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -289,7 +289,6 @@ GET            /commercial/travel/offers.json                                   
 GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
 GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET            /commercial/soulmates-test/$subgroup<\w+>.json                                                                    controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
 GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent
@@ -305,6 +304,7 @@ GET            /commercial/multi.json                                           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
@@ -442,5 +442,5 @@ GET            /$path<[^/]+/([^/]+/)?live/.*>.json                              
 GET            /*path.json                                                                                                       controllers.ArticleController.renderJson(path)
 GET            /*path/email                                                                                                      controllers.ArticleController.renderArticle(path)
 # temp route for live blogs so we can paginate without getting the blocks for all articles
-GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String])
+GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
 GET            /*path                                                                                                            controllers.ArticleController.renderArticle(path)

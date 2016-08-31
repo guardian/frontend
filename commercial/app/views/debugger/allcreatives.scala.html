@@ -196,7 +196,7 @@
                     </div>
                     <script>
                     loadCommercial(function () {
-                        require(['common/modules/commercial/creatives/commercial-component'])
+                        require(['commercial/modules/creatives/commercial-component'])
                             .then(function(
                                 CommercialComponent
                             ) {
@@ -229,7 +229,7 @@
 
         <script>
             loadCommercial(function () {
-                require(['common/modules/commercial/creatives/template'])
+                require(['commercial/modules/creatives/template'])
                     .then(function(
                         Template
                     ) {
@@ -252,7 +252,7 @@
                       });
                 });
             loadCommercial(function () {
-                require(['common/modules/commercial/creatives/commercial-component'])
+                require(['commercial/modules/creatives/commercial-component'])
                     .then(function(
                         CommercialComponent
                     ) {
@@ -268,7 +268,7 @@
                     });
                 });
             loadCommercial(function () {
-                require(['common/modules/commercial/creatives/commercial-component'])
+                require(['commercial/modules/creatives/commercial-component'])
                     .then(function(
                         CommercialComponent
                     ) {
@@ -298,7 +298,7 @@
     </div>
     <script>
         loadCommercial(function () {
-            require(['common/modules/commercial/creatives/commercial-component'])
+            require(['commercial/modules/creatives/commercial-component'])
                 .then(function(
                     CommercialComponent
                 ) {
@@ -324,7 +324,7 @@
     </div>
     <script>
         loadCommercial(function () {
-            require(['common/modules/commercial/creatives/commercial-component'])
+            require(['commercial/modules/creatives/commercial-component'])
                 .then(function(
                     CommercialComponent
                 ) {
@@ -362,7 +362,7 @@
                 'bean',
                 'qwery',
                 'common/utils/$',
-                'common/modules/commercial/creatives/commercial-component'
+                'commercial/modules/creatives/commercial-component'
             ])
                 .then(function (
                     bean,
@@ -416,7 +416,7 @@
                 'bean',
                 'qwery',
                 'common/utils/$',
-                'common/modules/commercial/creatives/commercial-component'
+                'commercial/modules/creatives/commercial-component'
             ])
                 .then(function (
                     bean,
@@ -486,7 +486,7 @@
             'bean',
             'qwery',
             'common/utils/$',
-            'common/modules/commercial/creatives/commercial-component'
+            'commercial/modules/creatives/commercial-component'
         ])
             .then(function(
                 bean,
@@ -526,7 +526,7 @@
     </div>
     <script>
     loadCommercial(function () {
-        require(['common/modules/commercial/creatives/commercial-component'])
+        require(['commercial/modules/creatives/commercial-component'])
             .then(function(
                 CommercialComponent
             ) {
@@ -547,7 +547,7 @@
     <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-multi"></div>
     <script>
         loadCommercial(function () {
-            require(['common/modules/commercial/creatives/commercial-component'])
+            require(['commercial/modules/creatives/commercial-component'])
                 .then(function(
                     CommercialComponent
                 ) {
@@ -595,7 +595,7 @@
                     'bean',
                     'qwery',
                     'common/utils/$',
-                    'common/modules/commercial/creatives/commercial-component'
+                    'commercial/modules/creatives/commercial-component'
                 ])
                     .then(function (
                         bean,
@@ -782,7 +782,7 @@
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['common/modules/commercial/creatives/template'])
+                        require(['commercial/modules/creatives/template'])
                             .then(function (Template) {
                                 new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
@@ -851,7 +851,7 @@
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['bean', 'common/modules/commercial/creatives/template'])
+                        require(['bean', 'commercial/modules/creatives/template'])
                             .then(function (bean, Template) {
                                 var container = document.querySelector('#@component("id")');
                                 var layout = document.getElementById('gimbap-layout');
@@ -909,7 +909,7 @@
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['bean', 'common/modules/commercial/creatives/template'])
+                        require(['bean', 'commercial/modules/creatives/template'])
                             .then(function (bean, Template) {
                                 var container = document.querySelector('#@component("id")');
                                 new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
@@ -962,7 +962,7 @@
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['bean', 'common/modules/commercial/creatives/template'])
+                        require(['bean', 'commercial/modules/creatives/template'])
                             .then(function (bean, Template) {
                                 var container = document.querySelector('#@component("id")');
                                 new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
@@ -1024,7 +1024,7 @@
             @component("args") match {
                 case args: JsObject => {
                     loadCommercial(function () {
-                        require(['bean', 'common/modules/commercial/creatives/template'])
+                        require(['bean', 'commercial/modules/creatives/template'])
                             .then(function (bean, Template) {
                                 var container = document.querySelector('#@component("id")');
                                 new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();

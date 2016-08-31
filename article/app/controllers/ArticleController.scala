@@ -128,20 +128,23 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderLiveBlog(path: String, page: Option[String] = None) =
-    Action.async { implicit request =>
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None) =
+    if (format.contains("email"))
+      renderArticle(path)
+    else
+      Action.async { implicit request =>
 
-      def renderWithRange(range: BlockRange) =
-        mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
-          render(path, _)
+        def renderWithRange(range: BlockRange) =
+          mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+            render(path, _)
+          }
+
+        page.map(ParseBlockId.fromPageParam) match {
+          case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
+          case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+          case None => renderWithRange(Canonical) // no page param
         }
-
-      page.map(ParseBlockId.fromPageParam) match {
-        case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
-        case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
-        case None => renderWithRange(Canonical) // no page param
       }
-    }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     Action.async { implicit request =>
@@ -218,6 +221,9 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isUSMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
+        // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
+      case liveBlog: Article if (liveBlog.isLiveBlog && request.isEmail) =>
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {
           createLiveBlogModel(liveBlog, response, _)

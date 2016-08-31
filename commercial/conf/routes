@@ -18,7 +18,6 @@ GET        /commercial/masterclasses.json                                       
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                            controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET        /commercial/soulmates-test/$subgroup<\w+>.json                       controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 
 # Book merchandising components
 GET        /commercial/books/book.json                                          controllers.commercial.BookOffersController.renderBook
@@ -43,3 +42,6 @@ GET        /commercial/paid                                                     
 # Hosted content
 GET        /commercial/advertiser-content/:campaignName/:pageName               controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName                          controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+
+# Subscriber number input page
+GET        /commercial/subscriber-number                                        controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage

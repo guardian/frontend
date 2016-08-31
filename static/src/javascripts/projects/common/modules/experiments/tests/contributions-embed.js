@@ -31,7 +31,7 @@ define([
 
         this.id = 'ContributionsEmbed20160823';
         this.start = '2016-08-23';
-        this.expiry = '2016-08-30';
+        this.expiry = '2016-09-06';
         this.author = 'Jonathan Rankin';
         this.description = 'Test contributions embed with amount picker.';
         this.showForSensitive = false;
