@@ -69,10 +69,11 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
-      val pattern = "soundcloud.com%2Ftracks%2F(\\d+)".r
-      val trackId = pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
-
-      Option(trackId)
+      val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
+      soundcloudUrl match {
+        case pattern(trackId) => Option(trackId)
+        case _ => None
+      }
     }
 
     def clean(document: Document) = {
