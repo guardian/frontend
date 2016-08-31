@@ -94,16 +94,7 @@ define([
             return;
         }
 
-        // If there is no routine attached to this event type, we just answer
-        // with an error code
-        if (!listeners[data.type].length) {
-            respond(formatError(error405, data.type), null);
-            return;
-        }
-
-        var iframe = data.iframeId ? document.getElementById(data.iframeId) : null;
-
-        if (Array.isArray(listeners[data.type])) {
+        if (Array.isArray(listeners[data.type]) && listeners[data.type].length) {
             // Because any listener can have side-effects (by unregistering itself),
             // we run the promise chain on a copy of the `listeners` array.
             // Hat tip @piuccio
@@ -131,8 +122,14 @@ define([
                 reportError(ex, { feature: 'native-ads' });
                 respond(formatError(error500, ex), null);
             });
+        } else if (typeof listeners[data.type] === 'function') {
+            // We found a persistent listener, to which we just delegate
+            // responsibility to write something. Anything. Really.
+            listeners[data.type](respond, data.value, getIframe(data));
         } else {
-            listeners[data.type](respond, data.value, iframe);
+            // If there is no routine attached to this event type, we just answer
+            // with an error code
+            respond(formatError(error405, data.type), null);
         }
 
         function respond(error, result) {
