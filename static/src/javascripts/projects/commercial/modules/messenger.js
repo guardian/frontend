@@ -42,6 +42,10 @@ define([
     function unregister(type, callback, options) {
         options || (options = {});
 
+        if (listeners[type] === undefined) {
+            throw new Error(formatError(error405, type));
+        }
+
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
