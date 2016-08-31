@@ -111,7 +111,7 @@ define([
             // occasional fastdom bomb in the middle.
             .reduce(function (promise, listener) {
                 return promise.then(function promiseCallback(ret) {
-                    var thisRet = listener(data.value, ret, iframe);
+                    var thisRet = listener(data.value, ret, getIframe(data));
                     return thisRet === undefined ? ret : thisRet;
                 });
             }, Promise.resolve(true));
@@ -157,6 +157,12 @@ define([
                 'id' in payload.value &&
                 'height' in payload.value;
         }
+    }
+
+    // Incoming messages may contain the ID of the iframe into which the
+    // source window is embedded.
+    function getIframe(data) {
+        return data.iframeId ? document.getElementById(data.iframeId) : null;
     }
 
     // Cheap string formatting function. It accepts as its first argument
