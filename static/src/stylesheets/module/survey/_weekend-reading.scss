@@ -1,17 +1,24 @@
 .email-signup-main {
-    background-color: $news-main-1;
+    background-color: $features-support-1;
 }
 
 .email-signup-main:before {
     height: 26px;
     content: '';
-    background-color: $news-main-1;
+    background-color: $features-support-1;
     display: block;
 }
 
 .email-signup {
-    background-color: $news-main-1;
+    background-color: $features-support-1;
     min-width: 16em;
+}
+
+.main__column--horizontal-bar:before {
+    content: '';
+    display: block;
+    border-bottom: 2px solid $features-support-3;
+
 }
 
 .content {
@@ -43,6 +50,7 @@
         .email-sub__submit-input {
             width: 25%;
             margin: 0px 0px 10px 3%;
+            background-color: inherit;
 
             @include mq($until: tablet) {
                 width: 100%;
@@ -63,7 +71,7 @@
 
     .email-signup__aside-text {
         @include fs-textSans(2);
-        color: $guardian-brand-light;
+        color: $features-support-3;
         width: 65%;
         margin-left: 2%;
 
@@ -83,8 +91,11 @@
 }
 
 .weekend-read-header__heading {
-    @include fs-header(2);
     padding: 0 .3rem;
+
+    .weekend-reading-pink {
+        color: $features-support-3;
+    }
 }
 
 .weekend-read-header__text {
