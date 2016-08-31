@@ -71,7 +71,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
       val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
       soundcloudUrl match {
-        case pattern(trackId) => Option(trackId)
+        case pattern(trackId) => Some(trackId)
         case _ => None
       }
     }
