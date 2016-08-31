@@ -20,6 +20,10 @@ class TargetingLifecycle(
     jobs.schedule("TargetingCampaignRefreshJob", "0 * * * * ?") {
       CampaignAgent.refresh()
     }
+
+    akkaAsync.after1s {
+      CampaignAgent.refresh()
+    }
   }
 }
 

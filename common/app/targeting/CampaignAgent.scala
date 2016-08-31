@@ -1,7 +1,7 @@
 package targeting
 
 import common._
-import com.gu.targeting.client.CampaignCache
+import com.gu.targeting.client._
 import com.amazonaws.services.s3.AmazonS3Client
 import conf.Configuration
 import services.AwsEndpoints
@@ -19,7 +19,11 @@ object CampaignAgent extends Logging with ExecutionContexts {
 
   def refresh() {
     agent.alter { old =>
-      old.update(crossAccountClient, Configuration.targeting.campaignsBucket)
+      try {
+        old.update(crossAccountClient, Configuration.targeting.campaignsBucket)
+      } catch {
+        case NonFatal(e) => log.error("Failed to update campaign list.", e)
+      }
       old
     }
   }
@@ -27,7 +31,9 @@ object CampaignAgent extends Logging with ExecutionContexts {
   def getCampaignsForTags(tags: Seq[String]) = try {
     agent().getCampaignsForTags(tags)
   } catch {
-    case NonFatal(e) => List() // TODO log here!
+    case NonFatal(e) =>
+      log.error("Failed to get campaigns for tags.", e)
+      List()
   }
 }
 

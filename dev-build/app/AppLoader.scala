@@ -27,6 +27,7 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
+import targeting.TargetingLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -84,6 +85,7 @@ trait AppComponents
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
+    wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
 

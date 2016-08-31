@@ -476,8 +476,8 @@ class GuardianConfiguration extends Logging {
       }
     }
 
-    lazy val crossAccountMandatoryCredentials = crossAccountCredentials
-      .getOrElse(throw new BadConfigurationException("AWS credentials for targeting cross account are not configured"))
+    lazy val crossAccountMandatoryCredentials = this.crossAccountCredentials
+      .getOrElse(throw new BadConfigurationException(s"AWS credentials for targeting cross account are not correctly configured"))
 
     lazy val campaignsBucket = configuration.getMandatoryStringProperty("targeting.campaigns.bucket")
   }
@@ -515,7 +515,7 @@ class GuardianConfiguration extends Logging {
     lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
 
     def crossAccountMandatoryCredentials: AWSCredentialsProvider =
-      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for cross account are not configured"))
+      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for facia tool cross account are not correctly configured"))
 
     lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
       val provider = new AWSCredentialsProviderChain(
