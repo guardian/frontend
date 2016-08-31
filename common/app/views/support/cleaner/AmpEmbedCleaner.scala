@@ -80,13 +80,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       for {
         audioElement <- document.getElementsByClass("element-audio")
         iframeElement <- audioElement.getElementsByTag("iframe")
-        soundcloudUrl = iframeElement.attr("src")
-        trackId <- getTrackIdFromUrl(soundcloudUrl) filterNot { _.isEmpty }
-        soundcloudElement = createElement(document, trackId)
-      } yield (audioElement, iframeElement, soundcloudElement, {
+        trackId <- getTrackIdFromUrl(iframeElement.attr("src"))
+      } yield {
+        val soundcloudElement = createElement(document, trackId)
         audioElement.appendChild(soundcloudElement)
         iframeElement.remove()
-      })
+      }
     }
   }
 
