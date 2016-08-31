@@ -119,7 +119,9 @@ define([
         //
         // Render new navigation
         //
-        newHeaderNavigation();
+        if (config.switches.abNewHeaderVariant) {
+            newHeaderNavigation();
+        }
 
         /*
          *  Interactive bootstraps.
