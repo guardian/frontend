@@ -1,3 +1,13 @@
+#survey-laboratory .illustration-container {
+  overflow: hidden;
+  min-height: 0;
+  height: 200px;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+
+}
+
 .email-signup-main {
     background-color: $features-support-1;
 }
@@ -35,12 +45,18 @@
         }
 
         .email-sub__lozenge {
-            border-color: #ffffff;
+            border-color: $features-support-3;
             border-radius: 100px;
             float: left;
             width: 70%;
             height: 3em;
             margin-bottom: 10px;
+
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: darken($features-support-3, 10%);
+            }
 
             @include mq($until: tablet) {
                 width: 100%;
@@ -91,7 +107,13 @@
 }
 
 .weekend-read-header__heading {
+    @include fs-header(5);
     padding: 0 .3rem;
+
+    @include mq($from: tablet) {
+      font-size: 36px;
+      margin-top: $gs-baseline / 2;
+    }
 
     .weekend-reading-pink {
         color: $features-support-3;
@@ -101,6 +123,12 @@
 .weekend-read-header__text {
     @include fs-bodyCopy(2);
     padding: 0 .3rem;
+    margin-top: $gs-baseline / 2;
+
+    @include mq($from: tablet) {
+      @include fs-bodyCopy(3);
+      margin-top: $gs-baseline;
+    }
 }
 
 .weekend-read-header__terms {
