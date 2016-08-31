@@ -50,8 +50,9 @@
 
 
     <div class="expiring-wrapper">
-        <h2>Expiring features</h2>
+        <h2>Expiring switches</h2>
         <ul id="switches">
+            @if(switches.isEmpty) { <li>None.</li> }
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
                     <li title="@switch.name - expires in @days days">

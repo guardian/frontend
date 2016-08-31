@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
 
@@ -60,7 +60,7 @@ trait ABTestSwitches {
     "Test contributions embed with amount picker.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 30),
+    sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
 

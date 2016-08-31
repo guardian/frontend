@@ -1,11 +1,12 @@
 package common
 
 import model.Cached.RevalidatableResult
+
 import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.switches.Switches.AutoRefreshSwitch
-import play.api.mvc.{ RequestHeader, Results, Result }
+import play.api.mvc.{ RequestHeader, Results }
 import play.twirl.api.Html
 import play.api.http.ContentTypes._
 
