@@ -5,11 +5,7 @@
 
 @surveyMain(surveyPage) {
     <div class="illustration-container">
-        <div class="content">
-                <div class="content__main-column">
-                @fragments.inlineSvg("weekend-reading", "illustration")
-            </div>
-        </div>
+        @fragments.inlineSvg("weekend-reading", "illustration")
     </div>
 
     <div class="content email-signup-main">
@@ -25,7 +21,7 @@
                 </header>
                 <div class="weekend-reading">
 
-                    <div class="email-signup" data-link-component="weekend-reading">
+                    <div class="email-signup" data-component="weekend-reading">
                         <form action="https://www.theguardian.com/email" method="post" class="email-sub__form js-email-sub__form email-sub__form--article" data-email-form-type="article" data-email-list-id="3742">
                           <div class="email-sub__form-wrapper">
                             <div class="email-sub__inline-label js-email-sub__inline-label">
@@ -75,9 +71,9 @@
 
             <div class="content__main-column">
 
-                <div class="weekend-read-sample">
+                <div class="weekend-read-sample"  data-component="weekend-reading">
                     <a href="/info/2016/jul/20/weekend-round-up-no10s-revolving-door/email">
-                        <button class="weekend-read-sample__button">
+                        <button class="weekend-read-sample__button"  data-link-name="weekend-reading-sample">
                             View a sample
                             @fragments.inlineSvg("arrow-right", "icon")
                         </button>

@@ -1,9 +1,21 @@
 #survey-laboratory .illustration-container {
-    overflow: hidden;
-    min-height: 0;
+    min-height: 20rem;
     height: 200px;
     width: 100%;
     position: relative;
+    z-index: 80;
+
+    @include mq($until: tablet) {
+        min-height: 10rem;
+    }
+}
+
+.inline-weekend-reading__svg {
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -1400px;
+    height: 112%;
     z-index: 100;
 }
 
