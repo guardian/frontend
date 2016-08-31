@@ -81,26 +81,36 @@ define([
                 taskQueued = false;
 
                 var viewport = detect.getViewport();
-                var slots = Object.keys(listeners)
-                    .filter(function (id) {
-                        return listeners[id].visible;
-                    })
-                    .map(function (id) {
-                        return [id, listeners[id].slot.getBoundingClientRect()];
-                    });
+                var listenerIds = Object.keys(listeners);
 
-                // When *not* using IOs, we have no choice but to go through all
-                // slots and find those that are inside the viewport
-                if( !useIO ) {
-                    slots = slots.filter(function (_) {
-                        return _[1].bottom > 0 && _[1].top < viewport.height;
-                    });
+                if (useIO) {
+                    listenerIds
+                    .filter(isSlotVisible)
+                    .map(getDimensions)
+                    .forEach(sendCoordinates);
+                } else {
+                    listenerIds
+                    .map(getDimensions)
+                    .filter(isSlotInViewport)
+                    .forEach(sendCoordinates);
                 }
-
-                slots.forEach(function (slot) {
-                    listeners[slot[0]].respond(null, domRectToRect(slot[1]));
-                });
             });
+        }
+
+        function isSlotVisible(id) {
+            return listeners[id].visible;
+        }
+
+        function isSlotInViewport(item) {
+            return item[1].bottom > 0 && item[1].top < viewport.height;
+        }
+
+        function getDimensions(id) {
+            return [id, listeners[id].slot.getBoundingClientRect()];
+        }
+
+        function sendCoordinates(item) {
+            listeners[item[0]].respond(null, domRectToRect(item[1]));
         }
     }
 
