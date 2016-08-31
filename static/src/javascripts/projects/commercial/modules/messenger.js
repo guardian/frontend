@@ -97,7 +97,7 @@ define([
         // occasional fastdom bomb in the middle.
         .reduce(function (promise, listener) {
             return promise.then(function promiseCallback(ret) {
-                var thisRet = listener(data.value, ret);
+                var thisRet = listener(data.value, ret, data.iframeId ? document.getElementById(data.iframeId) : null);
                 return thisRet === undefined ? ret : thisRet;
             });
         }, Promise.resolve(true));
