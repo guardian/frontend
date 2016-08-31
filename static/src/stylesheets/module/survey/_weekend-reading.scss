@@ -112,7 +112,7 @@
 
     @include mq($from: tablet) {
       font-size: 36px;
-      margin-top: $gs-baseline / 2;
+      margin-top: 8px;
     }
 
     .weekend-reading-pink {
