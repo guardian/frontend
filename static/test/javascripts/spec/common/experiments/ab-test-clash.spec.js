@@ -1,18 +1,18 @@
 define([
-    'common/modules/email/run-checks'
+    'common/modules/experiments/ab-test-clash'
 ], function (
-    RunChecks
+    Clash
 ) {
-        describe('RunChecks', function () {
+        describe('Clash', function () {
 
             it('test clash should be true with true function', function () {
                 var f = function () { return true; };
-                expect(RunChecks._testABClash(f)).toBeTruthy();
+                expect(Clash._testABClash(f)).toBeTruthy();
             });
 
             it('test clash should be false with false function', function () {
                 var f = function () { return false; };
-                expect(RunChecks._testABClash(f)).toBeFalsy();
+                expect(Clash._testABClash(f)).toBeFalsy();
             });
         });
 });
