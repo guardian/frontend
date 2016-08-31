@@ -41,7 +41,7 @@ define([
             widget: '.js-container--commercial',
             container: '.js-outbrain-container'
         },
-        email: {
+        nonCompliant: {
             widget: '.js-outbrain',
             container: '.js-outbrain-container'
         }
@@ -123,13 +123,13 @@ define([
             .then(function(result) {
 
                 function findEmail(value) {
-                    return value == 'email';
+                    return value == 'nonCompliant';
                 }
 
                 return result.find(findEmail);
             })
             .catch(function () {
-                return 'email';
+                return 'nonCompliant';
             });
     }
 
@@ -137,7 +137,7 @@ define([
         if (!clashingABTestPromise) {
             clashingABTestPromise = new Promise(function (resolve) {
                 if (clash.userIsInAClashingAbTest()) {
-                    resolve('email');
+                    resolve('nonCompliant');
                 }
                 else {
                     resolve();
@@ -155,7 +155,7 @@ define([
                     emailRunChecks.getEmailInserted()) {
                     // There is an email sign-up
                     // so load the merchandising component
-                    resolve('email');
+                    resolve('nonCompliant');
                 } else {
                     resolve();
                 }
