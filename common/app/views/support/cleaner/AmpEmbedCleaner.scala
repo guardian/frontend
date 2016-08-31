@@ -67,19 +67,20 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       soundcloud.attr("data-visual", "true")
       soundcloud.attr("height", "300") // height is necessary if data-visual == true
     }
+
+    def getTrackIdFromUrl(soundcloudUrl: String): String = {
+      val pattern = "soundcloud.com%2Ftracks%2F(\\d+)".r
+      pattern.findAllIn(soundcloudUrl).matchData.map { matches => matches.group(1) }.mkString
+    }
+
     def clean(document: Document) = {
-      document.getElementsByClass("element-audio").filterNot { audioElement: Element =>
-        audioElement.getElementsByTag("iframe").isEmpty
-      }.foreach { audioElementWithIframe: Element =>
+      document.getElementsByClass("element-audio").foreach { audioElementWithIframe: Element =>
         audioElementWithIframe.getElementsByTag("iframe").foreach { iframeElement: Element =>
           val soundcloudUrl = iframeElement.attr("src")
-          val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
-          soundcloudUrl match {
-            case pattern(trackId) =>
-              val soundcloud = createElement(document, trackId)
-              audioElementWithIframe.appendChild(soundcloud)
-              iframeElement.remove()
-            case _ =>
+          Option(getTrackIdFromUrl(soundcloudUrl)) filterNot { _.isEmpty } foreach { trackId =>
+            val soundcloudElement = createElement(document, trackId)
+            audioElementWithIframe.appendChild(soundcloudElement)
+            iframeElement.remove()
           }
         }
       }
