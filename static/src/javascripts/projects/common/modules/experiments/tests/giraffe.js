@@ -22,7 +22,7 @@ define([
 
         this.id = 'ContributionsArticle20160822';
         this.start = '2016-08-22';
-        this.expiry = '2016-08-26';
+        this.expiry = '2016-09-06';
         this.author = 'Mark Butler';
         this.description = 'Add a button allowing readers to contribute money.';
         this.showForSensitive = false;

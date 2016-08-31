@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "If this switch is on, amp live blog articles have an itemtype of NewsArticle, and thus appear in Google's AMP carousel",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
@@ -394,7 +394,7 @@ trait FeatureSwitches {
     "If this switch is on, amp-live-list will be included in live blogs",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 2),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
