@@ -1,7 +1,7 @@
 define([
     'common/utils/closest',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/dfp/messenger'
+    'commercial/modules/messenger'
 ], function (closest, fastdom, messenger) {
     // An intersection observer will allow us to efficiently send slot
     // coordinates for only those that are in the viewport.
