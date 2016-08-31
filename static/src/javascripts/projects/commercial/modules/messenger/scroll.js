@@ -57,7 +57,7 @@ define([
 
     function removeScrollListener(id) {
         if (listeners[id]) {
-            if (useIO) {
+            if (useIO && observer) {
                 observer.unobserve(listeners[id].slot);
                 slots[listeners[id].slot.id] = false;
             }
@@ -67,7 +67,7 @@ define([
 
         if (listenerCounter === 0) {
             window.removeEventListener('scroll', onScroll);
-            if (useIO) {
+            if (useIO && observer) {
                 observer.disconnect();
                 observer = null;
             }
@@ -112,7 +112,7 @@ define([
     }
 
     // Instances of classes bound to the current view are not serialised correctly
-    // by JSON.stringify. That's ok, we don't case if it's a DOMRect or some other
+    // by JSON.stringify. That's ok, we don't care if it's a DOMRect or some other
     // object, as long as the calling view receives the frame coordinates.
     function domRectToRect(rect) {
         return {
