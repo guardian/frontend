@@ -101,10 +101,6 @@ define([
             });
         }
 
-        function isIframeVisible(id) {
-            return iframes[id].visible;
-        }
-
         function isIframeInViewport(item) {
             return item[1].bottom > 0 && item[1].top < viewport.height;
         }
@@ -120,7 +116,7 @@ define([
 
     function onIntersect(changes) {
         visibleIframeIds = changes
-        .filter(function (_) { return _.intersectionRatio > 0 })
+        .filter(function (_) { return _.intersectionRatio > 0; })
         .map(   function (_) { return _.target.id; });
     }
 

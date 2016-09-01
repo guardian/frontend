@@ -52,7 +52,7 @@ define([
                 addEventListener: function (_, callback) {
                     onScroll = callback;
                 },
-                removeEventListener: function () { onScroll = null },
+                removeEventListener: function () { onScroll = null; },
                 IntersectionObserver: function mockIntersectionObserver(callback) {
                     onIntersect = callback;
                     return Object.freeze({
@@ -111,7 +111,7 @@ define([
                 addEventListener: function (_, callback) {
                     onScroll = callback;
                 },
-                removeEventListener: function () { onScroll = null }
+                removeEventListener: function () { onScroll = null; }
             };
 
             beforeEach(function () {
