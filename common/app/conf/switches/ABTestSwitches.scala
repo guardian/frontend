@@ -80,7 +80,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -90,7 +90,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
