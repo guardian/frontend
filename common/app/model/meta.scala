@@ -9,7 +9,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.liveblog.{Blocks, BodyBlock}
+import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
 import org.apache.commons.lang3.StringUtils

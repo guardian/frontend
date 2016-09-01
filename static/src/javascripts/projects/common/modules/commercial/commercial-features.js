@@ -123,6 +123,7 @@ define([
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
+            isLiveBlog &&
             this.dfpAdvertising &&
             switches.liveblogAdverts;
 

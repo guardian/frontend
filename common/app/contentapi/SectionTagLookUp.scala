@@ -1,8 +1,6 @@
 package contentapi
 
 import common.Maps.RichMap
-import conf.switches.Switches
-import Function.const
 
 object SectionTagLookUp {
   private val ExceptionsMap = Map(
