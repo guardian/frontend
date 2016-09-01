@@ -13,8 +13,6 @@ import scala.concurrent.Future
 
 class CardController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
-  import play.api.Play.current
-
   def opengraph(resource: String) = Action.async { implicit request =>
     val myUri = new URI(resource)
     val r = myUri.getPath

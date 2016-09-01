@@ -12,9 +12,9 @@ class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCh
   9002,
   NeverExpiresSingleHealthCheck("/books"),
   NeverExpiresSingleHealthCheck("/books/harrypotter"),
-  NeverExpiresSingleHealthCheck("/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum"),
-  NeverExpiresSingleHealthCheck("/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum?index=2"),
-  NeverExpiresSingleHealthCheck("/world/video/2012/nov/20/australian-fake-bomber-sentenced-sydney-teenager-video")
+  NeverExpiresSingleHealthCheck("/news/gallery/2012/oct/02/24-hours-in-pictures"),
+  NeverExpiresSingleHealthCheck("/news/gallery/2012/oct/02/24-hours-in-pictures?index=2"),
+  NeverExpiresSingleHealthCheck("/world/video/2012/dec/31/52-weeks-photos-2012-video")
 ) {
   override def healthCheck(): Action[AnyContent] = Action.async { request =>
     if (!SectionsLookUp.isLoaded()) {

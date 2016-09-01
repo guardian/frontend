@@ -38,7 +38,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     if (article.isUSMinute) {
       document.getElementsByClass("block").foreach { block =>
         val allElements = block.getAllElements
-        val headings = block.select("h2.block-title")
+        val heading = block.select("h2.block-title")
+        val headingNumRegEx = "^([0-9]+)[.]{1}[ ]*"
 
         // Add classes
         block.addClass("block--minute-article js-is-fixed-height")
@@ -50,20 +51,27 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Remove Classes
         block.removeClass("block")
 
-        headings.foreach(heading => {
-          if (heading.text() == "Summary" || heading.text() == "Key event") {
-            heading.remove()
-          } else {
-            val headingHtml = heading.html();
-            heading.html(headingHtml.replaceFirst("^([0-9]+)[.]{1}[ ]*", "<span class=\"block--minute-article--counter\">$1 </span>"))
-          }
-        })
+        // Modify Heading
+        if (heading.text() == "Summary" || heading.text() == "Key event") {
+          heading.remove()
+        } else {
+          heading.html(regexCleaner(heading.first(), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
+        }
 
+        // Add relevant classes
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
         } foreach(block.addClass)
 
+        // Check if the heading has a number and is an embed or quote
+        if (block.hasClass("block--minute-article--embed") ||
+            block.hasClass("block--minute-article--quote") &&
+            heading.html().matches(headingNumRegEx)) {
+              block.addClass("block--minute-article--shorty")
+        }
+
+        // Remove Un-needed Classes
         allElements.foreach(el => strippable.foreach(el.removeClass))
 
         // Re-order Elements
@@ -91,4 +99,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
     document
   }
+}
+
+object regexCleaner {
+  def apply(heading: Element, regEx: String, htmlToReplace: String): String = heading.html().replaceFirst(regEx, htmlToReplace)
 }

@@ -42,9 +42,19 @@ define([
     }
 
     function userIsInAClashingAbTest() {
-        var clashingTests = {name: 'ContributionsArticle20160818', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
-        return some(clashingTests.variants, function(variant) {
-            return ab.isInVariant(clashingTests.name, variant);
+        return _testABClash(ab.isInVariant);
+    }
+
+    function _testABClash(f) {
+        var contributionsArticle = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
+        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive'] };
+
+        var clashingTests = [contributionsArticle, contributionsEmbed];
+
+        return some(clashingTests, function(test) {
+            return some(test.variants, function (variant) {
+                return f(test.name, variant);
+            });
         });
     }
 
@@ -194,6 +204,7 @@ define([
         getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
-        listCanRun: listCanRun
+        listCanRun: listCanRun,
+        _testABClash: _testABClash // exposed for unit testing
     };
 });

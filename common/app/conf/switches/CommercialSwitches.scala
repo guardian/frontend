@@ -272,7 +272,7 @@ trait CommercialSwitches {
     "If on, all badges are served server side",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )
 
@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Serve container branding from capi",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )
 
@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "Show series containers on paid content pages.",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 26),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = false
   )
 
@@ -302,7 +302,7 @@ trait CommercialSwitches {
     "If on email will be sent to Rio Olympic surging content team every 30 minutes with update on surging content.",
     owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,8,23),
+    sellByDate = new LocalDate(2016,8,31),
     exposeClientSide = false
   )
 }
