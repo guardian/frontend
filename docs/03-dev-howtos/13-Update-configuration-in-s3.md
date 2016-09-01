@@ -10,7 +10,7 @@ To add or update a configuration item you need to:
 https://s3-eu-west-1.amazonaws.com/aws-frontend-store/config/eu-west-1-frontend.conf
 ```
 
-- This can be done by hand via the console or using the [aws cli tools](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+- This can be done by hand via the console or using the [aws cli tools](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) - You need valid [Janus](https://janus.gutools.co.uk) credentials for `frontend` to do this
 
 - Find the current version of the config file
 ```
@@ -39,7 +39,7 @@ aws s3 cp --profile=frontend s3://aws-frontend-store/config/eu-west-1-frontend.v
 ```
 aws s3 cp --profile=frontend eu-west-1-frontend.v4.conf s3://aws-frontend-store/config/eu-west-1-frontend.v4.conf
 ```
-and bump the version number `var s3ConfigVersion` in `/common/app/common/configuration.scala` to match the version of the config file you created.
+and bump the version number `var s3ConfigVersion` in [/common/app/common/configuration.scala](https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala) to match the version of the config file you created.
 
 - Once you are happy with your changes, create a pull request with the version number changes.
 
