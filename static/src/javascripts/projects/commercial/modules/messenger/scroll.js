@@ -6,14 +6,28 @@ define([
 ], function (closest, detect, fastdom, messenger) {
     // An intersection observer will allow us to efficiently send slot
     // coordinates for only those that are in the viewport.
-    var useIO = 'IntersectionObserver' in window;
+    var w = window;
+    var useIO = 'IntersectionObserver' in w;
     var taskQueued = false;
-    var listeners = {};
-    var slots = {};
-    var listenerCounter = 0;
-    var observer;
+    var iframes = {};
+    var iframeCounter = 0;
+    var observer, visibleIframeIds;
 
     messenger.register('scroll', onMessage, { persist: true });
+
+    return {
+        addScrollListener: addScrollListener,
+        removeScrollListener: removeScrollListener,
+        reset: reset
+    };
+
+    function reset(window_) {
+        w = window_ || window;
+        useIO = 'IntersectionObserver' in w;
+        taskQueued = false;
+        iframes = {};
+        iframeCounter = 0;
+    }
 
     function onMessage(respond, start, iframe) {
         if (start) {
