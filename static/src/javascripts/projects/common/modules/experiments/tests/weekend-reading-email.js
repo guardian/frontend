@@ -19,10 +19,10 @@ define([
         this.expiry = '2016-09-23';
         this.author = 'Kate Whalen';
         this.description = '';
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Trial two different email formats to compare CTO rates';
-        this.audienceCriteria = 'All users';
+        this.audienceCriteria = 'All users who visit the Weekend Reading page';
         this.dataLinkNames = '';
         this.idealOutcome = 'Users open and click-through on the Weekend Reading email';
 
@@ -30,32 +30,35 @@ define([
             return config.page.contentType === 'survey';
         };
 
-        function passRefererParam() {
-            var campaignCodeInput = qwery('.js-email-sub__campaignCode-input')[0];
-            var refererCode = window.location.search.replace('?', '');
-            if (refererCode) {
-                campaignCodeInput.setAttribute('value', refererCode);
+        function passRefererParam(emailForm) {
+            var referrerInput = qwery('.js-email-sub__referrer-input')[0];
+            var referrer = window.location.search.replace('?', '');
+            if (referrer) {
+                emailForm.setAttribute('data-link-name', 'referrer-' + referrer);
+                referrerInput.setAttribute('value', referrer);
             }
         }
 
         function updateSignupForm(emailListID) {
             var emailListInput = qwery('.js-email-sub__listid-input')[0];
+            var emailForm = qwery('.js-email-sub__form')[0];
+            emailForm.setAttribute('data-email-list-id', emailListID);
             emailListInput.setAttribute('value', emailListID);
-            passRefererParam();
+            passRefererParam(emailForm);
         }
 
         this.variants = [
             {
                 id: 'control',
                 test: function () {
-                    var emailListID = 3742;
+                    var emailListID = 3744; // Article version
                     updateSignupForm(emailListID);
                 }
             },
             {
                 id: 'variant',
                 test: function () {
-                    var emailListID = 3743;
+                    var emailListID = 3743; // Minute version
                     updateSignupForm(emailListID);
                 }
             }
