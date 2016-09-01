@@ -31,56 +31,46 @@ define([
 
     function onMessage(respond, start, iframe) {
         if (start) {
-            addScrollListener(iframe.id, closest(iframe, '.js-ad-slot'), respond);
+            addScrollListener(iframe, respond);
         } else {
-            removeScrollListener(iframe.id);
+            removeScrollListener(iframe);
         }
     }
 
-    return {
-        addScrollListener: addScrollListener,
-        removeScrollListener: removeScrollListener
-    };
-
-    function addScrollListener(id, slot, respond) {
-        if (listenerCounter === 0) {
-            window.addEventListener('scroll', onScroll);
+    function addScrollListener(iframe, respond) {
+        if (iframeCounter === 0) {
+            w.addEventListener('scroll', onScroll);
             if (useIO) {
-                observer = new window.IntersectionObserver(onIntersect);
+                observer = new w.IntersectionObserver(onIntersect);
             }
         }
 
-        listeners[id] = {
-            slot: slot,
+        iframes[iframe.id] = {
+            node: iframe,
             // When using IOs, a slot is hidden by default. When the IO starts
             // observing it, the onIntercept callback will be triggered if it
             // is already in the viewport
             visible: !useIO,
             respond: respond
         };
-        listenerCounter += 1;
+        iframeCounter += 1;
 
         if (useIO) {
-            slots[slot.id] = {
-                slot: slot,
-                iframeId: id
-            };
-            observer.observe(slot);
+            observer.observe(iframe);
         }
     }
 
-    function removeScrollListener(id) {
-        if (listeners[id]) {
+    function removeScrollListener(iframe) {
+        if (iframes[iframe.id]) {
             if (useIO && observer) {
-                observer.unobserve(listeners[id].slot);
-                slots[listeners[id].slot.id] = false;
+                observer.unobserve(iframe);
             }
-            listeners[id] = false;
-            listenerCounter -= 1;
+            iframes[iframe.id] = false;
+            iframeCounter -= 1;
         }
 
-        if (listenerCounter === 0) {
-            window.removeEventListener('scroll', onScroll);
+        if (iframeCounter === 0) {
+            w.removeEventListener('scroll', onScroll);
             if (useIO && observer) {
                 observer.disconnect();
                 observer = null;
@@ -90,49 +80,48 @@ define([
 
     function onScroll() {
         if (!taskQueued) {
+            var viewport = detect.getViewport();
             taskQueued = true;
-            fastdom.read(function () {
+
+            return fastdom.read(function () {
                 taskQueued = false;
 
-                var viewport = detect.getViewport();
-                var listenerIds = Object.keys(listeners);
+                var iframeIds = Object.keys(iframes);
 
                 if (useIO) {
-                    listenerIds
-                    .filter(isSlotVisible)
+                    visibleIframeIds
                     .map(getDimensions)
                     .forEach(sendCoordinates);
                 } else {
-                    listenerIds
+                    iframeIds
                     .map(getDimensions)
-                    .filter(isSlotInViewport)
+                    .filter(isIframeInViewport)
                     .forEach(sendCoordinates);
                 }
             });
         }
 
-        function isSlotVisible(id) {
-            return listeners[id].visible;
+        function isIframeVisible(id) {
+            return iframes[id].visible;
         }
 
-        function isSlotInViewport(item) {
+        function isIframeInViewport(item) {
             return item[1].bottom > 0 && item[1].top < viewport.height;
         }
 
         function getDimensions(id) {
-            return [id, listeners[id].slot.getBoundingClientRect()];
+            return [id, iframes[id].node.getBoundingClientRect()];
         }
 
         function sendCoordinates(item) {
-            listeners[item[0]].respond(null, domRectToRect(item[1]));
+            iframes[item[0]].respond(null, domRectToRect(item[1]));
         }
     }
 
     function onIntersect(changes) {
-        changes.forEach(function (_) {
-            var slot = slots[_.target.id];
-            listeners[slot.iframeId].visible = _.intersectionRatio > 0;
-        });
+        visibleIframeIds = changes
+        .filter(function (_) { return _.intersectionRatio > 0 })
+        .map(   function (_) { return _.target.id; });
     }
 
     // Instances of classes bound to the current view are not serialised correctly
