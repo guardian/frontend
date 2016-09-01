@@ -18,7 +18,7 @@ All development laptops must be encrypted. If you are not 100% sure, please ask 
 Follow [this link](https://www.google.co.uk) and enter the relevant search string for your system.
 
 # Obtain AWS credentials
-1. Fork [Janus](https://github.com/guardian/janus) and follow the readme
+1. Fork [Janus](https://github.com/guardian/janus) and follow the readme, give yourself `frontendDeveloper` permissions
 2. Make your change and push to a new branch (you can review the closed PRs for help)
 3. Submit a PR
 
@@ -32,7 +32,7 @@ Prerequesites:
 
 1. Clone repository
     - `git clone git@github.com:guardian/frontend.git && cd frontend`
-2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend and CMS fronts 
+2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend, CMS fronts and Composer
 4. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
     - ./dev.sh
 5. Build and run the app within the container
@@ -58,7 +58,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 Before checking out the repository you may need to [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 
-### Automatic 
+### Automatic
 1. Check out the repository:
 
     ```
@@ -66,7 +66,7 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
     cd frontend
     ```
 
-2. Get janus credentials for frontend
+2. Get janus credentials for frontend, cmsTools and composer
 
 3. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
@@ -108,7 +108,7 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 #### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet). 
+The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet).
 
 You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` is present.
 
