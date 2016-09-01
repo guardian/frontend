@@ -1,0 +1,173 @@
+@import 'svg';
+
+$contribute-yellow: #FFBB00;
+$gu-blue: #005689;
+$gu-blue-dark:#003D70;
+$comment-support-1: #7d7569;
+$white: #ffffff;
+$black: #000000;
+$gs-gutter: 20px;
+
+
+
+.interactive-embed {
+    height:100%;
+    width:100%;
+    border-top: 1px solid #4bc6df;
+    background-color: #efefec;
+
+    p {
+        line-height:24px;
+        font-family:"Guardian Text Egyptian Web";
+        padding-left: 5px;
+        padding-right: 15px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+
+
+    }
+
+    ul {
+        padding: 0 0 16px 0;
+        margin: 0;
+        list-style: none;
+
+    }
+
+    li {
+        display: inline;
+
+    }
+
+    .title {
+        margin-top: 0;
+        margin-bottom: 2px;
+        padding-left: 5px;
+        padding-top: 7px;
+        font-family: 'Guardian Egyptian Web';
+        font-weight: bold;
+        font-size: 1.17em;
+    }
+
+
+    @mixin font-smoothing() {
+        -moz-osx-font-smoothing: antialiased;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    @mixin circular {
+        border-radius: 1000px; // Android 2.3 cannot deal with '50%'
+    }
+
+    @mixin button {
+        @include font-smoothing();
+        @include fs-textSans(4);
+
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        text-align: left;
+        display: inline-block;
+        vertical-align: bottom;
+        outline: none;
+
+        padding: 6px $gs-gutter/2;
+        border: none;
+        @include circular;
+
+        background-color: #ffffff;
+
+        &:hover {
+            background-color: $comment-support-1;
+            color: $white;
+        }
+
+        &.active {
+            background-color: $contribute-yellow;
+            color: $black;
+        }
+    }
+
+    .p-cta{
+        margin-bottom:6px;
+    }
+
+
+    .option-button {
+        @include button();
+
+        width: calc((100% - 26px) /4);
+        text-align: center;
+        margin-left: 3px;
+        margin-right: 0;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .button-group {
+        margin-right: 5px;
+        margin-left: 2px;
+    }
+
+    .flex-container {
+        display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+        display: -ms-flexbox;  /* TWEENER - IE 10 */
+        display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+
+    }
+
+
+    .amount_field {
+        display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+        display: -ms-flexbox;  /* TWEENER - IE 10 */
+        display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+
+    }
+
+
+
+
+    .cont{
+        padding-top:10px;
+    }
+
+    .contribute {
+        width: 130px;
+        background-color: $gu-blue;
+        color: white;
+        font-weight: bold;
+        margin-top: 12px;
+        margin-left: 5px;
+        margin-right: 7px;
+        text-align: left;
+        padding-left:15px;
+        padding-right:0;
+        &:hover {
+            background-color: $gu-blue-dark;
+        }
+
+        &:after {
+            content: '';
+
+            display: inline-block;
+            background-repeat: no-repeat;
+            width: 30px;
+            height: 20px;
+            background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+            background-size: 100%;
+            float: right;
+        }
+    }
+
+
+}
+
+
+
+
