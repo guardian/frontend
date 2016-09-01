@@ -2,7 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.switches.Switches
 
 object Formula1HostedPages {
 

@@ -50,7 +50,17 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 6),
+    exposeClientSide = true
+  )
+
+  val ABContributionsUserTesting20160831 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-user-testing-20160831",
+    "User testing effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
 
@@ -60,7 +70,7 @@ trait ABTestSwitches {
     "Test contributions embed with amount picker.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 30),
+    sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
 
@@ -70,7 +80,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -80,7 +90,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -101,26 +111,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
-    exposeClientSide = true
-  )
-
-  val ABMinute = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute",
-    "Testing if minute teasers drive video plays.",
-    owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 1),
-    exposeClientSide = true
-  )
-
-  val ABMinuteLoadJs = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute-load-js",
-    "Load JS for minute test participants on some content pages.",
-    owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 
