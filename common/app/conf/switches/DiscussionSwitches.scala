@@ -34,7 +34,7 @@ trait DiscussionSwitches {
   )
 
   val RegisterWithPhoneNumber = Switch(
-    SwitchGroup.Feature,
+    SwitchGroup.Discussion,
     "register-with-phone",
     "When ON, new registering users will be required to provide a mobile number",
     owners = Seq(Owner.withGithub("NathanielBennett")),
