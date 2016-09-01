@@ -620,6 +620,9 @@ $timeline-width: 15px;
 /* prevent toast from dropping behind first post when not fixed */
 .toast__container:not(.is-sticky) {
     position: absolute;
+    // Make sure we're not covering the pagination buttons
+    width: 50%;
+    left: 25%;
 }
 
 .toast__container--open {
