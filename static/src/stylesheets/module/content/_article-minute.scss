@@ -540,6 +540,8 @@ body {
     }
 
     @include mq($from: desktop) {
+        margin-left: gs-span(1) + $gs-gutter;
+
         .quoted__contents {
             @include fs-headline(6, true);
         }
@@ -554,11 +556,15 @@ body {
 
 .block--minute-article--alt-layout.block--minute-article--quote {
     @include mq($from: tablet) {
-        margin-left: gs-span(3) + $gs-gutter;
+        margin-left: 0;
 
         &:before {
             left: 0;
         }
+    }
+
+    @include mq($from: desktop) {
+        margin-left: gs-span(3) + $gs-gutter;
     }
 }
 
@@ -640,20 +646,20 @@ body {
 }
 
 // Number to the left of modules
-.block--minute-article.block--minute-article--quote,
-.block--minute-article--tweet,
-.block--minute-article--video {
-
-    //padding-left: gs-span(1) + $gs-gutter;
-
-    @include mq($from: desktop) {
-        .block--minute-article--counter {
-            position: absolute;
-            left: 0;
-            width: gs-span(1);
-        }
-    }
-}
+// .block--minute-article.block--minute-article--quote,
+// .block--minute-article--tweet,
+// .block--minute-article--video {
+//
+//     //padding-left: gs-span(1) + $gs-gutter;
+//
+//     @include mq($from: desktop) {
+//         .block--minute-article--counter {
+//             position: absolute;
+//             left: 0;
+//             width: gs-span(1);
+//         }
+//     }
+// }
 
 // Background Image Layout
 @supports (object-fit: cover) {
