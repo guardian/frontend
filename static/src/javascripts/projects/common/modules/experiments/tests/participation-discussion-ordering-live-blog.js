@@ -14,7 +14,7 @@ define([
 
         this.id = 'ParticipationDiscussionOrderingLiveBlog';
         this.start = '2016-08-05';
-        this.expiry = '2016-08-28';
+        this.expiry = '2016-09-07';
         this.author = 'Nathaniel Bennett';
         this.description = 'Changes the default ordering of comments on live-blogs so we can determine whether sorting by recommended causes more users to view comments';
         this.audience = 0.1;
