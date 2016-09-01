@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/adblocking-response',
-    'common/modules/experiments/tests/no-social-count'
+    'common/modules/experiments/tests/no-social-count',
+    'common/modules/experiments/tests/contributions-user-testing'
 ], function (
     reportError,
     config,
@@ -43,7 +44,8 @@ define([
     DontUpgradeMobileRichLinks,
     ContributionsEmbed,
     AdBlockingResponse,
-    NoSocialCount
+    NoSocialCount,
+    ContributionsUserTesting
 ) {
 
     var TESTS = [
@@ -60,7 +62,8 @@ define([
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
-        new NoSocialCount()
+        new NoSocialCount(),
+        new ContributionsUserTesting()
     ];
 
     var participationsKey = 'gu.ab.participations';
