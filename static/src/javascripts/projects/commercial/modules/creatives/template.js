@@ -99,10 +99,9 @@ define([
 
                 fastdom.write(function () {
                     this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);
+                    return true;
                 }, this)
-                .then(function () {
-                    resolve(true);
-                });
+                .then(resolve);
             }.bind(this));
         }.bind(this));
     };
