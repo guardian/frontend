@@ -1,13 +1,11 @@
 define([
     'commercial/modules/creatives/expandable',
     'helpers/fixtures',
-    'qwery',
-    'fastdom'
+    'qwery'
 ], function (
     Expandable,
     fixtures,
-    qwery,
-    fastdom
+    qwery
 ) {
     var fixturesConfig = {
         id: 'expandable-ad-slot',
