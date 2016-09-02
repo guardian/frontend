@@ -27,13 +27,12 @@ define([
         this.description = 'For just one pageview, show users a banner promoting the Weekend Reading email';
         this.audience = 0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Find if there is demand for various Guardian digest offerings';
+        this.successMeasure = 'Snap banner promotes the Weekend Reading email and leads to visitors signing up';
         this.audienceCriteria = '50% of visitors';
-        this.dataLinkNames = 'habit forming digest promo';
-        this.idealOutcome = 'Visitors click on the CTA and demonstrate demand for the feature';
+        this.dataLinkNames = 'weekend-reading-snap';
+        this.idealOutcome = 'Visitors click on the CTA and sign-up to the Weekend Reading email';
 
         this.canRun = function () {
-            console.log('running!');
             return !config.page.isAdvertisementFeature && config.page.contentType === 'Article';
         };
 
@@ -50,9 +49,9 @@ define([
 
             var message = new Message('weekend-reading-message-09-16', {
                 pinOnHide: false,
-                siteMessageComponentName: 'weekend reading snap',
-                siteMessageLinkName: 'weekend reading snap message',
-                siteMessageCloseBtn: 'weekend reading snap hide',
+                siteMessageComponentName: 'weekend-reading-snap',
+                siteMessageLinkName: 'weekend-reading-snap-message',
+                siteMessageCloseBtn: 'weekend-reading-snap-hide',
                 cssModifierClass: cssModifierClass
             });
 
@@ -65,12 +64,12 @@ define([
 
         this.variants = [
             {
-                id: 'control',
+                id: 'show',
                 test: function () {
                     var messageText = 'Get the best reads of the week in your inbox every Saturday';
                     var linkText = 'Sign up';
                     var linkHref = '/survey/weekendreading?CMP=SnapBanner';
-                    renderDigestSnap(messageText, linkText, linkHref, 'weekendReading');
+                    renderDigestSnap(messageText, linkText, linkHref, 'weekend-reading');
                 }
             }
         ];
