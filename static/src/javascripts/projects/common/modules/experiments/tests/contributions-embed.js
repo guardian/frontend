@@ -11,7 +11,8 @@ define([
     'text!common/views/giraffe-message.html',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
-    'common/modules/experiments/embed'
+    'common/modules/experiments/embed',
+    'common/modules/article/space-filler'
 
 ], function (bean,
              qwery,
@@ -25,7 +26,8 @@ define([
              giraffeMessage,
              arrowRight,
              config,
-             embed
+             embed,
+             spaceFiller
 ) {
 
 
@@ -48,8 +50,24 @@ define([
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
+        function getSpacefinderRules() {
+            return {
+                bodySelector: '.js-article__body',
+                slotSelector: ' > p',
+                minAbove: 200,
+                minBelow: 150,
+                clearContentMeta: 50,
+                fromBottom: true,
+                selectors: {
+                    ' .element-rich-link': {minAbove: 100, minBelow: 100},
+                    ' > h2': {minAbove: 200, minBelow: 0},
+                    ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 200},
+                    ' .ad-slot': {minAbove: 150, minBelow: 200}
+                }
+            };
+        }
 
-        var writer = function (component) {
+        var bottomWriter = function (component) {
 
             return fastdom.write(function () {
                 var a = $('.submeta');
@@ -60,11 +78,21 @@ define([
 
         };
 
+        var inArticleWriter = function (component) {
+
+            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+                component.insertBefore(paras[0]);
+                embed.init();
+                mediator.emit('contributions-embed:insert', component);
+            });
+
+        };
 
 
-        var controlCompleter = function (complete) {
-            mediator.on('giraffe:insert', function () {
-                bean.on(qwery('#js-giraffe__contribute')[0], 'click', function (){
+
+        var completer = function (complete) {
+            mediator.on('contributions-embed:insert', function () {
+                bean.on(qwery('.js-submit-input')[0], 'click', function (){
                     complete();
                 });
             });
@@ -72,29 +100,27 @@ define([
 
         this.variants = [
             {
-                id: 'control',
+                id: 'bottom',
                 test: function () {
-                    var component = $.create(template(giraffeMessage, {
-                        linkText: 'If you use it, if you like it, why not pay for it? It’s only fair',
-                        linkName: 'contribute',
-                        linkHref: 'https://contribute.theguardian.com/?INTCMP=co_uk_cobed_like_control',
-                        copy: 'Give to the Guardian',
-                        svg: svg(arrowRight, ['button--giraffe__icon'])
+                    var component = $.create(template(contributionsEmbed, {
+                        position : 'inline',
+                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
                     }));
-                    writer(component);
+                    bottomWriter(component);
                 },
-                success: controlCompleter
+                success: completer
             },
 
             {
-                id: 'interactive',
+                id: 'inArticle',
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
+                        position : 'supporting',
                         linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
                     }));
-                    writer(component);
+                    inArticleWriter(component);
                 },
-                success: controlCompleter
+                success: completer
             }
         ];
     };
