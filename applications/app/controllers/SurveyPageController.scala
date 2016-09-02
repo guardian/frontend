@@ -27,7 +27,7 @@ class SurveyPageController(wsClient: WSClient) extends Controller with Execution
    }
 
   def renderWeekendReadingPage() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.weekendReading(StaticPages.simpleSurveyStaticPageForId(request.path))))
+      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.weekendReading(StaticPages.simpleEmailSignupPage(request.path, "Sign up for Guardian weekend reading"))))
    }
 
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>

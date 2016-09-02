@@ -1,12 +1,12 @@
 #survey-laboratory .illustration-container {
-    min-height: 20rem;
+    min-height: 10rem;
     height: 200px;
     width: 100%;
     position: relative;
     z-index: 80;
 
-    @include mq($until: tablet) {
-        min-height: 10rem;
+    @include mq(tablet) {
+        min-height: 20rem;
     }
 }
 
@@ -149,7 +149,7 @@
 .weekend-read-sample {
     margin-top: $gs-baseline;
     background-color: #ffffff;
-    }
+}
 
 .weekend-read-sample__button {
     @include fs-textSans(2);
