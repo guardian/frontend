@@ -55,10 +55,11 @@ define([
                 bodySelector: '.js-article__body',
                 slotSelector: ' > p',
                 minAbove: 250,
-                minBelow: 300,
+                minBelow: 100,
                 clearContentMeta: 50,
                 selectors: {
                     ' .element-rich-link': {minAbove: 100, minBelow: 100},
+                    ' .player': {minAbove: 200, minBelow: 200},
                     ' > h2': {minAbove: 200, minBelow: 0},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 200},
                     ' .ad-slot': {minAbove: 150, minBelow: 200}

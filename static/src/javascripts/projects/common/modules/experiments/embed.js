@@ -9,8 +9,8 @@ define([
 
     function init() {
         $.forEachElement(('[data-amount]'), function(el){
-            el.addEventListener('click', ev => {
-                var element = ev.currentTarget;
+            el.addEventListener('click', function () {
+                var element = event.currentTarget;
                 var amount = element.getAttribute('data-amount');
                 select(element);
                 setAmount(amount);
