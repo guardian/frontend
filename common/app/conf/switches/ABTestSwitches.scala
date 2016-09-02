@@ -54,6 +54,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABContributionsUserTesting20160831 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-user-testing-20160831",
+    "User testing effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 6),
+    exposeClientSide = true
+  )
+
   val ABContributionsEmbed20160823= Switch(
     SwitchGroup.ABTests,
     "ab-contributions-embed-20160823",
@@ -70,7 +80,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -80,7 +90,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
