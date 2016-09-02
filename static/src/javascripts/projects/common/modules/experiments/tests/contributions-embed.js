@@ -108,7 +108,7 @@ define([
                         position : 'inline',
                         linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
                         variant: 'bottom',
-                        intCMP : 'dfd'
+                        intCMP : 'co_uk_cobedpos_like_control'
                     }));
                     bottomWriter(component);
                 },
@@ -122,7 +122,7 @@ define([
                         position : 'supporting',
                         linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
                         variant : 'in-article',
-                        intCMP : 'dfd'
+                        intCMP : 'co_uk_cobedpos_like_article'
 
                     }));
                     inArticleWriter(component);

@@ -38,7 +38,7 @@ define([
     function setAmount(amount) {
         $('input.' + AMOUNT_CLASS).val(amount);
         var a = document.querySelector('.js-submit-input');
-        a.href = 'https://contribute.theguardian.com/uk?INTCMP=co_uk_cobed_like_interactive&amount=' + amount.toString();
+        a.href = a.href.replace(/amount=.*/, 'amount=' + amount.toString());
     }
 
 
