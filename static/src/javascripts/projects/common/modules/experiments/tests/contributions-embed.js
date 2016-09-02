@@ -54,10 +54,9 @@ define([
             return {
                 bodySelector: '.js-article__body',
                 slotSelector: ' > p',
-                minAbove: 200,
-                minBelow: 150,
+                minAbove: 250,
+                minBelow: 300,
                 clearContentMeta: 50,
-                fromBottom: true,
                 selectors: {
                     ' .element-rich-link': {minAbove: 100, minBelow: 100},
                     ' > h2': {minAbove: 200, minBelow: 0},
@@ -98,7 +97,9 @@ define([
             });
         };
 
+
         this.variants = [
+
             {
                 id: 'bottom',
                 test: function () {

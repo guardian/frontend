@@ -1,9 +1,9 @@
 @import 'svg';
 
 
-$contribute-yellow: #FFBB00;
+$contribute-yellow: #ffbb00;
 $gu-blue: #005689;
-$gu-blue-dark:#003D70;
+$gu-blue-dark: #003d70;
 $comment-support-1: #7d7569;
 $white: #ffffff;
 $black: #000000;
@@ -12,14 +12,14 @@ $gs-gutter: 20px;
 
 
 .interactive-embed {
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
     border-top: 1px solid #4bc6df;
     background-color: #efefec;
 
     p {
-        line-height:24px;
-        font-family:"Guardian Egyptian Web";
+        line-height: 24px;
+        font-family: 'Guardian Egyptian Web';
         padding-left: 5px;
         padding-right: 15px;
         margin-top: 8px;
@@ -29,13 +29,11 @@ $gs-gutter: 20px;
     }
 
     .form-section {
-        font-family:"Guardian Egyptian Web";
-        margin-bottom:16px;
-        color: #767676;
+        font-family: 'Guardian Egyptian Web';
         font-size: 1em;
         line-height: 20px;
-        margin-top: 0;
-        margin-bottom: 24px;
+        margin-top: 8px;
+        margin-bottom: 16px;
     }
 
 
@@ -47,22 +45,17 @@ $gs-gutter: 20px;
         padding-top: 7px;
         font-family: 'Guardian Egyptian Web';
         font-weight: bold;
-        font-size: 1.25em;
+        font-size: 1.17em;
     }
 
-
-    @mixin font-smoothing() {
-        -moz-osx-font-smoothing: antialiased;
-        -webkit-font-smoothing: antialiased;
-    }
 
     @mixin circular {
         border-radius: 1000px; // Android 2.3 cannot deal with '50%'
     }
 
     @mixin button {
-        @include font-smoothing();
         @include fs-textSans(4);
+        @include circular;
 
         font-weight: bold;
         text-decoration: none;
@@ -73,9 +66,7 @@ $gs-gutter: 20px;
         outline: none;
 
         padding: 6px $gs-gutter/2;
-        border: none;
-        @include circular;
-
+        border: 0;
         background-color: #ffffff;
 
         &:hover {
@@ -106,49 +97,33 @@ $gs-gutter: 20px;
     }
 
     .flex-container {
-        display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-        display: -ms-flexbox;  /* TWEENER - IE 10 */
-        display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
         display: flex;
-        -webkit-flex-direction: column;
         flex-direction: column;
-        padding: 0 0 16px 0;
+        padding: 0 0 16px;
         margin: 0;
         list-style: none;
 
 
     }
 
-
     .amount-field {
-        display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-        display: -ms-flexbox;  /* TWEENER - IE 10 */
-        display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
         display: flex;
-        -webkit-flex-direction: column;
         flex-direction: column;
 
     }
 
 
-
-
-
-    .cont{
-        padding-top:10px;
-    }
-
     .contribute {
         width: 130px;
         background-color: $gu-blue;
-        color: white;
+        color: #ffffff;
         font-weight: bold;
         margin-top: 12px;
         margin-left: 5px;
         margin-right: 7px;
         text-align: left;
-        padding-left:15px;
-        padding-right:0;
+        padding-left: 15px;
+        padding-right: 0;
         &:hover {
             background-color: $gu-blue-dark;
         }
@@ -168,18 +143,21 @@ $gs-gutter: 20px;
 
 
     @include mq($from: phablet) {
-        .bottomClass.option-button{
+        .bottomClass.option-button {
             width: 70px;
         }
 
-        .bottomClass.contribute{
+        .bottomClass.contribute {
             margin-top: 0;
             width: 130px;
         }
 
-        .bottomClass.amount-field{
-            -webkit-flex-direction: row;
+        .bottomClass.amount-field {
             flex-direction: row;
+        }
+
+        .bottomClass.contribute-embed {
+            margin-top: 0;
         }
 
     }

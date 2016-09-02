@@ -8,10 +8,8 @@ define([
 
 
     function init() {
-        console.log("herer");
-        $.forEachElement(("[data-amount]"), function(el){
+        $.forEachElement(('[data-amount]'), function(el){
             el.addEventListener('click', ev => {
-                console.log("here2r");
                 var element = ev.currentTarget;
                 var amount = element.getAttribute('data-amount');
                 select(element);
@@ -40,7 +38,7 @@ define([
     function setAmount(amount) {
         $('input.' + AMOUNT_CLASS).val(amount);
         var a = document.querySelector('.js-submit-input');
-        a.href = "https://contribute.theguardian.com/uk?INTCMP=co_uk_cobed_like_interactive&amount=" + amount.toString();
+        a.href = 'https://contribute.theguardian.com/uk?INTCMP=co_uk_cobed_like_interactive&amount=' + amount.toString();
     }
 
 
