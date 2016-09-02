@@ -11,6 +11,7 @@ define([
     'common/utils/drop-while',
     'lodash/functions/memoize',
     'lodash/functions/compose',
+    'lodash/functions/debounce',
     'Promise'
 ], function (
     mediator,
@@ -18,6 +19,7 @@ define([
     dropWhile,
     memoize,
     compose,
+    debounce,
     Promise
 ) {
 
