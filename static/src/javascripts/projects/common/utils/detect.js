@@ -78,6 +78,66 @@ define([
     var currentBreakpoint;
     var currentTweakpoint;
 
+    if ('matchMedia' in window) {
+        initMediaQueryListeners();
+    } else {
+        updateBreakpoints();
+        window.addEventListener('resize', debounce(updateBreakpoints, 200));
+    }
+
+    function initMediaQueryListeners() {
+        processBreakpoints(false);
+        processBreakpoints(true);
+
+        function processBreakpoints(isTweakpoint) {
+            breakpoints
+            // Major breakpoints lead to (min-width: major breakpoint) and (max-width: next major breakpoint) media queries
+            // Minor breakpoints lead to (min-width: minor breakpoint) and (max-width: next major|minor breakpoint) media queries
+            .filter(function (_) {
+                return isTweakpoint || !_.isTweakpoint;
+            })
+            .forEach(function (bp, index, bps) {
+                // If this is the tweakpoint phase, we are only interested in creating media queries for minor breakpoints
+                if (isTweakpoint && !bp.isTweakpoint) {
+                    return;
+                }
+                bp.mql = index < bps.length - 1 ?
+                    window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
+                    window.matchMedia('(min-width:'+ bp.width +'px)');
+                bp.mql.addListener(onMatchingBreakpoint);
+                onMatchingBreakpoint(bp.mql);
+
+                function onMatchingBreakpoint(mql) {
+                    if (mql.matches) {
+                        if (bp.isTweakpoint) {
+                            currentTweakpoint = bp.name;
+                        } else {
+                            currentBreakpoint = bp.name;
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function updateBreakpoints() {
+        var viewportWidth = getViewport().width;
+        var i = 0;
+        while (i < breakpoints.length) {
+            var bp = breakpoints[i];
+            if (bp.width <= viewportWidth) {
+                if (bp.isTweakpoint) {
+                    currentTweakpoint = bp.name;
+                } else {
+                    currentBreakpoint = currentTweakpoint = bp.name;
+                }
+                i += 1;
+            } else {
+                break;
+            }
+        }
+    }
+
     /**
      *     Util: returns a function that:
      *     1. takes a callback function
@@ -231,64 +291,6 @@ define([
 
     function reverseArray(arr) {
         return arr.reverse();
-    }
-
-    if ('matchMedia' in window) {
-        initMediaQueryListeners();
-    } else {
-        updateBreakpoints();
-        window.addEventListener('resize', debounce(updateBreakpoints, 200));
-    }
-
-    function initMediaQueryListeners() {
-        processBreakpoints(false);
-        processBreakpoints(true);
-
-        function processBreakpoints(isTweakpoint) {
-            breakpoints
-            // Major breakpoints lead to (min-width: major breakpoint) and (max-width: next major breakpoint) media queries
-            // Minor breakpoints lead to (min-width: minor breakpoint) and (max-width: next major|minor breakpoint) media queries
-            .filter(function (_) {
-                return isTweakpoint || !_.isTweakpoint;
-            })
-            .forEach(function (bp, index, bps) {
-                if (isTweakpoint && !bp.isTweakpoint) {
-                    return;
-                }
-                bp.mql = index < bps.length - 1 ?
-                    window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
-                    window.matchMedia('(min-width:'+ bp.width +'px)');
-                bp.mql.addListener(onMatchingBreakpoint);
-                onMatchingBreakpoint(bp.mql);
-
-                function onMatchingBreakpoint(mql) {
-                    if (mql.matches) {
-                        if (isTweakpoint) {
-                            currentTweakpoint = bp.name;
-                        } else {
-                            currentBreakpoint = bp.name;
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    function updateBreakpoints() {
-        var viewportWidth = detect.getViewport().width;
-        var i = 0;
-        while (i < breakpoints.length) {
-            var bp = breakpoints[i];
-            if (bp.width <= viewportWidth) {
-                if (bp.isTweakpoint) {
-                    currentTweakpoint = bp.name;
-                } else {
-                    currentBreakpoint = currentTweakpoint = bp.name;
-                }
-            } else {
-                break;
-            }
-        }
     }
 
     function getBreakpoint(includeTweakpoint) {
