@@ -3,36 +3,34 @@
         <input type="hidden" id="hidden-value" name="amount" class="js-amount js-amount-hidden" value=50>
         <div class="flex-container">
             <div >
-                <h3 class="form__column-heading title">If you use it, if you like it, why not pay for it? It's only fair</h3>
+                <h3 class="form__column-heading title">If you use it, if you like it, why not pay for it? It's only fair.</h3>
             </div>
 
             <div >
-                <p class="form-section">If you use it, if you like it, why not pay for it? It's only fair. Please give  to the Guardian.</p>
+                <p class="form-section">Please give to the Guardian by making a one-off contribution.</p>
             </div>
-
-            <div class="amount_field">
+            <div class="amount-field <%=bottomClass%>">
                 <div>
-                    <p class="p-cta">Make a one-off contribution:</p>
+                    <div class="js-button-group button-group u-cf">
+                        <button type="button" tabindex="8" class="js-button option-button option-button--bold <%=bottomClass%>" data-amount=25>
+                            <span class="currency js-currency">£</span>25
+                        </button>
+                        <button type="button" tabindex="8" class="js-button option-button option-button--bold <%=bottomClass%> active" data-amount=50>
+                            <span class="currency js-currency">£</span>50
+                        </button>
+                        <button type="button" tabindex="8" class="js-button option-button option-button--bold <%=bottomClass%>" data-amount=100>
+                            <span class="currency js-currency">£</span>100
+                        </button>
+                        <button type="button" tabindex="8" class="js-button option-button option-button--bold <%=bottomClass%>" data-amount=250>
+                            <span class="currency js-currency">£</span>250
+                        </button>
+                    </div>
                 </div>
-                <div class="js-button-group button-group u-cf">
-                    <button type="button" tabindex="8" class="js-button option-button option-button--bold" data-amount=25>
-                        <span class="currency js-currency">£</span>25
-                    </button>
-                    <button type="button" tabindex="8" class="js-button option-button option-button--bold active" data-amount=50>
-                        <span class="currency js-currency">£</span>50
-                    </button>
-                    <button type="button" tabindex="8" class="js-button option-button option-button--bold" data-amount=100>
-                        <span class="currency js-currency">£</span>100
-                    </button>
-                    <button type="button" tabindex="8" class="js-button option-button option-button--bold" data-amount=250>
-                        <span class="currency js-currency">£</span>250
-                    </button>
+                <div >
+                    <a class="js-submit-input option-button <%=bottomClass%> contribute action--contribute" href="https://contribute.theguardian.com/uk?INTCMP=co_uk_cobed_like_interactive&amount=50" target="_blank">
+                        Contribute
+                    </a>
                 </div>
-            </div>
-            <div >
-                <a class="js-submit-input option-button contribute action--contribute" href="https://contribute.theguardian.com/uk?INTCMP=co_uk_cobed_like_interactive&amount=50" target="_blank">
-                    Contribute
-                </a>
             </div>
         </div>
     </div>

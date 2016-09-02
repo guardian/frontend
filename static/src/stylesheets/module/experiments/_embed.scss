@@ -1,5 +1,6 @@
 @import 'svg';
 
+
 $contribute-yellow: #FFBB00;
 $gu-blue: #005689;
 $gu-blue-dark:#003D70;
@@ -18,7 +19,7 @@ $gs-gutter: 20px;
 
     p {
         line-height:24px;
-        font-family:"Guardian Text Egyptian Web";
+        font-family:"Guardian Egyptian Web";
         padding-left: 5px;
         padding-right: 15px;
         margin-top: 8px;
@@ -27,12 +28,17 @@ $gs-gutter: 20px;
 
     }
 
-    .flex-container {
-        padding: 0 0 16px 0;
-        margin: 0;
-        list-style: none;
-
+    .form-section {
+        font-family:"Guardian Egyptian Web";
+        margin-bottom:16px;
+        color: #767676;
+        font-size: 1em;
+        line-height: 20px;
+        margin-top: 0;
+        margin-bottom: 24px;
     }
+
+
 
     .title {
         margin-top: 0;
@@ -41,7 +47,7 @@ $gs-gutter: 20px;
         padding-top: 7px;
         font-family: 'Guardian Egyptian Web';
         font-weight: bold;
-        font-size: 1.17em;
+        font-size: 1.25em;
     }
 
 
@@ -83,11 +89,6 @@ $gs-gutter: 20px;
         }
     }
 
-    .p-cta{
-        margin-bottom:6px;
-    }
-
-
     .option-button {
         @include button();
 
@@ -111,11 +112,15 @@ $gs-gutter: 20px;
         display: flex;
         -webkit-flex-direction: column;
         flex-direction: column;
+        padding: 0 0 16px 0;
+        margin: 0;
+        list-style: none;
+
 
     }
 
 
-    .amount_field {
+    .amount-field {
         display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
         display: -ms-flexbox;  /* TWEENER - IE 10 */
         display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -124,6 +129,7 @@ $gs-gutter: 20px;
         flex-direction: column;
 
     }
+
 
 
 
@@ -159,6 +165,25 @@ $gs-gutter: 20px;
             float: right;
         }
     }
+
+
+    @include mq($from: phablet) {
+        .bottomClass.option-button{
+            width: 70px;
+        }
+
+        .bottomClass.contribute{
+            margin-top: 0;
+            width: 130px;
+        }
+
+        .bottomClass.amount-field{
+            -webkit-flex-direction: row;
+            flex-direction: row;
+        }
+
+    }
+
 
 
 }

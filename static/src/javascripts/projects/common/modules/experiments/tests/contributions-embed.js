@@ -40,7 +40,7 @@ define([
         this.description = 'Test contributions embed with amount picker.';
         this.showForSensitive = false;
         this.audience = 0.10;
-        this.audienceOffset = 0.13;
+        this.audienceOffset = 0.23;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -104,7 +104,8 @@ define([
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
                         position : 'inline',
-                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
+                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
+                        bottomClass : 'bottomClass'
                     }));
                     bottomWriter(component);
                 },
@@ -116,7 +117,8 @@ define([
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
                         position : 'supporting',
-                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html'
+                        linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
+                        bottomClass : ''
                     }));
                     inArticleWriter(component);
                 },
