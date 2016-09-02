@@ -18,7 +18,7 @@ define([
         });
     }
 
-    var getSpecifiedParent = function(element, parentClass) {
+    var getSpecifiedAncestor = function(element, ancestorClass) {
         var i = 0;
         do {
             element = element.parentNode;
@@ -26,12 +26,12 @@ define([
                 throw 'You are either traversing a lot of elements! Is this wise? Or your $element argument is undefined';
             }
             i++;
-        } while (element && !element.classList.contains(parentClass));
+        } while (element && !element.classList.contains(ancestorClass));
         return element;
     };
 
     function select(el) {
-        $(getSpecifiedParent(el, 'js-button-group').querySelectorAll('.js-button')).removeClass(ACTIVE_CLASS);
+        $(getSpecifiedAncestor(el, 'js-button-group').querySelectorAll('.js-button')).removeClass(ACTIVE_CLASS);
         $(el).addClass(ACTIVE_CLASS);
     }
 

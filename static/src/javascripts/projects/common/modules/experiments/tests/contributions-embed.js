@@ -37,7 +37,7 @@ define([
         this.start = '2016-09-02';
         this.expiry = '2016-09-07';
         this.author = 'Jonathan Rankin';
-        this.description = '    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",';
+        this.description = 'Test whether contributions embed performs better inline and in-article than at the bottom of the article.';
         this.showForSensitive = false;
         this.audience = 0.10;
         this.audienceOffset = 0.23;
@@ -102,12 +102,13 @@ define([
         this.variants = [
 
             {
-                id: 'bottom',
+                id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
                         position : 'inline',
                         linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
-                        bottomClass : 'bottomClass'
+                        variant: 'bottom',
+                        intCMP : 'dfd'
                     }));
                     bottomWriter(component);
                 },
@@ -120,7 +121,9 @@ define([
                     var component = $.create(template(contributionsEmbed, {
                         position : 'supporting',
                         linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
-                        bottomClass : ''
+                        variant : 'in-article',
+                        intCMP : 'dfd'
+
                     }));
                     inArticleWriter(component);
                 },

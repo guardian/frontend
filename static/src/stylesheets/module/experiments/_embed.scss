@@ -1,170 +1,153 @@
 @import 'svg';
 
 
-$contribute-yellow: #ffbb00;
-$gu-blue: #005689;
-$gu-blue-dark: #003d70;
-$comment-support-1: #7d7569;
-$white: #ffffff;
-$black: #000000;
-$gs-gutter: 20px;
+$news-main-1-dark: #003d70;
 
 
 
-.interactive-embed {
+.interactive-embed  {
     height: 100%;
     width: 100%;
     border-top: 1px solid #4bc6df;
     background-color: #efefec;
+}
 
-    p {
-        line-height: 24px;
-        font-family: 'Guardian Egyptian Web';
-        padding-left: 5px;
-        padding-right: 15px;
-        margin-top: 8px;
-        margin-bottom: 8px;
+.contributions-paragraph  {
+    line-height: 24px;
+    font-family: $f-serif-headline;
+    padding-left: 5px;
+    padding-right: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.form-section {
+    font-family: $f-serif-headline;
+    font-size: 1em;
+    line-height: 20px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
 
 
+
+.title {
+    margin-top: 0;
+    margin-bottom: 2px;
+    padding-left: 5px;
+    padding-top: 7px;
+    font-family: $f-serif-headline;
+    font-weight: bold;
+    font-size: 1.17em;
+}
+
+
+
+.option-button {
+    @include fs-textSans(4);
+
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    outline: none;
+    border: 0;
+    background-color: #ffffff;
+    border-radius: 1000px;
+
+    width: calc((100% - 26px) /4);
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    &:hover {
+        background-color: $comment-support-1;
+        color: $neutral-6;
     }
 
-    .form-section {
-        font-family: 'Guardian Egyptian Web';
-        font-size: 1em;
-        line-height: 20px;
-        margin-top: 8px;
-        margin-bottom: 16px;
+    &.active {
+        background-color: $multimedia-main-2;
+        color: $neutral-1;
     }
+}
 
+.button-group {
+    margin-right: 5px;
+    margin-left: 2px;
+}
 
-
-    .title {
-        margin-top: 0;
-        margin-bottom: 2px;
-        padding-left: 5px;
-        padding-top: 7px;
-        font-family: 'Guardian Egyptian Web';
-        font-weight: bold;
-        font-size: 1.17em;
-    }
-
-
-    @mixin circular {
-        border-radius: 1000px; // Android 2.3 cannot deal with '50%'
-    }
-
-    @mixin button {
-        @include fs-textSans(4);
-        @include circular;
-
-        font-weight: bold;
-        text-decoration: none;
-        cursor: pointer;
-        text-align: left;
-        display: inline-block;
-        vertical-align: bottom;
-        outline: none;
-
-        padding: 6px $gs-gutter/2;
-        border: 0;
-        background-color: #ffffff;
-
-        &:hover {
-            background-color: $comment-support-1;
-            color: $white;
-        }
-
-        &.active {
-            background-color: $contribute-yellow;
-            color: $black;
-        }
-    }
-
-    .option-button {
-        @include button();
-
-        width: calc((100% - 26px) /4);
-        text-align: center;
-        margin-left: 3px;
-        margin-right: 0;
-        padding-top: 7px;
-        padding-bottom: 7px;
-    }
-
-    .button-group {
-        margin-right: 5px;
-        margin-left: 2px;
-    }
-
-    .flex-container {
-        display: flex;
-        flex-direction: column;
-        padding: 0 0 16px;
-        margin: 0;
-        list-style: none;
-
-
-    }
-
-    .amount-field {
-        display: flex;
-        flex-direction: column;
-
-    }
-
-
-    .contribute {
-        width: 130px;
-        background-color: $gu-blue;
-        color: #ffffff;
-        font-weight: bold;
-        margin-top: 12px;
-        margin-left: 5px;
-        margin-right: 7px;
-        text-align: left;
-        padding-left: 15px;
-        padding-right: 0;
-        &:hover {
-            background-color: $gu-blue-dark;
-        }
-
-        &:after {
-            content: '';
-
-            display: inline-block;
-            background-repeat: no-repeat;
-            width: 30px;
-            height: 20px;
-            background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
-            background-size: 100%;
-            float: right;
-        }
-    }
-
-
-    @include mq($from: phablet) {
-        .bottomClass.option-button {
-            width: 70px;
-        }
-
-        .bottomClass.contribute {
-            margin-top: 0;
-            width: 130px;
-        }
-
-        .bottomClass.amount-field {
-            flex-direction: row;
-        }
-
-        .bottomClass.contribute-embed {
-            margin-top: 0;
-        }
-
-    }
-
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 16px;
+    margin: 0;
+    list-style: none;
 
 
 }
+
+.amount-field {
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.contribute {
+    width: 130px;
+    background-color: $news-main-1;
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-left: 5px;
+    margin-right: 7px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 0;
+    &:hover {
+        background-color: $news-main-1-dark;
+    }
+
+    &:after {
+        content: '';
+
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 20px;
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        background-size: 100%;
+        float: right;
+    }
+}
+
+
+@include mq($from: phablet) {
+    .option-button--bottom {
+        width: 70px;
+    }
+
+    .contribute--bottom {
+        margin-top: 0;
+        width: 130px;
+    }
+
+    .amount-field--bottom {
+        flex-direction: row;
+    }
+
+    .contribute-embed--bottom {
+        margin-top: 0;
+    }
+
+}
+
+
+
+
 
 
 
