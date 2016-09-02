@@ -153,4 +153,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
     exposeClientSide = true
   )
+
+  val ABWeekendReadingPromo = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-promo",
+    "Show visitors a snap banner to promote the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 12),
+    exposeClientSide = true
+  )
 }

@@ -21,7 +21,8 @@ define([
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/no-social-count',
-    'common/modules/experiments/tests/contributions-user-testing'
+    'common/modules/experiments/tests/contributions-user-testing',
+    'common/modules/experiments/tests/weekend-reading-promo'
 ], function (
     reportError,
     config,
@@ -45,7 +46,8 @@ define([
     ContributionsEmbed,
     AdBlockingResponse,
     NoSocialCount,
-    ContributionsUserTesting
+    ContributionsUserTesting,
+    WeekendReadingPromo
 ) {
 
     var TESTS = [
@@ -63,7 +65,8 @@ define([
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
         new NoSocialCount(),
-        new ContributionsUserTesting()
+        new ContributionsUserTesting(),
+        new WeekendReadingPromo()
     ];
 
     var participationsKey = 'gu.ab.participations';
