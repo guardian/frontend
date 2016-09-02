@@ -64,13 +64,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsEmbed20160823= Switch(
+  val ABContributionsEmbed20160902= Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-embed-20160823",
-    "Test contributions embed with amount picker.",
+    "ab-contributions-embed-20160902",
+    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
+    sellByDate = new LocalDate(2016, 9, 7),
     exposeClientSide = true
   )
 

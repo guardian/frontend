@@ -33,18 +33,18 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEmbed20160823';
-        this.start = '2016-08-23';
-        this.expiry = '2016-09-06';
+        this.id = 'ContributionsEmbed20160902';
+        this.start = '2016-09-02';
+        this.expiry = '2016-09-07';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test contributions embed with amount picker.';
+        this.description = '    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",';
         this.showForSensitive = false;
         this.audience = 0.10;
         this.audienceOffset = 0.23;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'The interactive embed performs 3x better than the control';
+        this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
             var pageObj = config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
