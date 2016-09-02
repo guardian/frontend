@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'common/utils/$',
     'common/modules/commercial/dfp/create-slot',
@@ -10,7 +9,6 @@ define([
     'text!fixtures/commercial/slice-adverts.html'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     $,
     createAdSlot,
@@ -70,12 +68,12 @@ define([
         });
 
         it('should only create a maximum of 3 advert slots', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should remove the "fc-slice__item--no-mpu" class', function (done) {
@@ -83,50 +81,46 @@ define([
                 return 'desktop';
             };
 
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 $('.ad-slot', $fixtureContainer).each(function (adSlot) {
                     expect(bonzo(adSlot).parent().hasClass('fc-slice__item--no-mpu')).toBe(false);
                 });
-
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have the correct ad names', function (done){
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
                 expect($adSlots[0].data('name')).toEqual('inline1');
                 expect($adSlots[1].data('name')).toEqual('inline2');
                 expect($adSlots[2].data('name')).toEqual('inline3');
-
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have the correct ad names on mobile', function (done) {
             detect.isBreakpoint = mockIsBreakpoint('mobile');
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
                 expect($adSlots[0].data('name')).toEqual('top-above-nav');
                 expect($adSlots[1].data('name')).toEqual('inline1');
                 expect($adSlots[2].data('name')).toEqual('inline2');
-
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have the correct size mappings', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
@@ -137,16 +131,15 @@ define([
 
                     expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
                 });
-
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have the correct size mappings on mobile', function (done) {
             detect.isBreakpoint = mockIsBreakpoint('mobile');
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
@@ -157,28 +150,31 @@ define([
 
                     expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
                 });
-
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have at least one non-advert containers between advert containers', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should not display ad slot if disabled in commercial-features', function (done) {
             commercialFeatures.sliceAdverts = false;
 
-            sliceAdverts.init().then(function (res) {
+            sliceAdverts.init()
+            .then(function (res) {
                 expect(res).toBe(false);
                 expect(qwery('.ad-slot', $fixtureContainer).length).toBe(0);
-            }).then(done);
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should not add ad to first container if network front', function (done) {
@@ -187,15 +183,15 @@ define([
             detect.isBreakpoint = function () {
                 return false;
             };
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
                 detect.isBreakpoint = oldis;
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should not add ad to container if it is closed', function (done) {
@@ -204,13 +200,13 @@ define([
             prefs[containerId] = 'closed';
             $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
             userPrefs.set('container-states', prefs);
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         describe('Top slot replacement', function () {
@@ -222,23 +218,23 @@ define([
 
             it('is added on mobile', function (done) {
                 detect.isBreakpoint = mockIsBreakpoint('mobile');
-                sliceAdverts.init();
-
-                fastdom.defer(function () {
+                sliceAdverts.init()
+                .then(function () {
                     expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
             it('is not added on desktop', function (done) {
                 detect.isBreakpoint = mockIsBreakpoint('desktop');
 
-                sliceAdverts.init();
-
-                fastdom.defer(function () {
+                sliceAdverts.init()
+                .then(function () {
                     expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
 
@@ -246,15 +242,15 @@ define([
 
         //TODO: get data if we need to reintroduce this again
         xit('should add one slot for tablet, one slot for mobile after container', function (done) {
-            sliceAdverts.init();
-
-            fastdom.defer(function () {
+            sliceAdverts.init()
+            .then(function () {
                 expect($('.fc-container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                     .toBe(true);
                 expect($('.fc-container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
                     .toBe(true);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         function mockIsBreakpoint(current) {
