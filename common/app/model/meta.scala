@@ -392,8 +392,7 @@ trait ContentPage extends Page {
     item.commercial.javascriptConfig ++
     item.content.conditionalConfig ++
     item.content.javascriptConfig ++
-    metadata.javascriptConfigOverrides ++
-    Map("campaigns" -> JsArray(item.content.campaigns.map(Campaign.toJson)))
+    metadata.javascriptConfigOverrides
 
   def getOpenGraphProperties: Map[String, String] =
     metadata.opengraphProperties ++

@@ -206,7 +206,8 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isHeroic", JsBoolean(isHeroic))
+    ("isHeroic", JsBoolean(isHeroic)),
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
