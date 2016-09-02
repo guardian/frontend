@@ -97,10 +97,12 @@ define([
 
                 var creativeHtml = template(creativeTpl, this.params);
 
-                resolve(fastdom.write(function () {
+                fastdom.write(function () {
                     this.adSlot.insertAdjacentHTML('beforeend', creativeHtml);
-                    return true;
-                }, this));
+                }, this)
+                .then(function () {
+                    resolve(true);
+                });
             }.bind(this));
         }.bind(this));
     };
