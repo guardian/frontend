@@ -28,7 +28,7 @@ trait DiscussionSwitches {
     "discussion-fetch-external-assets",
     "if this is switched on, discussion external assets map is fetched regularly",
     owners = Seq(Owner.withGithub("piuccio")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
