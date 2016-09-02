@@ -86,11 +86,6 @@ Loader.prototype.initMainComments = function() {
     var self = this,
         commentId = this.getCommentIdFromHash();
 
-
-    if (commentId) {
-        mediator.emit('discussion:seen:comment-permalink');
-    }
-
     //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
     var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
@@ -277,6 +272,8 @@ Loader.prototype.ready = function() {
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         mediator.emit('discussion:seen:comments-anchor');
+    } else if (this.getCommentIdFromHash()) {
+        mediator.emit('discussion:seen:comment-permalink');
     }
 
     mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));

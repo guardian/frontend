@@ -3,7 +3,10 @@ define([
     'common/utils/report-error',
     'commercial/modules/messenger/post-message'
 ], function (Promise, reportError, postMessage) {
-    var allowedHost = location.protocol + '//tpc.googlesyndication.com';
+    var allowedHosts = [
+        location.protocol + '//tpc.googlesyndication.com',
+        location.protocol + '//' + location.host
+    ];
     var listeners = {};
     var registeredListeners = 0;
 
@@ -54,7 +57,7 @@ define([
 
     function onMessage(event) {
         // We only allow communication with ads created by DFP
-        if (allowedHost !== event.origin) {
+        if (allowedHosts.indexOf(event.origin) < 0) {
             return;
         }
 
@@ -78,8 +81,6 @@ define([
             return;
         }
 
-        var iframes = getMessengerIframe(event.origin);
-
         // Because any listener can have side-effects (by unregistering itself),
         // we run the promise chain on a copy of the `listeners` array.
         // Hat tip @piuccio
@@ -96,7 +97,7 @@ define([
         // occasional fastdom bomb in the middle.
         .reduce(function (promise, listener) {
             return promise.then(function promiseCallback(ret) {
-                var thisRet = listener(data.value, iframes[0], ret);
+                var thisRet = listener(data.value, ret, data.iframeId ? document.getElementById(data.iframeId) : null);
                 return thisRet === undefined ? ret : thisRet;
             });
         }, Promise.resolve(true));
@@ -155,11 +156,5 @@ define([
         });
 
         return error;
-    }
-
-    function getMessengerIframe(origin) {
-        return Array.prototype.filter.call(document.getElementsByTagName('iframe'), function (iframe) {
-            return iframe.src.indexOf(origin) === 0;
-        });
     }
 });

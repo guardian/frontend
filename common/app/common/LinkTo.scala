@@ -3,8 +3,6 @@ package common
 import common.editions.{Au, Us, International}
 import common.Edition.editionRegex
 import conf.Configuration
-import conf.switches.Switches
-import implicits.Requests
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup

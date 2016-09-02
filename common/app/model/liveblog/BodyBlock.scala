@@ -2,7 +2,7 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, BlockElement => ApiBlockElement, Blocks => ApiBlocks, Block, VideoElementFields, Asset}
+import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks, Block}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}

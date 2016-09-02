@@ -36,8 +36,4 @@ class SoulmatesController extends Controller with implicits.Requests {
   def renderSoulmates(groupName: String): Action[AnyContent] = Action { implicit request =>
     result(groupName, views.html.soulmates.soulmates(_, _, _))
   }
-
-  def renderSoulmatesTest(groupName: String): Action[AnyContent] = Action { implicit request =>
-    result(groupName, views.html.soulmates.soulmatesTest(_, _, _))
-  }
 }

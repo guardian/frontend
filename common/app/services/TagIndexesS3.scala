@@ -6,8 +6,6 @@ import play.api.Play
 import play.api.Play.current
 import play.api.libs.json._
 
-import scala.collection.JavaConversions._
-
 sealed trait TagIndexError
 
 case object TagIndexNotFound extends TagIndexError

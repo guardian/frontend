@@ -4,7 +4,7 @@ import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
 import play.api.{Mode, Play}
-import play.api.libs.ws.{WS, WSClient, WSResponse}
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 
 import scala.concurrent.Future
