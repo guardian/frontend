@@ -228,7 +228,7 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 12px;
+        font-size: 14px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
 
@@ -267,6 +267,21 @@
         float: left;
         padding: 0 8px;
         line-height: $gs-column-width/2;
+    }
+
+    .survey-subscriber-links {
+        overflow: hidden;
+        margin-top: $gs-column-width/4;
+    }
+
+    .survey-subscriber-links .survey-text__info {
+        font-size: 10px;
+    }
+
+    .survey-subscriber-links hr {
+        margin-top: $gs-column-width/2;
+        margin-bottom: $gs-column-width/2;
+        color: #e3e3e3;
     }
 
     .inline-arrow-white-right {

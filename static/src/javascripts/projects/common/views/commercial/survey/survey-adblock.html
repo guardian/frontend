@@ -37,20 +37,43 @@
                     <%=surveyTextThird%>
                 </p>
                 <% } %>
+                <% if (membershipLink || signupLink) { %>
                 <div class="survey-links">
+                    <% if (membershipLink) { %>
                     <div class="survey-link">
                         <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="<%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
                     </div>
+                    <% } %>
+                    <% if (signupLink) { %>
                     <div class="survey-link">
                         <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
                     </div>
+                    <% } %>
                 </div>
+                <% } %>
+                <% if (surveyTextUserHelp) { %>
                 <p class="survey-text__info">
-                    <%=surveyTextMembership%>
+                    <%=surveyTextUserHelp%>
                 </p>
+                <% } %>
                 <p class="survey-text__info">
-                    <%=surveyTextSubscriber%>
+                    Thanks for supporting us.
                 </p>
+                <% if (surveyTextMembership || surveyTextSubscriber) { %>
+                <div class="survey-subscriber-links">
+                    <hr/>
+                    <% if (surveyTextMembership) { %>
+                    <p class="survey-text__info">
+                        <%=surveyTextMembership%>
+                    </p>
+                    <% } %>
+                    <% if (surveyTextSubscriber) { %>
+                    <p class="survey-text__info">
+                        <%=surveyTextSubscriber%>
+                    </p>
+                    <% } %>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>
