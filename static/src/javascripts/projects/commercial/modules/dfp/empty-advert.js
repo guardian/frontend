@@ -6,7 +6,8 @@ define([
 
     function emptyAdvert(advert) {
         fastdom.write(function () {
-            window.googletag.destroySlots([advert.slot]);
+            // Test only, workaround for sonobi problem
+            //window.googletag.destroySlots([advert.slot]);
             bonzo(advert.node).remove();
             advert.node = advert.slot = null;
         });
