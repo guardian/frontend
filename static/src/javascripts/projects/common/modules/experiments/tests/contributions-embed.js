@@ -54,7 +54,6 @@ define([
             var $outbrain = $('.js-outbrain-container');
             return $outbrain && $outbrain.length > 0;
         }
-
         
         function getSpacefinderRules() {
             return {
