@@ -323,7 +323,7 @@ body {
     @include mq($from: desktop) {
         max-width: gs-span(10);
         margin-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline * 2;
+        margin-bottom: $gs-baseline * 4;
         margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
