@@ -41,6 +41,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
         "Community Shield",
         "Scottish Cup",
         "Scottish League Cup",
+        "World Cup 2018 Qualifiers",
         "International friendlies"
     )
 

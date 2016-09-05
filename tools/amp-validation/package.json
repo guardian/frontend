@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/guardian/frontend#readme",
   "dependencies": {
-    "amphtml-validator": "^1.0.10"
+    "amphtml-validator": "^1.0.10",
+    "promise-retry": "^1.1.1"
   },
   "engines": {
     "node": ">=6"

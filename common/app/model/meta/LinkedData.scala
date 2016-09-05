@@ -1,7 +1,6 @@
 package model.meta
 
 import conf.Static
-import org.joda.time.DateTime
 
 class LinkedData(
   val `@type`: String,

@@ -1,13 +1,11 @@
 define([
     'commercial/modules/creatives/expandable',
     'helpers/fixtures',
-    'qwery',
-    'fastdom'
+    'qwery'
 ], function (
     Expandable,
     fixtures,
-    qwery,
-    fastdom
+    qwery
 ) {
     var fixturesConfig = {
         id: 'expandable-ad-slot',
@@ -33,14 +31,14 @@ define([
 
         it('should always have expand and close buttons', function (done) {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            new Expandable(qwery('.expandable-ad-slot', $fixturesContainer), {}).create();
-            fastdom.defer(function () {
+            new Expandable(qwery('.expandable-ad-slot', $fixturesContainer), {}).create()
+            .then(function () {
                 expect(qwery('.ad-exp--expand', $fixturesContainer).length).toBe(1);
                 expect(qwery('.ad-exp__close-button', $fixturesContainer).length).toBe(1);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
     });
 });
-

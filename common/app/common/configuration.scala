@@ -57,12 +57,15 @@ devOverrides {
       }
       InstallVars(stack, app, stage, region, configBucket)
     }
+    // This is version number of the config file we read from s3,
+    // increment this if you publish a new version of config
+    val s3ConfigVersion = 1
+
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-    lazy val devinfra = FileConfigurationSource(s"/etc/gu/frontend.properties")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
-    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials)
-    lazy val config = new CM(List(userPrivate, runtimeOnly, devinfra, commonS3Config), PlayDefaultLogger).load.resolve
+    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
+    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     // test mode is self contained and won't need to use anything secret
     lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")

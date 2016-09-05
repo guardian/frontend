@@ -55,33 +55,33 @@ define([
 
         it('should set escape usual ad slot boundaries', function (done) {
             gustyle = new Sut(adSlot, adType);
-            gustyle.addLabel();
-
-            fastdom.defer(function () {
+            gustyle.addLabel()
+            .then(function () {
                 expect(adSlot.hasClass('gu-style')).toBeTruthy();
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should set gu-style--unboxed class on content pages', function (done) {
             config.page.isContent = true;
             gustyle = new Sut(adSlot, adType);
-            gustyle.addLabel();
-
-            fastdom.defer(function () {
+            gustyle.addLabel()
+            .then(function () {
                 expect(adSlot.hasClass('gu-style--unboxed')).toBeTruthy();
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should add label', function (done) {
             gustyle = new Sut(adSlot, adType);
-            gustyle.addLabel();
-
-            fastdom.defer(function () {
+            gustyle.addLabel()
+            .then(function () {
                 expect($('.gu-comlabel').length).toEqual(1);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
     });
 });

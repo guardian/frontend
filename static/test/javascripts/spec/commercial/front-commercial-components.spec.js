@@ -1,13 +1,11 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     $,
     fixtures,
@@ -59,26 +57,26 @@ define([
             for (var i = 0; i < 4; i++) {
                 appendContainer($fixturesContainer);
             }
-            frontCommercialComponents.init();
-
-            fastdom.defer(function () {
+            frontCommercialComponents.init()
+            .then(function () {
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should place ad between 1st and 2nd containers if there are less than 4 containers', function (done) {
             for (var i = 0; i < 2; i++) {
                 appendContainer($fixturesContainer);
             }
-            frontCommercialComponents.init();
-
-            fastdom.defer(function () {
+            frontCommercialComponents.init()
+            .then(function () {
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                 var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
                 expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should place ad between between the 4th and 5th container if a network front', function (done) {
@@ -87,15 +85,15 @@ define([
             for (var i = 0; i < 5; i++) {
                 appendContainer($fixturesContainer);
             }
-            frontCommercialComponents.init();
-
-            fastdom.defer(function () {
+            frontCommercialComponents.init()
+            .then(function () {
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                 var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
 
                 expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('should have 1,1 slot for wide breakpoint if there is a page skin', function (done) {
@@ -103,30 +101,35 @@ define([
                 appendContainer($fixturesContainer);
             }
             config.page.hasPageSkin = true;
-            frontCommercialComponents.init();
-
-            fastdom.defer(function () {
+            frontCommercialComponents.init()
+            .then(function () {
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                 expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('1,1');
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
         it('it should not display ad slot if commercial-features switch is disabled', function (done) {
             commercialFeatures.frontCommercialComponents = false;
 
-            frontCommercialComponents.init().then(function(result) {
+            frontCommercialComponents.init()
+            .then(function(result) {
                 expect(result).toBe(false);
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
-                done();
-            });
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
-        it('should not display ad slot if there is less than two containers', function () {
+        it('should not display ad slot if there is less than two containers', function (done) {
             appendContainer($fixturesContainer);
-            frontCommercialComponents.init();
-
-            expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+            frontCommercialComponents.init()
+            .then(function () {
+                expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
     });
