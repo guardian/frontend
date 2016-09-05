@@ -379,8 +379,11 @@ Loader.prototype.renderCommentCount = function () {
     if (discussionFrontend.canRun(ab, window.curlConfig)) {
         return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
+            closed: this.getDiscussionClosed(),
             discussionId: this.getDiscussionId(),
-            element: document.querySelector('.js-discussion-comment-count').parentNode
+            element: document.getElementsByClassName('js-discussion-external-frontend')[0],
+            userFromCookie: !!Id.getUserFromCookie(),
+            profileUrl: config.page.idUrl
         });
     } else {
         return this.renderBonzoCommentCount();

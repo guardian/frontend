@@ -28,11 +28,12 @@ class DiscussionExternalAssetsLifecycle (config: GuardianConfiguration, wsClient
   def refresh(): Future[Map[String, String]] = {
     config.discussion.frontendAssetsMap match {
       case Some(url) if Switches.DiscussionFetchExternalAssets.isSwitchedOn =>
-        fetchAssetsMap(url, wsClient).map(
-          parseResponse(_, url) match {
-            case Some(parsed) => DiscussionAssetsMap.alter(parsed, URI.create(url))
+        val versionedUrl = url.replace("{VERSION}", config.discussion.frontendAssetsVersion)
+        fetchAssetsMap(versionedUrl, wsClient).map(
+          parseResponse(_, versionedUrl) match {
+            case Some(parsed) => DiscussionAssetsMap.alter(parsed, URI.create(versionedUrl))
             case None =>
-              val errMsg = "Impossible to parse discussion assets map"
+              val errMsg = s"Impossible to parse discussion assets map from $versionedUrl"
               log.warn(errMsg)
               Future.failed(new RuntimeException(errMsg))
           }

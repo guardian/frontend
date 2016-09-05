@@ -59,7 +59,7 @@ devOverrides {
     }
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 1
+    val s3ConfigVersion = 2
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
@@ -349,6 +349,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
+    lazy val frontendAssetsVersion = "v1.1.0"
   }
 
   object witness {
