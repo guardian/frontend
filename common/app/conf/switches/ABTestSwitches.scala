@@ -144,6 +144,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABWeekendReadingEmail = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-email",
+    "Try out two formats for the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 23),
+    exposeClientSide = true
+  )
+
   val ABNoSocialCount = Switch(
     SwitchGroup.ABTests,
     "ab-no-social-count",
