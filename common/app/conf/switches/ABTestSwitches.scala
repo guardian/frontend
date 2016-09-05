@@ -53,17 +53,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
-
-  val ABContributionsUserTesting20160831 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-user-testing-20160831",
-    "User testing effectiveness of inline CTA for contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
-    exposeClientSide = true
-  )
-
+  
   val ABContributionsEmbed20160905= Switch(
     SwitchGroup.ABTests,
     "ab-contributions-embed-20160905",

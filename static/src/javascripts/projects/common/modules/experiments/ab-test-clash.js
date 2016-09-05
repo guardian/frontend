@@ -19,9 +19,7 @@ define([
 
         var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control']};
 
-        var contributionsUserTesting = {name: 'ContributionsUserTesting20160831', variants: ['control']};
-
-        var clashingTests = [contributionsArticle, contributionsEmbed, contributionsUserTesting];
+        var clashingTests = [contributionsArticle, contributionsEmbed];
 
         return some(clashingTests, function (test) {
             return some(test.variants, function (variant) {
