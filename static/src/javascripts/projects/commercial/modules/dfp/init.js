@@ -23,7 +23,7 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = config.tests.commercialSonobi ? setupSonobi() : Promise.resolve();
+            var initialTag = config.tests.commercialHbSonobi ? setupSonobi() : Promise.resolve();
             return initialTag.then(setupAdvertising);
         }
 
@@ -40,7 +40,7 @@ define([
 
         return new Promise(function(resolve) {
 
-            if (config.tests.commercialSonobi) {
+            if (config.tests.commercialHbSonobi) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
             } else {
