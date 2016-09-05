@@ -40,6 +40,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         val allElements = block.getAllElements
         val heading = block.select("h2.block-title")
         val headingNumRegEx = "^([0-9]+)[.]{1}[ ]*"
+        val headingHasNumber = heading.html().matches(s"$headingNumRegEx.*")
 
         // Add classes
         block.addClass("block--minute-article js-is-fixed-height")
@@ -65,10 +66,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         } foreach(block.addClass)
 
         // Check if the heading has a number and is an embed or quote
-        if (block.hasClass("block--minute-article--embed") ||
-            block.hasClass("block--minute-article--quote") &&
-            heading.html().matches(headingNumRegEx)) {
-              block.addClass("block--minute-article--shorty")
+        if ((block.hasClass("block--minute-article--embed") || block.hasClass("block--minute-article--quote")) && headingHasNumber) {
+          block.addClass("block--minute-article--shorty")
         }
 
         // Remove Un-needed Classes
