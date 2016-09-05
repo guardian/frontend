@@ -1,22 +1,18 @@
 define([
     'common/utils/config',
-    'common/utils/storage',
     'common/utils/template',
-    'common/utils/fastdom-promise',
     'common/modules/ui/message',
+    'common/modules/user-prefs',
     'common/modules/commercial/user-features',
     'common/views/svgs',
-    'lodash/arrays/uniq',
     'text!common/views/experiments/weekend-reading-promo.html'
 ], function (
     config,
-    storage,
     template,
-    fastdomPromise,
     Message,
+    userPrefs,
     userFeatures,
     svgs,
-    uniq,
     weekendReadingPromo
 ) {
     return function () {
@@ -33,8 +29,14 @@ define([
         this.idealOutcome = 'Visitors click on the CTA and sign-up to the Weekend Reading email';
 
         this.canRun = function () {
-            return !config.page.isAdvertisementFeature && config.page.contentType === 'Article';
+            return !config.page.isAdvertisementFeature && config.page.contentType === 'Article' && !hasSeenDigestSnap();
         };
+
+        function hasSeenDigestSnap() {
+            // we ran a similar Snap before, so do not show our new CTA to these users
+            var messageStates = userPrefs.get('messages');
+            return messageStates && messageStates.indexOf('habit-digest-message-07-16') > -1;
+        }
 
         function renderDigestSnap(messageText, linkText, linkHref, variantName) {
             var templateData = {
