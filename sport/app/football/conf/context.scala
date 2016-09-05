@@ -2,9 +2,10 @@ package conf
 
 import app.LifecycleComponent
 import common._
+import conf.switches.Switches
 import feed.CompetitionsService
 import model.{LiveBlogAgent, TeamMap}
-import pa.{Http, PaClient, PaClientErrorsException}
+import pa.{PaClientConfig, Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
 
@@ -75,7 +76,19 @@ class FootballLifecycle(
 
 class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
 
+
+    // TODO - once we have proved this works with the switch, we can simply remove the switch and
+    // uncomment this line to make it permanent
+    //override lazy val base: String = "http://football-api.gu-web.net/v1.5"
+
+    private val cachedBase: String = "http://football-api.gu-web.net/v1.5"
+
     override def GET(urlString: String): Future[pa.Response] = {
+
+        val url = if (Switches.CachedFootballStats.isSwitchedOn)
+          urlString.replace(PaClientConfig.baseUrl, cachedBase)
+        else
+          urlString
 
         val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
 
