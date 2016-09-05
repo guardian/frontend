@@ -302,7 +302,7 @@ trait CommercialSwitches {
     "If on email will be sent to Rio Olympic surging content team every 30 minutes with update on surging content.",
     owners = Seq(Owner.withGithub("Calum Campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2016,8,23),
+    sellByDate = new LocalDate(2016,9,6),
     exposeClientSide = false
   )
 }

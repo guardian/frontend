@@ -8,9 +8,9 @@ trait ABTestSwitches {
     SwitchGroup.ABTests,
     "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
+    owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 
@@ -21,16 +21,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
     sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = true
-  )
-
-  val ABHostedZootropolisCta = Switch(
-    SwitchGroup.ABTests,
-    "ab-hosted-zootropolis-cta",
-    "Additional text on the Zootropolis CTA banner",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 24),
     exposeClientSide = true
   )
 
@@ -60,7 +50,27 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 6),
+    exposeClientSide = true
+  )
+
+  val ABContributionsUserTesting20160831 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-user-testing-20160831",
+    "User testing effectiveness of inline CTA for contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 6),
+    exposeClientSide = true
+  )
+
+  val ABContributionsEmbed20160905= Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-embed-20160905",
+    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 9),
     exposeClientSide = true
   )
 
@@ -70,7 +80,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -80,7 +90,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 31),
+    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
     exposeClientSide = true
   )
 
@@ -94,16 +104,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsHeader20160802 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-header-20160802",
-    "Test effectiveness of header for driving contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 8, 30),
-    exposeClientSide = true
-  )
-
   val ABAdFeedback = Switch(
     SwitchGroup.ABTests,
     "ab-ad-feedback",
@@ -111,26 +111,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
-    exposeClientSide = true
-  )
-
-  val ABMinute = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute",
-    "Testing if minute teasers drive video plays.",
-    owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 1),
-    exposeClientSide = true
-  )
-
-  val ABMinuteLoadJs = Switch(
-    SwitchGroup.ABTests,
-    "ab-minute-load-js",
-    "Load JS for minute test participants on some content pages.",
-    owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 1),
     exposeClientSide = true
   )
 
@@ -151,6 +131,36 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 14),
+    exposeClientSide = true
+  )
+
+  val ABAdBlockingResponse = Switch(
+    SwitchGroup.ABTests,
+    "ab-ad-blocking-response",
+    "Prominent adblocker response test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    exposeClientSide = true
+  )
+
+  val ABWeekendReadingEmail = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-email",
+    "Try out two formats for the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 23),
+    exposeClientSide = true
+  )
+
+  val ABNoSocialCount = Switch(
+    SwitchGroup.ABTests,
+    "ab-no-social-count",
+    "Remove social count from articles",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
     exposeClientSide = true
   )
 }

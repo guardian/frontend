@@ -11,7 +11,7 @@ define([
     'lodash/collections/contains',
     'common/modules/user-prefs',
     'common/modules/identity/api',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/ab-test-clash',
     'Promise'
 ], function (
     $,
@@ -26,7 +26,7 @@ define([
     contains,
     userPrefs,
     Id,
-    ab,
+    clash,
     Promise
 ) {
     var emailInserted = false;
@@ -39,13 +39,6 @@ define([
         return page.keywordExists(['US elections 2016', 'Football']) ||
             config.page.section === 'film' ||
             config.page.seriesId === 'world/series/guardian-morning-briefing';
-    }
-
-    function userIsInAClashingAbTest() {
-        var clashingTests = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
-        return some(clashingTests.variants, function(variant) {
-            return ab.isInVariant(clashingTests.name, variant);
-        });
     }
 
     function userHasRemoved(id, formType) {
@@ -158,7 +151,7 @@ define([
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&
-            !userIsInAClashingAbTest() &&
+            !clash.userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
             !obWidgetIsShown() &&

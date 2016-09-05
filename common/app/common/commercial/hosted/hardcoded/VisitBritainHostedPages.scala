@@ -2,7 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.switches.Switches
 
 object VisitBritainHostedPages {
 
@@ -16,8 +15,7 @@ object VisitBritainHostedPages {
     owner = "OMGB",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
     cssClass = "visit-britain",
-    brandColour = "#e41f13",
-    brightFont = true,
+    fontColour = FontColour("#e41f13"),
     logoLink = None
   )
 

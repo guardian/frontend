@@ -38,49 +38,16 @@ source_nvm() {
   fi
 }
 
-create_install_vars() {
-  local path="/etc/gu"
-  local filename="install_vars"
-
-  if [[ ! -f "$path/$filename" ]]; then
-    if [[ ! -d "$path" ]]; then
-      sudo mkdir "$path"
-    fi
-
-    echo "STAGE=DEV" | sudo tee "$path/$filename" > /dev/null
-  fi
-}
-
-install_awscli() {
-  if ! installed aws; then
-    if linux; then
-      sudo apt-get install -y awscli
-    elif mac; then
-      brew install awscli
-    fi
-  fi
-}
-
-create_frontend_properties() {
-  local path="$HOME/.gu"
-  local filename="frontend.properties"
-
-  if [[ ! -f "$path/$filename" ]]; then
-    if [[ ! -d "$path" ]]; then
-      mkdir "$path"
-    fi
+check_encryption() {
 
     if linux; then
         EXTRA_STEPS+=("Sorry, can't check if your hard disk is encryped so won't download frontend.properties.  Please check (applies to both portable and Desktop machines) and download from s3://aws-frontend-store/template-frontend.properties")
     elif mac; then
-      if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
-        EXTRA_STEPS+=("won't download frontend.properties as your hard disk is not encrypted! Follow these instructions: https://support.apple.com/en-gb/HT204837")
-      else
-        aws s3 cp --profile frontend s3://aws-frontend-store/template-frontend.properties "$path/$filename"
-      fi
+        if [[ "$(fdesetup status)" != "FileVault is On." ]]; then
+            EXTRA_STEPS+=("your hard disk is not encrypted! Encryption must be enabled on all guardian machines. Follow these instructions: https://support.apple.com/en-gb/HT204837")
+        fi
     fi
 
-  fi
 }
 
 create_aws_config() {
@@ -175,11 +142,9 @@ report() {
 }
 
 main() {
-  create_install_vars
+  check_encryption
   create_aws_config
   install_homebrew
-  install_awscli
-  create_frontend_properties
   install_jdk
   install_node
   install_gcc

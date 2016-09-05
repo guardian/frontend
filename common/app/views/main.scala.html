@@ -1,7 +1,7 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 
 @import common.{Edition, Navigation, commercial}
-@import conf.switches.Switches.{BreakingNewsSwitch, ForceOneByOnePxSlotSwitch}
+@import conf.switches.Switches.{BreakingNewsSwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 
@@ -109,7 +109,7 @@
 
         @fragments.analytics.base(page)
 
-        @if(ForceOneByOnePxSlotSwitch.isSwitchedOn || page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
         }
 

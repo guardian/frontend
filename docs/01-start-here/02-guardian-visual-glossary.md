@@ -78,6 +78,8 @@
 
 [All combinations](http://preview.gutools.co.uk/all-dynamic-fast#)
 
+[List of fronts containing containers built from CAPI queries and no curation](https://docs.google.com/spreadsheets/d/1x5JcqR33tnFCjd83mzBxmQONH5xeDkmeQNEjT_MUz0I/edit#gid=374412710)
+
 ## Rich Links
 
 [Lots of examples](http://preview.gutools.co.uk/info/developer-blog/2014/dec/12/rich-link-testing)
@@ -103,6 +105,11 @@
 - [Embedded video player](http://m.code.dev-theguardian.com/music/2012/jul/26/peter-gabriel-30-years-womad)
 
 ![image](images/video.jpg)
+
+
+### All article embeds
+
+- [Examples of article embeds](https://s3-eu-west-1.amazonaws.com/capi-wpt-querybot/pageElementSamplePages.html)
 
 
 ## Odd body formatting examples

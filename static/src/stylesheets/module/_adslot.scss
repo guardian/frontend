@@ -183,6 +183,12 @@
         background-color: transparent;
     }
 }
+
+.ad-slot--container-inline {
+    @include mq(mobileLandscape) {
+        margin-top: 0;
+    }
+}
 .ad-slot--gallery-inline {
     background-color: $media-background;
 
@@ -626,10 +632,22 @@
  * Fluid ad slots don't have widths
  */
 .ad-slot--fluid {
+    min-height: 250px;
     width: auto;
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 0;
+
+    &.ad-slot--liveblog-inline {
+        @include mq(mobile) {
+            margin-left: $gs-gutter / -2;
+            margin-right: $gs-gutter / -2;
+        }
+        @include mq(mobileLandscape, $until: tablet) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+    }
 }
 
 .ad-slot--fabric-v1 {

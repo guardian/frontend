@@ -7,7 +7,7 @@ import java.util.{Properties => JavaProperties}
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, PlayDefaultLogger}
+import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, PlayDefaultLogger, _}
 import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -20,21 +20,59 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
+case class InstallVars(stack: String, app: String, guStage: String, awsRegion: String, configBucket: String)
+
 object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
   lazy val configuration = {
 
-    val stage = {
+    val installVars = {
       val p = new JavaProperties()
       p.load(new FileInputStream(s"/etc/gu/install_vars"))
-      p.getProperty("STAGE", "DEV")
+      val stack = p.getProperty("stack", "frontend")
+      // if got config at app startup, we wouldn't need to configure it
+      val app = p.getProperty("app", "dev-build")
+      val stage = p.getProperty("STAGE", "DEV")
+      val region = p.getProperty("region", "eu-west-1")
+      val configBucket = p.getProperty("configBucket", "aws-frontend-store")
+      if (stage == "DEV" && new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
+        throw new RuntimeException(
+          "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
+            "All secrets are now stored in S3 bucket aws-frontend-store, not on your laptop.\n\n  " +
+            "Should you need to override any properties in DEV, create a new file ~/.gu/frontend.conf. \n" +
+            "For an example see https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L48\n" +
+            "For details of the changes see https://github.com/guardian/frontend/pull/14081")
+        /*
+        ~/.gu/frontend.conf example file:
+
+# local development (DEV stage) config overrides (not secrets)
+devOverrides {
+	switches.key=DEV/config/switches-yournamehere.properties
+	facia.stage=CODE
+}
+
+         */
+      }
+      InstallVars(stack, app, stage, region, configBucket)
     }
-    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.properties")
-    lazy val opsPrivate = FileConfigurationSource(s"/etc/gu/frontend.properties")
-    lazy val public = ClassPathConfigurationSource(s"env/$stage.properties")
-    new CM(List(userPrivate, opsPrivate, public), PlayDefaultLogger).load
+    // This is version number of the config file we read from s3,
+    // increment this if you publish a new version of config
+    val s3ConfigVersion = 1
+
+    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
+    lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
+    lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
+    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
+    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
+
+    // test mode is self contained and won't need to use anything secret
+    lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")
+    lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
+
+    val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
+    appConfig
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
@@ -53,13 +91,14 @@ object GuardianConfiguration extends Logging {
 
     def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
-    def getProperty[T](get: String => T)(property: String): Option[T] = Try(get(property)) match {
-      case Success(value) => Some(value)
-      case Failure(e: ConfigException.Missing) => None
-      case Failure(e) =>
-        log.error(s"couldn't retrive $property", e)
-        None
-    }
+    def getProperty[T](get: String => T)(property: String): Option[T] =
+      Try(get(property)) match {
+          case Success(value) => Some(value)
+          case Failure(e: ConfigException.Missing) => None
+          case Failure(e) =>
+            log.error(s"couldn't retrive $property", e)
+            None
+        }
 
   }
 

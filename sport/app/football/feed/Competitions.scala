@@ -110,12 +110,13 @@ object CompetitionsProvider {
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-    Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
+    Competition("301", "/football/efl-cup", "EFL Cup", "EFL Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
     Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
-    Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2))
+    Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2)),
+    Competition("701", "/football/world-cup-2018-qualifiers", "World Cup 2018 Qualifiers", "World Cup 2018 qual.", "Internationals", showInTeamsList = true, tableDividers = List(2))
   )
 }
 

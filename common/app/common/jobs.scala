@@ -7,7 +7,7 @@ import org.quartz._
 import play.api.Mode.Test
 
 import scala.collection.mutable
-import play.api.{Environment, Play}
+import play.api.Environment
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration

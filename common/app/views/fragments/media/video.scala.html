@@ -48,6 +48,7 @@
                 data-embeddable="@player.video.videos.embeddable"
                 @player.embedPath.map{ p => data-embed-path="@p" }
                 preload="none"
+                data-canonical-url="@player.path"
             >
                 @player.video.videos.encodings.map { encoding =>
                     <source src="@VideoEncodingUrlCleaner(encoding.url)" type="@encoding.format" />
