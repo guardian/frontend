@@ -5,10 +5,11 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
+GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
+
 GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
 GET            /survey/mydigest                                                                                                  controllers.SurveyPageController.renderMyDigestExplainerPage()
 GET            /survey/mydigest/404                                                                                              controllers.SurveyPageController.renderMyDigest404Page()
-GET            /signup/weekendreading                                                                                            controllers.SurveyPageController.renderWeekendReadingPage()
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
