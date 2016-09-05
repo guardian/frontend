@@ -58,11 +58,14 @@ body {
 
 .content__headline--minute {
     @include fs-headline(8, true);
+    line-height: .95;
     color: #ffffff;
     padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
     position: relative;
 
     @include mq(desktop) {
+        padding-bottom: $gs-baseline;
         font-size: 3.5rem;
     }
 
@@ -121,6 +124,10 @@ body {
         position: absolute;
         top: -#{gs-height(4) - $gs-baseline};
 
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+
         @include mq(desktop) {
             height: gs-height(4);
             top: -#{gs-height(5)};
@@ -142,7 +149,6 @@ body {
         @include fs-header(2);
         color: $minute-headline-colour;
         padding-bottom: $gs-baseline;
-
     }
 
     /* ==========================================================================
@@ -152,9 +158,8 @@ body {
     .content__dateline--minute-article,
     .content__standfirst,
     .logo--us-election {
-        max-width: gs-span(4);
-
         @include mq(tablet) {
+            max-width: gs-span(4);
             margin-left: 0;
         }
 
@@ -162,9 +167,7 @@ body {
             max-width: gs-span(6);
             margin-left: gs-span(1) + $gs-gutter;
         }
-
     }
-
 }
 
 .content__dateline--minute-article {
@@ -389,10 +392,14 @@ body {
     }
 }
 
-//Key event styling
-.is-key-event.block--minute-article {
-    @include mq($until: mobileLandscape) {
+// Background image block styling
+@include mq($until: mobileLandscape) {
+    .block--minute-article--background-image.block--minute-article {
         color: #ffffff;
+
+        p {
+            font-weight: 800;
+        }
 
         a {
             color: #ffffff;
