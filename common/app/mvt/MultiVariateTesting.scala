@@ -42,10 +42,10 @@ object CommercialSonobiTest extends TestDefinition(
   name = "commercial-sonobi",
   description = "A url-based test for testing the sonobi header-bidding integration",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 10, 1)
+  sellByDate = new LocalDate(2016, 11, 1)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.uri.endsWith("politics/2016/aug/22/owen-smith-and-jeremy-corbyn-pledge-to-hand-power-back-to-party-members")
+    request.headers.get("X-GU-comm-hb-test").contains("sonobi")
   }
 }
 
