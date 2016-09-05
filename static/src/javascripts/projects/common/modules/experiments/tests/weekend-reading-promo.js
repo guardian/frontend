@@ -25,10 +25,10 @@ define([
         this.expiry = '2016-09-12';
         this.author = 'Kate Whalen';
         this.description = 'For just one pageview, show users a banner promoting the Weekend Reading email';
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Snap banner promotes the Weekend Reading email and leads to visitors signing up';
-        this.audienceCriteria = '50% of visitors';
+        this.audienceCriteria = 'All visitors who have not yet seen this snap banner';
         this.dataLinkNames = 'weekend-reading-snap';
         this.idealOutcome = 'Visitors click on the CTA and sign-up to the Weekend Reading email';
 
