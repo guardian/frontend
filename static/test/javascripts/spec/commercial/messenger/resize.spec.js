@@ -72,7 +72,7 @@ define([
                 })
             )
             .then(done)
-            .catch(done.fail)
+            .catch(done.fail);
         });
     });
 });
