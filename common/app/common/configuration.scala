@@ -349,6 +349,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
+    lazy val frontendAssetsVersion = "v1.1.0"
   }
 
   object witness {
@@ -418,7 +419,6 @@ class GuardianConfiguration extends Logging {
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeamUs")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
-    lazy val surgingContentTeam = configuration.getStringProperty("email.surgingContentTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
