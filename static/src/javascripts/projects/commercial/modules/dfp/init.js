@@ -14,7 +14,8 @@ define([
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
-    'commercial/modules/messenger/resize'
+    'commercial/modules/messenger/resize',
+    'commercial/modules/messenger/scroll'
 ], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService, ophanTracking) {
 
     return init;

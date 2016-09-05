@@ -22,4 +22,14 @@ object StaticPages {
       contentType = GuardianContentTypes.NetworkFront,
       iosType = None,
       shouldGoogleIndex = false))
+
+    def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionSummary(id="global", activeBrandings=None)),
+        webTitle = webTitle,
+        analyticsName = "global",
+        contentType = "survey",
+        iosType = None,
+        shouldGoogleIndex = false))
 }
