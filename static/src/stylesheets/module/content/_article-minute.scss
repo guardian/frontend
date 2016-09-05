@@ -23,7 +23,6 @@ $minute-headline-colour: #ffffff;
 body {
     position: relative;
 
-
     &:before {
         content: '';
         background: url(http://i.imgur.com/lGd0PkM.png);
@@ -37,6 +36,7 @@ body {
         display: block;
         z-index: 9999;
         pointer-events: none;
+        opacity: .2;
         opacity: 0;
     }
 }
@@ -86,6 +86,11 @@ body {
     }
 }
 
+// Prevents transparent line being added by immersive template
+.content__standfirst--immersive-article:before {
+    content: none;
+}
+
 .content--minute-article {
     // Logo Styles
     .logo--us-election,
@@ -119,6 +124,7 @@ body {
         @include mq(desktop) {
             height: gs-height(4);
             top: -#{gs-height(5)};
+            left: -90px;
         }
 
         svg {
@@ -215,7 +221,7 @@ body {
     width: 100%;
 
     &:before {
-        @include rule(rgba(0, 181, 218, .6), $gs-baseline/3);
+        @include rule(rgba(39, 193, 224, .8), $gs-baseline/3);
         z-index: 2;
         right: 0;
     }
@@ -527,10 +533,10 @@ body {
     }
 
     @include mq($from: tablet) {
-        margin-left: gs-span(2) + $gs-gutter;
+        margin-left: 0;
 
         &:before {
-            width: gs-span(5);
+            width: gs-span(4);
         }
 
         .block-elements {
@@ -552,11 +558,15 @@ body {
             padding-right: 0;
         }
     }
+
+    @include mq($from: leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
 }
 
 .block--minute-article--alt-layout.block--minute-article--quote {
     @include mq($from: tablet) {
-        margin-left: 0;
+        margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
             left: 0;
@@ -564,7 +574,11 @@ body {
     }
 
     @include mq($from: desktop) {
-        margin-left: gs-span(3) + $gs-gutter;
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: leftCol) {
+        margin-left: gs-span(4) + $gs-gutter;
     }
 }
 
@@ -641,16 +655,17 @@ body {
 
 .block--minute-article--alt-layout.block--minute-article--tweet {
     @include mq($from: tablet) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: desktop) {
         margin-left: gs-span(4) + $gs-gutter;
     }
 }
 
 // Number to the left of modules
-// .block--minute-article.block--minute-article--quote,
-// .block--minute-article--tweet,
-// .block--minute-article--video {
-//
-//     //padding-left: gs-span(1) + $gs-gutter;
+// .block--minute-article--shorty {
+//     padding-left: gs-span(1) + $gs-gutter;
 //
 //     @include mq($from: desktop) {
 //         .block--minute-article--counter {
