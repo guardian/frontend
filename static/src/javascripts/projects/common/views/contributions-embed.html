@@ -1,37 +1,29 @@
-<figure class="element element-interactive interactive element--<%=position%> contribution-embed contribution-embed--<%=variant%>">
-    <div class="interactive-embed">
-        <input type="hidden" id="hidden-value" name="amount" class="js-amount js-amount-hidden" value=50>
-        <div class="flex-container">
-            <div >
-                <h3 class="form__column-heading title">Support our journalism</h3>
-            </div>
-
-            <div >
-                <p class="contributions-paragraph">If you use it, if you like it, why not pay for it? It's only fair. Please give to the Guardian.</p>
-                <p class="contributions-paragraph">Make a one-off contribution:</p>
-            </div>
-            <div class="amount-field amount-field--<%=variant%>">
-                <div>
-                    <div class="js-button-group button-group u-cf">
-                        <button type="button" class="js-button option-button option-button--bold option-button--<%=variant%>" data-amount="25">
-                            <span class="currency js-currency">£</span>25
-                        </button>
-                        <button type="button" class="js-button option-button option-button--bold option-button--<%=variant%> active" data-amount="50">
-                            <span class="currency js-currency">£</span>50
-                        </button>
-                        <button type="button" class="js-button option-button option-button--bold option-button--<%=variant%>" data-amount="100">
-                            <span class="currency js-currency">£</span>100
-                        </button>
-                        <button type="button" class="js-button option-button option-button--bold option-button--<%=variant%>" data-amount="250">
-                            <span class="currency js-currency">£</span>250
-                        </button>
-                    </div>
+<figure class="element element-interactive interactive element--<%=position%> contributions-embed contribution-embed--<%=variant%>">
+    <input type="hidden" id="hidden-value" name="amount" class="js-amount js-amount-hidden" value=50>
+    <div class="flex-container">
+        <div>
+            <h3 class="form__column-heading title">
+                Support our journalism</h3></div>
+        <div>
+            <p class="contributions-paragraph">If you use it, if you like it, why not pay for it? It's only fair. Please give to the Guardian.</p>
+            <p class="contributions-paragraph">Make a one-off contribution:</p></div>
+        <div class="amount-field amount-field--<%=variant%>">
+            <div>
+                <div class="js-button-group button-group u-cf">
+                    <button type="button" class="js-button option-button option-button--<%=variant%>" data-amount="25">
+                        <span class="currency js-currency">£</span>25
+                    </button><button type="button" class="js-button option-button option-button--<%=variant%> active" data-amount="50">
+                        <span class="currency js-currency">£</span>50
+                    </button><button type="button" class="js-button option-button option-button--<%=variant%>" data-amount="100">
+                        <span class="currency js-currency">£</span>100
+                    </button><button type="button" class="js-button option-button option-button--<%=variant%>" data-amount="250">
+                        <span class="currency js-currency">£</span>250</button>
                 </div>
-                <div >
-                    <a class="js-submit-input option-button contribute--<%=variant%> contribute action--contribute" href="https://contribute.theguardian.com/uk?INTCMP=<%=intCMP%>&amount=50" target="_blank">
-                        Contribute
-                    </a>
-                </div>
+            </div>
+            <div >
+                <a class="js-submit-input option-button contribute--<%=variant%> contribute action--contribute" href="https://contribute.theguardian.com/uk?INTCMP=<%=intCMP%>&amount=50" target="_blank">
+                    Contribute
+                </a>
             </div>
         </div>
     </div>
