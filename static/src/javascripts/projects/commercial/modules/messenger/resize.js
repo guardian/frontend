@@ -4,7 +4,7 @@ define([
     'common/utils/fastdom-promise',
     'commercial/modules/messenger'
 ], function (assign, closest, fastdom, messenger) {
-    messenger.register('resize', function(specs, iframe) {
+    messenger.register('resize', function(specs, ret, iframe) {
         return resize(specs, closest(iframe, '.js-ad-slot'));
     });
 
