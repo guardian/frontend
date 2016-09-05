@@ -100,6 +100,8 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
+      
+    }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
     jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
