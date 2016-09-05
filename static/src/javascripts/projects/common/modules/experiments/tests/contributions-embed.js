@@ -47,9 +47,15 @@ define([
         this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
             var pageObj = config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
         };
 
+        function obWidgetIsShown() {
+            var $outbrain = $('.js-outbrain-container');
+            return $outbrain && $outbrain.length > 0;
+        }
+
+        
         function getSpacefinderRules() {
             return {
                 bodySelector: '.js-article__body',

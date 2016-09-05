@@ -4,8 +4,6 @@ define([
     $
 ) {
     var ACTIVE_CLASS = 'active';
-    var AMOUNT_CLASS = 'js-amount';
-
 
     function init() {
         $.forEachElement(('[data-amount]'), function(el){
@@ -36,7 +34,6 @@ define([
     }
 
     function setAmount(amount) {
-        $('input.' + AMOUNT_CLASS).val(amount);
         var a = document.querySelector('.js-submit-input');
         a.href = a.href.replace(/amount=.*/, 'amount=' + amount.toString());
     }
