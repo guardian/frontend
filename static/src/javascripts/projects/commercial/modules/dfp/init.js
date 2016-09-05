@@ -21,7 +21,7 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = config.tests.commercialSonobi ? setupTags() : Promise.resolve();
+            var initialTag = config.tests.commercialSonobi ? setupSonobi() : Promise.resolve();
             return initialTag.then(setupAdvertising);
         }
 
@@ -30,22 +30,28 @@ define([
         });
     }
 
-    function setupTags() {
+    function setupSonobi() {
         return Promise.resolve(require(['js!sonobi.js']));
     }
 
     function setupAdvertising() {
 
         return new Promise(function(resolve) {
-            // if we don't already have googletag, create command queue and load it async
-            if (!window.googletag) {
-                window.googletag = {cmd: []};
-                // load the library asynchronously
-                require(['js!googletag.js']);
-            }
 
-            if (dfpEnv.prebidEnabled) {
-                dfpEnv.prebidService = new PrebidService();
+            if (config.tests.commercialSonobi) {
+                // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+                require(['js!googletag.js']);
+            } else {
+                if (!window.googletag) {
+                    window.googletag = {cmd: []};
+
+                    // Load the library asynchronously.
+                    require(['js!googletag.js']);
+                }
+
+                if (dfpEnv.prebidEnabled) {
+                    dfpEnv.prebidService = new PrebidService();
+                }
             }
 
             window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
