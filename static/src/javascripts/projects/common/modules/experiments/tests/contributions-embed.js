@@ -35,7 +35,7 @@ define([
 
         this.id = 'ContributionsEmbed20160905';
         this.start = '2016-09-05';
-        this.expiry = '2016-09-10';
+        this.expiry = '2016-09-09';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better inline and in-article than at the bottom of the article.';
         this.showForSensitive = false;
