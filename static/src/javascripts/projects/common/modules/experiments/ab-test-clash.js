@@ -17,7 +17,7 @@ define([
             variants: ['about', 'pockets', 'like', 'love', 'truth']
         };
 
-        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive']};
+        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control']};
 
         var contributionsUserTesting = {name: 'ContributionsUserTesting20160831', variants: ['control']};
 

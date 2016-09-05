@@ -145,7 +145,6 @@ main() {
   check_encryption
   create_aws_config
   install_homebrew
-  install_awscli
   install_jdk
   install_node
   install_gcc
