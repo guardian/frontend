@@ -16,7 +16,6 @@ object Uk extends Edition(
   implicit val UK = Uk
 
   val sportLocalNav: Seq[SectionLink] = Seq(
-    rioOlympics,
     football,
     cricket,
     rugbyunion,

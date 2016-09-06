@@ -49,18 +49,16 @@ define([
     };
 
     /**
-     * The array returned from the cookie is in the format;
+     * The object returned from the cookie has the keys:
      *
-     * [
-     *    id,
-     *    email,
-     *    displayname,
-     *    userGroupBitmask,
-     *    expiryDate,
-     *    persist,
-     *    accountCreatedDate,
+     * {
+     *    id
+     *    primaryEmailAddress
+     *    displayName
+     *    accountCreatedDate
      *    emailVerified
-     * ];
+     *    rawResponse
+     * };
      *
      * @return {?Object} the user information
      */

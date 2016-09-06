@@ -53,24 +53,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
-
-  val ABContributionsUserTesting20160831 = Switch(
+  
+  val ABContributionsEmbed20160905= Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-user-testing-20160831",
-    "User testing effectiveness of inline CTA for contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
-    exposeClientSide = true
-  )
-
-  val ABContributionsEmbed20160823= Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-embed-20160823",
-    "Test contributions embed with amount picker.",
+    "ab-contributions-embed-20160905",
+    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
+    sellByDate = new LocalDate(2016, 9, 9),
     exposeClientSide = true
   )
 

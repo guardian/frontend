@@ -192,3 +192,6 @@ Developer: Jimmy Breck-McKye
 Twitter: @jbreckmckye
 Website: www.breck-mckye.com
 Location: London, UK
+
+Developer: Jamie Byers
+Location: London, UK
