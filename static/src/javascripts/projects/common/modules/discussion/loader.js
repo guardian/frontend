@@ -370,6 +370,7 @@ Loader.prototype.renderBonzoCommentCount = function() {
             } else {
                 this.setState('empty');
             }
+            mediator.emit('comments-count-loaded');
         }
     }.bind(this))
     .catch(this.logError.bind(this, 'CommentCount'));
