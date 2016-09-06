@@ -37,7 +37,7 @@ body {
         z-index: 9999;
         pointer-events: none;
         opacity: .2;
-        opacity: 0;
+        //opacity: 0;
     }
 }
 
@@ -57,16 +57,22 @@ body {
 }
 
 .content__headline--minute {
-    @include fs-headline(8, true);
     line-height: .95;
     color: #ffffff;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
     position: relative;
 
+    @include mq(tablet) {
+        font-size: 44px !important;
+        width: gs-span(6);
+    }
+
     @include mq(desktop) {
+        font-size: 64px !important;
         padding-bottom: $gs-baseline;
-        font-size: 3.5rem;
+        margin-left: gs-span(1) + $gs-gutter;
+        width: gs-span(8);
     }
 
     @include mq(phablet) {
@@ -75,16 +81,12 @@ body {
             position: absolute;
             top: -$gs-baseline/3;
             left: 0;
-            width: gs-span(4) + $gs-gutter * 2;
         }
     }
 
     &:after {
         @include mq(desktop) {
-            width: gs-span(7);
-        }
-        @include mq(wide) {
-            width: gs-span(8);
+            width: gs-span(5);
         }
     }
 }
@@ -131,7 +133,7 @@ body {
         @include mq(desktop) {
             height: gs-height(4);
             top: -#{gs-height(5)};
-            left: -90px;
+            left: -78px;
         }
 
         svg {
@@ -140,7 +142,7 @@ body {
             max-width: 189px;
 
             @include mq($from: desktop) {
-                max-width: 257px;
+                max-width: 224px;
             }
         }
     }
@@ -154,17 +156,15 @@ body {
     /* ==========================================================================
        Header Layout
        ========================================================================== */
-    .content__headline,
     .content__dateline--minute-article,
-    .content__standfirst,
-    .logo--us-election {
+    .content__standfirst {
         @include mq(tablet) {
             max-width: gs-span(4);
             margin-left: 0;
         }
 
         @include mq(desktop) {
-            max-width: gs-span(6);
+            max-width: gs-span(5);
             margin-left: gs-span(1) + $gs-gutter;
         }
     }
@@ -222,6 +222,7 @@ body {
     overflow: hidden;
     position: relative;
     width: 100%;
+    margin-top: $gs-baseline;
 
     &:before {
         @include rule(rgba(39, 193, 224, .8), $gs-baseline/3);
@@ -263,7 +264,6 @@ body {
         }
 
         .block-elements {
-            padding-top: $gs-baseline/4;
             padding-left: $gs-gutter/2;
             padding-right: $gs-gutter/2;
 
@@ -283,8 +283,6 @@ body {
 
     // Mobile Landscape
     @include mq($from: mobileLandscape) {
-        margin-top: $gs-baseline;
-
         figure.element-image {
             position: relative;
         }
@@ -293,7 +291,7 @@ body {
     // Tablet
     @include mq($from: tablet) {
         max-width: gs-span(8);
-        padding-top: $gs-baseline;
+        margin-bottom: $gs-baseline * 3;
 
         &:before {
             width: gs-span(7);
@@ -305,6 +303,7 @@ body {
             box-sizing: border-box;
             width: gs-span(3);
             float: left;
+            margin-right: $gs-gutter;
 
             .block-title {
                 @include fs-headline(4);
@@ -314,7 +313,6 @@ body {
         figure.element-image {
             margin-top: 0;
             width: gs-span(5);
-            margin-left: $gs-gutter;
             display: inline-block;
         }
     }
@@ -322,12 +320,11 @@ body {
     // Desktop
     @include mq($from: desktop) {
         max-width: gs-span(10);
-        margin-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline * 4;
+        margin-bottom: $gs-baseline * 5;
         margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
-            width: gs-span(10);
+            width: gs-span(8);
         }
 
         .block-elements {
@@ -343,6 +340,10 @@ body {
     @include mq($from: leftCol) {
         max-width: gs-span(11);
         margin-left: gs-span(1) + $gs-gutter;
+
+        &:before {
+            width: gs-span(10);
+        }
 
         .block-elements {
             width: gs-span(5);
@@ -375,11 +376,8 @@ body {
 
         .block-elements {
             float: right;
-        }
-
-        figure.element-image {
-            margin-left: 0;
-            margin-right: $gs-gutter;
+            margin-left: $gs-gutter;
+            margin-right: 0;
         }
     }
 
@@ -389,25 +387,6 @@ body {
 
     @include mq($from: wide) {
         margin-left: gs-span(3) + $gs-gutter;
-    }
-}
-
-// Background image block styling
-@include mq($until: mobileLandscape) {
-    .block--minute-article--background-image.block--minute-article {
-        color: #ffffff;
-
-        p {
-            font-weight: 800;
-        }
-
-        a {
-            color: #ffffff;
-        }
-
-        .caption {
-            color: rgba(255, 255, 255, .5)
-        }
     }
 }
 
@@ -421,17 +400,11 @@ body {
 
     @include mq($from: desktop) {
         display: block;
-        font-size: 68px;
-        line-height: 72px;
-        letter-spacing: -3px;
+        font-size: 70px;
+        line-height: 74px;
+        letter-spacing: -5px;
         font-weight: 100;
         margin-top: -$gs-baseline/3;
-    }
-
-    @include mq($from: leftCol) {
-        font-size: 88px;
-        line-height: 92px;
-        letter-spacing: -5px;
     }
 }
 
@@ -549,6 +522,8 @@ body {
         .block-elements {
             width: gs-span(8);
             float: none;
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
@@ -609,6 +584,7 @@ body {
         .block-elements {
             width: gs-span(7);
             float: none;
+            margin: 0;
         }
 
         .caption__minute-article {
@@ -671,22 +647,35 @@ body {
 }
 
 // Number to the left of modules
-// .block--minute-article--shorty {
-//     padding-left: gs-span(1) + $gs-gutter;
-//
-//     @include mq($from: desktop) {
-//         .block--minute-article--counter {
-//             position: absolute;
-//             left: 0;
-//             width: gs-span(1);
-//         }
-//     }
-// }
+.block--minute-article--shorty {
+     @include mq($from: desktop) {
+        position: relative;
+        overflow: visible;
+
+         .block--minute-article--counter {
+           position: absolute;
+           width: gs-span(1) + $gs-gutter;
+           top: 4px;
+           left: -(gs-span(1) + $gs-gutter);
+           border-top: $gs-baseline/3 solid $us-minute-highlight-colour;
+       }
+   }
+}
 
 // Background Image Layout
 @supports (object-fit: cover) {
     .block--minute-article--background-image {
         @include mq($until: mobileLandscape) {
+            color: #ffffff;
+
+            p {
+                font-weight: 700;
+            }
+
+            a {
+                color: #ffffff;
+            }
+
             .block-elements {
                 margin-bottom: $gs-baseline*4;
                 position: relative;
@@ -725,6 +714,7 @@ body {
 
             .caption__minute-article {
                 background-color: transparent;
+                color: rgba(255, 255, 255, .5);
                 min-height: $gs-baseline*2;
                 position: absolute;
                 bottom: 0;
