@@ -36,23 +36,10 @@ $minute-headline-colour: #ffffff;
 }
 
 .content__headline--minute {
-    line-height: .95;
     color: #ffffff;
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
+    line-height: .95;
     position: relative;
-
-    @include mq(tablet) {
-        font-size: 44px !important;
-        width: gs-span(6);
-    }
-
-    @include mq(desktop) {
-        font-size: 64px !important;
-        padding-bottom: $gs-baseline;
-        margin-left: gs-span(1) + $gs-gutter;
-        width: gs-span(8);
-    }
+    padding-bottom: $gs-baseline;
 
     @include mq(phablet) {
         &:after {
@@ -63,8 +50,17 @@ $minute-headline-colour: #ffffff;
         }
     }
 
-    &:after {
-        @include mq(desktop) {
+    @include mq(tablet) {
+        font-size: 44px !important;
+        width: gs-span(6);
+    }
+
+    @include mq(desktop) {
+        font-size: 64px !important;
+        margin-left: gs-span(1) + $gs-gutter;
+        width: gs-span(8);
+
+        &:after {
             width: gs-span(5);
         }
     }
@@ -128,8 +124,6 @@ $minute-headline-colour: #ffffff;
 
     .content__standfirst {
         @include fs-header(2);
-        color: $minute-headline-colour;
-        padding-bottom: $gs-baseline;
     }
 
     /* ==========================================================================
@@ -158,7 +152,6 @@ $minute-headline-colour: #ffffff;
 /* ==========================================================================
    Main Column
    ========================================================================== */
-
 .content__main-column--minute-article {
     margin: 0 auto;
     max-width: none;
@@ -196,12 +189,9 @@ $minute-headline-colour: #ffffff;
    ========================================================================== */
 
 .block--minute-article {
-    background-color: $us-minute-main-colour;
-    color: $us-minute-contrast-colour;
     overflow: hidden;
     position: relative;
     width: 100%;
-    margin-top: $gs-baseline;
 
     &:before {
         @include rule(rgba(39, 193, 224, .8), $gs-baseline/3);
@@ -260,16 +250,10 @@ $minute-headline-colour: #ffffff;
         }
     }
 
-    // Mobile Landscape
-    @include mq($from: mobileLandscape) {
-        figure.element-image {
-            position: relative;
-        }
-    }
-
     // Tablet
     @include mq($from: tablet) {
         max-width: gs-span(8);
+        margin-top: $gs-baseline;
         margin-bottom: $gs-baseline * 3;
 
         &:before {
@@ -392,13 +376,11 @@ $minute-headline-colour: #ffffff;
    ========================================================================== */
 
 .block--minute-article {
-
     .updated-time {
         display: none;
     }
 
     // Standard elements
-
     a,
     .u-fauxlink {
         color: $us-minute-contrast-colour;
@@ -500,9 +482,6 @@ $minute-headline-colour: #ffffff;
 
         .block-elements {
             width: gs-span(8);
-            float: none;
-            margin-left: 0;
-            margin-right: 0;
         }
     }
 
@@ -515,8 +494,6 @@ $minute-headline-colour: #ffffff;
 
         .block-elements {
             width: gs-span(10);
-            padding-left: 0;
-            padding-right: 0;
         }
     }
 
@@ -528,10 +505,6 @@ $minute-headline-colour: #ffffff;
 .block--minute-article--alt-layout.block--minute-article--quote {
     @include mq($from: tablet) {
         margin-left: gs-span(1) + $gs-gutter;
-
-        &:before {
-            left: 0;
-        }
     }
 
     @include mq($from: desktop) {
@@ -557,13 +530,10 @@ $minute-headline-colour: #ffffff;
 
         &:before {
             width: gs-span(3);
-            left: 0;
         }
 
         .block-elements {
             width: gs-span(7);
-            float: none;
-            margin: 0;
         }
 
         .caption__minute-article {
@@ -597,7 +567,6 @@ $minute-headline-colour: #ffffff;
 
         &:before {
             width: gs-span(3);
-            left: 0;
         }
 
         .block-elements {
@@ -622,6 +591,21 @@ $minute-headline-colour: #ffffff;
 
     @include mq($from: desktop) {
         margin-left: gs-span(4) + $gs-gutter;
+    }
+}
+
+// Resetting styles for media blocks
+.block--minute-article--tweet,
+.block--minute-article--video,
+.block--minute-article--quote {
+    &:before {
+        left: 0;
+    }
+
+    .block-elements {
+        margin-left: 0;
+        margin-right: 0;
+        float: none;
     }
 }
 
