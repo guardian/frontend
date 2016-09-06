@@ -98,6 +98,10 @@ $block-padding-right: $gs-gutter;
     padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
     position: relative;
 
+    @include mq($from: tablet) {
+        width: gs-span(1);
+    }
+
     &.published-time {
         @include fs-textSans(2);
         margin: 0;
