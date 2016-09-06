@@ -20,27 +20,6 @@ $minute-headline-colour: #ffffff;
     }
 }
 
-body {
-    position: relative;
-
-    &:before {
-        content: '';
-        background: url(http://i.imgur.com/lGd0PkM.png);
-        background-repeat: repeat-y;
-        width: 1301px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        margin-left: -650px;
-        display: block;
-        z-index: 9999;
-        pointer-events: none;
-        opacity: .2;
-        //opacity: 0;
-    }
-}
-
 /* ==========================================================================
    Header
    ========================================================================== */
