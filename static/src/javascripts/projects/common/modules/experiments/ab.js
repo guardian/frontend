@@ -21,6 +21,7 @@ define([
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
+    'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/no-social-count'
 ], function (
     reportError,
@@ -45,6 +46,7 @@ define([
     ContributionsEmbed,
     AdBlockingResponse,
     WeekendReadingEmail,
+    WeekendReadingPromo,
     NoSocialCount
 ) {
 
@@ -63,6 +65,7 @@ define([
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
         new WeekendReadingEmail(),
+        new WeekendReadingPromo(),
         new NoSocialCount()
     ];
 
