@@ -40,7 +40,7 @@ define([
 
         return new Promise(function(resolve) {
 
-            if (config.tests.commercialHbSonobi === 'sonobi') {
+            if (config.tests.commercialHbSonobi) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
             } else {
