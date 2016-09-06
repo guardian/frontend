@@ -95,6 +95,16 @@
         height: 44px;
     }
 
+    .survey-text__strong {
+        @include fs-textSans(4);
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0;
+        padding: 6px 0 0 10px;
+        background-color: #f8b600;
+        height: 44px;
+    }
+
     .survey-text {
         padding: 4px 10px 0;
     }
@@ -228,7 +238,7 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 14px;
+        font-size: 12px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
 
@@ -295,8 +305,7 @@
     }
 
     .image-link-container {
-        width: 490px;
-        height: 108px;
+        height: 76px;
         margin-bottom: $gs-column-width/2;
         margin-left: $gs-gutter / 2;
         background: url('/assets/images/commercial/ad-block-instructions-chrome.png') no-repeat;
