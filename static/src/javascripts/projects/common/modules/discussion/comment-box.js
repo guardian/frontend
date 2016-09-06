@@ -125,7 +125,7 @@ CommentBox.prototype.prerender = function() {
 
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
-    } else {
+    } else if (this.options.shouldRenderMainAvatar) {
         var avatar = this.getElem('avatar-wrapper');
         avatar.setAttribute('userid', userData.id);
         UserAvatars.avatarify(avatar);
