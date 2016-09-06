@@ -163,7 +163,7 @@
 
         @include mq(tablet) {
             left: 50%;
-            top: percentage(1/5);
+            top: percentage(1/10);
             width: $gs-column-width * 10;
             height: auto;
             margin-left: -$gs-column-width * 5;
@@ -241,6 +241,10 @@
         }
     }
 
+    .survey-text__info.smaller {
+        font-size: 10px;
+    }
+
     .survey-links {
         overflow: hidden;
         margin-bottom: $gs-column-width/4;
@@ -278,10 +282,10 @@
         font-size: 10px;
     }
 
-    .survey-subscriber-links hr {
-        margin-top: $gs-column-width/2;
-        margin-bottom: $gs-column-width/2;
-        color: #e3e3e3;
+    .survey-content hr {
+        margin-top: $gs-column-width/4;
+        margin-bottom: $gs-column-width/4;
+        color: rgba(255, 255, 255, 0.3);
     }
 
     .inline-arrow-white-right {
@@ -290,6 +294,13 @@
         height: $gs-column-width/2;
     }
 
+    .image-link-container {
+        width: 490px;
+        height: 108px;
+        margin-bottom: $gs-column-width/2;
+        margin-left: $gs-gutter / 2;
+        background: url('/assets/images/commercial/ad-block-instructions-chrome.png') no-repeat;
+    }
 
 }
 

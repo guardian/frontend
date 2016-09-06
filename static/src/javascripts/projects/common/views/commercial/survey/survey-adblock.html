@@ -28,9 +28,9 @@
                     <%=surveyText%>
                 </p>
                 <% if (surveyTextSecond) { %>
-                <p class="survey-text__info">
-                    <%=surveyTextSecond%>
-                </p>
+                    <p class="survey-text__info">
+                        <%=surveyTextSecond%>
+                    </p>
                 <% } %>
                 <% if (surveyTextThird) { %>
                 <p class="survey-text__info">
@@ -56,19 +56,16 @@
                     <%=surveyTextUserHelp%>
                 </p>
                 <% } %>
-                <p class="survey-text__info">
-                    Thanks for supporting us.
-                </p>
                 <% if (surveyTextMembership || surveyTextSubscriber) { %>
-                <div class="survey-subscriber-links">
+                <div class="survey-links">
                     <hr/>
                     <% if (surveyTextMembership) { %>
-                    <p class="survey-text__info">
+                    <p class="survey-text__info smaller">
                         <%=surveyTextMembership%>
                     </p>
                     <% } %>
                     <% if (surveyTextSubscriber) { %>
-                    <p class="survey-text__info">
+                    <p class="survey-text__info smaller">
                         <%=surveyTextSubscriber%>
                     </p>
                     <% } %>
