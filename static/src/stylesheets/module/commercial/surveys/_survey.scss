@@ -117,7 +117,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, .92);
     z-index: $zindex-overlay;
     width: 100%;
     height: 100%;
@@ -285,7 +285,7 @@
     .survey-content hr {
         margin-top: $gs-column-width/4;
         margin-bottom: $gs-column-width/4;
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, .3);
     }
 
     .inline-arrow-white-right {
