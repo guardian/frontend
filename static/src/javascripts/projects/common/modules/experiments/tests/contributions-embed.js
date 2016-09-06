@@ -8,7 +8,6 @@ define([
     'common/utils/mediator',
     'text!common/views/contributions-embed.html',
     'common/utils/robust',
-    'text!common/views/giraffe-message.html',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
     'common/modules/experiments/embed',
@@ -23,7 +22,6 @@ define([
              mediator,
              contributionsEmbed,
              robust,
-             giraffeMessage,
              arrowRight,
              config,
              embed,
@@ -54,6 +52,7 @@ define([
             var $outbrain = $('.js-outbrain-container');
             return $outbrain && $outbrain.length > 0;
         }
+
         
         function getSpacefinderRules() {
             return {

@@ -32,14 +32,14 @@ define([
         this.start = '2016-09-06';
         this.expiry = '2016-09-12';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test whether the long ask performs better than _____.';
+        this.description = 'Test whether contributions embed performs better than our previous in-article component tests.';
         this.showForSensitive = false;
-        this.audience = 0.10;
+        this.audience = 0.05;
         this.audienceOffset = 0.33;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
+        this.idealOutcome = 'The embed performs at least as good as our previous in-article component tests';
         this.canRun = function () {
             var pageObj = config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
