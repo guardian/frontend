@@ -737,10 +737,10 @@
         float: none;
         min-height: 0;
         overflow: visible;
-        margin: auto $gs-gutter / 4 0;
+        margin: auto 0 $gs-gutter / 4 0;
         padding: 0;
         position: static;
-        width: auto;
+        width: 96%;
 
         &::before,
         &::after {

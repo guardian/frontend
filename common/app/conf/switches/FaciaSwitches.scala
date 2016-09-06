@@ -40,7 +40,7 @@ trait FaciaSwitches {
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
