@@ -75,7 +75,11 @@ define([
                 },
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
-                    if (isDev) {
+
+                    var isIgnored = typeof(data.tags.action) !== 'undefined' &&
+                        config.page.ignoredSentryActions.indexOf(data.tags.action) != -1;
+
+                    if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
                         if (window.console && window.console.warn) {
                             window.console.warn('Raven captured error.', data);
@@ -84,6 +88,7 @@ define([
 
                     return config.switches.enableSentryReporting &&
                         Math.random() < 0.1 &&
+                        !isIgnored &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }

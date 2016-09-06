@@ -7,7 +7,7 @@ import conf.Configuration.environment
 import model._
 import play.api.Play
 import play.api.Play.current
-import play.api.libs.json.{JsValue, JsBoolean, JsString, Json}
+import play.api.libs.json.{JsBoolean, JsString, JsArray, JsValue, Json}
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -53,6 +53,10 @@ object JavaScriptPage {
       case _ => Map()
     }
 
+    val ignoredSentryActions : Seq[JsString] = Seq(
+      JsString("ads")
+    )
+
     javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -67,7 +71,8 @@ object JavaScriptPage {
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
-      ("cardStyle", JsString(cardStyle))
+      ("cardStyle", JsString(cardStyle)),
+      ("ignoredSentryActions", JsArray(ignoredSentryActions) )
     )
   }
 }
