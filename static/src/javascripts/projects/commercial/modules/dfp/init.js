@@ -47,7 +47,7 @@ define([
                 if (!window.googletag) {
                     window.googletag = {cmd: []};
 
-                    // Load the library asynchronously.
+                    // If we don't already have googletag, create command queue and load it async.
                     require(['js!googletag.js']);
                 }
 
