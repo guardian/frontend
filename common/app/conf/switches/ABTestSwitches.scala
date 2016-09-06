@@ -16,7 +16,7 @@ trait ABTestSwitches {
 
   val ABDiscussionExternalFrontend = Switch(
     SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
+    "ab-discussion-external-frontend-count",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
@@ -53,7 +53,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 6),
     exposeClientSide = true
   )
-  
+
   val ABContributionsEmbed20160905= Switch(
     SwitchGroup.ABTests,
     "ab-contributions-embed-20160905",
