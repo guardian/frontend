@@ -66,6 +66,10 @@
     background-color: $neutral-8;
 }
 
+.top-banner-ad-container--fabric {
+    overflow: hidden;
+}
+
 .sticky-top-banner-ad {
     z-index: $zindex-popover;
     width: 100%;
@@ -656,6 +660,10 @@
 
 .ad-slot--revealer {
     min-width: 300px;
+}
+
+.ad-slot--fabric {
+    overflow: hidden;
 }
 
 .ad-slot--fabric-v1,
