@@ -27,7 +27,12 @@ Twitter: @kenlim
 From: Kuala Lumpur, Malaysia
 Location: London, UK
 
-Developer: Stephan Fowler
+Design human: Zef Cherry-Kynaston
+Twitter: @zeftilldeath
+From: Wales, UK
+Location: London, UK
+
+Product Manager: Stephan Fowler (Prev: Developer)
 Twitter: @stephanfowler
 From: London, UK
 
