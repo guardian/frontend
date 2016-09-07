@@ -41,6 +41,10 @@ define([
                     addTrackingPixel(bonzo(adSlot), params.Trackingpixel + params.cacheBuster);
                 }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
+                adSlot.classList.add('ad-slot--fabric');
+                if( adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
+                    adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
+                }
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 
