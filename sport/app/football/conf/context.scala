@@ -90,7 +90,7 @@ class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging
         else
           urlString
 
-        val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
+        val promiseOfResponse = wsClient.url(url).withRequestTimeout(2000).get()
 
         promiseOfResponse.map{ r =>
 

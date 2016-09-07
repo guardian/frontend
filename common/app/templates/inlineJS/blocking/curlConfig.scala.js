@@ -62,6 +62,7 @@ window.curlConfig = {
             reqwest:                        'components/reqwest/reqwest',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
+            'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',

@@ -10,9 +10,6 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /survey/customtodayemail                                             controllers.SurveyPageController.renderCustomEmail404Page()
-GET        /survey/mydigest                                                     controllers.SurveyPageController.renderMyDigestExplainerPage()
-GET        /survey/mydigest/404                                                 controllers.SurveyPageController.renderMyDigest404Page()
 GET        /signup/weekendreading                                               controllers.SurveyPageController.renderWeekendReadingPage()
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
