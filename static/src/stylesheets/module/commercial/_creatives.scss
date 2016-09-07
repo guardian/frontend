@@ -410,6 +410,19 @@
         }
     }
 
+    .creative__cta {
+        position: absolute;
+        right: 10px;
+        opacity: 0;
+        transition: opacity .2s;
+    }
+
+    .ad-exp__expand--opened .creative__cta {
+        opacity: 1;
+    }
+
+    .creative__cta--position-top    { top:    10px; }
+    .creative__cta--position-bottom { bottom: 10px; }
 }
 
 .creative--expandable-ga {

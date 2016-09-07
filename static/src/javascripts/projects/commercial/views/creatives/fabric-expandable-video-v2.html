@@ -1,5 +1,3 @@
-<% /* Forked from expandable-video-v2.html */ %>
-
 <div class="creative--expandable-video <%=data.videoOptions%>">
 
     <div class="ad-slot__label adFullWidth__label facia-container--layout-front" data-test-id="ad-slot-label">
@@ -21,6 +19,7 @@
                 <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImageM%>') <%=data.slide2Layer3BGImageRepeatM%> <%=data.slide2Layer3BGImagePositionM%>;"></div>
             </div>
         </div>
+        <%=data.mobileCTA%>
     </div>
 
     <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: <%=data.backgroundColor%>">
@@ -38,6 +37,7 @@
                 <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImage%>') <%=data.slide2Layer3BGImageRepeat%> <%=data.slide2Layer3BGImagePosition%>;"></div>
             </div>
         </div>
+        <%=data.desktopCTA%>
     </div>
 
     <div class="slide-video" style="background: url('<%=data.videoBGImage%>') <%=data.videoBGImageRepeat%> <%=data.videoBGImagePosition%>;">
