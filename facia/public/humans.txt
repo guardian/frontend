@@ -1,4 +1,4 @@
-/* TEAM */
+/* CURRENT TEAM */
 
 Head of User Experience: Nick Haley
 Twitter: @twobobswerver
@@ -73,7 +73,7 @@ Developer: Régis Kuckaertz
 Twitter: @regiskuckaertz
 From: Luxembourg, Luxembourg
 
-/* ALUMNI and COLLEAGUES */
+/* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
 From: Bath, Somerset
