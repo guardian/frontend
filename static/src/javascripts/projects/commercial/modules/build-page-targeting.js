@@ -3,6 +3,7 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/url',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
@@ -21,6 +22,7 @@ define([
     cookies,
     detect,
     storage,
+    url,
     audienceScienceGateway,
     krux,
     identity,
@@ -142,6 +144,9 @@ define([
                 })[0] || {};
 
             return matchedRef.id;
+        }, getWhitelistedQueryParams = function() {
+            var whiteList = ['0p19G'];
+            return pick(url.getUrlVars(), whiteList);
         };
 
     return function (opts) {
@@ -171,7 +176,8 @@ define([
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-            }, audienceScienceGateway.getSegments());
+            }, audienceScienceGateway.getSegments()
+            , getWhitelistedQueryParams());
 
         // filter out empty values
         return pick(pageTargets, function (target) {
