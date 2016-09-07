@@ -189,6 +189,9 @@
     @include mq(mobileLandscape) {
         margin-top: 0;
     }
+    @include mq(tablet) {
+        margin: 0 $gs-gutter/2;
+    }
 }
 .ad-slot--gallery-inline {
     background-color: $media-background;
@@ -238,7 +241,6 @@
     @include mq(tablet) {
         position: relative;
         height: auto;
-        margin: 0 $gs-gutter/2;
 
         .content-footer & {
             width: 300px;
