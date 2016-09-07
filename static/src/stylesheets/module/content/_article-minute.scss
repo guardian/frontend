@@ -459,9 +459,13 @@ $minute-headline-colour: #ffffff;
         display: block;
     }
 
+    .quoted {
+        margin: 0;
+    }
+
     .inline-quote svg {
         width: 50px;
-        height: auto;
+        height: 34px;
     }
 
     .quoted__contents {
