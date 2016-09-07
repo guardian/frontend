@@ -370,6 +370,7 @@ Loader.prototype.renderBonzoCommentCount = function() {
             } else {
                 this.setState('empty');
             }
+            mediator.emit('comments-count-loaded');
         }
     }.bind(this))
     .catch(this.logError.bind(this, 'CommentCount'));
@@ -383,7 +384,8 @@ Loader.prototype.renderCommentCount = function () {
             discussionId: this.getDiscussionId(),
             element: document.getElementsByClassName('js-discussion-external-frontend')[0],
             userFromCookie: !!Id.getUserFromCookie(),
-            profileUrl: config.page.idUrl
+            profileUrl: config.page.idUrl,
+            profileClientId: config.switches.registerWithPhone ? 'comments' : ''
         });
     } else {
         return this.renderBonzoCommentCount();

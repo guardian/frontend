@@ -1,21 +1,31 @@
 define([
+    'common/utils/fetch-json',
+    'common/utils/mediator',
     'common/utils/report-error'
 ], function(
+    fetchJson,
+    mediator,
     reportError
 ) {
     function canRun(ab, curlConfig) {
-        return (ab.isInVariant('DiscussionExternalFrontend', 'react') && curlConfig.paths['discussion-frontend-react']) ||
-            (ab.isInVariant('DiscussionExternalFrontend', 'preact') && curlConfig.paths['discussion-frontend-preact']);
+        return (ab.isInVariant('DiscussionExternalFrontendCount', 'react') && curlConfig.paths['discussion-frontend-react']) ||
+            (ab.isInVariant('DiscussionExternalFrontendCount', 'preact') && curlConfig.paths['discussion-frontend-preact']);
     }
 
     function load(ab, loader, opts) {
-        var requireVariant = ab.isInVariant('DiscussionExternalFrontend', 'react') ? 'react' : 'preact';
+        var requireVariant = ab.isInVariant('DiscussionExternalFrontendCount', 'react') ? 'react' : 'preact';
         return require('discussion-frontend-' + requireVariant, function (frontend) {
             // Preact works in a slightly different way
             // https://github.com/developit/preact-compat/issues/145
             if (requireVariant === 'preact') {
                 opts.element.innerHTML = '';
             }
+            // Inject the net module to work around the lack of a global fetch
+            // It can be removed once all browsers have window.fetch
+            opts.net = {
+                json: fetchJson
+            };
+
             frontend(opts)
             .then(function (emitter) {
                 emitter.on('error', function (feature, error) {
@@ -25,6 +35,7 @@ define([
                     if (value === 0) {
                         loader.setState('empty');
                     }
+                    mediator.emit('comments-count-loaded');
                 });
             })
             .catch(function (error) {
