@@ -399,7 +399,6 @@ $minute-headline-colour: #ffffff;
         }
     }
 
-
     // Captions
     .caption__minute-article {
         box-sizing: border-box;
@@ -447,7 +446,6 @@ $minute-headline-colour: #ffffff;
             fill: $minute-highlight-colour;
         }
     }
-
 }
 
 /* ==========================================================================
@@ -564,6 +562,7 @@ $minute-headline-colour: #ffffff;
 .block--minute-article--tweet {
     @include mq($from: tablet) {
         width: gs-span(5);
+        margin-left:  gs-span(2) + $gs-gutter;
 
         &:before {
             width: gs-span(3);
@@ -576,20 +575,28 @@ $minute-headline-colour: #ffffff;
 
     @include mq($from: desktop) {
         width: gs-span(6);
-        margin-left:  gs-span(6) + $gs-gutter;
+        margin-left:  gs-span(5) + $gs-gutter;
 
         .block-elements {
             width: gs-span(6);
         }
     }
+
+    @include mq($from: leftCol) {
+        margin-left:  gs-span(6) + $gs-gutter;
+    }
 }
 
 .block--minute-article--alt-layout.block--minute-article--tweet {
     @include mq($from: tablet) {
-        margin-left: gs-span(2) + $gs-gutter;
+        margin-left: gs-span(1) + $gs-gutter;
     }
 
     @include mq($from: desktop) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: leftCol) {
         margin-left: gs-span(4) + $gs-gutter;
     }
 }
