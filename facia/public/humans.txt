@@ -69,6 +69,9 @@ Location: London, UK (snaps.digit.nails)
 Twitter: @gtrufitt
 Website: trufitt.com
 
+Developer: Régis Kuckaertz
+Twitter: @regiskuckaertz
+From: Luxembourg, Luxembourg
 
 /* ALUMNI and COLLEAGUES */
 
