@@ -9,7 +9,6 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
-    'common/modules/experiments/tests/giraffe',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
     'common/modules/experiments/tests/participation-discussion-ordering-non-live',
     'common/modules/experiments/tests/hosted-article-onward-journey',
@@ -19,9 +18,12 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/no-social-count'
+    'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/no-social-count',
+    'common/modules/experiments/tests/contributions-epic-buttons'
 ], function (
     reportError,
     config,
@@ -33,7 +35,6 @@ define([
     noop,
     DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
-    Giraffe,
     ParticipationDiscussionOrderingLiveBlog,
     ParticipationDiscussionOrderingNonLive,
     HostedArticleOnwardJourney,
@@ -43,16 +44,18 @@ define([
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     ContributionsEmbed,
+    ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
-    NoSocialCount
+    WeekendReadingPromo,
+    NoSocialCount,
+    ContributionsEpicButtons
 ) {
 
     var TESTS = [
         new DiscussionExternalFrontend(),
         new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
-        new Giraffe(),
         new ParticipationDiscussionOrderingLiveBlog(),
         new ParticipationDiscussionOrderingNonLive(),
         new HostedArticleOnwardJourney(),
@@ -62,8 +65,12 @@ define([
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
+        new ContributionsEpic(),
+        new AdBlockingResponse(),
         new WeekendReadingEmail(),
-        new NoSocialCount()
+        new WeekendReadingPromo(),
+        new NoSocialCount(),
+        new ContributionsEpicButtons()
     ];
 
     var participationsKey = 'gu.ab.participations';
