@@ -1,10 +1,5 @@
 /* CURRENT TEAM */
 
-Chief Coder: Frank Hulley-Jones
-Twitter: @tobefrankj
-From: Ludlow, UK
-Location: London, UK
-
 Head of User Experience: Nick Haley
 Twitter: @twobobswerver
 From: London, England
@@ -101,6 +96,11 @@ Location: London, UK
 Design human: Duarte Carrilho da Graça		
 Twitter: @duartecg		
 From: Lisbon, Portugal		
+Location: London, UK
+
+Design intern: Frank Hulley-Jones
+Twitter: @tobefrankj
+From: Ludlow, UK
 Location: London, UK
 
 /* FORMER MEMBERS */
