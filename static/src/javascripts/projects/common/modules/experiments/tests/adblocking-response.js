@@ -25,26 +25,25 @@ define([
         this.description = 'Adblocking response ZERO PERCENT TEST WITH 10 MINUTES GRACE';
         this.audience = 0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Adblocking users will either pay, prove they have a subscription or turn off their adblocker.';
-        this.audienceCriteria = 'All non-Firefox users with active adblockers.';
+        this.successMeasure = 'Adblocking users white-list the Guardian domain';
+        this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
             ['adblock whitelist no-close'],
-            ['adblock membership no-close'],
-            ['subscriber number no-close'],
-            ['user help email no-close'],
+            ['adblock supporter no-close'],
+            ['adblock subscriber no-close'],
             ['adblock whitelist immediate-close'],
-            ['adblock membership immediate-close'],
-            ['subscriber number immediate-close'],
-            ['user help email immediate-close'],
+            ['adblock supporter immediate-close'],
+            ['adblock subscriber immediate-close'],
             ['adblock whitelist delayed-close'],
-            ['adblock membership delayed-close'],
-            ['subscriber number delayed-close'],
-            ['user help email delayed-close']
+            ['adblock supporter delayed-close'],
+            ['adblock subscriber delayed-close'],
+            ['survey adblock delayed-dismissed'],
+            ['survey adblock immediate-dismissed']
         ].map(function(_) {
             return _[0];
         }).join(', ');
         this.dataLinkNames = 'adblock response overlay: '+variantDataLinkNames+', subscriber number page: user help email';
-        this.idealOutcome = 'Adblocking users will either pay or allow ads.';
+        this.idealOutcome = 'After whitelisting our ads, former ad-blocking users will not re-block them';
 
         this.canRun = function () {
             return contains('chrome', detect.getUserAgent.browser.toLowerCase())
@@ -54,6 +53,9 @@ define([
         };
 
         this.variants = [{
+            id: 'control',
+            test: function(){}
+        }, {
             id: 'no-close',
             test: function () {
                 detect.adblockInUse.then(function (adblockUsed) {

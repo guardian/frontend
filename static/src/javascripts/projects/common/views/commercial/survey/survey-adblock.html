@@ -4,11 +4,16 @@
         <div class="survey-adblock-close js-survey-adblock-close">
             <%if (showCloseBtn === "delayed") { %>
             <span class="site-message__close-btn js-survey-adblock__delayed-close is-hidden"><span class="countdown">5</span></span>
-            <% } %>
-            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock dismissed">
+            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock delayed-dismissed">
                 <span class="is-hidden">Close</span>
                 <%=crossIcon%>
             </button>
+            <% } else { %>
+            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock immediate-dismissed">
+                <span class="is-hidden">Close</span>
+                <%=crossIcon%>
+            </button>
+            <% } %>
         </div>
         <% } %>
         <% if (marque36icon) { %>
