@@ -1,6 +1,6 @@
-$us-minute-highlight-colour: $news-main-2;
-$us-minute-main-colour: $neutral-5;
-$us-minute-contrast-colour: #333333;
+$minute-highlight-colour: $news-main-2;
+$minute-main-colour: $neutral-5;
+$minute-contrast-colour: #333333;
 $minute-headline-colour: #ffffff;
 
 @mixin rule($ruleColour, $ruleHeight) {
@@ -43,7 +43,7 @@ $minute-headline-colour: #ffffff;
 
     @include mq(phablet) {
         &:after {
-            @include rule($us-minute-highlight-colour, $gs-baseline/3);
+            @include rule($minute-highlight-colour, $gs-baseline/3);
             position: absolute;
             top: -$gs-baseline/3;
             left: 0;
@@ -145,7 +145,7 @@ $minute-headline-colour: #ffffff;
 
 .content__dateline--minute-article {
     @include fs-header(2);
-    color: $us-minute-highlight-colour;
+    color: $minute-highlight-colour;
     margin-bottom: 0;
 }
 
@@ -180,7 +180,7 @@ $minute-headline-colour: #ffffff;
 }
 
 .article__container--minute-article {
-    background-color: $us-minute-main-colour;
+    background-color: $minute-main-colour;
     padding-bottom: $gs-baseline;
 }
 
@@ -355,7 +355,7 @@ $minute-headline-colour: #ffffff;
 
 //Number styling
 .block--minute-article--counter {
-    color: $us-minute-highlight-colour;
+    color: $minute-highlight-colour;
 
     @include mq($until: desktop) {
         font-weight: 700;
@@ -383,19 +383,19 @@ $minute-headline-colour: #ffffff;
     // Standard elements
     a,
     .u-fauxlink {
-        color: $us-minute-contrast-colour;
+        color: $minute-contrast-colour;
     }
 
     p a {
-        border-bottom: 1px solid rgba($us-minute-highlight-colour, .6);
+        border-bottom: 1px solid rgba($minute-highlight-colour, .6);
 
         &:hover {
-            border-bottom-color: $us-minute-highlight-colour;
+            border-bottom-color: $minute-highlight-colour;
         }
 
         &:active {
-            color: $us-minute-highlight-colour;
-            border-bottom-color: $us-minute-highlight-colour;
+            color: $minute-highlight-colour;
+            border-bottom-color: $minute-highlight-colour;
         }
     }
 
@@ -403,7 +403,7 @@ $minute-headline-colour: #ffffff;
     // Captions
     .caption__minute-article {
         box-sizing: border-box;
-        color: $us-minute-contrast-colour;
+        color: $minute-contrast-colour;
         padding: $gs-baseline/4 $gs-gutter $gs-baseline/2 $gs-gutter/2;
         width: 100%;
     }
@@ -413,12 +413,12 @@ $minute-headline-colour: #ffffff;
             bottom: 0;
             padding-left: $gs-gutter/2;
             position: absolute;
-            background-color: rgba($us-minute-main-colour, .6);
+            background-color: rgba($minute-main-colour, .6);
         }
     }
 
     .caption {
-        color: $us-minute-contrast-colour;
+        color: $minute-contrast-colour;
     }
 
     .svg  & .caption--img:before {
@@ -439,12 +439,12 @@ $minute-headline-colour: #ffffff;
     // From content API
 
     .from-content-api & blockquote.quoted {
-        color: $us-minute-contrast-colour;
+        color: $minute-contrast-colour;
         margin-top: $gs-baseline/2;
         margin-bottom: 0;
 
         .inline-quote {
-            fill: $us-minute-highlight-colour;
+            fill: $minute-highlight-colour;
         }
     }
 
@@ -620,7 +620,7 @@ $minute-headline-colour: #ffffff;
            width: gs-span(1) + $gs-gutter;
            top: 4px;
            left: -(gs-span(1) + $gs-gutter);
-           border-top: $gs-baseline/3 solid $us-minute-highlight-colour;
+           border-top: $gs-baseline/3 solid $minute-highlight-colour;
        }
    }
 }
