@@ -19,7 +19,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return 'Promise' in window &&
+            return 'fetch' in window && 'Promise' in window &&
                 window.curlConfig.paths['discussion-frontend-react'] &&
                 window.curlConfig.paths['discussion-frontend-preact'];
         };

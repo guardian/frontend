@@ -22,9 +22,12 @@ define([
             }
             // Inject the net module to work around the lack of a global fetch
             // It can be removed once all browsers have window.fetch
-            opts.net = {
-                json: fetchJson
-            };
+            // Well, it turns out that fetchJson uses reqwest which sends X-Requested-With
+            // which is not allowed by Access-Control-Allow-Headers, so don't use reqwest
+            // until discussion API is fixed
+            // opts.net = {
+            //     json: fetchJson
+            // };
 
             frontend(opts)
             .then(function (emitter) {
