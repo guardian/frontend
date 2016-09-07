@@ -73,6 +73,10 @@ Developer: Régis Kuckaertz
 Twitter: @regiskuckaertz
 From: Luxembourg, Luxembourg
 
+Developer: Jon Soul
+Twitter: @jon_soul
+Location: London, UK
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
