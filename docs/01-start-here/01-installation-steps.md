@@ -18,7 +18,7 @@ All development laptops must be encrypted. If you are not 100% sure, please ask 
 Follow [this link](https://www.google.co.uk) and enter the relevant search string for your system.
 
 # Obtain AWS credentials
-1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this)
+1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account)
 2. Make your change and push to a new branch (you can review the closed PRs for help)
 3. Submit a PR
 
