@@ -30,7 +30,7 @@ object GuardianConfiguration extends Logging {
 
     val installVars = {
       val p = new JavaProperties()
-      p.load(new FileInputStream(s"/etc/gu/install_vars"))
+      p.load(new FileInputStream("/etc/gu/install_vars"))
       val stack = p.getProperty("stack", "frontend")
       // if got config at app startup, we wouldn't need to configure it
       val app = p.getProperty("app", "dev-build")
@@ -62,13 +62,13 @@ devOverrides {
     val s3ConfigVersion = 3
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-    lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
+    lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
     lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
     lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     // test mode is self contained and won't need to use anything secret
-    lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")
+    lazy val test = ClassPathConfigurationSource("env/DEVINFRA.properties")
     lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
 
     val appConfig =
