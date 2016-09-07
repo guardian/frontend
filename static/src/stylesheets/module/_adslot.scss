@@ -170,6 +170,7 @@
 .ad-slot--liveblog-inline {
     width: $mpu-original-width;
     margin: $gs-baseline auto;
+    min-width: $mpu-original-width;
     min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
