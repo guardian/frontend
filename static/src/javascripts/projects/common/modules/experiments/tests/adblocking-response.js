@@ -60,7 +60,7 @@ define([
                 config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
                 storage.local.isStorageAvailable() &&
                 !storage.local.get('gu.subscriber') &&
-                storage.local.get('gu.alreadyVisited') > 5
+                storage.local.get('gu.alreadyVisited') > 5;
         };
 
         this.variants = [{
