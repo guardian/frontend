@@ -5,7 +5,7 @@ case class NavLink(name: String, url: String)
 object NewNavigation {
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
-  trait TopLevelSection {
+  trait EditionalisedNavigationSection {
     def name: String
 
     def uk: List[NavLink]
@@ -22,7 +22,7 @@ object NewNavigation {
     }
   }
 
-  case object News extends TopLevelSection {
+  case object News extends EditionalisedNavigationSection {
     val name = "news"
 
     val uk = List(
@@ -75,7 +75,7 @@ object NewNavigation {
     )
   }
 
-  case object Opinion extends TopLevelSection {
+  case object Opinion extends EditionalisedNavigationSection {
     val name = "opinion"
 
     val uk = List(
@@ -123,7 +123,7 @@ object NewNavigation {
     )
   }
 
-  case object Sport extends TopLevelSection {
+  case object Sport extends EditionalisedNavigationSection {
     val name = "sport"
 
     val uk = List(
@@ -179,7 +179,7 @@ object NewNavigation {
     )
   }
 
-  case object Arts extends TopLevelSection {
+  case object Arts extends EditionalisedNavigationSection {
     val name = "arts"
 
     val uk = List(
@@ -230,7 +230,7 @@ object NewNavigation {
     )
   }
 
-  case object Life extends TopLevelSection {
+  case object Life extends EditionalisedNavigationSection {
     val name = "life"
 
     val uk = List(
