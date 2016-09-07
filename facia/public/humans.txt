@@ -95,6 +95,14 @@ Developer: Akash Askoolum
 Twitter: @akash1810
 Location: London, UK
 
+Developer: Jamie Byers		
+Location: London, UK		
+ 		
+Design human: Duarte Carrilho da Graça		
+Twitter: @duartecg		
+From: Lisbon, Portugal		
+Location: London, UK
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
@@ -212,9 +220,6 @@ Location: London, UK
 Developer: Jimmy Breck-McKye
 Twitter: @jbreckmckye
 Website: www.breck-mckye.com
-Location: London, UK
-
-Developer: Jamie Byers
 Location: London, UK
 
 Developer: Oliver Ash
