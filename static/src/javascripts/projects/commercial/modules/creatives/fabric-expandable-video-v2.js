@@ -46,7 +46,10 @@ define([
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
                     : '',
-                showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') ?
+                showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'false' ?
+                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
+                    : '',
+                showPlusInContainer: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'true' ?
                     '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
                     : '',
                 videoEmbed: (params.YoutubeVideoURL !== '') ?
