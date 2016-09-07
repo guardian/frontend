@@ -56,6 +56,14 @@ Twitter: @asanders
 
 Developer: John Duffell
 
+Developer: Zofia Korcz
+Twitter: @intuitio
+From: Poznan, Poland
+Location: London, England
+
+Developer: Sam Desborough
+Twitter: @samdesborough
+
 Client-Side Developer: Gareth Trufitt
 Location: London, UK (snaps.digit.nails)
 Twitter: @gtrufitt
@@ -120,14 +128,6 @@ From: London, England
 Developer: Austin Harris
 Twitter: @austinh7
 Location: Buxted, England
-
-Developer: Zofia Korcz
-Twitter: @intuitio
-From: Poznan, Poland
-Location: London, England
-
-Developer: Sam Desborough
-Twitter: @samdesborough
 
 Front-end Developer: Chris Finch
 Twitter: @chrisfinchy
