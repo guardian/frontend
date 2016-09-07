@@ -28,6 +28,7 @@ window.curlConfig = {
             'bootstraps/enhanced/profile':       '@Static("javascripts/bootstraps/enhanced/profile.js")',
             'foresee.js':                        'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
+            'sonobi.js':                         '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
