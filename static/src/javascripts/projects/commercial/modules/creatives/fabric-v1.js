@@ -39,8 +39,6 @@ define([
     };
 
     FabricV1.prototype.create = function () {
-        this.$adSlot.addClass('ad-slot--fabric-v1 content__mobile-full-width');
-
         if (!fabricV1Tpl) {
             fabricV1Tpl = template(fabricV1Html);
             iframeVideoTpl = template(iframeVideoStr);
@@ -94,6 +92,11 @@ define([
 
             if (this.scrollType === 'fixed' && hasBackgroundFixedSupport) {
                 bonzo(this.scrollingBg).css('background-attachment', 'fixed');
+            }
+
+            this.$adSlot.addClass('ad-slot--fabric-v1 ad-slot--fabric content__mobile-full-width');
+            if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
+                this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
             }
 
             return true;

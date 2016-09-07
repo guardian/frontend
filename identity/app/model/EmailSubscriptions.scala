@@ -51,6 +51,15 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "1506" }
     ),
     EmailSubscription(
+      "Weekend reading",
+      "news",
+      "News",
+      "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
+      "Every Saturday",
+      "3744",
+      subscribedTo = subscribedListIds.exists{ x => x == "3744" } || subscribedListIds.exists{ x => x == "3744" }
+    ),
+    EmailSubscription(
       "Media briefing",
       "news",
       "Media",

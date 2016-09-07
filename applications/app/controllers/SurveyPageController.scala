@@ -14,18 +14,6 @@ class SurveyPageController(wsClient: WSClient) extends Controller with Execution
 
   val defaultCacheDuration: Duration = 15.minutes
 
-  def renderCustomEmail404Page() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.customEmail404(StaticPages.simpleSurveyStaticPageForId(request.path))))
-   }
-
-  def renderMyDigestExplainerPage() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.myDigestExplainer(StaticPages.simpleSurveyStaticPageForId(request.path))))
-   }
-
-  def renderMyDigest404Page() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.myDigest404(StaticPages.simpleSurveyStaticPageForId(request.path))))
-   }
-
   def renderWeekendReadingPage() = Action { implicit request =>
       Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.weekendReading(StaticPages.simpleEmailSignupPage(request.path, "Sign up for Guardian weekend reading"))))
    }

@@ -3,6 +3,7 @@ define([
     'qwery',
     'bonzo',
     'raven',
+    'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
     'commercial/modules/build-page-targeting',
@@ -16,13 +17,14 @@ define([
     'commercial/modules/messenger/get-stylesheet',
     'commercial/modules/messenger/resize',
     'commercial/modules/messenger/scroll'
-], function (Promise, qwery, bonzo, raven, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService, ophanTracking) {
+], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService, ophanTracking) {
 
     return init;
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            return setupAdvertising();
+            var initialTag = 'tests' in config && config.tests.commercialHbSonobi ? setupSonobi() : Promise.resolve();
+            return initialTag.then(setupAdvertising);
         }
 
         return fastdom.write(function () {
@@ -30,18 +32,28 @@ define([
         });
     }
 
+    function setupSonobi() {
+        return Promise.resolve(require(['js!sonobi.js']));
+    }
+
     function setupAdvertising() {
 
         return new Promise(function(resolve) {
-            // if we don't already have googletag, create command queue and load it async
-            if (!window.googletag) {
-                window.googletag = {cmd: []};
-                // load the library asynchronously
-                require(['js!googletag.js']);
-            }
 
-            if (dfpEnv.prebidEnabled) {
-                dfpEnv.prebidService = new PrebidService();
+            if ('tests' in config && config.tests.commercialHbSonobi) {
+                // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+                require(['js!googletag.js']);
+            } else {
+                if (!window.googletag) {
+                    window.googletag = {cmd: []};
+
+                    // If we don't already have googletag, create command queue and load it async.
+                    require(['js!googletag.js']);
+                }
+
+                if (dfpEnv.prebidEnabled) {
+                    dfpEnv.prebidService = new PrebidService();
+                }
             }
 
             window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);

@@ -16,7 +16,7 @@ trait ABTestSwitches {
 
   val ABDiscussionExternalFrontend = Switch(
     SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
+    "ab-discussion-external-frontend-count",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
@@ -50,10 +50,10 @@ trait ABTestSwitches {
     "Test effectiveness of inline CTA for contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
+    sellByDate = new LocalDate(2016, 9, 7),
     exposeClientSide = true
   )
-  
+
   val ABContributionsEmbed20160905= Switch(
     SwitchGroup.ABTests,
     "ab-contributions-embed-20160905",
@@ -63,6 +63,18 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 9),
     exposeClientSide = true
   )
+
+  val ABContributionsEpic20160906 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-epic-20160906",
+    "Test whether contributions embed performs better than our previous in-article component tests.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 12),
+    exposeClientSide = true
+  )
+
+
 
   val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
@@ -151,6 +163,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
+    exposeClientSide = true
+  )
+
+  val ABWeekendReadingPromo = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-promo",
+    "Show visitors a snap banner to promote the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 12),
     exposeClientSide = true
   )
 }

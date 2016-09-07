@@ -19,8 +19,10 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
+    'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/no-social-count'
 ], function (
     reportError,
@@ -43,8 +45,10 @@ define([
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     ContributionsEmbed,
+    ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
+    WeekendReadingPromo,
     NoSocialCount
 ) {
 
@@ -62,7 +66,10 @@ define([
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
+        new ContributionsEpic(),
+        new AdBlockingResponse(),
         new WeekendReadingEmail(),
+        new WeekendReadingPromo(),
         new NoSocialCount()
     ];
 
