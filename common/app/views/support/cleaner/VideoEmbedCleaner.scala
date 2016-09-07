@@ -50,7 +50,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
         if (! canonicalUrl.isEmpty) {
-          element.attr("data-canonical-url", canonicalUrl)
+          element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
         }
 
         val mediaId = element.attr("data-media-id")

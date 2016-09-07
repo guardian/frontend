@@ -19,10 +19,11 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
+    'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/no-social-count',
-    'common/modules/experiments/tests/contributions-user-testing'
+    'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/no-social-count'
 ], function (
     reportError,
     config,
@@ -44,10 +45,11 @@ define([
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
     ContributionsEmbed,
+    ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
-    NoSocialCount,
-    ContributionsUserTesting
+    WeekendReadingPromo,
+    NoSocialCount
 ) {
 
     var TESTS = [
@@ -64,9 +66,11 @@ define([
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
+        new ContributionsEpic(),
+        new AdBlockingResponse(),
         new WeekendReadingEmail(),
-        new NoSocialCount(),
-        new ContributionsUserTesting()
+        new WeekendReadingPromo(),
+        new NoSocialCount()
     ];
 
     var participationsKey = 'gu.ab.participations';

@@ -17,11 +17,11 @@ define([
             variants: ['about', 'pockets', 'like', 'love', 'truth']
         };
 
-        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control']};
+        var contributionsEmbed = {name: 'ContributionsEmbed20160905', variants: ['control']};
 
-        var contributionsUserTesting = {name: 'ContributionsUserTesting20160831', variants: ['control']};
+        var contributionsEpic = {name: 'ContributionsEpic20160906', variants: ['control']};
 
-        var clashingTests = [contributionsArticle, contributionsEmbed, contributionsUserTesting];
+        var clashingTests = [contributionsArticle, contributionsEmbed, contributionsEpic];
 
         return some(clashingTests, function (test) {
             return some(test.variants, function (variant) {

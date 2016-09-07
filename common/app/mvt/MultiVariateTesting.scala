@@ -38,6 +38,39 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
+object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
+  name = "commercial-hb-sonobi",
+  description = "A test variant for the sonobi header-bidding integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("sonobi")
+  }
+}
+
+object CommercialHeaderBiddingPrebidVariant extends TestDefinition(
+  name = "commercial-hb-prebid",
+  description = "A test variant for the prebid header-bidding integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("prebid")
+  }
+}
+
+object CommercialHeaderBiddingControl extends TestDefinition(
+  name = "commercial-hb-control",
+  description = "A control group for the header bidding test",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("control")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -52,7 +85,10 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
-    CommercialClientLoggingVariant
+    CommercialClientLoggingVariant,
+    CommercialHeaderBiddingSonobiVariant,
+    CommercialHeaderBiddingPrebidVariant,
+    CommercialHeaderBiddingControl
   )
 }
 
