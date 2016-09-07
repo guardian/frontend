@@ -466,7 +466,7 @@ class GuardianConfiguration extends Logging {
 
     lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = stsRoleToAssume.flatMap { role =>
       val provider = new AWSCredentialsProviderChain(
-        new ProfileCredentialsProvider("composer"),
+        new ProfileCredentialsProvider("frontend"),
         new STSAssumeRoleSessionCredentialsProvider(role, "frontend"))
 
       try {
