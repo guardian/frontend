@@ -23,7 +23,7 @@ Twitter: @kenlim
 From: Kuala Lumpur, Malaysia
 Location: London, UK
 
-Developer: Stephan Fowler
+Product Manager: Stephan Fowler (Prev: Developer)
 Twitter: @stephanfowler
 From: London, UK
 
@@ -54,16 +54,12 @@ Client-side Developer: Alex Sanders
 Location: London/Norwich
 Twitter: @asanders
 
-Director of Digital Strategy: Wolfgang Blau
-Twitter: @wblau
-
-Guardian CTO: Shannon Maher
-
 Developer: John Duffell
 
-Developer: Oliver Ash
-Twitter: @OliverJAsh
-From: London, UK
+Client-Side Developer: Gareth Trufitt
+Location: London, UK (snaps.digit.nails)
+Twitter: @gtrufitt
+Website: trufitt.com
 
 
 /* ALUMNI and COLLEAGUES */
@@ -196,7 +192,11 @@ Location: London, UK
 Developer: Jamie Byers
 Location: London, UK
 
-Client-Side Developer: Gareth Trufitt
-Location: London, UK (snaps.digit.nails)
-Twitter: @gtrufitt
-Website: trufitt.com
+Developer: Oliver Ash
+Twitter: @OliverJAsh
+From: London, UK
+
+Guardian CTO: Shannon Maher
+
+Director of Digital Strategy: Wolfgang Blau
+Twitter: @wblau
