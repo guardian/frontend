@@ -1,5 +1,10 @@
 /* CURRENT TEAM */
 
+Chief Coder: Frank Hulley-Jones
+Twitter: @tobefrankj
+From: Ludlow, UK
+Location: London, UK
+
 Head of User Experience: Nick Haley
 Twitter: @twobobswerver
 From: London, England
@@ -85,16 +90,6 @@ From: Luxembourg, Luxembourg
 Developer: Jon Soul
 Twitter: @jon_soul
 Location: London, UK
-
-Developer: Jamie Byers
-Location: London, UK
-
-Design human: Duarte Carrilho da Graça
-Twitter: @duartecg
-From: Lisbon, Portugal
-Location: London, UK
-
-
 
 /* FORMER MEMBERS */
 
@@ -213,6 +208,9 @@ Location: London, UK
 Developer: Jimmy Breck-McKye
 Twitter: @jbreckmckye
 Website: www.breck-mckye.com
+Location: London, UK
+
+Developer: Jamie Byers
 Location: London, UK
 
 Developer: Oliver Ash
