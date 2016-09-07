@@ -284,4 +284,47 @@ object NewNavigation {
       NavLink("tech", "/uk/technology")
     )
   }
+
+  case object NavFooterLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = List(
+      NavLink("membership", "https://membership.theguardian.com/uk/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_UK"),
+      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
+      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
+      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
+      NavLink("professional", "/guardian-professional"),
+      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
+      NavLink("courses", "/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
+      NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
+      NavLink("today's paper", "/theguardian"),
+      NavLink("the observer", "/observer"),
+      NavLink("crosswords", "/crosswords")
+    )
+
+    val au = List(
+      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
+      NavLink("masterclasses", "/guardian-masterclasses-australia"),
+      NavLink("crosswords", "/crosswords"),
+      NavLink("video", "/video")
+    )
+
+    val us = List(
+      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
+      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS"),
+      NavLink("crosswords", "/crosswords"),
+      NavLink("video", "/video")
+    )
+
+    val int = List(
+      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
+      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
+      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
+      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
+      NavLink("today's paper", "/theguardian"),
+      NavLink("the observer", "/observer"),
+      NavLink("crosswords", "/crosswords"),
+      NavLink("video", "/video")
+    )
+  }
 }

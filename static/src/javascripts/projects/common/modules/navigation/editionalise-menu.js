@@ -19,7 +19,7 @@ define([
 
                 fastdomPromise.read(function() {
 
-                    return navList.classList.contains('main-navigation__secondary--' + edition);
+                    return navList.classList.contains('navigation-group--' + edition);
 
                 }).then(function (isListCurrentEdition) {
 
