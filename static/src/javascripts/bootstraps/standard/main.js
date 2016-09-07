@@ -75,9 +75,7 @@ define([
                 },
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
-
-                    var isIgnored = typeof(data.tags.action) !== 'undefined' &&
-                        config.page.ignoredSentryActions.indexOf(data.tags.action) != -1;
+                    var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
 
                     if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
