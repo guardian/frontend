@@ -25,83 +25,81 @@ define([
     merge,
     addTrackingPixel
 ) {
-    // Forked from expandable-video-v2.js
+    return FabricExpandableVideoV2;
 
-    var FabricExpandableVideoV1 = function ($adSlot, params) {
-        this.$adSlot      = $adSlot;
-        this.params       = params;
-        this.isClosed     = true;
-        this.closedHeight = 250;
-        this.openedHeight = 500;
-    };
+    function FabricExpandableVideoV2($adSlot, params) {
+        var isClosed     = true;
+        var closedHeight = 250;
+        var openedHeight = 500;
 
-    FabricExpandableVideoV1.prototype.create = function () {
-        var videoHeight = this.openedHeight;
-        var showmoreArrow = {
-            showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
-                : ''
-        };
-        var showmorePlus = {
-            showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
-                : ''
-        };
-        var videoSource = {
-            videoEmbed: (this.params.YoutubeVideoURL !== '') ?
-                '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
-                : ''
-        };
-        var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
-        var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
+        return Object.freeze({ create: create });
 
-        bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
-            fastdom.write(function () {
-                var videoSrc = $('#YTPlayer').attr('src');
-                var videoSrcAutoplay = videoSrc;
+        function create() {
+            var videoHeight = openedHeight;
+            var showmoreArrow = {
+                showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
+                    '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
+                    : ''
+            };
+            var showmorePlus = {
+                showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') ?
+                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
+                    : ''
+            };
+            var videoSource = {
+                videoEmbed: (params.YoutubeVideoURL !== '') ?
+                    '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
+                    : ''
+            };
+            var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(params, showmoreArrow, showmorePlus, videoSource) }));
+            var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
-                if (videoSrc.indexOf('autoplay') === -1) {
-                    videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
-                } else {
-                    videoSrcAutoplay = videoSrcAutoplay.replace(
-                        this.isClosed ? 'autoplay=0' : 'autoplay=1',
-                        this.isClosed ? 'autoplay=1' : 'autoplay=0'
+            bean.on($adSlot[0], 'click', '.ad-exp__open', function () {
+                fastdom.write(function () {
+                    var videoSrc = $('#YTPlayer').attr('src');
+                    var videoSrcAutoplay = videoSrc;
+
+                    if (videoSrc.indexOf('autoplay') === -1) {
+                        videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
+                    } else {
+                        videoSrcAutoplay = videoSrcAutoplay.replace(
+                            isClosed ? 'autoplay=0' : 'autoplay=1',
+                            isClosed ? 'autoplay=1' : 'autoplay=0'
+                        );
+                    }
+
+                    $('.ad-exp__close-button').toggleClass('button-spin');
+                    $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
+                    $ad.css(
+                        'height',
+                        isClosed ? openedHeight : closedHeight
                     );
+                    $('.slide-video, .slide-video .ad-exp__layer', $($adSlot[0]))
+                        .css('height', isClosed ? openedHeight : closedHeight)
+                        .toggleClass('slide-video__expand');
+
+                    isClosed = !isClosed;
+
+                    setTimeout(function () {
+                        $('#YTPlayer').attr('src', videoSrcAutoplay);
+                    }, 1000);
+
+                };
+            });
+
+            return fastdom.write(function () {
+                $ad.css('height', closedHeight);
+                $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', closedHeight);
+                if (params.trackingPixel) {
+                    addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
                 }
-
-                $('.ad-exp__close-button').toggleClass('button-spin');
-                $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
-                $ad.css(
-                    'height',
-                    this.isClosed ? this.openedHeight : this.closedHeight
-                );
-                $('.slide-video, .slide-video .ad-exp__layer', $(this.$adSlot[0]))
-                    .css('height', this.isClosed ? this.openedHeight : this.closedHeight)
-                    .toggleClass('slide-video__expand');
-
-                this.isClosed = !this.isClosed;
-
-                setTimeout(function () {
-                    $('#YTPlayer').attr('src', videoSrcAutoplay);
-                }, 1000);
-
-            }.bind(this));
-        }.bind(this));
-
-        return fastdom.write(function () {
-            $ad.css('height', this.closedHeight);
-            $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', this.closedHeight);
-            if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
-            }
-            $fabricExpandableVideo.appendTo(this.$adSlot);
-            this.$adSlot.addClass('ad-slot--fabric');
-            if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
-                this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
-            }
-            return true;
-        }, this);
-    };
-
-    return FabricExpandableVideoV1;
+                $fabricExpandableVideo.appendTo($adSlot);
+                $adSlot.addClass('ad-slot--fabric');
+                if( $adSlot.parent().hasClass('top-banner-ad-container') ) {
+                    $adSlot.parent().addClass('top-banner-ad-container--fabric');
+                }
+                return true;
+            });
+        }
+    }
 });
