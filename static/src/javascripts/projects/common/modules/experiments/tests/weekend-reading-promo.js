@@ -7,6 +7,7 @@ define([
     'common/modules/ui/message',
     'common/modules/user-prefs',
     'common/modules/commercial/user-features',
+    'common/modules/commercial/adblock-messages',
     'common/views/svgs',
     'text!common/views/experiments/weekend-reading-promo.html'
 ], function (
@@ -18,6 +19,7 @@ define([
     Message,
     userPrefs,
     userFeatures,
+    adblockMsg,
     svgs,
     weekendReadingPromo
 ) {
@@ -37,16 +39,17 @@ define([
         this.canRun = function () {
             return !config.page.isAdvertisementFeature &&
                 config.page.contentType === 'Article' &&
-                !isCompetingWithAdblockMessage() &&
                 // we ran a similar Snap before, so do not show our new CTA to these users
+                !willClashWithAdblockMessage() &&
                 !hasSeenMessage('habit-digest-message-07-16');
         };
 
-        // check to see if user has an ad-blocker enabled; we want the ad-block message to have priority
-        function isCompetingWithAdblockMessage() {
-            detect.adblockInUse.then(function (adblockUsed) {
-                return adblockUsed;
-            });
+        function willClashWithAdblockMessage() {
+            if (adblockMsg.showAdblockMsg()) {
+                return !hasSeenMessage('adblock-message-2016-06-15');
+            } else {
+                return false;
+            }
         }
 
         function hasSeenMessage(messageName) {
