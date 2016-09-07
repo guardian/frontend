@@ -77,6 +77,7 @@ define([
                         mediator.emit('membership-message:display');
                     }
                 }
+                mediator.emit('membership-message:complete');
             });
         }
 

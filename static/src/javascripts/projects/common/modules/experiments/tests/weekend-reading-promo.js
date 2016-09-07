@@ -3,6 +3,7 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/utils/storage',
+    'common/utils/mediator',
     'common/modules/ui/message',
     'common/modules/user-prefs',
     'common/modules/commercial/user-features',
@@ -13,6 +14,7 @@ define([
     detect,
     template,
     storage,
+    mediator,
     Message,
     userPrefs,
     userFeatures,
@@ -25,7 +27,7 @@ define([
         this.expiry = '2016-09-12';
         this.author = 'Kate Whalen';
         this.description = 'For just one pageview, show users a banner promoting the Weekend Reading email';
-        this.audience = 1;
+        this.audience = 0.5;
         this.audienceOffset = 0;
         this.successMeasure = 'Snap banner promotes the Weekend Reading email and leads to visitors signing up';
         this.audienceCriteria = 'All visitors who have not yet seen this snap banner';
@@ -35,37 +37,16 @@ define([
         this.canRun = function () {
             return !config.page.isAdvertisementFeature &&
                 config.page.contentType === 'Article' &&
-                !isCompetingWithMembershipMessage() &&
                 !isCompetingWithAdblockMessage() &&
                 // we ran a similar Snap before, so do not show our new CTA to these users
                 !hasSeenMessage('habit-digest-message-07-16');
         };
-
-        function hasSeenMembershipMessage() {
-            // This causes me intense pain to do, but the membership message codes are buried in the module and cannot be accessed.
-            // yes, this means this file will have to be updated whenever these codes get rotated. Hopefully, this test can get turned off before that happens.
-            return hasSeenMessage('membership-message-uk-2016-06-24') ||
-                hasSeenMessage('membership-message-us-2016-06-24') ||
-                hasSeenMessage('membership-message-au-2016-08-01') ||
-                hasSeenMessage('membership-message-int-2016-06-24');
-
-        }
 
         // check to see if user has an ad-blocker enabled; we want the ad-block message to have priority
         function isCompetingWithAdblockMessage() {
             detect.adblockInUse.then(function (adblockUsed) {
                 return adblockUsed;
             });
-        }
-
-        function isCompetingWithMembershipMessage() {
-            // membership banner only shows after 10 page visits, so we can safely show it to those with less than 10
-            if (10 > (storage.local.get('gu.alreadyVisited') || 0)) {
-                return false;
-            } else if (hasSeenMembershipMessage()) {
-                return false;
-            }
-            return true;
         }
 
         function hasSeenMessage(messageName) {
@@ -103,10 +84,12 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    var messageText = 'Get the best reads of the week in your inbox every Saturday';
-                    var linkText = 'Sign up';
-                    var linkHref = '/signup/weekendreading?CMP=SnapBanner';
-                    renderWeekendReadingSnap(messageText, linkText, linkHref, 'weekend-reading');
+                    mediator.on('membership-message:complete', function () {
+                        var messageText = 'Get the best reads of the week in your inbox every Saturday';
+                        var linkText = 'Sign up';
+                        var linkHref = '/signup/weekendreading?CMP=SnapBanner';
+                        renderWeekendReadingSnap(messageText, linkText, linkHref, 'weekend-reading');
+                    });
                 }
             }
         ];
