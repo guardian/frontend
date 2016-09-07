@@ -18,11 +18,13 @@ All development laptops must be encrypted. If you are not 100% sure, please ask 
 Follow [this link](https://www.google.co.uk) and enter the relevant search string for your system.
 
 # Obtain AWS credentials
-1. Fork [Janus](https://github.com/guardian/janus) and follow the readme
+1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this)
 2. Make your change and push to a new branch (you can review the closed PRs for help)
 3. Submit a PR
 
 # Local Test Server setup
+
+You can either set up the frontend using a Docker container, or through a local install on your machine. Before checking out the repository you may need to [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 
 ## Docker
 
@@ -32,7 +34,7 @@ Prerequesites:
 
 1. Clone repository
     - `git clone git@github.com:guardian/frontend.git && cd frontend`
-2. Get AWS Credentials using [janus](https://janus.gutools.co.uk/) for frontend and CMS fronts 
+2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
 4. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
     - ./dev.sh
 5. Build and run the app within the container
@@ -56,7 +58,7 @@ Containers can be thrown away very easily. To do so:
 ## Local machine
 You need a Mac or Linux PC (Ubuntu).
 
-Before checking out the repository you may need to [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
+**Note:** If using Homebrew to install nvm, it may throw up a message about nvm support; the instructions in this message may be necessary to make nvm work correctly.
 
 ### Automatic 
 1. Check out the repository:
@@ -66,7 +68,7 @@ Before checking out the repository you may need to [add an SSH key to your GitHu
     cd frontend
     ```
 
-2. Get janus credentials for frontend
+2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
 
 3. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
