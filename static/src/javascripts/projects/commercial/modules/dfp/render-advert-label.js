@@ -47,6 +47,7 @@ define([
 
     function shouldRenderLabel(adSlotNode) {
         return !(
+            adSlotNode.classList.contains('ad-slot--fluid') ||
             adSlotNode.classList.contains('ad-slot--frame') ||
             adSlotNode.classList.contains('gu-style') ||
             adSlotNode.classList.contains('ad-slot--facebook') ||

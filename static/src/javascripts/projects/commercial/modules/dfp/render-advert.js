@@ -125,10 +125,10 @@ define([
         removePlaceholders(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
-            return renderAdvertLabel(advert.node)
+            return callSizeCallback()
+                .then(function () { return renderAdvertLabel(advert.node); })
                 .then(addFeedbackDropdownToggle)
                 .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent); })
-                .then(callSizeCallback)
                 .then(addRenderedClass)
                 .then(function () {
                     return isRendered;
@@ -139,9 +139,10 @@ define([
                 if (size === '0,0') {
                     size = 'fluid';
                 }
-                if (sizeCallbacks[size]) {
-                    return sizeCallbacks[size](slotRenderEvent, advert);
-                }
+                return Promise.resolve(sizeCallbacks[size] ?
+                    sizeCallbacks[size](slotRenderEvent, advert) :
+                    null
+                );
             }
 
             function addRenderedClass() {
