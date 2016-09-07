@@ -10,6 +10,7 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!commercial/views/creatives/fabric-expandable-video-v1.html',
+    'text!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
     bean,
@@ -23,6 +24,7 @@ define([
     template,
     svgs,
     fabricExpandableVideoHtml,
+    fabricExpandableCtaHtml,
     addTrackingPixel
 ) {
     return FabricExpandableVideoV2;
@@ -32,11 +34,15 @@ define([
         var closedHeight = 250;
         var openedHeight = 500;
 
+        var ctaTpl = template(fabricExpandableCtaHtml);
+
         return Object.freeze({ create: create });
 
         function create() {
             var videoHeight = openedHeight;
             var additionalParams = {
+                destkopCTA: params.ctaDesktopImage ? ctaTpl({ link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
+                mobileCTA: params.ctaMobileImage ? ctaTpl({ link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
                     : '',
