@@ -226,7 +226,7 @@
         margin: 0 auto;
     }
 }
-.ad-slot--container-inline {
+.ad-slot--container-inline:not(.ad-slot--fluid) {
     /* I don't know wtf that is but it has no place in JS, so I moved it here */
     &.ad-slot--not-mobile {
         display: flex;
