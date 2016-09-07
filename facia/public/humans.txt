@@ -59,6 +59,10 @@ From: Halifax, Canada
 Developer: Justin Pinner
 Twitter: @_JustinPinner
 
+SETI (Tools & Infra): Matthew Walls
+GitHub: MatthewJWalls
+Location: Essex, UK
+
 Client-side Developer: Alex Sanders
 Location: London/Norwich
 Twitter: @asanders
