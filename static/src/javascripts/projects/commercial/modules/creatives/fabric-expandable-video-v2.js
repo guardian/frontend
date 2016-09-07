@@ -4,12 +4,12 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/detect',
+    'common/utils/assign',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
     'text!commercial/views/creatives/fabric-expandable-video-v1.html',
-    'lodash/objects/merge',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
     bean,
@@ -17,12 +17,12 @@ define([
     fastdom,
     $,
     detect,
+    assign,
     mediator,
     storage,
     template,
     svgs,
     fabricExpandableVideoHtml,
-    merge,
     addTrackingPixel
 ) {
     return FabricExpandableVideoV2;
@@ -36,22 +36,18 @@ define([
 
         function create() {
             var videoHeight = openedHeight;
-            var showmoreArrow = {
+            var additionalParams = {
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
-                    : ''
-            };
-            var showmorePlus = {
+                    : '',
                 showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
-                    : ''
-            };
-            var videoSource = {
+                    : '',
                 videoEmbed: (params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
                     : ''
             };
-            var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(params, showmoreArrow, showmorePlus, videoSource) }));
+            var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: assign(params, additionalParams) }));
             var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
             bean.on($adSlot[0], 'click', '.ad-exp__open', function () {
