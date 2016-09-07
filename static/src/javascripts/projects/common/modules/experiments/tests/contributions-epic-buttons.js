@@ -28,18 +28,18 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpic20160906';
+        this.id = 'ContributionsEpicButtons20160907';
         this.start = '2016-09-06';
         this.expiry = '2016-09-12';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test whether contributions embed performs better than our previous in-article component tests.';
+        this.description = 'Test whether adding the amount buttons to the epic increases the impressions to conversions rate.';
         this.showForSensitive = false;
-        this.audience = 0.05;
-        this.audienceOffset = 0.33;
+        this.audience = 0.1;
+        this.audienceOffset = 0.38;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'The embed performs at least as good as our previous in-article component tests';
+        this.idealOutcome = 'The buttons improve the conversion rate by 50%';
         this.canRun = function () {
             var pageObj = config.page;
             return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
@@ -77,9 +77,22 @@ define([
                 id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic',
+                        linkUrl : 'https://contribute.theguardian.com/uk?INTCMP=co_uk_epic_control',
                         position: 'bottom',
                         variant: 'no-buttons'
+                    }));
+                    bottomWriter(component);
+                },
+                success: completer
+            },
+
+            {
+                id: 'buttons',
+                test: function () {
+                    var component = $.create(template(contributionsEpic, {
+                        linkUrl : 'https://contribute.theguardian.com/uk?INTCMP=co_uk_epic_buttons&amount=50',
+                        position: 'bottom',
+                        variant: 'buttons'
                     }));
                     bottomWriter(component);
                 },

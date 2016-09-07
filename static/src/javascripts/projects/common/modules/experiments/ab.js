@@ -23,7 +23,8 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/no-social-count'
+    'common/modules/experiments/tests/no-social-count',
+    'common/modules/experiments/tests/contributions-epic-buttons'
 ], function (
     reportError,
     config,
@@ -49,7 +50,8 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    NoSocialCount
+    NoSocialCount,
+    ContributionsEpicButtons
 ) {
 
     var TESTS = [
@@ -70,7 +72,8 @@ define([
         new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new NoSocialCount()
+        new NoSocialCount(),
+        new ContributionsEpicButtons()
     ];
 
     var participationsKey = 'gu.ab.participations';

@@ -74,6 +74,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABContributionsEpicButtons20160907 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-epic-buttons-20160907",
+    "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 13),
+    exposeClientSide = true
+  )
+
 
 
   val ABParticipationDiscussionOrderingLiveBlogs = Switch(
