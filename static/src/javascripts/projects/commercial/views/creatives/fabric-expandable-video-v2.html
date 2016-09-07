@@ -4,7 +4,7 @@
         <div class="facia-container__inner">Advertisement</div>
     </div>
 
-    <div class="ad-exp--expand l-side-margins mobile-only" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>">
+    <a href="<%=data.link%>" class="ad-exp--expand l-side-margins mobile-only" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>">
         <div class="slide-container">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImageM%>') <%=data.slide1BGImageRepeatM%> <%=data.slide1BGImagePositionM%>;">
                 <div class="ad-exp__open">
@@ -20,9 +20,9 @@
             </div>
         </div>
         <%=data.mobileCTA%>
-    </div>
+    </a>
 
-    <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>">
+    <a href="<%=data.link%>" class="ad-exp--expand l-side-margins hide-until-tablet" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>">
         <div class="slide-container" style="">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImage%>') <%=data.slide1BGImageRepeat%> <%=data.slide1BGImagePosition%>;">
                 <div class="ad-exp__open">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <%=data.desktopCTA%>
-    </div>
+    </a>
 
     <div class="slide-video">
         <div class="slide-container">

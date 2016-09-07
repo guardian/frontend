@@ -353,9 +353,12 @@
         display: block;
     }
 
+    .video-container__inner {
+        position: relative;
+    }
+
     &.right-aligned-video .video-container__inner {
         width: 100%;
-        position: relative;
 
         @include mq(1024px) {
             width: 768px;

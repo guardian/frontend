@@ -75,10 +75,14 @@ define([
 
                     $('.ad-exp__close-button', $adSlot[0]).toggleClass('button-spin');
                     $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-up').toggleClass('chevron-down');
-                    $ad.css(
+                    $ad
+                    .css(
                         'height',
                         isClosed ? openedHeight : closedHeight
-                    );
+                    )
+                    .addClass(isClosed ? 'ad-exp__expand--opened' : '')
+                    .removeClass(isClosed ? '' : 'ad-exp__expand--opened');
+
                     $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
                         .css('height', isClosed ? openedHeight : closedHeight)
                         .toggleClass('slide-video__expand');
