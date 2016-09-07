@@ -71,7 +71,16 @@ devOverrides {
     lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")
     lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
 
-    val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
+    val appConfig =
+      if (installVars.guStage == "DEVINFRA") testConfig
+      else {
+        try {
+          config.getConfig(identity.app + "." + identity.stage)
+        } catch {
+          case e: ConfigException if installVars.guStage == "DEV" =>
+            throw new RuntimeException(s"${e.getMessage}.  You probably need to refresh your credentials.", e)
+        }
+      }
     appConfig
   }
 
