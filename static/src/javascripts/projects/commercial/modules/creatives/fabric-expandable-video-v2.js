@@ -64,13 +64,13 @@ define([
                         );
                     }
 
-                    $('.ad-exp__close-button').toggleClass('button-spin');
-                    $('.ad-exp__open-chevron').removeClass('chevron-up').toggleClass('chevron-down');
+                    $('.ad-exp__close-button', $adSlot[0]).toggleClass('button-spin');
+                    $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-up').toggleClass('chevron-down');
                     $ad.css(
                         'height',
                         isClosed ? openedHeight : closedHeight
                     );
-                    $('.slide-video, .slide-video .ad-exp__layer', $($adSlot[0]))
+                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
                         .css('height', isClosed ? openedHeight : closedHeight)
                         .toggleClass('slide-video__expand');
 
