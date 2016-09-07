@@ -21,7 +21,9 @@ define([
 
         var contributionsEpic = {name: 'ContributionsEpic20160906', variants: ['control']};
 
-        var clashingTests = [contributionsArticle, contributionsEmbed, contributionsEpic];
+        var contributionsEpicButtons = {name: 'ContributionsEpicButtons20160907', variants: ['control', 'buttons']};
+        
+        var clashingTests = [contributionsArticle, contributionsEmbed, contributionsEpic, contributionsEpicButtons];
 
         return some(clashingTests, function (test) {
             return some(test.variants, function (variant) {
