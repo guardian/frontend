@@ -28,7 +28,7 @@ You can either set up the frontend using a Docker container, or through a local 
 
 ## Docker
 
-Prerequesites:
+Prerequisites:
 - Docker. See [Install documentation](https://docs.docker.com/engine/installation/)
 - AWS CLI. See [documentation](https://aws.amazon.com/cli/)
 
