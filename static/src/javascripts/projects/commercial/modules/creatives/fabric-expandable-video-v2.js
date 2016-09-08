@@ -9,7 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'text!commercial/views/creatives/fabric-expandable-video-v1.html',
+    'text!commercial/views/creatives/fabric-expandable-video-v2.html',
     'text!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
@@ -93,7 +93,7 @@ define([
                         $('#YTPlayer').attr('src', videoSrcAutoplay);
                     }, 1000);
 
-                };
+                });
             });
 
             return fastdom.write(function () {
