@@ -120,6 +120,11 @@ Developer: Joseph Smith
 Twitter: @joelochlann
 Location: London, UK
 
+Developer: Thomas Bonnin
+Twitter: @tbonnin
+From: France
+Location: London, UK
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
