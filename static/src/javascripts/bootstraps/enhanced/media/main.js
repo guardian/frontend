@@ -98,6 +98,8 @@ define([
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
         var duration = parseInt(el.getAttribute('data-duration'), 10);
+        // $el.querySelector('.vjs-big-play-button').setAttribute('data-duration', duration);
+
 
         player.ready(function () {
             if (!isNaN(duration)) {
@@ -120,6 +122,7 @@ define([
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el) {
                 var $el = bonzo(el);
+                debugger;
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
                     container = bonzo(el).parent().parent();
