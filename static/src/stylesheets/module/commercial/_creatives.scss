@@ -427,6 +427,29 @@
 
     .creative__cta--position-top    { top:    10px; }
     .creative__cta--position-bottom { bottom: 10px; }
+
+    .has-no-flex & {
+        .slide-video {
+            > .slide-container {
+                display: table;
+            }
+        }
+
+        &.right-aligned-video .video-container__inner {
+            display: table-cell;
+        }
+
+        &.right-aligned-video .video-container__cta {
+            @include mq(1024px) {
+                display: table-cell;
+                width: calc(100% - 768px);
+            }
+
+            @include mq(wide) {
+                width: 532px;
+            }
+        }
+    }
 }
 
 .creative--expandable-ga {
