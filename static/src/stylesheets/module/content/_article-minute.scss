@@ -67,7 +67,7 @@ $minute-headline-colour: #ffffff;
 }
 
 // Prevents transparent line being added by immersive template
-.content__standfirst--immersive-article:before {
+.content__standfirst--immersive-minute-article:before {
     content: none;
 }
 
