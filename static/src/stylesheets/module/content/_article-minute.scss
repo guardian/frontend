@@ -51,12 +51,12 @@ $minute-headline-colour: #ffffff;
     }
 
     @include mq(tablet) {
-        font-size: 44px !important;
+        font-size: 44px;
         width: gs-span(6);
     }
 
     @include mq(desktop) {
-        font-size: 64px !important;
+        font-size: 64px;
         margin-left: gs-span(1) + $gs-gutter;
         width: gs-span(8);
 
