@@ -48,6 +48,8 @@ screenshots
 common/conf/assets
 atomic-map.json
 
+.eslintcache
+
 dev/gems
 dev/casperjs
 integration-tests/target/*

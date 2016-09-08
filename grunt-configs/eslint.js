@@ -2,7 +2,8 @@
 module.exports = function () {
     return {
         options: {
-            rulePaths: ['./dev/eslint-rules']
+            rulePaths: ['./dev/eslint-rules'],
+            cache: true
         },
         'Gruntfile.js': [
             'Gruntfile.js'
