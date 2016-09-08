@@ -340,12 +340,12 @@
     }
 
     .slide-video {
-        background: #000000;
         position: absolute;
         top: 24px;
         width: 100%;
         z-index: 3;
-        display: none;
+        visibility: hidden;
+        transition: all 1s, visibility 0s;
 
         > .slide-container {
             display: flex;
@@ -353,8 +353,7 @@
     }
 
     .slide-video__expand {
-        transition: all 1s;
-        display: block;
+        visibility: visible;
     }
 
     .video-container__inner {
@@ -415,7 +414,11 @@
         position: absolute;
         right: 10px;
         opacity: 0;
-        transition: opacity .2s 1.2s;
+        transition: opacity .2s 3s;
+
+        > img {
+            display: block;
+        }
     }
 
     .slide-video__expand .creative__cta {
