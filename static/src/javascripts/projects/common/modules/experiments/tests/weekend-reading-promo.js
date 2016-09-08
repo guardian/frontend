@@ -8,6 +8,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/commercial/user-features',
     'common/modules/commercial/adblock-messages',
+    'lodash/functions/after',
     'common/views/svgs',
     'text!common/views/experiments/weekend-reading-promo.html'
 ], function (
@@ -20,6 +21,7 @@ define([
     userPrefs,
     userFeatures,
     adblockMsg,
+    after,
     svgs,
     weekendReadingPromo
 ) {
@@ -40,17 +42,8 @@ define([
             return !config.page.isAdvertisementFeature &&
                 config.page.contentType === 'Article' &&
                 // we ran a similar Snap before, so do not show our new CTA to these users
-                !willClashWithAdblockMessage() &&
                 !hasSeenMessage('habit-digest-message-07-16');
         };
-
-        function willClashWithAdblockMessage() {
-            if (adblockMsg.showAdblockMsg()) {
-                return !hasSeenMessage('adblock-message-2016-06-15');
-            } else {
-                return false;
-            }
-        }
 
         function hasSeenMessage(messageName) {
             var messageStates = userPrefs.get('messages');
@@ -87,12 +80,15 @@ define([
             {
                 id: 'show',
                 test: function () {
-                    mediator.on('membership-message:complete', function () {
+                    // Ensure that this runs after two other the other banners (See PR #14218)
+                    var otherBannersAreComplete = after(2, function() {
                         var messageText = 'Get the best reads of the week in your inbox every Saturday';
                         var linkText = 'Sign up';
                         var linkHref = '/signup/weekendreading?CMP=SnapBanner';
                         renderWeekendReadingSnap(messageText, linkText, linkHref, 'weekend-reading');
                     });
+
+                    mediator.on('banner-message:complete', otherBannersAreComplete);
                 }
             }
         ];
