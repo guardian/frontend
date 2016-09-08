@@ -22,7 +22,7 @@ define([
         this.start = '2016-08-17';
         this.expiry = '2016-10-18';
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response ZERO PERCENT TEST WITH 10 MINUTES GRACE';
+        this.description = 'Adblocking response ZERO PERCENT TEST WITH 30 MINUTES GRACE';
         this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Adblocking users white-list the Guardian domain';
