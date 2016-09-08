@@ -107,7 +107,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+    ImgSrc(rawOpenGraphImage, EmailImage)
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images

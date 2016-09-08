@@ -2,108 +2,121 @@ package model
 
 import conf.Static
 
-sealed trait EmailContent extends Product with Serializable {
+
+sealed trait EmailMetadata[T] extends Product with Serializable {
   def name: String
-  def banner: String
-  def test(c: ContentType): Boolean
+  def banner: Option[String] = None
   def address: Option[String] = None
+  def test(c: T): Boolean
 }
 
-case object ArtWeekly extends EmailContent {
+sealed trait ArticleEmailMetadata extends EmailMetadata[ContentPage] {
+  def test(c: ContentPage): Boolean
+}
+
+sealed trait FrontEmailMetadata extends EmailMetadata[PressedPage] {
+  def test(p: PressedPage) = p.metadata.webTitle == this.name
+}
+
+case object ArtWeekly extends ArticleEmailMetadata {
   val name = "Art Weekly"
-  val banner = "art-weekly.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "artanddesign/series/art-weekly")
+  override val banner = Some("art-weekly.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
 }
 
-case object GreenLight extends EmailContent {
+case object GreenLight extends ArticleEmailMetadata {
   val name = "Green Light"
-  val banner = "green-light.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "environment/series/green-light")
+  override val banner = Some("green-light.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "environment/series/green-light")
 }
 
-case object MoneyTalks extends EmailContent {
+case object MoneyTalks extends ArticleEmailMetadata {
   val name = "Money Talks"
-  val banner = "money-talks.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "money/series/money-talks")
+  override val banner = Some("money-talks.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "money/series/money-talks")
 }
 
-case object PovertyMatters extends EmailContent {
+case object PovertyMatters extends ArticleEmailMetadata {
   val name = "Poverty Matters"
-  val banner = "poverty-matters.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "global-development/series/poverty-matters")
+  override val banner = Some("poverty-matters.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "global-development/series/poverty-matters")
 }
 
-case object TheBreakdown extends EmailContent {
+case object TheBreakdown extends ArticleEmailMetadata {
   val name = "The Breakdown"
-  val banner = "the-breakdown.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/breakdown")
+  override val banner = Some("the-breakdown.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/breakdown")
 }
 
-case object TheFiver extends EmailContent {
+case object TheFiver extends ArticleEmailMetadata {
   val name = "The Fiver"
-  val banner = "the-fiver.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "football/series/thefiver")
+  override val banner = Some("the-fiver.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "football/series/thefiver")
 }
 
-case object TheSpin extends EmailContent {
+case object TheSpin extends ArticleEmailMetadata {
   val name = "The Spin"
-  val banner = "the-spin.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/thespin")
+  override val banner = Some("the-spin.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/thespin")
 }
 
-case object MorningBriefing extends EmailContent {
+case object MorningBriefing extends ArticleEmailMetadata {
   val name = "Morning Briefing"
-  val banner = "morning-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
+  override val banner = Some("morning-briefing.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
 }
 
-case object TheUSMinute extends EmailContent {
+case object TheUSMinute extends ArticleEmailMetadata {
   val name = "The campaign minute 2016"
-  val banner = "the-us-minute.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
+  override val banner = Some("the-us-minute.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
 }
 
-case object USBriefing extends EmailContent {
+case object USBriefing extends ArticleEmailMetadata {
   val name = "Guardian US Briefing"
-  val banner = "guardian-us-briefing.png"
+  override val banner = Some("guardian-us-briefing.png")
   override val address = Some("222 Broadway, 22nd and 23rd Floors, New York, New York, 10038")
-  def test(c: ContentType) = c.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
 }
 
-case object AusBriefing extends EmailContent {
+case object AusBriefing extends ArticleEmailMetadata {
   val name = "Australian election briefing"
-  val banner = "australian-election-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
+  override val banner = Some("australian-election-briefing.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
 }
 
-case object EuReferendum extends EmailContent {
+case object EuReferendum extends ArticleEmailMetadata {
   val name = "EU Referendum Morning Briefing"
-  val banner = "eu-referendum.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
+  override val banner = Some("eu-referendum.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
 }
 
-case object LabNotes extends EmailContent {
+case object LabNotes extends ArticleEmailMetadata {
   val name = "Lab Notes"
-  val banner = "lab-notes.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "science/series/lab-notes")
+  override val banner = Some("lab-notes.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "science/series/lab-notes")
 }
 
-case object OlympicsDailyBriefing extends EmailContent {
+case object OlympicsDailyBriefing extends ArticleEmailMetadata {
   val name = "Olympics Daily Briefing"
-  val banner = "olympics-daily-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
+  override val banner = Some("olympics-daily-briefing.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
 }
 
-case object MediaBriefing extends EmailContent {
+case object MediaBriefing extends ArticleEmailMetadata {
   val name = "Media Briefing"
-  val banner = "media-briefing.png"
-  def test(c: ContentType) = c.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
+  override val banner = Some("media-briefing.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
+}
+
+case object TheFlyer extends FrontEmailMetadata {
+  val name = "The Flyer"
 }
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
-  private val allEmails     = Seq(
+  private val articleEmails     = Seq(
     ArtWeekly,
     GreenLight,
     MoneyTalks,
@@ -119,14 +132,22 @@ object EmailAddons {
     LabNotes,
     OlympicsDailyBriefing,
     MediaBriefing)
+  private val frontEmails = Seq(
+    TheFlyer
+  )
 
-  implicit class EmailContentType(c: ContentType) {
-    val email = allEmails.find(_.test(c))
+  implicit class EmailContentType(p: Page) {
+    val email = p match {
+      case c: ContentPage => articleEmails.find(_.test(c))
+      case p: PressedPage => frontEmails.find(_.test(p))
+    }
 
-    val fallbackSeriesText = if (email.isEmpty) c.content.seriesName else None
+    val fallbackSeriesText = PartialFunction.condOpt(p) {
+      case c: ContentPage if email.isEmpty => c.item.content.seriesName
+    }
 
     lazy val banner = {
-      val banner = email map (_.banner) getOrElse defaultBanner
+      val banner = email flatMap (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner")
     }
 
