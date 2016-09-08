@@ -561,8 +561,6 @@ class GuardianConfiguration extends Logging {
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
-        new EnvironmentVariableCredentialsProvider(),
-        new SystemPropertiesCredentialsProvider(),
         new ProfileCredentialsProvider("frontend"),
         new InstanceProfileCredentialsProvider
       )
