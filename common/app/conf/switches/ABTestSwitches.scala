@@ -16,7 +16,7 @@ trait ABTestSwitches {
 
   val ABDiscussionExternalFrontend = Switch(
     SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
+    "ab-discussion-external-frontend-count",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
@@ -44,35 +44,38 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABContributionsArticle20160822 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-article-20160822",
-    "Test effectiveness of inline CTA for contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
-    exposeClientSide = true
-  )
 
-  val ABContributionsUserTesting20160831 = Switch(
+  val ABContributionsEmbed20160905= Switch(
     SwitchGroup.ABTests,
-    "ab-contributions-user-testing-20160831",
-    "User testing effectiveness of inline CTA for contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
-    exposeClientSide = true
-  )
-
-  val ABContributionsEmbed20160823= Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-embed-20160823",
-    "Test contributions embed with amount picker.",
+    "ab-contributions-embed-20160905",
+    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 6),
+    sellByDate = new LocalDate(2016, 9, 9),
     exposeClientSide = true
   )
+
+  val ABContributionsEpic20160906 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-epic-20160906",
+    "Test whether contributions embed performs better than our previous in-article component tests.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 12),
+    exposeClientSide = true
+  )
+
+  val ABContributionsEpicButtons20160907 = Switch(
+    SwitchGroup.ABTests,
+    "ab-contributions-epic-buttons-20160907",
+    "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 9),
+    exposeClientSide = true
+  )
+
+
 
   val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
@@ -80,7 +83,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
     exposeClientSide = true
   )
 
@@ -90,7 +93,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
     exposeClientSide = true
   )
 
@@ -144,6 +147,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  val ABWeekendReadingEmail = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-email",
+    "Try out two formats for the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 23),
+    exposeClientSide = true
+  )
+
   val ABNoSocialCount = Switch(
     SwitchGroup.ABTests,
     "ab-no-social-count",
@@ -151,6 +164,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
+    exposeClientSide = true
+  )
+
+  val ABWeekendReadingPromo = Switch(
+    SwitchGroup.ABTests,
+    "ab-weekend-reading-promo",
+    "Show visitors a snap banner to promote the Weekend Reading email",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 12),
     exposeClientSide = true
   )
 }

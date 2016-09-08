@@ -39,7 +39,7 @@
     @***************************************************************************************
     * Code that is customised by us                                                        *
     ***************************************************************************************@
-    @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest, GoogleAnalyticsAccount.headerBidding)) {
+    @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
             'sampleRate': @{ if (Play.isDev) 100 else tracker.samplePercentage }
         });
@@ -100,6 +100,7 @@
                 var d = new Date().getTime();
                 if (d - referrerVars.value.time < 60 * 1000) { // One minute
                     ga('@{trackerName}.send', 'event', 'Click', 'Internal', referrerVars.value.tag, {
+                        nonInteraction: true, // to avoid affecting bounce rate
                         dimension12: referrerVars.value.path
                     });
                 }
@@ -121,6 +122,3 @@ from a Fastly/frontend endpoint that can make a server-side call to GA to record
   <img id="googleConfidenceNoScriptImage" alt=""
     src="@{Configuration.debug.beaconUrl}/count/pvg.gif" width="1" height="1" class="u-h" />
 </noscript>
-
-
-
