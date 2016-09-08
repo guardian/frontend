@@ -41,6 +41,10 @@ object Commercial {
     isBrandedContent(item.commercial.isFoundationSupported, page, defaultEdition, Foundation)
   }
 
+  def isBrandedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+    isPaidContent(item, page) || isSponsoredContent(item, page) || isFoundationFundedContent(item, page)
+  }
+
   private def hasAdOfSize(slot: AdSlot,
                           size: AdSize,
                           metaData: MetaData,
