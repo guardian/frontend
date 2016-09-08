@@ -70,18 +70,12 @@ define([
         });
         if (this.config.showCloseBtn) {
             if (this.config.showCloseBtn === 'delayed') {
-                fastdom.write(function () {
-                    $('.js-survey-adblock__delayed-close').removeClass('is-hidden');
-                });
-                countdown.startTimer(5, function(seconds){
-                    fastdom.write(function () {
-                        if (seconds > 0) {
-                            $('.js-survey-adblock__delayed-close').html('<span class=\'countdown\'>'+seconds+'</span>');
-                        } else {
-                            $('.js-survey-adblock__delayed-close').addClass('is-hidden');
+                countdown.startTimer(5, function(seconds) {
+                    if (seconds < 1) {
+                        fastdom.write(function () {
                             $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                        }
-                    });
+                        });
+                    }
                 });
             } else {
                 fastdom.write(function () {
