@@ -17,21 +17,15 @@ GET           /logout                                                           
 # Crossword
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
-# Travel offers
+
+# Commercial
 GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffersController.renderTravel
-
-# Jobs
 GET        /commercial/jobs.json                                                               controllers.commercial.JobsController.renderJobs
-
-# Masterclasses
 GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterclassesController.renderMasterclasses
-
-# Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-
-# Book offers
 GET        /commercial/books/book.json                                                         controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                                        controllers.commercial.BookOffersController.renderBooks
+
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
