@@ -283,7 +283,7 @@ $minute-headline-colour: #ffffff;
     // Desktop
     @include mq($from: desktop) {
         max-width: gs-span(10);
-        margin-bottom: $gs-baseline * 5;
+        margin-bottom: $gs-baseline * 6;
         margin-left: gs-span(1) + $gs-gutter;
 
         &:before {
