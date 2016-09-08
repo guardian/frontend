@@ -41,7 +41,7 @@ define([
         function create() {
             var videoHeight = openedHeight;
             var additionalParams = {
-                destkopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
+                desktopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
                 mobileCTA: params.ctaMobileImage ? ctaTpl({ media: 'mobile-only', link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
@@ -79,9 +79,7 @@ define([
                     .css(
                         'height',
                         isClosed ? openedHeight : closedHeight
-                    )
-                    .addClass(isClosed ? 'ad-exp__expand--opened' : '')
-                    .removeClass(isClosed ? '' : 'ad-exp__expand--opened');
+                    );
 
                     $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
                         .css('height', isClosed ? openedHeight : closedHeight)
