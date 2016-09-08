@@ -529,6 +529,9 @@
     "chokidar": {
       "version": "1.5.1"
     },
+    "circular-json": {
+      "version": "0.3.1"
+    },
     "clap": {
       "version": "1.1.1"
     },
@@ -1601,7 +1604,36 @@
       }
     },
     "grunt-eslint": {
-      "version": "18.0.0"
+      "version": "19.0.0",
+      "dependencies": {
+        "eslint": {
+          "version": "3.4.0"
+        },
+        "file-entry-cache": {
+          "version": "2.0.0"
+        },
+        "flat-cache": {
+          "version": "1.2.1"
+        },
+        "globals": {
+          "version": "9.9.0"
+        },
+        "ignore": {
+          "version": "3.1.5"
+        },
+        "lodash": {
+          "version": "4.15.0"
+        },
+        "shelljs": {
+          "version": "0.6.1"
+        },
+        "strip-bom": {
+          "version": "3.0.0"
+        },
+        "user-home": {
+          "version": "2.0.0"
+        }
+      }
     },
     "grunt-frequency-graph": {
       "version": "0.1.6",
@@ -2780,6 +2812,9 @@
     },
     "nan": {
       "version": "2.4.0"
+    },
+    "natural-compare": {
+      "version": "1.4.0"
     },
     "negotiator": {
       "version": "0.5.3"

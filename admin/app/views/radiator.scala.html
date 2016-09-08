@@ -45,13 +45,14 @@
         Note, it will not show unless you enable the "External status widget" for the build in Teamcity
             for some reason the &js=1 hangs waiting for a http resp so just using the iframe version for now
         *@
-        <iframe src="http://teamcity.gu-web.net:8111/externalStatus.html?buildTypeId=dotcom_master"></iframe>
+        <iframe src="https://teamcity.gu-web.net/externalStatus.html?buildTypeId=dotcom_master"></iframe>
     </div>
 
 
     <div class="expiring-wrapper">
-        <h2>Expiring features</h2>
+        <h2>Expiring switches</h2>
         <ul id="switches">
+            @if(switches.isEmpty) { <li>None.</li> }
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
                     <li title="@switch.name - expires in @days days">

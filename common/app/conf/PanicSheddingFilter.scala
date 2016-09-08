@@ -4,7 +4,6 @@ import java.lang.management.ManagementFactory
 
 import akka.agent.Agent
 import common.{ExecutionContexts, RequestMetrics, Logging}
-import conf.switches.Switches
 import org.joda.time.DateTime
 import play.api.mvc.Results._
 import play.api.mvc.{Result, RequestHeader, Filter}

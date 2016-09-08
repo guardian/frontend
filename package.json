@@ -39,7 +39,7 @@
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-uglify": "0.9.1",
     "grunt-css-metrics": "0.1.2",
-    "grunt-eslint": "18.0.0",
+    "grunt-eslint": "19.0.0",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-karma": "^2.0.0",
     "grunt-mkdir": "0.1.2",

@@ -1,5 +1,7 @@
 package common.commercial.hosted
 
+import java.awt.Color
+
 import model.StandalonePage
 
 trait HostedPage extends StandalonePage {
@@ -26,7 +28,6 @@ trait HostedPage extends StandalonePage {
   val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass} hosted-tone-bg"
   val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass} hosted-tone-border"
   val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
-
 }
 
 case class HostedCampaign(
@@ -35,10 +36,23 @@ case class HostedCampaign(
   owner: String,
   logo: HostedLogo,
   cssClass: String,
-  brandColour: String,
-  brightFont: Boolean,
+  fontColour: FontColour,
   logoLink: Option[String] = None
 )
+
+case class FontColour(brandColour: String) {
+
+  lazy val shouldHaveBrightFont = !isBrandColourBright
+
+  private val isBrandColourBright = {
+    val hexColour = brandColour.stripPrefix("#")
+    val rgb = Integer.parseInt(hexColour, 16)
+    val c = new Color(rgb)
+    val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
+    val brightness = hsb(2)
+    brightness > 0.5
+  }
+}
 
 case class HostedLogo(
   url: String

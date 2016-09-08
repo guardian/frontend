@@ -1,120 +1,114 @@
+#survey-laboratory .illustration-container {
+    min-height: 10rem;
+    height: 200px;
+    width: 100%;
+    position: relative;
+    z-index: 80;
+
+    @include mq(tablet) {
+        min-height: 20rem;
+    }
+}
+
+.inline-weekend-reading__svg {
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -1400px;
+    height: 112%;
+    z-index: 100;
+}
+
 .email-signup-main {
-    background-color: $news-main-1;
+    background-color: $features-support-1;
 }
 
 .email-signup-main:before {
-    height: 26px;
+    height: $gs-baseline * 2;
     content: '';
-    background-color: $news-main-1;
+    background-color: $features-support-1;
     display: block;
+
+    @include mq(tablet) {
+        height: $gs-baseline * 4;
+    }
+
+    @include mq(desktop) {
+        height: $gs-baseline * 3;
+    }
 }
 
 .email-signup {
-    background-color: $news-main-1;
+    background-color: $features-support-1;
     min-width: 16em;
+}
+
+.main__column--horizontal-bar:before {
+    content: '';
+    display: block;
+    border-bottom: 2px solid $features-support-3;
 }
 
 .content {
     padding-bottom: $gs-baseline * 2;
 }
 
-.email-signup {
-    //No script tag
-    a {
-        color: #ffffff;
-        padding: 0 .3rem;
-    }
+.weekend-reading {
+    margin-top: $gs-baseline;
 
-    .fsLabel {
-        @include fs-header(2);
-
-        color: #ffffff;
-        padding: 0 .3rem;
-
-    }
-
-    .fsPagination {
-        margin: 0;
-    }
-
-    .fsRequiredMarker {
-        display: none;
-    }
-
-    .fsField {
-        @include fs-textSans(2);
-        width: 100%;
-        border-radius: 100px;
-        border: 0;
-        height: 32px;
-        padding-left: 1rem;
-        box-sizing: border-box;
-        margin-bottom: $gs-baseline;
-    }
-
-    .fsSubmitButton {
-        @include fs-textSans(2);
-        display: inline-block;
-        float: left;
-        width: 100%;
-        height: 32px;
-        line-height: 28px;
-        overflow: hidden;
-        margin-bottom: $gs-baseline;
-        border-radius: 15px;
-        border: 1px solid currentColor;
-        color: #ffffff;
-        background-color: transparent;
-
-        &:hover,
-        &:focus,
-        &:active {
-            border-color: darken(#ffffff, 15%);
-        }
-
-    }
-
-    .fsValidationError {
-        background-color: $news-main-1;
-
-        .fsLabel {
+    .email-signup {
+        //No script tag
+        a {
             color: #ffffff;
-            background-image: none;
             padding: 0 .3rem;
         }
+
+        .email-sub__lozenge {
+            border-color: $features-support-3;
+            border-radius: 100px;
+            float: left;
+            width: 70%;
+            height: 3em;
+            margin-bottom: $gs-baseline;
+
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: darken($features-support-3, 10%);
+            }
+
+            @include mq($until: tablet) {
+                width: 100%;
+            }
+        }
+
+        .email-sub__submit-input {
+            width: 25%;
+            margin: 0px 0px $gs-baseline 3%;
+            background-color: inherit;
+
+            @include mq($until: tablet) {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
     }
 
-    .fsError {
-        margin: 0 .3rem;
+    .email-signup__aside-text {
+        @include fs-textSans(2);
+        color: $features-support-3;
+        width: 65%;
+        margin-left: 2%;
 
+        @include mq($until: tablet) {
+            width: 95%;
+        }
     }
-}
 
-.email-signup__field-input {
-    width: 100%;
-    border-radius: 100px;
-    border: 0;
-    height: 2.5em;
-    padding-left: 1rem;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-}
-
-.email-signup__action-button {
-    width: 100%;
-    background-color: $news-main-1;
-    border: 2px solid $guardian-brand-light;
-    border-radius: 100px;
-    height: 2.5rem;
-    color: #ff0000;
-    margin-bottom: 1rem;
-}
-
-.email-signup__aside-text {
-    @include fs-textSans(2);
-
-    color: $guardian-brand-light;
-    padding: 0 .3rem;
+    .email-signup__aside-text__frequency {
+        color: #ffffff;
+        float: right;
+    }
 }
 
 .weekend-read-header {
@@ -122,22 +116,34 @@
 }
 
 .weekend-read-header__heading {
-    @include fs-header(2);
-
+    @include fs-header(5);
     padding: 0 .3rem;
+
+    @include mq($from: tablet) {
+        font-size: 36px;
+        margin-top: 8px;
+  }
+
+    .weekend-reading-pink {
+        color: $features-support-3;
+    }
 }
 
 .weekend-read-header__text {
     @include fs-bodyCopy(2);
-
     padding: 0 .3rem;
+    margin-top: $gs-baseline / 2;
+
+    @include mq($from: tablet) {
+        @include fs-bodyCopy(3);
+        margin-top: $gs-baseline;
+  }
 }
 
 .weekend-read-header__terms {
     @include fs-textSans(2);
-    padding-left: .3rem;
-    padding-bottom: 20px;
-    color: $guardian-brand-light;
+    padding: 0 .3rem $gs-baseline * 2 .3rem;
+    color: $features-support-3;
 }
 
 .weekend-read-sample {
@@ -147,6 +153,7 @@
 
 .weekend-read-sample__button {
     @include fs-textSans(2);
+    margin: $gs-baseline 0;
     position: relative;
     color: $neutral-1;
     border: thin solid $neutral-3;
@@ -169,9 +176,4 @@
         right: 2px;
         top: 1px;
     }
-}
-
-.email-signup__aside-text__frequency {
-    color: #ffffff;
-    float: right;
 }

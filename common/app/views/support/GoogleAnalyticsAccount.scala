@@ -19,9 +19,6 @@ object GoogleAnalyticsAccount {
   */
   val editorialTest = Tracker("UA-33592456-1", "guardianTestPropertyTracker", 5)
 
-  // Dedicated property just for header bidding events
-  val headerBidding = Tracker("UA-78705427-6", "headerBiddingPropertyTracker")
-
   private val useProdTracker = environment.isProd && !environment.isPreview
 
   val editorialTracker: Tracker = if (useProdTracker) editorialProd else editorialTest

@@ -83,3 +83,15 @@
     }
 }
 
+// PLAIN DARK MODS
+.email-sub--plaindark {
+    .email-sub__message__description {
+        display: none;
+    }
+
+    .email-sub__message__headline {
+        color: #ffffff;
+        line-height: 2rem;
+    }
+}
+

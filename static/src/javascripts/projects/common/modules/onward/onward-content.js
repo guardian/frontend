@@ -2,7 +2,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'common/modules/commercial/badges',
+    'commercial/modules/badges',
     'common/modules/component',
     'lodash/arrays/union'
 ], function (

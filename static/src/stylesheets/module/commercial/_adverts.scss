@@ -43,7 +43,7 @@
         padding: 0;
     }
 
-    @include mq(mobileLandscape, desktop) {
+    @include mq(mobileLandscape, leftCol) {
         > .adverts__header {
             flex-direction: row;
             justify-content: space-between;
@@ -127,7 +127,7 @@
         color: #ffffff;
         display: flex;
 
-        @include mq($until: desktop) {
+        @include mq($until: leftCol) {
             align-items: center;
 
             .inline-marque-54 {
@@ -144,7 +144,7 @@
             }
         }
 
-        @include mq(desktop) {
+        @include mq(leftCol) {
             flex-direction: column;
 
             /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
@@ -677,7 +677,7 @@
         @include fs-headline(1);
         color: #ffffff;
 
-        @include mq($until: desktop) {
+        @include mq($until: leftCol) {
             display: none;
         }
 
@@ -737,10 +737,10 @@
         float: none;
         min-height: 0;
         overflow: visible;
-        margin: auto $gs-gutter / 4 0;
+        margin: auto 0 0;
         padding: 0;
         position: static;
-        width: auto;
+        width: 100%;
 
         &::before,
         &::after {
@@ -757,6 +757,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        padding-right: $gs-gutter / 4;
     }
 
     .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {

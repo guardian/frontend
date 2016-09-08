@@ -75,7 +75,9 @@ define([
                 },
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
-                    if (isDev) {
+                    var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
+
+                    if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
                         if (window.console && window.console.warn) {
                             window.console.warn('Raven captured error.', data);
@@ -84,6 +86,7 @@ define([
 
                     return config.switches.enableSentryReporting &&
                         Math.random() < 0.1 &&
+                        !isIgnored &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }
@@ -233,7 +236,7 @@ define([
             var membershipUrl = config.page.membershipUrl,
                 membershipAccess = config.page.membershipAccess,
                 requiresPaidTier = (membershipAccess.indexOf('paid-members-only') !== -1),
-                membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
+                membershipAuthUrl = membershipUrl + '/membership-content?referringContent=' + config.page.contentId + '&membershipAccess=' + membershipAccess;
 
             var redirect = function () {
                 window.location.href = membershipAuthUrl;
