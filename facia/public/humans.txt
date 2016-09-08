@@ -116,6 +116,10 @@ Developer: Kate Whalen
 Twitter: @KateAWhalen
 Location: London, UK
 
+Developer: Joseph Smith
+Twitter: @joelochlann
+Location: London, UK
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
