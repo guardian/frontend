@@ -113,6 +113,7 @@ object css {
       case "email" => "head.email"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"
+      case "signup" => "head.signup"
       case _ => "head.content"
     }
 
