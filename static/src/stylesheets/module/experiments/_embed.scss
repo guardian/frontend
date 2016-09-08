@@ -113,17 +113,40 @@
 
 .contributions__contribute--epic {
     margin-top: 0;
+    width: 100px;
     background-color: $multimedia-main-2;
     color: $neutral-1;
-    width: 100px;
     &:hover {
-        background-color: darken($multimedia-main-2, 5%);
         color: $neutral-1;
+        background-color: darken($multimedia-main-2, 5%);
     }
 
     &:after {
         background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$neutral-1" stroke="$neutral-1" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
+}
+
+
+.contributions__option-button--epic {
+    &:hover {
+        background-color: $comment-support-1;
+        color: $neutral-6;
+    }
+
+    &.active {
+        background-color: $neutral-1;
+        color: $neutral-6;
+    }
+}
+
+
+
+.contributions__button-group--epic {
+    margin-bottom: $gs-baseline;
+}
+
+.contributions__button-group--epic-no-buttons {
+    display: none;
 }
 
 @include mq($from: phablet) {
@@ -132,7 +155,7 @@
     }
 
     .contributions__contribute--bottom {
-        margin-left: $gs-gutter / 4;
+        margin-left: $gs-gutter / 2;
         margin-top: 0;
         width: 130px;
     }
@@ -144,6 +167,12 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
+
+    .contributions__contribute--no-buttons {
+        margin-left: 0;
+    }
+
+
 }
 
 
