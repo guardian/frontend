@@ -349,6 +349,7 @@
 
         > .slide-container {
             display: flex;
+            justify-content: flex-end;
         }
     }
 
@@ -428,28 +429,33 @@
     .creative__cta--position-top    { top:    10px; }
     .creative__cta--position-bottom { bottom: 10px; }
 
-    .has-no-flex & {
+    // .has-no-flex & {
         .slide-video {
             > .slide-container {
-                display: table;
+                display: block;
+                overflow: hidden;
             }
         }
 
         &.right-aligned-video .video-container__inner {
-            display: table-cell;
+            float: right;
         }
 
         &.right-aligned-video .video-container__cta {
             @include mq(1024px) {
-                display: table-cell;
+                display: block;
+                position: absolute;
                 width: calc(100% - 768px);
+                top: 0;
+                bottom: 0;
+                left: 0;
             }
 
             @include mq(wide) {
                 width: 532px;
             }
         }
-    }
+    // }
 }
 
 .creative--expandable-ga {
