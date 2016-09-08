@@ -119,7 +119,8 @@ define([
     function initPlayButtons(root, duration) {
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el, options, duration) {
-                el.setAttribute('data-duration', duration);
+                el.getAttribute('data-duration', duration);
+                console.log(duration);
                 var $el = bonzo(el);
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
