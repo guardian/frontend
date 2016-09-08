@@ -56,7 +56,7 @@ define([
                 bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
                     $('.survey-adblock').addClass('is-hidden');
                     var cookieName = 'gu_abm_x',
-                        cookieLifetimeMinutes = 10,
+                        cookieLifetimeMinutes = 30,
                         cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
                     cookies.addForMinutes(cookieName, cookieCount + 1, cookieLifetimeMinutes);
                 });
