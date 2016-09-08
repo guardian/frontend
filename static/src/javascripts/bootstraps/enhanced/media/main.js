@@ -95,11 +95,9 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function createVideoPlayer(el, options) {
+    function createVideoPlayer(el, options, duration) {
         var player = videojs(el, options);
         var duration = parseInt(el.getAttribute('data-duration'), 10);
-        // $el.querySelector('.vjs-big-play-button').setAttribute('data-duration', duration);
-
 
         player.ready(function () {
             if (!isNaN(duration)) {
@@ -118,11 +116,11 @@ define([
         return player;
     }
 
-    function initPlayButtons(root) {
+    function initPlayButtons(root, duration) {
         fastdom.read(function () {
-            $('.js-video-play-button', root).each(function (el) {
+            $('.js-video-play-button', root).each(function (el, options, duration) {
+                el.setAttribute('data-duration', duration);
                 var $el = bonzo(el);
-                debugger;
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
                     container = bonzo(el).parent().parent();
