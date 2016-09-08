@@ -231,6 +231,11 @@ define([
             }
 
             $fabricExpandingV1.appendTo(this.$adSlot);
+            this.$adSlot.addClass('ad-slot--fabric');
+
+            if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
+                this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
+            }
             return true;
         }, this);
     };

@@ -4,7 +4,9 @@
 
 ### watch/reload
 There is a `make watch` task available to build and watch for development
-changes.
+changes. View it on port `3000` - it uses [Browsersync](https://www.browsersync.io/) under the hood.
+
+If you use `m.thegulocal.com` it will try port `3000` and fall back to `9000` if unavailable.
 
 ```bash
 make watch

@@ -56,7 +56,8 @@ class DevParametersHttpRequestHandler(
     "k", // keywords in commercial component requests
     "s", // section in commercial component requests
     "seg", // user segments in commercial component requests
-    "t" // specific item targetting
+    "t", // specific item targetting
+    "0p19G" // Google AMP AB test parameter
   )
 
   val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams

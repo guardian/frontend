@@ -31,9 +31,7 @@ define([
     track.seen = false;
 
     var ga = window.ga;
-    // When ready to go live, change to:
-    // var gaTracker = config.googleAnalytics.trackers.editorial;
-    var gaTracker = 'guardianTestPropertyTracker';
+    var gaTracker = config.googleAnalytics.trackers.editorial;
 
     function sendToGA(label, customDimensions) {
         var fieldsObject = assign({
