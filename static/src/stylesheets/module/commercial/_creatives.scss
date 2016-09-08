@@ -346,6 +346,10 @@
         width: 100%;
         z-index: 3;
         display: none;
+
+        > .slide-container {
+            display: flex;
+        }
     }
 
     .slide-video__expand {
@@ -362,26 +366,20 @@
 
         @include mq(1024px) {
             width: 768px;
-            float: right;
         }
     }
 
+    &.right-aligned-video .video-container__cta {
+        display: none;
+
+        @include mq(1024px) {
+            display: block;
+            flex: 1;
+        };
+    }
+
     .expandable-video {
-        position: absolute;
-        z-index: 10;
-        margin-left: -50%;
-        left: 50%;
-    }
-
-    &.full-width-video .expandable-video {
-        margin-left: -50%;
-        left: 50%;
-    }
-
-    &.right-aligned-video .expandable-video {
-        margin: 0;
-        left: auto;
-        right: 0;
+        display: block;
     }
 
     .slide-1 {

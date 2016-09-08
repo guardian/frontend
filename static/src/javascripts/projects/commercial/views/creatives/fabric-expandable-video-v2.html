@@ -4,7 +4,7 @@
         <div class="facia-container__inner">Advertisement</div>
     </div>
 
-    <a href="<%=data.link%>" class="ad-exp--expand l-side-margins mobile-only" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>">
+    <div class="ad-exp--expand l-side-margins mobile-only" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImageM%>') <%=data.backgroundRepeatM%> <%=data.backgroundPositionM%>">
         <div class="slide-container">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImageM%>') <%=data.slide1BGImageRepeatM%> <%=data.slide1BGImagePositionM%>;">
                 <div class="ad-exp__open">
@@ -19,10 +19,9 @@
                 <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImageM%>') <%=data.slide2Layer3BGImageRepeatM%> <%=data.slide2Layer3BGImagePositionM%>;"></div>
             </div>
         </div>
-        <%=data.mobileCTA%>
-    </a>
+    </div>
 
-    <a href="<%=data.link%>" class="ad-exp--expand l-side-margins hide-until-tablet" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>">
+    <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background: <%=data.backgroundColor%> url('<%=data.backgroundImage%>') <%=data.backgroundRepeat%> <%=data.backgroundPosition%>">
         <div class="slide-container" style="">
             <div class="ad-exp-collapse__slide slide-1" style="background: <%=data.slide1BGColor%> url('<%=data.slide1BGImage%>') <%=data.slide1BGImageRepeat%> <%=data.slide1BGImagePosition%>;">
                 <div class="ad-exp__open">
@@ -37,11 +36,11 @@
                 <div class="ad-exp__layer ad-exp__layer3" style="background: url('<%=data.slide2Layer3BGImage%>') <%=data.slide2Layer3BGImageRepeat%> <%=data.slide2Layer3BGImagePosition%>;"></div>
             </div>
         </div>
-        <%=data.desktopCTA%>
-    </a>
+    </div>
 
     <div class="slide-video">
         <div class="slide-container">
+            <a href="<%=data.link%>" class="video-container__cta"></a>
             <div class="video-container__inner">
                 <%=data.videoEmbed%>
                 <%=data.showPlusInContainer%>
