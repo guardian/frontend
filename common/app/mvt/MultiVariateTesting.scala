@@ -20,7 +20,7 @@ object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
   description = "Feature switch (0% test) for the new header",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 9, 8) // Thursday
+  sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variant")
@@ -31,10 +31,43 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2016, 9, 1)
+  sellByDate = new LocalDate(2016, 11, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
+  }
+}
+
+object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
+  name = "commercial-hb-sonobi",
+  description = "A test variant for the sonobi header-bidding integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("sonobi")
+  }
+}
+
+object CommercialHeaderBiddingPrebidVariant extends TestDefinition(
+  name = "commercial-hb-prebid",
+  description = "A test variant for the prebid header-bidding integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("prebid")
+  }
+}
+
+object CommercialHeaderBiddingControl extends TestDefinition(
+  name = "commercial-hb-control",
+  description = "A control group for the header bidding test",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("control")
   }
 }
 
@@ -52,7 +85,10 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
-    CommercialClientLoggingVariant
+    CommercialClientLoggingVariant,
+    CommercialHeaderBiddingSonobiVariant,
+    CommercialHeaderBiddingPrebidVariant,
+    CommercialHeaderBiddingControl
   )
 }
 

@@ -64,6 +64,12 @@
 
 .top-banner-ad-container {
     background-color: $neutral-8;
+    // Needed for compatibility with IE11/Edge.
+    top: 0;
+}
+
+.top-banner-ad-container--fabric {
+    overflow: hidden;
 }
 
 .sticky-top-banner-ad {
@@ -656,6 +662,10 @@
 
 .ad-slot--revealer {
     min-width: 300px;
+}
+
+.ad-slot--fabric {
+    overflow: hidden;
 }
 
 .ad-slot--fabric-v1,

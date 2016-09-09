@@ -31,7 +31,6 @@ define([
 ) {
     var urlBuilders = {
         soulmates:      defaultUrlBuilder('soulmates/mixed'),
-        soulmatesTest:  defaultUrlBuilder('soulmates-test/mixed'),
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
         capi:           complexUrlBuilder('capi', false, false, true),
         paidforCard:    complexUrlBuilder('paid', '', false, true),

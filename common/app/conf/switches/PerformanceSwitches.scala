@@ -204,7 +204,17 @@ trait PerformanceSwitches {
     "If this switch is on then link preconnect hints will be on the page",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 5),
+    sellByDate = new LocalDate(2016, 10, 10),
+    exposeClientSide = false
+  )
+
+  val CachedFootballStats = Switch(
+    SwitchGroup.Performance,
+    "cached-football-stats",
+    "If this switch is on then calls to the football API will be via a cdn",
+    owners = Seq(Owner.withGithub("gklopper")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = false
   )
 }

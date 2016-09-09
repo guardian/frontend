@@ -5,10 +5,8 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
-GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
-GET            /survey/mydigest                                                                                                  controllers.SurveyPageController.renderMyDigestExplainerPage()
-GET            /survey/mydigest/404                                                                                              controllers.SurveyPageController.renderMyDigest404Page()
-GET            /survey/weekendreading                                                                                            controllers.SurveyPageController.renderWeekendReading404Page()
+GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
+
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
@@ -289,7 +287,6 @@ GET            /commercial/travel/offers.json                                   
 GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
 GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET            /commercial/soulmates-test/$subgroup<\w+>.json                                                                    controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
 GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent

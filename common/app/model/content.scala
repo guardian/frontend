@@ -22,7 +22,6 @@ import play.api.libs.json._
 import views.support._
 
 import scala.collection.JavaConversions._
-import scala.language.postfixOps
 import scala.util.Try
 
 sealed trait ContentType {
@@ -106,7 +105,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+    ImgSrc(rawOpenGraphImage, EmailImage)
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
