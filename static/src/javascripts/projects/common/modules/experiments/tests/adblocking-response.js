@@ -18,12 +18,12 @@ define([
     cookies
 ) {
     return function () {
-        this.id = 'AdBlockingResponse';
-        this.start = '2016-08-17';
-        this.expiry = '2016-10-18';
+        this.id = 'AdBlockingResponse2';
+        this.start = '2016-09-12';
+        this.expiry = '2016-09-15';
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response ZERO PERCENT TEST WITH 30 MINUTES GRACE';
-        this.audience = 0;
+        this.description = 'Adblocking response test with 30 minutes grace';
+        this.audience = 0.12;
         this.audienceOffset = 0;
         this.successMeasure = 'Adblocking users white-list the Guardian domain';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
