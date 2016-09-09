@@ -93,14 +93,18 @@ $block-padding-right: $gs-gutter;
     }
 }
 
-.block-time {
-    line-height: 15px;
-    padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
-    position: relative;
+.published-time {
 
     @include mq($from: tablet) {
         width: gs-span(1);
     }
+
+}
+
+.block-time {
+    line-height: 15px;
+    padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
+    position: relative;
 
     &.published-time {
         @include fs-textSans(2);

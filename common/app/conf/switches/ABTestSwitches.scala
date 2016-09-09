@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
+    sellByDate = new LocalDate(2016, 9, 13),
     exposeClientSide = true
   )
 
@@ -61,7 +61,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better than our previous in-article component tests.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 12),
+    sellByDate = new LocalDate(2016, 9, 13),
     exposeClientSide = true
   )
 
@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
+    sellByDate = new LocalDate(2016, 9, 13),
     exposeClientSide = true
   )
 
@@ -83,7 +83,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
     exposeClientSide = true
   )
 
@@ -93,7 +93,7 @@ trait ABTestSwitches {
     "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
     exposeClientSide = true
   )
 

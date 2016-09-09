@@ -33,7 +33,7 @@ define([
 
         this.id = 'ContributionsEmbed20160905';
         this.start = '2016-09-05';
-        this.expiry = '2016-09-09';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better inline and in-article than at the bottom of the article.';
         this.showForSensitive = false;
@@ -53,7 +53,7 @@ define([
             return $outbrain && $outbrain.length > 0;
         }
 
-        
+
         function getSpacefinderRules() {
             return {
                 bodySelector: '.js-article__body',
