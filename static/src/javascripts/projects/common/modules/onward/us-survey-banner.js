@@ -31,7 +31,6 @@ define([
         };
 
     function canShowPromo() {
-        return true;
         return isSwitchedOn() && UsUser() && isNewToSurvey();
     }
 
