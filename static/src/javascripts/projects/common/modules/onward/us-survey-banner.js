@@ -24,15 +24,14 @@ define([
         },
 
         messageTemplateOptions = {
-            linkHref: 'http://www.gdnmobilelab.com/primaries?referrer=' + getReferrer(),
-            linkText: 'Sign up now',
-            linkName: 'site-message--mobile-labs',
-            messageHeadline: 'Interested in the U.S elections?',
-            messageText: 'Get experimental mobile alerts during the June 7 presidential primary',
+            linkHref: 'https://surveys.theguardian.com/R.aspx?a=818&as=PM2tx7WG1j?CMP=' + getReferrer() + '_b-perceptionsurvey',
+            linkText: 'Tell us',
+            messageHeadline: 'We\'d love to know what you think about Guardian US',
             arrowWhiteRight: svgs('arrowWhiteRight')
         };
 
     function canShowPromo() {
+        return true;
         return isSwitchedOn() && UsUser() && isNewToSurvey();
     }
 
@@ -46,18 +45,14 @@ define([
 
     function getReferrer() {
         var referrerTypes = [
-                {id: 'facebook', match: 'facebook.com'},
-                {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
-                {id: 'googleplus', match: 'plus.url.google'},
-                {id: 'reddit', match: 'reddit.com'},
-                {id: 'google', match: 'www.google'},
-                {id: 'theguardian', match: 'theguardian.com'},
-                {id: 'localhost', match: 'localhost'},
-                {id: 'drudge', match: 'drudgereport.com'}
+                {id: 'fb', match: 'facebook.com'},
+                {id: 'twt', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                {id: 'goog', match: 'www.google'},
+                {id: 'ons', match: 'theguardian.com'}
             ],
             matchedRef = referrerTypes.filter(function (referrerType) {
                 return detect.getReferrer().indexOf(referrerType.match) > -1;
-            })[0] || {};
+            })[0] || {id: 'unk'};
 
         return matchedRef.id;
     }
