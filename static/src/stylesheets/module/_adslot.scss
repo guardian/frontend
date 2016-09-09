@@ -64,6 +64,8 @@
 
 .top-banner-ad-container {
     background-color: $neutral-8;
+    // Needed for compatibility with IE11/Edge.
+    top: 0;
 }
 
 .top-banner-ad-container--fabric {
@@ -163,12 +165,6 @@
     @include mq(wide) {
         text-align: left;
     }
-}
-
-// Compatibility fix for top banner ads in IE11/Edge. Without this top banner
-// appears further down the page, and covers content, in immersive galleries.
-.immersive-header-container .top-banner-ad-container {
-    top: 0;
 }
 
 /**
