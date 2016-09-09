@@ -62,7 +62,6 @@ define([
         new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
         new ContributionsEpic(),
-        new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new NoSocialCount(),

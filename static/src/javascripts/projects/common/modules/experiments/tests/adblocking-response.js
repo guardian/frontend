@@ -22,61 +22,61 @@ define([
         this.start = '2016-08-17';
         this.expiry = '2016-10-18';
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response ZERO PERCENT TEST WITH 10 MINUTES GRACE';
+        this.description = 'Adblocking response ZERO PERCENT TEST WITH 30 MINUTES GRACE';
         this.audience = 0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Adblocking users will either pay, prove they have a subscription or turn off their adblocker.';
-        this.audienceCriteria = 'All non-Firefox users with active adblockers.';
+        this.successMeasure = 'Adblocking users white-list the Guardian domain';
+        this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
             ['adblock whitelist no-close'],
-            ['adblock membership no-close'],
-            ['subscriber number no-close'],
-            ['user help email no-close'],
+            ['adblock supporter no-close'],
+            ['adblock subscriber no-close'],
             ['adblock whitelist immediate-close'],
-            ['adblock membership immediate-close'],
-            ['subscriber number immediate-close'],
-            ['user help email immediate-close'],
+            ['adblock supporter immediate-close'],
+            ['adblock subscriber immediate-close'],
             ['adblock whitelist delayed-close'],
-            ['adblock membership delayed-close'],
-            ['subscriber number delayed-close'],
-            ['user help email delayed-close']
+            ['adblock supporter delayed-close'],
+            ['adblock subscriber delayed-close'],
+            ['survey adblock delayed-dismissed'],
+            ['survey adblock immediate-dismissed']
         ].map(function(_) {
             return _[0];
         }).join(', ');
         this.dataLinkNames = 'adblock response overlay: '+variantDataLinkNames+', subscriber number page: user help email';
-        this.idealOutcome = 'Adblocking users will either pay or allow ads.';
+        this.idealOutcome = 'After whitelisting our ads, former ad-blocking users will not re-block them';
 
         this.canRun = function () {
-            return !contains('firefox', detect.getUserAgent.browser.toLowerCase())
+            return contains('chrome', detect.getUserAgent.browser.toLowerCase())
                 && contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
                 && config.page.edition === 'UK'
                 && !cookies.get('gu_abm_x');
         };
 
+        var isQualified = function () {
+            return !config.page.isFront &&
+                !config.page.shouldHideAdverts &&
+                !userFeatures.isPayingMember() &&
+                config.page.webTitle !== 'Subscriber number form' &&
+                config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
+                storage.local.isStorageAvailable() &&
+                !storage.local.get('gu.subscriber') &&
+                storage.local.get('gu.alreadyVisited') > 5;
+        };
+
         this.variants = [{
+            id: 'control',
+            test: function(){}
+        }, {
             id: 'no-close',
             test: function () {
                 detect.adblockInUse.then(function (adblockUsed) {
-                    if (adblockUsed && !config.page.isFront &&
-                        !userFeatures.isPayingMember() &&
-                        config.page.webTitle !== 'Subscriber number form' &&
-                        config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
-                        storage.local.isStorageAvailable() &&
-                        !storage.local.get('gu.subscriber')
-                    ) {
+                    if (adblockUsed && isQualified()) {
                         var surveyOverlay = new SurveyAdBlock({
-                            surveyHeader: 'We need to talk about adverts',
-                            surveyText: 'It looks like you’re trying to browse the Guardian without seeing any adverts.',
-                            surveyTextSecond: 'We understand people can find adverts distracting or intrusive, and we understand that readers have a choice about how and where they consume the news. But not being able to display adverts, regardless of whether readers interact with them or not, reduces funding that is crucial for the Guardian if it is to continue to survive independently.',
-                            surveyTextThird: 'To show your support for our world-class journalism, please consider helping us in one of two ways: either by disabling your ad blocking software for theguardian.com, or becoming a paying Guardian Member from £5 per month.',
-                            surveyTextMembership: 'If you are already a Guardian Member, please ' + '<a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_no-close\" target=\"_blank\" data-link-name=\"adblock membership no-close\">sign in here</a>.' + ' If you subscribe to the Guardian, ' + '<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber no-close\">please click here.</a>',
-                            surveyTextSubscriber: 'If you are unable to disable your ad blocking software for any reason, please contact ' + '<a class=\"text-link\" href="mailto:userhelp@theguardian.com" data-link-name="user help email no-close">userhelp@theguardian.com.</a>',
-                            signupText: 'How to disable adblockers on the Guardian',
-                            membershipText: 'Become a Member',
-                            signupLink: '/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom',
-                            membershipLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADB_RESP_no-close',
-                            signupDataLink: 'adblock whitelist no-close',
-                            membershipDataLink: 'adblock membership no-close',
+                            surveyHeader: 'Advertising helps fund our journalism',
+                            surveyText: 'We know that advertising on the Internet can be frustrating. But we\'re continually working to make sure our ads are well behaved because we want to get it right and we depend on advertising revenue.',
+                            surveyTextSecond: 'Please allow us to show you adverts.',
+                            surveyTextThird: '<hr /><p class="survey-text__info">How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_no-close" target="_blank">detailed instructions</a>)</p><div class="image-link-container"><a href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_no-close" target="_blank"></a></div><p class="survey-text__info"><strong>Ad Block:</strong> Click the <img src="/assets/images/commercial/ab-icon.png" width="20px"/> icon &#x2794; &quot;Don\'t run on pages on this domain&quot; &#x2794; &quot;Exclude&quot;</p><p class="survey-text__info"><strong>Ad Block Plus:</strong> Click the <img src="/assets/images/commercial/abp-icon.png" width="20px"/> icon &#x2794; &quot;Disable on theguardian.com&quot;</p>',
+                            surveyTextMembership: 'Already paying? <a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_no-close\" target=\"_blank\" data-link-name=\"adblock supporter no-close\">supporter sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber no-close\">subscriber sign in</a>',
                             subscriberLink: '/commercial/subscriber-number',
                             subscriberText: 'Subscriber number',
                             subscriberDataLink: 'adblock subscriber no-close',
@@ -91,25 +91,13 @@ define([
             id: 'immediate-close',
             test: function () {
                 detect.adblockInUse.then(function (adblockUsed) {
-                    if (adblockUsed && !config.page.isFront &&
-                        !userFeatures.isPayingMember() &&
-                        config.page.webTitle !== 'Subscriber number form' &&
-                        config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
-                        storage.local.isStorageAvailable() &&
-                        !storage.local.get('gu.subscriber')) {
+                    if (adblockUsed && isQualified()) {
                         var surveyOverlay = new SurveyAdBlock({
-                            surveyHeader: 'We need to talk about adverts',
-                            surveyText: 'It looks like you’re trying to browse the Guardian without seeing any adverts.',
-                            surveyTextSecond: 'We understand people can find adverts distracting or intrusive, and we understand that readers have a choice about how and where they consume the news. But not being able to display adverts, regardless of whether readers interact with them or not, reduces funding that is crucial for the Guardian if it is to continue to survive independently.',
-                            surveyTextThird: 'To show your support for our world-class journalism, please consider helping us in one of two ways: either by disabling your ad blocking software for theguardian.com, or becoming a paying Guardian Member from £5 per month.',
-                            surveyTextMembership: 'If you are already a Guardian Member, please ' + '<a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_immediate-close\" target=\"_blank\" data-link-name=\"adblock membership immediate-close\">sign in here</a>.' + ' If you subscribe to the Guardian, ' + '<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber immediate-close\">please click here.</a>',
-                            surveyTextSubscriber: 'If you are unable to disable your ad blocking software for any reason, please contact ' + '<a class=\"text-link\" href="mailto:userhelp@theguardian.com" data-link-name="user help email immediate-close">userhelp@theguardian.com.</a>',
-                            signupText: 'How to disable adblockers on the Guardian',
-                            membershipText: 'Become a Member',
-                            signupLink: '/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom',
-                            membershipLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADB_RESP_immediate-close',
-                            signupDataLink: 'adblock whitelist immediate-close',
-                            membershipDataLink: 'adblock membership immediate-close',
+                            surveyHeader: 'Advertising helps fund our journalism',
+                            surveyText: 'We know that advertising on the Internet can be frustrating. But we\'re continually working to make sure our ads are well behaved because we want to get it right and we depend on advertising revenue.',
+                            surveyTextSecond: 'Please allow us to show you adverts.',
+                            surveyTextThird: '<hr /><p class="survey-text__info">How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_immediate-close" target="_blank">detailed instructions</a>)</p><div class="image-link-container"><a href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_immediate-close" target="_blank"></a></div><p class="survey-text__info"><strong>Ad Block:</strong> Click the <img src="/assets/images/commercial/ab-icon.png" width="20px"/> icon &#x2794; &quot;Don\'t run on pages on this domain&quot; &#x2794; &quot;Exclude&quot;</p><p class="survey-text__info"><strong>Ad Block Plus:</strong> Click the <img src="/assets/images/commercial/abp-icon.png" width="20px"/> icon &#x2794; &quot;Disable on theguardian.com&quot;</p>',
+                            surveyTextMembership: 'Already paying? <a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_immediate-close\" target=\"_blank\" data-link-name=\"adblock supporter immediate-close\">supporter sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber immediate-close\">subscriber sign in</a>',
                             subscriberLink: '/commercial/subscriber-number',
                             subscriberText: 'Subscriber number',
                             subscriberDataLink: 'adblock subscriber immediate-close',
@@ -124,25 +112,13 @@ define([
             id: 'delayed-close',
             test: function () {
                 detect.adblockInUse.then(function (adblockUsed) {
-                    if (adblockUsed && !config.page.isFront &&
-                        !userFeatures.isPayingMember() &&
-                        config.page.webTitle !== 'Subscriber number form' &&
-                        config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
-                        storage.local.isStorageAvailable() &&
-                        !storage.local.get('gu.subscriber')) {
+                    if (adblockUsed && isQualified()) {
                         var surveyOverlay = new SurveyAdBlock({
-                            surveyHeader: 'We need to talk about adverts',
-                            surveyText: 'It looks like you’re trying to browse the Guardian without seeing any adverts.',
-                            surveyTextSecond: 'We understand people can find adverts distracting or intrusive, and we understand that readers have a choice about how and where they consume the news. But not being able to display adverts, regardless of whether readers interact with them or not, reduces funding that is crucial for the Guardian if it is to continue to survive independently.',
-                            surveyTextThird: 'To show your support for our world-class journalism, please consider helping us in one of two ways: either by disabling your ad blocking software for theguardian.com, or becoming a paying Guardian Member from £5 per month.',
-                            surveyTextMembership: 'If you are already a Guardian Member, please ' + '<a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_delayed-close\" target=\"_blank\" data-link-name=\"adblock membership delayed-close\">sign in here</a>.' + ' If you subscribe to the Guardian, ' + '<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber delayed-close\">please click here.</a>',
-                            surveyTextSubscriber: 'If you are unable to disable your ad blocking software for any reason, please contact ' + '<a class=\"text-link\" href="mailto:userhelp@theguardian.com" data-link-name="user help email delayed-close">userhelp@theguardian.com.</a>',
-                            signupText: 'How to disable adblockers on the Guardian',
-                            membershipText: 'Become a Member',
-                            signupLink: '/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom',
-                            membershipLink: 'https://membership.theguardian.com/uk/supporter?INTCMP=ADB_RESP_delayed-close',
-                            signupDataLink: 'adblock whitelist delayed-close',
-                            membershipDataLink: 'adblock membership delayed-close',
+                            surveyHeader: 'Advertising helps fund our journalism',
+                            surveyText: 'We know that advertising on the Internet can be frustrating. But we\'re continually working to make sure our ads are well behaved because we want to get it right and we depend on advertising revenue.',
+                            surveyTextSecond: 'Please allow us to show you adverts.',
+                            surveyTextThird: '<hr /><p class="survey-text__info">How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_delayed-close" target="_blank">detailed instructions</a>)</p><div class="image-link-container"><a href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_delayed-close" target="_blank"></a></div><p class="survey-text__info"><strong>Ad Block:</strong> Click the <img src="/assets/images/commercial/ab-icon.png" width="20px"/> icon &#x2794; &quot;Don\'t run on pages on this domain&quot; &#x2794; &quot;Exclude&quot;</p><p class="survey-text__info"><strong>Ad Block Plus:</strong> Click the <img src="/assets/images/commercial/abp-icon.png" width="20px"/> icon &#x2794; &quot;Disable on theguardian.com&quot;</p>',
+                            surveyTextMembership: 'Already paying? <a class=\"text-link\" href=\"https://profile.theguardian.com/signin?INTCMP=ADB_RESP_delayed-close\" target=\"_blank\" data-link-name=\"adblock supporter delayed-close\">supporter sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class=\"text-link\" href=\"/commercial/subscriber-number" target=\"_blank\" data-link-name=\"adblock subscriber delayed-close\">subscriber sign in</a>',
                             subscriberLink: '/commercial/subscriber-number',
                             subscriberText: 'Subscriber number',
                             subscriberDataLink: 'adblock subscriber delayed-close',
