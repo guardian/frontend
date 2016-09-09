@@ -52,7 +52,9 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
+      facebookShareText = None,
       twitterShareText = Some(videoTitle + " Watch full film: "),
+      emailSubjectText = None,
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName,  standfirst)
     )
@@ -82,7 +84,9 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
+      facebookShareText = None,
       twitterShareText = Some(videoTitle + " Watch full film: "),
+      emailSubjectText = None,
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -112,7 +116,9 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
+      facebookShareText = None,
       twitterShareText = Some(videoTitle + " Watch full film: "),
+      emailSubjectText = None,
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )

@@ -51,9 +51,11 @@ object ZootropolisHostedPages {
       standfirst,
       video,
       cta,
+      facebookShareText = None,
       twitterShareText = Some(
         "Get to know the residents of Zootropolis and find out where to download the film instantly"
       ),
+      emailSubjectText = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
   }
