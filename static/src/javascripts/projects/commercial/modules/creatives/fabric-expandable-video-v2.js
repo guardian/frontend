@@ -1,12 +1,8 @@
 define([
     'bean',
-    'bonzo',
     'common/utils/fastdom-promise',
     'common/utils/$',
-    'common/utils/detect',
     'common/utils/assign',
-    'common/utils/mediator',
-    'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
     'text!commercial/views/creatives/fabric-expandable-video-v2.html',
@@ -14,13 +10,9 @@ define([
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
     bean,
-    bonzo,
     fastdom,
     $,
-    detect,
     assign,
-    mediator,
-    storage,
     template,
     svgs,
     fabricExpandableVideoHtml,
