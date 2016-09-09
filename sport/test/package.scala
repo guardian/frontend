@@ -45,7 +45,7 @@ trait WithTestFootballClient {
     override def GET(url: String): Future[PaResponse] = {
       FootballHttpRecorder.load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {
         wsClient.url(url)
-          .withRequestTimeout(10000)
+          .withRequestTimeout(10.seconds)
           .get()
           .map { wsResponse =>
             pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
