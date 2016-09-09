@@ -1,18 +1,18 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
-@import views.support.EmailArticleImage
+@import views.support.EmailImage
 @import views.support.EmailHelpers._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
 
 @defining(page.article) { article =>
     @fullRow {
-        <a href="@article.metadata.webUrl" @page.item.email.map { email => title="View @email.name online"}>
-            <img width="580" src="@article.banner" @page.item.email.map { email => alt="View @email.name online"}>
+        <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
+            <img width="580" src="@page.banner" @page.email.map { email => alt="View @email.name online"}>
         </a>
     }
 
-    @article.fallbackSeriesText.map { seriesName =>
+    @page.fallbackSeriesText.map { seriesName =>
         @paddedRow {
             <h3 class="text--brand">@seriesName</h3>
             <hr class="rule--compact" />
@@ -81,7 +81,7 @@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
-                        @EmailArticleImage.bestFor(media).map { url =>
+                        @EmailImage.bestFor(media).map { url =>
                             @fullRow {
                                 <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                             }
@@ -107,7 +107,7 @@
                     case GuVideoBlockElement(video, media, data) => {
                         @data.get("url").map { url =>
                             @fullRowWithBackground(media) {
-                                <a class="play--button" href="@url"><img class="play--icon" src="@Images.play"></a>
+                                <a class="play--button" href="@url"><img class="float-left play--icon" src="@Images.play"></a>
                             }
                         }
                     }

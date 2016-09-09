@@ -1,4 +1,4 @@
-@(page: model.ContentPage)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page)(body: Html)(implicit request: RequestHeader)
 
 @import common.{LinkTo, CanonicalLink}
 
@@ -16,6 +16,11 @@
         @fragments.email.stylesheets.fonts()
         @fragments.email.stylesheets.main()
         @fragments.email.stylesheets.footer()
+
+        @if(page.metadata.isFront) {
+            @fragments.email.stylesheets.front()
+            @fragments.email.stylesheets.tones()
+        }
     </head>
 
     <body>
@@ -29,7 +34,6 @@
                             <tr>
                                 <td>@body</td>
                             </tr>
-
                             <tr>
                                 <td class="footer">@fragments.email.footer(page)</td>
                             </tr>

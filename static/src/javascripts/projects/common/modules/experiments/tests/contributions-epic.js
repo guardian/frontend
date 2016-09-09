@@ -30,7 +30,7 @@ define([
 
         this.id = 'ContributionsEpic20160906';
         this.start = '2016-09-06';
-        this.expiry = '2016-09-12';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better than our previous in-article component tests.';
         this.showForSensitive = false;
