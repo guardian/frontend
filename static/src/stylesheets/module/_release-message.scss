@@ -467,7 +467,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 .site-message--adblock-message,
-.site-message--membership-message {
+.site-message--membership-message-default {
     background: $membership-default;
 }
 .site-message--membership-message-deep-purple {

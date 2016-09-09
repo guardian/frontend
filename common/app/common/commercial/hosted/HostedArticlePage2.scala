@@ -1,6 +1,9 @@
 package common.commercial.hosted
 
+import com.gu.contentapi.client.model.v1.{Content, TagType}
+import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
+import conf.Static
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.JsString
@@ -11,6 +14,7 @@ case class HostedArticlePage2(
   pageName: String,
   title: String,
   standfirst: String,
+  body: String,
   cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
@@ -55,4 +59,62 @@ case class HostedArticlePage2(
       )
     )
   }
+}
+
+object HostedArticlePage2 extends Logging {
+
+  def fromContent(content: Content): Option[HostedArticlePage2] = {
+    val page = for {
+      campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
+      campaignName <- content.sectionName
+      tags = content.tags
+      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
+      sponsorships <- hostedTag.activeSponsorships
+      sponsorship <- sponsorships.headOption
+      toneTag <- tags find (_.`type` == TagType.Tone)
+    } yield {
+
+      HostedArticlePage2(
+        campaign = HostedCampaign(
+          id = campaignId,
+          name = campaignName,
+          owner = sponsorship.sponsorName,
+          logo = HostedLogo(
+            url = sponsorship.sponsorLogo
+          ),
+          cssClass = "renault",
+          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
+          logoLink = None
+        ),
+        pageUrl = content.webUrl,
+        pageName = content.webTitle,
+        title = "",
+        standfirst = content.fields.flatMap(_.standfirst).getOrElse(""),
+        body = content.fields.flatMap(_.body).getOrElse(""),
+        // todo: from cta atom
+        cta = HostedCallToAction(
+          url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
+          image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
+          label = Some("Discover Zoe"),
+          trackingCode = Some("explore-renault-zoe-button"),
+          btnText = None
+        ),
+        mainPicture = "",
+        mainPictureCaption = "",
+        // todo: missing data
+        facebookShareText = None,
+        // todo: missing data
+        twitterShareText = None,
+        // todo: missing data
+        emailSubjectText = None,
+        // todo: related content
+        nextPageNames = Nil
+      )
+    }
+
+    if (page.isEmpty) log.error(s"Failed to build HostedArticlePage from ${content.id}")
+
+    page
+  }
+
 }

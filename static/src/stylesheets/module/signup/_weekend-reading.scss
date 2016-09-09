@@ -1,14 +1,3 @@
-#survey-laboratory .illustration-container {
-    min-height: 10rem;
-    height: 200px;
-    width: 100%;
-    position: relative;
-    z-index: 80;
-
-    @include mq(tablet) {
-        min-height: 20rem;
-    }
-}
 
 .inline-weekend-reading__svg {
     overflow: hidden;
@@ -27,8 +16,6 @@
     }
 
 }
-
-
 
 .email-signup-main {
     background-color: $features-support-1;
@@ -58,7 +45,6 @@
     content: '';
     display: block;
     border-bottom: 2px solid $features-support-3;
-    margin: 0 .3rem;
 }
 
 .content {
@@ -123,69 +109,6 @@
     }
 }
 
-.weekend-read-header {
-    color: #ffffff;
-}
-
-.weekend-read-header__heading {
-    @include fs-header(5);
-    padding: 0 .3rem;
-
-    @include mq($from: tablet) {
-        font-size: 36px;
-        margin-top: 8px;
-  }
-
-    .weekend-reading-pink {
-        color: $features-support-3;
-    }
-}
-
-.weekend-read-header__text {
-    @include fs-bodyCopy(2);
-    padding: 0 .3rem;
-    margin-top: $gs-baseline / 2;
-
-    @include mq($from: tablet) {
-        @include fs-bodyCopy(3);
-        margin-top: $gs-baseline;
-  }
-}
-
-.weekend-read-header__terms {
-    @include fs-textSans(2);
-    padding: 0 .3rem $gs-baseline * 2 .3rem;
+.weekend-reading-pink {
     color: $features-support-3;
-}
-
-.weekend-read-sample {
-    margin-top: $gs-baseline;
-    background-color: #ffffff;
-}
-
-.weekend-read-sample__button {
-    @include fs-textSans(2);
-    margin: $gs-baseline 0;
-    position: relative;
-    color: $neutral-1;
-    border: thin solid $neutral-3;
-    background-color: transparent;
-    height: 32px;
-    line-height: 28px;
-    border-radius: 100px;
-    padding-left: 12px;
-    padding-right: 32px;
-
-    &:hover,
-    &:focus,
-    &:active {
-        border-color: $neutral-2;
-    }
-
-    .inline-arrow-right {
-        fill: $neutral-2;
-        position: absolute;
-        right: 2px;
-        top: 1px;
-    }
 }
