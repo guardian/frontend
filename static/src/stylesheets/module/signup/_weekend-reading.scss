@@ -3,9 +3,18 @@
     overflow: hidden;
     position: absolute;
     left: 50%;
-    margin-left: -1400px;
+    margin-left: -80.5rem;
     height: 112%;
     z-index: 100;
+
+    @include mq(tablet) {
+        height: 115%;
+    }
+    @include mq(desktop) {
+        height: 112%;
+        margin-left: -84.5rem;
+    }
+
 }
 
 .email-signup-main {
