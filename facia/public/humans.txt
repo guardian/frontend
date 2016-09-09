@@ -255,6 +255,10 @@ Developer: Oliver Ash
 Twitter: @OliverJAsh
 From: London, UK
 
+Engineer / Dev Manager: James Pamplin
+Twitter: @pampo
+From: Forster, Australia
+
 Guardian CTO: Shannon Maher
 
 Director of Digital Strategy: Wolfgang Blau
