@@ -509,7 +509,7 @@ trait FeatureSwitches {
   // Owner: Sam Morris
   val USSurveyBanner = Switch(
     SwitchGroup.Feature,
-    "US-survey-banner",
+    "us-survey-banner",
     "When ON, will show a banner to US users asking them to take part in a survey",
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = Off,
