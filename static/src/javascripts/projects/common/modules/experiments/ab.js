@@ -10,10 +10,9 @@ define([
     'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
-    'common/modules/experiments/tests/participation-discussion-ordering-non-live',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
-    'common/modules/experiments/tests/membership-messages',
+    'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/commercial-feedback',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
@@ -36,10 +35,9 @@ define([
     DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
     ParticipationDiscussionOrderingLiveBlog,
-    ParticipationDiscussionOrderingNonLive,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
-    MembershipMessages,
+    MembershipEngagementBannerTests,
     AdFeedback,
     RecommendedForYou,
     DontUpgradeMobileRichLinks,
@@ -57,10 +55,8 @@ define([
         new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
         new ParticipationDiscussionOrderingLiveBlog(),
-        new ParticipationDiscussionOrderingNonLive(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
-        new MembershipMessages(),
         new AdFeedback(),
         new RecommendedForYou(),
         new DontUpgradeMobileRichLinks(),
@@ -71,7 +67,7 @@ define([
         new WeekendReadingPromo(),
         new NoSocialCount(),
         new ContributionsEpicButtons()
-    ];
+    ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
 

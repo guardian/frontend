@@ -1,5 +1,6 @@
 package conf.switches
 
+import common.Edition
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
@@ -75,35 +76,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
-
   val ABParticipationDiscussionOrderingLiveBlogs = Switch(
     SwitchGroup.ABTests,
     "ab-participation-discussion-ordering-live-blog",
     "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 16), //Wednesday
     exposeClientSide = true
   )
 
-  val ABParticipationDiscussionOrderingNonLive = Switch(
+  for (edition <- Edition.all) Switch(
     SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering-non-live",
-    "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 8), //Wednesday
-    exposeClientSide = true
-  )
-
-  val ABMembershipEngagementBanner = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership-engagement-banner",
-    "Test effectiveness of header for driving membership.",
+    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
+    "Test effectiveness of header for driving contributions vs membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 7),
+    sellByDate = new LocalDate(2017, 9, 8),
     exposeClientSide = true
   )
 
