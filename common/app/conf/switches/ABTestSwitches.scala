@@ -1,5 +1,6 @@
 package conf.switches
 
+import common.Edition
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
@@ -85,13 +86,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABMembershipEngagementBanner = Switch(
+  for (edition <- Edition.all) Switch(
     SwitchGroup.ABTests,
-    "ab-membership-engagement-banner",
-    "Test effectiveness of header for driving membership.",
+    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
+    "Test effectiveness of header for driving contributions vs membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 7),
+    sellByDate = new LocalDate(2017, 9, 8),
     exposeClientSide = true
   )
 
