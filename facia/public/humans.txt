@@ -94,12 +94,12 @@ Developer: Akash Askoolum
 Twitter: @akash1810
 Location: London, UK
 
-Developer: Jamie Byers		
-Location: London, UK		
- 		
-Design human: Duarte Carrilho da Graça		
-Twitter: @duartecg		
-From: Lisbon, Portugal		
+Developer: Jamie Byers
+Location: London, UK
+
+Design human: Duarte Carrilho da Graça
+Twitter: @duartecg
+From: Lisbon, Portugal
 Location: London, UK
 
 Design intern: Frank Hulley-Jones
@@ -123,6 +123,10 @@ Location: London, UK
 Developer: Thomas Bonnin
 Twitter: @tbonnin
 From: France
+Location: London, UK
+
+Client-Side Developer: Simon Adcock
+Twitter: @siadcock
 Location: London, UK
 
 /* FORMER MEMBERS */
