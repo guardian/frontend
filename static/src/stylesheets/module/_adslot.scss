@@ -165,6 +165,12 @@
     }
 }
 
+// Compatibility fix for top banner ads in IE11/Edge. Without this top banner
+// appears further down the page, and covers content, in immersive galleries.
+.immersive-header-container .top-banner-ad-container {
+    top: 0;
+}
+
 /**
  * Inline ads
  */
