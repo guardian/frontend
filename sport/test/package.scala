@@ -1,8 +1,6 @@
 package test
 
-import common.ExecutionContexts
 import java.io.File
-
 import common.ExecutionContexts
 import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
@@ -13,6 +11,7 @@ import play.api.libs.ws.WSClient
 import recorder.{DefaultHttpRecorder, HttpRecorder}
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.io.Codec.UTF8
 
 class SportTestSuite extends Suites (
   new CompetitionListControllerTest,
