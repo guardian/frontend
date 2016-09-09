@@ -14,10 +14,6 @@ class SurveyPageController(wsClient: WSClient) extends Controller with Execution
 
   val defaultCacheDuration: Duration = 15.minutes
 
-  def renderWeekendReadingPage() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.weekendReading(StaticPages.simpleEmailSignupPage(request.path, "Sign up for Guardian weekend reading"))))
-   }
-
   def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
       wsClient.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
         .head

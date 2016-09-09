@@ -30,11 +30,11 @@ define([
     return function () {
         this.id = 'RecommendedForYou';
         this.start = '2016-08-02';
-        this.expiry = '2016-09-09';
+        this.expiry = '2016-09-16';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
-        this.audience = 0.1;
-        this.audienceOffset = 0.1;
+        this.audience = 0;
+        this.audienceOffset = 0;
         this.successMeasure = 'Number of clicks to turn on this section';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
