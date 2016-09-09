@@ -1,4 +1,5 @@
 @(branding: common.commercial.Branding)
+@import common.commercial.PaidContent
 
 <div class="brandbadge brandbadge--onside ad-slot--force-display ad-slot--paid-for-badge ad-slot--paid-for-badge--front">
     <div class="brandbadge__inner ad-slot--paid-for-badge__inner">
@@ -6,5 +7,8 @@
         <a href="@branding.sponsorLink" class="brandbadge__link ad-slot--paid-for-badge__link">
             <img class="brandbadge__logo" src="@branding.sponsorLogo">
         </a>
+        @if(branding.sponsorshipType != PaidContent) {
+            <a href="@branding.aboutThisLink" class="brandbadge__help">About this content</a>
+        }
     </div>
 </div>
