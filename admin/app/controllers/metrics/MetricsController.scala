@@ -7,8 +7,6 @@ import play.api.mvc.Action
 import tools._
 import model.NoCache
 import conf.Configuration
-import tools.CloudWatch._
-import play.api.Play.current
 
 import scala.concurrent.Future
 
@@ -19,9 +17,8 @@ class MetricsController(wsClient: WSClient) extends Controller with Logging with
 
   def renderLoadBalancers() = Action.async { implicit request =>
     for {
-      latency <- CloudWatch.fullStackLatency
-      fullStackOks <- CloudWatch.requestOkFullStack
-    } yield NoCache(Ok(views.html.lineCharts("PROD", (latency ++ fullStackOks).groupBy(_.name).flatMap(_._2).toSeq)))
+      graphs <- CloudWatch.dualOkLatencyFullStack
+    } yield NoCache(Ok(views.html.lineCharts("PROD", graphs)))
   }
 
   def renderErrors() = Action.async { implicit request =>
