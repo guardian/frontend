@@ -1,6 +1,5 @@
 package controllers.admin
 
-import akka.stream.Materializer
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
@@ -10,7 +9,7 @@ import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
-
+import scala.concurrent.duration._
 import scala.concurrent.Future
 
 @DoNotDiscover class DeploysNotifyControllerTest
@@ -30,7 +29,7 @@ import scala.concurrent.Future
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
       }
     }
   }

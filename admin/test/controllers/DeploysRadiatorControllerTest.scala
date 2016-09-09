@@ -10,7 +10,6 @@ import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
-
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysRadiatorControllerTest
@@ -29,7 +28,7 @@ import scala.concurrent.duration._
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
       }
     }
   }
