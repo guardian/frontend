@@ -7,13 +7,15 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
-    with Matchers
-    with FootballTestData
-    with WithTestFootballClient
-    with BeforeAndAfterAll
-    with WithTestWsClient {
+  with ConfiguredTestSuite
+  with Matchers
+  with FootballTestData
+  with WithTestFootballClient
+  with WithMaterializer
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  val leagueTableController = new LeagueTableController(testCompetitionsService)
+  lazy val leagueTableController = new LeagueTableController(testCompetitionsService)
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTable()(TestRequest())

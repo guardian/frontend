@@ -7,15 +7,17 @@ import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
+import test._
 
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
   extends WordSpec
+    with ConfiguredTestSuite
     with Matchers
     with FootballTestData
     with WithTestFootballClient
+    with WithMaterializer
     with BeforeAndAfterAll
     with WithTestWsClient {
 

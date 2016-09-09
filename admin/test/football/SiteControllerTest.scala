@@ -9,12 +9,11 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 
 @DoNotDiscover class SiteControllerTest
   extends FreeSpec
-  with PaFootballClient
+  with ConfiguredTestSuite
   with ExecutionContexts
   with ShouldMatchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
   with WithMaterializer
+  with BeforeAndAfterAll
   with WithTestWsClient {
 
 
