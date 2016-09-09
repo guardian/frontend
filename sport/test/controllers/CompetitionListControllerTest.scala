@@ -7,11 +7,13 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class CompetitionListControllerTest
   extends FlatSpec
-    with Matchers
-    with FootballTestData
-    with WithTestFootballClient
-    with BeforeAndAfterAll
-    with WithTestWsClient {
+  with ConfiguredTestSuite
+  with Matchers
+  with FootballTestData
+  with WithTestFootballClient
+  with WithMaterializer
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   val url = "/football/competitionsService"
   lazy val competitionListController = new CompetitionListController(testCompetitionsService)

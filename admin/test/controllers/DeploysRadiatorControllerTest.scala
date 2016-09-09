@@ -1,6 +1,5 @@
 package controllers.admin
 
-import akka.stream.Materializer
 import common.ExecutionContexts
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
