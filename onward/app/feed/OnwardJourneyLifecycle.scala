@@ -3,13 +3,17 @@ package feed
 import app.LifecycleComponent
 import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
-
 import scala.concurrent.{Future, ExecutionContext}
 
 class OnwardJourneyLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  akkaAsync: AkkaAsync,
+  geoMostPopularAgent: GeoMostPopularAgent,
+  dayMostPopularAgent: DayMostPopularAgent,
+  mostViewedAudioAgent: MostViewedAudioAgent,
+  mostViewedGalleryAgent: MostViewedGalleryAgent,
+  mostViewedVideoAgent: MostViewedVideoAgent)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -23,25 +27,25 @@ class OnwardJourneyLifecycle(
     jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
-      GeoMostPopularAgent.refresh()
-      MostViewedVideoAgent.refresh()
-      MostViewedAudioAgent.refresh()
-      MostViewedGalleryAgent.refresh()
+      geoMostPopularAgent.refresh()
+      mostViewedVideoAgent.refresh()
+      mostViewedAudioAgent.refresh()
+      mostViewedGalleryAgent.refresh()
     }
 
     // fire every hour
     jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
-      DayMostPopularAgent.refresh()
+      dayMostPopularAgent.refresh()
     }
 
     akkaAsync.after1s {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
-      GeoMostPopularAgent.refresh()
-      MostViewedVideoAgent.refresh()
-      MostViewedAudioAgent.refresh()
-      MostViewedGalleryAgent.refresh()
-      DayMostPopularAgent.refresh()
+      geoMostPopularAgent.refresh()
+      mostViewedVideoAgent.refresh()
+      mostViewedAudioAgent.refresh()
+      mostViewedGalleryAgent.refresh()
+      dayMostPopularAgent.refresh()
     }
   }
 

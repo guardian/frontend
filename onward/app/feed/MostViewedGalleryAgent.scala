@@ -4,10 +4,12 @@ import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
 import play.api.libs.json.{JsArray, JsValue}
+
 import scala.concurrent.Future
 import ContentApiClient.getResponse
+import services.OphanApi
 
-object MostViewedGalleryAgent extends Logging with ExecutionContexts {
+class MostViewedGalleryAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Seq[RelatedContentItem]](Nil)
 
@@ -16,7 +18,7 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
   def refresh() = {
     log.info("Refreshing most viewed galleries.")
 
-    val ophanResponse = services.OphanApi.getMostViewedGalleries(hours = 3, count = 12)
+    val ophanResponse = ophanApi.getMostViewedGalleries(hours = 3, count = 12)
 
     ophanResponse.map { result =>
 

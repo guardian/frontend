@@ -23,7 +23,8 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
                      r2PagePressJob: R2PagePressJob,
                      videoEncodingsJob: VideoEncodingsJob,
-                     matchDayRecorder: MatchDayRecorder)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+                     matchDayRecorder: MatchDayRecorder,
+                     analyticsSanityCheckJob: AnalyticsSanityCheckJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -60,7 +61,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
     jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
-      AnalyticsSanityCheckJob.run()
+      analyticsSanityCheckJob.run()
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
