@@ -108,7 +108,7 @@ define([
             if (!isNaN(duration)) {
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
-                // player.controlBar.addChild('button', { text: 'hello' });
+                // Sets the duration for the Video JS button element
                 $('.vjs-big-play-button')[0].setAttribute('data-duration', $(el).attr('data-duration'));
             }
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay

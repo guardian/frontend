@@ -196,6 +196,10 @@ $ima-controls-height: 70px;
   .vjs-control-text {
     display: none;
   }
+  // .l-row__item--span-1 {
+  //   top: 40%;
+  //   left: 36%;
+  // }
   .gu-media--audio &,
   .vjs-has-ended &,
   .vjs-ad-playing &,
@@ -203,6 +207,14 @@ $ima-controls-height: 70px;
   .vjs-has-started.vjs-using-native-controls &,
   .vjs-ad-loading & {
       display: none !important;
+  }
+}
+
+button.vjs-big-play-button {
+  top: 40%;
+  left: 36%;
+  &:before {
+    margin-top: 0;
   }
 }
 
