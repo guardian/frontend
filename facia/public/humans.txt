@@ -129,6 +129,10 @@ Client-Side Developer: Simon Adcock
 Twitter: @siadcock
 Location: London, UK
 
+Developer: Calum Campbell
+From: Malvern, UK
+
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
@@ -208,9 +212,6 @@ Developer: Nicolas Long
 Twitter: @room271
 Website: http://room271.net
 From: London, UK
-
-Developer: Calum Campbell
-From: Malvern, UK
 
 QA: Troy Harris
 LinkedIn: troyharris
