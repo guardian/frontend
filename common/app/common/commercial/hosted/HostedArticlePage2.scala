@@ -101,7 +101,8 @@ object HostedArticlePage2 extends Logging {
         pageUrl = content.webUrl,
         pageName = content.webTitle,
         title = content.webTitle,
-        standfirst = content.fields.flatMap(_.standfirst).getOrElse(""),
+        // using capi trail text instead of standfirst because we don't want the markup
+        standfirst = content.fields.flatMap(_.trailText).getOrElse(""),
         body = content.fields.flatMap(_.body).getOrElse(""),
         // todo: from cta atom
         cta = HostedCallToAction(
