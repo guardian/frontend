@@ -1,6 +1,7 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.{Content, TagType}
+import com.gu.contentapi.client.model.v1.ElementType.Image
+import com.gu.contentapi.client.model.v1.{Asset, Content, TagType}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import conf.Static
@@ -74,6 +75,17 @@ object HostedArticlePage2 extends Logging {
       toneTag <- tags find (_.`type` == TagType.Tone)
     } yield {
 
+      val mainImageAsset: Option[Asset] = {
+        val optElement = content.elements.flatMap(
+          _.find { element =>
+            element.`type` == Image && element.relation == "main"
+          }
+        )
+        optElement.map { element =>
+          element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
+        }
+      }
+
       HostedArticlePage2(
         campaign = HostedCampaign(
           id = campaignId,
@@ -88,7 +100,7 @@ object HostedArticlePage2 extends Logging {
         ),
         pageUrl = content.webUrl,
         pageName = content.webTitle,
-        title = "",
+        title = content.webTitle,
         standfirst = content.fields.flatMap(_.standfirst).getOrElse(""),
         body = content.fields.flatMap(_.body).getOrElse(""),
         // todo: from cta atom
@@ -99,8 +111,8 @@ object HostedArticlePage2 extends Logging {
           trackingCode = Some("explore-renault-zoe-button"),
           btnText = None
         ),
-        mainPicture = "",
-        mainPictureCaption = "",
+        mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
+        mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
         // todo: missing data
         facebookShareText = None,
         // todo: missing data
