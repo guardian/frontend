@@ -74,6 +74,10 @@ Twitter: @intuitio
 From: Poznan, Poland
 Location: London, England
 
+Developer: Lydia Shepherd
+From: Leeds, UK
+Location: London, UK
+
 Developer: Sam Desborough
 Twitter: @samdesborough
 
@@ -131,6 +135,15 @@ Location: London, UK
 
 Developer: Calum Campbell
 From: Malvern, UK
+
+QA: Scott Painter
+Twitter: @scottp719
+Location: London, UK
+
+Developer: Anne Byrne
+Twitter: @aycenne
+From: Cork, Ireland
+Location: London, UK
 
 
 /* FORMER MEMBERS */
@@ -255,6 +268,10 @@ Location: London, UK
 Developer: Oliver Ash
 Twitter: @OliverJAsh
 From: London, UK
+
+Engineer / Dev Manager: James Pamplin
+Twitter: @pampo
+From: Forster, Australia
 
 Guardian CTO: Shannon Maher
 
