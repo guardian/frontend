@@ -27,7 +27,9 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/big-play-button.html'
+    'common/utils/template'
 ], function (
     bean,
     bonzo,
@@ -55,7 +57,9 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    buttonTmpl,
+    template
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -104,7 +108,7 @@ define([
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
-
+            $('.vjs-big-play-button', player.el()).after(template(buttonTmpl, {'duration': 112}));
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
             player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
@@ -122,6 +126,8 @@ define([
                 el.getAttribute('data-duration', duration);
                 console.log(duration);
                 var $el = bonzo(el);
+                // debugger;
+                // $el.after(template(buttonTmpl, {'duration': duration}));
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
                     container = bonzo(el).parent().parent();
