@@ -143,7 +143,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
+    sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
 
@@ -163,7 +163,7 @@ trait ABTestSwitches {
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 12),
+    sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
 }
