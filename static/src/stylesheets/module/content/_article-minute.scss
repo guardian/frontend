@@ -37,7 +37,6 @@ $minute-headline-colour: #ffffff;
 
 .content__headline--minute {
     color: #ffffff;
-    line-height: .95;
     position: relative;
     padding-bottom: $gs-baseline;
 
@@ -402,31 +401,17 @@ $minute-headline-colour: #ffffff;
     // Captions
     .caption__minute-article {
         box-sizing: border-box;
-        color: $minute-contrast-colour;
         padding: $gs-baseline/4 $gs-gutter $gs-baseline/2 $gs-gutter/2;
         width: 100%;
-    }
 
-    .element-image .caption__minute-article {
-        @include mq($from: tablet) {
-            bottom: 0;
-            padding-left: $gs-gutter/2;
-            position: absolute;
-            background-color: rgba($minute-main-colour, .6);
+        @include mq($from: mobileLandscape) {
+            padding-left: 0;
         }
-    }
-
-    .caption {
-        color: $minute-contrast-colour;
     }
 
     .svg  & .caption--img:before {
         @extend %svg-i-camera-white-large !optional;
         margin-right: 5px;
-    }
-
-    figcaption.caption__minute-article {
-        max-width: none;
     }
 
     // Embeds
