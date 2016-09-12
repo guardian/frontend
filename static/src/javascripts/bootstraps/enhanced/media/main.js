@@ -28,7 +28,7 @@ define([
     // on env
     'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html',
-    'text!common/views/media/big-play-button.html'
+    'text!common/views/media/big-play-button.html',
     'common/utils/template'
 ], function (
     bean,
@@ -86,6 +86,7 @@ define([
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
+        $('.vjs-control-text').innerHTML = 'hello';
 
         // Hide superfluous controls, and label useful buttons.
         $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
@@ -107,8 +108,9 @@ define([
             if (!isNaN(duration)) {
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
+                // player.controlBar.addChild('button', { text: 'hello' });
+                $('.vjs-big-play-button')[0].setAttribute('data-duration', $(el).attr('data-duration'));
             }
-            $('.vjs-big-play-button', player.el()).after(template(buttonTmpl, {'duration': 112}));
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
             player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
@@ -124,10 +126,7 @@ define([
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el, options, duration) {
                 el.getAttribute('data-duration', duration);
-                console.log(duration);
                 var $el = bonzo(el);
-                // debugger;
-                // $el.after(template(buttonTmpl, {'duration': duration}));
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
                     container = bonzo(el).parent().parent();

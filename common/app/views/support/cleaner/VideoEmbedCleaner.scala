@@ -74,6 +74,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         findVideoApiElement(mediaId).foreach { videoElement =>
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
+          element.attr("data-duration", videoElement.videos.formattedDuration.toString)
           if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
