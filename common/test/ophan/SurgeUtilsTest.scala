@@ -21,12 +21,13 @@ class SurgeUtilsTest extends FlatSpec with Matchers {
   }
 
   "surgeLevelProvider" should "return a numerical representation of the surge level" in {
-    SurgeUtils.levelProvider(Some(500)) should be (Seq(1, 2, 3, 4))
-    SurgeUtils.levelProvider(Some(401)) should be (Seq(1, 2, 3, 4))
-    SurgeUtils.levelProvider(Some(301)) should be (Seq(2, 3, 4))
-    SurgeUtils.levelProvider(Some(201)) should be (Seq(3, 4))
-    SurgeUtils.levelProvider(Some(101)) should be (Seq(4))
-    SurgeUtils.levelProvider(Some(99))  should be (Seq(0))
+    SurgeUtils.levelProvider(Some(500)) should be (Seq(1, 2, 3, 4, 5))
+    SurgeUtils.levelProvider(Some(401)) should be (Seq(1, 2, 3, 4, 5))
+    SurgeUtils.levelProvider(Some(301)) should be (Seq(2, 3, 4, 5))
+    SurgeUtils.levelProvider(Some(201)) should be (Seq(3, 4, 5))
+    SurgeUtils.levelProvider(Some(101)) should be (Seq(4, 5))
+    SurgeUtils.levelProvider(Some(99))  should be (Seq(5))
+    SurgeUtils.levelProvider(Some(49))  should be (Seq(0))
     SurgeUtils.levelProvider(None) should be (Seq(0))
   }
 
