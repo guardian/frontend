@@ -7,7 +7,7 @@ import play.api.mvc.{Action, Controller}
 import contentapi.ContentApiClient
 import contentapi.ContentApiClient.getResponse
 
-class MostViewedVideoController extends Controller with Logging with ExecutionContexts {
+class MostViewedVideoController(mostViewedVideoAgent: MostViewedVideoAgent) extends Controller with Logging with ExecutionContexts {
 
   // Move this out of here if the test is successful
   def renderInSeries(series: String) = Action.async { implicit request =>
@@ -44,7 +44,7 @@ class MostViewedVideoController extends Controller with Logging with ExecutionCo
   def renderMostViewed() = Action { implicit request =>
 
     val size = request.getQueryString("size").getOrElse("6").toInt
-    val videos = MostViewedVideoAgent.mostViewedVideo().take(size)
+    val videos = mostViewedVideoAgent.mostViewedVideo().take(size)
 
     if (videos.nonEmpty) {
       Cached(900) {
@@ -59,5 +59,3 @@ class MostViewedVideoController extends Controller with Logging with ExecutionCo
     }
   }
 }
-
-object MostViewedVideoController extends MostViewedVideoController

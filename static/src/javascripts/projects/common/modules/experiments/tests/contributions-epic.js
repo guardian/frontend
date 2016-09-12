@@ -30,7 +30,7 @@ define([
 
         this.id = 'ContributionsEpic20160906';
         this.start = '2016-09-06';
-        this.expiry = '2016-09-12';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better than our previous in-article component tests.';
         this.showForSensitive = false;
@@ -77,7 +77,9 @@ define([
                 id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        intCMP : 'co_uk_epic'
+                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic',
+                        position: 'bottom',
+                        variant: 'no-buttons'
                     }));
                     bottomWriter(component);
                 },
