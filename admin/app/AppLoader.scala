@@ -10,7 +10,7 @@ import _root_.dfp.DfpDataCacheLifecycle
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
 import football.feed.MatchDayRecorder
-import jobs.{FastlyCloudwatchLoadJob, R2PagePressJob, VideoEncodingsJob}
+import jobs.{FastlyCloudwatchLoadJob, R2PagePressJob, VideoEncodingsJob, AnalyticsSanityCheckJob}
 import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -19,7 +19,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
-import services.{ConfigAgentLifecycle, FastlyStatisticService, EmailService}
+import services.{ConfigAgentLifecycle, EmailService, FastlyStatisticService, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -29,12 +29,14 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
+  lazy val ophanApi = wire[OphanApi]
   lazy val emailService = wire[EmailService]
   lazy val fastlyStatisticService = wire[FastlyStatisticService]
   lazy val fastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
   lazy val r2PagePressJob = wire[R2PagePressJob]
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
   lazy val matchDayRecorder = wire[MatchDayRecorder]
+  lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
 }
 
 trait Controllers extends AdminControllers {

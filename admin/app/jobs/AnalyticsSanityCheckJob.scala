@@ -12,7 +12,7 @@ import services.{CloudWatchStats, OphanApi}
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
-object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
+class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends ExecutionContexts with Logging {
 
   private val rawPageViews = new AtomicLong(0L)
   private val omniturePageViews = new AtomicLong(0L)
@@ -76,7 +76,7 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
 
   private def ophanViews: Future[Long] = {
     val now = new DateTime().minusMinutes(15).getMillis
-    OphanApi.getBreakdown("next-gen", hours = 1).map { json =>
+    ophanApi.getBreakdown("next-gen", hours = 1).map { json =>
       (json \\ "data").flatMap {
         line =>
           val recent = line.asInstanceOf[play.api.libs.json.JsArray].value.filter {

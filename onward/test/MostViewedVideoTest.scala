@@ -1,12 +1,22 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import controllers.MostViewedVideoController
+import feed.MostViewedVideoAgent
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
+import services.OphanApi
 
-@DoNotDiscover class MostViewedVideoTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MostViewedVideoTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
+
+  lazy val mostViewedVideoController = new MostViewedVideoController(new MostViewedVideoAgent(new OphanApi(wsClient)))
 
   "Most Viewed Video Controller" should "200 when content type is tag" in {
-    val result = controllers.MostViewedVideoController.renderMostViewed()(TestRequest())
+    val result = mostViewedVideoController.renderMostViewed()(TestRequest())
     status(result) should be(200)
   }
 }
