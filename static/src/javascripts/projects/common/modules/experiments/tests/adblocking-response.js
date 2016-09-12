@@ -44,12 +44,14 @@ define([
         }).join(', ');
         this.dataLinkNames = 'adblock response overlay: '+variantDataLinkNames+', subscriber number page: user help email';
         this.idealOutcome = 'After whitelisting our ads, former ad-blocking users will not re-block them';
+        this.hypothesis = '30% of ad-blocking users will whitelist us when they are given a close button on a blocking pop-over window.';
 
         this.canRun = function () {
-            return contains('chrome', detect.getUserAgent.browser.toLowerCase())
-                && contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())
-                && config.page.edition === 'UK'
-                && !cookies.get('gu_abm_x');
+            return contains('chrome', detect.getUserAgent.browser.toLowerCase()) &&
+                contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) &&
+                config.page.edition === 'UK' &&
+                !cookies.get('gu_abm_x') &&
+                detect.adblockInUse;
         };
 
         var isQualified = function () {
