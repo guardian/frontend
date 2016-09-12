@@ -133,6 +133,10 @@ Client-Side Developer: Simon Adcock
 Twitter: @siadcock
 Location: London, UK
 
+QA: Scott Painter
+Twitter: @scottp719
+Location: London, UK
+
 /* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
