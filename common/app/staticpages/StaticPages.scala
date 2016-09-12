@@ -1,6 +1,6 @@
 package staticpages
 
-import model.{SectionSummary, MetaData, SimplePage}
+import model.{GuardianContentTypes, SectionSummary, MetaData, SimplePage}
 
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage = SimplePage(
@@ -12,4 +12,24 @@ object StaticPages {
       contentType = "survey",
       iosType = None,
       shouldGoogleIndex = false))
+
+  def subscriberNumberPage: SimplePage = SimplePage(
+    MetaData.make(
+      id = "subscriber-number-page",
+      section = Option(SectionSummary(id="global", activeBrandings=None)),
+      webTitle = "Subscriber number form",
+      analyticsName = "subscriber-number-page",
+      contentType = GuardianContentTypes.NetworkFront,
+      iosType = None,
+      shouldGoogleIndex = false))
+
+    def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionSummary(id="global", activeBrandings=None)),
+        webTitle = webTitle,
+        analyticsName = "global",
+        contentType = "survey",
+        iosType = None,
+        shouldGoogleIndex = false))
 }

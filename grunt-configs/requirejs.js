@@ -7,6 +7,7 @@ module.exports = function (grunt, options) {
                 common:               'projects/common',
                 facia:                'projects/facia',
                 membership:           'projects/membership',
+                commercial:           'projects/commercial',
                 bean:                 'components/bean/bean',
                 bonzo:                'components/bonzo/bonzo',
                 domReady:             'components/domready/ready',

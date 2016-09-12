@@ -13,7 +13,7 @@ define([
     'common/utils/url',
     'common/utils/ajax',
     'common/modules/analytics/beacon',
-    'common/modules/commercial/build-page-targeting',
+    'commercial/modules/build-page-targeting',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
@@ -183,8 +183,10 @@ define([
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
-            canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? '/' + embedPath : null),
-            shouldHideAdverts = $el.attr('data-block-video-ads') === 'false' ? false : true,
+            canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null),
+            // the fallback to window.location.pathname should only happen for main media on fronts
+            gaEventLabel = canonicalUrl || window.location.pathname,
+            shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false',
             player,
             mouseMoveIdle,
             playerSetupComplete,
@@ -202,7 +204,7 @@ define([
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
-                var ajaxInfoUrl = config.page.ajaxUrl + urlUtils.getPath(canonicalUrl);
+                var ajaxInfoUrl = config.page.ajaxUrl + '/' + canonicalUrl;
 
                 ajax({
                     url: ajaxInfoUrl + '/info.json',
@@ -227,7 +229,7 @@ define([
         }));
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
-        events.bindGoogleAnalyticsEvents(player, canonicalUrl);
+        events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
         videoInfo.then(function(videoInfo) {
             if (videoInfo.expired) {
@@ -441,7 +443,7 @@ define([
                 require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {
-                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
                     initWithRaven();
                 });
             } else {

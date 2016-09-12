@@ -15,9 +15,6 @@
 - [Archiving](02-architecture/04-archiving.md)
 - [Architecture principles for CSS](02-architecture/05-architecture-principles-for-css.md)
 
-##[Dev how tos](03-dev-how-tos/)
-- [](03-dev-how-tos/*.md)
-
 ##[Dev howtos](03-dev-howtos/)
 - [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
 - [What to do when a deployment breaks](03-dev-howtos/02-deployment-errors.md)
@@ -31,6 +28,7 @@
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
 - [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
+- [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
