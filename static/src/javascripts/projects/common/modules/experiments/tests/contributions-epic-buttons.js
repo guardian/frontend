@@ -30,7 +30,7 @@ define([
 
         this.id = 'ContributionsEpicButtons20160907';
         this.start = '2016-09-07';
-        this.expiry = '2016-09-09';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether adding the amount buttons to the epic increases the impressions to conversions rate.';
         this.showForSensitive = false;

@@ -19,6 +19,7 @@ define([
     'commercial/modules/creatives/fabric-v1',
     'commercial/modules/creatives/fabric-expanding-v1',
     'commercial/modules/creatives/fabric-expandable-video-v1',
+    'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
     'commercial/modules/creatives/fluid250',
     'commercial/modules/creatives/fluid250GoogleAndroid',

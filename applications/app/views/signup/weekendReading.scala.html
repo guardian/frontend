@@ -1,9 +1,8 @@
-@(surveyPage: Page)(implicit request: RequestHeader)
+@(signupPage: Page)(implicit request: RequestHeader)
 
 @import model.Page
-@import conf.Configuration.Survey.formStackAccountName
 
-@surveyMain(surveyPage) {
+@signupMain(signupPage) {
     <div class="illustration-container">
         @fragments.inlineSvg("weekend-reading", "illustration")
     </div>
@@ -13,15 +12,15 @@
         <div class="gs-container">
 
             <div class="content__main-column main__column--horizontal-bar">
-                <header class="weekend-read-header">
-                    <h1 class="weekend-read-header__heading">weekend<span class="weekend-reading-pink"> reading</span></h1>
+                <header class="email-signup-header">
+                    <h1 class="email-signup-header__heading">weekend<span class="weekend-reading-pink"> reading</span></h1>
 
-                    <p class="weekend-read-header__text">Busy week? Of course it was. Sign up for our Saturday morning email and we'll send you our editors' picks of the best stuff you didn't have time to read - from features and news analysis to lifestyle and culture.</p>
+                    <p class="email-signup-header__text">Busy week? Of course it was. Sign up for our Saturday morning email and we'll send you our editors' picks of the best stuff you didn't have time to read - from features and news analysis to lifestyle and culture.</p>
                 </header>
 
                 <div class="weekend-reading">
 
-                    <div class="weekend-read-header__terms">
+                    <div class="email-signup-header__terms">
                         <span>We will be trialling this email through the autumn and hope you'll send us plenty of feedback</span>
                     </div>
 
@@ -75,9 +74,9 @@
 
             <div class="content__main-column">
 
-                <div class="weekend-read-sample"  data-component="weekend-reading">
+                <div class="email-signup-sample"  data-component="weekend-reading">
                     <a href="/info/2016/jul/20/weekend-round-up-no10s-revolving-door/email">
-                        <button class="weekend-read-sample__button"  data-link-name="weekend-reading-sample">
+                        <button class="email-signup-sample__button"  data-link-name="weekend-reading-sample">
                             View a sample
                             @fragments.inlineSvg("arrow-right", "icon")
                         </button>
