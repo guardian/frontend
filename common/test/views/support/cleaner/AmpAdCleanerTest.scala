@@ -39,7 +39,7 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
 
   }
 
-  "AmpAdCleaner" should "include ads at defined, regular intervals" in {
+  "AmpAdCleaner" should "not have changed ad intervals without someone checking the tests are still valid" in {
     AmpAdCleaner.AD_LIMIT should be(8)
     AmpAdCleaner.CHARS_BETWEEN_ADS should be(700)
     AmpAdCleaner.DONT_INTERLEAVE_SMALL_PARA should be(50)
