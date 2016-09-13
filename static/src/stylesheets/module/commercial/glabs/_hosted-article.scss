@@ -189,6 +189,18 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             text-align: center;
         }
     }
+    p.hostedbadge__info, p.hosted__glogotext {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      line-height: 16px;
+    }
+
+    p.hostedbadge__info{
+      padding-top: $gs-gutter / 4;
+      padding-bottom: $gs-gutter / 2.5;
+    }
+
     .gu-image {
         height: auto;
     }
