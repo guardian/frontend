@@ -6,6 +6,7 @@ import common.Logging
 import conf.Static
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
+import play.api.libs.json.JsString
 
 case class HostedVideoPage(
   campaign: HostedCampaign,
@@ -52,6 +53,9 @@ object HostedVideoPage extends Logging {
       val owner = sponsorship.sponsorName
       val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
 
+      val keywordId = s"${campaignId}/${campaignId}"
+      val keywordName = campaignId
+
       val metadata = MetaData.make(
         id = pageId,
         section = content.sectionId map SectionSummary.fromId,
@@ -61,6 +65,12 @@ object HostedVideoPage extends Logging {
         description = Some(standfirst),
         contentType = Video,
         iosType = Some(Video),
+        javascriptConfigOverrides = Map(
+          "keywordIds" -> JsString(keywordId),
+          "keywords" -> JsString(keywordName),
+          "toneIds" -> JsString(toneId),
+          "tones" -> JsString(toneName)
+        ),
         opengraphPropertiesOverrides = Map(
           "og:url" -> pageUrl,
           "og:title" -> pageTitle,
