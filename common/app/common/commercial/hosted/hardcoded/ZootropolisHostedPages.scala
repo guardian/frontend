@@ -96,7 +96,12 @@ object ZootropolisHostedPages {
     customData = customData
   )
 
-  private lazy val videoPage = videoPageWithoutNextPage.copy(nextPage = Some(articlePageWithoutNextPage))
+
+  private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
+    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+  }
+
+  private lazy val videoPage = withNextPage(videoPageWithoutNextPage, articlePageWithoutNextPage)
 
   private lazy val articlePage = articlePageWithoutNextPage.copy(nextPage = Some(videoPageWithoutNextPage))
 
