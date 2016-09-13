@@ -41,7 +41,7 @@ object CSP extends Logging {
     (requestBody \ "csp-report").validate[CSPReport] match {
       case JsSuccess(report, _) => report match {
         case CSPReport(None, None, None, None, None, None) => // Do not log if there is no data
-        case _ if report.isHTTP => log.logger.info(appendRaw("csp", Json.toJson(report).toString()), "csp report")
+        case _ => if (report.isHTTP) log.logger.info(appendRaw("csp", Json.toJson(report).toString()), "csp report")
       }
       case JsError(e) => throw new Exception(JsError.toJson(e).toString())
     }
