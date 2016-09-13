@@ -5,11 +5,13 @@ import conf.Configuration.site.host
 
 object ChesterZooHostedPages {
 
-  private val pageName = "what-we-fight-for"
+  private val galleryPageName = "what-we-fight-for"
+  private val nextPageName1 = "what-is-act-for-wildlife"
+  private val nextPageName2 = "saving-orangutans-from-extinction"
 
   private val campaign = HostedCampaign(
     id = "chester-zoo-act-for-wildlife",
-    name = "WHAT WE FIGHT FOR",
+    name = "What we fight for",
     owner = "Chester Zoo",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png"),
     cssClass = "chester-zoo",
@@ -90,25 +92,47 @@ object ChesterZooHostedPages {
     )
   )
 
-  private def cta(pageName: String) = HostedCallToAction(
-    label = Some("IT'S TIME TO ACT FOR WILDLIFE"),
+  private val cta = HostedCallToAction(
+    label = Some("We won't stand back and we won't give up."),
+    btnText = Some("It's time to act for wildlife"),
     url = "http://www.actforwildlife.org.uk/"
+  )
+
+  private val nextPage1: HostedPage = HostedGalleryPage(
+    campaign = campaign,
+    images = List(HostedGalleryImage(url = "http://media.guim.co.uk/005f414cad0c9971078f4b8c9326e4814279b63f/0_48_2048_1229/500.jpg", title = "", caption = "")),
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName1",
+    pageName = nextPageName1,
+    title = "What is Act For Wildlife?",
+    standfirst = "This is not a real page, just used for the onward journey links.",
+    cta = cta
+  )
+
+  private val nextPage2: HostedPage = HostedGalleryPage(
+    campaign = campaign,
+    images = List(HostedGalleryImage(url = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg", title = "", caption = "")),
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName2",
+    pageName = nextPageName2,
+    title = "Saving orangutans from extinction",
+    standfirst = "This is not a real page, just used for the onward journey links.",
+    cta = cta
   )
 
   private val galleryPage: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = images,
-    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/what-we-fight-for",
-    pageName = pageName,
-    title = "WHAT WE FIGHT FOR",
-    cta = cta(pageName),
-    nextPageNames = List(),
-    standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some of the world’s most endangered wildlife from extinction"
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$galleryPageName",
+    pageName = galleryPageName,
+    title = "What we fight for",
+    cta = cta,
+    nextPagesList = List(nextPage1, nextPage2),
+    standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some of the world’s most endangered wildlife from extinction",
+    twitterShareText = Some("Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife")
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {
       pageName match {
-        case `pageName` => Some(galleryPage)
+        case `galleryPageName` => Some(galleryPage)
         case _ => None
       }
   }
