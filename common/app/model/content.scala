@@ -156,10 +156,27 @@ final case class Content(
 
   lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
+  lazy val showSectionNotTag: Boolean = {
+
+    lazy val isChildrensBookBlog = tags.tags.exists { tag =>
+      tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
+    }
+
+    lazy val isPaidContentInDfp =
+      staticBadgesSwitch.isSwitchedOff && DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))
+
+    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && {
+      val branding = tags.tags.flatMap { tag =>
+        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
+      }.headOption
+      branding.exists(_.sponsorshipType == PaidContent)
+    }
+
+    isChildrensBookBlog || isPaidContentInDfp || isPaidContentInCapi
+  }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+    if (showSectionNotTag) {
       metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
