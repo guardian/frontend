@@ -32,8 +32,8 @@
     background-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-article-page p:nth-child(2)::first-letter{
-      background-color: @{page.campaign.fontColour.brandColour};
+    .hosted-article-page p:not(.hosted__next-page-title):nth-child(2)::first-letter {
+    background-color: @{page.campaign.fontColour.brandColour};
     }
     </style>
     <!--<![endif]-->

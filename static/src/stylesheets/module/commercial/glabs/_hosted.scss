@@ -183,7 +183,7 @@ $hosted-video-height: 540px;
         }
     }
 
-    p {
+    p:not(.hosted__next-page-title) {
         &:nth-child(2)::first-letter {
             color: #ffffff;
         }

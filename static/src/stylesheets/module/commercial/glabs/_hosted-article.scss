@@ -27,7 +27,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
-        bottom: 38px;
+        bottom: $gs-gutter;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
@@ -90,7 +90,8 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             text-align: center;
         }
         .text {
-            line-height: 20px;
+            font-size: 18px;
+            line-height: 24px;
         }
         h1 {
             line-height: 28px;
@@ -169,18 +170,22 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .from-content-api > ul li {
         margin-bottom: 0;
     }
-    p {
+    p:not(.hosted__next-page-title) {
+      font-size: 18px;
+      line-height: 24px;
+      
         &:nth-child(2)::first-letter {
-            font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+            @include fs-textSans(4);
             display: inline-block;
             float: left;
-            color: #000;
-            padding: 16px 20px 6px;
+            color: #000000;
+            padding: 12px 20px 4px;
             font-size: 480%;
             line-height: 4.25rem;
             width: 4.8125rem;
             height: 4.8125rem;
-            margin-right: 0.5rem;
+            margin-right: .5rem;
+            margin-top: 4px;
             text-align: center;
         }
     }
