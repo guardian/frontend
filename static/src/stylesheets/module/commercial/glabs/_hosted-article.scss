@@ -171,9 +171,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         margin-bottom: 0;
     }
     p:not(.hosted__next-page-title) {
-      font-size: 18px;
-      line-height: 24px;
-      
+        font-size: 18px;
+        line-height: 24px;
+
         &:nth-child(2)::first-letter {
             @include fs-textSans(4);
             display: inline-block;
