@@ -21,6 +21,7 @@ object HostedPages {
   private val leffeCampaignName = "leffe-rediscover-time"
   private val zootropolisCampaignName = "disney-zootropolis"
   private val singaporeGrandPrixCampaignName = "singapore-grand-prix"
+  private val chesterZooCampaignName = "chester-zoo-act-for-wildlife"
 
   def fromCampaignAndPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {
@@ -28,6 +29,7 @@ object HostedPages {
       case `leffeCampaignName` => LeffeHostedPages.fromPageName(pageName)
       case `zootropolisCampaignName` => ZootropolisHostedPages.fromPageName(pageName)
       case `singaporeGrandPrixCampaignName` => Formula1HostedPages.fromPageName(pageName)
+      case `chesterZooCampaignName` => ChesterZooHostedPages.fromPageName(pageName)
       case _ => None;
     }
   }
