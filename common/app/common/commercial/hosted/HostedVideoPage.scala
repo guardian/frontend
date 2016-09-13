@@ -3,7 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.{Content, TagType}
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import conf.Static
+import common.commercial.hosted.hardcoded.HostedPages
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 
@@ -112,7 +112,7 @@ object HostedVideoPage extends Logging {
         // todo: missing data
         emailSubjectText = None,
         // todo: related content
-        nextPage = None,
+        nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         metadata
       )
     }
