@@ -337,14 +337,18 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
+  private def or[A](pred: A => Boolean, pred2: A => Boolean)(a: A) = pred(a) || pred2(a)
+
   def clean(doc: Document): Document = {
 
     if (article.content.showInRelated) {
 
-      // Get all paragraphs which are not contained in a pullquote
-      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
-        p.parents.exists( ancestor =>
-          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+      // Get all paragraphs which are not contained in a pullquote or in an instagram caption
+      val paragraphs = doc.getElementsByTag("p").filterNot( p => p.parents.exists(
+          or((ancestor: Element) =>
+            ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote"),
+            _.hasClass("instagram-media")
+          )
         )
       )
 
