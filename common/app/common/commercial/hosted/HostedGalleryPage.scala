@@ -17,14 +17,16 @@ case class HostedGalleryPage(
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
   images: List[HostedGalleryImage],
-  nextPagesList: List[HostedPage] = List(),
+  nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List()
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
   val imageUrl = images.headOption.map(_.url).getOrElse("")
 
-  def nextPages: List[HostedPage] = nextPagesList ++ nextPageNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _))
+  def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
+    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl)
+  )
 
   override val metadata: MetaData = {
     val sectionId = campaign.id

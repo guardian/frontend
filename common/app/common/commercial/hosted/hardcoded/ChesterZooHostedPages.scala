@@ -7,7 +7,7 @@ import conf.switches.Switches
 object ChesterZooHostedPages {
 
   private val galleryPageName = "what-we-fight-for"
-  private val nextPageName1 = "what-is-act-for-wildlife"
+  private val nextPageName1 = "acting-for-wildlife-in-south-asia"
   private val nextPageName2 = "saving-orangutans-from-extinction"
 
   private val campaign = HostedCampaign(
@@ -99,24 +99,16 @@ object ChesterZooHostedPages {
     url = "http://www.actforwildlife.org.uk/"
   )
 
-  private val nextPage1: HostedPage = HostedGalleryPage(
-    campaign = campaign,
-    images = List(HostedGalleryImage(url = "http://media.guim.co.uk/005f414cad0c9971078f4b8c9326e4814279b63f/0_48_2048_1229/500.jpg", title = "", caption = "")),
+  private val nextPage1: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/6d8b2274fcc7a7bad7b13e8c65a65ee01dba11e8/252_86_1796_1078/1796.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName1",
-    pageName = nextPageName1,
-    title = "What is Act For Wildlife?",
-    standfirst = "This is not a real page, just used for the onward journey links.",
-    cta = cta
+    title = "Acting for wildlife in South Asia"
   )
 
-  private val nextPage2: HostedPage = HostedGalleryPage(
-    campaign = campaign,
-    images = List(HostedGalleryImage(url = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg", title = "", caption = "")),
+  private val nextPage2: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName2",
-    pageName = nextPageName2,
-    title = "Saving orangutans from extinction",
-    standfirst = "This is not a real page, just used for the onward journey links.",
-    cta = cta
+    title = "Saving orangutans from extinction"
   )
 
   private val galleryPage: HostedGalleryPage = HostedGalleryPage(
@@ -136,6 +128,14 @@ object ChesterZooHostedPages {
         case `galleryPageName` if Switches.showChesterZooGallery.isSwitchedOn => Some(galleryPage)
         case _ => None
       }
+  }
+
+  def nextPages(pageName: String): List[NextHostedPage] = {
+//      pageName match { TODO
+//        case `galleryPageName` => List(nextPage1, nextPage2)
+//        case _ => Nil
+//      }
+    List(nextPage1, nextPage2)
   }
 
 }
