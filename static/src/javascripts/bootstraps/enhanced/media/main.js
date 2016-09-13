@@ -108,8 +108,6 @@ define([
             if (!isNaN(duration)) {
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
-                // Sets the duration for the Video JS button element
-                $('.vjs-big-play-button')[0].setAttribute('data-duration', $(el).attr('data-duration'));
             }
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
             player.guAutoplay = $(el).attr('data-auto-play') === 'true';
@@ -153,6 +151,11 @@ define([
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
                 enhanceVideo(el, false, withPreroll);
+                var buttonDuration = el.getAttribute('data-duration');
+                var buttonButton = el.parentElement.querySelector('button.vjs-big-play-button');
+                buttonButton.dataset.duration = buttonDuration;
+                console.log(buttonDuration);
+                console.log(buttonButton);
             });
         });
     }
@@ -198,7 +201,7 @@ define([
         }
     }
 
-    function enhanceVideo(el, autoplay, shouldPreroll) {
+    function enhanceVideo(el, autoplay, shouldPreroll, duration) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
