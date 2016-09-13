@@ -7,10 +7,11 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
-
 import scala.concurrent.Future
 
-object DfpDataCacheJob extends ExecutionContexts with Logging {
+class DfpDataCacheJob(capiLookupAgent: CapiLookupAgent) extends ExecutionContexts with Logging {
+
+  val paidForTagsFinder = new PaidForTagFinder(capiLookupAgent)
 
   case class LineItemLoadSummary(prevCount: Int,
                                  loadThreshold: Option[DateTime],
@@ -44,8 +45,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- PlacementAgent.refresh()
     } {
       val data = loadLineItems()
-      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
-      CapiLookupAgent.refresh(paidForTags) map {
+      val paidForTags = paidForTagsFinder.fromLineItems(data.lineItems)
+      capiLookupAgent.refresh(paidForTags) map {
         _ => write(data)
       }
     }
@@ -157,8 +158,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (data.isValid) {
       val now = printLondonTime(DateTime.now())
 
-      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
-      CapiLookupAgent.refresh(paidForTags)
+      val paidForTags = paidForTagsFinder.fromLineItems(data.lineItems)
+      capiLookupAgent.refresh(paidForTags)
       Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags

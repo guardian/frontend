@@ -141,7 +141,37 @@ case class PaidForTag(targetedName: String,
                       lineItems: Seq[GuLineItem]) {
 }
 
-object PaidForTag {
+object PaidForTagFormat {
+
+  implicit val pftWrites: Writes[PaidForTag] = new Writes[PaidForTag] {
+    override def writes(tag: PaidForTag): JsValue = {
+      Json.obj(
+        "targetedName" -> tag.targetedName,
+        "tagType" -> tag.tagType.name,
+        "paidForType" -> tag.paidForType.name,
+        "matchingCapiTagIds" -> tag.matchingCapiTagIds,
+        "lineItems" -> tag.lineItems
+      )
+    }
+  }
+
+  implicit val pftReads: Reads[PaidForTag] = (
+    (JsPath \ "targetedName").read[String] and
+      (JsPath \ "tagType").read[String].map {
+        case Series.name => Series
+        case Keyword.name => Keyword
+      } and
+      (JsPath \ "paidForType").read[String].map {
+        case Sponsored.name => Sponsored
+        case AdvertisementFeature.name => AdvertisementFeature
+        case FoundationFunded.name => FoundationFunded
+      } and
+      (JsPath \ "matchingCapiTagIds").read[Seq[String]] and
+      (JsPath \ "lineItems").read[Seq[GuLineItem]]
+    )(PaidForTag.apply _)
+}
+
+class PaidForTagFinder(capiLookupAgent: CapiLookupAgent) {
 
   def fromLineItems(lineItems: Seq[GuLineItem]): Seq[PaidForTag] = {
 
@@ -158,38 +188,12 @@ object PaidForTag {
 
     lineItemsGroupedByTag.map { case (currTag, currLineItems) =>
       currTag.copy(
-        matchingCapiTagIds = CapiLookupAgent.getTagIds(currTag.tagType, currTag.targetedName),
+        matchingCapiTagIds = capiLookupAgent.getTagIds(currTag.tagType, currTag.targetedName),
         lineItems = currLineItems
       )
     }.toList.sortBy(_.targetedName)
   }
 
-  implicit val jsonWrites = new Writes[PaidForTag] {
-    override def writes(tag: PaidForTag): JsValue = {
-      Json.obj(
-        "targetedName" -> tag.targetedName,
-        "tagType" -> tag.tagType.name,
-        "paidForType" -> tag.paidForType.name,
-        "matchingCapiTagIds" -> tag.matchingCapiTagIds,
-        "lineItems" -> tag.lineItems
-      )
-    }
-  }
-
-  implicit val jsonReads: Reads[PaidForTag] = (
-    (JsPath \ "targetedName").read[String] and
-      (JsPath \ "tagType").read[String].map {
-        case Series.name => Series
-        case Keyword.name => Keyword
-      } and
-      (JsPath \ "paidForType").read[String].map {
-        case Sponsored.name => Sponsored
-        case AdvertisementFeature.name => AdvertisementFeature
-        case FoundationFunded.name => FoundationFunded
-      } and
-      (JsPath \ "matchingCapiTagIds").read[Seq[String]] and
-      (JsPath \ "lineItems").read[Seq[GuLineItem]]
-    )(PaidForTag.apply _)
 }
 
 
@@ -212,6 +216,8 @@ case class PaidForTagsReport(updatedTimeStamp: String, paidForTags: Seq[PaidForT
 }
 
 object PaidForTagsReport {
+
+  import common.dfp.PaidForTagFormat._
 
   implicit val jsonWrites = new Writes[PaidForTagsReport] {
     override def writes(report: PaidForTagsReport): JsValue = {
