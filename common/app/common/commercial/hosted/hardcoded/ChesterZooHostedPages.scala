@@ -2,6 +2,7 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
+import conf.switches.Switches
 
 object ChesterZooHostedPages {
 
@@ -132,7 +133,7 @@ object ChesterZooHostedPages {
 
   def fromPageName(pageName: String): Option[HostedPage] = {
       pageName match {
-        case `galleryPageName` => Some(galleryPage)
+        case `galleryPageName` if Switches.showChesterZooGallery.isSwitchedOn => Some(galleryPage)
         case _ => None
       }
   }
