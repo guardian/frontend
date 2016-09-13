@@ -2,11 +2,12 @@ package controllers
 
 import common._
 import containers.Containers
+import feed.MostReadAgent
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
 
-class PopularInTag extends Controller with Related with Containers with Logging with ExecutionContexts {
+class PopularInTag(val mostReadAgent: MostReadAgent) extends Controller with Related with Containers with Logging with ExecutionContexts {
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
@@ -27,5 +28,3 @@ class PopularInTag extends Controller with Related with Containers with Logging 
     )
   }
 }
-
-object PopularInTag extends PopularInTag

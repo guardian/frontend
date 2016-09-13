@@ -63,7 +63,10 @@ trait AppComponents
   with CommercialServices
   with DiscussionServices
   with FapiServices
-  with AdminJobsServices {
+  with AdminJobsServices
+  with OnwardServices {
+
+  override lazy val ophanApi = wire[OphanApi] // ophanApi is already defined in AdminServices and OnwardServices. Overriding it here to avoid conflict
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")

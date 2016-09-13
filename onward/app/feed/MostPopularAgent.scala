@@ -31,7 +31,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
 
 }
 
-object GeoMostPopularAgent extends Logging with ExecutionContexts {
+class GeoMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -47,7 +47,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
   }
 
   def update(countryCode: String) {
-    val ophanQuery = OphanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
+    val ophanQuery = ophanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
 
     ophanQuery.map { ophanResults =>
 
@@ -85,7 +85,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
   }
 }
 
-object DayMostPopularAgent extends Logging with ExecutionContexts {
+class DayMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -99,7 +99,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
   }
 
   def update(countryCode: String) {
-    val ophanQuery = OphanApi.getMostRead(hours = 24, count = 10, country = countryCode)
+    val ophanQuery = ophanApi.getMostRead(hours = 24, count = 10, country = countryCode)
 
     ophanQuery.map { ophanResults =>
 

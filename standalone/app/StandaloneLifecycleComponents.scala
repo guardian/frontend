@@ -10,7 +10,7 @@ import feed.OnwardJourneyLifecycle
 import rugby.conf.RugbyLifecycle
 import services.ConfigAgentLifecycle
 
-trait StandaloneLifecycleComponents extends SportServices with CommercialServices with FapiServices {
+trait StandaloneLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
   self: FrontendComponents =>
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
