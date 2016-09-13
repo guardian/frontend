@@ -50,7 +50,11 @@ case class FontColour(brandColour: String) {
     val c = new Color(rgb)
     val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
     val brightness = hsb(2)
-    brightness > 0.5
+    if(brandColour == "#E31B22") {
+      false
+    } else {
+      brightness > 0.5
+    }
   }
 }
 
