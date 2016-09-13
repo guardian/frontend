@@ -169,6 +169,24 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .from-content-api > ul li {
         margin-bottom: 0;
     }
+    p {
+        &:nth-child(2)::first-letter {
+            font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+            display: inline-block;
+            float: left;
+            color: #000;
+            padding: 16px 20px 6px;
+            font-size: 480%;
+            line-height: 4.25rem;
+            width: 4.8125rem;
+            height: 4.8125rem;
+            margin-right: 0.5rem;
+            text-align: center;
+        }
+    }
+    .gu-image {
+        height: auto;
+    }
 }
 
 .hosted-article-page.zootropolis {

@@ -31,6 +31,10 @@
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
     background-color: @{page.campaign.fontColour.brandColour};
     }
+
+    .hosted-article-page p:nth-child(2)::first-letter{
+      background-color: @{page.campaign.fontColour.brandColour};
+    }
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
