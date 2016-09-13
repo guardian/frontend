@@ -4,6 +4,10 @@
 
 ## Does this affect other platforms - Amp, Apps, etc?
 
+<!--
+To test and validate AMP locally add the amp query string along with the development hash: http://localhost:3000/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper?amp=1#development=1
+-->
+
 ## Screenshots
 
 ## Request for comment
