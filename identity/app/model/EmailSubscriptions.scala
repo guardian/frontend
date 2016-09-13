@@ -70,6 +70,15 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "217" }
     ),
     EmailSubscription(
+      "Brexit briefing",
+      "news",
+      "News",
+      "Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.",
+      "Tuesday mornings",
+      "3698",
+      subscribedTo = subscribedListIds.exists{ x => x == "3698" }
+    ),
+    EmailSubscription(
       "Green light",
       "news",
       "Environment",
