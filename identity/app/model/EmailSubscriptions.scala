@@ -54,10 +54,10 @@ object EmailSubscriptions {
       "Weekend reading",
       "news",
       "News",
-      "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
+      "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
       "Every Saturday",
       "3744",
-      subscribedTo = subscribedListIds.exists{ x => x == "3744" } || subscribedListIds.exists{ x => x == "3744" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3743" } || subscribedListIds.exists{ x => x == "3744" }
     ),
     EmailSubscription(
       "Media briefing",
