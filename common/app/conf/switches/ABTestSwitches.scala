@@ -129,11 +129,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response",
+    "ab-ad-blocking-response2",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    sellByDate = new LocalDate(2016, 9, 15),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
