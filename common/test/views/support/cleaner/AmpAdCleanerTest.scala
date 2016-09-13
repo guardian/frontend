@@ -39,12 +39,12 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
 
   }
 
-  "AmpAdCleaner" should "only add 2 ads in total" in {
+  "AmpAdCleaner" should "only add 8 ads in total" in {
     val doc = s"""<html><body>${s"<p>${tenChars * 70}</p>" * 4}</body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
 
-    result.getElementsByTag("amp-ad").size should be(2)
+    result.getElementsByTag("amp-ad").size should be(8)
 
   }
 
