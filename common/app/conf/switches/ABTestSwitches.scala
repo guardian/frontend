@@ -53,7 +53,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -63,7 +63,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better than our previous in-article component tests.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -73,7 +73,7 @@ trait ABTestSwitches {
     "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
