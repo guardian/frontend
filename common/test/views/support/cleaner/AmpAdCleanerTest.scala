@@ -39,6 +39,13 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
 
   }
 
+  "AmpAdCleaner" should "include ads at defined, regular intervals" in {
+    AmpAdCleaner.AD_LIMIT should be(8)
+    AmpAdCleaner.CHARS_BETWEEN_ADS should be(700)
+    AmpAdCleaner.DONT_INTERLEAVE_SMALL_PARA should be(50)
+
+  }
+
   "AmpAdCleaner" should "only add 8 ads in total" in {
     val doc = s"""<html><body>${s"<p>${tenChars * 70}</p>" * 30}</body></html>"""
     val document: Document = Jsoup.parse(doc)
