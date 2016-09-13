@@ -129,7 +129,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response2",
+    "ab-ad-blocking-response",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
