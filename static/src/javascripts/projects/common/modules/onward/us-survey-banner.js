@@ -18,46 +18,47 @@ define([
 
     var messageId = 'mobile-labs-alert',
         messageOptions = {
-            siteMessageLinkName: 'mobile labs | message | presidential primary alerts',
             siteMessageCloseButton: 'hide',
             cssModifierClass: 'mobile-labs'
         },
 
         messageTemplateOptions = {
-            linkHref: 'https://surveys.theguardian.com/R.aspx?a=818&as=PM2tx7WG1j?CMP=' + getReferrer() + '_b-perceptionsurvey',
+            linkHref: getLinkHref(),
             linkText: 'Tell us',
             messageHeadline: 'We\'d love to know what you think about Guardian US',
             arrowWhiteRight: svgs('arrowWhiteRight')
         };
 
     function canShowPromo() {
-        return isSwitchedOn() && UsUser() && isNewToSurvey();
+        return isSwitchedOn() && UsUser() && !hasSeenMessage(messageId);
     }
 
-    function isNewToSurvey() {
-        var prefs = userPrefs.get('us-survey-banner');
-
-        if (prefs === null) {
-            return true;
-        }
+    function hasSeenMessage(messageName) {
+        var messageStates = userPrefs.get('messages');
+        return messageStates && messageStates.indexOf(messageName) > -1;
     }
 
-    function getReferrer() {
+    function hasSeenMessage(messageName) {
+        var messageStates = userPrefs.get('messages');
+        return messageStates && messageStates.indexOf(messageName) > -1;
+    }
+
+    function getLinkHref() {
         var referrerTypes = [
-                {id: 'fb', match: 'facebook.com'},
-                {id: 'twt', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
-                {id: 'goog', match: 'www.google'},
-                {id: 'ons', match: 'theguardian.com'}
+                {id: 'https://surveys.theguardian.com/R.aspx?a=830&as=II4Hb66oK3', match: 'facebook.com'},
+                {id: 'https://surveys.theguardian.com/R.aspx?a=831&as=Xv2WU9YY4G', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                {id: 'https://surveys.theguardian.com/R.aspx?a=829&as=z9Qp2vI8FD', match: 'www.google'},
+                {id: 'https://surveys.theguardian.com/R.aspx?a=832&as=ug1hG6DF26', match: 'theguardian.com'}
             ],
             matchedRef = referrerTypes.filter(function (referrerType) {
                 return detect.getReferrer().indexOf(referrerType.match) > -1;
-            })[0] || {id: 'unk'};
+            })[0] || {id: 'https://surveys.theguardian.com/R.aspx?a=833&as=X7Uq6MA5CB'};
 
         return matchedRef.id;
     }
 
     function isSwitchedOn() {
-        return config.switches.USSurveyBanner;
+        return config.switches.usSurveyBanner;
     }
 
     function UsUser() {
@@ -66,10 +67,10 @@ define([
 
     function init() {
         if (canShowPromo()) {
-            userPrefs.set('us-survey-banner', {
-                'seen': true
-            });
-            new Message(messageId, messageOptions).show(template(messageTemplate, messageTemplateOptions));
+            var message = new Message(messageId, messageOptions);
+            if (message.show(template(messageTemplate, messageTemplateOptions))) {
+                message.remember();
+            }
         }
     }
 
