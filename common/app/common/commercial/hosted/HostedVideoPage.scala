@@ -3,9 +3,10 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.{Content, TagType}
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import conf.Static
+import common.commercial.hosted.hardcoded.HostedPages
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
+import play.api.libs.json.JsString
 
 case class HostedVideoPage(
   campaign: HostedCampaign,
@@ -17,7 +18,7 @@ case class HostedVideoPage(
   facebookShareText: Option[String] = None,
   twitterShareText: Option[String] = None,
   emailSubjectText: Option[String] = None,
-  nextPage: Option[HostedPage] = None,
+  nextPage: Option[NextHostedPage] = None,
   metadata: MetaData
 ) extends HostedPage {
 
@@ -50,7 +51,15 @@ object HostedVideoPage extends Logging {
       val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
-      val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
+      // using capi trail text instead of standfirst because we don't want the markup
+      val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
+
+      val toneId = toneTag.id
+      //val toneName = toneTag.webTitle //TODO the toneTag.webTitle value should be Hosted not Advertisement Feature
+      val toneName = "Hosted"
+
+      val keywordId = s"${campaignId}/${campaignId}"
+      val keywordName = campaignId
 
       val metadata = MetaData.make(
         id = pageId,
@@ -61,6 +70,12 @@ object HostedVideoPage extends Logging {
         description = Some(standfirst),
         contentType = Video,
         iosType = Some(Video),
+        javascriptConfigOverrides = Map(
+          "keywordIds" -> JsString(keywordId),
+          "keywords" -> JsString(keywordName),
+          "toneIds" -> JsString(toneId),
+          "tones" -> JsString(toneName)
+        ),
         opengraphPropertiesOverrides = Map(
           "og:url" -> pageUrl,
           "og:title" -> pageTitle,
@@ -99,10 +114,10 @@ object HostedVideoPage extends Logging {
         ),
         // todo: from cta atom
         cta = HostedCallToAction(
-          url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
-          image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
-          label = Some("Discover Zoe"),
-          trackingCode = Some("explore-renault-zoe-button"),
+          url = "http://www.actforwildlife.org.uk/",
+          image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
+          label = Some("It's time to act for wildlife"),
+          trackingCode = Some("act-for-wildlife-button"),
           btnText = None
         ),
         // todo: missing data
@@ -112,7 +127,7 @@ object HostedVideoPage extends Logging {
         // todo: missing data
         emailSubjectText = None,
         // todo: related content
-        nextPage = None,
+        nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         metadata
       )
     }

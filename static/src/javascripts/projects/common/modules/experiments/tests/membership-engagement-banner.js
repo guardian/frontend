@@ -42,8 +42,10 @@ define([
         // Required by the A/B testing framework - can not be async, unfortunately
         this.canRun = function () {
             var matchesEdition = config.page.edition.toLowerCase() == edition;
-            return matchesEdition && commercialFeatures.syncMembershipMessages &&
-                minVisited <= (storage.local.get('gu.alreadyVisited') || 0);
+
+            var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= minVisited;
+
+            return userHasMadeEnoughVisits && commercialFeatures.canReasonablyAskForMoney && matchesEdition;
         };
 
         this.completer = function (complete) {
@@ -64,7 +66,7 @@ define([
             id: id,
             test: function () {
                 // async check to see if user has an ad-blocker enabled
-                commercialFeatures.async.membershipMessages.then(function (canShow) {
+                commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                     if (canShow && self.canRun()) {
                         var renderedBanner = template(messageTemplate, { messageText: messageText, linkHref: linkHref });
                         var messageShown = new Message(

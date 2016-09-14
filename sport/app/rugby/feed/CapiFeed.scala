@@ -14,7 +14,7 @@ case class MatchNavigation(
   minByMin: ContentType
 )
 
-object CapiFeed extends ExecutionContexts with Logging {
+class CapiFeed(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
 
   def getMatchArticles(matches: Seq[Match]) : Future[Map[String, MatchNavigation]] = {
     Future.sequence(
@@ -31,7 +31,7 @@ object CapiFeed extends ExecutionContexts with Logging {
 
     log.info(s"Looking for ${rugbyMatch.toString}")
 
-    ContentApiClient.getResponse(ContentApiClient.search(Edition.defaultEdition)
+    contentApiClient.getResponse(contentApiClient.search(Edition.defaultEdition)
       .section("sport")
       .tag(searchTags)
       .fromDate(matchDate.toDateTimeAtStartOfDay)

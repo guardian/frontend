@@ -2,7 +2,7 @@
   omnitureId: String,
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
-  useCardBranding: Boolean)
+  useCardBranding: Boolean)(implicit request: RequestHeader)
 
 @import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.inlineSvg

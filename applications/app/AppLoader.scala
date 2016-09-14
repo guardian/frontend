@@ -5,7 +5,7 @@ import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics
 import common.Logback.LogstashLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
-import contentapi.SectionsLookUpLifecycle
+import contentapi.{CapiHttpClient, ContentApiClient, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
@@ -25,8 +25,14 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
+trait ApplicationsServices {
+  def wsClient: WSClient
+  lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+}
+
 trait Controllers extends ApplicationsControllers {
-  self: FrontendComponents =>
+  self: FrontendComponents with ApplicationsServices =>
   def wsClient: WSClient
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
@@ -53,7 +59,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ApplicationsServices {
 
   lazy val router: Router = wire[Routes]
 

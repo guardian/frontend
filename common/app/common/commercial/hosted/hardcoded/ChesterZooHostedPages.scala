@@ -6,9 +6,16 @@ import conf.switches.Switches
 
 object ChesterZooHostedPages {
 
-  private val galleryPageName = "what-we-fight-for"
-  private val nextPageName1 = "what-is-act-for-wildlife"
-  private val nextPageName2 = "saving-orangutans-from-extinction"
+  private val makingWildlifeFriendlyHabitats = "making-wildlife-friendly-habitats"
+  private val savingOragutansFromExtinction = "saving-orangutans-from-extinction"
+  private val conservationStartsCloserToHome = "conservation-starts-closer-to-home"
+  private val actingForWildlifeInSouthAsia = "acting-for-wildlife-in-south-asia"
+  private val savingWildlifeFromTheBrink = "saving-wildlife-from-the-brink-of-extinction"
+  private val aRaceAgainstTimeForWildLife = "a-race-against-time-for-wildlife-in-latin-america"
+  private val actingForWildlifeInAfrica = "acting-for-wildlife-in-africa"
+  private val theRoleOfZoosInSavingWildlife = "the-role-of-zoos-in-saving-wildlife"
+  private val takeTheSustainablePalmOilChallenge = "take-the-sustainable-palm-oil-challenge"
+  private val whatWeFightFor = "what-we-fight-for"
 
   private val campaign = HostedCampaign(
     id = "chester-zoo-act-for-wildlife",
@@ -99,42 +106,98 @@ object ChesterZooHostedPages {
     url = "http://www.actforwildlife.org.uk/"
   )
 
-  private val nextPage1: HostedPage = HostedGalleryPage(
-    campaign = campaign,
-    images = List(HostedGalleryImage(url = "http://media.guim.co.uk/005f414cad0c9971078f4b8c9326e4814279b63f/0_48_2048_1229/500.jpg", title = "", caption = "")),
-    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName1",
-    pageName = nextPageName1,
-    title = "What is Act For Wildlife?",
-    standfirst = "This is not a real page, just used for the onward journey links.",
-    cta = cta
+  private val makingWildlifeFriendlyHabitatsPage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/6d8b2274fcc7a7bad7b13e8c65a65ee01dba11e8/252_86_1796_1078/500.jpg",//todo
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$makingWildlifeFriendlyHabitats",
+    title = "Making wildlife friendly habitats"
   )
 
-  private val nextPage2: HostedPage = HostedGalleryPage(
-    campaign = campaign,
-    images = List(HostedGalleryImage(url = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg", title = "", caption = "")),
-    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$nextPageName2",
-    pageName = nextPageName2,
-    title = "Saving orangutans from extinction",
-    standfirst = "This is not a real page, just used for the onward journey links.",
-    cta = cta
+  private val savingOragutansFromExtinctionPage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$savingOragutansFromExtinction",
+    title = "Saving orangutans from extinction"
+  )
+
+  private val conservationStartsCloserToHomePage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/672a47345a9bb886d8a4420168b5934114da37de/0_51_2048_1229/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$conservationStartsCloserToHome",
+    title = "Conservation starts closer to home"
+  )
+
+  private val actingForWildlifeInSouthAsiaPage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/6d8b2274fcc7a7bad7b13e8c65a65ee01dba11e8/252_86_1796_1078/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$actingForWildlifeInSouthAsia",
+    title = "Acting for wildlife in South Asia"
+  )
+
+  private val savingWildlifeFromTheBrinkPage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/8124d85bda256d0b0c8eaec99ab8517e26e00671/0_75_2048_1228/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$savingWildlifeFromTheBrink",
+    title = "Saving wildlife from the brink of extinction"
+  )
+
+  private val aRaceAgainstTimeForWildLifePage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/79abfe296a0aee7c37677207b2a7f17bdfd51f57/362_120_1457_874/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$aRaceAgainstTimeForWildLife",
+    title = "A race against time for wildlife in Latin America"
+  )
+
+  private val actingForWildlifeInAfricaPage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/9d471141fae4c716f27f56de088a87af3b932031/0_71_2048_1229/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$actingForWildlifeInAfrica",
+    title = "Acting for wildlife in Africa"
+  )
+
+  private val theRoleOfZoosInSavingWildlifePage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/6ad6b68ed5dcc5bc6e370f39b69063b533ce7627/0_23_2019_1211/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$theRoleOfZoosInSavingWildlife",
+    title = "The roles of zoos in saving wildlife"
+  )
+
+  private val takeTheSustainablePalmOilChallengePage: NextHostedPage = NextHostedPage(
+    imageUrl = "https://media.guim.co.uk/838d447bf7432026f73ee1244bfd1717e9f6a848/0_68_2048_1229/500.jpg",
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$takeTheSustainablePalmOilChallenge",
+    title = "Take the sustainable Palm Oil challenge"
   )
 
   private val galleryPage: HostedGalleryPage = HostedGalleryPage(
     campaign = campaign,
     images = images,
-    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$galleryPageName",
-    pageName = galleryPageName,
+    pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$whatWeFightFor",
+    pageName = whatWeFightFor,
     title = "What we fight for",
     cta = cta,
-    nextPagesList = List(nextPage1, nextPage2),
+    nextPagesList = List(makingWildlifeFriendlyHabitatsPage, savingOragutansFromExtinctionPage),
     standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some of the world’s most endangered wildlife from extinction",
     twitterShareText = Some("Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife")
   )
 
+  private val whatWeFightForPage: NextHostedPage = NextHostedPage(
+    imageUrl = "http://media.guim.co.uk/85af2fd7ebb0731771e7e964bdced1adb1b1606b/0_51_2048_1228/500.jpg",
+    pageUrl = galleryPage.pageUrl,
+    title = galleryPage.title
+  )
+
   def fromPageName(pageName: String): Option[HostedPage] = {
       pageName match {
-        case `galleryPageName` if Switches.showChesterZooGallery.isSwitchedOn => Some(galleryPage)
+        case `whatWeFightFor` if Switches.showChesterZooGallery.isSwitchedOn => Some(galleryPage)
         case _ => None
+      }
+  }
+
+  def nextPages(pageName: String): List[NextHostedPage] = {
+      pageName match {
+        case `makingWildlifeFriendlyHabitats` => List(savingOragutansFromExtinctionPage, conservationStartsCloserToHomePage)
+        case `savingOragutansFromExtinction` => List(conservationStartsCloserToHomePage, actingForWildlifeInSouthAsiaPage)
+        case `conservationStartsCloserToHome` => List(actingForWildlifeInSouthAsiaPage, savingWildlifeFromTheBrinkPage)
+        case `actingForWildlifeInSouthAsia` => List(savingWildlifeFromTheBrinkPage, aRaceAgainstTimeForWildLifePage)
+        case `savingWildlifeFromTheBrink` => List(aRaceAgainstTimeForWildLifePage, actingForWildlifeInAfricaPage)
+        case `aRaceAgainstTimeForWildLife` => List(actingForWildlifeInAfricaPage, theRoleOfZoosInSavingWildlifePage)
+        case `actingForWildlifeInAfrica` => List(theRoleOfZoosInSavingWildlifePage, takeTheSustainablePalmOilChallengePage)
+        case `theRoleOfZoosInSavingWildlife` => List(takeTheSustainablePalmOilChallengePage, whatWeFightForPage)
+        case `takeTheSustainablePalmOilChallenge` => List(whatWeFightForPage, makingWildlifeFriendlyHabitatsPage)
+        case `whatWeFightFor` => List(makingWildlifeFriendlyHabitatsPage, savingOragutansFromExtinctionPage)
+        case _ => Nil
       }
   }
 
