@@ -13,7 +13,7 @@ import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
 import jobs.CricketStatsJob
-import model.ApplicationIdentity
+import model.{ApplicationIdentity, LiveBlogAgent}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
@@ -43,6 +43,7 @@ trait SportServices {
   lazy val rugbyFeed = wire[OptaFeed]
   lazy val rugbyStatsJob = wire[RugbyStatsJob]
   lazy val capiFeed = wire[CapiFeed]
+  lazy val liveBlogAgent = wire[LiveBlogAgent]
 }
 
 trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {

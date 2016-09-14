@@ -16,6 +16,7 @@ trait OnwardControllers {
   def weatherApi: WeatherApi
   def geoMostPopularAgent: GeoMostPopularAgent
   def dayMostPopularAgent: DayMostPopularAgent
+  def mostPopularAgent: MostPopularAgent
   def mostReadAgent: MostReadAgent
   def mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh
   def mostViewedVideoAgent: MostViewedVideoAgent
