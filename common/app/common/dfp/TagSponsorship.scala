@@ -141,7 +141,7 @@ case class PaidForTag(targetedName: String,
                       lineItems: Seq[GuLineItem]) {
 }
 
-object PaidForTagFormat {
+object PaidForTag {
 
   implicit val pftWrites: Writes[PaidForTag] = new Writes[PaidForTag] {
     override def writes(tag: PaidForTag): JsValue = {
@@ -217,7 +217,7 @@ case class PaidForTagsReport(updatedTimeStamp: String, paidForTags: Seq[PaidForT
 
 object PaidForTagsReport {
 
-  import common.dfp.PaidForTagFormat._
+  import common.dfp.PaidForTag._
 
   implicit val jsonWrites = new Writes[PaidForTagsReport] {
     override def writes(report: PaidForTagsReport): JsValue = {
