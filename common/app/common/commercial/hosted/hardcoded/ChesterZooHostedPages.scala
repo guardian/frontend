@@ -155,7 +155,7 @@ object ChesterZooHostedPages {
   )
 
   private val takeTheSustainablePalmOilChallengePage: NextHostedPage = NextHostedPage(
-    imageUrl = "https://media.guim.co.uk/6d8b2274fcc7a7bad7b13e8c65a65ee01dba11e8/252_86_1796_1078/1796.jpg",//todo
+    imageUrl = "https://media.guim.co.uk/838d447bf7432026f73ee1244bfd1717e9f6a848/0_68_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$takeTheSustainablePalmOilChallenge",
     title = "Take the sustainable Palm Oil challenge"
   )
