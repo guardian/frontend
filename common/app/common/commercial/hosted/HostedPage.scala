@@ -30,6 +30,12 @@ trait HostedPage extends StandalonePage {
   val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
 }
 
+case class NextHostedPage(
+  pageUrl: String,
+  title: String,
+  imageUrl: String
+)
+
 case class HostedCampaign(
   id: String,
   name: String,

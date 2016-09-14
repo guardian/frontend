@@ -6,7 +6,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import conf.Configuration
-import contentapi.{ContentApiClient, Http}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
@@ -19,26 +19,15 @@ import recorder.ContentApiHttpRecorder
 
 import scala.util.{Failure, Success, Try}
 
+//TODO: to delete once ContentApiClient global object is not used anymore
 trait TestSettings {
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  private def verify(property: String, hash: String, message: String) {
-    if (DigestUtils.sha256Hex(property) != hash) {
+  private def toRecorderHttp(httpClient: HttpClient) = new HttpClient {
 
-      // the println makes it easier to spot what is wrong in tests
-      println()
-      println(s"----------- $message -----------")
-      println()
-
-      throw new RuntimeException(message)
-    }
-  }
-
-  private def toRecorderHttp(http: Http) = new Http {
-
-    val originalHttp = http
+    val originalHttp = httpClient
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
       recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
@@ -47,8 +36,8 @@ trait TestSettings {
     }
   }
 
-  ContentApiClient.thriftClient._http = toRecorderHttp(ContentApiClient.thriftClient._http)
-  ContentApiClient.jsonClient._http = toRecorderHttp(ContentApiClient.jsonClient._http)
+  ContentApiClient.thriftClient._httpClient = toRecorderHttp(ContentApiClient.thriftClient._httpClient)
+  ContentApiClient.jsonClient._httpClient = toRecorderHttp(ContentApiClient.jsonClient._httpClient)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
@@ -138,4 +127,23 @@ trait WithTestWsClient {
   lazy val wsClient: WSClient = lazyWsClient
 
   override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
+}
+
+trait WithTestContentApiClient {
+  def wsClient: WSClient
+
+  val recorder = new ContentApiHttpRecorder {
+    override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
+  }
+
+  class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
+    override def GET(url: String, headers: Iterable[(String, String)]) = {
+      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
+        originalHttpClient.GET(url, headers)
+      }
+    }
+  }
+
+  lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
+  lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
 }

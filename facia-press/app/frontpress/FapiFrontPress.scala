@@ -11,7 +11,7 @@ import common._
 import common.commercial.Branding
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
-import contentapi.{CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
+import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
@@ -25,8 +25,7 @@ import scala.concurrent.Future
 class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiHost,
     apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
     useThrift = false
@@ -53,8 +52,7 @@ class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 class DraftFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiDraftHost,
     apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
     useThrift = false

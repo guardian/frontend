@@ -18,7 +18,6 @@ class AppLoader extends FrontendApplicationLoader {
 trait Controllers {
   def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
-  ContentApiClient.setHttp(wire[TrainingHttp]) // adds auth as a side effect - can be fixed when ContentApiClient uses DI instead of setHttp
 }
 
 trait AppComponents
@@ -27,6 +26,9 @@ trait AppComponents
   with Controllers
   with StandaloneLifecycleComponents
   with AdminJobsServices {
+
+  lazy val trainingCapiHttpClient = wire[TrainingHttp]
+  override lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 
