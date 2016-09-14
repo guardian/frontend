@@ -21,7 +21,6 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/no-social-count',
     'common/modules/experiments/tests/contributions-epic-buttons'
 ], function (
     reportError,
@@ -46,7 +45,6 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    NoSocialCount,
     ContributionsEpicButtons
 ) {
 
@@ -64,7 +62,6 @@ define([
         new ContributionsEpic(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new NoSocialCount(),
         new ContributionsEpicButtons()
     ].concat(MembershipEngagementBannerTests);
 

@@ -149,16 +149,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-no-social-count",
-    "Remove social count from articles",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-weekend-reading-promo",
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
