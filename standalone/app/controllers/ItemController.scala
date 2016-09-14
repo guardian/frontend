@@ -9,7 +9,7 @@ class ItemController(articleController: ArticleController,
                     ) extends ItemResponseController(
   articleController,
   new GalleryController(contentApiClient),
-  MediaController,
+  new MediaController(contentApiClient),
   new InteractiveController(contentApiClient),
   ImageContentController,
   faciaDraftController
