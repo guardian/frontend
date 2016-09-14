@@ -267,7 +267,7 @@ define([
         var ctaIndex = this.ctaIndex();
         fastdom.write(function () {
             this.$images.each(function (image, index) {
-                var opacity = (progress - index + 1) * 4 / 3;
+                var opacity = ((progress - index + 1) * 16 / 11) - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
@@ -279,6 +279,7 @@ define([
 
             bonzo(this.$progress).toggleClass('first-half', fractionProgress && fractionProgress < 0.5);
 
+            bonzo(this.$meta).css('opacity', progress != 0 ? 0 : 1);
         }.bind(this));
 
         if (newIndex && newIndex !== this.index) {
