@@ -26,7 +26,8 @@ trait AppComponents
   with StandaloneControllerComponents
   with Controllers
   with StandaloneLifecycleComponents
-  with AdminJobsServices {
+  with AdminJobsServices
+  with OnwardServices {
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 

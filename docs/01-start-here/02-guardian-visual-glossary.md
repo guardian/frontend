@@ -50,6 +50,12 @@
 
 ![image](images/minute.jpg)
 
+### AMP
+
+[Articles](https://amp.theguardian.com/world/2015/oct/15/obama-delay-withdrawal-us-troops-afghanistan) viewed in [Google AMP](https://www.ampproject.org) format, a simplified subset of HTML, designed to speed up the mobile web.
+
+![image](images/amp-ads.jpg)
+
 ## Onwards
 
 ### More on - Story package

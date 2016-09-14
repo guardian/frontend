@@ -13,7 +13,8 @@ class RugbyLifecycle(
   appLifeCycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
-  rugbyStatsJob: RugbyStatsJob
+  rugbyStatsJob: RugbyStatsJob,
+  capiFeed: CapiFeed
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   protected val initializationTimeout: FiniteDuration = 10.seconds
@@ -43,7 +44,7 @@ class RugbyLifecycle(
 
     jobs.deschedule("MatchNavArticles")
     jobs.schedule("MatchNavArticles", "35 0/30 * * * ?") {
-      val refreshedNavContent = CapiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
+      val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)
     }
 
@@ -57,7 +58,7 @@ class RugbyLifecycle(
       rugbyStatsJob.fetchPastScoreEvents
       rugbyStatsJob.fetchPastMatchesStat
 
-      val refreshedNavContent = CapiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
+      val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)
     }
   }
