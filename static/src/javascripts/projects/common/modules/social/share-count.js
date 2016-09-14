@@ -9,8 +9,7 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'text!common/views/content/share-count.html',
-    'text!common/views/content/share-count-immersive.html',
-    'common/modules/experiments/ab'
+    'text!common/views/content/share-count-immersive.html'
 ], function (
     fastdom,
     reportError,
@@ -22,8 +21,7 @@ define([
     template,
     svgs,
     shareCountTemplate,
-    shareCountImmersiveTemplate,
-    ab
+    shareCountImmersiveTemplate
 ) {
     var shareCount = 0,
         $shareCountEls = $('.js-sharecount'),
@@ -74,8 +72,7 @@ define([
         // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview
-        // AB test: No social counts - Variant: no-sharing doesn't insert share counts
-        if ($shareCountEls.length && !config.page.isPreview && !ab.isInVariant('NoSocialCount', 'no-sharing')) {
+        if ($shareCountEls.length && !config.page.isPreview) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({

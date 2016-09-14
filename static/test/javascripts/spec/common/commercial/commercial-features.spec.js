@@ -340,15 +340,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 });
             });
 
-            it('Does not display messages outside articles', function (done) {
-                config.page.contentType = 'Network Front';
-                features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(false);
-                    done();
-                });
-            });
-
             it('Does not display messages to existing members', function (done) {
                 userFeatures.isPayingMember = function () {return true;};
                 features = new CommercialFeatures;

@@ -5,6 +5,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballClient, FootballLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import cricketPa.PaFeed
@@ -23,7 +24,7 @@ import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle
 import router.Routes
 import rugby.controllers.RugbyControllers
-import rugby.feed.OptaFeed
+import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
 
 class AppLoader extends FrontendApplicationLoader {
@@ -32,6 +33,8 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
+  lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
   lazy val footballClient = wire[FootballClient]
   lazy val competitionDefinitions = CompetitionsProvider.allCompetitions
   lazy val competitionsService = wire[CompetitionsService]
@@ -39,6 +42,7 @@ trait SportServices {
   lazy val cricketStatsJob = wire[CricketStatsJob]
   lazy val rugbyFeed = wire[OptaFeed]
   lazy val rugbyStatsJob = wire[RugbyStatsJob]
+  lazy val capiFeed = wire[CapiFeed]
 }
 
 trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {
@@ -62,7 +66,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with SportServices{
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with SportServices {
 
   lazy val router: Router = wire[Routes]
 

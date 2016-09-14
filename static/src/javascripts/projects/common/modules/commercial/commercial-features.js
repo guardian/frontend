@@ -128,7 +128,6 @@ define([
             switches.liveblogAdverts;
 
         this.syncMembershipMessages =
-            isArticle &&
             !userFeatures.isPayingMember();
 
         this.async = {
