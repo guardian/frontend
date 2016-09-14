@@ -162,6 +162,7 @@ final case class CircuitBreakingContentApiClient(
     }
   }
 }
+
 //TODO: Do not use. For legacy reason only.
 //To delete once all references to ContentApiClient are via the class
 object ContentApiClient extends ContentApiClient(WSCapiHttpClient)

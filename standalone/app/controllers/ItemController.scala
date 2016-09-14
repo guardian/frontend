@@ -10,7 +10,7 @@ class ItemController(articleController: ArticleController,
   articleController,
   new GalleryController(contentApiClient),
   MediaController,
-  InteractiveController,
+  new InteractiveController(contentApiClient),
   ImageContentController,
   faciaDraftController
 )
