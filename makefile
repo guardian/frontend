@@ -43,7 +43,7 @@ validate-js:
 	@grunt validate:js
 
 validate-amp:
-	@cd tools/amp-validation && npm install && node index.js
+	@cd tools/amp-validation && npm install && node index.js true
 
 shrinkwrap:
 	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
