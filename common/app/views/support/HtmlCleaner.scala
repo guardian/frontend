@@ -342,7 +342,8 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
     if (article.content.showInRelated) {
 
       // Get all paragraphs which are not contained in a pullquote or in an instagram caption
-      val paragraphs = doc.getElementsByTag("p").filterNot( p => p.parents.exists { ancestor =>
+      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
+        p.parents.exists { ancestor =>
           val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
           val inInstagramBlock = ancestor.hasClass("instagram-media")
           inPullquote || inInstagramBlock
