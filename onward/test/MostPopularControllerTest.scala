@@ -1,7 +1,7 @@
 package test
 
 import controllers.MostPopularController
-import feed.{DayMostPopularAgent, GeoMostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test._
 import play.api.test.Helpers._
@@ -18,7 +18,12 @@ import services.OphanApi
   val tag = "technology"
 
   lazy val ophanApi = new OphanApi(wsClient)
-  lazy val mostPopularController = new MostPopularController(testContentApiClient, new GeoMostPopularAgent(ophanApi), new DayMostPopularAgent(ophanApi))
+  lazy val mostPopularController = new MostPopularController(
+    testContentApiClient,
+    new GeoMostPopularAgent(testContentApiClient, ophanApi),
+    new DayMostPopularAgent(testContentApiClient, ophanApi),
+    new MostPopularAgent(testContentApiClient)
+  )
 
   "Most Popular Controller" should "200 when content type is tag" in {
     val result = mostPopularController.render(tag)(TestRequest())

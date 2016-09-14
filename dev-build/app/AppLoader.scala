@@ -7,7 +7,7 @@ import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient, SectionsLookUpLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
 import controllers.commercial._
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
@@ -63,11 +63,13 @@ trait AppComponents
   with CommercialServices
   with DiscussionServices
   with AdminJobsServices
-  with OnwardServices {
+  with OnwardServices
+  with FapiServices
+  with ApplicationsServices {
 
   //Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]
-  override lazy val capiHttpClient = wire[CapiHttpClient]
+  override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
 
   override def router: Router = wire[Routes]

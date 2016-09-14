@@ -3,15 +3,13 @@ package indexes
 import common.Logging
 import common.StringEncodings.asAscii
 import contentapi.ContentApiClient
-import ContentApiClient.getResponse
-
 import scala.concurrent.Future
 import com.gu.contentapi.client.model.v1.{TagsResponse, Tag}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 
-object ContentApiTagsEnumerator extends Logging {
+class ContentApiTagsEnumerator(contentApiClient: ContentApiClient) extends Logging {
   val DelayBetweenRetries = 100.millis
   val MaxNumberRetries = 5
   val MaxPageSize = 1000
@@ -39,7 +37,7 @@ object ContentApiTagsEnumerator extends Logging {
   }
 
   def enumerateTagType(tagType: String) = enumeratePages { page =>
-    getResponse(ContentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
+    contentApiClient.getResponse(contentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
   }
 
   implicit class RichTag(tag: Tag) {
