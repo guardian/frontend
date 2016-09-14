@@ -2,9 +2,8 @@ package model
 
 import common._
 import contentapi.ContentApiClient
-import ContentApiClient.getResponse
 
-trait LiveBlogAgent extends ExecutionContexts with Logging {
+class LiveBlogAgent(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
   import Edition.{all => editions}
 
   private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[ContentType]](None)).toMap
@@ -20,8 +19,8 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
     val tag = "football/series/saturday-clockwatch|tone/minutebyminute"
     log.info(s"Fetching football blogs with tag: $tag")
 
-    getResponse(
-      ContentApiClient.item("/football", edition)
+    contentApiClient.getResponse(
+      contentApiClient.item("/football", edition)
         .tag(tag)
         .showEditorsPicks(true)
     ).map {response =>
@@ -42,8 +41,4 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   private def isClockWatch(content: ContentType) = content.tags.tags.exists(_.id == "football/series/saturday-clockwatch")
 
   def blogFor(edition: Edition) = agents(edition.id)
-}
-
-object LiveBlogAgent extends LiveBlogAgent {
-  def apply(edition: Edition) = blogFor(edition)()
 }

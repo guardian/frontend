@@ -1,6 +1,7 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import conf.{CachedHealthCheckLifeCycle, StandaloneFilters}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, ResponsiveViewerController, StandaloneControllerComponents}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -27,7 +28,11 @@ trait AppComponents
   with Controllers
   with StandaloneLifecycleComponents
   with AdminJobsServices
-  with OnwardServices {
+  with OnwardServices
+  with ApplicationsServices {
+
+  override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  override lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 
