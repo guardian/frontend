@@ -331,7 +331,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 });
             });
 
-            it('Does not display messages to existing members because they are already giving us money', function () {
+            it('Does not ask paying members for money - because they are *already* giving us money, we do not want to hassle them', function () {
                 userFeatures.isPayingMember = function () {return true;};
                 features = new CommercialFeatures;
                 expect(features.canReasonablyAskForMoney).toBe(false);
