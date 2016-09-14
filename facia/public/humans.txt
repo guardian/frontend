@@ -149,6 +149,31 @@ Developer: Rafe Kennedy
 Twitter: @rjmk_
 From: Reading, UK
 
+User Experience Architect: Alastair Jardine
+Twitter: @aj_ux
+From: London, UK
+
+Software Engineer in Test: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
+
+Software Architect/Hacker: Phil Wills
+Twitter: @philwills
+
+Developer: Mariot Chauvin
+Twitter: @mchv
+
+Developer: Nicolas Long
+Twitter: @room271
+Website: http://room271.net
+From: London, UK
+
+Agile Project Manager: Huma Islam
+From: London, UK
+
+Senior Developer: Adam Fisher
+Twitter: @adamnfish
+
 
 /* FORMER MEMBERS */
 
@@ -172,10 +197,6 @@ Designer and front-end developer: Paul Lloyd
 Twitter: @paulrobertlloyd
 From: Brighton, UK
 
-User Experience Architect: Alastair Jardine
-Twitter: @aj_ux
-From: London, UK
-
 Developer (Frontendy Things): David Vella
 Twitter: @indeox
 From: Gozo, Malta
@@ -183,10 +204,6 @@ From: Gozo, Malta
 Developer: Ben James
 Twitter: @bmjames
 From: Liverpool, UK
-
-Software Engineer in Test: Gideon Goldberg
-Twitter: @gidsg
-From: London, UK, Earth, the Universe
 
 Developer Manager (ID/Discussion): Nick Smith
 From: London, UK
@@ -219,30 +236,13 @@ Developer: Max Harlow
 Twitter: @maxharlow
 From: London, UK
 
-Software Architect/Hacker: Phil Wills
-Twitter: @philwills
-
-Developer: Mariot Chauvin
-Twitter: @mchv
-
-Developer: Nicolas Long
-Twitter: @room271
-Website: http://room271.net
-From: London, UK
-
 QA: Troy Harris
 LinkedIn: troyharris
 Twitter: @troyharrisoz
 From: Wollongong, Australia
 
-Agile Project Manager: Huma Islam
-From: London, UK
-
 Software Architect: Andy Hume
 Twitter: @andyhume
-
-Senior Developer: Adam Fisher
-Twitter: @adamnfish
 
 Developer: Robert Berry
 Twitter: @RobJamesBerry
