@@ -20,7 +20,7 @@ define([
     return function () {
         this.id = 'AdBlockingResponse';
         this.start = '2016-09-14';
-        this.expiry = '2016-09-20';
+        this.expiry = '2016-09-16';
         this.author = 'Justin Pinner';
         this.description = 'Adblocking response ZERO PERCENT test with 30 minutes grace';
         this.audience = 0;

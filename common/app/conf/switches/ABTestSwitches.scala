@@ -133,7 +133,7 @@ trait ABTestSwitches {
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 15),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2016, 9, 16),   // Friday @ 23:59 BST
     exposeClientSide = true
   )
 
