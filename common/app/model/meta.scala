@@ -5,8 +5,9 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.commercial.{BrandHunter, Branding}
 import common.dfp._
-import common.{Edition, ManifestData, NavItem, Pagination}
+import common.{Edition, Logging, ManifestData, NavItem, Pagination}
 import conf.Configuration
+import conf.Configuration.commercial.{dfpAccountId, dfpAdUnitGuRoot}
 import cricketPa.CricketTeams
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -302,7 +303,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
@@ -721,5 +722,19 @@ object Tags {
 
   def make(apiContent: contentapi.Content) = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
+  }
+}
+
+object AdUnitMaker extends Logging {
+
+  val knownBadAdUnits = Seq("article")
+
+  def make(pageId: String, adUnitSuffix: String): String = {
+    if (knownBadAdUnits.contains(adUnitSuffix)) {
+      log.warn(s"Bad ad unit '$dfpAdUnitGuRoot/$adUnitSuffix' on page '$pageId'")
+      s"/$dfpAccountId/$dfpAdUnitGuRoot"
+    } else {
+      s"/$dfpAccountId/$dfpAdUnitGuRoot/$adUnitSuffix/ng"
+    }
   }
 }
