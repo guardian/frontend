@@ -7,11 +7,18 @@ import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Span}
 
-@DoNotDiscover class CrosswordDataTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite with ScalaFutures {
+@DoNotDiscover class CrosswordDataTest
+  extends FreeSpec
+  with ShouldMatchers
+  with ConfiguredTestSuite
+  with ScalaFutures
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   "CrosswordData" - {
 
-    val crosswordPageController = new CrosswordPageController
+    val crosswordPageController = new CrosswordPageController(testContentApiClient)
 
     "fromCrossword should normalize separators for grouped entries" in {
 

@@ -296,4 +296,14 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val showChesterZooGallery = Switch(
+    group = CommercialLabs,
+    "chester-zoo-gallery",
+    "Make the Chester Zoo gallery page available",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
+  )
+
 }

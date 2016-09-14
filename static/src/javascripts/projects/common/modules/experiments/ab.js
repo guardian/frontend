@@ -10,19 +10,15 @@ define([
     'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/participation-discussion-ordering-live-blog',
-    'common/modules/experiments/tests/participation-discussion-ordering-non-live',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
-    'common/modules/experiments/tests/membership-messages',
-    'common/modules/experiments/tests/commercial-feedback',
+    'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/no-social-count',
     'common/modules/experiments/tests/contributions-epic-buttons'
 ], function (
     reportError,
@@ -36,19 +32,15 @@ define([
     DiscussionExternalFrontend,
     LiveBlogChromeNotificationsProd,
     ParticipationDiscussionOrderingLiveBlog,
-    ParticipationDiscussionOrderingNonLive,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
-    MembershipMessages,
-    AdFeedback,
+    MembershipEngagementBannerTests,
     RecommendedForYou,
-    DontUpgradeMobileRichLinks,
     ContributionsEmbed,
     ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    NoSocialCount,
     ContributionsEpicButtons
 ) {
 
@@ -57,21 +49,15 @@ define([
         new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
         new ParticipationDiscussionOrderingLiveBlog(),
-        new ParticipationDiscussionOrderingNonLive(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
-        new MembershipMessages(),
-        new AdFeedback(),
         new RecommendedForYou(),
-        new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
         new ContributionsEpic(),
-        new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new NoSocialCount(),
         new ContributionsEpicButtons()
-    ];
+    ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
 

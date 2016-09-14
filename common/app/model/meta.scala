@@ -580,15 +580,25 @@ final case class Tags(
 
   private def tagsOfType(tagType: String): List[Tag] = tags.filter(_.properties.tagType == tagType)
 
-  lazy val keywords: List[Tag] = tagsOfType("Keyword")
-  lazy val nonKeywordTags: List[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
+  private def tagsOfTypeOrPaidContentSubtype(tagType: String, paidContentSubType: String): List[Tag] = {
+    tags.filter { tag =>
+      tag.properties.tagType == tagType ||
+      (tag.properties.tagType == "PaidContent" && tag.properties.paidContentType == Some(paidContentSubType))
+    }
+  }
+
+  lazy val keywords: List[Tag] = tagsOfTypeOrPaidContentSubtype("Keyword", "Topic")
+
+  lazy val nonKeywordTags: List[Tag] = tags.diff(keywords)
+
   lazy val contributors: List[Tag] = tagsOfType("Contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
-  lazy val series: List[Tag] = tagsOfType("Series")
+  lazy val series: List[Tag] = tagsOfTypeOrPaidContentSubtype("Series", "Series")
   lazy val blogs: List[Tag] = tagsOfType("Blog")
   lazy val tones: List[Tag] = tagsOfType("Tone")
   lazy val types: List[Tag] = tagsOfType("Type")
   lazy val tracking: List[Tag] = tagsOfType("Tracking")
+  lazy val paidContent: List[Tag] = tagsOfType("PaidContent")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption

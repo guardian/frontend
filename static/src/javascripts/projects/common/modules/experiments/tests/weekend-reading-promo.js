@@ -28,10 +28,10 @@ define([
     return function () {
         this.id = 'WeekendReadingPromo';
         this.start = '2016-09-01';
-        this.expiry = '2016-09-12';
+        this.expiry = '2016-10-03';
         this.author = 'Kate Whalen';
         this.description = 'For just one pageview, show users a banner promoting the Weekend Reading email';
-        this.audience = 0.5;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Snap banner promotes the Weekend Reading email and leads to visitors signing up';
         this.audienceCriteria = 'All visitors who have not yet seen this snap banner';

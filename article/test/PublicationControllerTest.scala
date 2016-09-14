@@ -1,17 +1,22 @@
 package test
 
+import contentapi.ContentApiClient
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 
-@DoNotDiscover class PublicationControllerTest extends FlatSpec
-                                                with Matchers
-                                                with ConfiguredTestSuite
-                                                with MockitoSugar {
+@DoNotDiscover class PublicationControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with MockitoSugar
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -20,7 +25,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val emptySeq: Seq[TagDefinition] = Seq.empty
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
-  val articleController = new ArticleController
+  val articleController = new ArticleController(testContentApiClient)
   val publicationController = new PublicationController(bookAgent, bookSectionAgent, articleController)
 
   "Publication Controller" should "redirect to an /all page when an observer dated book url is requested" in {

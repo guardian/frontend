@@ -2,7 +2,6 @@ package controllers
 
 import common._
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import contentapi.Paths
 import model.Cached.WithoutRevalidationResult
 import model._
@@ -12,7 +11,7 @@ import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 
-class LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
+class LatestIndexController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
   def latest(path: String) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
@@ -34,8 +33,8 @@ class LatestIndexController extends Controller with ExecutionContexts with impli
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = getResponse(
-      ContentApiClient.item(s"/$path", Edition(request))
+    val result = contentApiClient.getResponse(
+      contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .orderBy("newest")
     ).map{ item =>
@@ -64,5 +63,3 @@ class LatestIndexController extends Controller with ExecutionContexts with impli
     }
   }
 }
-
-object LatestIndexController extends LatestIndexController

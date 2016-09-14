@@ -10,6 +10,7 @@ define([
     'common/utils/robust',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
+    'common/modules/commercial/commercial-features',
     'common/modules/experiments/embed'
 ], function (bean,
              qwery,
@@ -22,6 +23,7 @@ define([
              robust,
              arrowRight,
              config,
+             commercialFeatures,
              embed
 ) {
 
@@ -30,7 +32,7 @@ define([
 
         this.id = 'ContributionsEpicButtons20160907';
         this.start = '2016-09-07';
-        this.expiry = '2016-09-09';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether adding the amount buttons to the epic increases the impressions to conversions rate.';
         this.showForSensitive = false;
@@ -41,8 +43,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'The buttons improve the conversion rate by 50%';
         this.canRun = function () {
-            var pageObj = config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
+            return commercialFeatures.canAskForAContribution && worksWellWithPageTemplate && !obWidgetIsShown();
         };
 
         function obWidgetIsShown() {

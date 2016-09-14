@@ -4,7 +4,6 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import implicits.{Dates, ItemResponses}
 import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
@@ -16,7 +15,7 @@ import views.support.PreviousAndNext
 
 import scala.concurrent.Future
 
-class AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+class AllIndexController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -93,8 +92,8 @@ class AllIndexController extends Controller with ExecutionContexts with ItemResp
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = getResponse(
-      ContentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
+    val result = contentApiClient.getResponse(
+      contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
         IndexPage(
@@ -117,8 +116,8 @@ class AllIndexController extends Controller with ExecutionContexts with ItemResp
   }
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
-    val result = getResponse(
-      ContentApiClient.item(s"/$path", Edition(request))
+    val result = contentApiClient.getResponse(
+      contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .fromDate(date)
         .orderBy("oldest")
@@ -133,5 +132,3 @@ class AllIndexController extends Controller with ExecutionContexts with ItemResp
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
 }
-
-object AllIndexController extends AllIndexController

@@ -13,6 +13,12 @@
                 vAxis: {title: '@chart.labels(1)'},
             } else {
                 legend: { position: "in" },
+                @if(chart.dualY){
+                    series: {
+                        0: {targetAxisIndex: 0},
+                        1: {targetAxisIndex: 1}
+                    },
+                }
             }
             chartArea: { width: "85%" },
             titleTextStyle: {color: '#999'},

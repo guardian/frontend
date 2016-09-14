@@ -10,6 +10,7 @@ define([
     'common/utils/robust',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
+    'common/modules/commercial/commercial-features',
     'common/modules/experiments/embed',
     'common/modules/article/space-filler'
 
@@ -24,6 +25,7 @@ define([
              robust,
              arrowRight,
              config,
+             commercialFeatures,
              embed,
              spaceFiller
 ) {
@@ -33,7 +35,7 @@ define([
 
         this.id = 'ContributionsEmbed20160905';
         this.start = '2016-09-05';
-        this.expiry = '2016-09-09';
+        this.expiry = '2016-09-13';
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better inline and in-article than at the bottom of the article.';
         this.showForSensitive = false;
@@ -44,8 +46,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
-            var pageObj = config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
+            return commercialFeatures.canAskForAContribution && worksWellWithPageTemplate && !obWidgetIsShown();
         };
 
         function obWidgetIsShown() {
@@ -53,7 +55,7 @@ define([
             return $outbrain && $outbrain.length > 0;
         }
 
-        
+
         function getSpacefinderRules() {
             return {
                 bodySelector: '.js-article__body',

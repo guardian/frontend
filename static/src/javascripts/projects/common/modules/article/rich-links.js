@@ -12,8 +12,7 @@ define([
     'common/modules/article/space-filler',
     'common/modules/ui/images',
     'text!common/views/content/richLinkTag.html',
-    'lodash/collections/contains',
-    'common/modules/experiments/ab'
+    'lodash/collections/contains'
 ], function (
     fastdom,
     qwery,
@@ -28,15 +27,13 @@ define([
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains,
-    ab
+    contains
 ) {
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
-            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/),
-            isMobile = detect.isBreakpoint({max: 'mobile'}) && ab.isInVariant('DontUpgradeMobileRichLinks', 'no-upgrade');
+            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
-        if (matches && matches[1] && !isMobile) {
+        if (matches && matches[1]) {
             return fetchJson('/embed/card' + matches[1] + '.json', {
                 mode: 'cors'
             }).then(function (resp) {
