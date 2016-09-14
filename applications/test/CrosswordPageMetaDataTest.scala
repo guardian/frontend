@@ -2,12 +2,18 @@ package test
 
 import controllers.CrosswordPageController
 import metadata.MetaDataMatcher
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-@DoNotDiscover class CrosswordPageMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CrosswordPageMetaDataTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val crosswordUrl = "crosswords/cryptic/26697"
-  val crosswordPageController = new CrosswordPageController
+  val crosswordPageController = new CrosswordPageController(testContentApiClient)
 
   it should "not include the ios deep link" in {
     val result = crosswordPageController.crossword("cryptic", 26697)(TestRequest(crosswordUrl))
