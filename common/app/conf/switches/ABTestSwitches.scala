@@ -119,16 +119,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-dont-upgrade-mobile-rich-links",
-    "Test whether the loyalty of users decreases with non-enhanced rich links",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-ad-blocking-response",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
