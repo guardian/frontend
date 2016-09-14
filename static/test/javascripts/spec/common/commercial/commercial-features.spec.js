@@ -315,7 +315,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
         describe('Membership messages', function () {
             it('Displays messages by default', function (done) {
                 features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
+                features.async.canDisplayMembershipEngagementBanner.then(function (flag) {
                     expect(flag).toBe(true);
                     done();
                 });
@@ -325,37 +325,16 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 // i.e. we want to show the adblock message instead
                 detect.adblockInUse = Promise.resolve(true);
                 features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
+                features.async.canDisplayMembershipEngagementBanner.then(function (flag) {
                     expect(flag).toBe(false);
                     done();
                 });
             });
 
-            it('Does display messages on mobile', function (done) {
-                detect.getBreakpoint = function () { return 'mobile'; };
-                features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(true);
-                    done();
-                });
-            });
-
-            it('Does not display messages outside articles', function (done) {
-                config.page.contentType = 'Network Front';
-                features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(false);
-                    done();
-                });
-            });
-
-            it('Does not display messages to existing members', function (done) {
+            it('Does not ask paying members for money - because they are *already* giving us money, we do not want to hassle them', function () {
                 userFeatures.isPayingMember = function () {return true;};
                 features = new CommercialFeatures;
-                features.async.membershipMessages.then(function (flag) {
-                    expect(flag).toBe(false);
-                    done();
-                });
+                expect(features.canReasonablyAskForMoney).toBe(false);
             });
         });
     });

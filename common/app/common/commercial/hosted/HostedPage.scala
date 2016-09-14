@@ -30,6 +30,12 @@ trait HostedPage extends StandalonePage {
   val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
 }
 
+case class NextHostedPage(
+  pageUrl: String,
+  title: String,
+  imageUrl: String
+)
+
 case class HostedCampaign(
   id: String,
   name: String,
@@ -50,7 +56,11 @@ case class FontColour(brandColour: String) {
     val c = new Color(rgb)
     val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
     val brightness = hsb(2)
-    brightness > 0.5
+    if(brandColour == "#E31B22") {
+      false
+    } else {
+      brightness > 0.5
+    }
   }
 }
 

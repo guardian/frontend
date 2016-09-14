@@ -1,7 +1,6 @@
 @(page: model.Page)(implicit request: RequestHeader)
 @import common.{Edition, StringEncodings}
 @import conf.Static
-@import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
 
 var isModernBrowser =

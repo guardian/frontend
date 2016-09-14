@@ -1,11 +1,18 @@
 package controllers
 
+import contentapi.ContentApiClient
+
 // If you add to this, don't forget the one in dev-build
-class ItemController(articleController: ArticleController, faciaDraftController: FaciaDraftController) extends ItemResponseController(
+class ItemController(articleController: ArticleController,
+                     faciaDraftController: FaciaDraftController,
+                     galleryController: GalleryController,
+                     mediaController: MediaController,
+                     interactiveController: InteractiveController
+                    ) extends ItemResponseController(
   articleController,
-  GalleryController,
-  MediaController,
-  InteractiveController,
+  galleryController,
+  mediaController,
+  interactiveController,
   ImageContentController,
   faciaDraftController
 )

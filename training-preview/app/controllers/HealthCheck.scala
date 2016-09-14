@@ -5,11 +5,11 @@ import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import dispatch.{FunctionHandler, Http}
 
 import scala.concurrent.Future
-import contentapi.{ContentApiClient, Response}
+import contentapi.{ContentApiClient, HttpClient, Response}
 import conf.Configuration.contentApi.previewAuth
 import play.api.libs.ws.WSClient
 
-class TrainingHttp extends contentapi.Http with ExecutionContexts {
+class TrainingHttp extends HttpClient with ExecutionContexts {
 
   // Play 2.4.2 has problems passing the any certificate flag through play.ws.ssl.loose.acceptAnyCertificate
   // This is a workaround. Forum here (called 'Play 2.4 disable certification check'):

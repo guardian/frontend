@@ -1,14 +1,24 @@
 package test
 
+import controllers.RelatedController
+import feed.MostReadAgent
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import services.OphanApi
 
-@DoNotDiscover class RelatedControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class RelatedControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
   val articleWithoutRelated = "childrens-books-site/2016/may/17/picasso-ed-vere"
+
+  lazy val relatedController = new RelatedController(new MostReadAgent(new OphanApi(wsClient)))
 
   it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/${article}.json")
@@ -22,12 +32,12 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
   }
 
   it should "404 when article does not exist" in {
-    val result = controllers.RelatedController.render(badArticle)(TestRequest())
+    val result = relatedController.render(badArticle)(TestRequest())
     status(result) should be(404)
   }
 
   it should "404 when article does not have related content" in {
-    val result = controllers.RelatedController.render(articleWithoutRelated)(TestRequest())
+    val result = relatedController.render(articleWithoutRelated)(TestRequest())
     status(result) should be(404)
   }
 }

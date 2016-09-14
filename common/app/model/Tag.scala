@@ -134,7 +134,8 @@ object TagProperties {
       bylineImageUrl = tag.bylineImageUrl,
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
-      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
+      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle))),
+      paidContentType = tag.paidContentType
     )
   }
 }
@@ -155,7 +156,8 @@ case class TagProperties(
                           bylineImageUrl: Option[String],
                           podcast: Option[Podcast],
                           references: Seq[Reference],
-                          activeBrandings: Option[Seq[Branding]]
+                          activeBrandings: Option[Seq[Branding]],
+                          paidContentType: Option[String]
 ) {
  val footballBadgeUrl = references.find(_.`type` == "pa-football-team")
       .map(_.id.split("/").drop(1).mkString("/"))

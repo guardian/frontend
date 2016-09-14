@@ -4,7 +4,6 @@ import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -15,7 +14,7 @@ import slices.{Fixed, FixedContainers}
 
 import scala.concurrent.Future
 
-class MediaInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class MediaInSectionController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
   // These exist to work around the absence of default values in Play routing.
   def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
     renderMedia(mediaType, sectionId, Some(seriesId))
@@ -38,7 +37,7 @@ class MediaInSectionController extends Controller with Logging with Paging with 
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(!_.equals(currentShortUrl))
 
-    val promiseOrResponse = getResponse(ContentApiClient.search(edition)
+    val promiseOrResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .section(sectionId)
       .tag(tags)
       .showTags("all")
@@ -92,5 +91,3 @@ class MediaInSectionController extends Controller with Logging with Paging with 
     renderFormat(response, response, 900)
   }
 }
-
-object MediaInSectionController extends MediaInSectionController

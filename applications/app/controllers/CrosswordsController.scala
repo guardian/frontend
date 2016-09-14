@@ -17,10 +17,13 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 trait CrosswordController extends Controller with Logging with ExecutionContexts {
+
+  def contentApiClient: ContentApiClient
+
   def noResults()(implicit request: RequestHeader): Result
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
-    ContentApiClient.getResponse(ContentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
+    contentApiClient.getResponse(contentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"))
   }
 
   def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -46,7 +49,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
 
@@ -89,9 +92,7 @@ class CrosswordPageController extends CrosswordController {
   }
 }
 
-object CrosswordPageController extends CrosswordPageController
-
-class CrosswordSearchController extends CrosswordController {
+class CrosswordSearchController(val contentApiClient: ContentApiClient) extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
@@ -115,7 +116,7 @@ class CrosswordSearchController extends CrosswordController {
       empty => Future.successful(Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
 
       params => {
-        val withoutSetter = ContentApiClient.item(s"crosswords/series/${params.crosswordType}")
+        val withoutSetter = contentApiClient.item(s"crosswords/series/${params.crosswordType}")
           .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
           .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
           .pageSize(50)
@@ -124,7 +125,7 @@ class CrosswordSearchController extends CrosswordController {
           withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
         }
 
-        ContentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
+        contentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
           response.results.getOrElse(Seq.empty).toList match {
             case Nil => noResults
 
@@ -162,5 +163,3 @@ class CrosswordSearchController extends CrosswordController {
 
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
-
-object CrosswordSearchController extends CrosswordSearchController

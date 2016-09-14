@@ -53,7 +53,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -63,7 +63,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better than our previous in-article component tests.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -73,7 +73,7 @@ trait ABTestSwitches {
     "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -119,16 +119,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-dont-upgrade-mobile-rich-links",
-    "Test whether the loyalty of users decreases with non-enhanced rich links",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-ad-blocking-response",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
@@ -143,17 +133,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-no-social-count",
-    "Remove social count from articles",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
+    sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
 
@@ -163,7 +143,7 @@ trait ABTestSwitches {
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 12),
+    sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
 }

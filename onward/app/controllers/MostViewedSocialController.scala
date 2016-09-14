@@ -13,9 +13,9 @@ import slices.Fixed
 
 import scala.concurrent.Future.{successful => unit}
 
-class MostViewedSocialController extends Controller with ExecutionContexts {
+class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh) extends Controller with ExecutionContexts {
   def renderMostViewed(socialContext: String) = Action.async { implicit request =>
-    val mostPopularSocial = MostPopularSocialAutoRefresh.get
+    val mostPopularSocial = mostPopularSocialAutoRefresh.get
 
     val articles = socialContext match {
       case "twitter" => mostPopularSocial.map(_.twitter)
@@ -25,8 +25,8 @@ class MostViewedSocialController extends Controller with ExecutionContexts {
 
     articles match {
       case Some(articleIds) if articleIds.nonEmpty =>
-        ContentApiClient.getResponse(
-          ContentApiClient
+        contentApiClient.getResponse(
+          contentApiClient
             .search(Edition(request))
             .ids(articleIds.take(7).map(item => feed.urlToContentPath(item.url)).mkString(","))
         ) map { response =>
@@ -68,5 +68,3 @@ class MostViewedSocialController extends Controller with ExecutionContexts {
     }
   }
 }
-
-object MostViewedSocialController extends MostViewedSocialController

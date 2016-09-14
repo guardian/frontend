@@ -1,15 +1,27 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import controllers.MostPopularController
+import feed.{DayMostPopularAgent, GeoMostPopularAgent}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test._
 import play.api.test.Helpers._
+import services.OphanApi
 
-@DoNotDiscover class MostPopularControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MostPopularControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val tag = "technology"
 
+  lazy val ophanApi = new OphanApi(wsClient)
+  lazy val mostPopularController = new MostPopularController(testContentApiClient, new GeoMostPopularAgent(ophanApi), new DayMostPopularAgent(ophanApi))
+
   "Most Popular Controller" should "200 when content type is tag" in {
-    val result = controllers.MostPopularController.render(tag)(TestRequest())
+    val result = mostPopularController.render(tag)(TestRequest())
     status(result) should be(200)
   }
 
@@ -18,7 +30,7 @@ import play.api.test.Helpers._
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.MostPopularController.render(tag)(fakeRequest)
+    val result = mostPopularController.render(tag)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")

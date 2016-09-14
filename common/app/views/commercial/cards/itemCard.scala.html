@@ -11,7 +11,7 @@
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
   optImgRatio: Option[String] = None,
-  useCardBranding: Boolean)
+  useCardBranding: Boolean)(implicit request: RequestHeader)
 
 <div class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, optClassNames, useCardBranding)">
     <a href="@item.targetUrl"

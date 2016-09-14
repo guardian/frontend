@@ -63,7 +63,11 @@ trait AppComponents
   with CommercialServices
   with DiscussionServices
   with FapiServices
-  with AdminJobsServices {
+  with AdminJobsServices
+  with OnwardServices {
+
+  //Overriding conflicting members
+  override lazy val ophanApi = wire[OphanApi]
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
