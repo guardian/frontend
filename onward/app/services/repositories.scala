@@ -9,6 +9,9 @@ import conf.switches.Switches.RelatedContentSwitch
 import ContentApiClient.getResponse
 
 trait Related extends ConciergeRepository {
+
+  def mostReadAgent: MostReadAgent
+
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
     if (RelatedContentSwitch.isSwitchedOff) {
@@ -52,7 +55,7 @@ trait Related extends ConciergeRepository {
         RelatedContentItem(item)
       }
       RelatedContent(items.sortBy(content =>
-        - MostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10))
+        - mostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10))
     }
 
     trails

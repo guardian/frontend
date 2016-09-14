@@ -2,13 +2,19 @@ package test
 
 import controllers.GalleryController
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-@DoNotDiscover class GalleryControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class GalleryControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
 
-  val galleryController = new GalleryController
+  val galleryController = new GalleryController(testContentApiClient)
 
   "Gallery Controller" should "200 when content type is gallery" in {
     val result = galleryController.render(galleryUrl)(TestRequest(s"/$galleryUrl"))

@@ -9,7 +9,8 @@ import scala.concurrent.{Future, ExecutionContext}
 class MostReadLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync
+  akkaAsync: AkkaAsync,
+  mostReadAgent: MostReadAgent
 )(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
@@ -21,11 +22,11 @@ class MostReadLifecycle(
 
     // update every 30 min
     jobs.schedule("MostReadAgentRefreshJob",  "0 0/30 * * * ?") {
-      MostReadAgent.update()
+      mostReadAgent.update()
     }
 
     akkaAsync.after1s {
-      MostReadAgent.update()
+      mostReadAgent.update()
     }
   }
 }

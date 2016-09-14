@@ -2,10 +2,9 @@ package feed
 
 import common._
 import play.api.libs.json.{JsArray, JsValue}
-import java.net.URL
 import services.OphanApi
 
-object MostReadAgent extends Logging with ExecutionContexts {
+class MostReadAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Int]](Map.empty)
 
@@ -13,7 +12,7 @@ object MostReadAgent extends Logging with ExecutionContexts {
     log.info("Refreshing most read.")
 
     // limiting to sport/football section for now as this is only used by popular-in-tag component
-    val ophanQuery = OphanApi.getMostReadInSection("sport,football", 2, 1000)
+    val ophanQuery = ophanApi.getMostReadInSection("sport,football", 2, 1000)
 
     ophanQuery.map{ ophanResults =>
 

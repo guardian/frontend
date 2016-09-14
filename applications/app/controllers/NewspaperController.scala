@@ -1,13 +1,16 @@
 package controllers
 
 import common.{ExecutionContexts, Logging}
+import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
-class NewspaperController extends Controller with Logging with ExecutionContexts {
+class NewspaperController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
+
+  private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
   def latestGuardianNewspaper() = Action.async { implicit request =>
 
@@ -17,7 +20,7 @@ class NewspaperController extends Controller with Logging with ExecutionContexts
       "Main section | News | The Guardian",
       "GFE: Newspaper books Main Section"
     ))
-    val todaysPaper = NewspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
@@ -31,7 +34,7 @@ class NewspaperController extends Controller with Logging with ExecutionContexts
       "GFE: Observer Newspaper books Main Section"
     ))
 
-    val todaysPaper = NewspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
@@ -54,7 +57,7 @@ class NewspaperController extends Controller with Logging with ExecutionContexts
       ))
     }
 
-    val paper = NewspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))
+    val paper = newspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))
 
     for( tp <- paper) yield {
       if(noContentForListExists(tp.bookSections)) Found(s"/$path")
@@ -63,7 +66,7 @@ class NewspaperController extends Controller with Logging with ExecutionContexts
   }
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
-    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == NewspaperQuery.FRONT_PAGE_DISPLAY_NAME)
+    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == newspaperQuery.FRONT_PAGE_DISPLAY_NAME)
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
@@ -71,7 +74,5 @@ class NewspaperController extends Controller with Logging with ExecutionContexts
     Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }
-
-object NewspaperController extends NewspaperController
 
 case class TodayNewspaper(page: SimplePage, bookSections: Seq[FaciaContainer])

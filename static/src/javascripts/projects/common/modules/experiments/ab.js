@@ -13,15 +13,12 @@ define([
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-engagement-banner',
-    'common/modules/experiments/tests/commercial-feedback',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/platform-dont-upgrade-mobile-rich-links',
     'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/no-social-count',
     'common/modules/experiments/tests/contributions-epic-buttons'
 ], function (
     reportError,
@@ -38,15 +35,12 @@ define([
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipEngagementBannerTests,
-    AdFeedback,
     RecommendedForYou,
-    DontUpgradeMobileRichLinks,
     ContributionsEmbed,
     ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    NoSocialCount,
     ContributionsEpicButtons
 ) {
 
@@ -57,14 +51,11 @@ define([
         new ParticipationDiscussionOrderingLiveBlog(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
-        new AdFeedback(),
         new RecommendedForYou(),
-        new DontUpgradeMobileRichLinks(),
         new ContributionsEmbed(),
         new ContributionsEpic(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new NoSocialCount(),
         new ContributionsEpicButtons()
     ].concat(MembershipEngagementBannerTests);
 

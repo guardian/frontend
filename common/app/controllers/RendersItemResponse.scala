@@ -20,13 +20,13 @@ trait RendersItemResponse {
 
 }
 
-class ItemResponseController(val controllers: RendersItemResponse*) extends Controller with ExecutionContexts {
+class ItemResponseController(contentApiClient: ContentApiClient, val controllers: RendersItemResponse*) extends Controller with ExecutionContexts {
 
   def render(path: String) = Action.async{ implicit request =>
-    val itemRequest = ContentApiClient.item(path, Edition(request))
+    val itemRequest = contentApiClient.item(path, Edition(request))
 
     controllers.find(_.canRender(path)).map(_.renderItem(path)).getOrElse {
-      ContentApiClient.getResponse(itemRequest).flatMap { response =>
+      contentApiClient.getResponse(itemRequest).flatMap { response =>
         controllers.find(_.canRender(response))
           .map(_.renderItem(path))
           .getOrElse(successful(NoCache(NotFound)))

@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model.Cached.WithoutRevalidationResult
@@ -27,7 +26,7 @@ case class Series(id: String, tag: Tag, trails: RelatedContent) {
  }
 }
 
-class SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class SeriesController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)
@@ -49,7 +48,7 @@ class SeriesController extends Controller with Logging with Paging with Executio
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
 
-    val seriesResponse: Future[Option[Series]] = getResponse(ContentApiClient.item(seriesId, edition)
+    val seriesResponse: Future[Option[Series]] = contentApiClient.getResponse(contentApiClient.item(seriesId, edition)
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
@@ -111,5 +110,3 @@ class SeriesController extends Controller with Logging with Paging with Executio
     renderFormat(response, response, 900)
   }
 }
-
-object SeriesController extends SeriesController

@@ -1,7 +1,6 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import conf._
 import common._
 import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
@@ -9,8 +8,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 
-
-class EmbedController extends Controller with Logging with ExecutionContexts {
+class EmbedController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
@@ -24,7 +22,7 @@ class EmbedController extends Controller with Logging with ExecutionContexts {
 
     log.info(s"Fetching video: $path for edition $edition")
 
-    val response: Future[ItemResponse] = ContentApiClient.getResponse(ContentApiClient.item(path, edition)
+    val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition)
       .showFields("all")
     )
 
@@ -50,5 +48,3 @@ class EmbedController extends Controller with Logging with ExecutionContexts {
     Cached(600)(RevalidatableResult.Ok(views.html.videoEmbed(model)))
   }
 }
-
-object EmbedController extends EmbedController
