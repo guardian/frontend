@@ -5,7 +5,9 @@
 ## Does this affect other platforms - Amp, Apps, etc?
 
 <!--
-To test and validate AMP locally add the amp query string along with the development hash: http://localhost:3000/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper?amp=1#development=1
+Run the AMP test suite with `make validate-amp`
+
+You should also validate a specific page that your change affects by adding the amp query string along with the development hash: http://localhost:3000/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper?amp=1#development=1
 
 The AMP validation results will appear in your console.
 -->
