@@ -121,7 +121,7 @@ object HostedArticlePage2 extends Logging {
         // todo: missing data
         emailSubjectText = None,
         // todo: related content
-        nextPagesList = HostedPages.nextPages(campaignName = campaignId, pageName = "")
+        nextPagesList = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1))
       )
     }
 
