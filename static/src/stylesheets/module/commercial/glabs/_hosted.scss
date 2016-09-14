@@ -229,6 +229,12 @@ $hosted-video-height: 540px;
     color: rgba(255, 255, 255, .5);
 }
 
+.hosted-page {
+    .survey-container {
+        top: 40%;
+    }
+}
+
 .hosted-video-page {
     .hosted__container.host {
         position: relative;
@@ -711,6 +717,11 @@ $hosted-video-height: 540px;
     &:hover {
         background-color: rgba(#333333, .2);
     }
+
+    &:active,
+    &:visited {
+        text-decoration: none;
+    }
 }
 
 .hosted__cta-link,
@@ -751,7 +762,7 @@ $hosted-video-height: 540px;
 
 .hosted__standfirst {
     width: auto;
-    padding: $gs-baseline $gs-gutter 0;
+    padding: $gs-baseline / 2 $gs-gutter 0;
 
     @include mq(desktop) {
         margin-bottom: $gs-gutter * 1.5;
