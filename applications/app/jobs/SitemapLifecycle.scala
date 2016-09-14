@@ -29,12 +29,13 @@ class SiteMapJob(contentApiClient: ContentApiClient) extends ExecutionContexts w
     video: xml.NodeSeq)
 
   private val newsSiteMap = new NewsSiteMap(contentApiClient)
+  private val videoSiteMap = new VideoSiteMap(contentApiClient)
   private val siteMapContent = AkkaAgent[Option[SiteMapContent]](None)
 
   def update(): Unit = {
     for {
       newsSiteMap <- newsSiteMap.getLatestContent
-      videoSiteMap <- VideoSiteMap.getLatestContent
+      videoSiteMap <- videoSiteMap.getLatestContent
     } {
       siteMapContent.send(Some(SiteMapContent(newsSiteMap, videoSiteMap)))
     }
