@@ -7,7 +7,7 @@ import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
-import contentapi.{CapiHttpClient, ContentApiClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
@@ -27,7 +27,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait ArticleServices {
   def wsClient: WSClient
-  private lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 }
 

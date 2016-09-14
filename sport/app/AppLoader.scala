@@ -5,7 +5,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballClient, FootballLifecycle}
-import contentapi.{CapiHttpClient, ContentApiClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import cricketPa.PaFeed
@@ -33,7 +33,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
-  private lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val footballClient = wire[FootballClient]
   lazy val competitionDefinitions = CompetitionsProvider.allCompetitions

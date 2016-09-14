@@ -5,7 +5,7 @@ import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import feed.OnwardJourneyLifecycle
 import rugby.conf.RugbyLifecycle
@@ -15,7 +15,7 @@ trait StandaloneLifecycleComponents extends SportServices with CommercialService
   self: FrontendComponents =>
 
   //Override conflicting members
-  private lazy val capiHttpClient = wire[CapiHttpClient]
+  override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(

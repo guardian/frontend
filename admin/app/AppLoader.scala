@@ -7,7 +7,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.{DfpDataCacheJob, DfpDataCacheLifecycle}
-import contentapi.{CapiHttpClient, ContentApiClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
 import football.feed.MatchDayRecorder
@@ -30,7 +30,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
-  private lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val emailService = wire[EmailService]

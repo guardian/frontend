@@ -5,7 +5,7 @@ import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics
 import common.Logback.LogstashLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient, SectionsLookUpLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
@@ -27,7 +27,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait ApplicationsServices {
   def wsClient: WSClient
-  private lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val siteMapJob = wire[SiteMapJob]
 }
