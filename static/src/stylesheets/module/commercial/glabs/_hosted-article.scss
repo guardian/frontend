@@ -96,6 +96,18 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         h1 {
             line-height: 28px;
         }
+        figcaption {
+            font-size: 12px;
+            line-height: 16px;
+            color: $neutral-2;
+
+            &:before {
+                @include icon(image);
+                content: '';
+                vertical-align: top;
+                margin-top: 1px;
+            }
+        }
     }
     .hosted__standfirst {
         padding: 0;
