@@ -8,6 +8,7 @@ define([
 
     var performanceLog = {
             viewId: 'unknown',
+            tags: [],
             modules: [],
             adverts: [],
             baselines: []
@@ -173,6 +174,10 @@ define([
         }
     }
 
+    function addTag(tag) {
+        performanceLog.tags.push(tag);
+    }
+
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
@@ -180,6 +185,6 @@ define([
         addBaseline : addBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
-        reportTrackingData: reportTrackingData
+        addTag: addTag
     };
 });

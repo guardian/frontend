@@ -43,6 +43,8 @@ define([
             if ('tests' in config && config.tests.commercialHbSonobi) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
+
+                ophanTracking.addTag('sonobi');
             } else {
                 if (!window.googletag) {
                     window.googletag = {cmd: []};
@@ -53,6 +55,9 @@ define([
 
                 if (dfpEnv.prebidEnabled) {
                     dfpEnv.prebidService = new PrebidService();
+                    ophanTracking.addTag('prebid');
+                } else {
+                    ophanTracking.addTag('waterfall');
                 }
             }
 
