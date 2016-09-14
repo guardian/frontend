@@ -764,11 +764,8 @@ $hosted-video-height: 540px;
 
 .hosted__standfirst {
     width: auto;
-    padding: $gs-baseline / 2 $gs-gutter 0;
-
-    @include mq(desktop) {
-        margin-bottom: $gs-gutter * 1.5;
-    }
+    padding: $gs-baseline $gs-gutter 0;
+    margin: 30px 0 0;
 }
 
 .hosted__social.host__header {
