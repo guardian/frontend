@@ -10,6 +10,7 @@ define([
     'common/utils/robust',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
+    'common/modules/commercial/commercial-features',
     'common/modules/experiments/embed',
     'common/modules/article/space-filler'
 
@@ -24,6 +25,7 @@ define([
              robust,
              arrowRight,
              config,
+             commercialFeatures,
              embed,
              spaceFiller
 ) {
@@ -44,8 +46,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
-            var pageObj = config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
+            return commercialFeatures.canAskForAContribution && worksWellWithPageTemplate && !obWidgetIsShown();
         };
 
         function obWidgetIsShown() {
