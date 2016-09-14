@@ -149,10 +149,18 @@ define([
         }));
     }
 
-    function addBaseline(baselineName) {
+    function addStartTimeBaseline(baselineName) {
         performanceLog.baselines.push({
             name: baselineName,
-            time: userTiming.getCurrentTime()
+            startTime: userTiming.getCurrentTime()
+        });
+    }
+
+    function addEndTimeBaseline(baselineName) {
+        performanceLog.baselines.map(function(baseline) {
+            if (baseline.name === baselineName) {
+                baseline.endTime = userTiming.getCurrentTime()
+            }
         });
     }
 
@@ -177,7 +185,8 @@ define([
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
         updateAdvertMetric : updateAdvertMetric,
-        addBaseline : addBaseline,
+        addStartTimeBaseline : addStartTimeBaseline,
+        addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
         reportTrackingData: reportTrackingData
