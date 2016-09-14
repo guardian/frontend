@@ -10,7 +10,10 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 
-class MostPopularController(contentApiClient: ContentApiClient, geoMostPopularAgent: GeoMostPopularAgent, dayMostPopularAgent: DayMostPopularAgent) extends Controller with Logging with ExecutionContexts {
+class MostPopularController(contentApiClient: ContentApiClient,
+                            geoMostPopularAgent: GeoMostPopularAgent,
+                            dayMostPopularAgent: DayMostPopularAgent,
+                            mostPopularAgent: MostPopularAgent) extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
@@ -22,7 +25,7 @@ class MostPopularController(contentApiClient: ContentApiClient, geoMostPopularAg
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
-      var globalPopularContent = MostPopularAgent.mostPopular(edition)
+      var globalPopularContent = mostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
         Some(MostPopular("across the guardian", "", globalPopularContent.map(_.faciaContent)))
       else
@@ -84,7 +87,7 @@ class MostPopularController(contentApiClient: ContentApiClient, geoMostPopularAg
 
   def renderPopularMicroformat2 = Action { implicit request =>
     val edition = Edition(request)
-    val mostPopular = MostPopularAgent.mostPopular(edition) take 5
+    val mostPopular = mostPopularAgent.mostPopular(edition) take 5
 
     Cached(900) {
       JsonComponent(

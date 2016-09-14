@@ -1,8 +1,8 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import conf.{CachedHealthCheckLifeCycle, StandaloneFilters}
-import contentapi.ContentApiClient
-import controllers.{TrainingHttp, HealthCheck, StandaloneControllerComponents}
+import contentapi.{ContentApiClient, HttpClient}
+import controllers.{HealthCheck, StandaloneControllerComponents, TrainingHttp}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -25,9 +25,10 @@ trait AppComponents
   with StandaloneControllerComponents
   with Controllers
   with StandaloneLifecycleComponents
-  with AdminJobsServices {
+  with AdminJobsServices
+  with ApplicationsServices {
 
-  lazy val trainingCapiHttpClient = wire[TrainingHttp]
+  override lazy val capiHttpClient: HttpClient = wire[TrainingHttp]
   override lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]

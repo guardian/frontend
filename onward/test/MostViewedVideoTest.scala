@@ -14,7 +14,10 @@ import services.OphanApi
   with WithTestWsClient
   with WithTestContentApiClient {
 
-  lazy val mostViewedVideoController = new MostViewedVideoController(testContentApiClient, new MostViewedVideoAgent(new OphanApi(wsClient)))
+  lazy val mostViewedVideoController = new MostViewedVideoController(
+    testContentApiClient,
+    new MostViewedVideoAgent(testContentApiClient, new OphanApi(wsClient))
+  )
 
   "Most Viewed Video Controller" should "200 when content type is tag" in {
     val result = mostViewedVideoController.renderMostViewed()(TestRequest())
