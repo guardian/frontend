@@ -38,11 +38,6 @@ define([
         return messageStates && messageStates.indexOf(messageName) > -1;
     }
 
-    function hasSeenMessage(messageName) {
-        var messageStates = userPrefs.get('messages');
-        return messageStates && messageStates.indexOf(messageName) > -1;
-    }
-
     function getLinkHref() {
         var referrerTypes = [
                 {id: 'https://surveys.theguardian.com/R.aspx?a=830&as=II4Hb66oK3', match: 'facebook.com'},
