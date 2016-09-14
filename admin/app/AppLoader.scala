@@ -30,7 +30,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
-  lazy val capiHttpClient = wire[CapiHttpClient]
+  private lazy val capiHttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val emailService = wire[EmailService]

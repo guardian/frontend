@@ -28,7 +28,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
-  lazy val capiHttpClient = wire[CapiHttpClient]
+  private lazy val capiHttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val stocksData = wire[StocksData]

@@ -33,7 +33,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
-  lazy val capiHttpClient = wire[CapiHttpClient]
+  private lazy val capiHttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val footballClient = wire[FootballClient]
   lazy val competitionDefinitions = CompetitionsProvider.allCompetitions

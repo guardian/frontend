@@ -25,9 +25,10 @@ trait AppComponents
   with StandaloneControllerComponents
   with Controllers
   with StandaloneLifecycleComponents
-  with AdminJobsServices {
+  with AdminJobsServices
+  with ApplicationsServices {
 
-  lazy val trainingCapiHttpClient = wire[TrainingHttp]
+  lazy val trainingHttpClient = wire[TrainingHttp]
   override lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]

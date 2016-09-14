@@ -15,7 +15,7 @@ trait StandaloneLifecycleComponents extends SportServices with CommercialService
   self: FrontendComponents =>
 
   //Override conflicting members
-  override lazy val capiHttpClient = wire[CapiHttpClient]
+  private lazy val capiHttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(
