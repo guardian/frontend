@@ -54,10 +54,12 @@ object EmailSubscriptions {
       "Weekend reading",
       "news",
       "News",
-      "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
+      "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
       "Every Saturday",
       "3744",
-      subscribedTo = subscribedListIds.exists{ x => x == "3744" } || subscribedListIds.exists{ x => x == "3744" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
+      exampleUrl = Some("http://www.theguardian.com/membership/series/weekend-reading/latest/email")
+
     ),
     EmailSubscription(
       "Media briefing",
@@ -68,6 +70,16 @@ object EmailSubscriptions {
       "217",
       7,
       subscribedTo = subscribedListIds.exists{ x => x == "217" }
+    ),
+    EmailSubscription(
+      "Brexit briefing",
+      "news",
+      "News",
+      "Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.",
+      "Tuesday mornings",
+      "3698",
+      subscribedTo = subscribedListIds.exists{ x => x == "3698" },
+      exampleUrl = Some("http://www.theguardian.com/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
       "Green light",
@@ -281,7 +293,7 @@ object EmailSubscriptions {
 
   def commentEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      "The best of Guardian Opinion",
+      "Best of Guardian Opinion - UK",
       "comment",
       "Opinion's daily email newsletter",
       "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
@@ -291,7 +303,16 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2313" }
     ),
     EmailSubscription(
-      "Best of Guardian Opinion - Australia",
+      "Best of Guardian Opinion - US",
+      "comment",
+      "Opinion's daily email newsletter",
+      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+      "Weekday afternoons",
+      "3228",
+      subscribedTo = subscribedListIds.exists{ x => x == "3228" }
+    ),
+    EmailSubscription(
+      "Best of Guardian Opinion - AUS",
       "comment",
       "An evening selection of the best reads from Guardian Opinion in Australia",
       "An evening selection of the best reads from Guardian Opinion in Australia",
