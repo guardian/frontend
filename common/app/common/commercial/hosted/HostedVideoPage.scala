@@ -53,6 +53,9 @@ object HostedVideoPage extends Logging {
       val owner = sponsorship.sponsorName
       val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
 
+      val toneId = toneTag.id
+      val toneName = toneTag.webTitle
+
       val keywordId = s"${campaignId}/${campaignId}"
       val keywordName = campaignId
 
