@@ -54,7 +54,8 @@ object HostedVideoPage extends Logging {
       val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
 
       val toneId = toneTag.id
-      val toneName = toneTag.webTitle
+      //val toneName = toneTag.webTitle //TODO the toneTag.webTitle value should be Hosted not Advertisement Feature
+      val toneName = "Hosted"
 
       val keywordId = s"${campaignId}/${campaignId}"
       val keywordName = campaignId
