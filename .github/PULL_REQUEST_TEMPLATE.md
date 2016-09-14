@@ -6,6 +6,8 @@
 
 <!--
 To test and validate AMP locally add the amp query string along with the development hash: http://localhost:3000/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper?amp=1#development=1
+
+The AMP validation results will appear in your console.
 -->
 
 ## Screenshots
