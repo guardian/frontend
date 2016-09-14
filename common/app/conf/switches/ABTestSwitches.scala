@@ -99,16 +99,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-feedback",
-    "Solicit feedback for ad impressions",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-recommended-for-you",
     "Test demand for a personalised container on fronts",
     owners = Seq(Owner.withGithub("joelochlann")),
