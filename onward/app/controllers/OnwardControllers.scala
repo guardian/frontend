@@ -3,6 +3,7 @@ package controllers
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
+import contentapi.ContentApiClient
 import feed._
 import play.api.libs.ws.WSClient
 import weather.WeatherApi
@@ -10,6 +11,7 @@ import weather.WeatherApi
 trait OnwardControllers {
 
   def wsClient: WSClient
+  def contentApiClient: ContentApiClient
   def stocksData: StocksData
   def weatherApi: WeatherApi
   def geoMostPopularAgent: GeoMostPopularAgent

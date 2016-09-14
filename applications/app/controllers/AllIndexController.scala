@@ -4,7 +4,6 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import implicits.{Dates, ItemResponses}
 import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
@@ -93,7 +92,7 @@ class AllIndexController(contentApiClient: ContentApiClient) extends Controller 
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = getResponse(
+    val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
@@ -117,7 +116,7 @@ class AllIndexController(contentApiClient: ContentApiClient) extends Controller 
   }
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
-    val result = getResponse(
+    val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .fromDate(date)
