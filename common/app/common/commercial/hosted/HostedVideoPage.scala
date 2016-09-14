@@ -50,7 +50,8 @@ object HostedVideoPage extends Logging {
       val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
-      val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
+      // using capi trail text instead of standfirst because we don't want the markup
+      val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
       val metadata = MetaData.make(
         id = pageId,
