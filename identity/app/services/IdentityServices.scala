@@ -2,11 +2,17 @@ package services
 
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
+import contentapi.{CapiHttpClient, ContentApiClient}
 import idapiclient.IdApiComponents
 import model.SaveForLaterDataBuilder
-import play.api.BuiltInComponents
+import play.api.libs.ws.WSClient
 
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
+
+  def wsClient: WSClient
+  private lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+
   lazy val returnUrlVerifier = wire[ReturnUrlVerifier]
   lazy val idRequestParser = wire[IdRequestParser]
   lazy val identityUrlBuilder = wire[IdentityUrlBuilder]
