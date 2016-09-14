@@ -51,8 +51,12 @@
                     <div class="hosted-gallery__captions">
                         @for(i <- page.images.indices) {
                             <div class="hosted-gallery__caption js-hosted-gallery-caption @{if (i == 0) "current-caption" else ""}">
-                                @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
-                                <span>@page.images(i).title</span>
+                                <div class="hosted-gallery__image-title">
+                                    <span>
+                                        @fragments.inlineSvg("camera", "icon", List("inline-camera inline-icon "))
+                                        @page.images(i).title
+                                    </span>
+                                </div>
                                 <div class="hosted-gallery__caption-text">
                                     @page.images(i).caption
                                     @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
