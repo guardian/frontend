@@ -10,7 +10,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 
-class MostPopularController(geoMostPopularAgent: GeoMostPopularAgent, dayMostPopularAgent: DayMostPopularAgent) extends Controller with Logging with ExecutionContexts {
+class MostPopularController(contentApiClient: ContentApiClient, geoMostPopularAgent: GeoMostPopularAgent, dayMostPopularAgent: DayMostPopularAgent) extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
@@ -101,7 +101,7 @@ class MostPopularController(geoMostPopularAgent: GeoMostPopularAgent, dayMostPop
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApiClient.getResponse(ContentApiClient.item(path, edition)
+    contentApiClient.getResponse(contentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)
     ).map{response =>

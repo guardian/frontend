@@ -12,12 +12,13 @@ import services.OphanApi
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithTestWsClient {
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val tag = "technology"
 
   lazy val ophanApi = new OphanApi(wsClient)
-  lazy val mostPopularController = new MostPopularController(new GeoMostPopularAgent(ophanApi), new DayMostPopularAgent(ophanApi))
+  lazy val mostPopularController = new MostPopularController(testContentApiClient, new GeoMostPopularAgent(ophanApi), new DayMostPopularAgent(ophanApi))
 
   "Most Popular Controller" should "200 when content type is tag" in {
     val result = mostPopularController.render(tag)(TestRequest())
