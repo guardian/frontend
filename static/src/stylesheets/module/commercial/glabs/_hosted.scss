@@ -229,9 +229,11 @@ $hosted-video-height: 540px;
     color: rgba(255, 255, 255, .5);
 }
 
-.hosted-page {
+.hosted-page ~ .survey-overlay-simple {
     .survey-container {
-        top: 40%;
+        @include mq(tablet) {
+            top: 40%;
+        }
     }
 }
 
