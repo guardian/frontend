@@ -1,7 +1,7 @@
 package common.commercial
 
 import common.Edition
-import model.ContentType
+import model.{ContentType, Trail}
 import org.joda.time.DateTime
 
 object BrandHunter {
@@ -26,5 +26,12 @@ object BrandHunter {
     }.headOption
 
     brandingBySection orElse brandingByTags
+  }
+
+  def findTrailBranding(trail: Trail, edition: Edition): Option[Branding] = {
+    val publicationDate = Some(trail.webPublicationDate)
+    trail.tags.tags.flatMap { tag =>
+      findBranding(tag.properties.activeBrandings, edition, publicationDate)
+    }.headOption
   }
 }

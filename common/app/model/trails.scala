@@ -1,12 +1,15 @@
 package model
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import common.Edition.defaultEdition
+import common.commercial.{BrandHunter, PaidContent}
+import conf.switches.Switches.staticBadgesSwitch
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.libs.json.{Json, JsBoolean, JsString, JsValue}
-import views.support.{Naked, ImgSrc}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import views.support.{ImgSrc, Naked}
 
 /**
  * additional information needed to display something on a facia page from CAPI
@@ -90,7 +93,13 @@ final case class Trail (
   lazy val showByline: Boolean = tags.isComment
 
   lazy val shouldHidePublicationDate: Boolean = {
-    commercial.isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
+    lazy val isPaidContentInDfp = staticBadgesSwitch.isSwitchedOff && commercial.isAdvertisementFeature
+    lazy val isPaidContentInCapi =
+      staticBadgesSwitch.isSwitchedOn && BrandHunter.findTrailBranding(this, defaultEdition).exists {
+        _.sponsorshipType == PaidContent
+      }
+
+    (isPaidContentInDfp || isPaidContentInCapi) && webPublicationDate.isOlderThan(2.weeks)
   }
 
   def faciaUrl: Option[String] = this match {
