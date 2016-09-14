@@ -63,7 +63,8 @@ trait AppComponents
   with CommercialServices
   with DiscussionServices
   with AdminJobsServices
-  with OnwardServices {
+  with OnwardServices
+  with FapiServices {
 
   //Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]
