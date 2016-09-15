@@ -44,7 +44,15 @@ function runValidator(validator, devChannel) {
 }
 
 function onError(error) {
-    console.error(error.message);
+
+    try {
+        require('megalog').error(`Are you running the article or dev-build app? \n \n ${error.message}`, {
+            heading: 'A 200 was not returned'
+        });
+    } catch(e) {
+        console.log(error.message)
+    }
+
     validatorJs.cleanUp();
     process.exit(1);
 }
