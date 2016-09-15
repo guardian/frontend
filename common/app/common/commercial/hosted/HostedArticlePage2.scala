@@ -19,9 +19,8 @@ case class HostedArticlePage2(
   cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
+  socialShareText: Option[String],
+  shortSocialShareText: Option[String],
   nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List()
 )
@@ -114,12 +113,8 @@ object HostedArticlePage2 extends Logging {
         ),
         mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
         mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
-        // todo: missing data
-        facebookShareText = None,
-        // todo: missing data
-        twitterShareText = None,
-        // todo: missing data
-        emailSubjectText = None,
+        socialShareText = content.fields.flatMap(_.socialShareText),
+        shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
         nextPagesList = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1))
       )

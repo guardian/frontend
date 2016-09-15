@@ -169,7 +169,7 @@ object ChesterZooHostedPages {
     cta = cta,
     nextPagesList = List(makingWildlifeFriendlyHabitatsPage, savingOragutansFromExtinctionPage),
     standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some of the world’s most endangered wildlife from extinction",
-    twitterShareText = Some("Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife")
+    shortSocialShareText = Some("Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife")
   )
 
   private val whatWeFightForPage: NextHostedPage = NextHostedPage(
