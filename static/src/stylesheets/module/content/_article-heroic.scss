@@ -31,29 +31,29 @@ $labour-liverpool-header-element-opacity: .85;
 }
 
 .content--labour-liverpool .content__article-body {
-  padding-top: 12px;
+    padding-top: 12px;
 }
 
 .content--labour-liverpool.heroic--video .content__article-body {
-  padding: 0px;
-  @include mq($from: tablet){
-      padding-top: 40px;
-  }
+    padding: 0px;
+    @include mq($from: tablet) {
+        padding-top: 40px;
+    }
 }
 
-.content--labour-liverpool-article{
-    &.heroic--video{
+.content--labour-liverpool-article {
+    &.heroic--video {
         min-height: 0rem;
 
         @include mq($from: mobileLandscape) {
-          min-height: 27rem;
+            min-height: 27rem;
         }
 
-        @include mq($from: tablet){
+        @include mq($from: tablet) {
             min-height: 23.78rem;
         }
 
-        @include mq($from:desktop){
+        @include mq($from: desktop) {
             height: 32.2rem;
         }
     }
@@ -61,28 +61,28 @@ $labour-liverpool-header-element-opacity: .85;
 
 .heroic--video {
     .labour-liverpool-headline {
-        top:220px;
+        top: 220px;
 
-        @include mq($from: mobileLandscape){
-          top:340px
+        @include mq($from: mobileLandscape) {
+            top: 340px;
         };
 
         @include mq($from: tablet) {
-          top:300px;
+            top: 300px;
         }
 
-        @include mq($from: desktop){
-            top:450px;
+        @include mq($from: desktop) {
+            top: 450px;
         }
   }
 
-  .vjs-control-bar{
-    visibility: hidden;
+    .vjs-control-bar {
+        visibility: hidden;
 
-      &.playing{
-        visibility: visible;
-      }
-  }
+        &.playing {
+            visibility: visible;
+        }
+    }
 }
 
 .labour-liverpool-cutout {
@@ -121,8 +121,8 @@ $labour-liverpool-header-element-opacity: .85;
         }
     }
 
-    &.playing{
-      opacity: 0;
+    &.playing {
+        opacity: 0;
     }
 }
 
@@ -395,30 +395,30 @@ $labour-liverpool-header-element-opacity: .85;
 }
 
 .heroic-video {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 60px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
 
-  @include mq($from: tablet) {
-    width: 740px;
-    margin-top: 0px;
-  }
+    @include mq($from: tablet) {
+        width: 740px;
+        margin-top: 0px;
+    }
 
-  @include mq($from: desktop){
-    width: 980px;
-  }
+    @include mq($from: desktop) {
+        width: 980px;
+    }
 }
 
-.l-side-margins{
-  &.heroic--video{
-    &::before{
-      margin-top: -560px;
-      height: 128%;
+.l-side-margins {
+    &.heroic--video {
+        &::before {
+            margin-top: -560px;
+            height: 128%;
+        }
+        &::after {
+            margin-top: -560px;
+            height: 128%;
+        }
     }
-    &::after{
-      margin-top: -560px;
-      height: 128%;
-    }
-  }
 }
