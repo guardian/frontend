@@ -383,6 +383,7 @@ define([
         if($('.heroic--video')){
           initHeroic();
         }
+        return player;
     }
 
     function initEndSlate(player, endSlatePath) {
