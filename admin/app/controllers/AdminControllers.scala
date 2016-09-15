@@ -5,15 +5,19 @@ import common.AkkaAsync
 import controllers.admin._
 import controllers.admin.commercial.{DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
 import controllers.cache.{ImageDecacheController, PageDecacheController}
+import dfp.DfpDataCacheJob
 import jobs.VideoEncodingsJob
 import play.api.libs.ws.WSClient
 import play.api.Mode
+import services.OphanApi
 
 trait AdminControllers {
   def akkaAsync: AkkaAsync
   def wsClient: WSClient
   def videoEncodingsJob: VideoEncodingsJob
   def mode: Mode.Mode
+  def ophanApi: OphanApi
+  def dfpDataCacheJob: DfpDataCacheJob
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]

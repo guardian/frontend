@@ -2,9 +2,10 @@ package conf
 
 import app.LifecycleComponent
 import common._
+import conf.switches.Switches
 import feed.CompetitionsService
 import model.{LiveBlogAgent, TeamMap}
-import pa.{Http, PaClient, PaClientErrorsException}
+import pa.{PaClientConfig, Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
 
@@ -14,7 +15,8 @@ class FootballLifecycle(
   appLifeCycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
-  competitionsService: CompetitionsService)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  competitionsService: CompetitionsService,
+  liveBlogAgent: LiveBlogAgent)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     descheduleJobs()
@@ -41,7 +43,7 @@ class FootballLifecycle(
     }
 
     jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
-      LiveBlogAgent.refresh()
+      liveBlogAgent.refresh()
     }
 
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
@@ -67,7 +69,7 @@ class FootballLifecycle(
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
-      LiveBlogAgent.refresh()
+      liveBlogAgent.refresh()
       TeamMap.refresh()
     }
   }
@@ -75,9 +77,21 @@ class FootballLifecycle(
 
 class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
 
+
+    // TODO - once we have proved this works with the switch, we can simply remove the switch and
+    // uncomment this line to make it permanent
+    //override lazy val base: String = "http://football-api.gu-web.net/v1.5"
+
+    private val cachedBase: String = "http://football-api.gu-web.net/v1.5"
+
     override def GET(urlString: String): Future[pa.Response] = {
 
-        val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
+        val url = if (Switches.CachedFootballStats.isSwitchedOn)
+          urlString.replace(PaClientConfig.baseUrl, cachedBase)
+        else
+          urlString
+
+        val promiseOfResponse = wsClient.url(url).withRequestTimeout(2000).get()
 
         promiseOfResponse.map{ r =>
 

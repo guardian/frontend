@@ -7,7 +7,7 @@
 @if(staticBadgesSwitch.isSwitchedOn) {
 
     @for(branding <- page.branding(Edition(request))) {
-        @contentLogo(branding)
+        @contentLogo(branding, content.tags.isInteractive)
     }
 
 } else {

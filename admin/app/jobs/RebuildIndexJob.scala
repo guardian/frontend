@@ -1,6 +1,7 @@
 package jobs
 
-import common.{Logging, ExecutionContexts, StopWatch}
+import common.{ExecutionContexts, Logging, StopWatch}
+import contentapi.ContentApiClient
 import indexes.ContentApiTagsEnumerator
 import indexes.TagPages._
 import model.{TagIndexListings, TagIndexPage}
@@ -9,7 +10,10 @@ import services.TagIndexesS3
 
 import scala.concurrent.{Future, blocking}
 
-object RebuildIndexJob extends ExecutionContexts with Logging {
+class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
+
+  val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
+
   def saveToS3(parentKey: String, tagPages: Seq[TagIndexPage]) {
     val s3StopWatch = new StopWatch
 
@@ -35,8 +39,8 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   private def alphaTitle(key: String) = key.toUpperCase.replace("-", "–")
 
   def rebuildKeywordIndexes() = {
-    val keywords = ContentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
-    val series = ContentApiTagsEnumerator.enumerateTagTypeFiltered("series")
+    val keywords = contentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
+    val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
     /** Subjects are indexed both alphabetically and by their parent section */
     (keywords andThen series).run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
@@ -48,7 +52,7 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   }
 
   def rebuildNewspaperBooks() = {
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(byPublication) map { booksMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(byPublication) map { booksMap =>
       blocking {
         saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
       }
@@ -56,7 +60,7 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   }
 
   def rebuildNewspaperBookSections() = {
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(byPublication) map { bookSectionMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(byPublication) map { bookSectionMap =>
       blocking {
         saveToS3("newspaper_book_sections", toPages(bookSectionMap)(alphaTitle, asciiLowerWebTitle))
       }
@@ -64,7 +68,7 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   }
 
   def rebuildContributorIndex() = {
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
       blocking {
         saveToS3("contributors", toPages(alphaMap)(alphaTitle, nameOrder))
       }

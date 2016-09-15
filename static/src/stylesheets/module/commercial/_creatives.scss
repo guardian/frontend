@@ -151,7 +151,7 @@
         @include fs-textSans(1);
         position: absolute;
         z-index: 11;
-        bottom: -10px;
+        bottom: 0;
         left: 50%;
         border: 1px solid #ffffff;
         border-width: 1px 1px 0;
@@ -340,45 +340,37 @@
     }
 
     .slide-video {
-        background: #000000;
         position: absolute;
         top: 24px;
         width: 100%;
         z-index: 3;
-        display: none;
+        visibility: hidden;
+        transition: all 1s, visibility 0s;
+
+        > .slide-container {
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 
     .slide-video__expand {
-        transition: all 1s;
-        display: block;
+        visibility: visible;
+    }
+
+    .video-container__inner {
+        position: relative;
     }
 
     &.right-aligned-video .video-container__inner {
         width: 100%;
-        position: relative;
 
         @include mq(1024px) {
             width: 768px;
-            float: right;
         }
     }
 
     .expandable-video {
-        position: absolute;
-        z-index: 10;
-        margin-left: -50%;
-        left: 50%;
-    }
-
-    &.full-width-video .expandable-video {
-        margin-left: -50%;
-        left: 50%;
-    }
-
-    &.right-aligned-video .expandable-video {
-        margin: 0;
-        left: auto;
-        right: 0;
+        display: block;
     }
 
     .slide-1 {
@@ -407,6 +399,71 @@
 
         &.ad-exp__layer3 {
             z-index: 3;
+        }
+    }
+
+    .has-no-flex & {
+        .slide-video {
+            > .slide-container {
+                display: block;
+                overflow: hidden;
+            }
+        }
+
+        &.right-aligned-video .video-container__inner {
+            float: right;
+        }
+    }
+}
+
+.creative--expandable-video-v2 {
+
+    &.right-aligned-video .video-container__cta {
+        display: none;
+
+        @include mq(1024px) {
+            display: block;
+            flex: 1;
+        };
+    }
+
+    .creative__cta {
+        position: absolute;
+        right: 10px;
+        opacity: 0;
+        transition: opacity .2s 3s;
+
+        > img {
+            display: block;
+        }
+    }
+
+
+    .slide-video__expand .creative__cta {
+        opacity: 1;
+    }
+
+    .creative__cta--position-top    { top:    10px; }
+    .creative__cta--position-bottom { bottom: 10px; }
+
+    .ad-exp__close-button {
+        top: 10px;
+    }
+
+    .has-no-flex & {
+        &.right-aligned-video .video-container__cta {
+            @include mq(1024px) {
+                display: block;
+                position: absolute;
+                width: calc(100% - 768px);
+                top: 0;
+                bottom: 0;
+                left: 0;
+            }
+
+            @include mq(wide) {
+                width: 532px;
+            }
         }
     }
 

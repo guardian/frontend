@@ -9,9 +9,7 @@ define([
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/ui/toggles',
-    'commercial/modules/user-ad-feedback'
+    'common/modules/onward/geo-most-popular'
 ], function (
     bonzo,
     qwery,
@@ -23,9 +21,7 @@ define([
     stickyMpu,
     applyCreativeTemplate,
     renderAdvertLabel,
-    geoMostPopular,
-    Toggles,
-    recordUserAdFeedback
+    geoMostPopular
 ) {
     /**
      * ADVERT RENDERING
@@ -127,8 +123,6 @@ define([
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return callSizeCallback()
                 .then(function () { return renderAdvertLabel(advert.node); })
-                .then(addFeedbackDropdownToggle)
-                .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent); })
                 .then(addRenderedClass)
                 .then(function () {
                     return isRendered;
@@ -151,36 +145,6 @@ define([
                 }) : Promise.resolve();
             }
 
-            function addFeedbackDropdownToggle() {
-                return isRendered ? fastdom.write(function () {
-                    if (!bonzo(advert.node).hasClass('js-toggle-ready')){
-                        new Toggles(advert.node).init();
-                    }
-                }) : Promise.resolve();
-            }
-
-            function applyFeedbackOnClickListeners(slotRenderEvent) {
-                return isRendered ? fastdom.write(function () {
-                    bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                if(bonzo(el).hasClass('is-active')) {
-                                    recordUserAdFeedback(window.location.pathname, advert.node.id, slotRenderEvent, 'ad-feedback-menu-opened');
-                                }
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
-                    });
-                    bonzo(qwery('.popup__item-problem--option')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
-                    });
-                }) : Promise.resolve();
-            }
         }).catch(raven.captureException);
     }
 

@@ -111,7 +111,7 @@ object Branding {
       sponsorName = sponsorship.sponsorName,
       sponsorLogo = sponsorship.sponsorLogo,
       sponsorLink = sponsorship.sponsorLink,
-      aboutThisLink = "/sponsored-content",
+      aboutThisLink = sponsorship.aboutLink getOrElse "/sponsored-content",
       targeting = sponsorship.targeting map SponsorshipTargeting.make,
       foundationFundedContext = sponsorship.sponsorshipType match {
         case ApiSponsorshipType.Foundation => Some(sectionOrTagName)

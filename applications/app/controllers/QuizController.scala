@@ -40,7 +40,7 @@ case class QuizAnswersPage(
   val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
 }
 
-class QuizController extends Controller with ExecutionContexts with Logging {
+class QuizController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
@@ -58,8 +58,8 @@ class QuizController extends Controller with ExecutionContexts with Logging {
     val edition = Edition(request)
 
     log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
-    val capiQuery = ContentApiClient.item(path, edition).showAtoms("all")
-    val result = ContentApiClient.getResponse(capiQuery) map { itemResponse =>
+    val capiQuery = contentApiClient.item(path, edition).showAtoms("all")
+    val result = contentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>
 
         val quiz = Atoms.make(content).flatMap(_.quizzes.find(_.id == quizId))
@@ -75,5 +75,3 @@ class QuizController extends Controller with ExecutionContexts with Logging {
   }
 
 }
-
-object QuizController extends QuizController

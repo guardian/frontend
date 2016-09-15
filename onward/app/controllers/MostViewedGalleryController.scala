@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-class MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
+class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent) extends Controller with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "more galleries",
@@ -40,7 +40,7 @@ class MostViewedGalleryController extends Controller with Logging with Execution
 
   private def getMostViewedGallery()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("6").toInt
-    MostViewedGalleryAgent.mostViewedGalleries().take(size).toList
+    mostViewedGalleryAgent.mostViewedGalleries().take(size).toList
   }
 
   private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader) = {
@@ -60,5 +60,3 @@ class MostViewedGalleryController extends Controller with Logging with Execution
     renderFormat(htmlResponse, jsonResponse, 900)
   }
 }
-
-object MostViewedGalleryController extends MostViewedGalleryController

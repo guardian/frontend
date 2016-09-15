@@ -9,9 +9,13 @@ import play.api.test.FakeRequest
   extends FeatureSpec
   with GivenWhenThen
   with Matchers
-  with FootballTestData with WithTestFootballClient with BeforeAndAfterAll with WithTestWsClient {
+  with FootballTestData
+  with WithTestFootballClient
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
-  val moreOnMatchController = new MoreOnMatchController(testCompetitionsService)
+  val moreOnMatchController = new MoreOnMatchController(testCompetitionsService, testContentApiClient)
 
   feature("Match Nav") {
 

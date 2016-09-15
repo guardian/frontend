@@ -27,7 +27,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
-        bottom: 38px;
+        bottom: $gs-gutter;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
@@ -90,15 +90,27 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             text-align: center;
         }
         .text {
-            line-height: 20px;
+            font-size: 18px;
+            line-height: 24px;
         }
         h1 {
             line-height: 28px;
         }
+        figcaption {
+            font-size: 12px;
+            line-height: 16px;
+            color: $neutral-2;
+
+            &:before {
+                @include icon(image);
+                content: '';
+                vertical-align: top;
+                margin-top: 1px;
+            }
+        }
     }
     .hosted__standfirst {
         padding: 0;
-        margin: 50px 0 0;
 
         .hosted__terms {
             margin-top: 0;
@@ -168,6 +180,40 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
     .from-content-api > ul li {
         margin-bottom: 0;
+    }
+    p:not(.hosted__next-page-title) {
+        font-size: 18px;
+        line-height: 24px;
+
+        &:nth-child(2)::first-letter {
+            @include fs-textSans(4);
+            display: inline-block;
+            float: left;
+            color: #000000;
+            padding: 12px 16px 4px;
+            font-size: 480%;
+            line-height: 4.25rem;
+            width: 4.8125rem;
+            height: 4.8125rem;
+            margin-right: .5rem;
+            margin-top: 4px;
+            text-align: center;
+        }
+    }
+    p.hostedbadge__info, p.hosted__glogotext {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: .5px;
+        line-height: 16px;
+    }
+
+    p.hostedbadge__info {
+        padding-top: $gs-gutter / 4;
+        padding-bottom: $gs-gutter / 2.5;
+    }
+
+    .gu-image {
+        height: auto;
     }
 }
 

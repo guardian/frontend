@@ -1,9 +1,10 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf._
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.ImageQuery
@@ -15,7 +16,7 @@ case class ImageContentPage(image: ImageContent, related: RelatedContent) extend
   override lazy val item = image
 }
 
-class ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
+class ImageContentController(val contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
 
@@ -35,5 +36,3 @@ class ImageContentController extends Controller with RendersItemResponse with Im
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
-
-object ImageContentController extends ImageContentController

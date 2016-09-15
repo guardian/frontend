@@ -294,9 +294,10 @@ define([
 
         describe('keyword targeting', function () {
 
-            it('should send page level keywords', function () {
-                dfp.init();
-                expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+            it('should send page level keywords', function (done) {
+                dfp.init().then(function () {
+                    expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+                }).then(done).catch(done.fail);
             });
 
             it('should send container level keywords', function (done) {
