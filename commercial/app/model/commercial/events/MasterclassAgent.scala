@@ -10,11 +10,13 @@ object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionCont
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Masterclass]] = {
 
-    def populateKeywordIds(masterclasses: Seq[Masterclass]): Seq[Masterclass] = {
+    def fetchKeywords(name: String): Future[Seq[String]] = for(tags <- Lookup.keyword(name)) yield tags.map(_.id)
 
-      masterclasses map { masterclass =>
-        val keywordIdsFromTitle = MasterclassTagsAgent.forTag(masterclass.name)
-        masterclass.copy(keywordIdSuffixes = keywordIdsFromTitle map Keyword.getIdSuffix)
+    def addKeywordsFromContentApi(masterclasses: Seq[Masterclass]): Future[Seq[Masterclass]] = {
+      Future.traverse(masterclasses) { masterclass =>
+        fetchKeywords(masterclass.name).map { keywords =>
+          masterclass.copy(keywordIdSuffixes = keywords map Keyword.getIdSuffix)
+        }
       }
     }
 
@@ -41,10 +43,12 @@ object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionCont
       val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
       updateAvailableMerchandise(masterclasses)
 
-      val masterclassesWithImages = addImagesFromContentApi(populateKeywordIds(masterclasses.filter(_.isOpen)))
-      masterclassesWithImages map { updates =>
-        updateAvailableMerchandise(updates)
-        ParsedFeed(updates, feed.parseDuration)
+      for {
+        withKeywords <- addKeywordsFromContentApi(masterclasses.filter(_.isOpen))
+        withKeywordsAndImages <- addImagesFromContentApi(withKeywords)
+      } yield {
+        updateAvailableMerchandise(withKeywordsAndImages)
+        ParsedFeed(withKeywordsAndImages, feed.parseDuration)
       }
     }
   }

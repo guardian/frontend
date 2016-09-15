@@ -4,8 +4,6 @@ import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries
-import model.commercial.events.MasterclassTagsAgent
-import model.commercial.travel.Countries
 import metrics.MetricUploader
 
 import play.api.inject.ApplicationLifecycle
@@ -52,8 +50,6 @@ class CommercialLifecycle(
   }
 
   private val refreshJobs: List[RefreshJob] = List(
-    new MasterclassTagsRefresh(jobs),
-    new CountriesRefresh(jobs),
     new IndustriesRefresh(jobs)
   )
 
@@ -137,14 +133,6 @@ class CommercialLifecycle(
     }
 
     akkaAsync.after1s {
-
-      MasterclassTagsAgent.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
-      }
-
-      Countries.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
-      }
 
       Industries.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
