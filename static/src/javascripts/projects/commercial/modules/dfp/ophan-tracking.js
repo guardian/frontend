@@ -168,7 +168,7 @@ define([
         var index = performanceLog.baselines
             .map(function (_) { return _.name; })
             .indexOf(baselineName);
-        return index > -1 ? performanceLog.baselines[index].time : 0;
+        return index > -1 ? performanceLog.baselines[index].startTime : 0;
     }
 
     function reportTrackingData() {
