@@ -5,6 +5,8 @@ const validatorJs = require('./validator-js');
 const fetchPage = require('./fetch-page');
 const endpoints = require('./endpoints');
 
+const isDev = process.env.NODE_ENV === 'dev' || false;
+
 // TODO: re-add pre-release when/if google provide us with one
 validatorJs.fetchRelease().then(checkEndpoints(false)).catch(onError);
 
@@ -24,10 +26,9 @@ function checkEndpoints(devChannel) {
 }
 
 function runValidator(validator, devChannel) {
-    const isDev = process.argv[2] || false;
-    
+
     return endpoint => fetchPage
-        .get(endpoint, isDev)
+        .get(endpoint)
         .then(res => {
             console.log(`Checking the AMP validity (${devChannel ? 'pre-release' : 'release'}) of the page at ${isDev ? 'localhost:9000' : ''}${endpoint}, result is:`);
             const result = validator.validateString(res);

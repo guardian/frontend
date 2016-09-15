@@ -7,9 +7,11 @@ const promiseRetry = require('promise-retry');
 const hostname = 'https://amp.theguardian.com';
 const localHostname = 'http://localhost:9000';
 
-exports.get = (endpoint, isDev) => makeRequest(endpoint, isDev).then(getBody);
+const isDev = process.env.NODE_ENV === 'dev' || false;
 
-function makeRequest(endpoint, isDev) {
+exports.get = endpoint => makeRequest(endpoint).then(getBody);
+
+function makeRequest(endpoint) {
     return promiseRetry(retry => {
         return new Promise((resolve, reject) => {
             const errorMessage = `Unable to fetch ${endpoint}`;
