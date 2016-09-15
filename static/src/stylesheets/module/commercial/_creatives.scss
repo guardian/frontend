@@ -446,8 +446,10 @@
     .creative__cta--position-top    { top:    10px; }
     .creative__cta--position-bottom { bottom: 10px; }
 
-    .ad-exp__close-button {
-        top: 10px;
+    .ad-exp__open--container {
+        @include mq(wide) {
+            right: calc(50% - 640px);
+        }
     }
 
     .has-no-flex & {

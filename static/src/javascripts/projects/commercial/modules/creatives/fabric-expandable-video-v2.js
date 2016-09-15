@@ -32,17 +32,15 @@ define([
 
         function create() {
             var videoHeight = openedHeight;
+            var plusIconPosition = params.showCrossInContainer.substring(3);
             var additionalParams = {
                 desktopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
                 mobileCTA: params.ctaMobileImage ? ctaTpl({ media: 'mobile-only', link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
                     : '',
-                showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'screen' ?
-                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
-                    : '',
-                showPlusInContainer: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'container' ?
-                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
+                showPlus: params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow' ?
+                    '<button class="ad-exp__close-button ad-exp__open ad-exp__open--' + plusIconPosition + '">' + svgs('closeCentralIcon') + '</button>'
                     : '',
                 videoEmbed: (params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
