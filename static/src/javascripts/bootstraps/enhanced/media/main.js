@@ -151,18 +151,20 @@ define([
     }
 
     function initHeroic(){
-      var player = $('.vjs-tech')[0];
-      var headline = $('.labour-liverpool-headline')[0];
-      var controls = $('.vjs-control-bar')[0];
+        if($('.vjs-tech') && $('.labour-liverpool-headline') && $('.vjs-control-bar')){
+            var player = $('.vjs-tech');
+            var headline = $('.labour-liverpool-headline');
+            var controls = $('.vjs-control-bar');
 
-      bean.on(player, 'playing', function () {
-          bonzo(headline).addClass('playing');
-          bonzo(controls).addClass('playing');
-      });
-      bean.on(player, 'pause', function () {
-        bonzo(headline).removeClass('playing');
-        bonzo(controls).removeClass('playing');
-      });
+            bean.on(player[0], 'playing', function () {
+                bonzo(headline[0]).addClass('playing');
+                bonzo(controls).addClass('playing');
+            });
+            bean.on(player[0], 'pause', function () {
+              bonzo(headline[0]).removeClass('playing');
+              bonzo(controls[0]).removeClass('playing');
+            });
+        }
     }
 
     function isGeoBlocked(el) {
