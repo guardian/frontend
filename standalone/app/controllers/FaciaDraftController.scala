@@ -1,16 +1,16 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import contentapi.SectionsLookUp
+import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.front.FrontJsonFapiDraft
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
 import scala.concurrent.Future
 
-class FaciaDraftController(val frontJsonFapi: FrontJsonFapiDraft, sectionsLookUp: SectionsLookUp) extends FaciaController with RendersItemResponse {
+class FaciaDraftController(val frontJsonFapi: FrontJsonFapiDraft, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp) extends FaciaController with RendersItemResponse {
 
-  private val indexController = new IndexController(sectionsLookUp)
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")

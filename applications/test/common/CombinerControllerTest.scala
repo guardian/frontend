@@ -15,7 +15,7 @@ import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTes
   with WithTestContentApiClient {
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val indexController = new IndexController(sectionsLookUp)
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
 
   "Combiner" should "404 when there is no content for 2 tags" in {
     val result = indexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())

@@ -1,6 +1,6 @@
 package controllers.preview
 
-import contentapi.SectionsLookUp
+import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.{FaciaController, IndexController}
 import controllers.front.FrontJsonFapi
 import play.api.libs.ws.WSClient
@@ -10,9 +10,9 @@ class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
-class FaciaDraftController(val frontJsonFapi: FrontJsonFapi, sectionsLookUp: SectionsLookUp) extends FaciaController {
+class FaciaDraftController(val frontJsonFapi: FrontJsonFapi, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp) extends FaciaController {
 
-  private val indexController = new IndexController(sectionsLookUp)
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 
   override def renderFront(path: String) = {
     log.info(s"Serving Path: $path")

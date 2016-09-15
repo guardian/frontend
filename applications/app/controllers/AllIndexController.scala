@@ -16,7 +16,7 @@ import scala.concurrent.Future
 
 class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
-  private val indexController = new IndexController(sectionsLookUp)
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)

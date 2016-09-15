@@ -20,7 +20,7 @@ import play.api.test.Helpers._
   val crosswordsUrl = "crosswords"
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val indexController = new IndexController(sectionsLookUp)
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
 
   it should "Include organisation metadata" in {
     val result = indexController.render(articleUrl)(TestRequest(articleUrl))

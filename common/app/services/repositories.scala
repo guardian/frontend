@@ -14,6 +14,7 @@ import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
 
+  val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp
   private val rssFields = s"${QueryDefaults.trailFields},byline,body,standfirst"
 
@@ -60,7 +61,7 @@ trait Index extends ConciergeRepository with Collections {
       }
     )
 
-    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.search(edition)
+    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
@@ -122,7 +123,7 @@ trait Index extends ConciergeRepository with Collections {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
-    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.item(queryPath, edition).page(pageNum)
+    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
     ) map { response =>

@@ -21,7 +21,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
     sectionsLookUp.refresh()
   }
 
-  lazy val indexController = new IndexController(sectionsLookUp)
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
 
   "Index Controller" should "200 when content type is front" in {
     val result = indexController.render(section)(TestRequest(s"/$section"))
