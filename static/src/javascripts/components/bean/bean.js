@@ -2,6 +2,10 @@
   * Bean - copyright (c) Jacob Thornton 2011-2012
   * https://github.com/fat/bean
   * MIT license
+  * 
+  *  Changes from upstream:
+  *      - Removed 'keyIdentitfier' until https://github.com/fat/bean/issues/128 is fixed 
+  *
   */
 (function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
@@ -106,7 +110,7 @@
               'fromElement offsetX offsetY pageX pageY screenX screenY toElement'))
           , mouseWheelProps = mouseProps.concat(str2arr('wheelDelta wheelDeltaX wheelDeltaY wheelDeltaZ ' +
               'axis')) // 'axis' is FF specific
-          , keyProps     = commonProps.concat(str2arr('char charCode key keyCode keyIdentifier '          +
+          , keyProps     = commonProps.concat(str2arr('char charCode key keyCode '          +
               'keyLocation location'))
           , textProps    = commonProps.concat(str2arr('data'))
           , touchProps   = commonProps.concat(str2arr('touches targetTouches changedTouches scale rotation'))

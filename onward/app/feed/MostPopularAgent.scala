@@ -7,9 +7,8 @@ import play.api.libs.json.{JsArray, JsValue}
 import model.RelatedContentItem
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-import ContentApiClient.getResponse
 
-object MostPopularAgent extends Logging with ExecutionContexts {
+class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -20,7 +19,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = getResponse(ContentApiClient.item("/", edition)
+  def refresh(edition: Edition) = contentApiClient.getResponse(contentApiClient.item("/", edition)
       .showMostViewed(true)
     ).map { response =>
       val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
@@ -31,7 +30,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
 
 }
 
-class GeoMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
+class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -56,7 +55,7 @@ class GeoMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionCont
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
+        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
           .map(_.content.map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e)  =>
@@ -85,7 +84,7 @@ class GeoMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionCont
   }
 }
 
-class DayMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
+class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -108,7 +107,7 @@ class DayMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionCont
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
+        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition ))
           .map(_.content.map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e) =>
@@ -135,7 +134,7 @@ class DayMostPopularAgent(ophanApi: OphanApi) extends Logging with ExecutionCont
   }
 }
 
-object MostPopularExpandableAgent extends Logging with ExecutionContexts {
+class MostPopularExpandableAgent(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -144,7 +143,7 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      getResponse(ContentApiClient.item("/", edition)
+      contentApiClient.getResponse(contentApiClient.item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       ).foreach { response =>

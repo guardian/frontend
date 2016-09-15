@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "Vertical positioning of the onward journey links",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Test which gallery image to put the call to action link on",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -77,16 +77,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-participation-discussion-ordering-live-blog",
-    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16), //Wednesday
-    exposeClientSide = true
-  )
-
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -113,7 +103,7 @@ trait ABTestSwitches {
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    sellByDate = new LocalDate(2016, 9, 16),   // Friday @ 23:59 BST
     exposeClientSide = true
   )
 

@@ -67,6 +67,7 @@
         color: $neutral-2-contrasted;
     }
 }
+
 .brandbadge--onside {
     padding-bottom: $gs-baseline * 2;
     border-bottom: 1px dotted $neutral-5;
@@ -76,19 +77,16 @@
     }
 
     @include mq(leftCol) {
-        clear: left;
         float: left;
+        clear: left;
         width: $left-column;
+        min-height: 0;
+        border-bottom-width: 0;
+        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(wide) {
         width: $left-column-wide;
-    }
-
-    @include mq(leftCol) {
-        min-height: 0;
-        border-bottom-width: 0;
-        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(mobile, $until: leftCol) {
@@ -140,6 +138,15 @@
         }
     }
 }
+
+.content__main-column--article {
+    .brandbadge--onside {
+        @include mq(leftCol) {
+            float: none;
+        }
+    }
+}
+
 .brandbadge--interactive {
     width: 140px;
     min-height: 135px;
