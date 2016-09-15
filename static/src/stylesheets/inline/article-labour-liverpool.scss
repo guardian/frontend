@@ -33,7 +33,7 @@ $labour-liverpool-header-element-opacity: .85;
 }
 
 .content--labour-liverpool .content__article-body {
-    padding-top: 12px;
+    padding-top: $gs-baseline;
 }
 
 .content--labour-liverpool.heroic--video .content__article-body {
@@ -48,15 +48,15 @@ $labour-liverpool-header-element-opacity: .85;
         min-height: 0rem;
 
         @include mq($from: mobileLandscape) {
-            min-height: 27rem;
+            min-height: 432px;
         }
 
         @include mq($from: tablet) {
-            min-height: 23.78rem;
+            min-height: 364px;
         }
 
         @include mq($from: desktop) {
-            height: 32.2rem;
+            height: 515px;
         }
     }
 }
@@ -411,6 +411,11 @@ $labour-liverpool-header-element-opacity: .85;
         width: 980px;
     }
 }
+
+
+/*This brings the margins to the top of the page, when the heroic template has a video.
+Because this template uses the immersive header they are outside of the header - hence
+givng this some mega minus margins.*/
 
 .l-side-margins {
     &.heroic--video {

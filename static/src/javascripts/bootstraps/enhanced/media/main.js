@@ -151,17 +151,16 @@ define([
     }
 
     function initHeroic(){
-        if($('.vjs-tech') && $('.labour-liverpool-headline') && $('.vjs-control-bar')){
-            var player = $('.vjs-tech');
-            var headline = $('.labour-liverpool-headline');
-            var controls = $('.vjs-control-bar');
-
+        var player = $('.vjs-tech'),
+            headline = $('.labour-liverpool-headline')[0],
+            controls = $('.vjs-control-bar');
+        if(player && headline && controls){
             bean.on(player[0], 'playing', function () {
-                bonzo(headline[0]).addClass('playing');
-                bonzo(controls).addClass('playing');
+                bonzo(headline).addClass('playing');
+                bonzo(controls[0]).addClass('playing');
             });
             bean.on(player[0], 'pause', function () {
-              bonzo(headline[0]).removeClass('playing');
+              bonzo(headline).removeClass('playing');
               bonzo(controls[0]).removeClass('playing');
             });
         }
@@ -382,7 +381,7 @@ define([
                 });
             }
         });
-        if($('.heroic--video')){
+        if($('.heroic--video').length > 0){
           initHeroic();
         }
         return player;
