@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "Vertical positioning of the onward journey links",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Test which gallery image to put the call to action link on",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
