@@ -109,7 +109,7 @@ object HostedArticlePage2 extends Logging {
           image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
           label = Some("It's time to act for wildlife"),
           trackingCode = Some("act-for-wildlife-button"),
-          btnText = None
+          btnText = Some("Act for wildlife")
         ),
         mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
         mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
