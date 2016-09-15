@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.HostedPage
+import common.commercial.hosted.{HostedPage, NextHostedPage}
 
 object LegacyHostedPages {
 
@@ -31,6 +31,13 @@ object HostedPages {
       case `singaporeGrandPrixCampaignName` => Formula1HostedPages.fromPageName(pageName)
       case `chesterZooCampaignName` => ChesterZooHostedPages.fromPageName(pageName)
       case _ => None;
+    }
+  }
+
+  def nextPages(campaignName: String, pageName: String): List[NextHostedPage] = {
+    campaignName match {
+      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName)
+      case _ => Nil;
     }
   }
 }

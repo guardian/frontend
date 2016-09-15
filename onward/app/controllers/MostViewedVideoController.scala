@@ -5,16 +5,15 @@ import feed.MostViewedVideoAgent
 import model.{Content, Video, Cached}
 import play.api.mvc.{Action, Controller}
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 
-class MostViewedVideoController(mostViewedVideoAgent: MostViewedVideoAgent) extends Controller with Logging with ExecutionContexts {
+class MostViewedVideoController(contentApiClient: ContentApiClient, mostViewedVideoAgent: MostViewedVideoAgent) extends Controller with Logging with ExecutionContexts {
 
   // Move this out of here if the test is successful
   def renderInSeries(series: String) = Action.async { implicit request =>
     val page = (request.getQueryString("page") getOrElse "1").toInt
     val edition = Edition(request)
 
-    getResponse(ContentApiClient.search(edition)
+    contentApiClient.getResponse(contentApiClient.search(edition)
       .tag(series)
       .contentType("video")
       .showTags("series")

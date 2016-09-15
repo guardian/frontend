@@ -4,12 +4,10 @@ import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
 import play.api.libs.json.{JsArray, JsValue}
-
 import scala.concurrent.Future
-import ContentApiClient.getResponse
 import services.OphanApi
 
-class MostViewedGalleryAgent(ophanApi: OphanApi) extends Logging with ExecutionContexts {
+class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Seq[RelatedContentItem]](Nil)
 
@@ -27,7 +25,7 @@ class MostViewedGalleryAgent(ophanApi: OphanApi) extends Logging with ExecutionC
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
+        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
           RelatedContentItem(item)
         })
       }

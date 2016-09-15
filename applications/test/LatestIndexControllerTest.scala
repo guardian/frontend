@@ -1,14 +1,20 @@
 package test
 
 import controllers.LatestIndexController
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 
-@DoNotDiscover class LatestIndexControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class LatestIndexControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   private val MovedPermanently = 301
   private val Found = 302
-  val latestIndexController = new LatestIndexController
+  val latestIndexController = new LatestIndexController(testContentApiClient)
 
   it should "redirect to latest for a series" in {
     val result = latestIndexController.latest("football/series/thefiver")(TestRequest())

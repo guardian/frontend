@@ -19,9 +19,9 @@ case class HostedArticlePage2(
   cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
+  socialShareText: Option[String],
+  shortSocialShareText: Option[String],
+  nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List()
 )
   extends HostedPage {
@@ -29,10 +29,9 @@ case class HostedArticlePage2(
   val pageTitle = s"Advertiser content hosted by the Guardian: $title"
   val imageUrl = mainPicture
 
-  def nextPages: List[HostedPage] = nextPageNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
-    case page: HostedPage => Some(page)
-    case _ => None
-  })
+  def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
+    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl)
+  )
 
   override val metadata: MetaData = {
     val keywordId = s"${campaign.id}/${campaign.id}"
@@ -106,22 +105,18 @@ object HostedArticlePage2 extends Logging {
         body = content.fields.flatMap(_.body).getOrElse(""),
         // todo: from cta atom
         cta = HostedCallToAction(
-          url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
-          image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
-          label = Some("Discover Zoe"),
-          trackingCode = Some("explore-renault-zoe-button"),
+          url = "http://www.actforwildlife.org.uk/",
+          image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
+          label = Some("It's time to act for wildlife"),
+          trackingCode = Some("act-for-wildlife-button"),
           btnText = None
         ),
         mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
         mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
-        // todo: missing data
-        facebookShareText = None,
-        // todo: missing data
-        twitterShareText = None,
-        // todo: missing data
-        emailSubjectText = None,
+        socialShareText = content.fields.flatMap(_.socialShareText),
+        shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
-        nextPageNames = Nil
+        nextPagesList = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1))
       )
     }
 

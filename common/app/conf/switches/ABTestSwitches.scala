@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "Vertical positioning of the onward journey links",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Test which gallery image to put the call to action link on",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -53,7 +53,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -63,7 +63,7 @@ trait ABTestSwitches {
     "Test whether contributions embed performs better than our previous in-article component tests.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -73,17 +73,7 @@ trait ABTestSwitches {
     "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 13),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-participation-discussion-ordering-live-blog",
-    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16), //Wednesday
+    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -99,16 +89,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-feedback",
-    "Solicit feedback for ad impressions",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-recommended-for-you",
     "Test demand for a personalised container on fronts",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -119,21 +99,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-dont-upgrade-mobile-rich-links",
-    "Test whether the loyalty of users decreases with non-enhanced rich links",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-ad-blocking-response",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    sellByDate = new LocalDate(2016, 9, 16),   // Friday @ 23:59 BST
     exposeClientSide = true
   )
 
@@ -144,16 +114,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-no-social-count",
-    "Remove social count from articles",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
     exposeClientSide = true
   )
 

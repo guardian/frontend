@@ -24,7 +24,8 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      r2PagePressJob: R2PagePressJob,
                      videoEncodingsJob: VideoEncodingsJob,
                      matchDayRecorder: MatchDayRecorder,
-                     analyticsSanityCheckJob: AnalyticsSanityCheckJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+                     analyticsSanityCheckJob: AnalyticsSanityCheckJob,
+                     rebuildIndexJob: RebuildIndexJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -80,7 +81,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     }
 
     jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
-      RebuildIndexJob.run()
+      rebuildIndexJob.run()
     }
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
@@ -101,7 +102,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
-      
+
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
@@ -141,7 +142,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     scheduleJobs()
 
     akkaAsync.after1s {
-      RebuildIndexJob.run()
+      rebuildIndexJob.run()
       videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
     }

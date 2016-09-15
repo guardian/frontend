@@ -1,11 +1,10 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{ContentFields, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
 import model._
-import play.api.http.Status._
 import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
@@ -16,7 +15,7 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
   override lazy val item = media
 }
 
-class MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class MediaController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }
@@ -34,8 +33,8 @@ class MediaController extends Controller with RendersItemResponse with Logging w
     val edition = Edition(request)
 
     log.info(s"Fetching media: $path for edition $edition")
-    val response: Future[ItemResponse] = ContentApiClient.getResponse(
-      ContentApiClient.item(path, edition)
+    val response: Future[ItemResponse] = contentApiClient.getResponse(
+      contentApiClient.item(path, edition)
         .showFields("all")
     )
 
@@ -63,8 +62,6 @@ class MediaController extends Controller with RendersItemResponse with Logging w
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
-
-object MediaController extends MediaController
 
 case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
 object MediaInfo {
