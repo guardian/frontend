@@ -101,7 +101,7 @@ define([
 
     function loadModules(modules, baseline) {
 
-        ophanTracking.addBaseline(baseline);
+        ophanTracking.addStartTimeBaseline(baseline);
 
         var modulePromises = [];
 
@@ -118,7 +118,11 @@ define([
             });
         });
 
-       return Promise.all(modulePromises);
+       return Promise.all(modulePromises)
+           .then(function(moduleLoadResult){
+               ophanTracking.addEndTimeBaseline(baseline);
+               return moduleLoadResult;
+           });
     }
 
     return {
