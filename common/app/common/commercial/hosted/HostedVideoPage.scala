@@ -117,7 +117,7 @@ object HostedVideoPage extends Logging {
           image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
           label = Some("It's time to act for wildlife"),
           trackingCode = Some("act-for-wildlife-button"),
-          btnText = None
+          btnText = Some("Act for wildlife")
         ),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
