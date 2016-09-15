@@ -159,7 +159,7 @@ object ChesterZooHostedPages {
   private val theRoleOfZoosInSavingWildlifePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/6ad6b68ed5dcc5bc6e370f39b69063b533ce7627/0_23_2019_1211/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$theRoleOfZoosInSavingWildlife",
-    title = "The roles of zoos in saving wildlife"
+    title = "The role of zoos in saving wildlife"
   )
 
 
