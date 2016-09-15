@@ -2,6 +2,10 @@
   * Bean - copyright (c) Jacob Thornton 2011-2012
   * https://github.com/fat/bean
   * MIT license
+  * 
+  *  Changes from upstream:
+  *      - Removed 'keyIdentitfier' until https://github.com/fat/bean/issues/128 is fixed 
+  *
   */
 (function (name, context, definition) {
   if (typeof module != 'undefined' && module.exports) module.exports = definition()
