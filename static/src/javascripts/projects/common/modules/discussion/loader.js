@@ -86,8 +86,7 @@ Loader.prototype.initMainComments = function() {
     var self = this,
         commentId = this.getCommentIdFromHash();
 
-    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
-    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
