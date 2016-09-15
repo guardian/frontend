@@ -109,7 +109,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             }
         }
 
-        video { //inline video element
+        .vjs_video_3-dimensions { //inline video element
             width: 100%;
 
             @include mq(desktop) {
@@ -119,6 +119,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             @include mq(wide) {
                 width: gs-span(11) + $gs-gutter;
                 margin-left: gs-span(-3);
+            }
+
+            video {
+                width: 100%;
             }
         }
     }
