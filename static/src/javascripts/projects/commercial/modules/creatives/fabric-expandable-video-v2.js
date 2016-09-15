@@ -50,39 +50,12 @@ define([
             var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
             bean.on($adSlot[0], 'click', '.ad-exp__open', function () {
-                fastdom.write(function () {
-                    var videoSrc = $('#YTPlayer').attr('src');
-                    var videoSrcAutoplay = videoSrc;
-
-                    if (videoSrc.indexOf('autoplay') === -1) {
-                        videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
-                    } else {
-                        videoSrcAutoplay = videoSrcAutoplay.replace(
-                            isClosed ? 'autoplay=0' : 'autoplay=1',
-                            isClosed ? 'autoplay=1' : 'autoplay=0'
-                        );
-                    }
-
-                    $('.ad-exp__close-button', $adSlot[0]).toggleClass('button-spin');
-                    $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-up').toggleClass('chevron-down');
-                    $ad
-                    .css(
-                        'height',
-                        isClosed ? openedHeight : closedHeight
-                    );
-
-                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
-                        .css('height', isClosed ? openedHeight : closedHeight)
-                        .toggleClass('slide-video__expand');
-
-                    isClosed = !isClosed;
-
-                    setTimeout(function () {
-                        $('#YTPlayer').attr('src', videoSrcAutoplay);
-                    }, 1000);
-
-                });
+                fastdom.write(function () { open(isClosed); });
             });
+
+            bean.on($adSlot[0], 'click', '.creative__cta', function () {
+                fastdom.write(function () { open(false); });
+            })
 
             return fastdom.write(function () {
                 $ad.css('height', closedHeight);
@@ -97,6 +70,44 @@ define([
                 }
                 return true;
             });
+
+            function open(isClosed_) {
+                var videoSrc = $('#YTPlayer').attr('src');
+                var videoSrcAutoplay = videoSrc;
+
+                if (videoSrc.indexOf('autoplay') === -1) {
+                    videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
+                } else {
+                    videoSrcAutoplay = videoSrcAutoplay.replace(
+                        isClosed_ ? 'autoplay=0' : 'autoplay=1',
+                        isClosed_ ? 'autoplay=1' : 'autoplay=0'
+                    );
+                }
+
+                if (isClosed_) {
+                    $('.ad-exp__close-button', $adSlot[0]).addClass('button-spin');
+                    $('.ad-exp__open-chevron', $adSlot[0]).addClass('chevron-down');
+                    $ad.css('height', openedHeight);
+                    $fabricExpandableVideo.addClass('creative--open');
+                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
+                    .css('height', openedHeight)
+                    .addClass('slide-video__expand');
+                } else {
+                    $('.ad-exp__close-button', $adSlot[0]).removeClass('button-spin');
+                    $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-down');
+                    $ad.css('height', closedHeight);
+                    $fabricExpandableVideo.removeClass('creative--open');
+                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
+                    .css('height', closedHeight)
+                    .removeClass('slide-video__expand');
+                }
+
+                isClosed = !isClosed_;
+
+                setTimeout(function () {
+                    $('#YTPlayer').attr('src', videoSrcAutoplay);
+                }, 1000);
+            }
         }
     }
 });
