@@ -649,7 +649,7 @@
     padding-bottom: 0;
 
     &.ad-slot--liveblog-inline {
-        @include mq(mobile) {
+        @include mq(mobile, $until: mobileLandscape) {
             margin-left: $gs-gutter / -2;
             margin-right: $gs-gutter / -2;
         }
