@@ -72,23 +72,20 @@
     border-bottom: 1px dotted $neutral-5;
 
     @include mq(tablet) {
-        float: right;
+        float: left;
     }
 
     @include mq(leftCol) {
+        float: none;
         clear: left;
-        float: left;
         width: $left-column;
+        min-height: 0;
+        border-bottom-width: 0;
+        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(wide) {
         width: $left-column-wide;
-    }
-
-    @include mq(leftCol) {
-        min-height: 0;
-        border-bottom-width: 0;
-        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(mobile, $until: leftCol) {
