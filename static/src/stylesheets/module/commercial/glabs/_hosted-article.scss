@@ -109,8 +109,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             }
         }
 
-        .vjs_video_3-dimensions { //inline video element
+        //inline video element
+        .vjs-controls-enabled { //this is temporary solution, we don't have other common class on every inline videos
             width: 100%;
+            height: auto;
 
             @include mq(desktop) {
                 width: gs-span(8);
@@ -123,6 +125,20 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 
             video {
                 width: 100%;
+            }
+
+            .vjs-poster,
+            .vjs-big-play-button {
+                width: 100%;
+
+                @include mq(desktop) {
+                    width: gs-span(8);
+                }
+
+                @include mq(wide) {
+                    width: gs-span(11) + $gs-gutter;
+                    margin-left: gs-span(-3);
+                }
             }
         }
     }

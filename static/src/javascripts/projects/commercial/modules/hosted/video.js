@@ -73,41 +73,43 @@ define([
                         }
                     }
 
-                    player = videojs($videoEl.get(0), videojsOptions());
-                    player.guMediaType = 'video';
-                    videojs.plugin('fullscreener', fullscreener);
+                    $videoEl.each(function(el){
+                        player = videojs(el, videojsOptions());
+                        player.guMediaType = 'video';
+                        videojs.plugin('fullscreener', fullscreener);
 
-                    player.ready(function () {
-                        var vol;
-                        initLoadingSpinner(player);
-                        upgradeVideoPlayerAccessibility(player);
+                        player.ready(function () {
+                            var vol;
+                            initLoadingSpinner(player);
+                            upgradeVideoPlayerAccessibility(player);
 
-                        // unglitching the volume on first load
-                        vol = player.volume();
-                        if (vol) {
-                            player.volume(0);
-                            player.volume(vol);
-                        }
-
-                        player.fullscreener();
-
-                        var mediaId = $videoEl.attr('data-media-id');
-                        deferToAnalytics(function () {
-                            events.initOmnitureTracking(player);
-                            events.initOphanTracking(player, mediaId);
-
-                            events.bindGlobalEvents(player);
-                            events.bindContentEvents(player);
-                        });
-
-                        player.on('error', function () {
-                            var err = player.error();
-                            if (err && 'message' in err && 'code' in err) {
-                                reportError(new Error(err.message), {
-                                    feature: 'hosted-player',
-                                    vjsCode: err.code
-                                }, false);
+                            // unglitching the volume on first load
+                            vol = player.volume();
+                            if (vol) {
+                                player.volume(0);
+                                player.volume(vol);
                             }
+
+                            player.fullscreener();
+
+                            var mediaId = $videoEl.attr('data-media-id');
+                            deferToAnalytics(function () {
+                                events.initOmnitureTracking(player);
+                                events.initOphanTracking(player, mediaId);
+
+                                events.bindGlobalEvents(player);
+                                events.bindContentEvents(player);
+                            });
+
+                            player.on('error', function () {
+                                var err = player.error();
+                                if (err && 'message' in err && 'code' in err) {
+                                    reportError(new Error(err.message), {
+                                        feature: 'hosted-player',
+                                        vjsCode: err.code
+                                    }, false);
+                                }
+                            });
                         });
                     });
 
