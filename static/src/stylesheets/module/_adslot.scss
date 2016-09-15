@@ -168,6 +168,7 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
+    min-width: $mpu-original-width;
     width: $mpu-original-width;
     margin: $gs-baseline auto;
     min-width: $mpu-original-width;
