@@ -159,7 +159,7 @@ define([
     function addEndTimeBaseline(baselineName) {
         performanceLog.baselines.map(function(baseline) {
             if (baseline.name === baselineName) {
-                baseline.endTime = userTiming.getCurrentTime()
+                baseline.endTime = userTiming.getCurrentTime();
             }
         });
     }
