@@ -418,6 +418,12 @@
 
 .creative--expandable-video-v2 {
 
+    &:not(.creative--open) {
+        .ad-exp--expand {
+            cursor: pointer;
+        }
+    }
+
     &.right-aligned-video .video-container__cta {
         display: none;
 
