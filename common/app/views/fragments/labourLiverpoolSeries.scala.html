@@ -12,11 +12,11 @@
     page.item.tags.isLabourLiverpoolSeries,
     page.item.elements.hasMainVideo
 )) { case (hasEmbed, hasMainMedia, isLabourLiverpoolSeries, hasVideo) =>
-<!--
+
   <style>
     @Html(common.Assets.css.inlineLabourLiverpool)
   </style>
- -->
+
     <div class="@RenderClasses(Map(
             "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
             "immersive-main-media" -> hasMainMedia,
