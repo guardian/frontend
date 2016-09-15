@@ -51,11 +51,10 @@ object ZootropolisHostedPages {
       standfirst,
       video,
       cta,
-      facebookShareText = None,
-      twitterShareText = Some(
+      socialShareText = None,
+      shortSocialShareText = Some(
         "Get to know the residents of Zootropolis and find out where to download the film instantly"
       ),
-      emailSubjectText = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
   }
@@ -90,11 +89,10 @@ object ZootropolisHostedPages {
     cta,
     ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
-    facebookShareText = Some("Get to know the colourful characters of Disney’s Zootropolis with these printable colouring-in sheets and " +
-      "character posters! Zootropolis is packed with snappy action, witty dialogue & belly laughs.  It’s an adorable movie that shouldn’t be missed." +
-      " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
-    twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
-    emailSubjectText = Some("Get to know the residents of Zootropolis!"),
+    socialShareText = Some("Get to know the colourful characters of Disney’s Zootropolis with these printable colouring-in sheets and " +
+                           "character posters! Zootropolis is packed with snappy action, witty dialogue & belly laughs.  It’s an adorable movie that shouldn’t be missed." +
+                           " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
+    shortSocialShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
     customData = customData
   )
 

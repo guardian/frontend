@@ -15,10 +15,9 @@ case class HostedVideoPage(
   standfirst: String,
   video: HostedVideo,
   cta: HostedCallToAction,
-  facebookShareText: Option[String],
-  twitterShareText: Option[String],
-  emailSubjectText: Option[String],
-  nextPage: Option[HostedPage] = None,
+  socialShareText: Option[String],
+  shortSocialShareText: Option[String],
+  nextPage: Option[NextHostedPage] = None,
   metadata: MetaData
 ) extends HostedPage {
 
@@ -120,9 +119,8 @@ object HostedVideoPage extends Logging {
           trackingCode = Some("act-for-wildlife-button"),
           btnText = None
         ),
-        facebookShareText = None,
-        twitterShareText = None,
-        emailSubjectText = None,
+        socialShareText = content.fields.flatMap(_.socialShareText),
+        shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         metadata
