@@ -6,14 +6,14 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import common._
+import common.commercial.{BrandHunter, PaidContent}
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareImageLogoOverlay, FacebookShareUseTrailPicFirstSwitch, HeroicTemplateSwitch, TwitterShareImageLogoOverlay}
+import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
-import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -69,7 +69,6 @@ final case class Content(
   showFooterContainers: Boolean = false
 ) {
 
-  lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
@@ -78,7 +77,20 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
+  lazy val isImmersiveGallery = {
+    metadata.contentType.toLowerCase == "gallery" &&
+    (
+      (staticBadgesSwitch.isSwitchedOff && !trail.commercial.isAdvertisementFeature) ||
+      (
+        staticBadgesSwitch.isSwitchedOn && {
+          val branding = tags.tags.flatMap { tag =>
+            BrandHunter.findBranding( tag.properties.activeBrandings, Edition.defaultEdition, None)
+          }.headOption
+          branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
+        }
+        )
+      )
+  }
   lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
@@ -105,7 +117,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+    ImgSrc(rawOpenGraphImage, EmailImage)
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -144,10 +156,27 @@ final case class Content(
 
   lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
+  lazy val showSectionNotTag: Boolean = {
+
+    lazy val isChildrensBookBlog = tags.tags.exists { tag =>
+      tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
+    }
+
+    lazy val isPaidContentInDfp =
+      staticBadgesSwitch.isSwitchedOff && DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))
+
+    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && {
+      val branding = tags.tags.flatMap { tag =>
+        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
+      }.headOption
+      branding.exists(_.sponsorshipType == PaidContent)
+    }
+
+    isChildrensBookBlog || isPaidContentInDfp || isPaidContentInCapi
+  }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+    if (showSectionNotTag) {
       metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id

@@ -1,14 +1,16 @@
-@(page: model.ContentPage)
+@(page: model.Page)
 
 @import views.support.StripHtmlTagsAndUnescapeEntities
+@import views.support.EmailHelpers.{subjectFromPage, introFromPage}
+
 
 <!--
 %%[
     Var @@subject, @@intro
-    Set @@subject = "@Html(StripHtmlTagsAndUnescapeEntities(page.item.trail.headline))"
+    Set @@subject = "@Html(StripHtmlTagsAndUnescapeEntities(subjectFromPage(page)))"
 
 
-    @page.item.trail.fields.trailText.map { byline =>
+    @introFromPage(page).map { byline =>
     Set @@intro = "@Html(StripHtmlTagsAndUnescapeEntities(byline))"
     }
 ]%%

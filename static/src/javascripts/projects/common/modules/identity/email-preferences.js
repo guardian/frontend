@@ -6,12 +6,14 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/config'
 ], function (
     bean,
     reqwest,
     fastdom,
-    $
+    $,
+    config
 ) {
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
@@ -152,6 +154,11 @@ define([
             } else {
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
+            // deal with the AB test running on Weekend Reading (there are two listIDs)
+            if (config.switches.abWeekendReadingEmail && value === 'unsubscribe-3744') {
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3743') + '&';
+            }
+
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
         buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);

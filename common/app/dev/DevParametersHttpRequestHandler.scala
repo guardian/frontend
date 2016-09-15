@@ -45,7 +45,8 @@ class DevParametersHttpRequestHandler(
     "amp", // used in dev to request the amp version of a specific url
     "__amp_source_origin", // used by amp-live-list to enforce CORS
     "amp_latest_update_time", // used by amp-live-list to check for latest updates
-    "heatmap" // used by ophan javascript to enable the heatmap
+    "heatmap", // used by ophan javascript to enable the heatmap
+    "format" // used to determine whether HTML should be served in email-friendly format or not
   )
 
   val commercialParams = Seq(

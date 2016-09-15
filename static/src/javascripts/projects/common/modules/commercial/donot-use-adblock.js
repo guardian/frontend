@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
+    'common/utils/mediator',
     'common/modules/commercial/adblock-messages',
     'common/modules/commercial/adblock-banner-config',
     'common/modules/adblock-banner',
@@ -19,6 +20,7 @@ define([
     detect,
     storage,
     template,
+    mediator,
     adblockMsg,
     adblockConfig,
     AdblockBanner,
@@ -95,10 +97,10 @@ define([
             showAdblockMessage();
             showAdblockBanner();
         }
+        mediator.emit('banner-message:complete');
     }
 
     return {
         init: init
     };
 });
-

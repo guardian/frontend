@@ -2,11 +2,13 @@ package football.controllers
 
 import com.softwaremill.macwire._
 import conf.FootballClient
+import contentapi.ContentApiClient
 import feed.CompetitionsService
 
 trait FootballControllers {
   def competitionsService: CompetitionsService
   def footballClient: FootballClient
+  def contentApiClient: ContentApiClient
   lazy val fixturesController = wire[FixturesController]
   lazy val resultsController = wire[ResultsController]
   lazy val matchDayController = wire[MatchDayController]

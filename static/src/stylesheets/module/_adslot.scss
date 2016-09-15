@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: initial;
+    overflow: hidden;
 
     .js-off & {
         display: none;
@@ -64,6 +64,8 @@
 
 .top-banner-ad-container {
     background-color: $neutral-8;
+    // Needed for compatibility with IE11/Edge.
+    top: 0;
 }
 
 .top-banner-ad-container--fabric {

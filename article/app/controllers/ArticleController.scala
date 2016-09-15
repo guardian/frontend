@@ -30,7 +30,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -194,7 +194,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = ContentApiClient.item(path, edition)
+    val capiItem = contentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
@@ -204,7 +204,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
-    ContentApiClient.getResponse(capiItemWithBlocks)
+    contentApiClient.getResponse(capiItemWithBlocks)
 
   }
 

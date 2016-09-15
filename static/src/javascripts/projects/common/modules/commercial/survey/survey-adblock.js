@@ -31,6 +31,7 @@ define([
                 surveyTextThird: this.config.surveyTextThird,
                 surveyTextMembership: this.config.surveyTextMembership,
                 surveyTextSubscriber: this.config.surveyTextSubscriber,
+                surveyTextUserHelp: this.config.surveyTextUserHelp,
                 signupText: this.config.signupText,
                 membershipText: this.config.membershipText,
                 signupLink: this.config.signupLink,
@@ -55,7 +56,7 @@ define([
                 bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
                     $('.survey-adblock').addClass('is-hidden');
                     var cookieName = 'gu_abm_x',
-                        cookieLifetimeMinutes = 10,
+                        cookieLifetimeMinutes = 30,
                         cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
                     cookies.addForMinutes(cookieName, cookieCount + 1, cookieLifetimeMinutes);
                 });
@@ -69,18 +70,12 @@ define([
         });
         if (this.config.showCloseBtn) {
             if (this.config.showCloseBtn === 'delayed') {
-                fastdom.write(function () {
-                    $('.js-survey-adblock__delayed-close').removeClass('is-hidden');
-                });
-                countdown.startTimer(5, function(seconds){
-                    fastdom.write(function () {
-                        if (seconds > 0) {
-                            $('.js-survey-adblock__delayed-close').html('<span class=\'countdown\'>'+seconds+'</span>');
-                        } else {
-                            $('.js-survey-adblock__delayed-close').addClass('is-hidden');
+                countdown.startTimer(5, function(seconds) {
+                    if (seconds < 1) {
+                        fastdom.write(function () {
                             $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                        }
-                    });
+                        });
+                    }
                 });
             } else {
                 fastdom.write(function () {
