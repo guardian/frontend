@@ -23,6 +23,8 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
+      capiScalaModels,
+      capiJsonModels,
       filters,
       commonsLang,
       configMagic,
