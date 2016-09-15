@@ -524,7 +524,7 @@ $hosted-video-height: 540px;
     .hostedbadge__logo.hostedbadge__logo {
         position: relative;
         display: none;
-        @include mq($until: tablet) {
+        @include mq($until: wide) {
             display: block;
         }
     }
