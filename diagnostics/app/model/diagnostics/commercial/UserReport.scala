@@ -30,6 +30,7 @@ case class Baseline(
 
 case class UserReport(
   viewId: String,
+  tags: Seq[String],
   modules: Seq[Module],
   adverts: Seq[Advert],
   baselines: Seq[Baseline])
