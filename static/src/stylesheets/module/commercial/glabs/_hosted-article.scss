@@ -108,6 +108,39 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
                 margin-top: 1px;
             }
         }
+
+        //inline video element
+        .vjs-controls-enabled { //this is temporary solution, we don't have other common class on every inline videos
+            width: 100%;
+            height: auto;
+
+            @include mq(desktop) {
+                width: gs-span(8);
+            }
+
+            @include mq(wide) {
+                width: gs-span(11) + $gs-gutter;
+                margin-left: gs-span(-3);
+            }
+
+            video {
+                width: 100%;
+            }
+
+            .vjs-poster,
+            .vjs-big-play-button {
+                width: 100%;
+
+                @include mq(desktop) {
+                    width: gs-span(8);
+                }
+
+                @include mq(wide) {
+                    width: gs-span(11) + $gs-gutter;
+                    margin-left: gs-span(-3);
+                }
+            }
+        }
     }
     .hosted__standfirst {
         padding: 0;
