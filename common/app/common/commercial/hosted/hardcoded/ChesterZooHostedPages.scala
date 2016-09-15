@@ -92,7 +92,7 @@ object ChesterZooHostedPages {
   private val cta = HostedCallToAction(
     label = Some("We won't stand back and we won't give up."),
     btnText = Some("It's time to act for wildlife"),
-    url = "http://www.actforwildlife.org.uk/"
+    url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016"
   )
 
 
@@ -207,7 +207,6 @@ object ChesterZooHostedPages {
   private val videos = List(whatIsActForWildlife, makingWildlifeFriendlyHabitats, helpPutAStopToTheIllegalWildlifeTrade)
   private val articles = List(savingOragutansFromExtinction, savingWildlifeFromTheBrink, aRaceAgainstTimeForWildLife, takeTheSustainablePalmOilChallenge)
   private val articlesWithVideo = List(conservationStartsCloserToHome, ensuringAFutureForSouthAsianWildlife, actingForWildlifeInAfrica, theRoleOfZoosInSavingWildlife)
-  private val galleries = List(whatWeFightFor)
 
   private def allLivePagesOrdered = List(
     whatIsActForWildlife,
@@ -222,7 +221,17 @@ object ChesterZooHostedPages {
     makingWildlifeFriendlyHabitats,
     helpPutAStopToTheIllegalWildlifeTrade,
     whatWeFightFor
-  )
+  ) filter(page => {
+    if(videos.contains(page)){
+      Switches.showChesterZooVideos.isSwitchedOn
+    } else if(articles.contains(page)){
+      Switches.showChesterZooArticles.isSwitchedOn
+    } else if(articlesWithVideo.contains(page)){
+      Switches.showChesterZooArticlesWithVideo.isSwitchedOn
+    } else {
+      Switches.showChesterZooGallery.isSwitchedOn
+    }
+  })
 
   def nextPages(pageName: String): List[NextHostedPage] = {
     val index: Int = allLivePagesOrdered.indexOf(pageName)
