@@ -25,7 +25,8 @@ case class Advert(
 
 case class Baseline(
   name: Option[String],
-  time: Option[Double]
+  startTime: Option[Double],
+  endTime: Option[Double]
 )
 
 case class UserReport(
