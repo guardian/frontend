@@ -6,15 +6,22 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
 
-@DoNotDiscover class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll with ConfiguredTestSuite{
+@DoNotDiscover class IndexControllerTest
+  extends FlatSpec
+  with Matchers
+  with BeforeAndAfterAll
+  with ConfiguredTestSuite
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val section = "books"
+  lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
 
   override def beforeAll(): Unit = {
-    SectionsLookUp.refresh()
+    sectionsLookUp.refresh()
   }
 
-  lazy val indexController = new IndexController
+  lazy val indexController = new IndexController(sectionsLookUp)
 
   "Index Controller" should "200 when content type is front" in {
     val result = indexController.render(section)(TestRequest(s"/$section"))

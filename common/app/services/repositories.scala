@@ -14,6 +14,7 @@ import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
 
+  val sectionsLookUp: SectionsLookUp
   private val rssFields = s"${QueryDefaults.trailFields},byline,body,standfirst"
 
   def normaliseTag(tag: String): String = {
@@ -109,7 +110,7 @@ trait Index extends ConciergeRepository with Collections {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
     val fields = if (isRss) rssFields else QueryDefaults.trailFields
 
-    val maybeSection = SectionsLookUp.get(path)
+    val maybeSection = sectionsLookUp.get(path)
 
     /** If looking up a section, go to equivalent tag instead.
       *
@@ -172,7 +173,5 @@ trait Index extends ConciergeRepository with Collections {
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
-
-object Index extends Index
 
 

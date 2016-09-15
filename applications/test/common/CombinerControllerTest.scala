@@ -1,12 +1,22 @@
 package common
 
+import contentapi.SectionsLookUp
 import controllers.IndexController
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.{ConfiguredTestSuite, TestRequest}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTestWsClient}
 
-@DoNotDiscover class CombinerControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
-  val indexController = new IndexController
+@DoNotDiscover class CombinerControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
+
+  lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
+  lazy val indexController = new IndexController(sectionsLookUp)
+
   "Combiner" should "404 when there is no content for 2 tags" in {
     val result = indexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())
     status(result) should be(404)

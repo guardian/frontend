@@ -1,13 +1,10 @@
 package test
 
 import java.io.File
-
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
-import conf.Configuration
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import org.apache.commons.codec.digest.DigestUtils
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
@@ -16,7 +13,6 @@ import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
-
 import scala.util.{Failure, Success, Try}
 
 //TODO: to delete once ContentApiClient global object is not used anymore
@@ -132,13 +128,13 @@ trait WithTestWsClient {
 trait WithTestContentApiClient {
   def wsClient: WSClient
 
-  val recorder = new ContentApiHttpRecorder {
+  val httpRecorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
   class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
     override def GET(url: String, headers: Iterable[(String, String)]) = {
-      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
+      httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttpClient.GET(url, headers)
       }
     }
