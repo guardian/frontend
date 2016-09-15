@@ -1,5 +1,6 @@
 @(page: ContentPage)(implicit request: RequestHeader)
 
+@import common.LinkTo
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
 @import views.support.TrailCssClasses.toneClass
@@ -8,16 +9,18 @@
 @defining((
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
-    page.item.tags.isLabourLiverpoolSeries
-)) { case (hasEmbed, hasMainMedia, isLabourLiverpoolSeries) =>
-
+    page.item.tags.isLabourLiverpoolSeries,
+    page.item.elements.hasMainVideo
+)) { case (hasEmbed, hasMainMedia, isLabourLiverpoolSeries, hasVideo) =>
+<!--
   <style>
     @Html(common.Assets.css.inlineLabourLiverpool)
   </style>
-
+ -->
     <div class="@RenderClasses(Map(
             "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
-            "immersive-main-media" -> hasMainMedia
+            "immersive-main-media" -> hasMainMedia,
+            "heroic--video" -> hasVideo
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
@@ -39,7 +42,10 @@
                     )
                 }
             } else {
-                @if(hasMainMedia) {
+                @if(page.item.elements.hasMainVideo) {
+                  @fragments.immersiveVideo(page)
+                }
+                @if(page.item.elements.hasMainEmbed) {
                     <div class="immersive-main-media__media__loading">
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>

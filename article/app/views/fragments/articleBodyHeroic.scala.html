@@ -7,10 +7,12 @@
 @import views.support.{ImgSrc, Item140}
 
 @defining(model.article) { article =>
-    <div class="l-side-margins">
+    <div class="l-side-margins @if(article.content.elements.hasMainVideo){heroic--video}">
         <article id="article" data-test-id="article-root"
             class="content content--article
-            @if(article.content.tags.isLabourLiverpoolSeries){content--labour-liverpool}"
+            @if(article.content.tags.isLabourLiverpoolSeries){content--labour-liverpool}
+            @if(article.content.elements.hasMainVideo){heroic--video}
+            "
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
