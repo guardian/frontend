@@ -55,7 +55,7 @@ define([
 
             bean.on($adSlot[0], 'click', '.creative__cta', function () {
                 fastdom.write(function () { open(false); });
-            })
+            });
 
             return fastdom.write(function () {
                 $ad.css('height', closedHeight);
