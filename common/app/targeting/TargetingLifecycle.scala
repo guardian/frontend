@@ -17,7 +17,7 @@ class TargetingLifecycle(
 
   override def start(): Unit = {
     jobs.deschedule("TargetingCampaignRefreshJob")
-    jobs.scheduleEvery("TargetingCampaignRefreshJob", 30.minutes) {
+    jobs.scheduleEvery("TargetingCampaignRefreshJob", 1.minutes) {
       CampaignAgent.refresh()
     }
 
