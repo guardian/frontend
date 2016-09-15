@@ -1,14 +1,4 @@
-define([
-    'bean',
-    'common/utils/$',
-    'common/utils/storage'
-], function (
-    bean,
-    $,
-    storage
-) {
+define([], function () {
     function init() {}
-
     return init;
-
 });
