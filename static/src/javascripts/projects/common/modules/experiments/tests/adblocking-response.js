@@ -60,6 +60,7 @@ define([
                 !config.page.isFront &&
                 !config.page.shouldHideAdverts &&
                 config.page.section !== 'childrens-books-site' &&
+                config.page.section !== 'politics' && // because it's not https
                 !userFeatures.isPayingMember() &&
                 config.page.webTitle !== 'Subscriber number form' &&
                 config.page.webTitle !== 'How to disable your adblocker for theguardian.com' &&
