@@ -474,28 +474,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object targeting {
-    lazy val stsRoleToAssume = configuration.getStringProperty("aws.composer.account.role")
-
-    lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = stsRoleToAssume.flatMap { role =>
-      val provider = new AWSCredentialsProviderChain(
-        new ProfileCredentialsProvider("frontend"),
-        new STSAssumeRoleSessionCredentialsProvider(role, "frontend"))
-
-      try {
-         val creds = provider.getCredentials
-         Some(provider)
-      } catch {
-        case ex: AmazonClientException =>
-          log.error("amazon client cross account exception", ex)
-          if (Play.isProd) throw ex
-          None
-      }
-    }
-
-    lazy val crossAccountMandatoryCredentials = this.crossAccountCredentials
-      .getOrElse(throw new BadConfigurationException(s"AWS credentials for targeting cross account are not correctly configured"))
-
-    lazy val campaignsBucket = configuration.getMandatoryStringProperty("targeting.campaigns.bucket")
+    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
   }
 
   object facia {

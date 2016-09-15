@@ -1,34 +1,18 @@
 package targeting
 
 import common._
-import com.gu.targeting.client._
-import com.amazonaws.services.s3.AmazonS3Client
+import com.gu.targeting.client.CampaignCache
 import conf.Configuration
-import services.AwsEndpoints
-
-import scala.util.Try
 import scala.util.control.NonFatal
+import scala.concurrent.Future
 
 object CampaignAgent extends Logging with ExecutionContexts {
-  val crossAccountClient: Option[AmazonS3Client] = Try({
-    val client = new AmazonS3Client(Configuration.targeting.crossAccountMandatoryCredentials)
-    client.setEndpoint(AwsEndpoints.s3)
-    client
-  }).toOption
+  private val agent = AkkaAgent[CampaignCache](CampaignCache(List()))
 
-  private val agent = AkkaAgent[CampaignCache](new CampaignCache())
-
-  def refresh() {
-    crossAccountClient.foreach(client => {
-      agent.alter { old =>
-        try {
-          old.update(client, Configuration.targeting.campaignsBucket)
-        } catch {
-          case NonFatal(e) => log.error("Failed to update campaign list.", e)
-        }
-        old
-      }
-    })
+  def refresh(): Future[Unit] = {
+    Configuration.targeting.campaignsUrl.map(url => {
+      CampaignCache.fetch(url).map(agent.send)
+    }).getOrElse(Future.failed(throw new BadConfigurationException("Campaigns URL not configured")))
   }
 
   def getCampaignsForTags(tags: Seq[String]) = try {

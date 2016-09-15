@@ -3,7 +3,7 @@ package targeting
 import app.LifecycleComponent
 import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
-
+import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
 
 class TargetingLifecycle(
@@ -17,7 +17,7 @@ class TargetingLifecycle(
 
   override def start(): Unit = {
     jobs.deschedule("TargetingCampaignRefreshJob")
-    jobs.schedule("TargetingCampaignRefreshJob", "0 * * * * ?") {
+    jobs.scheduleEvery("TargetingCampaignRefreshJob", 30.minutes) {
       CampaignAgent.refresh()
     }
 
