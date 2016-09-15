@@ -31,7 +31,7 @@ object InstallVars {
 
   def apply(key: String, default: String) = properties.getOrElse(key, default)
 
-  trait InstallationVars {
+  object InstallationVars {
     val stack = apply("stack", "frontend")
     // if got config at app startup, we wouldn't need to configure it
     val app = apply("app", "dev-build")
@@ -59,10 +59,11 @@ object InstallVars {
   }
 }
 
-object GuardianConfiguration extends Logging with InstallVars.InstallationVars {
+object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
+  import InstallVars.InstallationVars._
 
   lazy val configuration = {
     // This is version number of the config file we read from s3,
@@ -144,8 +145,10 @@ class GuardianConfiguration extends Logging {
       configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
   }
 
-  object environment extends InstallVars.InstallationVars {
+  object environment {
+    import InstallVars._
 
+    lazy val stage = InstallationVars.stage
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
