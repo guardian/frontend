@@ -444,6 +444,9 @@
         }
     }
 
+    .slide-video:not(.slide-video__expand) .expandable-video {
+        display: none;
+    }
 
     .slide-video__expand .creative__cta {
         opacity: 1;
