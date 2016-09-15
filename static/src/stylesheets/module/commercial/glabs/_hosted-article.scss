@@ -108,6 +108,19 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
                 margin-top: 1px;
             }
         }
+
+        video { //inline video element
+            width: 100%;
+
+            @include mq(desktop) {
+                width: gs-span(8);
+            }
+
+            @include mq(wide) {
+                width: gs-span(11) + $gs-gutter;
+                margin-left: gs-span(-3);
+            }
+        }
     }
     .hosted__standfirst {
         padding: 0;
