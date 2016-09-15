@@ -43,10 +43,11 @@ object SurgeUtils {
       case Some(x) if x >= 300 => 2
       case Some(x) if x >= 200 => 3
       case Some(x) if x >= 100 => 4
+      case Some(x) if x >= 50 => 5
       case _ => 0
     }
 
-    if (level == 0) Seq(0) else Seq.range(level, 5)
+    if (level == 0) Seq(0) else Seq.range(level, 6)
   }
 
   def parse(json: JsValue) = {
