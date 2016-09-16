@@ -234,11 +234,13 @@ object ChesterZooHostedPages {
   })
 
   def nextPages(pageName: String): List[NextHostedPage] = {
-    val index: Int = allLivePagesOrdered.indexOf(pageName)
-    val nextIndex = (index + 1) % allLivePagesOrdered.length
-    val nextNextIndex = (index + 2) % allLivePagesOrdered.length
+    val orderedPages: List[String] = allLivePagesOrdered
+    val index: Int = if(orderedPages.contains(pageName)) orderedPages.indexOf(pageName) else if (orderedPages.nonEmpty) orderedPages.length - 1 else 0
+    val length: Int = if(orderedPages.nonEmpty) orderedPages.length else 1
+    val nextIndex = (index + 1) % length
+    val nextNextIndex = (index + 2) % length
 
-    List(nextIndex, nextNextIndex).map(allLivePagesOrdered(_)).map(pageMap)
+    List(nextIndex, nextNextIndex).filter(_ != index).map(orderedPages(_)).map(pageMap)
   }
 
   private def galleryPage: HostedGalleryPage = HostedGalleryPage(
