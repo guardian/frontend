@@ -2,11 +2,14 @@ package model.commercial.travel
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
+import contentapi.ContentApiClient
 import model.commercial.{Keyword, Lookup, MerchandiseAgent, Segment}
 
 import scala.concurrent.Future
 
-object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionContexts {
+class TravelOffersAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[TravelOffer] with ExecutionContexts {
+
+  private val lookup = new Lookup(contentApiClient)
 
   def offersTargetedAt(segment: Segment): Seq[TravelOffer] = {
     val defaultOffers = available.sortBy(_.position).take(4)
@@ -21,7 +24,7 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[TravelOffer]] = {
 
     def fetchKeywords(country: String): Future[Seq[String]] = for {
-      keywords <- Lookup.keyword("\"" + country + "\"", section = Some("travel"))
+      keywords <- lookup.keyword("\"" + country + "\"", section = Some("travel"))
     } yield keywords.map(_.id).distinct
 
     def keywordsForOffer(offer: TravelOffer): Future[Seq[String]] = Future.sequence(offer.countries.map(fetchKeywords)).map(_.flatten)

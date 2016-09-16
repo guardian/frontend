@@ -1,22 +1,30 @@
 package model.commercial
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import test.ConfiguredTestSuite
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import test.{ConfiguredTestSuite, WithTestContentApiClient, WithTestWsClient}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-@DoNotDiscover class LookupTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class LookupTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
+
+  lazy val lookup = new Lookup(testContentApiClient)
 
   private val timeout = 10.seconds
 
   private def contentsOf(shortUrls: String*) = {
-    val futureContents = Lookup.contentByShortUrls(shortUrls)
+    val futureContents = lookup.contentByShortUrls(shortUrls)
     Await.result(futureContents, timeout)
   }
 
   private def contentsForKeyword(keywordId: String) = {
-    val futureContents = Lookup.latestContentByKeyword(keywordId, 4)
+    val futureContents = lookup.latestContentByKeyword(keywordId, 4)
     Await.result(futureContents, timeout)
   }
 

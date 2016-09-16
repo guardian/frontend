@@ -24,9 +24,9 @@ trait RefreshJob extends Logging {
   }
 }
 
-class IndustriesRefresh(val jobs: JobScheduler) extends RefreshJob {
+class IndustriesRefresh(industries: Industries, val jobs: JobScheduler) extends RefreshJob {
 
   val name: String = "Industries"
 
-  def refresh() = Industries.refresh()
+  def refresh() = industries.refresh()
 }
