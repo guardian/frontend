@@ -8,4 +8,11 @@
     }
 
     @fragments.onwardPlaceholder(crosswordPage.content.commercial.isAdvertisementFeature)
+
+    @if(!crosswordPage.content.content.shouldHideAdverts && crosswordPage.content.commercial.needsHighMerchandisingSlot(Edition(request))) {
+        <div class="fc-container fc-container--commercial">
+            @fragments.commercial.commercialComponentHigh(false)
+        </div>
+    }
+
 </div>
