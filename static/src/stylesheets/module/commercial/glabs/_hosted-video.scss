@@ -10,7 +10,7 @@
             }
         }
         .hostedbadge__logo {
-            @include mq($until: tablet) {
+            @include mq($until: wide) {
                 // use fading one
                 display: none;
             }
