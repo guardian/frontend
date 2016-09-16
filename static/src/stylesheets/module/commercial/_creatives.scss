@@ -420,6 +420,10 @@
             float: right;
         }
     }
+
+    .slide-video:not(.slide-video__expand) .expandable-video {
+        display: none;
+    }
 }
 
 .creative--expandable-video-v2 {
@@ -448,10 +452,6 @@
         > img {
             display: block;
         }
-    }
-
-    .slide-video:not(.slide-video__expand) .expandable-video {
-        display: none;
     }
 
     .slide-video__expand .creative__cta {
