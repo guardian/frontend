@@ -333,6 +333,10 @@
         }
     }
 
+    &.full-width-video .slide-container {
+        width: 100%;
+    }
+
     &.full-width-video .slide-video .slide-container {
         @include mq(wide) {
             width: 100%;
@@ -422,10 +426,6 @@
         .ad-exp--expand {
             cursor: pointer;
         }
-    }
-
-    &.full-width-video .slide-container {
-        width: 100%;
     }
 
     &.right-aligned-video .video-container__cta {
