@@ -9,6 +9,7 @@ import implicits.Dates._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Naked}
 
 /**
@@ -92,9 +93,9 @@ final case class Trail (
   /** TODO - this should be set in the Facia tool */
   lazy val showByline: Boolean = tags.isComment
 
-  def shouldHidePublicationDate(edition: Edition): Boolean = {
+  def shouldHidePublicationDate(implicit request: RequestHeader): Boolean = {
     lazy val isPaidContentInDfp = staticBadgesSwitch.isSwitchedOff && commercial.isAdvertisementFeature
-    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && BrandHunter.isPaidContent(this, edition)
+    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && BrandHunter.isPaidContent(this, Edition(request))
     (isPaidContentInDfp || isPaidContentInCapi) && webPublicationDate.isOlderThan(2.weeks)
   }
 
