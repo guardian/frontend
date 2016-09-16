@@ -173,7 +173,10 @@ define([
     }
 
     function reportTrackingData() {
-        if (config.tests.commercialClientLogging) {
+        if (config.tests.commercialClientLogging ||
+            config.tests.commercialHbSonobi ||
+            config.tests.commercialHbPrebid ||
+            config.tests.commercialHbControl) {
             require(['ophan/ng'], function (ophan) {
                 performanceLog.viewId = ophan.viewId;
 
