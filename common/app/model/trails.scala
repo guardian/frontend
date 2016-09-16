@@ -2,8 +2,8 @@ package model
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.Edition.defaultEdition
-import common.commercial.{BrandHunter, PaidContent}
+import common.Edition
+import common.commercial.BrandHunter
 import conf.switches.Switches.staticBadgesSwitch
 import implicits.Dates._
 import org.joda.time.DateTime
@@ -92,13 +92,9 @@ final case class Trail (
   /** TODO - this should be set in the Facia tool */
   lazy val showByline: Boolean = tags.isComment
 
-  lazy val shouldHidePublicationDate: Boolean = {
+  def shouldHidePublicationDate(edition: Edition): Boolean = {
     lazy val isPaidContentInDfp = staticBadgesSwitch.isSwitchedOff && commercial.isAdvertisementFeature
-    lazy val isPaidContentInCapi =
-      staticBadgesSwitch.isSwitchedOn && BrandHunter.findTrailBranding(this, defaultEdition).exists {
-        _.sponsorshipType == PaidContent
-      }
-
+    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && BrandHunter.isPaidContent(this, edition)
     (isPaidContentInDfp || isPaidContentInCapi) && webPublicationDate.isOlderThan(2.weeks)
   }
 
