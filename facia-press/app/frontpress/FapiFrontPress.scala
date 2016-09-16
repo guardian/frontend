@@ -22,7 +22,7 @@ import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
 
-class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
+class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
@@ -31,7 +31,7 @@ class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
     useThrift = false
   )
 
-  implicit val apiClient: ApiClient = FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -49,7 +49,7 @@ class LiveFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
     FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
-class DraftFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
+class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
@@ -58,7 +58,7 @@ class DraftFapiFrontPress(val wsClient: WSClient) extends FapiFrontPress {
     useThrift = false
   )
 
-  implicit val apiClient: ApiClient = FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -89,7 +89,8 @@ object EmbedJsonHtml {
 trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
-  implicit val apiClient: ApiClient
+  implicit val fapiClient: ApiClient
+  val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   def pressByPathId(path: String): Future[Unit]
 
@@ -249,8 +250,8 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
   }
 
   private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse:Future[ItemResponse] = ContentApiClient.getResponse(
-      ContentApiClient.item(id, Edition.defaultEdition)
+    val contentApiResponse:Future[ItemResponse] = capiClientForFrontsSeo.getResponse(
+      capiClientForFrontsSeo.item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
     )

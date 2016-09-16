@@ -11,7 +11,7 @@ import services._
 
 import scala.concurrent.Future
 
-class TaggedContentController(contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Logging with ExecutionContexts {
+class TaggedContentController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Logging with ExecutionContexts {
 
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>

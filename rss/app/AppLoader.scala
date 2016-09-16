@@ -4,7 +4,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
-import contentapi.SectionsLookUpLifecycle
+import contentapi._
 import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
 import model.ApplicationIdentity
@@ -22,14 +22,16 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers {
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents {
+
+  // Services
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+  lazy val sectionsLookUp = wire[SectionsLookUp]
+
+  // Controllers
   lazy val healthCheck = wire[HealthCheck]
   lazy val rssController = wire[RssController]
-}
-
-trait AdminLifecycleComponents {
-  self: AppComponents with Controllers =>
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
@@ -40,9 +42,6 @@ trait AdminLifecycleComponents {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers {
 
   lazy val router: Router = wire[Routes]
 
