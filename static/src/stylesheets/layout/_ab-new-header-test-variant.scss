@@ -23,18 +23,18 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     @include mq($until: $mobile-medium) {
         width: 170px;
         // height: auto doesn't work in Safari
-        height: calc(3/16 * 170px);
+        height: calc(3 / 16 * 170px);
     }
 
     @include mq($from: $mobile-medium, $until: mobileLandscape) {
         width: 225px;
-        height: calc(3/16 * 225px);
+        height: calc(3 / 16 * 225px);
     }
 
     @include mq(mobileLandscape) {
         width: 260px;
         // height: auto doesn't work in Safari
-        height: calc(3/16 * 260px);
+        height: calc(3 / 16 * 260px);
         padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
         margin-right: $gs-gutter / 2;
     }
@@ -43,12 +43,9 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 .new-header__nav {
     @include fs-textSans(5);
     line-height: 1.6;
-    display: flex;
-    align-items: center;
     width: 100%;
+    padding-left: 10px;
     // Position after pseudo element which forces line break
-    order: 1;
-    justify-content: space-between;
 
     @include mq($until: mobile) {
         font-size: 16px;
@@ -72,14 +69,16 @@ $gutter-large: 55px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
-    position: relative;
+    position: absolute;
+    right: 0px;
     // Unset button from user agent stylesheet
     border: 0;
     outline: none;
     // Override button from user agent stylesheet
     border-radius: 100%;
-    z-index: $zindex-modal;
+    z-index: 1031;
     background-color: $news-main-2;
+    cursor: pointer;
 
     &--open:before {
         // Extended hit area for veggie burger close state, for fat fingers
@@ -136,6 +135,7 @@ $gutter-large: 55px;
     right: 0;
     margin-left: auto;
     margin-right: auto;
+    cursor: pointer;
 
     &,
     &:before,
@@ -170,28 +170,20 @@ $gutter-large: 55px;
     }
 }
 
-.new-header__nav__list {
-    display: flex;
-    flex-wrap: wrap;
-    // Unset ul from user agent stylesheet
-    margin-top: 0;
-    // Unset ul from user agent stylesheet
-    margin-bottom: 0;
-    order: -1;
-    margin-left: $gs-gutter / 2;
 
-    @include mq($until: mobile) {
-        overflow: hidden;
-        height: 1.6em;
+.new-header__nav__link {
+    // Override a from _lists.scss
+    color: #ffffff;
+    padding-left: .3em;
+    padding-right: .07em;
+    display: inline-block;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
     }
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-    }
-}
-
-.new-header__nav__primary-item {
-    // Override inherited nav ul from _lists.scss
     list-style: none;
     white-space: nowrap;
     position: relative;
@@ -208,21 +200,8 @@ $gutter-large: 55px;
         color: $news-main-2;
     }
 
-    &:first-child:before {
+    &:first-of-type:before {
         content: none;
-    }
-}
-
-.new-header__nav__link {
-    // Override a from _lists.scss
-    color: #ffffff;
-    padding-left: .3em;
-    padding-right: .3em;
-    display: inline-block;
-
-    &:focus,
-    &:hover {
-        text-decoration: none;
     }
 }
 
@@ -323,10 +302,10 @@ $gutter-large: 55px;
     }
 }
 
-.edition-picker__checkbox, .edition-picker__button {
+.edition-picker__button {
     display: none;
 
-    &:checked, &.open {
+    &:checked, &[aria-expanded='true'] {
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: $guardian-brand-dark;
@@ -350,35 +329,19 @@ $gutter-large: 55px;
     left: 0;
     line-height: 1;
     z-index: $zindex-modal;
-
-    .js-on & {
-        &:not(.shown) {
-            display: none;
-        }
-    }
-
-    .js-off & {
-        &:not(:target) {
-            display: none;
-        }
-    }
 }
 
 .main-menu-container__overlay {
     background-color: hsla(0, 0%, 0%, .5);
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
-    z-index: -1;
-
-    .main-menu-container.off-screen & {
-        opacity: 0;
-        transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
-    }
+    z-index: 2;
+    display: none;
 }
 
 .main-menu-container__menu {
@@ -415,6 +378,31 @@ $gutter-large: 55px;
     .main-menu-container.off-screen & {
         transform: translateX(-110%);
         transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+    }
+}
+
+.new-header__nav__button {
+    display: none;
+}
+
+.main-menu-container {
+    transform: translateX(-110%);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+}
+
+.new-header__nav__button {
+    &:checked, &[aria-expanded='true']  {
+        & ~ .main-menu-container {
+            transform: translateX(0%);
+            transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+        }
+    }
+    &:checked, &[aria-expanded='true'] {
+        & ~ .main-menu-container__overlay {
+            opacity: 1;
+            transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
+            display: block;
+        }
     }
 }
 

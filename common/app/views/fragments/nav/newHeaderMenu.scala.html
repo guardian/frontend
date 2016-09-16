@@ -5,7 +5,7 @@
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     <li class="main-navigation__item navigation-border">
             <!-- TODO: Firefox -->
-        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name">
+        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
             <summary class="main-navigation__item__button">
                 <i class="main-navigation__icon"></i>
                 @topLevelSection.name
@@ -16,6 +16,7 @@
                     navigation-group
                     navigation-group--@{edition.id.toLowerCase}
                     js-editionlise-secondary-nav"
+                    data-edition="@{edition.id.toLowerCase}"
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
@@ -29,11 +30,12 @@
     </li>
 }
 
-<div class="main-menu-container" id="main-menu">
-        <!-- TODO: Provide tabbable alternative -->
-    <a href="#" class="main-menu-container__overlay" aria-hidden="true"></a>
+<div href="#" class="main-menu-container__overlay" aria-hidden="true"></div>
 
-    <div class="main-menu-container__menu js-reset-scroll-on-menu">
+<div class="main-menu-container">
+        <!-- TODO: Provide tabbable alternative -->
+
+    <div class="main-menu-container__menu js-reset-scroll-on-menu" id="main-menu" aria-hidden="true">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)
