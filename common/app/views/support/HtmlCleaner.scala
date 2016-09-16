@@ -107,7 +107,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isUSMinute) MinuteMedia
+        else if (article.isTheMinute) MinuteMedia
         else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
@@ -125,7 +125,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+      val inlineClass = if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
 
       val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 

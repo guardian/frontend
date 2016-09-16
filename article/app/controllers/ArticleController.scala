@@ -219,7 +219,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
-      case minute: Article if minute.isUSMinute =>
+      case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
         // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
       case liveBlog: Article if (liveBlog.isLiveBlog && request.isEmail) =>

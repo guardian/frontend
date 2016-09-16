@@ -6,7 +6,7 @@ import scala.collection.JavaConversions._
 case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     // US Minute articles use liveblog blocks but we don't want to show timestamps
-    if (article.isUSMinute) document.getElementsByClass("published-time").foreach(_.remove)
+    if (article.isTheMinute) document.getElementsByClass("published-time").foreach(_.remove)
     document
   }
 }
@@ -35,7 +35,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    if (article.isUSMinute) {
+    if (article.isTheMinute) {
       document.getElementsByClass("block").foreach { block =>
         val allElements = block.getAllElements
         val heading = block.select("h2.block-title")
