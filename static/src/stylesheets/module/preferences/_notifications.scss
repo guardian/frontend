@@ -22,8 +22,7 @@ $slider-clearence: 3px;
     width: $gs-gutter * 2.5;
     border-radius: $slider-height / 2;
     margin-right: $gs-gutter / 2;
-
-    transition: all .4s ease;
+    transition: background .3s ease;
 
     &:before {
         content: '';
@@ -33,6 +32,7 @@ $slider-clearence: 3px;
         height: $slider-height - ($slider-clearence * 2);
         background-color: $neutral-8;
         border-radius: 50%;
+        transition: all .3s ease;
     }
 
     &--unsubscribed {
@@ -40,7 +40,6 @@ $slider-clearence: 3px;
 
         &:before {
             left: $slider-clearence;
-            right: auto;
         }
 
         .notifications__toggle:hover & {
@@ -52,12 +51,11 @@ $slider-clearence: 3px;
         background-color: $live-main-2;
 
         &:before {
-            right: $slider-clearence;
-            left: auto;
+            left: $slider-clearence * 7;
         }
 
         .notifications__toggle:hover & {
-            background-color: $neutral-1;
+            background-color: $live-support-2;
         }
     }
 }
