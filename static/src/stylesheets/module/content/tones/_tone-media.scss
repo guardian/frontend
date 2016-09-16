@@ -58,6 +58,7 @@
         }
     }
 
+    &:not(.content--advertisement-feature)
     .brandbadge__logo {
         filter: invert(50%);
     }
