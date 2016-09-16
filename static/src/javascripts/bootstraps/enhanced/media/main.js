@@ -128,6 +128,9 @@ define([
                   el.classList.remove('vjs-big-play-button');
                   el.classList.add('vjs-big-play-button__duration');
                 }
+                if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                  initButtonDuration();
+                }
                 var $el = bonzo(el);
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
@@ -162,7 +165,6 @@ define([
                   buttonElement.dataset.duration = buttonDuration;
                   console.log(buttonElement);
                 }
-                debugger;
                 if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
                   initButtonDuration();
                 }
