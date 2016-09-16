@@ -33,7 +33,7 @@ class Lookup(contentApiClient: ContentApiClient) extends ExecutionContexts with 
                 .showAtoms("all")
     val result = contentApiClient.getResponse(query) map { response => response.content flatMap transform }
     result.onFailure {
-      case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}")
+      case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
     }
     result
   }
