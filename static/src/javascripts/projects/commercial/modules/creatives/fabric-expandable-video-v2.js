@@ -71,7 +71,7 @@ define([
                 return true;
             });
 
-            function open(isClosed_) {
+            function open(open) {
                 var videoSrc = $('#YTPlayer').attr('src');
                 var videoSrcAutoplay = videoSrc;
 
@@ -79,12 +79,12 @@ define([
                     videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
                 } else {
                     videoSrcAutoplay = videoSrcAutoplay.replace(
-                        isClosed_ ? 'autoplay=0' : 'autoplay=1',
-                        isClosed_ ? 'autoplay=1' : 'autoplay=0'
+                        open ? 'autoplay=0' : 'autoplay=1',
+                        open ? 'autoplay=1' : 'autoplay=0'
                     );
                 }
 
-                if (isClosed_) {
+                if (open) {
                     $('.ad-exp__close-button', $adSlot[0]).addClass('button-spin');
                     $('.ad-exp__open-chevron', $adSlot[0]).addClass('chevron-down');
                     $ad.css('height', openedHeight);
@@ -102,7 +102,7 @@ define([
                     .removeClass('slide-video__expand');
                 }
 
-                isClosed = !isClosed_;
+                isClosed = !open;
 
                 setTimeout(function () {
                     $('#YTPlayer').attr('src', videoSrcAutoplay);
