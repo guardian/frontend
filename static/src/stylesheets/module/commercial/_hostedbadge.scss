@@ -22,21 +22,25 @@
 
 .hostedbadge__info {
     @include f-headlineSans;
-    @include font-size(13, 11);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    line-height: 16px;
 
     height: auto;
-    padding: 3px 0 2px;
+    padding-top: $gs-gutter / 4;
+    padding-bottom: $gs-gutter / 2.5;
     color: $neutral-1;
     margin: 0;
     text-align: center;
 
-    @include mq(desktop) {
+    /*@include mq(desktop) {
         .hostedbadge--shouldscale & {
             padding: 0;
             font-size: 16px;
             line-height: 28px;
         }
-    }
+    }*/
 }
 
 .hostedbadge .hostedbadge__logo {

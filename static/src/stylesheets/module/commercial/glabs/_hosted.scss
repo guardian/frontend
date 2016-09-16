@@ -222,7 +222,10 @@ $hosted-video-height: 540px;
 
 .hosted__glogotext {
     @include f-headlineSans;
-    @include font-size(14);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    line-height: 16px;
 
     margin: 0;
     text-align: left;
@@ -520,6 +523,10 @@ $hosted-video-height: 540px;
 
     .hostedbadge {
         position: absolute;
+
+        @include mq(desktop) {
+            margin-left: $gs-gutter / 2;
+        }
     }
     .hostedbadge__logo.hostedbadge__logo {
         position: relative;
