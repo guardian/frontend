@@ -15,18 +15,8 @@ define([
     'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-<<<<<<< 75681b40cc78d673647a2bfedec39297a512f63a
-    'common/modules/experiments/tests/weekend-reading-promo'
-=======
     'common/modules/experiments/tests/weekend-reading-promo',
-<<<<<<< 253726bcbdd152a7a7d12ea1ff1b93e4fc907c50
-    'common/modules/experiments/tests/contributions-epic-buttons'
-=======
-    'common/modules/experiments/tests/no-social-count',
-    'common/modules/experiments/tests/contributions-epic-buttons',
     'common/modules/experiments/tests/video-button-duration'
->>>>>>> AB test structure added with bug to fix
->>>>>>> AB test structure added with bug to fix
 ], function (
     reportError,
     config,
@@ -44,18 +34,8 @@ define([
     ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
-<<<<<<< 75681b40cc78d673647a2bfedec39297a512f63a
-    WeekendReadingPromo
-=======
     WeekendReadingPromo,
-<<<<<<< 253726bcbdd152a7a7d12ea1ff1b93e4fc907c50
-    ContributionsEpicButtons
-=======
-    NoSocialCount,
-    ContributionsEpicButtons,
     VideoButtonDuration
->>>>>>> AB test structure added with bug to fix
->>>>>>> AB test structure added with bug to fix
 ) {
 
     var TESTS = [
@@ -66,13 +46,8 @@ define([
         new HostedGalleryCallToAction(),
         new ContributionsEpic(),
         new WeekendReadingEmail(),
-<<<<<<< 75681b40cc78d673647a2bfedec39297a512f63a
-        new WeekendReadingPromo()
-=======
         new WeekendReadingPromo(),
-        new NoSocialCount(),
         new VideoButtonDuration()
->>>>>>> AB test structure added with bug to fix
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
