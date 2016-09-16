@@ -33,14 +33,6 @@
     color: $neutral-1;
     margin: 0;
     text-align: center;
-
-    /*@include mq(desktop) {
-        .hostedbadge--shouldscale & {
-            padding: 0;
-            font-size: 16px;
-            line-height: 28px;
-        }
-    }*/
 }
 
 .hostedbadge .hostedbadge__logo {

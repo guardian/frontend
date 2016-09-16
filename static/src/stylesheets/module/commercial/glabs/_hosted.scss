@@ -556,6 +556,14 @@ $hosted-video-height: 540px;
     }
 }
 
+.hosted-page .hosted-fading { //this needs to overwrite inline styles
+    .hosted__heading {
+        @include mq(tablet) {
+            color: #ffffff;
+        }
+    }
+}
+
 .hosted__heading--small {
     @include f-headlineSans;
 
