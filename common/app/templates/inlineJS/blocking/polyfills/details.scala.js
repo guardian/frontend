@@ -23,12 +23,15 @@
     }
 
     function bindEvents() {
-        document.addEventListener('click', handleEvent);
+        document.addEventListener('click', handleEvent, true);
         document.addEventListener('keypress', function (event) {
-            if (event.keyCode === 0x20 || event.keyCode === 0x0D) {
+            if (event.key && (event.key === ' ' || event.key === 'Enter')) {
                 handleEvent(event);
             }
-        });
+            else if (event.keyCode === 0x20 || event.keyCode === 0x0D) {
+                handleEvent(event);
+            }
+        }, true);
     }
 
     function appendCss() {
