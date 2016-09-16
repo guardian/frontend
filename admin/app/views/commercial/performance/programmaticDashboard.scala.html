@@ -19,15 +19,38 @@
     <div class="container-fluid">
         <h4>Time taken to execute the Commercial javascript application</h4>
 
-         <div class="row">
+        <div class="row">
             <div class="col-md-12">This is the time between the commercial system starting and completing (known as the commercial bootstrap).</div>
-         </div>
+        </div>
 
         <div class="row graph graph--commercial-app-duration">
-            <div class="col-md-1">
+            <div class="col-md-2">
+                <div class="graph__legend">
+                    <div class="graph__legend__label">Fastest execution:</div>
+                    <ol>
+                        <li>
+                            <span class="legend__label--prebid">
+                                <b>— prebid</b>
+                                <span class="average--prebid"></span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="legend__label--waterfall">
+                                <b>— waterfall</b>
+                                <span class="average--waterfall"></span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="legend__label--sonobi">
+                                <b>— sonobi</b>
+                                <span class="average--sonobi"></span>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
                 <div class="graph__y-axis">Time (ms)</div>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <div id="programmatic-live-performance-data" class="epoch category10"></div>
             </div>
         </div>

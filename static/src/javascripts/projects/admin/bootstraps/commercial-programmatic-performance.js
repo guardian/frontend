@@ -1,4 +1,4 @@
-/*global $, Epoch*/
+/*global $, Epoch, d3*/
 define([
     'common/utils/config',
     'common/utils/fetch-json',
@@ -22,6 +22,7 @@ define([
     var FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
     var FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
     var reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
+    var colors = d3.scale.category10().range();
 
     function initialise() {
 
@@ -50,6 +51,11 @@ define([
         });
 
        window.setInterval(fetchData, FETCH_INTERVAL);
+
+       // Add key colours to the legend rows, based on d3.
+       $('.legend__label--prebid').css('color', colors[0]);
+       $('.legend__label--waterfall').css('color', colors[1]);
+       $('.legend__label--sonobi').css('color', colors[2]);
     }
 
     function getProgrammaticReports(reports, deliveryMethod) {

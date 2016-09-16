@@ -23,3 +23,7 @@ commercial/performance/programmatic-dashboard
 #programmatic-live-performance-data {
     height: 350px;
 }
+
+.graph__legend {
+    margin: -100px 0 40px;
+}
