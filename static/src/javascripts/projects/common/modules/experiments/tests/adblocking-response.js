@@ -69,6 +69,7 @@ define([
                 !storage.local.get('gu.subscriber') &&
                 !storage.local.get('gu.contributor') &&
                 storage.local.get('gu.alreadyVisited') > 5 &&
+                config.page.pageId !== 'contributor-email-page' &&
                 config.page.pageId !== 'contributor-email-page-submitted';
         };
 
