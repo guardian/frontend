@@ -170,6 +170,11 @@ $ima-controls-height: 70px;
   border: none;
   background-color: $media-default;
   backface-visibility: hidden;
+
+  .vjs-has-started & {
+      padding-bottom: 0;
+  }
+
   &:before {
     content: attr(data-duration);
     @include fs-textSans(4);
