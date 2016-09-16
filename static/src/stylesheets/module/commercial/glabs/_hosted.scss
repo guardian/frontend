@@ -288,10 +288,12 @@ $hosted-video-height: 540px;
     }
 }
 
-.hosted-article-page .vjs_video_3-dimensions,
 .hosted__video.gu-media--video {
     vertical-align: top;
+}
 
+.hosted-article-page figure div > div, //no useful class name here!
+.hosted__video.gu-media--video {
     .vjs-big-play-button .vjs-control-text {
         @include fs-textSans(4);
         margin-left: 16px;
@@ -460,7 +462,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.hosted-article-page .vjs_video_3-dimensions.vjs-controls-enabled {
+.hosted-article-page .vjs-controls-enabled.vjs-controls-enabled {
     .vjs-control-bar {
         position: absolute;
         bottom: 7px;
