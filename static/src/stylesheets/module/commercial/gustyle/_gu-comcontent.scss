@@ -4,6 +4,10 @@
 
 .gu-display {
     position: relative;
+
+    .hostedbadge__info {
+        @include font-size(13, 11);
+    }
 }
 
 .gu-display__image-layer {
