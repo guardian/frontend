@@ -424,6 +424,10 @@
         }
     }
 
+    &.full-width-video .slide-container {
+        width: 100%;
+    }
+
     &.right-aligned-video .video-container__cta {
         display: none;
 
