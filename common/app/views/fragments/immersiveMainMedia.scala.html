@@ -1,5 +1,6 @@
 @(page: ContentPage)(implicit request: RequestHeader)
 
+@import common.{LinkTo, Localisation}
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
 @import views.support.TrailCssClasses.toneClass
@@ -26,11 +27,12 @@
                 @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
             </a>
 
-            @if(ArticleBadgesSwitch.isSwitchedOn) {
+            @if(ArticleBadgesSwitch.isSwitchedOn && isTheMinuteArticle) {
                 @badgeFor(page.item).map { badge =>
                     <div class="badge-slot">
                         <a href="@LinkTo {/@badge.seriesTag}">
-                            <img class="badge-slot__img" src="@badge.imageUrl"/>
+                            <img class="badge-slot__img" src="@badge.imageUrl" alt=""/>
+                            <span class="u-h">View more @Localisation(page.item.content.sectionLabelName) articles</span>
                         </a>
                     </div>
                 }
