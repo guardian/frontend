@@ -72,27 +72,26 @@ $minute-headline-colour: #ffffff;
 
 .content--minute-article {
     // Logo Styles
-    .logo--us-election,
+    .badge-slot,
     .logo--minute-article {
         display: block;
         float: left;
     }
 
-    .logo--us-election {
-        height: gs-height(2);
+    .badge-slot {
         position: absolute;
         top: $gs-baseline / 2;
-        width: gs-span(1) + $gs-gutter;
-
-        @include mq(tablet) {
-            width: gs-span(1) + $gs-gutter * 2;
-        }
 
         svg {
             height: auto;
             max-height: 47px;
             width: 100%;
         }
+    }
+
+    .badge-slot__img {
+        height: 66px;
+        width: 66px;
     }
 
     .logo--minute-article {
