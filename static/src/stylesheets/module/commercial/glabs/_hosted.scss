@@ -288,6 +288,7 @@ $hosted-video-height: 540px;
     }
 }
 
+.hosted-article-page .vjs_video_3-dimensions,
 .hosted__video.gu-media--video {
     vertical-align: top;
 
@@ -456,6 +457,18 @@ $hosted-video-height: 540px;
     .vjs-load-progress,
     .vjs-play-progress {
         height: 3px;
+    }
+}
+
+.hosted-article-page .vjs_video_3-dimensions.vjs-controls-enabled {
+    .vjs-control-bar {
+        position: absolute;
+        bottom: 7px;
+        @include mq(wide) {
+            right: 0;
+            left: auto;
+            width: 880px;
+        }
     }
 }
 
