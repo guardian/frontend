@@ -333,13 +333,15 @@
         }
     }
 
-    &.full-width-video .slide-container {
-        width: 100%;
-    }
-
-    &.full-width-video .slide-video .slide-container {
-        @include mq(wide) {
+    &.full-width-video {
+        .video-container__inner {
             width: 100%;
+        }
+
+        .slide-video .slide-container {
+            @include mq(wide) {
+                width: 100%;
+            }
         }
     }
 
