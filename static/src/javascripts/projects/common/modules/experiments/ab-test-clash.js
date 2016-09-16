@@ -12,7 +12,7 @@ define([
 
     function _testABClash(f) {
 
-        var contributionsEpic = {name: 'ContributionsEpic20160906', variants: ['control']};
+        var contributionsEpic = {name: 'ContributionsEpic20160916', variants: ['control', 'give', 'today', 'make']};
 
         var contributionsEpicButtons = {name: 'ContributionsEpicButtons20160907', variants: ['control', 'buttons']};
 
