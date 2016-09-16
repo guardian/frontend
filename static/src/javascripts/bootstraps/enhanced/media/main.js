@@ -123,7 +123,11 @@ define([
     function initPlayButtons(root, duration) {
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el, options, duration) {
-                el.getAttribute('data-duration', duration);
+                function initButtonDuration() {
+                  el.getAttribute('data-duration', duration);
+                  el.classList.remove('vjs-big-play-button');
+                  el.classList.add('vjs-big-play-button__duration');
+                }
                 var $el = bonzo(el);
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
@@ -151,11 +155,17 @@ define([
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
                 enhanceVideo(el, false, withPreroll);
-                var buttonDuration = el.getAttribute('data-duration');
-                var buttonButton = el.parentElement.querySelector('button.vjs-big-play-button');
-                buttonButton.dataset.duration = buttonDuration;
-                console.log(buttonDuration);
-                console.log(buttonButton);
+                function initButtonDuration() {
+                  var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+                  buttonElement.classList.add('vjs-big-play-button__duration');
+                  var buttonDuration = el.getAttribute('data-duration');
+                  buttonElement.dataset.duration = buttonDuration;
+                  console.log(buttonElement);
+                }
+                debugger;
+                if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                  initButtonDuration();
+                }
             });
         });
     }

@@ -79,80 +79,80 @@ $ima-controls-height: 70px;
     }
 }
 
-// .vjs-big-play-button {
-//     cursor: pointer;
-//     position: absolute;
-//     z-index: 1;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     box-sizing: border-box;
-//     text-align: center;
-//     border: 0;
-//     padding: 0;
-//     background-color: transparent;
-//
-//     .vjs-has-started & {
-//         padding-bottom: $vjs-control-height;
-//     }
-//
-//     &:hover .vjs-control-text {
-//         transform: translate(-50%, -50%) scale(1.15);
-//     }
-//
-//     .vjs-control-text {
-//         // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-//         @include video-play-button-size($vjs-small-button-size);
-//         position: absolute;
-//         top: 50%;
-//         left: 50%;
-//         transform: translate(-50%, -50%);
-//         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-//         user-select: none;
-//
-//         @include mq(mobileLandscape) {
-//             @include video-play-button-size($vjs-large-button-size);
-//         }
-//
-//         &:before {
-//             @include circular;
-//             @include video-play-button-size($vjs-small-button-size);
-//             content: '';
-//             display: block;
-//             @include mq(mobileLandscape) {
-//                 @include video-play-button-size($vjs-large-button-size);
-//             }
-//             background-color: $media-default;
-//         }
-//
-//         &:after {
-//             content: '';
-//             position: absolute;
-//             top: 50%;
-//             left: 50%;
-//             transform: translate(-40%, -50%);
-//             border-style: solid;
-//             border-width: 1em 0 1em 2.4em;
-//             border-color: transparent transparent transparent $neutral-1;
-//
-//             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-//                 border-radius: .2em;
-//             }
-//         }
-//     }
-//
-//     .gu-media--audio &,
-//     .vjs-has-ended &,
-//     .vjs-ad-playing &,
-//     .vjs-playing &,
-//     .vjs-has-started.vjs-using-native-controls &,
-//     .vjs-ad-loading & {
-//         display: none !important;
-//     }
-// }
-
 .vjs-big-play-button {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+
+    .vjs-has-started & {
+        padding-bottom: $vjs-control-height;
+    }
+
+    &:hover .vjs-control-text {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
+
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        &:before {
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            content: '';
+            display: block;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: $media-default;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $neutral-1;
+
+            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+                border-radius: .2em;
+            }
+        }
+    }
+
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
+        display: none !important;
+    }
+}
+
+.vjs-big-play-button__duration {
   cursor: pointer;
   display: inline-block;
   width: auto;
@@ -196,10 +196,6 @@ $ima-controls-height: 70px;
   .vjs-control-text {
     display: none;
   }
-  // .l-row__item--span-1 {
-  //   top: 40%;
-  //   left: 36%;
-  // }
   .gu-media--audio &,
   .vjs-has-ended &,
   .vjs-ad-playing &,
@@ -210,9 +206,9 @@ $ima-controls-height: 70px;
   }
 }
 
-button.vjs-big-play-button {
-  top: 40%;
-  left: 36%;
+button.vjs-big-play-button__duration {
+  top: 45%;
+  left: 5%;
   &:before {
     margin-top: 0;
   }
@@ -1161,7 +1157,7 @@ button.vjs-big-play-button {
 // we had major refactoring issues.
 .gu-media--show-controls-at-start.vjs-paused {
     .vjs-control-bar {
-        bottom: 0;
+        bottom: -3.95em;
     }
 
     .vjs-big-play-button .vjs-control-text {

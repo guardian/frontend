@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
+  
+  Switch(
+    ABTests,
+    "ab-video-button-duration",
+    "Show visitors new video play button",
+    owners = Seq(Owner.withGithub("mr-mr")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
 }
