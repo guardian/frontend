@@ -128,6 +128,7 @@ CommentBox.prototype.prerender = function() {
     } else if (this.options.shouldRenderMainAvatar) {
         var avatar = this.getElem('avatar-wrapper');
         avatar.setAttribute('userid', userData.id);
+        avatar.setAttribute('data-userid', userData.id);
         UserAvatars.avatarify(avatar);
     }
 
