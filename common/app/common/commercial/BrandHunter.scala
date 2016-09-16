@@ -25,6 +25,6 @@ object BrandHunter {
       findBranding(tag.properties.activeBrandings, edition, publicationDate)
     }.headOption
 
-    brandingBySection orElse brandingByTags
+    brandingByTags orElse brandingBySection
   }
 }

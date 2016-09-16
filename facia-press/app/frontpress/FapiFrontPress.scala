@@ -225,7 +225,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
             val tagBrandings = response.tag.flatMap { tag =>
               tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
             }
-            val brandings = sectionBrandings.toList.flatten ++ tagBrandings.toList.flatten
+            val brandings = tagBrandings.toList.flatten ++ sectionBrandings.toList.flatten
             if (brandings.isEmpty) None else Some(brandings)
           }
         )
