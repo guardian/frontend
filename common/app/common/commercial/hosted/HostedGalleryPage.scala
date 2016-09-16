@@ -13,9 +13,8 @@ case class HostedGalleryPage(
   standfirst: String,
   cta: HostedCallToAction,
   ctaIndex: Option[Integer] = None,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
+  socialShareText: Option[String] = None,
+  shortSocialShareText: Option[String] = None,
   images: List[HostedGalleryImage],
   nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List()

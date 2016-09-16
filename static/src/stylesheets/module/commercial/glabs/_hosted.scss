@@ -229,6 +229,14 @@ $hosted-video-height: 540px;
     color: rgba(255, 255, 255, .5);
 }
 
+.hosted-page ~ .survey-overlay-simple {
+    .survey-container {
+        @include mq(tablet) {
+            top: 40%;
+        }
+    }
+}
+
 .hosted-video-page {
     .hosted__container.host {
         position: relative;
@@ -599,11 +607,6 @@ $hosted-video-height: 540px;
     @include mq(desktop) {
         padding-top: 270px;
     }
-
-    a {
-        // hack stop the link underline
-        color: transparent;
-    }
 }
 
 .hosted__cta-btn-wrapper {
@@ -707,15 +710,23 @@ $hosted-video-height: 540px;
     display: block;
     width: 100%;
     height: 100%;
+    // hack stop the link underline
+    color: transparent;
+    outline: none;
 
     &:hover {
         background-color: rgba(#333333, .2);
+    }
+
+    &:active,
+    &:visited {
+        text-decoration: none;
     }
 }
 
 .hosted__cta-link,
 .hosted__next-video--tile {
-    &:hover {
+    &:hover, &:active {
         text-decoration: none;
     }
 }
@@ -752,10 +763,6 @@ $hosted-video-height: 540px;
 .hosted__standfirst {
     width: auto;
     padding: $gs-baseline $gs-gutter 0;
-
-    @include mq(desktop) {
-        margin-bottom: $gs-gutter * 1.5;
-    }
 }
 
 .hosted__social.host__header {

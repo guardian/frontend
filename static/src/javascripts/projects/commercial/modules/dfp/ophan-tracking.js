@@ -150,10 +150,18 @@ define([
         }));
     }
 
-    function addBaseline(baselineName) {
+    function addStartTimeBaseline(baselineName) {
         performanceLog.baselines.push({
             name: baselineName,
-            time: userTiming.getCurrentTime()
+            startTime: userTiming.getCurrentTime()
+        });
+    }
+
+    function addEndTimeBaseline(baselineName) {
+        performanceLog.baselines.map(function(baseline) {
+            if (baseline.name === baselineName) {
+                baseline.endTime = userTiming.getCurrentTime();
+            }
         });
     }
 
@@ -161,7 +169,7 @@ define([
         var index = performanceLog.baselines
             .map(function (_) { return _.name; })
             .indexOf(baselineName);
-        return index > -1 ? performanceLog.baselines[index].time : 0;
+        return index > -1 ? performanceLog.baselines[index].startTime : 0;
     }
 
     function reportTrackingData() {
@@ -182,7 +190,8 @@ define([
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
         updateAdvertMetric : updateAdvertMetric,
-        addBaseline : addBaseline,
+        addStartTimeBaseline : addStartTimeBaseline,
+        addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
         addTag: addTag

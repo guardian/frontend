@@ -61,7 +61,7 @@ define([
                 var primaryBaseline = find(report.baselines, function(baseline){
                     return baseline.name === 'primary';
                 });
-                return primaryBaseline ? primaryBaseline.time : 0;
+                return primaryBaseline ? primaryBaseline.startTime : 0;
             });
 
             // Filter the times array from silly numbers, investigating why Date times are appearing in the array.
