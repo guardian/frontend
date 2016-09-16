@@ -27,3 +27,12 @@ commercial/performance/programmatic-dashboard
 .graph__legend {
     margin: -100px 0 40px;
 }
+
+.graph__legend__keys {
+    list-style-type: none;
+    padding-left: 6px;
+}
+
+.graph__legend__label {
+    text-align: center;
+}
