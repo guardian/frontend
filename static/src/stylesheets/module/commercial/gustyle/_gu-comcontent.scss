@@ -6,7 +6,8 @@
     position: relative;
 
     .hostedbadge__info {
-        @include font-size(13, 11);
+        @include font-size(13, 10);
+        font-weight: normal;
     }
 }
 
