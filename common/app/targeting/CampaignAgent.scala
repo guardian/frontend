@@ -11,8 +11,8 @@ object CampaignAgent extends Logging with ExecutionContexts {
 
   def refresh(): Future[Unit] = {
     Configuration.targeting.campaignsUrl.map(url => {
-      CampaignCache.fetch(url).map(agent.send)
-    }).getOrElse(Future.failed(throw new BadConfigurationException("Campaigns URL not configured")))
+      CampaignCache.fetch(url).flatMap(agent.alter).map(_ => ())
+    }).getOrElse(Future.failed(new BadConfigurationException("Campaigns URL not configured")))
   }
 
   def getCampaignsForTags(tags: Seq[String]) = try {
@@ -23,5 +23,3 @@ object CampaignAgent extends Logging with ExecutionContexts {
       List()
   }
 }
-
-
