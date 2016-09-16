@@ -53,7 +53,9 @@ define([
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach',
-    'common/modules/experiments/subscriber-number-form'
+    'common/modules/experiments/subscriber-number-form',
+    'common/modules/experiments/contributor-email-form',
+    'common/modules/experiments/contributor-email-submitted'
 ], function (
     fastdom,
     bean,
@@ -107,7 +109,9 @@ define([
     emailArticle,
     identity,
     forEach,
-    subscriberNumberForm
+    subscriberNumberForm,
+    contributorEmailForm,
+    contributorEmailSubmitted
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -372,6 +376,8 @@ define([
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-subscriber-number-form', subscriberNumberForm],
+                ['c-contributor-email-form', contributorEmailForm],
+                ['c-contributor-email-submitted', contributorEmailSubmitted],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
