@@ -71,7 +71,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             font-size: 18px;
             line-height: 24px;
 
-            &:nth-child(2)::first-letter {
+            &.intro + p::first-letter {
                 @include fs-textSans(4);
                 display: inline-block;
                 float: left;
@@ -97,6 +97,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .drop-cap {
             @include fs-textSans(4);
+            background-color: $zootropolisColor;
             display: inline-block;
             float: left;
             color: #ffffff;
@@ -107,10 +108,6 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             height: 77px;
             margin-right: 8px;
             text-align: center;
-        }
-        .text {
-            font-size: 18px;
-            line-height: 24px;
         }
         h1 {
             line-height: 28px;

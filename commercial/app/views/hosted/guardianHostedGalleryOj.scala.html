@@ -1,18 +1,18 @@
 @import common.commercial.hosted.NextHostedPage
-@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextPages: List[NextHostedPage], backgroundCss: String = "",  borderCss: String = "", textCss: String = "")
+@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextPages: List[NextHostedPage])
     <div class="hosted-gallery__oj js-hosted-gallery-oj">
-        <div class="hosted-gallery__oj-cta @borderCss">
+        <div class="hosted-gallery__oj-cta hosted-tone-border">
             <div class="hosted-gallery__cta-title">
                 @{ctaText}
             </div>
-            <a class="hosted-gallery__cta-link @backgroundCss" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
+            <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
                 @{buttonText} @fragments.inlineSvg("external-link", "icon")
             </a>
         </div>
         @for(nextPage <- nextPages){
-            <a href="@{nextPage.pageUrl}" class="hosted-gallery__oj-next-gallery @borderCss">
+            <a href="@{nextPage.pageUrl}" class="hosted-gallery__oj-next-gallery hosted-tone-border">
                 <div class="hosted-gallery__next-gallery-title">
-                    <div class="hosted-gallery__oj-sub-header @textCss">
+                    <div class="hosted-gallery__oj-sub-header hosted-tone">
                         More
                     </div>
                     <div class="hosted-gallery__cta-title">

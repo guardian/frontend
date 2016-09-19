@@ -8,7 +8,7 @@ import model.Cached.RevalidatableResult
 import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
-import views.html.hosted.{guardianHostedArticle, guardianHostedArticle2, guardianHostedGallery, guardianHostedVideo}
+import views.html.hosted.{zootropolisPage, guardianHostedArticle, guardianHostedGallery, guardianHostedVideo}
 import scala.concurrent.Future
 
 class HostedContentController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {
@@ -20,8 +20,8 @@ class HostedContentController(contentApiClient: ContentApiClient) extends Contro
     hostedPage map {
       case Some(page: HostedVideoPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedVideo(page)))
       case Some(page: HostedGalleryPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedGallery(page)))
+      case Some(page: ZootropolisPage) => Cached(60)(RevalidatableResult.Ok(zootropolisPage(page)))
       case Some(page: HostedArticlePage) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle(page)))
-      case Some(page: HostedArticlePage2) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle2(page)))
       case _ => NoCache(NotFound)
     }
 
@@ -35,7 +35,7 @@ class HostedContentController(contentApiClient: ContentApiClient) extends Contro
       if (content.isHosted) {
         content.`type` match {
           case Video => HostedVideoPage.fromContent(content)
-          case Article => HostedArticlePage2.fromContent(content)
+          case Article => HostedArticlePage.fromContent(content)
           case _ =>
             log.error(s"Failed to render unsupported hosted type: ${content.`type`}: ${content.id}")
             None
