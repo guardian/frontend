@@ -1,8 +1,8 @@
 define([
-    'common/utils/mediator',
     'common/utils/config',
-    'common/utils/url'
-], function (mediator, config, urlUtils) {
+    'common/utils/url',
+    'commercial/modules/dfp/dfp-env'
+], function (config, urlUtils, dfpEnv) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql';
     var sectionPlacements = {
@@ -16,7 +16,6 @@ define([
     };
     var section = sectionPlacements[config.page.section] ? config.page.section : 'default';
     var audienceSciencePqlUrl = getUrl();
-    var isLoaded = false;
 
     function getUrl() {
         var placements = sectionPlacements[section];
@@ -28,8 +27,12 @@ define([
     }
 
     function onLoad() {
-        isLoaded = true;
-        mediator.emit('commercial:audience-science:loaded');
+        if (dfpEnv.shouldLazyLoad()) {
+            window.googletag.cmd.push(
+                setAudienceScienceCallback,
+                setAudienceScienceKeys
+            );
+        }
     }
 
     function getSegments() {
@@ -41,19 +44,6 @@ define([
         .map(function (placement) {
             return 'pq_' + placement;
         });
-    }
-
-    function init() {
-        if (isLoaded) {
-            run();
-        } else {
-            mediator.once('commercial:audience-science:loaded', run);
-        }
-    }
-
-    function run() {
-        setAudienceScienceCallback();
-        setAudienceScienceKeys();
     }
 
     function setAudienceScienceKeys() {
@@ -83,8 +73,7 @@ define([
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
         onLoad: onLoad,
-        getSegments: getSegments,
-        init: init
+        getSegments: getSegments
     };
 
 });

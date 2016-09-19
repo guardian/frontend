@@ -12,7 +12,6 @@ define([
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/PrebidService',
     'commercial/modules/dfp/ophan-tracking',
-    'commercial/modules/third-party-tags/audience-science-pql',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -20,7 +19,7 @@ define([
     'commercial/modules/messenger/scroll'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
-             ophanTracking, audienceScience) {
+             ophanTracking) {
 
     return init;
 
@@ -68,7 +67,6 @@ define([
             window.googletag.cmd.push(
                 setListeners,
                 setPageTargeting,
-                dfpEnv.shouldLazyLoad() ? audienceScience.init : function() {},
                 resolve
             );
         });
