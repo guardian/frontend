@@ -1,8 +1,7 @@
 define([
     'common/utils/config',
-    'common/utils/url',
-    'commercial/modules/dfp/dfp-env'
-], function (config, urlUtils, dfpEnv) {
+    'common/utils/url'
+], function (config, urlUtils) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql';
     var sectionPlacements = {
@@ -27,12 +26,10 @@ define([
     }
 
     function onLoad() {
-        if (dfpEnv.shouldLazyLoad()) {
-            window.googletag.cmd.push(
-                setAudienceScienceCallback,
-                setAudienceScienceKeys
-            );
-        }
+        window.googletag.cmd.push(
+            setAudienceScienceCallback,
+            setAudienceScienceKeys
+        );
     }
 
     function getSegments() {
