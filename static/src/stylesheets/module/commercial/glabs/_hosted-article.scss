@@ -97,6 +97,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .drop-cap {
             @include fs-textSans(4);
+            background-color: $zootropolisColor;
             display: inline-block;
             float: left;
             color: #ffffff;

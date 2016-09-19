@@ -25,10 +25,6 @@ trait HostedPage extends StandalonePage {
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
 
-  val brandColourCssClass = s"hosted-tone--${campaign.cssClass} hosted-tone"
-  val brandBackgroundCssClass = s"hosted-tone-bg--${campaign.cssClass} hosted-tone-bg"
-  val brandBorderCssClass = s"hosted-tone-border--${campaign.cssClass} hosted-tone-border"
-  val brandBtnCssClass = s"hosted-tone-btn--${campaign.cssClass} hosted-tone-btn"
 }
 
 case class NextHostedPage(
@@ -57,7 +53,7 @@ case class FontColour(brandColour: String) {
     val c = new Color(rgb)
     val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
     val brightness = hsb(2)
-    if(brandColour == "#E31B22") {
+    if(brandColour == "#E31B22" || brandColour == "#E41F13") {
       false
     } else {
       brightness > 0.5
