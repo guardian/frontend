@@ -1,8 +1,6 @@
 define([
     'common/utils/config'
-], function (
-    config
-) {
+], function () {
     return function () {
         this.id = 'VideoButtonDuration';
         this.start = '2016-09-19';

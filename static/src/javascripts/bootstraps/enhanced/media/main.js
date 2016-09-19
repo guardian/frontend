@@ -98,11 +98,12 @@ define([
 
     function createVideoPlayer(el, options, duration) {
         var player = videojs(el, options);
-        var duration = parseInt(el.getAttribute('data-duration'), 10);
+        // Commenting out line below but reluctant to delete it
+        // var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
             if (!isNaN(duration)) {
-                player.duration();
+                player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
@@ -116,11 +117,11 @@ define([
         return player;
     }
 
-    function initPlayButtons(root, duration) {
+    function initPlayButtons(root) {
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el, options, duration) {
                 function initButtonDuration() {
-                  el.getAttribute('data-duration');
+                  el.getAttribute('data-duration', duration);
                   el.classList.remove('vjs-big-play-button');
                   el.classList.add('vjs-big-play-button__duration');
                 }
@@ -154,14 +155,15 @@ define([
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
                 enhanceVideo(el, false, withPreroll);
-                function initButtonDuration() {
+                function initArticleButtonDuration() {
                   var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+                  buttonElement.classList.remove('vjs-big-play-button');
                   buttonElement.classList.add('vjs-big-play-button__duration');
                   var buttonDuration = el.getAttribute('data-duration');
                   buttonElement.dataset.duration = buttonDuration;
                 }
                 if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
-                  initButtonDuration();
+                  initArticleButtonDuration();
                 }
             });
         });
@@ -319,6 +321,20 @@ define([
                                 player.one('playing', function() {
                                     beacon.counts('video-tech-html5');
                                 });
+
+                                player.on('pause', function() {
+                                  function initPauseButtonDuration() {
+                                    var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+                                    buttonElement.classList.remove('vjs-big-play-button');
+                                    buttonElement.classList.add('vjs-big-play-button__duration');
+                                    var buttonDuration = el.getAttribute('data-duration');
+                                    buttonElement.dataset.duration = buttonDuration;
+                                  }
+                                  if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                                    initPauseButtonDuration();
+                                  }
+                                });
+
 
                                 // unglitching the volume on first load
                                 vol = player.volume();
