@@ -133,6 +133,9 @@ define([
 
             userTiming.mark('commercial start');
 
+            // Stub the command queue
+            window.googletag = { cmd: [] };
+
             loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
                 loadModules(secondaryModules, ophanTracking.secondaryBaseline);
             });
