@@ -47,6 +47,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/onward/us-survey-banner',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'common/modules/email/email',
@@ -103,6 +104,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    USSurveyBanner,
     pinterest,
     SaveForLater,
     email,
@@ -390,6 +392,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
+                ['c-us-survey-banner', modules.USSurveyBanner],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]
 
