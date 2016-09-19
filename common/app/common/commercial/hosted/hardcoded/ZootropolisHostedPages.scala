@@ -78,7 +78,7 @@ object ZootropolisHostedPages {
 
   private lazy val articlePageName = "meet-the-characters-of-zootropolis"
 
-  private lazy val articlePageWithoutNextPage = HostedArticlePage(
+  private lazy val articlePageWithoutNextPage = ZootropolisPage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,

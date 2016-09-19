@@ -8,7 +8,7 @@ import model.Cached.RevalidatableResult
 import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
-import views.html.hosted.{guardianHostedArticle, guardianHostedArticle2, guardianHostedGallery, guardianHostedVideo}
+import views.html.hosted.{zootropolisPage, guardianHostedArticle2, guardianHostedGallery, guardianHostedVideo}
 import scala.concurrent.Future
 
 class HostedContentController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {
@@ -20,7 +20,7 @@ class HostedContentController(contentApiClient: ContentApiClient) extends Contro
     hostedPage map {
       case Some(page: HostedVideoPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedVideo(page)))
       case Some(page: HostedGalleryPage) => Cached(60)(RevalidatableResult.Ok(guardianHostedGallery(page)))
-      case Some(page: HostedArticlePage) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle(page)))
+      case Some(page: ZootropolisPage) => Cached(60)(RevalidatableResult.Ok(zootropolisPage(page)))
       case Some(page: HostedArticlePage2) => Cached(60)(RevalidatableResult.Ok(guardianHostedArticle2(page)))
       case _ => NoCache(NotFound)
     }

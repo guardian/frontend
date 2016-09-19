@@ -4,7 +4,7 @@ import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.JsString
 
-case class HostedArticlePage(
+case class ZootropolisPage(
   campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
