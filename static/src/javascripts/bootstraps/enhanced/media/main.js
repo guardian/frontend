@@ -82,7 +82,6 @@ define([
     function upgradeVideoPlayerAccessibility(player) {
         // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
         $('.vjs-tech', player.el()).attr('aria-hidden', true);
-        $('.vjs-control-text').innerHTML = 'hello';
 
         // Hide superfluous controls, and label useful buttons.
         $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
