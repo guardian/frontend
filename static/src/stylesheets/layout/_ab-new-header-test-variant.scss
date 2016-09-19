@@ -357,7 +357,6 @@ $gutter-large: 55px;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
     @include mq($until: $mobile-medium) {
-        margin-right: $gutter-small + ($veggie-burger-small / 2);
         padding-top: $gs-baseline / 3;
     }
 
@@ -365,14 +364,6 @@ $gutter-large: 55px;
         //Larger font/icon size for larger devices
         font-size: 24px;
         padding-top: $gs-baseline;
-    }
-
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
-        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
-    }
-
-    @include mq(mobileLandscape) {
-        margin-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 
     .main-menu-container.off-screen & {
@@ -388,6 +379,18 @@ $gutter-large: 55px;
 .main-menu-container {
     transform: translateX(-110%);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+
+    @include mq($until: $mobile-medium) {
+        margin-right: $gutter-small + ($veggie-burger-small / 2);
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gutter-large + ($veggie-burger-medium / 2);
+    }
 }
 
 .new-header__nav__button {
