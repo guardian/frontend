@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Test variants of the button text to drive contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 21),
+    sellByDate = new LocalDate(2016, 9, 27),
     exposeClientSide = true
   )
 

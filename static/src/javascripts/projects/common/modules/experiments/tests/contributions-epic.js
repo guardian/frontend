@@ -32,7 +32,7 @@ define([
 
         this.id = 'ContributionsEpic20160916';
         this.start = '2016-09-16';
-        this.expiry = '2016-09-21';
+        this.expiry = '2016-09-27';
         this.author = 'Mark Butler';
         this.description = 'Test variants of the button text to drive contributions.';
         this.showForSensitive = false;
