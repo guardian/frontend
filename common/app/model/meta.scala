@@ -4,7 +4,7 @@ import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import com.gu.targeting.client.Campaign
-import common.commercial.{BrandHunter, Branding}
+import common.commercial.{AdUnitMaker, BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -303,7 +303,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),

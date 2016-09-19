@@ -2,14 +2,12 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/modules/navigation/edition-picker',
-    'common/modules/navigation/editionalise-menu',
-    'common/utils/details-polyfill'
+    'common/modules/navigation/editionalise-menu'
 ], function (
     fastdomPromise,
     $,
     editionPicker,
-    editionaliseMenu,
-    detailsPolyfill
+    editionaliseMenu
 ) {
     var mainMenuId = '#main-menu';
     var html = $('html');
@@ -149,8 +147,6 @@ define([
     }
 
     function init() {
-        detailsPolyfill.init('.main-navigation__item__button');
-
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
 

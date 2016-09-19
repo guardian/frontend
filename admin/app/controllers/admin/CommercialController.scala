@@ -105,6 +105,10 @@ class CommercialController extends Controller with Logging with ExecutionContext
     Ok(views.html.commercial.performance.browserDashboard())
   }
 
+  def renderProgrammaticPerformanceDashboard() = Action { implicit request =>
+    Ok(views.html.commercial.performance.programmaticDashboard())
+  }
+
   def renderKeyValues() = Action { implicit request =>
     Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
   }

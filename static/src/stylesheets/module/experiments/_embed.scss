@@ -149,6 +149,22 @@
     display: none;
 }
 
+.contributions__contribute--no-buttons--today {
+    width: 150px;
+}
+
+.contributions__contribute--no-buttons--make {
+    width: 170px;
+}
+
+.contributions__contribute--no-buttons--control {
+    width: 130px;
+}
+
+.contributions__contribute--no-buttons--give {
+    width: 130px;
+}
+
 @include mq($from: phablet) {
     .contributions__option-button--bottom {
         width: 70px;
@@ -157,7 +173,6 @@
     .contributions__contribute--bottom {
         margin-left: $gs-gutter / 2;
         margin-top: 0;
-        width: 130px;
     }
 
     .contributions__amount-field--bottom {
@@ -171,8 +186,6 @@
     .contributions__contribute--no-buttons {
         margin-left: 0;
     }
-
-
 }
 
 

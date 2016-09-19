@@ -28,9 +28,63 @@ $labour-liverpool-header-element-opacity: .85;
 .content--labour-liverpool .content__article-body > p:first-of-type {
     @include fs-headline(3);
     color: darken($news-support-4, 25%);
-    margin-top: $gs-baseline;
     font-size: 22px;
     font-weight: 200;
+}
+
+.content--labour-liverpool .content__article-body {
+    padding-top: $gs-baseline;
+}
+
+.content--labour-liverpool.heroic--video .content__article-body {
+    padding: 0px;
+    @include mq($from: tablet) {
+        padding-top: 40px;
+    }
+}
+
+.content--labour-liverpool-article {
+    &.heroic--video {
+        min-height: 0rem;
+
+        @include mq($from: mobileLandscape) {
+            min-height: 432px;
+        }
+
+        @include mq($from: tablet) {
+            min-height: 364px;
+        }
+
+        @include mq($from: desktop) {
+            height: 515px;
+        }
+    }
+}
+
+.heroic--video {
+    .labour-liverpool-headline {
+        top: 220px;
+
+        @include mq($from: mobileLandscape) {
+            top: 340px;
+        };
+
+        @include mq($from: tablet) {
+            top: 300px;
+        }
+
+        @include mq($from: desktop) {
+            top: 450px;
+        }
+  }
+
+    .vjs-control-bar {
+        visibility: hidden;
+
+        &.playing {
+            visibility: visible;
+        }
+    }
 }
 
 .labour-liverpool-cutout {
@@ -52,6 +106,8 @@ $labour-liverpool-header-element-opacity: .85;
     width: 100%;
     // make bottom left corner of headline flush with the bottom of the main media image
     top: 250px; // IE / Edge
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
 
     .gs-container {
         @include mq(mobile) {
@@ -65,6 +121,10 @@ $labour-liverpool-header-element-opacity: .85;
         @include mq($from: tablet) {
             top: 314px;
         }
+    }
+
+    &.playing {
+        opacity: 0;
     }
 }
 
@@ -334,4 +394,38 @@ $labour-liverpool-header-element-opacity: .85;
     position: absolute;
     z-index: 40;
     color: $news-main-1;
+}
+
+.heroic-video {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+
+    @include mq($from: tablet) {
+        width: 740px;
+        margin-top: 0px;
+    }
+
+    @include mq($from: desktop) {
+        width: 980px;
+    }
+}
+
+
+/*This brings the margins to the top of the page, when the heroic template has a video.
+Because this template uses the immersive header they are outside of the header - hence
+givng this some mega minus margins.*/
+
+.l-side-margins {
+    &.heroic--video {
+        &::before {
+            margin-top: -560px;
+            height: 128%;
+        }
+        &::after {
+            margin-top: -560px;
+            height: 128%;
+        }
+    }
 }

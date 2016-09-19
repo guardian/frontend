@@ -3,8 +3,38 @@
 @import views.html.hosted._
 
 @main(page, Some("commercial"))  { }  {
+    <!--[if (gt IE 9)|(IEMobile)]><!-->
+    <style>
+    .hosted-tone {
+        color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-tone-bg {
+        background-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-tone-border {
+        border-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-tone-btn,
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        background-color: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-page .hosted__link {
+        color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-page ~ .survey-overlay-simple .survey-text__header {
+        background-color: @{page.campaign.fontColour.brandColour};
+    }
+    </style>
+        <!--<![endif]-->
     <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @{page.campaign.cssClass} @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
-        @guardianHostedHeader("hosted-gallery-page", page.campaign.cssClass, page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+        @guardianHostedHeader("hosted-gallery-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
                 <div class="js-hosted-gallery-container hosted-gallery__gallery-container">
@@ -26,7 +56,7 @@
                             <div class="hosted-gallery__image--placeholder"></div>
                         }
                     </div>
-                    @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText, page.brandBackgroundCssClass)
+                    @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText)
                     <div class="hosted-gallery__progress js-hosted-gallery-progress">
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
                         <div class="hosted-gallery__progress--wrapper">
@@ -40,7 +70,7 @@
                         </div>
                         @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                     </div>
-                    @guardianHostedGalleryOj(page.cta.label, page.cta.url, page.cta.btnText, page.nextPages, page.brandBackgroundCssClass,  page.brandBorderCssClass, page.brandColourCssClass)
+                    @guardianHostedGalleryOj(page.cta.label, page.cta.url, page.cta.btnText, page.nextPages)
                 </div>
                 <div class="hosted__container hosted__container--content hosted-gallery__lower-bar js-gallery-caption-bar">
                     <header class="host__header hosted__social">

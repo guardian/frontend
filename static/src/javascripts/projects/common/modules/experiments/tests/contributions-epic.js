@@ -30,14 +30,14 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpic20160906';
-        this.start = '2016-09-06';
-        this.expiry = '2016-09-13';
-        this.author = 'Jonathan Rankin';
-        this.description = 'Test whether contributions embed performs better than our previous in-article component tests.';
+        this.id = 'ContributionsEpic20160916';
+        this.start = '2016-09-16';
+        this.expiry = '2016-09-27';
+        this.author = 'Mark Butler';
+        this.description = 'Test variants of the button text to drive contributions.';
         this.showForSensitive = false;
         this.audience = 0.05;
-        this.audienceOffset = 0.33;
+        this.audienceOffset = 0.23;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -79,7 +79,51 @@ define([
                 id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic',
+                        id: 'control',
+                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic_cta_control',
+                        linkName: 'Contribute',
+                        position: 'bottom',
+                        variant: 'no-buttons'
+                    }));
+                    bottomWriter(component);
+                },
+                success: completer
+            },
+            {
+                id: 'give',
+                test: function () {
+                    var component = $.create(template(contributionsEpic, {
+                        id: 'give',
+                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic_cta_give',
+                        linkName: 'Give today',
+                        position: 'bottom',
+                        variant: 'no-buttons'
+                    }));
+                    bottomWriter(component);
+                },
+                success: completer
+            },
+            {
+                id: 'today',
+                test: function () {
+                    var component = $.create(template(contributionsEpic, {
+                        id: 'today',
+                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic_cta_today',
+                        linkName: 'Contribute today',
+                        position: 'bottom',
+                        variant: 'no-buttons'
+                    }));
+                    bottomWriter(component);
+                },
+                success: completer
+            },
+            {
+                id: 'make',
+                test: function () {
+                    var component = $.create(template(contributionsEpic, {
+                        id: 'make',
+                        linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_epic_cta_make',
+                        linkName: 'Make a contribution',
                         position: 'bottom',
                         variant: 'no-buttons'
                     }));

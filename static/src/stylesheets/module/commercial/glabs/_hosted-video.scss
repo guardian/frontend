@@ -10,10 +10,21 @@
             }
         }
         .hostedbadge__logo {
-            @include mq($until: tablet) {
+            @include mq($until: wide) {
                 // use fading one
                 display: none;
             }
+        }
+    }
+}
+
+.leffe {
+    .hosted-tone-btn {
+        &.hosted-tone-btn,
+        &:focus,
+        &:hover {
+            background-color: #ffffff;
+            border-color: #ffffff;
         }
     }
 }

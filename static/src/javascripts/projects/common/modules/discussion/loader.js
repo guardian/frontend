@@ -335,7 +335,8 @@ Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
-        newCommenter: !this.user.privateFields.hasCommented
+        newCommenter: !this.user.privateFields.hasCommented,
+        shouldRenderMainAvatar: !discussionFrontend.canRun(ab, window.curlConfig)
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
@@ -379,6 +380,7 @@ Loader.prototype.renderCommentCount = function () {
     if (discussionFrontend.canRun(ab, window.curlConfig)) {
         return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
+            avatarImagesHost: config.page.avatarImagesUrl,
             closed: this.getDiscussionClosed(),
             discussionId: this.getDiscussionId(),
             element: document.getElementsByClassName('js-discussion-external-frontend')[0],

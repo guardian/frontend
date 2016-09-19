@@ -174,14 +174,17 @@ case class Tag (
 
   override val metadata: MetaData = Tag.makeMetadata(properties, pagination)
 
+  def isOfType(typeName: String): Boolean = properties.tagType == typeName || isOfPaidType(typeName)
+  def isOfPaidType(typeName: String): Boolean = properties.paidContentType.contains(typeName)
+
   val isContributor: Boolean = metadata.id.startsWith("profile/")
   val id: String = metadata.id
   val name: String = metadata.webTitle
-  val isSeries: Boolean = properties.tagType == "Series"
-  val isBlog: Boolean = properties.tagType == "Blog"
+  val isSeries: Boolean = isOfType("Series")
+  val isBlog: Boolean = isOfType("Blog")
   val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.sectionId)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
-  val isKeyword = properties.tagType == "Keyword"
+  val isKeyword = isOfType("Keyword") || isOfPaidType("Topic")
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
