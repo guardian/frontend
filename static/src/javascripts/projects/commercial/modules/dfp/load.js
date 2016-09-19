@@ -9,9 +9,8 @@ define([
     'commercial/modules/dfp/queue-advert',
     'commercial/modules/dfp/display-lazy-ads',
     'commercial/modules/dfp/display-ads',
-    'commercial/modules/dfp/refresh-on-resize',
-    'commercial/modules/third-party-tags/audience-science-pql'
-], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, audienceSciencePql) {
+    'commercial/modules/dfp/refresh-on-resize'
+], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
     return load;
 
     function load() {
@@ -28,7 +27,6 @@ define([
                 createAdverts,
                 queueAdverts,
                 setPublisherProvidedId,
-                dfpEnv.shouldLazyLoad() ? setAudienceScienceCallback : function() {},
                 dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
                 // anything we want to happen after displaying ads
                 refreshOnResize,
@@ -56,17 +54,5 @@ define([
             var hashedId = sha1.hash(user.id);
             window.googletag.pubads().setPublisherProvidedId(hashedId);
         }
-    }
-
-    // Remove all Audience Science related targeting keys as soon as we recieve
-    // an AS creative (will get called by the creative itself)
-    function setAudienceScienceCallback() {
-        window.onAudienceScienceCreativeLoaded = function () {
-            var pubads = window.googletag.pubads();
-            Object.keys(audienceSciencePql.getSegments()).forEach(removeKey);
-            function removeKey(key) {
-                pubads.clearTargeting(key);
-            }
-        };
     }
 });

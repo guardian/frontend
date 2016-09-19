@@ -40,8 +40,7 @@ import scala.concurrent.duration._
   it should "find content for short URL ids with campaign suffixes" in {
     contentsOf("p/4z2fv/stw", "p/4nx5n/stw").map(_.metadata.webTitle) should be(
       Seq(
-        "Papua New Guinea unveiled: exclusive photos of the nation’s tribal culture",
-        "Defining Moment: a photographer's snap decision in the face of danger"
+        "Papua New Guinea unveiled: exclusive photos of the nation’s tribal culture", "Defining Moment: a photographer's snap decision in the face of danger (part 1)"
       )
     )
   }

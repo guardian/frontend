@@ -17,7 +17,9 @@ define([
     'commercial/modules/messenger/get-stylesheet',
     'commercial/modules/messenger/resize',
     'commercial/modules/messenger/scroll'
-], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures, buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService, ophanTracking) {
+], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
+             buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
+             ophanTracking) {
 
     return init;
 
@@ -45,12 +47,7 @@ define([
                 require(['js!googletag.js']);
                 ophanTracking.addTag('sonobi');
             } else {
-                if (!window.googletag) {
-                    window.googletag = {cmd: []};
-
-                    // If we don't already have googletag, create command queue and load it async.
-                    require(['js!googletag.js']);
-                }
+                require(['js!googletag.js']);
 
                 if (dfpEnv.prebidEnabled) {
                     dfpEnv.prebidService = new PrebidService();

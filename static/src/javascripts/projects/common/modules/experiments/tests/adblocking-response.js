@@ -18,12 +18,12 @@ define([
     cookies
 ) {
     return function () {
-        this.id = 'AdBlockingResponse';
+        this.id = 'AdBlockingResponse2';
         this.start = '2016-09-16';
-        this.expiry = '2016-09-17';
+        this.expiry = '2016-09-23'; // the test will STOP on THURSDAY 22nd PM. Test dates don't behave like our switches!
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response ZERO PERCENT test with 30 minutes grace';
-        this.audience = 0;
+        this.description = 'Adblocking response test with 30 minutes grace';
+        this.audience = 0.12;
         this.audienceOffset = 0;
         this.successMeasure = 'Adblocking users white-list the Guardian domain';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';

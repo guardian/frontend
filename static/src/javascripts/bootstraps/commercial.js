@@ -54,6 +54,7 @@ define([
     badges
 ) {
     var primaryModules = [
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
@@ -66,7 +67,6 @@ define([
 
     var secondaryModules = [
         ['cm-load', dfpLoad],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-sponsorships', sponsorships.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
@@ -132,6 +132,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+
+            // Stub the command queue
+            window.googletag = { cmd: [] };
 
             loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
                 loadModules(secondaryModules, ophanTracking.secondaryBaseline);

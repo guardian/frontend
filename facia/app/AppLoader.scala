@@ -7,7 +7,6 @@ import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{Assets, FaciaControllers, HealthCheck}
-import crosswords.TodaysCrosswordGridLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
@@ -48,7 +47,6 @@ trait AppLifecycleComponents {
     wire[FaciaDfpAgentLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[IndexListingsLifecycle],
-    wire[TodaysCrosswordGridLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )

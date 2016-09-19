@@ -6,17 +6,15 @@ define([
     describe('Audience Science Gateway', function () {
 
         var injector = new Injector(),
-            audienceScienceGateway, config, storage;
+            audienceScienceGateway, config;
 
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/third-party-tags/audience-science-pql',
-                'common/utils/config',
-                'common/utils/storage'], function () {
+                'common/utils/config'], function () {
 
                     audienceScienceGateway = arguments[0];
                     config = arguments[1];
-                    storage = arguments[2];
 
                     config.page = {
                         section: 'news'
@@ -32,51 +30,43 @@ define([
 
         it('should be able to get segments', function () {
             audienceScienceGateway.reset();
-            var stored = {},
-                storedValue = {
-                    Y1C40a: {
-                        'default': {
-                            key: 'sct-76-qHDJGkNzOZB198Rq0V98'
-                        },
-                        data: {
-                            'STPG-li383': {
-                                key: 'sct-76-qHDJGkNzOZB198Rq0V98'
-                            }
-                        },
-                        blob: 'CjRjMmMyOTQ1OC0yZDhmLTRlMGMtYTY1Ni04NjcxZTJmOWRmMzctMTQwODYyODU1MjA2Ny0y'
+            window.asiPlacements = {
+                Y1C40a: {
+                    'default': {
+                        key: 'sct-76-qHDJGkNzOZB198Rq0V98'
                     },
-                    c7Zrhu: {
-                        'default': {
+                    data: {
+                        'STPG-li383': {
+                            key: 'sct-76-qHDJGkNzOZB198Rq0V98'
+                        }
+                    },
+                    blob: 'CjRjMmMyOTQ1OC0yZDhmLTRlMGMtYTY1Ni04NjcxZTJmOWRmMzctMTQwODYyODU1MjA2Ny0y'
+                },
+                c7Zrhu: {
+                    'default': {
+                        key: 'k_1zMBS3xPySFDHSOzVC3M3um3A'
+                    },
+                    data: {
+                        'STPG-li436': {
                             key: 'k_1zMBS3xPySFDHSOzVC3M3um3A'
-                        },
-                        data: {
-                            'STPG-li436': {
-                                key: 'k_1zMBS3xPySFDHSOzVC3M3um3A'
-                            }
-                        },
-                        blob: 'CjQ3YmM2YjgzZC02ZTk4LTQ3MjEtYTVmZC05ZGJiYzcwZmQyOWItMTQwODYzMjE4NTI4MS0w'
-                    }
-                };
-            stored.news = storedValue;
-            storage.local.set('gu.ads.audsci-gateway', stored);
-            expect(audienceScienceGateway.getSegments()).toEqual({
-                /*eslint-disable camelcase*/
-                pq_Y1C40a: 'T',
-                pq_c7Zrhu: 'T'
-                /*eslint-enable camelcase*/
-            });
+                        }
+                    },
+                    blob: 'CjQ3YmM2YjgzZC02ZTk4LTQ3MjEtYTVmZC05ZGJiYzcwZmQyOWItMTQwODYzMjE4NTI4MS0w'
+                }
+            };
+            expect(audienceScienceGateway.getSegments()).toEqual(['pq_Y1C40a', 'pq_c7Zrhu']);
         });
 
         it('should return empty object if no segments', function () {
             audienceScienceGateway.reset();
-            storage.local.set('gu.ads.audsci-gateway', {});
-            expect(audienceScienceGateway.getSegments()).toEqual({});
+            window.asiPlacements = {};
+            expect(audienceScienceGateway.getSegments()).toEqual([]);
         });
 
         it('should return empty object if switch is off', function () {
             config.page.section = undefined;
             audienceScienceGateway.reset();
-            expect(audienceScienceGateway.getSegments()).toEqual({});
+            expect(audienceScienceGateway.getSegments()).toEqual([]);
         });
 
     });
