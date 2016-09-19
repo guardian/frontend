@@ -7,12 +7,13 @@ define([
 ) {
     return function () {
         this.id = 'VideoButtonDuration';
-        this.start = '2016-09-13';
-        this.expiry = '2016-09-30';
+        this.start = '2016-09-19';
+        this.expiry = '2016-10-07';
         this.author = 'Chris J Clarke';
         this.description = 'Test whether adding duration to the play button increases plays';
-        this.audience = 0.5;
-        this.audienceOffset = 0.5;
+        this.showForSensitive = true;
+        this.audience = 0.20;
+        this.audienceOffset = 0.15;
         this.successMeasure = 'No significant difference in clicks between the variant and control';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
