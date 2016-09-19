@@ -9,12 +9,13 @@ import play.api.test.Helpers._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 
   private val MovedPermanently = 301
   private val Found = 302
-  val latestIndexController = new LatestIndexController(testContentApiClient)
+  lazy val latestIndexController = new LatestIndexController(testContentApiClient)
 
   it should "redirect to latest for a series" in {
     val result = latestIndexController.latest("football/series/thefiver")(TestRequest())
