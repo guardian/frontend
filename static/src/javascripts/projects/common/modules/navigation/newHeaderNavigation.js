@@ -33,9 +33,7 @@ define([
                 var checkboxControls = checkbox.getAttribute('aria-controls');
                 var forEachClass = Array.prototype.forEach.bind(checkbox.classList);
 
-                forEachClass(function (c) {
-                    button.classList.add(c);
-                });
+                forEachClass(button.classList.add);
                 button.setAttribute('id', checkboxId);
                 button.setAttribute('aria-controls', checkboxControls);
                 button.setAttribute('aria-expanded', 'false');
