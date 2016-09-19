@@ -4,36 +4,17 @@ define([
     'bean',
     'fastdom'
 ], function (Promise, qwery, bean, fastdom) {
-    var shouldWePolyfill = !('open' in document.createElement('details'));
 
     return {
         init: init
     };
 
     function init() {
-        if (shouldWePolyfill) {
-            bean.on(document, 'click', 'summary', onClick);
-            bean.on(document, 'keypress', 'summary', onKeyPress(onClick));
-        }
-
         var showMores = qwery('.adverts__more > summary');
         bean.on(document, 'click', showMores, onOpenClick);
         bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
 
         return Promise.resolve();
-    }
-
-    function onClick(event) {
-        var details = event.currentTarget.parentNode;
-        if (details.hasAttribute('open')) {
-            fastdom.write(function () {
-                details.removeAttribute('open');
-            });
-        } else {
-            fastdom.write(function () {
-                details.setAttribute('open', 'open');
-            });
-        }
     }
 
     function onKeyPress(handler) {

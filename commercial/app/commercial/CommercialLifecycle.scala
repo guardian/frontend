@@ -4,8 +4,6 @@ import app.LifecycleComponent
 import commercial.feeds._
 import common._
 import model.commercial.jobs.Industries
-import model.commercial.events.MasterclassTagsAgent
-import model.commercial.travel.Countries
 import metrics.MetricUploader
 
 import play.api.inject.ApplicationLifecycle
@@ -23,7 +21,8 @@ class CommercialLifecycle(
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
   feedsFetcher: FeedsFetcher,
-  feedsParser: FeedsParser)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  feedsParser: FeedsParser,
+  industries: Industries)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -52,9 +51,7 @@ class CommercialLifecycle(
   }
 
   private val refreshJobs: List[RefreshJob] = List(
-    new MasterclassTagsRefresh(jobs),
-    new CountriesRefresh(jobs),
-    new IndustriesRefresh(jobs)
+    new IndustriesRefresh(industries, jobs)
   )
 
   override def start(): Unit = {
@@ -138,15 +135,7 @@ class CommercialLifecycle(
 
     akkaAsync.after1s {
 
-      MasterclassTagsAgent.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh masterclass tags: ${e.getMessage}")
-      }
-
-      Countries.refresh() onFailure {
-        case NonFatal(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
-      }
-
-      Industries.refresh() onFailure {
+      industries.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 

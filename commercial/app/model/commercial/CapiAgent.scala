@@ -1,14 +1,16 @@
 package model.commercial
 
 import common.{AkkaAgent, Logging}
+import contentapi.ContentApiClient
 import model.ContentType
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object CapiAgent extends Logging {
+class CapiAgent(contentApiClient: ContentApiClient) extends Logging {
 
   private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[ContentType]]](Map.empty)
+  private val lookup = new Lookup(contentApiClient)
 
   private lazy val cache = shortUrlAgent.get()
 
@@ -44,7 +46,7 @@ object CapiAgent extends Logging {
     val eventualNewCache = if (urlsNotInCache.isEmpty) {
       Future.successful(cache)
     } else {
-      Lookup.contentByShortUrls(shortUrlIds) flatMap {
+      lookup.contentByShortUrls(shortUrlIds) flatMap {
         addToCache
       } recoverWith {
         case NonFatal(e) =>

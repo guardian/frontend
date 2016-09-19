@@ -6,6 +6,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
@@ -27,11 +28,15 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val stocksData = wire[StocksData]
   lazy val weatherApi = wire[WeatherApi]
   lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
+  lazy val mostPopularAgent = wire[MostPopularAgent]
+  lazy val mostPopularExpandableAgent = wire[MostPopularExpandableAgent]
   lazy val mostReadAgent = wire[MostReadAgent]
   lazy val mostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]

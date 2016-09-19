@@ -10,6 +10,7 @@ define([
     'common/utils/robust',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
+    'common/modules/commercial/commercial-features',
     'common/modules/experiments/embed'
 ], function (bean,
              qwery,
@@ -22,6 +23,7 @@ define([
              robust,
              arrowRight,
              config,
+             commercialFeatures,
              embed
 ) {
 
@@ -41,8 +43,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'The embed performs at least as good as our previous in-article component tests';
         this.canRun = function () {
-            var pageObj = config.page;
-            return !(pageObj.isSensitive || pageObj.isLiveBlog || pageObj.isFront || obWidgetIsShown() || pageObj.isAdvertisementFeature) && pageObj.edition === 'UK';
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
+            return commercialFeatures.canAskForAContribution && worksWellWithPageTemplate && !obWidgetIsShown();
         };
 
         function obWidgetIsShown() {

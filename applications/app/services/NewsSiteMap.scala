@@ -6,11 +6,10 @@ import contentapi.ContentApiClient
 import model.Content
 import org.joda.time.{DateTimeZone, DateTime}
 import implicits.Dates.DateTime2ToCommonDateFormats
-
 import scala.concurrent.Future
 import scala.xml.NodeSeq
 
-object NewsSiteMap extends ExecutionContexts {
+class NewsSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts {
   private case class UrlSet(urls: Seq[Url]){
     def xml() = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -52,7 +51,7 @@ object NewsSiteMap extends ExecutionContexts {
 
   def getLatestContent: Future[NodeSeq] = {
 
-    val query = ContentApiClient.search(Edition.defaultEdition)
+    val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
       .orderBy("newest")
@@ -62,11 +61,11 @@ object NewsSiteMap extends ExecutionContexts {
       .showElements("all")
       .fromDate(DateTime.now(DateTimeZone.UTC).minusDays(2))
 
-    val responses = ContentApiClient.getResponse(query).flatMap { initialResponse =>
+    val responses = contentApiClient.getResponse(query).flatMap { initialResponse =>
       // Request any further pages if needed.
       val followingPages = for {
         pageNumber <- 2 to initialResponse.pages
-      } yield ContentApiClient.getResponse(query.page(pageNumber))
+      } yield contentApiClient.getResponse(query.page(pageNumber))
       Future.sequence(Future.successful(initialResponse) +: followingPages)
     }
 

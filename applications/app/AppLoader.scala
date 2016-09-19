@@ -5,11 +5,11 @@ import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics
 import common.Logback.LogstashLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient, SectionsLookUpLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
-import jobs.SiteMapLifecycle
+import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -27,8 +27,10 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait ApplicationsServices {
   def wsClient: WSClient
-  lazy val capiHttpClient = wire[CapiHttpClient]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
+  lazy val siteMapJob = wire[SiteMapJob]
+  lazy val sectionsLookUp = wire[SectionsLookUp]
 }
 
 trait Controllers extends ApplicationsControllers {
@@ -43,7 +45,7 @@ trait Controllers extends ApplicationsControllers {
 }
 
 trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+  self: FrontendComponents with Controllers with ApplicationsServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

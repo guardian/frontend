@@ -1,16 +1,17 @@
-import app.{LifecycleComponent, FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
-import common.dfp.DfpAgentLifecycle
+import dfp.{CapiLookupAgent, DfpAgentLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
-import _root_.dfp.DfpDataCacheLifecycle
+import _root_.dfp.{DfpDataCacheJob, DfpDataCacheLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
 import football.feed.MatchDayRecorder
-import jobs.{FastlyCloudwatchLoadJob, R2PagePressJob, VideoEncodingsJob, AnalyticsSanityCheckJob}
+import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -29,6 +30,8 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val emailService = wire[EmailService]
   lazy val fastlyStatisticService = wire[FastlyStatisticService]
@@ -37,6 +40,9 @@ trait AdminServices {
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
   lazy val matchDayRecorder = wire[MatchDayRecorder]
   lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
+  lazy val capiLookupAgent = wire[CapiLookupAgent]
+  lazy val dfpDataCacheJob = wire[DfpDataCacheJob]
+  lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }
 
 trait Controllers extends AdminControllers {

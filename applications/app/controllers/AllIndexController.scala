@@ -3,20 +3,20 @@ package controllers
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ExecutionContexts, Logging}
-import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
+import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
-
 import scala.concurrent.Future
 
-class AllIndexController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -46,7 +46,7 @@ class AllIndexController(contentApiClient: ContentApiClient) extends Controller 
     val edition = Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
-      IndexController.render(path)(request)
+      indexController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */
       Future.successful(Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path"))))
@@ -93,7 +93,7 @@ class AllIndexController(contentApiClient: ContentApiClient) extends Controller 
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = getResponse(
+    val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
@@ -117,7 +117,7 @@ class AllIndexController(contentApiClient: ContentApiClient) extends Controller 
   }
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
-    val result = getResponse(
+    val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .fromDate(date)

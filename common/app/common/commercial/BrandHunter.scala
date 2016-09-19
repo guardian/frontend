@@ -1,7 +1,7 @@
 package common.commercial
 
 import common.Edition
-import model.ContentType
+import model.{ContentType, MetaData, Tags, Trail}
 import org.joda.time.DateTime
 
 object BrandHunter {
@@ -14,17 +14,34 @@ object BrandHunter {
     activeBrandings flatMap (_ find (_.isTargeting(publicationDate, edition)))
   }
 
-  def findContentBranding(content: ContentType, edition: Edition): Option[Branding] = {
-    val publicationDate = Some(content.trail.webPublicationDate)
+  private def findBranding(
+    metadata: MetaData,
+    tags: Tags,
+    edition: Edition,
+    publicationDate: Option[DateTime]
+  ): Option[Branding] = {
 
-    val brandingBySection = content.metadata.section.flatMap { section =>
+    val brandingBySection = metadata.section.flatMap { section =>
       findBranding(section.activeBrandings, edition, publicationDate)
     }
 
-    val brandingByTags = content.tags.tags.flatMap { tag =>
+    val brandingByTags = tags.tags.flatMap { tag =>
       findBranding(tag.properties.activeBrandings, edition, publicationDate)
     }.headOption
 
-    brandingBySection orElse brandingByTags
+    brandingByTags orElse brandingBySection
+  }
+
+  def findContentBranding(content: ContentType, edition: Edition): Option[Branding] = {
+    findBranding(content.metadata, content.tags, edition, Some(content.trail.webPublicationDate))
+  }
+
+  /*
+   * Even though paid content is never edition-specific, there may be another type of sponsorship that takes precedence
+   * so we need to consider the edition.
+   */
+  def isPaidContent(trail: Trail, edition: Edition): Boolean = {
+    val trailBranding = findBranding(trail.metadata, trail.tags, edition, Some(trail.webPublicationDate))
+    trailBranding.exists(_.sponsorshipType == PaidContent)
   }
 }

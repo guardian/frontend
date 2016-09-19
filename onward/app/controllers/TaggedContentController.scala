@@ -3,7 +3,6 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import common._
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import feed.MostReadAgent
 import model._
 import play.api.libs.json.{JsArray, Json}
@@ -12,7 +11,7 @@ import services._
 
 import scala.concurrent.Future
 
-class TaggedContentController(val mostReadAgent: MostReadAgent) extends Controller with Related with Logging with ExecutionContexts {
+class TaggedContentController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Logging with ExecutionContexts {
 
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>
@@ -46,7 +45,7 @@ class TaggedContentController(val mostReadAgent: MostReadAgent) extends Controll
 
   private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[List[ContentType]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
-    getResponse(ContentApiClient.search(edition)
+    contentApiClient.getResponse(contentApiClient.search(edition)
       .tag(tag)
       .pageSize(3)
     ).map { response =>
