@@ -6,7 +6,6 @@ $hosted-video-height: 540px;
 @import '_hosted-gallery.scss';
 @import '_hosted-article.scss';
 @import '_hosted-header.scss';
-@import '_hosted-colours.scss';
 
 @mixin hosted-fade-in {
     visibility: visible;
