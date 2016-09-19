@@ -6,7 +6,7 @@ $labour-liverpool-header-element-opacity: .85;
     min-height: gs-height(8);
 
     //if immersive switch is on it gets given this class so we can still have a full screen image
-    &.heroic-immersive{
+    &.heroic-immersive {
         min-height: 100vh;
     }
 
@@ -92,12 +92,11 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.heroic-immersive{
-  .labour-liverpool-headline {
-    top: auto;
-    bottom: 122px;
-    position: absolute;
-  }
+.heroic-immersive .labour-liverpool-headline {     
+        top: auto;
+        bottom: 122px;
+        position: absolute;
+    }
 }
 
 .labour-liverpool-cutout {
