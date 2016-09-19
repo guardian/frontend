@@ -1,6 +1,6 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
-@import views.support.RenderClasses
+@import views.support.{RenderClasses, InteractiveCleaner}
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 
@@ -8,63 +8,62 @@
 
 @bodyRaw(interactive: model.Interactive) = {
     @interactive.maybeBody.map { body =>
-        @HtmlFormat.raw(body)
+        @HtmlFormat.raw(InteractiveCleaner(body))
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
 }
 
 @body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
-    <div class="l-side-margins">
-        <article id="article" class="@RenderClasses(
-                Map(
-                    "content--advertisement-feature" -> isPaidContent,
-                    "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
-                    "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
-                    "paid-content--advertisement-feature" -> isPaidContent
-                ),
-                "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
-            )"
-            itemscope itemtype="@interactive.metadata.schemaType" role="main">
-
-            @if(isPaidContent){
-                @fragments.guBand()
-            }
-
-            @fragments.headDefault(interactive, page, showBadge = true)
-
-            <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
-                <div class="gs-container u-cf">
-                    <div class="content__main-column">
-                        @fragments.contentMeta(interactive, page, showBadge = false)
-                    </div>
-                </div>
-
-                <div class="gs-container" data-test-id="interactive-content-body">
-                    <div class="content__main-column content__main-column--interactive">
-                        @if(!isImmersive) {
-                            @bodyRaw(interactive)
-                        } else {
-                            @HtmlFormat.raw(interactive.fallbackEl)
-                        }
-                    </div>
-                </div>
-
-                <div class="gs-container u-cf">
-                    <div class="content__main-column content__meta-footer">
-                        @fragments.contentMeta(interactive, page, showBadge = false)
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
-
-    </div>
-
     @if(isImmersive) {
         <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
-          @interactive.figureEl.map(HtmlFormat.raw(_))
+            @bodyRaw(interactive)
+        </div>
+    } else {
+        <div class="l-side-margins">
+            <article id="article" class="@RenderClasses(
+                    Map(
+                        "content--advertisement-feature" -> isPaidContent,
+                        "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
+                        "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
+                        "paid-content--advertisement-feature" -> isPaidContent
+                    ),
+                    "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
+                )"
+                itemscope itemtype="@interactive.metadata.schemaType" role="main">
+    
+                @if(isPaidContent){
+                    @fragments.guBand()
+                }
+    
+                @fragments.headDefault(interactive, page, showBadge = true)
+    
+                <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
+                    <div class="gs-container u-cf">
+                        <div class="content__main-column">
+                            @fragments.contentMeta(interactive, page, showBadge = false)
+                        </div>
+                    </div>
+    
+                    <div class="gs-container" data-test-id="interactive-content-body">
+                        <div class="content__main-column content__main-column--interactive">
+                            @if(!isImmersive) {
+                                @bodyRaw(interactive)
+                            } else {
+                                @HtmlFormat.raw(interactive.fallbackEl)
+                            }
+                        </div>
+                    </div>
+    
+                    <div class="gs-container u-cf">
+                        <div class="content__main-column content__meta-footer">
+                            @fragments.contentMeta(interactive, page, showBadge = false)
+                        </div>
+                    </div>
+                </div>
+            </article>
         </div>
     }
+
+    @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
 }

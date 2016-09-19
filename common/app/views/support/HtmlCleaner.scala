@@ -537,6 +537,18 @@ object GalleryCaptionCleaner {
   }
 }
 
+object InteractiveCleaner {
+  def apply(interactive: String) = {
+    val document = Jsoup.parse(interactive)
+    val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
+    if (srcdoc != null) {
+        val iframedoc = Jsoup.parse(srcdoc)
+        document.html(iframedoc.getElementsByTag("noscript").html())
+    }
+    document.toString
+  }
+}
+
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
