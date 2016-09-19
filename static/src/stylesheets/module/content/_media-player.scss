@@ -209,6 +209,10 @@ $ima-controls-height: 70px;
   .vjs-ad-loading & {
       display: none !important;
   }
+  .l-row__item--span-3 & {
+    top: 42%;
+    left: 5%;
+  }
 }
 
 button.vjs-big-play-button__duration {
