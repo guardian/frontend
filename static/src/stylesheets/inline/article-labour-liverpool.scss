@@ -13,6 +13,14 @@ $labour-liverpool-header-element-opacity: .85;
             height: 100%;
         }
     }
+    //firefox fix for the height of the video
+    &.heroic-video-container{
+      min-height: 548px;
+
+      @include mq($until: desktop){
+        min-height: 398px;
+      }
+    }
 
     .content__wrapper--standfirst {
         background-color: #ffffff;
