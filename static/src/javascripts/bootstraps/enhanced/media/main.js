@@ -27,9 +27,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/big-play-button.html',
-    'common/utils/template'
+    'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
@@ -57,9 +55,7 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl,
-    buttonTmpl,
-    template
+    loadingTmpl
 ) {
     function getAdUrl() {
         var queryParams = {
@@ -106,7 +102,7 @@ define([
 
         player.ready(function () {
             if (!isNaN(duration)) {
-                player.duration(duration);
+                player.duration();
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
@@ -124,7 +120,7 @@ define([
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el, options, duration) {
                 function initButtonDuration() {
-                  el.getAttribute('data-duration', duration);
+                  el.getAttribute('data-duration');
                   el.classList.remove('vjs-big-play-button');
                   el.classList.add('vjs-big-play-button__duration');
                 }
@@ -163,7 +159,6 @@ define([
                   buttonElement.classList.add('vjs-big-play-button__duration');
                   var buttonDuration = el.getAttribute('data-duration');
                   buttonElement.dataset.duration = buttonDuration;
-                  console.log(buttonElement);
                 }
                 if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
                   initButtonDuration();
@@ -213,7 +208,7 @@ define([
         }
     }
 
-    function enhanceVideo(el, autoplay, shouldPreroll, duration) {
+    function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),

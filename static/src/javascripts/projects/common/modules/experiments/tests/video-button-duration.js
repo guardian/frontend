@@ -1,9 +1,7 @@
 define([
-    'common/utils/config',
-    'bean'
+    'common/utils/config'
 ], function (
-    config,
-    bean
+    config
 ) {
     return function () {
         this.id = 'VideoButtonDuration';

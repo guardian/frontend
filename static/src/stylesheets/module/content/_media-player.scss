@@ -155,9 +155,8 @@ $ima-controls-height: 70px;
 .vjs-big-play-button__duration {
   cursor: pointer;
   display: inline-block;
-  width: auto;
   z-index: 2;
-  padding: 0 10px 0;
+  padding: 0 10px;
   position: absolute;
   bottom: 8px;
   left: 5px;
@@ -167,7 +166,7 @@ $ima-controls-height: 70px;
   height: 44px;
   color: #161616;
   border-radius: 46px;
-  border: none;
+  border: 0;
   background-color: $media-default;
   backface-visibility: hidden;
 
@@ -176,8 +175,8 @@ $ima-controls-height: 70px;
   }
 
   &:before {
-    content: attr(data-duration);
     @include fs-textSans(4);
+    content: attr(data-duration);
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
@@ -185,14 +184,14 @@ $ima-controls-height: 70px;
     padding-right: 7px;
     padding-left: 8px;
     margin-left: 4px;
-    border-left: 1px solid rgba(51,51,51,0.6);
+    border-left: 1px solid rgba(51, 51, 51, 0.6);
     display: inline-block;
   }
   &:after {
     content: '';
     border: 1px solid;
     border-width: 8px 8px 8px 18px;
-    border-color: transparent transparent transparent #333;
+    border-color: transparent transparent transparent #333333;
     position: absolute;
     top: 50%;
     left: 14px;
