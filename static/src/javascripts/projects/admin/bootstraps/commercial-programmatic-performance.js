@@ -35,7 +35,7 @@ define([
 
        chart = $('#programmatic-live-performance-data').epoch({
             type: 'time.line',
-            range: [0, 5000],
+            range: [0, 4000],
             axes: ['left', 'right', 'bottom'],
             tickFormats: {
                 left: Epoch.Formats.regular,
