@@ -37,6 +37,9 @@ define([
         return Object.keys(placements)
         .filter(function (placement) {
             return placements[placement].default;
+        })
+        .map(function (placement) {
+            return 'pq_' + placement;
         });
     }
 
