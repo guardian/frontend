@@ -22,6 +22,10 @@
         border-color: @{page.campaign.fontColour.brandColour};
     }
 
+    .hosted-page .hosted__heading {
+        color: @{page.campaign.fontColour.brandColour};
+    }
+
     .hosted-page .hosted__next-video--tile {
         border-top-color: @{page.campaign.fontColour.brandColour};
     }
@@ -60,7 +64,9 @@
                             <h1 class="hosted__heading @{page.brandColourCssClass}">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
+                            <a href="@page.campaign.logoLink.getOrElse(page.cta.url)" data-link-name="hosted-logo-top-left" target="_blank">
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                            </a>
                         </div>
                     </div>
                 </div>

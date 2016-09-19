@@ -77,16 +77,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-participation-discussion-ordering-live-blog",
-    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16), //Wednesday
-    exposeClientSide = true
-  )
-
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -103,17 +93,17 @@ trait ABTestSwitches {
     "Test demand for a personalised container on fronts",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 23),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response",
+    "ab-ad-blocking-response2",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),   // Friday @ 23:59 BST
+    sellByDate = new LocalDate(2016, 9, 22),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 

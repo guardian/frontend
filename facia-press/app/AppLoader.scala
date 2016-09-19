@@ -4,6 +4,7 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{Application, HealthCheck}
 import frontpress.{DraftFapiFrontPress, FrontPressCron, LiveFapiFrontPress, ToolPressQueueWorker}
 import lifecycle.FaciaPressLifecycle
@@ -19,25 +20,18 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers {
-  def wsClient: WSClient
-  def toolPressQueueWorker: ToolPressQueueWorker
-  def liveFapiFrontPress: LiveFapiFrontPress
-  def draftFapiFrontPress: DraftFapiFrontPress
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val applicationController: Application = wire[Application]
-}
+trait AppComponents extends FrontendComponents {
 
-trait FapiFrontPresses {
-  def wsClient: WSClient
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+
   lazy val liveFapiFrontPress = wire[LiveFapiFrontPress]
   lazy val draftFapiFrontPress = wire[DraftFapiFrontPress]
   lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
   lazy val frontPressCron = wire[FrontPressCron]
-}
 
-trait AppLifecycleComponents extends FapiFrontPresses {
-  self: FrontendComponents =>
+  lazy val healthCheck = wire[HealthCheck]
+  lazy val applicationController: Application = wire[Application]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -46,9 +40,6 @@ trait AppLifecycleComponents extends FapiFrontPresses {
     wire[CloudWatchMetricsLifecycle],
     wire[FaciaPressLifecycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
 
   lazy val router: Router = wire[Routes]
 

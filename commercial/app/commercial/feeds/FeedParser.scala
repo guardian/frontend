@@ -17,7 +17,11 @@ sealed trait FeedParser[+T] extends ExecutionContexts {
   def parse(feedContent: => Option[String]): Future[ParsedFeed[T]]
 }
 
-class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventAgent) {
+class FeedsParser(bestsellersAgent: BestsellersAgent,
+                  liveEventAgent: LiveEventAgent,
+                  masterclassAgent: MasterclassAgent,
+                  travelOffersAgent: TravelOffersAgent,
+                  jobsAgent: JobsAgent) {
 
   private val jobs: Option[FeedParser[Job]] = {
     Configuration.commercial.jobsUrl map { url =>
@@ -25,7 +29,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventA
 
         val feedMetaData = JobsFeedMetaData(url)
 
-        def parse(feedContent: => Option[String]) = JobsAgent.refresh(feedMetaData, feedContent)
+        def parse(feedContent: => Option[String]) = jobsAgent.refresh(feedMetaData, feedContent)
       }
     }
   }
@@ -61,7 +65,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventA
 
         val feedMetaData = EventsFeedMetaData("masterclasses", accessToken)
 
-        def parse(feedContent: => Option[String]) = MasterclassAgent.refresh(feedMetaData, feedContent)
+        def parse(feedContent: => Option[String]) = masterclassAgent.refresh(feedMetaData, feedContent)
       }
     }
   }
@@ -83,7 +87,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent, liveEventAgent: LiveEventA
 
         val feedMetaData = TravelOffersFeedMetaData(url)
 
-        def parse(feedContent: => Option[String]) = TravelOffersAgent.refresh(feedMetaData, feedContent)
+        def parse(feedContent: => Option[String]) = travelOffersAgent.refresh(feedMetaData, feedContent)
       }
     }
   }

@@ -111,10 +111,13 @@ object Commercial {
         isPaidContainer || isAllPaidContent
       }
 
-      !isPaidFront && (
-        (containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer)
-          || optContainerModel.exists(isPaid)
-        )
+      lazy val isPaidContainerInDfp =
+        containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer
+
+      lazy val isPaidContainerInCapi =
+        containerBrandingFromCapi.isSwitchedOn && container.showBranding && optContainerModel.exists(isPaid)
+
+      !isPaidFront && (isPaidContainerInDfp || isPaidContainerInCapi)
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {

@@ -5,7 +5,7 @@ import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics
 import common.Logback.LogstashLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
@@ -30,6 +30,7 @@ trait ApplicationsServices {
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val siteMapJob = wire[SiteMapJob]
+  lazy val sectionsLookUp = wire[SectionsLookUp]
 }
 
 trait Controllers extends ApplicationsControllers {
