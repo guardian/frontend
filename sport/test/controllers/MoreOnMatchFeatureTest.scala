@@ -9,6 +9,7 @@ import play.api.test.FakeRequest
   extends FeatureSpec
   with GivenWhenThen
   with Matchers
+  with ConfiguredTestSuite
   with FootballTestData
   with WithTestFootballClient
   with BeforeAndAfterAll

@@ -11,6 +11,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   with Matchers
   with BeforeAndAfterAll
   with ConfiguredTestSuite
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

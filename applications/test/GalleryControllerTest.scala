@@ -9,12 +9,13 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
 
-  val galleryController = new GalleryController(testContentApiClient)
+  lazy val galleryController = new GalleryController(testContentApiClient)
 
   "Gallery Controller" should "200 when content type is gallery" in {
     val result = galleryController.render(galleryUrl)(TestRequest(s"/$galleryUrl"))

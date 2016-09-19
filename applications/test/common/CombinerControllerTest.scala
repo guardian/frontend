@@ -4,13 +4,14 @@ import contentapi.SectionsLookUp
 import controllers.IndexController
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTestWsClient}
+import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
 @DoNotDiscover class CombinerControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

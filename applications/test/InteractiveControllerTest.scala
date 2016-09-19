@@ -1,18 +1,16 @@
 package test
 
 import controllers.InteractiveController
-import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
-
-import scala.collection.JavaConversions._
 
 @DoNotDiscover class InteractiveControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
   with PrivateMethodTester {
