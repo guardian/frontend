@@ -48,11 +48,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-20160906",
-    "Test whether contributions embed performs better than our previous in-article component tests.",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-contributions-epic-20160916",
+    "Test variants of the button text to drive contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 20),
+    sellByDate = new LocalDate(2016, 9, 27),
     exposeClientSide = true
   )
 
