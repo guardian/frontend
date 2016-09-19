@@ -3,10 +3,10 @@
 @import common.{ NewNavigation, LinkTo, Edition }
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
-    <li class="main-navigation__item navigation-border">
+    <li class="main-navigation__item navigation-border js-navigation-item">
             <!-- TODO: Firefox -->
         <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
-            <summary class="main-navigation__item__button">
+            <summary class="main-navigation__item__button js-navigation-button">
                 <i class="main-navigation__icon"></i>
                 @topLevelSection.name
             </summary>

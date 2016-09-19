@@ -68,7 +68,7 @@ define([
         }
         if (menuIsOpen()) {
             fastdom.write(function () {
-                var mainListItems = qwery('.main-navigation__item');
+                var mainListItems = qwery('.js-main-navigation-item');
 
                 button.setAttribute('aria-expanded', 'false');
                 mainMenu.setAttribute('aria-hidden', 'true');
@@ -83,7 +83,7 @@ define([
             });
         } else {
             fastdom.write(function () {
-                var firstButton = qwery('.main-navigation__item__button')[0];
+                var firstButton = qwery('.js-navigation-button')[0];
 
                 button.setAttribute('aria-expanded', 'true');
                 mainMenu.setAttribute('aria-hidden', 'false');
@@ -137,7 +137,7 @@ define([
                 fastdom.read(function () {
                     var id = primaryItem.getAttribute('aria-controls');
                     var menuToOpen = qwery('#' + id)[0];
-                    var menuButton = qwery('.main-navigation__item__button', menuToOpen)[0];
+                    var menuButton = qwery('.js-navigation-button', menuToOpen)[0];
 
                     fastdom.write(function () {
                         menuToOpen.setAttribute('open', '');
