@@ -1,6 +1,41 @@
 @(signupPage: Page)(implicit request: RequestHeader)
 
 @import model.Page
+@import model.EmailSubscriptions
+
+
+@emailListCategoryList(theme: String, emailListings: List[EmailSubscription], isActive: Boolean) = {
+    @fragments.dropdown(theme, isActive = isActive) {
+        @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
+            <div class="@RenderClasses(Map(
+                "u-cf" -> true,
+                "email-subscription" -> true,
+                "email-subscription--subscribed" -> emailListing.subscribedTo,
+                "email-subscription--first" -> row.isFirst))">
+                @if(emailListing.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@emailListing.listId" />}
+                <div class="email-subscription__name">@emailListing.name</div>
+
+                <div class="email-subscription__description">@emailListing.description @if(emailListing.exampleUrl.isDefined){<br><a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">See the latest email</a>}</div>
+
+                <div class="email-subscription__meta u-cf">
+                    <button class="email-subscription__button js-subscription-button"
+                            data-link-name="@if(emailListing.subscribedTo){Unsubscribe}else{Subscribe} to @emailListing.name"
+                            name="addEmailSubscription"
+                            type="button"
+                            value="@if(emailListing.subscribedTo){unsubscribe-}@emailListing.listId">
+                        @if(emailListing.subscribedTo){Unsubscribe}else{Subscribe}
+                    </button>
+                    <div class="email-subscription__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+                        @emailListing.frequency
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
 
 @signupMain(signupPage) {
 
@@ -9,7 +44,10 @@
             <div class="content__main-column">
 
                 <div class="newsletter-cards">
+                    <div class="email-subscriptions">
+                        @emailListCategoryList("news", EmailSubscriptions.newsEmails(), true)
 
+                    </div>
                 </div>
 
             </div>

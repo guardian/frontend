@@ -1,8 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import conf.Configuration
-import model.{Cached, NoCache}
+import model.{Cached}
 import model.Cached.RevalidatableResult
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, Controller}
