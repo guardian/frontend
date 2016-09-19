@@ -72,7 +72,8 @@ define([
      * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
      * and their containers closed up.
      */
-    sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
+    sizeCallbacks[adSizes.outOfPage] =
+    sizeCallbacks[adSizes.empty] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             var $parent = bonzo(advert.node.parentNode);
             return fastdom.write(function () {
