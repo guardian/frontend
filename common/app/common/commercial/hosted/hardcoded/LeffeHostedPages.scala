@@ -53,7 +53,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -86,7 +87,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -116,7 +118,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -146,7 +149,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -175,7 +179,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )

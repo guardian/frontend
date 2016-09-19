@@ -15,7 +15,6 @@ define([
             userAdTargeting,
             ab,
             krux,
-            audienceScienceGateway,
             injector = new Injector();
 
         beforeEach(function (done) {
@@ -27,8 +26,7 @@ define([
                     'common/modules/identity/api',
                     'common/modules/commercial/user-ad-targeting',
                     'common/modules/experiments/ab',
-                    'commercial/modules/third-party-tags/krux',
-                    'commercial/modules/third-party-tags/audience-science-pql'],
+                    'commercial/modules/third-party-tags/krux'],
                 function () {
                     buildPageTargeting = arguments[0];
                     config = arguments[1];
@@ -38,7 +36,6 @@ define([
                     userAdTargeting = arguments[5];
                     ab = arguments[6];
                     krux = arguments[7];
-                    audienceScienceGateway = arguments[8];
 
                     config.page = {
                         edition:     'US',
@@ -53,9 +50,6 @@ define([
                         keywordIds: 'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
                         blogIds: 'a/blog',
                         videoDuration: 63
-                    };
-                    config.switches = {
-                        audienceScienceGateway: true
                     };
 
                     config.ophan = {
@@ -83,12 +77,6 @@ define([
                     };
                     krux.getSegments = function () {
                         return ['E012712', 'E012390', 'E012478'];
-                    };
-                    audienceScienceGateway.getSegments = function () {
-                        return {
-                            asg1: 'value-one',
-                            asg2: 'value-two'
-                        };
                     };
                     storage.local.set('gu.alreadyVisited', 0);
                     done();
@@ -154,13 +142,6 @@ define([
             expect(buildPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
         });
 
-        it('should set correct audience science gateway params', function () {
-            var pageTargeting = buildPageTargeting();
-
-            expect(pageTargeting.asg1).toBe('value-one');
-            expect(pageTargeting.asg2).toBe('value-two');
-        });
-
         it('should remove empty values', function () {
             config.page = {};
             config.ophan.pageViewId = '123456';
@@ -169,9 +150,6 @@ define([
             };
             krux.getSegments = function () {
                 return [];
-            };
-            audienceScienceGateway.getSegments = function () {
-                return {};
             };
 
             var opts = {

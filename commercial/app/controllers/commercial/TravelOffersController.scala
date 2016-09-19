@@ -4,12 +4,12 @@ import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-class TravelOffersController extends Controller with implicits.Requests {
+class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Controller with implicits.Requests {
 
   def renderTravel = Action { implicit request =>
 
     val travelOffers =
-      (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.offersTargetedAt(segment)).distinct
+      (travelOffersAgent.specificTravelOffers(specificIds) ++ travelOffersAgent.offersTargetedAt(segment)).distinct
 
     travelOffers match {
       case Nil => NoCache(jsonFormat.nilResult.result)

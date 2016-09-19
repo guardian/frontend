@@ -149,6 +149,14 @@
     display: none;
 }
 
+.contributions__contribute--no-buttons--today {
+    width: 150px;
+}
+
+.contributions__contribute--no-buttons--make {
+    width: 170px;
+}
+
 @include mq($from: phablet) {
     .contributions__option-button--bottom {
         width: 70px;
@@ -171,8 +179,6 @@
     .contributions__contribute--no-buttons {
         margin-left: 0;
     }
-
-
 }
 
 

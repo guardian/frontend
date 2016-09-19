@@ -2,8 +2,6 @@ package commercial
 
 import common.{JobScheduler, Logging}
 import model.commercial.jobs.Industries
-import model.commercial.events.MasterclassTagsAgent
-import model.commercial.travel.Countries
 
 trait RefreshJob extends Logging {
 
@@ -26,24 +24,9 @@ trait RefreshJob extends Logging {
   }
 }
 
-class MasterclassTagsRefresh(val jobs: JobScheduler) extends RefreshJob {
-
-  val name: String = "MasterClassTags"
-
-  def refresh() = MasterclassTagsAgent.refresh()
-}
-
-class CountriesRefresh(val jobs: JobScheduler) extends RefreshJob {
-
-  val name: String = "Countries"
-
-  def refresh() = Countries.refresh()
-
-}
-
-class IndustriesRefresh(val jobs: JobScheduler) extends RefreshJob {
+class IndustriesRefresh(industries: Industries, val jobs: JobScheduler) extends RefreshJob {
 
   val name: String = "Industries"
 
-  def refresh() = Industries.refresh()
+  def refresh() = industries.refresh()
 }

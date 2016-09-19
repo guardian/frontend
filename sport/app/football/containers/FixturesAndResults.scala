@@ -112,7 +112,8 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           showTimestamps = false,
           dateLinkPath = None,
           useShowMore = false,
-          hasShowMoreEnabled = true
+          hasShowMoreEnabled = true,
+          showBranding = false
         )
       }
     }).flatten

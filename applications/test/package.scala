@@ -1,9 +1,12 @@
 package test
 
-import java.util.{ List => JList }
+import java.util.{List => JList}
+
+import contentapi.SectionsLookUp
 import controllers.HealthCheck
 import org.scalatest.{BeforeAndAfterAll, Suites}
 import services.NewspaperControllerTest
+
 import collection.JavaConversions._
 
 object `package` {
@@ -39,7 +42,9 @@ class ApplicationsTestSuite extends Suites (
   new NewspaperControllerTest
 ) with SingleServerSuite
   with BeforeAndAfterAll
-  with WithTestWsClient {
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+  lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
+  override lazy val port: Int = new HealthCheck(wsClient, sectionsLookUp).testPort
 }

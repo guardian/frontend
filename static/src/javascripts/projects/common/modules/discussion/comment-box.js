@@ -125,10 +125,16 @@ CommentBox.prototype.prerender = function() {
 
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
-    } else {
+    } else if (this.options.shouldRenderMainAvatar) {
         var avatar = this.getElem('avatar-wrapper');
         avatar.setAttribute('userid', userData.id);
+        avatar.setAttribute('data-userid', userData.id);
         UserAvatars.avatarify(avatar);
+    } else {
+        var container = document.getElementsByClassName('d-comment-box__meta')[0];
+        if (container) {
+            container.parentNode.removeChild(container);
+        }
     }
 
     if (this.options.replyTo) {

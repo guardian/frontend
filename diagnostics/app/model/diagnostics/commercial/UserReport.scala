@@ -25,11 +25,13 @@ case class Advert(
 
 case class Baseline(
   name: Option[String],
-  time: Option[Double]
+  startTime: Option[Double],
+  endTime: Option[Double]
 )
 
 case class UserReport(
   viewId: String,
+  tags: Seq[String],
   modules: Seq[Module],
   adverts: Seq[Advert],
   baselines: Seq[Baseline])

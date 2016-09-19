@@ -1,17 +1,26 @@
 package test
 
+import contentapi.SectionsLookUp
 import controllers.IndexController
 import metadata.MetaDataMatcher
 import org.jsoup.Jsoup
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
 
-@DoNotDiscover class IndexMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class IndexMetaDataTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val articleUrl = "money/pensions"
   val crosswordsUrl = "crosswords"
-  val indexController = new IndexController
+
+  lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
 
   it should "Include organisation metadata" in {
     val result = indexController.render(articleUrl)(TestRequest(articleUrl))
