@@ -9,6 +9,57 @@
 @import views.html.hosted.{guardianHostedShareButtons, guardianHostedCta}
 
 @main(page, Some("commercial")) { } {
+    <!--[if (gt IE 9)|(IEMobile)]><!-->
+    <style>
+    .hosted-tone {
+        color: @{page.campaign.fontColour.brandColour};
+    }
+    .hosted-tone-bg {
+        background-color: @{page.campaign.fontColour.brandColour};
+    }
+    .hosted-tone-border {
+        border-color: @{page.campaign.fontColour.brandColour};
+    }
+    .hosted-tone-btn,
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        background-color: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
+        color: #ffffff;
+    }
+    .hosted-tone-btn svg {
+        fill: #ffffff;
+    }
+    .hosted-page .hosted__next-video .hosted__next-video--tile {
+        border-top-color: @{page.campaign.fontColour.brandColour};
+        background: #d5f4e1;
+    }
+
+    .hostedbadge.hosted-tone-bg .hostedbadge__info {
+        color: #ffffff;
+    }
+    .hosted__link {
+        color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-article-page .content__article-body p.intro + p::first-letter {
+        background-color: @{page.campaign.fontColour.brandColour};
+        color: #ffffff;
+    }
+
+    ~ .survey-overlay-simple .survey-text__header {
+        background-color: @{page.campaign.fontColour.brandColour};
+        color: #ffffff;
+    }
+    ~ .survey-overlay-simple .survey-text__header .site-message__close-btn {
+        border-color: #ffffff;
+    }
+    ~ .survey-overlay-simple .survey-text__header .site-message__close-btn .inline-cross {
+        fill: #ffffff;
+    }
+
+    </style>
+    <!--<![endif]-->
     @guardianHostedHeader("hosted-article-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @{page.campaign.cssClass}">
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
@@ -31,7 +82,7 @@
                                 Zootropolis is a city like no other. But when optimistic Judy Hopps arrives, she discovers that being a bunny on a police force of big, tough animals isn’t so easy.
                             </p>
                             <p class="text">
-                                <span class="drop-cap hosted-tone-bg--zootropolis">D</span> etermined to prove herself, she jumps at the opportunity to crack a case, even if it means partnering with a fast-talking fox, Nick Wilde. Walt Disney Animation Studios’ “Zootropolis,” is a comedy-adventure directed by Tangled’s Byron Howard.
+                                Determined to prove herself, she jumps at the opportunity to crack a case, even if it means partnering with a fast-talking fox, Nick Wilde. Walt Disney Animation Studios’ “Zootropolis,” is a comedy-adventure directed by Tangled’s Byron Howard.
                             </p>
 
                             <!--Beginning of the Con Artist - fox !-->
@@ -49,7 +100,7 @@
                                         <img src="@{page.customData.conArtistPoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Nick - The con artist</h3>
+                                        <h3 class="animal__header hosted-tone">Nick - The con artist</h3>
                                         <p class="text">
                                             <i>“It’s called a hustle.“</i>
                                         </p>
@@ -81,7 +132,7 @@
                                         <img src="@{page.customData.rookiePoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Judy - The rookie</h3>
+                                        <h3 class="animal__header hosted-tone">Judy - The rookie</h3>
                                         <p class="text">
                                             <i>“In Zootropolis, anyone can be anything!“</i>
                                         </p>
@@ -113,7 +164,7 @@
                                         <img src="@{page.customData.chiefPoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Bogo - The chief</h3>
+                                        <h3 class="animal__header hosted-tone">Bogo - The chief</h3>
                                         <p class="text">
                                             <i>“Throw your paws in the air!“</i>
                                         </p>
@@ -145,7 +196,7 @@
                                         <img src="@{page.customData.slothPoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Flash - The DMV employee</h3>
+                                        <h3 class="animal__header hosted-tone">Flash - The DMV employee</h3>
                                         <p class="text">
                                             <i>“You want it when?“</i>
                                         </p>
@@ -177,7 +228,7 @@
                                         <img src="@{page.customData.deskClerkPoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Benjamin Clawhauser - The desk clerk</h3>
+                                        <h3 class="animal__header hosted-tone">Benjamin Clawhauser - The desk clerk</h3>
                                         <p class="text">
                                             <i>“You are even cuter than I thought you’d be!“</i>
                                         </p>
@@ -206,7 +257,7 @@
                                         <img src="@{page.customData.gazellePoster}" alt="@{page.campaign.owner}">
                                     </div>
                                     <div class="animal__about">
-                                        <h3 class="animal__header hosted-tone--zootropolis">Gazelle - The pop star</h3>
+                                        <h3 class="animal__header hosted-tone">Gazelle - The pop star</h3>
                                         <p class="text">
                                             <i>“Try everything.“</i>
                                         </p>
@@ -238,7 +289,7 @@
                         <div class="hosted__standfirst">
                             <div class="hosted__terms">​@{page.standfirst}
                                 <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                                    <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn hosted-tone--zootropolis js-hosted-about" data-link-name="terms-and-conditions-text-link">@{page.standfirstLink}</button>
+                                    <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn hosted-tone js-hosted-about" data-link-name="terms-and-conditions-text-link">@{page.standfirstLink}</button>
                                 </div>
                             </div>
                         </div>

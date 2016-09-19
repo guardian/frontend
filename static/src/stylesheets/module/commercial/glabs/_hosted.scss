@@ -183,10 +183,8 @@ $hosted-video-height: 540px;
         }
     }
 
-    p:not(.hosted__next-page-title):not(.hosted__next-video-title) {
-        &:nth-child(2)::first-letter {
-            color: #ffffff;
-        }
+    &.hosted-article-page .content__article-body p.intro + p::first-letter {
+        color: #ffffff;
     }
 }
 

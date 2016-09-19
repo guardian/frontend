@@ -17,3 +17,14 @@
         }
     }
 }
+
+.leffe {
+    .hosted-tone-btn {
+        &.hosted-tone-btn,
+        &:focus,
+        &:hover {
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+    }
+}
