@@ -7,7 +7,8 @@ define([
     'lodash/collections/find',
     'lodash/collections/map',
     'lodash/collections/reduce',
-    'lodash/collections/filter'
+    'lodash/collections/filter',
+    'lodash/arrays/flatten'
 ], function (
     config,
     fetchJson,
@@ -16,14 +17,15 @@ define([
     find,
     map,
     reduce,
-    filter
+    filter,
+    flatten
 ) {
     var chart;
     var FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
     var FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
     var reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
     var colors = d3.scale.category10().range();
-    var programmaticExecutionTimes = {      // Store the 1000 most recently fetched datapoints.
+    var advertLoadTimes = {      // Store the 5000 most recently fetched datapoints.
         prebid: [],
         waterfall: [],
         sonobi: []
@@ -33,7 +35,7 @@ define([
 
        chart = $('#programmatic-live-performance-data').epoch({
             type: 'time.line',
-            range: [0, 10000],
+            range: [0, 4000],
             axes: ['left', 'right', 'bottom'],
             tickFormats: {
                 left: Epoch.Formats.regular,
@@ -55,8 +57,17 @@ define([
             ]
         });
 
-       window.setInterval(fetchData, FETCH_INTERVAL);
+       window.setInterval(renderCurrentData, FETCH_INTERVAL);
 
+       // Backfill the data to get accurate averages.
+       var backFillDate = new Date();
+       backFillDate.setSeconds(backFillDate.getSeconds() - FETCH_DELAY);
+
+       // Get the last 2 minutes worth of data.
+       for (var i = 0; i < 120; i++) {
+           backFillDate.setMilliseconds(backFillDate.getMilliseconds() - FETCH_INTERVAL);
+           fetchData(backFillDate, false);
+       }
        // Add key colours to the legend rows, based on d3.
        $('.legend__label--prebid').css('color', colors[0]);
        $('.legend__label--waterfall').css('color', colors[1]);
@@ -74,15 +85,15 @@ define([
         return Number.isFinite(average) ? average.toFixed([2]) : '0.0';
     }
 
-    function storeAverageStartTime(startTimes, deliveryMethod) {
+    function storeAdvertLoadTimes(loadTimes, deliveryMethod) {
         // Find the corresponding array to store these start times.
-        var globalTimeValues = programmaticExecutionTimes[deliveryMethod];
+        var globalTimeValues = advertLoadTimes[deliveryMethod];
 
         // Push the new start times into the stored array to find an average.
-        Array.prototype.push.apply(globalTimeValues, startTimes);
-        // Limit the size of the array to 1000.
-        if (globalTimeValues.length > 1000) {
-            globalTimeValues.splice(0, globalTimeValues.length - 1000);
+        Array.prototype.push.apply(globalTimeValues, loadTimes);
+        // Limit the size of the array to 5000.
+        if (globalTimeValues.length > 5000) {
+            globalTimeValues.splice(0, globalTimeValues.length - 5000);
         }
 
         if (!globalTimeValues.length) {
@@ -92,30 +103,40 @@ define([
         $('.average--' + deliveryMethod).text(calculateAverage(globalTimeValues));
     }
 
-    // Stores the start time values, and returns the average start time for this batch of reports.
-    function processAverageStartTime(reports, deliveryMethod) {
-        var startTimes = map(reports, function(report){
-            var primaryBaseline = find(report.baselines, function(baseline){
-                return baseline.name === 'primary';
+    // Searches through the report data to find advert loading times. It then stores the load time values, and returns
+    // the average load time for this batch of reports.
+    function processAdvertLoadTimes(reports, deliveryMethod) {
+        var loadData = map(reports, function(report){
+            var recordedAdverts = filter(report.adverts, function(advert) {
+                return advert.stopLoading && advert.startLoading;
             });
-            return primaryBaseline ? primaryBaseline.startTime : 0;
+
+            return map(recordedAdverts, function(report) {
+                return report.stopLoading - report.startLoading;
+            });
         });
+        var loadTimes = flatten(loadData);
 
         // Filter the times array from silly numbers.
-        var validStartTimes = filter(startTimes, function(startTime) { return startTime < 20000; });
+        var validLoadTimes = filter(loadTimes, function(executionTime) { return executionTime < 30000; });
 
-        // Store the start times too, to display global dataset averages.
-        storeAverageStartTime(validStartTimes, deliveryMethod);
+        // Store the execution times too, to display global dataset averages.
+        storeAdvertLoadTimes(validLoadTimes, deliveryMethod);
 
         // Return the average for this specific timestamped dataset.
-        return calculateAverage(validStartTimes);
+        return calculateAverage(validLoadTimes);
     }
 
-    function fetchData() {
+    function renderCurrentData() {
         var currentDate = new Date();
         currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
+        fetchData(currentDate, true);
+    }
+
+    function fetchData(date, renderGraphData) {
+
         var fetchUrl = template(reportTemplateUrl, {
-            isoDate: currentDate.toISOString()
+            isoDate: date.toISOString()
         });
 
         fetchJson(config.page.beaconUrl + fetchUrl, {
@@ -126,24 +147,28 @@ define([
             var waterfallReports = getProgrammaticReports(logs.reports, 'waterfall');
             var sonobiReports = getProgrammaticReports(logs.reports, 'sonobi');
             
-            var prebidStartTime = processAverageStartTime(prebidReports, 'prebid');
-            var waterfallStartTime = processAverageStartTime(waterfallReports, 'waterfall');
-            var sonobiStartTime = processAverageStartTime(sonobiReports, 'sonobi');
+            var prebidAdvertLoadTime = processAdvertLoadTimes(prebidReports, 'prebid');
+            var waterfallAdvertLoadTime = processAdvertLoadTimes(waterfallReports, 'waterfall');
+            var sonobiAdvertLoadTime = processAdvertLoadTimes(sonobiReports, 'sonobi');
 
-            chart.push([
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: prebidStartTime
-                },
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: waterfallStartTime
-                },
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: sonobiStartTime
-                }
-            ]);
+            if (renderGraphData) {
+                var time = date.getTime() / 1000;
+
+                chart.push([
+                    {
+                        time: time,
+                        y: prebidAdvertLoadTime
+                    },
+                    {
+                        time: time,
+                        y: waterfallAdvertLoadTime
+                    },
+                    {
+                        time: time,
+                        y: sonobiAdvertLoadTime
+                    }
+                ]);
+            }
         });
     }
 

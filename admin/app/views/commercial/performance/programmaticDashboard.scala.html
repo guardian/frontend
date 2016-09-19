@@ -17,10 +17,19 @@
     </header>
 
     <div class="container-fluid">
-        <h4>Time taken to execute the Commercial javascript application</h4>
+        <h4>Advert loading time</h4>
 
         <div class="row">
-            <div class="col-md-12">This is the time between the commercial system starting and completing (known as the commercial bootstrap).</div>
+            <div class="col-md-12">
+                <p>
+                    This is the time taken for an individual advert slot to obtain a response from the server. There are multiple slots on a page, and many page views, so an average is calculated.
+                    For programmatic systems, such as 'prebid' or 'sonobi', the load time includes the additional network latency introduced by header-bidding.
+                </p>
+                <p>
+                    The expectation is that prebid's latency increases with additional bidders, whilst sonobi's latency should not be affected by additional bidders.
+                    Both systems are expected to be slower than the standard 'waterfall' system; however they promise better CPM revenue.
+                </p>
+            </div>
         </div>
 
         <div class="row graph graph--commercial-app-duration">
