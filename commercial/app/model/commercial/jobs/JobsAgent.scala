@@ -6,7 +6,7 @@ import model.commercial._
 
 import scala.concurrent.Future
 
-object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
+class JobsAgent(allIndustries: Industries) extends MerchandiseAgent[Job] with ExecutionContexts {
 
   def jobsTargetedAt(segment: Segment): Seq[Job] = {
     def defaultJobs = available filter (_.industries.contains("Media"))
@@ -25,7 +25,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
     def withKeywords(parsedFeed: Future[ParsedFeed[Job]]): Future[ParsedFeed[Job]] = {
       parsedFeed map { feed =>
         val jobs = feed.contents map { job =>
-          val jobKeywordIds = job.sectorIds.flatMap(Industries.forIndustry).distinct
+          val jobKeywordIds = job.sectorIds.flatMap(allIndustries.forIndustry).distinct
           job.copy(keywordIdSuffixes = jobKeywordIds map Keyword.getIdSuffix)
         }
         ParsedFeed(jobs, feed.parseDuration)

@@ -12,7 +12,10 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.Random
 
-class Multi(bestsellersAgent: BestsellersAgent)
+class Multi(bestsellersAgent: BestsellersAgent,
+            masterclassAgent: MasterclassAgent,
+            travelOffersAgent: TravelOffersAgent,
+            jobsAgent: JobsAgent)
   extends Controller
   with ExecutionContexts
   with implicits.Collections
@@ -32,15 +35,15 @@ class Multi(bestsellersAgent: BestsellersAgent)
     val eventualContent = componentsAndSpecificIds map {
       case ("jobs", jobId) if jobId.nonEmpty =>
         Future.successful {
-          JobsAgent.specificJobs(Seq(jobId)).headOption orElse {
-            JobsAgent.jobsTargetedAt(segment).headOption
+          jobsAgent.specificJobs(Seq(jobId)).headOption orElse {
+            jobsAgent.jobsTargetedAt(segment).headOption
           } map {
             views.html.jobs.jobsBlended(_, clickMacro)
           }
         }
       case ("jobs", _) =>
         Future.successful {
-          JobsAgent.jobsTargetedAt(segment).headOption map {
+          jobsAgent.jobsTargetedAt(segment).headOption map {
             views.html.jobs.jobsBlended(_, clickMacro)
           }
         }
@@ -60,29 +63,29 @@ class Multi(bestsellersAgent: BestsellersAgent)
         }
       case ("travel", travelId) if travelId.nonEmpty =>
         Future.successful {
-          TravelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
-            TravelOffersAgent.offersTargetedAt(segment).headOption
+          travelOffersAgent.specificTravelOffers(Seq(travelId)).headOption orElse {
+            travelOffersAgent.offersTargetedAt(segment).headOption
           } map {
             views.html.travel.travelBlended(_, clickMacro)
           }
         }
       case ("travel", _) =>
         Future.successful {
-          TravelOffersAgent.offersTargetedAt(segment).headOption map {
+          travelOffersAgent.offersTargetedAt(segment).headOption map {
             views.html.travel.travelBlended(_, clickMacro)
           }
         }
       case ("masterclasses", eventBriteId) if eventBriteId.nonEmpty =>
         Future.successful {
-          MasterclassAgent.specificMasterclasses(Seq(eventBriteId)).filterNot(_.mainPicture.isEmpty).headOption orElse {
-            MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption
+          masterclassAgent.specificMasterclasses(Seq(eventBriteId)).filterNot(_.mainPicture.isEmpty).headOption orElse {
+            masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption
           } map {
             views.html.masterclasses.masterclassesBlended(_, clickMacro)
           }
         }
       case ("masterclasses", _) =>
         Future.successful {
-          MasterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption map {
+          masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty).headOption map {
             views.html.masterclasses.masterclassesBlended(_, clickMacro)
           }
         }

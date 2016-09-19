@@ -5,11 +5,11 @@ import common.{AkkaAgent, ExecutionContexts, Logging}
 
 import scala.util.{Failure, Success}
 
-object SectionsLookUp extends Logging with ExecutionContexts {
+class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
   private val sections = AkkaAgent[Option[Map[String, Section]]](None)
 
   def refresh() = {
-    ContentApiClient.getResponse(ContentApiClient.sections) onComplete {
+    contentApiClient.getResponse(contentApiClient.sections) onComplete {
       case Success(response) =>
         log.info("Refreshed sections from Content API")
         sections send Some(response.results.flatMap({ section =>

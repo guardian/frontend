@@ -21,7 +21,8 @@ class CommercialLifecycle(
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
   feedsFetcher: FeedsFetcher,
-  feedsParser: FeedsParser)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  feedsParser: FeedsParser,
+  industries: Industries)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     stop()
@@ -50,7 +51,7 @@ class CommercialLifecycle(
   }
 
   private val refreshJobs: List[RefreshJob] = List(
-    new IndustriesRefresh(jobs)
+    new IndustriesRefresh(industries, jobs)
   )
 
   override def start(): Unit = {
@@ -134,7 +135,7 @@ class CommercialLifecycle(
 
     akkaAsync.after1s {
 
-      Industries.refresh() onFailure {
+      industries.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 

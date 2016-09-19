@@ -2,15 +2,18 @@ package model.commercial.events
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.{ExecutionContexts, Logging}
+import contentapi.ContentApiClient
 import model.commercial._
 
 import scala.concurrent.Future
 
-object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionContexts with Logging {
+class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[Masterclass] with ExecutionContexts with Logging {
+
+  private val lookup = new Lookup(contentApiClient)
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Masterclass]] = {
 
-    def fetchKeywords(name: String): Future[Seq[String]] = for(tags <- Lookup.keyword(name)) yield tags.map(_.id)
+    def fetchKeywords(name: String): Future[Seq[String]] = for(tags <- lookup.keyword(name)) yield tags.map(_.id)
 
     def addKeywordsFromContentApi(masterclasses: Seq[Masterclass]): Future[Seq[Masterclass]] = {
       Future.traverse(masterclasses) { masterclass =>
@@ -26,7 +29,7 @@ object MasterclassAgent extends MerchandiseAgent[Masterclass] with ExecutionCont
         val contentId = masterclass.guardianUrl
           .replace("http://www.theguardian.com/", "")
           .replaceFirst("\\?.*", "")
-        Lookup.mainPicture(contentId) map { imageContainer =>
+        lookup.mainPicture(contentId) map { imageContainer =>
           masterclass.copy(mainPicture = imageContainer)
         } recover {
           // This is just in case the Future doesn't pan out.

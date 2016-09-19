@@ -4,7 +4,7 @@ import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-class JobsController extends Controller with implicits.Requests {
+class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 
@@ -23,7 +23,7 @@ class JobsController extends Controller with implicits.Requests {
   )
 
   def renderJobs = Action { implicit request =>
-    (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
+    (jobsAgent.specificJobs(specificIds) ++ jobsAgent.jobsTargetedAt(segment)).distinct match {
       case Nil => NoCache(jsonFormat.nilResult.result)
       case jobs => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
