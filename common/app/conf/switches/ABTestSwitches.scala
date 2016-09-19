@@ -46,17 +46,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
-  val ABContributionsEmbed20160905= Switch(
-    ABTests,
-    "ab-contributions-embed-20160905",
-    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 20),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-contributions-epic-20160906",
