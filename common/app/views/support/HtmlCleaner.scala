@@ -448,18 +448,6 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class ImmersiveMainEmbed(isImmersive: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-    if(isImmersive) {
-      val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
-      if(srcdoc != null) {
-          document.getElementsByTag("body").html(srcdoc)
-      }
-    }
-    document
-  }
-}
-
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
