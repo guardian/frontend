@@ -130,6 +130,11 @@ CommentBox.prototype.prerender = function() {
         avatar.setAttribute('userid', userData.id);
         avatar.setAttribute('data-userid', userData.id);
         UserAvatars.avatarify(avatar);
+    } else {
+        var container = document.getElementsByClassName('d-comment-box__meta')[0];
+        if (container) {
+            container.parentNode.removeChild(container);
+        }
     }
 
     if (this.options.replyTo) {
