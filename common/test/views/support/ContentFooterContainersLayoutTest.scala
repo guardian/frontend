@@ -81,7 +81,6 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   it should "include story package placeholder even when there's no story package to show" in {
     val html = buildHtml(contentItem(showInRelatedContent = false), emptyRelatedContent)
-    println("'" + html + "'")
     html.toString shouldBe
       "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml outbrainHtml mostPopularHtml " +
         "standardCommercialHtml "
