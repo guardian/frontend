@@ -10,7 +10,6 @@ define([
     editionaliseMenu
 ) {
     var html = qwery('html')[0];
-    var veggieBurgerLink = qwery('.js-change-link');
     var menuItems = qwery('.js-close-nav-list');
     var buttonClickHandlers = {
         'main-menu-toggle': veggieBurgerClickHandler,
@@ -58,12 +57,13 @@ define([
     function veggieBurgerClickHandler(event) {
         var button = event.target;
         var mainMenu = qwery('#main-menu')[0];
+        var veggieBurgerLink = qwery('.js-change-link')[0];
 
         function menuIsOpen() {
             return (button.getAttribute('aria-expanded') === 'true');
         }
 
-        if (!mainMenu) {
+        if (!mainMenu || !veggieBurgerLink) {
             return;
         }
         if (menuIsOpen()) {
@@ -72,7 +72,7 @@ define([
 
                 button.setAttribute('aria-expanded', 'false');
                 mainMenu.setAttribute('aria-hidden', 'true');
-                veggieBurgerLink[0].classList.remove('new-header__nav__menu-button--open');
+                veggieBurgerLink.classList.remove('new-header__nav__menu-button--open');
 
                 // Remove possible ordering for the lists
                 mainListItems.forEach(function (item) {
@@ -87,7 +87,7 @@ define([
 
                 button.setAttribute('aria-expanded', 'true');
                 mainMenu.setAttribute('aria-hidden', 'false');
-                veggieBurgerLink[0].classList.add('new-header__nav__menu-button--open');
+                veggieBurgerLink.classList.add('new-header__nav__menu-button--open');
 
                 if (firstButton) {
                     firstButton.focus();

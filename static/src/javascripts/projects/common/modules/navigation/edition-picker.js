@@ -22,7 +22,9 @@ define([
         function closeMenu() {
             fastdom.write(function () {
                 button.setAttribute('aria-expanded', 'false');
-                editionPickerDropdown.setAttribute('aria-hidden', 'true');
+                if (editionPickerDropdown) {
+                    editionPickerDropdown.setAttribute('aria-hidden', 'true');
+                }
             });
         }
 
@@ -31,7 +33,9 @@ define([
         } else {
             fastdom.write(function () {
                 button.setAttribute('aria-expanded', 'true');
-                editionPickerDropdown.setAttribute('aria-hidden', 'false');
+                if (editionPickerDropdown) {
+                    editionPickerDropdown.setAttribute('aria-hidden', 'false');
+                }
                 document.addEventListener('click', closeEditionPickerAndRemoveListener, false);
             });
         }
