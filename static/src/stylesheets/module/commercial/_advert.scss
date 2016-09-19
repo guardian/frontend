@@ -202,7 +202,7 @@
     .advert--inverse {
         flex-direction: row-reverse;
 
-        > .advert__text {
+        .advert__text {
             padding: $gs-baseline / 2 0 $gs-baseline / 2 $gs-gutter / 2;
         }
 

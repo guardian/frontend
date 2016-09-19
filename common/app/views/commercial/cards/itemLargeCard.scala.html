@@ -13,30 +13,32 @@
   optImgRatio: Option[String] = None,
   useCardBranding: Boolean)(implicit request: RequestHeader)
 
-<a href="@item.targetUrl"
-   class="@CssClassBuilder.linkFromLargeCard(item, optAdvertClassNames, optClassNames, useCardBranding)"
-   data-link-name="@omnitureId"
-    >
-    <div class="advert__text">
-        <h2 class="advert__title">
-            @for(icon <- item.icon){@inlineSvg(icon, "icon")}
-            @item.headline
-        </h2>
-        @for(description <- item.description) {
-            <div class="advert__standfirst">@Html(description)</div>
-        }
-        @if(useCardBranding) {
-            @for(branding <- item.branding) {
-                @contentLogo(branding)
+<div class="@CssClassBuilder.linkFromLargeCard(item, optAdvertClassNames, optClassNames, useCardBranding)">
+    <a href="@item.targetUrl"
+       data-link-name="@omnitureId"
+       class="advert__container"
+        >
+        <div class="advert__text">
+            <h2 class="advert__title">
+                @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+                @item.headline
+            </h2>
+            @for(description <- item.description) {
+                <div class="advert__standfirst">@Html(description)</div>
             }
-        }
-    </div>
-    <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
-        @image(
-            Seq("advert__image"),
-            FaciaWidths.mediaFromItemClasses(ItemClasses(mobile = Standard, tablet = cardType, desktop = Some(cardType))),
-            maybeImageMedia = item.image,
-            maybeSrc = item.fallbackImageUrl
-        )
-    </div>
-</a>
+            @if(useCardBranding) {
+                @for(branding <- item.branding) {
+                    @contentLogo(branding)
+                }
+            }
+        </div>
+    </a>
+        <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
+            @image(
+                Seq("advert__image"),
+                FaciaWidths.mediaFromItemClasses(ItemClasses(mobile = Standard, tablet = cardType, desktop = Some(cardType))),
+                maybeImageMedia = item.image,
+                maybeSrc = item.fallbackImageUrl
+            )
+        </div>
+</div>
