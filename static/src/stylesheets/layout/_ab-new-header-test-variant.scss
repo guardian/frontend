@@ -305,7 +305,8 @@ $gutter-large: 55px;
 .edition-picker__button {
     display: none;
 
-    &:checked, &[aria-expanded='true'] {
+    &:checked,
+    &[aria-expanded='true'] {
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: $guardian-brand-dark;
@@ -394,13 +395,15 @@ $gutter-large: 55px;
 }
 
 .new-header__nav__button {
-    &:checked, &[aria-expanded='true']  {
+    &:checked,
+    &[aria-expanded='true']  {
         & ~ .main-menu-container {
             transform: translateX(0%);
             transition: transform .4s cubic-bezier(.23, 1, .32, 1);
         }
     }
-    &:checked, &[aria-expanded='true'] {
+    &:checked,
+    &[aria-expanded='true'] {
         & ~ .main-menu-container__overlay {
             opacity: 1;
             transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
