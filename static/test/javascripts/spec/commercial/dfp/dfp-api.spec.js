@@ -1,3 +1,5 @@
+define('js', [], function () { return function () {}; });
+define('js!googletag.js', [], function () { return function () {}; });
 define([
     'bean',
     'bonzo',

@@ -27,7 +27,7 @@ object Formula1HostedPages {
   val packagesPageName = "packages"
   val offtrackPageName = "offtrack"
 
-  val overviewArticlePage = HostedArticlePage2(
+  val overviewArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$overviewPageName",
     pageName = overviewPageName,
@@ -37,10 +37,12 @@ object Formula1HostedPages {
     cta(overviewPageName),
     nextPageNames = List(packagesPageName, offtrackPageName),
     mainPicture = "https://media.guim.co.uk/18ad0d659d2cf5b961b7c7c9548283cc6e4559e1/0_346_5184_3110/2000.jpg",
-    mainPictureCaption = "A bird's eye view of the illuminated Marina Bay Street Circuit"
+    mainPictureCaption = "A bird's eye view of the illuminated Marina Bay Street Circuit",
+    socialShareText = None,
+    shortSocialShareText = None
   )
 
-  val packagesArticlePage = HostedArticlePage2(
+  val packagesArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$packagesPageName",
     pageName = packagesPageName,
@@ -51,10 +53,12 @@ object Formula1HostedPages {
     cta(packagesPageName),
     nextPageNames = List(offtrackPageName, overviewPageName),
     mainPicture = "https://media.guim.co.uk/5dfce3ee95c325437fd26d1757a5a9032c514400/0_0_3008_1997/2000.jpg",
-    mainPictureCaption = ""
+    mainPictureCaption = "",
+    socialShareText = None,
+    shortSocialShareText = None
   )
 
-  val offtrackArticlePage = HostedArticlePage2(
+  val offtrackArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$offtrackPageName",
     pageName = offtrackPageName,
@@ -66,7 +70,9 @@ object Formula1HostedPages {
     cta(offtrackPageName),
     nextPageNames = List(overviewPageName, packagesPageName),
     mainPicture = "https://media.guim.co.uk/797e2c3ecf6631e647f31978073404e1b78974a7/0_0_5184_3456/2000.jpg",
-    mainPictureCaption = "Take a break from the action and cool off within the Circuit Park"
+    mainPictureCaption = "Take a break from the action and cool off within the Circuit Park",
+    socialShareText = None,
+    shortSocialShareText = None
   )
 
   def fromPageName(pageName: String): Option[HostedPage] = {

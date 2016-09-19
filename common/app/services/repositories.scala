@@ -14,6 +14,8 @@ import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
 
+  val contentApiClient: ContentApiClient
+  val sectionsLookUp: SectionsLookUp
   private val rssFields = s"${QueryDefaults.trailFields},byline,body,standfirst"
 
   def normaliseTag(tag: String): String = {
@@ -59,7 +61,7 @@ trait Index extends ConciergeRepository with Collections {
       }
     )
 
-    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.search(edition)
+    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
@@ -109,7 +111,7 @@ trait Index extends ConciergeRepository with Collections {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
     val fields = if (isRss) rssFields else QueryDefaults.trailFields
 
-    val maybeSection = SectionsLookUp.get(path)
+    val maybeSection = sectionsLookUp.get(path)
 
     /** If looking up a section, go to equivalent tag instead.
       *
@@ -121,7 +123,7 @@ trait Index extends ConciergeRepository with Collections {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
-    val promiseOfResponse = ContentApiClient.getResponse(ContentApiClient.item(queryPath, edition).page(pageNum)
+    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
     ) map { response =>
@@ -172,7 +174,5 @@ trait Index extends ConciergeRepository with Collections {
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
-
-object Index extends Index
 
 

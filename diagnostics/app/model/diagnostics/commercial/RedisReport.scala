@@ -94,23 +94,32 @@ object RedisReport extends Logging with ExecutionContexts {
       // on the Redis pub-sub channel, triggering the callback which will forward the data into S3.
       // Nothing bad happens if data expires too soon, or the system falls behind; we just collect less data.
       client.setex(report.viewId, PAGE_VIEW_DATA_COLLECTION_PERIOD, "surrogate-key")
-      client.setex(dataKeyFromId(report.viewId), PAGE_VIEW_DATA_EXPIRY, Json.toJson(report).toString)
 
-      // Use a time key-value which holds an array of all the view data recorded for a given time period (minute periods).
-      val timeKey = reportsKeyFromDate(DateTime.now())
-      client.rpush(timeKey, Json.toJson(report).toString)
-      client.expire(timeKey, PAGE_VIEW_DATA_EXPIRY.toInt)
+      // If the data key has been written before, then the time key must have been written as well, so we skip this.
+      // Otherwise, the page view would appear in several time keys.
+      if (!client.exists(dataKeyFromId(report.viewId))) {
+        // Register the page view at the current time. Use a time key-value which holds an array of all the view data
+        // recorded for a given time period (minute periods).
+        val timeKey = reportsKeyFromDate(DateTime.now())
+        client.sadd(timeKey, report.viewId)
+        client.expire(timeKey, PAGE_VIEW_DATA_EXPIRY.toInt)
+      }
+
+      // Write the new report data to the data key.
+      client.setex(dataKeyFromId(report.viewId), PAGE_VIEW_DATA_EXPIRY, Json.toJson(report).toString)
     }
   }
 
   def getReports(dateTime: DateTime): List[String] = {
-
-    val maybeReports = for {
-      client <- redisClient
-      reports <- client.lrange(reportsKeyFromDate(dateTime), 0, -1)
+    val reports = for {
+      client <- redisClient.toList
+      maybeSet <- client.smembers[String](reportsKeyFromDate(dateTime)).toList
+      maybeViewId <- maybeSet
+      viewId <- maybeViewId
+      report <- client.get[String](dataKeyFromId(viewId))
     } yield {
-      reports.flatten
+      report
     }
-    maybeReports.getOrElse(List.empty)
+    reports.toList
   }
 }

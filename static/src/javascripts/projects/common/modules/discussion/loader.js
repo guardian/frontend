@@ -86,8 +86,7 @@ Loader.prototype.initMainComments = function() {
     var self = this,
         commentId = this.getCommentIdFromHash();
 
-    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
-    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
@@ -336,7 +335,8 @@ Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
-        newCommenter: !this.user.privateFields.hasCommented
+        newCommenter: !this.user.privateFields.hasCommented,
+        shouldRenderMainAvatar: !discussionFrontend.canRun(ab, window.curlConfig)
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
@@ -380,6 +380,7 @@ Loader.prototype.renderCommentCount = function () {
     if (discussionFrontend.canRun(ab, window.curlConfig)) {
         return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
+            avatarImagesHost: config.page.avatarImagesUrl,
             closed: this.getDiscussionClosed(),
             discussionId: this.getDiscussionId(),
             element: document.getElementsByClassName('js-discussion-external-frontend')[0],

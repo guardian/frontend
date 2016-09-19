@@ -32,17 +32,15 @@ define([
 
         function create() {
             var videoHeight = openedHeight;
+            var plusIconPosition = params.showCrossInContainer.substring(3);
             var additionalParams = {
                 desktopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
                 mobileCTA: params.ctaMobileImage ? ctaTpl({ media: 'mobile-only', link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
                     : '',
-                showPlus: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'screen' ?
-                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
-                    : '',
-                showPlusInContainer: (params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow') && params.showCrossInContainer === 'container' ?
-                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>'
+                showPlus: params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow' ?
+                    '<button class="ad-exp__close-button ad-exp__open ad-exp__open--' + plusIconPosition + '">' + svgs('closeCentralIcon') + '</button>'
                     : '',
                 videoEmbed: (params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
@@ -52,38 +50,11 @@ define([
             var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
             bean.on($adSlot[0], 'click', '.ad-exp__open', function () {
-                fastdom.write(function () {
-                    var videoSrc = $('#YTPlayer').attr('src');
-                    var videoSrcAutoplay = videoSrc;
+                fastdom.write(function () { open(isClosed); });
+            });
 
-                    if (videoSrc.indexOf('autoplay') === -1) {
-                        videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
-                    } else {
-                        videoSrcAutoplay = videoSrcAutoplay.replace(
-                            isClosed ? 'autoplay=0' : 'autoplay=1',
-                            isClosed ? 'autoplay=1' : 'autoplay=0'
-                        );
-                    }
-
-                    $('.ad-exp__close-button', $adSlot[0]).toggleClass('button-spin');
-                    $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-up').toggleClass('chevron-down');
-                    $ad
-                    .css(
-                        'height',
-                        isClosed ? openedHeight : closedHeight
-                    );
-
-                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
-                        .css('height', isClosed ? openedHeight : closedHeight)
-                        .toggleClass('slide-video__expand');
-
-                    isClosed = !isClosed;
-
-                    setTimeout(function () {
-                        $('#YTPlayer').attr('src', videoSrcAutoplay);
-                    }, 1000);
-
-                });
+            bean.on($adSlot[0], 'click', '.creative__cta', function () {
+                fastdom.write(function () { open(false); });
             });
 
             return fastdom.write(function () {
@@ -99,6 +70,44 @@ define([
                 }
                 return true;
             });
+
+            function open(open) {
+                var videoSrc = $('#YTPlayer').attr('src');
+                var videoSrcAutoplay = videoSrc;
+
+                if (videoSrc.indexOf('autoplay') === -1) {
+                    videoSrcAutoplay = videoSrc + '&amp;autoplay=1';
+                } else {
+                    videoSrcAutoplay = videoSrcAutoplay.replace(
+                        open ? 'autoplay=0' : 'autoplay=1',
+                        open ? 'autoplay=1' : 'autoplay=0'
+                    );
+                }
+
+                if (open) {
+                    $('.ad-exp__close-button', $adSlot[0]).addClass('button-spin');
+                    $('.ad-exp__open-chevron', $adSlot[0]).addClass('chevron-down');
+                    $ad.css('height', openedHeight);
+                    $fabricExpandableVideo.addClass('creative--open');
+                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
+                    .css('height', openedHeight)
+                    .addClass('slide-video__expand');
+                } else {
+                    $('.ad-exp__close-button', $adSlot[0]).removeClass('button-spin');
+                    $('.ad-exp__open-chevron', $adSlot[0]).removeClass('chevron-down');
+                    $ad.css('height', closedHeight);
+                    $fabricExpandableVideo.removeClass('creative--open');
+                    $('.slide-video, .slide-video .ad-exp__layer', $adSlot[0])
+                    .css('height', closedHeight)
+                    .removeClass('slide-video__expand');
+                }
+
+                isClosed = !open;
+
+                setTimeout(function () {
+                    $('#YTPlayer').attr('src', videoSrcAutoplay);
+                }, 1000);
+            }
         }
     }
 });

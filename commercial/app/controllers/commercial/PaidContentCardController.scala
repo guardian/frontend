@@ -1,19 +1,22 @@
 package controllers.commercial
 
 import common.{ExecutionContexts, Logging}
+import contentapi.ContentApiClient
 import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
 import views.support.Item300
 import views.support.commercial.TrackingCodeBuilder
 
-class PaidContentCardController extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class PaidContentCardController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with implicits.Requests with Logging {
+
+  private val lookup = new Lookup(contentApiClient)
 
   private def renderCard(format: Format) = Action.async { implicit request =>
 
     val shortUrl = request.getParameter("articleUrl")
 
-    Lookup.contentByShortUrls(shortUrl.toList) map { contents =>
+    lookup.contentByShortUrls(shortUrl.toList) map { contents =>
       contents.headOption map { content =>
         val articleUrl = content.metadata.webUrl
         val articleTitle = request.getParameter("articleHeaderText") getOrElse content.metadata.webTitle

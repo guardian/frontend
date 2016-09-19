@@ -6,10 +6,10 @@ import scala.concurrent.Future
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import conf.switches.Switches.RelatedContentSwitch
-import ContentApiClient.getResponse
 
 trait Related extends ConciergeRepository {
 
+  val contentApiClient: ContentApiClient
   def mostReadAgent: MostReadAgent
 
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
@@ -24,7 +24,7 @@ trait Related extends ConciergeRepository {
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val response = getResponse(ContentApiClient.item(path, edition)
+      val response = contentApiClient.getResponse(contentApiClient.item(path, edition)
         .tag(tags)
         .showRelated(true)
       )
@@ -44,8 +44,8 @@ trait Related extends ConciergeRepository {
 
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
-    val response = getResponse(
-      ContentApiClient.search(edition)
+    val response = contentApiClient.getResponse(
+      contentApiClient.search(edition)
         .tag(tags)
         .pageSize(50)
     )

@@ -7,7 +7,7 @@ import play.api.mvc.{Action, AnyContent}
 
 import scala.concurrent.Future
 
-class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
+class HealthCheck(override val wsClient: WSClient, sectionsLookUp: SectionsLookUp) extends AllGoodCachedHealthCheck(
   wsClient,
   9002,
   NeverExpiresSingleHealthCheck("/books"),
@@ -17,7 +17,7 @@ class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCh
   NeverExpiresSingleHealthCheck("/world/video/2012/dec/31/52-weeks-photos-2012-video")
 ) {
   override def healthCheck(): Action[AnyContent] = Action.async { request =>
-    if (!SectionsLookUp.isLoaded()) {
+    if (!sectionsLookUp.isLoaded()) {
       Future.successful(InternalServerError("Sections have not loaded from Content API"))
     } else {
       super.healthCheck()(request)

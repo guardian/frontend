@@ -64,13 +64,14 @@ object EmailSubscriptions {
 
     ),
     EmailSubscription(
-      "Media briefing",
+      "MediaGuardian Briefing",
       "news",
       "Media",
-      "An indispensable summary of what the papers are saying about media on your desktop before 9am. We summarise the media headlines in every newspaper from the Wall Street Journal to the Daily Star.",
+      "An indispensable summary of the media industry headlines in your inbox before 9am. We dig out the most important stories from every and any newspaper, broadcaster and website.",
       "Weekday mornings",
       "217",
-      subscribedTo = subscribedListIds.exists{ x => x == "217" }
+      subscribedTo = subscribedListIds.exists{ x => x == "217" },
+      exampleUrl = Some("http://www.theguardian.com/media/series/mediaguardian-briefing/latest/email")
     ),
     EmailSubscription(
       "Brexit briefing",
@@ -296,7 +297,7 @@ object EmailSubscriptions {
       "Best of Guardian Opinion - US",
       "comment",
       "Opinion's daily email newsletter",
-      "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
+      "Keep up on today’s pressing issues with the Guardian’s Best of Opinion US email. We’ll send the most shared opinion, analysis and editorial articles from the last 24 hours, every weekday, direct to your inbox.",
       "Weekday afternoons",
       "3228",
       subscribedTo = subscribedListIds.exists{ x => x == "3228" }
