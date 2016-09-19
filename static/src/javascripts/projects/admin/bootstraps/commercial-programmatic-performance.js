@@ -57,8 +57,17 @@ define([
             ]
         });
 
-       window.setInterval(fetchData, FETCH_INTERVAL);
+       window.setInterval(renderCurrentData, FETCH_INTERVAL);
 
+       // Backfill the data to get accurate averages.
+       var backFillDate = new Date();
+       backFillDate.setSeconds(backFillDate.getSeconds() - FETCH_DELAY);
+
+       // Get the last 2 minutes worth of data.
+       for (var i = 0; i < 120; i++) {
+           backFillDate.setMilliseconds(backFillDate.getMilliseconds() - FETCH_INTERVAL);
+           fetchData(backFillDate, false);
+       }
        // Add key colours to the legend rows, based on d3.
        $('.legend__label--prebid').css('color', colors[0]);
        $('.legend__label--waterfall').css('color', colors[1]);
@@ -118,11 +127,16 @@ define([
         return calculateAverage(validLoadTimes);
     }
 
-    function fetchData() {
+    function renderCurrentData() {
         var currentDate = new Date();
         currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
+        fetchData(currentDate, true);
+    }
+
+    function fetchData(date, renderGraphData) {
+
         var fetchUrl = template(reportTemplateUrl, {
-            isoDate: currentDate.toISOString()
+            isoDate: date.toISOString()
         });
 
         fetchJson(config.page.beaconUrl + fetchUrl, {
@@ -137,20 +151,24 @@ define([
             var waterfallAdvertLoadTime = processAdvertLoadTimes(waterfallReports, 'waterfall');
             var sonobiAdvertLoadTime = processAdvertLoadTimes(sonobiReports, 'sonobi');
 
-            chart.push([
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: prebidAdvertLoadTime
-                },
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: waterfallAdvertLoadTime
-                },
-                {
-                    time: currentDate.getTime() / 1000,
-                    y: sonobiAdvertLoadTime
-                }
-            ]);
+            if (renderGraphData) {
+                var time = date.getTime() / 1000;
+
+                chart.push([
+                    {
+                        time: time,
+                        y: prebidAdvertLoadTime
+                    },
+                    {
+                        time: time,
+                        y: waterfallAdvertLoadTime
+                    },
+                    {
+                        time: time,
+                        y: sonobiAdvertLoadTime
+                    }
+                ]);
+            }
         });
     }
 
