@@ -27,7 +27,7 @@ object Formula1HostedPages {
   val packagesPageName = "packages"
   val offtrackPageName = "offtrack"
 
-  val overviewArticlePage = HostedArticlePage2(
+  val overviewArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$overviewPageName",
     pageName = overviewPageName,
@@ -42,7 +42,7 @@ object Formula1HostedPages {
     shortSocialShareText = None
   )
 
-  val packagesArticlePage = HostedArticlePage2(
+  val packagesArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$packagesPageName",
     pageName = packagesPageName,
@@ -58,7 +58,7 @@ object Formula1HostedPages {
     shortSocialShareText = None
   )
 
-  val offtrackArticlePage = HostedArticlePage2(
+  val offtrackArticlePage = HostedArticlePage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$offtrackPageName",
     pageName = offtrackPageName,

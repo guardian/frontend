@@ -9,7 +9,7 @@ import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.JsString
 
-case class HostedArticlePage2(
+case class HostedArticlePage(
   campaign: HostedCampaign,
   pageUrl: String,
   pageName: String,
@@ -61,9 +61,9 @@ case class HostedArticlePage2(
   }
 }
 
-object HostedArticlePage2 extends Logging {
+object HostedArticlePage extends Logging {
 
-  def fromContent(content: Content): Option[HostedArticlePage2] = {
+  def fromContent(content: Content): Option[HostedArticlePage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaignName <- content.sectionName
@@ -85,7 +85,7 @@ object HostedArticlePage2 extends Logging {
         }
       }
 
-      HostedArticlePage2(
+      HostedArticlePage(
         campaign = HostedCampaign(
           id = campaignId,
           name = campaignName,
