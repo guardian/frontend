@@ -107,7 +107,7 @@ define([
                 if (itemId === targetListId) {
                     fastdom.write(function () {
                         var parent = listItem.parentNode;
-                        var menuContainer = qwery('.js-reset-scroll-on-menu')[0];
+                        var menuContainer = qwery('.js-main-menu')[0];
 
                         // Using flexbox to reorder lists based on what is clicked.
                         parent.style.order = '-' + index;
