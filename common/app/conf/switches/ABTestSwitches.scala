@@ -56,16 +56,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-contributions-epic-buttons-20160907",
-    "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 20),
-    exposeClientSide = true
-  )
-
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
