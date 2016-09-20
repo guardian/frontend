@@ -55,10 +55,10 @@
 
         @Edition.all.map { edition =>
             <ul class="navigation-group
-                navigation-group--@{edition.id.toLowerCase}
                 navigation-border
                 secondary-navigation
                 js-editionlise-secondary-nav"
+                data-edition=@{edition.id.toLowerCase}
                 @if(edition.id.toLowerCase != "uk") { hidden }>
 
                 @NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map { item =>
