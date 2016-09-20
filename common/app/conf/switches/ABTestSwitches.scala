@@ -18,7 +18,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-count",
+    "ab-discussion-external-frontend-avatar",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
