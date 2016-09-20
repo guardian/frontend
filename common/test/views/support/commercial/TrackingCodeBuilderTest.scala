@@ -7,13 +7,6 @@ import views.support.SponsorDataAttributes
 
 class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
-  private def mkBrandingAttributes(sponsorName: String) = SponsorDataAttributes(
-    sponsor = Some(sponsorName),
-    sponsorshipType = "",
-    seriesId = None,
-    keywordId = None
-  )
-
   private def mkBranding(sponsorName: String) = Branding(
     sponsorshipType = Sponsored,
     sponsorName,
@@ -35,7 +28,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     branding
   )
 
-  private def mkContainerModel(brandingAttributes: Option[SponsorDataAttributes] = None) = {
+  private def mkContainerModel(branding: Option[Branding] = None) = {
 
     def mkContainerContent() = ContainerContent(
       title = "container-title",
@@ -59,8 +52,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
       id = "",
       layoutName = "",
       mkContainerContent(),
-      brandingAttributes,
-      branding = None
+      brandingAttributes = None,
+      branding = branding
     )
   }
 
@@ -68,7 +61,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBrandingAttributes("sponsor-name"))),
+      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
@@ -90,7 +83,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     val code = TrackingCodeBuilder.mkInteractionTrackingCode(
       frontId = "front-id",
       containerIndex = 2,
-      container = mkContainerModel(brandingAttributes = Some(mkBrandingAttributes("sponsor-name"))),
+      container = mkContainerModel(branding = Some(mkBranding("sponsor-name"))),
       card = mkCardContent(5)
     )(request = FakeRequest().withHeaders("X-Gu-Edition" -> "US"))
     code shouldBe
