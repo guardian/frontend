@@ -106,7 +106,7 @@ define([
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
+    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--top-banner-ad']);
 
     /**
      * Commercial components with merch sizing get fluid-250 styling

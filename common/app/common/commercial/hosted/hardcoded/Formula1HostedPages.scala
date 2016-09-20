@@ -10,9 +10,7 @@ object Formula1HostedPages {
     name = "Singapore Grand Prix",
     owner = "First Stop Singapore",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
-    cssClass = "f1-singapore",
-    fontColour = FontColour("#063666"),
-    logoLink = None
+    fontColour = FontColour("#063666")
   )
 
   private def cta(pageName: String) = HostedCallToAction(
