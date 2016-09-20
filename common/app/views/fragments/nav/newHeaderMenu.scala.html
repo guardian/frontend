@@ -50,14 +50,15 @@
         </ul>
         <ul class="navigation-group navigation-border secondary-navigation">
             <li class="navigation-group__item navigation-group__item--search">
-                <form class="navigation-group__search-container js-search-google" action="https://www.google.co.uk/search">
+                <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
                     @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
-                    <label for="submitgooglesearch">
-                        <input class="u-h" type="submit" id="submitgooglesearch">
+                    <label for="submit-google-search">
+                        <input class="u-h" type="submit" id="submit-google-search">
                         @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
                     </label>
                     <label for="q" class="u-h">What term do you want to search?</label>
-                    <input type="text" name="q" class="navigation-group__search-box js-get-search-term" placeholder="search for...">
+                    <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
+                    <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
                 </form>
             </li>
         </ul>
