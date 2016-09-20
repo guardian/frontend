@@ -43,9 +43,9 @@ The Identity site can be configured to use the local Identity API with the
 following properties in `~/.gu/frontend.conf`.
 
 ```
-# ID
 devOverrides {
-  id.apiRoot=https://idapi.thegulocal.com
+  # ID
+  id.apiRoot="https://idapi.thegulocal.com"
   id.apiClientToken=frontend-dev-client-token
 }
 ```
