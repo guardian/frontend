@@ -444,7 +444,6 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
   override lazy val item = gallery
-  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
