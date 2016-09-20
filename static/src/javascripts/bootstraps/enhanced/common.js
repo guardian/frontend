@@ -392,7 +392,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
-                ['c-us-survey-banner', modules.USSurveyBanner],
+                ['c-us-survey-banner', USSurveyBanner],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]
 
