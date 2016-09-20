@@ -279,7 +279,8 @@ object FaciaContainer {
     showTimestamps = false,
     None,
     useShowMore = true,
-    hasShowMoreEnabled = !config.config.hideShowMore
+    hasShowMoreEnabled = !config.config.hideShowMore,
+    showBranding = config.config.showBranding
   )
 
   def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None) = {
@@ -311,7 +312,8 @@ case class FaciaContainer(
   showTimestamps: Boolean,
   dateLinkPath: Option[String],
   useShowMore: Boolean,
-  hasShowMoreEnabled: Boolean
+  hasShowMoreEnabled: Boolean,
+  showBranding: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))

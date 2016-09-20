@@ -134,7 +134,8 @@ object TagProperties {
       bylineImageUrl = tag.bylineImageUrl,
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
-      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle)))
+      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle))),
+      paidContentType = tag.paidContentType
     )
   }
 }
@@ -155,7 +156,8 @@ case class TagProperties(
                           bylineImageUrl: Option[String],
                           podcast: Option[Podcast],
                           references: Seq[Reference],
-                          activeBrandings: Option[Seq[Branding]]
+                          activeBrandings: Option[Seq[Branding]],
+                          paidContentType: Option[String]
 ) {
  val footballBadgeUrl = references.find(_.`type` == "pa-football-team")
       .map(_.id.split("/").drop(1).mkString("/"))
@@ -172,14 +174,17 @@ case class Tag (
 
   override val metadata: MetaData = Tag.makeMetadata(properties, pagination)
 
+  def isOfType(typeName: String): Boolean = properties.tagType == typeName || isOfPaidType(typeName)
+  def isOfPaidType(typeName: String): Boolean = properties.paidContentType.contains(typeName)
+
   val isContributor: Boolean = metadata.id.startsWith("profile/")
   val id: String = metadata.id
   val name: String = metadata.webTitle
-  val isSeries: Boolean = properties.tagType == "Series"
-  val isBlog: Boolean = properties.tagType == "Blog"
+  val isSeries: Boolean = isOfType("Series")
+  val isBlog: Boolean = isOfType("Blog")
   val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.sectionId)
   val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
-  val isKeyword = properties.tagType == "Keyword"
+  val isKeyword = isOfType("Keyword") || isOfPaidType("Topic")
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))

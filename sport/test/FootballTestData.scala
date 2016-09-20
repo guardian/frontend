@@ -101,7 +101,7 @@ object FootballTestData {
   val teamTags: Map[String, Tag] = Map(
     "Liverpool" -> Tag(
       TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
-        "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None),
+        "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None, None),
       None,
       None,
       None)

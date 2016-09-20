@@ -9,11 +9,15 @@ import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.HealthCheck
 import controllers.commercial.CommercialControllers
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
-import model.commercial.events.LiveEventAgent
+import model.commercial.CapiAgent
+import model.commercial.events.{LiveEventAgent, MasterclassAgent}
+import model.commercial.jobs.{Industries, JobsAgent}
+import model.commercial.travel.TravelOffersAgent
 import play.api.ApplicationLoader.Context
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
@@ -37,9 +41,17 @@ trait CommercialServices {
   def actorSystem: ActorSystem
 
   lazy val magentoService = wire[MagentoService]
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+
   lazy val bookFinder = wire[BookFinder]
   lazy val bestsellersAgent = wire[BestsellersAgent]
   lazy val liveEventAgent = wire[LiveEventAgent]
+  lazy val masterclassAgent = wire[MasterclassAgent]
+  lazy val travelOffersAgent = wire[TravelOffersAgent]
+  lazy val jobsAgent = wire[JobsAgent]
+  lazy val capiAgent = wire[CapiAgent]
+  lazy val industries = wire[Industries]
 
   lazy val feedsFetcher = wire[FeedsFetcher]
   lazy val feedsParser = wire[FeedsParser]

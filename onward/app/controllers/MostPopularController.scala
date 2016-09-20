@@ -8,10 +8,12 @@ import model._
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader}
 import views.support.FaciaToMicroFormat2Helpers._
-
 import scala.concurrent.Future
 
-class MostPopularController extends Controller with Logging with ExecutionContexts {
+class MostPopularController(contentApiClient: ContentApiClient,
+                            geoMostPopularAgent: GeoMostPopularAgent,
+                            dayMostPopularAgent: DayMostPopularAgent,
+                            mostPopularAgent: MostPopularAgent) extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
@@ -23,7 +25,7 @@ class MostPopularController extends Controller with Logging with ExecutionContex
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
-      var globalPopularContent = MostPopularAgent.mostPopular(edition)
+      var globalPopularContent = mostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
         Some(MostPopular("across the guardian", "", globalPopularContent.map(_.faciaContent)))
       else
@@ -59,7 +61,7 @@ class MostPopularController extends Controller with Logging with ExecutionContex
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
-    val countryPopular = MostPopular("across the guardian", "", GeoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
+    val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     Cached(900) {
       JsonComponent(
@@ -73,7 +75,7 @@ class MostPopularController extends Controller with Logging with ExecutionContex
   def renderPopularDay(countryCode: String) = Action { implicit request =>
     Cached(900) {
       JsonComponent(
-        "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>
+        "trails" -> JsArray(dayMostPopularAgent.mostPopular(countryCode).map{ trail =>
           Json.obj(
             ("url", trail.content.metadata.url),
             ("headline", trail.content.trail.headline)
@@ -85,7 +87,7 @@ class MostPopularController extends Controller with Logging with ExecutionContex
 
   def renderPopularMicroformat2 = Action { implicit request =>
     val edition = Edition(request)
-    val mostPopular = MostPopularAgent.mostPopular(edition) take 5
+    val mostPopular = mostPopularAgent.mostPopular(edition) take 5
 
     Cached(900) {
       JsonComponent(
@@ -102,7 +104,7 @@ class MostPopularController extends Controller with Logging with ExecutionContex
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApiClient.getResponse(ContentApiClient.item(path, edition)
+    contentApiClient.getResponse(contentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)
     ).map{response =>
@@ -112,5 +114,3 @@ class MostPopularController extends Controller with Logging with ExecutionContex
     }
   }
 }
-
-object MostPopularController extends MostPopularController

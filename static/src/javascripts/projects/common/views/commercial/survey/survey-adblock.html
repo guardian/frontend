@@ -54,6 +54,11 @@
                         <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
                     </div>
                     <% } %>
+                    <% if (contributorLink) { %>
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=contributorDataLink%>"><%=contributorText%><%=arrowWhiteRight%></a>
+                    </div>
+                    <% } %>
                 </div>
                 <% } %>
                 <% if (surveyTextUserHelp) { %>
