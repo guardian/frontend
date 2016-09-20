@@ -577,7 +577,7 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .navigation-group__item--search {
-    padding-top: 6px;
+    padding-top: $gs-baseline/2;
 }
 
 .navigation-group__search-container {
@@ -587,7 +587,7 @@ $navigation-horizontal-padding: $gs-gutter * 2;
     overflow: hidden;
     margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline;
     border-radius: 1000px;
-    height: 36px;
+    height: $gs-baseline*3;
 }
 
 .navigation-group__search-box {
