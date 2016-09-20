@@ -31,19 +31,6 @@ So the required steps are:
 
 * configure and run nginx (see `/nginx`)
 * update your hosts file (also described in `/nginx`)
-* make sure that your `~/.gu/frontend.conf` file contains
-
-
-
-```
-# ID
-id.apiRoot=https://id.code.dev-guardianapis.com
-id.apiClientToken=frontend-code-client-token
-```
-
-This configures the locally running identity module with the Identity API 
-on the CODE environment.
-
 * run the Identity subproject on port 9009
 
 With these in place, you'll be able to browse Identity on
@@ -57,6 +44,8 @@ following properties in `~/.gu/frontend.conf`.
 
 ```
 # ID
-id.apiRoot=https://idapi.thegulocal.com
-id.apiClientToken=frontend-dev-client-token
+devOverrides {
+  id.apiRoot=https://idapi.thegulocal.com
+  id.apiClientToken=frontend-dev-client-token
+}
 ```
