@@ -12,13 +12,11 @@ define([
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-engagement-banner',
-    'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/contributions-embed',
     'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-kong'
+    'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/video-button-duration'
 ], function (
     reportError,
@@ -34,13 +32,11 @@ define([
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipEngagementBannerTests,
-    RecommendedForYou,
-    ContributionsEmbed,
     ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    ContributionsKong
+    ContributionsStory,
     VideoButtonDuration
 ) {
 
@@ -50,12 +46,10 @@ define([
         new LiveBlogChromeNotificationsProd(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
-        new RecommendedForYou(),
-        new ContributionsEmbed(),
         new ContributionsEpic(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new ContributionsKong()
+        new ContributionsStory(),
         new VideoButtonDuration()
     ].concat(MembershipEngagementBannerTests);
 
