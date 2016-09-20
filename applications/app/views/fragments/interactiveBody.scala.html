@@ -8,7 +8,7 @@
 
 @bodyRaw(interactive: model.Interactive) = {
     @interactive.maybeBody.map { body =>
-        @HtmlFormat.raw(InteractiveCleaner(body))
+        @HtmlFormat.raw(body)
     }.getOrElse {
         <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
@@ -17,7 +17,13 @@
 @body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
     @if(isImmersive) {
         <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
-            @bodyRaw(interactive)
+            @if(interactive.hasSrcdoc) {
+
+                    @HtmlFormat.raw(InteractiveCleaner(interactive.fields.body))
+
+            } else {
+                @interactive.figureEl.map(HtmlFormat.raw(_))
+            }
         </div>
     } else {
         <div class="l-side-margins">
@@ -63,7 +69,6 @@
                 </div>
             </article>
         </div>
+        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
     }
-
-    @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
 }
