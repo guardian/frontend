@@ -20,10 +20,8 @@
         <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
             @if(interactive.hasSrcdoc) {
                 @if(interactivePressing.isSwitchedOn) {
-                    <h2>switch is on</h2>
                     @HtmlFormat.raw(InteractiveCleaner(interactive.fields.body))
                 } else {
-                    <h2>switch is off</h2>
                     @bodyRaw(interactive)
                 }
             } else {
