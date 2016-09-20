@@ -13,10 +13,7 @@ define([
     'common/utils/config',
     'common/modules/commercial/commercial-features',
     'common/utils/cookies',
-    'common/utils/element-inview',
-    'inlineSvg!svgs/illustration/contributions-finance',
-    'inlineSvg!svgs/illustration/contributions-independent',
-    'inlineSvg!svgs/illustration/contributions-quality'
+    'common/utils/element-inview'
 ], function (bean,
              qwery,
              $,
@@ -31,10 +28,7 @@ define([
              config,
              commercialFeatures,
              cookies,
-             ElementInview,
-             iconFinance,
-             iconIndependent,
-             iconQuality
+             ElementInview
 ) {
 
     return function () {
@@ -61,23 +55,25 @@ define([
                 title: 'Did you know...',
                 body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">... the Guardian has the freedom to report on any story it wants?\</p>\
                         \<p class=\"contributions__paragraph contributions__paragraph--epic\">From Edward Snowden to the Panama Papers, everything we do is in pursuit of the truth. We believe that every issue should be reported without bias, whatever the cost to us. These days, though, those are expensive beliefs to hold.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">If you believe in our unbiased reporting, if you read us, if you like us, then please contribute to the Guardian.\</p>'
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">If you believe in our unbiased reporting, if you read us, if you like us, then please contribute to the Guardian.\</p>',
+                imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-independent.png'
             },
             {
                 title: 'Did you know...',
                 body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian has won more than 50 journalism awards in 2016?\</p>\
                         \<p class=\"contributions__paragraph contributions__paragraph--epic\">Whether it’s Brexit or the Olympics, stories like this cost a lot to produce. We believe that money should never get in the way of informative, unbiased quality journalism. This is why we make our website available free of charge.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">We’ll always be here to cover them. If you read us, if you like us, then please contribute to the Guardian.\</p>'
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">We’ll always be here to cover them. If you read us, if you like us, then please contribute to the Guardian.\</p>',
+                imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-quality.png'
             },
             {
                 title: 'Did you know...',
                 body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian is working in a difficult financial environment?\</p>\
                         \<p class=\"contributions__paragraph contributions__paragraph--epic\">Never before have more people read the Guardian. Unlike many others, you can read us online, for free. However, like many others, we’re selling fewer actual papers. Which means that never before have so few paid for the Guardian.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Finding the truth is expensive. But supporting us isn’t. If you read us, if you like us, then please contribute to the Guardian.\</p>'
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Finding the truth is expensive. But supporting us isn’t. If you read us, if you like us, then please contribute to the Guardian.\</p>',
+                imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-finance.png'
             }
         ];
 
-        var icons = [iconIndependent, iconQuality, iconFinance];
 
         function obWidgetIsShown() {
             var $outbrain = $('.js-outbrain-container');
@@ -100,14 +96,14 @@ define([
             });
         };
 
-        function getStoryComponent(message, storyVariant, image) {
+        function getStoryComponent(message, storyVariant) {
             return $.create(template(contributionsStory, {
                 position: 'bottom',
                 title: message.title,
                 body: message.body,
                 linkUrl : 'https://contribute.theguardian.com?INTCMP=co_uk_story_' + storyVariant,
                 storyVariant: storyVariant,
-                image: image
+                imageHref: message.imageHref
             }));
         }
 
@@ -174,7 +170,7 @@ define([
                 id: 'story',
                 test: function () {
                     addInviewLIstener(proposedAdvance, currentTime, storyMessageIterationCount, 'contributions-story');
-                    writer(getStoryComponent(messages[storyMessageIterationCount%3], storyMessageIterationCount, icons[storyMessageIterationCount%3]));
+                    writer(getStoryComponent(messages[storyMessageIterationCount%3], storyMessageIterationCount));
                 },
                 success: completer
             }

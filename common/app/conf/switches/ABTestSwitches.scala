@@ -53,19 +53,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 3),
-<<<<<<< HEAD
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-20160906",
+    "ab-contributions-epic-20160916",
     "Test variants of the button text to drive contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 27),
-=======
->>>>>>> set audience share and write correct ideal outcome
     exposeClientSide = true
   )
 
