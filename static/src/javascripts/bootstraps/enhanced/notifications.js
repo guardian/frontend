@@ -80,7 +80,7 @@ define([
 
             fastdom.write( function() {
                 $follow.html(src);
-                bean.one($follow[0], 'click', '.js-notifications__button', handler);
+                bean.one($follow[0], 'click', '.js-notifications__toggle', handler);
             });
 
             return $follow;
@@ -108,7 +108,7 @@ define([
 
         closeDisplayMessage: function(){
             $('.js-live-notifications-denied').remove();
-            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__button', modules.subscribeHandler);
+            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__toggle', modules.subscribeHandler);
         },
 
         notificationsDeniedMessage: function() {
