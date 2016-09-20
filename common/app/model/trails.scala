@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition
 import common.commercial.BrandHunter
-import conf.switches.Switches.staticBadgesSwitch
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
@@ -94,9 +93,8 @@ final case class Trail (
   lazy val showByline: Boolean = tags.isComment
 
   def shouldHidePublicationDate(implicit request: RequestHeader): Boolean = {
-    lazy val isPaidContentInDfp = staticBadgesSwitch.isSwitchedOff && commercial.isAdvertisementFeature
-    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && BrandHunter.isPaidContent(this, Edition(request))
-    (isPaidContentInDfp || isPaidContentInCapi) && webPublicationDate.isOlderThan(2.weeks)
+    lazy val isPaidContent = BrandHunter.isPaidContent(this, Edition(request))
+    isPaidContent && webPublicationDate.isOlderThan(2.weeks)
   }
 
   def faciaUrl: Option[String] = this match {

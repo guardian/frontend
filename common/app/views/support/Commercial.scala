@@ -4,7 +4,7 @@ import common.Edition
 import common.Edition.defaultEdition
 import common.commercial.{Sponsored, _}
 import common.dfp._
-import conf.switches.Switches.{containerBrandingFromCapi, staticBadgesSwitch}
+import conf.switches.Switches.containerBrandingFromCapi
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{ContentType, MetaData, Page, Tag, Tags}
@@ -24,10 +24,8 @@ object Commercial {
     page: Page,
     edition: Edition,
     sponsorshipType: SponsorshipType
-  ): Boolean = {
-    (staticBadgesSwitch.isSwitchedOff && dfpDependentCondition) ||
-    (staticBadgesSwitch.isSwitchedOn && page.branding(edition).exists(_.sponsorshipType == sponsorshipType))
-  }
+  ): Boolean =
+    page.branding(edition).exists(_.sponsorshipType == sponsorshipType)
 
   def isPaidContent(item: ContentType, page: Page): Boolean =
     isBrandedContent(item.commercial.isAdvertisementFeature, page, defaultEdition, PaidContent)

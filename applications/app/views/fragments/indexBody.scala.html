@@ -1,7 +1,6 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import common.commercial.PaidContent
 @import common.{Edition, PagePaths}
-@import conf.switches.Switches.staticBadgesSwitch
 @import model.FrontProperties
 @import model.FrontProperties.empty
 @import services.IndexPage
@@ -15,129 +14,72 @@
     }
 }
 
-@if(staticBadgesSwitch.isSwitchedOn) {
+@index.branding(Edition(request)) match {
 
-    @index.branding(Edition(request)) match {
+    case Some(branding) => {
+        <div class="l-side-margins">
+            <div
+            class="@RenderClasses(Map("fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
+            data-link-name="Front | @request.path"
+            role="main">
 
-        case Some(branding) => {
-            <div class="l-side-margins">
-                <div
-                class="@RenderClasses(Map("fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
-                data-link-name="Front | @request.path"
-                role="main">
+                @if(branding.sponsorshipType == PaidContent) {
+                    @fragments.guBand()
+                }
 
-                    @if(branding.sponsorshipType == PaidContent) {
-                        @fragments.guBand()
+                @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                    @containers.map { containerDefinition =>
+                        @container(containerDefinition, frontProperties = FrontProperties.fromBranding(branding))
                     }
+                }
 
-                    @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-                        @containers.map { containerDefinition =>
-                            @container(containerDefinition, frontProperties = FrontProperties.fromBranding(branding))
-                        }
-                    }
+                @index.page.metadata.pagination.map { paginationInstance =>
+                    <div class="fc-container__pagination">
+                        @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                    </div>
+                }
 
-                    @index.page.metadata.pagination.map { paginationInstance =>
-                        <div class="fc-container__pagination">
-                            @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
-                        </div>
-                    }
+                @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
 
-                    @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+                <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
 
-                    <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+                @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+                    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                        @Html(model.meta.LinkedData.toJson(linkedData))
+                    </script>
+                }
 
-                    @defining(IndexPage.makeLinkedData(index)) { linkedData =>
-                        <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
-                            @Html(model.meta.LinkedData.toJson(linkedData))
-                        </script>
-                    }
-
-                </div>
             </div>
-        }
-
-        case None => {
-            <div class="l-side-margins">
-                <div class="u-cf index-page" data-link-name="Front | @request.path" role="main">
-
-                    @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-                        @containers.map { containerDefinition =>
-                            @container(containerDefinition, empty)
-                        }
-                    }
-
-                    @index.page.metadata.pagination.map { paginationInstance =>
-                        <div class="fc-container__pagination">
-                            @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
-                        </div>
-                    }
-
-                    @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
-
-                    <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
-
-                    @defining(IndexPage.makeLinkedData(index)) { linkedData =>
-                        <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
-                            @Html(model.meta.LinkedData.toJson(linkedData))
-                        </script>
-                    }
-
-                </div>
-            </div>
-        }
+        </div>
     }
 
-} else {
+    case None => {
+        <div class="l-side-margins">
+            <div class="u-cf index-page" data-link-name="Front | @request.path" role="main">
 
-<div class="l-side-margins">
-    <div
-        class="@RenderClasses(
-            Map(
-                "js-sponsored-front" -> (
-                    index.commercial.isSponsored(Some(Edition(request))) ||
-                    index.commercial.isAdvertisementFeature ||
-                    index.commercial.isFoundationSupported
-                ),
-                "fc-container--advertisement-feature paid-content--advertisement-feature" -> index.commercial.isAdvertisementFeature
-            ), "u-cf index-page"
-        )"
-        data-link-name="Front | @request.path"
-        @index.tags.sponsor.map { sponsor =>
-            data-sponsor="@sponsor"
-        }
-        @index.commercial.sponsorshipType.map { sponsorshipType =>
-            data-sponsorship="@sponsorshipType"
-        }
-        role="main">
+                @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                    @containers.map { containerDefinition =>
+                        @container(containerDefinition, empty)
+                    }
+                }
 
-        @if(index.commercial.isAdvertisementFeature) {
-            @fragments.guBand()
-        }
+                @index.page.metadata.pagination.map { paginationInstance =>
+                    <div class="fc-container__pagination">
+                        @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                    </div>
+                }
 
-        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-            @containers.map { containerDefinition =>
-                @container(containerDefinition, empty)
-            }
-        }
+                @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
 
-        @index.page.metadata.pagination.map { paginationInstance =>
-            <div class="fc-container__pagination">
-                @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+
+                @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+                    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                        @Html(model.meta.LinkedData.toJson(linkedData))
+                    </script>
+                }
+
             </div>
-        }
-
-        @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
-        <div class="fc-container fc-container--commercial">
-            @fragments.commercial.commercialComponent()
         </div>
-
-        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
-            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
-                @Html(model.meta.LinkedData.toJson(linkedData))
-            </script>
-        }
-
-    </div>
-</div>
-
+    }
 }
