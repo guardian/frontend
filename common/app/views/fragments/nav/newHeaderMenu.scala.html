@@ -2,7 +2,7 @@
 
 @import common.{ NewNavigation, LinkTo, Edition }
 
-@sectionList(topLevelSection: NewNavigation.TopLevelSection) = {
+@sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     <li class="main-navigation__item navigation-border">
             <!-- TODO: Firefox -->
         <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name">
@@ -13,8 +13,8 @@
 
             @Edition.all.map { edition =>
                 <ul class="main-navigation__secondary
-                    main-navigation__secondary--@{edition.id.toLowerCase}
                     navigation-group
+                    navigation-group--@{edition.id.toLowerCase}
                     js-editionlise-secondary-nav"
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
@@ -49,19 +49,21 @@
                 Search
             </a></li>
         </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="https://jobs.theguardian.com">Jobs</a></li>
-            <li class="navigation-group__item"><a href="https://soulmates.theguardian.com/">Dating</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /guardian-masterclasses }">Masterclasses</a></li>
-        </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="@LinkTo { /crosswords }">Crosswords</a></li>
-        </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="@LinkTo { /observer }">The Observer</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /theguardian }">Today’s Paper</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /theobserver }">Sunday’s Paper</a></li>
-        </ul>
+
+        @Edition.all.map { edition =>
+            <ul class="navigation-group
+                navigation-group--@{edition.id.toLowerCase}
+                navigation-border
+                secondary-navigation
+                js-editionlise-secondary-nav"
+                @if(edition.id.toLowerCase != "uk") { hidden }>
+
+                @NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map { item =>
+                    <li class="navigation-group__item"><a href="@LinkTo { @item.url }"> @item.name </a></li>
+                }
+            </ul>
+        }
+
         <ul class="navigation-group navigation-border secondary-navigation">
             <li class="navigation-group__item"><a href="https://www.facebook.com/theguardian">
                 @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
