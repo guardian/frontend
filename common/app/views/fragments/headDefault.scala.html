@@ -12,9 +12,7 @@
                 @fragments.standfirst(item)
             }
 
-            @if(showBadge) {
-                @fragments.commercial.badge(item, page)
-            }
+            @fragments.commercial.badge(item, page)
 
             @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {
                 @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified)

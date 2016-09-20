@@ -8,9 +8,7 @@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
-        @if(gallery.showBadge) {
-            @fragments.commercial.badge(gallery.item, gallery)
-        }
+        @fragments.commercial.badge(gallery.item, gallery)
 
         @fragments.contentMeta(gallery.item, gallery)
 

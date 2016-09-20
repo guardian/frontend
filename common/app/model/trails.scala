@@ -93,7 +93,7 @@ final case class Trail (
   lazy val showByline: Boolean = tags.isComment
 
   def shouldHidePublicationDate(implicit request: RequestHeader): Boolean = {
-    lazy val isPaidContent = BrandHunter.isPaidContent(this, Edition(request))
+    val isPaidContent = BrandHunter.isPaidContent(this, Edition(request))
     isPaidContent && webPublicationDate.isOlderThan(2.weeks)
   }
 
