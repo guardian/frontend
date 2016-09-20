@@ -1,0 +1,63 @@
+.newsletters__news {
+    display: inline-block;
+}
+
+.newsletter-card__meta {
+    .newsletter-card__lozenge {
+        border-color: $comment-support-1;
+        border-radius: 100px;
+        height: 3em;
+        width: 10rem;
+        margin-bottom: $gs-baseline;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: darken($comment-support-2, 10%);
+        }
+    }
+}
+
+.newsletter-card {
+    display: inline-block;
+    float: left;
+    height: 21rem;
+    width: 15rem;
+
+    margin: $gs-baseline;
+    background-color: $comment-support-2;
+}
+
+.newsletter-card__illustration {
+    height: 3rem;
+    background-color: $multimedia-main-1;
+}
+
+.newsletter-card__name {
+    @include fs-header(2);
+    color: #ffffff;
+    background-color: $comment-support-1;
+    padding: .3rem;
+}
+
+.newsletter-card__description {
+    height: 7.5rem;
+    padding: .3rem;
+}
+
+.newsletter-card__meta {
+    padding: .3rem;
+
+}
+
+.newsletter-card__example {
+    height: 3rem;
+}
+
+.newsletter-card__frequency {
+    @include fs-textSans(2);
+
+    .inline-icon {
+        fill: $multimedia-main-1;
+    }
+}
