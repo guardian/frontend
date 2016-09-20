@@ -93,7 +93,6 @@ object HostedArticlePage extends Logging {
           logo = HostedLogo(
             url = sponsorship.sponsorLogo
           ),
-          cssClass = "", //TODO remove this variable later
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
