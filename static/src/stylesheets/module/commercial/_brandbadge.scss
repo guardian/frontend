@@ -139,9 +139,9 @@
     }
 }
 
-.content__main-column--article {
+.content__main-column {
     .brandbadge--onside {
-        @include mq(leftCol) {
+        @include mq(tablet) {
             float: none;
         }
     }
