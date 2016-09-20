@@ -8,12 +8,12 @@ import org.scalatest.{FlatSpec, Matchers}
  */
 class FontColourTest extends FlatSpec with Matchers {
 
-  "shouldHaveBrightFont" should "be false for a bright brandColour" in {
+  "shouldHaveBrightFont" should "be true for Zootropolis green" in {
     val colour = FontColour("#2ec869") //Zootropolis
-    colour.shouldHaveBrightFont should be(false)
+    colour.shouldHaveBrightFont should be(true)
   }
 
-  it should "be false for another bright brandColour" in {
+  it should "be false for a bright brandColour e.g Renault Yellow" in {
     val colour = FontColour("#ffc421") //Renault
     colour.shouldHaveBrightFont should be(false)
   }
@@ -30,6 +30,15 @@ class FontColourTest extends FlatSpec with Matchers {
 
   it should "be true for black brandColour" in {
     val colour = FontColour("#000000") //black
+    colour.shouldHaveBrightFont should be(true)
+  }
+
+  it should "be true for Visit Britain colour" in {
+    val colour = FontColour("#E41F13") //red
+    colour.shouldHaveBrightFont should be(true)
+  }
+  it should "be true for Chester Zoo colour" in {
+    val colour = FontColour("#E31B22") //red
     colour.shouldHaveBrightFont should be(true)
   }
 }
