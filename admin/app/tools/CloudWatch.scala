@@ -162,7 +162,7 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withPeriod(120)
       .withStatistics("Average")
       .withNamespace("Fastly")
-      .withDimensions(new Dimension().withName("Stage").withValue("prod"))
+      .withDimensions(stage)
       .withMetricName(metric))) map { metricsResult =>
       new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
     }
@@ -186,9 +186,7 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withStatistics("Average")
         .withNamespace("Fastly")
         .withMetricName(s"$region-hits")
-        .withDimensions(
-          new Dimension().withName("Stage").withValue("prod")
-        ))
+        .withDimensions(stage))
       )
 
       misses <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
@@ -198,10 +196,8 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withStatistics("Average")
         .withNamespace("Fastly")
         .withMetricName(s"$region-miss")
-        .withDimensions(
-          new Dimension().withName("Stage").withValue("prod")
-        )
-      ))
+        .withDimensions(stage))
+      )
     } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
   }
 
@@ -291,7 +287,7 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withEndTime(now.toDate)
         .withPeriod(900)
         .withStatistics("Sum")
-        .withDimensions(new Dimension().withName("Stage").withValue("prod"))))
+        .withDimensions(stage)))
     }
 
     def compare(pvCount: GetMetricStatisticsResult,
