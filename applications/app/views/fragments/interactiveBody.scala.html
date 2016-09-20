@@ -3,6 +3,7 @@
 @import views.support.{RenderClasses, InteractiveCleaner}
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches.interactivePressing
 
 @body(page.interactive, page.item.content.isImmersive, isPaidContent(page.interactive, page))
 
@@ -18,9 +19,13 @@
     @if(isImmersive) {
         <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
             @if(interactive.hasSrcdoc) {
-
+                @if(interactivePressing.isSwitchedOn) {
+                    <h2>switch is on</h2>
                     @HtmlFormat.raw(InteractiveCleaner(interactive.fields.body))
-
+                } else {
+                    <h2>switch is off</h2>
+                    @bodyRaw(interactive)
+                }
             } else {
                 @interactive.figureEl.map(HtmlFormat.raw(_))
             }
