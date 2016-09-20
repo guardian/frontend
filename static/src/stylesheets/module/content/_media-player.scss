@@ -175,7 +175,7 @@ $ima-controls-height: 70px;
 
     &:before {
         @include fs-textSans(4);
-        content: attr(data-duration);
+        content: attr(data-formatted-duration);
         font-weight: 400;
         font-size: 15px;
         line-height: 20px;
