@@ -10,7 +10,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-class TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
@@ -31,7 +31,7 @@ class TopStoriesController extends Controller with Logging with Paging with Exec
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    ContentApiClient.getResponse(ContentApiClient.item("/", edition)
+    contentApiClient.getResponse(contentApiClient.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
         response.editorsPicks.getOrElse(Seq.empty).toList map { item =>
@@ -77,5 +77,3 @@ class TopStoriesController extends Controller with Logging with Paging with Exec
     renderFormat(response, response, 900)
   }
 }
-
-object TopStoriesController extends TopStoriesController

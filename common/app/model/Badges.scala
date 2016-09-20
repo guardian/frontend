@@ -1,7 +1,6 @@
 package model
 
-import conf.switches.Switches
-import conf.{Configuration, Static}
+import conf.Static
 import layout.FaciaContainer
 import java.security.MessageDigest
 import java.math.BigInteger

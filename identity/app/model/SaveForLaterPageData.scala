@@ -3,7 +3,6 @@ package model
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.{ExecutionContexts, Edition, Pagination}
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient._
 import layout.{ItemClasses, FaciaCard}
 import services.{FaciaContentConvert, IdentityRequest, IdentityUrlBuilder}
 import implicits.Articles._
@@ -34,14 +33,14 @@ case class SaveForLaterPageData(
   totalArticlesSaved: Int,
   shortUrls: List[String])
 
-class SaveForLaterDataBuilder(idUrlBuilder: IdentityUrlBuilder) extends ExecutionContexts {
+class SaveForLaterDataBuilder(contentApiClient: ContentApiClient, idUrlBuilder: IdentityUrlBuilder) extends ExecutionContexts {
 
   def apply(savedArticles: SavedArticles, idRequest: IdentityRequest, pageNum: Int): Future[SaveForLaterPageData] = {
 
     val articles = savedArticles.getPage(pageNum)
     val shortUrls = articles.map(_.shortUrl)
 
-    getResponse(ContentApiClient.search(Edition.defaultEdition)
+    contentApiClient.getResponse(contentApiClient.search(Edition.defaultEdition)
       .ids(shortUrls.map(_.drop(1)).mkString(","))
       .showFields("all")
       .showElements ("all")

@@ -1,7 +1,5 @@
 package model
 
-import java.net.URLEncoder
-
 import campaigns.ShortCampaignCodes
 import common.`package`._
 import conf.Configuration.facebook.{ appId => facebookAppId }

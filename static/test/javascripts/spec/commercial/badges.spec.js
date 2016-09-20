@@ -1,5 +1,4 @@
 define([
-    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/template',
@@ -7,7 +6,6 @@ define([
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
     $,
     template,
@@ -211,11 +209,12 @@ define([
             it('should not add a badge if one already exists', function (done) {
                 $('.container__header', $fixtureContainer).first()
                     .after('<div class="ad-slot--paid-for-badge"></div>');
-                badges.init();
-                fastdom.defer(function () {
+                badges.init()
+                .then(function () {
                     expect(qwery('.facia-container .ad-slot', $fixtureContainer).length).toBe(0);
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
             it('should add container\'s keywords to ad', function (done) {
@@ -225,10 +224,12 @@ define([
                         'data-keywords': 'russia,ukraine',
                         'data-sponsorship': 'sponsoredfeatures'
                     });
-                badges.init().then(function () {
+                badges.init()
+                .then(function () {
                     expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
             it('should add container\'s keywords to ad', function (done) {
@@ -239,31 +240,37 @@ define([
                         'data-keywords': 'russia,ukraine',
                         'data-sponsorship': 'sponsoredfeatures'
                     });
-                badges.init().then(function () {
+                badges.init()
+                .then(function () {
                     expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
             it('should increment badge id if multiple badges added', function (done) {
                 var $containers = $('.container', $fixtureContainer)
                     .addClass('js-sponsored-container')
                     .attr('data-sponsorship', 'sponsoredfeatures');
-                badges.init().then(function () {
+                badges.init()
+                .then(function () {
                     expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
                     expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
 
             it('should be able to add badge to a container', function (done) {
                 var $container = $('.container', $fixtureContainer).first()
                     .addClass('js-sponsored-container')
                     .attr('data-sponsorship', 'sponsoredfeatures');
-                badges.add($container).then(function () {
+                badges.add($container)
+                .then(function () {
                     expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
-                    done();
-                });
+                })
+                .then(done)
+                .catch(done.fail);
             });
         });
     });

@@ -1,14 +1,21 @@
 package test
 
+import contentapi.ContentApiClient
 import controllers.ArticleController
 import metadata.MetaDataMatcher
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-@DoNotDiscover class ArticleMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ArticleMetaDataTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
 
-  lazy val articleController = new ArticleController
+  lazy val articleController = new ArticleController(testContentApiClient)
 
   it should "Include organisation metadata" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))

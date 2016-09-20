@@ -5,7 +5,6 @@ import conf.switches.Switches
 import model.{Content, Video}
 import scala.language.postfixOps
 import contentapi.ContentApiClient
-import ContentApiClient.getResponse
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -14,7 +13,7 @@ import services.MissingVideoEncodings
 import model.diagnostics.video.DynamoDbStore
 
 
-class VideoEncodingsJob(wsClient: WSClient) extends ExecutionContexts with Logging  {
+class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) extends ExecutionContexts with Logging  {
 
   private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
@@ -36,7 +35,7 @@ class VideoEncodingsJob(wsClient: WSClient) extends ExecutionContexts with Loggi
   private def checkForMissingEncodings(akkaAsync: AkkaAsync) {
      log.info("Checking for missing video encodings")
 
-     val apiVideoResponse = getResponse(ContentApiClient.search(Edition.defaultEdition)
+     val apiVideoResponse = contentApiClient.getResponse(contentApiClient.search(Edition.defaultEdition)
         .tag("type/video")
         .showElements("all")
         .pageSize(100)

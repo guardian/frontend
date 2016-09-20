@@ -108,6 +108,43 @@
             return window.context.isMaster && config.type == 'doubleclick';
         }
 
+        function stripUrlToQueryString(url) {
+            return url.replace(/.*\?/, '');
+        }
+
+        function getUrlVars(originalUrl) {
+            return stripUrlToQueryString(originalUrl).split('&')
+                .filter(Boolean)
+                .map(function (query) {
+                    return query.indexOf('=') > -1 ? query.split('=') : [query, true];
+                })
+                .reduce(function (result, input) {
+                    result[input[0]] = input[1];
+                    return result;
+                }, {});
+        }
+
+        function attachQueryParams(config) {
+            //Google AMP AB test query parameter
+            var whitelist = ['0p19G'];
+            var originalLocationHref = getOriginalLocationHref();
+            var paramsMap = originalLocationHref ? getUrlVars(originalLocationHref) : {};
+            Object.keys(paramsMap).map(function(value, index){
+                if(whitelist.indexOf(value) > -1) {
+                    config.targeting[value] = paramsMap[value];
+                }
+            });
+            return config;
+        }
+
+        function getOriginalLocationHref() {
+            try {
+                var configString = window.location.hash.substr(1);
+                var config = JSON.parse(configString);
+                return config._context.location.href;
+            } catch(e){}
+        }
+
         // this is the big AMP callback
         draw3p(function (config, done) {
 
@@ -117,7 +154,8 @@
             }
 
             if (configIsValid(config)) {
-                var configWithAdTestParam = attachAdTestParam(config);
+                var configWithAttachedQueryParams = attachQueryParams(config);
+                var configWithAdTestParam = attachAdTestParam(configWithAttachedQueryParams);
                 var result = attachKruxSegments(configWithAdTestParam);
                 done(result);
             } else {

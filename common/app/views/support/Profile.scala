@@ -122,7 +122,7 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
   override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
-object EmailArticleImage extends Profile(width = Some(640))
+object EmailImage extends Profile(width = Some(640))
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))

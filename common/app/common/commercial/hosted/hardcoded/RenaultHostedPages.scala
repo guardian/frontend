@@ -16,8 +16,7 @@ object RenaultHostedPages {
     owner = "Renault",
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
     cssClass = "renault",
-    brandColour = "#ffc421",
-    brightFont = false,
+    fontColour = FontColour("#ffc421"),
     logoLink = None
   )
 
@@ -53,7 +52,8 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some(videoTitle + " Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName,  standfirst)
     )
@@ -83,7 +83,8 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some(videoTitle + " Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -113,17 +114,22 @@ object RenaultHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some(videoTitle + " Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
   }
 
-  private val teaser: HostedVideoPage = teaserWithoutNextPage.copy(nextPage = Some(episode1WithoutNextPage))
+  private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
+    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+  }
 
-  private val episode1: HostedVideoPage = episode1WithoutNextPage.copy(nextPage = Some(episode2WithoutNextPage))
+  private val teaser: HostedPage = withNextPage(teaserWithoutNextPage, episode1WithoutNextPage)
 
-  private val episode2: HostedVideoPage = episode2WithoutNextPage.copy(nextPage = Some(episode1WithoutNextPage))
+  private val episode1: HostedPage = withNextPage(episode1WithoutNextPage, episode2WithoutNextPage)
+
+  private val episode2: HostedPage = withNextPage(episode2WithoutNextPage, episode1WithoutNextPage)
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {

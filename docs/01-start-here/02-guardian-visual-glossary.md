@@ -50,6 +50,12 @@
 
 ![image](images/minute.jpg)
 
+### AMP
+
+[Articles](https://amp.theguardian.com/world/2015/oct/15/obama-delay-withdrawal-us-troops-afghanistan) viewed in [Google AMP](https://www.ampproject.org) format, a simplified subset of HTML, designed to speed up the mobile web.
+
+![image](images/amp-ads.jpg)
+
 ## Onwards
 
 ### More on - Story package
@@ -77,6 +83,8 @@
 ## Fronts cards
 
 [All combinations](http://preview.gutools.co.uk/all-dynamic-fast#)
+
+[List of fronts containing containers built from CAPI queries and no curation](https://docs.google.com/spreadsheets/d/1x5JcqR33tnFCjd83mzBxmQONH5xeDkmeQNEjT_MUz0I/edit#gid=374412710)
 
 ## Rich Links
 

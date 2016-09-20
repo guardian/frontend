@@ -8,7 +8,7 @@ import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
 import scala.collection.JavaConversions._
 
 object AmpAdCleaner {
-  val AD_LIMIT = 2
+  val AD_LIMIT = 8
   val CHARS_BETWEEN_ADS = 700
   val DONT_INTERLEAVE_SMALL_PARA = 50
 

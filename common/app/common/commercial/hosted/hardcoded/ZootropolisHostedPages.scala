@@ -13,8 +13,7 @@ object ZootropolisHostedPages {
     owner = "Disney",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg"),
     cssClass = "zootropolis",
-    brandColour = "#2ec869",
-    brightFont = true,
+    fontColour = FontColour("#2ec869"),
     logoLink = None
   )
 
@@ -52,7 +51,8 @@ object ZootropolisHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some(
+      socialShareText = None,
+      shortSocialShareText = Some(
         "Get to know the residents of Zootropolis and find out where to download the film instantly"
       ),
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
@@ -78,7 +78,7 @@ object ZootropolisHostedPages {
 
   private lazy val articlePageName = "meet-the-characters-of-zootropolis"
 
-  private lazy val articlePageWithoutNextPage = HostedArticlePage(
+  private lazy val articlePageWithoutNextPage = ZootropolisPage(
     campaign,
     pageUrl = s"$host/advertiser-content/${campaign.id}/$articlePageName",
     pageName = articlePageName,
@@ -89,15 +89,19 @@ object ZootropolisHostedPages {
     cta,
     ctaBanner = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg",
     mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png",
-    facebookShareText = Some("Get to know the colourful characters of Disney’s Zootropolis with these printable colouring-in sheets and " +
-      "character posters! Zootropolis is packed with snappy action, witty dialogue & belly laughs.  It’s an adorable movie that shouldn’t be missed." +
-      " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
-    twitterShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
-    emailSubjectText = Some("Get to know the residents of Zootropolis!"),
+    socialShareText = Some("Get to know the colourful characters of Disney’s Zootropolis with these printable colouring-in sheets and " +
+                           "character posters! Zootropolis is packed with snappy action, witty dialogue & belly laughs.  It’s an adorable movie that shouldn’t be missed." +
+                           " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
+    shortSocialShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
     customData = customData
   )
 
-  private lazy val videoPage = videoPageWithoutNextPage.copy(nextPage = Some(articlePageWithoutNextPage))
+
+  private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
+    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+  }
+
+  private lazy val videoPage = withNextPage(videoPageWithoutNextPage, articlePageWithoutNextPage)
 
   private lazy val articlePage = articlePageWithoutNextPage.copy(nextPage = Some(videoPageWithoutNextPage))
 

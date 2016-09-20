@@ -20,55 +20,76 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-case class InstallVars(stack: String, app: String, guStage: String, awsRegion: String, configBucket: String)
+object InstallVars {
+
+  val installVars = new File("/etc/gu/install_vars") match {
+      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case _ => ""
+    }
+
+  val properties = Properties(installVars)
+
+  def apply(key: String, default: String) = properties.getOrElse(key, default)
+
+  object InstallationVars {
+    val stack = apply("stack", "frontend")
+    // if got config at app startup, we wouldn't need to configure it
+    val app = apply("app", "dev-build")
+    val stage = apply("STAGE", "DEV")
+    val awsRegion = apply("region", "eu-west-1")
+    val configBucket = apply("configBucket", "aws-frontend-store")
+    if (stage == "DEV" && new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
+    throw new RuntimeException(
+      "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
+      "All secrets are now stored in S3 bucket aws-frontend-store, not on your laptop.\n\n  " +
+      "Should you need to override any properties in DEV, create a new file ~/.gu/frontend.conf. \n" +
+      "For an example see https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L48\n" +
+      "For details of the changes see https://github.com/guardian/frontend/pull/14081")
+    /*
+    ~/.gu/frontend.conf example file:
+
+    # local development (DEV stage) config overrides (not secrets)
+    devOverrides {
+      switches.key=DEV/config/switches-yournamehere.properties
+      facia.stage=CODE
+    }
+
+     */
+    }
+  }
+}
 
 object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
+  import InstallVars.InstallationVars._
+
   lazy val configuration = {
+    // This is version number of the config file we read from s3,
+    // increment this if you publish a new version of config
+    val s3ConfigVersion = 4
 
-    val installVars = {
-      val p = new JavaProperties()
-      p.load(new FileInputStream(s"/etc/gu/install_vars"))
-      val stack = p.getProperty("stack", "frontend")
-      // if got config at app startup, we wouldn't need to configure it
-      val app = p.getProperty("app", "dev-build")
-      val stage = p.getProperty("STAGE", "DEV")
-      val region = p.getProperty("region", "eu-west-1")
-      val configBucket = p.getProperty("configBucket", "aws-frontend-store")
-      if (stage == "DEV" && new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
-        throw new RuntimeException(
-          "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
-            "All secrets are now stored in S3 bucket aws-frontend-store, not on your laptop.\n\n  " +
-            "Should you need to override any properties in DEV, create a new file ~/.gu/frontend.conf. \n" +
-            "For an example see https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L48\n" +
-            "For details of the changes see https://github.com/guardian/frontend/pull/14081")
-        /*
-        ~/.gu/frontend.conf example file:
-
-# local development (DEV stage) config overrides (not secrets)
-devOverrides {
-	switches.key=DEV/config/switches-yournamehere.properties
-	facia.stage=CODE
-}
-
-         */
-      }
-      InstallVars(stack, app, stage, region, configBucket)
-    }
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-    lazy val devinfra = FileConfigurationSource(s"/etc/gu/frontend.properties")
-    lazy val runtimeOnly = FileConfigurationSource(s"/etc/gu/frontend.conf")
-    lazy val identity = new AwsApplication(installVars.stack, installVars.app, installVars.guStage, installVars.awsRegion)
-    lazy val commonS3Config = S3ConfigurationSource(identity, installVars.configBucket, Configuration.aws.mandatoryCredentials)
-    lazy val config = new CM(List(userPrivate, runtimeOnly, devinfra, commonS3Config), PlayDefaultLogger).load.resolve
+    lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
+    lazy val identity = new AwsApplication(stack, app, stage, awsRegion)
+    lazy val commonS3Config = S3ConfigurationSource(identity, configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
+    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
     // test mode is self contained and won't need to use anything secret
-    lazy val test = ClassPathConfigurationSource(s"env/DEVINFRA.properties")
+    lazy val test = ClassPathConfigurationSource("env/DEVINFRA.properties")
     lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
 
-    val appConfig = if (installVars.guStage == "DEVINFRA") testConfig else config.getConfig(identity.app + "." + identity.stage)
+    val appConfig =
+      if (stage == "DEVINFRA") testConfig
+      else {
+        try {
+          config.getConfig(identity.app + "." + identity.stage)
+        } catch {
+          case e: ConfigException if stage == "DEV" =>
+            throw new RuntimeException(s"${e.getMessage}.  You probably need to refresh your credentials.", e)
+        }
+      }
     appConfig
   }
 
@@ -103,7 +124,7 @@ devOverrides {
 
 class GuardianConfiguration extends Logging {
   import GuardianConfiguration._
-  implicit private lazy val app = Play.current
+  import play.api.Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
@@ -125,17 +146,9 @@ class GuardianConfiguration extends Logging {
   }
 
   object environment {
-    private val installVars = new File("/etc/gu/install_vars") match {
-      case f if f.exists => IOUtils.toString(new FileInputStream(f))
-      case _ => ""
-    }
+    import InstallVars._
 
-    private val properties = Properties(installVars)
-
-    def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
-
-    val stage = apply("STAGE", "unknown")
-
+    lazy val stage = InstallationVars.stage
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
@@ -213,6 +226,10 @@ class GuardianConfiguration extends Logging {
 
   object googletag {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
+  }
+
+  object sonobi {
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//mtrx.go.sonobi.com/morpheus.theguardian.2919.js")
   }
 
   object frontend {
@@ -346,6 +363,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
+    lazy val frontendAssetsVersion = "v1.2.0"
   }
 
   object witness {
@@ -411,11 +429,10 @@ class GuardianConfiguration extends Logging {
     }
 
     lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
-    lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeam.au")
-    lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
+    lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeamAu")
+    lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeamUs")
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
-    lazy val surgingContentTeam = configuration.getStringProperty("email.surgingContentTeam")
 
     lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
@@ -430,19 +447,19 @@ class GuardianConfiguration extends Logging {
 
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
-    // But does not change across environments
-    // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
+    // But does not change across environments.
     lazy val config: Map[String, String] = Map(
-      "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
-      "idApiUrl" -> id.apiRoot,
-      "idOAuthUrl" -> id.oauthUrl,
-      "discussionApiClientHeader" -> discussion.apiClientHeader,
-      "discussionD2Uid" -> discussion.d2Uid,
+      ("googleSearchUrl", "//www.google.co.uk/cse/cse.js"),
+      ("idApiUrl", id.apiRoot),
+      ("idOAuthUrl", id.oauthUrl),
+      ("discussionApiClientHeader", discussion.apiClientHeader),
+      ("discussionD2Uid", discussion.d2Uid),
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
-      ("stripePublicToken", id.stripePublicToken)
+      ("stripePublicToken", id.stripePublicToken),
+      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
@@ -458,7 +475,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object facia {
-    lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
     lazy val collectionCap: Int = 35
   }
 
@@ -545,8 +562,6 @@ class GuardianConfiguration extends Logging {
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
-        new EnvironmentVariableCredentialsProvider(),
-        new SystemPropertiesCredentialsProvider(),
         new ProfileCredentialsProvider("frontend"),
         new InstanceProfileCredentialsProvider
       )

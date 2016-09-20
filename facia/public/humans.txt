@@ -1,4 +1,4 @@
-/* TEAM */
+/* CURRENT TEAM */
 
 Head of User Experience: Nick Haley
 Twitter: @twobobswerver
@@ -14,6 +14,10 @@ Twitter: @grantklopper
 From: Durban, South Africa
 Location: London, UK
 
+Development Manager: Dominic Kendrick
+Twitter: @dominickendrick
+From: London, UK
+
 Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: London, UK
@@ -21,6 +25,11 @@ From: London, UK
 Engineer (Tech lead, Commercial): Ken Lim
 Twitter: @kenlim
 From: Kuala Lumpur, Malaysia
+Location: London, UK
+
+Design human: Zef Cherry-Kynaston
+Twitter: @zeftilldeath
+From: Wales, UK
 Location: London, UK
 
 Developer: Stephan Fowler
@@ -50,23 +59,123 @@ From: Halifax, Canada
 Developer: Justin Pinner
 Twitter: @_JustinPinner
 
+SETI (Tools & Infra): Matthew Walls
+GitHub: MatthewJWalls
+Location: Essex, UK
+
 Client-side Developer: Alex Sanders
 Location: London/Norwich
 Twitter: @asanders
 
-Director of Digital Strategy: Wolfgang Blau
-Twitter: @wblau
-
-Guardian CTO: Shannon Maher
-
 Developer: John Duffell
 
-Developer: Oliver Ash
-Twitter: @OliverJAsh
+Developer: Zofia Korcz
+Twitter: @intuitio
+From: Poznan, Poland
+Location: London, England
+
+Developer: Lydia Shepherd
+From: Leeds, UK
+Location: London, UK
+
+Developer: Sam Desborough
+Twitter: @samdesborough
+
+Client-Side Developer: Gareth Trufitt
+Location: London, UK (snaps.digit.nails)
+Twitter: @gtrufitt
+Website: trufitt.com
+
+Developer: Régis Kuckaertz
+Twitter: @regiskuckaertz
+From: Luxembourg, Luxembourg
+
+Developer: Jon Soul
+Twitter: @jon_soul
+Location: London, UK
+
+Developer: Akash Askoolum
+Twitter: @akash1810
+Location: London, UK
+
+Developer: Jamie Byers
+Location: London, UK
+
+Design human: Duarte Carrilho da Graça
+Twitter: @duartecg
+From: Lisbon, Portugal
+Location: London, UK
+
+Digital Designer: Frank Hulley-Jones
+Twitter: @tobefrankj
+From: Ludlow, UK
+Location: London, UK
+
+Digital Designer / Unicorn: Ben Longden
+Twitter: @benlongden
+From: Europe
+Location: London, UK
+
+Developer: Kate Whalen
+Twitter: @KateAWhalen
+Location: London, UK
+
+Developer: Joseph Smith
+Twitter: @joelochlann
+Location: London, UK
+
+Developer: Thomas Bonnin
+Twitter: @tbonnin
+From: France
+Location: London, UK
+
+Client-Side Developer: Simon Adcock
+Twitter: @siadcock
+Location: London, UK
+
+Developer: Calum Campbell
+From: Malvern, UK
+
+QA: Scott Painter
+Twitter: @scottp719
+Location: London, UK
+
+Developer: Anne Byrne
+Twitter: @aycenne
+From: Cork, Ireland
+Location: London, UK
+
+Developer: Rafe Kennedy
+Twitter: @rjmk_
+From: Reading, UK
+
+User Experience Architect: Alastair Jardine
+Twitter: @aj_ux
 From: London, UK
 
+Software Engineer in Test: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
 
-/* ALUMNI and COLLEAGUES */
+Software Architect/Hacker: Phil Wills
+Twitter: @philwills
+
+Developer: Mariot Chauvin
+Twitter: @mchv
+
+Developer: Nicolas Long
+Twitter: @room271
+Website: http://room271.net
+From: London, UK
+
+Agile Project Manager: Huma Islam
+From: London, UK
+
+Senior Developer: Adam Fisher
+Twitter: @adamnfish
+
+
+/* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
 From: Bath, Somerset
@@ -88,10 +197,6 @@ Designer and front-end developer: Paul Lloyd
 Twitter: @paulrobertlloyd
 From: Brighton, UK
 
-User Experience Architect: Alastair Jardine
-Twitter: @aj_ux
-From: London, UK
-
 Developer (Frontendy Things): David Vella
 Twitter: @indeox
 From: Gozo, Malta
@@ -99,10 +204,6 @@ From: Gozo, Malta
 Developer: Ben James
 Twitter: @bmjames
 From: Liverpool, UK
-
-Software Engineer in Test: Gideon Goldberg
-Twitter: @gidsg
-From: London, UK, Earth, the Universe
 
 Developer Manager (ID/Discussion): Nick Smith
 From: London, UK
@@ -125,14 +226,6 @@ Developer: Austin Harris
 Twitter: @austinh7
 Location: Buxted, England
 
-Developer: Zofia Korcz
-Twitter: @intuitio
-From: Poznan, Poland
-Location: London, England
-
-Developer: Sam Desborough
-Twitter: @samdesborough
-
 Front-end Developer: Chris Finch
 Twitter: @chrisfinchy
 Linkedin: chrisfinch
@@ -143,30 +236,13 @@ Developer: Max Harlow
 Twitter: @maxharlow
 From: London, UK
 
-Software Architect/Hacker: Phil Wills
-Twitter: @philwills
-
-Developer: Mariot Chauvin
-Twitter: @mchv
-
-Developer: Nicolas Long
-Twitter: @room271
-Website: http://room271.net
-From: London, UK
-
 QA: Troy Harris
 LinkedIn: troyharris
 Twitter: @troyharrisoz
 From: Wollongong, Australia
 
-Agile Project Manager: Huma Islam
-From: London, UK
-
 Software Architect: Andy Hume
 Twitter: @andyhume
-
-Senior Developer: Adam Fisher
-Twitter: @adamnfish
 
 Developer: Robert Berry
 Twitter: @RobJamesBerry
@@ -192,3 +268,16 @@ Developer: Jimmy Breck-McKye
 Twitter: @jbreckmckye
 Website: www.breck-mckye.com
 Location: London, UK
+
+Developer: Oliver Ash
+Twitter: @OliverJAsh
+From: London, UK
+
+Engineer / Dev Manager: James Pamplin
+Twitter: @pampo
+From: Forster, Australia
+
+Guardian CTO: Shannon Maher
+
+Director of Digital Strategy: Wolfgang Blau
+Twitter: @wblau

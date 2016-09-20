@@ -30,7 +30,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -128,20 +128,23 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderLiveBlog(path: String, page: Option[String] = None) =
-    Action.async { implicit request =>
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None) =
+    if (format.contains("email"))
+      renderArticle(path)
+    else
+      Action.async { implicit request =>
 
-      def renderWithRange(range: BlockRange) =
-        mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
-          render(path, _)
+        def renderWithRange(range: BlockRange) =
+          mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+            render(path, _)
+          }
+
+        page.map(ParseBlockId.fromPageParam) match {
+          case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
+          case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+          case None => renderWithRange(Canonical) // no page param
         }
-
-      page.map(ParseBlockId.fromPageParam) match {
-        case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
-        case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
-        case None => renderWithRange(Canonical) // no page param
       }
-    }
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
     Action.async { implicit request =>
@@ -191,7 +194,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val edition = Edition(request)
 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val capiItem = ContentApiClient.item(path, edition)
+    val capiItem = contentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
@@ -201,7 +204,7 @@ class ArticleController extends Controller with RendersItemResponse with Logging
       val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
-    ContentApiClient.getResponse(capiItemWithBlocks)
+    contentApiClient.getResponse(capiItemWithBlocks)
 
   }
 
@@ -216,8 +219,11 @@ class ArticleController extends Controller with RendersItemResponse with Logging
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
-      case minute: Article if minute.isUSMinute =>
+      case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
+        // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
+      case liveBlog: Article if (liveBlog.isLiveBlog && request.isEmail) =>
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {
           createLiveBlogModel(liveBlog, response, _)

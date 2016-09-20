@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: initial;
+    overflow: hidden;
 
     .js-off & {
         display: none;
@@ -64,6 +64,12 @@
 
 .top-banner-ad-container {
     background-color: $neutral-8;
+    // Needed for compatibility with IE11/Edge.
+    top: 0;
+}
+
+.top-banner-ad-container--fabric {
+    overflow: hidden;
 }
 
 .sticky-top-banner-ad {
@@ -170,6 +176,7 @@
 .ad-slot--liveblog-inline {
     width: $mpu-original-width;
     margin: $gs-baseline auto;
+    min-width: $mpu-original-width;
     min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
@@ -187,6 +194,9 @@
 .ad-slot--container-inline {
     @include mq(mobileLandscape) {
         margin-top: 0;
+    }
+    @include mq(tablet) {
+        margin: 0 $gs-gutter/2;
     }
 }
 .ad-slot--gallery-inline {
@@ -225,7 +235,7 @@
         margin: 0 auto;
     }
 }
-.ad-slot--container-inline {
+.ad-slot--container-inline:not(.ad-slot--fluid) {
     /* I don't know wtf that is but it has no place in JS, so I moved it here */
     &.ad-slot--not-mobile {
         display: flex;
@@ -237,7 +247,6 @@
     @include mq(tablet) {
         position: relative;
         height: auto;
-        margin: 0 $gs-gutter/2;
 
         .content-footer & {
             width: 300px;
@@ -637,6 +646,17 @@
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 0;
+
+    &.ad-slot--liveblog-inline {
+        @include mq(mobile, $until: mobileLandscape) {
+            margin-left: $gs-gutter / -2;
+            margin-right: $gs-gutter / -2;
+        }
+        @include mq(mobileLandscape, $until: tablet) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+    }
 }
 
 .ad-slot--fabric-v1 {
@@ -645,6 +665,10 @@
 
 .ad-slot--revealer {
     min-width: 300px;
+}
+
+.ad-slot--fabric {
+    overflow: hidden;
 }
 
 .ad-slot--fabric-v1,

@@ -2,7 +2,6 @@ package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
 import conf.Configuration.site.host
-import conf.switches.Switches
 
 object VisitBritainHostedPages {
 
@@ -16,8 +15,7 @@ object VisitBritainHostedPages {
     owner = "OMGB",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
     cssClass = "visit-britain",
-    brandColour = "#e41f13",
-    brightFont = true,
+    fontColour = FontColour("#E41F13"),
     logoLink = None
   )
 
@@ -208,7 +206,7 @@ object VisitBritainHostedPages {
     title = "Don’t be a sloth this summer",
     cta = cta(activitiesPageName),
     nextPageNames = List(cityPageName, coastPageName),
-    twitterShareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
+    shortSocialShareText = Some("Don't be a sloth this summer: get active and explore Great Britain. Check out this gallery for inspiration"),
     standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along the Isle of Wight’s scenic coastline."
   )
 

@@ -27,7 +27,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
-        bottom: 38px;
+        bottom: $gs-gutter;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
@@ -67,6 +67,25 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
     .content__article-body {
+        p {
+            font-size: 18px;
+            line-height: 24px;
+
+            &.intro + p::first-letter {
+                @include fs-textSans(4);
+                display: inline-block;
+                float: left;
+                color: #000000;
+                padding: 12px 16px 4px;
+                font-size: 480%;
+                line-height: 4.25rem;
+                width: 4.8125rem;
+                height: 4.8125rem;
+                margin-right: .5rem;
+                margin-top: 4px;
+                text-align: center;
+            }
+        }
         .intro {
             font-size: 26px;
             line-height: 30px;
@@ -78,6 +97,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .drop-cap {
             @include fs-textSans(4);
+            background-color: $zootropolisColor;
             display: inline-block;
             float: left;
             color: #ffffff;
@@ -89,16 +109,57 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             margin-right: 8px;
             text-align: center;
         }
-        .text {
-            line-height: 20px;
-        }
         h1 {
             line-height: 28px;
+        }
+        figcaption {
+            font-size: 12px;
+            line-height: 16px;
+            color: $neutral-2;
+
+            &:before {
+                @include icon(image);
+                content: '';
+                vertical-align: top;
+                margin-top: 1px;
+            }
+        }
+
+        //inline video element
+        .vjs-controls-enabled { //this is temporary solution, we don't have other common class on every inline videos
+            width: 100%;
+            height: auto;
+
+            @include mq(desktop) {
+                width: gs-span(8);
+            }
+
+            @include mq(wide) {
+                width: gs-span(11) + $gs-gutter;
+                margin-left: gs-span(-3);
+            }
+
+            video {
+                width: 100%;
+            }
+
+            .vjs-poster,
+            .vjs-big-play-button {
+                width: 100%;
+
+                @include mq(desktop) {
+                    width: gs-span(8);
+                }
+
+                @include mq(wide) {
+                    width: gs-span(11) + $gs-gutter;
+                    margin-left: gs-span(-3);
+                }
+            }
         }
     }
     .hosted__standfirst {
         padding: 0;
-        margin: 50px 0 0;
 
         .hosted__terms {
             margin-top: 0;
@@ -168,6 +229,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
     .from-content-api > ul li {
         margin-bottom: 0;
+    }
+
+    .gu-image {
+        height: auto;
     }
 }
 

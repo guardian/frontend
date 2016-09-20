@@ -1,6 +1,7 @@
 package model.commercial.jobs
 
 import common.{AkkaAgent, ExecutionContexts}
+import contentapi.ContentApiClient
 import model.commercial._
 import org.apache.commons.lang.StringEscapeUtils._
 import org.apache.commons.lang.StringUtils
@@ -46,9 +47,7 @@ object Job {
 
 case class JobSector(path: String, name: String)
 
-object Industries extends ExecutionContexts {
-
-  private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
+object Industries {
 
   // note, these are ordered by importance
   val sectorIdIndustryMap = Map[Int, String](
@@ -78,11 +77,18 @@ object Industries extends ExecutionContexts {
     (343, "Skilled Trade"),
     (350, "Social Enterprise")
   )
+}
+
+class Industries(contentApiClient: ContentApiClient) extends ExecutionContexts {
+
+  private val lookup = new Lookup(contentApiClient)
+  private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
+
 
   def refresh(): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
-    sectorIdIndustryMap map {
+    Industries.sectorIdIndustryMap map {
       case (id, name) =>
-        Lookup.keyword(name) flatMap {
+        lookup.keyword(name) flatMap {
           keywords => industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
         }
     }

@@ -107,7 +107,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isUSMinute) MinuteMedia
+        else if (article.isTheMinute) MinuteMedia
         else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
@@ -125,7 +125,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+      val inlineClass = if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
 
       val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
@@ -341,11 +341,13 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
     if (article.content.showInRelated) {
 
-      // Get all paragraphs which are not contained in a pullquote
+      // Get all paragraphs which are not contained in a pullquote or in an instagram caption
       val paragraphs = doc.getElementsByTag("p").filterNot( p =>
-        p.parents.exists( ancestor =>
-          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
-        )
+        p.parents.exists { ancestor =>
+          val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+          val inInstagramBlock = ancestor.hasClass("instagram-media")
+          inPullquote || inInstagramBlock
+        }
       )
 
       // order by length of name so we do not make simple match errors

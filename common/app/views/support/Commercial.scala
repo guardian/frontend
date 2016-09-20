@@ -41,6 +41,10 @@ object Commercial {
     isBrandedContent(item.commercial.isFoundationSupported, page, defaultEdition, Foundation)
   }
 
+  def isBrandedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+    isPaidContent(item, page) || isSponsoredContent(item, page) || isFoundationFundedContent(item, page)
+  }
+
   private def hasAdOfSize(slot: AdSlot,
                           size: AdSize,
                           metaData: MetaData,
@@ -107,10 +111,13 @@ object Commercial {
         isPaidContainer || isAllPaidContent
       }
 
-      !isPaidFront && (
-        (containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer)
-          || optContainerModel.exists(isPaid)
-        )
+      lazy val isPaidContainerInDfp =
+        containerBrandingFromCapi.isSwitchedOff && container.commercialOptions.isPaidContainer
+
+      lazy val isPaidContainerInCapi =
+        containerBrandingFromCapi.isSwitchedOn && container.showBranding && optContainerModel.exists(isPaid)
+
+      !isPaidFront && (isPaidContainerInDfp || isPaidContainerInCapi)
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {

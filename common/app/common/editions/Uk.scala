@@ -3,7 +3,6 @@ package common.editions
 import java.util.Locale
 
 import common._
-import conf.switches.Switches
 import org.joda.time.DateTimeZone
 
 object Uk extends Edition(
@@ -17,7 +16,6 @@ object Uk extends Edition(
   implicit val UK = Uk
 
   val sportLocalNav: Seq[SectionLink] = Seq(
-    rioOlympics,
     football,
     cricket,
     rugbyunion,

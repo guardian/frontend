@@ -11,19 +11,19 @@ define([
         label: false,
         refresh: false,
         sizeMappings: {
-            mobile: compile(adSizes.outOfPage, adSizes.badge)
+            mobile: compile(adSizes.empty, adSizes.badge)
         }
     };
 
     var inlineDefinition = {
         sizeMappings: {
-            mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
+            mobile: compile(adSizes.empty, adSizes.mpu, adSizes.fluid)
         }
     };
 
     var rightMappings = {
         mobile: compile(
-            adSizes.outOfPage,
+            adSizes.empty,
             adSizes.mpu,
             adSizes.halfPage,
             config.page.edition === 'US' ? adSizes.portrait : null,
@@ -42,14 +42,14 @@ define([
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.mpu, adSizes.fluid)
+                mobile: compile(adSizes.empty, adSizes.mpu, adSizes.fluid)
             }
         },
         im: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.inlineMerchandising)
+                mobile: compile(adSizes.empty, adSizes.inlineMerchandising)
             }
         },
         inline: inlineDefinition,
@@ -58,7 +58,7 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHigh, adSizes.fluid)
+                mobile: compile(adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
             }
         },
         'merchandising-high-ad-feature': {
@@ -66,7 +66,7 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.merchandisingHighAdFeature, adSizes.fluid)
+                mobile: compile(adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
             }
         },
         spbadge: badgeDefinition,
@@ -76,7 +76,7 @@ define([
         'top-above-nav': {
             sizeMappings: {
                 mobile: compile(
-                    adSizes.outOfPage,
+                    adSizes.empty,
                     adSizes.mpu,
                     adSizes.fluid250,
                     adSizes.fabric,
@@ -117,7 +117,7 @@ define([
         name = definition.name || name;
 
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
-            definition.sizeMappings.wide = adSizes.outOfPage;
+            definition.sizeMappings.wide = adSizes.empty;
         }
 
         assign(attributes, definition.sizeMappings);

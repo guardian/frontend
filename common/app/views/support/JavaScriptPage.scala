@@ -1,15 +1,14 @@
 package views.support
 
-import common.Maps.RichMap
 import common.Edition
+import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
+import conf.switches.Switches.staticBadgesSwitch
 import model._
-import implicits.Dates.DateTime2ToCommonDateFormats
-import org.joda.time.DateTime
 import play.api.Play
 import play.api.Play.current
-import play.api.libs.json.{JsValue, JsBoolean, JsString, Json}
+import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -27,7 +26,13 @@ object JavaScriptPage {
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
     val isInappropriateForSponsorship = content.exists(_.commercial.isInappropriateForSponsorship)
-    val sponsorshipType = content.flatMap(_.commercial.sponsorshipType).map("sponsorshipType" -> JsString(_))
+    val sponsorshipType = {
+      val maybeSponsorshipType = {
+        if (staticBadgesSwitch.isSwitchedOn) page.branding(edition).map(_.sponsorshipType.name)
+        else content.flatMap(_.commercial.sponsorshipType)
+      }
+      maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
+    }
     val sponsorshipTag = content.flatMap(_.commercial.sponsorshipTag).map( tag => "sponsorshipTag" -> JsString(tag.name))
     val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
     val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)

@@ -1,6 +1,6 @@
 package controllers.admin
 
-import contentapi.PreviewContentApi
+import contentapi.{CapiHttpClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
@@ -19,6 +19,8 @@ object TestFailed{
 }
 
 class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
+
+  val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
 
   def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
@@ -75,8 +77,8 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
-    PreviewContentApi.client.getResponse(request).map {
+    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
+    previewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -90,8 +92,8 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
-    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
-    PreviewContentApi.client.getResponse(request).map {
+    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
+    previewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -112,7 +114,6 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
   }
 
   private def httpGet(testName: String, url: String) =  {
-    import play.api.Play.current
     wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {

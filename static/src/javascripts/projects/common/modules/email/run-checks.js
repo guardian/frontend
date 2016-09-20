@@ -11,7 +11,7 @@ define([
     'lodash/collections/contains',
     'common/modules/user-prefs',
     'common/modules/identity/api',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/ab-test-clash',
     'Promise'
 ], function (
     $,
@@ -26,7 +26,7 @@ define([
     contains,
     userPrefs,
     Id,
-    ab,
+    clash,
     Promise
 ) {
     var emailInserted = false;
@@ -39,23 +39,6 @@ define([
         return page.keywordExists(['US elections 2016', 'Football']) ||
             config.page.section === 'film' ||
             config.page.seriesId === 'world/series/guardian-morning-briefing';
-    }
-
-    function userIsInAClashingAbTest() {
-        return _testABClash(ab.isInVariant);
-    }
-
-    function _testABClash(f) {
-        var contributionsArticle = {name: 'ContributionsArticle20160822', variants: ['about', 'pockets', 'like', 'love', 'truth'] };
-        var contributionsEmbed = {name: 'ContributionsEmbed20160823', variants: ['control', 'interactive'] };
-
-        var clashingTests = [contributionsArticle, contributionsEmbed];
-
-        return some(clashingTests, function(test) {
-            return some(test.variants, function (variant) {
-                return f(test.name, variant);
-            });
-        });
     }
 
     function userHasRemoved(id, formType) {
@@ -112,8 +95,9 @@ define([
 
     var canRunList = {
         theCampaignMinute: function () {
-            return (page.keywordExists(['US elections 2016']) || config.page.isMinuteArticle)
-                && config.page.series != 'Guardian US briefing';
+            var isUSElection = page.keywordExists(['US elections 2016']);
+            var isNotUSBriefingSeries = config.page.series !== 'Guardian US briefing';
+            return isUSElection && isNotUSBriefingSeries;
         },
         theFilmToday: function () {
             return config.page.section === 'film';
@@ -168,7 +152,7 @@ define([
             !emailInserted &&
             !config.page.isFront &&
             config.switches.emailInArticle &&
-            !userIsInAClashingAbTest() &&
+            !clash.userIsInAClashingAbTest() &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
             !obWidgetIsShown() &&
@@ -204,7 +188,6 @@ define([
         getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
-        listCanRun: listCanRun,
-        _testABClash: _testABClash // exposed for unit testing
+        listCanRun: listCanRun
     };
 });

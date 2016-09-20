@@ -4,10 +4,11 @@ import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
 import play.api.libs.json.{JsArray, JsValue}
-import scala.concurrent.Future
-import ContentApiClient.getResponse
 
-object MostViewedAudioAgent extends Logging with ExecutionContexts {
+import scala.concurrent.Future
+import services.OphanApi
+
+class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   private val audioAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
   private val podcastAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
@@ -18,7 +19,7 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
   def refresh() = {
     log.info("Refreshing most viewed audio.")
 
-    val ophanResponse = services.OphanApi.getMostViewedAudio(hours = 3, count = 100)
+    val ophanResponse = ophanApi.getMostViewedAudio(hours = 3, count = 100)
 
     ophanResponse.map { result =>
 
@@ -27,7 +28,7 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        getResponse(ContentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
+        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
           RelatedContentItem(item)
         })
       }

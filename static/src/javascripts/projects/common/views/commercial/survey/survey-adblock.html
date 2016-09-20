@@ -4,11 +4,16 @@
         <div class="survey-adblock-close js-survey-adblock-close">
             <%if (showCloseBtn === "delayed") { %>
             <span class="site-message__close-btn js-survey-adblock__delayed-close is-hidden"><span class="countdown">5</span></span>
-            <% } %>
-            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock dismissed">
+            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock delayed-dismissed">
                 <span class="is-hidden">Close</span>
                 <%=crossIcon%>
             </button>
+            <% } else { %>
+            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock immediate-dismissed">
+                <span class="is-hidden">Close</span>
+                <%=crossIcon%>
+            </button>
+            <% } %>
         </div>
         <% } %>
         <% if (marque36icon) { %>
@@ -24,33 +29,58 @@
         </h3>
         <div class="survey-content">
             <div class="survey-text">
-                <p class="survey-text__info">
+                <p class="survey-text__strong">
                     <%=surveyText%>
                 </p>
                 <% if (surveyTextSecond) { %>
-                <p class="survey-text__info">
-                    <%=surveyTextSecond%>
-                </p>
+                    <p class="survey-text__strong">
+                        <%=surveyTextSecond%>
+                    </p>
                 <% } %>
                 <% if (surveyTextThird) { %>
                 <p class="survey-text__info">
                     <%=surveyTextThird%>
                 </p>
                 <% } %>
+                <% if (membershipLink || signupLink) { %>
                 <div class="survey-links">
+                    <% if (membershipLink) { %>
                     <div class="survey-link">
                         <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="<%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
                     </div>
+                    <% } %>
+                    <% if (signupLink) { %>
                     <div class="survey-link">
                         <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
                     </div>
+                    <% } %>
+                    <% if (contributorLink) { %>
+                    <div class="survey-link">
+                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=contributorDataLink%>"><%=contributorText%><%=arrowWhiteRight%></a>
+                    </div>
+                    <% } %>
                 </div>
+                <% } %>
+                <% if (surveyTextUserHelp) { %>
                 <p class="survey-text__info">
-                    <%=surveyTextMembership%>
+                    <%=surveyTextUserHelp%>
                 </p>
-                <p class="survey-text__info">
-                    <%=surveyTextSubscriber%>
-                </p>
+                <% } %>
+                <% if (surveyTextMembership || surveyTextSubscriber) { %>
+                <div class="survey-links">
+                    <hr/>
+                    <% if (surveyTextMembership) { %>
+                    <p class="survey-text__info smaller">
+                        <%=surveyTextMembership%>
+                    </p>
+                    <% } %>
+                    <% if (surveyTextSubscriber) { %>
+                    <p class="survey-text__info smaller">
+                        <%=surveyTextSubscriber%>
+                    </p>
+                    <% } %>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>

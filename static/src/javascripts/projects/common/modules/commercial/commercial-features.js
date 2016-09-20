@@ -123,16 +123,19 @@ define([
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
+            isLiveBlog &&
             this.dfpAdvertising &&
             switches.liveblogAdverts;
 
-        this.syncMembershipMessages =
-            isArticle &&
-            !userFeatures.isPayingMember();
+        this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
+            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);
 
+        this.canAskForAContribution =
+            this.canReasonablyAskForMoney && config.page.edition === 'UK'; // Contributions only testing in UK so far
+        
         this.async = {
-            membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
-                return !adblockUsed && self.syncMembershipMessages;
+            canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {
+                return !adblockUsed && self.canReasonablyAskForMoney;
             })
         };
     }

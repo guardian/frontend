@@ -60,23 +60,59 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
-  def cleanAmpEmbed(document: Document) = {
+  object AmpSoundcloud {
+    def createElement(document: Document, trackId: String): Element = {
+      val soundcloud = document.createElement("amp-soundcloud")
+      soundcloud.attr("data-trackid", trackId)
+      soundcloud.attr("data-visual", "true")
+      soundcloud.attr("height", "300") // height is necessary if data-visual == true
+    }
 
-    document.getElementsByClass("element-embed").filter { element: Element =>
-      element.getElementsByTag("iframe").length != 0
-    }.foreach { embed: Element =>
-      embed.getElementsByTag("iframe").map { element: Element =>
-        val src = element.attr("srcdoc") // TODO it's a hack searching through the doc but CAPI doesn't have the shortcode yet
+    def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
+      val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
+      soundcloudUrl match {
+        case pattern(trackId) => Some(trackId)
+        case _ => None
+      }
+    }
+
+    def clean(document: Document) = {
+      for {
+        audioElement <- document.getElementsByClass("element-audio")
+        iframeElement <- audioElement.getElementsByTag("iframe")
+        trackId <- getTrackIdFromUrl(iframeElement.attr("src"))
+      } yield {
+        val soundcloudElement = createElement(document, trackId)
+        audioElement.appendChild(soundcloudElement)
+        iframeElement.remove()
+      }
+    }
+  }
+
+  def cleanAmpEmbed(document: Document) = {
+    document.getElementsByClass("element-embed")
+      .filter(_.getElementsByTag("iframe").length != 0)
+      .foreach(_.getElementsByTag("iframe").map(_.remove))
+  }
+
+  def cleanAmpInstagram(document: Document) = {
+    document.getElementsByClass("element-instagram").foreach { embed: Element =>
+      embed.getElementsByTag("a").map { element: Element =>
+        val src = element.attr("href")
         val list = src.split("""instagram\.com/p/""")
         (if (list.length == 1) None else list.lastOption).flatMap(_.split("/").headOption).map { shortcode =>
           val instagram = document.createElement("amp-instagram")
-          instagram.attr("shortcode", shortcode)
-          instagram.attr("width", "7")// 8:7 seems to be the normal ratio
-          instagram.attr("height", "8")
-          instagram.attr("layout", "responsive")
-          embed.appendChild(instagram)
+
+          instagram
+            .attr("data-shortcode", shortcode)
+            .attr("width", "7") // 8:7 seems to be the normal ratio
+            .attr("height", "8")
+            .attr("layout", "responsive")
+
+          embed
+            .empty()
+            .appendChild(instagram)
         }
-        element.remove()
       }
     }
 
@@ -119,6 +155,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
+    AmpSoundcloud.clean(document)
+    cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpEmbed(document)
 

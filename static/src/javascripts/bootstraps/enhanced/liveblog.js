@@ -3,7 +3,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/rich-links',
-    'commercial/modules/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
     'common/modules/ui/notification-counter',
@@ -18,7 +17,6 @@ define([
     detect,
     mediator,
     richLinks,
-    liveblogAdverts,
     Affix,
     AutoUpdate,
     NotificationCounter,
@@ -34,10 +32,6 @@ define([
     var modules;
 
     modules = {
-        initAdverts: function () {
-            return liveblogAdverts.init();
-        },
-
         affixTimeline: function () {
             var topMarker;
             if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0 && config.page.keywordIds.indexOf('sport/rugby-union') < 0) {
@@ -80,7 +74,6 @@ define([
 
     function ready() {
         robust.catchErrorsAndLogAll([
-            ['lb-adverts',    modules.initAdverts],
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
             ['lb-timestamp',  modules.keepTimestampsCurrent],

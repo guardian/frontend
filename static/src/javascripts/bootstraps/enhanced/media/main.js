@@ -150,6 +150,22 @@ define([
         });
     }
 
+    function initHeroic(){
+        var player = $('.vjs-tech'),
+            headline = $('.labour-liverpool-headline')[0],
+            controls = $('.vjs-control-bar');
+        if(player && headline && controls){
+            bean.on(player[0], 'playing', function () {
+                bonzo(headline).addClass('playing');
+                bonzo(controls[0]).addClass('playing');
+            });
+            bean.on(player[0], 'pause', function () {
+              bonzo(headline).removeClass('playing');
+              bonzo(controls[0]).removeClass('playing');
+            });
+        }
+    }
+
     function isGeoBlocked(el) {
         var source = el.currentSrc;
 
@@ -351,6 +367,7 @@ define([
                                         });
                                     }, 500);
                                 });
+
                             });
                         });
 
@@ -364,7 +381,9 @@ define([
                 });
             }
         });
-
+        if($('.heroic--video').length > 0){
+          initHeroic();
+        }
         return player;
     }
 
@@ -443,7 +462,7 @@ define([
                 require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {
-                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
                     initWithRaven();
                 });
             } else {

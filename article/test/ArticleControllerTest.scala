@@ -4,16 +4,23 @@ import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+
 import scala.collection.JavaConversions._
 
-@DoNotDiscover class ArticleControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ArticleControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
-  lazy val articleController = new ArticleController
+  lazy val articleController = new ArticleController(testContentApiClient)
 
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))

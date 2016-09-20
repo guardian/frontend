@@ -18,6 +18,7 @@ define([
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/colours',
     'commercial/modules/slice-adverts',
+    'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
@@ -44,6 +45,7 @@ define([
     hostedGallery,
     hostedColours,
     sliceAdverts,
+    liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
@@ -52,18 +54,19 @@ define([
     badges
 ) {
     var primaryModules = [
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
+        ['cm-liveblogAdverts', liveblogAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     var secondaryModules = [
         ['cm-load', dfpLoad],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-sponsorships', sponsorships.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
@@ -98,7 +101,7 @@ define([
 
     function loadModules(modules, baseline) {
 
-        ophanTracking.addBaseline(baseline);
+        ophanTracking.addStartTimeBaseline(baseline);
 
         var modulePromises = [];
 
@@ -115,7 +118,11 @@ define([
             });
         });
 
-       return Promise.all(modulePromises);
+       return Promise.all(modulePromises)
+           .then(function(moduleLoadResult){
+               ophanTracking.addEndTimeBaseline(baseline);
+               return moduleLoadResult;
+           });
     }
 
     return {
@@ -125,6 +132,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+
+            // Stub the command queue
+            window.googletag = { cmd: [] };
 
             loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
                 loadModules(secondaryModules, ophanTracking.secondaryBaseline);
