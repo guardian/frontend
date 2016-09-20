@@ -55,7 +55,8 @@ define([
     'lodash/collections/forEach',
     'common/modules/experiments/subscriber-number-form',
     'common/modules/experiments/contributor-email-form',
-    'common/modules/experiments/contributor-email-submitted'
+    'common/modules/experiments/contributor-email-submitted',
+    'common/modules/navigation/new-search'
 ], function (
     fastdom,
     bean,
@@ -111,7 +112,8 @@ define([
     forEach,
     subscriberNumberForm,
     contributorEmailForm,
-    contributorEmailSubmitted
+    contributorEmailSubmitted,
+    enhanceSearch
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -133,6 +135,8 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+                // enhance search for the new header
+                enhanceSearch();
             },
 
             showTabs: function () {
