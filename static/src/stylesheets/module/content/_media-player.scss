@@ -156,12 +156,11 @@ $ima-controls-height: 70px;
     cursor: pointer;
     display: inline-block;
     z-index: 2;
-    padding: 0 10px;
+    padding: 0 10px 0 41px;
     position: absolute;
     bottom: 8px;
     left: 5px;
     line-height: 28px;
-    padding-left: 41px;
     width: auto;
     height: 44px;
     color: #161616;
@@ -1165,6 +1164,7 @@ button.vjs-big-play-button__duration {
 // we had major refactoring issues.
 .gu-media--show-controls-at-start.vjs-paused {
     .vjs-control-bar {
+        //Hides control bar but still shows the seeker
         bottom: -3.95em;
     }
 
