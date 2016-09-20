@@ -11,7 +11,7 @@ define([
         var editionPickerDropdown = qwery('.js-edition-picker-dropdown')[0];
 
         function menuIsOpen() {
-            return (button.getAttribute('aria-expanded') === 'true');
+            return button.getAttribute('aria-expanded') === 'true';
         }
 
         function closeEditionPickerAndRemoveListener() {
