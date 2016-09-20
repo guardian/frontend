@@ -31,7 +31,7 @@ So the required steps are:
 
 * configure and run nginx (see `/nginx`)
 * update your hosts file (also described in `/nginx`)
-* make sure that your frontend.properties file contains
+* make sure that your `~/.gu/frontend.conf` file contains
 
 
 
@@ -53,7 +53,7 @@ With these in place, you'll be able to browse Identity on
 ## Configuration of local Identity API
 
 The Identity site can be configured to use the local Identity API with the
-following properties in `frontend.properties`.
+following properties in `~/.gu/frontend.conf`.
 
 ```
 # ID
