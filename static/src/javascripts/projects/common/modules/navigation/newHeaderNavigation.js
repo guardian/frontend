@@ -24,6 +24,14 @@ define([
         });
     }
 
+    function removeOrderingFromLists() {
+        var mainListItems = qwery('.js-navigation-item');
+
+        mainListItems.forEach(function (item) {
+            item.style.order = '';
+        });
+    }
+
     function enhanceToButton() {
         var checkboxes = qwery('.js-enhance-checkbox');
         fastdom.read(function () {
@@ -68,16 +76,11 @@ define([
         }
         if (menuIsOpen()) {
             fastdom.write(function () {
-                var mainListItems = qwery('.js-main-navigation-item');
-
                 button.setAttribute('aria-expanded', 'false');
                 mainMenu.setAttribute('aria-hidden', 'true');
                 veggieBurgerLink.classList.remove('new-header__nav__menu-button--open');
+                removeOrderingFromLists();
 
-                // Remove possible ordering for the lists
-                mainListItems.forEach(function (item) {
-                    item.style.order = '';
-                });
                 // Users should be able to scroll again
                 html.style.overflow = '';
             });
