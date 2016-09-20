@@ -98,11 +98,11 @@ define([
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
         // Commenting out line below but reluctant to delete it
-        // var duration = parseInt(el.getAttribute('data-duration'), 10);
+        var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
-            if (!isNaN()) {
-                player.duration();
+            if (!isNaN(duration)) {
+                player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
