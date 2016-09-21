@@ -59,24 +59,10 @@ object SponsorshipTargeting {
   }
 }
 
-case class Dimensions(width: Int, height: Int)
-
-object Dimensions {
-
-  implicit val dimensionsFormat = Json.format[Dimensions]
-}
-
-case class Logo(url: String, dimensions: Option[Dimensions])
-
-object Logo {
-
-  implicit val logoFormat = Json.format[Logo]
-}
-
 case class Branding(
   sponsorshipType: SponsorshipType,
   sponsorName: String,
-  sponsorLogo: Logo,
+  sponsorLogo: String,
   sponsorLink: String,
   aboutThisLink: String,
   targeting: Option[SponsorshipTargeting],
@@ -123,8 +109,7 @@ object Branding {
         case _ => Sponsored
       },
       sponsorName = sponsorship.sponsorName,
-      sponsorLogo =
-        Logo(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions map (d => Dimensions(d.width, d.height))),
+      sponsorLogo = sponsorship.sponsorLogo,
       sponsorLink = sponsorship.sponsorLink,
       aboutThisLink = sponsorship.aboutLink getOrElse "/sponsored-content",
       targeting = sponsorship.targeting map SponsorshipTargeting.make,
