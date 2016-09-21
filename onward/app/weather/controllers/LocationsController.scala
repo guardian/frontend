@@ -17,7 +17,7 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
 
   def findCity(query: String) = Action.async { implicit request =>
     weatherApi.searchForLocations(query) map { locations =>
-      Cached(7.days)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
+      Cached(7.days)(JsonComponent(Json.toJson(CityResponse.fromLocationResponses(locations.toList))))
     }
   }
 
@@ -51,7 +51,7 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
             weatherApi.getNearestCity(latitudeLongitude) map { location =>
-              Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(CityResponse.fromLocationResponse(location).copy(
+              Cached(1 hour)(JsonComponent(Json.toJson(CityResponse.fromLocationResponse(location).copy(
                 // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
                 // given how fuzzy geolocation by IP is.
                 city = city
@@ -66,11 +66,11 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
 
               log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
 
-              Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(weatherCity)))
+              Cached(1 hour)(JsonComponent(Json.toJson(weatherCity)))
             }
         }
 
-      case None => Future.successful(Cached(1 hour)(JsonComponent.forJsValue(Json.toJson(cityFromRequestEdition))))
+      case None => Future.successful(Cached(1 hour)(JsonComponent(Json.toJson(cityFromRequestEdition))))
     }
   }
 }

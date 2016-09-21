@@ -40,11 +40,6 @@ object JsonComponent extends Results with implicits.Requests {
     Json.stringify(json)
   )
 
-  def forJsValue(json: JsValue)(implicit request: RequestHeader): RevalidatableResult = resultFor(
-    request,
-    Json.stringify(json)
-  )
-
   private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader): String = {
     jsonFor(("config" -> Json.parse(templates.js.javaScriptConfig(page).body)) +: items: _*)
   }
