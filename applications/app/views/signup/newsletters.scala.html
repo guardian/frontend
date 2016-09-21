@@ -15,23 +15,30 @@
                 <div class="newsletter-card__description">@emailListing.teaser</div>
 
                 <div class="newsletter-card__meta u-cf">
+
                     <div class="newsletter-card__example">
-                @if(emailListing.exampleUrl.isDefined){
+                        @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                            <button class="button button--tertiary newsletter-card__lozenge" data-link-name="@emailListing.name sample">
-                            See the latest email
+                            <button class="button button--tertiary newsletter-card__lozenge"
+                                    data-link-name="Preview @emailListing.name"
+                                    type="button"
+                                    value="@emailListing.listId">
+                                See the latest email
                             </button>
                         </a>}
                     </div>
 
-
-                    <button class="button button--tertiary newsletter-card__lozenge"
-                            data-link-name="Subscribe to @emailListing.name"
-                            name="addEmailSubscription"
-                            type="button"
-                            value="@emailListing.listId">
-                        Sign up
-                    </button>
+                    <div>
+                        <a href="@emailListing.signupPage" target="signup-email-@emailListing.listId">
+                            <button class="button button--tertiary newsletter-card__lozenge"
+                                    data-link-name="Subscribe to @emailListing.name"
+                                    name="addEmailSubscription"
+                                    type="button"
+                                    value="@emailListing.listId">
+                                Sign up
+                            </button>
+                        </a>
+                    </div>
 
                     <div class="newsletter-card__frequency">
                         @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
@@ -49,14 +56,17 @@
     <div class="content">
         <div class="gs-container">
 
-            <div class="newsletters__news">
-                @emailListCategoryList("News", EmailSubscriptions.newsEmails(), true)
+            <div class="newsletters-category">
+                @emailListCategoryList("News", (EmailSubscriptions.newsEmails() ++ EmailSubscriptions.featureEmails()), true)
             </div>
-            <div class="newsletters__sport">
+            <div class="newsletters-category">
                 @emailListCategoryList("Sport", EmailSubscriptions.sportEmails(), true)
             </div>
-            <div class="newsletters__culture">
+            <div class="newsletters-category">
                 @emailListCategoryList("Culture", EmailSubscriptions.cultureEmails(), true)
+            </div>
+            <div class="newsletters-category">
+                @emailListCategoryList("Lifestyle", EmailSubscriptions.lifestyleEmails(), true)
             </div>
 
         </div>

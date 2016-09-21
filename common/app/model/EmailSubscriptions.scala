@@ -56,20 +56,7 @@ object EmailSubscriptions {
       signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-au")
     ),
     EmailSubscription(
-      "Weekend Reading",
-      "news",
-      "Feature",
-      teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
-      "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
-      "Every Saturday",
-      "3744",
-      subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
-      signupPage = Some("https://www.theguardian.com/signup/weekendreading"),
-      exampleUrl = Some("http://www.theguardian.com/membership/series/weekend-reading/latest/email")
-
-    ),
-    EmailSubscription(
-      "MediaGuardian Briefing",
+      "MediaGuardian briefing",
       "news",
       "Media",
       teaser = "An indispensable summary of what the papers are saying about media on your desktop before 9am",
@@ -78,10 +65,10 @@ object EmailSubscriptions {
       "217",
       subscribedTo = subscribedListIds.exists{ x => x == "217" },
       signupPage = Some("https://www.theguardian.com/info/2016/feb/15/sign-up-to-the-media-briefing"),
-      exampleUrl = Some("http://www.theguardian.com/media/series/mediaguardian-briefing/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/media/series/mediaguardian-briefing/latest/email")
     ),
     EmailSubscription(
-      "Brexit Briefing",
+      "Brexit briefing",
       "news",
       "News",
       teaser = "Get a weekly update on Britain's progress down the long road to leaving the EU",
@@ -89,7 +76,7 @@ object EmailSubscriptions {
       "Tuesday mornings",
       "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
-      exampleUrl = Some("http://www.theguardian.com/politics/series/eu-referendum-morning-briefing/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
       "Green light",
@@ -101,10 +88,10 @@ object EmailSubscriptions {
       "38",
       subscribedTo = subscribedListIds.exists{ x => x == "38" },
       signupPage = Some("https://www.theguardian.com/environment/2015/oct/19/sign-up-to-the-green-light-email"),
-      exampleUrl = Some("http://www.theguardian.com/environment/series/green-light/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
-      "Lab Notes",
+      "Lab notes",
       "news",
       "Science",
       teaser = "Important breakthroughs, insider knowledge, and some distractingly good fun and games",
@@ -116,7 +103,7 @@ object EmailSubscriptions {
       exampleUrl = Some("https://www.theguardian.com/science/series/lab-notes/latest/email")
     ),
     EmailSubscription(
-      "Poverty Matters",
+      "Poverty matters",
       "news",
       "Global development",
       teaser = "From the shocking to the uplifting - get the world's biggest stories that you're missing",
@@ -125,18 +112,7 @@ object EmailSubscriptions {
       "113",
       subscribedTo = subscribedListIds.exists{ x => x == "113" },
       signupPage = Some("https://www.theguardian.com/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
-      exampleUrl = Some("http://www.theguardian.com/global-development/series/poverty-matters/latest/email")
-    ),
-    EmailSubscription(
-      "The Long Read",
-      "news",
-      "The week’s Long Reads and audio features",
-      teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
-      "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
-      "Every Saturday",
-      "3322",
-      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email"),
-      subscribedTo = subscribedListIds.exists{ x => x == "3322" }
+      exampleUrl = Some("https://www.theguardian.com/global-development/series/poverty-matters/latest/email")
     ),
     EmailSubscription(
       "Morning Mail",
@@ -153,11 +129,12 @@ object EmailSubscriptions {
       "Australian politics",
       "news",
       "Politics",
-      teaser = "",
+      teaser = "A daily dose of the latest news and comment on Australian politics from the Guardian",
       "All the latest news and comment on Australian politics from the Guardian, delivered to you every weekday.",
       "Weekdays at 10am",
       "1866",
-      subscribedTo = subscribedListIds.exists{ x => x == "1866" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1866" },
+      signupPage = Some("https://www.theguardian.com/australia-news/2014/dec/10/australian-politics-subscribe-by-email")
     )
   )
 
@@ -182,18 +159,44 @@ object EmailSubscriptions {
       "Every Thursday",
       "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
-      exampleUrl = Some("http://www.theguardian.com/sport/series/breakdown/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
       "The Spin",
       "sport",
       "Cricket",
-      teaser = "Comment and news, rumour and humour from the world of cricket. No tired cricket cliches, but it might bowl you over",
+      teaser = "News, rumour and humour from the world of cricket. No tired cricket cliches, but it might bowl you over",
       "The Spin brings you all the latest comment and news, rumour and humour from the world of cricket every Tuesday. It promises not to use tired old cricket cliches, but it might just bowl you over.",
       "Every Tuesday",
       "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
-      exampleUrl = Some("http://www.theguardian.com/sport/series/thespin/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
+    )
+  )
+
+  def featureEmails(subscribedListIds: Iterable[String] = None) = List(
+    EmailSubscription(
+      "Weekend Reading",
+      "news",
+      "Feature",
+      teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
+      "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
+      "Every Saturday",
+      "3744",
+      subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
+      signupPage = Some("https://www.theguardian.com/signup/weekendreading"),
+      exampleUrl = Some("https://www.theguardian.com/membership/series/weekend-reading/latest/email")
+    ),
+    EmailSubscription(
+      "The Long Read",
+      "news",
+      "Feature",
+      teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
+      "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
+      "Every Saturday",
+      "3322",
+      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email"),
+      subscribedTo = subscribedListIds.exists{ x => x == "3322" }
     )
   )
 
@@ -222,11 +225,13 @@ object EmailSubscriptions {
       "Film Today",
       "culture",
       "Film",
-      teaser = "",
+      teaser = "Our film editors recap the top headlines each weekday in time for your evening commute",
       "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
       "Every weekday",
       "1950",
-      subscribedTo = subscribedListIds.exists{ x => x == "1950" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1950" },
+      signupPage = Some("https://www.theguardian.com/info/2016/feb/12/film-today-email-sign-up"),
+      exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     ),
     EmailSubscription(
       "Bookmarks",
@@ -247,16 +252,16 @@ object EmailSubscriptions {
       "Every Friday",
       "99",
       subscribedTo = subscribedListIds.exists{ x => x == "99" },
-      exampleUrl = Some("http://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     )
   )
 
   def lifestyleEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      "Zip file",
+      "Zip File",
       "lifestyle",
       "Technology",
-      teaser = "",
+      teaser = "The week's top technology stories, games news and review, plus podcasts and video reports",
       "For all you need to know about technology in the world this week, news, analysis and comment.",
       "Every Thursday",
       "1902",
@@ -284,7 +289,7 @@ object EmailSubscriptions {
       "1079",
       subscribedTo = subscribedListIds.exists{ x => x == "1079" },
       signupPage = Some("https://www.theguardian.com/money/2015/nov/10/sign-up-to-the-guardians-money-email"),
-      exampleUrl = Some("http://www.theguardian.com/money/series/money-talks/latest/email")
+      exampleUrl = Some("https://www.theguardian.com/money/series/money-talks/latest/email")
     ),
     EmailSubscription(
       "Fashion Statement",
@@ -301,7 +306,7 @@ object EmailSubscriptions {
       "Crossword editor's update",
       "lifestyle",
       "Crosswords",
-      teaser = "",
+      teaser = "Get a monthly missive from the Guardian's crossword editor on what's been occupying solvers and setters",
       "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
       "Monthly",
       "101",
@@ -367,5 +372,5 @@ object EmailSubscriptions {
 
   def apply(subscribedListIds: Iterable[String] = None): EmailSubscriptions = EmailSubscriptions(List(
 
-  ) ++ newsEmails(subscribedListIds) ++ sportEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ lifestyleEmails(subscribedListIds) ++ commentEmails(subscribedListIds))
+  ) ++ newsEmails(subscribedListIds) ++ featureEmails(subscribedListIds) ++ sportEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ lifestyleEmails(subscribedListIds) ++ commentEmails(subscribedListIds))
 }

@@ -1,19 +1,20 @@
-.newsletters__news {
+.newsletters-category {
     display: inline-block;
+    clear: both;
 }
 
 .newsletter-card__meta {
     .newsletter-card__lozenge {
         border-color: $comment-support-1;
         border-radius: 100px;
-        height: 3em;
+        height: 2.8em;
         width: 10rem;
         margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: darken($comment-support-2, 10%);
+            border-color: lighten($comment-support-1, 20%);
         }
     }
 }
@@ -22,10 +23,19 @@
     display: inline-block;
     float: left;
     height: 21rem;
-    width: 15rem;
-
+    width: 15.5rem;
     margin: $gs-baseline;
     background-color: $comment-support-2;
+
+    @include mq(tablet) {
+        height: 18rem;
+        width: 20rem;
+    }
+
+    @include mq(desktop) {
+        height: 21rem;
+        width: 15.5rem;
+    }
 }
 
 .newsletter-card__illustration {
@@ -43,6 +53,14 @@
 .newsletter-card__description {
     height: 7.5rem;
     padding: .3rem;
+
+    @include mq(tablet) {
+        height: 4.5rem;
+    }
+
+    @include mq(desktop) {
+        height: 7.5rem;
+    }
 }
 
 .newsletter-card__meta {
@@ -56,6 +74,7 @@
 
 .newsletter-card__frequency {
     @include fs-textSans(2);
+    padding: 0 .5rem;
 
     .inline-icon {
         fill: $multimedia-main-1;
