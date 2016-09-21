@@ -1,10 +1,10 @@
-## Impliment Google Analytics
+## Implement Google Analytics
 
 This describes how to work with Google Analytics (GA)
 
 ## Hints
 
-Always discuss the reporting requirements before you impliment any new dimensions.
+Always discuss the reporting requirements before you implement any new dimensions.
 Talk to the mobile apps team early, things can always be a bit different once you take their needs into account
 
 ## Dashboards
@@ -24,9 +24,9 @@ The main entry point for google pageview tracking is in
 
 All the Page View tracking happens in [`google.scala.html`](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/google.scala.html)
 
-We are carefull about how many tracking events we push to the GA test so only send 5% of traffic to the test account. In your local environment we are sending 100% to make development easier.
+We are careful about how many tracking events we push to the GA test so only send 5% of traffic to the test account. In your local environment we are sending 100% to make development easier.
 
-We impliment the standard [async GA tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
+We implement the standard [async GA tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
 
 We then send through all the custom [`dimensions`](https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets) to GA.
 
@@ -34,7 +34,7 @@ All of our custom `dimensions` are [`hit`](https://support.google.com/analytics/
 Apart from `dimension15`(identityId) and `dimension2`(ophanBrowserId) which is a `user` scoped
 
 ## Data dictionaries
-We maintain documenation that describes all the custom `dimensions`, `events` and `metrics` used within GA
+We maintain documentation that describes all the custom `dimensions`, `events` and `metrics` used within GA
 
 - [Dimensions](https://docs.google.com/spreadsheets/d/1MmWHNeeiQE_dzekImIP9Tv4beLx_8JzWx3rOtCp4PGg)
 - [Events](https://docs.google.com/spreadsheets/d/1KvBDyguXDtww9qTipD5L3D9NbH4IgkbRFWlbFTA3J2E)
@@ -43,7 +43,7 @@ We maintain documenation that describes all the custom `dimensions`, `events` an
 # Media Events
 
 The main entry point for Media (Video and Audio) tracking is
-[`ttvideo/events.js`](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/video/events.js)
+[`video/events.js`](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/video/events.js)
 
 Uses the following `dimensions`
 
@@ -75,7 +75,7 @@ and the following [`metrics`](https://developers.google.com/analytics/devguides/
 ```
 
 
-Incrimenting metrics is done to give a truer account of the actions that are happening on the video, out of the box, it would give a session level interaction, not a hit level.
+Incrementing metrics is done to give a truer account of the actions that are happening on the video, out of the box, it would give a session level interaction, not a hit level.
 
 
 # Click Events
@@ -88,11 +88,11 @@ In page click (opening nav) that don't cause page load
 Internal click (navigating to another internal page on gu.com)
 External clicks (going to another domain)
 
-This listens to the Mediator events, and impliments tracking in both google and omniture
+This listens to the Mediator events, and implements tracking in both google and omniture
 
 TODO:
 
-Impliment delay after omniture is removed
-Impliment sessions storage deletion
+Implement delay after omniture is removed
+Implement sessions storage deletion
 
 
