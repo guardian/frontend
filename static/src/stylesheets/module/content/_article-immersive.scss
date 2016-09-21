@@ -109,21 +109,18 @@
 }
 
 .content__headline--immersive {
+    @include fs-headline(7, true);
+    line-height: 1;
     font-weight: 200;
+
+    @include mq(desktop) {
+        font-size: 4rem;
+    }
 }
 
 .immersive-main-media__headline-container--dark {
     .content__headline--immersive-article {
         color: #ffffff;
-    }
-}
-
-.content__headline--immersive-article {
-    @include fs-headline(7, true);
-    line-height: 1;
-
-    @include mq(desktop) {
-        font-size: 4rem;
     }
 }
 
