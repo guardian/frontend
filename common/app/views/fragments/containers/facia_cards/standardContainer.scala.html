@@ -1,6 +1,5 @@
 @import common.commercial.ContainerModel
 @import common.{Edition, Localisation}
-@import conf.switches.Switches.containerBrandingFromCapi
 @import views.html.fragments.commercial.contentLogo
 @import views.html.fragments.containers.facia_cards.{containerHeader, showMore, showMoreButton, slice}
 @import views.support.RenderClasses
@@ -10,16 +9,14 @@
 
 @containerHeader(containerDefinition, frontProperties)
 
-@if(containerBrandingFromCapi.isSwitchedOn) {
-    @if(containerDefinition.index == 0) {
-        @for(frontBranding <- frontProperties.branding(Edition(request))) {
-            @contentLogo(frontBranding)
-        }
-    } else {
-        @for(containerModel <- maybeContainerModel) {
-            @for(containerBranding <- containerModel.branding) {
-                @contentLogo(containerBranding)
-            }
+@if(containerDefinition.index == 0) {
+    @for(frontBranding <- frontProperties.branding(Edition(request))) {
+        @contentLogo(frontBranding)
+    }
+} else {
+    @for(containerModel <- maybeContainerModel) {
+        @for(containerBranding <- containerModel.branding) {
+            @contentLogo(containerBranding)
         }
     }
 }

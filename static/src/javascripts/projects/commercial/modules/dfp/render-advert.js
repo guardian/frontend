@@ -72,7 +72,8 @@ define([
      * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
      * and their containers closed up.
      */
-    sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
+    sizeCallbacks[adSizes.outOfPage] =
+    sizeCallbacks[adSizes.empty] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             var $parent = bonzo(advert.node.parentNode);
             return fastdom.write(function () {
@@ -105,7 +106,7 @@ define([
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
+    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--top-banner-ad']);
 
     /**
      * Commercial components with merch sizing get fluid-250 styling

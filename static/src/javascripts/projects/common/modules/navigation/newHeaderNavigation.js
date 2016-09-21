@@ -1,159 +1,163 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/$',
+    'qwery',
+    'fastdom',
     'common/modules/navigation/edition-picker',
     'common/modules/navigation/editionalise-menu'
 ], function (
-    fastdomPromise,
-    $,
+    qwery,
+    fastdom,
     editionPicker,
     editionaliseMenu
 ) {
-    var mainMenuId = '#main-menu';
-    var html = $('html');
-    var mainMenuEl = $(mainMenuId);
-    var veggieBurgerLink = $('.js-change-link');
-    var primaryItems = $('.js-close-nav-list');
+    var html = qwery('html')[0];
+    var menuItems = qwery('.js-close-nav-list');
+    var buttonClickHandlers = {
+        'main-menu-toggle': veggieBurgerClickHandler,
+        'edition-picker': editionPicker
+    };
 
     function closeAllOtherPrimaryLists(targetItem) {
-        primaryItems.each(function (item) {
-
+        menuItems.forEach(function (item) {
             if (item !== targetItem) {
                 item.removeAttribute('open');
             }
         });
     }
 
-    function animateMenuOpen() {
-        return fastdomPromise.write(function () {
-            mainMenuEl.addClass('off-screen shown');
+    function removeOrderingFromLists() {
+        var mainListItems = qwery('.js-navigation-item');
 
-            veggieBurgerLink.addClass('new-header__nav__menu-button--open');
-            veggieBurgerLink.attr('href', '#');
-        }).then(function () {
-            return fastdomPromise.write(function () {
-                mainMenuEl.removeClass('off-screen');
-            });
-        }).then(function () {
-            var firstButton = $('.main-navigation__item__button')[0];
-
-            return fastdomPromise.write(function () {
-                if (firstButton) {
-                    firstButton.focus();
-                }
-                // Prevents scrolling on the body
-                html.css('overflow', 'hidden');
-            });
+        mainListItems.forEach(function (item) {
+            item.style.order = '';
         });
     }
 
-    function animateMenuClose() {
-        return fastdomPromise.write(function () {
-            if (mainMenuEl.hasClass('shown')) {
-                mainMenuEl.addClass('off-screen');
+    function enhanceToButton() {
+        var checkboxes = qwery('.js-enhance-checkbox');
+        fastdom.read(function () {
+            var buttons = checkboxes.map(function (checkbox) {
+                var button = document.createElement('button');
+                var checkboxId = checkbox.id;
+                var checkboxControls = checkbox.getAttribute('aria-controls');
+                var checkboxClasses = Array.prototype.slice.call(checkbox.classList);
 
-                veggieBurgerLink.removeClass('new-header__nav__menu-button--open');
-                veggieBurgerLink.attr('href', mainMenuId);
+                checkboxClasses.forEach(function (c) {
+                    button.classList.add(c);
+                });
+                button.setAttribute('id', checkboxId);
+                button.setAttribute('aria-controls', checkboxControls);
+                button.setAttribute('aria-expanded', 'false');
 
-                // TODO: Support browsers that don't have transitions
-                // We still want to hide this
-                if (mainMenuEl.length > 0) {
-
-                    mainMenuEl[0].addEventListener('transitionend', function handler() {
-
-                        mainMenuEl[0].removeEventListener('transitionend', handler);
-
-                        return fastdomPromise.write(function () {
-                            mainMenuEl.removeClass('off-screen');
-                            mainMenuEl.removeClass('shown');
-                        }).then(function () {
-                            return fastdomPromise.write(function () {
-                                var mainListItems = $('.main-navigation__item');
-                                // Remove possible ordering for the lists
-                                mainListItems.removeAttr('style');
-                                // No targetItem to put in as the parameter. All lists should close.
-                                closeAllOtherPrimaryLists();
-
-                                $('.new-header__nav__menu-button').focus();
-                                // Users should be able to scroll again
-                                html.css('overflow', '');
-                            });
-                        });
-                    });
-                }
-            }
-        });
-    }
-
-    function moveTargetListToTop(targetListId) {
-        primaryItems.each(function (listItem, index) {
-
-            fastdomPromise.read(function () {
-                return listItem.getAttribute('id');
-            }).then(function (itemId) {
-
-                if (itemId === targetListId) {
-                    fastdomPromise.write(function () {
-                        var parent = listItem.parentNode;
-                        var menuContainer = $('.js-reset-scroll-on-menu');
-
-                        // Using flexbox to reorder lists based on what is clicked.
-                        parent.style.order = '-' + index;
-
-                        // Make sure when the menu is open, the user is always scrolled to the top
-                        menuContainer[0].scrollTop = 0;
-                    });
-                }
+                return button;
             });
-        });
-    }
+            fastdom.write(function () {
+                buttons.forEach(function (button, index) {
+                    var checkbox = checkboxes[index];
+                    var eventHandler = buttonClickHandlers[button.id];
 
-    function openTargetListOnClick() {
-        var primaryLinks = $('.js-open-section-in-menu');
-
-        primaryLinks.each(function (primaryLink) {
-
-            primaryLink.addEventListener('click', function () {
-
-                fastdomPromise.read(function () {
-                    return primaryLink.getAttribute('aria-controls');
-                }).then(function (id) {
-                    var menuToOpen = $('#' + id);
-
-                    fastdomPromise.write(function () {
-                        menuToOpen.attr('open', '');
-                        return id;
-                    }).then(moveTargetListToTop.bind(id));
+                    checkbox.parentNode.replaceChild(button, checkbox);
+                    button.addEventListener('click', eventHandler);
                 });
             });
         });
     }
 
-    function bindPrimaryItemClickEvents() {
-        primaryItems.each(function (item) {
+    function veggieBurgerClickHandler(event) {
+        var button = event.target;
+        var mainMenu = qwery('#main-menu')[0];
+        var veggieBurgerLink = qwery('.js-change-link')[0];
+
+        function menuIsOpen() {
+            return button.getAttribute('aria-expanded') === 'true';
+        }
+
+        if (!mainMenu || !veggieBurgerLink) {
+            return;
+        }
+        if (menuIsOpen()) {
+            fastdom.write(function () {
+                button.setAttribute('aria-expanded', 'false');
+                mainMenu.setAttribute('aria-hidden', 'true');
+                veggieBurgerLink.classList.remove('new-header__nav__menu-button--open');
+                removeOrderingFromLists();
+
+                // Users should be able to scroll again
+                html.style.overflow = '';
+            });
+        } else {
+            fastdom.write(function () {
+                var firstButton = qwery('.js-navigation-button')[0];
+
+                button.setAttribute('aria-expanded', 'true');
+                mainMenu.setAttribute('aria-hidden', 'false');
+                veggieBurgerLink.classList.add('new-header__nav__menu-button--open');
+
+                if (firstButton) {
+                    firstButton.focus();
+                }
+                // No targetItem to put in as the parameter. All lists should close.
+                closeAllOtherPrimaryLists();
+                // Prevents scrolling on the body
+                html.style.overflow = 'hidden';
+            });
+        }
+    }
+
+    function moveTargetListToTop(targetListId) {
+        menuItems.forEach(function (listItem, index) {
+
+            fastdom.read(function () {
+                var itemId = listItem.getAttribute('id');
+
+                if (itemId === targetListId) {
+                    fastdom.write(function () {
+                        var parent = listItem.parentNode;
+                        var menuContainer = qwery('.js-main-menu')[0];
+
+                        // Using flexbox to reorder lists based on what is clicked.
+                        parent.style.order = '-' + index;
+
+                        // Make sure when the menu is open, the user is always scrolled to the top
+                        menuContainer.scrollTop = 0;
+                    });
+                }
+            });
+        });
+    }
+
+    function bindMenuItemClickEvents() {
+        menuItems.forEach(function (item) {
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
 
-    function handleHashChange () {
-        var shouldShowMenu = window.location.hash === mainMenuId;
-        var shouldHideMenu = window.location.hash === '';
+    function bindPrimaryItemsClickEvents() {
+        var primaryItems = qwery('.js-open-section-in-menu');
 
-        if (shouldShowMenu) {
-            animateMenuOpen();
-        } else if (shouldHideMenu) {
-            animateMenuClose();
-        }
+        primaryItems.forEach(function (primaryItem) {
+
+            primaryItem.addEventListener('click', function () {
+                fastdom.read(function () {
+                    var id = primaryItem.getAttribute('aria-controls');
+                    var menuToOpen = qwery('#' + id)[0];
+                    var menuButton = qwery('.js-navigation-button', menuToOpen)[0];
+
+                    fastdom.write(function () {
+                        menuToOpen.setAttribute('open', '');
+                        moveTargetListToTop(id);
+                        menuButton.focus();
+                        // Prevents scrolling on the body
+                        html.style.overflow = 'hidden';
+                    });
+                });
+            });
+        });
     }
 
     function init() {
-        window.addEventListener('hashchange', handleHashChange);
-        handleHashChange();
-
-        bindPrimaryItemClickEvents();
-        openTargetListOnClick();
-
-        editionPicker();
+        enhanceToButton();
+        bindMenuItemClickEvents();
+        bindPrimaryItemsClickEvents();
         editionaliseMenu();
     }
 

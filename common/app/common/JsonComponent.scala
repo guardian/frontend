@@ -35,6 +35,11 @@ object JsonComponent extends Results with implicits.Requests {
   def apply(obj: JsObject)(implicit request: RequestHeader): RevalidatableResult = resultFor(request,
     Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
 
+  def apply(json: JsValue)(implicit request: RequestHeader): RevalidatableResult = resultFor(
+    request,
+    Json.stringify(json)
+  )
+
   def forJsValue(json: JsValue)(implicit request: RequestHeader): RevalidatableResult = resultFor(
     request,
     Json.stringify(json)

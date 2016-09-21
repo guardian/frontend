@@ -5,6 +5,7 @@ import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRe
 import common.ExecutionContexts
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
+import conf.Configuration._
 
 import scala.concurrent.Future
 
@@ -13,18 +14,18 @@ object HttpErrors extends ExecutionContexts {
     new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, metric)
   }
 
-  private val prod = new Dimension().withName("Stage").withValue("prod")
+  private val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   def googlebot404s = withErrorLogging(Future.sequence(Seq(
     euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withStartTime(new DateTime().minusHours(12).toDate)
-        .withNamespace("ArchiveMetrics").withDimensions(prod)
+        .withNamespace("ArchiveMetrics").withDimensions(stage)
     ) map { metric =>
       new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat(Colour.`tone-live-1`), metric)
     },
     euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withNamespace("ArchiveMetrics")
-        .withDimensions(prod).withPeriod(900)
+        .withDimensions(stage).withPeriod(900)
         .withStartTime(new DateTime().minusDays(14).toDate)
     ) map { metric =>
       new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat(Colour.`tone-live-2`), metric)
