@@ -310,6 +310,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: $guardian-brand-dark;
+            box-shadow: 0 0 $gs-baseline * 2.5 0 rgba(0,0,0,0.2);
         }
 
         & ~ .edition-picker__current-edition {
