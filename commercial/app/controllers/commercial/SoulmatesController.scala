@@ -5,6 +5,7 @@ import model.commercial.soulmates._
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc._
+import scala.concurrent.duration._
 
 class SoulmatesController extends Controller with implicits.Requests {
 
@@ -37,8 +38,10 @@ class SoulmatesController extends Controller with implicits.Requests {
   }
 
   def getSoulmates(groupName: String) = Action { implicit request =>
-    val sample: Seq[Member] = soulmatesSample(groupName)
-    val json = Json.toJson(sample)
-    Ok(json)
+
+    val json = Json.toJson(soulmatesSample(groupName))
+    Cached(60.seconds){
+      Ok(json)
+    }
   }
 }
