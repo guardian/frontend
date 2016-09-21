@@ -7,6 +7,8 @@ import play.twirl.api.Html
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
+import play.api.libs.json.{JsObject, Writes}
+
 import scala.concurrent.Future
 
 class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
@@ -55,7 +57,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(obj("name" -> "foo"))(request).result
+      JsonComponent(obj("name" -> "foo"))(request, play.api.libs.json.Writes.JsValueWrites).result
     }
 
     contentType(result) should be(Some("application/json"))
