@@ -92,10 +92,10 @@ interaction-tracking.js is an abstraction over the top of [clickstream.js](https
 
 TODO:
 
-- When Omniture is removed: 
+- When Omniture is removed:
 	- Re-implement delay when clicking external links which is currently handled by the omniture JS
 	- Re-implement the deletion of session storage which is tracked between pages
-	
+
 ### Discussion Events
 
 The comments event is a custom event defined in [analytics/discussion](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/discussion.js)
@@ -103,5 +103,20 @@ The comments event is a custom event defined in [analytics/discussion](https://g
 Most discussion events can be tracked with click events so the only GA custom event for discussion is for 'scroll'.
 
 The custom category for tracking a user scrolling to the comments is *ElementView* with an action of *Onpage item* and a label of *Scroll to comments*.
+
+### Forsee
+
+This also has a GA tracking event
+
+[analytics/foresee-survey.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/foresee-survey.js)
+
+### 404 pages
+
+Check [chris's PR](https://github.com/guardian/frontend/pull/14114) for implimentation details
+
+### AMP
+
+Main entry point for AMP analytics is
+[amp/googleAnalytics.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/amp/googleAnalytics.scala.html)
 
 
