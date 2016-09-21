@@ -5,7 +5,9 @@ import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
+import play.api.libs.json.Json
 import play.api.mvc._
+import model._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -110,6 +112,24 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       }
     }
   }
+
+  private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+    val sample: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
+    sample.map((content: Seq[model.ContentType]) => {
+      val 
+
+
+      firstContent = content.head
+//      val json = Json.toJson(firstContent)
+      val temp = ContentTypeFormat.format.writes(firstContent)
+      Ok(temp)
+    })
+//    val json = Json.toJson(firstContent)
+//    Ok(json)
+  }
+
+  def nativeJson = renderNative(jsonFormat, isMulti = false)
+  def nativeJsonMulti = renderNative(jsonFormat, isMulti = true)
 
   def itemsHtml = renderItems(htmlFormat, isMulti = true)
   def itemsJson = renderItems(jsonFormat, isMulti = true)
