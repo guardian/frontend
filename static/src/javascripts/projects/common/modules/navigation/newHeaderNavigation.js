@@ -3,18 +3,48 @@ define([
     'fastdom',
     'common/modules/navigation/edition-picker',
     'common/modules/navigation/editionalise-menu'
-], function (
-    qwery,
-    fastdom,
-    editionPicker,
-    editionaliseMenu
-) {
+], function (qwery,
+             fastdom,
+             editionPicker,
+             editionaliseMenu) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
     var buttonClickHandlers = {
         'main-menu-toggle': veggieBurgerClickHandler,
         'edition-picker': editionPicker
     };
+    var enhanced = {};
+
+    function weShouldEnhance(toggle) {
+        return !enhanced[toggle.id] && toggle && !toggle.checked;
+    }
+
+
+    function applyEnhancementsTo(checkbox) {
+        fastdom.read(function () {
+            var button = document.createElement('button');
+            var checkboxId = checkbox.id;
+            var checkboxControls = checkbox.getAttribute('aria-controls');
+            var checkboxClasses = Array.prototype.slice.call(checkbox.classList);
+
+            checkboxClasses.forEach(function (c) {
+                button.classList.add(c);
+            });
+            button.setAttribute('id', checkboxId);
+            button.setAttribute('aria-controls', checkboxControls);
+            button.setAttribute('aria-expanded', 'false');
+
+            fastdom.write(function () {
+                var eventHandler = buttonClickHandlers[button.id];
+
+                checkbox.parentNode.replaceChild(button, checkbox);
+                if (eventHandler) {
+                    button.addEventListener('click', eventHandler);
+                }
+                enhanced[button.id] = true;
+            });
+        });
+    }
 
     function closeAllOtherPrimaryLists(targetItem) {
         menuItems.forEach(function (item) {
@@ -32,33 +62,24 @@ define([
         });
     }
 
-    function enhanceToButton() {
-        var checkboxes = qwery('.js-enhance-checkbox');
-        fastdom.read(function () {
-            var buttons = checkboxes.map(function (checkbox) {
-                var button = document.createElement('button');
-                var checkboxId = checkbox.id;
-                var checkboxControls = checkbox.getAttribute('aria-controls');
-                var checkboxClasses = Array.prototype.slice.call(checkbox.classList);
+    function enhanceCheckboxesToButtons() {
+        var toggles = [
+            qwery('#main-menu-toggle')[0],
+            qwery('#edition-picker')[0]
+        ];
 
-                checkboxClasses.forEach(function (c) {
-                    button.classList.add(c);
+        toggles.forEach(function (toggle) {
+            if (!toggle) {
+                return;
+            }
+            if (weShouldEnhance(toggle)) {
+                applyEnhancementsTo(toggle);
+            } else {
+                toggle.addEventListener('click', function closeMenuHandler() {
+                    applyEnhancementsTo(toggle);
+                    toggle.removeEventListener('click', closeMenuHandler);
                 });
-                button.setAttribute('id', checkboxId);
-                button.setAttribute('aria-controls', checkboxControls);
-                button.setAttribute('aria-expanded', 'false');
-
-                return button;
-            });
-            fastdom.write(function () {
-                buttons.forEach(function (button, index) {
-                    var checkbox = checkboxes[index];
-                    var eventHandler = buttonClickHandlers[button.id];
-
-                    checkbox.parentNode.replaceChild(button, checkbox);
-                    button.addEventListener('click', eventHandler);
-                });
-            });
+            }
         });
     }
 
@@ -155,7 +176,7 @@ define([
     }
 
     function init() {
-        enhanceToButton();
+        enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
         editionaliseMenu();
