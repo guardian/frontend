@@ -55,6 +55,9 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
     @include mq($until: mobile) {
         font-size: 16px;
+        // Menu squishes gracefully
+        height: $gs-baseline * 2.5;
+        margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
