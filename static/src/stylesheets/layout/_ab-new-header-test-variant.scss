@@ -576,11 +576,45 @@ $navigation-horizontal-padding: $gs-gutter * 2;
     }
 }
 
-.navigation-group__search-icon svg {
+.navigation-group__item--search {
+    padding-top: $gs-baseline/2;
+}
+
+.navigation-group__search-container {
+    @include fs-textSans(5);
+    position: relative;
+    background-color: $guardian-brand-dark;
+    overflow: hidden;
+    margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline;
+    border-radius: 1000px;
+    height: $gs-baseline*3;
+}
+
+.navigation-group__search-box {
+    background-color: inherit;
+    border: 0;
+    vertical-align: middle;
+    height: 100%;
+
+    // autoprefixer handles all the appropriate psuedo element selectors for placeholders
+    &::placeholder {
+        color: #ffffff;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.navigation-group__search-icon {
+    fill: $news-support-1;
+    padding-left: $gs-gutter/2;
+}
+
+.navigation-group__search-icon__svg {
     width: .9em;
     height: .9em;
-    //Optical alignment
-    margin-right: -.1em;
+    vertical-align: middle;
 }
 
 .navigation-group__profile-icon svg {

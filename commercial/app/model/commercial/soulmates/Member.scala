@@ -20,6 +20,7 @@ object Member {
   val IdPattern = """.*/([\da-f]+)/.*""".r
 
   implicit val readsGender: Reads[Gender] = JsPath.read[String].map (gender => if(gender == "Woman") Woman else Man)
+  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
 
   implicit val readsMember: Reads[Member] =
     (
@@ -29,6 +30,8 @@ object Member {
         (JsPath \ "profile_photo").read[String] and
         (JsPath \ "location").read[String].map(locations => locations.split(",").head)
       ) (Member.apply _)
+
+  implicit val writesMember: Writes[Member] = Json.writes[Member]
 
   // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
   implicit val readsMembers: Reads[Seq[Member]] = new Reads[Seq[Member]] {
