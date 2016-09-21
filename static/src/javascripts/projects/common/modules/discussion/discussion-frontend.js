@@ -8,12 +8,12 @@ define([
     reportError
 ) {
     function canRun(ab, curlConfig) {
-        return (ab.isInVariant('DiscussionExternalFrontendCount', 'react') && curlConfig.paths['discussion-frontend-react']) ||
-            (ab.isInVariant('DiscussionExternalFrontendCount', 'preact') && curlConfig.paths['discussion-frontend-preact']);
+        return (ab.isInVariant('DiscussionExternalFrontendAvatar', 'react') && curlConfig.paths['discussion-frontend-react']) ||
+            (ab.isInVariant('DiscussionExternalFrontendAvatar', 'preact') && curlConfig.paths['discussion-frontend-preact']);
     }
 
     function load(ab, loader, opts) {
-        var requireVariant = ab.isInVariant('DiscussionExternalFrontendCount', 'react') ? 'react' : 'preact';
+        var requireVariant = ab.isInVariant('DiscussionExternalFrontendAvatar', 'react') ? 'react' : 'preact';
         return require('discussion-frontend-' + requireVariant, function (frontend) {
             // Preact works in a slightly different way
             // https://github.com/developit/preact-compat/issues/145

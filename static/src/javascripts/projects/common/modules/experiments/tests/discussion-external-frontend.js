@@ -5,16 +5,16 @@ define([
 ) {
     return function () {
 
-        this.id = 'DiscussionExternalFrontendCount';
-        this.start = '2016-09-06';
+        this.id = 'DiscussionExternalFrontendAvatar';
+        this.start = '2016-09-20';
         this.expiry = '2016-09-30';
         this.author = 'Fabio Crisci';
         this.description = 'Load discussion frontend from an external location';
-        this.audience = 0.05;
-        this.audienceOffset = 0.45;
-        this.successMeasure = 'Comment count loads correctly';
+        this.audience = 1;
+        this.audienceOffset = 0;
+        this.successMeasure = 'Comments count and avatar load correctly';
         this.showForSensitive = true;
-        this.audienceCriteria = 'Browsers with Promise';
+        this.audienceCriteria = 'Modern browsers';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
@@ -25,15 +25,6 @@ define([
         };
 
         this.variants = [
-            {
-                id: 'control',
-                test: function () {},
-                success: function (complete) {
-                    if (this.canRun()) {
-                        mediator.on('comments-count-loaded', complete);
-                    }
-                }.bind(this)
-            },
             {
                 id: 'react',
                 test: function () {},

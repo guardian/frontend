@@ -94,10 +94,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
         AdsStatusEmailJob(emailService).run()
       }
-      jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
-        log.info(s"Starting ExpiringAdFeaturesEmailJob")
-        ExpiringAdFeaturesEmailJob(emailService).run()
-      }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
@@ -131,7 +127,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FrontPressJobStandardFrequency")
     jobs.deschedule("FrontPressJobLowFrequency")
     jobs.deschedule("AdsStatusEmailJob")
-    jobs.deschedule("ExpiringAdFeaturesEmailJob")
     jobs.deschedule("VideoEncodingsJob")
     jobs.deschedule("ExpiringSwitchesEmailJob")
     jobs.deschedule("AssetMetricsCache")

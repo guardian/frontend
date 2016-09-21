@@ -5,12 +5,25 @@ $labour-liverpool-header-element-opacity: .85;
 .immersive-header-container--labour-liverpool {
     min-height: gs-height(8);
 
+    //if immersive switch is on it gets given this class so we can still have a full screen image
+    &.heroic-immersive {
+        min-height: 100vh;
+    }
+
     .immersive-main-media__media {
         position: absolute;
         height: gs-height(8);
 
         @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
             height: 100%;
+        }
+    }
+    //firefox fix for the height of the video
+    &.heroic-video-container {
+        min-height: 548px;
+
+        @include mq($until: desktop) {
+            min-height: 398px;
         }
     }
 
@@ -85,6 +98,12 @@ $labour-liverpool-header-element-opacity: .85;
             visibility: visible;
         }
     }
+}
+
+.heroic-immersive .labour-liverpool-headline {
+    top: auto;
+    bottom: 122px;
+    position: absolute;
 }
 
 .labour-liverpool-cutout {

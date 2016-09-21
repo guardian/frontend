@@ -97,6 +97,7 @@ define([
 
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
+        // Commenting out line below but reluctant to delete it
         var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
@@ -104,7 +105,6 @@ define([
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
-
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
             player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
@@ -119,6 +119,9 @@ define([
     function initPlayButtons(root) {
         fastdom.read(function () {
             $('.js-video-play-button', root).each(function (el) {
+                if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                  initButtonDuration(el);
+                }
                 var $el = bonzo(el);
                 bean.on(el, 'click', function () {
                     var placeholder, player, container;
@@ -139,6 +142,12 @@ define([
         });
     }
 
+    function initButtonDuration(el) {
+      el.getAttribute('data-formatted-duration');
+      el.classList.remove('vjs-big-play-button');
+      el.classList.add('vjs-big-play-button__duration');
+    }
+
     function initPlayer(withPreroll) {
         videojs.plugin('skipAd', skipAd);
         videojs.plugin('fullscreener', fullscreener);
@@ -146,8 +155,19 @@ define([
         fastdom.read(function () {
             $('.js-gu-media--enhance').each(function (el) {
                 enhanceVideo(el, false, withPreroll);
+                if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                  initArticleButtonDuration(el);
+                }
             });
         });
+    }
+
+    function initArticleButtonDuration(el) {
+      var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+      buttonElement.classList.remove('vjs-big-play-button');
+      buttonElement.classList.add('vjs-big-play-button__duration');
+      var buttonDuration = el.getAttribute('data-formatted-duration');
+      buttonElement.dataset.formattedDuration = buttonDuration;
     }
 
     function initHeroic(){
@@ -302,6 +322,20 @@ define([
                                 player.one('playing', function() {
                                     beacon.counts('video-tech-html5');
                                 });
+
+                                player.on('pause', function() {
+                                  function initPauseButtonDuration() {
+                                    var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+                                    buttonElement.classList.remove('vjs-big-play-button');
+                                    buttonElement.classList.add('vjs-big-play-button__duration');
+                                    var buttonDuration = el.getAttribute('data-formatted-duration');
+                                    buttonElement.dataset.duration = buttonDuration;
+                                  }
+                                  if(ab.isInVariant('VideoButtonDuration', 'video-button-duration')) {
+                                    initPauseButtonDuration();
+                                  }
+                                });
+
 
                                 // unglitching the volume on first load
                                 vol = player.volume();

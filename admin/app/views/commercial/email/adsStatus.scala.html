@@ -1,17 +1,4 @@
 @(report: jobs.AdStatusReport)
-@import common.dfp.GuLineItem
-
-@reportLogoLineItems(lineItems: Seq[GuLineItem], description: String) = {
-@if(lineItems.nonEmpty) {
-    <div>
-        <p>@description:</p>
-        <ul>@for(lineItem <- lineItems) {
-            <li>@{lineItem.id}: @{lineItem.name}</li>
-        }</ul>
-        <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships</p>
-    </div>
-}
-}
 
 @if(report.isEmpty) {
 
@@ -27,14 +14,7 @@
             <ul>@for(pageskin <- report.pageskinsWithoutEditions) {
                 <li>@{pageskin.lineItemId}: @{pageskin.lineItemName}</li>
             }</ul>
-            <p>See https://frontend.gutools.co.uk/analytics/commercial/pageskins</p>
+            <p>See @controllers.admin.routes.CommercialController.renderPageskins()</p>
         </div>
     }
-
-    @reportLogoLineItems(report.geotargetedAdFeatures, "These ad feature logos are geotargeted")
-
-    @reportLogoLineItems(report.sponsorshipsWithoutSponsors, "These logos have no sponsor set up")
-
-    @reportLogoLineItems(report.noSuchTargetedTags, "These logos are targeting a tag that doesn't exist")
-
 }

@@ -10,7 +10,6 @@ define([
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/init',
     'commercial/modules/dfp/load',
-    'commercial/modules/dfp/sponsorships',
     'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
@@ -23,8 +22,7 @@ define([
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/ophan-tracking',
-    'commercial/modules/badges'
+    'commercial/modules/dfp/ophan-tracking'
 ], function (
     Promise,
     config,
@@ -37,7 +35,6 @@ define([
     closeDisabledSlots,
     dfpInit,
     dfpLoad,
-    sponsorships,
     frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
@@ -50,8 +47,7 @@ define([
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    ophanTracking,
-    badges
+    ophanTracking
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
@@ -67,7 +63,6 @@ define([
 
     var secondaryModules = [
         ['cm-load', dfpLoad],
-        ['cm-sponsorships', sponsorships.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
@@ -83,10 +78,6 @@ define([
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedColours', hostedColours.init]);
-    }
-
-    if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
-        primaryModules.push(['cm-badges', badges.init]);
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||

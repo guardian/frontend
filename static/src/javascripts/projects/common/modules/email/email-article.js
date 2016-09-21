@@ -31,22 +31,22 @@ define([
     storage,
     find
 ) {
-
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
         },
+        isUSMinuteArticle = config.page.isMinuteArticle && config.page.keywordIds.indexOf('us-news/us-elections-2016') > -1,
         listConfigs = {
             theCampaignMinute: {
                 listId: '3599',
                 listName: 'theCampaignMinute',
-                campaignCode: config.page.isMinuteArticle ? 'the_minute_footer' : 'the_minute_election_article',
-                headline: config.page.isMinuteArticle ? 'Enjoying the minute?' : 'Want the latest election news?',
+                campaignCode: isUSMinuteArticle ? 'the_minute_footer' : 'the_minute_election_article',
+                headline: isUSMinuteArticle ? 'Enjoying the minute?' : 'Want the latest election news?',
                 description: 'Sign up and we\'ll send you the campaign minute every weekday.',
                 successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
                 successDescription: 'We will send you the biggest political story lines of the day',
-                modClass: config.page.isMinuteArticle ? 'post-article' : 'end-article',
+                modClass: isUSMinuteArticle ? 'post-article' : 'end-article',
                 insertMethod: function ($iframeEl) {
-                    if (config.page.isMinuteArticle) {
+                    if (isUSMinuteArticle ) {
                         $iframeEl.insertAfter('.js-article__container');
                     } else {
                         insertBottomOfArticle($iframeEl);
