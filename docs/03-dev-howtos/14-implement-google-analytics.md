@@ -84,15 +84,24 @@ The main entry point for click tracking is [analytics/interaction-tracking.js](h
 
 Click events are:
 
-In page click (opening nav) that don't cause page load
-Internal click (navigating to another internal page on gu.com)
-External clicks (going to another domain)
+- In-page click (opening nav) that don't cause page load
+- Internal click (navigating to another internal page on gu.com)
+- External clicks (going to another domain)
 
-This listens to the Mediator events, and implements tracking in both google and omniture
+interaction-tracking.js is an abstraction over the top of [clickstream.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/ui/clickstream.js) that sends the events to both Omniture and Google.
 
 TODO:
 
-Implement delay after omniture is removed
-Implement sessions storage deletion
+- When Omniture is removed: 
+	- Re-implement delay when clicking external links which is currently handled by the omniture JS
+	- Re-implement the deletion of session storage which is tracked between pages
+	
+# Discussion Events
+
+The comments event is a custom event defined in [analytics/discussion](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/discussion.js)
+
+Most discussion events can be tracked with click events so the only GA custom event for discussion is for 'scroll'.
+
+The custom category for tracking a user scrolling to the comments is *ElementView* with an action of *Onpage item* and a label of *Scroll to comments*.
 
 
