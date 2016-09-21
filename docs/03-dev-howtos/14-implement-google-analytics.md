@@ -1,23 +1,19 @@
-## Implement Google Analytics
+# Implement Google Analytics
 
 This describes how to work with Google Analytics (GA)
 
 ## Hints
 
 Always discuss the reporting requirements before you implement any new dimensions.
-Talk to the mobile apps team early, things can always be a bit different once you take their needs into account
+
+Talk to the mobile apps team early, things can be a slightly different once you take their needs into account (eg: web pages vs app screens)
 
 ## Dashboards
 
-Google Analytics
-https://analytics.google.com
+- [Google Analytics](https://analytics.google.com)
+- [Confidence graph](https://frontend.gutools.co.uk/analytics/confidence)
 
-Confidence graph
-https://frontend.gutools.co.uk/analytics/confidence
-
-## Start Here
-
-# Page View tracking
+## Page View tracking
 
 The main entry point for google pageview tracking is in
 [`analytics/base.scala.html`](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html#L12)
@@ -30,22 +26,25 @@ We implement the standard [async GA tracking](https://developers.google.com/anal
 
 We then send through all the custom [`dimensions`](https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets) to GA.
 
-All of our custom `dimensions` are [`hit`](https://support.google.com/analytics/answer/2709828?hl=en#example-hit) (scopes are `user`, `session` or `hit`)
-Apart from `dimension15`(identityId) and `dimension2`(ophanBrowserId) which is a `user` scoped
+All of our custom `dimensions` are [`hit scoped`](https://support.google.com/analytics/answer/2709828?hl=en#example-hit) (scopes are `user`, `session` or `hit`)
+apart from `dimension15`(identityId) and `dimension2`(ophanBrowserId) which is a `user` scoped
 
-## Data dictionaries
+### Data dictionaries
 We maintain documentation that describes all the custom `dimensions`, `events` and `metrics` used within GA
 
 - [Dimensions](https://docs.google.com/spreadsheets/d/1MmWHNeeiQE_dzekImIP9Tv4beLx_8JzWx3rOtCp4PGg)
 - [Events](https://docs.google.com/spreadsheets/d/1KvBDyguXDtww9qTipD5L3D9NbH4IgkbRFWlbFTA3J2E)
 - [Metrics](https://docs.google.com/spreadsheets/d/1KDZ3aImiI3CnSaxAVWOkgBxKQTZqD1QsGRoMDXlc2YQ)
 
-# Media Events
+## Events
+
+
+### Media Events
 
 The main entry point for Media (Video and Audio) tracking is
 [`video/events.js`](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/video/events.js)
 
-Uses the following `dimensions`
+This is an example of the media event using the following custom `dimensions`
 
 ```
     var fieldsObject = {
@@ -62,7 +61,8 @@ Uses the following `dimensions`
     }
 ```
 
-and the following [`metrics`](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#metric)
+and the following custom [`metrics`](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#metric)
+
 ```
     var events = {
         'play': 'metric1',
@@ -75,10 +75,10 @@ and the following [`metrics`](https://developers.google.com/analytics/devguides/
 ```
 
 
-Incrementing metrics is done to give a truer account of the actions that are happening on the video, out of the box, it would give a session level interaction, not a hit level.
+Incrementing metrics in this way is done to give a truer account of the actions that are happening on the video. Out of the box it would give a session level interaction, not a hit level.
 
 
-# Click Events
+### Click Events
 
 The main entry point for click tracking is [analytics/interaction-tracking.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/interaction-tracking.js)
 
@@ -96,7 +96,7 @@ TODO:
 	- Re-implement delay when clicking external links which is currently handled by the omniture JS
 	- Re-implement the deletion of session storage which is tracked between pages
 	
-# Discussion Events
+### Discussion Events
 
 The comments event is a custom event defined in [analytics/discussion](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/discussion.js)
 
