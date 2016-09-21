@@ -171,6 +171,7 @@ $ima-controls-height: 70px;
 
     .vjs-has-started & {
         padding-bottom: 0;
+        display: none;
     }
 
     &:before {
