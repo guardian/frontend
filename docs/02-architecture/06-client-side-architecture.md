@@ -2,7 +2,34 @@
 
 ### Quick Overview
 
-The Javascript app is split into 
+The JS app can be split into distinct parts:
+
+- Inline blocking JS
+- Inline Non-blocking JS
+- app.js - curl module loader, the bundle booter and the standard Javascript
+- Commercial Javascript
+- Enhanced Javascript
+
+And then specific Javascripts used on different pages and required into the app when needed:
+
+- Article
+- Article Minute
+- Crosswords
+- Liveblog
+- Gallery
+- Trail
+- Profile
+- Sudoku
+- Image content
+- Facia
+- Football
+- Preferences
+- Membership
+- Ophan
+- Admin
+- Main Media
+- Video Embed
+- Accessibility
 
 ### General structure
 
@@ -18,7 +45,10 @@ See below for quick descriptions.
 			- applyRenderConditions
 			- loadFonts
 			- enable non blocking stylesheets
-			- Load the main app async
+			- **Load the main app async**
+				- app.js
+				- commercial.js
+				- enhanced/main.js
 			- Cloudwatch beacon
 		- [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
 			- getUserData.js
