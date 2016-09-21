@@ -3,13 +3,14 @@ package views.support.commercial
 import common.commercial._
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
+import views.support.SponsorDataAttributes
 
 class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   private def mkBranding(sponsorName: String) = Branding(
     sponsorshipType = Sponsored,
     sponsorName,
-    sponsorLogo = Logo("", None),
+    sponsorLogo = "",
     sponsorLink = "",
     aboutThisLink = "",
     targeting = None,

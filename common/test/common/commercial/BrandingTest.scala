@@ -9,10 +9,7 @@ class BrandingTest extends FlatSpec with Matchers {
     val branding = Branding(
       sponsorshipType = Foundation,
       sponsorName = "Bill and Melinda Gates Foundation",
-      sponsorLogo = Logo(
-        "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
-        None
-      ),
+      sponsorLogo = "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
       sponsorLink = "http://www.theguardian.com/global-development",
       aboutThisLink = "/sponsored-content",
       targeting = None,
