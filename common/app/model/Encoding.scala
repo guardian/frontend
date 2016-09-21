@@ -19,9 +19,13 @@ object Encoding extends HttpsUrl {
 object EncodingOrdering extends Ordering[Encoding] {
 
   // put these in the order you want the encodings to appear
+  // Browsers play <video> sources in order of appearance
+  // m3u8 first for Apple devices, mp4 second as the default encoding for non-Apple devices
+  // other encodings will only be reached iff mp4 fails
   private val precedence = Seq(
     "video/m3u8",
     "video/mp4",
+    "video/webm",
     "video/3gpp:small",
     "video/3gpp:large",
     "video/mp4:720"
