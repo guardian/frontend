@@ -1,10 +1,13 @@
 package controllers.commercial
 
+import common.JsonComponent
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc._
+
+import scala.concurrent.duration._
 
 class SoulmatesController extends Controller with implicits.Requests {
 
@@ -39,8 +42,8 @@ class SoulmatesController extends Controller with implicits.Requests {
   def getSoulmates(groupName: String) = Action { implicit request =>
 
     val json = Json.toJson(soulmatesSample(groupName))
-    Cached.explicitlyCache(60){
-      Ok(json)
+    Cached(60.seconds){
+      JsonComponent(json)
     }
   }
 }
