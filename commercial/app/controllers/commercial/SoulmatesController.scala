@@ -41,9 +41,8 @@ class SoulmatesController extends Controller with implicits.Requests {
 
   def getSoulmates(groupName: String) = Action { implicit request =>
 
-    val json = Json.toJson(soulmatesSample(groupName))
     Cached(60.seconds){
-      JsonComponent(json)
+      JsonComponent(soulmatesSample(groupName))
     }
   }
 }

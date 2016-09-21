@@ -24,8 +24,6 @@ class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: Mo
       FrontProperties.empty
     )(request)
 
-    JsonComponent(
-      "html" -> html
-    )
+    JsonComponent(html)
   }
 }

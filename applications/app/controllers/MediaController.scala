@@ -25,7 +25,7 @@ class MediaController(contentApiClient: ContentApiClient) extends Controller wit
       case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
       case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
     } map { mediaInfo =>
-      Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
+      Cached(60)(JsonComponent(mediaInfo))
     }
   }
 
