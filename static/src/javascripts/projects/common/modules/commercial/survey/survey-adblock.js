@@ -33,7 +33,7 @@ define([
                 adFreeText: this.config.adFreeText,
                 whitelistDataLink: this.config.whitelistDataLink,
                 whitelistText: this.config.whitelistText,
-                whitelistGuideImage: this.config.whitelistGuideImage
+                whitelistGuideImage: this.config.whitelistGuideImage,
                 adBlockIcon: this.config.adBlockIcon,
                 adBlockPlusIcon: this.config.adBlockPlusIcon,
                 variant: this.config.variant
