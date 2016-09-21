@@ -840,16 +840,7 @@ final case class Interactive(
     }
   }
 
-  lazy val hasSrcdoc = {
-    val srcdoc = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe").attr("srcdoc")
-
-    if (srcdoc.length > 0) {
-      true
-    } else {
-      false
-    }
-  }
-
+  lazy val hasSrcdoc = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe").first().hasAttr("srcdoc")
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
