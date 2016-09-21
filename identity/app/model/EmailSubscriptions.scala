@@ -213,6 +213,16 @@ object EmailSubscriptions {
       signupPage = Some("https://www.theguardian.com/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
     EmailSubscription(
+      name = "Documentaries update",
+      theme = "culture",
+      about = "Documentaries",
+      teaser = "We release a new documentary every month. Would you like a reminder with new releases?",
+      description = "We release a new documentary every month. Would you like a reminder with new releases?",
+      frequency = "Monthly",
+      listId = "3745",
+      subscribedTo = subscribedListIds.exists{ x => x == "3745" }
+    ),
+    EmailSubscription(
       "Close up",
       "culture",
       "Film",
@@ -366,7 +376,7 @@ object EmailSubscriptions {
       "First Dog on the Moon",
       "comment",
       "Cartoons from Guardian Australia's resident Walkley-winning cartoonist",
-      teaser = "",
+      teaser = "Love First Dog? Sign up and we'll let you know whenever there's a new cartoon to see",
       "Subscribe to First Dog on the Moon to get his cartoons straight to your inbox every time they're published",
       "About three times a week",
       "2635",
