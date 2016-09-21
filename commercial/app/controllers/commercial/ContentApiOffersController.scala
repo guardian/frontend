@@ -113,19 +113,28 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
+  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement])
+
+  object CapiSingle {
+    def apply(content: Content): CapiSingle = {
+      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images)
+    }
+  }
+
+
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+
     val sample: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
+
     sample.map((content: Seq[model.ContentType]) => {
-      val 
-
-
-      firstContent = content.head
-//      val json = Json.toJson(firstContent)
-      val temp = ContentTypeFormat.format.writes(firstContent)
-      Ok(temp)
+      val capiResponse = ContentTypeFormat.format.writes(content.head)
+      val firstTry = content.head
+      val temp = CapiSingle(firstTry.content)
+      val writeTemp = temp.toString
+      val jsonNow = Json.toJson(writeTemp)
+      Ok(jsonNow)
     })
-//    val json = Json.toJson(firstContent)
-//    Ok(json)
+    
   }
 
   def nativeJson = renderNative(jsonFormat, isMulti = false)
