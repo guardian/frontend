@@ -98,7 +98,7 @@ class SeriesController(contentApiClient: ContentApiClient) extends Controller wi
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(visuallyPleasingContainerForStories(series.trails.faciaItems.length)),
+        Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
         componentId
