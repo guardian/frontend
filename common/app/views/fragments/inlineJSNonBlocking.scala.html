@@ -19,8 +19,10 @@
     @InlineJs(showUserName().body, "showUserName.js")
 }
 
-// editionalise new header navigation
-@InlineJs(editionaliseMenu().body, "editionaliseMenu.js")
+@if(mvt.ABNewHeaderVariant.canRun) {
+    // editionalise new header navigation
+    @InlineJs(editionaliseMenu().body, "editionaliseMenu.js")
+}
 
 // ************* ANALYTICS *************
 
