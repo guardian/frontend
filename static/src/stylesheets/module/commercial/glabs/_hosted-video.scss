@@ -186,45 +186,38 @@
     }
 
     .hosted-next-autoplay__next-in-series {
-        display: none;
+        @include clearfix;
+        @include f-headlineSans;
+        display: block;
+        margin: 6px;
+        padding-top: 6px;
     }
+    .hosted-next-autoplay__tile {
+        @include clearfix;
+        @include circular;
+        display: block;
+        float: left;
+        color: #333333;
+        line-height: 30px;
+        margin: 12px 0;
+        font-weight: 600;
+        padding: 4px 6px 4px 16px;
 
-    //Variant 2 of AB test
-    &.hosted-next-autoplay--variant2 {
-        .hosted-next-autoplay__next-in-series {
-            @include clearfix;
-            @include f-headlineSans;
-            display: block;
-            margin: 6px;
-            padding-top: 6px;
+        @include mq(desktop) {
+            margin: 24px 0;
         }
-        .hosted-next-autoplay__tile {
-            @include clearfix;
-            @include circular;
+
+        .inline-arrow-right {
             display: block;
-            float: left;
-            color: #333333;
-            line-height: 30px;
-            margin: 12px 0;
-            font-weight: 600;
-            padding: 4px 6px 4px 16px;
+            float: right;
+            height: 30px;
+            width: 30px;
+            margin-left: 20px;
+        }
 
-            @include mq(desktop) {
-                margin: 24px 0;
-            }
-
-            .inline-arrow-right {
-                display: block;
-                float: right;
-                height: 30px;
-                width: 30px;
-                margin-left: 40px;
-            }
-
-            svg {
-                position: static;
-                fill: #333333;
-            }
+        svg {
+            position: static;
+            fill: #333333;
         }
     }
 }
