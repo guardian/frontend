@@ -27,7 +27,7 @@
         }
         @if(useCardBranding) {
             @for(branding <- item.branding) {
-                @contentLogo(branding, isInteractivePage = false)
+                @contentLogo(branding, isInteractivePage = false, isCardBranding = false, isOnTheLeft = false)
             }
         }
     </div>

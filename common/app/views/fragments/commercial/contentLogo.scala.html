@@ -1,9 +1,9 @@
-@(branding: common.commercial.Branding, isInteractivePage: Boolean, isCardBranding: Boolean = false)(implicit request: RequestHeader)
+@(branding: common.commercial.Branding, isInteractivePage: Boolean, isCardBranding: Boolean, isContainer: Boolean)(implicit request: RequestHeader)
 @import common.commercial.PaidContent
 @import implicits.Requests.RichRequestHeader
 
 <div class="adverts__badge js-badge
-    @if((branding.sponsorshipType != PaidContent) || isInteractivePage) {adverts__badge--alt}
+    @if(isInteractivePage || isOnTheLeft) {adverts__badge--alt}
     @if(isInteractivePage) {adverts__badge--interactive}
     @if(isCardBranding) {adverts__badge--card-branding}
     ">
