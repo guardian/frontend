@@ -2,20 +2,21 @@
 
 @import common.{ NewNavigation, LinkTo, Edition }
 
-@sectionList(topLevelSection: NewNavigation.TopLevelSection) = {
-    <li class="main-navigation__item navigation-border">
+@sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
+    <li class="main-navigation__item navigation-border js-navigation-item">
             <!-- TODO: Firefox -->
-        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name">
-            <summary class="main-navigation__item__button">
+        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
+            <summary class="main-navigation__item__button js-navigation-button">
                 <i class="main-navigation__icon"></i>
                 @topLevelSection.name
             </summary>
 
             @Edition.all.map { edition =>
                 <ul class="main-navigation__secondary
-                    main-navigation__secondary--@{edition.id.toLowerCase}
                     navigation-group
+                    navigation-group--@{edition.id.toLowerCase}
                     js-editionlise-secondary-nav"
+                    data-edition="@{edition.id.toLowerCase}"
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
@@ -29,11 +30,13 @@
     </li>
 }
 
-<div class="main-menu-container" id="main-menu">
-        <!-- TODO: Provide tabbable alternative -->
-    <a href="#" class="main-menu-container__overlay" aria-hidden="true"></a>
+<label for="main-menu-toggle" class="main-menu-container__overlay" aria-hidden="true"></label>
 
-    <div class="main-menu-container__menu js-reset-scroll-on-menu">
+<div class="main-menu-container">
+
+    <!-- TODO: Provide tabbable alternative -->
+
+    <div class="main-menu-container__menu js-main-menu" id="main-menu" aria-hidden="true">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)
@@ -44,24 +47,36 @@
                 @fragments.inlineSvg("profile-36", "icon", List("navigation-group__icon", "navigation-group__profile-icon"))
                 Sign in
             </a></li>
-            <li class="navigation-group__item"><a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com">
-                @fragments.inlineSvg("search-36", "icon", List("navigation-group__icon", "navigation-group__search-icon"))
-                Search
-            </a></li>
         </ul>
         <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="https://jobs.theguardian.com">Jobs</a></li>
-            <li class="navigation-group__item"><a href="https://soulmates.theguardian.com/">Dating</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /guardian-masterclasses }">Masterclasses</a></li>
+            <li class="navigation-group__item navigation-group__item--search">
+                <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
+                    @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
+                    <label for="submit-google-search">
+                        <input class="u-h" type="submit" id="submit-google-search">
+                        @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
+                    </label>
+                    <label for="q" class="u-h">What term do you want to search?</label>
+                    <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
+                    <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
+                </form>
+            </li>
         </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="@LinkTo { /crosswords }">Crosswords</a></li>
-        </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="@LinkTo { /observer }">The Observer</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /theguardian }">Today’s Paper</a></li>
-            <li class="navigation-group__item"><a href="@LinkTo { /theobserver }">Sunday’s Paper</a></li>
-        </ul>
+
+        @Edition.all.map { edition =>
+            <ul class="navigation-group
+                navigation-border
+                secondary-navigation
+                js-editionlise-secondary-nav"
+                data-edition=@{edition.id.toLowerCase}
+                @if(edition.id.toLowerCase != "uk") { hidden }>
+
+                @NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map { item =>
+                    <li class="navigation-group__item"><a href="@LinkTo { @item.url }"> @item.name </a></li>
+                }
+            </ul>
+        }
+
         <ul class="navigation-group navigation-border secondary-navigation">
             <li class="navigation-group__item"><a href="https://www.facebook.com/theguardian">
                 @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
@@ -74,3 +89,4 @@
         </ul>
     </div>
 </div>
+

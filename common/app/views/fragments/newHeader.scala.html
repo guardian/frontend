@@ -4,17 +4,14 @@
 @import common.{LinkTo, NewNavigation}
 
 @primaryLinks(sectionName: String) = {
-    <li class="new-header__nav__primary-item">
-        <a class="new-header__nav__link js-open-section-in-menu"
-            tabindex="0"
-            aria-controls="primary-list-@sectionName"
-            href="@LinkTo{#main-menu}">
-                @sectionName
-        </a>
-    </li>
-}
+    <label for="main-menu-toggle" class="new-header__nav__link js-open-section-in-menu"
+        tabindex="0"
+        aria-controls="primary-list-@sectionName"
+    >
+            @sectionName
+    </label>
 
-@fragments.nav.newHeaderMenu()
+}
 
 <header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
     <div class="new-header__inner gs-container">
@@ -26,16 +23,17 @@
         @fragments.nav.editionPicker()
 
         <nav class="new-header__nav">
-            <a href="#main-menu" class="new-header__nav__menu-button js-change-link" tabindex="0">
-                <i class="new-header__veggie-burger-icon">
-                </i>
+            @NewNavigation.topLevelSections.map { section =>
+                @primaryLinks(section.name)
+            }
+            <label for="main-menu-toggle" class="new-header__nav__menu-button js-change-link" tabindex="0">
+                <span class="new-header__veggie-burger-icon"></span>
                 <span class="u-h">Menu</span>
-            </a>
-            <ul class="new-header__nav__list">
-                @NewNavigation.topLevelSections.map { section =>
-                    @primaryLinks(section.name)
-                }
-            </ul>
+            </label>
+            <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
+
+            @fragments.nav.newHeaderMenu()
         </nav>
     </div>
 </header>
+

@@ -2,14 +2,12 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'commercial/modules/badges',
     'common/modules/component',
     'lodash/arrays/union'
 ], function (
     config,
     mediator,
     register,
-    badges,
     Component,
     union
 ) {
@@ -28,8 +26,7 @@ define([
 
     Component.define(OnwardContent);
 
-    OnwardContent.prototype.ready = function (container) {
-        badges.add(container);
+    OnwardContent.prototype.ready = function () {
         register.end('series-content');
         mediator.emit('modules:onward:loaded');
         mediator.emit('page:new-content');

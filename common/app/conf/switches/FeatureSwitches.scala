@@ -4,16 +4,6 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val immersiveMainEmbedSwitch = Switch(
-    SwitchGroup.Feature,
-    "immersive-main-media",
-    "If this switch is on, main media embeds won't be iframed",
-    owners = Seq(Owner.withGithub("sammorrisdesign")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 22),
-    exposeClientSide = false
-  )
-
   // see https://github.com/guardian/frontend/pull/13446
   val HeroicTemplateSwitch = Switch(
     SwitchGroup.Feature,

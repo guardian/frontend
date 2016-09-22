@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/tests/contributions-epic',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo'
+    'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/video-button-duration'
 ], function (
     reportError,
     config,
@@ -31,7 +32,8 @@ define([
     ContributionsEpic,
     AdBlockingResponse,
     WeekendReadingEmail,
-    WeekendReadingPromo
+    WeekendReadingPromo,
+    VideoButtonDuration
 ) {
 
     var TESTS = [
@@ -41,7 +43,8 @@ define([
         new HostedGalleryCallToAction(),
         new ContributionsEpic(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo()
+        new WeekendReadingPromo(),
+        new VideoButtonDuration()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

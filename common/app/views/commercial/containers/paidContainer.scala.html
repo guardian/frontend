@@ -3,7 +3,6 @@
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
-@import conf.switches.Switches.containerBrandingFromCapi
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
 @import views.html.fragments.commercial.contentLogo
@@ -80,11 +79,7 @@
 }
 
 @logoSlot = {
-    @if(containerBrandingFromCapi.isSwitchedOn) {
-        @for(branding <- containerModel.branding) {
-            @contentLogo(branding)
-        }
-    } else {
-        <div class="js-badge-placeholder"></div>
+    @for(branding <- containerModel.branding) {
+        @contentLogo(branding)
     }
 }
