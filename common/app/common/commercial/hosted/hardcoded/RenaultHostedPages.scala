@@ -15,9 +15,7 @@ object RenaultHostedPages {
     name = "Discover your Renault Zoe",
     owner = "Renault",
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
-    cssClass = "renault",
-    fontColour = FontColour("#ffc421"),
-    logoLink = None
+    fontColour = FontColour("#ffc421")
   )
 
   private val cta = HostedCallToAction(

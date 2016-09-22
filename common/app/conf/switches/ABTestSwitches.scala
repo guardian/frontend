@@ -18,7 +18,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-count",
+    "ab-discussion-external-frontend-avatar",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
@@ -53,16 +53,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-buttons-20160907",
-    "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 20),
     exposeClientSide = true
   )
 
@@ -103,6 +93,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 3),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
+    "ab-video-button-duration",
+    "Show visitors new video play button",
+    owners = Seq(Owner.withGithub("mr-mr")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 }

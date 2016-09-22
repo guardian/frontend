@@ -7,9 +7,23 @@
         <h3 class="brandbadge__header">@branding.label</h3>
         <a href="@branding.sponsorLink" class="brandbadge__link ad-slot--paid-for-badge__link">
             @if(request.isAmp) {
-                <amp-img class="brandbadge__logo" src="@branding.sponsorLogo" />
+                @branding.sponsorLogo.dimensions.map { dim =>
+                    <amp-img src="@branding.sponsorLogo.url"
+                        width="@dim.width"
+                        height="@dim.height"
+                        alt="@{branding.sponsorName}'s logo"
+                        class="brandbadge__logo"></amp-img>
+                }.getOrElse {
+                    <p>@branding.sponsorName</p>
+                }
             } else {
-                <img class="brandbadge__logo" src="@branding.sponsorLogo">
+                <img src="@branding.sponsorLogo.url"
+                    @for(dim <- branding.sponsorLogo.dimensions) {
+                        width="@dim.width"
+                        height="@dim.height"
+                    }
+                    alt="@{branding.sponsorName}'s logo"
+                    class="brandbadge__logo">
             }
         </a>
         @if(branding.sponsorshipType != PaidContent) {

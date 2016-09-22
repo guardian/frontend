@@ -19,7 +19,7 @@ define([
 
             return fastdom.write(function () {
                 $adSlot[0].insertAdjacentHTML('beforeend', markup);
-                $adSlot.addClass('ad-slot--revealer');
+                $adSlot.addClass('ad-slot--revealer content__mobile-full-width');
                 if (params.trackingPixel) {
                     addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
                 }

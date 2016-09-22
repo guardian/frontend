@@ -23,7 +23,8 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
         "Fastly-Client",
         "Fastly-Client-IP",
         "Fastly-FF",
-        "Fastly-SSL"
+        "Fastly-SSL",
+        "Fastly-Digest"
       )
       val allHeadersFields = rh.headers.toMap.map {
         case (headerName, headerValues) => (headerName, headerValues.mkString(","))

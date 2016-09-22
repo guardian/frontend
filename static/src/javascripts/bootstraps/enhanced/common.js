@@ -28,7 +28,6 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/membership',
@@ -85,7 +84,6 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    newHeaderNavigation,
     Profile,
     Search,
     membership,
@@ -135,7 +133,6 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
-                newHeaderNavigation();
             },
 
             showTabs: function () {
@@ -392,7 +389,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
-                ['c-us-survey-banner', modules.USSurveyBanner],
+                ['c-us-survey-banner', USSurveyBanner],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]
 

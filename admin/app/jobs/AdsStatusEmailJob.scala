@@ -1,7 +1,7 @@
 package jobs
 
+import common.dfp.PageSkinSponsorship
 import common.{ExecutionContexts, Logging}
-import common.dfp.{AdvertisementFeature, GuLineItem, PageSkinSponsorship}
 import conf.Configuration.commercial._
 import services.EmailService
 import tools.Store
@@ -31,46 +31,17 @@ case class AdsStatusEmailJob(emailService: EmailService) extends Logging with Ex
   }
 
   private def htmlBody: String = {
-    val paidForTags = Store.getDfpPaidForTags().paidForTags filterNot {
-      _.lineItems.forall(_.targeting.hasAdTestTargetting)
-    }
 
     val pageskinsWithoutEdition: Seq[PageSkinSponsorship] = {
       Store.getDfpPageSkinnedAdUnits().deliverableSponsorships.filter(_.editions.isEmpty)
     }
 
-    val geotargetedAdFeatures: Seq[GuLineItem] = {
-      val adFeatureTags = paidForTags filter (_.paidForType == AdvertisementFeature)
-      val allAdFeatures = adFeatureTags flatMap (_.lineItems)
-      allAdFeatures filter (_.targeting.geoTargetsIncluded.nonEmpty) sortBy (_.id)
-    }
-
-    val sponsorshipsWithoutSponsors: Seq[GuLineItem] = {
-      val lineItems = paidForTags flatMap (_.lineItems)
-      lineItems filter (_.sponsor.isEmpty) sortBy (_.id)
-    }
-
-    // Will revisit this when glabs have fixed their tagging
-    val noSuchTargetedTags: Seq[GuLineItem] = Nil
-
-    views.html.commercial.email.adsStatus(AdStatusReport(
-      pageskinsWithoutEdition,
-      geotargetedAdFeatures,
-      sponsorshipsWithoutSponsors,
-      noSuchTargetedTags
-    )).body.trim()
+    views.html.commercial.email.adsStatus(AdStatusReport(pageskinsWithoutEdition)).body.trim()
   }
 
 }
 
-case class AdStatusReport(pageskinsWithoutEditions: Seq[PageSkinSponsorship],
-                          geotargetedAdFeatures: Seq[GuLineItem],
-                          sponsorshipsWithoutSponsors: Seq[GuLineItem],
-                          noSuchTargetedTags: Seq[GuLineItem]) {
+case class AdStatusReport(pageskinsWithoutEditions: Seq[PageSkinSponsorship]) {
 
-  val isEmpty =
-    pageskinsWithoutEditions.isEmpty &&
-      geotargetedAdFeatures.isEmpty &&
-      sponsorshipsWithoutSponsors.isEmpty &&
-      noSuchTargetedTags.isEmpty
+  val isEmpty = pageskinsWithoutEditions.isEmpty
 }

@@ -38,7 +38,6 @@ case class HostedCampaign(
   name: String,
   owner: String,
   logo: HostedLogo,
-  cssClass: String,
   fontColour: FontColour,
   logoLink: Option[String] = None
 )
@@ -51,13 +50,12 @@ case class FontColour(brandColour: String) {
     val hexColour = brandColour.stripPrefix("#")
     val rgb = Integer.parseInt(hexColour, 16)
     val c = new Color(rgb)
-    val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
-    val brightness = hsb(2)
-    if(brandColour == "#E31B22" || brandColour == "#E41F13") {
-      false
-    } else {
-      brightness > 0.5
-    }
+    // the conversion in java.awt.Color uses HSB colour space, whereas we want HSL here
+    // see http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
+    val min: Float = Math.min(Math.min(c.getRed, c.getGreen), c.getBlue)
+    val max: Float = Math.max(Math.max(c.getRed, c.getGreen), c.getBlue)
+    val lightness = (min + max) / 510
+    lightness > 0.5
   }
 }
 

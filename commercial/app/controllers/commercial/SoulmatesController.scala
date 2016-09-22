@@ -1,39 +1,49 @@
 package controllers.commercial
 
+import common.JsonComponent
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
 import model.{Cached, NoCache}
+import play.api.libs.json.Json
 import play.api.mvc._
-import play.twirl.api.HtmlFormat
+
+import scala.concurrent.duration._
 
 class SoulmatesController extends Controller with implicits.Requests {
 
-  private def result(groupName: String,
-                     view: (Seq[Member], Option[String], Option[String]) => HtmlFormat.Appendable)
-                    (implicit request: Request[AnyContent]): Result = {
+  private def soulmatesSample(groupName: String): Seq[Member] = {
 
-    val sample = {
-      def take3(agent: SoulmatesAgent) = agent.sample().take(3)
-      if (groupName == "mixed") {
+    def take3(agent: SoulmatesAgent) = agent.sample().take(3)
+
+    groupName match {
+      case "mixed" => {
         val members = take3(womenAgent) ++ take3(menAgent)
         Sample.default(members)
-      } else if (groupName == "mixednew") {
+      }
+      case "mixednew" => {
         val members = take3(newWomenAgent) ++ take3(newMenAgent)
         Sample.default(members)
-      } else SoulmatesAgent.sample(groupName)
+      }
+      case _ => SoulmatesAgent.sample(groupName)
     }
+  }
 
-    sample.toList match {
+  def renderSoulmates(groupName: String) = Action { implicit request =>
+    soulmatesSample(groupName).toList match {
       case Nil => NoCache(jsonFormat.nilResult.result)
       case soulmates => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
-        jsonFormat.result(view(soulmates, omnitureId, clickMacro))
+        jsonFormat.result(views.html.soulmates.soulmates(soulmates, omnitureId, clickMacro))
       }
     }
   }
 
-  def renderSoulmates(groupName: String): Action[AnyContent] = Action { implicit request =>
-    result(groupName, views.html.soulmates.soulmates(_, _, _))
+  def getSoulmates(groupName: String) = Action { implicit request =>
+
+    val json = Json.toJson(soulmatesSample(groupName))
+    Cached(60.seconds){
+      JsonComponent(json)
+    }
   }
 }

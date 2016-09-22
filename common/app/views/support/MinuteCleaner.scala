@@ -1,12 +1,12 @@
 package views.support
 
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{Document, Element}
 import scala.collection.JavaConversions._
 
 case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     // US Minute articles use liveblog blocks but we don't want to show timestamps
-    if (article.isUSMinute) document.getElementsByClass("published-time").foreach(_.remove)
+    if (article.isTheMinute) document.getElementsByClass("published-time").foreach(_.remove)
     document
   }
 }
@@ -35,9 +35,12 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    if (article.isUSMinute) {
+    if (article.isTheMinute) {
       document.getElementsByClass("block").foreach { block =>
         val allElements = block.getAllElements
+        val heading = block.select("h2.block-title")
+        val headingNumRegEx = "^([0-9]+)[.]{1}[ ]*"
+        val headingHasNumber = heading.html().matches(s"$headingNumRegEx.*")
 
         // Add classes
         block.addClass("block--minute-article js-is-fixed-height")
@@ -49,13 +52,25 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Remove Classes
         block.removeClass("block")
 
-        block.select("h2.block-title").foreach(e => if (e.text() == "Summary" || e.text() == "Key event") e.remove())
+        // Modify Heading
+        if (heading.text() == "Summary" || heading.text() == "Key event") {
+          heading.remove()
+        } else {
+          heading.html(regexCleaner(heading.first(), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
+        }
 
+        // Add relevant classes
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
         } foreach(block.addClass)
 
+        // Check if the heading has a number and is an embed or quote
+        if ((block.hasClass("block--minute-article--embed") || block.hasClass("block--minute-article--quote")) && headingHasNumber) {
+          block.addClass("block--minute-article--shorty")
+        }
+
+        // Remove Un-needed Classes
         allElements.foreach(el => strippable.foreach(el.removeClass))
 
         // Re-order Elements
@@ -83,4 +98,8 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
     document
   }
+}
+
+object regexCleaner {
+  def apply(heading: Element, regEx: String, htmlToReplace: String): String = heading.html().replaceFirst(regEx, htmlToReplace)
 }
