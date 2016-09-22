@@ -4,7 +4,6 @@ import common.JsonComponent
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
 import model.{Cached, NoCache}
-import play.api.libs.json.Json
 import play.api.mvc._
 
 import scala.concurrent.duration._
