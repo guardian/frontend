@@ -3,10 +3,12 @@ define([
     'fastdom',
     'common/modules/navigation/edition-picker',
     'common/modules/navigation/editionalise-menu'
-], function (qwery,
-             fastdom,
-             editionPicker,
-             editionaliseMenu) {
+], function (
+    qwery,
+    fastdom,
+    editionPicker,
+    editionaliseMenu
+) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
     var buttonClickHandlers = {
@@ -15,8 +17,8 @@ define([
     };
     var enhanced = {};
 
-    function weShouldEnhance(toggle) {
-        return !enhanced[toggle.id] && toggle && !toggle.checked;
+    function weShouldEnhance(checkbox) {
+        return !enhanced[checkbox.id] && checkbox && !checkbox.checked;
     }
 
 
@@ -63,21 +65,21 @@ define([
     }
 
     function enhanceCheckboxesToButtons() {
-        var toggles = [
+        var checkboxes = [
             qwery('#main-menu-toggle')[0],
             qwery('#edition-picker')[0]
         ];
 
-        toggles.forEach(function (toggle) {
-            if (!toggle) {
+        checkboxes.forEach(function (checkbox) {
+            if (!checkbox) {
                 return;
             }
-            if (weShouldEnhance(toggle)) {
-                applyEnhancementsTo(toggle);
+            if (weShouldEnhance(checkbox)) {
+                applyEnhancementsTo(checkbox);
             } else {
-                toggle.addEventListener('click', function closeMenuHandler() {
-                    applyEnhancementsTo(toggle);
-                    toggle.removeEventListener('click', closeMenuHandler);
+                checkbox.addEventListener('click', function closeMenuHandler() {
+                    applyEnhancementsTo(checkbox);
+                    checkbox.removeEventListener('click', closeMenuHandler);
                 });
             }
         });
