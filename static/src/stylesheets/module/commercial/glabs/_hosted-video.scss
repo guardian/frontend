@@ -40,24 +40,10 @@
     }
 }
 
-.leffe {
-    .hosted-tone-btn {
-        &.hosted-tone-btn,
-        &:focus,
-        &:hover {
-            background-color: #ffffff;
-            border-color: #ffffff;
-        }
-    }
-}
-
-
-
 .vjs-ended ~ .hosted-fading .hosted__meta {
     width: 60%;
 }
 
-//Variant 1 of AB test
 .hosted-next-autoplay {
     @include f-textSans;
     visibility: hidden;

@@ -142,8 +142,8 @@ define([
                                     bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
                                         cancelAutoplay($hostedNext);
                                     });
-                                    player.one('timeupdate', function () {
 
+                                    player.one('timeupdate', function () {
                                         nextVideoInterval = setInterval(function () {
                                             var timeLeft = duration - parseInt(player.currentTime(), 10);
                                             var countdownLength = 10; //seconds before the end when to show the timer

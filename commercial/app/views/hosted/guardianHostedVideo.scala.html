@@ -22,18 +22,9 @@
         border-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted-next-autoplay__poster-timer,
-    .hosted-page .hosted-next-autoplay__tile {
-        background-color: @{page.campaign.fontColour.brandColour};
-    }
-
     .hosted-page .hosted-next-autoplay__video,
     .hosted-page .hosted-next-autoplay__next-in-series {
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
-    }
-
-    .hosted-page .hosted__heading {
-        color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__next-video--tile {
@@ -71,7 +62,7 @@
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone">@{page.video.title}</h1>
+                            <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                             <a href="@page.campaign.logoLink.getOrElse(page.cta.url)" data-link-name="hosted-logo-top-left" target="_blank">
@@ -88,7 +79,7 @@
                         </div>
                         <div class="hosted-next-autoplay__next-in-series">
                             <div class="hosted-next-autoplay__subheader">@{page.cta.label}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile" data-link-name="@{page.campaign.name}" target="_blank">
+                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{page.campaign.name}" target="_blank">
                                 @{if(page.cta.btnText.isDefined) page.cta.btnText else s"Visit ${page.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
                             </a>
                         </div>
@@ -99,7 +90,7 @@
                             </div>
                             <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
                                 <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
+                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
                             </a>
                             <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
                                 Watch now
