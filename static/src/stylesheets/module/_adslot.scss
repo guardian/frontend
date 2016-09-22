@@ -477,22 +477,6 @@
     }
 }
 
-.ad-slot--paid-for-badge--interactive {
-    width: 140px;
-    min-height: 135px;
-    border-top: 1px dotted $neutral-5;
-
-    @include mq(desktop) {
-        position: absolute;
-        top: $gs-baseline / 2;
-        right: -1 * (gs-span(4) + $gs-gutter / 2);
-        border-top-width: 0;
-    }
-
-    @include mq(wide) {
-        right: -1 * (gs-span(5) + $gs-gutter);
-    }
-}
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     min-height: 90px;
