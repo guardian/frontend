@@ -4,7 +4,7 @@ This describes how to work with Google Analytics (GA)
 
 ## Hints
 
-Always discuss the reporting requirements before you implement any new dimensions.
+Always discuss the reporting requirements with [data solutions](mailto:data.solutions@guardian.co.uk) and [google analytics](google.analyticscore@guardian.co.uk) teams before you implement any new dimensions.
 
 Talk to the mobile apps team early, things can be a slightly different once you take their needs into account (eg: web pages vs app screens)
 
@@ -17,8 +17,6 @@ Talk to the mobile apps team early, things can be a slightly different once you 
 
 The main entry point for google pageview tracking is in
 [`analytics/base.scala.html`](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html#L12)
-
-All the Page View tracking happens in [`google.scala.html`](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/google.scala.html)
 
 We are careful about how many tracking events we push to the GA test so only send 5% of traffic to the test account. In your local environment we are sending 100% to make development easier.
 
