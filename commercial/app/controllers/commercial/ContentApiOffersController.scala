@@ -5,7 +5,8 @@ import common.{Edition, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
-import play.api.libs.json.Json
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 import play.api.mvc._
 import model._
 
@@ -113,28 +114,32 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
+
   case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement])
 
   object CapiSingle {
-    def apply(content: Content): CapiSingle = {
+    import ElementsFormat._
+
+    def fromContent(content: Content): CapiSingle = {
       CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images)
     }
+
+    implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
   }
 
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
-    val sample: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
+    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
-    sample.map((content: Seq[model.ContentType]) => {
-      val capiResponse = ContentTypeFormat.format.writes(content.head)
-      val firstTry = content.head
-      val temp = CapiSingle(firstTry.content)
-      val writeTemp = temp.toString
-      val jsonNow = Json.toJson(writeTemp)
-      Ok(jsonNow)
+    specificContent.map((content: Seq[model.ContentType]) => {
+
+      val response = content.head
+      val capiSingle = CapiSingle.fromContent(response.content)
+      val capiJson = Json.toJson(capiSingle)
+      Ok(capiJson)
     })
-    
+
   }
 
   def nativeJson = renderNative(jsonFormat, isMulti = false)
