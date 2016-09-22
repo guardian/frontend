@@ -6,6 +6,7 @@
 .newsletter-card__meta {
     .newsletter-card__lozenge {
         border-color: $comment-support-1;
+        -webkit-border-radius: 62.5rem;
         border-radius: 100px;
         height: 2.8em;
         width: 10rem;
@@ -22,19 +23,22 @@
 .newsletter-card {
     display: inline-block;
     float: left;
-    height: 21rem;
-    width: 15.5rem;
-    margin: $gs-baseline;
+    height: 18rem;
+    width: 90%;
+    margin: $gs-baseline 5%;
     background-color: $comment-support-2;
 
     @include mq(tablet) {
         height: 18rem;
         width: 20rem;
+        margin: $gs-baseline;
     }
 
     @include mq(desktop) {
         height: 21rem;
-        width: 15.5rem;
+        width: 30%;
+        min-width: 15.5rem;
+        margin: $gs-baseline;
     }
 }
 
@@ -47,25 +51,23 @@
     @include fs-header(2);
     color: #ffffff;
     background-color: $comment-support-1;
-    padding: .3rem;
+    padding: .5rem;
+}
+
+.newsletter-card__content {
+    padding: .5rem;
 }
 
 .newsletter-card__description {
-    height: 7.5rem;
-    padding: .3rem;
+    height: 4.5rem;
 
     @include mq(tablet) {
         height: 4.5rem;
     }
 
     @include mq(desktop) {
-        height: 7.5rem;
+        height: 5.5rem;
     }
-}
-
-.newsletter-card__meta {
-    padding: .3rem;
-
 }
 
 .newsletter-card__example {
@@ -74,9 +76,30 @@
 
 .newsletter-card__frequency {
     @include fs-textSans(2);
-    padding: 0 .5rem;
+    margin-left: .2rem;
 
     .inline-icon {
         fill: $multimedia-main-1;
     }
+}
+
+.newsletter-card__iframe {
+    width: 100%;
+}
+
+.email-sub__text-input {
+    border-right: 0;
+    -webkit-border-radius: 62.5rem 0 0 62.5rem;
+    border-radius: 62.5rem 0 0 62.5rem;
+    float: left;
+    width: 62%;
+}
+
+.email-sub__submit-input {
+    -webkit-border-radius: 0 62.5rem 62.5rem 0;
+    border-radius: 0 62.5rem 62.5rem 0;
+    border-left: 0;
+    float: left;
+    margin-right: 0;
+    width: auto;
 }

@@ -7,11 +7,12 @@
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription], isActive: Boolean) = {
     <h1 class="email-signup-header__heading">@theme</h1>
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card" data-component="newsletter-card">
+        <div class="newsletter-card" data-component="newsletter-card">
 
-                <div class="newsletter-card__illustration"></div>
-                <div class="newsletter-card__name">@emailListing.name</div>
+            <div class="newsletter-card__illustration"></div>
+            <div class="newsletter-card__name">@emailListing.name</div>
 
+            <div class="newsletter-card__content">
                 <div class="newsletter-card__description">@emailListing.teaser</div>
 
                 <div class="newsletter-card__meta u-cf">
@@ -29,15 +30,7 @@
                     </div>
 
                     <div>
-                        <a href="@emailListing.signupPage" target="signup-email-@emailListing.listId">
-                            <button class="button button--tertiary newsletter-card__lozenge"
-                                    data-link-name="Subscribe to @emailListing.name"
-                                    name="addEmailSubscription"
-                                    type="button"
-                                    value="@emailListing.listId">
-                                Sign up
-                            </button>
-                        </a>
+                        <iframe src="/email/form/plain/@emailListing.listId" height="218px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=".sd.sdfasdf."></iframe>
                     </div>
 
                     <div class="newsletter-card__frequency">
@@ -46,6 +39,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         }
 }
 
