@@ -37,13 +37,13 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
     val apiKey = Configuration.riffraff.apiKey
 
     for {
-      user50x <- CloudWatch.user50x
+      router50x <- CloudWatch.routerBackend50x
       latencyGraphs <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors
       fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics
       cost <- CloudWatch.cost
     } yield {
-      val errorGraphs = Seq(user50x)
+      val errorGraphs = Seq(router50x)
       val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
       NoCache(Ok(views.html.radiator(
         errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon,
