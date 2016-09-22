@@ -24,7 +24,7 @@ case class HostedGalleryPage(
   val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
-    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl)
+    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl, contentType = page.contentType)
   )
 
   override val metadata: MetaData = {

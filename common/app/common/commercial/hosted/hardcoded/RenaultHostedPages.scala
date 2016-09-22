@@ -120,7 +120,8 @@ object RenaultHostedPages {
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 
   private val teaser: HostedPage = withNextPage(teaserWithoutNextPage, episode1WithoutNextPage)
