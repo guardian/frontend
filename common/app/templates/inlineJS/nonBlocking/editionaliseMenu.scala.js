@@ -2,7 +2,7 @@
 
 (function (window) {
     var edition = window.guardian.config.page.edition.toLowerCase();
-    var editionLists = Array.prototype.slice.call(document.getElementsByClassName('js-editionlise-secondary-nav'));
+    var editionLists = Array.prototype.slice.call(document.getElementsByClassName('js-editionalise-secondary-nav'));
 
     // UK is our default edition so we don't have to change it
     if (edition !== 'uk') {
