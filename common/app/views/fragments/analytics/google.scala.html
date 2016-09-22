@@ -72,6 +72,7 @@
         ga('@{trackerName}.set', 'dimension15', identityId);
         ga('@{trackerName}.set', 'dimension16', isLoggedIn);
         ga('@{trackerName}.set', 'dimension21', getQueryParam('INTCMP')); @* internal campaign code *@
+        ga('@{trackerName}.set', 'dimension22', getQueryParam('CMP_BUNIT')); @* campaign business unit*@
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
