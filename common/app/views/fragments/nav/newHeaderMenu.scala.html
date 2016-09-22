@@ -17,7 +17,7 @@
                     navigation-group--@{edition.id.toLowerCase}
                     js-editionlise-secondary-nav"
                     data-edition="@{edition.id.toLowerCase}"
-                    @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
+                    @if(edition.id.toLowerCase != Edition(request).id.toLowerCase) { hidden }>
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
