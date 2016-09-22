@@ -50,7 +50,7 @@
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">

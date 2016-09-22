@@ -709,6 +709,10 @@ $hosted-video-height: 540px;
             height: 20px;
         }
     }
+    .hosted-page:not(.hosted-page--bright) & {
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }
 }
 
 .hosted__cta-link {
