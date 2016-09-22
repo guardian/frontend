@@ -158,7 +158,7 @@ define([
         enhanceToButton();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
-        editionaliseMenu();
+        //editionaliseMenu();
     }
 
     return init;
