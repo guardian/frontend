@@ -127,13 +127,33 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
   }
 
-
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+
+    val optKeyword = request.getParameter("k")
+
+    val latestContent = optKeyword.map { keyword =>
+      // getting twice as many, as we filter out content without images
+      lookup.latestContentByKeyword(keyword, 1)
+    }.getOrElse(Future.successful(Nil))
 
     val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
-    specificContent.map((content: Seq[model.ContentType]) => {
+    latestContent onFailure {
+      case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
+    }
 
+    specificContent onFailure {
+      case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
+    }
+
+    val futureContents = for {
+      specific <- specificContent
+      latestByKeyword <- latestContent
+    } yield {
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
+    }
+
+    futureContents.map((content: Seq[model.ContentType]) => {
       val response = content.head
       val capiSingle = CapiSingle.fromContent(response.content)
       val capiJson = Json.toJson(capiSingle)
