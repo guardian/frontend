@@ -156,7 +156,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
 
       Cached(60) {
         if (request.isJson) {
-          JsonComponent(views.html.discussionComments.topCommentsList(page).toString)
+          JsonComponent(views.html.discussionComments.topCommentsList(page))
         } else {
           RevalidatableResult.Ok(views.html.discussionComments.topCommentsList(page))
         }

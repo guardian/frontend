@@ -12,11 +12,20 @@ import play.api.http.ContentTypes._
 
 object JsonComponent extends Results with implicits.Requests {
 
-  def withRefreshStatus(json: JsValue): JsValue =
-    json.as[JsObject] + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))
+  def apply[A](value: A)(implicit request: RequestHeader, writes:Writes[A]) = {
 
-  def apply[A](value: A)(implicit request: RequestHeader, writes:Writes[A]) =
-    resultFor(request, Json.stringify(withRefreshStatus(toJson(value))))
+    // some objects are passed in as JsObject and expect to have the refreshStatus appended
+    val json =
+      value match {
+        case obj: JsObject => obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))
+        case _ => Json.toJson(value)
+      }
+
+    resultFor(
+      request,
+      Json.stringify(json)
+    )
+  }
 
   def apply(html: Html)(implicit request: RequestHeader): RevalidatableResult = {
     val json = jsonFor("html" -> html)

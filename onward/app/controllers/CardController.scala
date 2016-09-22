@@ -46,7 +46,7 @@ class CardController(wsClient: WSClient) extends Controller with Logging with Ex
               // To test a story that has no image:
               // /cards/opengraph/http%3A%2F%2Fwww.theguardian.com%2Fmedia%2Fgreenslade%2F2013%2Faug%2F22%2Fjournalist-safety-egypt.json
 
-              JsonComponent(Map(
+              JsonComponent(Json.toJson(Map(
                 ("url", fragment.select("meta[property=og:url]").attr("content")),
                 ("title", fragment.select("meta[property=og:title]").attr("content")),
                 ("image", nonFallbackImage.getOrElse("")),
@@ -55,7 +55,7 @@ class CardController(wsClient: WSClient) extends Controller with Logging with Ex
                 ("published_time", fragment.select("meta[property=article:published_time]").attr("content")),
                 ("modified_time", fragment.select("meta[property=article:modified_time]").attr("content")),
                 ("host", a.replaceAll("^www\\.", ""))
-              ))
+              )).as[JsObject])
             }
             case _ => NotFound
           }
@@ -68,14 +68,14 @@ class CardController(wsClient: WSClient) extends Controller with Logging with Ex
               val firstParagraph = fragment.select("#mw-content-text > p").first
               firstParagraph.select(".reference").remove()
 
-              JsonComponent(Map(
+              JsonComponent(Json.toJson(Map(
                 ("url", resource),
                 ("title", fragment.select("#firstHeading").text()),
                 ("image", fragment.select(".image img").attr("src")),
                 ("description", firstParagraph.text().split("\\.").headOption.getOrElse("")),
                 ("site_name", "Wikipedia"),
                 ("host", "wikipedia.org")
-              ))
+              )).as[JsObject])
             }
             case _ => NotFound
           }
