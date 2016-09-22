@@ -3,11 +3,13 @@ package controllers.admin
 import common.Logging
 import implicits.Requests
 import model.NoCache
-import model.deploys.{RiffRaffService, ApiResults}
+import model.deploys.{ApiResults, RiffRaffService}
+import model.deploys.ApiResults.{ApiError, ApiErrors}
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
 import model.deploys._
 import play.api.libs.ws.WSClient
+import scala.util.control.NonFatal
 
 trait DeploysRadiatorController extends Controller with Logging with Requests {
 
@@ -19,7 +21,12 @@ trait DeploysRadiatorController extends Controller with Logging with Requests {
   }
 
   def getBuild(number: String) = Action.async {
-    teamcity.getTeamCityBuild(number).map(ApiResults(_))
+    teamcity
+      .getBuild(number)
+      .map(build => Right(build))
+      .recover { case NonFatal(error) => Left(ApiErrors(List(ApiError(error.getMessage, 500)))) }
+      .map(ApiResults(_))
+
   }
 
   def renderDeploysRadiator() = Action {

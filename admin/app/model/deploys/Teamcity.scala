@@ -1,11 +1,9 @@
 package model.deploys
 
 import conf.Configuration
-import ApiResults.{ApiError, ApiErrors, ApiResponse}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import play.api.libs.ws.WSClient
-
+import play.api.libs.ws.WSResponse
 import scala.concurrent.Future
 import scala.language.postfixOps
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -53,23 +51,31 @@ object TeamCityBuild {
 
 class TeamcityService(httpClient: HttpLike) {
 
-  def getTeamCityBuild(number: String): Future[ApiResponse[TeamCityBuild]] = {
-    val apiPath = "/guestAuth/app/rest"
-    val url = s"${Configuration.teamcity.internalHost}${apiPath}/builds/number:$number,state:any,canceled(any)"
+  private def GET(path: String, queryString: Map[String, String]): Future[WSResponse] = {
+    val apiPath = "guestAuth/app/rest"
+    val url = s"${Configuration.teamcity.internalHost}/$apiPath/$path"
 
-    httpClient.GET(url,
+    httpClient.GET(
+      url,
+      queryString,
+      headers = Map("Accept" -> "application/json")
+    )
+  }
+
+  def getBuild(number: String): Future[TeamCityBuild] = {
+    GET(
+      path = s"builds/number:$number,state:any,canceled(any)",
       queryString = Map("fields" -> List(
         "id", "number", "buildType(name,projectName)", "status",
         "revisions(revision(version))", "changes(change(username,comment,version))",
-        "artifact-dependencies(build(number))").mkString(",")),
-      headers = Map("Accept" -> "application/json")
+        "artifact-dependencies(build(number))").mkString(","))
     ).map { response =>
       response.status match {
         case 200 => response.json.validate[TeamCityBuild] match {
-          case JsSuccess(build, _) => Right(build)
-          case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from Teamcity API", 500))))
+          case JsSuccess(build, _) => build
+          case JsError(error) => throw new RuntimeException(s"Invalid JSON from Teamcity API: $error")
         }
-        case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from TeamCity: $statusCode", 500))))
+        case statusCode => throw new RuntimeException(s"Invalid status code from TeamCity: $statusCode")
       }
     }
   }
