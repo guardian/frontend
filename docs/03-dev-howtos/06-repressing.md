@@ -52,7 +52,7 @@ If you just ship new facia without pressing things will break until the presser 
 * turn off the facia-press-on-demand switches again
 * turn on auto deploys again
 * change your local machine back to DEV facia bucket!
-* have a beer
+* celebrate!
 
 ### Removing a field
 Follow the above instructions, only deploy the new facia (that doesn't need the field) first, check it works, and then follow the presser steps to repress the fronts without the field.
