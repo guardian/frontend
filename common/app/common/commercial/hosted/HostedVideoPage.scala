@@ -46,6 +46,7 @@ object HostedVideoPage extends Logging {
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
       def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
+      def isYoutube = videoVariants.find(_.platform.toString.contains("Youtube")).isDefined
 
       val pageId = content.id
       val pageUrl = content.webUrl
@@ -106,6 +107,7 @@ object HostedVideoPage extends Logging {
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
+          youTubeHtml = if(isYoutube) Some(videoAtom.defaultHtml) else None,
           srcUrlMp4 = videoUrl("video/mp4"),
           srcUrlWebm = videoUrl("video/webm"),
           srcUrlOgg = videoUrl("video/ogg"),
@@ -139,6 +141,7 @@ case class HostedVideo(
   title: String,
   duration: Int,
   posterUrl: String,
+  youTubeHtml: Option[String] = None,
   srcUrlMp4: String,
   srcUrlWebm: String,
   srcUrlOgg: String,

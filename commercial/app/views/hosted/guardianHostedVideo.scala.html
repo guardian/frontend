@@ -45,20 +45,24 @@
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    <video
-                    data-duration="@{page.video.duration}"
-                    data-media-id="@{page.video.mediaId}"
-                    controls="controls"
-                    preload="auto"
-                    style="width: 100%;"
-                    data-block-video-ads="true"
-                    poster="@{page.video.posterUrl}"
-                    class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@{page.video.srcUrlMp4}">
-                        <source type="video/webm" src="@{page.video.srcUrlWebm}">
-                        <source type="video/ogg" src="@{page.video.srcUrlOgg}">
-                        <source type="video/m3u8" src="@{page.video.srcM3u8}">
-                    </video>
+                    @if(page.video.youTubeHtml.isDefined){
+                        @Html(page.video.youTubeHtml.get)
+                    } else {
+                        <video
+                        data-duration="@{page.video.duration}"
+                        data-media-id="@{page.video.mediaId}"
+                        controls="controls"
+                        preload="auto"
+                        style="width: 100%;"
+                        data-block-video-ads="true"
+                        poster="@{page.video.posterUrl}"
+                        class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                            <source type="video/mp4" src="@{page.video.srcUrlMp4}">
+                            <source type="video/webm" src="@{page.video.srcUrlWebm}">
+                            <source type="video/ogg" src="@{page.video.srcUrlOgg}">
+                            <source type="video/m3u8" src="@{page.video.srcM3u8}">
+                        </video>
+                    }
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">

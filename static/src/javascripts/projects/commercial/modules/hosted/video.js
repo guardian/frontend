@@ -128,51 +128,51 @@ define([
                                 }
                             });
                         });
+                    });
 
-                        if ($hostedNext.length) {
-                            //on desktop show the next video link 10 second before the end of the currently watching video
-                            if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
+                    if ($hostedNext.length) {
+                        //on desktop show the next video link 10 second before the end of the currently watching video
+                        if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
 
-                                var $timer = $('.js-autoplay-timer');
-                                var nextVideoPage;
+                            var $timer = $('.js-autoplay-timer');
+                            var nextVideoPage;
 
-                                if ($timer.length) {
-                                    nextVideoPage = $timer.data('next-page');
+                            if ($timer.length) {
+                                nextVideoPage = $timer.data('next-page');
 
-                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                        cancelAutoplay($hostedNext);
-                                    });
+                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                                    cancelAutoplay($hostedNext);
+                                });
 
-                                    player.one('timeupdate', function () {
-                                        nextVideoInterval = setInterval(function () {
-                                            var timeLeft = duration - parseInt(player.currentTime(), 10);
-                                            var countdownLength = 10; //seconds before the end when to show the timer
+                                player.one('timeupdate', function () {
+                                    nextVideoInterval = setInterval(function () {
+                                        var timeLeft = duration - parseInt(player.currentTime(), 10);
+                                        var countdownLength = 10; //seconds before the end when to show the timer
 
-                                            if (timeLeft <= countdownLength) {
-                                                fastdom.write(function () {
-                                                    $hostedNext.addClass('js-autoplay-start');
-                                                    $timer.text(timeLeft + 's');
-                                                });
-                                            }
-                                            if(timeLeft <= 0){
-                                                omniture.trackLinkImmediate('Immediately play the next video');
-                                                window.location = nextVideoPage;
-                                            }
-                                        }, 1000);
-                                    });
-                                }
-                            } else {
-                                player.one('ended', function () {
-                                    fastdom.write(function () {
-                                        $hostedNext.addClass('js-autoplay-start');
-                                    });
-                                    bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                        cancelAutoplayMobile($hostedNext);
-                                    });
+                                        if (timeLeft <= countdownLength) {
+                                            fastdom.write(function () {
+                                                $hostedNext.addClass('js-autoplay-start');
+                                                $timer.text(timeLeft + 's');
+                                            });
+                                        }
+                                        if(timeLeft <= 0){
+                                            omniture.trackLinkImmediate('Immediately play the next video');
+                                            window.location = nextVideoPage;
+                                        }
+                                    }, 1000);
                                 });
                             }
+                        } else {
+                            player.one('ended', function () {
+                                fastdom.write(function () {
+                                    $hostedNext.addClass('js-autoplay-start');
+                                });
+                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                                    cancelAutoplayMobile($hostedNext);
+                                });
+                            });
                         }
-                    });
+                    }
 
                     resolve();
                 });
