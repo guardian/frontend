@@ -5,12 +5,12 @@ define([
     'commercial/modules/messenger'
 ], function (assign, closest, fastdom, messenger) {
     messenger.register('resize', function(specs, ret, iframe) {
-        return resize(specs, closest(iframe, '.js-ad-slot'));
+        return resize(specs, iframe, closest(iframe, '.js-ad-slot'));
     });
 
     return resize;
 
-    function resize(specs, adSlot) {
+    function resize(specs, iframe, adSlot) {
         if (!specs || !('height' in specs || 'width' in specs)) {
             return null;
         }
@@ -27,6 +27,7 @@ define([
 
         return fastdom.write(function () {
             assign(adSlot.style, styles);
+            assign(iframe.style, styles);
         });
     }
 
