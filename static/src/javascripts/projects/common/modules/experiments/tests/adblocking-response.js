@@ -19,18 +19,24 @@ define([
 ) {
     return function () {
         this.id = 'AdBlockingResponse3';
-        this.start = '2016-09-26';
-        this.expiry = '2016-10-11'; // the test will STOP on MONDAY 10th PM. Test dates don't behave like our switches.
+        this.start = '2016-09-22';
+        this.expiry = '2016-10-14'; // this test will expire on Thurs 13th PM.
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response with ad-free 404 demand test';
+        this.description = 'Adblocking response with ad-free 404 test';
         this.audience = 0;  // TODO: audience sizing
-        this.audienceOffset = 0;
+        this.audienceOffset = 0; // exclude anyone that had been in 12% v2 test
         this.successMeasure = 'Adblocking users show genuine interest in a paid ad-free service';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
-            ['adblock whitelist no-close'],
-            ['adblock supporter no-close'],
-            ['adblock subscriber no-close']
+            ['adblock whitelist 299'],
+            ['adblock supporter 299'],
+            ['adblock subscriber 299'],
+            ['adblock whitelist 499'],
+            ['adblock supporter 499'],
+            ['adblock subscriber 499'],
+            ['adblock whitelist 999'],
+            ['adblock supporter 999'],
+            ['adblock subscriber 999']
         ].map(function(_) {
             return _[0];
         }).join(', ');
@@ -42,6 +48,7 @@ define([
             return contains('chrome', detect.getUserAgent.browser.toLowerCase()) &&
                 contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) &&
                 config.page.edition === 'UK' &&
+                //(cookies.get('GU_geo_continent') && cookies.get('GU_geo_continent').toUpperCase() === 'EU') &&
                 detect.adblockInUseSync();
         };
 
@@ -49,7 +56,7 @@ define([
             // NOTE: async adblock detection doesn't work if the page is opened in a new tab
             return detect.adblockInUseSync() &&
                 !cookies.get('gu_abm_x') &&
-                (cookies.get('GU_geo_continent') && cookies.get('GU_geo_continent').toUpperCase() === 'EU') &&
+                //(cookies.get('GU_geo_continent') && cookies.get('GU_geo_continent').toUpperCase() === 'EU') &&
                 !config.page.isFront &&
                 !config.page.shouldHideAdverts &&
                 config.page.section !== 'childrens-books-site' &&
@@ -74,12 +81,14 @@ define([
                 if (isQualified()) {
                     var variant = '299',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeText = 'Ad free &pound;2.99/month',
+                        adFreeButtonText = 'Go ad-free for &pound;2.99/month',
+                        adFreeMessagePrefix = '&pound;2.99 per month',
                         header = 'Advertising helps fund our journalism';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
-                        adFreeText: adFreeText,
+                        adFreeButtonText: adFreeButtonText,
+                        adFreeMessagePrefix: adFreeMessagePrefix,
                         surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],
@@ -96,12 +105,14 @@ define([
                 if (isQualified()) {
                     var variant = '499',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeText = 'Ad free &pound;4.99/month',
+                        adFreeButtonText = 'Go ad-free for &pound;4.99/month',
+                        adFreeMessagePrefix = '&pound;4.99 per month',
                         header = 'Advertising helps fund our journalism';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
-                        adFreeText: adFreeText,
+                        adFreeButtonText: adFreeButtonText,
+                        adFreeMessagePrefix: adFreeMessagePrefix,
                         surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],
@@ -118,12 +129,14 @@ define([
                 if (isQualified()) {
                     var variant = '999',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeText = 'Ad free &pound;9.99/month',
+                        adFreeButtonText = 'Go ad-free for &pound;9.99/month',
+                        adFreeMessagePrefix = '&pound;4.99 per month',
                         header = 'Advertising helps fund our journalism';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
-                        adFreeText: adFreeText,
+                        adFreeButtonText: adFreeButtonText,
+                        adFreeMessagePrefix: adFreeMessagePrefix,
                         surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],

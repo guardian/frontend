@@ -5,10 +5,7 @@ define([
     'common/utils/template',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'text!common/views/commercial/survey/survey-adblock.html',
-    'lodash/arrays/uniq',
-    'common/utils/countdown',
-    'common/utils/cookies'
+    'text!common/views/commercial/survey/survey-adblock.html'
 ], function (
     bean,
     fastdom,
@@ -16,10 +13,7 @@ define([
     template,
     userprefs,
     svgs,
-    surveyAdBlockTemplate,
-    uniq,
-    countdown,
-    cookies
+    surveyAdBlockTemplate
 ) {
     var surveyAdBlock = function (config) {
         this.config = config || {};
@@ -30,7 +24,8 @@ define([
                 crossIcon: svgs('crossIcon'),
                 surveyOverlaySimple: svgs('surveyOverlaySimple'),
                 adFreeDataLink: this.config.adFreeDataLink,
-                adFreeText: this.config.adFreeText,
+                adFreeButtonText: this.config.adFreeButtonText,
+                adFreeMessagePrefix: this.config.adFreeMessagePrefix,
                 whitelistDataLink: this.config.whitelistDataLink,
                 whitelistText: this.config.whitelistText,
                 whitelistGuideImage: this.config.whitelistGuideImage,
@@ -43,16 +38,30 @@ define([
     surveyAdBlock.prototype.attach = function () {
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
-            // TODO: dump the close button but wire up the other interactions
-            if (this.config.showCloseBtn) {
-                bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
-                    $('.survey-adblock').addClass('is-hidden');
-                    var cookieName = 'gu_abm_x',
-                        cookieLifetimeMinutes = 30,
-                        cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
-                    cookies.addForMinutes(cookieName, cookieCount + 1, cookieLifetimeMinutes);
-                });
-            }
+            bean.on(document, 'click', $('.survey-button__cta.whitelist'), function () {
+                // -> state 2
+                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-2'), function(el){el.classList.remove('is-hidden');});
+            });
+            bean.on(document, 'click', $('.survey-button__cta.noads'), function () {
+                // -> state 3
+                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.remove('is-hidden');});
+            });
+            bean.on(document, 'click', $('.howto-unblock__close-btn'), function () {
+                // -> state 1
+                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
+            });
+            bean.on(document, 'click', $('.pay-now__close-btn'), function () {
+                // -> state 1
+                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
+            });
         }.bind(this));
     };
 
@@ -60,22 +69,6 @@ define([
         fastdom.write(function () {
             $('.js-survey-adblock').removeClass('is-hidden');
         });
-        // TODO: dump the close button but wire up the other interactions
-        if (this.config.showCloseBtn) {
-            if (this.config.showCloseBtn === 'delayed') {
-                countdown.startTimer(5, function(seconds) {
-                    if (seconds < 1) {
-                        fastdom.write(function () {
-                            $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                        });
-                    }
-                });
-            } else {
-                fastdom.write(function () {
-                    $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                });
-            }
-        }
     };
 
     return surveyAdBlock;

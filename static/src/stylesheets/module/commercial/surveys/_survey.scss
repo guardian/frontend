@@ -241,6 +241,7 @@
         font-size: 12px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
+        text-align: center;
 
         .text-link {
             color: #ffffff;
@@ -281,6 +282,83 @@
         float: left;
         padding: 0 8px;
         line-height: $gs-column-width/2;
+    }
+
+    .survey-buttons {
+        overflow: hidden;
+        margin-bottom: $gs-column-width/4;
+        text-align: center;
+        @include fs-bodyCopy(1);
+        @include mq($until: mobile) {
+            margin-bottom: $gs-row-height / 4;
+        }
+        line-height: $gs-column-width/2;
+        .survey-button__cta {
+            -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
+            -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
+            box-shadow:inset 0px 1px 0px 0px #a4e271;
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
+            background:-moz-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background:-webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background:-o-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background:-ms-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+            background-color:#89c403;
+            -moz-border-radius:6px;
+            -webkit-border-radius:6px;
+            border-radius:6px;
+            border:1px solid #74b807;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-weight:bold;
+            padding:6px 24px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #528009;
+            position: relative;
+            margin-top: 10px;
+            top: 25%;
+            height: 50%;
+            width: 250px;
+        }
+        .survey-button__cta:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
+            background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background:-webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background:-o-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background:-ms-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
+            background-color:#77a809;
+            text-decoration: none;
+        }
+        .survey-button__cta:active {
+            position:relative;
+            top:1px;
+        }
+    }
+
+    .howto-unblock {
+       p {
+           text-align: left;
+       }
+    }
+
+    .howto-unblock__close-btn {
+        @include mq($until: tablet) {
+            position: relative;
+        }
+
+        .inline-icon {
+            svg {
+                width: 10px;
+                height: 10px;
+            }
+            color: #ffffff;
+            fill: #ffffff;
+            float: right;
+        }
     }
 
     .survey-subscriber-links {
