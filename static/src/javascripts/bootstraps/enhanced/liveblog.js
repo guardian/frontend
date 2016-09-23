@@ -66,7 +66,7 @@ define([
             && !detect.isIOS()
             && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
             && detect.getUserAgent.browser === 'Chrome'
-            && config.page.isLive)
+            && config.page.isLive);
         },
 
         initNotifications: function() {
