@@ -1,182 +1,72 @@
 #Table Of Content
 *(Do NOT edit manually. Generated automatically)*
 
-##[Admin jobs](admin-jobs/)
-- [](admin-jobs/*.md)
+##[Start here](01-start-here/)
+- [Quick start guide](01-start-here/01-installation-steps.md)
+- [Visual glossary of the Guardian.com](01-start-here/02-guardian-visual-glossary.md)
+- [How to deploy](01-start-here/03-how-to-deploy.md)
+- [Troubleshooting](01-start-here/04-troubleshooting.md)
+- [Development tips](01-start-here/05-development-tips.md)
 
-##[Admin](admin/)
-- [](admin/*.md)
+##[Architecture](02-architecture/)
+- [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
+- [Fronts Architecture](02-architecture/02-fronts-architecture.md)
+- [Libraries we use](02-architecture/03-libraries-we-use.md)
+- [Archiving](02-architecture/04-archiving.md)
+- [Architecture principles for CSS](02-architecture/05-architecture-principles-for-css.md)
 
-##[App](app/)
-- [](app/*.md)
+##[Dev howtos](03-dev-howtos/)
+- [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
+- [What to do when a deployment breaks](03-dev-howtos/02-deployment-errors.md)
+- [Guardian embeds](03-dev-howtos/03-embeds.md)
+- [Inline SVGs](03-dev-howtos/04-inline-svgs.md)
+- [Interactives](03-dev-howtos/05-interactives.md)
+- [Repressing fronts](03-dev-howtos/06-repressing.md)
+- [Sprite production](03-dev-howtos/07-sprite-production.md)
+- [Template Deduping](03-dev-howtos/08-template-deduping.md)
+- [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
+- [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
+- [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
+- [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
+- [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
+- [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
 
-##[Applications](applications/)
-- [](applications/*.md)
+##[Quality](04-quality/)
+- [Browsers support](04-quality/01-browser-support.md)
+- [Browser support principles](04-quality/02-browser-support-principles.md)
 
-##[Archive](archive/)
-- [](archive/*.md)
+##[Commercial](05-commercial/)
+- [How do DFP adverts work?](05-commercial/01-DFP-Advertising.md)
+- [Integration of commercial components](05-commercial/02-commercial-components.md)
+- [Commercial javascript](05-commercial/03-commercial-javascript.md)
 
-##[Article](article/)
-- [](article/*.md)
+##[Features and components](06-features-and-components/)
+- [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
+- [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
 
-##[Commercial](commercial/)
-- [](commercial/*.md)
+##[Performance](07-performance/)
+- [Performance reading list](07-performance/01-performance-reading.md)
 
-##[Common](common/)
-- [](common/*.md)
+##[Design](08-design/)
 
-##[Conf](conf/)
-- [](conf/*.md)
+##[Archives](99-archives/)
+- [Recipe for Breton crêpes](99-archives/crepes.md)
+- [CSS guideline (out-of-date)](99-archives/css-guidelines.md)
+- [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
+- [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
+- [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
 
-##[Core navigation](core-navigation/)
-- [](core-navigation/*.md)
-
-##[Data](data/)
-- [](data/*.md)
-
-##[Dev build](dev-build/)
-- [](dev-build/*.md)
-
-##[Dev](dev/)
-- [](dev/*.md)
-
-##[Diagnostics](diagnostics/)
-- [](diagnostics/*.md)
-
-##[Discussion](discussion/)
-
-##[Docs](docs/)
-- [Link Tracking](docs/click-tracking.md)
-- [META: How to create a new documentation file](docs/how-to-create-a-doc-file.md)
-
-##[Facia end to end](facia-end-to-end/)
-- [](facia-end-to-end/*.md)
-
-##[Facia press](facia-press/)
-- [](facia-press/*.md)
-
-##[Facia tool](facia-tool/)
-- [](facia-tool/*.md)
-
-##[Facia](facia/)
-- [](facia/*.md)
-
-##[Fapi client diff](fapi-client-diff/)
-- [](fapi-client-diff/*.md)
-
-##[Fronts endtoend tests](fronts-endtoend-tests/)
-- [](fronts-endtoend-tests/*.md)
-
-##[Git hooks](git-hooks/)
-- [](git-hooks/*.md)
-
-##[Grunt configs](grunt-configs/)
-- [](grunt-configs/*.md)
-
-##[Identity](identity/)
-
-##[Image](image/)
-- [](image/*.md)
-
-##[Integrated tests](integrated-tests/)
-
-##[Integration tests](integration-tests/)
-- [](integration-tests/*.md)
-
-##[Ivy sbt](ivy-sbt/)
-- [](ivy-sbt/*.md)
-
-##[Logs](logs/)
-- [](logs/*.md)
-
-##[Nginx](nginx/)
-
-##[Node_modules](node_modules/)
-- [](node_modules/*.md)
-
-##[Onward](onward/)
-- [](onward/*.md)
-
-##[Png resizer](png-resizer/)
-- [](png-resizer/*.md)
-
-##[Porter](porter/)
-- [](porter/*.md)
-
-##[Preview](preview/)
-- [](preview/*.md)
-
-##[Project](project/)
-- [](project/*.md)
-
-##[ProjectFilesBackup](projectFilesBackup/)
-- [](projectFilesBackup/*.md)
-
-##[ProjectFilesBackup1](projectFilesBackup1/)
-- [](projectFilesBackup1/*.md)
-
-##[ProjectFilesBackup2](projectFilesBackup2/)
-- [](projectFilesBackup2/*.md)
-
-##[ProjectFilesBackup3](projectFilesBackup3/)
-- [](projectFilesBackup3/*.md)
-
-##[ProjectFilesBackup4](projectFilesBackup4/)
-- [](projectFilesBackup4/*.md)
-
-##[ProjectFilesBackup5](projectFilesBackup5/)
-- [](projectFilesBackup5/*.md)
-
-##[ProjectFilesBackup6](projectFilesBackup6/)
-- [](projectFilesBackup6/*.md)
-
-##[ProjectFilesBackup7](projectFilesBackup7/)
-- [](projectFilesBackup7/*.md)
-
-##[ProjectFilesBackup8](projectFilesBackup8/)
-- [](projectFilesBackup8/*.md)
-
-##[ProjectFilesBackup9](projectFilesBackup9/)
-- [](projectFilesBackup9/*.md)
-
-##[Public](public/)
-- [](public/*.md)
-
-##[Router](router/)
-- [](router/*.md)
-
-##[Rss](rss/)
-- [](rss/*.md)
-
-##[Sanity tests](sanity-tests/)
-- [](sanity-tests/*.md)
-
-##[Sport](sport/)
-- [](sport/*.md)
-
-##[Standalone](standalone/)
-- [](standalone/*.md)
-
-##[Static](static/)
-- [](static/*.md)
-
-##[Target](target/)
-- [](target/*.md)
-
-##[Tools](tools/)
-- [](tools/*.md)
-
-##[Training preview](training-preview/)
-- [](training-preview/*.md)
-
-##[Training](training/)
-- [](training/*.md)
-
-##[Vendor](vendor/)
-- [](vendor/*.md)
-
-##[Weather](weather/)
-- [](weather/*.md)
+##[Styleguide](styleguide/)
+- [](styleguide/*.md)
 
 
 ---
+# META: How to create a new documentation file
+
+## Documentation conventions
+
+- Find the correct subdirectory your new documentation file belongs to.
+- Every documentation file should be markdown (with .md extension).
+- First line of every documentation file should contain its title (used to generated the table of content).
+- Store all the images in an `/images` subfolder in the same directory the document referencing them will be.
+- Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
