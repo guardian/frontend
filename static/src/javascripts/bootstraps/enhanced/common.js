@@ -317,7 +317,7 @@ define([
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
-                    saveForLater.init();
+                    saveForLater.conditionalInit();
                 }
             },
 
