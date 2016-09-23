@@ -1,5 +1,6 @@
 @import conf.switches.Switch
-@(  errorCharts: Seq[tools.AwsLineChart],
+@(  ciBuilds: Seq[model.deploys.TeamCityBuild],
+    errorCharts: Seq[tools.AwsLineChart],
     latencyCharts: Seq[tools.AwsLineChart],
     fastlyCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
@@ -33,19 +34,16 @@
         <div class="cost"><a href="https://console.aws.amazon.com/billing/home"><strong>$@cost.max.toLong</strong> this month</a></div>
     </header>
 
-    <div class="pingdom-wrapper">
-        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-        <ul id="pingdom"></ul>
-    </div>
-
-    <div class="build-wrapper">
+    <div id="build-wrapper">
         <h2>Teamcity builds</h2>
-        @*
-        To add another build just append another &buildTypeId=XXXXXX
-        Note, it will not show unless you enable the "External status widget" for the build in Teamcity
-            for some reason the &js=1 hangs waiting for a http resp so just using the iframe version for now
-        *@
-        <iframe src="https://teamcity.gu-web.net/externalStatus.html?buildTypeId=dotcom_master"></iframe>
+        <ul>
+        @ciBuilds.map { build =>
+            <li>
+                <a class="@if(build.isSuccess) { succeeded } else { failed }"
+                href="@conf.Configuration.teamcity.host/viewLog.html?buildId=@build.id&buildTypeId=@build.projectName">@build.projectName (@build.number)</a>
+            </li>
+        }
+        </ul>
     </div>
 
 
@@ -56,16 +54,25 @@
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
                     <li title="@switch.name - expires in @days days">
-                        <span class="expiry-days-@days">@switch.name</span> - <span>@showOwners(switch)</span>
+                        <span class="@if(days < 0) { expired } else { expiry-days-@days }">@switch.name</span> - <span>@showOwners(switch)</span>
                     </li>
                 }
             }
         </ul>
     </div>
+
     <br clear="all"/>
-    <div class="pageviews-wrapper">
-        <h2>Pageviews <span class="pageviews-per-second"></span></h2>
-        <div id="pageviews"></div>
+    <div>
+        <h2>Pageviews <span class="pageviews-per-second"></span> / Errors</h2>
+        <div id="pageviews" class="chart"></div>
+        @errorCharts.map{ chart => @fragments.lineChart(chart) }
+    </div>
+
+    <br clear="all"/>
+
+    <div class="pingdom-wrapper">
+        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+        <ul id="pingdom"></ul>
     </div>
 
     <div class="monitoring-wrapper">
@@ -82,15 +89,16 @@
             <ul class="riffraff" id="riffraffPROD"></ul>
             <ul class="deployers" id="deployersPROD"></ul>
         </div>
+        <a href="/deploys-radiator"> Go to Deploys-Radiator</a>
     </div>
 
-    @graph_group("Errors", errorCharts)
     @graph_group("Latencies", latencyCharts)
+    <a href="/metrics/loadbalancers"> More Latencies</a>
+
     @graph_group("Fastly", fastlyCharts)
 }
 
 @graph_group(title: String, graphs: Seq[tools.AwsLineChart]) = {
-    <br clear="all"/>
     <div>
         <h2>@title</h2>
         @graphs.map{ chart => @fragments.lineChart(chart) }
