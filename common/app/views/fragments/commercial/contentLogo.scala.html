@@ -1,11 +1,11 @@
-@(branding: common.commercial.Branding, isInteractivePage: Boolean, isCardBranding: Boolean, isOnTheLeft: Boolean)(implicit request: RequestHeader)
+@(branding: common.commercial.Branding, isInteractivePage: Boolean, isBranded: Boolean, isOnTheLeft: Boolean)(implicit request: RequestHeader)
 @import common.commercial.PaidContent
 @import implicits.Requests.RichRequestHeader
 
 <div class="adverts__badge js-badge
     @if(isInteractivePage || isOnTheLeft) {adverts__badge--alt}
     @if(isInteractivePage) {adverts__badge--interactive}
-    @if(isCardBranding) {adverts__badge--card-branding}
+    @if(isBranded) {advert--branded}
     ">
     @branding.label
     <a class="adverts__badge__link" href="@branding.sponsorLink" data-link-name="logo link">
