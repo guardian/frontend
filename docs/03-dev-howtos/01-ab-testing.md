@@ -8,12 +8,20 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 
 There are six steps in the test lifecycle:-
 
- - Adding a switch to turn the test on & off
- - Writing a test, which is typically a simple AMD module
- - Running the test
- - Analysis of the test data
- - Share your findings
+ - [Adding a switch to turn the test on & off](#adding-a-switch)
+ - [Writing a test, which is typically a simple AMD module](#writing-a-test)
+ - [Running the test](#running-the-test)
+ - [Analysis of the test data](#analysis-of-the-test-data)
+ - [Share your findings](#share-your-findings)
  - Delete the test
+
+## Quick Tips
+
+- Creating your switch: if its an ab test it should start with `ab-` (see more naming conventions in [Adding a switch](#adding-a-switch)
+- Choosing your audience offset: it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
+- Is your audience percentage appropriate for your test? Ask the data team if you don't know.
+- Starting/Stopping a test: You can start and stop your tests in production at any time using the [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
+- Ophan has a dashboard with all the active ab tests [here](https://dashboard.ophan.co.uk/ab)
 
 ## Adding a switch
 
@@ -180,6 +188,8 @@ The data is logged under the Omniture property _p51_.
 ### Ophan
 
 We have an [AB test dashboard](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
+
+Ophan also has a [dashboard](https://dashboard.ophan.co.uk/ab) where you can take a look at your test data
 
 For inspection of the raw test data you can query the datalake created by the data team.
 
