@@ -1,13 +1,11 @@
 define([
     'qwery',
     'fastdom',
-    'common/modules/navigation/edition-picker',
-    'common/modules/navigation/editionalise-menu'
+    'common/modules/navigation/edition-picker'
 ], function (
     qwery,
     fastdom,
-    editionPicker,
-    editionaliseMenu
+    editionPicker
 ) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
@@ -180,7 +178,6 @@ define([
         enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
-        editionaliseMenu();
     }
 
     return init;
