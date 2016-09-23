@@ -83,26 +83,18 @@ object Commercial {
 
       def isPaid(containerModel: ContainerModel): Boolean = {
 
-        def isPaidBranding(branding: Option[Branding]): Boolean =
-          branding.exists(_.sponsorshipType == PaidContent)
-
-        def isPaid(card: CardContent): Boolean = isPaidBranding(card.branding)
-
-        val isPaidContainer = isPaidBranding(containerModel.branding)
+        val isPaidContainer = containerModel.branding.exists(_.sponsorshipType == PaidContent)
 
         val isAllPaidContent = {
           val content = containerModel.content
           val cards = content.initialCards ++ content.showMoreCards
-          cards.nonEmpty && cards.forall(isPaid)
+          cards.nonEmpty && cards.forall(_.branding.exists(_.sponsorshipType == PaidContent))
         }
 
         isPaidContainer || isAllPaidContent
       }
 
-      lazy val isPaidContainer =
-        container.showBranding && optContainerModel.exists(isPaid)
-
-      !isPaidFront && isPaidContainer
+      !isPaidFront && container.showBranding && optContainerModel.exists(isPaid)
     }
 
     def mkSponsorDataAttributes(config: CollectionConfig): Option[SponsorDataAttributes] = {
