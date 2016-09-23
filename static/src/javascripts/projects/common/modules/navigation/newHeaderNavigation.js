@@ -65,12 +65,11 @@ define([
     }
 
     function enhanceCheckboxesToButtons() {
-        var checkboxes = [
-            qwery('#main-menu-toggle')[0],
-            qwery('#edition-picker')[0]
-        ];
+        var checkboxIds = ['main-menu-toggle', 'edition-picker'];
 
-        checkboxes.forEach(function (checkbox) {
+        checkboxIds.forEach(function (checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+
             if (!checkbox) {
                 return;
             }
@@ -87,7 +86,7 @@ define([
 
     function veggieBurgerClickHandler(event) {
         var button = event.target;
-        var mainMenu = qwery('#main-menu')[0];
+        var mainMenu = document.getElementById('main-menu');
         var veggieBurgerLink = qwery('.js-change-link')[0];
 
         function menuIsOpen() {
@@ -162,7 +161,7 @@ define([
             primaryItem.addEventListener('click', function () {
                 fastdom.read(function () {
                     var id = primaryItem.getAttribute('aria-controls');
-                    var menuToOpen = qwery('#' + id)[0];
+                    var menuToOpen = document.getElementById(id);
                     var menuButton = qwery('.js-navigation-button', menuToOpen)[0];
 
                     fastdom.write(function () {
