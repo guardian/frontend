@@ -18,6 +18,7 @@ case class HostedVideoPage(
   socialShareText: Option[String],
   shortSocialShareText: Option[String],
   nextPage: Option[NextHostedPage] = None,
+  nextVideo: Option[NextHostedPage] = None,
   metadata: MetaData
 ) extends HostedPage {
 
@@ -122,6 +123,7 @@ object HostedVideoPage extends Logging {
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
+        nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata
       )
     }

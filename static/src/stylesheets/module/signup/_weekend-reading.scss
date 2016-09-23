@@ -1,9 +1,12 @@
+.illustration-container {
+    background-color: #82c81e;
+}
 
 .inline-weekend-reading__svg {
     overflow: hidden;
     position: absolute;
     left: 50%;
-    margin-left: -80.5rem;
+    margin-left: -162rem;
     height: 112%;
     z-index: 100;
 
@@ -12,7 +15,7 @@
     }
     @include mq(desktop) {
         height: 112%;
-        margin-left: -84.5rem;
+        margin-left: -166rem;
     }
 
 }
