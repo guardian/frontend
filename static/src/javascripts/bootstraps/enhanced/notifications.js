@@ -108,6 +108,10 @@ define([
                     } else {
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
+                }).catch(function(e) {
+                    var $denied = $('.live-notifications__label--denied');
+                    $denied.show('block');
+                    throw e;
                 });
             });
         },
