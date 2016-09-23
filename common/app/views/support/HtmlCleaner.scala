@@ -299,7 +299,6 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
             val user = el.ownText().replaceFirst("— ", "")
-            println(user)
             val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
