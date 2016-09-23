@@ -47,37 +47,51 @@ object TeamCityBuild {
       (__ \ "revisions" \ "revision" \\ "version").read[String] and
       (__ \ "changes" \ "change").read[List[Commit]]
     )(TeamCityBuild.apply _)
+
 }
+
+case class TeamCityBuilds(builds: Seq[TeamCityBuild])
+
+object TeamCityBuilds {
+  implicit val r: Reads[TeamCityBuilds] = (__ \ "build").read[Seq[TeamCityBuild]].map{ list => TeamCityBuilds(list) }
+}
+
 
 class TeamcityService(httpClient: HttpLike) {
 
-  private def GET(path: String, queryString: Map[String, String]): Future[WSResponse] = {
+  private lazy val buildFields = List("id", "number", "buildType(name,projectName)", "status",
+    "revisions(revision(version))", "changes(change(username,comment,version))",
+    "artifact-dependencies(build(number))").mkString(",")
+
+  private def GET[T](path: String, queryString: Map[String, String])(implicit r:Reads[T]): Future[T] = {
     val apiPath = "guestAuth/app/rest"
     val url = s"${Configuration.teamcity.internalHost}/$apiPath/$path"
 
-    httpClient.GET(
-      url,
-      queryString,
-      headers = Map("Accept" -> "application/json")
-    )
+    httpClient
+      .GET(url, queryString, headers = Map("Accept" -> "application/json"))
+      .map { response =>
+        response.status match {
+          case 200 => response.json.validate[T] match {
+            case JsSuccess(obj, _) => obj
+            case JsError(error) => throw new RuntimeException(s"Invalid JSON from Teamcity API: $error")
+          }
+          case statusCode => throw new RuntimeException(s"Invalid status code from TeamCity: $statusCode")
+        }
+      }
+  }
+
+  def getBuilds(project: String, count: Int = 10): Future[Seq[TeamCityBuild]] = {
+    GET[TeamCityBuilds](
+      path = "builds",
+      queryString = Map("locator" -> s"buildType:(id:$project),count:$count") + ("fields" -> s"build(${buildFields})")
+    ).map(_.builds)
   }
 
   def getBuild(number: String): Future[TeamCityBuild] = {
-    GET(
+    GET[TeamCityBuild](
       path = s"builds/number:$number,state:any,canceled(any)",
-      queryString = Map("fields" -> List(
-        "id", "number", "buildType(name,projectName)", "status",
-        "revisions(revision(version))", "changes(change(username,comment,version))",
-        "artifact-dependencies(build(number))").mkString(","))
-    ).map { response =>
-      response.status match {
-        case 200 => response.json.validate[TeamCityBuild] match {
-          case JsSuccess(build, _) => build
-          case JsError(error) => throw new RuntimeException(s"Invalid JSON from Teamcity API: $error")
-        }
-        case statusCode => throw new RuntimeException(s"Invalid status code from TeamCity: $statusCode")
-      }
-    }
+      queryString = Map("fields" -> buildFields)
+    )
   }
 
 }

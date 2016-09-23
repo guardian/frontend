@@ -1,5 +1,6 @@
 @import conf.switches.Switch
-@(  errorCharts: Seq[tools.AwsLineChart],
+@(  ciBuilds: Seq[model.deploys.TeamCityBuild],
+    errorCharts: Seq[tools.AwsLineChart],
     latencyCharts: Seq[tools.AwsLineChart],
     fastlyCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
@@ -33,14 +34,16 @@
         <div class="cost"><a href="https://console.aws.amazon.com/billing/home"><strong>$@cost.max.toLong</strong> this month</a></div>
     </header>
 
-    <div class="build-wrapper">
+    <div id="build-wrapper">
         <h2>Teamcity builds</h2>
-        @*
-        To add another build just append another &buildTypeId=XXXXXX
-        Note, it will not show unless you enable the "External status widget" for the build in Teamcity
-            for some reason the &js=1 hangs waiting for a http resp so just using the iframe version for now
-        *@
-        <iframe src="https://teamcity.gu-web.net/externalStatus.html?buildTypeId=dotcom_master"></iframe>
+        <ul>
+        @ciBuilds.map { build =>
+            <li>
+                <a class="@if(build.isSuccess) { succeeded } else { failed }"
+                href="@conf.Configuration.teamcity.host/viewLog.html?buildId=@build.id&buildTypeId=@build.projectName">@build.projectName (@build.number)</a>
+            </li>
+        }
+        </ul>
     </div>
 
 
