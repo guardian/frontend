@@ -634,6 +634,27 @@
     }
 }
 
+.content__main-column--article,
+.content__main-column--liveblog,
+.content--media--video {
+    .adverts__badge--alt {
+        padding-bottom: 20px;
+    }
+}
+
+.content__main-column--liveblog {
+    .adverts__badge--alt {
+        float: none;
+    }
+}
+
+.content--media--video:not(.paid-content--advertisement-feature) {
+    .adverts__badge,
+    .adverts__badge__help {
+        color: $neutral-6;
+    }
+}
+
 .adverts__badge--interactive {
     float: right;
     clear: right;
@@ -656,7 +677,7 @@
 }
 
 .advert--card-branding {
-    margin-bottom: 96px; //$gs-row-height + height of the logo
+    margin-bottom: $gs-row-height + $gs-baseline * 5; //96px = $gs-row-height + height of the logo
 }
 
 .adverts__badge--card-branding {
