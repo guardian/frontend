@@ -56,8 +56,8 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
     AutoRefreshSwitch.switchOn()
 
     val result = Future {
-      val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(obj("name" -> "foo"))(request, play.api.libs.json.Writes.JsValueWrites).result
+      implicit val request = FakeRequest("GET", "http://foo.bar.com/data.json")
+      JsonComponent(JsonComponent.withRefreshStatus(obj("name" -> "foo"))).result
     }
 
     contentType(result) should be(Some("application/json"))
