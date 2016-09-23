@@ -39,8 +39,7 @@ define([
     without,
     omniture
 ) {
-    var explainerDismissed = 'gu.notificationsExplainerDismissed',
-        modules = {
+    var modules = {
 
         getReg: function () {
             return navigator.serviceWorker.ready;
@@ -54,10 +53,6 @@ define([
 
         init: function() {
             var $followElement = modules.configureSubscribeButton();
-            if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
-                modules.showExplainer();
-            }
-
             modules.trackFollowButtonAttention($followElement.get(0));
         },
 
@@ -86,40 +81,6 @@ define([
             return $follow;
         },
 
-        showExplainer: function() {
-            var src = template(explainer,{
-                closeIcon : svgs('closeCentralIcon'),
-                imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'live-notifications-explainer-svg']),
-                imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'live-notifications-explainer-svg'])
-            });
-
-            fastdom.write(function () {
-                var $notifications = $('.js-live-notifications');
-                $notifications.append(src);
-               // bean.one($notifications[0], 'click', '.js-live-notifications__item__close', function() {
-                bean.one($('.js-live-notifications__item__close')[0], 'click', function() {
-                    fastdom.write(function() {
-                        userPrefs.set(explainerDismissed, true);
-                        $('.js-live-notifications-explainer').remove();
-                    });
-                });
-            });
-        },
-
-        closeDisplayMessage: function(){
-            $('.js-live-notifications-denied').remove();
-            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__toggle', modules.subscribeHandler);
-        },
-
-        notificationsDeniedMessage: function() {
-            var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
-            fastdom.write(function () {
-                var blocked = $('.js-notifications-blocked');
-                blocked.prepend(src);
-                bean.one(blocked[0], 'click', '.js-live-notifications-denied__item__close', modules.closeDisplayMessage);
-            });
-        },
-
         subscribeHandler: function () {
             var wasNotGranted = Notification.permission !== 'granted';
             modules.subscribe().then(modules.follow)
@@ -130,7 +91,6 @@ define([
                     }
                 }) .catch( function () {
                     if (Notification.permission === 'denied') {
-                        modules.notificationsDeniedMessage();
                         omniture.trackLinkImmediate('browser-notifications-denied');
                     }
                 });
@@ -219,10 +179,6 @@ define([
             return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
             });
-        },
-
-        hasDismissedExplainer: function() {
-           return userPrefs.get(explainerDismissed);
         }
     };
 
