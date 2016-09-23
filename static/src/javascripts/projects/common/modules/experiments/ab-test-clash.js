@@ -7,19 +7,24 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
-        return _testABClash(ab.isInVariant);
-    }
-
-    function _testABClash(f) {
 
         var contributionsStory = {name: 'ContributionsStory20160922', variants: ['control', 'story']};
-        var clashingTests = [contributionsEpic, contributionsStory];
+        var clashingTests = [contributionsStory];
 
-        return some(clashingTests, function (test) {
-            return some(test.variants, function (variant) {
-                return f(test.name, variant);
+        return _testABClash(ab.isInVariant, clashingTests);
+    }
+
+    function _testABClash(f, clashingTests) {
+        if (clashingTests.length > 0) {
+            return some(clashingTests, function (test) {
+                return some(test.variants, function (variant) {
+                    return f(test.name, variant);
+                });
             });
-        });
+        }
+        else {
+            return false;
+        }
     }
 
     return {
