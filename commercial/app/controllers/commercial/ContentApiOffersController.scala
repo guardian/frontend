@@ -133,14 +133,14 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 1)
+      lookup.latestContentByKeyword(keyword, 2)
     }.getOrElse(Future.successful(Nil))
-
-    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
     latestContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
     }
+
+    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
     specificContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
@@ -150,7 +150,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       specific <- specificContent
       latestByKeyword <- latestContent
     } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 1
     }
 
     futureContents.map((content: Seq[model.ContentType]) => {
