@@ -54,7 +54,7 @@
             @switches.map{ switch =>
                 @Switch.expiry(switch).daysToExpiry.map { days =>
                     <li title="@switch.name - expires in @days days">
-                        <span class="expiry-days-@days">@switch.name</span> - <span>@showOwners(switch)</span>
+                        <span class="@if(days < 0) { expired } else { expiry-days-@days }">@switch.name</span> - <span>@showOwners(switch)</span>
                     </li>
                 }
             }
