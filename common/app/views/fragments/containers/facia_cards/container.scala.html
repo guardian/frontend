@@ -1,7 +1,7 @@
 @import common.commercial.ContainerModel
 @import common.dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
@@ -35,6 +35,7 @@
     }
 
     @containerDefinition.container match {
+
         case _: model.MostPopular if isPaidFront => {}
 
         case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
@@ -46,24 +47,8 @@
             }
         }
 
-        case slices.Commercial(SingleCampaign(_)) => {
-            @maybeContainerModel match {
-                case Some(containerModel) => {
-                    @paidContainer(
-                        frontId.getOrElse(""),
-                        containerDefinition.index,
-                        containerModel.copy(
-                            layoutName = "fixed/small/slow-IV",
-                            content = containerModel.content.copy(showMoreCards = Nil)
-                        )
-                    )
-                }
-                case None => {}
-            }
-        }
-
         case _ => {
-        <section id="@componentName"
+            <section id="@componentName"
                  class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
                  data-link-name="container-@{containerDefinition.index + 1} | @componentName"
                  data-id="@containerDefinition.dataId"
@@ -71,51 +56,45 @@
                  data-component="@componentName"
                  aria-expanded="true">
 
-            @if(containerDefinition.isStoryPackage){
-                <style>
-                @Html(common.Assets.css.inlineStoryPackage)
-                </style>
-            }
-
-            @containerDefinition.container match {
-
-                case _: Dynamic | _: Fixed => {
-                    <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
-                    </div>
+                @if(containerDefinition.isStoryPackage){
+                    <style>
+                    @Html(common.Assets.css.inlineStoryPackage)
+                    </style>
                 }
 
-                case NavList => {
-                    <div class="fc-container__inner">
-                        @navListContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                @containerDefinition.container match {
 
-                case Video => {
-                    <div class="gs-container">
-                        @videoContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                    case _: Dynamic | _: Fixed => {
+                        <div class="fc-container__inner">
+                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
+                        </div>
+                    }
 
-                case NavMediaList => {
-                    <div class="fc-container__inner">
-                        @navMediaListContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                    case NavList => {
+                        <div class="fc-container__inner">
+                            @navListContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
 
-                case MostPopular => {
-                    <div class="fc-container__inner">
-                        @mostPopularContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                    case Video => {
+                        <div class="gs-container">
+                            @videoContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
 
-                case slices.Commercial(container) => {
-                    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
-                        @commercialContainer(container, containerDefinition, frontProperties)
-                    </div>
+                    case NavMediaList => {
+                        <div class="fc-container__inner">
+                            @navMediaListContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
+
+                    case MostPopular => {
+                        <div class="fc-container__inner">
+                            @mostPopularContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
                 }
-            }
-        </section>
+            </section>
         }
     }
 }

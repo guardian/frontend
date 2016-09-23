@@ -89,6 +89,9 @@ object Competitions {
     val competitions = comps
   }
 }
+ 
+// when updating this code, think about whether the mobile apps api needs to be updated too 
+// (https://github.com/guardian/mobile-apps-api/blob/master/mobile-football/app/data/pa/Competitions.scala)
 
 object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(

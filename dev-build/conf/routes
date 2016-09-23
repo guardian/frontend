@@ -290,6 +290,7 @@ GET            /commercial/masterclasses.json                                   
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
+GET            /commercial/books/api/books.json                                                                                  controllers.commercial.BookOffersController.getBooks
 GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent
 GET            /commercial/capi.json                                                                                             controllers.commercial.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml

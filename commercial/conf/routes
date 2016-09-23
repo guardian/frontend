@@ -24,6 +24,7 @@ GET        /commercial/soulmates/api/$subgroup<\w+>.json                 control
 # Book merchandising components
 GET         /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
 GET         /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
+GET         /commercial/books/api/books.json                              controllers.commercial.BookOffersController.getBooks
 
 # Live events merchandising components
 GET         /commercial/liveevents/event.json                             controllers.commercial.LiveEventsController.renderEvent

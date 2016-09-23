@@ -27,13 +27,10 @@ object ContainerDefinition {
   def fromContainer(container: Container, items: Seq[PressedContent]) = container match {
     case Dynamic(dynamicContainer) =>
       dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
-
-    case Fixed(containerDefinition) => Some(containerDefinition)
-
-    case Commercial(SingleCampaign(containerDefinition)) => Some(containerDefinition)
-    case Commercial(MultiCampaign(containerDefinition)) => Some(containerDefinition)
-
-    case _ => None
+    case Fixed(containerDefinition) =>
+      Some(containerDefinition)
+    case _ =>
+      None
   }
 
   /** Fast container that looks good for the number of items provided */

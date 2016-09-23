@@ -96,7 +96,7 @@ object ZootropolisHostedPages {
 
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType)))
   }
 
   private lazy val videoPage = withNextPage(videoPageWithoutNextPage, articlePageWithoutNextPage)

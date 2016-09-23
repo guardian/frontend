@@ -269,8 +269,6 @@ object FaciaContainer {
     // popular containers should never be sponsored
     container match {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
-      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
-      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.multi
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader),

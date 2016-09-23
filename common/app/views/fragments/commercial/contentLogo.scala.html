@@ -21,10 +21,6 @@
             }
         } else {
             <img src="@branding.sponsorLogo.url"
-                @for(dim <- branding.sponsorLogo.dimensions) {
-                    width="@dim.width"
-                    height="@dim.height"
-                }
             alt="@{branding.sponsorName}'s logo"
             class="adverts__badge__logo">
         }
