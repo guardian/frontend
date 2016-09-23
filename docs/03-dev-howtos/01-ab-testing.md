@@ -117,6 +117,8 @@ The AMD module must return an object with the following properties,
         - variant.success: a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
 
 
+When choosing your audience offset, it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
+
 You will also need to mark the module as a dependency of the AB testing module.
 
 Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js`
