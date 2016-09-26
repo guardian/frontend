@@ -5,7 +5,6 @@ import common.{JobScheduler, AkkaAsync}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
-import conf.switches.Switches.Targeting
 
 class TargetingLifecycle(
   appLifecycle: ApplicationLifecycle,
@@ -15,22 +14,18 @@ class TargetingLifecycle(
 
     appLifecycle.addStopHook {
       () => Future {
-        if (Targeting.isSwitchedOn) {
-          jobs.deschedule("TargetingCampaignRefreshJob")
-        }
+        jobs.deschedule("TargetingCampaignRefreshJob")
       }
     }
 
   override def start(): Unit = {
-    if (Targeting.isSwitchedOn) {
-      jobs.deschedule("TargetingCampaignRefreshJob")
-      jobs.scheduleEvery("TargetingCampaignRefreshJob", 1.minutes) {
-        CampaignAgent.refresh()
-      }
+    jobs.deschedule("TargetingCampaignRefreshJob")
+    jobs.scheduleEvery("TargetingCampaignRefreshJob", 1.minutes) {
+      CampaignAgent.refresh()
+    }
 
-      akkaAsync.after1s {
-        CampaignAgent.refresh()
-      }
+    akkaAsync.after1s {
+      CampaignAgent.refresh()
     }
   }
 }

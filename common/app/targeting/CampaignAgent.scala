@@ -11,9 +11,13 @@ object CampaignAgent extends Logging with ExecutionContexts {
   private val agent = AkkaAgent[CampaignCache](CampaignCache(Nil, None))
 
   def refresh(): Future[Unit] = {
-    Configuration.targeting.campaignsUrl.map(url => {
-      CampaignCache.fetch(url, limit = 100).flatMap(agent.alter).map(_ => ())
-    }).getOrElse(Future.failed(new BadConfigurationException("Campaigns URL not configured")))
+    if (Targeting.isSwitchedOn) {
+      Configuration.targeting.campaignsUrl.map(url => {
+        CampaignCache.fetch(url, limit = 100).flatMap(agent.alter).map(_ => ())
+      }).getOrElse(Future.failed(new BadConfigurationException("Campaigns URL not configured")))
+    } else {
+      Future.successful(())
+    }
   }
 
   def getCampaignsForTags(tags: Seq[String]) = {
