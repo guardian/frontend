@@ -288,6 +288,7 @@ GET            /commercial/travel/api/offers.json                               
 GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
 GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+GET            /commercial/soulmates/$subgroup<\w+>                                                                              controllers.commercial.SoulmatesController.getSoulmates(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
 GET            /commercial/books/api/books.json                                                                                  controllers.commercial.BookOffersController.getBooks
