@@ -39,7 +39,6 @@ define([
     contains,
     loadingTmpl
 ) {
-    var YT = window.YT;
     var player;
     var nextVideoInterval;
 
@@ -81,14 +80,14 @@ define([
             var $youtubeIframe = $('.js-hosted-youtube-video');
             $youtubeIframe.each(function(el){
                 youtubePlayer.init().promise.then(function () {
-                    player = new YT.Player(el.id, {
+                    player = new window.YT.Player(el.id, {
                         events: {
                             'onStateChange': onPlayerStateChange
                         }
                     });
                     function onPlayerStateChange(event) {
                         ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function(status){
-                            bonzo(el).toggleClass('youtube-video-' + status.toLocaleLowerCase(), event.data === YT.PlayerState[status]);
+                            bonzo(el).toggleClass('youtube-video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
                         });
                     }
                 });

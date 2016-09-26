@@ -8,7 +8,7 @@ define([
     loadScript
 ) {
     var scriptId = 'youtube-player';
-    var scriptSrc = 'http://www.youtube.com/player_api';
+    var scriptSrc = 'https://www.youtube.com/player_api';
     var promise = new Promise(function(resolve) {
         window.onYouTubeIframeAPIReady = resolve;
     });
