@@ -286,6 +286,7 @@ GET            /admin/football/api/squad/:teamId                                
 GET            /commercial/travel/offers.json                                                                                    controllers.commercial.TravelOffersController.renderTravel
 GET            /commercial/travel/api/offers.json                                                                                controllers.commercial.TravelOffersController.getTravel
 GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
+GET            /commercial/api/jobs.json                                                                                         controllers.commercial.JobsController.getJobs
 GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
