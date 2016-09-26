@@ -21,7 +21,7 @@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
-                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
+                            <a href="@LinkTo { @sectionItem.url }" data-link-name="nav : secondary : @sectionItem.name">@sectionItem.name</a>
                         </li>
                     }
                 </ul>
