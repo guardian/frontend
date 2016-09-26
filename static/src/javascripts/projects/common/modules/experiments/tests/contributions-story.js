@@ -53,23 +53,20 @@ define([
         var messages = [
             {
                 title: 'Did you know...',
-                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">... the Guardian has the freedom to report on any story it wants?\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">From Edward Snowden to the Panama Papers, everything we do is in pursuit of the truth. We believe that every issue should be reported without bias, whatever the cost to us. These days, though, those are expensive beliefs to hold.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">If you believe in our unbiased reporting, if you read us, if you like us, then please contribute to the Guardian.\</p>',
+                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">... the Guardian is unique? Unlike other media, we have no billionaire owner and no hidden influences. Just open, honest journalism, free from commercial or political interference. We seek truth, not approval.\</p>\
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">If you do too, then please help to keep our independence, and our future, secure. You can give to the Guardian in less than a minute.\</p>',
                 imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-independent.png'
             },
             {
                 title: 'Did you know...',
-                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian has won more than 50 journalism awards in 2016?\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Whether it’s Brexit or the Olympics, stories like this cost a lot to produce. We believe that money should never get in the way of informative, unbiased quality journalism. This is why we make our website available free of charge.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">We’ll always be here to cover them. If you read us, if you like us, then please contribute to the Guardian.\</p>',
+                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian has won 70 awards so far this year? Our serious, fearless, public-interest journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters.\</p>\
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\"> If you do too, then please help to keep our quality journalism, and our future, secure. You can give to the Guardian in less than a minute.\</p>',
                 imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-quality.png'
             },
             {
                 title: 'Did you know...',
-                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian is working in a difficult financial environment?\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Never before have more people read the Guardian. Unlike many others, you can read us online, for free. However, like many others, we’re selling fewer actual papers. Which means that never before have so few paid for the Guardian.\</p>\
-                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Finding the truth is expensive. But supporting us isn’t. If you read us, if you like us, then please contribute to the Guardian.\</p>',
+                body: '\<p class=\"contributions__paragraph contributions__paragraph--epic\">… the Guardian is working in a difficult commercial environment? More people are reading our journalism than ever, but far fewer are paying for it - and advertising revenues are falling fast. Producing the Guardian’s quality, independent journalism is expensive, but supporting us isn’t.\</p>\
+                        \<p class=\"contributions__paragraph contributions__paragraph--epic\">Please help to keep our future secure. You can give to the Guardian in less than a minute.\</p>',
                 imageHref: 'https://uploads.guim.co.uk/2016/09/22/contributions-finance.png'
             }
         ];
