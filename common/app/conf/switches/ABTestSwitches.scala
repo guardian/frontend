@@ -48,11 +48,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-story-20160922",
-    "Test whether telling the story of the guardian through staggered messages over time results in more contributions than always showing the epic message.",
+    "ab-contributions-story",
+    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
+    sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
 

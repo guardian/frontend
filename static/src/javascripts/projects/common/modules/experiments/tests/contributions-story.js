@@ -14,30 +14,32 @@ define([
     'common/modules/commercial/commercial-features',
     'common/utils/cookies',
     'common/utils/element-inview'
-], function (bean,
-             qwery,
-             $,
-             template,
-             svg,
-             fastdom,
-             mediator,
-             contributionsStory,
-             contributionsEpic,
-             robust,
-             arrowRight,
-             config,
-             commercialFeatures,
-             cookies,
-             ElementInview
+    ], function (
+        bean,
+        qwery,
+        $,
+        template,
+        svg,
+        fastdom,
+        mediator,
+        contributionsStory,
+        contributionsEpic,
+        robust,
+        arrowRight,
+        config,
+        commercialFeatures,
+        cookies,
+        ElementInview
 ) {
 
     return function () {
 
-        this.id = 'ContributionsStory20160922';
-        this.start = '2016-09-22';
-        this.expiry = '2016-10-03';
+        this.id = 'ContributionsStory';
+        this.start = '2016-09-26';
+        this.expiry = '2016-10-06';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test whether telling the story of the guardian through staggered messages over time results in more contributions than always showing the epic message.';
+        this.description = 'Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more ' +
+            'contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs).';
         this.showForSensitive = false;
         this.audience = 0.08;
         this.audienceOffset = 0.48;
@@ -79,8 +81,8 @@ define([
 
         var writer = function (component) {
             return fastdom.write(function () {
-                var a = $('.submeta');
-                component.insertBefore(a);
+                var submetaElement = $('.submeta');
+                component.insertBefore(submetaElement);
                 mediator.emit('contributions-embed:insert', component);
             });
         };
@@ -167,7 +169,7 @@ define([
                 id: 'story',
                 test: function () {
                     addInviewLIstener(proposedAdvance, currentTime, storyMessageIterationCount, 'contributions-story');
-                    writer(getStoryComponent(messages[storyMessageIterationCount%3], storyMessageIterationCount));
+                    writer(getStoryComponent(messages[(storyMessageIterationCount-1)%3], storyMessageIterationCount));
                 },
                 success: completer
             }
