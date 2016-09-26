@@ -86,8 +86,6 @@ define([
 
     SaveForLater.prototype.conditionalInit = function(){
         if (!liveBlog.notificationsCondition()) {
-            var $saveForLaterContainer = $('.meta__save-for-later');
-            $saveForLaterContainer.show();
             this.init();
         }
     };
