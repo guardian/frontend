@@ -17,6 +17,7 @@ define([
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without',
+    'lodash/objects/isEmpty',
     'common/modules/analytics/omniture'
 ], function (
     bonzo,
@@ -37,6 +38,7 @@ define([
     some,
     uniq,
     without,
+    isEmpty,
     omniture
 ) {
     var modules = {
@@ -73,11 +75,12 @@ define([
                     icon: svgs(isSsubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
-            fastdom.write( function() {
-                $follow.html(src);
-                bean.one($follow[0], 'click', '.js-notifications__toggle', handler);
-            });
-
+            if (!isEmpty($follow)) {
+                fastdom.write(function () {
+                    $follow.html(src);
+                    bean.one($follow[0], 'click', '.js-notifications__toggle', handler);
+                });
+            }
             return $follow;
         },
 
