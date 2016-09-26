@@ -23,8 +23,8 @@ define([
         this.expiry = '2016-10-14'; // this test will expire on Thurs 13th PM.
         this.author = 'Justin Pinner';
         this.description = 'Adblocking response with ad-free 404 test';
-        this.audience = 0;  // TODO: audience sizing
-        this.audienceOffset = 0; // exclude anyone that had been in 12% v2 test
+        this.audience = 0.12;
+        this.audienceOffset = 0.12; // exclude anyone that would have been in the previous 12% v2 test
         this.successMeasure = 'Adblocking users show genuine interest in a paid ad-free service';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
@@ -44,19 +44,17 @@ define([
         this.idealOutcome = 'Adblock users demonstrate that they would make contributions that will completely offset lost ad display revenue';
         this.hypothesis = 'Given the opportunity to pay for ad-free or whitelist the guardian more than 75% of adblock users choose one of these options';
 
+        // NOTE: async adblock detection doesn't work reliably if the page is opened in a new tab
+
         this.canRun = function () {
             return contains('chrome', detect.getUserAgent.browser.toLowerCase()) &&
                 contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint()) &&
                 config.page.edition === 'UK' &&
-                //(cookies.get('GU_geo_continent') && cookies.get('GU_geo_continent').toUpperCase() === 'EU') &&
                 detect.adblockInUseSync();
         };
 
         var isQualified = function () {
-            // NOTE: async adblock detection doesn't work if the page is opened in a new tab
             return detect.adblockInUseSync() &&
-                !cookies.get('gu_abm_x') &&
-                //(cookies.get('GU_geo_continent') && cookies.get('GU_geo_continent').toUpperCase() === 'EU') &&
                 !config.page.isFront &&
                 !config.page.shouldHideAdverts &&
                 config.page.section !== 'childrens-books-site' &&
@@ -82,7 +80,7 @@ define([
                 if (isQualified()) {
                     var variant = '299',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Go ad-free for &pound;2.99/month',
+                        adFreeButtonText = 'Remove ads for &pound;2.99/month',
                         adFreeMessagePrefix = '&pound;2.99 per month',
                         header = 'Advertising helps fund our journalism';
 
@@ -106,7 +104,7 @@ define([
                 if (isQualified()) {
                     var variant = '499',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Go ad-free for &pound;4.99/month',
+                        adFreeButtonText = 'Remove ads for &pound;4.99/month',
                         adFreeMessagePrefix = '&pound;4.99 per month',
                         header = 'Advertising helps fund our journalism';
 
@@ -130,8 +128,8 @@ define([
                 if (isQualified()) {
                     var variant = '999',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Go ad-free for &pound;9.99/month',
-                        adFreeMessagePrefix = '&pound;4.99 per month',
+                        adFreeButtonText = 'Remove ads for &pound;9.99/month',
+                        adFreeMessagePrefix = '&pound;9.99 per month',
                         header = 'Advertising helps fund our journalism';
 
                     var surveyOverlay = new SurveyAdBlock({

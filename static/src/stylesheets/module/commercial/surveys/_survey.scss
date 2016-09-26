@@ -244,11 +244,14 @@
         @include fs-bodyCopy(1);
         font-size: 12px;
         line-height: 120%;
-        margin: 0 $gs-gutter $gs-column-width/4 0;
         text-align: left;
 
         .center {
             text-align: center;
+        }
+
+        p {
+            margin-top: 10px;
         }
     }
 
@@ -392,8 +395,12 @@
 
     .image-link-container {
         height: 85px;
+        margin-top: 10px;
         margin-bottom: $gs-column-width/2;
         margin-left: $gs-gutter / 2;
+        p {
+            margin-top: 10px;
+        }
     }
 
 }
