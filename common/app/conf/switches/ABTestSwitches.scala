@@ -22,7 +22,17 @@ trait ABTestSwitches {
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 11, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-discussion-promote-comments",
+    "Promote the comments with a sticky bottom banner",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 10, 12),
     exposeClientSide = true
   )
 
