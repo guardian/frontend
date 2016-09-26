@@ -41,6 +41,8 @@ object HostedVideoPage extends Logging {
       atoms <- content.atoms
       videoAtoms <- atoms.media
       videoAtom <- videoAtoms.headOption
+      ctaAtoms <- atoms.cta
+      ctaAtom <- ctaAtoms.headOption
     } yield {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
@@ -113,17 +115,9 @@ object HostedVideoPage extends Logging {
           srcUrlOgg = videoUrl("video/ogg"),
           srcM3u8 = videoUrl("video/m3u8")
         ),
-        // todo: from cta atom
-        cta = HostedCallToAction(
-          url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016",
-          image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
-          label = Some("It's time to act for wildlife"),
-          trackingCode = Some("act-for-wildlife-button"),
-          btnText = Some("Act for wildlife")
-        ),
+        cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        // todo: related content
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata
@@ -147,25 +141,3 @@ case class HostedVideo(
   srcUrlOgg: String,
   srcM3u8: String
 )
-
-case class HostedCallToAction(
-  url: String,
-  image: Option[String] = None,
-  label: Option[String] = None,
-  trackingCode: Option[String] = None,
-  btnText: Option[String] = None
-)
-
-object HostedCallToAction {
-
-  def fromAtom(ctaAtom: Atom): HostedCallToAction = {
-    val cta = ctaAtom.data.asInstanceOf[AtomData.Cta].cta
-    HostedCallToAction(
-      url = cta.url,
-      image = cta.backgroundImage,
-      label = cta.label,
-      trackingCode = cta.trackingCode,
-      btnText = cta.btnText
-    )
-  }
-}
