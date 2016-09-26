@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
-import com.gu.contentatom.thrift.AtomData
+import com.gu.contentatom.thrift.{Atom, AtomData}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import model.GuardianContentTypes._
@@ -155,3 +155,17 @@ case class HostedCallToAction(
   trackingCode: Option[String] = None,
   btnText: Option[String] = None
 )
+
+object HostedCallToAction {
+
+  def fromAtom(ctaAtom: Atom): HostedCallToAction = {
+    val cta = ctaAtom.data.asInstanceOf[AtomData.Cta].cta
+    HostedCallToAction(
+      url = cta.url,
+      image = cta.backgroundImage,
+      label = cta.label,
+      trackingCode = cta.trackingCode,
+      btnText = cta.btnText
+    )
+  }
+}
