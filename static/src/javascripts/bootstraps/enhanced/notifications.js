@@ -109,8 +109,11 @@ define([
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
                 }).catch(function(e) {
-                    var $denied = $('.live-notifications__label--denied');
-                    $denied.show('block');
+                    fastdom.write(function(){
+                        var $denied = $('.js-live-notifications__label--denied');
+                        $denied.removeClass('live-notifications__label--hidden');
+                        $denied.addClass('live-notifications__label--visible');
+                    });
                     throw e;
                 });
             });

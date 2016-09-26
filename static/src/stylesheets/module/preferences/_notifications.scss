@@ -97,13 +97,20 @@ $notifications-button-height: 28px;
     color: $live-main-1;
     line-height: $slider-height;
     display: none;
+}
 
-    &--denied {
-        @include fs-textSans(2, true);
-        padding: $gs-baseline 0;
-        display: none;
-        text-align: left;
-    }
+.live-notifications__label--visible {
+    display: block;
+}
+
+.live-notifications__label--hidden {
+    display: none;
+}
+
+.js-live-notifications__label--denied {
+    @include fs-textSans(2, true);
+    padding: $gs-baseline 0;
+    text-align: left;
 }
 
 @each $state in (subscribed, unsubscribed) {
