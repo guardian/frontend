@@ -1,8 +1,12 @@
 package controllers.commercial
 
-import model.commercial.jobs.{JobSector, JobsAgent}
+import common.JsonComponent
+import model.commercial.Segment
+import model.commercial.jobs.{Job, JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._
+import play.api.libs.json.Json
+import scala.concurrent.duration._
 
 class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Requests {
 
@@ -22,14 +26,24 @@ class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Req
     JobSector("media", "Media")
   )
 
+  private def jobSample(specificIds: Seq[String], segment: Segment): Seq[Job] =
+    (jobsAgent.specificJobs(specificIds) ++ jobsAgent.jobsTargetedAt(segment)).distinct.take(2)
+
   def renderJobs = Action { implicit request =>
-    (jobsAgent.specificJobs(specificIds) ++ jobsAgent.jobsTargetedAt(segment)).distinct match {
+    jobSample(specificIds, segment) match {
       case Nil => NoCache(jsonFormat.nilResult.result)
       case jobs => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
-        jsonFormat.result(views.html.jobs.jobs(jobs.take(2), jobSectors, omnitureId, clickMacro))
+        jsonFormat.result(views.html.jobs.jobs(jobs, jobSectors, omnitureId, clickMacro))
       }
     }
+  }
+
+  def getJobs = Action { implicit request =>
+      val json = Json.toJson(jobSample(specificIds, segment))
+      Cached(60.seconds){
+        JsonComponent(json)
+      }
   }
 }

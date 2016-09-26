@@ -5,6 +5,8 @@ import contentapi.ContentApiClient
 import model.commercial._
 import org.apache.commons.lang.StringEscapeUtils._
 import org.apache.commons.lang.StringUtils
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 import scala.concurrent.Future
 import scala.xml.Node
@@ -43,6 +45,21 @@ object Job {
     sectorIds = (xml \ "Sectors" \ "Sector") map (_.text.toInt),
     salaryDescription = (xml \ "SalaryDescription").text
   )
+
+
+  implicit val writesJob: Writes[Job] = (
+    (JsPath \ "id").write[Int] and
+    (JsPath \ "title").write[String] and
+    (JsPath \ "shortDescription").write[String] and
+    (JsPath \ "locationDescription").write[Option[String]] and
+    (JsPath \ "recruiterName").write[String] and
+    (JsPath \ "recruiterPageUrl").write[Option[String]] and
+    (JsPath \ "recruiterLogoUrl").write[String] and
+    (JsPath \ "sectorIds").write[Seq[Int]] and
+    (JsPath \ "salaryDescription").write[String] and
+    (JsPath \ "keywordIdSuffixes").write[Seq[String]]
+  )(unlift(Job.unapply))
+
 }
 
 case class JobSector(path: String, name: String)
