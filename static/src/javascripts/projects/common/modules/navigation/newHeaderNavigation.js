@@ -2,12 +2,12 @@ define([
     'qwery',
     'fastdom',
     'common/modules/navigation/edition-picker',
-    'common/modules/navigation/is-signed-in'
+    'common/modules/navigation/user-account'
 ], function (
     qwery,
     fastdom,
     editionPicker,
-    isSignedIn
+    userAccount
 ) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
@@ -180,7 +180,7 @@ define([
         enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
-        isSignedIn();
+        userAccount();
     }
 
     return init;

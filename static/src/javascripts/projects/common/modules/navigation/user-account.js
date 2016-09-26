@@ -24,9 +24,11 @@ define([
             var userAccountLinksContainer = qwery('.js-show-user-account-links')[0];
 
             if (userAccountLinksContainer) {
-                userAccountLinksContainer.classList.add('user-signed-in');
+                fastdom.write(function () {
+                    userAccountLinksContainer.classList.add('user-signed-in');
 
-                updateCommentLink();
+                    updateCommentLink();
+                });
             }
         }
     }
