@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import common.commercial._
-import common.{Edition, ExecutionContexts, Logging}
+import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
@@ -11,6 +11,7 @@ import play.api.mvc._
 import model._
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 sealed abstract class SponsorType(val className: String)
@@ -133,7 +134,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 2)
+      lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     latestContent onFailure {
@@ -150,14 +151,15 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       specific <- specificContent
       latestByKeyword <- latestContent
     } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 1
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
     futureContents.map((content: Seq[model.ContentType]) => {
       val response = content.head
       val capiSingle = CapiSingle.fromContent(response.content)
-      val capiJson = Json.toJson(capiSingle)
-      Ok(capiJson)
+      Cached(60.seconds) {
+        JsonComponent(capiSingle)
+      }
     })
 
   }
