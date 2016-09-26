@@ -7,6 +7,7 @@ import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 
@@ -54,14 +55,12 @@ class TopStoriesController(contentApiClient: ContentApiClient) extends Controlle
       "GFE:Top Stories"
     ))
 
-    val htmlResponse = () => views.html.topStories(page, trails)
-    val jsonResponse = () => views.html.fragments.topStoriesBody(trails)
+    val htmlResponse: () => Html = () => views.html.topStories(page, trails)
+    val jsonResponse: () => Html = () => views.html.fragments.topStoriesBody(trails)
 
     Cached(900) {
       if (request.isJson)
-        JsonComponent(
-          "html" -> jsonResponse()
-        )
+        JsonComponent(jsonResponse())
       else
         RevalidatableResult.Ok(htmlResponse())
     }

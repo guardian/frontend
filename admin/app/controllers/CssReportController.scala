@@ -43,19 +43,19 @@ class CssReportController extends Controller with ExecutionContexts {
 
   def index = Action.async { implicit request =>
     CssReport.index() map { dates =>
-      JsonComponent.forJsValue(Json.toJson(CssReportsIndex(dates))).result
+      JsonComponent(CssReportsIndex(dates)).result
     }
   }
 
   def report(day: LocalDate) = Action.async { implicit request =>
     CssReport.report(day) map { selectors =>
-      JsonComponent.forJsValue(Json.toJson(CssReportResponse.fromSelectors(selectors))).result
+      JsonComponent(CssReportResponse.fromSelectors(selectors)).result
     }
   }
 
   def aggregateReport = Action.async { implicit request =>
     CssReport.aggregateReport map { selectors =>
-      JsonComponent.forJsValue(Json.toJson(CssReportResponse.fromSelectors(selectors))).result
+      JsonComponent(CssReportResponse.fromSelectors(selectors)).result
     }
   }
 }

@@ -11,12 +11,12 @@
 
 @if(containerDefinition.index == 0) {
     @for(frontBranding <- frontProperties.branding(Edition(request))) {
-        @contentLogo(frontBranding)
+        @contentLogo(frontBranding, isInteractivePage = false, isBranded = false, isOnTheLeft = true)
     }
 } else {
     @for(containerModel <- maybeContainerModel) {
         @for(containerBranding <- containerModel.branding) {
-            @contentLogo(containerBranding)
+            @contentLogo(containerBranding, isInteractivePage = false, isBranded = false, isOnTheLeft = true)
         }
     }
 }
