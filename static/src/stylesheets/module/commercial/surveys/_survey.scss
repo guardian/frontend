@@ -180,6 +180,10 @@
         }
     }
 
+    .survey-container.thank-you {
+        background-color: #3e3e3e;
+    }
+
     .survey-logo {
         svg {
             fill: #ffffff;
@@ -241,14 +245,18 @@
         font-size: 12px;
         line-height: 120%;
         margin: 0 $gs-gutter $gs-column-width/4 0;
-        text-align: center;
+        text-align: left;
 
-        .text-link {
-            color: #ffffff;
-            text-decoration: underline;
-            &:hover {
-                text-decoration: none;
-            }
+        .center {
+            text-align: center;
+        }
+    }
+
+    .text-link {
+        color: #ffffff;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
         }
     }
 
@@ -345,7 +353,7 @@
         }
     }
 
-    .howto-unblock__close-btn {
+    .howto-unblock__close-btn, .pay-now__close-btn {
         @include mq($until: tablet) {
             position: relative;
         }

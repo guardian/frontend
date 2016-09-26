@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'text!common/views/commercial/survey/survey-adblock.html'
+    'text!common/views/commercial/survey/survey-adblock.html',
+    'common/utils/storage',
 ], function (
     bean,
     fastdom,
@@ -13,7 +14,8 @@ define([
     template,
     userprefs,
     svgs,
-    surveyAdBlockTemplate
+    surveyAdBlockTemplate,
+    storage
 ) {
     var surveyAdBlock = function (config) {
         this.config = config || {};
@@ -42,25 +44,54 @@ define([
                 // -> state 2
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-4'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-2'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').removeClass('thank-you');
             });
             bean.on(document, 'click', $('.survey-button__cta.noads'), function () {
                 // -> state 3
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-4'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').removeClass('thank-you');
+            });
+            bean.on(document, 'click', $('.survey-button__cta.paypal'), function () {
+                // -> state 4
+                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').addClass('thank-you');
+                storage.local.set('gu.abb3.exempt', true);
+            });
+            bean.on(document, 'click', $('.survey-button__cta.ccard'), function () {
+                // -> state 4
+                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
+                $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').addClass('thank-you');
+                storage.local.set('gu.abb3.exempt', true);
             });
             bean.on(document, 'click', $('.howto-unblock__close-btn'), function () {
                 // -> state 1
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').removeClass('thank-you');
             });
             bean.on(document, 'click', $('.pay-now__close-btn'), function () {
                 // -> state 1
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
+                $('.survey-container').removeClass('thank-you');
+            });
+            bean.on(document, 'click', $('.survey-button__cta.readon'), function () {
+                // -> go to article
+                $('.survey-container').removeClass('thank-you');
+                $('.js-survey-adblock').addClass('is-hidden');
             });
         }.bind(this));
     };
