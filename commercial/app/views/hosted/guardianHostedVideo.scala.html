@@ -1,4 +1,5 @@
 @import common.commercial.hosted.HostedVideoPage
+@import conf.Configuration.site.host
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 @import views.html.hosted.guardianHostedShareButtons
@@ -48,7 +49,7 @@
                     @page.video.youtubeId.map { youtubeId =>
                         <iframe id="hosted-video-@youtubeId"
                         class="js-hosted-youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1&origin=theguardian.com"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1&@{if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                     }.getOrElse {
