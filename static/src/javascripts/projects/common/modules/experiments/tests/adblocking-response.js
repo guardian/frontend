@@ -5,8 +5,7 @@ define([
     'common/utils/storage',
     'lodash/collections/contains',
     'common/modules/commercial/user-features',
-    'common/modules/commercial/survey/survey-adblock',
-    'common/utils/cookies'
+    'common/modules/commercial/survey/survey-adblock'
 ], function (
     $,
     config,
@@ -14,8 +13,7 @@ define([
     storage,
     contains,
     userFeatures,
-    SurveyAdBlock,
-    cookies
+    SurveyAdBlock
 ) {
     return function () {
         this.id = 'AdBlockingResponse3';
