@@ -1,0 +1,13 @@
+@import common.commercial.hosted.HostedPage
+@(trails: Seq[HostedPage])(implicit request: RequestHeader)
+
+@if(trails.isEmpty) {
+    <p></p>
+} else {
+    @for(trail <- trails) {
+        <a href="@trail.pageUrl" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @trail.title">
+            <img class="hosted__next-video-thumb" src="@trail.imageUrl" alt="Next Page: @trail.title">
+            <p class="hosted__next-page-title">@trail.title</p>
+        </a>
+    }
+}

@@ -3,6 +3,9 @@ package common.commercial.hosted
 import java.awt.Color
 import java.net.URLEncoder
 
+import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.model.v1.ContentType.{Article, Video}
+import common.Logging
 import model.StandalonePage
 
 object HostedContentType extends Enumeration {
@@ -29,11 +32,31 @@ trait HostedPage extends StandalonePage {
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
 
+  def cta: HostedCallToAction
+
   def contentType = {
     this match {
       case page: HostedVideoPage => HostedContentType.Video
       case page: HostedArticlePage => HostedContentType.Article
       case _ => HostedContentType.Gallery
+    }
+  }
+}
+
+object HostedPage extends Logging {
+
+  def fromContent(item: Content): Option[HostedPage] = {
+    if (item.isHosted) {
+      item.`type` match {
+        case Video => HostedVideoPage.fromContent(item)
+        case Article => HostedArticlePage.fromContent(item)
+        case _ =>
+          log.error(s"Failed to make unsupported hosted type: ${item.`type`}: ${item.id}")
+          None
+      }
+    } else {
+      log.error(s"Failed to make non-hosted content: ${item.id}")
+      None
     }
   }
 }

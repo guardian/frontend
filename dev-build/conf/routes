@@ -306,6 +306,7 @@ GET            /commercial/multi.json                                           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /advertiser-content/onward/:campaignName/:pageName/:cType.json                                                    controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
 GET            /commercial/contributor-email                                                                                     controllers.commercial.ContributorEmailPageController.renderContributorEmailPage
 GET            /commercial/contributor-email/do                                                                                  controllers.commercial.ContributorEmailPageController.renderContributorEmailPageResult
