@@ -17,6 +17,7 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/video-button-duration'
 ], function (
     reportError,
@@ -37,6 +38,7 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
+    ContributionsStory,
     VideoButtonDuration
 ) {
 
@@ -50,6 +52,7 @@ define([
         new ContributionsEpic(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
+        new ContributionsStory(),
         new VideoButtonDuration()
     ].concat(MembershipEngagementBannerTests);
 

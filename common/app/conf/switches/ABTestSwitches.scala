@@ -58,6 +58,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-story",
+    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-20160916",
     "Test variants of the button text to drive contributions.",
     owners = Seq(Owner.withGithub("markjamesbutler")),
