@@ -1,4 +1,4 @@
-<div class="survey-overlay survey-adblock js-survey-adblock is-hidden" data-link-name="adblock <%=variant%> response overlay" role="dialog" aria-label="take part in our survey">
+<div class="survey-overlay survey-adblock js-survey-adblock is-hidden" data-link-name="adblock response overlay <%=variant%> " role="dialog" aria-label="take part in our survey">
     <div class="survey-container">
 
         <div class="survey-content">
@@ -66,16 +66,16 @@
         </div>
 
         <div class="survey-buttons">
-            <div class="survey-button__cta noads state-1 state-2" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
-            <div class="survey-button__cta whitelist state-1" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
-            <div class="survey-button__cta readon state-4 is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta noads state-1 state-2" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta whitelist state-1" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta readon state-4 is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
         </div>
 
         <div class="howto-unblock state-2 is-hidden">
             <hr />
             <div class="survey-text__info">
                 <span>
-                    How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP_<%=variant%>">detailed instructions</a>)
+                    How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP3_<%=variant%>">detailed instructions</a>)
                 </span>
                 <span class="howto-unblock__close-btn" data-link-name="survey adblock howto-unblock closed">
                     <%=crossIcon%>
@@ -90,15 +90,15 @@
         <div class="howto-pay state-3 is-hidden">
             <hr />
             <div class="survey-text__info">
-                <div class="pay-now__close-btn" data-link-name="survey adblock pay-now closed"><%=crossIcon%></div>
+                <div class="pay-now__close-btn" data-link-name="survey adblock <%=variant%> pay-now closed"><%=crossIcon%></div>
                 <div class="survey-buttons">
-                    <div class="survey-button__cta paypal" data-link-name="adblock adfree paypal button">Pay with PayPal<%=arrowWhiteRight%></div>
-                    <div class="survey-button__cta ccard" data-link-name="adblock adfree creditcard button">Pay with card<%=arrowWhiteRight%></div>
+                    <div class="survey-button-rounded__cta pay paypal" data-link-name="adblock adfree <%=variant%> paypal button"><span class="pp-paywith">Pay with</span><%=arrowWhiteRight%></div>
+                    <div class="survey-button-rounded__cta pay ccard" data-link-name="adblock adfree <%=variant%> creditcard button" alt="Pay with debit or credit card">Pay with debit/credit card<%=arrowWhiteRight%></div>
                 </div>
                 <hr />
                 <div class="survey-buttons">
                     <p>Don't want to pay?</p>
-                    <div class="survey-button__cta whitelist" data-link-name="pay-now <%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
+                    <div class="survey-button-rounded__cta whitelist" data-link-name="pay-now <%=variant%>"><%=whitelistText%><%=arrowWhiteRight%></div>
                 </div>
             </div>
         </div>
@@ -106,10 +106,10 @@
         <div class="survey-text__info footer state-1">
             <hr />
             <p>
-                Already paying?&nbsp;<a class="text-link" href="https://profile.theguardian.com/signin?INTCMP=ADB_RESP_<%=variant%>" data-link-name="adblock supporter <%=variant%>">I am a supporter</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/subscriber-number" data-link-name="adblock subscriber <%=variant%>">I am a subscriber</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/contributor-email" data-link-name="adblock contributor <%=variant%>">I am a contributor</a>
+                Already paying?&nbsp;<a class="text-link" href="https://profile.theguardian.com/signin?INTCMP=ADB_RESP3_<%=variant%>" data-link-name="adblock supporter <%=variant%>">I am a supporter</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/subscriber-number" data-link-name="adblock subscriber <%=variant%>">I am a subscriber</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/contributor-email" data-link-name="adblock contributor <%=variant%>">I am a contributor</a>
             </p>
             <p>
-                If you don't know why you are seeing this message, please <a class="text-link" href="https://www.theguardian.com/help/contact-us?INTCMP=ADB_RESP_<%=variant%>">contact us</a>
+                If you don't know why you are seeing this message, please <a class="text-link" href="https://www.theguardian.com/help/contact-us?INTCMP=ADB_RESP3_<%=variant%>">contact us</a>
             </p>
         </div>
 

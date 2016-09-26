@@ -40,7 +40,7 @@ define([
     surveyAdBlock.prototype.attach = function () {
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
-            bean.on(document, 'click', $('.survey-button__cta.whitelist'), function () {
+            bean.on(document, 'click', $('.survey-button-rounded__cta.whitelist'), function () {
                 // -> state 2
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
@@ -48,7 +48,7 @@ define([
                 $.forEachElement(('.state-2'), function(el){el.classList.remove('is-hidden');});
                 $('.survey-container').removeClass('thank-you');
             });
-            bean.on(document, 'click', $('.survey-button__cta.noads'), function () {
+            bean.on(document, 'click', $('.survey-button-rounded__cta.noads'), function () {
                 // -> state 3
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
@@ -56,7 +56,7 @@ define([
                 $.forEachElement(('.state-3'), function(el){el.classList.remove('is-hidden');});
                 $('.survey-container').removeClass('thank-you');
             });
-            bean.on(document, 'click', $('.survey-button__cta.paypal'), function () {
+            bean.on(document, 'click', $('.survey-button-rounded__cta.paypal'), function () {
                 // -> state 4
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
@@ -65,7 +65,7 @@ define([
                 $('.survey-container').addClass('thank-you');
                 storage.local.set('gu.abb3.exempt', true);
             });
-            bean.on(document, 'click', $('.survey-button__cta.ccard'), function () {
+            bean.on(document, 'click', $('.survey-button-rounded__cta.ccard'), function () {
                 // -> state 4
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
@@ -88,7 +88,7 @@ define([
                 $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
                 $('.survey-container').removeClass('thank-you');
             });
-            bean.on(document, 'click', $('.survey-button__cta.readon'), function () {
+            bean.on(document, 'click', $('.survey-button-rounded__cta.readon'), function () {
                 // -> go to article
                 $('.survey-container').removeClass('thank-you');
                 $('.js-survey-adblock').addClass('is-hidden');

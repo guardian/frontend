@@ -304,49 +304,45 @@
         margin-bottom: $gs-column-width/4;
         text-align: center;
         line-height: $gs-column-width/2;
-        .survey-button__cta {
-            -moz-box-shadow: inset 0px 1px 0px 0px #a4e271;
-            -webkit-box-shadow: inset 0px 1px 0px 0px #a4e271;
-            box-shadow: inset 0px 1px 0px 0px #a4e271;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(.05, #89c403), color-stop(1, #77a809));
-            background: -moz-linear-gradient(top, #89c403 5%, #77a809 100%);
-            background: -webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
-            background: -o-linear-gradient(top, #89c403 5%, #77a809 100%);
-            background: -ms-linear-gradient(top, #89c403 5%, #77a809 100%);
-            background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
-            background-color: #89c403;
-            -moz-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px;
-            border: 1px solid #74b807;
+
+        .survey-button-rounded__cta {
+            @include clearfix;
+            @include circular;
+            border: 1px solid rgba(#ffffff, .3);
             display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-weight: bold;
+            @include mq($until: mobile) {
+                margin-bottom: $gs-row-height / 2;
+            }
             padding: 6px 24px;
-            text-decoration: none;
-            text-shadow: 0px 1px 0px #528009;
             position: relative;
+            cursor: pointer;
             margin-top: 10px;
+            background-color: #2e8b3a;
             top: 25%;
             height: 50%;
             width: 250px;
         }
-        .survey-button__cta:hover {
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(.05, #77a809), color-stop(1, #89c403));
-            background: -moz-linear-gradient(top, #77a809 5%, #89c403 100%);
-            background: -webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
-            background: -o-linear-gradient(top, #77a809 5%, #89c403 100%);
-            background: -ms-linear-gradient(top, #77a809 5%, #89c403 100%);
-            background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
+        .survey-button-rounded__cta:hover {
             background-color: #77a809;
-            text-decoration: none;
         }
-        .survey-button__cta:active {
-            position: relative;
-            top: 1px;
+
+        .survey-button-rounded__cta.pay {
+            .pp-paywith {
+                margin-left: 35px;
+            }
+            background-color: #dba500;
+        }
+
+        .survey-button-rounded__cta.pay:hover {
+            background-color: #77a809;
+        }
+
+        .survey-button-rounded__cta.pay.paypal {
+            text-align: left;
+            background-repeat: no-repeat;
+            background-size: 93px;
+            background-image: url('//contribute.theguardian.com/assets/dist/images/form/24f3c805/ppcom-white.svg');
+            background-position: left 125px center;
         }
     }
 

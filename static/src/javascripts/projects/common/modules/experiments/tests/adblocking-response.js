@@ -86,7 +86,6 @@ define([
                         whitelistText: whitelistText,
                         adFreeButtonText: adFreeButtonText,
                         adFreeMessagePrefix: adFreeMessagePrefix,
-                        surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],
                         adBlockPlusIcon: config.images.commercial['abp-icon'],
