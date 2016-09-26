@@ -218,17 +218,21 @@ object CloudWatch extends Logging with ExecutionContexts {
 
   def googleConfidence: Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
 
-  def user50x = for {
-    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(60)
-      .withStatistics("Sum")
-      .withNamespace("Diagnostics")
-      .withMetricName("kpis-user-50x")
-      .withDimensions(stage)))
-  } yield new AwsLineChart("User 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
-
+  def routerBackend50x = {
+    val dimension = new Dimension()
+      .withName("LoadBalancerName")
+      .withValue(LoadBalancer("frontend-router").fold("unknown")(_.id))
+    for {
+      metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(2).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(60)
+        .withStatistics("Sum")
+        .withNamespace("AWS/ELB")
+        .withMetricName("HTTPCode_Backend_5XX")
+        .withDimensions(dimension)))
+    } yield new AwsLineChart("Router 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
+  }
 
   object headlineTests {
 

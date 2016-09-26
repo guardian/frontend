@@ -38,7 +38,7 @@ object NewNavigation {
 
     val au = List(
       NavLink("headlines", "/au"),
-      NavLink("UK", "/australia-news"),
+      NavLink("australia", "/australia-news"),
       NavLink("world", "/world"),
       NavLink("australian politics", "/australia-news/australian-politics"),
       NavLink("environment", "/au/environment"),
@@ -51,7 +51,7 @@ object NewNavigation {
 
     val us = List(
       NavLink("headlines", "/us"),
-      NavLink("US election", "/us-news"),
+      NavLink("US election", "/us-news/us-elections-2016"),
       NavLink("US", "/us-news"),
       NavLink("world", "/world"),
       NavLink("environment", "/us/environment"),
