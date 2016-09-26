@@ -10,26 +10,7 @@ The JS app can be split into distinct parts:
 - Commercial Javascript
 - Enhanced Javascript
 
-And then specific Javascripts used on different pages and required into the app when needed:
-
-- Article
-- Article Minute
-- Crosswords
-- Liveblog
-- Gallery
-- Trail
-- Profile
-- Sudoku
-- Image content
-- Facia
-- Football
-- Preferences
-- Membership
-- Ophan
-- Admin
-- Main Media
-- Video Embed
-- Accessibility
+And then specific Javascript bootstraps used on different pages and required into the app when needed - Article, Article Minute, Crosswords, Liveblog, Gallery, Trail, Profile, Sudoku, Image content, Facia, Football, Preferences, Membership, Ophan, Admin, Main Media, Video Embed, Accessibility.
 
 ### General structure
 
@@ -52,7 +33,7 @@ See below for quick descriptions.
 			- Cloudwatch beacon
 		- [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
 			- getUserData.js
-			- detectAdblock 😨
+			- detectAdblock 
 			- showUserName
 			- ophanConfig
 		
@@ -137,46 +118,168 @@ Secrets.
 
 Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/ophanConfig.scala.js) which is used across analytics to tie data together.
 
-## (S)CSS
+### Bootstraps
 
-WIP..
+In javascripts/bootstraps we define all the entry points for each bundle described in [requirejs.js](). 
 
-Inline SCSS
+The top level entry points which call the bootstrap initalisation of all other bundles are [enhanced/main.js](), [standard/main.js](), [admin.js]() (for frontend.gutools, not theguardian.com), [commercial.js]() and [video-embed.js]() (initalised when there is a video embed from [videoEmbed.scala.html]()).
 
-	- head.scala.html
-		-stylesheets.scala.html
-			- @Html(head(project))
-			
-			
-Project refers to one of:
+### app.js
 
+- [Builds a bundle](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js#L47) for [standard/main bootstrap](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js)
+	- Includes the [boot.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/boot.js) in the bundle
+	
+```js
+boot: {
+	options: {
+		name: 'boot',
+		out: options.staticTargetDir + 'javascripts/boot.js',
+		include: 'bootstraps/standard/main',
+		insertRequire: ['boot'],
+		exclude: [
+			'text',
+			'inlineSvg'
+		]
+	}
+}
 ```
-private def cssHead(project: String): String =
-    project match {
-      case "footballSnaps" => "head.footballSnaps"
-      case "facia" => "head.facia"
-      case "identity" => "head.identity"
-      case "football" => "head.football"
-      case "index" => "head.index"
-      case "rich-links" => "head.rich-links"
-      case "email" => "head.email"
-      case "commercial" => "head.commercial"
-      case "survey" => "head.survey"
-      case _ => "head.content"
-    }
- ```
- 
- 
-in [assets.scala](https://github.com/guardian/frontend/blob/master/common/app/assets/assets.scala#L105)
 
-		
-## Build pipeline
+- And [concatenates that](https://github.com/guardian/frontend/blob/master/grunt-configs/concat.js#L8) with the [curl-domReady.js](https://github.com/cujojs/curl) (Curl module loader that waits for domReady)
 
-WIP..
+```js
+app: {
+	src: [
+		options.staticSrcDir + 'javascripts/components/curl/curl-domReady.js',
+		options.staticTargetDir + 'javascripts/boot.js'
+	],
+	dest: options.staticTargetDir + 'javascripts/app.js'
+}
+```
 
-### Assets
 
-#### CSS
+#### Standard main.js
 
-#### JS
+To quote the file:
 
+> // This file is intended to be downloaded and run ASAP on all pages by all readers.
+
+> // While it's ok to run code from here that requires specific host capabilities, it should manage failing gracefully by itself.
+
+>// Assume *nothing* about the host...
+
+> // This also means you should think *very hard* before adding modules to it, in particular 3rd party modules.
+
+> // For this file, performance and breadth of support should take priority over *anything*…
+
+The [standard main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js) does a few core things:
+
+- Sets-up error handling
+- Bootstraps interactives immediately as they're content
+- Initalises A/B tests (so be **very** careful about what you require into AB tests as they're bundled with the standard JS)
+- Upgrades images
+- Adds some event listeners for use elsewhere in the app (throttled scroll)
+- Initialises membership and identity
+- Initialises the header
+
+#### boot.js
+
+The [boot.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/boot.js) is the main entry point for the app.
+
+Again, to quote the file:
+
+> This module is responsible for booting the application. It is concatenated with
+curl and bootstraps/standard into app.js
+
+> We download the bundles in parallel, but they must be executed
+sequentially because each bundle assumes dependencies from the previous
+bundle.
+
+> Once a bundle has been executed, all of its modules have been registered.
+Now we can safely require one of those modules.
+
+> Unfortunately we can't do all of this using the curl API, so we use a
+combination of ajax/eval/curl instead.
+
+> Bundles we need to run: commercial + enhanced
+
+> Only if we detect we should run enhance.
+
+It uses promises to require and init, in blocking order, standard JS, commercial JS and enhanced JS. As mentioned above it is bundled into app.js and the `insertRequire` option is used to insert a require call for it.
+
+
+### Commercial JS
+
+The commercial JS is it's own bundle and is executed immediately after the standard JS.
+
+[Read about the commercial JS](https://github.com/guardian/frontend/blob/master/docs/05-commercial/03-commercial-javascript.md)
+
+### Enhanced JS
+
+The main entry point for enhanced JS is in [bootstraps/enhanced/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/enhanced/main.js)
+
+Here we initalise the rest of our Javascript application, requiring the bundles expected by the current page.
+
+For example, we use the page config property of `isFront` to load `facia.js`:
+
+```js
+// Front
+if (config.page.isFront) {
+	require(['bootstraps/enhanced/facia'], function (facia) {
+		bootstrapContext('facia', facia);
+	});
+}
+```
+
+or check if there `isMedia` or a video or audio element exists on the page in order to require the mainMedia JS:
+
+```js
+if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
+	require(['bootstraps/enhanced/media/main'], function (media) {
+		bootstrapContext('media', media);
+	});
+}
+```
+
+Each bundle is created via the [requirejs config](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js), eg:
+
+```js
+facia: {
+	options: {
+		name: 'bootstraps/enhanced/facia',
+		out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/facia.js',
+		exclude: [
+			'boot',
+			'bootstraps/standard/main',
+			'bootstraps/commercial',
+			'bootstraps/enhanced/main',
+			'text',
+			'inlineSvg'
+		]
+	}
+}
+```
+
+and each must return an `init` function that is called from `enhanced.js` once required.
+
+All the enhanced bootstraps are in [bootstraps/enhanced](https://github.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps/enhanced), where you'll be able to see what each bootstrap initialises.
+
+### Components
+
+[Here be 3rd-party JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/components) such as bean, bonzo and fastdom.
+
+### Projects
+
+There are five projects in the Javascript architecture:
+
+- Admin - This is the Javascript for the admin tools at frontend.gutools (not guardian.com related)
+- Commercial - The modules and js views for the commercial Javascript
+- Common - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
+	- In modules you will find the Javascript for everything from articles to crosswords, identitity to sport.
+	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familairise yourself with these methods as you will likely end up finding what you need here.
+	- The Javascript views for the JS loaded content including a/b test experiments, breaking news, share buttons etc.
+- Facia - Contains JS modules and views for the weather, snaps and fronts containers
+- Membership - Contains the formatters, payment and stripe javascripts
+
+### Vendor
+
+Contains vendor JS from the likes of forsee, formstack, prebid and stripe.
