@@ -2,30 +2,30 @@
 @import common.commercial.PaidContent
 @import implicits.Requests.RichRequestHeader
 
-<div class="adverts__badge
-    @if(isInteractivePage || isOnTheLeft) {adverts__badge--alt}
-    @if(isInteractivePage) {adverts__badge--interactive}
-    @if(isBranded) {advert--branded}
+<div class="badge
+    @if(isInteractivePage || isOnTheLeft) {badge--alt}
+    @if(isInteractivePage) {badge--interactive}
+    @if(isBranded) {badge--branded}
     ">
     @branding.label
-    <a class="adverts__badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+    <a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
         @if(request.isAmp) {
             @branding.sponsorLogo.dimensions.map { dim =>
                 <amp-img src="@branding.sponsorLogo.url"
                 width="@dim.width"
                 height="@dim.height"
                 alt="@{branding.sponsorName}'s logo"
-                class="adverts__badge__logo"></amp-img>
+                class="badge__logo"></amp-img>
             }.getOrElse {
                 <p>@branding.sponsorName</p>
             }
         } else {
             <img src="@branding.sponsorLogo.url"
             alt="@{branding.sponsorName}'s logo"
-            class="adverts__badge__logo">
+            class="badge__logo">
         }
     </a>
     @if(branding.sponsorshipType != PaidContent) {
-        <a href="@branding.aboutThisLink" class="adverts__badge__help">About this content</a>
+        <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
     }
 </div>
