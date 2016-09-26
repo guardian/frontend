@@ -88,7 +88,7 @@ final case class Content(
         }
     )
   }
-  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
+  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isHeroic
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
