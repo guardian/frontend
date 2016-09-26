@@ -633,3 +633,20 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 .no-text-transform {
     text-transform: none;
 }
+
+//
+@include mq($until: tablet) {
+    .has-new-header {
+        .weather {
+            padding-top: 1px;
+        }
+
+        .fc-container--first .fc-container__inner {
+            padding-top: $gs-baseline / 2 + $gs-baseline / 4;
+        }
+
+        .content__labels {
+            padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
+        }
+    }
+}
