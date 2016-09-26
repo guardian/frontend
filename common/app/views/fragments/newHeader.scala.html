@@ -23,7 +23,7 @@
 
         @fragments.nav.editionPicker()
 
-        <nav class="new-header__nav">
+        <nav class="new-header__nav" data-component="nav">
             @NewNavigation.topLevelSections.map { section =>
                 @primaryLinks(section.name)
             }
