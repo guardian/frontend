@@ -46,19 +46,26 @@ object Job {
     salaryDescription = (xml \ "SalaryDescription").text
   )
 
+  def toJsonTuple(job: Job): Option[(Int, String, String, String, String, Option[String], String)] =
+    Some((
+      job.id,
+      job.title,
+      job.listingUrl,
+      job.recruiterLogoUrl,
+      job.recruiterName,
+      job.locationDescription,
+      job.shortSalaryDescription
+    ))
 
   implicit val writesJob: Writes[Job] = (
     (JsPath \ "id").write[Int] and
     (JsPath \ "title").write[String] and
-    (JsPath \ "shortDescription").write[String] and
-    (JsPath \ "locationDescription").write[Option[String]] and
-    (JsPath \ "recruiterName").write[String] and
-    (JsPath \ "recruiterPageUrl").write[Option[String]] and
+    (JsPath \ "listingUrl").write[String] and
     (JsPath \ "recruiterLogoUrl").write[String] and
-    (JsPath \ "sectorIds").write[Seq[Int]] and
-    (JsPath \ "salaryDescription").write[String] and
-    (JsPath \ "keywordIdSuffixes").write[Seq[String]]
-  )(unlift(Job.unapply))
+    (JsPath \ "recruiterName").write[String] and
+    (JsPath \ "locationDescription").write[Option[String]] and
+    (JsPath \ "shortSalaryDescription").write[String]
+  )(unlift(Job.toJsonTuple))
 
 }
 
