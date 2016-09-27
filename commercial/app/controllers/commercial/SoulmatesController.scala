@@ -29,7 +29,7 @@ class SoulmatesController extends Controller with implicits.Requests {
 
   def renderSoulmates(groupName: String) = Action { implicit request =>
     soulmatesSample(groupName).toList match {
-      case Nil => Cached(componentMaxAge){ jsonFormat.nilResult }
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case soulmates => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
