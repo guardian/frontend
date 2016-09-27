@@ -45,13 +45,13 @@
         </ul>
 
         @if(SearchSwitch.isSwitchedOn) {
-            <ul class="navigation-group navigation-border secondary-navigation">
+            <ul class="navigation-group secondary-navigation">
                 <li class="navigation-group__item navigation-group__item--search">
                     <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
                         @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
                         <label for="submit-google-search">
                             <input class="u-h" type="submit" id="submit-google-search">
-                            @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
+                            @fragments.inlineSvg("search-36", "icon", List("navigation-group__icon", "navigation-group__search-icon"))
                         </label>
                         <label for="q" class="u-h">What term do you want to search?</label>
                         <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
@@ -61,13 +61,13 @@
             </ul>
         }
 
-        <ul class="navigation-group navigation-group--grey navigation-border secondary-navigation">
+        <ul class="navigation-group navigation-group--grey secondary-navigation">
 
             <li class="navigation-group__item js-editionalise-secondary-nav"
                 @* TODO: should membership really only show up in the uk edition? *@
                 data-edition="uk">
                     <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_UK">
-                        @fragments.inlineSvg("marque-36", "icon", List("navigation-group__icon", "navigation-group__user-icon", "navigation-group__membership-icon"))
+                        @fragments.inlineSvg("marque-36", "icon", List("navigation-group__icon", "navigation-group__membership-icon"))
                         membership
                     </a>
             </li>
@@ -79,7 +79,8 @@
         @Edition.all.map { edition =>
             <ul class="navigation-group
                 navigation-border
-                js-editionalise-secondary-nav"
+                js-editionalise-secondary-nav
+                secondary-navigation"
                 data-edition=@{edition.id.toLowerCase}
                 @if(edition.id.toLowerCase != "uk") { hidden }>
 

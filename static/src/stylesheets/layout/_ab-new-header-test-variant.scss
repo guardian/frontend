@@ -439,7 +439,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 }
 
 //This variable is only used in open menu styling
-$navigation-horizontal-padding: $gs-gutter * 2;
+$navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 .main-navigation__item__button {
     position: relative;
@@ -489,9 +489,9 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 .main-navigation__icon,
 .navigation-group__icon {
     position: absolute;
-    left: 0;
+    left: $gs-gutter/2;
     text-align: center;
-    width: $navigation-horizontal-padding;
+    width: $navigation-horizontal-padding - $gs-gutter/2;
 }
 
 .main-navigation__secondary {
@@ -528,6 +528,15 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 .navigation-group--grey {
     background-color: $neutral-1;
     padding-bottom: $gs-baseline;
+
+    .navigation-group__icon {
+        fill: $neutral-2;
+
+        & svg {
+            width: 1em;
+            height: 1em;
+        }
+    }
 }
 
 .navigation-group__item {
@@ -556,10 +565,11 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .secondary-navigation {
+    font-size: .9em;
     margin-top: $gs-baseline;
 
     &:nth-child(2) {
-        margin-top: $gs-baseline / 1.5;
+        margin-top: 0;
     }
 
     &:last-child {
@@ -577,33 +587,33 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 
 .navigation-group__social-icon {
     fill: $news-support-2;
-    top: -.1em;
+    top: -.2em;
 }
 
 .navigation-group__social-icon__svg {
-    width: 1.6em;
-    height: 1.6em;
+    width: 1.9em;
+    height: 1.9em;
 }
 
+// Search bar
 .navigation-group__item--search {
     padding-top: $gs-baseline/2;
 }
 
 .navigation-group__search-container {
     @include fs-textSans(5);
-    position: relative;
-    background-color: $guardian-brand-dark;
+    margin: 0 $gs-gutter*2 $gs-baseline*2 $gs-gutter/2;
+    background-color: red;
     overflow: hidden;
-    margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline;
-    border-radius: 1000px;
-    height: $gs-baseline*3;
 }
 
 .navigation-group__search-box {
-    background-color: inherit;
     border: 0;
     vertical-align: middle;
-    height: 100%;
+    background-color: lighten($guardian-brand, 5%);
+    padding-left: $navigation-horizontal-padding - $gs-gutter/2;
+    border-radius: 1000px;
+    height: $gs-baseline*3;
 
     // autoprefixer handles all the appropriate psuedo element selectors for placeholders
     &::placeholder {
@@ -612,22 +622,19 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 
     &:focus {
         outline: none;
+        background-color: #ffffff;
     }
 }
 
 .navigation-group__search-icon {
-    fill: $news-support-1;
-    padding-left: $gs-gutter/2;
+    fill: #ffffff;
+    top: $gs-baseline;
 }
 
 .navigation-group__search-icon__svg {
-    width: .9em;
-    height: .9em;
+    width: 1em;
+    height: 1em;
     vertical-align: middle;
-}
-
-.navigation-group__membership-icon {
-    fill: $neutral-2;
 }
 
 .navigation-group__item--user-account {
@@ -648,18 +655,6 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 
 .user-account__signed-in__link {
     color: $neutral-3;
-}
-
-.navigation-group__user-icon__svg {
-    height: .9em;
-    width: .9em;
-}
-
-.navigation-group__profile-icon__svg {
-    fill: $neutral-1;
-    background-color: $neutral-2;
-    border-radius: 100%;
-    padding-top: .1em;
 }
 
 .no-text-transform {
