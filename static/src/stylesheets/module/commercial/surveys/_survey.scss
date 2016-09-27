@@ -336,6 +336,7 @@
             height: 50%;
             width: 250px;
         }
+
         .survey-button-rounded__cta:hover {
             background-color: #3f9d4c;
         }
@@ -344,20 +345,25 @@
             .pp-paywith {
                 margin-left: 35px;
             }
-            background-color: #f6a424;
         }
-
-        .survey-button-rounded__cta.pay:hover {
-            background-color: #f4b906;
+        .survey-button-rounded__cta.pay.ccard {
+            background-color: #0079c1;
         }
-
+        .survey-button-rounded__cta.pay.ccard:hover {
+            background-color: #0281cc;
+        }
         .survey-button-rounded__cta.pay.paypal {
             text-align: left;
             background-repeat: no-repeat;
             background-size: 93px;
             background-image: url('//contribute.theguardian.com/assets/dist/images/form/24f3c805/ppcom-white.svg');
             background-position: left 125px center;
+            background-color: #003d61;
         }
+        .survey-button-rounded__cta.pay.paypal:hover {
+            background-color: #014a75;
+        }
+
     }
 
     .howto-unblock {
