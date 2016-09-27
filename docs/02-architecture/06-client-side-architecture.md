@@ -16,7 +16,7 @@ And then specific Javascript bootstraps used on different pages and required int
 
 See below for quick descriptions.
 
-- [main.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/main.scala.html)
+- [- main.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/main.scala.html)
 	- [head.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/head.scala.html)
 		- [inlineJsBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSBlocking.scala.html) - Scripts required to render the page correctly on first paint.
 			- Polyfills for json2, es5-html5, RAF, classlist
@@ -53,7 +53,7 @@ There are ways to force enhancement, so take a look at the JS, but something of 
 
 #### pageConfig
 
-If you put `guardian.config` in your console, you will see the JS config containing information about analytics, modules, switches, tests and the page. This config object is initally populated serverside and topped-up client side (ie: information about the user is only available client-side)
+If you put `guardian.config` in your console, you will see the JS config containing information about analytics, modules, switches, tests and the page. This config object is initially populated serverside and topped-up client side (i.e.: information about the user is only available client-side)
 
 The initial config structure is defined in [config.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/config.scala.js) and [javaScriptConfig.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/javaScriptConfig.scala.js). 
 
@@ -122,7 +122,7 @@ Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/master/comm
 
 In javascripts/bootstraps we define all the entry points for each bundle described in [requirejs.js](). 
 
-The top level entry points which call the bootstrap initalisation of all other bundles are [enhanced/main.js](), [standard/main.js](), [admin.js]() (for frontend.gutools, not theguardian.com), [commercial.js]() and [video-embed.js]() (initalised when there is a video embed from [videoEmbed.scala.html]()).
+The top level entry points which call the bootstrap initialisation of all other bundles are [enhanced/main.js](), [standard/main.js](), [admin.js]() (for frontend.gutools, not theguardian.com), [commercial.js]() and [video-embed.js]() (initialised when there is a video embed from [videoEmbed.scala.html]()).
 
 ### app.js
 
@@ -175,7 +175,7 @@ The [standard main.js](https://github.com/guardian/frontend/blob/master/static/s
 
 - Sets-up error handling
 - Bootstraps interactives immediately as they're content
-- Initalises A/B tests (so be **very** careful about what you require into AB tests as they're bundled with the standard JS)
+- Initialises A/B tests (so be **very** careful about what you require into AB tests as they're bundled with the standard JS)
 - Upgrades images
 - Adds some event listeners for use elsewhere in the app (throttled scroll)
 - Initialises membership and identity
@@ -217,7 +217,7 @@ The commercial JS is it's own bundle and is executed immediately after the stand
 
 The main entry point for enhanced JS is in [bootstraps/enhanced/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/enhanced/main.js)
 
-Here we initalise the rest of our Javascript application, requiring the bundles expected by the current page.
+Here we initialise the rest of our Javascript application, requiring the bundles expected by the current page.
 
 For example, we use the page config property of `isFront` to load `facia.js`:
 
@@ -240,7 +240,7 @@ if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
 }
 ```
 
-Each bundle is created via the [requirejs config](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js), eg:
+Each bundle is created via the [requirejs config](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js), e.g.:
 
 ```js
 facia: {
@@ -274,8 +274,8 @@ There are five projects in the Javascript architecture:
 - Admin - This is the Javascript for the admin tools at frontend.gutools (not guardian.com related)
 - Commercial - The modules and js views for the commercial Javascript
 - Common - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
-	- In modules you will find the Javascript for everything from articles to crosswords, identitity to sport.
-	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familairise yourself with these methods as you will likely end up finding what you need here.
+	- In modules you will find the Javascript for everything from articles to crosswords, identity to sport.
+	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familiarise yourself with these methods as you will likely end up finding what you need here.
 	- The Javascript views for the JS loaded content including a/b test experiments, breaking news, share buttons etc.
 - Facia - Contains JS modules and views for the weather, snaps and fronts containers
 - Membership - Contains the formatters, payment and stripe javascripts
