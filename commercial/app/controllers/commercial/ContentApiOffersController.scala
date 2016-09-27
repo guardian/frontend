@@ -159,7 +159,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     futureContents.map((content: Seq[model.ContentType]) => {
       val response = content.head
       val capiSingle = CapiSingle.fromContent(response.content)
-      Cached(60.seconds) {
+      Cached(1.seconds) {
         JsonComponent(capiSingle)
       }
     })
