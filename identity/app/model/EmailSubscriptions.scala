@@ -23,7 +23,7 @@ object EmailSubscriptions {
 
   def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      name = "The Guardian today",
+      name = "The Guardian Today",
       subheading = Some("UK"),
       theme = "news",
       about = "News",
@@ -35,7 +35,7 @@ object EmailSubscriptions {
       signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-uk")
     ),
     EmailSubscription(
-      name = "The Guardian today",
+      name = "The Guardian Today",
       subheading = Some("US"),
       theme = "news",
       about = "News",
@@ -48,7 +48,7 @@ object EmailSubscriptions {
       exampleUrl = Some("https://www.theguardian.com/us-news/series/guardian-us-briefing/latest/email")
     ),
     EmailSubscription(
-      name = "The Guardian today",
+      name = "The Guardian Today",
       subheading = Some("AUS"),
       theme = "news",
       about = "News",
@@ -148,11 +148,12 @@ object EmailSubscriptions {
       name = "The Fiver",
       theme = "sport",
       about = "Football",
-      teaser = "Rounding up the day's footbal news and gossip in our own belligerent, sometimes intelligent and (occasionally) funny way",
+      teaser = "Rounding up the day's football news and gossip in our own belligerent, sometimes intelligent and (occasionally) funny way",
       description = "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
       frequency = "Weekday afternoons",
       listId = "218",
       subscribedTo = subscribedListIds.exists{ x => x == "218" },
+      signupPage = Some("https://www.theguardian.com/info/2016/jan/05/the-fiver-email-sign-up"),
       exampleUrl = Some("https://www.theguardian.com/football/series/thefiver/latest/email")
     ),
     EmailSubscription(
@@ -164,6 +165,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
@@ -175,6 +177,7 @@ object EmailSubscriptions {
       frequency = "Every Tuesday",
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
     )
   )
@@ -200,8 +203,8 @@ object EmailSubscriptions {
       description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
       frequency = "Every Saturday",
       listId = "3322",
-      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email"),
-      subscribedTo = subscribedListIds.exists{ x => x == "3322" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3322" },
+      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email")
     )
   )
 
@@ -246,7 +249,8 @@ object EmailSubscriptions {
       description = "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
       frequency = "Every Thursday",
       listId = "3039",
-      subscribedTo = subscribedListIds.exists{ x => x == "3039" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3039" },
+      signupPage = Some("https://www.theguardian.com/books/2015/feb/03/sign-up-to-our-bookmarks-email")
     ),
     EmailSubscription(
       name = "Art Weekly",
@@ -257,6 +261,7 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "99",
       subscribedTo = subscribedListIds.exists{ x => x == "99" },
+      signupPage = Some("https://www.theguardian.com/artanddesign/2015/oct/19/sign-up-to-the-art-weekly-email"),
       exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     )
   )
