@@ -17,7 +17,9 @@
                 </div>
 
                 <div class="newsletter-card__content">
-                    <div class="newsletter-card__description">@emailListing.teaser</div>
+                    @emailListing.teaser
+                </div>
+                <div class="newsletter-card__meta">
                     <div class="newsletter-card__frequency">
                         @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
                         @emailListing.frequency
