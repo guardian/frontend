@@ -5,17 +5,26 @@
 
 
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription], isActive: Boolean) = {
-    <h1 class="email-signup-header__heading">@theme</h1>
+    <div class="newsletter-card newsletters-category__heading">
+        @theme
+    </div>
+    <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-        <div class="newsletter-card" data-component="newsletter-card">
+            <div class="newsletter-card" data-component="newsletter-card">
 
-            <div class="newsletter-card__illustration"></div>
-            <div class="newsletter-card__name">@emailListing.name</div>
+                <div class="newsletter-card__name">@emailListing.name</div>
 
-            <div class="newsletter-card__content">
-                <div class="newsletter-card__description">@emailListing.teaser</div>
+                <div class="newsletter-card__subheading">
+                    @if(emailListing.subheading.isDefined){ @emailListing.subheading }
+                </div>
 
-                <div class="newsletter-card__meta u-cf">
+                <div class="newsletter-card__content">
+                    <div class="newsletter-card__description">@emailListing.teaser</div>
+
+                    <div class="newsletter-card__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                        @emailListing.frequency
+                    </div>
 
                     <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
@@ -28,19 +37,16 @@
                             </button>
                         </a>}
                     </div>
+                </div>
 
+                <div class="newsletter-card__meta u-cf">
                     <div>
                         <iframe src="/email/form/plain/@emailListing.listId" height="218px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=".sd.sdfasdf."></iframe>
                     </div>
-
-                    <div class="newsletter-card__frequency">
-                        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
-                        @emailListing.frequency
-                    </div>
                 </div>
             </div>
-        </div>
         }
+    </div>
 }
 
 
@@ -49,6 +55,8 @@
 
     <div class="content">
         <div class="gs-container">
+
+            <div class="newsletters-heading">newsletters</div>
 
             <div class="newsletters-category">
                 @emailListCategoryList("News", (EmailSubscriptions.newsEmails() ++ EmailSubscriptions.featureEmails()), true)
@@ -61,6 +69,9 @@
             </div>
             <div class="newsletters-category">
                 @emailListCategoryList("Lifestyle", EmailSubscriptions.lifestyleEmails(), true)
+            </div>
+            <div class="newsletters-category">
+                @emailListCategoryList("Comment", EmailSubscriptions.commentEmails(), true)
             </div>
 
         </div>
