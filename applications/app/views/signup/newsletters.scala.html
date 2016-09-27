@@ -4,28 +4,24 @@
 @import model.EmailSubscriptions
 
 
-@emailListCategoryList(theme: String, emailListings: List[EmailSubscription], isActive: Boolean) = {
-    <div class="newsletter-card newsletters-category__heading">
+@emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
+    <div class="newsletters-category__heading">
         @theme
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card" data-component="newsletter-card">
+            <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card">
 
-                <div class="newsletter-card__name">@emailListing.name</div>
-
-                <div class="newsletter-card__subheading">
-                    @if(emailListing.subheading.isDefined){ @emailListing.subheading }
+                <div class="newsletter-card__name">@emailListing.name
+                    @if(emailListing.subheading.isDefined){ <br>@emailListing.subheading }
                 </div>
 
                 <div class="newsletter-card__content">
                     <div class="newsletter-card__description">@emailListing.teaser</div>
-
                     <div class="newsletter-card__frequency">
                         @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
                         @emailListing.frequency
                     </div>
-
                     <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
@@ -33,13 +29,13 @@
                                     data-link-name="Preview @emailListing.name"
                                     type="button"
                                     value="@emailListing.listId">
-                                See the latest email
+                                <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
                             </button>
                         </a>}
                     </div>
                 </div>
 
-                <div class="newsletter-card__meta u-cf">
+                <div class="newsletter-card__signup">
                     <div>
                         <iframe src="/email/form/plain/@emailListing.listId" height="218px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=".sd.sdfasdf."></iframe>
                     </div>
@@ -59,19 +55,22 @@
             <div class="newsletters-heading">newsletters</div>
 
             <div class="newsletters-category">
-                @emailListCategoryList("News", (EmailSubscriptions.newsEmails() ++ EmailSubscriptions.featureEmails()), true)
+                @emailListCategoryList("News", EmailSubscriptions.newsEmails())
             </div>
             <div class="newsletters-category">
-                @emailListCategoryList("Sport", EmailSubscriptions.sportEmails(), true)
+                @emailListCategoryList("Features", EmailSubscriptions.featureEmails())
             </div>
             <div class="newsletters-category">
-                @emailListCategoryList("Culture", EmailSubscriptions.cultureEmails(), true)
+                @emailListCategoryList("Sport", EmailSubscriptions.sportEmails())
             </div>
             <div class="newsletters-category">
-                @emailListCategoryList("Lifestyle", EmailSubscriptions.lifestyleEmails(), true)
+                @emailListCategoryList("Culture", EmailSubscriptions.cultureEmails())
             </div>
             <div class="newsletters-category">
-                @emailListCategoryList("Comment", EmailSubscriptions.commentEmails(), true)
+                @emailListCategoryList("Lifestyle", EmailSubscriptions.lifestyleEmails())
+            </div>
+            <div class="newsletters-category">
+                @emailListCategoryList("Comment", EmailSubscriptions.commentEmails())
             </div>
 
         </div>

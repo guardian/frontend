@@ -8,37 +8,47 @@
   }
 }
 
-.newsletter-card__meta {
+.newsletter-card__signup {
     padding: .5rem;
 }
 
-.newsletter-card__lozenge {
-    border-color: $comment-support-1;
-    -webkit-border-radius: 62.5rem;
-    border-radius: 100px;
-    height: 2.8em;
-    width: 10rem;
-    margin-bottom: $gs-baseline;
+.newsletter-card__example {
 
-    &:hover,
-    &:focus,
-    &:active {
-        border-color: lighten($comment-support-1, 20%);
+    .newsletter-card__lozenge {
+        color: $news-main-1;
+        border-color: $news-main-1;
+        -webkit-border-radius: 62.5rem;
+        border-radius: 100px;
+        height: 2.8em;
+        width: 6rem;
+        margin: 0;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: lighten($news-main-1, 10%);
+        }
     }
 }
 
 .newsletter-card__wrapper {
     position: relative;
-    margin-left: 20%;
+
+    @include mq(desktop) {
+        margin-left: 17%;
+    }
 }
 
 .newsletter-card {
+    color: $neutral-1;
     display: inline-block;
     float: left;
     height: 18rem;
     width: 90%;
     margin: $gs-baseline 5%;
     background-color: $neutral-6;
+    border-top: $gs-baseline/4 solid $news-main-2;
+    border-bottom: $gs-baseline/4 solid $neutral-3;
 
     @include mq(tablet) {
         height: 18rem;
@@ -55,15 +65,16 @@
 }
 
 .newsletter-card__name {
-    @include fs-header(5);
+    @include fs-header(4);
     text-align: right;
     color: #ffffff;
     background-color: $news-main-1;
     padding: .5rem;
+    height: 3.5rem;
 }
 
 .newsletter-card__subheading {
-    @include fs-header(5);
+    @include fs-header(4);
     text-align: right;
     color: #ffffff;
     background-color: $news-main-1;
@@ -73,27 +84,34 @@
 
 .newsletter-card__content {
     padding: .5rem;
-}
-
-.newsletter-card__description {
-    height: 4.5rem;
+    height: 8.5rem;
 
     @include mq(tablet) {
-        height: 4.5rem;
+        height: 8.5rem;
     }
 
     @include mq(desktop) {
-        height: 6.5rem;
+        height: 11.5rem;
     }
 }
 
-.newsletter-card__example {
-    height: 3rem;
+.newsletter-card__preview {
+    line-height: 2rem;
+    width: 6rem;
+    height: 2.2rem;
+    margin-left: -1rem;
+
+    .inline-arrow-right {
+        fill: $news-main-1;
+        position: absolute;
+        height: 2rem;
+        line-height: 2rem;
+    }
 }
 
 .newsletter-card__frequency {
     @include fs-textSans(2);
-    margin-left: .2rem;
+    padding: 1rem 0;
     color: $neutral-2;
 
     .inline-icon {
@@ -106,22 +124,21 @@
 }
 
 .newsletters-category {
-    border-top: $gs-baseline/3 solid $news-main-2;
+    border-top: $gs-baseline/4 solid $news-main-2;
     display: inline-block;
     clear: both;
+    padding-top: $gs-baseline;
 }
 
 .newsletters-category__heading {
     @include fs-header(5);
     background: none;
+    position: relative;
     margin: 0;
     padding: $gs-baseline 0;
     height: 1.5rem;
 
-    @include mq($from: tablet) {
-        @include fs-header(5);
+    @include mq(desktop) {
         position: absolute;
-        height: 100%;
-        width: 20%;
   }
 }

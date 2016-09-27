@@ -182,7 +182,7 @@ object EmailSubscriptions {
   def featureEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "Weekend Reading",
-      theme = "news",
+      theme = "feature",
       about = "Feature",
       teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
       description = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
@@ -194,7 +194,7 @@ object EmailSubscriptions {
     ),
     EmailSubscription(
       name = "The Long Read",
-      theme = "news",
+      theme = "feature",
       about = "Feature",
       teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
       description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
