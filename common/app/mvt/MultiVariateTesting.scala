@@ -64,7 +64,7 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
     CommercialClientLoggingVariant,
-    CommercialHeaderBiddingSonobiVariant,
+    CommercialHeaderBiddingSonobiVariant
   )
 }
 
