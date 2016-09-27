@@ -14,6 +14,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
+import views.support.ImgSrc
+import cards.{Half, Third, Standard}
+import layout.{FaciaWidths, ItemClasses, BrowserWidth, BreakpointWidth}
+
 sealed abstract class SponsorType(val className: String)
 case object PaidFor extends SponsorType("paidfor")
 case object Supported extends SponsorType("supported")
@@ -115,19 +119,66 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
+  // Holds the source element data for the images.
+  case class ImageSource (minWidth: String, sizes: String,
+    hidpiSrcset: String, lodpiSrcset: String)
 
-  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement], audioTag: Boolean,
+  // Holds all source element data and the backup image src for older browsers.
+  case class ImageInfo (sources: Seq[ImageSource], backupSrc: String)
+
+  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: ImageInfo, audioTag: Boolean,
                         galleryTag: Boolean, videoTag: Boolean)
 
   object CapiSingle {
     import ElementsFormat._
 
     def fromContent(content: Content): CapiSingle = {
-      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images, content.tags.isAudio,
+
+      val imageData = content.trail.trailPicture
+      val fallbackImageUrl = content.trail.trailPicture flatMap
+        ImgSrc.getFallbackUrl
+
+      // val cardType = Math.min(noCards, 4) match {
+      //   case 3 => Third
+      //   case 2 => Half
+      //   case _ => Standard
+      // }
+
+      val cardType = Standard
+
+      val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
+        mobile = Standard,
+        tablet = cardType,
+        desktop = Some(cardType)
+      )).breakpoints
+
+      val sources = breakpointWidths.map { breakpointWidth =>
+        ImageSource(
+          breakpointWidth.breakpoint.minWidth.getOrElse("0").toString,
+          breakpointWidth.width.toString,
+          ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+            imageData, hidpi = true),
+          ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+            imageData)
+        )
+      }
+
+      val imageInfo = ImageInfo(sources, fallbackImageUrl.getOrElse(""))
+
+      CapiSingle(content.trail.headline, content.metadata.webUrl,
+        content.trail.fields.trailText, imageInfo, content.tags.isAudio,
         content.tags.isGallery, content.tags.isVideo)
     }
 
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
+  }
+
+  object ImageInfo {
+    implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
+  }
+
+  object ImageSource {
+    implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
   }
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
