@@ -136,7 +136,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 8)
+      lookup.latestContentByKeyword(keyword, 2)
     }.getOrElse(Future.successful(Nil))
 
     latestContent onFailure {
@@ -153,7 +153,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       specific <- specificContent
       latestByKeyword <- latestContent
     } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 1
     }
 
     futureContents.map((content: Seq[model.ContentType]) => {
