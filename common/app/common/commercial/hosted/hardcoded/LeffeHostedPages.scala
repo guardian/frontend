@@ -17,9 +17,7 @@ object LeffeHostedPages {
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
     logo = HostedLogo(Static("images/commercial/leffe.jpg")),
-    cssClass = "leffe",
-    fontColour = FontColour("#dec190"),
-    logoLink = None
+    fontColour = FontColour("#dec190")
   )
 
   private val cta = HostedCallToAction(
@@ -187,7 +185,8 @@ object LeffeHostedPages {
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 
   private lazy val willardWiganPage = withNextPage(willardWiganPageWithoutNextPage, adrienneTreebyPageWithoutNextPage)

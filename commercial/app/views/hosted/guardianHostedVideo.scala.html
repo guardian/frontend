@@ -1,4 +1,5 @@
 @import common.commercial.hosted.HostedVideoPage
+@import conf.Configuration.site.host
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 @import views.html.hosted.guardianHostedShareButtons
@@ -22,8 +23,9 @@
         border-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__heading {
-        color: @{page.campaign.fontColour.brandColour};
+    .hosted-page .hosted-next-autoplay__video,
+    .hosted-page .hosted-next-autoplay__next-in-series {
+        border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__next-video--tile {
@@ -40,28 +42,36 @@
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @{page.campaign.cssClass} @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    <video
-                    data-duration="@{page.video.duration}"
-                    data-media-id="@{page.video.mediaId}"
-                    controls="controls"
-                    preload="auto"
-                    style="width: 100%;"
-                    data-block-video-ads="true"
-                    poster="@{page.video.posterUrl}"
-                    class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                        <source type="video/mp4" src="@{page.video.srcUrlMp4}">
-                        <source type="video/webm" src="@{page.video.srcUrlWebm}">
-                        <source type="video/ogg" src="@{page.video.srcUrlOgg}">
-                        <source type="video/m3u8" src="@{page.video.srcM3u8}">
-                    </video>
+                    @page.video.youtubeId.map { youtubeId =>
+                        <iframe id="hosted-video-@youtubeId"
+                        class="js-hosted-youtube-video"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1&@{if(host != "") s"&origin=$host" else ""}"
+                        frameborder="0"
+                        allowfullscreen=""></iframe>
+                    }.getOrElse {
+                        <video
+                        data-duration="@{page.video.duration}"
+                        data-media-id="@{page.video.mediaId}"
+                        controls="controls"
+                        preload="auto"
+                        style="width: 100%;"
+                        data-block-video-ads="true"
+                        poster="@{page.video.posterUrl}"
+                        class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
+                            <source type="video/mp4" src="@{page.video.srcUrlMp4}">
+                            <source type="video/webm" src="@{page.video.srcUrlWebm}">
+                            <source type="video/ogg" src="@{page.video.srcUrlOgg}">
+                            <source type="video/m3u8" src="@{page.video.srcM3u8}">
+                        </video>
+                    }
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">
-                            <h1 class="hosted__heading hosted-tone">@{page.video.title}</h1>
+                            <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                             <a href="@page.campaign.logoLink.getOrElse(page.cta.url)" data-link-name="hosted-logo-top-left" target="_blank">
@@ -69,6 +79,34 @@
                             </a>
                         </div>
                     </div>
+                    @for(nextPage <- page.nextVideo) {
+                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
+                        <div class="hosted-next-autoplay__cancel">
+                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
+                                <span>Hide</span>
+                            </button>
+                        </div>
+                        <div class="hosted-next-autoplay__next-in-series">
+                            <div class="hosted-next-autoplay__subheader">@{page.cta.label}</div>
+                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{page.campaign.name}" target="_blank">
+                                @{if(page.cta.btnText.isDefined) page.cta.btnText else s"Visit ${page.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
+                            </a>
+                        </div>
+                        <div class="hosted-next-autoplay__video">
+                            <div class="hosted-next-autoplay__header">
+                                <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
+                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
+                            </div>
+                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
+                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
+                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
+                            </a>
+                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
+                                Watch now
+                            </a>
+                        </div>
+                    </div>
+                    }
                 </div>
             </div>
         </section>

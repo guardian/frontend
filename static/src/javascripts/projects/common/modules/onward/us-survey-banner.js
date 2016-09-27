@@ -69,6 +69,6 @@ define([
         }
     }
 
-    return init();
+    return init;
 
 });

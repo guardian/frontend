@@ -2,7 +2,6 @@ package views.support.commercial
 
 import common.Edition
 import common.commercial.{CardContent, ContainerModel}
-import conf.switches.Switches.containerBrandingFromCapi
 import play.api.mvc.RequestHeader
 
 object TrackingCodeBuilder extends implicits.Requests {
@@ -11,13 +10,8 @@ object TrackingCodeBuilder extends implicits.Requests {
                                 containerIndex: Int,
                                 container: ContainerModel,
                                 card: CardContent)(implicit request: RequestHeader): String = {
-    val sponsor = {
-      if (containerBrandingFromCapi.isSwitchedOn) {
-        container.branding.map(_.sponsorName) orElse card.branding.map(_.sponsorName) getOrElse ""
-      } else {
-        container.brandingAttributes.flatMap(_.sponsor) getOrElse ""
-      }
-    }
+    val sponsor =
+      container.branding.map(_.sponsorName) orElse card.branding.map(_.sponsorName) getOrElse ""
     val cardIndex =
       (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
     Seq(

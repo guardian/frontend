@@ -28,7 +28,6 @@ object MainCleaner {
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
-        ImmersiveMainEmbed(article.isImmersive, article.isSixtyDaysModified),
         MainFigCaptionCleaner
       )
   }
@@ -61,7 +60,7 @@ object BodyCleaner {
       ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      HeroicVideos(article.isHeroic),
+      ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)

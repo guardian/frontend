@@ -1767,13 +1767,10 @@
       }
     },
     "grunt-svgmin": {
-      "version": "2.0.1",
+      "version": "4.0.0",
       "dependencies": {
-        "esprima": {
-          "version": "2.2.0"
-        },
-        "js-yaml": {
-          "version": "3.3.1"
+        "csso": {
+          "version": "2.2.1"
         },
         "minimist": {
           "version": "0.0.8"
@@ -1781,11 +1778,11 @@
         "mkdirp": {
           "version": "0.5.1"
         },
-        "sax": {
-          "version": "1.1.6"
+        "pretty-bytes": {
+          "version": "4.0.2"
         },
         "svgo": {
-          "version": "0.5.6"
+          "version": "0.7.0"
         }
       }
     },

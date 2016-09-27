@@ -155,8 +155,9 @@ define([
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
             // deal with the AB test running on Weekend Reading (there are two listIDs)
-            if (config.switches.abWeekendReadingEmail && value === 'unsubscribe-3744') {
-                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3743') + '&';
+            // delete me after 2016-10-01!
+            if (config.switches.abWeekendReadingEmail && value === 'unsubscribe-3743') {
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3744') + '&';
             }
 
         }

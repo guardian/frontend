@@ -102,8 +102,8 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.on('click,', '.js-discussion-author-link, .js-discussion-change-page', this.removeTruncation.bind(this));
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function () {
+    this.on('click,', '.js-discussion-author-link', this.removeTruncation.bind(this));
+    this.on('click', '.js-discussion-change-page, .js-discussion-show-button, .d-show-more-replies__button', function () {
         mediator.emit('discussion:comments:get-more-replies');
         self.removeTruncation();
     });

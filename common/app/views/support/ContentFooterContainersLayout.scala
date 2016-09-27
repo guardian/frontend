@@ -1,6 +1,6 @@
 package views.support
 
-import conf.switches.Switches.{OutbrainSwitch, showPaidSeriesContainer}
+import conf.switches.Switches.OutbrainSwitch
 import model.{Content, RelatedContent}
 import play.twirl.api.{Html, HtmlFormat}
 
@@ -25,7 +25,7 @@ object ContentFooterContainersLayout {
       Seq(
           optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
           Some(storyPackagePlaceholder),
-          optional(showPaidSeriesContainer.isSwitchedOn, onwardPlaceholder)
+          Some(onwardPlaceholder)
       ).flatten
 
     } else {

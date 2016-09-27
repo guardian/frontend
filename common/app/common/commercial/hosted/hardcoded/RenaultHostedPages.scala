@@ -15,9 +15,7 @@ object RenaultHostedPages {
     name = "Discover your Renault Zoe",
     owner = "Renault",
     logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
-    cssClass = "renault",
-    fontColour = FontColour("#ffc421"),
-    logoLink = None
+    fontColour = FontColour("#ffc421")
   )
 
   private val cta = HostedCallToAction(
@@ -122,7 +120,8 @@ object RenaultHostedPages {
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 
   private val teaser: HostedPage = withNextPage(teaserWithoutNextPage, episode1WithoutNextPage)

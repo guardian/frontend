@@ -12,9 +12,7 @@ object ZootropolisHostedPages {
     name = "Zootropolis",
     owner = "Disney",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg"),
-    cssClass = "zootropolis",
-    fontColour = FontColour("#2ec869"),
-    logoLink = None
+    fontColour = FontColour("#2ec869")
   )
 
   private val cta = HostedCallToAction(
@@ -98,7 +96,7 @@ object ZootropolisHostedPages {
 
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title)))
+    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType)))
   }
 
   private lazy val videoPage = withNextPage(videoPageWithoutNextPage, articlePageWithoutNextPage)

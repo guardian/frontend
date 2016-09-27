@@ -11,9 +11,7 @@ object ChesterZooHostedPages {
     name = "What we fight for",
     owner = "Chester Zoo",
     logo = HostedLogo("https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png"),
-    cssClass = "chester-zoo",
-    fontColour = FontColour("#E31B22"),
-    logoLink = None
+    fontColour = FontColour("#E31B22")
   )
 
   private val images: List[HostedGalleryImage] = List(
@@ -115,24 +113,28 @@ object ChesterZooHostedPages {
   private val whatIsActForWildlifePage: NextHostedPage = NextHostedPage(
     imageUrl = "http://media.guim.co.uk/c23491f2b55687fe71aa11840468e54c647ade80/0_0_3881_2328/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$whatIsActForWildlife",
+    contentType = HostedContentType.Video,
     title = "What is Act for Wildlife?"
   )
 
   private val savingOragutansFromExtinctionPage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/e5494199050a52ed24f003f691e6abdd6eee5993/0_0_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$savingOragutansFromExtinction",
+    contentType = HostedContentType.Article,
     title = "Saving orangutans from extinction"
   )
 
   private val conservationStartsCloserToHomePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/672a47345a9bb886d8a4420168b5934114da37de/0_51_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$conservationStartsCloserToHome",
+    contentType = HostedContentType.Article,
     title = "Conservation starts closer to home"
   )
 
   private val savingWildlifeFromTheBrinkPage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/8124d85bda256d0b0c8eaec99ab8517e26e00671/0_75_2048_1228/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$savingWildlifeFromTheBrink",
+    contentType = HostedContentType.Article,
     title = "Saving wildlife from the brink of extinction"
   )
 
@@ -141,24 +143,28 @@ object ChesterZooHostedPages {
   private val ensuringAFutureForSouthAsianWildlifePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/6d8b2274fcc7a7bad7b13e8c65a65ee01dba11e8/252_86_1796_1078/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$ensuringAFutureForSouthAsianWildlife",
+    contentType = HostedContentType.Article,
     title = "Ensuring a future for South Asian wildlife"
   )
 
   private val aRaceAgainstTimeForWildLifePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/79abfe296a0aee7c37677207b2a7f17bdfd51f57/362_120_1457_874/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$aRaceAgainstTimeForWildLife",
+    contentType = HostedContentType.Article,
     title = "A race against time for wildlife in Latin America"
   )
 
   private val actingForWildlifeInAfricaPage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/9d471141fae4c716f27f56de088a87af3b932031/0_71_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$actingForWildlifeInAfrica",
+    contentType = HostedContentType.Article,
     title = "Acting for wildlife in Africa"
   )
 
   private val theRoleOfZoosInSavingWildlifePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/6ad6b68ed5dcc5bc6e370f39b69063b533ce7627/0_23_2019_1211/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$theRoleOfZoosInSavingWildlife",
+    contentType = HostedContentType.Article,
     title = "The role of zoos in saving wildlife"
   )
 
@@ -167,24 +173,28 @@ object ChesterZooHostedPages {
   private val takeTheSustainablePalmOilChallengePage: NextHostedPage = NextHostedPage(
     imageUrl = "https://media.guim.co.uk/838d447bf7432026f73ee1244bfd1717e9f6a848/0_68_2048_1229/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$takeTheSustainablePalmOilChallenge",
+    contentType = HostedContentType.Article,
     title = "Take the sustainable Palm Oil challenge"
   )
 
   private val makingWildlifeFriendlyHabitatsPage: NextHostedPage = NextHostedPage(
     imageUrl = "http://media.guim.co.uk/a4cf689f63c6840021b04a51e7ec55e3edde45d8/238_0_2134_1281/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$makingWildlifeFriendlyHabitats",
+    contentType = HostedContentType.Video,
     title = "Making wildlife friendly habitats"
   )
 
   private val helpPutAStopToTheIllegalWildlifeTradePage: NextHostedPage = NextHostedPage(
     imageUrl = "http://media.guim.co.uk/ddafbbdf638514dcbdba961e121115ab94e3af4a/199_2_1347_809/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$helpPutAStopToTheIllegalWildlifeTrade",
+    contentType = HostedContentType.Video,
     title = "Help put a stop to the illegal wildlife trade"
   )
 
   private val whatWeFightForPage: NextHostedPage = NextHostedPage(
     imageUrl = "http://media.guim.co.uk/85af2fd7ebb0731771e7e964bdced1adb1b1606b/0_51_2048_1228/500.jpg",
     pageUrl = s"$host/advertiser-content/chester-zoo-act-for-wildlife/$whatWeFightFor",
+    contentType = HostedContentType.Gallery,
     title = "What we fight for"
   )
 
@@ -233,8 +243,8 @@ object ChesterZooHostedPages {
     }
   })
 
-  def nextPages(pageName: String): List[NextHostedPage] = {
-    val orderedPages: List[String] = allLivePagesOrdered
+  def nextPages(pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = {
+    val orderedPages: List[String] = allLivePagesOrdered.filter(pn => if(contentType.isDefined) pageMap(pn).contentType == contentType.get else true)
     val index: Int = if(orderedPages.contains(pageName)) orderedPages.indexOf(pageName) else if (orderedPages.nonEmpty) orderedPages.length - 1 else 0
     val length: Int = if(orderedPages.nonEmpty) orderedPages.length else 1
     val nextIndex = (index + 1) % length

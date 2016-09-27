@@ -81,19 +81,16 @@ final case class Content(
   lazy val isImmersiveGallery = {
     metadata.contentType.toLowerCase == "gallery" &&
     (
-      (staticBadgesSwitch.isSwitchedOff && !trail.commercial.isAdvertisementFeature) ||
-      (
-        staticBadgesSwitch.isSwitchedOn && {
+        {
           val branding = tags.tags.flatMap { tag =>
             BrandHunter.findBranding( tag.properties.activeBrandings, Edition.defaultEdition, None)
           }.headOption
           branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
         }
-        )
-      )
+    )
   }
-  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
+  lazy val isExplore = HeroicTemplateSwitch.isSwitchedOn && tags.isExploreSeries
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
@@ -164,17 +161,14 @@ final case class Content(
       tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
     }
 
-    lazy val isPaidContentInDfp =
-      staticBadgesSwitch.isSwitchedOff && DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))
-
-    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && {
+    lazy val isPaidContent = {
       val branding = tags.tags.flatMap { tag =>
         BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
       }.headOption
       branding.exists(_.sponsorshipType == PaidContent)
     }
 
-    isChildrensBookBlog || isPaidContentInDfp || isPaidContentInCapi
+    isChildrensBookBlog || isPaidContent
   }
 
   lazy val sectionLabelLink : String = {
@@ -232,10 +226,11 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
     ("isHeroic", JsBoolean(isHeroic)),
+    ("isExplore", JsBoolean(isExplore)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
@@ -270,8 +265,8 @@ final case class Content(
       case trackingTags => Some("trackingNames", JsString(trackingTags.map(_.name).mkString(",")))
     }
 
-    val articleMeta = if (tags.isUSMinuteSeries) {
-      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    val articleMeta = if (tags.isTheMinuteArticle) {
+      Some("isMinuteArticle", JsBoolean(tags.isTheMinuteArticle))
     } else None
 
     val atomsMeta = atoms.map { atoms =>
@@ -472,7 +467,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || content.isImmersive) && content.tags.isArticle
     )
   }
 
@@ -514,10 +509,9 @@ final case class Article (
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
-  val isUSMinute: Boolean = content.tags.isUSMinuteSeries
+  val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
-  val isHeroic: Boolean = content.isHeroic
-  val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
+  val isExplore: Boolean = content.isExplore
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -843,6 +837,15 @@ final case class Interactive(
     }
   }
 
+  lazy val hasSrcdoc = {
+    val iframe = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe")
+
+    if (iframe.length > 0) {
+        iframe.first().hasAttr("srcdoc")
+    } else {
+        false
+    }
+  }
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
