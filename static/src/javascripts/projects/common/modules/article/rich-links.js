@@ -9,10 +9,12 @@ define([
     'common/utils/mediator',
     'common/utils/report-error',
     'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
     'text!common/views/content/richLinkTag.html',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     qwery,
@@ -24,37 +26,53 @@ define([
     mediator,
     reportError,
     template,
+    fastdomPromise,
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains
+    contains,
+    ab
 ) {
+
+    function elementIsBelowViewport (el) {
+        return fastdomPromise.read(function(){
+            var rect = el.getBoundingClientRect();
+            return rect.top > (window.innerHeight || document.documentElement.clientHeight);
+        });
+    }
+
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
-            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/),
+            isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
 
-        if (matches && matches[1]) {
-            return fetchJson('/embed/card' + matches[1] + '.json', {
-                mode: 'cors'
-            }).then(function (resp) {
-                if (resp.html) {
-                    fastdom.write(function () {
-                        $(el).html(resp.html)
-                            .removeClass('element-rich-link--not-upgraded')
-                            .addClass('element-rich-link--upgraded');
-                        imagesModule.upgradePictures(el);
-                        $('.submeta-container--break').removeClass('submeta-container--break');
-                        mediator.emit('rich-link:loaded', el);
+        // Fastdom read the viewport height before upgrading if we're in the test
+        (isInRichLinkTest) ? elementIsBelowViewport(el).then(doUpgrade) : doUpgrade(true);
+
+        function doUpgrade(shouldUpgrade) {
+            if (shouldUpgrade && matches && matches[1]) {
+                return fetchJson('/embed/card' + matches[1] + '.json', {
+                    mode: 'cors'
+                }).then(function (resp) {
+                    if (resp.html) {
+                        fastdom.write(function () {
+                            $(el).html(resp.html)
+                                .removeClass('element-rich-link--not-upgraded')
+                                .addClass('element-rich-link--upgraded');
+                            imagesModule.upgradePictures(el);
+                            $('.submeta-container--break').removeClass('submeta-container--break');
+                            mediator.emit('rich-link:loaded', el);
+                        });
+                    }
+                })
+                .catch(function (ex) {
+                    reportError(ex, {
+                        feature: 'rich-links'
                     });
-                }
-            })
-            .catch(function (ex) {
-                reportError(ex, {
-                    feature: 'rich-links'
                 });
-            });
-        } else {
-            return Promise.resolve(null);
+            } else {
+                return Promise.resolve(null);
+            }
         }
     }
 
