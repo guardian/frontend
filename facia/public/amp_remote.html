@@ -148,6 +148,8 @@
         // this is the big AMP callback
         draw3p(function (config, done) {
 
+            debugger;
+
             if (configIsValid(config) && isMasterIframe(config)) {
                 exposeMetaDataForKrux(config);
                 loadKrux();
