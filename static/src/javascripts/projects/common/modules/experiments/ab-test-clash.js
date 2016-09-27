@@ -13,7 +13,7 @@ define([
     function _testABClash(f) {
 
         var contributionsEpic = {name: 'ContributionsEpic20160916', variants: ['control', 'give', 'today', 'make']};
-        var contributionsStory = {name: 'ContributionsStory20160922', variants: ['control', 'story']};
+        var contributionsStory = {name: 'ContributionsStory', variants: ['control', 'story']};
         var clashingTests = [contributionsEpic, contributionsStory];
 
         return some(clashingTests, function (test) {
