@@ -16,12 +16,12 @@ define([
     SurveyAdBlock
 ) {
     return function () {
-        this.id = 'AdBlockingResponse3';
+        this.id = 'AdBlockingResponse30pc';
         this.start = '2016-09-22';
         this.expiry = '2016-10-14'; // this test will expire on Thurs 13th PM.
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response with ad-free 404 test';
-        this.audience = 0.12;
+        this.description = 'Adblocking response with ad-free 404 test ZERO PERCENT';
+        this.audience = 0;
         this.audienceOffset = 0.12; // exclude anyone that would have been in the previous 12% v2 test
         this.successMeasure = 'Adblocking users show genuine interest in a paid ad-free service';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
@@ -63,7 +63,7 @@ define([
                 storage.local.isStorageAvailable() &&
                 !storage.local.get('gu.subscriber') &&
                 !storage.local.get('gu.contributor') &&
-                !storage.local.get('gu.abb3.exempt') &&
+                !storage.local.get('gu.abb30pc.exempt') &&
                 storage.local.get('gu.alreadyVisited') > 5 &&
                 config.page.pageId !== 'contributor-email-page' &&
                 config.page.pageId !== 'contributor-email-page-submitted';

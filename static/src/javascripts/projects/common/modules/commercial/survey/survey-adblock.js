@@ -63,7 +63,7 @@ define([
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
                 $('.survey-container').addClass('thank-you');
-                storage.local.set('gu.abb3.exempt', true);
+                storage.local.set('gu.abb30pc.exempt', true);
             });
             bean.on(document, 'click', $('.survey-button-rounded__cta.ccard'), function () {
                 // -> state 4
@@ -72,7 +72,7 @@ define([
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
                 $('.survey-container').addClass('thank-you');
-                storage.local.set('gu.abb3.exempt', true);
+                storage.local.set('gu.abb30pc.exempt', true);
             });
             bean.on(document, 'click', $('.howto-unblock__close-btn'), function () {
                 // -> state 1
