@@ -12,6 +12,7 @@
     padding: 0 $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
 }
 
+
 .contributions__title {
     @include fs-header(2);
     margin: 0;
@@ -139,14 +140,12 @@
     }
 }
 
-
+.contributions__button-group--epic-no-buttons {
+    display: none;
+}
 
 .contributions__button-group--epic {
     margin-bottom: $gs-baseline;
-}
-
-.contributions__button-group--epic-no-buttons {
-    display: none;
 }
 
 .contributions__contribute--no-buttons--today {
@@ -168,7 +167,6 @@
     }
 
     .contributions__contribute--bottom {
-        margin-left: $gs-gutter / 2;
         margin-top: 0;
     }
 
@@ -179,14 +177,20 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
-
-    .contributions__contribute--no-buttons {
-        margin-left: 0;
-    }
 }
 
+.contributions__title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 
+.contributions__epic--story {
+    padding: 0 $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
+}
 
-
-
+.contributions__story--icon {
+    margin-right: $gs-gutter / -4;
+    line-height: 0;
+}
 

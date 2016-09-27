@@ -6,11 +6,13 @@ define([
     'Promise',
     'bean',
     'fastdom',
+    'bonzo',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/report-error',
+    'common/modules/video/youtube-player',
     'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -22,11 +24,13 @@ define([
     Promise,
     bean,
     fastdom,
+    bonzo,
     $,
     deferToAnalytics,
     detect,
     mediator,
     reportError,
+    youtubePlayer,
     omniture,
     ab,
     events,
@@ -73,6 +77,22 @@ define([
 
     function init() {
         return new Promise(function (resolve) {
+            var $youtubeIframe = $('.js-hosted-youtube-video');
+            $youtubeIframe.each(function(el){
+                youtubePlayer.init().promise.then(function () {
+                    player = new window.YT.Player(el.id, {
+                        events: {
+                            'onStateChange': onPlayerStateChange
+                        }
+                    });
+                    function onPlayerStateChange(event) {
+                        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function(status){
+                            bonzo(el).toggleClass('youtube-video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
+                        });
+                    }
+                });
+            });
+
             require(['bootstraps/enhanced/media/main'], function () {
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
