@@ -334,6 +334,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     left: 0;
     line-height: 1;
     z-index: $zindex-main-menu;
+    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
 }
 
 .main-menu-container__overlay {
@@ -353,7 +354,6 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     height: 100%;
     background-color: $guardian-brand;
     color: #ffffff;
-    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
