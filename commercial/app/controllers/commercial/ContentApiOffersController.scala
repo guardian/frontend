@@ -116,8 +116,10 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
 
-  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement], audioTag: Boolean,
-                        galleryTag: Boolean, videoTag: Boolean, branding: Option[Branding])
+  case class CapiSingle(articleHeadline: String, articleUrl: String,
+                        articleText: Option[String], articleImage: Seq[ImageElement],
+                        audioTag: Boolean, galleryTag: Boolean,
+                        videoTag: Boolean, branding: Option[Branding])
 
   object CapiSingle {
     import ElementsFormat._
@@ -160,7 +162,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     futureContents.map((content: Seq[model.ContentType]) => {
       val response = content.head
-      val capiSingle = CapiSingle.fromContent(response)
+      val capiSingle = CapiSingle.fromContent(response.content)
       Cached(1.seconds) {
         JsonComponent(capiSingle)
       }
