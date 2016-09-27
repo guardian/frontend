@@ -88,9 +88,9 @@ define([
             if (!isEmpty($follow)) {
                 fastdom.write(function () {
                     if (isSubscribed) {
-                        $follow.attr('data-link-name', 'live-blog-notifications-turned-off')
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-off');
                     } else {
-                        $follow.attr('data-link-name', 'live-blog-notifications-turned-on')
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-on');
                     }
 
                     $follow.html(src);
