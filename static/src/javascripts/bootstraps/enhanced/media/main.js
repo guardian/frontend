@@ -415,7 +415,7 @@ define([
                 });
             }
         });
-        if($('.heroic--video').length > 0){
+        if($('.explore--video').length > 0){
           initExploreVideo();
         }
         return player;

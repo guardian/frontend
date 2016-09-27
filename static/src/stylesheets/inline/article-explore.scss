@@ -6,7 +6,7 @@ $explore-series-header-element-opacity: .85;
     min-height: gs-height(8);
 
     //if immersive switch is on it gets given this class so we can still have a full screen image
-    &.heroic-immersive {
+    &.explore-immersive {
         min-height: 100vh;
     }
 
@@ -19,7 +19,7 @@ $explore-series-header-element-opacity: .85;
         }
     }
     //firefox fix for the height of the video
-    &.heroic-video-container {
+    &.explore-video-container {
         min-height: 548px;
 
         @include mq($until: desktop) {
@@ -49,7 +49,7 @@ $explore-series-header-element-opacity: .85;
     padding-top: $gs-baseline;
 }
 
-.content--explore-series.heroic--video .content__article-body {
+.content--explore-series.explore--video .content__article-body {
     padding: 0px;
     @include mq($from: tablet) {
         padding-top: 40px;
@@ -57,7 +57,7 @@ $explore-series-header-element-opacity: .85;
 }
 
 .content--explore-series-article {
-    &.heroic--video {
+    &.explore--video {
         min-height: 0rem;
 
         @include mq($from: mobileLandscape) {
@@ -74,7 +74,7 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.heroic--video {
+.explore--video {
     .explore-series-headline {
         top: 220px;
 
@@ -100,7 +100,7 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.heroic-immersive .explore-series-headline {
+.explore-immersive .explore-series-headline {
     top: auto;
     bottom: 122px;
     position: absolute;
