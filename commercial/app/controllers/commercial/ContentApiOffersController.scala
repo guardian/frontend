@@ -16,7 +16,7 @@ import scala.util.control.NonFatal
 
 import views.support.ImgSrc
 import cards.{Half, Third, Standard}
-import layout.{FaciaWidths, ItemClasses, BrowserWidth, BreakpointWidth}
+import layout.{FaciaWidths, ItemClasses}
 
 sealed abstract class SponsorType(val className: String)
 case object PaidFor extends SponsorType("paidfor")
@@ -25,6 +25,8 @@ case object Supported extends SponsorType("supported")
 class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: CapiAgent) extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private val lookup = new Lookup(contentApiClient)
+
+  // ----- cAPI Frontend Templates ----- //
 
   private val sponsorTypeToClassRefactor = Map(
     "sponsored" -> Supported,
@@ -119,31 +121,46 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
-  // Holds the source element data for the images.
-  case class ImageSource (minWidth: String, sizes: String,
-    hidpiSrcset: String, lodpiSrcset: String)
+  // ----- cAPI Native Templates ----- //
 
-  // Holds all source element data and the backup image src for older browsers.
+  // Holds the source element data for the images.
+  case class ImageSource (
+    minWidth: String,
+    sizes: String,
+    hidpiSrcset: String,
+    lodpiSrcset: String
+  )
+
+  object ImageSource {
+    implicit val writesImageSource: Writes[ImageSource] =
+      Json.writes[ImageSource]
+  }
+
+  // Holds all source element data, and the backup image src for older browsers.
   case class ImageInfo (sources: Seq[ImageSource], backupSrc: String)
 
-  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: ImageInfo, audioTag: Boolean,
-                        galleryTag: Boolean, videoTag: Boolean)
+  object ImageInfo {
+    implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
+  }
+
+  // The information needed to render the native cAPI single ad.
+  case class CapiSingle(
+    articleHeadline: String,
+    articleUrl: String,
+    articleText: Option[String],
+    articleImage: ImageInfo,
+    audioTag: Boolean,
+    galleryTag: Boolean,
+    videoTag: Boolean
+  )
 
   object CapiSingle {
     import ElementsFormat._
 
-    def fromContent(content: Content): CapiSingle = {
+    // Puts together image source info using data from cAPI.
+    private def buildImageData(imageData: Option[ImageMedia]): ImageInfo = {
 
-      val imageData = content.trail.trailPicture
-      val fallbackImageUrl = content.trail.trailPicture flatMap
-        ImgSrc.getFallbackUrl
-
-      // val cardType = Math.min(noCards, 4) match {
-      //   case 3 => Third
-      //   case 2 => Half
-      //   case _ => Standard
-      // }
-
+      val fallbackImageUrl = imageData flatMap ImgSrc.getFallbackUrl
       val cardType = Standard
 
       val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
@@ -163,22 +180,27 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
         )
       }
 
-      val imageInfo = ImageInfo(sources, fallbackImageUrl.getOrElse(""))
+      ImageInfo(sources, fallbackImageUrl.getOrElse(""))
 
-      CapiSingle(content.trail.headline, content.metadata.webUrl,
-        content.trail.fields.trailText, imageInfo, content.tags.isAudio,
-        content.tags.isGallery, content.tags.isVideo)
+    }
+
+    def fromContent(content: Content): CapiSingle = {
+
+      val imageInfo = buildImageData(content.trail.trailPicture)
+
+      CapiSingle(
+        content.trail.headline,
+        content.metadata.webUrl,
+        content.trail.fields.trailText,
+        imageInfo,
+        content.tags.isAudio,
+        content.tags.isGallery,
+        content.tags.isVideo
+      )
+
     }
 
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
-  }
-
-  object ImageInfo {
-    implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
-  }
-
-  object ImageSource {
-    implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
   }
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
