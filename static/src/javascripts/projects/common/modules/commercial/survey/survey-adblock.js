@@ -37,61 +37,71 @@ define([
             });
     };
 
+    var greetingView = function() {
+        // -> state 1
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.greeting-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var whiteListInstructionView = function () {
+        // -> state 2
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var adFreeOptionView = function() {
+        // -> state 3
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var paymentDoneView = function() {
+        // -> state 4
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').addClass('thank-you');
+        storage.local.set('gu.abb30pc.exempt', true);
+    };
+
+    var closeOverlay = function() {
+        // -> go to article
+        $('.survey-container').removeClass('thank-you');
+        $('.js-survey-adblock').addClass('is-hidden');
+    };
+
     surveyAdBlock.prototype.attach = function () {
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
             bean.on(document, 'click', $('.cta-whitelist'), function () {
-                // -> state 2
-                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-4'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-2'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').removeClass('thank-you');
+                whiteListInstructionView();
             });
             bean.on(document, 'click', $('.survey-button-rounded__cta.noads'), function () {
-                // -> state 3
-                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-4'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').removeClass('thank-you');
+                adFreeOptionView();
             });
             bean.on(document, 'click', $('.survey-button-rounded__cta.paypal'), function () {
-                // -> state 4
-                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').addClass('thank-you');
-                storage.local.set('gu.abb30pc.exempt', true);
+                paymentDoneView();
             });
             bean.on(document, 'click', $('.survey-button-rounded__cta.ccard'), function () {
-                // -> state 4
-                $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-4'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').addClass('thank-you');
-                storage.local.set('gu.abb30pc.exempt', true);
+                paymentDoneView();
             });
             bean.on(document, 'click', $('.howto-unblock__close-btn'), function () {
-                // -> state 1
-                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').removeClass('thank-you');
+                greetingView();
             });
             bean.on(document, 'click', $('.pay-now__close-btn'), function () {
-                // -> state 1
-                $.forEachElement(('.state-2'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
-                $.forEachElement(('.state-1'), function(el){el.classList.remove('is-hidden');});
-                $('.survey-container').removeClass('thank-you');
+                greetingView();
             });
             bean.on(document, 'click', $('.survey-button-rounded__cta.readon'), function () {
-                // -> go to article
-                $('.survey-container').removeClass('thank-you');
-                $('.js-survey-adblock').addClass('is-hidden');
+                closeOverlay();
             });
         }.bind(this));
     };

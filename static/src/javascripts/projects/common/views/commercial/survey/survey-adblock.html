@@ -11,7 +11,7 @@
                 <%=surveyOverlaySimple%>
             </div>
             <div class="survey-header">
-                <div class="state-1 state-2">
+                <div class="greeting-state whitelist-state">
                     <div class="survey-text__header">
                         We rely on advertising revenue to fund our journalism
                     </div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div class="state-3 is-hidden">
+                <div class="adfree-state is-hidden">
                     <div class="survey-text__header">
                         Choose ad-free payment method
                     </div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <div class="state-4 is-hidden">
+                <div class="thankyou-state is-hidden">
                     <div class="survey-text__header">
                         Thank you for your interest in an ad-free Guardian
                     </div>
@@ -63,12 +63,12 @@
         </div>
 
         <div class="survey-buttons">
-            <div class="survey-button-rounded__cta noads state-1 state-2" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
-            <div class="survey-button-rounded__cta cta-whitelist state-1" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
-            <div class="survey-button-rounded__cta readon state-4 is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta noads greeting-state whitelist-state" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta cta-whitelist greeting-state" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta readon thankyou-state is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
         </div>
 
-        <div class="howto-unblock state-2 is-hidden">
+        <div class="howto-unblock whitelist-state is-hidden">
             <hr />
             <div class="survey-text__info">
                 <span class="survey-text__strong">
@@ -84,7 +84,7 @@
             <p class="survey-text__info" style="margin-top: 25px;">After making this change, please reload the page in your browser.</p>
         </div>
 
-        <div class="howto-pay state-3 is-hidden">
+        <div class="howto-pay adfree-state is-hidden">
             <hr />
             <div class="survey-text__info">
                 <div class="pay-now__close-btn" data-link-name="survey adblock <%=variant%> pay-now closed"><%=crossIcon%></div>
@@ -97,7 +97,7 @@
             </div>
         </div>
 
-        <div class="survey-text__info state-1">
+        <div class="survey-text__info greeting-state">
             <hr />
             <div class="footer">
                 <p>
