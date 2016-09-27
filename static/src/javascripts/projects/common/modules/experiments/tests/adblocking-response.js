@@ -79,8 +79,7 @@ define([
                     var variant = '299',
                         whitelistText = 'Allow ads and browse for free',
                         adFreeButtonText = 'Remove ads for &pound;2.99/month',
-                        adFreeMessagePrefix = '&pound;2.99 per month',
-                        header = 'Advertising helps fund our journalism';
+                        adFreeMessagePrefix = '&pound;2.99 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
@@ -102,14 +101,12 @@ define([
                     var variant = '499',
                         whitelistText = 'Allow ads and browse for free',
                         adFreeButtonText = 'Remove ads for &pound;4.99/month',
-                        adFreeMessagePrefix = '&pound;4.99 per month',
-                        header = 'Advertising helps fund our journalism';
+                        adFreeMessagePrefix = '&pound;4.99 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
                         adFreeButtonText: adFreeButtonText,
                         adFreeMessagePrefix: adFreeMessagePrefix,
-                        surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],
                         adBlockPlusIcon: config.images.commercial['abp-icon'],
@@ -126,14 +123,12 @@ define([
                     var variant = '999',
                         whitelistText = 'Allow ads and browse for free',
                         adFreeButtonText = 'Remove ads for &pound;9.99/month',
-                        adFreeMessagePrefix = '&pound;9.99 per month',
-                        header = 'Advertising helps fund our journalism';
+                        adFreeMessagePrefix = '&pound;9.99 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
                         adFreeButtonText: adFreeButtonText,
                         adFreeMessagePrefix: adFreeMessagePrefix,
-                        surveyHeader: header,
                         whitelistGuideImage: config.images.commercial['abp-whitelist-instruction-chrome'],
                         adBlockIcon: config.images.commercial['ab-icon'],
                         adBlockPlusIcon: config.images.commercial['abp-icon'],
