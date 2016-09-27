@@ -204,14 +204,15 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
   // The information needed to render the native cAPI multiple ad.
-  case class CapiMultiple(cards: Seq[CapiSingle])
+  case class CapiMultiple(articles: Seq[CapiSingle])
 
   object CapiMultiple {
 
-    def fromContent(cards: Seq[Content]): CapiMultiple = {      
+    def fromContent(articles: Seq[ContentType]): CapiMultiple = {      
 
-      CapiMultiple(cards.map { content => 
+      CapiMultiple(articles.map { article => 
 
+        val content = article.content
         val imageInfo = buildImageData(content.trail.trailPicture)
 
         CapiSingle(
@@ -239,7 +240,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 2)
+      lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     latestContent onFailure {
@@ -256,16 +257,29 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       specific <- specificContent
       latestByKeyword <- latestContent
     } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 1
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents.map((content: Seq[model.ContentType]) => {
-      val response = content.head
-      val capiSingle = CapiSingle.fromContent(response.content)
-      Cached(60.seconds) {
-        JsonComponent(capiSingle)
-      }
-    })
+    if (isMulti) {
+
+      futureContents.map((content: Seq[model.ContentType]) => {
+        val capiMultiple = CapiMultiple.fromContent(content)
+        Cached(60.seconds) {
+          JsonComponent(CapiMultiple)
+        }
+      })
+
+    } else {
+
+      futureContents.map((content: Seq[model.ContentType]) => {
+        val response = content.head
+        val capiSingle = CapiSingle.fromContent(response.content)
+        Cached(60.seconds) {
+          JsonComponent(capiSingle)
+        }
+      })
+
+    }
 
   }
 
