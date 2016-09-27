@@ -13,14 +13,11 @@
             <div class="survey-header">
                 <div class="state-1 state-2">
                     <div class="survey-text__header">
-                        Advertising helps fund our journalism
+                        We rely on advertising revenue to fund our journalism
                     </div>
                     <div class="survey-text">
-                        <p class="survey-text__strong">
-                            The ability to display adverts is essential for us, but you're not currently seeing any.
-                        </p>
-                        <p class="survey-text__strong">
-                            Please choose how you would prefer to continue reading our content.
+                        <p>
+                            Please <strong>allow ads</strong> or <strong>go ad-free</strong> so we can continue to bring you quality news into the future.
                         </p>
                     </div>
                 </div>
@@ -30,10 +27,10 @@
                         Choose ad-free payment method
                     </div>
                     <div class="survey-text">
-                        <p class="survey-text__strong">
+                        <p>
                             <%=adFreeMessagePrefix%> buys you an ad-free experience across theguardian.com website when you sign in.
                         </p>
-                        <p class="survey-text__strong">
+                        <p>
                             There's no ongoing commitment, and you can stop your payments or take a holiday from ad-free at any time.
                         </p>
                     </div>
@@ -43,7 +40,7 @@
                     <div class="survey-text__header">
                         Thank you for your interest in an ad-free Guardian
                     </div>
-                    <div class="survey-text__strong">
+                    <div>
                         <p>
                             We're assessing demand for an ad-free version of theguardian.com. Your interest has been counted
                             and you won't be charged anything.
@@ -67,15 +64,15 @@
 
         <div class="survey-buttons">
             <div class="survey-button-rounded__cta noads state-1 state-2" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
-            <div class="survey-button-rounded__cta whitelist state-1" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta cta-whitelist state-1" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
             <div class="survey-button-rounded__cta readon state-4 is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
         </div>
 
         <div class="howto-unblock state-2 is-hidden">
             <hr />
             <div class="survey-text__info">
-                <span>
-                    How to allow ads on the Guardian with AdBlock or AdBlock Plus (<a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP3_<%=variant%>">detailed instructions</a>)
+                <span class="survey-text__strong">
+                    Allow ads and browse for free. <a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP30pc_<%=variant%>"><span>More information</span></a>
                 </span>
                 <span class="howto-unblock__close-btn" data-link-name="survey adblock howto-unblock closed">
                     <%=crossIcon%>
@@ -96,21 +93,20 @@
                     <div class="survey-button-rounded__cta pay ccard" data-link-name="adblock adfree <%=variant%> creditcard button" alt="Pay with debit or credit card">Pay with debit/credit card<%=arrowWhiteRight%></div>
                 </div>
                 <hr />
-                <div class="survey-buttons">
-                    <p>Don't want to pay?</p>
-                    <div class="survey-button-rounded__cta whitelist" data-link-name="pay-now <%=variant%>"><%=whitelistText%><%=arrowWhiteRight%></div>
-                </div>
+                <p class="survey-text__strong">Don't want to pay? <a class="text-link cta-whitelist" data-link-name="pay-now whitelist <%=variant%>">Allow ads</a>&nbsp;&#x2794;</p>
             </div>
         </div>
 
-        <div class="survey-text__info footer state-1">
+        <div class="survey-text__info state-1">
             <hr />
-            <p>
-                Already paying?&nbsp;<a class="text-link" href="https://profile.theguardian.com/signin?INTCMP=ADB_RESP3_<%=variant%>" data-link-name="adblock supporter <%=variant%>">I am a supporter</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/subscriber-number" data-link-name="adblock subscriber <%=variant%>">I am a subscriber</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/contributor-email" data-link-name="adblock contributor <%=variant%>">I am a contributor</a>
-            </p>
-            <p>
-                If you don't know why you are seeing this message, please <a class="text-link" href="https://www.theguardian.com/help/contact-us?INTCMP=ADB_RESP3_<%=variant%>">contact us</a>
-            </p>
+            <div class="footer">
+                <p>
+                    Already paying?&nbsp;<a class="text-link" href="https://profile.theguardian.com/signin?INTCMP=ADB_RESP30pc_<%=variant%>" data-link-name="adblock supporter <%=variant%>">Supporter sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/subscriber-number" data-link-name="adblock subscriber <%=variant%>">Print subscriber sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/contributor-email" data-link-name="adblock contributor <%=variant%>">Contributor sign in</a>
+                </p>
+                <p>
+                    If you don't know why you are seeing this message, please <a class="text-link" href="https://www.theguardian.com/help/contact-us?INTCMP=ADB_RESP30pc_<%=variant%>">contact us</a>
+                </p>
+            </div>
         </div>
 
     </div>

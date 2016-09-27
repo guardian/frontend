@@ -242,7 +242,6 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 12px;
         line-height: 120%;
         text-align: left;
 
@@ -253,6 +252,21 @@
         p {
             margin-top: 10px;
         }
+
+        .footer p {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+    }
+
+    .survey-text__strong {
+        @include fs-textSans(4);
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0;
+        padding: 6px 0 0 10px;
+        height: 44px;
     }
 
     .text-link {
@@ -296,7 +310,7 @@
     }
 
     .survey-buttons {
-        @include fs-bodyCopy(1);
+        @include fs-textSans(5);
         @include mq($until: mobile) {
             margin-bottom: $gs-row-height / 4;
         }
@@ -330,7 +344,7 @@
             .pp-paywith {
                 margin-left: 35px;
             }
-            background-color: #f5a623;
+            background-color: #f6a424;
         }
 
         .survey-button-rounded__cta.pay:hover {

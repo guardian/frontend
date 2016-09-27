@@ -40,7 +40,7 @@ define([
     surveyAdBlock.prototype.attach = function () {
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
-            bean.on(document, 'click', $('.survey-button-rounded__cta.whitelist'), function () {
+            bean.on(document, 'click', $('.cta-whitelist'), function () {
                 // -> state 2
                 $.forEachElement(('.state-1'), function(el){el.classList.add('is-hidden');});
                 $.forEachElement(('.state-3'), function(el){el.classList.add('is-hidden');});
