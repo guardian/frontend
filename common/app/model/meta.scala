@@ -647,7 +647,8 @@ final case class Tags(
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 
   // Specific Series
-  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
+  private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
+  lazy val isExploreSeries = isLabourLiverpool
 
   lazy val keywordIds = keywords.map { _.id }
 
