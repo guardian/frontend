@@ -123,6 +123,33 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   // ----- cAPI Native Templates ----- //
 
+  // Puts together image source info using data from cAPI.
+  private def buildImageData(imageData: Option[ImageMedia]): ImageInfo = {
+
+    val fallbackImageUrl = imageData flatMap ImgSrc.getFallbackUrl
+    val cardType = Standard
+
+    val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
+      mobile = Standard,
+      tablet = cardType,
+      desktop = Some(cardType)
+    )).breakpoints
+
+    val sources = breakpointWidths.map { breakpointWidth =>
+      ImageSource(
+        breakpointWidth.breakpoint.minWidth.getOrElse("0").toString,
+        breakpointWidth.width.toString,
+        ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+          imageData, hidpi = true),
+        ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+          imageData)
+      )
+    }
+
+    ImageInfo(sources, fallbackImageUrl.getOrElse(""))
+
+  }
+
   // Holds the source element data for the images.
   case class ImageSource (
     minWidth: String,
@@ -157,33 +184,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   object CapiSingle {
     import ElementsFormat._
 
-    // Puts together image source info using data from cAPI.
-    private def buildImageData(imageData: Option[ImageMedia]): ImageInfo = {
-
-      val fallbackImageUrl = imageData flatMap ImgSrc.getFallbackUrl
-      val cardType = Standard
-
-      val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
-        mobile = Standard,
-        tablet = cardType,
-        desktop = Some(cardType)
-      )).breakpoints
-
-      val sources = breakpointWidths.map { breakpointWidth =>
-        ImageSource(
-          breakpointWidth.breakpoint.minWidth.getOrElse("0").toString,
-          breakpointWidth.width.toString,
-          ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-            imageData, hidpi = true),
-          ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-            imageData)
-        )
-      }
-
-      ImageInfo(sources, fallbackImageUrl.getOrElse(""))
-
-    }
-
     def fromContent(content: Content): CapiSingle = {
 
       val imageInfo = buildImageData(content.trail.trailPicture)
@@ -201,6 +201,36 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
 
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
+  }
+
+  // The information needed to render the native cAPI multiple ad.
+  case class CapiMultiple(cards: Seq[CapiSingle])
+
+  object CapiMultiple {
+
+    def fromContent(cards: Seq[Content]): CapiMultiple = {      
+
+      CapiMultiple(cards.map { content => 
+
+        val imageInfo = buildImageData(content.trail.trailPicture)
+
+        CapiSingle(
+          content.trail.headline,
+          content.metadata.webUrl,
+          content.trail.fields.trailText,
+          imageInfo,
+          content.tags.isAudio,
+          content.tags.isGallery,
+          content.tags.isVideo
+        )
+
+      })
+
+    }
+
+    implicit val writesCapiMultiple: Writes[CapiMultiple] =
+      Json.writes[CapiMultiple]
+
   }
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
