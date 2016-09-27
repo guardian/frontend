@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/hosted-article-onward-journey',
@@ -28,7 +27,6 @@ define([
     mvtCookie,
     memoize,
     noop,
-    DiscussionExternalFrontend,
     DiscussionPromoteBottomBanner,
     LiveBlogChromeNotificationsProd,
     HostedArticleOnwardJourney,
@@ -43,7 +41,6 @@ define([
 ) {
 
     var TESTS = [
-        new DiscussionExternalFrontend(),
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
