@@ -34,33 +34,39 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     "foundation-supported" -> "Supported by"
   )
 
-  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def retrieveContent()(implicit request: Request[AnyContent]): Future[Seq[ContentType]]  = {
 
     val optKeyword = request.getParameter("k")
 
-    val eventualLatest = optKeyword.map { keyword =>
+    val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
       lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
-    eventualLatest onFailure {
+    latestContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
     }
 
-    val eventualSpecific = capiAgent.contentByShortUrls(specificIds)
+    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
-    eventualSpecific onFailure {
+    specificContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
     }
 
     val futureContents = for {
-      specific <- eventualSpecific
-      latestByKeyword <- eventualLatest
+      specific <- specificContent
+      latestByKeyword <- latestContent
     } yield {
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents.map(_.toList) map {
+    futureContents
+  }
+
+
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+
+    retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
@@ -136,31 +142,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
-    val optKeyword = request.getParameter("k")
-
-    val latestContent = optKeyword.map { keyword =>
-      // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 8)
-    }.getOrElse(Future.successful(Nil))
-
-    latestContent onFailure {
-      case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
-    }
-
-    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
-
-    specificContent onFailure {
-      case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
-    }
-
-    val futureContents = for {
-      specific <- specificContent
-      latestByKeyword <- latestContent
-    } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
-    }
-
-    futureContents.map((content: Seq[model.ContentType]) => {
+    retrieveContent().map((content: Seq[model.ContentType]) => {
       val response = content.head
       val capiSingle = CapiSingle.fromContent(response)
       Cached(60.seconds) {
