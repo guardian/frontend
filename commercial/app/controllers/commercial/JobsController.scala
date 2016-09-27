@@ -43,9 +43,8 @@ class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Req
   }
 
   def getJobs = Action { implicit request =>
-      val json = Json.toJson(jobSample(specificIds, segment))
       Cached(60.seconds){
-        JsonComponent(json)
+        JsonComponent(jobSample(specificIds, segment))
       }
   }
 }
