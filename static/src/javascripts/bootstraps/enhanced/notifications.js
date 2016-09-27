@@ -2,7 +2,7 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/storage',
@@ -54,8 +54,18 @@ define([
         },
 
         init: function() {
-            var $followElement = modules.configureSubscribeButton();
-            modules.trackFollowButtonAttention($followElement.get(0));
+            modules.addButtonPromise().then(function(){
+                var $followElement = modules.configureSubscribeButton();
+                modules.trackFollowButtonAttention($followElement.get(0));
+            });
+        },
+
+        addButtonPromise: function() {
+            var button = '<button class="js-notifications__toggle notifications__toggle notifications-follow-input--solo"></button><span class="live-notifications__label js-live-notifications__label--denied live-notifications__label--hidden">Oops! You need to <a href="https://support.google.com/chrome/answer/3220216">unblock notifications</a> for www.theguardian.com</span>';
+            var $container = $('.js-live-notifications');
+            return fastdom.write(function(){
+                $container.append(button);
+            });
         },
 
         trackFollowButtonAttention: function (followElement) {
@@ -67,7 +77,7 @@ define([
         },
 
         configureSubscribeButton: function () {
-            var $follow = bonzo($('.js-live-notifications')),
+            var $follow = bonzo($('.js-notifications__toggle')),
                 isSsubscribed = modules.checkSubscriptions(),
                 handler = isSsubscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
                 src = template(followLink, {
@@ -78,7 +88,7 @@ define([
             if (!isEmpty($follow)) {
                 fastdom.write(function () {
                     $follow.html(src);
-                    bean.one($follow[0], 'click', '.js-notifications__toggle', handler);
+                    bean.one($follow[0], 'click', handler);
                 });
             }
             return $follow;

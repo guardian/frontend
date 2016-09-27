@@ -114,10 +114,8 @@ $notifications-button-height: 28px;
 }
 
 @each $state in (subscribed, unsubscribed) {
-    .notifications__toggle--#{$state} {
-        .live-notifications__label--#{$state} {
-            display: inline-block;
-        }
+    .live-notifications__label--#{$state} {
+        display: inline-block;
     }
 }
 

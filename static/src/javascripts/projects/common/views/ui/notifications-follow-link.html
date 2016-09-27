@@ -1,10 +1,7 @@
- <button class="js-notifications__toggle notifications__toggle notifications-follow-input--solo notifications__toggle--<%= isSubscribed ? 'subscribed' : 'unsubscribed' %>" data-link-name="live-blog-notifications-turned-<%= isSubscribed ? 'off' : 'on' %>">
-     <% if (isSubscribed) { %>
-         <div class="live-notifications__slider live-notifications__slider--subscribed"></div>
-         <span class="live-notifications__label live-notifications__label--subscribed">Receive updates on this story</span>
-     <% } else { %>
-         <div class="live-notifications__slider live-notifications__slider--unsubscribed"></div>
-         <span class="live-notifications__label live-notifications__label--unsubscribed">Receive updates on this story</span>
-     <% } %>
- </button>
- <span class="live-notifications__label js-live-notifications__label--denied live-notifications__label--hidden">Oops! You need to <a href="https://support.google.com/chrome/answer/3220216">unblock notifications</a> for www.theguardian.com</span>
+<% if (isSubscribed) { %>
+    <div class="live-notifications__slider live-notifications__slider--subscribed"></div>
+    <span class="live-notifications__label live-notifications__label--subscribed">Receive updates on this story</span>
+<% } else { %>
+    <div class="live-notifications__slider live-notifications__slider--unsubscribed"></div>
+    <span class="live-notifications__label live-notifications__label--unsubscribed">Receive updates on this story</span>
+<% } %>
