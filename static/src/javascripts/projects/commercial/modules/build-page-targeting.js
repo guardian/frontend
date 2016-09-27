@@ -4,7 +4,6 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/url',
-    'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
@@ -23,7 +22,6 @@ define([
     detect,
     storage,
     url,
-    audienceScienceGateway,
     krux,
     identity,
     userAdTargeting,
@@ -176,8 +174,7 @@ define([
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-            }, audienceScienceGateway.getSegments()
-            , getWhitelistedQueryParams());
+            }, getWhitelistedQueryParams());
 
         // filter out empty values
         return pick(pageTargets, function (target) {

@@ -9,7 +9,8 @@ import scala.concurrent.{Future, ExecutionContext}
 class SectionsLookUpLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync
+  akkaAsync: AkkaAsync,
+  sectionsLookUp: SectionsLookUp
 )(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
@@ -18,7 +19,7 @@ class SectionsLookUpLifecycle(
 
   private def scheduleJobs() {
     jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
-      SectionsLookUp.refresh()
+      sectionsLookUp.refresh()
     }
   }
 
@@ -31,7 +32,7 @@ class SectionsLookUpLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      SectionsLookUp.refresh()
+      sectionsLookUp.refresh()
     }
   }
 }

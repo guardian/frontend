@@ -10,6 +10,10 @@ import scala.concurrent.duration._
 import scala.util.control.NonFatal
 import scala.xml.Node
 
+import play.api.data.validation.ValidationError
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
+
 case class TravelOffer(id: String,
                        title: String,
                        offerUrl: String,
@@ -38,6 +42,8 @@ case class TravelOffer(id: String,
 }
 
 object TravelOffer {
+
+  implicit val writesTravelOffer: Writes[TravelOffer] = Json.writes[TravelOffer]
 
   def fromXml(xml: Node): TravelOffer = {
 
@@ -73,98 +79,4 @@ object TravelOffer {
       position = -1
     )
   }
-}
-
-object Countries extends ExecutionContexts with Logging {
-
-  private lazy val countryKeywordIds = AkkaAgent(Map.empty[String, Seq[String]])
-
-  private val defaultCountries = Seq(
-    "Albania",
-    "Argentina",
-    "Armenia",
-    "Austria",
-    "Belgium",
-    "Bolivia",
-    "Botswana",
-    "Brazil",
-    "Bulgaria",
-    "Cambodia",
-    "Canada",
-    "China",
-    "Croatia",
-    "Cuba",
-    "Czech Republic",
-    "Denmark",
-    "Ecuador",
-    "Egypt",
-    "Estonia",
-    "Ethiopia",
-    "Faroe Islands",
-    "Finland",
-    "France",
-    "Georgia",
-    "Germany",
-    "Greece",
-    "Hong Kong",
-    "Hungary",
-    "Iceland",
-    "India",
-    "Iran",
-    "Ireland",
-    "Italy",
-    "Japan",
-    "Jordan",
-    "Latvia",
-    "Lithuania",
-    "Madagascar",
-    "Malaysia",
-    "Malta",
-    "Mongolia",
-    "Morocco",
-    "Myanmar",
-    "Namibia",
-    "Nepal",
-    "Netherlands",
-    "Norway",
-    "Oman",
-    "Peru",
-    "Poland",
-    "Portugal",
-    "Romania",
-    "Slovakia",
-    "South Africa",
-    "Spain",
-    "Sri Lanka",
-    "Sweden",
-    "Switzerland",
-    "Thailand",
-    "Tunisia",
-    "Turkey",
-    "United Kingdom",
-    "United States",
-    "Uruguay",
-    "Uzbekistan",
-    "Vietnam"
-  )
-
-  private implicit val timeout: Timeout = 10.seconds
-
-  def refresh(): Future[Seq[Map[String, Seq[String]]]] = {
-    val countries = {
-      val currentAds = TravelOffersAgent.available
-      if (currentAds.isEmpty) defaultCountries
-      else currentAds.flatMap(_.countries).distinct
-    }
-    Future.sequence {
-      countries map {
-        country =>
-          Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
-            keywords => countryKeywordIds.alter(_.updated(country, keywords.map(_.id)))
-          }
-      }
-    }
-  }
-
-  def forCountry(name: String) = countryKeywordIds().getOrElse(name, Nil)
 }

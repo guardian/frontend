@@ -11,7 +11,6 @@ import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTimeConstants, DateTime, DateTimeZone}
 import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
-
 import scala.concurrent.Future
 
 case class BookSectionContent(tag: Tag, content: Seq[ApiContent])
@@ -19,7 +18,7 @@ case class ContentByPage(page: Int, content: ApiContent)
 case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
 
-object NewspaperQuery extends ExecutionContexts with Dates with Logging {
+class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContexts with Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -49,7 +48,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
 
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String): Future[List[FaciaContainer]] = {
 
-    val itemQuery = ContentApiClient.item(itemId)
+    val itemQuery = contentApiClient.item(itemId)
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
@@ -58,7 +57,7 @@ object NewspaperQuery extends ExecutionContexts with Dates with Logging {
       .fromDate(newspaperDate.withTimeAtStartOfDay())
       .toDate(newspaperDate)
 
-    ContentApiClient.getResponse(itemQuery).map { resp =>
+    contentApiClient.getResponse(itemQuery).map { resp =>
 
       //filter out the first page results to make a Front Page container
       val (firstPageContent, otherContent) = resp.results.getOrElse(Nil).partition(content => getNewspaperPageNumber(content).contains(1))

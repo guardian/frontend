@@ -8,7 +8,7 @@ import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
 import scala.collection.JavaConversions._
 
 object AmpAdCleaner {
-  val AD_LIMIT = 2
+  val AD_LIMIT = 8
   val CHARS_BETWEEN_ADS = 700
   val DONT_INTERLEAVE_SMALL_PARA = 50
 
@@ -88,7 +88,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
 
   def adAfter(element: Element) = {
     val ampAd = <div class="amp-ad-container">
-          <amp-ad width="300" height="250" type="doubleclick"
+          <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
                   json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
                   data-slot={AmpAdDataSlot(article).toString()}>
           </amp-ad>

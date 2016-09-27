@@ -2,10 +2,9 @@ package common.dfp
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-
 import scala.concurrent.Future
 
-object CapiLookupAgent extends ExecutionContexts with Logging {
+class CapiLookupAgent(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
 
   private val agent = AkkaAgent[Map[(TagType, String), Seq[String]]](Map.empty)
 
@@ -21,8 +20,8 @@ object CapiLookupAgent extends ExecutionContexts with Logging {
   private def lookup(paidForTags: Seq[PaidForTag]): Future[Map[(TagType, String), Seq[String]]] = {
 
     def lookup(tagType: TagType, tagName: String): Future[((TagType, String), Seq[String])] = {
-      val query = ContentApiClient.tags.q(tagName).tagType(tagType.name).pageSize(50)
-      val lookupResult = ContentApiClient.getResponse(query) map { response =>
+      val query = contentApiClient.tags.q(tagName).tagType(tagType.name).pageSize(50)
+      val lookupResult = contentApiClient.getResponse(query) map { response =>
         response.results
       } recover {
         case e: Exception =>

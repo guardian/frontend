@@ -3,9 +3,10 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.{Content, TagType}
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import conf.Static
+import common.commercial.hosted.hardcoded.HostedPages
 import model.GuardianContentTypes._
 import model.{MetaData, SectionSummary}
+import play.api.libs.json.JsString
 
 case class HostedVideoPage(
   campaign: HostedCampaign,
@@ -14,10 +15,10 @@ case class HostedVideoPage(
   standfirst: String,
   video: HostedVideo,
   cta: HostedCallToAction,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
-  nextPage: Option[HostedPage] = None,
+  socialShareText: Option[String],
+  shortSocialShareText: Option[String],
+  nextPage: Option[NextHostedPage] = None,
+  nextVideo: Option[NextHostedPage] = None,
   metadata: MetaData
 ) extends HostedPage {
 
@@ -45,12 +46,21 @@ object HostedVideoPage extends Logging {
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
       def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
+      def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
       val pageId = content.id
       val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
-      val standfirst = content.fields flatMap (_.standfirst) getOrElse ""
+      // using capi trail text instead of standfirst because we don't want the markup
+      val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
+
+      val toneId = toneTag.id
+      //val toneName = toneTag.webTitle //TODO the toneTag.webTitle value should be Hosted not Advertisement Feature
+      val toneName = "Hosted"
+
+      val keywordId = s"${campaignId}/${campaignId}"
+      val keywordName = campaignId
 
       val metadata = MetaData.make(
         id = pageId,
@@ -61,6 +71,12 @@ object HostedVideoPage extends Logging {
         description = Some(standfirst),
         contentType = Video,
         iosType = Some(Video),
+        javascriptConfigOverrides = Map(
+          "keywordIds" -> JsString(keywordId),
+          "keywords" -> JsString(keywordName),
+          "toneIds" -> JsString(toneId),
+          "tones" -> JsString(toneName)
+        ),
         opengraphPropertiesOverrides = Map(
           "og:url" -> pageUrl,
           "og:title" -> pageTitle,
@@ -80,7 +96,6 @@ object HostedVideoPage extends Logging {
           logo = HostedLogo(
             url = sponsorship.sponsorLogo
           ),
-          cssClass = "renault",
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
@@ -92,6 +107,7 @@ object HostedVideoPage extends Logging {
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
+          youtubeId = youtubeId,
           srcUrlMp4 = videoUrl("video/mp4"),
           srcUrlWebm = videoUrl("video/webm"),
           srcUrlOgg = videoUrl("video/ogg"),
@@ -99,20 +115,17 @@ object HostedVideoPage extends Logging {
         ),
         // todo: from cta atom
         cta = HostedCallToAction(
-          url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
-          image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
-          label = Some("Discover Zoe"),
-          trackingCode = Some("explore-renault-zoe-button"),
-          btnText = None
+          url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016",
+          image = Some("http://media.guim.co.uk/d723e82cdd399f013905a5ee806fea3591b4a363/0_926_3872_1666/2000.jpg"),
+          label = Some("It's time to act for wildlife"),
+          trackingCode = Some("act-for-wildlife-button"),
+          btnText = Some("Act for wildlife")
         ),
-        // todo: missing data
-        facebookShareText = None,
-        // todo: missing data
-        twitterShareText = None,
-        // todo: missing data
-        emailSubjectText = None,
+        socialShareText = content.fields.flatMap(_.socialShareText),
+        shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
-        nextPage = None,
+        nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
+        nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata
       )
     }
@@ -128,6 +141,7 @@ case class HostedVideo(
   title: String,
   duration: Int,
   posterUrl: String,
+  youtubeId: Option[String] = None,
   srcUrlMp4: String,
   srcUrlWebm: String,
   srcUrlOgg: String,

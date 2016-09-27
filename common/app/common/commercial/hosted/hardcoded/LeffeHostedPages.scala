@@ -17,9 +17,7 @@ object LeffeHostedPages {
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
     logo = HostedLogo(Static("images/commercial/leffe.jpg")),
-    cssClass = "leffe",
-    fontColour = FontColour("#dec190"),
-    logoLink = None
+    fontColour = FontColour("#dec190")
   )
 
   private val cta = HostedCallToAction(
@@ -53,7 +51,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -86,7 +85,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -116,7 +116,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -146,7 +147,8 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -175,26 +177,27 @@ object LeffeHostedPages {
       standfirst,
       video,
       cta,
-      twitterShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
+      socialShareText = None,
+      shortSocialShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
   }
 
-  private lazy val willardWiganPage = willardWiganPageWithoutNextPage
-                                 .copy(nextPage = Some(adrienneTreebyPageWithoutNextPage))
+  private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
+    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
+  }
 
-  private lazy val adrienneTreebyPage = adrienneTreebyPageWithoutNextPage
-                                   .copy(nextPage = Some(peteLawrencePageWithoutNextPage))
+  private lazy val willardWiganPage = withNextPage(willardWiganPageWithoutNextPage, adrienneTreebyPageWithoutNextPage)
 
-  private lazy val peteLawrencePage = peteLawrencePageWithoutNextPage
-                                 .copy(nextPage = Some(susanDergesPageWithoutNextPage))
+  private lazy val adrienneTreebyPage = withNextPage(adrienneTreebyPageWithoutNextPage, peteLawrencePageWithoutNextPage)
 
-  private lazy val susanDergesPage = susanDergesPageWithoutNextPage
-                                .copy(nextPage = Some(quayBrothersPageWithoutNextPage))
+  private lazy val peteLawrencePage = withNextPage(peteLawrencePageWithoutNextPage, susanDergesPageWithoutNextPage)
 
-  private lazy val quayBrothersPage = quayBrothersPageWithoutNextPage
-                                   .copy(nextPage = Some(willardWiganPageWithoutNextPage))
+  private lazy val susanDergesPage = withNextPage(susanDergesPageWithoutNextPage, quayBrothersPageWithoutNextPage)
+
+  private lazy val quayBrothersPage = withNextPage(quayBrothersPageWithoutNextPage, willardWiganPageWithoutNextPage)
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {

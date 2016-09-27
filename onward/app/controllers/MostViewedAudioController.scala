@@ -9,7 +9,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-class MostViewedAudioController extends Controller with Logging with ExecutionContexts {
+class MostViewedAudioController(mostViewedAudioAgent: MostViewedAudioAgent) extends Controller with Logging with ExecutionContexts {
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }
@@ -26,12 +26,12 @@ class MostViewedAudioController extends Controller with Logging with ExecutionCo
 
   private def getMostViewedAudio()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedAudio().take(size).toList
+    mostViewedAudioAgent.mostViewedAudio().take(size).toList
   }
 
   private def getMostViewedPodcast()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    MostViewedAudioAgent.mostViewedPodcast().take(size).toList
+    mostViewedAudioAgent.mostViewedPodcast().take(size).toList
   }
 
   private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
@@ -49,10 +49,6 @@ class MostViewedAudioController extends Controller with Logging with ExecutionCo
       FrontProperties.empty
     )(request)
 
-    JsonComponent(
-      "html" -> html
-    )
+    JsonComponent(html)
   }
 }
-
-object MostViewedAudioController extends MostViewedAudioController

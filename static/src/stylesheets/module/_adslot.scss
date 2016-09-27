@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: initial;
+    overflow: hidden;
 
     .js-off & {
         display: none;
@@ -64,6 +64,8 @@
 
 .top-banner-ad-container {
     background-color: $neutral-8;
+    // Needed for compatibility with IE11/Edge.
+    top: 0;
 }
 
 .top-banner-ad-container--fabric {
@@ -174,6 +176,7 @@
 .ad-slot--liveblog-inline {
     width: $mpu-original-width;
     margin: $gs-baseline auto;
+    min-width: $mpu-original-width;
     min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
 
@@ -191,6 +194,9 @@
 .ad-slot--container-inline {
     @include mq(mobileLandscape) {
         margin-top: 0;
+    }
+    @include mq(tablet) {
+        margin: 0 $gs-gutter/2;
     }
 }
 .ad-slot--gallery-inline {
@@ -229,7 +235,7 @@
         margin: 0 auto;
     }
 }
-.ad-slot--container-inline {
+.ad-slot--container-inline:not(.ad-slot--fluid) {
     /* I don't know wtf that is but it has no place in JS, so I moved it here */
     &.ad-slot--not-mobile {
         display: flex;
@@ -241,7 +247,6 @@
     @include mq(tablet) {
         position: relative;
         height: auto;
-        margin: 0 $gs-gutter/2;
 
         .content-footer & {
             width: 300px;
@@ -472,22 +477,6 @@
     }
 }
 
-.ad-slot--paid-for-badge--interactive {
-    width: 140px;
-    min-height: 135px;
-    border-top: 1px dotted $neutral-5;
-
-    @include mq(desktop) {
-        position: absolute;
-        top: $gs-baseline / 2;
-        right: -1 * (gs-span(4) + $gs-gutter / 2);
-        border-top-width: 0;
-    }
-
-    @include mq(wide) {
-        right: -1 * (gs-span(5) + $gs-gutter);
-    }
-}
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     min-height: 90px;
@@ -643,7 +632,7 @@
     padding-bottom: 0;
 
     &.ad-slot--liveblog-inline {
-        @include mq(mobile) {
+        @include mq(mobile, $until: mobileLandscape) {
             margin-left: $gs-gutter / -2;
             margin-right: $gs-gutter / -2;
         }
@@ -660,10 +649,12 @@
 
 .ad-slot--revealer {
     min-width: 300px;
+    width: auto;
 }
 
 .ad-slot--fabric {
     overflow: hidden;
+    width: auto;
 }
 
 .ad-slot--fabric-v1,

@@ -3,7 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{BrandHunter, Branding}
+import common.commercial.{AdUnitMaker, BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -302,7 +302,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitGuRoot}/$adUnitSuffix/ng")),
+    ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
@@ -444,7 +444,6 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
   override lazy val item = gallery
-  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
@@ -579,15 +578,25 @@ final case class Tags(
 
   private def tagsOfType(tagType: String): List[Tag] = tags.filter(_.properties.tagType == tagType)
 
-  lazy val keywords: List[Tag] = tagsOfType("Keyword")
-  lazy val nonKeywordTags: List[Tag] = tags.filterNot(_.properties.tagType == "Keyword")
+  private def tagsOfTypeOrPaidContentSubtype(tagType: String, paidContentSubType: String): List[Tag] = {
+    tags.filter { tag =>
+      tag.properties.tagType == tagType ||
+      (tag.properties.tagType == "PaidContent" && tag.properties.paidContentType == Some(paidContentSubType))
+    }
+  }
+
+  lazy val keywords: List[Tag] = tagsOfTypeOrPaidContentSubtype("Keyword", "Topic")
+
+  lazy val nonKeywordTags: List[Tag] = tags.diff(keywords)
+
   lazy val contributors: List[Tag] = tagsOfType("Contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
-  lazy val series: List[Tag] = tagsOfType("Series")
+  lazy val series: List[Tag] = tagsOfTypeOrPaidContentSubtype("Series", "Series")
   lazy val blogs: List[Tag] = tagsOfType("Blog")
   lazy val tones: List[Tag] = tagsOfType("Tone")
   lazy val types: List[Tag] = tagsOfType("Type")
   lazy val tracking: List[Tag] = tagsOfType("Tracking")
+  lazy val paidContent: List[Tag] = tagsOfType("PaidContent")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
@@ -629,13 +638,15 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
-  lazy val isUSMinuteSeries = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
+  lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
 
   lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
   lazy val isElection = isUSElection || isAusElection
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
+
+  // Specific Series
   lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
 
   lazy val keywordIds = keywords.map { _.id }

@@ -11,14 +11,10 @@ define([
     }
 
     function _testABClash(f) {
-        
-        var contributionsEmbed = {name: 'ContributionsEmbed20160905', variants: ['control']};
 
-        var contributionsEpic = {name: 'ContributionsEpic20160906', variants: ['control']};
-
-        var contributionsEpicButtons = {name: 'ContributionsEpicButtons20160907', variants: ['control', 'buttons']};
-        
-        var clashingTests = [contributionsEmbed, contributionsEpic, contributionsEpicButtons];
+        var contributionsEpic = {name: 'ContributionsEpic20160916', variants: ['control', 'give', 'today', 'make']};
+        var contributionsStory = {name: 'ContributionsStory20160922', variants: ['control', 'story']};
+        var clashingTests = [contributionsEpic, contributionsStory];
 
         return some(clashingTests, function (test) {
             return some(test.variants, function (variant) {

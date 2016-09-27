@@ -76,16 +76,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AudienceScienceSwitch = Switch(
-    SwitchGroup.Commercial,
-    "audience-science",
-    "If this switch is on, Audience Science segments will be used to target ads.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",
@@ -266,33 +256,43 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val staticBadgesSwitch = Switch(
+  val showChesterZooGallery = Switch(
     group = CommercialLabs,
-    "static-badges",
-    "If on, all badges are served server side",
+    "chester-zoo-gallery",
+    "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
   )
 
-  val containerBrandingFromCapi = Switch(
+  val showChesterZooArticles = Switch(
     group = CommercialLabs,
-    "static-container-badges",
-    "Serve container branding from capi",
+    "chester-zoo-articles",
+    "Make the Chester Zoo article pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
   )
 
-  val showPaidSeriesContainer = Switch(
+  val showChesterZooArticlesWithVideo = Switch(
     group = CommercialLabs,
-    "show-paid-series-containers",
-    "Show series containers on paid content pages.",
+    "chester-zoo-articles-with-video",
+    "Make the Chester Zoo article (with video) pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
+  )
+
+  val showChesterZooVideos = Switch(
+    group = CommercialLabs,
+    "chester-zoo-videos",
+    "Make the Chester Zoo video pages available",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 28),
     exposeClientSide = false
   )
 

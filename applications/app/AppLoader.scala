@@ -5,11 +5,11 @@ import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics
 import common.Logback.LogstashLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import conf.switches.SwitchboardLifecycle
-import contentapi.SectionsLookUpLifecycle
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
-import jobs.SiteMapLifecycle
+import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -25,18 +25,27 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
+trait ApplicationsServices {
+  def wsClient: WSClient
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
+  lazy val siteMapJob = wire[SiteMapJob]
+  lazy val sectionsLookUp = wire[SectionsLookUp]
+}
+
 trait Controllers extends ApplicationsControllers {
-  self: FrontendComponents =>
+  self: FrontendComponents with ApplicationsServices =>
   def wsClient: WSClient
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val assets = wire[Assets]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
+  lazy val signupPageController = wire[SignupPageController]
 }
 
 trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+  self: FrontendComponents with Controllers with ApplicationsServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -52,7 +61,7 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
+trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ApplicationsServices {
 
   lazy val router: Router = wire[Routes]
 

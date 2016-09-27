@@ -66,7 +66,7 @@ define([
                 };
 
                 // exclude ad features from non-ad feature content
-                if (config.page.sponsorshipType !== 'advertisement-features') {
+                if (config.page.sponsorshipType !== 'paid-content') {
                     opts.excludeTags.push('tone/advertisement-features');
                 }
                 // don't want to show professional network content on videos or interactives

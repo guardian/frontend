@@ -107,7 +107,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isUSMinute) MinuteMedia
+        else if (article.isTheMinute) MinuteMedia
         else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
@@ -125,7 +125,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+      val inlineClass = if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
 
       val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
@@ -341,11 +341,13 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
     if (article.content.showInRelated) {
 
-      // Get all paragraphs which are not contained in a pullquote
+      // Get all paragraphs which are not contained in a pullquote or in an instagram caption
       val paragraphs = doc.getElementsByTag("p").filterNot( p =>
-        p.parents.exists( ancestor =>
-          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
-        )
+        p.parents.exists { ancestor =>
+          val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+          val inInstagramBlock = ancestor.hasClass("instagram-media")
+          inPullquote || inInstagramBlock
+        }
       )
 
       // order by length of name so we do not make simple match errors
@@ -446,18 +448,6 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class ImmersiveMainEmbed(isImmersive: Boolean, isSixtyDaysModified: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-      if(immersiveMainEmbedSwitch.isSwitchedOn && isSixtyDaysModified && isImmersive) {
-        val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
-        if(srcdoc != null) {
-            document.getElementsByTag("body").html(srcdoc)
-        }
-      }
-      document
-  }
-}
-
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
@@ -532,6 +522,18 @@ object GalleryCaptionCleaner {
     galleryCaption.prependChild(captionTitle)
 
     galleryCaption.toString
+  }
+}
+
+object InteractiveCleaner {
+  def apply(interactive: String) = {
+    val document = Jsoup.parse(interactive)
+    val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
+    if (srcdoc != null) {
+        val iframedoc = Jsoup.parse(srcdoc)
+        document.html(iframedoc.getElementsByTag("noscript").html())
+    }
+    document.toString
   }
 }
 

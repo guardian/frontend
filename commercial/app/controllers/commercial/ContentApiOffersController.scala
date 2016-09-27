@@ -1,7 +1,8 @@
 package controllers.commercial
 
 import common.commercial._
-import common.{ExecutionContexts, Logging, Edition}
+import common.{Edition, ExecutionContexts, Logging}
+import contentapi.ContentApiClient
 import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
 import play.api.mvc._
@@ -13,7 +14,9 @@ sealed abstract class SponsorType(val className: String)
 case object PaidFor extends SponsorType("paidfor")
 case object Supported extends SponsorType("supported")
 
-class ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: CapiAgent) extends Controller with ExecutionContexts with implicits.Requests with Logging {
+
+  private val lookup = new Lookup(contentApiClient)
 
   private val sponsorTypeToClassRefactor = Map(
     "sponsored" -> Supported,
@@ -33,14 +36,14 @@ class ContentApiOffersController extends Controller with ExecutionContexts with 
 
     val eventualLatest = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      Lookup.latestContentByKeyword(keyword, 8)
+      lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     eventualLatest onFailure {
       case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
     }
 
-    val eventualSpecific = CapiAgent.contentByShortUrls(specificIds)
+    val eventualSpecific = capiAgent.contentByShortUrls(specificIds)
 
     eventualSpecific onFailure {
       case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")

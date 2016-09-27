@@ -269,8 +269,6 @@ object FaciaContainer {
     // popular containers should never be sponsored
     container match {
       case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
-      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
-      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.multi
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description.map(DescriptionMetaHeader),
@@ -279,7 +277,8 @@ object FaciaContainer {
     showTimestamps = false,
     None,
     useShowMore = true,
-    hasShowMoreEnabled = !config.config.hideShowMore
+    hasShowMoreEnabled = !config.config.hideShowMore,
+    showBranding = config.config.showBranding
   )
 
   def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None) = {
@@ -311,7 +310,8 @@ case class FaciaContainer(
   showTimestamps: Boolean,
   dateLinkPath: Option[String],
   useShowMore: Boolean,
-  hasShowMoreEnabled: Boolean
+  hasShowMoreEnabled: Boolean,
+  showBranding: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))

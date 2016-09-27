@@ -3,7 +3,7 @@ package conf
 import app.LifecycleComponent
 import common._
 import feed.CompetitionsService
-import model.{LiveBlogAgent, TeamMap}
+import model.TeamMap
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
@@ -40,10 +40,6 @@ class FootballLifecycle(
       competitionsService.refreshCompetitionData()
     }
 
-    jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
-      LiveBlogAgent.refresh()
-    }
-
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
       TeamMap.refresh()
     }
@@ -67,7 +63,6 @@ class FootballLifecycle(
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
-      LiveBlogAgent.refresh()
       TeamMap.refresh()
     }
   }

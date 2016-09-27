@@ -22,13 +22,17 @@ define([
     function init() {
         return new Promise(function(resolve) {
             var $nextVideo = $('.js-next-video');
-            var colour = removeHash($nextVideo.data('colour'));
+            var colour;
 
-            fastdom.write(function () {
-                $nextVideo.css({
-                    'background': 'rgba(' + hexToRGB(colour) + ', 0.1)'
+            if ($nextVideo.length) {
+                colour = removeHash($nextVideo.data('colour'));
+
+                fastdom.write(function () {
+                    $nextVideo.css({
+                        'background': 'rgba(' + hexToRGB(colour) + ', 0.1)'
+                    });
                 });
-            });
+            }
 
             resolve();
         });

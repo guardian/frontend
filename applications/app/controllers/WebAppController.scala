@@ -1,13 +1,9 @@
 package controllers
 
-import common.{JsonComponent, Edition, ExecutionContexts, Logging}
-import conf.Static
+import common.{ExecutionContexts, Logging}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
-import play.api.libs.json.{JsArray, JsString, JsObject}
-
-import scala.concurrent.Future
+import play.api.mvc.{Action, Controller}
 
 class WebAppController extends Controller with ExecutionContexts with Logging {
 

@@ -6,14 +6,14 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import common._
+import common.commercial.{BrandHunter, PaidContent}
 import common.dfp.DfpAgent
 import conf.Configuration
-import conf.switches.Switches.{FacebookShareImageLogoOverlay, FacebookShareUseTrailPicFirstSwitch, HeroicTemplateSwitch, TwitterShareImageLogoOverlay}
+import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
-import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -69,7 +69,6 @@ final case class Content(
   showFooterContainers: Boolean = false
 ) {
 
-  lazy val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(metadata.id)
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
@@ -78,9 +77,19 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isImmersiveGallery = metadata.contentType.toLowerCase == "gallery" && !trail.commercial.isAdvertisementFeature
+  lazy val isImmersiveGallery = {
+    metadata.contentType.toLowerCase == "gallery" &&
+    (
+        {
+          val branding = tags.tags.flatMap { tag =>
+            BrandHunter.findBranding( tag.properties.activeBrandings, Edition.defaultEdition, None)
+          }.headOption
+          branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
+        }
+    )
+  }
   lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isHeroic
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
 
   lazy val hasSingleContributor: Boolean = {
@@ -105,7 +114,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
 
   lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailArticleImage)
+    ImgSrc(rawOpenGraphImage, EmailImage)
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -144,10 +153,24 @@ final case class Content(
 
   lazy val contributorTwitterHandle: Option[String] = tags.contributors.headOption.flatMap(_.properties.twitterHandle)
 
-  lazy val showSectionNotTag: Boolean = tags.tags.exists{ tag => tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog" }
+  lazy val showSectionNotTag: Boolean = {
+
+    lazy val isChildrensBookBlog = tags.tags.exists { tag =>
+      tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
+    }
+
+    lazy val isPaidContent = {
+      val branding = tags.tags.flatMap { tag =>
+        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
+      }.headOption
+      branding.exists(_.sponsorshipType == PaidContent)
+    }
+
+    isChildrensBookBlog || isPaidContent
+  }
 
   lazy val sectionLabelLink : String = {
-    if (showSectionNotTag || DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))) {
+    if (showSectionNotTag) {
       metadata.sectionId
     } else tags.tags.find(_.isKeyword) match {
       case Some(tag) => tag.id
@@ -201,7 +224,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
     ("isHeroic", JsBoolean(isHeroic))
@@ -238,8 +261,8 @@ final case class Content(
       case trackingTags => Some("trackingNames", JsString(trackingTags.map(_.name).mkString(",")))
     }
 
-    val articleMeta = if (tags.isUSMinuteSeries) {
-      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    val articleMeta = if (tags.isTheMinuteArticle) {
+      Some("isMinuteArticle", JsBoolean(tags.isTheMinuteArticle))
     } else None
 
     val atomsMeta = atoms.map { atoms =>
@@ -440,7 +463,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || content.isImmersive) && content.tags.isArticle
     )
   }
 
@@ -482,10 +505,9 @@ final case class Article (
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
-  val isUSMinute: Boolean = content.tags.isUSMinuteSeries
+  val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isHeroic: Boolean = content.isHeroic
-  val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -811,6 +833,15 @@ final case class Interactive(
     }
   }
 
+  lazy val hasSrcdoc = {
+    val iframe = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe")
+
+    if (iframe.length > 0) {
+        iframe.first().hasAttr("srcdoc")
+    } else {
+        false
+    }
+  }
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 

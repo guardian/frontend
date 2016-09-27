@@ -59,7 +59,9 @@
             case page: model.ContentPage if (page.item.content.isHeroic) => {
                 <div class="@RenderClasses(Map(
                     ("immersive-header-container", page.item.fields.main.nonEmpty),
-                    ("immersive-header-container--labour-liverpool", page.item.content.tags.isLabourLiverpoolSeries)))">
+                    ("immersive-header-container--labour-liverpool", page.item.content.tags.isLabourLiverpoolSeries),
+                    ("heroic-video-container", page.item.content.elements.hasMainVideo)))">
+
                     @headerAndTopAds(showAdverts, edition)
 
                     @fragments.labourLiverpoolSeries(page)

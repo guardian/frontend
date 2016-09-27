@@ -25,7 +25,8 @@ define([
     'common/utils/url',
     'common/utils/cookies',
     'common/utils/robust',
-    'common/utils/user-timing'
+    'common/utils/user-timing',
+    'common/modules/navigation/newHeaderNavigation'
 ], function (
     raven,
     qwery,
@@ -40,7 +41,8 @@ define([
     url,
     cookies,
     robust,
-    userTiming
+    userTiming,
+    newHeaderNavigation
 ) {
     return function () {
         var guardian = window.guardian;
@@ -75,7 +77,9 @@ define([
                 },
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
-                    if (isDev) {
+                    var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
+
+                    if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
                         if (window.console && window.console.warn) {
                             window.console.warn('Raven captured error.', data);
@@ -84,6 +88,7 @@ define([
 
                     return config.switches.enableSentryReporting &&
                         Math.random() < 0.1 &&
+                        !isIgnored &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }
@@ -288,6 +293,11 @@ define([
         } catch (e) {
             // do nothing
         }
+
+        /**
+         *  New Header Navigation
+         */
+        newHeaderNavigation();
 
         userTiming.mark('standard end');
     };

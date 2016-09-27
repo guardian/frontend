@@ -28,7 +28,6 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
-    'common/modules/navigation/newHeaderNavigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/membership',
@@ -47,13 +46,16 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/onward/us-survey-banner',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
     'lodash/collections/forEach',
-    'common/modules/experiments/subscriber-number-form'
+    'common/modules/experiments/subscriber-number-form',
+    'common/modules/experiments/contributor-email-form',
+    'common/modules/experiments/contributor-email-submitted'
 ], function (
     fastdom,
     bean,
@@ -82,7 +84,6 @@ define([
     AutoSignin,
     CookieRefresh,
     navigation,
-    newHeaderNavigation,
     Profile,
     Search,
     membership,
@@ -101,13 +102,16 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    USSurveyBanner,
     pinterest,
     SaveForLater,
     email,
     emailArticle,
     identity,
     forEach,
-    subscriberNumberForm
+    subscriberNumberForm,
+    contributorEmailForm,
+    contributorEmailSubmitted
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -129,7 +133,6 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
-                newHeaderNavigation();
             },
 
             showTabs: function () {
@@ -372,6 +375,8 @@ define([
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-subscriber-number-form', subscriberNumberForm],
+                ['c-contributor-email-form', contributorEmailForm],
+                ['c-contributor-email-submitted', contributorEmailSubmitted],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
@@ -384,6 +389,7 @@ define([
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-email', modules.initEmail],
+                ['c-us-survey-banner', USSurveyBanner],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]
 

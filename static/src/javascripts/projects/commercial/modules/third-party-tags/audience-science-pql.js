@@ -1,11 +1,9 @@
 define([
     'common/utils/config',
-    'common/utils/storage',
     'common/utils/url'
-], function (config, storage, urlUtils) {
+], function (config, urlUtils) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql';
-    var storageKey = 'gu.ads.audsci-gateway';
     var sectionPlacements = {
         sport:        ['FKSWod', '2xivTZ', 'MTLELH'],
         football:     ['6FaXJO', 'ORE2W-', 'MTLELH'],
@@ -28,36 +26,41 @@ define([
     }
 
     function onLoad() {
-        var asiPlacements = window.asiPlacements;
-        var segments = storage.local.get(storageKey) || {};
-        // override the global value with our previously stored one
-        window.asiPlacements = segments[section];
-        segments[section] = asiPlacements;
-        storage.local.set(storageKey, segments);
+        window.googletag.cmd.push(
+            setAudienceScienceCallback,
+            setAudienceScienceKeys
+        );
     }
 
     function getSegments() {
-        var segments = {};
-        var storedSegments = storage.local.get(storageKey);
-        if (
-            config.switches.audienceScienceGateway &&
-            storedSegments &&
-            storedSegments[section]
-        ) {
-            segments = Object.keys(storedSegments[section])
-                .filter(function (placement) {
-                    //keyword `default` written in dot notation throws an exception IE8
-                    return storedSegments[section][placement]['default']; //eslint-disable-line
-                }).map(function (placement) {
-                    return ['pq_' + placement, 'T'];
-                }).reduce(function (result, input) {
-                    result[input[0]] = input[1];
-                    return result;
-                }, {});
-            // set up the global asiPlacements var in case dfp returns before asg
-            window.asiPlacements = storedSegments[section];
-        }
-        return segments;
+        var placements = window.asiPlacements || {};
+        return Object.keys(placements)
+        .filter(function (placement) {
+            return placements[placement].default;
+        })
+        .map(function (placement) {
+            return 'pq_' + placement;
+        });
+    }
+
+    function setAudienceScienceKeys() {
+        getSegments().forEach(addKey);
+    }
+
+    // Remove all Audience Science related targeting keys as soon as we recieve
+    // an AS creative (will get called by the creative itself)
+    function setAudienceScienceCallback() {
+        window.onAudienceScienceCreativeLoaded = function () {
+            getSegments().forEach(removeKey);
+        };
+    }
+
+    function addKey(key) {
+        window.googletag.pubads().setTargeting(key, 'T');
+    }
+
+    function removeKey(key) {
+        window.googletag.pubads().clearTargeting(key);
     }
 
     return {

@@ -1,11 +1,13 @@
 package conf.switches
 
+import common.Edition
+import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABLiveBlogChromeNotificationsProd2 = Switch(
-    SwitchGroup.ABTests,
+  Switch(
+    ABTests,
     "ab-live-blog-chrome-notifications-prod2",
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
@@ -14,166 +16,113 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend-count",
+  Switch(
+    ABTests,
+    "ab-discussion-external-frontend-avatar",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 11, 3),
     exposeClientSide = true
   )
 
-  val ABHostedArticleOnwardJourney = Switch(
-    SwitchGroup.ABTests,
+  Switch(
+    ABTests,
+    "ab-discussion-promote-comments",
+    "Promote the comments with a sticky bottom banner",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 10, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-hosted-article-onward-journey",
     "Vertical positioning of the onward journey links",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
-  val ABHostedGalleryCallToAction = Switch(
-    SwitchGroup.ABTests,
+  Switch(
+    ABTests,
     "ab-hosted-gallery-cta",
     "Test which gallery image to put the call to action link on",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 16),
+    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
-
-  val ABContributionsEmbed20160905= Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-embed-20160905",
-    "Test whether contributions embed performs better inline and in-article than at the bottom of the article.",
+  Switch(
+    ABTests,
+    "ab-contributions-story",
+    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
+    sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
 
-  val ABContributionsEpic20160906 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-epic-20160906",
-    "Test whether contributions embed performs better than our previous in-article component tests.",
-    owners = Seq(Owner.withGithub("jranks123")),
+  Switch(
+    ABTests,
+    "ab-contributions-epic-20160916",
+    "Test variants of the button text to drive contributions.",
+    owners = Seq(Owner.withGithub("markjamesbutler")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 12),
+    sellByDate = new LocalDate(2016, 9, 27),
     exposeClientSide = true
   )
 
-  val ABContributionsEpicButtons20160907 = Switch(
-    SwitchGroup.ABTests,
-    "ab-contributions-epic-buttons-20160907",
-    "Test whether adding the amount buttons to the epic increases the impressions to conversions rate.",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
-    exposeClientSide = true
-  )
-
-
-
-  val ABParticipationDiscussionOrderingLiveBlogs = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering-live-blog",
-    "Test to see whether ordering comments by recommends on live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
-    exposeClientSide = true
-  )
-
-  val ABParticipationDiscussionOrderingNonLive = Switch(
-    SwitchGroup.ABTests,
-    "ab-participation-discussion-ordering-non-live",
-    "Test to see whether ordering comments by recommends on content o[ther than live blogs increases the number oof people who read them",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 7), //Wednesday
-    exposeClientSide = true
-  )
-
-  val ABMembershipEngagementBanner = Switch(
-    SwitchGroup.ABTests,
-    "ab-membership-engagement-banner",
-    "Test effectiveness of header for driving membership.",
+  for (edition <- Edition.all) Switch(
+    ABTests,
+    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
+    "Test effectiveness of header for driving contributions vs membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 7),
+    sellByDate = new LocalDate(2017, 9, 8),
     exposeClientSide = true
   )
 
-  val ABAdFeedback = Switch(
-    SwitchGroup.ABTests,
-    "ab-ad-feedback",
-    "Solicit feedback for ad impressions",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),  // Wednesday
-    exposeClientSide = true
-  )
-
-  val ABRecommendedForYou = Switch(
-    SwitchGroup.ABTests,
-    "ab-recommended-for-you",
-    "Test demand for a personalised container on fronts",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
-    exposeClientSide = true
-  )
-
-  val ABDontUpgradeMobileRichLinks = Switch(
-    SwitchGroup.ABTests,
-    "ab-dont-upgrade-mobile-rich-links",
-    "Test whether the loyalty of users decreases with non-enhanced rich links",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 14),
-    exposeClientSide = true
-  )
-
-  val ABAdBlockingResponse = Switch(
-    SwitchGroup.ABTests,
-    "ab-ad-blocking-response",
+  Switch(
+    ABTests,
+    "ab-ad-blocking-response2",
     "Prominent adblocker response test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 18),   // Tuesday
+    sellByDate = new LocalDate(2016, 9, 29),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
-  val ABWeekendReadingEmail = Switch(
-    SwitchGroup.ABTests,
+  Switch(
+    ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
+    sellByDate = new LocalDate(2016, 10, 3),
     exposeClientSide = true
   )
 
-  val ABNoSocialCount = Switch(
-    SwitchGroup.ABTests,
-    "ab-no-social-count",
-    "Remove social count from articles",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 21),   // Wednesday
-    exposeClientSide = true
-  )
-
-  val ABWeekendReadingPromo = Switch(
-    SwitchGroup.ABTests,
+  Switch(
+    ABTests,
     "ab-weekend-reading-promo",
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 12),
+    sellByDate = new LocalDate(2016, 10, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-video-button-duration",
+    "Show visitors new video play button",
+    owners = Seq(Owner.withGithub("mr-mr")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 }

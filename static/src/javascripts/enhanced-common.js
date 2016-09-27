@@ -19,7 +19,6 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/article/spacefinder',
     'common/modules/article/space-filler',
-    'commercial/modules/badges',
     'commercial/modules/build-page-targeting',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',

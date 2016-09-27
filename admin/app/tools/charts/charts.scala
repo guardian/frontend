@@ -66,6 +66,7 @@ trait Chart {
   def dataset: Seq[ChartRow]
   def hasData = dataset.nonEmpty
   def format: ChartFormat
+  def dualY: Boolean = false
 
   def asDataset = s"[[$labelString], $dataString]"
 
@@ -134,6 +135,10 @@ class AwsLineChart(
 
 class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
   override def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("dd/MM")
+}
+
+class AwsDualYLineChart(name: String, labels: (String, String, String), format: ChartFormat, chartOne: GetMetricStatisticsResult, chartTwo: GetMetricStatisticsResult) extends AwsLineChart(name, Seq(labels._1, labels._2, labels._3), format, chartOne, chartTwo) {
+  override def dualY = true
 }
 
 class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {

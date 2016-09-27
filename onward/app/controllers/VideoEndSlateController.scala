@@ -4,14 +4,13 @@ import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import implicits.Requests
 import model._
 import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-class VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class VideoEndSlateController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
@@ -26,7 +25,7 @@ class VideoEndSlateController extends Controller with Logging with Paging with E
 
     def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
-    val promiseOrResponse = getResponse(ContentApiClient.search(edition)
+    val promiseOrResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .section(sectionId)
       .tag("type/video")
       .showTags("all")
@@ -66,7 +65,7 @@ class VideoEndSlateController extends Controller with Logging with Paging with E
 
     def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
 
-    val promiseOrResponse = getResponse(ContentApiClient.item(seriesId, edition)
+    val promiseOrResponse = contentApiClient.getResponse(contentApiClient.item(seriesId, edition)
       .tag("type/video")
       .showTags("all")
       .showFields("all")
@@ -89,5 +88,3 @@ class VideoEndSlateController extends Controller with Logging with Paging with E
     renderFormat(response, response, 900)
   }
 }
-
-object VideoEndSlateController extends VideoEndSlateController

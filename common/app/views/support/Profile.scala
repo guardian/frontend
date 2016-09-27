@@ -17,6 +17,7 @@ sealed trait ElementProfile {
   def hidpi: Boolean
   def compression: Int
   def isPng: Boolean
+  def autoFormat: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
@@ -38,7 +39,7 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
-  val autoParam = "auto=format"
+  val autoParam = if (autoFormat) "auto=format" else ""
   val sharpParam = "usm=12"
   val fitParam = "fit=max"
   val dprParam = if (hidpi) {
@@ -66,7 +67,8 @@ case class Profile(
   override val height: Option[Int] = None,
   override val hidpi: Boolean = false,
   override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile
+  override val isPng: Boolean = false,
+  override val autoFormat: Boolean = true) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -77,7 +79,8 @@ case class VideoProfile(
   override val height: Some[Int],
   override val hidpi: Boolean = false,
   override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile {
+  override val isPng: Boolean = false,
+  override val autoFormat: Boolean = true) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -122,7 +125,7 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
   override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
-object EmailArticleImage extends Profile(width = Some(640))
+object EmailImage extends Profile(width = Some(640), autoFormat = false)
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))

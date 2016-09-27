@@ -9,9 +9,7 @@ define([
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/ui/toggles',
-    'commercial/modules/user-ad-feedback'
+    'common/modules/onward/geo-most-popular'
 ], function (
     bonzo,
     qwery,
@@ -23,9 +21,7 @@ define([
     stickyMpu,
     applyCreativeTemplate,
     renderAdvertLabel,
-    geoMostPopular,
-    Toggles,
-    recordUserAdFeedback
+    geoMostPopular
 ) {
     /**
      * ADVERT RENDERING
@@ -76,7 +72,8 @@ define([
      * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
      * and their containers closed up.
      */
-    sizeCallbacks[adSizes.outOfPage] = function (event, advert) {
+    sizeCallbacks[adSizes.outOfPage] =
+    sizeCallbacks[adSizes.empty] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
             var $parent = bonzo(advert.node.parentNode);
             return fastdom.write(function () {
@@ -109,7 +106,7 @@ define([
     /**
      * Mobile adverts with fabric sizes get 'fluid' full-width design
      */
-    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--mobile', 'ad-slot--top-banner-ad']);
+    sizeCallbacks[adSizes.fabric] = addFluid(['ad-slot--top-banner-ad']);
 
     /**
      * Commercial components with merch sizing get fluid-250 styling
@@ -125,10 +122,8 @@ define([
         removePlaceholders(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
-            return renderAdvertLabel(advert.node)
-                .then(addFeedbackDropdownToggle)
-                .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent); })
-                .then(callSizeCallback)
+            return callSizeCallback()
+                .then(function () { return renderAdvertLabel(advert.node); })
                 .then(addRenderedClass)
                 .then(function () {
                     return isRendered;
@@ -139,9 +134,10 @@ define([
                 if (size === '0,0') {
                     size = 'fluid';
                 }
-                if (sizeCallbacks[size]) {
-                    return sizeCallbacks[size](slotRenderEvent, advert);
-                }
+                return Promise.resolve(sizeCallbacks[size] ?
+                    sizeCallbacks[size](slotRenderEvent, advert) :
+                    null
+                );
             }
 
             function addRenderedClass() {
@@ -150,36 +146,6 @@ define([
                 }) : Promise.resolve();
             }
 
-            function addFeedbackDropdownToggle() {
-                return isRendered ? fastdom.write(function () {
-                    if (!bonzo(advert.node).hasClass('js-toggle-ready')){
-                        new Toggles(advert.node).init();
-                    }
-                }) : Promise.resolve();
-            }
-
-            function applyFeedbackOnClickListeners(slotRenderEvent) {
-                return isRendered ? fastdom.write(function () {
-                    bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                if(bonzo(el).hasClass('is-active')) {
-                                    recordUserAdFeedback(window.location.pathname, advert.node.id, slotRenderEvent, 'ad-feedback-menu-opened');
-                                }
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
-                    });
-                    bonzo(qwery('.popup__item-problem--option')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
-                    });
-                }) : Promise.resolve();
-            }
         }).catch(raven.captureException);
     }
 

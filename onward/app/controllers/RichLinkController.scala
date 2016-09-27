@@ -8,9 +8,8 @@ import scala.concurrent.Future
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
-import ContentApiClient.getResponse
 
-class RichLinkController extends Controller with Paging with Logging with ExecutionContexts with Requests   {
+class RichLinkController(contentApiClient: ContentApiClient) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
   def renderHtml(path: String) = render(path)
 
@@ -24,8 +23,8 @@ class RichLinkController extends Controller with Paging with Logging with Execut
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
-    val response: Future[ItemResponse] = getResponse(
-      ContentApiClient.item(path, edition)
+    val response: Future[ItemResponse] = contentApiClient.getResponse(
+      contentApiClient.item(path, edition)
         .showFields("headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow")
         .showTags("all")
         .showElements("all")
@@ -39,11 +38,7 @@ class RichLinkController extends Controller with Paging with Logging with Execut
 
     if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request)))
     else Cached(900) {
-      JsonComponent(
-         "html" -> contentResponse
-      )
+      JsonComponent(contentResponse)
     }
   }
 }
-
-object RichLinkController extends RichLinkController

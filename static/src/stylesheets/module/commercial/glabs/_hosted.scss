@@ -6,29 +6,6 @@ $hosted-video-height: 540px;
 @import '_hosted-gallery.scss';
 @import '_hosted-article.scss';
 @import '_hosted-header.scss';
-@import '_hosted-colours.scss';
-
-@mixin hosted-fade-in {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 1s linear, visibility 0s;
-}
-
-@mixin hosted-fade-out {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 1s linear, visibility 1s;
-}
-
-@mixin hosted-slide-in {
-    right: 0;
-    transition: right 2s linear;
-}
-
-@mixin hosted-slide-out {
-    right: -242px;
-    transition: right 2s linear;
-}
 
 .hosted-tone--dark {
     background-color: #3e3e3e;
@@ -182,6 +159,10 @@ $hosted-video-height: 540px;
             }
         }
     }
+
+    &.hosted-article-page .content__article-body p.intro + p::first-letter {
+        color: #ffffff;
+    }
 }
 
 .hosted__glogo {
@@ -216,11 +197,22 @@ $hosted-video-height: 540px;
 
 .hosted__glogotext {
     @include f-headlineSans;
-    @include font-size(14);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    line-height: 16px;
 
     margin: 0;
     text-align: left;
     color: rgba(255, 255, 255, .5);
+}
+
+.hosted-page ~ .survey-overlay-simple {
+    .survey-container {
+        @include mq(tablet) {
+            top: 40%;
+        }
+    }
 }
 
 .hosted-video-page {
@@ -276,7 +268,10 @@ $hosted-video-height: 540px;
 
 .hosted__video.gu-media--video {
     vertical-align: top;
+}
 
+.hosted-article-page figure div > div, //no useful class name here!
+.hosted__video.gu-media--video {
     .vjs-big-play-button .vjs-control-text {
         @include fs-textSans(4);
         margin-left: 16px;
@@ -445,6 +440,18 @@ $hosted-video-height: 540px;
     }
 }
 
+.hosted-article-page .vjs-controls-enabled.vjs-controls-enabled {
+    .vjs-control-bar {
+        position: absolute;
+        bottom: 7px;
+        @include mq(wide) {
+            right: 0;
+            left: auto;
+            width: 880px;
+        }
+    }
+}
+
 .hosted__meta {
     position: absolute;
     left: 88px;
@@ -476,6 +483,7 @@ $hosted-video-height: 540px;
     }
 }
 
+.youtube-video-playing + .hosted-fading,
 .vjs-playing + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -484,6 +492,7 @@ $hosted-video-height: 540px;
     }
 }
 
+.youtube-video-paused + .hosted-fading,
 .vjs-paused + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -506,11 +515,15 @@ $hosted-video-height: 540px;
 
     .hostedbadge {
         position: absolute;
+
+        @include mq(desktop) {
+            margin-left: $gs-gutter / 2;
+        }
     }
     .hostedbadge__logo.hostedbadge__logo {
         position: relative;
         display: none;
-        @include mq($until: tablet) {
+        @include mq($until: wide) {
             display: block;
         }
     }
@@ -532,6 +545,14 @@ $hosted-video-height: 540px;
     @include mq(desktop) {
         font-size: 36px;
         line-height: 34px;
+    }
+}
+
+.hosted-page .hosted-fading { //this needs to overwrite inline styles
+    .hosted__heading {
+        @include mq(tablet) {
+            color: #ffffff;
+        }
     }
 }
 
@@ -592,11 +613,6 @@ $hosted-video-height: 540px;
     margin-left: 20px;
     @include mq(desktop) {
         padding-top: 270px;
-    }
-
-    a {
-        // hack stop the link underline
-        color: transparent;
     }
 }
 
@@ -695,21 +711,33 @@ $hosted-video-height: 540px;
             height: 20px;
         }
     }
+    .hosted-page:not(.hosted-page--bright) & {
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }
 }
 
 .hosted__cta-link {
     display: block;
     width: 100%;
     height: 100%;
+    // hack stop the link underline
+    color: transparent;
+    outline: none;
 
     &:hover {
         background-color: rgba(#333333, .2);
+    }
+
+    &:active,
+    &:visited {
+        text-decoration: none;
     }
 }
 
 .hosted__cta-link,
 .hosted__next-video--tile {
-    &:hover {
+    &:hover, &:active {
         text-decoration: none;
     }
 }
@@ -746,10 +774,6 @@ $hosted-video-height: 540px;
 .hosted__standfirst {
     width: auto;
     padding: $gs-baseline $gs-gutter 0;
-
-    @include mq(desktop) {
-        margin-bottom: $gs-gutter * 1.5;
-    }
 }
 
 .hosted__social.host__header {
@@ -929,4 +953,8 @@ $hosted-video-height: 540px;
         font-size: 18px;
         line-height: 20px;
     }
+}
+
+iframe + .hosted-fading .hosted__video-overlay {
+    display: none;
 }

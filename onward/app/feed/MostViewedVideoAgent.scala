@@ -4,13 +4,13 @@ import com.gu.contentapi.client
 import common._
 import common.editions.Uk
 import contentapi.ContentApiClient
-import contentapi.ContentApiClient.getResponse
 import model.{Video, _}
 import play.api.libs.json._
+import services.OphanApi
 
 import scala.concurrent.Future
 
-object MostViewedVideoAgent extends Logging with ExecutionContexts {
+class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
 
   case class QueryResult(id: String, count: Double, paths: Seq[String])
 
@@ -23,7 +23,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
   def refresh(): Unit = {
     log.info("Refreshing most viewed video.")
 
-    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 20)
+    val ophanResponse = ophanApi.getMostViewedVideos(hours = 3, count = 20)
 
     ophanResponse.map { result =>
 
@@ -40,7 +40,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         .map(id => id.drop(1)) // drop leading '/'
         .mkString(",")
 
-      val mostViewed: Future[Seq[Video]] = getResponse(ContentApiClient.search(Uk)
+      val mostViewed: Future[Seq[Video]] = contentApiClient.getResponse(contentApiClient.search(Uk)
         .ids(contentIds)
         .pageSize(20)
       ).map{ r =>

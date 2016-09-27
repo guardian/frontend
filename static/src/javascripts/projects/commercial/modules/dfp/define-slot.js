@@ -14,13 +14,14 @@ define([
         var adUnit = adUnitOverride ?
             '/' + config.page.dfpAccountId + '/' + adUnitOverride :
             config.page.adUnit;
+        var sizeOpts = getSizeOpts(sizes);
         var id = adSlotNode.id;
         var slot;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnit, id);
+            slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
-            slot = createInPageSlot(adUnit, id, sizes);
+            slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }
 
         setTargeting(adSlotNode, slot, 'data-series', 'se');
@@ -32,7 +33,7 @@ define([
         return slot;
     }
 
-    function createInPageSlot(adUnit, id, sizes) {
+    function getSizeOpts(sizes) {
         var sizeMapping = buildSizeMapping(sizes);
         // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
         var size = uniq(
@@ -40,7 +41,10 @@ define([
             function (size) { return size[0] + '-' + size[1]; }
         );
 
-        return window.googletag.defineSlot(adUnit, size, id).defineSizeMapping(sizeMapping);
+        return {
+            sizeMapping: sizeMapping,
+            size: size
+        };
     }
 
     function setTargeting(adSlotNode, slot, attribute, targetKey) {

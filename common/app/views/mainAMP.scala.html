@@ -21,6 +21,7 @@
         <script custom-element="amp-soundcloud" src="https://cdn.ampproject.org/v0/amp-soundcloud-0.1.js" async></script>
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
+        <script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
         @if(content.tags.isLiveBlog) {
             <script custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async></script>
             @if(LiveUpdateAmpSwitch.isSwitchedOn) {
@@ -57,6 +58,10 @@
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
 
         @fragments.amp.googleAnalytics(content)
+
+        <amp-analytics id="comscore" type="comscore">
+          <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+        </amp-analytics>
 
         <div class="main-body">
 

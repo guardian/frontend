@@ -13,20 +13,19 @@ case class HostedGalleryPage(
   standfirst: String,
   cta: HostedCallToAction,
   ctaIndex: Option[Integer] = None,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
+  socialShareText: Option[String] = None,
+  shortSocialShareText: Option[String] = None,
   images: List[HostedGalleryImage],
+  nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List()
 ) extends HostedPage {
 
   val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
   val imageUrl = images.headOption.map(_.url).getOrElse("")
 
-  def nextGalleries: List[HostedGalleryPage] = nextPageNames.flatMap(HostedPages.fromCampaignAndPageName(campaign.id, _) flatMap {
-    case gallery: HostedGalleryPage => Some(gallery)
-    case _ => None
-  })
+  def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
+    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl, contentType = page.contentType)
+  )
 
   override val metadata: MetaData = {
     val sectionId = campaign.id
@@ -53,7 +52,7 @@ case class HostedGalleryPage(
         "og:url" -> pageUrl,
         "og:title" -> pageTitle,
         "og:description" ->
-        s"ADVERTISER CONTENT FROM OMGB HOSTED BY THE GUARDIAN | $title",
+        s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $title",
         "og:image" -> images.head.url,
         "fb:app_id" -> "180444840287"
       )

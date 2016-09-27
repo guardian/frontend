@@ -4,8 +4,9 @@ import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{JsPath, Reads}
+import play.api.libs.json.{JsPath, Reads, Writes}
 
 import scala.concurrent.Future
 
@@ -52,6 +53,8 @@ object Book {
       ((JsPath \ "categories")(0) \ "name").readNullable[String] and
       (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
     )(Book.apply _)
+
+  implicit val writesBook: Writes[Book] = Json.writes[Book]
 }
 
 class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] with ExecutionContexts {

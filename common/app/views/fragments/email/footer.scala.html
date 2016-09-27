@@ -1,4 +1,4 @@
-@(page: model.ContentPage)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 @import views.support.EmailHelpers._
 @import model.EmailAddons.EmailContentType
@@ -10,10 +10,10 @@
 
 @fullRow(Seq("disclaimer")) {
     <p>
-    @page.item.email.map { email =>
+    @page.email.map { email =>
         You are receiving this email because you are a subscriber to @{email.name}.
     }
 
-    Guardian News & Media Limited - a member of Guardian Media Group PLC. Registered Office: @page.item.address
+    Guardian News & Media Limited - a member of Guardian Media Group PLC. Registered Office: @page.address
     </p>
 }
