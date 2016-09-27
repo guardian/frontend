@@ -77,7 +77,7 @@ define([
         },
 
         configureSubscribeButton: function () {
-            var $follow = bonzo($('.js-notifications__toggle')),
+            var $follow = $('.js-notifications__toggle'),
                 isSubscribed = modules.checkSubscriptions(),
                 handler = isSubscribed ? modules.unSubscribeHandler: modules.subscribeHandler,
                 src = template(followLink, {
