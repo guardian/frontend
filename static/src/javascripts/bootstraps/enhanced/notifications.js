@@ -78,15 +78,21 @@ define([
 
         configureSubscribeButton: function () {
             var $follow = bonzo($('.js-notifications__toggle')),
-                isSsubscribed = modules.checkSubscriptions(),
-                handler = isSsubscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
+                isSubscribed = modules.checkSubscriptions(),
+                handler = isSubscribed ? modules.unSubscribeHandler: modules.subscribeHandler,
                 src = template(followLink, {
-                    isSubscribed: isSsubscribed,
-                    icon: svgs(isSsubscribed ? 'notificationsOff' : 'notificationsOn')
+                    isSubscribed: isSubscribed,
+                    icon: svgs(isSubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
             if (!isEmpty($follow)) {
                 fastdom.write(function () {
+                    if (isSubscribed) {
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-off')
+                    } else {
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-on')
+                    }
+
                     $follow.html(src);
                     bean.one($follow[0], 'click', handler);
                 });
