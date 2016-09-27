@@ -49,9 +49,12 @@
                     @page.video.youtubeId.map { youtubeId =>
                         <iframe id="hosted-video-@youtubeId"
                         class="js-hosted-youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1&@{if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
+                        <div class="hosted__youtube-poster-image" style="background-image: url(@page.video.posterUrl);">
+                            <div class="hosted__youtube-play-button"></div>
+                        </div>
                     }.getOrElse {
                         <video
                         data-duration="@{page.video.duration}"
