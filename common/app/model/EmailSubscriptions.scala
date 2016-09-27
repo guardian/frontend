@@ -3,7 +3,6 @@ package model
 case class EmailSubscriptions(subscriptions: List[EmailSubscription])
 case class EmailSubscription(
   name: String,
-  subheading: Option[String] = None,
   theme: String,
   about: String,
   teaser: String,
@@ -11,6 +10,7 @@ case class EmailSubscription(
   frequency: String,
   listId: String,
   subscribedTo: Boolean = false,
+  subheading: Option[String] = None,
   signupPage: Option[String] = None,
   exampleUrl: Option[String] = None
 )
@@ -23,8 +23,7 @@ object EmailSubscriptions {
 
   def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      name = "The Guardian today",
-      subheading = Some("UK"),
+      name = "The Guardian Today",
       theme = "news",
       about = "News",
       teaser = "The stories you need to read, delivered to your inbox each morning",
@@ -32,11 +31,11 @@ object EmailSubscriptions {
       frequency = "Every day",
       listId = "37",
       subscribedTo = subscribedListIds.exists{ x => x == "37" },
+      subheading = Some("UK"),
       signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-uk")
     ),
     EmailSubscription(
-      name = "The Guardian today",
-      subheading = Some("US"),
+      name = "The Guardian Today",
       theme = "news",
       about = "News",
       teaser = "Our editors break down the big news for you in the daily briefing",
@@ -44,12 +43,12 @@ object EmailSubscriptions {
       frequency = "Every day",
       listId = "1493",
       subscribedTo = subscribedListIds.exists{ x => x == "1493" },
+      subheading = Some("US"),
       signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-uk"),
       exampleUrl = Some("https://www.theguardian.com/us-news/series/guardian-us-briefing/latest/email")
     ),
     EmailSubscription(
-      name = "The Guardian today",
-      subheading = Some("AUS"),
+      name = "The Guardian Today",
       theme = "news",
       about = "News",
       teaser = "All the day's top news, commentary and features in one handy lunchtime email",
@@ -57,11 +56,11 @@ object EmailSubscriptions {
       frequency = "Every day",
       listId = "1506",
       subscribedTo = subscribedListIds.exists{ x => x == "1506" },
+      subheading = Some("AUS"),
       signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-au")
     ),
     EmailSubscription(
       name = "Morning Mail",
-      subheading = Some("AUS"),
       theme = "news",
       about = "Guardian Australia's morning news briefing from around the web",
       teaser = "Get ahead with a shot of early morning news - our editors bring you everything you need",
@@ -69,6 +68,7 @@ object EmailSubscriptions {
       frequency = "Every weekday",
       listId = "2636",
       subscribedTo = subscribedListIds.exists{ x => x == "2636" },
+      subheading = Some("AUS"),
       signupPage = Some("https://www.theguardian.com/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
     ),
     EmailSubscription(
@@ -148,11 +148,12 @@ object EmailSubscriptions {
       name = "The Fiver",
       theme = "sport",
       about = "Football",
-      teaser = "Rounding up the day's footbal news and gossip in our own belligerent, sometimes intelligent and (occasionally) funny way",
+      teaser = "Rounding up the day's football news and gossip in our own belligerent, sometimes intelligent and (occasionally) funny way",
       description = "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
       frequency = "Weekday afternoons",
       listId = "218",
       subscribedTo = subscribedListIds.exists{ x => x == "218" },
+      signupPage = Some("https://www.theguardian.com/info/2016/jan/05/the-fiver-email-sign-up"),
       exampleUrl = Some("https://www.theguardian.com/football/series/thefiver/latest/email")
     ),
     EmailSubscription(
@@ -164,6 +165,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
@@ -175,6 +177,7 @@ object EmailSubscriptions {
       frequency = "Every Tuesday",
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
     )
   )
@@ -200,8 +203,8 @@ object EmailSubscriptions {
       description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
       frequency = "Every Saturday",
       listId = "3322",
-      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email"),
-      subscribedTo = subscribedListIds.exists{ x => x == "3322" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3322" },
+      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email")
     )
   )
 
@@ -246,7 +249,8 @@ object EmailSubscriptions {
       description = "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
       frequency = "Every Thursday",
       listId = "3039",
-      subscribedTo = subscribedListIds.exists{ x => x == "3039" }
+      subscribedTo = subscribedListIds.exists{ x => x == "3039" },
+      signupPage = Some("https://www.theguardian.com/books/2015/feb/03/sign-up-to-our-bookmarks-email")
     ),
     EmailSubscription(
       name = "Art Weekly",
@@ -257,6 +261,7 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "99",
       subscribedTo = subscribedListIds.exists{ x => x == "99" },
+      signupPage = Some("https://www.theguardian.com/artanddesign/2015/oct/19/sign-up-to-the-art-weekly-email"),
       exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
     )
   )
@@ -335,7 +340,6 @@ object EmailSubscriptions {
   def commentEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "Best of Guardian Opinion",
-      subheading = Some("UK"),
       theme = "comment",
       about = "Opinion's daily email newsletter",
       teaser = "Get up to speed on the most interesting and provoking issues and join the debate every afternoon",
@@ -343,11 +347,11 @@ object EmailSubscriptions {
       frequency = "Weekday afternoons",
       listId = "2313",
       subscribedTo = subscribedListIds.exists{ x => x == "2313" },
+      subheading = Some("UK"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
     ),
     EmailSubscription(
       name = "Best of Guardian Opinion",
-      subheading = Some("US"),
       theme = "comment",
       about = "Opinion's daily email newsletter",
       teaser = "Keep up with today’s pressing issues in the US with the Guardian’s American edition of the opinion email",
@@ -355,11 +359,11 @@ object EmailSubscriptions {
       frequency = "Weekday afternoons",
       listId = "3228",
       subscribedTo = subscribedListIds.exists{ x => x == "3228" },
+      subheading = Some("US"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
     ),
     EmailSubscription(
       name = "Best of Guardian Opinion",
-      subheading = Some("AUS"),
       theme = "comment",
       about = "An evening selection of the best reads from Guardian Opinion in Australia",
       teaser = "An evening selection of the best reads from Guardian Opinion in Australia",
@@ -367,6 +371,7 @@ object EmailSubscriptions {
       frequency = "Daily",
       listId = "2976",
       subscribedTo = subscribedListIds.exists{ x => x == "2976" },
+      subheading = Some("AUS"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
     ),
     EmailSubscription(
