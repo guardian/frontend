@@ -265,7 +265,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       futureContents.map((content: Seq[model.ContentType]) => {
         val capiMultiple = CapiMultiple.fromContent(content)
         Cached(60.seconds) {
-          JsonComponent(CapiMultiple)
+          JsonComponent(capiMultiple)
         }
       })
 
