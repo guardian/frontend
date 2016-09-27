@@ -116,13 +116,15 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
 
-  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement])
+  case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement], audioTag: Boolean,
+                        galleryTag: Boolean, videoTag: Boolean)
 
   object CapiSingle {
     import ElementsFormat._
 
     def fromContent(content: Content): CapiSingle = {
-      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images)
+      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images, content.tags.isAudio,
+        content.tags.isGallery, content.tags.isVideo)
     }
 
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
