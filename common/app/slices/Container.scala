@@ -16,8 +16,7 @@ object Container extends Logging {
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
   ) ++
-    FixedContainers.all.mapValues(Fixed.apply) ++
-    CommercialContainerType.all
+    FixedContainers.all.mapValues(Fixed.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
@@ -61,4 +60,3 @@ case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
 case object Video extends Container
-case class Commercial(get: CommercialContainerType) extends Container

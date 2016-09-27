@@ -1,12 +1,10 @@
 package controllers
 
-import common.{ExecutionContexts, JsonComponent, Logging}
-import conf.Configuration
+import common.{ExecutionContexts, Logging}
 import model.NoCache
 import model.notifications.DynamoDbStore
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future

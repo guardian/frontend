@@ -34,9 +34,9 @@ class CtaController(val wsClient: WSClient) extends Controller with ExecutionCon
 
   def cta(key: DiscussionKey) = Action.async { implicit request =>
     getTopComments(key).map { comments: List[Comment] =>
-      Cached(60)(JsonComponent("html" -> views.html.fragments.ctaTopComments(comments, true)))
+      Cached(60)(JsonComponent(views.html.fragments.ctaTopComments(comments, true)))
     } recover {
-      case _ => Cached(900)(JsonComponent("html" -> views.html.fragments.ctaTopComments(Nil, false)))
+      case _ => Cached(900)(JsonComponent(views.html.fragments.ctaTopComments(Nil, false)))
     }
   }
 }
