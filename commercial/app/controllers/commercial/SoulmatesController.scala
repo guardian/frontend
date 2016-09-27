@@ -3,7 +3,7 @@ package controllers.commercial
 import common.JsonComponent
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
-import model.{Cached, NoCache}
+import model.Cached
 import play.api.mvc._
 
 import scala.concurrent.duration._
@@ -29,7 +29,7 @@ class SoulmatesController extends Controller with implicits.Requests {
 
   def renderSoulmates(groupName: String) = Action { implicit request =>
     soulmatesSample(groupName).toList match {
-      case Nil => NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(componentMaxAge){ jsonFormat.nilResult }
       case soulmates => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
@@ -40,8 +40,6 @@ class SoulmatesController extends Controller with implicits.Requests {
 
   def getSoulmates(groupName: String) = Action { implicit request =>
 
-    Cached(60.seconds){
-      JsonComponent(soulmatesSample(groupName))
-    }
+    Cached(60.seconds){ JsonComponent(soulmatesSample(groupName)) }
   }
 }
