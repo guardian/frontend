@@ -3,7 +3,7 @@ package controllers.commercial
 import common.commercial._
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, Lookup}
+import model.commercial.{CapiAgent, CapiSingle, Lookup}
 import model.{Cached, NoCache}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -119,25 +119,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
         }
       }
     }
-  }
-
-
-  case class CapiSingle(articleHeadline: String, articleUrl: String,
-                        articleText: Option[String], articleImage: Seq[ImageElement],
-                        audioTag: Boolean, galleryTag: Boolean,
-                        videoTag: Boolean, branding: Option[Branding])
-
-  object CapiSingle {
-    import ElementsFormat._
-
-    def fromContent(contentType: ContentType): CapiSingle = {
-      val content = contentType.content
-      val branding = BrandHunter.findContentBranding(contentType, Edition.defaultEdition)
-
-      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images, content.tags.isAudio,
-        content.tags.isGallery, content.tags.isVideo, branding)
-    }
-    implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
   }
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
