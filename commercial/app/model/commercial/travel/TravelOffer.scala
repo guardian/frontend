@@ -10,6 +10,10 @@ import scala.concurrent.duration._
 import scala.util.control.NonFatal
 import scala.xml.Node
 
+import play.api.data.validation.ValidationError
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
+
 case class TravelOffer(id: String,
                        title: String,
                        offerUrl: String,
@@ -38,6 +42,8 @@ case class TravelOffer(id: String,
 }
 
 object TravelOffer {
+
+  implicit val writesTravelOffer: Writes[TravelOffer] = Json.writes[TravelOffer]
 
   def fromXml(xml: Node): TravelOffer = {
 
@@ -74,4 +80,3 @@ object TravelOffer {
     )
   }
 }
-

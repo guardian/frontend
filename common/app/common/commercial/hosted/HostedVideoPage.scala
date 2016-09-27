@@ -18,6 +18,7 @@ case class HostedVideoPage(
   socialShareText: Option[String],
   shortSocialShareText: Option[String],
   nextPage: Option[NextHostedPage] = None,
+  nextVideo: Option[NextHostedPage] = None,
   metadata: MetaData
 ) extends HostedPage {
 
@@ -45,6 +46,7 @@ object HostedVideoPage extends Logging {
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
       def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
+      def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
       val pageId = content.id
       val pageUrl = content.webUrl
@@ -105,6 +107,7 @@ object HostedVideoPage extends Logging {
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
+          youtubeId = youtubeId,
           srcUrlMp4 = videoUrl("video/mp4"),
           srcUrlWebm = videoUrl("video/webm"),
           srcUrlOgg = videoUrl("video/ogg"),
@@ -122,6 +125,7 @@ object HostedVideoPage extends Logging {
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         // todo: related content
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
+        nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata
       )
     }
@@ -137,6 +141,7 @@ case class HostedVideo(
   title: String,
   duration: Int,
   posterUrl: String,
+  youtubeId: Option[String] = None,
   srcUrlMp4: String,
   srcUrlWebm: String,
   srcUrlOgg: String,

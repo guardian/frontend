@@ -80,6 +80,6 @@
 
 @logoSlot = {
     @for(branding <- containerModel.branding) {
-        @contentLogo(branding)
+        @contentLogo(branding, isInteractivePage = false, isBranded = false, isOnTheLeft = false)
     }
 }

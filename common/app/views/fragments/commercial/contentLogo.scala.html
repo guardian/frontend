@@ -1,33 +1,31 @@
-@(branding: common.commercial.Branding, isInteractivePage: Boolean = false)(implicit request: RequestHeader)
+@(branding: common.commercial.Branding, isInteractivePage: Boolean, isBranded: Boolean, isOnTheLeft: Boolean)(implicit request: RequestHeader)
 @import common.commercial.PaidContent
 @import implicits.Requests.RichRequestHeader
 
-<div class="brandbadge brandbadge--onside ad-slot--force-display ad-slot--paid-for-badge ad-slot--paid-for-badge--front @if(isInteractivePage) {ad-slot--paid-for-badge--interactive}">
-    <div class="brandbadge__inner ad-slot--paid-for-badge__inner">
-        <h3 class="brandbadge__header">@branding.label</h3>
-        <a href="@branding.sponsorLink" class="brandbadge__link ad-slot--paid-for-badge__link">
-            @if(request.isAmp) {
-                @branding.sponsorLogo.dimensions.map { dim =>
-                    <amp-img src="@branding.sponsorLogo.url"
-                        width="@dim.width"
-                        height="@dim.height"
-                        alt="@{branding.sponsorName}'s logo"
-                        class="brandbadge__logo"></amp-img>
-                }.getOrElse {
-                    <p>@branding.sponsorName</p>
-                }
-            } else {
-                <img src="@branding.sponsorLogo.url"
-                    @for(dim <- branding.sponsorLogo.dimensions) {
-                        width="@dim.width"
-                        height="@dim.height"
-                    }
-                    alt="@{branding.sponsorName}'s logo"
-                    class="brandbadge__logo">
+<div class="badge
+    @if(isInteractivePage || isOnTheLeft) {badge--alt}
+    @if(isInteractivePage) {badge--interactive}
+    @if(isBranded) {badge--branded}
+    ">
+    @branding.label
+    <a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+        @if(request.isAmp) {
+            @branding.sponsorLogo.dimensions.map { dim =>
+                <amp-img src="@branding.sponsorLogo.url"
+                width="@dim.width"
+                height="@dim.height"
+                alt="@{branding.sponsorName}'s logo"
+                class="badge__logo"></amp-img>
+            }.getOrElse {
+                <p>@branding.sponsorName</p>
             }
-        </a>
-        @if(branding.sponsorshipType != PaidContent) {
-            <a href="@branding.aboutThisLink" class="brandbadge__help">About this content</a>
+        } else {
+            <img src="@branding.sponsorLogo.url"
+            alt="@{branding.sponsorName}'s logo"
+            class="badge__logo">
         }
-    </div>
+    </a>
+    @if(branding.sponsorshipType != PaidContent) {
+        <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
+    }
 </div>

@@ -5,6 +5,10 @@ import java.net.URLEncoder
 
 import model.StandalonePage
 
+object HostedContentType extends Enumeration {
+  val Video, Article, Gallery = Value
+}
+
 trait HostedPage extends StandalonePage {
   def campaign: HostedCampaign
   def pageUrl: String
@@ -25,11 +29,19 @@ trait HostedPage extends StandalonePage {
   final val toneId = "tone/hosted"
   final val toneName = "Hosted"
 
+  def contentType = {
+    this match {
+      case page: HostedVideoPage => HostedContentType.Video
+      case page: HostedArticlePage => HostedContentType.Article
+      case _ => HostedContentType.Gallery
+    }
+  }
 }
 
 case class NextHostedPage(
   pageUrl: String,
   title: String,
+  contentType: HostedContentType.Value,
   imageUrl: String
 )
 
