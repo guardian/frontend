@@ -52,7 +52,7 @@ define([
 
         isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1,
 
-        isHosted: config.page.tones === 'Hosted'
+        isHosted: config.page.isHosted
 
     }, config);
 });

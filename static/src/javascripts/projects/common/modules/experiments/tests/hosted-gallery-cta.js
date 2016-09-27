@@ -27,7 +27,7 @@ define([
         this.idealOutcome = 'People will click on the call to action link more often.';
 
         this.canRun = function () {
-            return config.page.contentType === 'Gallery' && config.page.tones === 'Hosted' && config.page.images.length > 6;
+            return config.page.contentType === 'Gallery' && config.page.isHosted && config.page.images.length > 6;
         };
 
         this.variants = [
