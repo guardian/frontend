@@ -8,6 +8,7 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-external-frontend',
+    'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-article-onward-journey',
     'common/modules/experiments/tests/hosted-gallery-cta',
     'common/modules/experiments/tests/membership-engagement-banner',
@@ -15,6 +16,7 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/video-button-duration'
 ], function (
     reportError,
@@ -26,6 +28,7 @@ define([
     memoize,
     noop,
     DiscussionExternalFrontend,
+    DiscussionPromoteBottomBanner,
     HostedArticleOnwardJourney,
     HostedGalleryCallToAction,
     MembershipEngagementBannerTests,
@@ -33,17 +36,20 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
+    ContributionsStory,
     VideoButtonDuration
 ) {
 
     var TESTS = [
         new DiscussionExternalFrontend(),
+        new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
         new HostedArticleOnwardJourney(),
         new HostedGalleryCallToAction(),
         new ContributionsEpic(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
+        new ContributionsStory(),
         new VideoButtonDuration()
     ].concat(MembershipEngagementBannerTests);
 

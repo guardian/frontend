@@ -483,6 +483,7 @@ $hosted-video-height: 540px;
     }
 }
 
+.youtube-video-playing + .hosted-fading,
 .vjs-playing + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -491,6 +492,7 @@ $hosted-video-height: 540px;
     }
 }
 
+.youtube-video-paused + .hosted-fading,
 .vjs-paused + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,

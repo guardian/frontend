@@ -43,9 +43,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       comment =>
         Cached(60) {
           if (request.isJson)
-            JsonComponent(
-              "html" -> views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation).toString
-            )
+            JsonComponent(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
           else
             RevalidatableResult.Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
@@ -158,9 +156,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
 
       Cached(60) {
         if (request.isJson) {
-          JsonComponent(
-            "html" -> views.html.discussionComments.topCommentsList(page).toString
-          )
+          JsonComponent(views.html.discussionComments.topCommentsList(page))
         } else {
           RevalidatableResult.Ok(views.html.discussionComments.topCommentsList(page))
         }
