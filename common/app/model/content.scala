@@ -229,7 +229,6 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isHeroic", JsBoolean(isHeroic)),
     ("isExplore", JsBoolean(isExplore)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
