@@ -14,13 +14,13 @@
 )) { case (hasEmbed, hasMainMedia, isExploreSeries, hasVideo) =>
 
   <style>
-    @Html(common.Assets.css.inlineLabourLiverpool)
+    @Html(common.Assets.css.inlineExplore)
   </style>
 
     <div class="@RenderClasses(Map(
             "content--explore-series-article" -> isExploreSeries,
             "immersive-main-media" -> hasMainMedia,
-            "heroic--video" -> hasVideo
+            "explore--video" -> hasVideo
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">

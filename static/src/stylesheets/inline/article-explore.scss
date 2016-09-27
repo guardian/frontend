@@ -341,7 +341,7 @@ $explore-series-header-element-opacity: .85;
 .content__article-body {
     figure {
         //these styles need to overide the styles coming from Layout Hint
-        &.element-video--heroic {
+        &.element-video--explore {
             margin-bottom: $gs-gutter*3;
 
             @include mq($until: phablet) {
@@ -354,13 +354,13 @@ $explore-series-header-element-opacity: .85;
         }
 
         figcaption {
-            &.caption-heroic {
+            &.caption-explore {
                 top: 80%;
             }
         }
     }
 }
-.element-video--heroic {
+.element-video--explore {
     .gu-media-wrapper--video {
         -webkit-clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
         clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
@@ -409,13 +409,13 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.caption-heroic {
+.caption-explore {
     position: absolute;
     z-index: 40;
     color: $news-main-1;
 }
 
-.heroic-video {
+.explore-video {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -437,7 +437,7 @@ Because this template uses the immersive header they are outside of the header -
 givng this some mega minus margins.*/
 
 .l-side-margins {
-    &.heroic--video {
+    &.explore--video {
         &::before {
             margin-top: -560px;
             height: 128%;
