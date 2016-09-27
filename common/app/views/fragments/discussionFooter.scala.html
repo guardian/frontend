@@ -3,27 +3,7 @@
 
 @sectionHeading = {
 
-    <div class="discussion__heading js-discussion-external-frontend">
-
-        <div class="container__meta">
-            <h2 class="container__meta__title">comments <span class="discussion__comment-count js-discussion-comment-count"></span></h2>
-
-            <p class="container__meta__item discussion__meta discussion__meta--open-signed-out">
-                <a class="u-underline" href="@Configuration.id.url/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN@if(RegisterWithPhoneNumber.isSwitchedOn){&clientId=comments}">Sign in</a>
-                or <a class="u-underline" href="@Configuration.id.url/register?INTCMP=DOTCOM_COMMENTS_REG@if(RegisterWithPhoneNumber.isSwitchedOn){&clientId=comments}">create your Guardian account</a> to join the discussion.
-            </p>
-
-            <p class="container__meta__item discussion__meta discussion__meta--closed">This discussion is closed for comments.</p>
-
-            <p class="container__meta__item discussion__meta discussion__meta--readonly">
-                We’re doing some maintenance right now. You can still read comments, but please come back later to add your own.
-            </p>
-
-            <p class="container__meta__item d-discussion__error discussion__meta discussion__meta--banned">
-                Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>)
-            </p>
-        </div>
-    </div>
+    <div class="discussion__heading js-discussion-external-frontend"></div>
 }
 
 @toolbar = {

@@ -5,8 +5,6 @@ define([
     mediator,
     reportError
 ) {
-    var VARIANT = 'preact';
-
     function load(ab, loader, opts) {
         function onDiscussionFrontendLoad (emitter) {
             emitter.on('error', function (feature, error) {
@@ -20,12 +18,7 @@ define([
             });
         }
 
-        return require('discussion-frontend-' + VARIANT, function (frontend) {
-            // Preact works in a slightly different way
-            // https://github.com/developit/preact-compat/issues/145
-            if (VARIANT === 'preact') {
-                opts.element.innerHTML = '';
-            }
+        return require('discussion-frontend-preact', function (frontend) {
             // - Inject the net module to work around the lack of a global fetch
             //   It can be removed once all browsers have window.fetch
             // - Well, it turns out that fetchJson uses reqwest which sends X-Requested-With
