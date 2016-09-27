@@ -31,7 +31,9 @@ class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Req
 
   def renderJobs = Action { implicit request =>
     jobSample(specificIds, segment) match {
-      case Nil => NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(60.seconds) {
+        jsonFormat.nilResult
+      }
       case jobs => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
