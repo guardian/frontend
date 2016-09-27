@@ -117,16 +117,18 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
 
   case class CapiSingle(articleHeadline: String, articleUrl: String, articleText: Option[String], articleImage: Seq[ImageElement], audioTag: Boolean,
-                        galleryTag: Boolean, videoTag: Boolean)
+                        galleryTag: Boolean, videoTag: Boolean, branding: Option[Branding])
 
   object CapiSingle {
     import ElementsFormat._
 
-    def fromContent(content: Content): CapiSingle = {
-      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images, content.tags.isAudio,
-        content.tags.isGallery, content.tags.isVideo)
-    }
+    def fromContent(contentType: ContentType): CapiSingle = {
+      val content = contentType.content
+      val branding = BrandHunter.findContentBranding(contentType, Edition.defaultEdition)
 
+      CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, content.elements.images, content.tags.isAudio,
+        content.tags.isGallery, content.tags.isVideo, branding)
+    }
     implicit val writesCapiSingle: Writes[CapiSingle] = Json.writes[CapiSingle]
   }
 
@@ -136,7 +138,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
-      lookup.latestContentByKeyword(keyword, 2)
+      lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
     latestContent onFailure {
@@ -153,12 +155,12 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       specific <- specificContent
       latestByKeyword <- latestContent
     } yield {
-      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 1
+      (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
     futureContents.map((content: Seq[model.ContentType]) => {
       val response = content.head
-      val capiSingle = CapiSingle.fromContent(response.content)
+      val capiSingle = CapiSingle.fromContent(response)
       Cached(1.seconds) {
         JsonComponent(capiSingle)
       }
