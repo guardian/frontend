@@ -26,7 +26,12 @@
             @NewNavigation.topLevelSections.map { section =>
                 @primaryLinks(section.name)
             }
-            <label for="main-menu-toggle" class="new-header__nav__menu-button js-change-link" tabindex="0">
+            <label
+                for="main-menu-toggle"
+                class="new-header__nav__menu-button js-change-link"
+                tabindex="0"
+                data-link-name="main-navigation : veggie-burger : show"
+            >
                 <span class="new-header__veggie-burger-icon"></span>
                 <span class="u-h">Menu</span>
             </label>
