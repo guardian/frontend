@@ -506,15 +506,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
-
-  // Owner: Sam Cutler / Editorial Tools
-  val Targeting = Switch(
-    SwitchGroup.Feature,
-    "targeting",
-    "When ON will the targeting system will poll for updates and merge targeted campaigns into content",
-    owners= Seq(Owner.withGithub("currysoup")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
 }

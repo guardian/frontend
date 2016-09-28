@@ -5,7 +5,6 @@ import java.net.URL
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.targeting.client.Campaign
 import common._
 import common.commercial.{BrandHunter, PaidContent}
 import common.dfp.DfpAgent
@@ -92,7 +91,6 @@ final case class Content(
   lazy val isExplore = HeroicTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
-  lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -229,8 +227,7 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isExplore", JsBoolean(isExplore)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
+    ("isExplore", JsBoolean(isExplore))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
