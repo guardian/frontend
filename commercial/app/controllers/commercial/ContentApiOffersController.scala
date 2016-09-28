@@ -3,7 +3,7 @@ package controllers.commercial
 import common.commercial._
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, Lookup}
+import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
 import model.{Cached, NoCache}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -128,16 +128,16 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     retrieveContent().map((content: Seq[model.ContentType]) => {
 
       val capiData = if (isMulti) {
-        CapiMultiple.fromContent(content)
+        JsonComponent(CapiMultiple.fromContent(content))
       } else {
 
         val response = content.head
-        CapiSingle.fromContent(response)
+        JsonComponent(CapiSingle.fromContent(response))
 
       }
       
       Cached(60.seconds) {
-        JsonComponent(capiData)
+        capiData
       }
 
     })
