@@ -1,7 +1,6 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
-@import common.Edition
 @import layout.ContentWidths.ImageContentMedia
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial._
 @import views.support.RenderClasses
 
 @defining(page.image) { image =>
@@ -9,16 +8,16 @@
 <div class="l-side-margins l-side-margins--media">
     <article
         class="@RenderClasses(Map(
-            "content--advertisement-feature paid-content--advertisement-feature" -> image.commercial.isAdvertisementFeature,
-            "content--sponsored" -> image.commercial.isSponsored(Some(Edition(request))),
-            "content--foundation-supported" -> image.commercial.isFoundationSupported
+            "content--advertisement-feature paid-content--advertisement-feature" -> isPaidContent(page.image, page),
+            "content--sponsored" -> isSponsoredContent(page.image, page),
+            "content--foundation-supported" -> isFoundationFundedContent(page.image, page)
         ), "content content--media content--image tonal tonal--tone-media")"
         itemprop="mainContentOfPage"
         itemscope
         itemtype="@image.metadata.schemaType"
         role="main">
 
-        @if(image.commercial.isAdvertisementFeature) {
+        @if(isPaidContent(page.image, page)) {
             @fragments.guBand()
         }
 

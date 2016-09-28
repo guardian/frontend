@@ -3,8 +3,8 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.facia.api.models._
 import common.Edition
-import common.commercial.Branding
-import common.dfp.DfpAgent
+import common.Edition.defaultEdition
+import common.commercial.{BrandHunter, Branding, PaidContent}
 import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
@@ -25,9 +25,8 @@ object PressedPage {
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
     val isAdvertisementFeature: Boolean = {
-      val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
-      val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
-      keywordSponsorship.isAdvertisementFeature
+      val branding = BrandHunter.findBranding(frontProperties.activeBrandings, defaultEdition, publicationDate = None)
+      branding.exists(_.sponsorshipType == PaidContent)
     }
 
     val faciaPageMetaData: Map[String, JsValue] = Map(
@@ -116,28 +115,6 @@ case class PressedPage (
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
   override def branding(edition: Edition): Option[Branding] = frontProperties.branding(edition)
-
-  def sponsorshipType: Option[String] = {
-    if (isSponsored(None)) {
-      Option("sponsoredfeatures")
-    } else if (isAdvertisementFeature) {
-      Option("advertisement-features")
-    } else if (isFoundationSupported) {
-      Option("foundation-features")
-    } else {
-      None
-    }
-  }
-
-  def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
-    keywordIds exists (DfpAgent.isSponsored(_, Some(metadata.sectionId), maybeEdition))
-  def hasMultipleSponsors = false // Todo: need to think about this
-  lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
-      Some(metadata.sectionId)))
-  def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
-  lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
-      Some(metadata.sectionId)))
-  lazy val sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 }

@@ -108,15 +108,12 @@ object GetClasses {
       ("fc-container--has-show-more", hasDesktopShowMore),
       ("js-container--first", isFirst),
       ("fc-container--video", isVideo),
-      ("fc-container--sponsored", commercialOptions.isSponsored),
-      ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),
       ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
-      ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         // no toggle for Headlines container as it will be hosting the weather widget instead
-        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines && !commercialOptions.isPaidFor)
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines)
     ) collect {
       case (kls, true) => kls
     }) ++ extraClasses: _*)

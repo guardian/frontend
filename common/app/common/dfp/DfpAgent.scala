@@ -11,18 +11,13 @@ import services.S3
 import scala.io.Codec.UTF8
 
 object DfpAgent
-  extends PaidForTagAgent
-  with PageskinAdAgent
+  extends PageskinAdAgent
   with InlineMerchandiseComponentAgent
   with HighMerchandiseComponentAgent
   with AdSlotAgent
   with ExecutionContexts {
 
   override protected val environmentIsProd: Boolean = environment.isProd
-  override protected val environmentIsPreview: Boolean = {
-    if (Play.maybeApplication.isDefined) environment.isPreview
-    else false
-  }
 
   private lazy val currentPaidForTagsAgent = AkkaAgent[Seq[PaidForTag]](Nil)
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())

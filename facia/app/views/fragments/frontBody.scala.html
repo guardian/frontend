@@ -1,24 +1,22 @@
 @import common.Edition
-@import common.commercial.ContainerModel
+@import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader)
 
-@defining((faciaPage.isSponsored(Some(Edition(request))),
-        faciaPage.isAdvertisementFeature,
-        faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
+@defining((faciaPage.branding(Edition(request)).exists(_.sponsorshipType == Sponsored),
+           faciaPage.branding(Edition(request)).exists(_.sponsorshipType == PaidContent))) { case (isSponsored, isAdFeature) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
-                "fc-container--advertisement-feature paid-content--advertisement-feature" -> isAdFeature,
-                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
+                "fc-container--advertisement-feature paid-content--advertisement-feature" -> isAdFeature
             ), "facia-page")"
             data-link-name="Front | @request.path"
-                @faciaPage.sponsor.map { sponsor =>
-                data-sponsor="@sponsor"
+                @faciaPage.branding(Edition(request)).map { branding =>
+                data-sponsor="@branding.sponsorName"
                 }
-                @faciaPage.sponsorshipType.map { sponsorshipType =>
-                data-sponsorship="@sponsorshipType"
+                @faciaPage.branding(Edition(request)).map { branding =>
+                data-sponsorship="@branding.sponsorshipType.name"
                 }
             role="main">
 
@@ -33,7 +31,7 @@
                             containerDefinition,
                             faciaPage.frontProperties,
                             Some(faciaPage.id),
-                            faciaPage.isAdvertisementFeature,
+                            isAdFeature,
                             faciaPage.collections.find {
                                 _.id == containerDefinition.dataId
                             }.map {
