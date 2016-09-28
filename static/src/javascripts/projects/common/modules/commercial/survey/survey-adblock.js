@@ -6,9 +6,7 @@ define([
     'common/modules/user-prefs',
     'common/views/svgs',
     'text!common/views/commercial/survey/survey-adblock.html',
-    'lodash/arrays/uniq',
-    'common/utils/countdown',
-    'common/utils/cookies'
+    'common/utils/storage',
 ], function (
     bean,
     fastdom,
@@ -17,53 +15,94 @@ define([
     userprefs,
     svgs,
     surveyAdBlockTemplate,
-    uniq,
-    countdown,
-    cookies
+    storage
 ) {
     var surveyAdBlock = function (config) {
         this.config = config || {};
         this.bannerTmpl = template(surveyAdBlockTemplate,
             {
-                surveyHeader: this.config.surveyHeader,
-                surveyText: this.config.surveyText,
-                surveyTextSecond: this.config.surveyTextSecond,
-                surveyTextThird: this.config.surveyTextThird,
-                surveyTextMembership: this.config.surveyTextMembership,
-                surveyTextSubscriber: this.config.surveyTextSubscriber,
-                surveyTextUserHelp: this.config.surveyTextUserHelp,
-                signupText: this.config.signupText,
-                membershipText: this.config.membershipText,
-                signupLink: this.config.signupLink,
-                membershipLink: this.config.membershipLink,
-                signupDataLink: this.config.signupDataLink,
-                membershipDataLink: this.config.membershipDataLink,
-                subscriberLink: this.config.subscriberLink,
-                subscriberText: this.config.subscriberText,
-                subscriberDataLink: this.config.subscriberDataLink,
-                contributorLink: this.config.contributorLink,
-                contributorText: this.config.contributorText,
-                contributorDataLink: this.config.contributorDataLink,
-                showCloseBtn: this.config.showCloseBtn,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 marque36icon: svgs('marque36icon'),
                 crossIcon: svgs('crossIcon'),
-                surveyOverlaySimple: svgs('surveyOverlaySimple')
+                surveyOverlaySimple: svgs('surveyOverlaySimple'),
+                adFreeDataLink: this.config.adFreeDataLink,
+                adFreeButtonText: this.config.adFreeButtonText,
+                adFreeMessagePrefix: this.config.adFreeMessagePrefix,
+                whitelistDataLink: this.config.whitelistDataLink,
+                whitelistText: this.config.whitelistText,
+                whitelistGuideImage: this.config.whitelistGuideImage,
+                adBlockIcon: this.config.adBlockIcon,
+                adBlockPlusIcon: this.config.adBlockPlusIcon,
+                variant: this.config.variant
             });
+    };
+
+    var greetingView = function() {
+        // -> state 1
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.greeting-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var whiteListInstructionView = function () {
+        // -> state 2
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var adFreeOptionView = function() {
+        // -> state 3
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').removeClass('thank-you');
+    };
+
+    var paymentDoneView = function() {
+        // -> state 4
+        $.forEachElement(('.greeting-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.whitelist-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
+        $.forEachElement(('.thankyou-state'), function(el){el.classList.remove('is-hidden');});
+        $('.survey-container').addClass('thank-you');
+        storage.local.set('gu.abb3.exempt', true);
+    };
+
+    var closeOverlay = function() {
+        // -> go to article
+        $('.survey-container').removeClass('thank-you');
+        $('.js-survey-adblock').addClass('is-hidden');
     };
 
     surveyAdBlock.prototype.attach = function () {
         fastdom.write(function () {
             $(document.body).append(this.bannerTmpl);
-            if (this.config.showCloseBtn) {
-                bean.on(document, 'click', $('.js-survey-adblock__close-btn'), function () {
-                    $('.survey-adblock').addClass('is-hidden');
-                    var cookieName = 'gu_abm_x',
-                        cookieLifetimeMinutes = 30,
-                        cookieCount = cookies.get(cookieName) ? parseInt(cookies.get(cookieName)) : 0;
-                    cookies.addForMinutes(cookieName, cookieCount + 1, cookieLifetimeMinutes);
-                });
-            }
+            bean.on(document, 'click', $('.cta-whitelist'), function () {
+                whiteListInstructionView();
+            });
+            bean.on(document, 'click', $('.survey-button-rounded__cta.noads'), function () {
+                adFreeOptionView();
+            });
+            bean.on(document, 'click', $('.survey-button-rounded__cta.paypal'), function () {
+                paymentDoneView();
+            });
+            bean.on(document, 'click', $('.survey-button-rounded__cta.ccard'), function () {
+                paymentDoneView();
+            });
+            bean.on(document, 'click', $('.howto-unblock__close-btn'), function () {
+                greetingView();
+            });
+            bean.on(document, 'click', $('.pay-now__close-btn'), function () {
+                greetingView();
+            });
+            bean.on(document, 'click', $('.survey-button-rounded__cta.readon'), function () {
+                closeOverlay();
+            });
         }.bind(this));
     };
 
@@ -71,21 +110,6 @@ define([
         fastdom.write(function () {
             $('.js-survey-adblock').removeClass('is-hidden');
         });
-        if (this.config.showCloseBtn) {
-            if (this.config.showCloseBtn === 'delayed') {
-                countdown.startTimer(5, function(seconds) {
-                    if (seconds < 1) {
-                        fastdom.write(function () {
-                            $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                        });
-                    }
-                });
-            } else {
-                fastdom.write(function () {
-                    $('.js-survey-adblock__close-btn').removeClass('is-hidden');
-                });
-            }
-        }
     };
 
     return surveyAdBlock;

@@ -31,7 +31,19 @@ object Member {
         (JsPath \ "location").read[String].map(locations => locations.split(",").head)
       ) (Member.apply _)
 
-  implicit val writesMember: Writes[Member] = Json.writes[Member]
+  implicit val writesMember: Writes[Member] = new Writes[Member] {
+    def writes(member: Member): JsValue = {
+      Json.obj(
+        "username" -> member.username,
+        "gender" -> member.gender.name,
+        "age" -> member.age,
+        "profile_photo" -> member.profilePhoto,
+        "location" -> member.location,
+        "profile_id" -> member.profileId,
+        "profile_url" -> member.profileUrl
+      )
+    }
+  }
 
   // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
   implicit val readsMembers: Reads[Seq[Member]] = new Reads[Seq[Member]] {

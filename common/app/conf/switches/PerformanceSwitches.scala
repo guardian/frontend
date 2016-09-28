@@ -217,14 +217,4 @@ trait PerformanceSwitches {
     sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = false
   )
-
-  val CachedFootballStats = Switch(
-    SwitchGroup.Performance,
-    "cached-football-stats",
-    "If this switch is on then calls to the football API will be via a cdn",
-    owners = Seq(Owner.withGithub("gklopper")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 10),
-    exposeClientSide = false
-  )
 }
