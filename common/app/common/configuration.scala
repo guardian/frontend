@@ -474,6 +474,10 @@ class GuardianConfiguration extends Logging {
     lazy val config = configuration.getMandatoryStringProperty("front.config")
   }
 
+  object targeting {
+    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
+  }
+
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
     lazy val collectionCap: Int = 35
@@ -507,7 +511,7 @@ class GuardianConfiguration extends Logging {
     lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
 
     def crossAccountMandatoryCredentials: AWSCredentialsProvider =
-      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for cross account are not configured"))
+      crossAccountCredentials.getOrElse(throw new BadConfigurationException("AWS credentials for facia tool cross account are not correctly configured"))
 
     lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
       val provider = new AWSCredentialsProviderChain(
