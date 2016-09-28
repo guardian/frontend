@@ -31,7 +31,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 **Note:** If using Homebrew to install nvm, it may throw up a message about nvm support; the instructions in this message may be necessary to make nvm work correctly.
 
-### Automatic
+### Automatic 
 1. Check out the repository:
 
     ```
@@ -45,7 +45,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 4. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
 
-### Manual
+### Manual
 Install each of the things listed below:
 
 #### Configuration
@@ -81,7 +81,7 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 #### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet).
+The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet). 
 
 You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` is present.
 
@@ -178,7 +178,7 @@ Containers can be thrown away very easily. To do so:
 - `docker rm ID`. Use `-f` option to force deletion when the container is still in used.
 
 
-## Run the app
+## Run the app
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
 ```
 ./sbt
