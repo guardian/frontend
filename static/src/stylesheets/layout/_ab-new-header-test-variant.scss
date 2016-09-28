@@ -522,6 +522,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     }
 }
 
+.navigation-no-border {
+    padding-bottom: $gs-baseline;
+}
+
 .navigation-group {
     // Unset ul from _lists.scss
     margin-left: 0;
@@ -533,7 +537,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 .navigation-group--grey {
     background-color: $neutral-1;
-    padding-bottom: $gs-baseline;
 
     .navigation-group__icon {
         fill: $neutral-2;
@@ -567,11 +570,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 .secondary-navigation {
     font-size: .9em;
-    margin-top: $gs-baseline;
-
-    &:nth-child(2) {
-        margin-top: 0;
-    }
 
     &:last-child {
         margin-bottom: $gs-baseline * 3;
@@ -592,18 +590,14 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 }
 
 svg.navigation-group__social-icon__svg {
-    width: 1.9em;
-    height: 1.9em;
+    width: 1.8em;
+    height: 1.8em;
 }
 
 // Search bar
-.navigation-group__item--search {
-    padding-top: $gs-baseline/2;
-}
-
 .navigation-group__search-container {
     @include fs-textSans(5);
-    margin: 0 $gs-gutter*2 $gs-baseline*2 $gs-gutter/2;
+    margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline $gs-gutter/2;
     overflow: hidden;
 }
 
@@ -627,6 +621,10 @@ svg.navigation-group__social-icon__svg {
         color: $neutral-1;
         background-color: #ffffff;
 
+        &::placeholder {
+            color: $neutral-3;
+        }
+
         & ~ label .navigation-group__search-icon {
             fill: $neutral-2;
         }
@@ -635,7 +633,7 @@ svg.navigation-group__social-icon__svg {
 
 .navigation-group__search-icon {
     fill: $news-support-2;
-    top: $gs-baseline;
+    top: $gs-baseline/2;
 }
 
 .navigation-group__item--user-account {

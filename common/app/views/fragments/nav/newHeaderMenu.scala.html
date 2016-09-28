@@ -45,7 +45,7 @@
         </ul>
 
         @if(SearchSwitch.isSwitchedOn) {
-            <ul class="navigation-group secondary-navigation">
+            <ul class="navigation-group navigation-no-border">
                 <li class="navigation-group__item navigation-group__item--search">
                     <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
                         <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
@@ -61,7 +61,7 @@
             </ul>
         }
 
-        <ul class="navigation-group navigation-group--grey secondary-navigation">
+        <ul class="navigation-group navigation-no-border navigation-group--grey secondary-navigation">
 
             <li class="navigation-group__item js-editionalise-secondary-nav"
                 @* TODO: should membership really only show up in the uk edition? *@
@@ -78,6 +78,7 @@
 
         @Edition.all.map { edition =>
             <ul class="navigation-group
+                navigation-no-border
                 js-editionalise-secondary-nav
                 secondary-navigation"
                 data-edition=@{edition.id.toLowerCase}
