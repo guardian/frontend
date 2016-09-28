@@ -12,9 +12,11 @@
                 "email-subscription--subscribed" -> subscription.subscribedTo,
                 "email-subscription--first" -> row.isFirst))">
                 @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
-                <div class="email-subscription__name">@subscription.name
+                <div class="email-subscription__name">
+                    <h2 class="email-subscription__heading">@subscription.name</h2>
+
                     @if(subscription.subheading.isDefined){
-                        <div class="email-subscription__name">@subscription.subheading</div>
+                        <h3 class="email-subscription__subheading">@subscription.subheading</h3>
                     }
                 </div>
 
