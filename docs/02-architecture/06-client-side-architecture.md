@@ -60,7 +60,20 @@ There are ways to force enhancement, so take a look at the JS, but something of 
 
 If you put `guardian.config` in your console, you will see the JS config containing information about analytics, modules, switches, tests and the page. This config object is initially populated serverside and topped-up client side (i.e.: information about the user is only available client-side)
 
-The initial config structure is defined in [config.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/config.scala.js) and [javaScriptConfig.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/javaScriptConfig.scala.js). 
+The initial config structure is defined in [config.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/config.scala.js) and [javaScriptConfig.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/javaScriptConfig.scala.js).
+
+In [config.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/config.scala.js) we also set the `isModernBrowser` flag which is our 'cuts the mustard test' comprising of:
+
+```
+ 	"querySelector" in document
+    && "addEventListener" in window
+    && "localStorage" in window
+    && "sessionStorage" in window
+    && "bind" in Function
+    && (("XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest())|| "XDomainRequest" in window)
+```
+
+The commercial JS will only run if `isModernBrowser` is true.
 
 You'll most likely be using the page config the most often which is defined in [JavascriptPage.scala](https://github.com/guardian/frontend/blob/master/common/app/views/support/JavaScriptPage.scala). Be aware that the metadata for a particular page may be [overridden with MetaData.make](https://github.com/guardian/frontend/blob/master/common/app/common/commercial/hosted/HostedGalleryPage.scala#L35).
 
