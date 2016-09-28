@@ -9,8 +9,7 @@ define([
     return shouldPrebidAdvert;
 
     function shouldPrebidAdvert(advert) {
-        return
-            dfpEnv.prebidEnabled &&
+        return dfpEnv.prebidEnabled &&
             dfpEnv.shouldLazyLoad() &&
             excludedAdvertIds.indexOf(advert.id) === -1;
     }
