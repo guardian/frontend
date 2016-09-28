@@ -2,7 +2,7 @@
 
 ## I can see mark-up in my response, but it's not in the application anywhere. Where is it coming from?
 
-Your markup is coming from CAPI and used as-is.
+If you can't find your element in views, cleaners or JS, it is likely your markup is coming from CAPI and used as-is. You can use Teleporter (ask your neighbour if you don't know what that is) to view the response from CAPI on the page you're seeing the mark-up.
 
 For example: you're trying to style a class, but can't find it in the Frontend codebase and want to make sure it's only used in the HTML where you're looking.
 
@@ -12,7 +12,7 @@ If your class only appears on the component you expected, you can be fairly conf
 
 ## What are the make commands on Frontend?
 
-Look in the [makefile](https://github.com/guardian/frontend/blob/master/makefile)
+Run `make` without any arguments or look in the [makefile](https://github.com/guardian/frontend/blob/master/makefile)
 
 ## How do I run JS, bundled and hashed, as I would see it on the live site?
 
