@@ -1,87 +1,107 @@
-<div class="survey-overlay survey-adblock js-survey-adblock is-hidden" data-link-name="adblock response overlay" role="dialog" aria-label="take part in our survey">
+<div class="survey-overlay survey-adblock js-survey-adblock is-hidden" data-link-name="adblock response overlay <%=variant%> " role="dialog" aria-label="take part in our survey">
     <div class="survey-container">
-        <% if (showCloseBtn) { %>
-        <div class="survey-adblock-close js-survey-adblock-close">
-            <%if (showCloseBtn === "delayed") { %>
-            <span class="site-message__close-btn js-survey-adblock__delayed-close is-hidden"><span class="countdown">5</span></span>
-            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock delayed-dismissed">
-                <span class="is-hidden">Close</span>
-                <%=crossIcon%>
-            </button>
-            <% } else { %>
-            <button class="site-message__close-btn js-survey-adblock__close-btn is-hidden" data-link-name="survey adblock immediate-dismissed">
-                <span class="is-hidden">Close</span>
-                <%=crossIcon%>
-            </button>
-            <% } %>
-        </div>
-        <% } %>
-        <% if (marque36icon) { %>
-        <div class="survey-logo">
-            <%=marque36icon%>
-        </div>
-        <% } %>
-        <div class="survey-icon">
-            <%=surveyOverlaySimple%>
-        </div>
-        <h3 class="survey-text__header">
-            <%=surveyHeader%>
-        </h3>
+
         <div class="survey-content">
-            <div class="survey-text">
-                <p class="survey-text__strong">
-                    <%=surveyText%>
-                </p>
-                <% if (surveyTextSecond) { %>
-                    <p class="survey-text__strong">
-                        <%=surveyTextSecond%>
-                    </p>
-                <% } %>
-                <% if (surveyTextThird) { %>
-                <p class="survey-text__info">
-                    <%=surveyTextThird%>
-                </p>
-                <% } %>
-                <% if (membershipLink || signupLink) { %>
-                <div class="survey-links">
-                    <% if (membershipLink) { %>
-                    <div class="survey-link">
-                        <a class="survey-link__takepart" href="<%=membershipLink%>" target="_blank" data-link-name="<%=membershipDataLink%>"><%=membershipText%><%=arrowWhiteRight%></a>
+            <% if (marque36icon) { %>
+            <div class="survey-logo">
+                <%=marque36icon%>
+            </div>
+            <% } %>
+            <div class="survey-icon">
+                <%=surveyOverlaySimple%>
+            </div>
+            <div class="survey-header">
+                <div class="greeting-state whitelist-state">
+                    <div class="survey-text__header">
+                        We rely on advertising revenue to fund our journalism
                     </div>
-                    <% } %>
-                    <% if (signupLink) { %>
-                    <div class="survey-link">
-                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=signupDataLink%>"><%=signupText%><%=arrowWhiteRight%></a>
+                    <div class="survey-text">
+                        <p>
+                            Please <strong>allow ads</strong> or <strong>go ad-free</strong> so we can continue to bring you quality news into the future.
+                        </p>
                     </div>
-                    <% } %>
-                    <% if (contributorLink) { %>
-                    <div class="survey-link">
-                        <a class="survey-link__takepart" href="<%=signupLink%>" target="_blank" data-link-name="<%=contributorDataLink%>"><%=contributorText%><%=arrowWhiteRight%></a>
-                    </div>
-                    <% } %>
                 </div>
-                <% } %>
-                <% if (surveyTextUserHelp) { %>
-                <p class="survey-text__info">
-                    <%=surveyTextUserHelp%>
-                </p>
-                <% } %>
-                <% if (surveyTextMembership || surveyTextSubscriber) { %>
-                <div class="survey-links">
-                    <hr/>
-                    <% if (surveyTextMembership) { %>
-                    <p class="survey-text__info smaller">
-                        <%=surveyTextMembership%>
-                    </p>
-                    <% } %>
-                    <% if (surveyTextSubscriber) { %>
-                    <p class="survey-text__info smaller">
-                        <%=surveyTextSubscriber%>
-                    </p>
-                    <% } %>
+
+                <div class="adfree-state is-hidden">
+                    <div class="survey-text__header">
+                        Choose ad-free payment method
+                    </div>
+                    <div class="survey-text">
+                        <p>
+                            <%=adFreeMessagePrefix%> buys you an ad-free experience across theguardian.com website when you sign in.
+                        </p>
+                        <p>
+                            There's no ongoing commitment, and you can stop your payments or take a holiday from ad-free at any time.
+                        </p>
+                    </div>
                 </div>
-                <% } %>
+
+                <div class="thankyou-state is-hidden">
+                    <div class="survey-text__header">
+                        Thank you for your interest in an ad-free Guardian
+                    </div>
+                    <div>
+                        <p>
+                            We're assessing demand for an ad-free version of theguardian.com. Your interest has been counted
+                            and you won't be charged anything.
+                        </p>
+                        <p>
+                            Help us improve your experience by doing our <a class="text-link" href="https://www.surveymonkey.co.uk/r/YR9LMZC" target="_blank">1 minute survey</a>.
+                        </p>
+                        <p>
+                            Thank you.
+                        </p>
+                    </div>
+
+                </div>
+
             </div>
         </div>
+
+        <div class="survey-buttons">
+            <div class="survey-button-rounded__cta noads greeting-state whitelist-state" data-link-name="<%=adFreeDataLink%>"><%=adFreeButtonText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta cta-whitelist greeting-state" data-link-name="<%=whitelistDataLink%>"><%=whitelistText%><%=arrowWhiteRight%></div>
+            <div class="survey-button-rounded__cta readon thankyou-state is-hidden" data-link-name="adblock paymentdone continuetoarticle">Continue to article<%=arrowWhiteRight%></div>
+        </div>
+
+        <div class="howto-unblock whitelist-state is-hidden top-border">
+            <div class="survey-text__info">
+                <span class="survey-text__strong">
+                    Allow ads and browse for free. <a class="text-link" href="/info/2016/mar/21/how-to-disable-your-adblocker-for-theguardiancom?INTCMP=ADB_RESP3_<%=variant%>"><span>More information</span></a>
+                </span>
+                <span class="howto-unblock__close-btn" data-link-name="survey adblock howto-unblock closed">
+                    <%=crossIcon%>
+                </span>
+            </div>
+            <div class="image-link-container"><img src="<%=whitelistGuideImage%>"/></div>
+            <p class="survey-text__info"><strong>Ad Block:</strong> Click the <img alt="adblock" src="<%=adBlockIcon%>" width="20px"/> icon &#x2794; &quot;Don\'t run on pages on this domain&quot; &#x2794; &quot;Exclude&quot;</p>
+            <p class="survey-text__info"><strong>Ad Block Plus:</strong> Click the <img alt="adblock plus" src="<%=adBlockPlusIcon%>" width="20px"/> icon &#x2794; &quot;Disable on theguardian.com&quot;</p>
+            <p class="survey-text__info" style="margin-top: 25px;">After making this change, please reload the page in your browser.</p>
+        </div>
+
+        <div class="howto-pay adfree-state is-hidden top-border">
+            <div class="survey-text__info">
+                <div class="pay-now__close-btn" data-link-name="survey adblock <%=variant%> pay-now closed"><%=crossIcon%></div>
+                <div class="survey-buttons">
+                    <div class="survey-button-rounded__cta pay ccard" data-link-name="adblock adfree <%=variant%> creditcard button" alt="Pay with debit or credit card">Pay with debit/credit card<%=arrowWhiteRight%></div>
+                    <div class="survey-button-rounded__cta pay paypal" data-link-name="adblock adfree <%=variant%> paypal button"><span class="pp-paywith">Pay with</span><span class="is-hidden">paypal</span><%=arrowWhiteRight%></div>
+                </div>
+                <div class="survey-text__strong top-border">
+                    <p>Don't want to pay? <a class="text-link cta-whitelist" data-link-name="pay-now whitelist <%=variant%>">Allow ads</a>&nbsp;&#x2794;</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="survey-text__info greeting-state top-border">
+            <div class="footer">
+                <p>
+                    Already paying?&nbsp;<a class="text-link" href="https://profile.theguardian.com/signin?INTCMP=ADB_RESP3_<%=variant%>" data-link-name="adblock supporter <%=variant%>">Supporter sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/subscriber-number" data-link-name="adblock subscriber <%=variant%>">Print subscriber sign in</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="text-link" href="/commercial/contributor-email" data-link-name="adblock contributor <%=variant%>">Contributor sign in</a>
+                </p>
+                <p>
+                    If you don't know why you are seeing this message, please <a class="text-link" href="https://www.theguardian.com/help/contact-us?INTCMP=ADB_RESP3_<%=variant%>">contact us</a>
+                </p>
+            </div>
+        </div>
+
     </div>
 </div>
