@@ -53,9 +53,13 @@
         @if(SearchSwitch.isSwitchedOn) {
             <ul class="navigation-group">
                 <li class="navigation-group__item navigation-group__item--search">
-                    <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
+                    <form class="navigation-group__search-container"
+                        action="https://www.google.co.uk/search"
+                        data-link-name="main-navigation : search">
+
                         <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
                         <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
+
                         @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
                         <label for="submit-google-search">
                             <input class="u-h" type="submit" id="submit-google-search">
@@ -69,6 +73,7 @@
 
         <ul class="navigation-group navigation-group--grey secondary-navigation">
 
+
             @Edition.all.map { edition =>
 
                 @NewNavigation.MembershipLinks.getEditionalisedNavLinks(edition).map { item =>
@@ -76,7 +81,7 @@
                         data-edition=@{edition.id.toLowerCase}
                         @if(edition.id.toLowerCase != "uk") { hidden }>
 
-                            <a href="@item.url">
+                            <a href="@item.url" data-link-name="main-navigation : @item.name">
                                 @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
                                 @item.name
                             </a>
