@@ -132,6 +132,10 @@
     width: 100%;
     height: 100%;
 
+    .top-border {
+        border-top: 1px solid #dddddd;
+    }
+
     .countdown {
         @include fs-textSans(2);
         display: block;
@@ -167,7 +171,7 @@
         width: 100%;
         height: 100%;
         padding: $gs-row-height $gs-column-width*.5;
-        background-color: #01558b;
+        background-color: #175789;
         color: #ffffff;
         box-sizing: border-box;
 
@@ -178,6 +182,10 @@
             height: auto;
             margin-left: -$gs-column-width * 5;
         }
+    }
+
+    .survey-container.thank-you {
+        background-color: #3e3d3d;
     }
 
     .survey-logo {
@@ -238,16 +246,39 @@
 
     .survey-text__info {
         @include fs-bodyCopy(1);
-        font-size: 12px;
         line-height: 120%;
-        margin: 0 $gs-gutter $gs-column-width/4 0;
+        text-align: left;
+        margin-top: 5px;
 
-        .text-link {
-            color: #ffffff;
-            text-decoration: underline;
-            &:hover {
-                text-decoration: none;
-            }
+        .center {
+            text-align: center;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        .footer p {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+    }
+
+    .survey-text__strong {
+        @include fs-textSans(4);
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 0;
+        padding: 6px 0 0 10px;
+        height: 44px;
+    }
+
+    .text-link {
+        color: #ffffff;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
         }
     }
 
@@ -283,6 +314,85 @@
         line-height: $gs-column-width/2;
     }
 
+    .survey-buttons {
+        @include fs-textSans(5);
+        @include mq($until: mobile) {
+            margin-bottom: $gs-row-height / 4;
+        }
+        overflow: hidden;
+        margin-bottom: $gs-column-width/4;
+        text-align: center;
+        line-height: $gs-column-width/2;
+
+        .survey-button-rounded__cta {
+            @include clearfix;
+            @include circular;
+            border: 1px solid rgba(#ffffff, .3);
+            display: inline-block;
+            @include mq($until: mobile) {
+                margin-bottom: $gs-row-height / 2;
+            }
+            padding: 6px 24px;
+            position: relative;
+            cursor: pointer;
+            margin-top: 10px;
+            background-color: #2d8b3a;
+            top: 25%;
+            height: 50%;
+            width: 250px;
+        }
+
+        .survey-button-rounded__cta:hover {
+            background-color: #3f9d4c;
+        }
+
+        .survey-button-rounded__cta.pay {
+            .pp-paywith {
+                margin-left: 35px;
+            }
+        }
+        .survey-button-rounded__cta.pay.ccard {
+            background-color: #0079c1;
+        }
+        .survey-button-rounded__cta.pay.ccard:hover {
+            background-color: #0281cc;
+        }
+        .survey-button-rounded__cta.pay.paypal {
+            text-align: left;
+            background-repeat: no-repeat;
+            background-size: 93px;
+            background-image: url('//contribute.theguardian.com/assets/dist/images/form/24f3c805/ppcom-white.svg');
+            background-position: left 125px center;
+            background-color: #003d61;
+        }
+        .survey-button-rounded__cta.pay.paypal:hover {
+            background-color: #014a75;
+        }
+
+    }
+
+    .howto-unblock {
+        p {
+            text-align: left;
+        }
+    }
+
+    .howto-unblock__close-btn, .pay-now__close-btn {
+        @include mq($until: tablet) {
+            position: relative;
+        }
+
+        .inline-icon {
+            svg {
+                width: 10px;
+                height: 10px;
+            }
+            color: #ffffff;
+            fill: #ffffff;
+            float: right;
+        }
+    }
+
     .survey-subscriber-links {
         overflow: hidden;
         margin-top: $gs-column-width/4;
@@ -306,8 +416,12 @@
 
     .image-link-container {
         height: 85px;
+        margin-top: 10px;
         margin-bottom: $gs-column-width/2;
         margin-left: $gs-gutter / 2;
+        p {
+            margin-top: 10px;
+        }
     }
 
 }

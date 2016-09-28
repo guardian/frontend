@@ -201,9 +201,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
 
   private object JsonCollection{
-    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> html
-    )
+    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(html)
   }
 
   private object JsonFront{

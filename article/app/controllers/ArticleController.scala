@@ -118,7 +118,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
     case article: ArticlePage =>
       val htmlResponse = () => {
         if (request.isEmail) views.html.articleEmail(article)
-        else if (article.article.isHeroic) views.html.articleHeroic(article)
+        else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
         else views.html.article(article)

@@ -11,12 +11,12 @@ import conf.switches.Switches.StocksWidgetSwitch
 class StocksController(stocksData: StocksData) extends Controller {
   def stocks = Action { implicit request =>
     if (StocksWidgetSwitch.isSwitchedOff) {
-      Cached(1.minute)(JsonComponent.forJsValue(Json.toJson(Stocks(Seq.empty))))
+      Cached(1.minute)(JsonComponent(Stocks(Seq.empty)))
     } else {
       stocksData.get match {
         case None => InternalServerError("Business data not loaded")
         case Some(stocks) =>
-          Cached(1.minute)(JsonComponent.forJsValue(Json.toJson(stocks)))
+          Cached(1.minute)(JsonComponent(stocks))
       }
     }
   }

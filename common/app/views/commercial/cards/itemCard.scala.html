@@ -16,7 +16,7 @@
 <div class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, optClassNames, useCardBranding)">
     <a href="@item.targetUrl"
        data-link-name="@omnitureId"
-       class="advert">
+       class="advert @if(useCardBranding) {advert--branded}">
         <h2 class="advert__title">
             @for(icon <- item.icon){@inlineSvg(icon, "icon")}
             @item.headline
@@ -35,7 +35,7 @@
     </a>
     @if(useCardBranding) {
         @for(branding <- item.branding) {
-            @contentLogo(branding)
+            @contentLogo(branding, isInteractivePage = false, isBranded = true, isOnTheLeft = false)
         }
     }
 </div>

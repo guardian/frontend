@@ -113,7 +113,7 @@ define([
             .addMembershipVariant('coffee', 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.')
             .addMembershipVariant('voice', 'The Guardian’s voice is needed now more than ever. Support our journalism for just £49 per year.')
         ,new EditionTest('us')
-            .addMembershipVariant('fearless', 'We need your to help support our fearless, independent journalism. Become a Guardian US Member for just $49 a year.')
+            .addMembershipVariant('fearless', 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $49 a year.')
             .addMembershipVariant('accountable', 'We’re accountable to readers, not shareholders. Support The Guardian for $49 a year.')
         ,new EditionTest('au')
             .addMembershipVariant('control', 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.')

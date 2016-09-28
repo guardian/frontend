@@ -5,6 +5,8 @@ import contentapi.ContentApiClient
 import model.commercial._
 import org.apache.commons.lang.StringEscapeUtils._
 import org.apache.commons.lang.StringUtils
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 import scala.concurrent.Future
 import scala.xml.Node
@@ -43,6 +45,20 @@ object Job {
     sectorIds = (xml \ "Sectors" \ "Sector") map (_.text.toInt),
     salaryDescription = (xml \ "SalaryDescription").text
   )
+
+  implicit val writesJob = new Writes[Job] {
+    def writes(job: Job): JsValue = {
+      Json.obj(
+        "id" -> job.id,
+        "title" -> job.title,
+        "listingUrl" -> job.listingUrl,
+        "recruiterLogoUrl" -> job.recruiterLogoUrl,
+        "recruiterName" -> job.recruiterName,
+        "locationDescription" -> job.locationDescription,
+        "shortSalaryDescription" -> job.shortSalaryDescription
+      )
+    }
+  }
 }
 
 case class JobSector(path: String, name: String)

@@ -49,8 +49,6 @@ class MostViewedAudioController(mostViewedAudioAgent: MostViewedAudioAgent) exte
       FrontProperties.empty
     )(request)
 
-    JsonComponent(
-      "html" -> html
-    )
+    JsonComponent(html)
   }
 }
