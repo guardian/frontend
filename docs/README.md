@@ -30,6 +30,7 @@
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
 - [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
 - [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
+- [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)

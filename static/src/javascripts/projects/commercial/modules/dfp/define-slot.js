@@ -19,7 +19,7 @@ define([
         var slot;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
             slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }

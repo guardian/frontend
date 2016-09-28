@@ -168,21 +168,28 @@ a {
     }
 }
 
-/* Teamcity widget */
-.build-wrapper {
+/* Teamcity */
+#build-wrapper {
     float: left;
     width: 50%;
 }
 
-/*(we do not have control over these class names) */
-.buildNumberDate, .buildResults, .tcTD_projectName {
-    display: none;
+#build-wrapper ul {
+    padding: 0;
+    list-style-type: none;
 }
 
-.tcTable, .tcTable tr {
-    display: inline-block;
+#build-wrapper a {
+    display:inline-block;
+    padding: 10px;
+    margin: 2px 0 2px 0;
 }
 
-.buildTypeIcon {
-   width: 32px;
+#build-wrapper .succeeded {
+    background-color: #B8FAA0;
+}
+
+#build-wrapper .failed {
+    background-color: red;
+    color: white;
 }

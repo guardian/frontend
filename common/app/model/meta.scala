@@ -444,7 +444,6 @@ case class GalleryPage(
   index: Int,
   trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
   override lazy val item = gallery
-  val showBadge = item.commercial.isSponsored(Some(Edition(request))) || item.commercial.isFoundationSupported || item.commercial.isAdvertisementFeature
 }
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
@@ -648,7 +647,8 @@ final case class Tags(
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 
   // Specific Series
-  lazy val isLabourLiverpoolSeries = tags.exists(t => t.id == "membership/series/labour-liverpool")
+  private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
+  lazy val isExploreSeries = isLabourLiverpool
 
   lazy val keywordIds = keywords.map { _.id }
 

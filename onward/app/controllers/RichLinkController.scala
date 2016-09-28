@@ -38,9 +38,7 @@ class RichLinkController(contentApiClient: ContentApiClient) extends Controller 
 
     if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request)))
     else Cached(900) {
-      JsonComponent(
-         "html" -> contentResponse
-      )
+      JsonComponent(contentResponse)
     }
   }
 }

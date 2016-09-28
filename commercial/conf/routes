@@ -9,19 +9,23 @@ GET         /_healthcheck                                                 contro
 
 # Travel offer merchandising components
 GET         /commercial/travel/offers.json                                controllers.commercial.TravelOffersController.renderTravel
+GET         /commercial/travel/api/offers.json                            controllers.commercial.TravelOffersController.getTravel
 
 # Job merchandising components
 GET         /commercial/jobs.json                                         controllers.commercial.JobsController.renderJobs
+GET         /commercial/jobs/api/jobs.json                                controllers.commercial.JobsController.getJobs
 
 # Masterclass merchandising components
 GET         /commercial/masterclasses.json                                controllers.commercial.MasterclassesController.renderMasterclasses
 
 # Soulmates merchandising components
-GET         /commercial/soulmates/$subgroup<\w+>.json                     controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+GET        /commercial/soulmates/$subgroup<\w+>.json                      controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+GET        /commercial/soulmates/api/$subgroup<\w+>.json                  controllers.commercial.SoulmatesController.getSoulmates(subgroup)
 
 # Book merchandising components
 GET         /commercial/books/book.json                                   controllers.commercial.BookOffersController.renderBook
 GET         /commercial/books/books.json                                  controllers.commercial.BookOffersController.renderBooks
+GET         /commercial/books/api/books.json                              controllers.commercial.BookOffersController.getBooks
 
 # Live events merchandising components
 GET         /commercial/liveevents/event.json                             controllers.commercial.LiveEventsController.renderEvent

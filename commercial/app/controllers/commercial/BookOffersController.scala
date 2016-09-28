@@ -1,11 +1,14 @@
 package controllers.commercial
 
-import common.{ExecutionContexts, Logging}
+import common.{JsonComponent, ExecutionContexts, Logging}
+import model.commercial.Segment
 import model.commercial.books.{BestsellersAgent, Book, BookFinder, CacheNotConfiguredException}
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
 import play.api.mvc._
+import play.api.libs.json.Json
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent)
@@ -46,11 +49,15 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
     }
   }
 
+  private def booksSample(isbns: Seq[String], segment: Segment): Future[Seq[Book]] =
+    bestsellersAgent.getSpecificBooks(isbns) map { specificBooks =>
+      (specificBooks ++ bestsellersAgent.bestsellersTargetedAt(segment)).distinctBy(_.isbn).take(4)
+    }
+
   def renderBooks = Action.async { implicit request =>
 
-    def result(books: Seq[Book]): Result = books.distinctBy(_.isbn).take(5) match {
-      case Nil =>
-        NoCache(jsonFormat.nilResult.result)
+    def result(books: Seq[Book]): Result = books match {
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case someBooks =>
         Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
@@ -66,9 +73,15 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
         }
     }
 
-    val isbns = request.queryString.getOrElse("t", Nil)
-    bestsellersAgent.getSpecificBooks(isbns) map { specificBooks =>
-      result(specificBooks ++ bestsellersAgent.bestsellersTargetedAt(segment))
+    booksSample(specificIds, segment) map result
+  }
+
+  def getBooks = Action.async { implicit request =>
+    booksSample(specificIds, segment) map { books =>
+      val json = Json.toJson(books)
+      Cached(60.seconds){
+        JsonComponent(json)
+      }
     }
   }
 }

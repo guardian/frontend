@@ -18,11 +18,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-count",
+    "ab-discussion-external-frontend-avatar",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 11, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-discussion-promote-comments",
+    "Promote the comments with a sticky bottom banner",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 10, 12),
     exposeClientSide = true
   )
 
@@ -48,14 +58,14 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-20160916",
-    "Test variants of the button text to drive contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
+    "ab-contributions-story",
+    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 27),
+    sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
-
+  
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -68,11 +78,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response2",
-    "Prominent adblocker response test",
+    "ab-ad-blocking-response30pc",
+    "Prominent adblocker ad-free test ZERO PERCENT",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 22),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
@@ -93,6 +103,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-video-button-duration",
+    "Show visitors new video play button",
+    owners = Seq(Owner.withGithub("mr-mr")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
 }

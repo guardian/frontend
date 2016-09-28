@@ -1,18 +1,23 @@
 package controllers.commercial
 
-import model.commercial.travel.TravelOffersAgent
+import common.JsonComponent
+import model.commercial.Segment
+import model.commercial.travel.{TravelOffersAgent, TravelOffer}
 import model.{Cached, NoCache}
+import play.api.libs.json.Json
 import play.api.mvc._
+
+import scala.concurrent.duration._
 
 class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Controller with implicits.Requests {
 
+  private def travelSample(specificIds: Seq[String], segment: Segment): Seq[TravelOffer] =
+    (travelOffersAgent.specificTravelOffers(specificIds) ++ travelOffersAgent.offersTargetedAt(segment)).distinct
+
   def renderTravel = Action { implicit request =>
 
-    val travelOffers =
-      (travelOffersAgent.specificTravelOffers(specificIds) ++ travelOffersAgent.offersTargetedAt(segment)).distinct
-
-    travelOffers match {
-      case Nil => NoCache(jsonFormat.nilResult.result)
+    travelSample(specificIds, segment) match {
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
@@ -25,6 +30,13 @@ class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Contr
         }
 
       }
+    }
+  }
+
+  def getTravel = Action { implicit request =>
+    val json = Json.toJson(travelSample(specificIds, segment))
+    Cached(60.seconds){
+      JsonComponent(json)
     }
   }
 }

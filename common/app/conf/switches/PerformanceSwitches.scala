@@ -46,6 +46,16 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val interactivePressing = Switch(
+    SwitchGroup.Performance,
+    "interactive-pressing",
+    "If this switch is switched on then immersive interactives that are supplied as markup in Composer will be pressed into the page",
+    owners = Seq(Owner.withGithub("sammorrisdesign")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val CircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
@@ -203,16 +213,6 @@ trait PerformanceSwitches {
     "use-link-preconnect",
     "If this switch is on then link preconnect hints will be on the page",
     owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 10),
-    exposeClientSide = false
-  )
-
-  val CachedFootballStats = Switch(
-    SwitchGroup.Performance,
-    "cached-football-stats",
-    "If this switch is on then calls to the football API will be via a cdn",
-    owners = Seq(Owner.withGithub("gklopper")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = false

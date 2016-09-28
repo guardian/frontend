@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedPage, NextHostedPage}
+import common.commercial.hosted.{HostedContentType, HostedPage, NextHostedPage}
 
 object LegacyHostedPages {
 
@@ -34,9 +34,9 @@ object HostedPages {
     }
   }
 
-  def nextPages(campaignName: String, pageName: String): List[NextHostedPage] = {
+  def nextPages(campaignName: String, pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = {
     campaignName match {
-      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName)
+      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName, contentType)
       case _ => Nil;
     }
   }

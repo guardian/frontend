@@ -20,7 +20,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     val page = request.getQueryString("page") getOrElse "1"
     discussionApi.profileDiscussions(userId, page) map { profileDiscussions =>
       Cached(60) {
-        JsonComponent("html" -> views.html.profileActivity.discussions(
+        JsonComponent(views.html.profileActivity.discussions(
           profilePage(profileDiscussions.profile, "discussions"),
           profileDiscussions
         ))
@@ -32,7 +32,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     val page = request.getQueryString("page") getOrElse "1"
     discussionApi.profileReplies(userId, page) map { replies =>
       Cached(60) {
-        JsonComponent("html" -> views.html.profileActivity.comments(
+        JsonComponent(views.html.profileActivity.comments(
           profilePage(replies.profile, "replies"),
           replies
         ))
@@ -44,7 +44,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     val page = request.getQueryString("page") getOrElse "1"
     discussionApi.profileSearch(userId, q, page) map { comments =>
       Cached(60) {
-        JsonComponent("html" -> views.html.profileActivity.comments(
+        JsonComponent(views.html.profileActivity.comments(
           profilePage(comments.profile, "search"),
           comments
         ))
@@ -56,7 +56,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     val page = request.getQueryString("page") getOrElse "1"
     discussionApi.profileComments(userId, page, picks = true) map { picks =>
       Cached(60) {
-        JsonComponent("html" -> views.html.profileActivity.comments(
+        JsonComponent(views.html.profileActivity.comments(
           profilePage(picks.profile, "picks"),
           picks
         ))

@@ -1,3 +1,10 @@
+// Specific values for menu button breakpoints
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
+$gutter-small: 29px;
+$gutter-medium: 37px;
+$gutter-large: 55px;
+
 $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__inner {
@@ -42,35 +49,35 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__nav {
     @include fs-textSans(5);
-    line-height: 1.6;
+    line-height: $gs-baseline * 2.5;
     width: 100%;
-    padding-left: 10px;
-    // Position after pseudo element which forces line break
+    margin-left: $gs-gutter / 2;
 
     @include mq($until: mobile) {
         font-size: 16px;
+        // Menu squishes gracefully
+        height: $gs-baseline * 2.5;
+        margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 5.2vw;
     }
 
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        line-height: $gs-baseline * 3;
+    }
+
     @include mq(mobileLandscape) {
         font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+        margin-left: $gs-gutter;
     }
 }
-
-// Specific values for menu button breakpoints
-$veggie-burger-small: 42px;
-$veggie-burger-medium: 52px;
-$gutter-small: 29px;
-$gutter-medium: 37px;
-$gutter-large: 55px;
 
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
     position: absolute;
-    right: 0px;
     // Unset button from user agent stylesheet
     border: 0;
     outline: none;
@@ -79,6 +86,7 @@ $gutter-large: 55px;
     z-index: 1071;
     background-color: $news-main-2;
     cursor: pointer;
+    bottom: -$gs-baseline / 2;
 
     &--open:before {
         // Extended hit area for veggie burger close state, for fat fingers
@@ -90,10 +98,8 @@ $gutter-large: 55px;
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
-        margin-top: -$gs-baseline / 1.5;
-        margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
-        margin-right: $gutter-small;
+        right: $gutter-small;
 
         &--open:before {
             height: $veggie-burger-small * 2;
@@ -107,10 +113,8 @@ $gutter-large: 55px;
     @include mq($mobile-medium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
-        margin-top: -$gs-baseline / 1.5;
-        margin-bottom: -$gs-baseline / 2;
         //Align with the 'i' in 'theguardian'
-        margin-right: $gutter-medium;
+        right: $gutter-medium;
 
         &--open:before {
             height: $veggie-burger-medium * 2;
@@ -123,7 +127,7 @@ $gutter-large: 55px;
 
     @include mq(mobileLandscape) {
         //Align with the 'i' in 'theguardian'
-        margin-right: $gutter-large;
+        right: $gutter-large;
     }
 }
 
@@ -135,7 +139,6 @@ $gutter-large: 55px;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    cursor: pointer;
 
     &,
     &:before,
@@ -188,7 +191,7 @@ $gutter-large: 55px;
     white-space: nowrap;
     position: relative;
 
-    &:first-child .new-header__nav__link {
+    &:first-child {
         padding-left: 0;
     }
 
@@ -267,7 +270,7 @@ $gutter-large: 55px;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 0 10px 10px;
+        border-width: 0 $gs-gutter / 2 $gs-gutter / 2;
         border-color: transparent transparent $guardian-brand-dark;
     }
 }
@@ -310,6 +313,7 @@ $gutter-large: 55px;
         & ~ .edition-picker__dropdown {
             display: block;
             background-color: $guardian-brand-dark;
+            box-shadow: 0 0 $gs-baseline * 2.5 0 rgba(0, 0, 0, .2);
         }
 
         & ~ .edition-picker__current-edition {
@@ -330,6 +334,7 @@ $gutter-large: 55px;
     left: 0;
     line-height: 1;
     z-index: $zindex-main-menu;
+    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
 }
 
 .main-menu-container__overlay {
@@ -349,7 +354,6 @@ $gutter-large: 55px;
     height: 100%;
     background-color: $guardian-brand;
     color: #ffffff;
-    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
@@ -521,6 +525,11 @@ $navigation-horizontal-padding: $gs-gutter * 2;
     margin-bottom: 0;
 }
 
+.navigation-group--grey {
+    background-color: $neutral-1;
+    padding-bottom: $gs-baseline;
+}
+
 .navigation-group__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
@@ -559,8 +568,7 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .navigation-group__icon {
-    fill: $news-support-2;
-    top: .4em;
+    top: .3em;
 
     svg {
         display: inline-block;
@@ -568,30 +576,110 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .navigation-group__social-icon {
+    fill: $news-support-2;
     top: -.1em;
+}
 
-    svg {
-        width: 1.6em;
-        height: 1.6em;
+.navigation-group__social-icon__svg {
+    width: 1.6em;
+    height: 1.6em;
+}
+
+.navigation-group__item--search {
+    padding-top: $gs-baseline/2;
+}
+
+.navigation-group__search-container {
+    @include fs-textSans(5);
+    position: relative;
+    background-color: $guardian-brand-dark;
+    overflow: hidden;
+    margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline;
+    border-radius: 1000px;
+    height: $gs-baseline*3;
+}
+
+.navigation-group__search-box {
+    background-color: inherit;
+    border: 0;
+    vertical-align: middle;
+    height: 100%;
+
+    // autoprefixer handles all the appropriate psuedo element selectors for placeholders
+    &::placeholder {
+        color: #ffffff;
+    }
+
+    &:focus {
+        outline: none;
     }
 }
 
-.navigation-group__search-icon svg {
-    width: .9em;
-    height: .9em;
-    //Optical alignment
-    margin-right: -.1em;
+.navigation-group__search-icon {
+    fill: $news-support-1;
+    padding-left: $gs-gutter/2;
 }
 
-.navigation-group__profile-icon svg {
-    height: .8em;
+.navigation-group__search-icon__svg {
     width: .9em;
-    fill: $guardian-brand;
-    background-color: $news-support-2;
+    height: .9em;
+    vertical-align: middle;
+}
+
+.navigation-group__membership-icon {
+    fill: $neutral-2;
+}
+
+.navigation-group__item--user-account {
+
+    .user-account__signed-in {
+        display: none;
+    }
+
+    &.user-signed-in {
+        .user-account__signed-in {
+            display: block;
+        }
+        .user-account__login {
+            display: none;
+        }
+    }
+}
+
+.user-account__signed-in__link {
+    color: $neutral-3;
+}
+
+.navigation-group__user-icon__svg {
+    height: .9em;
+    width: .9em;
+}
+
+.navigation-group__profile-icon__svg {
+    fill: $neutral-1;
+    background-color: $neutral-2;
     border-radius: 100%;
     padding-top: .1em;
 }
 
 .no-text-transform {
     text-transform: none;
+}
+
+// Breathing space between header and content
+@include mq($until: tablet) {
+    .has-new-header {
+        .weather {
+            padding-top: 1px;
+        }
+
+        .fc-container--first .fc-container__inner,
+        .index-page-header {
+            padding-top: $gs-baseline / 2 + $gs-baseline / 4;
+        }
+
+        .content__labels {
+            padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
+        }
+    }
 }

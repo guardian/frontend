@@ -43,9 +43,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       comment =>
         Cached(60) {
           if (request.isJson)
-            JsonComponent(
-              "html" -> views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation).toString
-            )
+            JsonComponent(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
           else
             RevalidatableResult.Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
@@ -146,8 +144,9 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       }
     } recover {
       case NonFatal(e) =>
-        log.error(s"Discussion $key cannot be retrieved", e)
-        InternalServerError(s"Discussion $key cannot be retrieved")
+        val errorMessage = s"Discussion $key cannot be retrieved"
+        log.error(errorMessage, e)
+        NotFound(errorMessage)
     }
   }
 
@@ -158,9 +157,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
 
       Cached(60) {
         if (request.isJson) {
-          JsonComponent(
-            "html" -> views.html.discussionComments.topCommentsList(page).toString
-          )
+          JsonComponent(views.html.discussionComments.topCommentsList(page))
         } else {
           RevalidatableResult.Ok(views.html.discussionComments.topCommentsList(page))
         }

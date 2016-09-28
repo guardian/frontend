@@ -75,9 +75,7 @@ class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   private def renderPlayerCard(card: HtmlFormat.Appendable)(implicit request: RequestHeader) = {
     if(!request.isJson) Cors(NoCache(Ok(card)))
     else NoCache {
-      JsonComponent(
-          "html" -> card
-      ).result
+      JsonComponent(card).result
     }
   }
 
