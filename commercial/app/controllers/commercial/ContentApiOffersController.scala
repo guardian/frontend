@@ -22,8 +22,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   private val lookup = new Lookup(contentApiClient)
 
-  // ----- cAPI Frontend Templates ----- //
-
   private val sponsorTypeToClassRefactor = Map(
     "sponsored" -> Supported,
     "advertisement-feature" -> PaidFor,
