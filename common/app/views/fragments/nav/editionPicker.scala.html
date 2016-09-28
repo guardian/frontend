@@ -2,14 +2,19 @@
 
 @import common.{Edition, LinkTo}
 
-<div class="edition-picker js-edition-picker-container">
+<div class="edition-picker js-edition-picker-container" data-component="edition-picker">
 
     <input class="edition-picker__button js-enhance-checkbox"
         type="checkbox"
         id="edition-picker"
         aria-controls="edition-picker__dropdown">
 
-    <label class="edition-picker__current-edition js-on-enter-click" for="edition-picker" tabindex="0">
+    <label
+        class="edition-picker__current-edition js-on-enter-click"
+        for="edition-picker"
+        tabindex="0"
+        data-link-name="edition-picker : show"
+    >
         @fragments.inlineSvg("world", "icon")
         <span class="u-h"> Change editions from the </span>
         @Edition(request).displayName
