@@ -45,7 +45,7 @@
     color: $neutral-1;
     display: inline-block;
     float: left;
-    height: 18rem;
+    height: 16.5rem;
     width: 90%;
     margin: $gs-baseline 5%;
     background-color: $neutral-6;
@@ -87,10 +87,10 @@
 .newsletter-card__content {
     @include fs-bodyCopy(2);
     padding: .5rem;
-    height: 5.5rem;
+    height: 4rem;
 
     @include mq(tablet) {
-        height: 8.5rem;
+        height: 5.5rem;
     }
 
     @include mq(desktop) {
@@ -135,7 +135,6 @@
     border-top: $gs-baseline/4 solid $news-main-2;
     display: inline-block;
     clear: both;
-    padding-top: $gs-baseline;
 }
 
 .newsletters-category__heading {
