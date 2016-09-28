@@ -7,13 +7,13 @@
     <label for="main-menu-toggle" class="new-header__nav__link js-open-section-in-menu"
         tabindex="0"
         aria-controls="primary-list-@sectionName"
+        data-link-name="@sectionName"
     >
             @sectionName
     </label>
-
 }
 
-<header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
+<header class="@Atomise("New-header")" role="banner">
     <div class="new-header__inner gs-container">
         <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0">
             <h1 class="u-h">The Guardian</h1>
@@ -22,7 +22,7 @@
 
         @fragments.nav.editionPicker()
 
-        <nav class="new-header__nav">
+        <nav class="new-header__nav" data-component="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @primaryLinks(section.name)
             }
@@ -36,4 +36,3 @@
         </nav>
     </div>
 </header>
-

@@ -3,6 +3,7 @@ define([
     'bonzo',
     'qwery',
     'raven',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -27,6 +28,7 @@ define([
     bonzo,
     qwery,
     raven,
+    Promise,
     $,
     config,
     detect,
@@ -336,7 +338,7 @@ Loader.prototype.renderCommentBox = function(elem) {
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,
-        shouldRenderMainAvatar: !discussionFrontend.canRun(ab, window.curlConfig)
+        shouldRenderMainAvatar: false
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
@@ -348,36 +350,8 @@ Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-Loader.prototype.renderBonzoCommentCount = function() {
-    fetchJson('/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(), {
-        mode: 'cors'
-    })
-    .then(function (response) {
-        if(response && response.counts && response.counts.length) {
-            var commentCount = response.counts[0].count;
-            if (commentCount > 0) {
-                // Remove non-JS links
-                bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
-
-                var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
-                           '  <i class="i"></i>' + commentCount +
-                           '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
-                           '</a>';
-                $('.js-comment-count').html(html);
-
-                $('.js-discussion-comment-count').text('(' + commentCount + ')');
-            } else {
-                this.setState('empty');
-            }
-            mediator.emit('comments-count-loaded');
-        }
-    }.bind(this))
-    .catch(this.logError.bind(this, 'CommentCount'));
-};
-
 Loader.prototype.renderCommentCount = function () {
-    if (discussionFrontend.canRun(ab, window.curlConfig)) {
+    if (window.curlConfig.paths['discussion-frontend-preact']) {
         return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
             avatarImagesHost: config.page.avatarImagesUrl,
@@ -386,10 +360,11 @@ Loader.prototype.renderCommentCount = function () {
             element: document.getElementsByClassName('js-discussion-external-frontend')[0],
             userFromCookie: !!Id.getUserFromCookie(),
             profileUrl: config.page.idUrl,
-            profileClientId: config.switches.registerWithPhone ? 'comments' : ''
+            profileClientId: config.switches.registerWithPhone ? 'comments' : '',
+            Promise: Promise
         });
     } else {
-        return this.renderBonzoCommentCount();
+        this.setState('empty');
     }
 };
 

@@ -1,4 +1,3 @@
-
 @mixin hosted-fade-in {
     visibility: visible;
     opacity: 1;
@@ -38,6 +37,48 @@
             }
         }
     }
+}
+
+.hosted__youtube-poster-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: 0;
+}
+
+.hosted__youtube-play-button {
+    @include hosted-fade-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    &::before {
+        @include mq(mobileLandscape) {
+            width: 70px;
+            height: 70px;
+            font-size: 12px;
+        }
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        transform: translate(-40%, -50%);
+        border-style: solid;
+    }
+}
+
+.youtube__video-ready + .hosted__youtube-poster-image {
+    pointer-events: none;
+}
+
+.js-hosted-youtube-video:not(.youtube__video-started) + .hosted__youtube-poster-image {
+    background-size: cover;
+}
+
+.youtube__video-ready:not(.youtube__video-playing) ~ .hosted__youtube-poster-image .hosted__youtube-play-button {
+    @include hosted-fade-in;
 }
 
 .vjs-ended ~ .hosted-fading .hosted__meta {
