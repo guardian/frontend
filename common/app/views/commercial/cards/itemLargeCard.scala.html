@@ -1,6 +1,6 @@
 @import cards.{CardType, Standard}
 @import layout.{FaciaWidths, ItemClasses}
-@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.commercial.cardLogo
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
 @import views.support.commercial.CssClassBuilder
@@ -27,7 +27,7 @@
         }
         @if(useCardBranding) {
             @for(branding <- item.branding) {
-                @contentLogo(branding, isInteractivePage = false, isBranded = false, isOnTheLeft = false)
+                @cardLogo(branding, isStandardSizeCard = false)
             }
         }
     </div>

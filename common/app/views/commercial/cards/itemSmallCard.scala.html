@@ -4,7 +4,7 @@
   optClassNames: Option[Seq[String]] = None,
   useCardBranding: Boolean)(implicit request: RequestHeader)
 
-@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.commercial.cardLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.CssClassBuilder
 
@@ -18,7 +18,7 @@
     </p>
     @if(useCardBranding) {
         @for(branding <- item.branding) {
-            @contentLogo(branding, isInteractivePage = false, isBranded = false, isOnTheLeft = false)
+            @cardLogo(branding, isStandardSizeCard = false)
         }
     }
 </a>

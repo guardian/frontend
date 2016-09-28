@@ -1,0 +1,10 @@
+@(branding: common.commercial.Branding, isStandardSizeCard: Boolean)(implicit request: RequestHeader)
+
+<div class="badge @if(!isStandardSizeCard) {badge--branded}">
+    @branding.label
+    <a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+        <img src="@branding.sponsorLogo.url"
+             alt="@{branding.sponsorName}'s logo"
+             class="badge__logo">
+    </a>
+</div>

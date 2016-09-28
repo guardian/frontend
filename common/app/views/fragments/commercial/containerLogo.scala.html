@@ -1,0 +1,14 @@
+@(branding: common.commercial.Branding, isOnTheLeft: Boolean)(implicit request: RequestHeader)
+@import common.commercial.PaidContent
+
+<div class="badge @if(isOnTheLeft){badge--alt}">
+    @branding.label
+    <a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+        <img src="@branding.sponsorLogo.url"
+             alt="@{branding.sponsorName}'s logo"
+             class="badge__logo">
+    </a>
+    @if(branding.sponsorshipType != PaidContent) {
+        <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
+    }
+</div>

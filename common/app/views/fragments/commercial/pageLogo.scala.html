@@ -1,12 +1,8 @@
-@(branding: common.commercial.Branding, isInteractivePage: Boolean, isBranded: Boolean, isOnTheLeft: Boolean)(implicit request: RequestHeader)
+@(branding: common.commercial.Branding, isInteractive: Boolean)(implicit request: RequestHeader)
 @import common.commercial.PaidContent
 @import implicits.Requests.RichRequestHeader
 
-<div class="badge
-    @if(isInteractivePage || isOnTheLeft) {badge--alt}
-    @if(isInteractivePage) {badge--interactive}
-    @if(isBranded) {badge--branded}
-    ">
+<div class="badge badge--alt @if(isInteractive){badge--interactive}">
     @branding.label
     <a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
         @if(request.isAmp) {
