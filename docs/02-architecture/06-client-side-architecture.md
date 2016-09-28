@@ -6,6 +6,7 @@ The JS app can be split into distinct parts:
 
 - Inline blocking JS
 - Inline Non-blocking JS
+- Analytics
 - app.js - curl module loader, the bundle booter and the standard Javascript
 - Commercial Javascript
 - Enhanced Javascript
@@ -36,6 +37,10 @@ See below for quick descriptions.
 			- detectAdblock 
 			- showUserName
 			- ophanConfig
+		- [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
+			- Google
+			- Omniture
+			- Comscore
 		
 ### Inline blocking JS 
 
@@ -117,6 +122,12 @@ Secrets.
 #### Ophan config
 
 Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/ophanConfig.scala.js) which is used across analytics to tie data together.
+
+### Analytics
+
+The analytics for Dotcom are defined in [analytics/base.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html). It contains [Google Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/google.scala.html), [Omniture](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/omniture.scala.html) and [Comscore](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/comscore.scala.html). 
+
+[Read more about the Google Analytics implementation](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/14-implement-google-analytics.md).
 
 ### Bootstraps
 
