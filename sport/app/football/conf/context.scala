@@ -2,10 +2,9 @@ package conf
 
 import app.LifecycleComponent
 import common._
-import conf.switches.Switches
 import feed.CompetitionsService
 import model.TeamMap
-import pa.{PaClientConfig, Http, PaClient, PaClientErrorsException}
+import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
 
@@ -71,29 +70,20 @@ class FootballLifecycle(
 
 class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
 
+  // Runs the API calls via a CDN
+  override lazy val base: String = "http://football-api.gu-web.net/v1.5"
 
-    // TODO - once we have proved this works with the switch, we can simply remove the switch and
-    // uncomment this line to make it permanent
-    //override lazy val base: String = "http://football-api.gu-web.net/v1.5"
+  override def GET(urlString: String): Future[pa.Response] = {
 
-    private val cachedBase: String = "http://football-api.gu-web.net/v1.5"
+    val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
 
-    override def GET(urlString: String): Future[pa.Response] = {
+    promiseOfResponse.map { r =>
 
-        val url = if (Switches.CachedFootballStats.isSwitchedOn)
-          urlString.replace(PaClientConfig.baseUrl, cachedBase)
-        else
-          urlString
-
-        val promiseOfResponse = wsClient.url(url).withRequestTimeout(2000).get()
-
-        promiseOfResponse.map{ r =>
-
-          //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
-          //I have reported to PA, but just trimming here so we can carry on development
-          pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
-        }
-      }
+      //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
+      //I have reported to PA, but just trimming here so we can carry on development
+      pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
+    }
+  }
 
   lazy val apiKey = SportConfiguration.pa.footballKey
 

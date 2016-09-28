@@ -144,8 +144,9 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       }
     } recover {
       case NonFatal(e) =>
-        log.error(s"Discussion $key cannot be retrieved", e)
-        InternalServerError(s"Discussion $key cannot be retrieved")
+        val errorMessage = s"Discussion $key cannot be retrieved"
+        log.error(errorMessage, e)
+        NotFound(errorMessage)
     }
   }
 

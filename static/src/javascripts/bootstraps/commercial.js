@@ -81,8 +81,7 @@ define([
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner ||
-         config.tests.abNewHeaderVariant
+         config.page.disableStickyTopBanner
     ) {
         config.page.hasStickyAdBanner = false;
     } else {
