@@ -26,15 +26,15 @@ define([
         this.successMeasure = 'Adblocking users show genuine interest in a paid ad-free service';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
-            ['adblock whitelist 299'],
-            ['adblock supporter 299'],
-            ['adblock subscriber 299'],
-            ['adblock whitelist 499'],
-            ['adblock supporter 499'],
-            ['adblock subscriber 499'],
-            ['adblock whitelist 999'],
-            ['adblock supporter 999'],
-            ['adblock subscriber 999']
+            ['adblock whitelist 300'],
+            ['adblock supporter 300'],
+            ['adblock subscriber 300'],
+            ['adblock whitelist 500'],
+            ['adblock supporter 500'],
+            ['adblock subscriber 500'],
+            ['adblock whitelist 1000'],
+            ['adblock supporter 1000'],
+            ['adblock subscriber 1000']
         ].map(function(_) {
             return _[0];
         }).join(', ');
