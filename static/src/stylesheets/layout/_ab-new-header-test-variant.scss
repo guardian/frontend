@@ -352,7 +352,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .main-menu-container__menu {
     height: 100%;
-    background-color: $guardian-brand;
+    background-color: $guardian-brand-dark;
     color: #ffffff;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
@@ -367,7 +367,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
     @include mq($mobile-medium) {
         //Larger font/icon size for larger devices
-        font-size: 24px;
+        font-size: 22px;
         padding-top: $gs-baseline;
     }
 
@@ -492,11 +492,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     left: $gs-gutter/2;
     text-align: center;
     width: $navigation-horizontal-padding - $gs-gutter/2;
+
+    & svg {
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+    }
 }
 
 .main-navigation__secondary {
     color: #ffffff;
-    background-color: darken($guardian-brand, 3%);
+    background-color: #003b5e;
     padding-bottom: $gs-baseline;
 }
 
@@ -512,7 +518,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         left: $navigation-horizontal-padding;
         right: 0;
         height: 1px;
-        background: darken($guardian-brand, 3%);
+        background: #003b5e;
     }
 }
 
@@ -531,11 +537,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
     .navigation-group__icon {
         fill: $neutral-2;
-
-        & svg {
-            width: 1em;
-            height: 1em;
-        }
     }
 }
 
@@ -590,7 +591,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     top: -.2em;
 }
 
-.navigation-group__social-icon__svg {
+svg.navigation-group__social-icon__svg {
     width: 1.9em;
     height: 1.9em;
 }
@@ -603,17 +604,18 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 .navigation-group__search-container {
     @include fs-textSans(5);
     margin: 0 $gs-gutter*2 $gs-baseline*2 $gs-gutter/2;
-    background-color: red;
     overflow: hidden;
 }
 
 .navigation-group__search-box {
     border: 0;
     vertical-align: middle;
-    background-color: lighten($guardian-brand, 5%);
+    background-color: $guardian-brand;
     padding-left: $navigation-horizontal-padding - $gs-gutter/2;
     border-radius: 1000px;
+    box-sizing: border-box;
     height: $gs-baseline*3;
+    width: 100%;
 
     // autoprefixer handles all the appropriate psuedo element selectors for placeholders
     &::placeholder {
@@ -622,19 +624,18 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
     &:focus {
         outline: none;
+        color: $neutral-1;
         background-color: #ffffff;
+
+        & ~ label .navigation-group__search-icon {
+            fill: $neutral-2;
+        }
     }
 }
 
 .navigation-group__search-icon {
-    fill: #ffffff;
+    fill: $news-support-2;
     top: $gs-baseline;
-}
-
-.navigation-group__search-icon__svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
 }
 
 .navigation-group__item--user-account {
