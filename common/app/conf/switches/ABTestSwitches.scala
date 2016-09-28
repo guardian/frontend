@@ -65,7 +65,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
-  
+
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -78,8 +78,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response30pc",
-    "Prominent adblocker ad-free test ZERO PERCENT",
+    "ab-ad-blocking-response3",
+    "Prominent adblocker ad-free test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST

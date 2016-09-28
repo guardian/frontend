@@ -70,7 +70,7 @@ define([
         $.forEachElement(('.adfree-state'), function(el){el.classList.add('is-hidden');});
         $.forEachElement(('.thankyou-state'), function(el){el.classList.remove('is-hidden');});
         $('.survey-container').addClass('thank-you');
-        storage.local.set('gu.abb30pc.exempt', true);
+        storage.local.set('gu.abb3.exempt', true);
     };
 
     var closeOverlay = function() {
