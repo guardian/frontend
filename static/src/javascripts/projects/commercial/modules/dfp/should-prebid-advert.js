@@ -1,7 +1,6 @@
 define([
-    'common/utils/config',
     'commercial/modules/dfp/dfp-env'
-], function (config, dfpEnv) {
+], function (dfpEnv) {
     var excludedAdvertIds = [
         'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high'
@@ -10,10 +9,7 @@ define([
     return shouldPrebidAdvert;
 
     function shouldPrebidAdvert(advert) {
-
-        var participatingInSonobi = 'tests' in config && config.tests.commercialHbSonobi;
-
-        return !participatingInSonobi &&
+        return
             dfpEnv.prebidEnabled &&
             dfpEnv.shouldLazyLoad() &&
             excludedAdvertIds.indexOf(advert.id) === -1;
