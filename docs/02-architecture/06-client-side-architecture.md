@@ -300,7 +300,7 @@ All the enhanced bootstraps are in [bootstraps/enhanced](https://github.com/guar
 
 There are five projects in the Javascript architecture:
 
-- [Admin](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/admin) - This is the Javascript for the admin tools at frontend.gutools (not guardian.com related)
+- [Admin](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/admin) - This is the Javascript for the frontend admin tools gutools (ask your neighbour what these are). It is the only JS file not related to theguardian.com.
 - [Commercial](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/commercial) - The modules and js views for the commercial Javascript
 - [Common](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/common) - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
 	- In modules you will find the Javascript for everything from articles to crosswords, identity to sport.
