@@ -38,26 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-article-onward-journey",
-    "Vertical positioning of the onward journey links",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-gallery-cta",
-    "Test which gallery image to put the call to action link on",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-story",
     "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
     owners = Seq(Owner.withGithub("jranks123")),
