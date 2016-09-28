@@ -1,14 +1,14 @@
 define([
     'qwery',
     'fastdom',
+    'ophan/ng',
     'common/modules/navigation/edition-picker',
     'common/modules/navigation/user-account'
-], function (
-    qwery,
-    fastdom,
-    editionPicker,
-    userAccount
-) {
+], function (qwery,
+             fastdom,
+             ophan,
+             editionPicker,
+             userAccount) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
     var buttonClickHandlers = {
@@ -80,6 +80,14 @@ define([
                     applyEnhancementsTo(checkbox);
                     checkbox.removeEventListener('click', closeMenuHandler);
                 });
+                if (checkboxId === 'main-menu-toggle') {
+                    // record in Ophan that the menu was opened in a fully expanded state
+                    // i.e. standard JS had not been loaded when menu was first opened
+                    ophan.record({
+                        component: 'main-navigation',
+                        value: 'is fully expanded'
+                    });
+                }
             }
         });
     }
