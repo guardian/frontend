@@ -20,7 +20,7 @@ See below for quick descriptions.
 - [- main.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/main.scala.html)
 	- [head.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/head.scala.html)
 		- [inlineJsBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSBlocking.scala.html) - Scripts required to render the page correctly on first paint.
-			- Polyfills for json2, es5-html5, RAF, classlist
+			- Polyfills for json2, es5-html5, RAF, classlist, matches and details
 			- Curl config
 			- shouldEnhance
 			- pageConfig
