@@ -29,18 +29,18 @@
                         <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                             <div class="media-body">
 
-                                @media match {
-                                    case audio: Audio if audio.elements.mainAudio.exists(_.images.imageCrops.nonEmpty) => {
-                                        @media.elements.mainAudio.map { audio =>
-                                            @fragments.imageFigure(audio.images)
-                                        }
-                                    }
-                                    case _ => {}
-                                }
-
                                 <div class="media-primary player">
                                 @media match {
                                     case audio: Audio => {
+
+                                        @audio.elements.images.map { img =>
+
+                                            @fragments.imageFigure(
+                                                img.images,
+                                                doCaption=false
+                                            )
+                                        }
+
                                         <figure data-component="main audio">
                                         @audio.elements.mainAudio.map { audioElement =>
                                             @fragments.media.audio(
