@@ -54,7 +54,7 @@ Contains the [config](https://github.com/guardian/frontend/blob/master/common/ap
 
 The [shouldEnhance JS](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/shouldEnhance.scala.js) defines whether we should run the enhanced Javascript. 
 
-There are ways to force enhancement, so take a look at the JS, but something of note is that we don't enhance devices running iOS < 8 on all pages or on all iPads on Fronts.
+There are ways to force enhancement, so take a look at the JS, but something of note is that we don't enhance devices running iOS < 8 on any pages and don't enhance iPads on Fronts.
 
 #### pageConfig
 
