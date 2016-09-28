@@ -238,7 +238,7 @@ It uses promises to require and init, in blocking order, standard JS, commercial
 
 ### Commercial JS
 
-The commercial JS is it's own bundle and is executed immediately after the standard JS.
+The commercial JS is its own bundle and is executed immediately after the standard JS.
 
 [Read about the commercial JS](https://github.com/guardian/frontend/blob/master/docs/05-commercial/03-commercial-javascript.md)
 
