@@ -476,13 +476,6 @@ class GuardianConfiguration extends Logging {
 
   object targeting {
     lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
-
-    // Total number of rules allowed per campaign, any campaigns with more than one rule will be filtered
-    lazy val ruleLimit: Int = configuration.getIntegerProperty("targeting.ruleLimit").getOrElse(1)
-
-    // The combined number of tags allowed in the required and lacking fields of a rule.
-    // Any campaigns with rules with too many tags will be filtered
-    lazy val tagLimit: Int = configuration.getIntegerProperty("targeting.tagLimit").getOrElse(20)
   }
 
   object facia {
