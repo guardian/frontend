@@ -77,7 +77,7 @@ The commercial JS will only run if `isModernBrowser` is true.
 
 You'll most likely be using the page config the most often which is defined in [JavascriptPage.scala](https://github.com/guardian/frontend/blob/master/common/app/views/support/JavaScriptPage.scala). Be aware that the metadata for a particular page may be [overridden with MetaData.make](https://github.com/guardian/frontend/blob/master/common/app/common/commercial/hosted/HostedGalleryPage.scala#L35).
 
-*Note that if you want to use config in a JS module, you shouldn't use the window object, but include it directly in your module via the config.js utility.*
+*Note that if you want to use config in a JS module, you shouldn't use the window object, but include it directly in your module via the [config.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/utils/config.js) utility.*
 
 #### applyRenderConditions
 
