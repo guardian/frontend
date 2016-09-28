@@ -42,9 +42,9 @@ define([
     }
 
     function upgradeRichLink(el) {
-        var href = $('a', el).attr('href'),
-            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/),
-            isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
+        var href = $('a', el).attr('href');
+        var matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+        var isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
 
         // Fastdom read the viewport height before upgrading if we're in the test
         (isInRichLinkTest) ? elementIsBelowViewport(el).then(doUpgrade) : doUpgrade(true);
