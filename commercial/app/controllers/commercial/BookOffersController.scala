@@ -57,8 +57,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
   def renderBooks = Action.async { implicit request =>
 
     def result(books: Seq[Book]): Result = books match {
-      case Nil =>
-        NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case someBooks =>
         Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")

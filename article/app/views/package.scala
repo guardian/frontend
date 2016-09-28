@@ -60,7 +60,7 @@ object BodyCleaner {
       ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      HeroicVideos(article.isHeroic),
+      ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)
