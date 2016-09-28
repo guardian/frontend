@@ -610,6 +610,7 @@ svg.navigation-group__social-icon__svg {
     box-sizing: border-box;
     height: $gs-baseline*3;
     width: 100%;
+    max-width: gs-span(4);
 
     // autoprefixer handles all the appropriate psuedo element selectors for placeholders
     &::placeholder {
