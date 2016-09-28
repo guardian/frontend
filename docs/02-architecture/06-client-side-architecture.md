@@ -36,6 +36,7 @@ See below for quick descriptions.
 			- getUserData.js
 			- detectAdblock 
 			- showUserName
+			- editionaliseMenu
 			- ophanConfig
 		- [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
 			- Google
@@ -131,6 +132,10 @@ Secrets.
 #### showUserName
 
 [Puts the user's username](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/showUserName.scala.js) into the header (increases perceived rendering speed as their username is there before the app.js has to download and parse).
+
+#### editionaliseMenu
+
+The [editonaliseMenu JS](https://github.com/guardian/frontend/blob/d4bc1349f981cdc8f2508b3f0df61b00420ca219/common/app/templates/inlineJS/nonBlocking/editionaliseMenu.scala.js) updates the menu to show and hide the sub-menus in the current edition.
 
 #### Ophan config
 
