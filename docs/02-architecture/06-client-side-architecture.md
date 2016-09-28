@@ -131,9 +131,9 @@ The analytics for Dotcom are defined in [analytics/base.scala.html](https://gith
 
 ### Bootstraps
 
-In javascripts/bootstraps we define all the entry points for each bundle described in [requirejs.js](). 
+In [javascripts/bootstraps](b.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps) we define all the entry points for each bundle described in [requirejs.js](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js). 
 
-The top level entry points which call the bootstrap initialisation of all other bundles are [enhanced/main.js](), [standard/main.js](), [admin.js]() (for frontend.gutools, not theguardian.com), [commercial.js]() and [video-embed.js]() (initialised when there is a video embed from [videoEmbed.scala.html]()).
+The top level entry points which call the bootstrap initialisation of all other bundles are [enhanced/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/enhanced/main.js), [standard/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js), [admin.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/admin.js) (for frontend.gutools, not theguardian.com), [commercial.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/commercial.js) and [video-embed.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/video-embed.js) (initialised when there is a video embed from [videoEmbed.scala.html](https://github.com/guardian/frontend/blob/master/applications/app/views/videoEmbed.scala.html)).
 
 ### app.js
 
@@ -282,15 +282,15 @@ All the enhanced bootstraps are in [bootstraps/enhanced](https://github.com/guar
 
 There are five projects in the Javascript architecture:
 
-- Admin - This is the Javascript for the admin tools at frontend.gutools (not guardian.com related)
-- Commercial - The modules and js views for the commercial Javascript
-- Common - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
+- [Admin](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/admin) - This is the Javascript for the admin tools at frontend.gutools (not guardian.com related)
+- [Commercial](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/commercial) - The modules and js views for the commercial Javascript
+- [Common](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/common) - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
 	- In modules you will find the Javascript for everything from articles to crosswords, identity to sport.
 	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familiarise yourself with these methods as you will likely end up finding what you need here.
 	- The Javascript views for the JS loaded content including a/b test experiments, breaking news, share buttons etc.
-- Facia - Contains JS modules and views for the weather, snaps and fronts containers
-- Membership - Contains the formatters, payment and stripe javascripts
+- [Facia](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/facia) - Contains JS modules and views for the weather, snaps and fronts containers
+- [Membership](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/membership) - Contains the formatters, payment and stripe javascripts
 
 ### Vendor
 
-Contains vendor JS from the likes of forsee, formstack, prebid and stripe.
+Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack, prebid and stripe.
