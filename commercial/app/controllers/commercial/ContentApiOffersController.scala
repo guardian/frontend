@@ -123,33 +123,17 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
-    retrieveContent().map((content: Seq[model.ContentType]) => {
-      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult}
-      case someContent => Cached(componentMaxAge) {
-        val response = someContent.head
-        val capiSingle = CapiSingle.fromContent(response)
-        Cached(60.seconds) {
-          JsonComponent(capiSingle)
+    retrieveContent().map(_.toList.headOption).map(
+      {
+        case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+        case Some(content) => {
+          val capiSingle = CapiSingle.fromContent(content)
+          Cached(60.seconds) {
+            JsonComponent(capiSingle)
+          }
         }
       }
-
-
-    })
-
-
-
-
-
-
-
-              retrieveContent().map((content: Seq[model.ContentType]) => {
-                val response = content.head
-                val capiSingle = CapiSingle.fromContent(response)
-                Cached(60.seconds) {
-                  JsonComponent(capiSingle)
-                }
-              })
-
+    )
   }
 
   def nativeJson = renderNative(jsonFormat, isMulti = false)
