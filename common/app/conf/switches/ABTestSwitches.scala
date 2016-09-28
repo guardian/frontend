@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 9, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-hosted-more-from",
+    "Show more onward journey links in the hosted article pages",
+    owners = Seq(Owner.withGithub("Calanthe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 27),
+    exposeClientSide = true
+  )
 }
