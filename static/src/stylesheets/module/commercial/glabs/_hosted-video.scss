@@ -47,7 +47,7 @@
 }
 
 .hosted__youtube-play-button {
-    display: none;
+    @include hosted-fade-out;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -78,7 +78,7 @@
 }
 
 .youtube__video-ready:not(.youtube__video-playing) ~ .hosted__youtube-poster-image .hosted__youtube-play-button {
-    display: block;
+    @include hosted-fade-in;
 }
 
 .vjs-ended ~ .hosted-fading .hosted__meta {
