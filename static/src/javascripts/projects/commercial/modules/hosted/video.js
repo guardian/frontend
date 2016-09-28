@@ -103,7 +103,8 @@ define([
 
                         player.ready(function () {
                             var vol;
-                            duration = parseInt(this.duration(), 10);
+                            var player = this;
+                            duration = parseInt(player.duration(), 10);
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 
