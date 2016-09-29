@@ -34,15 +34,16 @@ GET         /commercial/liveevents/event.json                               cont
 GET         /commercial/multi.json                                          controllers.commercial.Multi.renderMulti
 
 # Content API merchandising components
-GET         /commercial/capi.json                                           controllers.commercial.ContentApiOffersController.itemsJson
-GET         /commercial/capi                                                controllers.commercial.ContentApiOffersController.itemsHtml
-GET         /commercial/capi-single.json                                    controllers.commercial.ContentApiOffersController.itemJson
-GET         /commercial/api/capi-single                                     controllers.commercial.ContentApiOffersController.nativeJson
-GET         /commercial/capi-single                                         controllers.commercial.ContentApiOffersController.itemHtml
-GET         /commercial/capi-single-merch.json                              controllers.commercial.ContentApiOffersController.itemJson
-GET         /commercial/capi-single-merch                                   controllers.commercial.ContentApiOffersController.itemHtml
-GET         /commercial/paid.json                                           controllers.commercial.PaidContentCardController.cardJson
-GET         /commercial/paid                                                controllers.commercial.PaidContentCardController.cardHtml
+GET         /commercial/capi.json                                         controllers.commercial.ContentApiOffersController.itemsJson
+GET         /commercial/capi                                              controllers.commercial.ContentApiOffersController.itemsHtml
+GET         /commercial/capi-single.json                                  controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/api/capi-single.json                              controllers.commercial.ContentApiOffersController.nativeJson
+GET         /commercial/api/capi-multiple.json                            controllers.commercial.ContentApiOffersController.nativeJsonMulti
+GET         /commercial/capi-single                                       controllers.commercial.ContentApiOffersController.itemHtml
+GET         /commercial/capi-single-merch.json                            controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
+GET         /commercial/paid.json                                         controllers.commercial.PaidContentCardController.cardJson
+GET         /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
