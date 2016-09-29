@@ -30,18 +30,14 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
-    val thisLoadBalancer = loadBalancers.find(_.project == id).head
+    val thisLoadBalancer = loadBalancers.find(_.project == id).headOption
 
+    val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, testPath, id))
+      .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
     val viaWebsite = testOnGuardianSite(testPath, id)
-
     val directToContentApi = testOnContentApi(testPath, id)
-
-    val directToLoadBalancer = testOnLoadBalancer(thisLoadBalancer, testPath, id)
-
     val directToRouter = testOnRouter(testPath, id)
-
     val directToPreviewContentApi = testOnPreviewContentApi(testPath, id)
-
     val viaPreviewWebsite = testOnPreviewSite(testPath, id)
 
     // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
@@ -60,19 +56,30 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
 
   private def testOnRouter(testPath: String, id: String): Future[EndpointStatus] = {
-    val router = LoadBalancer.all.find(_.project == "frontend-router").flatMap(_.url).head
-    val result = httpGet("Can fetch directly from Router load balancer", s"http://$router$testPath")
-    result.map{ result =>
-      if (result.isOk)
-        result
-      else
-        TestFailed(result.name, result.messages.toSeq :+
-          "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
+
+    def fetchWithRouterUrl(url: String) = {
+      val result = httpGet("Can fetch directly from Router load balancer", s"http://$url$testPath")
+      result.map{ result =>
+        if (result.isOk)
+          result
+        else
+          TestFailed(result.name, result.messages.toSeq :+
+            "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
+      }
     }
+
+    LoadBalancer.all
+      .find(_.project == "frontend-router")
+      .flatMap(_.url)
+      .map(fetchWithRouterUrl(_))
+      .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))
+
   }
 
   private def testOnLoadBalancer(thisLoadBalancer: LoadBalancer, testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://${thisLoadBalancer.url.head}$testPath")
+    thisLoadBalancer.url.map { url =>
+      httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://${url}$testPath")
+    }.getOrElse(Future(TestFailed(s"Can get ${thisLoadBalancer.name}'s loadbalancer url")))
   }
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
@@ -106,11 +113,11 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
   }
 
   private def testOnGuardianSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from www.theguardian.com", s"http://www.theguardian.com$testPath")
+    httpGet("Can fetch from www.theguardian.com", s"https://www.theguardian.com$testPath")
   }
 
   private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from preview.gutools.co.uk", s"http://preview.gutools.co.uk$testPath")
+    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath")
   }
 
   private def httpGet(testName: String, url: String) =  {
