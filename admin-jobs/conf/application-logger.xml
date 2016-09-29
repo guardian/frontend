@@ -20,7 +20,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-commercial-client-side/date=%d{yyyy-MM-dd, aux}/%d{yyyy-MM-dd--HH}.log</fileNamePattern>
-            <maxHistory>7</maxHistory>
+            <maxHistory>2</maxHistory>
         </rollingPolicy>
 
         <encoder>
