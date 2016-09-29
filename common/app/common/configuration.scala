@@ -474,6 +474,10 @@ class GuardianConfiguration extends Logging {
     lazy val config = configuration.getMandatoryStringProperty("front.config")
   }
 
+  object targeting {
+    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
+  }
+
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
     lazy val collectionCap: Int = 35
