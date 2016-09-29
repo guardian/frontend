@@ -50,9 +50,7 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1,
-
-        isHosted: config.page.isHosted
+        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1
 
     }, config);
 });

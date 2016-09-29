@@ -72,7 +72,7 @@ define([
         }]
     ];
 
-    if (config.isHosted) {
+    if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
