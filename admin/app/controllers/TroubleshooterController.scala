@@ -113,11 +113,11 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
   }
 
   private def testOnGuardianSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from www.theguardian.com", s"http://www.theguardian.com$testPath")
+    httpGet("Can fetch from www.theguardian.com", s"https://www.theguardian.com$testPath")
   }
 
   private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from preview.gutools.co.uk", s"http://preview.gutools.co.uk$testPath")
+    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath")
   }
 
   private def httpGet(testName: String, url: String) =  {
