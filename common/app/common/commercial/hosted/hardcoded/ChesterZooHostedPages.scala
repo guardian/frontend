@@ -90,7 +90,9 @@ object ChesterZooHostedPages {
   private val cta = HostedCallToAction(
     label = Some("We won't stand back and we won't give up."),
     btnText = Some("It's time to act for wildlife"),
-    url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016"
+    url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016",
+    image = None,
+    trackingCode = None
   )
 
 

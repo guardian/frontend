@@ -170,9 +170,9 @@ define([
       buttonElement.dataset.formattedDuration = buttonDuration;
     }
 
-    function initHeroic(){
+    function initExploreVideo(){
         var player = $('.vjs-tech'),
-            headline = $('.labour-liverpool-headline')[0],
+            headline = $('.explore-series-headline')[0],
             controls = $('.vjs-control-bar');
         if(player && headline && controls){
             bean.on(player[0], 'playing', function () {
@@ -415,8 +415,8 @@ define([
                 });
             }
         });
-        if($('.heroic--video').length > 0){
-          initHeroic();
+        if($('.explore--video').length > 0){
+          initExploreVideo();
         }
         return player;
     }

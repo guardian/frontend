@@ -12,7 +12,13 @@
                 "email-subscription--subscribed" -> subscription.subscribedTo,
                 "email-subscription--first" -> row.isFirst))">
                 @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
-                <div class="email-subscription__name">@subscription.name</div>
+                <div class="email-subscription__name">
+                    <h2 class="email-subscription__heading">@subscription.name</h2>
+
+                    @if(subscription.subheading.isDefined){
+                        <h3 class="email-subscription__subheading">@subscription.subheading</h3>
+                    }
+                </div>
 
                 <div class="email-subscription__description">@subscription.description @if(subscription.exampleUrl.isDefined){<br><a href="@subscription.exampleUrl" target="preview-email-@subscription.listId">See the latest email</a>}</div>
 
