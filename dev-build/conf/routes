@@ -298,6 +298,8 @@ GET            /commercial/capi.json                                            
 GET            /commercial/capi                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single                                                                                           controllers.commercial.ContentApiOffersController.itemHtml
+GET            /commercial/api/capi-single                                                                                       controllers.commercial.ContentApiOffersController.nativeJson
+GET            /commercial/api/capi-multiple                                                                                     controllers.commercial.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
