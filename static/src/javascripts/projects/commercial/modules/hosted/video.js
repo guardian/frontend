@@ -155,19 +155,16 @@ define([
                         var $currentTime = $('.js-youtube-current-time');
                         youtubePlayer.init(el, {
                             onPlayerStateChange: function (event) {
-                                switch(event.data) {
-                                    case window.YT.PlayerState.PAUSED:
-                                        var currentTime = Math.floor(event.target.getCurrentTime());
-                                        var seconds = currentTime % 60;
-                                        var minutes = (currentTime - seconds) / 60;
-                                        $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
-                                        break;
-                                    case window.YT.PlayerState.ENDED:
-                                        $currentTime.text('0:00');
-                                        if(nextVideoPage && !useAutoplay()){
-                                            triggerEndSlate();
-                                        }
-                                        break;
+                                if(event.data == window.YT.PlayerState.ENDED) {
+                                    $currentTime.text('0:00');
+                                    if(nextVideoPage && !useAutoplay()){
+                                        triggerEndSlate();
+                                    }
+                                } else {
+                                    var currentTime = Math.floor(event.target.getCurrentTime());
+                                    var seconds = currentTime % 60;
+                                    var minutes = (currentTime - seconds) / 60;
+                                    $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
                                 }
                             },
                             onPlayerReady: function (event) {

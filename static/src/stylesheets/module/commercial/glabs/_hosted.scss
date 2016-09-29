@@ -270,7 +270,7 @@ $hosted-video-height: 540px;
     vertical-align: top;
 }
 
-.js-hosted-youtube-video + .hosted__youtube-poster-image .hosted__youtube-play-button,
+.hosted__youtube-video ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
 .hosted-article-page figure div > div .vjs-big-play-button .vjs-control-text, //no useful class name here!
 .hosted__video.gu-media--video .vjs-big-play-button .vjs-control-text {
     @include fs-textSans(4);
@@ -485,7 +485,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.youtube__video-playing ~ .hosted-fading,
+.youtube__video-started:not(.youtube__video-paused) ~ .hosted-fading,
 .vjs-playing + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -531,7 +531,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.js-hosted-youtube-video ~ .hosted-fading .hosted__video-overlay {
+.hosted__youtube-video ~ .hosted-fading .hosted__video-overlay {
     pointer-events: none;
 }
 

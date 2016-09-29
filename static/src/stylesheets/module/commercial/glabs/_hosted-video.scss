@@ -73,12 +73,22 @@
     pointer-events: none;
 }
 
-.js-hosted-youtube-video:not(.youtube__video-started) ~ .hosted__youtube-poster-image {
+.hosted__youtube-video:not(.youtube__video-started) ~ .hosted__youtube-poster-image {
     background-size: cover;
 }
 
-.youtube__video-ready:not(.youtube__video-playing) ~ .hosted__youtube-poster-image .hosted__youtube-play-button {
-    @include hosted-fade-in;
+.youtube__video-ready:not(.youtube__video-started),
+.youtube__video-paused {
+    & ~ .hosted__youtube-poster-image .hosted__youtube-play-button {
+        @include hosted-fade-in;
+    }
+}
+
+.hosted__youtube-video:not(.youtube__video-started),
+.youtube__video-paused {
+    & ~ .vjs-control-bar.youtube-player {
+        @include hosted-fade-in;
+    }
 }
 
 .vjs-ended ~ .hosted-fading .hosted__meta {
@@ -86,7 +96,7 @@
 }
 
 .vjs-control-bar.youtube-player {
-    @include hosted-fade-in;
+    @include hosted-fade-out;
     position: absolute;
     bottom: 0;
     background-color: unset;
@@ -94,10 +104,6 @@
     padding-top: 2px;
     left: 88px;
     pointer-events: none;
-}
-
-.youtube__video-playing ~ .vjs-control-bar.youtube-player {
-    @include hosted-fade-out;
 }
 
 .youtube__video-started.youtube__video-started ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
