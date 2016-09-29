@@ -19,12 +19,12 @@
         <file>logs/frontend-commercial-client-side.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/frontend-commercial-client-side.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-commercial-client-side/date=%d{yyyy-MM-dd, aux}/%d{yyyy-MM-dd--HH}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
 
         <encoder>
-            <pattern>%date [%thread] %-5level %logger{36} - %msg%n%xException</pattern>
+            <pattern>%msg%n%nopex</pattern>
         </encoder>
     </appender>
 
