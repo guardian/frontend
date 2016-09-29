@@ -9,7 +9,11 @@ case class CapiMultiple(articles: Seq[CapiSingle])
 object CapiMultiple {
 
   def fromContent(articles: Seq[ContentType]): CapiMultiple = {
-    CapiMultiple(articles.map(CapiSingle.fromContent))
+
+    CapiMultiple(articles.map(article => {
+    	CapiSingle.fromContent(article, articles.length)
+    }))
+
   }
 
   implicit val writesCapiMultiple: Writes[CapiMultiple] =

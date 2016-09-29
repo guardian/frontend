@@ -1,7 +1,7 @@
 package model.commercial
 
 import views.support.ImgSrc
-import cards.Standard
+import cards.{Standard, Half, Third}
 import layout.{FaciaWidths, ItemClasses}
 import model.ImageMedia
 import play.api.libs.json.{Json, Writes}
@@ -9,15 +9,19 @@ import play.api.libs.json.{Json, Writes}
 object CapiImages {
 
   // Puts together image source info using data from cAPI.
-  def buildImageData(imageData: Option[ImageMedia]): ImageInfo = {
+  def buildImageData(imageData: Option[ImageMedia], noImages: Int = 1) = {
 
     val fallbackImageUrl = imageData flatMap ImgSrc.getFallbackUrl
-    val cardType = Standard
+    val imageType = noImages match {
+      case 3 => Third
+      case 2 => Half
+      case _ => Standard
+    }
 
     val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
       mobile = Standard,
-      tablet = cardType,
-      desktop = Some(cardType)
+      tablet = imageType,
+      desktop = Some(imageType)
     )).breakpoints
 
     val sources = breakpointWidths.map { breakpointWidth =>
