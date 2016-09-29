@@ -18,7 +18,7 @@ define([
         this.idealOutcome = 'People will click on links from either the first or second variant';
 
         this.canRun = function () {
-            return config.isHosted && config.page.contentType === 'Gallery';
+            return /*config.isHosted && */config.page.contentType === 'Gallery';
         };
 
 
@@ -26,19 +26,16 @@ define([
             {
                 id: 'control',
                 test: function () {
-                    console.log('control');
                 }
             },
             {
                 id: 'variant1',
                 test: function () {
-                    console.log('variant1');
                 }
             },
             {
                 id: 'variant2',
                 test: function () {
-                    console.log('variant2');
                 }
             }
         ];
