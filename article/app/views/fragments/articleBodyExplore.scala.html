@@ -7,14 +7,14 @@
 @import views.support.{ImgSrc, Item140}
 
 @defining(model.article) { article =>
-    <div class="l-side-margins @if(article.content.elements.hasMainVideo){heroic--video}">
+    <div class="l-side-margins @if(article.content.elements.hasMainVideo){explore--video}">
         <article id="article" data-test-id="article-root"
             class="@RenderClasses(Map(
                     "content content--article" -> true,
-                    "content--labour-liverpool" -> article.content.tags.isLabourLiverpoolSeries,
-                    "heroic--video" -> article.content.elements.hasMainVideo
+                    "content--explore-series" -> article.content.tags.isExploreSeries,
+                    "explore--video" -> article.content.elements.hasMainVideo
                 ))"
-          
+
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -28,10 +28,8 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
-                            @if(article.content.tags.isLabourLiverpoolSeries) {
-                                <img class="labour-liverpool-cutout hide-on-mobile" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
-                                @fragments.inlineSvg("quote", "icon", List("labour-liverpool-quotes"))
-                            }
+                                <img class="explore-series-cutout hide-on-mobile" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
+                                @fragments.inlineSvg("quote", "icon", List("explore-series-quotes"))
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
                         <div class="after-article js-after-article"></div>
@@ -42,11 +40,6 @@
                 </div>
             </div>
         </article>
-
-        @if(article.content.tags.isLabourLiverpoolSeries) {
-            @fragments.labourLiverpoolContact()
-        }
-
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
 
     </div>

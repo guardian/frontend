@@ -419,16 +419,16 @@ case class Summary(amount: Int) extends HtmlCleaner {
 
 //
 
-case class HeroicVideos(isHeroic: Boolean) extends HtmlCleaner{
+case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
   override def clean(document: Document): Document = {
-    if(isHeroic){
+    if(isExplore){
       val videoCaptionSvg = views.html.fragments.inlineSvg("videoCaption", "membership", List("video-caption-bubble")).toString()
       //gets the videos and adds a new class
       document.getElementsByTag("figure").filter(_.hasClass("element-video"))foreach{ elementVideo =>
-          elementVideo.addClass("element-video--heroic");
+          elementVideo.addClass("element-video--explore");
           //gets the figcaption of the video and adds a new class
           elementVideo.children().filter(_.hasClass("caption"))foreach{ elementVideoCaption =>
-            elementVideoCaption.addClass("caption-heroic")
+            elementVideoCaption.addClass("caption-explore")
             elementVideoCaption.prepend(videoCaptionSvg)
           }
       }

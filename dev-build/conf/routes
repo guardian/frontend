@@ -289,7 +289,7 @@ GET            /commercial/jobs.json                                            
 GET            /commercial/jobs/api/jobs.json                                                                                    controllers.commercial.JobsController.getJobs
 GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
 GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET            /commercial/soulmates/$subgroup<\w+>                                                                              controllers.commercial.SoulmatesController.getSoulmates(subgroup)
+GET            /commercial/soulmates/api/$subgroup<\w+>.json                                                                     controllers.commercial.SoulmatesController.getSoulmates(subgroup)
 GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
 GET            /commercial/books/api/books.json                                                                                  controllers.commercial.BookOffersController.getBooks
@@ -306,6 +306,7 @@ GET            /commercial/multi.json                                           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /advertiser-content/onward/:campaignName/:pageName/:cType.json                                                    controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
 GET            /commercial/contributor-email                                                                                     controllers.commercial.ContributorEmailPageController.renderContributorEmailPage
 GET            /commercial/contributor-email/do                                                                                  controllers.commercial.ContributorEmailPageController.renderContributorEmailPageResult

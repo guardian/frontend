@@ -48,14 +48,12 @@
 
             @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 
-            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm())
+            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm(idUrlBuilder, idRequest))
 
-            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm())
+            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest))
 
             @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
         </div>
     </div>
-
-    @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }
