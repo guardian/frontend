@@ -4,6 +4,7 @@ import java.lang.System.currentTimeMillis
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
+import model.commercial.TravelOffer
 import org.joda.time.format.DateTimeFormat
 
 import scala.concurrent.Future
