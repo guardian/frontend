@@ -121,7 +121,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
-  private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderNative(isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map {
       case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
@@ -135,8 +135,8 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   }
 
-  def nativeJson = renderNative(jsonFormat, isMulti = false)
-  def nativeJsonMulti = renderNative(jsonFormat, isMulti = true)
+  def nativeJson = renderNative(isMulti = false)
+  def nativeJsonMulti = renderNative(isMulti = true)
 
   def itemsHtml = renderItems(htmlFormat, isMulti = true)
   def itemsJson = renderItems(jsonFormat, isMulti = true)
