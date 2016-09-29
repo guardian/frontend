@@ -149,6 +149,29 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+  def cleanAmpMaps(document: Document) = {
+    document.getElementsByClass("element-map").foreach { embed: Element =>
+      embed.getElementsByTag("iframe").map { element: Element =>
+        val width = element.attr("width")
+        val height = element.attr("height")
+        val src = element.attr("src")
+        val frameBorder = element.attr("frameborder")
+        val elementMap = document.createElement("amp-iframe")
+          elementMap
+            .attr("width", width) // 8:7 seems to be the normal ratio
+            .attr("height", height)
+            .attr("layout", "responsive")
+            .attr("sandbox", "allow-scripts allow-same-origin allow-popups")
+            .attr("frameborder", frameBorder)
+            .attr("src", src)
+          embed
+            .empty()
+            .appendChild(elementMap)
+      }
+    }
+
+  }
+
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
   override def clean(document: Document): Document = {
@@ -156,6 +179,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
     AmpSoundcloud.clean(document)
+    cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpEmbed(document)
