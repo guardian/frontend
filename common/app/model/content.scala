@@ -837,15 +837,6 @@ final case class Interactive(
     }
   }
 
-  lazy val hasSrcdoc = {
-    val iframe = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe")
-
-    if (iframe.length > 0) {
-        iframe.first().hasAttr("srcdoc")
-    } else {
-        false
-    }
-  }
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
@@ -854,7 +845,6 @@ object Interactive {
     val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
-    val elements = content.elements
     val tags = content.tags
     val section = content.metadata.sectionId
     val id = content.metadata.id
