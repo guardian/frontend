@@ -75,19 +75,20 @@ define([
 
     function init() {
         return new Promise(function (resolve) {
-            var $youtubeIframe = $('.js-hosted-youtube-video');
-            $youtubeIframe.each(function(el){
-                youtubePlayer.init(el);
-            });
-
             require(['bootstraps/enhanced/media/main'], function () {
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
                     var $inlineVideoEl = $('video');
-                    var duration;
                     var $hostedNext = $('.js-hosted-next-autoplay');
+                    var $youtubeIframe = $('.js-hosted-youtube-video');
+                    var $timer = $('.js-autoplay-timer');
+                    var nextVideoPage = $timer.length && $timer.data('next-page');
+                    var duration = $youtubeIframe.length && $youtubeIframe.data('duration');
+                    function useAutoplay(){
+                        return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+                    }
 
-                    if ($videoEl.length === 0) {
+                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
                         if ($inlineVideoEl.length === 0) {
                             // halt execution
                             return resolve();
@@ -136,52 +137,67 @@ define([
                                 }
                             });
                         });
+
                     });
-
-                    if ($hostedNext.length) {
+                    if ($hostedNext.length && nextVideoPage) {
                         //on desktop show the next video link 10 second before the end of the currently watching video
-                        if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-
-                            var $timer = $('.js-autoplay-timer');
-                            var nextVideoPage;
-
-                            if ($timer.length) {
-                                nextVideoPage = $timer.data('next-page');
-
-                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                    cancelAutoplay($hostedNext);
-                                });
-
-                                player.one('timeupdate', function () {
-                                    nextVideoInterval = setInterval(function () {
-                                        var timeLeft = duration - parseInt(player.currentTime(), 10);
-                                        var countdownLength = 10; //seconds before the end when to show the timer
-
-                                        if (timeLeft <= countdownLength) {
-                                            fastdom.write(function () {
-                                                $hostedNext.addClass('js-autoplay-start');
-                                                $timer.text(timeLeft + 's');
-                                            });
-                                        }
-                                        if(timeLeft <= 0){
-                                            omniture.trackLinkImmediate('Immediately play the next video');
-                                            window.location = nextVideoPage;
-                                        }
-                                    }, 1000);
-                                });
-                            }
-                        } else {
-                            player.one('ended', function () {
-                                fastdom.write(function () {
-                                    $hostedNext.addClass('js-autoplay-start');
-                                });
-                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                    cancelAutoplayMobile($hostedNext);
-                                });
+                        if (useAutoplay()) {
+                            bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                                cancelAutoplay($hostedNext);
                             });
+                            player && player.one('timeupdate', triggerAutoplay.bind(this, player.currentTime.bind(player)));
+                        } else {
+                            player && player.one('ended', triggerEndSlate);
                         }
                     }
 
+                    $youtubeIframe.each(function(el){
+                        youtubePlayer.init(el, {
+                            onPlayerStateChange: function (event) {
+                                switch(event.data) {
+                                    case window.YT.PlayerState.PAUSED:
+                                        //todo: display current time/duration
+                                        break;
+                                    case window.YT.PlayerState.ENDED:
+                                        if(!useAutoplay()){
+                                            triggerEndSlate();
+                                        }
+                                        break;
+                                }
+                            },
+                            onPlayerReady: function (event) {
+                                if (useAutoplay()) {
+                                    triggerAutoplay(event.target.getCurrentTime.bind(event.target));
+                                }
+                            }
+                        });
+                    });
+
+                    function triggerAutoplay(getCurrentTimeFn) {
+                        nextVideoInterval = setInterval(function () {
+                            var timeLeft = duration - Math.floor(getCurrentTimeFn());
+                            var countdownLength = 10; //seconds before the end when to show the timer
+
+                            if (timeLeft <= countdownLength) {
+                                fastdom.write(function () {
+                                    $hostedNext.addClass('js-autoplay-start');
+                                    $timer.text(timeLeft + 's');
+                                });
+                            }
+                            if(timeLeft <= 0){
+                                omniture.trackLinkImmediate('Immediately play the next video');
+                                window.location = nextVideoPage;
+                            }
+                        }, 1000);
+                    }
+                    function triggerEndSlate() {
+                        fastdom.write(function () {
+                            $hostedNext.addClass('js-autoplay-start');
+                        });
+                        bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
+                            cancelAutoplayMobile($hostedNext);
+                        });
+                    }
                     resolve();
                 });
             });
