@@ -1,0 +1,22 @@
+@import common.commercial.hosted.HostedPage
+@(maybeTrail: Option[HostedPage])(implicit request: RequestHeader)
+
+@maybeTrail.map { trail =>
+
+    <div class="hosted__next-video">
+        <div class="hosted__next-video--header">
+            <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+            <h2 class="hosted__next-video--client-name hosted-tone">@{trail.campaign.owner}</h2>
+        </div>
+        <a href="@{trail.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{trail.campaign.fontColour.brandColour}" data-link-name="Next Hosted Video: @{trail.title}">
+            <img class="hosted__next-video-thumb" src="@{trail.imageUrl}" alt="Next Video: @{trail.title}">
+            <p class="hosted__next-video-title">@{trail.title}</p>
+        </a>
+    </div>
+
+
+}.getOrElse{
+
+    <div></div>
+
+}
