@@ -55,19 +55,18 @@
             }
         </div>
         <div class="immersive-main-media__image-overlay"></div>
-        <div class="series-identity">
+        <div class="series-identity-explore">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <div class="series-identity__background">
-                        @fragments.inlineSvg("explore-series-identity-bg", "membership")
-                    </div>
-                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
-                        <div class="series-identity__title">Labour &amp; Liverpool</div>
-                        <div class="series-identity__byline">with Ewen MacAskill</div>
-                    </a>
+                  <div class="series-identity-explore__container">
+                      @fragments.meta.metaInline(page.item)
+                      <div class="series-identity__byline">
+                      <span class="byline-meta">with</span>  @fragments.meta.byline(page.item.trail.byline, page.item.tags)
+                      </div>
+                  </div>
                 </div>
             </div>
-        </div>
+          </div>
         <div class="explore-series-trail-wrapper">
           <div class="explore-series-headline">
               <div class="gs-container">
