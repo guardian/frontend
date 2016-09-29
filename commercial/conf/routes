@@ -37,8 +37,8 @@ GET         /commercial/multi.json                                          cont
 GET         /commercial/capi.json                                         controllers.commercial.ContentApiOffersController.itemsJson
 GET         /commercial/capi                                              controllers.commercial.ContentApiOffersController.itemsHtml
 GET         /commercial/capi-single.json                                  controllers.commercial.ContentApiOffersController.itemJson
-GET         /commercial/api/capi-single                                   controllers.commercial.ContentApiOffersController.nativeJson
-GET         /commercial/api/capi-multiple                                 controllers.commercial.ContentApiOffersController.nativeJsonMulti
+GET         /commercial/api/capi-single.json                              controllers.commercial.ContentApiOffersController.nativeJson
+GET         /commercial/api/capi-multiple.json                            controllers.commercial.ContentApiOffersController.nativeJsonMulti
 GET         /commercial/capi-single                                       controllers.commercial.ContentApiOffersController.itemHtml
 GET         /commercial/capi-single-merch.json                            controllers.commercial.ContentApiOffersController.itemJson
 GET         /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
