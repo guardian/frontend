@@ -243,7 +243,7 @@ Optimizely relies on JQuery, which the frontend code does not use as a base JS l
 
 The Optimizely set-up allows _anyone_ to insert bits of code/design in to the site outside of a release cycle. While this sort of democratisation of AB testing is important we strongly feel, like all code/design/ux, the tests should follow this route through the review systems we have in place. Git pull etc.
 
-Given we already have 2 repositories of user behaviour data (Omniture, Ophan/RedShift) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
+Given we already have 2 repositories of user behaviour data (GA, Ophan) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
 
 Optimizely is relatively expensive - several thousand pounds p/month.
 
