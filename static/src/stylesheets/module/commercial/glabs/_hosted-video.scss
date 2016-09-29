@@ -73,21 +73,28 @@
     pointer-events: none;
 }
 
-.hosted__youtube-video:not(.youtube__video-started) ~ .hosted__youtube-poster-image {
-    background-size: cover;
+.youtube__video-ended,
+.hosted__youtube-video:not(.youtube__video-started) {
+    ~ .hosted__youtube-poster-image {
+        background-size: cover;
+    }
 }
 
 .youtube__video-ready:not(.youtube__video-started),
-.youtube__video-paused {
+.youtube__video-paused,
+.youtube__video-ended {
     & ~ .hosted__youtube-poster-image .hosted__youtube-play-button {
         @include hosted-fade-in;
     }
 }
 
 .hosted__youtube-video:not(.youtube__video-started),
-.youtube__video-paused {
+.youtube__video-paused,
+.youtube__video-ended {
     & ~ .vjs-control-bar.youtube-player {
         @include hosted-fade-in;
+        transition-delay: 500ms;
+        transition-duration: 500ms;
     }
 }
 
@@ -97,6 +104,7 @@
 
 .vjs-control-bar.youtube-player {
     @include hosted-fade-out;
+    transition-duration: 0s;
     position: absolute;
     bottom: 0;
     background-color: unset;
@@ -106,10 +114,15 @@
     pointer-events: none;
 }
 
-.youtube__video-started.youtube__video-started ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
-.youtube__video-started ~ .vjs-control-bar.youtube-player {
+.youtube__video-started:not(.youtube__video-ended) {
     @include mq($until: tablet) {
-        @include hosted-fade-out;
+        & ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
+        & ~ .vjs-control-bar.youtube-player {
+            @include hosted-fade-out;
+        }
+        & ~ .hosted-fading .hosted__video-overlay {
+            display: none;
+        }
     }
 }
 
