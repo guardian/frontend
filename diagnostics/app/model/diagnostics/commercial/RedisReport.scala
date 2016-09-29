@@ -4,16 +4,8 @@ import common.{ExecutionContexts, Logging}
 import common.commercial.ClientSideLogging
 import org.joda.time.DateTime
 import play.api.libs.json.Json
-import services.S3
 
-object S3CommercialReports extends S3 {
-  override lazy val bucket = "ophan-raw-client-side-ad-metrics"
-}
-
-/*
-RedisReport writes commercial performance beacons into Redis as key-values.
-When the key expires, the ExpiredKeyEventSubscriber object will be notified.
-*/
+// RedisReport writes commercial performance beacons into Redis as key-values.
 object RedisReport extends Logging with ExecutionContexts {
 
   // The number of seconds to wait before triggering the data collection process for a page view.
