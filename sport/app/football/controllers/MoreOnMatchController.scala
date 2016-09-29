@@ -121,7 +121,7 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
     val response = competitionsService.competitions.find { _.matches.exists(_.id == matchId) }
       .fold(JsonNotFound()) { competition =>
         val fMatch = competition.matches.find(_.id == matchId).head
-        JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
+        JsonComponent(football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
       }
     Cached(30)(response)
   }

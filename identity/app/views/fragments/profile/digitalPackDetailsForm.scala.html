@@ -1,3 +1,7 @@
+@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
 <div class="manage-account-tab">
     <div class="manage-account-loader js-dig-loader">
         <span class="is-updating show-updating"></span>
@@ -7,3 +11,5 @@
     @fragments.profile.digitalPackForm.details()
     @fragments.profile.digitalPackForm.upsell()
 </div>
+
+@registrationFooter(idRequest, idUrlBuilder, model.DigitalPackUserhelp)

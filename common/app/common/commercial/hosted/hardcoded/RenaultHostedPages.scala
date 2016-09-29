@@ -22,7 +22,8 @@ object RenaultHostedPages {
     url = "https://www.renault.co.uk/vehicles/new-vehicles/zoe.html",
     label = Some("Discover Zoe"),
     image = Some(Static("images/commercial/ren_commercial_banner.jpg")),
-    trackingCode = Some("explore-renault-zoe-button")
+    trackingCode = Some("explore-renault-zoe-button"),
+    btnText = None
   )
 
   private val teaserWithoutNextPage: HostedVideoPage = {

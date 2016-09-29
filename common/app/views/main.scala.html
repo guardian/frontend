@@ -40,6 +40,7 @@
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
+            ("has-new-header", mvt.ABNewHeaderVariant.isParticipating),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
@@ -56,15 +57,15 @@
                     @fragments.immersiveGalleryMainMedia(page)
                 </div>
             }
-            case page: model.ContentPage if (page.item.content.isHeroic) => {
+            case page: model.ContentPage if (page.item.content.isExplore) => {
                 <div class="@RenderClasses(Map(
                     ("immersive-header-container", page.item.fields.main.nonEmpty),
-                    ("immersive-header-container--labour-liverpool", page.item.content.tags.isLabourLiverpoolSeries),
-                    ("heroic-video-container", page.item.content.elements.hasMainVideo)))">
+                    ("immersive-header-container--explore-series", page.item.content.tags.isExploreSeries),
+                    ("explore-video-container", page.item.content.elements.hasMainVideo)))">
 
                     @headerAndTopAds(showAdverts, edition)
 
-                    @fragments.labourLiverpoolSeries(page)
+                    @fragments.exploreSeries(page)
                 </div>
             }
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive) => {

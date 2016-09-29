@@ -1,7 +1,7 @@
 package football.controllers
 
 import common.JsonComponent
-import feed.{Competitions, CompetitionsService}
+import feed.CompetitionsService
 import football.containers.FixturesAndResults
 import model.Cached
 import play.api.mvc.{Action, Controller}

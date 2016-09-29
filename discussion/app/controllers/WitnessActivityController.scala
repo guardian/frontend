@@ -12,7 +12,7 @@ trait WitnessActivityController extends WitnessApi with Controller with Executio
 
   def witnessActivity(userId: String): Action[AnyContent] = Action.async {
     implicit request => {
-      def renderWitnessActivityJson = (contributions: List[WitnessActivity]) => Cached(60)(JsonComponent("html" -> views.html.profileActivity.witnessActivity(contributions)))
+      def renderWitnessActivityJson = (contributions: List[WitnessActivity]) => Cached(60)(JsonComponent(views.html.profileActivity.witnessActivity(contributions)))
       getWitnessActivity(userId) map renderWitnessActivityJson
     }
   }

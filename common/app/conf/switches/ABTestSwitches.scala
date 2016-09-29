@@ -18,41 +18,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-avatar",
-    "Standalone frontend discussion",
+    "ab-discussion-promote-comments",
+    "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 10, 12),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-hosted-article-onward-journey",
-    "Vertical positioning of the onward journey links",
-    owners = Seq(Owner.withGithub("lps88")),
+    "ab-contributions-story",
+    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-gallery-cta",
-    "Test which gallery image to put the call to action link on",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-20160916",
-    "Test variants of the button text to drive contributions.",
-    owners = Seq(Owner.withGithub("markjamesbutler")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 27),
+    sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
 
@@ -68,11 +48,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response2",
-    "Prominent adblocker response test",
+    "ab-ad-blocking-response3",
+    "Prominent adblocker ad-free test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
@@ -103,6 +83,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("mr-mr")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-upgrade-mobile-rich-links-below-viewport",
+    "Only upgrade rich links if they are below the current viewport",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 13),
     exposeClientSide = true
   )
 }

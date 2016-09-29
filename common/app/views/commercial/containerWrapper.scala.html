@@ -17,7 +17,7 @@
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
         <h1 class="adverts__title">@title</h1>
         @if(badgeInHeader) {
-            @for(badge        <- optBadge)   {<div class="adverts__badge adverts__badge--alt js-badge">@badge</div>}
+            @for(badge        <- optBadge)   {<div class="badge badge--alt">@badge</div>}
         }
         @for(blurb    <- optBlurb)   {<div class="adverts__blurb">@blurb</div>}
         @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
@@ -26,7 +26,7 @@
     <div class="adverts__body">
         @innards
         @if(!badgeInHeader) {
-            @for(badge        <- optBadge)   {<div class="adverts__badge js-badge">@badge</div>}
+            @for(badge        <- optBadge)   {<div class="badge">@badge</div>}
         }
     </div>
 </aside>

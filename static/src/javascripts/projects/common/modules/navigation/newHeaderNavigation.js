@@ -1,11 +1,13 @@
 define([
     'qwery',
     'fastdom',
-    'common/modules/navigation/edition-picker'
+    'common/modules/navigation/edition-picker',
+    'common/modules/navigation/user-account'
 ], function (
     qwery,
     fastdom,
-    editionPicker
+    editionPicker,
+    userAccount
 ) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
@@ -102,7 +104,7 @@ define([
                 removeOrderingFromLists();
 
                 // Users should be able to scroll again
-                html.style.overflow = '';
+                html.classList.remove('nav-is-open');
             });
         } else {
             fastdom.write(function () {
@@ -118,7 +120,7 @@ define([
                 // No targetItem to put in as the parameter. All lists should close.
                 closeAllOtherPrimaryLists();
                 // Prevents scrolling on the body
-                html.style.overflow = 'hidden';
+                html.classList.add('nav-is-open');
             });
         }
     }
@@ -178,6 +180,7 @@ define([
         enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
+        userAccount();
     }
 
     return init;

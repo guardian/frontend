@@ -17,7 +17,7 @@ class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Contr
   def renderTravel = Action { implicit request =>
 
     travelSample(specificIds, segment) match {
-      case Nil => NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")
