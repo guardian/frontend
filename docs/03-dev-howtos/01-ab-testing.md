@@ -17,7 +17,7 @@ There are six steps in the test lifecycle:-
 
 ## Quick Tips
 
-- Creating your switch: if its an ab test it should start with `ab-` (see more naming conventions in [Adding a switch](#adding-a-switch)
+- Creating your switch: if it's an ab test it should start with `ab-` (see more naming conventions in [Adding a switch](#adding-a-switch)
 - Choosing your audience offset: it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
 - Is your audience percentage appropriate for your test? Ask the data team if you don't know.
 - Starting/Stopping a test: You can start and stop your tests in production at any time using the [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
