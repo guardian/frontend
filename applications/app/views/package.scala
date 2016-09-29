@@ -9,7 +9,7 @@ object InteractiveBodyCleaner {
   def apply(interactive: Interactive)(implicit request: RequestHeader): Html = {
     val html = interactive.fields.body
     val cleaners = List(
-      AtomsCleaner(interactive.content.atoms)
+      AtomsCleaner(interactive.content.atoms, shouldFence = false)
     ) ++ (if (interactive.content.isImmersive) List(InteractiveSrcdocCleaner) else Nil)
 
     withJsoup(html)(cleaners: _*)

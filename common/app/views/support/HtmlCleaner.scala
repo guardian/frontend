@@ -618,7 +618,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -631,7 +631,7 @@ case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeade
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

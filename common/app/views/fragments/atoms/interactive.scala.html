@@ -1,8 +1,16 @@
-@(interactive: _root_.model.content.InteractiveAtom)
+@(interactive: _root_.model.content.InteractiveAtom, shouldFence: Boolean)
 
-<figure class="interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
+@body = {
     <style>
         @HtmlFormat.raw(interactive.css)
     </style>
     @HtmlFormat.raw(interactive.html)
-</figure>
+}
+
+@if(shouldFence) {
+    <iframe class="fenced" srcdoc="@body.toString"></iframe>
+} else {
+    <figure class="interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
+        @body
+    </figure>
+}
