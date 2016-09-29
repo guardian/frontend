@@ -26,7 +26,7 @@
     if (guardian.config.user) {
         identityId = guardian.config.user.id;
     }
-    var isLoggedIn = !!identityId;
+    var isLoggedIn = (!!identityId).toString();
 
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
@@ -73,6 +73,7 @@
         ga('@{trackerName}.set', 'dimension16', isLoggedIn);
         ga('@{trackerName}.set', 'dimension21', getQueryParam('INTCMP')); @* internal campaign code *@
         ga('@{trackerName}.set', 'dimension22', getQueryParam('CMP_BUNIT')); @* campaign business unit*@
+        ga('@{trackerName}.set', 'dimension23', getQueryParam('CMP_TU')); @* campaign team*@
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>

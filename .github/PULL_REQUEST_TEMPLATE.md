@@ -2,6 +2,10 @@
 
 ## What is the value of this and can you measure success?
 
+<!--
+If setting up an AB test, make sure you have read our [AB testing doc](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/01-ab-testing.md).
+-->
+
 ## Does this affect other platforms - Amp, Apps, etc?
 
 <!--

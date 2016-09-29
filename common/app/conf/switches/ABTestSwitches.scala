@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-avatar",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("piuccio")),
@@ -93,6 +83,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("mr-mr")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-upgrade-mobile-rich-links-below-viewport",
+    "Only upgrade rich links if they are below the current viewport",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 13),
     exposeClientSide = true
   )
 }
