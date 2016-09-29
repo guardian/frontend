@@ -146,6 +146,19 @@ define([
                     }
                 });
             });
+
+            qwery('figure.interactive-atom').forEach(function (el) {
+                var mainJS = el.getAttribute('data-interactive');
+                if (!mainJS) return;
+
+                require([mainJS], function (interactive) {
+                    fastdom.defer(function () {
+                        robust.catchErrorsAndLog('interactive-atom-bootstrap', function () {
+                            interactive.main(el, config);
+                        });
+                    });
+                });
+            });
         }
 
         //
