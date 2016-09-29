@@ -31,7 +31,7 @@ object CapiImages {
       )
     }
 
-    ImageInfo(sources, fallbackImageUrl.getOrElse(""))
+    ImageInfo(sources, fallbackImageUrl)
 
   }
 
@@ -49,7 +49,7 @@ object CapiImages {
   }
 
   // Holds all source element data, and the backup image src for older browsers.
-  case class ImageInfo (sources: Seq[ImageSource], backupSrc: String)
+  case class ImageInfo (sources: Seq[ImageSource], backupSrc: Option[String])
 
   object ImageInfo {
     implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
