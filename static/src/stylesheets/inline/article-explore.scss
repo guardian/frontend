@@ -52,7 +52,7 @@ $explore-series-header-element-opacity: .85;
 
 .content--explore-series-article {
     &.explore--video {
-        min-height: 0rem;
+        min-height: 0;
 
         @include mq($from: mobileLandscape) {
             min-height: 432px;
@@ -197,7 +197,7 @@ $explore-series-header-element-opacity: .85;
     position: absolute;
     margin-left: -190px;
     margin-top: -20px;
-    bottom: 0px;
+    bottom: 0;
 
     .byline-img {
         //fixes weird space at the bottom of the image
