@@ -28,7 +28,6 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
                         <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
-                                <img class="explore-series-cutout hide-on-mobile" src="@ImgSrc("https://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2015/8/18/1439913873894/Ewen-MacAskill-R.png", Item140)">
                                 @fragments.inlineSvg("quote", "icon", List("explore-series-quotes"))
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
@@ -41,6 +40,5 @@
             </div>
         </article>
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
-
     </div>
 }

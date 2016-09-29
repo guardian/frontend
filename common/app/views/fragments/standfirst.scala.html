@@ -3,6 +3,7 @@
 <div class="@RenderClasses(Map(
     "content__standfirst--gallery" -> item.content.isImmersiveGallery,
     "content__standfirst--immersive-article" -> (item.content.isImmersive && item.tags.isArticle),
+    "content__standfirst--explore" -> (item.tags.isExploreSeries && item.tags.isArticle),
     "content__standfirst--immersive-minute-article" -> item.tags.isTheMinuteArticle),
     "content__standfirst")" data-link-name="standfirst" data-component="standfirst">
     @item.fields.trailText.map{ t =>
@@ -19,7 +20,7 @@
     @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(
-                if(item.content.isImmersive && item.tags.isArticle && item.trail.byline) {
+                if(item.content.isImmersive && item.tags.isArticle && item.trail.byline && !item.tags.isExploreSeries) {
                     if (standfirst.contains(item.trail.byline.get)) {
                         ContributorLinks(standfirst, item.tags.contributors).toString()
                     } else {

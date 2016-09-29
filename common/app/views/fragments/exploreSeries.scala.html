@@ -12,11 +12,11 @@
     page.item.tags.isExploreSeries,
     page.item.elements.hasMainVideo
 )) { case (hasEmbed, hasMainMedia, isExploreSeries, hasVideo) =>
-
+<!--
   <style>
     @Html(common.Assets.css.inlineExplore)
   </style>
-
+ -->
     <div class="@RenderClasses(Map(
             "content--explore-series-article" -> isExploreSeries,
             "immersive-main-media" -> hasMainMedia,
@@ -54,10 +54,7 @@
                 }
             }
         </div>
-
-        <div class="content--explore-series-article__headline-background">
-             @fragments.inlineSvg("explore-series-headline-bg", "membership")
-        </div>
+        <div class="immersive-main-media__image-overlay"></div>
         <div class="series-identity">
             <div class="gs-container">
                 <div class="content__main-column">
@@ -71,18 +68,28 @@
                 </div>
             </div>
         </div>
+        <div class="explore-series-trail-wrapper">
+          <div class="explore-series-headline">
+              <div class="gs-container">
+                  <div class="content__main-column">
+                      <h1 class="explore-series-headline__content">
+                          @Html(page.item.trail.headline)
+                      </h1>
+                  </div>
+              </div>
+          </div>
 
-        <div class="explore-series-headline">
+          <div class="explore-series-standfirst">
             <div class="gs-container">
-                <div class="content__main-column">
-                    <div class="explore-series-headline__background">
-                        @fragments.inlineSvg("explore-series-header-bg", "membership")
-                    </div>
-                    <h1 class="explore-series-headline__content">
-                        @Html(page.item.trail.headline)
-                    </h1>
+              <div class="content__main-column">
+                <div class="explore-series-byline-image hide-on-mobile">
+                  @fragments.meta.bylineImage(page.item.tags)
                 </div>
+                @fragments.standfirst(page.item)
+              </div>
             </div>
-        </div>
+          </div>
+      </div>
+
     </div>
 }
