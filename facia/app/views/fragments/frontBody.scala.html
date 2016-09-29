@@ -12,12 +12,6 @@
                 "fc-container--advertisement-feature paid-content--advertisement-feature" -> isAdFeature
             ), "facia-page")"
             data-link-name="Front | @request.path"
-                @faciaPage.branding(Edition(request)).map { branding =>
-                data-sponsor="@branding.sponsorName"
-                }
-                @faciaPage.branding(Edition(request)).map { branding =>
-                data-sponsorship="@branding.sponsorshipType.name"
-                }
             role="main">
 
             @if(isAdFeature){
