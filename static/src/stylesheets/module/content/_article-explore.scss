@@ -242,7 +242,7 @@ $explore-series-header-element-opacity: .85;
         }
 
         a {
-            color: white;
+            color: $neutral-8;
         }
     }
 
@@ -251,7 +251,7 @@ $explore-series-header-element-opacity: .85;
         font-size: 14px;
 
         @include mq($from: tablet) {
-          font-size: 18px;
+            font-size: 18px;
         }
     }
 
