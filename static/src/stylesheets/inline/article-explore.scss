@@ -318,63 +318,6 @@ $explore-series-header-element-opacity: .85;
     color: #ffffff;
 }
 
-.explore-series-contact__top-border {
-    border-top: 1px solid $news-main-2;
-}
-
-.explore-series-contact__wrapper {
-    text-align: center;
-
-    @include mq($from: tablet) {
-        text-align: left;
-    }
-}
-
-.explore-series-contact__sign-up {
-    display: inline-block;
-    width: 100%;
-    @include mq($from: tablet) {
-        width: calc(75% - 5em);
-        padding-right: 5em;
-    }
-    @include mq($from: desktop) {
-        left: -30%;
-        padding-right: 0;
-    }
-}
-
-.explore-series-contact__sign-up__header {
-    @include fs-header(3);
-    margin-top: 12px;
-}
-
-.explore-series-contact__sign-up__form {
-    border: 0;
-    width: 100%;
-    @include mq(tablet) {
-        height: 500px;
-    }
-    @include mq($from: desktop) {
-        width: 75%;
-    }
-}
-
-.explore-series-contact__contact-ewen {
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.explore-series-contact__avatar-container {
-    width: 100%;
-    position: relative;
-}
-
-.explore-series-contact__avatar {
-    width: 100%;
-    max-width: 140px;
-}
-
 .speech-bubble {
     @include fs-header(1);
     color: #ffffff;
@@ -411,25 +354,6 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.explore-series-contact__contact-ewen__buttons {
-    width: 100%;
-    margin: 0;
-}
-
-.explore-series-contact__button {
-    @include fs-textSans(2);
-    // this colour matches the submit button on the Labour & Liverpool email form
-    @include button-colour(#00b0ce, #ffffff);
-    display: block;
-    border-radius: 20px;
-    margin-top: $gs-baseline;
-    text-align: left;
-
-    .social-icon--small__svg {
-        width: 88%;
-        height: 88%;
-    }
-}
 .content__article-body {
     figure {
         //these styles need to overide the styles coming from Layout Hint
