@@ -268,7 +268,7 @@ final case class Content(
     } else None
 
     val atomsMeta = atoms.map { atoms =>
-      val atomIdentifiers = atoms.all.collect { case quiz: Quiz => JsString(quiz.id) }
+      val atomIdentifiers = atoms.all.map(atom => JsString(atom.id))
       ("atoms", JsArray(atomIdentifiers))
     }
 

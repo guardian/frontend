@@ -1,6 +1,7 @@
 @(model: _root_.model.content.Atom)(implicit request: RequestHeader)
 @import _root_.model.content.Quiz
 @import _root_.model.content.MediaAtom
+@import _root_.model.content.InteractiveAtom
 
 @{
     model match {
@@ -9,6 +10,7 @@
             case youtube if media.assets.head.platform == "Youtube" => views.html.fragments.atoms.youtube(media)
             case _ => views.html.fragments.atoms.media(media)
         }
+        case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive)
         case _ =>
     }
 }
