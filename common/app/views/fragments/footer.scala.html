@@ -25,7 +25,7 @@
             </div>
 
             @if(showNav) {
-                <div class="l-footer__navigation-wrapper u-cf">
+                <div class="l-footer__navigation-wrapper u-cf @if(mvt.ABNewHeaderVariant.isParticipating) {hide-on-mobile}">
                     @fragments.nav.navigationFooter(page)
                 </div>
             }

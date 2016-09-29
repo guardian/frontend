@@ -14,9 +14,9 @@
         @* Add advert every 5 blog posts, up to a maximum of 8 *@
         @if(blockGroup.length == 5 && index < 8) {
             <div @if(LiveUpdateAmpSwitch.isSwitchedOn) { id="amp-ad-@index" data-sort-time="1" } class="block amp-ad-container amp-ad-container--live-blog">
-                <amp-ad width="300" height="250" type="doubleclick"
-                json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
-                data-slot=@AmpAdDataSlot(article).toString()>
+                <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
+                    json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
+                    data-slot=@AmpAdDataSlot(article).toString()>
                 </amp-ad>
             </div>
         }

@@ -7,6 +7,13 @@ $gutter-large: 55px;
 
 $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
+
+// When the menu is open this class is added to the html to prevent users from scrolling
+.nav-is-open {
+    overflow: hidden;
+    position: fixed;
+}
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -334,6 +341,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     left: 0;
     line-height: 1;
     z-index: $zindex-main-menu;
+    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
 }
 
 .main-menu-container__overlay {
@@ -353,7 +361,6 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     height: 100%;
     background-color: $guardian-brand;
     color: #ffffff;
-    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
@@ -525,6 +532,11 @@ $navigation-horizontal-padding: $gs-gutter * 2;
     margin-bottom: 0;
 }
 
+.navigation-group--grey {
+    background-color: $neutral-1;
+    padding-bottom: $gs-baseline;
+}
+
 .navigation-group__item {
     // Override inherited ul from user agent stylesheet
     list-style: none;
@@ -563,8 +575,7 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .navigation-group__icon {
-    fill: $news-support-2;
-    top: .4em;
+    top: .3em;
 
     svg {
         display: inline-block;
@@ -572,12 +583,13 @@ $navigation-horizontal-padding: $gs-gutter * 2;
 }
 
 .navigation-group__social-icon {
+    fill: $news-support-2;
     top: -.1em;
+}
 
-    svg {
-        width: 1.6em;
-        height: 1.6em;
-    }
+.navigation-group__social-icon__svg {
+    width: 1.6em;
+    height: 1.6em;
 }
 
 .navigation-group__item--search {
@@ -621,15 +633,60 @@ $navigation-horizontal-padding: $gs-gutter * 2;
     vertical-align: middle;
 }
 
-.navigation-group__profile-icon svg {
-    height: .8em;
+.navigation-group__membership-icon {
+    fill: $neutral-2;
+}
+
+.navigation-group__item--user-account {
+
+    .user-account__signed-in {
+        display: none;
+    }
+
+    &.user-signed-in {
+        .user-account__signed-in {
+            display: block;
+        }
+        .user-account__login {
+            display: none;
+        }
+    }
+}
+
+.user-account__signed-in__link {
+    color: $neutral-3;
+}
+
+.navigation-group__user-icon__svg {
+    height: .9em;
     width: .9em;
-    fill: $guardian-brand;
-    background-color: $news-support-2;
+}
+
+.navigation-group__profile-icon__svg {
+    fill: $neutral-1;
+    background-color: $neutral-2;
     border-radius: 100%;
     padding-top: .1em;
 }
 
 .no-text-transform {
     text-transform: none;
+}
+
+// Breathing space between header and content
+@include mq($until: tablet) {
+    .has-new-header {
+        .weather {
+            padding-top: 1px;
+        }
+
+        .fc-container--first .fc-container__inner,
+        .index-page-header {
+            padding-top: $gs-baseline / 2 + $gs-baseline / 4;
+        }
+
+        .content__labels {
+            padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
+        }
+    }
 }

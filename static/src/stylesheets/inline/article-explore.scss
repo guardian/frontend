@@ -1,12 +1,12 @@
 @import '../_vars';
 @import '../_mixins';
-$labour-liverpool-header-element-opacity: .85;
+$explore-series-header-element-opacity: .85;
 
-.immersive-header-container--labour-liverpool {
+.immersive-header-container--explore-series {
     min-height: gs-height(8);
 
     //if immersive switch is on it gets given this class so we can still have a full screen image
-    &.heroic-immersive {
+    &.explore-immersive {
         min-height: 100vh;
     }
 
@@ -19,7 +19,7 @@ $labour-liverpool-header-element-opacity: .85;
         }
     }
     //firefox fix for the height of the video
-    &.heroic-video-container {
+    &.explore-video-container {
         min-height: 548px;
 
         @include mq($until: desktop) {
@@ -38,26 +38,26 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.content--labour-liverpool .content__article-body > p:first-of-type {
+.content--explore-series .content__article-body > p:first-of-type {
     @include fs-headline(3);
     color: darken($news-support-4, 25%);
     font-size: 22px;
     font-weight: 200;
 }
 
-.content--labour-liverpool .content__article-body {
+.content--explore-series .content__article-body {
     padding-top: $gs-baseline;
 }
 
-.content--labour-liverpool.heroic--video .content__article-body {
+.content--explore-series.explore--video .content__article-body {
     padding: 0px;
     @include mq($from: tablet) {
         padding-top: 40px;
     }
 }
 
-.content--labour-liverpool-article {
-    &.heroic--video {
+.content--explore-series-article {
+    &.explore--video {
         min-height: 0rem;
 
         @include mq($from: mobileLandscape) {
@@ -74,8 +74,8 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.heroic--video {
-    .labour-liverpool-headline {
+.explore--video {
+    .explore-series-headline {
         top: 220px;
 
         @include mq($from: mobileLandscape) {
@@ -100,19 +100,19 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.heroic-immersive .labour-liverpool-headline {
+.explore-immersive .explore-series-headline {
     top: auto;
     bottom: 122px;
     position: absolute;
 }
 
-.labour-liverpool-cutout {
+.explore-series-cutout {
     float: left;
     width: 140px;
     margin: 0 $gs-gutter/-2;
 }
 
-.labour-liverpool-quotes__svg {
+.explore-series-quotes__svg {
     float: left;
     fill: $news-support-4;
     width: 30px;
@@ -120,7 +120,7 @@ $labour-liverpool-header-element-opacity: .85;
     padding-right: $gs-gutter/4;
 }
 
-.labour-liverpool-headline {
+.explore-series-headline {
     position: relative;
     width: 100%;
     // make bottom left corner of headline flush with the bottom of the main media image
@@ -147,7 +147,7 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-headline__content {
+.explore-series-headline__content {
     @include fs-headline(5);
     position: absolute;
     font-weight: 200;
@@ -164,14 +164,14 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-headline__background {
+.explore-series-headline__background {
     position: absolute;
     width: 100%;
 }
 
-.inline-labour-liverpool-header-bg__svg {
+.inline-explore-series-header-bg__svg {
     fill: $news-main-2;
-    opacity: $labour-liverpool-header-element-opacity;
+    opacity: $explore-series-header-element-opacity;
     width: 100%;
 }
 
@@ -191,9 +191,9 @@ $labour-liverpool-header-element-opacity: .85;
     width: gs-span(3.5);
 }
 
-.inline-labour-liverpool-identity-bg__svg {
+.inline-explore-series-identity-bg__svg {
     fill: $news-main-1;
-    opacity: $labour-liverpool-header-element-opacity;
+    opacity: $explore-series-header-element-opacity;
     width: 100%;
     height: 100%;
 }
@@ -215,22 +215,22 @@ $labour-liverpool-header-element-opacity: .85;
     color: #ffffff;
 }
 
-.content--labour-liverpool-article__headline-background {
+.content--explore-series-article__headline-background {
     position: absolute;
     width: 100%;
 }
 
-.inline-labour-liverpool-headline-bg__svg {
+.inline-explore-series-headline-bg__svg {
     fill: $news-main-2;
-    opacity: $labour-liverpool-header-element-opacity;
+    opacity: $explore-series-header-element-opacity;
     width: 100%;
 }
 
-.labour-liverpool-contact__top-border {
+.explore-series-contact__top-border {
     border-top: 1px solid $news-main-2;
 }
 
-.labour-liverpool-contact__wrapper {
+.explore-series-contact__wrapper {
     text-align: center;
 
     @include mq($from: tablet) {
@@ -238,7 +238,7 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-contact__sign-up {
+.explore-series-contact__sign-up {
     display: inline-block;
     width: 100%;
     @include mq($from: tablet) {
@@ -251,12 +251,12 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-contact__sign-up__header {
+.explore-series-contact__sign-up__header {
     @include fs-header(3);
     margin-top: 12px;
 }
 
-.labour-liverpool-contact__sign-up__form {
+.explore-series-contact__sign-up__form {
     border: 0;
     width: 100%;
     @include mq(tablet) {
@@ -267,18 +267,18 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-contact__contact-ewen {
+.explore-series-contact__contact-ewen {
     overflow: hidden;
     display: inline-block;
     vertical-align: top;
 }
 
-.labour-liverpool-contact__avatar-container {
+.explore-series-contact__avatar-container {
     width: 100%;
     position: relative;
 }
 
-.labour-liverpool-contact__avatar {
+.explore-series-contact__avatar {
     width: 100%;
     max-width: 140px;
 }
@@ -319,12 +319,12 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.labour-liverpool-contact__contact-ewen__buttons {
+.explore-series-contact__contact-ewen__buttons {
     width: 100%;
     margin: 0;
 }
 
-.labour-liverpool-contact__button {
+.explore-series-contact__button {
     @include fs-textSans(2);
     // this colour matches the submit button on the Labour & Liverpool email form
     @include button-colour(#00b0ce, #ffffff);
@@ -341,7 +341,7 @@ $labour-liverpool-header-element-opacity: .85;
 .content__article-body {
     figure {
         //these styles need to overide the styles coming from Layout Hint
-        &.element-video--heroic {
+        &.element-video--explore {
             margin-bottom: $gs-gutter*3;
 
             @include mq($until: phablet) {
@@ -354,13 +354,13 @@ $labour-liverpool-header-element-opacity: .85;
         }
 
         figcaption {
-            &.caption-heroic {
+            &.caption-explore {
                 top: 80%;
             }
         }
     }
 }
-.element-video--heroic {
+.element-video--explore {
     .gu-media-wrapper--video {
         -webkit-clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
         clip-path: polygon(0 6%, 100% 3%, 100% 100%, 0% 95%);
@@ -409,13 +409,13 @@ $labour-liverpool-header-element-opacity: .85;
     }
 }
 
-.caption-heroic {
+.caption-explore {
     position: absolute;
     z-index: 40;
     color: $news-main-1;
 }
 
-.heroic-video {
+.explore-video {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -437,7 +437,7 @@ Because this template uses the immersive header they are outside of the header -
 givng this some mega minus margins.*/
 
 .l-side-margins {
-    &.heroic--video {
+    &.explore--video {
         &::before {
             margin-top: -560px;
             height: 128%;

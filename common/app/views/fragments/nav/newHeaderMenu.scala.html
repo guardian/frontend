@@ -1,10 +1,11 @@
 @()(implicit request: RequestHeader)
 
 @import common.{ NewNavigation, LinkTo, Edition }
+@import conf.Configuration
+@import conf.switches.Switches.SearchSwitch
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     <li class="main-navigation__item navigation-border js-navigation-item">
-            <!-- TODO: Firefox -->
         <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
             <summary class="main-navigation__item__button js-navigation-button">
                 <i class="main-navigation__icon"></i>
@@ -15,13 +16,13 @@
                 <ul class="main-navigation__secondary
                     navigation-group
                     navigation-group--@{edition.id.toLowerCase}
-                    js-editionlise-secondary-nav"
+                    js-editionalise-secondary-nav"
                     data-edition="@{edition.id.toLowerCase}"
                     @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
-                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
+                            <a href="@LinkTo { @sectionItem.url }" data-link-name="@sectionItem.name">@sectionItem.name</a>
                         </li>
                     }
                 </ul>
@@ -42,32 +43,43 @@
                 @sectionList(section)
             }
         </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="https://profile.theguardian.com/signin?INTCMP=DOTCOM_HEADER_SIGNIN">
-                @fragments.inlineSvg("profile-36", "icon", List("navigation-group__icon", "navigation-group__profile-icon"))
-                Sign in
-            </a></li>
-        </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item navigation-group__item--search">
-                <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
-                    @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
-                    <label for="submit-google-search">
-                        <input class="u-h" type="submit" id="submit-google-search">
-                        @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
-                    </label>
-                    <label for="q" class="u-h">What term do you want to search?</label>
-                    <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
-                    <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
-                </form>
+
+        @if(SearchSwitch.isSwitchedOn) {
+            <ul class="navigation-group navigation-border secondary-navigation">
+                <li class="navigation-group__item navigation-group__item--search">
+                    <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
+                        @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
+                        <label for="submit-google-search">
+                            <input class="u-h" type="submit" id="submit-google-search">
+                            @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
+                        </label>
+                        <label for="q" class="u-h">What term do you want to search?</label>
+                        <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
+                        <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
+                    </form>
+                </li>
+            </ul>
+        }
+
+        <ul class="navigation-group navigation-group--grey navigation-border secondary-navigation">
+
+            <li class="navigation-group__item js-editionalise-secondary-nav"
+                @* TODO: should membership really only show up in the uk edition? *@
+                data-edition="uk">
+                    <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_UK">
+                        @fragments.inlineSvg("marque-36", "icon", List("navigation-group__icon", "navigation-group__user-icon", "navigation-group__membership-icon"))
+                        membership
+                    </a>
             </li>
+
+            @fragments.nav.userAccountLinks()
+
         </ul>
 
         @Edition.all.map { edition =>
             <ul class="navigation-group
                 navigation-border
-                secondary-navigation
-                js-editionlise-secondary-nav"
+                js-editionalise-secondary-nav"
                 data-edition=@{edition.id.toLowerCase}
                 @if(edition.id.toLowerCase != "uk") { hidden }>
 
@@ -89,4 +101,3 @@
         </ul>
     </div>
 </div>
-

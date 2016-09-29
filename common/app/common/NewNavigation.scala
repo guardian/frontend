@@ -38,7 +38,7 @@ object NewNavigation {
 
     val au = List(
       NavLink("headlines", "/au"),
-      NavLink("UK", "/australia-news"),
+      NavLink("australia", "/australia-news"),
       NavLink("world", "/world"),
       NavLink("australian politics", "/australia-news/australian-politics"),
       NavLink("environment", "/au/environment"),
@@ -51,7 +51,7 @@ object NewNavigation {
 
     val us = List(
       NavLink("headlines", "/us"),
-      NavLink("US election", "/us-news"),
+      NavLink("US election", "/us-news/us-elections-2016"),
       NavLink("US", "/us-news"),
       NavLink("world", "/world"),
       NavLink("environment", "/us/environment"),
@@ -289,7 +289,6 @@ object NewNavigation {
     val name = ""
 
     val uk = List(
-      NavLink("membership", "https://membership.theguardian.com/uk/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_UK"),
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
       NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),

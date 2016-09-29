@@ -2,12 +2,12 @@ define([
     'qwery',
     'fastdom',
     'common/modules/navigation/edition-picker',
-    'common/modules/navigation/editionalise-menu'
+    'common/modules/navigation/user-account'
 ], function (
     qwery,
     fastdom,
     editionPicker,
-    editionaliseMenu
+    userAccount
 ) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
@@ -15,6 +15,38 @@ define([
         'main-menu-toggle': veggieBurgerClickHandler,
         'edition-picker': editionPicker
     };
+    var enhanced = {};
+
+    function weShouldEnhance(checkbox) {
+        return !enhanced[checkbox.id] && checkbox && !checkbox.checked;
+    }
+
+
+    function applyEnhancementsTo(checkbox) {
+        fastdom.read(function () {
+            var button = document.createElement('button');
+            var checkboxId = checkbox.id;
+            var checkboxControls = checkbox.getAttribute('aria-controls');
+            var checkboxClasses = Array.prototype.slice.call(checkbox.classList);
+
+            checkboxClasses.forEach(function (c) {
+                button.classList.add(c);
+            });
+            button.setAttribute('id', checkboxId);
+            button.setAttribute('aria-controls', checkboxControls);
+            button.setAttribute('aria-expanded', 'false');
+
+            fastdom.write(function () {
+                var eventHandler = buttonClickHandlers[button.id];
+
+                checkbox.parentNode.replaceChild(button, checkbox);
+                if (eventHandler) {
+                    button.addEventListener('click', eventHandler);
+                }
+                enhanced[button.id] = true;
+            });
+        });
+    }
 
     function closeAllOtherPrimaryLists(targetItem) {
         menuItems.forEach(function (item) {
@@ -32,39 +64,29 @@ define([
         });
     }
 
-    function enhanceToButton() {
-        var checkboxes = qwery('.js-enhance-checkbox');
-        fastdom.read(function () {
-            var buttons = checkboxes.map(function (checkbox) {
-                var button = document.createElement('button');
-                var checkboxId = checkbox.id;
-                var checkboxControls = checkbox.getAttribute('aria-controls');
-                var checkboxClasses = Array.prototype.slice.call(checkbox.classList);
+    function enhanceCheckboxesToButtons() {
+        var checkboxIds = ['main-menu-toggle', 'edition-picker'];
 
-                checkboxClasses.forEach(function (c) {
-                    button.classList.add(c);
+        checkboxIds.forEach(function (checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+
+            if (!checkbox) {
+                return;
+            }
+            if (weShouldEnhance(checkbox)) {
+                applyEnhancementsTo(checkbox);
+            } else {
+                checkbox.addEventListener('click', function closeMenuHandler() {
+                    applyEnhancementsTo(checkbox);
+                    checkbox.removeEventListener('click', closeMenuHandler);
                 });
-                button.setAttribute('id', checkboxId);
-                button.setAttribute('aria-controls', checkboxControls);
-                button.setAttribute('aria-expanded', 'false');
-
-                return button;
-            });
-            fastdom.write(function () {
-                buttons.forEach(function (button, index) {
-                    var checkbox = checkboxes[index];
-                    var eventHandler = buttonClickHandlers[button.id];
-
-                    checkbox.parentNode.replaceChild(button, checkbox);
-                    button.addEventListener('click', eventHandler);
-                });
-            });
+            }
         });
     }
 
     function veggieBurgerClickHandler(event) {
         var button = event.target;
-        var mainMenu = qwery('#main-menu')[0];
+        var mainMenu = document.getElementById('main-menu');
         var veggieBurgerLink = qwery('.js-change-link')[0];
 
         function menuIsOpen() {
@@ -82,7 +104,7 @@ define([
                 removeOrderingFromLists();
 
                 // Users should be able to scroll again
-                html.style.overflow = '';
+                html.classList.remove('nav-is-open');
             });
         } else {
             fastdom.write(function () {
@@ -98,7 +120,7 @@ define([
                 // No targetItem to put in as the parameter. All lists should close.
                 closeAllOtherPrimaryLists();
                 // Prevents scrolling on the body
-                html.style.overflow = 'hidden';
+                html.classList.add('nav-is-open');
             });
         }
     }
@@ -139,7 +161,7 @@ define([
             primaryItem.addEventListener('click', function () {
                 fastdom.read(function () {
                     var id = primaryItem.getAttribute('aria-controls');
-                    var menuToOpen = qwery('#' + id)[0];
+                    var menuToOpen = document.getElementById(id);
                     var menuButton = qwery('.js-navigation-button', menuToOpen)[0];
 
                     fastdom.write(function () {
@@ -155,10 +177,10 @@ define([
     }
 
     function init() {
-        enhanceToButton();
+        enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
         bindPrimaryItemsClickEvents();
-        editionaliseMenu();
+        userAccount();
     }
 
     return init;

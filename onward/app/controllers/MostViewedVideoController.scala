@@ -33,9 +33,7 @@ class MostViewedVideoController(contentApiClient: ContentApiClient, mostViewedVi
       val pagination = Pagination(page, response.pages, response.total)
 
       Cached(900) {
-        JsonComponent(
-          "html" -> views.html.fragments.videosInSeries(videos, seriesTitle, series, pagination)
-        )
+        JsonComponent(views.html.fragments.videosInSeries(videos, seriesTitle, series, pagination))
       }
     }
   }
@@ -47,9 +45,7 @@ class MostViewedVideoController(contentApiClient: ContentApiClient, mostViewedVi
 
     if (videos.nonEmpty) {
       Cached(900) {
-        JsonComponent(
-          "html" -> views.html.fragments.mostViewedVideo(videos)
-        )
+        JsonComponent(views.html.fragments.mostViewedVideo(videos))
       }
     } else {
       Cached(60) {
