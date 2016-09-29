@@ -510,7 +510,7 @@ trait FeatureSwitches {
   // Owner: Francis Carr
   val LiveBlogChromeNotificationsProd = Switch(
     SwitchGroup.Feature,
-    "liveBlogChromeNotificationsProd",
+    "live-blog-chrome-notifications-prod",
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
