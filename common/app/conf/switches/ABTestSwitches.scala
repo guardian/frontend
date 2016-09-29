@@ -18,41 +18,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-external-frontend-avatar",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
     sellByDate = new LocalDate(2016, 10, 12),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-article-onward-journey",
-    "Vertical positioning of the onward journey links",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-gallery-cta",
-    "Test which gallery image to put the call to action link on",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
     exposeClientSide = true
   )
 
@@ -65,7 +35,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
-  
+
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -78,8 +48,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response30pc",
-    "Prominent adblocker ad-free test ZERO PERCENT",
+    "ab-ad-blocking-response3",
+    "Prominent adblocker ad-free test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
@@ -113,6 +83,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("mr-mr")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-upgrade-mobile-rich-links-below-viewport",
+    "Only upgrade rich links if they are below the current viewport",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 13),
     exposeClientSide = true
   )
 }

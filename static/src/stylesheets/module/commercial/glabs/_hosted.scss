@@ -270,41 +270,43 @@ $hosted-video-height: 540px;
     vertical-align: top;
 }
 
-.hosted-article-page figure div > div, //no useful class name here!
-.hosted__video.gu-media--video {
-    .vjs-big-play-button .vjs-control-text {
-        @include fs-textSans(4);
-        margin-left: 16px;
-        margin-top: 0;
-        width: 136px;
-        height: 48px;
-        text-indent: -999px;
-        color: #ffffff;
-        border: 2px solid #ffffff;
-        border-radius: 30px;
-        @include mq(desktop) {
-            margin-left: 0;
-        }
-
-        &:before {
-            content: 'Watch now';
-            background-color: transparent;
-            text-indent: 0; //I want to show 'Watch now' text instead of the hardcoded "Play Video"
-            position: absolute;
-            top: 14px;
-            left: 34px;
-            font-size: 16px;
-            width: 92px;
-        }
-
-        &:after {
-            top: 50%;
-            left: 20%;
-            border-width: 8px 8px 8px 18px;
-            border-color: transparent transparent transparent $neutral-7;
-        }
+.js-hosted-youtube-video + .hosted__youtube-poster-image .hosted__youtube-play-button,
+.hosted-article-page figure div > div .vjs-big-play-button .vjs-control-text, //no useful class name here!
+.hosted__video.gu-media--video .vjs-big-play-button .vjs-control-text {
+    @include fs-textSans(4);
+    margin-left: 16px;
+    margin-top: 0;
+    width: 136px;
+    height: 48px;
+    text-indent: -999px;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 30px;
+    @include mq(desktop) {
+        margin-left: 0;
     }
 
+    &:before {
+        content: 'Watch now';
+        background-color: transparent;
+        text-indent: 0; //I want to show 'Watch now' text instead of the hardcoded "Play Video"
+        position: absolute;
+        top: 14px;
+        left: 34px;
+        font-size: 16px;
+        width: 92px;
+    }
+
+    &:after {
+        top: 50%;
+        left: 20%;
+        border-width: 8px 8px 8px 18px;
+        border-color: transparent transparent transparent $neutral-7;
+    }
+}
+
+.hosted-article-page figure div > div, //no useful class name here!
+.hosted__video.gu-media--video {
     .vjs-control,
     .vjs-control-bar:before {
         @include hosted-fade-out;
@@ -483,7 +485,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.youtube-video-playing + .hosted-fading,
+.youtube__video-playing ~ .hosted-fading,
 .vjs-playing + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -492,7 +494,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.youtube-video-paused + .hosted-fading,
+.youtube__video-paused ~ .hosted-fading,
 .vjs-paused + .hosted-fading {
     .hosted__meta,
     .hostedbadge__logo,
@@ -526,6 +528,16 @@ $hosted-video-height: 540px;
         @include mq($until: wide) {
             display: block;
         }
+    }
+}
+
+.js-hosted-youtube-video ~ .hosted-fading .hosted__video-overlay {
+    pointer-events: none;
+}
+
+.youtube__video-started ~ .hosted-fading .hosted__video-overlay {
+    @include mq($until: tablet) {
+        display: none;
     }
 }
 
@@ -953,8 +965,4 @@ $hosted-video-height: 540px;
         font-size: 18px;
         line-height: 20px;
     }
-}
-
-iframe + .hosted-fading .hosted__video-overlay {
-    display: none;
 }

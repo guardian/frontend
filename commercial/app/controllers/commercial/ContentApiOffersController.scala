@@ -1,13 +1,17 @@
 package controllers.commercial
 
 import common.commercial._
-import common.{Edition, ExecutionContexts, Logging}
+import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, Lookup}
+import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
 import model.{Cached, NoCache}
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 import play.api.mvc._
+import model._
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 sealed abstract class SponsorType(val className: String)
@@ -30,33 +34,39 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     "foundation-supported" -> "Supported by"
   )
 
-  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def retrieveContent()(implicit request: Request[AnyContent]): Future[Seq[ContentType]]  = {
 
     val optKeyword = request.getParameter("k")
 
-    val eventualLatest = optKeyword.map { keyword =>
+    val latestContent = optKeyword.map { keyword =>
       // getting twice as many, as we filter out content without images
       lookup.latestContentByKeyword(keyword, 8)
     }.getOrElse(Future.successful(Nil))
 
-    eventualLatest onFailure {
+    latestContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
     }
 
-    val eventualSpecific = capiAgent.contentByShortUrls(specificIds)
+    val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
-    eventualSpecific onFailure {
+    specificContent onFailure {
       case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
     }
 
     val futureContents = for {
-      specific <- eventualSpecific
-      latestByKeyword <- eventualLatest
+      specific <- specificContent
+      latestByKeyword <- latestContent
     } yield {
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents.map(_.toList) map {
+    futureContents
+  }
+
+
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+
+    retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)
       case contents => Cached(componentMaxAge) {
 
@@ -110,6 +120,23 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       }
     }
   }
+
+  private def renderNative(isMulti: Boolean) = Action.async { implicit request =>
+
+    retrieveContent().map {
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+      case content if isMulti => Cached(60.seconds) {
+        JsonComponent(CapiMultiple.fromContent(content))
+      }
+      case first :: _ => Cached(60.seconds) {
+        JsonComponent(CapiSingle.fromContent(first))
+      }
+    }
+
+  }
+
+  def nativeJson = renderNative(isMulti = false)
+  def nativeJsonMulti = renderNative(isMulti = true)
 
   def itemsHtml = renderItems(htmlFormat, isMulti = true)
   def itemsJson = renderItems(jsonFormat, isMulti = true)

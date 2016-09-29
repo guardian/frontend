@@ -5,13 +5,13 @@ import org.joda.time.LocalDate
 
 trait FeatureSwitches {
   // see https://github.com/guardian/frontend/pull/13446
-  val HeroicTemplateSwitch = Switch(
+  val ExploreTemplateSwitch = Switch(
     SwitchGroup.Feature,
-    "heroic-main-media",
-    "If this switch is on, Heroic template will be applied to heroic articles. This template is part of a Membership Explore test",
+    "explore-main-media",
+    "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
+    sellByDate = new LocalDate(2016, 11, 15),
     exposeClientSide = false
   )
 
@@ -496,14 +496,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Sam Morris
-  val USSurveyBanner = Switch(
+  // Owner: Sam Cutler / Editorial Tools
+  val Targeting = Switch(
     SwitchGroup.Feature,
-    "us-survey-banner",
-    "When ON, will show a banner to US users asking them to take part in a survey",
-    owners = Seq(Owner.withGithub("sammorrisdesign")),
+    "targeting",
+    "When ON will the targeting system will poll for updates and merge targeted campaigns into content",
+    owners= Seq(Owner.withGithub("currysoup")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = never,
     exposeClientSide = true
   )
 }
