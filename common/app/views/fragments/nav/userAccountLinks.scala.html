@@ -6,17 +6,19 @@
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
 
     <li class="navigation-group__item navigation-group__item--user-account js-show-user-account-links">
-        @fragments.inlineSvg("profile", "icon", List("navigation-group__icon", "navigation-group__user-icon", "navigation-group__profile-icon"))
-
         <div class="user-account__login">
             <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN">
+                @fragments.inlineSvg("profile", "icon", List("main-menu__icon", "main-menu__icon--profile"))
                 Sign in
             </a>
         </div>
 
         <div class="user-account__signed-in">
             <details>
-                <summary class="main-navigation__item__button user-account__signed-in__label"> my account </summary>
+                <summary class="main-navigation__item__button user-account__signed-in__label">
+                    <i class="main-menu__icon main-menu__icon--chevron"></i>
+                    my account
+                </summary>
 
                 <ul class="user-account__signed-in__links">
                     @if(SaveForLaterSwitch.isSwitchedOn) {
