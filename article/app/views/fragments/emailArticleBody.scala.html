@@ -8,7 +8,7 @@
 @defining(page.article) { article =>
     @fullRow {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
-            <img width="580" src="@page.banner" @page.email.map { email => alt="View @email.name online"}>
+            <img width="580" class="full-width" src="@page.banner" @page.email.map { email => alt="View @email.name online"}>
         </a>
     }
 
@@ -83,7 +83,7 @@
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { url =>
                             @fullRow {
-                                <img width="580" class="media--main" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                                <img width="580" class="full-width" src="@url" @data.get("alt").map { alt => alt="@alt" }>
                             }
 
                             @paddedRow {
