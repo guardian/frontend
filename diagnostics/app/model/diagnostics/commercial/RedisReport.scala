@@ -8,17 +8,11 @@ import play.api.libs.json.Json
 // RedisReport writes commercial performance beacons into Redis as key-values.
 object RedisReport extends Logging with ExecutionContexts {
 
-  // The number of seconds to wait before triggering the data collection process for a page view.
-  private val PAGE_VIEW_DATA_COLLECTION_PERIOD = 60L
-  // The time to keep the data associated with a page view.
-  private val PAGE_VIEW_DATA_EXPIRY = 600L
+  // The time to keep the data associated with a page view. 20 minutes.
+  private val PAGE_VIEW_DATA_EXPIRY = 1200L
 
   def report(report: UserReport): Unit = {
     ClientSideLogging.redisClient.foreach { client =>
-      // The surrogate key is set to expire first. This causes the expiry notification to be sent
-      // on the Redis pub-sub channel, triggering the callback which will forward the data into S3.
-      // Nothing bad happens if data expires too soon, or the system falls behind; we just collect less data.
-      client.setex(report.viewId, PAGE_VIEW_DATA_COLLECTION_PERIOD, "surrogate-key")
 
       // If the data key has been written before, then the time key must have been written as well, so we skip this.
       // Otherwise, the page view would appear in several time keys.
