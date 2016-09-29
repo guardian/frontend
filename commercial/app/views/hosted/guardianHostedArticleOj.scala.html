@@ -7,7 +7,27 @@
             <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
             <h2 class="hosted__next-video--client-name hosted-tone">@{campaignOwner}</h2>
         </div>
+        <div class="hosted__next-video__carousel-arrows">
+            @fragments.inlineSvg("arrow-right", "icon", List("arrow-left"))
+            @fragments.inlineSvg("arrow-right", "icon", List("arrow-right"))
+        </div>
         @for(nextPage <- nextPages) {
+            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
+                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
+                <p class="hosted__next-page-title">@{nextPage.title}</p>
+            </a>
+            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
+                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
+                <p class="hosted__next-page-title">@{nextPage.title}</p>
+            </a>
+            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
+                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
+                <p class="hosted__next-page-title">@{nextPage.title}</p>
+            </a>
+            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
+                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
+                <p class="hosted__next-page-title">@{nextPage.title}</p>
+            </a>
             <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{nextPage.title}">
                 <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Page: @{nextPage.title}">
                 <p class="hosted__next-page-title">@{nextPage.title}</p>

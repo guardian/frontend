@@ -466,3 +466,27 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
 }
+
+/* Hosted More From Carousel AB test */
+.hosted__next-video__carousel-arrows {
+    position: absolute;
+    right: 0;
+    top: 26px;
+
+    .inline-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        cursor: pointer;
+    }
+
+    .arrow-left {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
