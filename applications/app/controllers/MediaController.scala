@@ -8,6 +8,7 @@ import model._
 import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
+import JsonComponent.withRefreshStatus
 
 import scala.concurrent.Future
 
@@ -25,7 +26,7 @@ class MediaController(contentApiClient: ContentApiClient) extends Controller wit
       case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
       case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
     } map { mediaInfo =>
-      Cached(60)(JsonComponent(Json.toJson(mediaInfo).as[JsObject]))
+      Cached(60)(JsonComponent(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
     }
   }
 

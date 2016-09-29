@@ -3,5 +3,5 @@
 @import views.html.fragments.commercial.contentLogo
 
 @for(branding <- page.branding(Edition(request))) {
-    @contentLogo(branding, content.tags.isInteractive)
+    @contentLogo(branding, content.tags.isInteractive, isBranded = false, isOnTheLeft = true)
 }

@@ -8,6 +8,7 @@
 @import form.Input
 @import helper._
 @import conf.switches.Switches
+@import views.html.fragments.registrationFooter
 
 <fieldset class="fieldset">
     <div class="fieldset__heading">
@@ -72,3 +73,5 @@
 
     </fieldset>
 </form>
+
+@registrationFooter(idRequest, idUrlBuilder)

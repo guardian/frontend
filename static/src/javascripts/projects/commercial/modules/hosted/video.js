@@ -11,6 +11,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/report-error',
+    'common/modules/video/youtube-player',
     'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -27,6 +28,7 @@ define([
     detect,
     mediator,
     reportError,
+    youtubePlayer,
     omniture,
     ab,
     events,
@@ -73,6 +75,11 @@ define([
 
     function init() {
         return new Promise(function (resolve) {
+            var $youtubeIframe = $('.js-hosted-youtube-video');
+            $youtubeIframe.each(function(el){
+                youtubePlayer.init(el);
+            });
+
             require(['bootstraps/enhanced/media/main'], function () {
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
@@ -96,7 +103,8 @@ define([
 
                         player.ready(function () {
                             var vol;
-                            duration = parseInt(this.duration(), 10);
+                            var player = this;
+                            duration = parseInt(player.duration(), 10);
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 

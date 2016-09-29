@@ -36,7 +36,9 @@ module.exports = (() => {
         '/lifeandstyle/2016/jun/04/dont-talk-politics-sex-ex-10-ways-ruin-a-date',  // gif
         '/football/2016/jun/20/ngolo-kante-france-euro-2016-caen-jose-saez', // guardian audio
         '/science/2016/may/25/neanderthals-built-mysterious-cave-structures-175000-years-ago', // dailymotion
-        // '/cities/2015/feb/24/private-london-exposed-thames-path-riverside-walking-route', // google maps
+        '/sustainable-business/live/2016/sep/16/coffee-climate-change-smallholders-central-america-ethiopia-technology-funding', // commercial badge with dimensions
+        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career', // page with GLabs badge
+        //'/world/2016/sep/19/democratic-republic-congo-demonstrations-banned-police-killed-joseph-kabila-etienne-tshisekedi', // google maps
         '/news/2016/may/09/how-mossack-fonseca-missed-warning-signs-of-70-million-boiler-room-scam-panama-papers', // scribd
         '/sport/2015/nov/18/jonah-lomu-interview-2015-world-cup-audio', // soundcloud
         '/music/musicblog/2016/jul/21/yello-swiss-pop-pioneers-return-with-new-video-limbo', // vevo

@@ -1,4 +1,5 @@
 @import common.commercial.hosted.HostedVideoPage
+@import conf.Configuration.site.host
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 @import views.html.hosted.guardianHostedHeader
 @import views.html.hosted.guardianHostedShareButtons
@@ -45,9 +46,13 @@
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    @if(page.video.youTubeHtml.isDefined){
-                        @Html(page.video.youTubeHtml.get)
-                    } else {
+                    @page.video.youtubeId.map { youtubeId =>
+                        <iframe id="hosted-video-@youtubeId"
+                        class="js-hosted-youtube-video"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(host != "") s"&origin=$host" else ""}"
+                        frameborder="0"
+                        allowfullscreen=""></iframe>
+                    }.getOrElse {
                         <video
                         data-duration="@{page.video.duration}"
                         data-media-id="@{page.video.mediaId}"
@@ -62,6 +67,11 @@
                             <source type="video/ogg" src="@{page.video.srcUrlOgg}">
                             <source type="video/m3u8" src="@{page.video.srcM3u8}">
                         </video>
+                    }
+                    @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
+                        <div class="hosted__youtube-poster-image" style="background-image: url(@page.video.posterUrl);">
+                            <div class="hosted__youtube-play-button"></div>
+                        </div>
                     }
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>

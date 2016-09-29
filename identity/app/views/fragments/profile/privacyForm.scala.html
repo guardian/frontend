@@ -6,6 +6,7 @@
 @import views.html.fragments.form.{checkboxField}
 @import form.IdFormHelpers._
 @import helper._
+@import views.html.fragments.registrationFooter
 
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -61,3 +62,5 @@
 
     </fieldset>
 </form>
+
+@registrationFooter(idRequest, idUrlBuilder)
