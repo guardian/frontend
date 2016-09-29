@@ -158,7 +158,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         val frameBorder = element.attr("frameborder")
         val elementMap = document.createElement("amp-iframe")
           elementMap
-            .attr("width", width) // 8:7 seems to be the normal ratio
+            .attr("width", width)
             .attr("height", height)
             .attr("layout", "responsive")
             .attr("sandbox", "allow-scripts allow-same-origin allow-popups")
