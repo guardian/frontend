@@ -69,11 +69,11 @@
     }
 }
 
-.youtube__video-ready + .hosted__youtube-poster-image {
+.youtube__video-ready ~ .hosted__youtube-poster-image {
     pointer-events: none;
 }
 
-.js-hosted-youtube-video:not(.youtube__video-started) + .hosted__youtube-poster-image {
+.js-hosted-youtube-video:not(.youtube__video-started) ~ .hosted__youtube-poster-image {
     background-size: cover;
 }
 
@@ -83,6 +83,28 @@
 
 .vjs-ended ~ .hosted-fading .hosted__meta {
     width: 60%;
+}
+
+.vjs-control-bar.youtube-player {
+    @include hosted-fade-in;
+    position: absolute;
+    bottom: 0;
+    background-color: unset;
+    font-size: 16px;
+    padding-top: 2px;
+    left: 88px;
+    pointer-events: none;
+}
+
+.youtube__video-playing ~ .vjs-control-bar.youtube-player {
+    @include hosted-fade-out;
+}
+
+.youtube__video-started.youtube__video-started ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
+.youtube__video-started ~ .vjs-control-bar.youtube-player {
+    @include mq($until: tablet) {
+        @include hosted-fade-out;
+    }
 }
 
 .hosted-next-autoplay {

@@ -83,7 +83,7 @@ define([
                     var $youtubeIframe = $('.js-hosted-youtube-video');
                     var $timer = $('.js-autoplay-timer');
                     var nextVideoPage = $timer.length && $timer.data('next-page');
-                    var duration = $youtubeIframe.length && $youtubeIframe.data('duration');
+                    var duration;
                     function useAutoplay(){
                         return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
                     }
@@ -105,7 +105,6 @@ define([
                         player.ready(function () {
                             var vol;
                             var player = this;
-                            duration = parseInt(player.duration(), 10);
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 
@@ -145,35 +144,41 @@ define([
                             bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
                                 cancelAutoplay($hostedNext);
                             });
-                            player && player.one('timeupdate', triggerAutoplay.bind(this, player.currentTime.bind(player)));
+                            player && player.one('timeupdate', triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt(player.duration(), 10)));
                         } else {
                             player && player.one('ended', triggerEndSlate);
                         }
                     }
 
                     $youtubeIframe.each(function(el){
+                        duration = $(el).data('duration');
+                        var $currentTime = $('.js-youtube-current-time');
                         youtubePlayer.init(el, {
                             onPlayerStateChange: function (event) {
                                 switch(event.data) {
                                     case window.YT.PlayerState.PAUSED:
-                                        //todo: display current time/duration
+                                        var currentTime = Math.floor(event.target.getCurrentTime());
+                                        var seconds = currentTime % 60;
+                                        var minutes = (currentTime - seconds) / 60;
+                                        $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
                                         break;
                                     case window.YT.PlayerState.ENDED:
-                                        if(!useAutoplay()){
+                                        $currentTime.text('0:00');
+                                        if(nextVideoPage && !useAutoplay()){
                                             triggerEndSlate();
                                         }
                                         break;
                                 }
                             },
                             onPlayerReady: function (event) {
-                                if (useAutoplay()) {
-                                    triggerAutoplay(event.target.getCurrentTime.bind(event.target));
+                                if (nextVideoPage && useAutoplay()) {
+                                    triggerAutoplay(event.target.getCurrentTime.bind(event.target), duration);
                                 }
                             }
                         });
                     });
 
-                    function triggerAutoplay(getCurrentTimeFn) {
+                    function triggerAutoplay(getCurrentTimeFn, duration) {
                         nextVideoInterval = setInterval(function () {
                             var timeLeft = duration - Math.floor(getCurrentTimeFn());
                             var countdownLength = 10; //seconds before the end when to show the timer
