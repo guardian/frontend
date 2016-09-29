@@ -1,9 +1,7 @@
 @import common.commercial.hosted.HostedVideoPage
 @import conf.Configuration.site.host
+@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward}
 @(page: HostedVideoPage)(implicit request: RequestHeader)
-@import views.html.hosted.guardianHostedHeader
-@import views.html.hosted.guardianHostedShareButtons
-@import views.html.hosted.guardianHostedCta
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -135,7 +133,25 @@
                 </div>
             </div>
 
-            <div class="js-onward-placeholder"></div>
+            @page.nextPage.map { trail =>
+
+                @* To show hardcoded onward component if there is one - this will eventually be removed *@
+                <div class="hosted__next-video">
+                    <div class="hosted__next-video--header">
+                        <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+                        <h2 class="hosted__next-video--client-name hosted-tone">@{page.campaign.owner}</h2>
+                    </div>
+                    <a href="@{trail.pageUrl}" class="hosted__next-video--tile js-next-video" data-colour="@{page.campaign.fontColour.brandColour}" data-link-name="Next Hosted Video: @{trail.title}">
+                        <img class="hosted__next-video-thumb" src="@{trail.imageUrl}" alt="Next Video: @{trail.title}">
+                        <p class="hosted__next-video-title">@{trail.title}</p>
+                    </a>
+                </div>
+
+            }.getOrElse {
+
+                <div class="js-onward-placeholder"></div>
+
+            }
 
         </section>
         @guardianHostedCta(page, page.cta)
