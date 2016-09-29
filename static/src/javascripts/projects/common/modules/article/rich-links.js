@@ -9,10 +9,12 @@ define([
     'common/utils/mediator',
     'common/utils/report-error',
     'common/utils/template',
+    'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
     'text!common/views/content/richLinkTag.html',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     qwery,
@@ -24,28 +26,52 @@ define([
     mediator,
     reportError,
     template,
+    fastdomPromise,
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains
+    contains,
+    ab
 ) {
+
+    function elementIsBelowViewport (el) {
+        return fastdomPromise.read(function(){
+            var rect = el.getBoundingClientRect();
+            return rect.top > (window.innerHeight || document.documentElement.clientHeight);
+        });
+    }
+
     function upgradeRichLink(el) {
-        var href = $('a', el).attr('href'),
-            matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+        var href = $('a', el).attr('href');
+        var matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+        var isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
+
+        function doUpgrade(shouldUpgrade, resp) {
+            if (shouldUpgrade) {
+                return fastdom.write(function () {
+                    $(el).html(resp.html)
+                        .removeClass('element-rich-link--not-upgraded')
+                        .addClass('element-rich-link--upgraded');
+                    imagesModule.upgradePictures(el);
+                    $('.submeta-container--break').removeClass('submeta-container--break');
+                    mediator.emit('rich-link:loaded', el);
+                });
+            }
+        }
 
         if (matches && matches[1]) {
             return fetchJson('/embed/card' + matches[1] + '.json', {
                 mode: 'cors'
             }).then(function (resp) {
                 if (resp.html) {
-                    fastdom.write(function () {
-                        $(el).html(resp.html)
-                            .removeClass('element-rich-link--not-upgraded')
-                            .addClass('element-rich-link--upgraded');
-                        imagesModule.upgradePictures(el);
-                        $('.submeta-container--break').removeClass('submeta-container--break');
-                        mediator.emit('rich-link:loaded', el);
-                    });
+
+                    // Fastdom read the viewport height before upgrading if we're in the test
+                    if (isInRichLinkTest) {
+                        elementIsBelowViewport(el).then(function(shouldUpgrade){
+                            doUpgrade(shouldUpgrade, resp);
+                        });
+                    } else {
+                        doUpgrade(true, resp); }
                 }
             })
             .catch(function (ex) {
@@ -56,6 +82,7 @@ define([
         } else {
             return Promise.resolve(null);
         }
+
     }
 
     function getSpacefinderRules() {

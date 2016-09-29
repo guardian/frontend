@@ -27,7 +27,7 @@ case class CSSRule(selector: String, styles: ListMap[String, String]) {
     Seq(ids, (classes + attributes + pseudos), tags).map(_.toString).mkString.toInt
   }
 
-  override def toString() = s"$selector { ${CSSRule.styleString(styles)} }"
+  override def toString() = s"$selector { ${CSSRule.styleStringFromMap(styles)} }"
 }
 
 object CSSRule {
@@ -38,11 +38,11 @@ object CSSRule {
       selectors <- rule.lift(0)
       styles <- rule.lift(1)
     } yield {
-      selectors.split(",").map(selector => CSSRule(selector.trim, makeStyles(styles.stripSuffix("}").trim)))
+      selectors.split(",").map(selector => CSSRule(selector.trim, styleMapFromString(styles.stripSuffix("}").trim)))
     }
   }
 
-  def makeStyles(styles: String): ListMap[String, String] = {
+  def styleMapFromString(styles: String): ListMap[String, String] = {
     styles.split(";(?!base)").flatMap { style =>
       val split = style.split(":(?!(\\w)|(//))")
 
@@ -53,7 +53,7 @@ object CSSRule {
     }.foldLeft(ListMap.empty[String, String])(_ + _)
   }
 
-  def styleString(styles: ListMap[String, String]): String = styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
+  def styleStringFromMap(styles: ListMap[String, String]): String = styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
 }
 
 object InlineStyles {
@@ -78,8 +78,15 @@ object InlineStyles {
       head.map(css => el.appendChild(document.createElement("style").text(css)))
     }
 
-    inline sortBy(_.specifity) foreach { rule =>
+    inline.sortBy(_.specifity).foreach { rule =>
       document.select(rule.selector) foreach(el => el.attr("style", mergeStyles(rule, el.attr("style"))))
+    }
+
+    // Outlook ignores styles with !important so we need to strip that out.
+    // So this doesn't change which styles take effect, we also sort styles
+    // so that all important styles appear to the right of all non-important styles.
+    document.getAllElements.foreach { el =>
+      el.attr("style", sortStyles(el.attr("style")).replace(" !important", ""))
     }
 
     Html(document.toString)
@@ -105,11 +112,35 @@ object InlineStyles {
     }
   }
 
+  /**
+    * I found drawing this table helpful in understanding the logic of this function.
+    * As you add styles from left to right:
+    *
+    * Existing Style | New Style    | Which should win?
+    * ---------------------------------------------------
+    *  !important    |      -       | existing
+    *      -         |  !important  | new
+    *  !important    |  !important  | new
+    *      -         |      -       | new
+    */
   def mergeStyles(rule: CSSRule, existing: String): String = {
-    CSSRule.styleString(rule.styles.foldLeft(CSSRule.makeStyles(existing)) { case (style, (property, value)) =>
+    CSSRule.styleStringFromMap(rule.styles.foldLeft(CSSRule.styleMapFromString(existing)) { case (style, (property, value)) =>
       if (style.get(property).exists(_.contains("!important")) && !value.contains("!important")) style
       else style + (property -> value)
     })
+  }
+
+  /**
+    * Ensure !important styles appear last
+    */
+  def sortStyles(styles: String): String = {
+    val stylesMap = CSSRule.styleMapFromString(styles)
+    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith { case((k1, v1), (k2, v2)) =>
+      if (v1.contains("!important") || !v2.contains("!important")) false
+      else true
+    }:_*)
+
+    CSSRule.styleStringFromMap(importantStylesLast)
   }
 
   private def seq(rules: CSSRuleList): Seq[W3CSSRule] = for (i <- 0 until rules.getLength) yield rules.item(i)

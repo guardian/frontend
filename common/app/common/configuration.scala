@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 5
+    val s3ConfigVersion = 6
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -363,7 +363,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.3.0"
+    lazy val frontendAssetsVersion = "v1.4.0"
   }
 
   object witness {
@@ -472,6 +472,10 @@ class GuardianConfiguration extends Logging {
 
   object front {
     lazy val config = configuration.getMandatoryStringProperty("front.config")
+  }
+
+  object targeting {
+    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
   }
 
   object facia {

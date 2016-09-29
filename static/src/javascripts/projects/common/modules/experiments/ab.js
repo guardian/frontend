@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/discussion-external-frontend',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/membership-engagement-banner',
@@ -16,7 +15,8 @@ define([
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/video-button-duration',
-    'common/modules/experiments/tests/hosted-more-from'
+    'common/modules/experiments/tests/hosted-more-from',
+    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport'
 ], function (
     reportError,
     config,
@@ -26,7 +26,6 @@ define([
     mvtCookie,
     memoize,
     noop,
-    DiscussionExternalFrontend,
     DiscussionPromoteBottomBanner,
     LiveBlogChromeNotificationsProd,
     MembershipEngagementBannerTests,
@@ -35,11 +34,11 @@ define([
     WeekendReadingPromo,
     ContributionsStory,
     VideoButtonDuration,
-    HostedMoreFrom
+    HostedMoreFrom,
+    UpgradeMobileRichLinksBelowViewport
 ) {
 
     var TESTS = [
-        new DiscussionExternalFrontend(),
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
         new LiveBlogChromeNotificationsProd(),
@@ -47,7 +46,8 @@ define([
         new WeekendReadingPromo(),
         new ContributionsStory(),
         new VideoButtonDuration(),
-        new HostedMoreFrom()
+        new HostedMoreFrom(),
+        new UpgradeMobileRichLinksBelowViewport()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

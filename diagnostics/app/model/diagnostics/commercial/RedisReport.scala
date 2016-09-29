@@ -46,7 +46,8 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
         log.logger.info(s"writing report to s3 bucket, view id: $id")
 
         if (Configuration.environment.isProd) {
-          S3CommercialReports.putPublic(s"commercial-client-logs/$id", reportData, "text/plain")
+          val date = DateTime.now().toString("yyyy-MM-dd")
+          S3CommercialReports.putPublic(s"date=$date/$id", reportData, "text/plain")
         }
       }
     } catch {
@@ -56,7 +57,7 @@ class ExpiredKeyEventSubscriber(client: RedisClient, system: ActorSystem) extend
 }
 
 object S3CommercialReports extends S3 {
-  override lazy val bucket = "aws-frontend-logs"
+  override lazy val bucket = "ophan-raw-client-side-ad-metrics"
 }
 
 /*
