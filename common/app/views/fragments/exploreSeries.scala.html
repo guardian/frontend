@@ -12,11 +12,11 @@
     page.item.tags.isExploreSeries,
     page.item.elements.hasMainVideo
 )) { case (hasEmbed, hasMainMedia, isExploreSeries, hasVideo) =>
-<!--
+
   <style>
     @Html(common.Assets.css.inlineExplore)
   </style>
- -->
+
     <div class="@RenderClasses(Map(
             "content--explore-series-article" -> isExploreSeries,
             "immersive-main-media" -> hasMainMedia,
