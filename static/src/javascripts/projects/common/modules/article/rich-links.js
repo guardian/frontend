@@ -46,34 +46,43 @@ define([
         var matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
         var isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
 
-        // Fastdom read the viewport height before upgrading if we're in the test
-        (isInRichLinkTest) ? elementIsBelowViewport(el).then(doUpgrade) : doUpgrade(true);
-
-        function doUpgrade(shouldUpgrade) {
-            if (shouldUpgrade && matches && matches[1]) {
-                return fetchJson('/embed/card' + matches[1] + '.json', {
-                    mode: 'cors'
-                }).then(function (resp) {
-                    if (resp.html) {
-                        fastdom.write(function () {
-                            $(el).html(resp.html)
-                                .removeClass('element-rich-link--not-upgraded')
-                                .addClass('element-rich-link--upgraded');
-                            imagesModule.upgradePictures(el);
-                            $('.submeta-container--break').removeClass('submeta-container--break');
-                            mediator.emit('rich-link:loaded', el);
-                        });
-                    }
-                })
-                .catch(function (ex) {
-                    reportError(ex, {
-                        feature: 'rich-links'
-                    });
+        function doUpgrade(shouldUpgrade, resp) {
+            if (shouldUpgrade) {
+                return fastdom.write(function () {
+                    $(el).html(resp.html)
+                        .removeClass('element-rich-link--not-upgraded')
+                        .addClass('element-rich-link--upgraded');
+                    imagesModule.upgradePictures(el);
+                    $('.submeta-container--break').removeClass('submeta-container--break');
+                    mediator.emit('rich-link:loaded', el);
                 });
-            } else {
-                return Promise.resolve(null);
             }
         }
+
+        if (matches && matches[1]) {
+            return fetchJson('/embed/card' + matches[1] + '.json', {
+                mode: 'cors'
+            }).then(function (resp) {
+                if (resp.html) {
+
+                    // Fastdom read the viewport height before upgrading if we're in the test
+                    if (isInRichLinkTest) {
+                        elementIsBelowViewport(el).then(function(shouldUpgrade){
+                            doUpgrade(shouldUpgrade, resp);
+                        });
+                    } else {
+                        doUpgrade(true, resp); }
+                }
+            })
+            .catch(function (ex) {
+                reportError(ex, {
+                    feature: 'rich-links'
+                });
+            });
+        } else {
+            return Promise.resolve(null);
+        }
+
     }
 
     function getSpacefinderRules() {
