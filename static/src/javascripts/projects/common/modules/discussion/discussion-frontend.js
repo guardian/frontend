@@ -1,7 +1,11 @@
 define([
+    'fastdom',
+    'common/utils/formatters',
     'common/utils/mediator',
     'common/utils/report-error'
 ], function(
+    fastdom,
+    formatters,
     mediator,
     reportError
 ) {
@@ -19,10 +23,16 @@ define([
                     // in the page refresh their value.
                     var otherValues = document.getElementsByClassName('js_commentcount_actualvalue');
                     for (var i = 0, len = otherValues.length; i < len; i += 1) {
-                        otherValues[i].textContent = value;
+                        updateCommentCount(otherValues[i], value);
                     }
                 }
                 mediator.emit('comments-count-loaded');
+            });
+        }
+
+        function updateCommentCount (element, value) {
+            fastdom.write(function () {
+                element.textContent = formatters.integerCommas(value);
             });
         }
 
