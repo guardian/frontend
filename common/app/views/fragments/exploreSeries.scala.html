@@ -54,7 +54,9 @@
                 }
             }
         </div>
-        <div class="immersive-main-media__image-overlay"></div>
+        @if(!page.item.elements.hasMainVideo){
+          <div class="immersive-main-media__image-overlay"></div>
+        }
         <div class="series-identity-explore">
             <div class="gs-container">
                 <div class="content__main-column">

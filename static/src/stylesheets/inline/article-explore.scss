@@ -59,18 +59,19 @@ $explore-series-header-element-opacity: .85;
     }
 
     &.explore--video {
+        background-color: #333;
         min-height: 0;
 
         @include mq($from: mobileLandscape) {
-            min-height: 432px;
+            min-height: 470px;
         }
 
         @include mq($from: tablet) {
-            min-height: 364px;
+            min-height: 720px;
         }
 
         @include mq($from: desktop) {
-            height: 515px;
+            height: 730px;
         }
     }
 }
@@ -455,15 +456,15 @@ $explore-series-header-element-opacity: .85;
 Because this template uses the immersive header they are outside of the header - hence
 givng this some mega minus margins.*/
 
-.l-side-margins {
-    &.explore--video {
-        &::before {
-            margin-top: -560px;
-            height: 128%;
-        }
-        &::after {
-            margin-top: -560px;
-            height: 128%;
-        }
-    }
-}
+// .l-side-margins {
+//     &.explore--video {
+//         &::before {
+//             margin-top: -560px;
+//             height: 128%;
+//         }
+//         &::after {
+//             margin-top: -560px;
+//             height: 128%;
+//         }
+//     }
+// }
