@@ -4,9 +4,7 @@ import com.gu.contentapi.client.model.v1.{Content, TagType}
 import com.gu.contentatom.thrift.{Atom, AtomData}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
-import model.GuardianContentTypes._
-import model.{MetaData, SectionSummary}
-import play.api.libs.json.JsString
+import model.MetaData
 
 case class HostedVideoPage(
   campaign: HostedCampaign,
@@ -57,39 +55,6 @@ object HostedVideoPage extends Logging {
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
-      val toneId = toneTag.id
-      //val toneName = toneTag.webTitle //TODO the toneTag.webTitle value should be Hosted not Advertisement Feature
-      val toneName = "Hosted"
-
-      val keywordId = s"${campaignId}/${campaignId}"
-      val keywordName = campaignId
-
-      val metadata = MetaData.make(
-        id = pageId,
-        section = content.sectionId map SectionSummary.fromId,
-        webTitle = pageTitle,
-        analyticsName = s"GFE:$campaignId:$Video:$pageTitle",
-        url = Some(s"/$pageId"),
-        description = Some(standfirst),
-        contentType = Video,
-        iosType = Some(Video),
-        javascriptConfigOverrides = Map(
-          "keywordIds" -> JsString(keywordId),
-          "keywords" -> JsString(keywordName),
-          "toneIds" -> JsString(toneId),
-          "tones" -> JsString(toneName)
-        ),
-        opengraphPropertiesOverrides = Map(
-          "og:url" -> pageUrl,
-          "og:title" -> pageTitle,
-          "og:description" ->
-          s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
-          "og:image" -> video.posterUrl.getOrElse(""),
-          "fb:app_id" -> "180444840287"
-        ),
-        twitterPropertiesOverrides = Map()
-      )
-
       HostedVideoPage(
         campaign = HostedCampaign(
           id = campaignId,
@@ -120,7 +85,7 @@ object HostedVideoPage extends Logging {
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
-        metadata
+        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )
     }
 
