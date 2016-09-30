@@ -27,6 +27,17 @@ object ClientSideLogging extends Logging {
     reports.toList
   }
 
+  def cleanUpReports(dateTime: DateTime): Unit = {
+    redisClient.map( client => {
+      val timeKey = ClientSideLogging.reportsKeyFromDate(dateTime)
+      val pageViewIds = client.smembers[String](timeKey).map(_.flatten).getOrElse(List())
+      val dataKeys = pageViewIds.map(ClientSideLogging.dataKeyFromId)
+      client.del(dataKeys ++ timeKey)
+    })
+
+
+  }
+
   // Make a client for each usage, otherwise there may be protocol errors.
   def redisClient: Option[RedisClient] = {
     try {
