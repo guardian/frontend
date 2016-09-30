@@ -13,6 +13,14 @@ define([
             emitter.once('comment-count', function (value) {
                 if (value === 0) {
                     loader.setState('empty');
+                } else {
+                    // By the time discussion frontent loads, the number of comments
+                    // might have changed. If there are other comment counts element
+                    // in the page refresh their value.
+                    var otherValues = document.getElementsByClassName('js_commentcount_actualvalue');
+                    for (var i = 0, len = otherValues.length; i < len; i += 1) {
+                        otherValues[i].textContent = value;
+                    }
                 }
                 mediator.emit('comments-count-loaded');
             });
