@@ -193,7 +193,9 @@ object VisitBritainHostedPages {
   private def cta(pageName: String) = HostedCallToAction(
     label = Some("Explore our collection of unique experiences from all over Great Britain & Northern Ireland"),
     btnText = Some("Find more inspiration"),
-    url = s"http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleries$pageName&utm_campaign=display"
+    url = s"http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleries$pageName&utm_campaign=display",
+    image = None,
+    trackingCode = None
   )
 
   val activitiesGallery: HostedGalleryPage = HostedGalleryPage(

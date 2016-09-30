@@ -298,6 +298,8 @@ GET            /commercial/capi.json                                            
 GET            /commercial/capi                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single                                                                                           controllers.commercial.ContentApiOffersController.itemHtml
+GET            /commercial/api/capi-single.json                                                                                  controllers.commercial.ContentApiOffersController.nativeJson
+GET            /commercial/api/capi-multiple.json                                                                                controllers.commercial.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
@@ -306,6 +308,7 @@ GET            /commercial/multi.json                                           
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /advertiser-content/onward/:campaignName/:pageName/:cType.json                                                    controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
 GET            /commercial/contributor-email                                                                                     controllers.commercial.ContributorEmailPageController.renderContributorEmailPage
 GET            /commercial/contributor-email/do                                                                                  controllers.commercial.ContributorEmailPageController.renderContributorEmailPageResult
