@@ -15,6 +15,7 @@ import org.jsoup.nodes.{Document, Element}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import scala.util.Try
 import scala.util.control.NonFatal
 import scala.xml.Node
 
@@ -88,7 +89,17 @@ case class TravelOffer(id: String,
   }
 }
 
-case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) {
+sealed trait Gender {
+  override def toString: String
+}
+case object Woman extends Gender {
+  override def toString = "Woman"
+}
+case object Man extends Gender {
+  override def toString = "Man"
+}
+
+case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) extends Merchandise {
 
   val profileId: Option[String] = profilePhoto match {
     case Member.IdPattern(id) => Some(id)
@@ -101,10 +112,6 @@ case class Member(username: String, gender: Gender, age: Int, profilePhoto: Stri
 }
 
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
-
-sealed case class Gender(name: String) {
-  override def toString = name
-}
 
 case class Job(id: Int,
                title: String,
@@ -245,11 +252,7 @@ object TravelOffer {
     def text(nodeSelector: String): String = (xml \ nodeSelector).text.trim
     def tagText(group: String): Seq[String] = (xml \\ "tag").filter(hasGroupAttr(_, group)).map(_.text.trim)
 
-    def parseInt(s: String) = try {
-      Some(s.toInt)
-    } catch {
-      case NonFatal(_) => None
-    }
+    def parseInt(s: String) = Try(s.toInt).toOption
 
     def parseDouble(s: String) = try {
       Some(s.toDouble)
@@ -283,7 +286,7 @@ object Member {
   val IdPattern = """.*/([\da-f]+)/.*""".r
 
   implicit val readsGender: Reads[Gender] = JsPath.read[String].map (gender => if(gender == "Woman") Woman else Man)
-  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
+  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.toString))
 
   implicit val readsMember: Reads[Member] =
     (
@@ -298,7 +301,7 @@ object Member {
     def writes(member: Member): JsValue = {
       Json.obj(
         "username" -> member.username,
-        "gender" -> member.gender.name,
+        "gender" -> member.gender,
         "age" -> member.age,
         "profile_photo" -> member.profilePhoto,
         "location" -> member.location,
@@ -318,9 +321,6 @@ object Member {
     }
   }
 }
-
-object Woman extends Gender("Woman")
-object Man extends Gender("Man")
 
 object Job {
 
@@ -364,7 +364,5 @@ object LiveEvent {
       imageUrl = eventMembershipInformation.mainImageUrl
     )
 
-  implicit val writesLiveEvent: Writes[LiveEvent] = new Writes[LiveEvent] {
-    def writes(m: LiveEvent) = JsString("")
-  }
+  implicit val writesLiveEvent: Writes[LiveEvent] = Json.writes[LiveEvent]
 }

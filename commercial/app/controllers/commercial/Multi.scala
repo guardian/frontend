@@ -28,13 +28,25 @@ class Multi(bestsellersAgent: BestsellersAgent,
     val components = offerTypes zip offerIds
 
     val samples = components map {
-      case ("Book", Some(bookId))     => bestsellersAgent.getSpecificBooks(Seq(bookId))
-      case ("Book", None)             => Future.successful(bestsellersAgent.bestsellersTargetedAt(segment))
-      case ("Job", Some(jobId))       => Future.successful(jobsAgent.specificJobs(Seq(jobId)))
-      case ("Job", None)              => Future.successful(jobsAgent.jobsTargetedAt(segment))
-      case ("Masterclass", Some(masterclassId)) => Future.successful(masterclassAgent.specificMasterclasses(Seq(masterclassId)).filterNot(_.mainPicture.isEmpty))
-      case ("Masterclass", None)                => Future.successful(masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty))
-      case ("Soulmates", _)           => Future.successful {
+      case ("Book", optId)        => optId.map { bookId =>
+        bestsellersAgent.getSpecificBooks(Seq(bookId))
+      }.getOrElse {
+        Future.successful(bestsellersAgent.bestsellersTargetedAt(segment))
+      }
+
+      case ("Job", optId)        => optId.map { jobId =>
+        Future.successful(jobsAgent.specificJobs(Seq(jobId)))
+      }.getOrElse {
+        Future.successful(jobsAgent.jobsTargetedAt(segment))
+      }
+
+      case ("Masterclass", optId) => optId.map { masterclassId =>
+        Future.successful(masterclassAgent.specificMasterclasses(Seq(masterclassId)).filterNot(_.mainPicture.isEmpty))
+      }.getOrElse {
+        Future.successful(masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty))
+      }
+
+      case ("Soulmates", _)       => Future.successful {
         (for {
           woman <- SoulmatesAgent.womenAgent.sample().headOption
           man <- SoulmatesAgent.menAgent.sample().headOption
@@ -45,27 +57,27 @@ class Multi(bestsellersAgent: BestsellersAgent,
         }
       }
 
-      case ("Travel", Some(travelId)) => Future.successful(travelOffersAgent.specificTravelOffers(Seq(travelId)))
-      case ("Travel", None)           => Future.successful(travelOffersAgent.offersTargetedAt(segment))
+      case ("Travel", optId)      => optId.map { travelId =>
+        Future.successful(travelOffersAgent.specificTravelOffers(Seq(travelId)))
+      }.getOrElse {
+        Future.successful(travelOffersAgent.offersTargetedAt(segment))
+      }
+
       case _                          => Future.successful(Nil)
     }
 
-    Future.sequence(samples) map { realSamples =>
-        realSamples.map(_.headOption)
-    } map { realSamples =>
-        realSamples.flatten
-    }
+    Future.sequence(samples) map { realSamples => realSamples.flatMap(_.headOption) }
   }
 
   def renderMulti() = Action.async { implicit request =>
-    val requestedContent = request.getParameters("components").map { component => component match {
+    val requestedContent = request.getParameters("components").map {
         case "books"  => "Book"
         case "jobs"   => "Job"
         case "travel" => "Travel"
         case "masterclasses" => "Masterclass"
         case "soulmates" => "Soulmates"
         case _        => ""
-    }}
+    }
 
     val slotIds = request.getParameters("slotIds").map { slotId => if (slotId.trim.isEmpty) None else Some(slotId) }
 
@@ -82,7 +94,8 @@ class Multi(bestsellersAgent: BestsellersAgent,
         case m: Masterclass => views.html.masterclasses.masterclassesBlended(m, clickMacro)
         case p: MemberPair  => views.html.soulmates.soulmatesBlended(Random.shuffle(Seq(p.member1, p.member2)), clickMacro)
         case t: TravelOffer => views.html.travel.travelBlended(t, clickMacro)
-        case _              => Html("")
+        case _: LiveEvent   => Html("")
+        case _: Member      => Html("")
       }
 
       if (requestedContent.nonEmpty && content.size == requestedContent.size) {
@@ -106,10 +119,10 @@ class Multi(bestsellersAgent: BestsellersAgent,
     eventualContents map { contents =>
       if (offerTypes.size == contents.size) {
         Cached(componentMaxAge) {
-          JsonComponent(JsArray((offerTypes zip contents).map({ case (contentType, content) => Json.obj(
+          JsonComponent(JsArray((offerTypes zip contents).map { case (contentType, content) => Json.obj(
               "type" -> contentType,
               "value" -> Json.toJson(content)(Merchandise.writes)
-          )})))
+          )}))
         }
       } else {
         Cached(componentMaxAge)(jsonFormat.nilResult)
