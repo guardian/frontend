@@ -37,7 +37,6 @@ class MediaController(contentApiClient: ContentApiClient) extends Controller wit
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient.item(path, edition)
         .showFields("all")
-        .showBlocks("main")
     )
 
     val result = response map { response =>

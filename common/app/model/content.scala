@@ -2,7 +2,6 @@ package model
 
 import java.net.URL
 
-import com.gu.contentapi.client.model.v1.{AssetType, Blocks, ElementType}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
@@ -68,8 +67,7 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false,
-  blocks: Option[Blocks] = None
+  showFooterContainers: Boolean = false
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -392,8 +390,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      blocks = apiContent.blocks
+      }
     )
   }
 }
@@ -580,14 +577,6 @@ final case class Audio (override val content: Content) extends ContentType {
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
-
-  val mainSectionImages = for {
-    blocks <- content.blocks
-    mainBlock <- blocks.main
-    firstElement <- mainBlock.elements.headOption
-    assets = firstElement.assets.filter(_.`type` == AssetType.Image)
-    nativeImages = assets.zipWithIndex.map{ case (e, i) => ImageAsset.make(e, i)}
-  } yield ImageMedia(nativeImages)
 
 }
 
