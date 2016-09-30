@@ -155,16 +155,30 @@ define([
                         var $currentTime = $('.js-youtube-current-time');
                         youtubePlayer.init(el, {
                             onPlayerStateChange: function (event) {
-                                if(event.data == window.YT.PlayerState.ENDED) {
+                                var playTimer;
+
+                                //show end slate when movie finishes
+                                if (event.data === window.YT.PlayerState.ENDED) {
                                     $currentTime.text('0:00');
                                     if(nextVideoPage && !useAutoplay()){
                                         triggerEndSlate();
                                     }
                                 } else {
+                                    //update current time
                                     var currentTime = Math.floor(event.target.getCurrentTime());
                                     var seconds = currentTime % 60;
                                     var minutes = (currentTime - seconds) / 60;
                                     $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
+                                }
+
+                                //calculate completion and send event to ophan
+                                if (event.data === window.YT.PlayerState.PLAYING) {
+                                    var playerTotalTime = youtubePlayer.getDuration();
+                                    playTimer = setInterval(function() {
+                                        sendPercentageCompleteEvents(youTubePlayer, playerTotalTime);
+                                    }, 1000);
+                                } else {
+                                    clearTimeout(playTimer);
                                 }
                             },
                             onPlayerReady: function (event) {
@@ -174,6 +188,36 @@ define([
                             }
                         });
                     });
+
+                    function sendPercentageCompleteEvents(youTubePlayer, playerTotalTime) {
+                        var quartile = playerTotalTime / 4;
+                        var playbackEvents = {
+                            'watched25': quartile,
+                            'watched50': quartile * 2,
+                            'watched75': quartile * 3,
+                            'end': playerTotalTime
+                        };
+
+                        _.forEach(playbackEvents, function(value, key) {
+                            if (youTubePlayer.getCurrentTime() > value) {
+                                ophanRecord(youTubePlayer.id, key);
+                            }
+                        });
+                    }
+
+                    function ophanRecord(id, key) {
+                        var ophanPath = 'ophan/embed';
+                        if (id) {
+                            require([ophanPath], function (ophan) {
+                                var eventObject = {};
+                                eventObject['youtube video'] = {
+                                    id: id,
+                                    eventType: key
+                                };
+                                ophan.record(eventObject);
+                            });
+                        }
+                    }
 
                     function triggerAutoplay(getCurrentTimeFn, duration) {
                         nextVideoInterval = setInterval(function () {
