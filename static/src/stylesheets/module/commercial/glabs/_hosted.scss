@@ -270,7 +270,7 @@ $hosted-video-height: 540px;
     vertical-align: top;
 }
 
-.js-hosted-youtube-video + .hosted__youtube-poster-image .hosted__youtube-play-button,
+.hosted__youtube-video ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
 .hosted-article-page figure div > div .vjs-big-play-button .vjs-control-text, //no useful class name here!
 .hosted__video.gu-media--video .vjs-big-play-button .vjs-control-text {
     @include fs-textSans(4);
@@ -485,21 +485,27 @@ $hosted-video-height: 540px;
     }
 }
 
-.youtube__video-playing ~ .hosted-fading,
-.vjs-playing + .hosted-fading {
-    .hosted__meta,
-    .hostedbadge__logo,
-    .hosted__video-overlay {
-        @include hosted-fade-out;
+.hosted__youtube-video,
+.vjs-playing {
+    & ~ .hosted-fading {
+        .hosted__meta,
+        .hostedbadge__logo,
+        .hosted__video-overlay {
+            @include hosted-fade-out;
+        }
     }
 }
 
-.youtube__video-paused ~ .hosted-fading,
-.vjs-paused + .hosted-fading {
-    .hosted__meta,
-    .hostedbadge__logo,
-    .hosted__video-overlay {
-        @include hosted-fade-in;
+.hosted__youtube-video:not(.youtube__video-started),
+.youtube__video-paused,
+.youtube__video-ended,
+.vjs-paused {
+    & ~ .hosted-fading {
+        .hosted__meta,
+        .hostedbadge__logo,
+        .hosted__video-overlay {
+            @include hosted-fade-in;
+        }
     }
 }
 
@@ -531,14 +537,8 @@ $hosted-video-height: 540px;
     }
 }
 
-.js-hosted-youtube-video ~ .hosted-fading .hosted__video-overlay {
+.hosted__youtube-video ~ .hosted-fading .hosted__video-overlay {
     pointer-events: none;
-}
-
-.youtube__video-started ~ .hosted-fading .hosted__video-overlay {
-    @include mq($until: tablet) {
-        display: none;
-    }
 }
 
 // Headings
