@@ -42,6 +42,10 @@ module.exports = function () {
 
         validateCCS: {
             command: 'make compile-css'
+        },
+
+        rollup: {
+            command: 'node rollup.js'
         }
     };
 };

@@ -10,8 +10,8 @@ define([
     'common/utils/user-timing',
     'common/utils/robust',
     'common/modules/experiments/ab',
-    './common',
-    './sport',
+    'bootstraps/enhanced/common',
+    'bootstraps/enhanced/sport',
     'enhanced-common'
 ], function (
     fastdom,
