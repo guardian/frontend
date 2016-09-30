@@ -8,8 +8,8 @@ import model.MetaData
  */
 object Support {
 
-  def makeshiftPage(nextPage: NextHostedPage, campaign: HostedCampaign): HostedPage = new HostedPage {
-    override def campaign: HostedCampaign = campaign
+  def makeshiftPage(nextPage: NextHostedPage, hostedCampaign: HostedCampaign): HostedPage = new HostedPage {
+    override def campaign: HostedCampaign = hostedCampaign
 
     override def pageUrl: String = nextPage.pageUrl
 
