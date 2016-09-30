@@ -1,0 +1,41 @@
+package common.commercial
+
+import com.redis.RedisClient
+import common.Logging
+import conf.Configuration
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+
+object ClientSideLogging extends Logging {
+
+  val reportFormat = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
+
+  def dataKeyFromId(viewId: String): String = viewId + "-data"
+
+  def reportsKeyFromDate(dateTime: DateTime): String = reportFormat.print(dateTime) + "-views"
+
+  def getReports(dateTime: DateTime): List[String] = {
+    val reports = for {
+      client <- redisClient.toList
+      maybeSet <- client.smembers[String](ClientSideLogging.reportsKeyFromDate(dateTime)).toList
+      maybeViewId <- maybeSet
+      viewId <- maybeViewId
+      report <- client.get[String](ClientSideLogging.dataKeyFromId(viewId))
+    } yield {
+      report
+    }
+    reports.toList
+  }
+
+  // Make a client for each usage, otherwise there may be protocol errors.
+  def redisClient: Option[RedisClient] = {
+    try {
+      Configuration.redis.endpoint.map(new RedisClient(_, 6379))
+    }
+    catch {
+      case e: Exception =>
+        log.logger.error(e.getMessage)
+        None
+    }
+  }
+}

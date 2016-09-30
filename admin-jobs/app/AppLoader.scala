@@ -16,6 +16,7 @@ import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
 import services.ConfigAgentLifecycle
+import jobs.CommercialClientSideLoggingLifecycle
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -42,7 +43,8 @@ trait AppLifecycleComponents {
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[CommercialClientSideLoggingLifecycle]
   )
 }
 
