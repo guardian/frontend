@@ -10,16 +10,20 @@ define([
 
     function loadOnwardComponent() {
 
-        var placeholder = document.querySelector('.js-onward-placeholder');
+        // todo: why is this necessary?  if it's not here get 404s all over the site
+        if (config.page.isHosted) {
 
-        return fetchJson(config.page.ajaxUrl + '/'
-            + config.page.pageId + '/'
-            + config.page.contentType.toLowerCase() + '/'
-            + 'onward.json')
-            .then(function (json) {
-                return fastdom.write(function () {
-                    placeholder.innerHTML = json.html;
+            var placeholder = document.querySelector('.js-onward-placeholder');
+
+            return fetchJson(config.page.ajaxUrl + '/'
+                + config.page.pageId + '/'
+                + config.page.contentType.toLowerCase() + '/'
+                + 'onward.json')
+                .then(function (json) {
+                    return fastdom.write(function () {
+                        placeholder.innerHTML = json.html;
+                    });
                 });
-            });
+        }
     }
 });
