@@ -7,7 +7,6 @@ $gutter-large: 55px;
 
 $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
-
 // When the menu is open this class is added to the html to prevent users from scrolling
 .nav-is-open {
     overflow: hidden;
@@ -528,10 +527,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     }
 }
 
-.navigation-no-border {
-    padding-bottom: $gs-baseline;
-}
-
 .navigation-group {
     // Unset ul from _lists.scss
     margin-left: 0;
@@ -539,6 +534,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
+
+    & li:last-child {
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .navigation-group--grey {
@@ -636,8 +635,6 @@ svg.main-menu__icon--social__svg {
 }
 
 .navigation-group__item--user-account {
-    padding-bottom: $gs-baseline;
-
     .user-account__signed-in {
         display: none;
     }
@@ -660,7 +657,6 @@ svg.main-menu__icon--social__svg {
 .user-account__signed-in__links {
     margin-left: 0;
     margin-bottom: -$gs-baseline;
-    padding-bottom: $gs-baseline;
     background-color: rgba(0, 0, 0, .15);
 }
 
@@ -670,22 +666,4 @@ svg.main-menu__icon--social__svg {
 
 .no-text-transform {
     text-transform: none;
-}
-
-// Breathing space between header and content
-@include mq($until: tablet) {
-    .has-new-header {
-        .weather {
-            padding-top: 1px;
-        }
-
-        .fc-container--first .fc-container__inner,
-        .index-page-header {
-            padding-top: $gs-baseline / 2 + $gs-baseline / 4;
-        }
-
-        .content__labels {
-            padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
-        }
-    }
 }
