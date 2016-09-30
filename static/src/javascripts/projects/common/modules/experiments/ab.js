@@ -8,7 +8,6 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
@@ -26,7 +25,6 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
-    LiveBlogChromeNotificationsProd,
     MembershipEngagementBannerTests,
     AdBlockingResponse,
     WeekendReadingEmail,
@@ -39,7 +37,6 @@ define([
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
-        new LiveBlogChromeNotificationsProd(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new ContributionsStory(),
