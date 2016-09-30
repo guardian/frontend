@@ -59,7 +59,7 @@ $explore-series-header-element-opacity: .85;
     }
 
     &.explore--video {
-        background-color: #333;
+        background-color: $neutral-1;
         min-height: 0;
 
         @include mq($from: mobileLandscape) {
