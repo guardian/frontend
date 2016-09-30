@@ -1,9 +1,9 @@
-@(loadbalancer: tools.LoadBalancer, results: Seq[controllers.admin.EndpointStatus])(implicit request: RequestHeader)
+@(loadbalancer: Option[tools.LoadBalancer], results: Seq[controllers.admin.EndpointStatus])(implicit request: RequestHeader)
 
 @admin_main("Troubleshooting results", "PROD", isAuthed = true) {
 
     <div class="row-fluid">
-        <h4>@loadbalancer.name (@loadbalancer.project)</h4>
+        <h4>@loadbalancer.map(lb => s"${lb.name} (${lb.project})").getOrElse("Unknown loadbalancer")</h4>
         <p>Failures are in order - the cause of the error will most likely be at the level of the first failure</p>
     </div>
     <table class="table table-striped table-bordered">

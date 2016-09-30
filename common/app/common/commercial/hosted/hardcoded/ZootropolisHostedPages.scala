@@ -19,7 +19,8 @@ object ZootropolisHostedPages {
     url = "https://ad.doubleclick.net/ddm/clk/307882423;133964630;h",
     image = Some("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis_cta.jpg"),
     trackingCode = Some("disney-zootropolis"),
-    btnText = Some("Out now on digital download")
+    btnText = Some("Out now on digital download"),
+    label = None
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {

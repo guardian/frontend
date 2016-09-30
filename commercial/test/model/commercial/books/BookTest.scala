@@ -1,5 +1,6 @@
 package model.commercial.books
 
+import model.commercial.Book
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.Json
 import test.ConfiguredTestSuite

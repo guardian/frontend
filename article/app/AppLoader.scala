@@ -4,6 +4,7 @@ import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
+import targeting.TargetingLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
@@ -49,6 +50,7 @@ trait AppLifecycleComponents {
     wire[SurgingContentAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
 }

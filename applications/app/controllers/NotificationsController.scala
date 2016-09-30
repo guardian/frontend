@@ -1,8 +1,8 @@
 package controllers
 
 import common.{ExecutionContexts, Logging}
-import model.NoCache
 import model.notifications.DynamoDbStore
+import model.{Cors, NoCache}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
@@ -25,7 +25,7 @@ class NotificationsController extends Controller with ExecutionContexts with Log
       },
       data => {
         DynamoDbStore.addItemToSubscription(data.browserEndpoint, data.notificationTopicId)
-          .map(_ => NoCache(Ok))
+          .map(_ => NoCache(Cors(Ok)))
           .recover{ case t => NoCache(InternalServerError)}
       }
     )
@@ -38,7 +38,7 @@ class NotificationsController extends Controller with ExecutionContexts with Log
       },
       data => {
         DynamoDbStore.deleteItemFromSubscription(data.browserEndpoint, data.notificationTopicId)
-          .map(_ => NoCache(Ok))
+          .map(_ => NoCache(Cors(Ok)))
           .recover{ case t => NoCache(InternalServerError)}
       }
     )
