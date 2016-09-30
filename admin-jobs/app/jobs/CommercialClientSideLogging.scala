@@ -55,11 +55,15 @@ class CommercialClientSideLoggingLifecycle(
 
   def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
-      // Start searching logs by doubling the period, allowing fresh data to settle.
-      val timeStart = DateTime.now.minusSeconds(jobFrequency.toSeconds.toInt * 2)
-      log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
-      val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(jobFrequency.toMillis))
-      log.logger.info(s"Fetched $numReports logs from Redis.")
+      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
+        // Start searching logs by doubling the period, allowing fresh data to settle.
+        val timeStart = DateTime.now.minusSeconds(jobFrequency.toSeconds.toInt * 2)
+        log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
+        val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(jobFrequency.toMillis))
+        log.logger.info(s"Fetched $numReports logs from Redis.")
+      } else {
+        log.logger.info(s"Job skipped, logging switch is turned off.")
+      }
     }
   }
 }
