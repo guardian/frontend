@@ -1,5 +1,6 @@
 package model.commercial.travel
 
+import model.commercial.TravelOffer
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 

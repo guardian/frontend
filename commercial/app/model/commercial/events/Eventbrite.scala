@@ -141,6 +141,8 @@ object Eventbrite extends ExecutionContexts with Logging {
         }
       }
     }
+
+    implicit val ticketWrites: Writes[EBTicket] = Json.writes[EBTicket]
   }
 
   case class EBVenue(name: Option[String],
@@ -170,6 +172,8 @@ object Eventbrite extends ExecutionContexts with Logging {
           captureEmptyString((JsPath \ "address" \ "postal_code").readNullable[String])
         ) (EBVenue.apply _)
     }
+
+    implicit val venueWrites: Writes[EBVenue] = Json.writes[EBVenue]
   }
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
 

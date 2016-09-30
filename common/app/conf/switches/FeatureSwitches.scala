@@ -496,14 +496,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Sam Morris
-  val USSurveyBanner = Switch(
+  // Owner: Sam Cutler / Editorial Tools
+  val Targeting = Switch(
     SwitchGroup.Feature,
-    "us-survey-banner",
-    "When ON, will show a banner to US users asking them to take part in a survey",
-    owners = Seq(Owner.withGithub("sammorrisdesign")),
+    "targeting",
+    "When ON will the targeting system will poll for updates and merge targeted campaigns into content",
+    owners= Seq(Owner.withGithub("currysoup")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = never,
     exposeClientSide = true
   )
 }

@@ -2,6 +2,7 @@ package common
 
 import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
+import play.twirl.api.Html
 import scala.collection.immutable.ListMap
 
 class InlineStylesTest extends FlatSpec with Matchers {
@@ -67,7 +68,7 @@ class InlineStylesTest extends FlatSpec with Matchers {
   it should "preserve properties with base64 strings" in {
     val styles = "font-family: Arial; background: red url(data:image/png;base64,ABCDEF)"
 
-    CSSRule.makeStyles(styles) should be(ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"))
+    CSSRule.styleMapFromString(styles) should be(ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"))
   }
 
   it should "work with urls in values" in {
@@ -75,8 +76,44 @@ class InlineStylesTest extends FlatSpec with Matchers {
     val https = "background: url(https://www.example.com/image.png)"
     val relative = "background: url(//www.example.com/image.png)"
 
-    CSSRule.makeStyles(http) should be(ListMap("background" -> "url(http://www.example.com/image.png)"))
-    CSSRule.makeStyles(https) should be(ListMap("background" -> "url(https://www.example.com/image.png)"))
-    CSSRule.makeStyles(relative) should be(ListMap("background" -> "url(//www.example.com/image.png)"))
+    CSSRule.styleMapFromString(http) should be(ListMap("background" -> "url(http://www.example.com/image.png)"))
+    CSSRule.styleMapFromString(https) should be(ListMap("background" -> "url(https://www.example.com/image.png)"))
+    CSSRule.styleMapFromString(relative) should be(ListMap("background" -> "url(//www.example.com/image.png)"))
+  }
+
+  it should "make !important styles appear last while otherwise preserving the existing ordering" in {
+    val styleString = "padding-top: 10px !important; color: red; margin: 5px !important; padding: 5px;"
+
+    InlineStyles.sortStyles(styleString) should be("color: red; padding: 5px; padding-top: 10px !important; margin: 5px !important")
+  }
+
+  it should "inline styles correctly" in {
+    val html = """
+                 |<html>
+                 |<head>
+                 |<style>
+                 |#h1 { color: red !important; border: 1px; padding: 0; }
+                 |</style>
+                 |<style>
+                 |h1 { padding: 1px !important; margin: 0; border: 0; }
+                 |</style>
+                 |<style>
+                 |h1 { margin: 1px; }
+                 |</style>
+                 |</head>
+                 |<body>
+                 |<h1 id="h1">Hello</h1>
+                 |</body>
+                 |</html>""".stripMargin
+
+    val inlinedHtml = InlineStyles(Html(html))
+    val inlinedDocument = Jsoup.parse(inlinedHtml.toString)
+
+    // specificity puts #h1 styles to the right of h1 styles, so expect "border: 1px" to beat "border: 0"
+    // precedence puts the second h1 to the right of the first, so expect "margin: 1px" to beat "margin: 0"
+    // !important overrides specificity & precedence so expect "padding: 1px" to beat "padding: 0"
+    // !important styles should end up on the right so expect "padding: 1px" and "color: red" to be on the right
+
+    inlinedDocument.getElementById("h1").attr("style") should be("margin: 1px; border: 1px; padding: 1px; color: red")
   }
 }

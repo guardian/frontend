@@ -1,5 +1,6 @@
 package model.commercial.soulmates
 
+import model.commercial.{Member, Man, Woman}
 
 object Fixtures {
 
