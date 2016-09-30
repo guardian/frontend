@@ -1,8 +1,8 @@
 package controllers.commercial
 
 import common.JsonComponent
-import model.commercial.Segment
-import model.commercial.travel.{TravelOffersAgent, TravelOffer}
+import model.commercial.{Segment, TravelOffer}
+import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -17,7 +17,7 @@ class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Contr
   def renderTravel = Action { implicit request =>
 
     travelSample(specificIds, segment) match {
-      case Nil => NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case offers => Cached(componentMaxAge) {
         val clickMacro = request.getParameter("clickMacro")
         val omnitureId = request.getParameter("omnitureId")

@@ -529,10 +529,8 @@ $header-image-size-desktop: 100px;
     background-color: #ffffff;
 }
 .index-page-header {
-    border-top: 1px solid $news-accent;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
-    margin-top: $gs-baseline;
 
     .has-page-skin & {
         width: gs-span(12);

@@ -26,7 +26,7 @@
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card facia-card--large @toneClass(pressedContent)">
                 @imageUrlFromPressedContent(pressedContent).map { url =>
-                    <img width="580" class="media--main" src="@url" />
+                    <img width="580" class="full-width" src="@url" />
                 }
                 @headline(pressedContent)
                 @pressedContent.card.trailText.map { trailText =>
@@ -48,7 +48,7 @@
                         </td>
                         <td class="five sub-columns last">
                             @imageUrlFromPressedContent(pressedContent).map { url =>
-                                <img width="580" class="media--main" src="@url" />
+                                <img width="580" class="full-width" src="@url" />
                             }
                         </td>
                     </tr>
@@ -59,7 +59,7 @@
 }
 
 @fullRow {
-    <img width="580" src="@Static("images/email/banners/generic.png")">
+    <img width="580" class="full-width" src="@Static("images/email/banners/generic.png")">
 }
 
 @page.frontProperties.onPageDescription.map { description =>

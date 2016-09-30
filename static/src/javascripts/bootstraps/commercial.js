@@ -16,6 +16,7 @@ define([
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/colours',
+    'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
@@ -41,6 +42,7 @@ define([
     hostedVideo,
     hostedGallery,
     hostedColours,
+    hostedOnward,
     sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
@@ -77,12 +79,12 @@ define([
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedColours', hostedColours.init]);
+            ['cm-hostedColours', hostedColours.init],
+            ['cm-hostedOnward', hostedOnward.init]);
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner ||
-         config.tests.abNewHeaderVariant
+         config.page.disableStickyTopBanner
     ) {
         config.page.hasStickyAdBanner = false;
     } else {

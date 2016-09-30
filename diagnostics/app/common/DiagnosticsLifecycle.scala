@@ -2,7 +2,6 @@ package common
 
 import akka.actor.ActorSystem
 import app.LifecycleComponent
-import model.diagnostics.commercial.{RedisReport, ExpiredKeyEventSubscriber}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -28,12 +27,4 @@ class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
     scheduleJobs()
   }
 
-  // Construct the singleton subscriber class when the DiagnosticsLifecycle class is instantiated.
-  val subscriber: Option[ExpiredKeyEventSubscriber] = {
-    RedisReport.redisClient.map { client =>
-      log.logger.info("Creating ExpiredKeyEventSubscriber to listen to redis key events")
-      new ExpiredKeyEventSubscriber(client, system)
-
-    }
-  }
 }

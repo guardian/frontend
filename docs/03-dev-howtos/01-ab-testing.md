@@ -8,12 +8,20 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 
 There are six steps in the test lifecycle:-
 
- - Adding a switch to turn the test on & off
- - Writing a test, which is typically a simple AMD module
- - Running the test
- - Analysis of the test data
- - Share your findings
+ - [Adding a switch to turn the test on & off](#adding-a-switch)
+ - [Writing a test, which is typically a simple AMD module](#writing-a-test)
+ - [Running the test](#running-the-test)
+ - [Analysis of the test data](#analysis-of-the-test-data)
+ - [Share your findings](#share-your-findings)
  - Delete the test
+
+## Quick Tips
+
+- Creating your switch: if it's an ab test it should start with `ab-` (see more naming conventions in [Adding a switch](#adding-a-switch)
+- Choosing your audience offset: it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
+- Is your audience percentage appropriate for your test? Ask the data team if you don't know.
+- Starting/Stopping a test: You can start and stop your tests in production at any time using the [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
+- Ophan has a dashboard with all the active ab tests [here](https://dashboard.ophan.co.uk/ab)
 
 ## Adding a switch
 
@@ -117,6 +125,8 @@ The AMD module must return an object with the following properties,
         - variant.success: a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
 
 
+When choosing your audience offset, it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
+
 You will also need to mark the module as a dependency of the AB testing module.
 
 Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js`
@@ -179,7 +189,9 @@ The data is logged under the Omniture property _p51_.
 
 We have an [AB test dashboard](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
 
-For inspection of the raw test data you can query the RedShift instance created by the data team.
+Ophan also has a [dashboard](https://dashboard.ophan.co.uk/ab) where you can take a look at your test data
+
+For inspection of the raw test data you can query the datalake created by the data team.
 
 ## Share your findings
 
@@ -231,7 +243,7 @@ Optimizely relies on JQuery, which the frontend code does not use as a base JS l
 
 The Optimizely set-up allows _anyone_ to insert bits of code/design in to the site outside of a release cycle. While this sort of democratisation of AB testing is important we strongly feel, like all code/design/ux, the tests should follow this route through the review systems we have in place. Git pull etc.
 
-Given we already have 2 repositories of user behaviour data (Omniture, Ophan/RedShift) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
+Given we already have 2 repositories of user behaviour data (GA, Ophan) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
 
 Optimizely is relatively expensive - several thousand pounds p/month.
 

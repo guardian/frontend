@@ -9,18 +9,18 @@
 @defining((
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
-    page.item.tags.isLabourLiverpoolSeries,
+    page.item.tags.isExploreSeries,
     page.item.elements.hasMainVideo
-)) { case (hasEmbed, hasMainMedia, isLabourLiverpoolSeries, hasVideo) =>
+)) { case (hasEmbed, hasMainMedia, isExploreSeries, hasVideo) =>
 
   <style>
-    @Html(common.Assets.css.inlineLabourLiverpool)
+    @Html(common.Assets.css.inlineExplore)
   </style>
 
     <div class="@RenderClasses(Map(
-            "content--labour-liverpool-article" -> isLabourLiverpoolSeries,
+            "content--explore-series-article" -> isExploreSeries,
             "immersive-main-media" -> hasMainMedia,
-            "heroic--video" -> hasVideo
+            "explore--video" -> hasVideo
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
@@ -55,16 +55,16 @@
             }
         </div>
 
-        <div class="content--labour-liverpool-article__headline-background">
-             @fragments.inlineSvg("labour-liverpool-headline-bg", "membership")
+        <div class="content--explore-series-article__headline-background">
+             @fragments.inlineSvg("explore-series-headline-bg", "membership")
         </div>
         <div class="series-identity">
             <div class="gs-container">
                 <div class="content__main-column">
                     <div class="series-identity__background">
-                        @fragments.inlineSvg("labour-liverpool-identity-bg", "membership")
+                        @fragments.inlineSvg("explore-series-identity-bg", "membership")
                     </div>
-                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/labour-liverpool">
+                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/explore-series">
                         <div class="series-identity__title">Labour &amp; Liverpool</div>
                         <div class="series-identity__byline">with Ewen MacAskill</div>
                     </a>
@@ -72,13 +72,13 @@
             </div>
         </div>
 
-        <div class="labour-liverpool-headline">
+        <div class="explore-series-headline">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <div class="labour-liverpool-headline__background">
-                        @fragments.inlineSvg("labour-liverpool-header-bg", "membership")
+                    <div class="explore-series-headline__background">
+                        @fragments.inlineSvg("explore-series-header-bg", "membership")
                     </div>
-                    <h1 class="labour-liverpool-headline__content">
+                    <h1 class="explore-series-headline__content">
                         @Html(page.item.trail.headline)
                     </h1>
                 </div>

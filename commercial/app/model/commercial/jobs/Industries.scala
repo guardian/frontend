@@ -2,48 +2,8 @@ package model.commercial.jobs
 
 import common.{AkkaAgent, ExecutionContexts}
 import contentapi.ContentApiClient
-import model.commercial._
-import org.apache.commons.lang.StringEscapeUtils._
-import org.apache.commons.lang.StringUtils
-
+import model.commercial.Lookup
 import scala.concurrent.Future
-import scala.xml.Node
-
-case class Job(id: Int,
-               title: String,
-               shortDescription: String,
-               locationDescription: Option[String],
-               recruiterName: String,
-               recruiterPageUrl: Option[String],
-               recruiterLogoUrl: String,
-               sectorIds: Seq[Int],
-               salaryDescription: String,
-               keywordIdSuffixes: Seq[String] = Nil) {
-
-  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
-
-  def listingUrl = s"http://jobs.theguardian.com/job/$id"
-
-  val industries: Seq[String] =
-    Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
-
-  val mainIndustry: Option[String] = industries.headOption
-}
-
-object Job {
-
-  def apply(xml: Node): Job = Job(
-    id = (xml \ "JobID").text.toInt,
-    title = (xml \ "JobTitle").text,
-    shortDescription = unescapeHtml((xml \ "ShortJobDescription").text),
-    locationDescription = OptString((xml \ "LocationDescription").text),
-    recruiterName = (xml \ "RecruiterName").text,
-    recruiterPageUrl = OptString((xml \ "RecruiterPageUrl").text),
-    recruiterLogoUrl = (xml \ "RecruiterLogoURL").text,
-    sectorIds = (xml \ "Sectors" \ "Sector") map (_.text.toInt),
-    salaryDescription = (xml \ "SalaryDescription").text
-  )
-}
 
 case class JobSector(path: String, name: String)
 

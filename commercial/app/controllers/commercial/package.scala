@@ -11,6 +11,11 @@ package object commercial {
 
   val componentMaxAge = 15.minutes
 
+  /*  if a service goes down or an agent becomes unavailable, we don't want each user request to
+      hit frontend; allow Fastly to briefly cache Nil results
+   */
+  val componentNilMaxAge = 5.seconds
+
   def segment(implicit request: RequestHeader) = {
     val params = request.queryString
     val section = params.get("s") map (_.head)
