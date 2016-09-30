@@ -28,17 +28,19 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
   def test(id: String, testPath: String) = Action.async{ implicit request =>
 
+    val pathToTest = if(testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
+
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
     val thisLoadBalancer = loadBalancers.find(_.project == id).headOption
 
-    val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, testPath, id))
+    val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, pathToTest, id))
       .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
-    val viaWebsite = testOnGuardianSite(testPath, id)
-    val directToContentApi = testOnContentApi(testPath, id)
-    val directToRouter = testOnRouter(testPath, id)
-    val directToPreviewContentApi = testOnPreviewContentApi(testPath, id)
-    val viaPreviewWebsite = testOnPreviewSite(testPath, id)
+    val viaWebsite = testOnGuardianSite(pathToTest, id)
+    val directToContentApi = testOnContentApi(pathToTest, id)
+    val directToRouter = testOnRouter(pathToTest, id)
+    val directToPreviewContentApi = testOnPreviewContentApi(pathToTest, id)
+    val viaPreviewWebsite = testOnPreviewSite(pathToTest, id)
 
     // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
     // in the stack
