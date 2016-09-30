@@ -15,6 +15,23 @@
         </encoder>
     </appender>
 
+    <appender name="COMMERCIAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/frontend-commercial-client-side.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/frontend-commercial-client-side/date=%d{yyyy-MM-dd, aux}/%d{yyyy-MM-dd--HH-mm}.log</fileNamePattern>
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n%nopex</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jobs.CommercialClientSideLogging" level="INFO" additivity="false">
+        <appender-ref ref="COMMERCIAL"/>
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>
