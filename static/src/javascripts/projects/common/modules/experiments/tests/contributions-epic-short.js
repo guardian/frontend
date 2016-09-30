@@ -16,7 +16,7 @@ define([
     template,
     fastdom,
     mediator,
-    contributionsShort,
+    contributionsEpicShort,
     config,
     commercialFeatures,
     embed
@@ -28,7 +28,7 @@ define([
         this.start = '2016-09-30';
         this.expiry = '2016-10-10';
         this.author = 'Guy Dawson';
-        this.description = 'Test whether epic\'s design or copy lead to its success.';
+        this.description = 'Test whether epics design or copy lead to its success.';
         this.audience = 0.04;
 
         // Equal to the upper bound of the ContributionsStory segment.
@@ -72,7 +72,7 @@ define([
             {
                 id: 'epic-short',
                 test: function() {
-                    var component = $.create(template(contributionsShort, {
+                    var component = $.create(template(contributionsEpicShort, {
                         linkUrl: 'https://contribute.theguardian.com?INTCMP=co_uk_epic_short'
                     }));
 
