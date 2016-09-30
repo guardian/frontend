@@ -152,14 +152,15 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   def cleanAmpMaps(document: Document) = {
     document.getElementsByClass("element-map").foreach { embed: Element =>
       embed.getElementsByTag("iframe").map { element: Element =>
-        val width = element.attr("width")
-        val height = element.attr("height")
         val src = element.attr("src")
         val frameBorder = element.attr("frameborder")
         val elementMap = document.createElement("amp-iframe")
           elementMap
-            .attr("width", width)
-            .attr("height", height)
+      // In AMP, when using the layout `responsive`, width is 100%,
+      // and height is decided by the ratio between width and height.
+      // https://www.ampproject.org/docs/guides/responsive/control_layout.html
+            .attr("width", "4")
+            .attr("height", "3")
             .attr("layout", "responsive")
             .attr("sandbox", "allow-scripts allow-same-origin allow-popups")
             .attr("frameborder", frameBorder)
