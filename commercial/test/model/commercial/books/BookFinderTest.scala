@@ -1,5 +1,6 @@
 package model.commercial.books
 
+import model.commercial.Book
 import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}

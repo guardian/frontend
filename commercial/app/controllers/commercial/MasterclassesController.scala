@@ -1,6 +1,7 @@
 package controllers.commercial
 
-import model.commercial.events.{Masterclass, MasterclassAgent}
+import model.commercial.Masterclass
+import model.commercial.events.MasterclassAgent
 import model.{Cached, NoCache}
 import play.api.mvc._
 

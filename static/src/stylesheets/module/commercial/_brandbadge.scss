@@ -282,9 +282,8 @@
 }
 
 .badge--alt {
-    float: left;
-    clear: left;
-    border-top: 1px dotted $neutral-5;
+    float: none;
+    border-top: 0;
     margin-top: $gs-baseline / 3;
     padding-top: $gs-baseline / 6;
     text-align: left;
@@ -292,6 +291,9 @@
 
     @include mq(leftCol) {
         width: $left-column;
+        float: left;
+        clear: left;
+        border-top: 1px dotted $neutral-5;
     }
 
     @include mq(wide) {
@@ -320,6 +322,16 @@
     }
 }
 
+.fc-container {
+    .badge--alt {
+        @include mq(tablet) {
+            float: left;
+            clear: left;
+            border-top: 1px dotted $neutral-5;
+        }
+    }
+}
+
 .content__main-column--article,
 .content__main-column--liveblog,
 .content--media--video,
@@ -332,6 +344,21 @@
 .content__main-column--liveblog {
     .badge--alt {
         float: none;
+    }
+}
+
+.content--immersive-article {
+    .badge--alt {
+        @include mq(leftCol) {
+            position: absolute;
+            left: ($gs-column-width * -3 + $gs-gutter);
+            top: 10px;
+        }
+        @include mq(wide) {
+            position: absolute;
+            left: ($gs-column-width * -4);
+            top: 10px;
+        }
     }
 }
 

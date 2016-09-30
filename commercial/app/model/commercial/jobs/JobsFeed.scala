@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
+import model.commercial.Job
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration

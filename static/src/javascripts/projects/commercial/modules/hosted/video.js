@@ -6,7 +6,6 @@ define([
     'Promise',
     'bean',
     'fastdom',
-    'bonzo',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -24,7 +23,6 @@ define([
     Promise,
     bean,
     fastdom,
-    bonzo,
     $,
     deferToAnalytics,
     detect,
@@ -79,18 +77,7 @@ define([
         return new Promise(function (resolve) {
             var $youtubeIframe = $('.js-hosted-youtube-video');
             $youtubeIframe.each(function(el){
-                youtubePlayer.init().promise.then(function () {
-                    player = new window.YT.Player(el.id, {
-                        events: {
-                            'onStateChange': onPlayerStateChange
-                        }
-                    });
-                    function onPlayerStateChange(event) {
-                        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function(status){
-                            bonzo(el).toggleClass('youtube-video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
-                        });
-                    }
-                });
+                youtubePlayer.init(el);
             });
 
             require(['bootstraps/enhanced/media/main'], function () {
@@ -116,7 +103,8 @@ define([
 
                         player.ready(function () {
                             var vol;
-                            duration = parseInt(this.duration(), 10);
+                            var player = this;
+                            duration = parseInt(player.duration(), 10);
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 

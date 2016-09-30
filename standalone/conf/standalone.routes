@@ -26,6 +26,7 @@ GET        /commercial/soulmates/$subgroup<\w+>.json                            
 GET        /commercial/books/book.json                                                         controllers.commercial.BookOffersController.renderBook
 GET        /commercial/books/books.json                                                        controllers.commercial.BookOffersController.renderBooks
 GET        /advertiser-content/:campaignName/:pageName                                         controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 
 
 # Onward

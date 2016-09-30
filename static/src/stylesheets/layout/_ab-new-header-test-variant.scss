@@ -7,6 +7,13 @@ $gutter-large: 55px;
 
 $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
+
+// When the menu is open this class is added to the html to prevent users from scrolling
+.nav-is-open {
+    overflow: hidden;
+    position: fixed;
+}
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -663,4 +670,22 @@ svg.main-menu__icon--social__svg {
 
 .no-text-transform {
     text-transform: none;
+}
+
+// Breathing space between header and content
+@include mq($until: tablet) {
+    .has-new-header {
+        .weather {
+            padding-top: 1px;
+        }
+
+        .fc-container--first .fc-container__inner,
+        .index-page-header {
+            padding-top: $gs-baseline / 2 + $gs-baseline / 4;
+        }
+
+        .content__labels {
+            padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
+        }
+    }
 }
