@@ -490,3 +490,8 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         transform: rotate(180deg);
     }
 }
+
+.hosted__next-video__carousel-wrapper {
+    overflow: hidden;
+    position: relative;
+}
