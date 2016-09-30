@@ -29,11 +29,9 @@ class Multi(bestsellersAgent: BestsellersAgent,
 
     val samples = Future.traverse(components) {
       case ("Book", Some(bookId))=>
-        bestsellersAgent.getSpecificBooks(Seq(bookId)) map { books =>
-          if(books.isEmpty)
-            bestsellersAgent.bestsellersTargetedAt(segment)
-          else
-            books
+        bestsellersAgent.getSpecificBooks(Seq(bookId)) map {
+          case Nil   => bestsellersAgent.bestsellersTargetedAt(segment)
+          case books => books
         }
 
       case ("Book", None)        =>
