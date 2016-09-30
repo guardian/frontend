@@ -27,7 +27,7 @@ class Multi(bestsellersAgent: BestsellersAgent,
   private def multiSample(offerTypes: Seq[String], offerIds: Seq[Option[String]], segment: Segment): Future[Seq[Merchandise]] = {
     val components = offerTypes zip offerIds
 
-    val samples = components map {
+    val samples = Future.traverse(components) {
       case ("Book", optId)        => optId.map { bookId =>
         bestsellersAgent.getSpecificBooks(Seq(bookId))
       }.getOrElse {
@@ -66,7 +66,7 @@ class Multi(bestsellersAgent: BestsellersAgent,
       case _                          => Future.successful(Nil)
     }
 
-    Future.sequence(samples) map { realSamples => realSamples.flatMap(_.headOption) }
+    samples.map(realSamples => realSamples.flatMap(_.headOption))
   }
 
   def renderMulti() = Action.async { implicit request =>
