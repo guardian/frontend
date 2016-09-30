@@ -318,8 +318,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
               element.appendChild(img)
             }
 
-            List(userNameEl, userIdEl, body, link, date)
-              .map(i => element.appendChild(i))
+            List(userNameEl, userIdEl, body, link, date).map(element.appendChild)
           }
         }
       }
