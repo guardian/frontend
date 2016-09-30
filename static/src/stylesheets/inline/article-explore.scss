@@ -51,6 +51,13 @@ $explore-series-header-element-opacity: .85;
 }
 
 .content--explore-series-article {
+    //fix for Ie and Edge
+    height: 720px;
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        height: 0;
+    }
+
     &.explore--video {
         min-height: 0;
 
