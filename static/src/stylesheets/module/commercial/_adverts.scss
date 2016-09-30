@@ -363,12 +363,7 @@
 
 .adverts--legacy-inline {
     padding: 0;
-    width: $gs-gutter * 6.5;
     background: #eaeaea;
-
-    @include mq(mobileLandscape) {
-        width: gs-span(3);
-    }
 
     > .adverts__header {
         @include mq($until: mobileLandscape) {
