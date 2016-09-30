@@ -20,7 +20,8 @@
 }
 .tweet,
 .from-content-api blockquote.tweet {
-    font-family: Helvetica, Roboto, 'Segoe UI', Calibri, sans-serif;  // We're going to style this like the upgraded embed
+    // We're going to style this like the upgraded embed
+    font-family: Helvetica, Roboto, 'Segoe UI', Calibri, sans-serif;
     font-size: 14px;
     border: 1px solid $neutral-4;
     border-radius: 4px;
@@ -46,15 +47,9 @@
         margin-right: $block-padding-right;
     }
 }
-// Temporary fix to issue #1674
-.from-content-api blockquote.tweet {
-    width: auto;
-}
-// End temporary fix
+
 .tweet:before,
-.tweet:after,
-.live-blog .tweet:before,
-.live-blog .tweet:after {
+.tweet:after {
     display: none !important;
 }
 
