@@ -353,18 +353,22 @@ $explore-series-header-element-opacity: .85;
 }
 
 .content__meta-container--explore {
-    //only show first three social links
-    width: 117px;
+    margin: 7px;
     border: 0;
 
     .meta__social {
-        border-top: 0
+        border-top: 1px dotted $neutral-4;
     }
 
-    @include mq($from: leftCol) {
-        width: 105px;
+    //only show first three social links
+    .social__item:nth-child(n+4) {
+        display: none;
+    }
+
+    @include mq($from: desktop) {
+        position: absolute;
         margin-left: 0;
-        margin-right: -160px;
+        margin-right: -240px;
         right: 0;
     }
 }
