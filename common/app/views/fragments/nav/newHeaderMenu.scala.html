@@ -55,15 +55,17 @@
             <ul class="navigation-group">
                 <li class="navigation-group__item navigation-group__item--search">
                     <form class="navigation-group__search-container"
-                        action="https://www.google.co.uk/search"
-                        data-link-name="nav2 : search">
+                        action="https://www.google.co.uk/search">
 
-                        <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
+                        <input type="text" name="q"
+                            class="navigation-group__search-box"
+                            placeholder="search for..."
+                            data-link-name="nav2 : search">
                         <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
 
                         @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
                         <label for="submit-google-search">
-                            <input class="u-h" type="submit" id="submit-google-search">
+                            <input class="u-h" type="submit" id="submit-google-search" data-link-name="nav2 : search : submit">
                             @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
                         </label>
                         <label for="q" class="u-h">What term do you want to search?</label>
