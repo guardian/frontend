@@ -4,36 +4,33 @@
 @import common.{LinkTo, NewNavigation}
 
 @primaryLinks(sectionName: String) = {
-    <label for="main-menu-toggle" class="new-header__nav__link js-open-section-in-menu"
-        tabindex="0"
+    <label for="main-menu-toggle" tabindex="0"
+        class="new-header__nav__link js-open-section-in-menu"
         aria-controls="primary-list-@sectionName"
-        data-link-name="main-navigation-link : @sectionName"
-    >
+        data-link-name="nav2 : primary : @sectionName">
             @sectionName
     </label>
 }
 
 <header class="@Atomise("New-header")" role="banner">
     <div class="new-header__inner gs-container">
-        <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="new-header-logo">
+        <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
         </a>
 
         @fragments.nav.editionPicker()
 
-        <nav class="new-header__nav" data-component="main-navigation">
+        <nav class="new-header__nav" data-component="nav2">
             @NewNavigation.topLevelSections.map { section =>
                 @primaryLinks(section.name)
             }
-            <label
-                for="main-menu-toggle"
+            <label for="main-menu-toggle"
                 class="new-header__nav__menu-button js-change-link"
                 tabindex="0"
-                data-link-name="main-navigation : veggie-burger : show"
-            >
-                <span class="new-header__veggie-burger-icon"></span>
-                <span class="u-h">Menu</span>
+                data-link-name="nav2 : veggie-burger">
+                    <span class="new-header__veggie-burger-icon"></span>
+                    <span class="u-h">Menu</span>
             </label>
             <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
 
