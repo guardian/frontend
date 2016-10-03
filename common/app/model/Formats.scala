@@ -225,11 +225,6 @@ object ContentTypeFormat {
 
   private case class JsonCommercial(
     isInappropriateForSponsorship: Boolean,
-    sponsorshipTag: Option[Tag],
-    isFoundationSupported: Boolean,
-    isAdvertisementFeature: Boolean,
-    hasMultipleSponsors: Boolean,
-    hasMultipleFeatureAdvertisers: Boolean,
     hasInlineMerchandise: Boolean
   )
 
@@ -261,14 +256,12 @@ object ContentTypeFormat {
        ) => {
 
        val sharelinks = ShareLinks.apply(tags, fields, metadata)
-       val commercial = Commercial.apply(tags, metadata,
-        jsonCommercial.isInappropriateForSponsorship,
-        jsonCommercial.sponsorshipTag,
-        jsonCommercial.isFoundationSupported,
-        jsonCommercial.isAdvertisementFeature,
-        jsonCommercial.hasMultipleSponsors,
-        jsonCommercial.hasMultipleFeatureAdvertisers,
-        jsonCommercial.hasInlineMerchandise)
+       val commercial = Commercial.apply(
+         tags,
+         metadata,
+         jsonCommercial.isInappropriateForSponsorship,
+         jsonCommercial.hasInlineMerchandise
+       )
        val trail = Trail.apply(tags, commercial, fields, metadata, elements,
         jsonTrail.webPublicationDate,
         jsonTrail.headline,
@@ -339,11 +332,6 @@ object ContentTypeFormat {
         ),
         JsonCommercial.apply(
           content.commercial.isInappropriateForSponsorship,
-          content.commercial.sponsorshipTag,
-          content.commercial.isFoundationSupported,
-          content.commercial.isAdvertisementFeature,
-          content.commercial.hasMultipleSponsors,
-          content.commercial.hasMultipleFeatureAdvertisers,
           content.commercial.hasInlineMerchandise
         ),
         JsonTrail.apply(

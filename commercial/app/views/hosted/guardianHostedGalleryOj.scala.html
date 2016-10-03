@@ -22,5 +22,8 @@
                 <img class="hosted-gallery__next-gallery-image" src="@nextPage.imageUrl"/>
             </a>
         }
+        @if(nextPages.isEmpty){
+            <div class="js-onward-placeholder"></div>
+        }
     </div>
 

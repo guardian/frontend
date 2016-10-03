@@ -43,7 +43,7 @@ class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAg
     val futureParsedFeed = Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
     futureParsedFeed flatMap { feed =>
 
-      val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass(event) }
+      val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass.fromEvent(event) }
       updateAvailableMerchandise(masterclasses)
 
       for {
@@ -58,7 +58,7 @@ class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAg
 
   def availableMasterclasses: Seq[Masterclass] = available
 
-  def masterclassesTargetedAt(segment: Segment) = {
+  def masterclassesTargetedAt(segment: Segment): Seq[Masterclass] = {
 
     val keywords: Seq[String] = segment.context.keywords
 

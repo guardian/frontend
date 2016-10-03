@@ -20,7 +20,7 @@ GET         /commercial/masterclasses.json                                  cont
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                        controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET        /commercial/soulmates/api/$subgroup<\w+>.json                    controllers.commercial.SoulmatesController.getSoulmates(subgroup)
+GET        /commercial/api/soulmates.json                                   controllers.commercial.SoulmatesController.getSoulmates
 
 # Book merchandising components
 GET         /commercial/books/book.json                                     controllers.commercial.BookOffersController.renderBook
@@ -32,7 +32,7 @@ GET         /commercial/liveevents/event.json                               cont
 
 # Multiple offer merchandising components
 GET         /commercial/multi.json                                          controllers.commercial.Multi.renderMulti
-
+GET         /commercial/api/multi.json                                      controllers.commercial.Multi.getMulti
 # Content API merchandising components
 GET         /commercial/capi.json                                         controllers.commercial.ContentApiOffersController.itemsJson
 GET         /commercial/capi                                              controllers.commercial.ContentApiOffersController.itemsHtml
@@ -48,7 +48,9 @@ GET         /commercial/paid                                              contro
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
-GET         /advertiser-content/onward/:campaignName/:pageName/:cType.json  controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+#   todo: remove once https://github.com/guardian/flexible-content/pull/2724 is released
+GET         /advertiser-content/:campaignName/gallery/:pageName             controllers.commercial.HostedContentController.renderHostedGallery(campaignName, pageName)
+GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 
 # Subscriber number input page
 GET         /commercial/subscriber-number                                   controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage

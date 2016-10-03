@@ -5,7 +5,7 @@ import akka.pattern.CircuitBreaker
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.commercial.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
+import model.commercial.{Book, FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}

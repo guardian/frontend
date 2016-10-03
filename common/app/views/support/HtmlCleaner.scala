@@ -1,8 +1,8 @@
 package views.support
 
 import java.text.Normalizer
+import java.net.URI
 import java.util.regex.{Matcher, Pattern}
-
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -153,7 +153,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
-    val srcImagePath = new java.net.URL(src).getPath()
+    val srcImagePath = new URI(src).getPath()
     val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.
@@ -298,8 +298,13 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
-            val user = el.ownText()
-            val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+            val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
+
+            val userName = user.lift(0).getOrElse("")
+            val userId = user.lift(1).getOrElse("")
+
+            val userNameEl = document.createElement("span").attr("class", "tweet__user-name").text(userName)
+            val userIdEl = document.createElement("span").attr("class", "tweet__user-id").text(userId)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
             element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
@@ -313,7 +318,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
               element.appendChild(img)
             }
 
-            element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+            List(userNameEl, userIdEl, body, link, date).map(element.appendChild)
           }
         }
       }

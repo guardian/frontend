@@ -5,6 +5,7 @@ import java.lang.System._
 import commercial.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
+import model.commercial.LiveEvent
 import play.api.Play.current
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -64,7 +65,7 @@ class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging 
         ParsedFeed(events, _) <- Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
       } yield events flatMap { event =>
         val matchingMembershipInfo = eventMembershipInfo find (_.id == event.id)
-        matchingMembershipInfo map (LiveEvent(event, _) )
+        matchingMembershipInfo map (LiveEvent.fromEvent(event, _) )
       }
 
     liveEvents map updateAvailableMerchandise

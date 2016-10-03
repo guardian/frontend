@@ -61,10 +61,16 @@ define([
             );
         },
 
+        notificationsCondition: function() {
+            return (config.switches.liveBlogChromeNotificationsProd
+            && !detect.isIOS()
+            && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
+            && detect.getUserAgent.browser === 'Chrome'
+            && config.page.isLive);
+        },
+
         initNotifications: function() {
-            if (ab.isInVariant('LiveBlogChromeNotificationsProd2', 'show-notifications')
-                && (window.location.protocol === 'https:' ||  window.location.hash === '#force-sw')
-                && detect.getUserAgent.browser === 'Chrome' && config.page.isLive) {
+            if (modules.notificationsCondition()) {
                     notifications.init();
             }
         }
@@ -86,6 +92,7 @@ define([
     }
 
     return {
-        init: ready
+        init: ready,
+        notificationsCondition: modules.notificationsCondition
     };
 });

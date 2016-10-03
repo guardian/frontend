@@ -6,13 +6,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  Switch(
-    ABTests,
-    "ab-live-blog-chrome-notifications-prod2",
-    "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+  val ABDiscussionExternalFrontend = Switch(
+    SwitchGroup.ABTests,
+    "ab-discussion-external-frontend",
+    "Standalone frontend discussion",
+    owners = Seq(Owner.withGithub("piuccio")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 11, 3),
     exposeClientSide = true
   )
 
@@ -62,7 +62,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 
@@ -72,17 +72,7 @@ trait ABTestSwitches {
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-video-button-duration",
-    "Show visitors new video play button",
-    owners = Seq(Owner.withGithub("mr-mr")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 
@@ -93,6 +83,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 13),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-short",
+    "Test whether epics design or copy lead to its success.",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = true
   )
 }
