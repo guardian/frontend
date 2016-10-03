@@ -12,7 +12,7 @@
 }
 
 @metaBody() = {
-    @if(!item.content.isImmersiveGallery) {
+    @if(!item.content.isImmersiveGallery && !item.tags.isExploreSeries) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -48,7 +48,10 @@
                 }">
                 </div>
             </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
+            @if(SaveForLaterSwitch.isSwitchedOn
+                && !item.content.isImmersiveGallery
+                && !item.tags.isExploreSeries
+            ) {
                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
             }
         </div>
@@ -61,6 +64,7 @@
     @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
+    @if(item.tags.isExploreSeries) {content__meta-container--explore}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 

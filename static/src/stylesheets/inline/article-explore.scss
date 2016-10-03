@@ -359,6 +359,23 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
+.content__meta-container--explore {
+    //only show first three social links
+    width: 117px;
+    border: 0;
+
+    .meta__social {
+        border-top: 0
+    }
+
+    @include mq($from: leftCol) {
+        width: 105px;
+        margin-left: 0;
+        margin-right: -160px;
+        right: 0;
+    }
+}
+
 .content__article-body {
     figure {
         //these styles need to overide the styles coming from Layout Hint
