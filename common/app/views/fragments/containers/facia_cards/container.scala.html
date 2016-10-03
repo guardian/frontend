@@ -91,11 +91,11 @@
 
                         <ul class="tertiary-navigation mobile-only">
 
-                            @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { footballNavItem =>
+                            @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
 
                                 <li class="tertiary-navigation__item">
-                                    <a class="tertiary-navigation__link" href="@LinkTo(footballNavItem.url)" data-link-name="@footballNavItem.name">
-                                        @Html(footballNavItem.name)
+                                    <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="@tertiaryLink.name">
+                                        @Html(tertiaryLink.name)
                                         <i class="tertiary-navigation__icon rounded-icon"></i>
                                     </a>
                                 </li>
