@@ -152,6 +152,28 @@ define([
                         }
                     }
 
+                    function initYoutubeEvents(videoId) {
+                        var eventList = ['play', '25', '50', '75', 'end'];
+
+                        forEach(eventList, function(event) {
+                            mediator.once(event, function() {
+                                ophanRecord(event);
+                            });
+                        });
+
+                        function ophanRecord(event) {
+                            require(['ophan/ng'], function (ophan) {
+                                var eventObject = {
+                                    video: {
+                                        id: 'gu-video-youtube-' + videoId,
+                                        eventType: 'video:content:' + event
+                                    }
+                                };
+                                ophan.record(eventObject);
+                            });
+                        }
+                    }
+
                     $youtubeIframe.each(function(el){
                         duration = $(el).data('duration');
                         var $currentTime = $('.js-youtube-current-time');
@@ -177,6 +199,7 @@ define([
 
                                 //calculate completion and send event to ophan
                                 if (event.data === window.YT.PlayerState.PLAYING) {
+                                    initYoutubeEvents(player.getVideoData()['video_id']);
                                     var playerTotalTime = player.getDuration();
                                     playTimer = setInterval(function() {
                                         sendPercentageCompleteEvents(player, playerTotalTime, ophanId);
@@ -193,40 +216,20 @@ define([
                         });
                     });
 
-                    function sendPercentageCompleteEvents(youtubePlayer, playerTotalTime, ophanId) {
+                    function sendPercentageCompleteEvents(youtubePlayer, playerTotalTime) {
                         var quartile = playerTotalTime / 4;
                         var playbackEvents = {
-                            'start': 0,
-                            'watched25': quartile,
-                            'watched50': quartile * 2,
-                            'watched75': quartile * 3,
+                            'play': 0,
+                            '25': quartile,
+                            '50': quartile * 2,
+                            '75': quartile * 3,
                             'end': playerTotalTime
                         };
-                        var prevThreshold = '';
 
                         forEach(playbackEvents, function(value, key) {
                             if (youtubePlayer.getCurrentTime() > value) {
-                                console.log('beg:', prevThreshold);
-                                if (key !== prevThreshold) {
-                                    console.log('key:', key, 'prevThreshold: ', prevThreshold);
-                                    //ophanRecord(ophanId, key);
-
-                                }
-
+                                mediator.emit(key);
                             }
-                            prevThreshold = 'ss';//key;
-                            console.log('end:', prevThreshold);
-                        });
-                    }
-
-                    function ophanRecord(id, eventType) {
-                        require(['ophan/ng'], function (ophan) {
-                            var eventObject = {};
-                            eventObject['youtube-video'] = {
-                                id: id,
-                                eventType: 'video:content:' + eventType
-                            };
-                            ophan.record(eventObject);
                         });
                     }
 
