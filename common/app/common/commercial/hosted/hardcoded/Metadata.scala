@@ -84,7 +84,7 @@ object Metadata {
   ): MetaData = {
     val sectionId = campaign.id
     MetaData.make(
-      id = s"commercial/advertiser-content/$sectionId/$pageName",
+      id = s"advertiser-content/$sectionId/$pageName",
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
       contentType = Gallery.name,

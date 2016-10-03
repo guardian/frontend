@@ -34,11 +34,6 @@ class HostedContentController(contentApiClient: ContentApiClient)
     renderPage(Future.successful(hardcoded.LegacyHostedPages.fromCampaignAndPageName(campaignName, pageName)))
   }
 
-  // todo: remove once https://github.com/guardian/flexible-content/pull/2724 is released
-  def renderHostedGallery(campaignName: String, pageName: String) = {
-    renderHostedPage(campaignName + "/gallery", pageName)
-  }
-
   def renderHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
 
     val capiResponse = {
