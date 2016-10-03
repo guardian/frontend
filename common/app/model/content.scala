@@ -8,14 +8,12 @@ import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign
 import common._
 import common.commercial.{BrandHunter, PaidContent}
-import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -230,6 +228,7 @@ final case class Content(
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
@@ -277,10 +276,9 @@ final case class Content(
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
-      commercial.isAdvertisementFeature ||
+      isAdvertisementFeature ||
       metadata.contentType == "Interactive" ||
-      metadata.contentType == "Crossword" ||
-      metadata.contentType == "Hosted"
+      metadata.contentType == "Crossword"
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =

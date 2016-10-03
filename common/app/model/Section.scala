@@ -13,14 +13,12 @@ object Section {
     val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
 
     val keywordIds: Seq[String] = frontKeywordIds(id)
-    val keywordSponsorship = KeywordSponsorshipHandling(id, adUnitSuffix, keywordIds)
 
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
-        "keywords" -> JsString(webTitle),
-        "keywordIds" -> JsString(keywordIds.mkString(",")),
-        "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-        "isAdvertisementFeature" -> JsBoolean(keywordSponsorship.isAdvertisementFeature)
-      )
+      "keywords" -> JsString(webTitle),
+      "keywordIds" -> JsString(keywordIds.mkString(",")),
+      "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))
+    )
 
     val metadata = MetaData (
       id,
@@ -43,7 +41,6 @@ object Section {
 
     Section(
       metadata,
-      keywordSponsorship,
       isEditionalised = section.editions.length > 1,
       activeBrandings = section.activeSponsorships map (_ map Branding.make(section.webTitle))
     )
@@ -52,7 +49,6 @@ object Section {
 
 case class Section private (
   override val metadata: MetaData,
-  keywordSponsorship: KeywordSponsorshipHandling,
   isEditionalised: Boolean,
   activeBrandings: Option[Seq[Branding]]
   ) extends StandalonePage {
