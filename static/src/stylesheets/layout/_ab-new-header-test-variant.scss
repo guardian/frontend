@@ -11,6 +11,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 .nav-is-open {
     overflow: hidden;
     position: fixed;
+    width: 100%;
 }
 
 .new-header__inner {
