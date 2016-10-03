@@ -937,6 +937,7 @@ $hosted-video-height: 540px;
     border-top: 2px solid;
     margin: 0 $gs-gutter $gs-gutter;
     text-decoration: none;
+    position: relative;
 
     &:active {
         color: #333333;
@@ -949,6 +950,7 @@ $hosted-video-height: 540px;
     align-self: flex-start;
     object-fit: cover;
     flex: 0;
+    z-index: 1;
 
     @include mq($until: phablet) {
         height: 54px;
@@ -961,9 +963,18 @@ $hosted-video-height: 540px;
     line-height: 23px;
     padding: 10px;
     margin: 0;
+    z-index: 1;
 
     @include mq($until: phablet) {
         font-size: 18px;
         line-height: 20px;
     }
+}
+
+.hosted-next-page-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    z-index: 0;
 }
