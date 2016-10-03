@@ -1,5 +1,4 @@
 @import common.commercial.ContainerModel
-@import common.dfp.{Keyword, Series}
 @import layout.MetaDataHeader
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.commercial.containers.paidContainer
@@ -12,19 +11,6 @@
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
-
-@renderBrandingDataAttributes() = {
-    @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
-    @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-        @tag.tagType match {
-            case Series => { data-series="@{ tag.tagId}"}
-            case Keyword => { data-keywords="@{ tag.tagId}"}
-        }
-    }
-    @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-    data-sponsorship="@sponsorshipType"
-    }
-}
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -52,7 +38,6 @@
                  class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
                  data-link-name="container-@{containerDefinition.index + 1} | @componentName"
                  data-id="@containerDefinition.dataId"
-                 @renderBrandingDataAttributes()
                  data-component="@componentName"
                  aria-expanded="true">
 

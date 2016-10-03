@@ -235,12 +235,13 @@ object Masterclass {
     def writes(m: Masterclass) = Json.obj(
       "id" -> m.id,
       "name" -> m.name,
-      "startDate" -> m.startDate,
+      "startDate" -> m.readableDate,
       "url" -> m.guardianUrl,
       "venue" -> m.venue,
-      "tickets" -> m.tickets,
+      "ticketPrice" -> m.tickets.headOption.map(_.price),
       "capacity" -> m.capacity,
-      "pictureUrl" -> m.mainPicture.map(picture => Item300.bestFor(picture.images))
+      "pictureUrl" -> m.mainPicture.map(picture => Item300.bestFor(picture.images)),
+      "ratioTicketsLeft" -> m.ratioTicketsLeft
     )
   }
 }

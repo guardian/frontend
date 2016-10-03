@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 7
+    val s3ConfigVersion = 8
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -396,7 +396,6 @@ class GuardianConfiguration extends Logging {
     }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
