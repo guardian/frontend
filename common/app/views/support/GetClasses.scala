@@ -79,7 +79,7 @@ object GetClasses {
     hasTitle,
     isHeadlines = false,
     isVideo = false,
-    ContainerCommercialOptions.empty,
+    commercialOptions = ContainerCommercialOptions(omitMPU = false),
     hasDesktopShowMore = false,
     container = None,
     extraClasses = Nil,

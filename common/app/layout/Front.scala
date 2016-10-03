@@ -97,13 +97,6 @@ case class CollectionEssentials(
   showMoreLimit: Option[Int]
 )
 
-object ContainerCommercialOptions {
-
-  val empty = ContainerCommercialOptions(omitMPU = false)
-
-  def mostPopular(omitMPU: Boolean) = empty.copy(omitMPU = omitMPU)
-}
-
 case class ContainerCommercialOptions(omitMPU: Boolean)
 
 object FaciaContainer {
@@ -164,8 +157,8 @@ object FaciaContainer {
     config.config.showLatestUpdate,
     // popular containers should never be sponsored
     container match {
-      case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
-      case _ => ContainerCommercialOptions.empty
+      case MostPopular => ContainerCommercialOptions(omitMPU)
+      case _ => ContainerCommercialOptions(omitMPU = false)
     },
     config.config.description.map(DescriptionMetaHeader),
     None,
