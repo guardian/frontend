@@ -48,6 +48,8 @@ GET         /commercial/paid                                              contro
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
+#   todo: remove once https://github.com/guardian/flexible-content/pull/2724 is released
+GET         /advertiser-content/:campaignName/gallery/:pageName             controllers.commercial.HostedContentController.renderHostedGallery(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 
 # Subscriber number input page

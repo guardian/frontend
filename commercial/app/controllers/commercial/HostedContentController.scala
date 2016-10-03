@@ -34,6 +34,11 @@ class HostedContentController(contentApiClient: ContentApiClient)
     renderPage(Future.successful(hardcoded.LegacyHostedPages.fromCampaignAndPageName(campaignName, pageName)))
   }
 
+  // todo: remove once https://github.com/guardian/flexible-content/pull/2724 is released
+  def renderHostedGallery(campaignName: String, pageName: String) = {
+    renderHostedPage(campaignName + "/gallery", pageName)
+  }
+
   def renderHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
 
     val capiResponse = {
@@ -90,6 +95,9 @@ class HostedContentController(contentApiClient: ContentApiClient)
             case "article" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
               Cached(cacheDuration)(JsonComponent(hostedArticleOnwardComponent(trails)))
+            case "gallery" =>
+              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
             case _ =>
               Cached(0)(JsonNotFound())
           }
