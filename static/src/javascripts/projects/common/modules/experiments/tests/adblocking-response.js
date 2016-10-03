@@ -16,25 +16,25 @@ define([
     SurveyAdBlock
 ) {
     return function () {
-        this.id = 'AdBlockingResponse30pc';
-        this.start = '2016-09-22';
+        this.id = 'AdBlockingResponse3';
+        this.start = '2016-09-28';
         this.expiry = '2016-10-14'; // this test will expire on Thurs 13th PM.
         this.author = 'Justin Pinner';
-        this.description = 'Adblocking response with ad-free 404 test ZERO PERCENT';
-        this.audience = 0;
-        this.audienceOffset = 0.12; // exclude anyone that would have been in the previous 12% v2 test
+        this.description = 'Adblocking response test with ad-free option';
+        this.audience = 0.12;
+        this.audienceOffset = 0.13; // exclude anyone that would have been in the previous 12% v2 test
         this.successMeasure = 'Adblocking users show genuine interest in a paid ad-free service';
         this.audienceCriteria = 'Chrome desktop users with active adblocking software';
         var variantDataLinkNames = [
-            ['adblock whitelist 299'],
-            ['adblock supporter 299'],
-            ['adblock subscriber 299'],
-            ['adblock whitelist 499'],
-            ['adblock supporter 499'],
-            ['adblock subscriber 499'],
-            ['adblock whitelist 999'],
-            ['adblock supporter 999'],
-            ['adblock subscriber 999']
+            ['adblock whitelist 300'],
+            ['adblock supporter 300'],
+            ['adblock subscriber 300'],
+            ['adblock whitelist 500'],
+            ['adblock supporter 500'],
+            ['adblock subscriber 500'],
+            ['adblock whitelist 1000'],
+            ['adblock supporter 1000'],
+            ['adblock subscriber 1000']
         ].map(function(_) {
             return _[0];
         }).join(', ');
@@ -63,7 +63,7 @@ define([
                 storage.local.isStorageAvailable() &&
                 !storage.local.get('gu.subscriber') &&
                 !storage.local.get('gu.contributor') &&
-                !storage.local.get('gu.abb30pc.exempt') &&
+                !storage.local.get('gu.abb3.exempt') &&
                 storage.local.get('gu.alreadyVisited') > 5 &&
                 config.page.pageId !== 'contributor-email-page' &&
                 config.page.pageId !== 'contributor-email-page-submitted';
@@ -73,13 +73,13 @@ define([
             id: 'control',
             test: function(){}
         }, {
-            id: '299',
+            id: '300',
             test: function () {
                 if (isQualified()) {
-                    var variant = '299',
+                    var variant = '300',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Remove ads for &pound;2.99/month',
-                        adFreeMessagePrefix = '&pound;2.99 per month';
+                        adFreeButtonText = 'Remove ads for &pound;3/month',
+                        adFreeMessagePrefix = '&pound;3 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
@@ -95,13 +95,13 @@ define([
                 }
             }
         }, {
-            id: '499',
+            id: '500',
             test: function () {
                 if (isQualified()) {
-                    var variant = '499',
+                    var variant = '500',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Remove ads for &pound;4.99/month',
-                        adFreeMessagePrefix = '&pound;4.99 per month';
+                        adFreeButtonText = 'Remove ads for &pound;5/month',
+                        adFreeMessagePrefix = '&pound;5 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,
@@ -117,13 +117,13 @@ define([
                 }
             }
         }, {
-            id: '999',
+            id: '1000',
             test: function () {
                 if (isQualified()) {
-                    var variant = '999',
+                    var variant = '1000',
                         whitelistText = 'Allow ads and browse for free',
-                        adFreeButtonText = 'Remove ads for &pound;9.99/month',
-                        adFreeMessagePrefix = '&pound;9.99 per month';
+                        adFreeButtonText = 'Remove ads for &pound;10/month',
+                        adFreeMessagePrefix = '&pound;10 per month';
 
                     var surveyOverlay = new SurveyAdBlock({
                         whitelistText: whitelistText,

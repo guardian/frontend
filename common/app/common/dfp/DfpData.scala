@@ -2,12 +2,12 @@ package common.dfp
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
-import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+
 import scala.language.postfixOps
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
@@ -209,42 +209,6 @@ case class GuLineItem(id: Long,
   val isExpired = endTime.exists(_.isBeforeNow)
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
-
-  val paidForTags: Seq[PaidForTag] = targeting.customTargetSets.flatMap { targetSet =>
-
-    def paidForTagsFromTargets(targetedNames: Seq[String], tagType: TagType, paidForType: PaidForType) = {
-      targetedNames
-        .map({ dfpTargetName =>
-           // Some of the targeted names in DFP have strange unicode characters. Strip them here.
-           StringUtils.strip(dfpTargetName, "\u200B").trim
-        })
-        .map({ targetedName =>
-          PaidForTag(
-            targetedName,
-            tagType = tagType,
-            paidForType = paidForType,
-            matchingCapiTagIds = Nil,
-            lineItems = Nil
-          )
-        })
-    }
-
-    def seriesTags = targetSet.filterTags(_.isSeriesTag) _
-    def keywordTags = targetSet.filterTags(_.isKeywordTag) _
-
-    paidForTagsFromTargets(seriesTags(_.isSponsoredSlot), Series, Sponsored) ++
-    paidForTagsFromTargets(keywordTags(_.isSponsoredSlot), Keyword, Sponsored) ++
-    paidForTagsFromTargets(seriesTags(_.isAdvertisementFeatureSlot), Series, AdvertisementFeature) ++
-    paidForTagsFromTargets(keywordTags(_.isAdvertisementFeatureSlot), Keyword, AdvertisementFeature) ++
-    paidForTagsFromTargets(seriesTags(_.isFoundationSupportedSlot), Series, FoundationFunded) ++
-    paidForTagsFromTargets(keywordTags(_.isFoundationSupportedSlot), Keyword, FoundationFunded)
-  }.distinct
-
-  val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
-
-  val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
-
-  val foundationSupportedTags: Seq[String] = targeting.customTargetSets.flatMap(_.foundationSupportedTags).distinct
 
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct

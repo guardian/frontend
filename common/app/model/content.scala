@@ -5,16 +5,15 @@ import java.net.URL
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
+import com.gu.targeting.client.Campaign
 import common._
 import common.commercial.{BrandHunter, PaidContent}
-import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, Quiz}
 import model.pressed._
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -88,9 +87,10 @@ final case class Content(
         }
     )
   }
-  lazy val isExplore = HeroicTemplateSwitch.isSwitchedOn && tags.isExploreSeries
+  lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
+  lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -227,7 +227,9 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isExplore", JsBoolean(isExplore))
+    ("isExplore", JsBoolean(isExplore)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -274,10 +276,9 @@ final case class Content(
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
-      commercial.isAdvertisementFeature ||
+      isAdvertisementFeature ||
       metadata.contentType == "Interactive" ||
-      metadata.contentType == "Crossword" ||
-      metadata.contentType == "Hosted"
+      metadata.contentType == "Crossword"
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
@@ -434,6 +435,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       ("videoDuration" -> videoDuration)
     ) ++ bookReviewIsbn

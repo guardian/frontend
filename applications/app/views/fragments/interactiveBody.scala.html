@@ -1,9 +1,9 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
 @import views.support.{RenderClasses, InteractiveCleaner}
-@import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import conf.switches.Switches.interactivePressing
+@import views.support.Commercial._
 
 @body(page.interactive, page.item.content.isImmersive, isPaidContent(page.interactive, page))
 
@@ -33,27 +33,27 @@
             <article id="article" class="@RenderClasses(
                     Map(
                         "content--advertisement-feature" -> isPaidContent,
-                        "content--sponsored" -> interactive.commercial.isSponsored(Some(Edition(request))),
-                        "content--foundation-supported" -> interactive.commercial.isFoundationSupported,
+                        "content--sponsored" -> isSponsoredContent(interactive, page),
+                        "content--foundation-supported" -> isFoundationFundedContent(interactive, page),
                         "paid-content--advertisement-feature" -> isPaidContent
                     ),
                     "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
                 )"
                 itemscope itemtype="@interactive.metadata.schemaType" role="main">
-    
+
                 @if(isPaidContent){
                     @fragments.guBand()
                 }
-    
+
                 @fragments.headDefault(interactive, page, showBadge = true)
-    
+
                 <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
                     <div class="gs-container u-cf">
                         <div class="content__main-column">
                             @fragments.contentMeta(interactive, page, showBadge = false)
                         </div>
                     </div>
-    
+
                     <div class="gs-container" data-test-id="interactive-content-body">
                         <div class="content__main-column content__main-column--interactive">
                             @if(!isImmersive) {
@@ -63,7 +63,7 @@
                             }
                         </div>
                     </div>
-    
+
                     <div class="gs-container u-cf">
                         <div class="content__main-column content__meta-footer">
                             @fragments.contentMeta(interactive, page, showBadge = false)

@@ -23,6 +23,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
 
+  def isLoaded() = configAgent.get().isDefined
+
   def getClient: ApiClient = {
     FrontsApi.crossAccountClient
   }

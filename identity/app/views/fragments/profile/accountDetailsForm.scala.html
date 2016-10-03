@@ -6,6 +6,8 @@
 @import model.{Countries, PhoneNumbers, Titles}
 @import org.joda.time.DateTime.now
 @import helper._
+@import views.html.fragments.registrationFooter
+
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
     <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
@@ -199,3 +201,5 @@
 
 
 </form>
+
+@registrationFooter(idRequest, idUrlBuilder)

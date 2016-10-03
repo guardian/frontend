@@ -6,19 +6,9 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  Switch(
-    ABTests,
-    "ab-live-blog-chrome-notifications-prod2",
-    "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-discussion-external-frontend-avatar",
+  val ABDiscussionExternalFrontend = Switch(
+    SwitchGroup.ABTests,
+    "ab-discussion-external-frontend",
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
@@ -38,26 +28,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-article-onward-journey",
-    "Vertical positioning of the onward journey links",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-gallery-cta",
-    "Test which gallery image to put the call to action link on",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-story",
     "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -65,7 +35,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 6),
     exposeClientSide = true
   )
-  
+
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -78,8 +48,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response30pc",
-    "Prominent adblocker ad-free test ZERO PERCENT",
+    "ab-ad-blocking-response3",
+    "Prominent adblocker ad-free test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
@@ -92,7 +62,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 
@@ -102,17 +72,27 @@ trait ABTestSwitches {
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-video-button-duration",
-    "Show visitors new video play button",
-    owners = Seq(Owner.withGithub("mr-mr")),
+    "ab-upgrade-mobile-rich-links-below-viewport",
+    "Only upgrade rich links if they are below the current viewport",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 10, 13),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-short",
+    "Test whether epics design or copy lead to its success.",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = true
   )
 }

@@ -1,10 +1,13 @@
 package controllers.commercial
 
 import common.JsonComponent
+import model.commercial.soulmates.{SoulmatesAgent, Sample}
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
+import model.commercial.Member
 import model.Cached
 import play.api.mvc._
+import controllers.commercial
 
 import scala.concurrent.duration._
 
@@ -38,8 +41,10 @@ class SoulmatesController extends Controller with implicits.Requests {
     }
   }
 
-  def getSoulmates(groupName: String) = Action { implicit request =>
-
-    Cached(60.seconds){ JsonComponent(soulmatesSample(groupName)) }
+  def getSoulmates() = Action { implicit request =>
+    specificId match {
+      case Some(feed) => Cached(60.seconds) { JsonComponent(soulmatesSample(feed)) }
+      case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+    }
   }
 }

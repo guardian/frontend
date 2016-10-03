@@ -50,9 +50,12 @@ define([
         });
 
         it('should set width and height of the ad slot', function (done) {
-            var adSlot = document.getElementById('iframe01').parentNode;
-            resize({ width: '10', height: '10' }, adSlot)
+            var iframe = document.getElementById('iframe01');
+            var adSlot = iframe.parentNode;
+            resize({ width: '10', height: '10' }, iframe, adSlot)
             .then(function () {
+                expect(iframe.style.height).toBe('10px');
+                expect(iframe.style.width).toBe('10px');
                 expect(adSlot.style.height).toBe('10px');
                 expect(adSlot.style.width).toBe('10px');
             })
@@ -65,7 +68,7 @@ define([
             Promise.all(
                 iframes
                 .map(function (iframe) {
-                    return resize({ height: '10' + iframe.dataset.unit }, iframe.parentNode)
+                    return resize({ height: '10' + iframe.dataset.unit }, iframe, iframe.parentNode)
                     .then(function () {
                         expect(iframe.parentNode.style.height).toBe('10' + iframe.dataset.unit);
                     });

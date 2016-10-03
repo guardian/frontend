@@ -1,47 +1,62 @@
-@mixin notifcations-button-style($foreground: $neutral-2, $background: #ffffff) {
-    .notifications__button {
-        color: $foreground;
-        border-color: $foreground;
-        border-style: solid;
-
-        .inline-icon {
-            fill: $foreground
-        }
-    }
-
-    .notifications__button--subscribed {
-        color: $background;
-        background-color: $foreground;
-        .inline-icon {
-            fill: $background;
-            background-color: $foreground;
-        }
-
-        &:focus,
-        &:hover {
-            background-color: $foreground;
-            .inline-icon {
-                background-color: darken($foreground, 10%);
-            }
-        }
-    }
-
-    .notifications__button--unsubscribed {
-        color: $foreground;
+@mixin notifcations-button-style($foreground: $live-main-2, $background: #ffffff) {
+    .notifications__toggle {
+        border: 0;
+        padding: 0;
+        display: block;
         background-color: transparent;
-        .inline-icon {
-            fill: $foreground;
-        }
 
-        &:focus,
-        &:hover {
-            color: darken($foreground, 10%);
-            border-color: darken($foreground, 10%);
-            .inline-icon {
-                fill: darken($foreground, 10%);
-            }
-
+        &:hover,
+        &:focus {
+            outline: 0;
         }
+    }
+}
+
+$slider-height: 32px;
+$slider-clearence: 3px;
+
+.live-notifications__slider {
+    float: left;
+    position: relative;
+    height: $slider-height;
+    width: $gs-gutter * 2.5;
+    border-radius: $slider-height / 2;
+    margin-right: $gs-gutter / 2;
+    transition: background .3s ease;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: $slider-clearence;
+        width: $slider-height - ($slider-clearence * 2);
+        height: $slider-height - ($slider-clearence * 2);
+        background-color: $neutral-8;
+        border-radius: 50%;
+        transition: all .3s ease;
+    }
+}
+
+.live-notifications__slider--unsubscribed {
+    background-color: $neutral-3;
+
+    &:before {
+        left: $slider-clearence;
+    }
+
+    .notifications__toggle:hover & {
+        background-color: $neutral-2;
+    }
+}
+
+.live-notifications__slider--subscribed {
+    background-color: $live-main-2;
+
+    &:before {
+        left: $slider-clearence * 7;
+    }
+
+    .notifications__toggle:hover & {
+        background-color: $live-support-2;
     }
 }
 
@@ -62,7 +77,7 @@ $notifications-button-height: 28px;
     position: relative;
 }
 
-.notifications__button .inline-icon {
+.notifications__toggle .inline-icon {
     svg {
         width: 1.143em;
         height: .857em;
@@ -78,14 +93,29 @@ $notifications-button-height: 28px;
 }
 
 .live-notifications__label {
+    @include fs-textSans(4);
+    color: $live-main-1;
+    line-height: $slider-height;
     display: none;
 }
 
+.live-notifications__label--visible {
+    display: block;
+}
+
+.live-notifications__label--hidden {
+    display: none;
+}
+
+.js-live-notifications__label--denied {
+    @include fs-textSans(2, true);
+    padding: $gs-baseline 0;
+    text-align: left;
+}
+
 @each $state in (subscribed, unsubscribed) {
-    .notifications__button--#{$state} {
-        .live-notifications__label--#{$state} {
-            display: inline;
-        }
+    .live-notifications__label--#{$state} {
+        display: inline-block;
     }
 }
 
@@ -147,7 +177,7 @@ $notifications-button-height: 28px;
     display: block;
     padding-left: $gs-gutter/2;
     padding-top: $gs-gutter/2;
-    padding-right: $gs-gutter/2;    
+    padding-right: $gs-gutter/2;
 
     .button {
         padding: 0;
@@ -248,7 +278,3 @@ $notifications-button-height: 28px;
     right: -$gs-gutter / 2;
 
 }
-
-
-
-

@@ -1,5 +1,6 @@
 package model.commercial.jobs
 
+import model.commercial.Job
 
 object Fixtures {
 

@@ -90,7 +90,9 @@ object ChesterZooHostedPages {
   private val cta = HostedCallToAction(
     label = Some("We won't stand back and we won't give up."),
     btnText = Some("It's time to act for wildlife"),
-    url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016"
+    url = "http://www.actforwildlife.org.uk/?utm_source=theguardian.com&utm_medium=referral&utm_campaign=LaunchCampaignSep2016",
+    image = None,
+    trackingCode = None
   )
 
 
@@ -253,17 +255,26 @@ object ChesterZooHostedPages {
     List(nextIndex, nextNextIndex).filter(_ != index).map(orderedPages(_)).map(pageMap)
   }
 
-  private def galleryPage: HostedGalleryPage = HostedGalleryPage(
-    campaign = campaign,
-    images = images,
-    pageUrl = whatWeFightForPage.pageUrl,
-    pageName = whatWeFightFor,
-    title = whatWeFightForPage.title,
-    cta = cta,
-    nextPagesList = nextPages(whatWeFightFor),
-    standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some of the world’s most endangered wildlife from extinction",
-    shortSocialShareText = Some("Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife")
-  )
+  private def galleryPage: HostedGalleryPage = {
+    val pageUrl = whatWeFightForPage.pageUrl
+    val pageName = whatWeFightFor
+    val title = whatWeFightForPage.title
+    HostedGalleryPage(
+      campaign = campaign,
+      images = images,
+      pageUrl = pageUrl,
+      pageName = pageName,
+      title = title,
+      cta = cta,
+      nextPagesList = nextPages(whatWeFightFor),
+      standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some" +
+                   " of the world’s most endangered wildlife from extinction",
+      shortSocialShareText = Some(
+        "Right now, #ChesterZoo is working around the world to save endangered wildlife from extinction #ActforWildlife"
+      ),
+      metadata = Metadata.forHardcodedHostedGalleryPage(campaign, pageUrl, pageName, title, images)
+    )
+  }
 
   def fromPageName(pageName: String): Option[HostedPage] = {
     pageName match {
