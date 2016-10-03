@@ -309,6 +309,15 @@ $explore-series-header-element-opacity: .85;
     height: 100%;
 }
 
+.immersive-main-media__logo__svg__svg {
+    float: right;
+    width: 70%;
+
+    @include mq($from: tablet) {
+        float: none;
+        width: 100%;
+    }
+}
 
 .series-identity__title, .series-identity__byline {
     @include fs-header(2);
