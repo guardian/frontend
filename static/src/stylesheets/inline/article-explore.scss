@@ -44,7 +44,7 @@ $explore-series-header-element-opacity: .85;
 }
 
 .content--explore-series.explore--video .content__article-body {
-    padding: 0px;
+    padding: 0;
     @include mq($from: tablet) {
         padding-top: 40px;
     }
@@ -151,7 +151,7 @@ $explore-series-header-element-opacity: .85;
 .explore-series-trail-wrapper {
     position: absolute;
     width: 100%;
-    bottom: 0px;
+    bottom: 0;
 }
 
 .explore-series-standfirst {
@@ -183,7 +183,7 @@ $explore-series-header-element-opacity: .85;
 
         @include mq($until: leftCol) {
             margin-left: gs-span(2);
-            margin-bottom: -4px;
+            margin-bottom: -$gs-baseline / 3;
         }
         @include mq($until: tablet) {
             margin-left: inherit;
@@ -201,7 +201,7 @@ $explore-series-header-element-opacity: .85;
 
     .byline-img {
         //fixes weird space at the bottom of the image
-        line-height: 0px;
+        line-height: 0;
 
         img {
             width: 210px;
@@ -227,14 +227,13 @@ $explore-series-header-element-opacity: .85;
     }
 
     .content__labels {
-        padding: 0px;
+        padding: 0;
     }
 
     .byline {
-        @include fs-headline(4);
+        @include fs-headline(1);
         border-top: 0;
-        padding: 0px;
-        font-size: 14px;
+        padding: 0;
         font-weight: 900;
         line-height: 16px;
         display: inline-block;
@@ -291,8 +290,6 @@ $explore-series-header-element-opacity: .85;
         }
     }
 }
-
-
 
 .immersive-main-media__image-overlay {
     position: absolute;
@@ -433,7 +430,7 @@ $explore-series-header-element-opacity: .85;
     figcaption {
         a {
             position: relative;
-            top: 0px;
+            top: 0;
             z-index: 10;
             display: block;
             max-width: gs-span(3);
@@ -466,28 +463,10 @@ $explore-series-header-element-opacity: .85;
 
     @include mq($from: tablet) {
         width: 740px;
-        margin-top: 0px;
+        margin-top: 0;
     }
 
     @include mq($from: desktop) {
         width: 980px;
     }
 }
-
-
-/*This brings the margins to the top of the page, when the heroic template has a video.
-Because this template uses the immersive header they are outside of the header - hence
-givng this some mega minus margins.*/
-
-// .l-side-margins {
-//     &.explore--video {
-//         &::before {
-//             margin-top: -560px;
-//             height: 128%;
-//         }
-//         &::after {
-//             margin-top: -560px;
-//             height: 128%;
-//         }
-//     }
-// }
