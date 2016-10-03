@@ -34,8 +34,6 @@ object ClientSideLogging extends Logging {
       val dataKeys = pageViewIds.map(ClientSideLogging.dataKeyFromId)
       client.del(dataKeys ++ timeKey)
     })
-
-
   }
 
   // Make a client for each usage, otherwise there may be protocol errors.
