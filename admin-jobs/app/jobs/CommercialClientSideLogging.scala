@@ -43,7 +43,7 @@ class CommercialClientSideLoggingLifecycle(
   }}
 
   // 5 minutes between each log write.
-  private val jobFrequency = 600.seconds
+  private val jobFrequency = 5.minutes
 
   override def start(): Unit = {
     jobs.deschedule("CommercialClientSideLoggingJob")
@@ -56,7 +56,7 @@ class CommercialClientSideLoggingLifecycle(
   def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
       if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
-        // Start searching logs by doubling the period, allowing fresh data to settle.
+        // Start searching logs from two periods behind the current time. This allows fresh data to settle.
         val timeStart = DateTime.now.minusSeconds(jobFrequency.toSeconds.toInt * 2)
         log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
         val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(jobFrequency.toMillis))
