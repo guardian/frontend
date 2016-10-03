@@ -2,7 +2,7 @@ import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
-import dfp.{CapiLookupAgent, DfpAgentLifecycle}
+import dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
@@ -40,8 +40,6 @@ trait AdminServices {
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
   lazy val matchDayRecorder = wire[MatchDayRecorder]
   lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
-  lazy val capiLookupAgent = wire[CapiLookupAgent]
-  lazy val dfpDataCacheJob = wire[DfpDataCacheJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }
 
