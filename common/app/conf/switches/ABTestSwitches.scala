@@ -78,21 +78,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-video-button-duration",
-    "Show visitors new video play button",
-    owners = Seq(Owner.withGithub("mr-mr")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-upgrade-mobile-rich-links-below-viewport",
     "Only upgrade rich links if they are below the current viewport",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 13),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-short",
+    "Test whether epics design or copy lead to its success.",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 10),
     exposeClientSide = true
   )
 }

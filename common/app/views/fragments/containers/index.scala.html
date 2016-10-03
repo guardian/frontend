@@ -10,12 +10,6 @@
 @defining(page.webTitle) { case (webTitle) =>
     <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
         data-link-name="all index"
-        @for(sponsorData <- container.mkSponsorDataAttributes(config)) {
-            @for(sponsor <- sponsorData.sponsor) { data-sponsor="@sponsor" }
-            @for(seriesId <- sponsorData.seriesId) { data-keywords="@seriesId" }
-            @for(keywordId <- sponsorData.keywordId) { data-keywords="@keywordId" }
-            @for(sponsorshipType <- sponsorData.sponsorshipType) { data-sponsorship="@sponsorshipType" }
-        }
         data-component="all index">
         <div class="fc-container__inner">
             <div class="fc-container__header js-container__header">

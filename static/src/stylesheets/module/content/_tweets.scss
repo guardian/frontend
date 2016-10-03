@@ -4,20 +4,11 @@
     so we have font-families and colours in here that are not part
     of the Guardian styles.
    ========================================================================== */
-.tweet {
-    display: table-cell;
-    width: 10000px;
-    max-width: 100%;
-    background-position: 0 ($gs-baseline/3)*2 !important;
-    background-repeat: no-repeat;
 
-    .block-time + .block-elements .element-tweet:first-child & {
-        border-top: 0;
-    }
-}
 .element-tweet {
     margin: $gs-baseline 0 ($gs-baseline/3)*4;
 }
+
 .tweet,
 .from-content-api blockquote.tweet {
     // We're going to style this like the upgraded embed
