@@ -63,22 +63,20 @@
 
         <ul class="navigation-group navigation-group--grey secondary-navigation">
 
-            <li class="navigation-group__item js-editionalise-secondary-nav"
-                @* TODO: should membership really only show up in the uk edition? *@
-                data-edition="uk">
-                    <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_UK">
-                        @fragments.inlineSvg("marque-36", "icon", List("main-menu__icon", "main-menu__icon--membership"))
-                        become a supporter
-                    </a>
-            </li>
+            @Edition.all.map { edition =>
 
-            <li class="navigation-group__item js-editionalise-secondary-nav"
-                data-edition="uk">
-                    <a href="">
-                        @fragments.inlineSvg("device", "icon", List("main-menu__icon", "main-menu__icon--subscribe"))
-                        subscribe
-                    </a>
-            </li>
+                @NewNavigation.MembershipLinks.getEditionalisedNavLinks(edition).map { item =>
+                    <li class="navigation-group__item js-editionalise-secondary-nav"
+                        data-edition=@{edition.id.toLowerCase}
+                        @if(edition.id.toLowerCase != "uk") { hidden }>
+
+                            <a href="@item.url">
+                                @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
+                                @item.name
+                            </a>
+                    </li>
+                }
+            }
 
             @fragments.nav.userAccountLinks()
 
