@@ -1,6 +1,8 @@
 package common
 
-case class NavLink(name: String, url: String)
+import conf.Configuration
+
+case class NavLink(name: String, url: String, iconName: String = "")
 
 object NewNavigation {
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
@@ -324,6 +326,31 @@ object NewNavigation {
       NavLink("the observer", "/observer"),
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
+    )
+  }
+
+  case object MembershipLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = List(
+//       TODO: use config for urls instead
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/uk/supporter?INTCMP=mem_uk_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/uk?INTCMP=NGW_NEWHEADER_UK_GU_SUBSCRIBE", "device")
+    )
+
+    val au = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/au/supporter?INTCMP=mem_au_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/au?INTCMP=NGW_NEWHEADER_AU_GU_SUBSCRIBE", "device")
+    )
+
+    val us = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/us/supporter?INTCMP=mem_us_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/us?INTCMP=NGW_NEWHEADER_US_GU_SUBSCRIBE", "device")
+    )
+
+    val int = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/int/supporter?INTCMP=mem_int_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/int?INTCMP=NGW_NEWHEADER_INT_GU_SUBSCRIBE", "device")
     )
   }
 }

@@ -10,8 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class DfpDataCacheLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobScheduler: JobScheduler,
-  akkaAsync: AkkaAsync,
-  dfpDataCacheJob: DfpDataCacheJob)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
 
   appLifecycle.addStopHook { () => Future {
     jobs foreach { job =>
@@ -66,7 +65,7 @@ class DfpDataCacheLifecycle(
     new Job[Unit] {
       val name: String = "DFP-Cache"
       val interval: Int = 2
-      def run(): Future[Unit] = dfpDataCacheJob.run()
+      def run(): Future[Unit] = DfpDataCacheJob.run()
     },
 
     new Job[Unit] {
@@ -110,7 +109,7 @@ class DfpDataCacheLifecycle(
     }
 
     akkaAsync.after1s {
-      dfpDataCacheJob.refreshAllDfpData()
+      DfpDataCacheJob.refreshAllDfpData()
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()
       CustomTargetingKeyValueJob.run()

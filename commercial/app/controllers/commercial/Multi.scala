@@ -28,23 +28,28 @@ class Multi(bestsellersAgent: BestsellersAgent,
     val components = offerTypes zip offerIds
 
     val samples = Future.traverse(components) {
-      case ("Book", optId)        => optId.map { bookId =>
-        bestsellersAgent.getSpecificBooks(Seq(bookId))
-      }.getOrElse {
+      case ("Book", Some(bookId))=>
+        bestsellersAgent.getSpecificBooks(Seq(bookId)) map {
+          case Nil   => bestsellersAgent.bestsellersTargetedAt(segment)
+          case books => books
+        }
+
+      case ("Book", None)        =>
         Future.successful(bestsellersAgent.bestsellersTargetedAt(segment))
-      }
 
-      case ("Job", optId)        => optId.map { jobId =>
-        Future.successful(jobsAgent.specificJobs(Seq(jobId)))
+      case ("Job", optId)        => Future.successful(optId.flatMap { jobId =>
+        val jobs = jobsAgent.specificJobs(Seq(jobId))
+        if(jobs.isEmpty) None else Some(jobs)
       }.getOrElse {
-        Future.successful(jobsAgent.jobsTargetedAt(segment))
-      }
+        jobsAgent.jobsTargetedAt(segment)
+      })
 
-      case ("Masterclass", optId) => optId.map { masterclassId =>
-        Future.successful(masterclassAgent.specificMasterclasses(Seq(masterclassId)).filterNot(_.mainPicture.isEmpty))
+      case ("Masterclass", optId) => Future.successful(optId.flatMap { masterclassId =>
+        var masterclasses = masterclassAgent.specificMasterclasses(Seq(masterclassId)).filterNot(_.mainPicture.isEmpty)
+        if(masterclasses.isEmpty) None else Some(masterclasses)
       }.getOrElse {
-        Future.successful(masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty))
-      }
+        masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty)
+      })
 
       case ("Soulmates", _)       => Future.successful {
         (for {
@@ -57,11 +62,12 @@ class Multi(bestsellersAgent: BestsellersAgent,
         }
       }
 
-      case ("Travel", optId)      => optId.map { travelId =>
-        Future.successful(travelOffersAgent.specificTravelOffers(Seq(travelId)))
+      case ("Travel", optId)      => Future.successful(optId.flatMap { travelId =>
+        var travels = travelOffersAgent.specificTravelOffers(Seq(travelId))
+        if(travels.isEmpty) None else Some(travels)
       }.getOrElse {
-        Future.successful(travelOffersAgent.offersTargetedAt(segment))
-      }
+        travelOffersAgent.offersTargetedAt(segment)
+      })
 
       case _                          => Future.successful(Nil)
     }

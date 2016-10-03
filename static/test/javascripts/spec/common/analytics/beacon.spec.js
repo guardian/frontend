@@ -10,7 +10,7 @@ define([
         inject = new Injector(),
         config = {
             page: {
-                beaconUrl: '//beacon.guim.co.uk'
+                beaconUrl: '//beacon.gu-web.net'
             }
         };
 
@@ -31,14 +31,14 @@ define([
         var img = beacon.fire('/pv.gif');
 
         expect(img.nodeName.toLowerCase()).toBe('img');
-        expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/pv.gif');
+        expect(bonzo(img).attr('src')).toBe('//beacon.gu-web.net/pv.gif');
     });
 
     it('should create correct img element when counting', function () {
         var img = beacon.counts('blocked-ads');
 
         if (!navigator.sendBeacon) {
-            expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads');
+            expect(bonzo(img).attr('src')).toBe('//beacon.gu-web.net/counts.gif?c=blocked-ads');
         }
     });
 
@@ -47,7 +47,7 @@ define([
 
         if (!navigator.sendBeacon) {
             expect(bonzo(img).attr('src'))
-                .toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads&c=localStorage-supported');
+                .toBe('//beacon.gu-web.net/counts.gif?c=blocked-ads&c=localStorage-supported');
         }
     });
 });
