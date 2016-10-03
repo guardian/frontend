@@ -1,5 +1,5 @@
 @(branding: common.commercial.Branding, isStandardSizeCard: Boolean)(implicit request: RequestHeader)
 
-<div class="badge @if(!isStandardSizeCard) {badge--branded}">
+<div class="badge @if(isStandardSizeCard){badge--branded}">
     @logo(branding)
 </div>
