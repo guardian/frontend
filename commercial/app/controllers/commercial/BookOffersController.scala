@@ -1,8 +1,8 @@
 package controllers.commercial
 
 import common.{JsonComponent, ExecutionContexts, Logging}
-import model.commercial.Segment
-import model.commercial.books.{BestsellersAgent, Book, BookFinder, CacheNotConfiguredException}
+import model.commercial.{Segment, Book}
+import model.commercial.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
 import play.api.mvc._
@@ -57,8 +57,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
   def renderBooks = Action.async { implicit request =>
 
     def result(books: Seq[Book]): Result = books match {
-      case Nil =>
-        NoCache(jsonFormat.nilResult.result)
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
       case someBooks =>
         Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")

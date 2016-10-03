@@ -1,5 +1,6 @@
 package model.commercial.events
 
+import model.commercial.Masterclass
 import model.commercial.events.Eventbrite.EBResponse
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
@@ -15,7 +16,7 @@ class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers {
 
     response.events.size should be (50)
 
-    val singleMasterclass = Masterclass(response.events.filter(_.name == "Self-editing skills for novelists").head).get
+    val singleMasterclass = Masterclass.fromEvent(response.events.filter(_.name == "Self-editing skills for novelists").head).get
     singleMasterclass.tickets.size should be (2)
   }
 }

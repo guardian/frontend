@@ -1,13 +1,14 @@
 @()(implicit request: RequestHeader)
 
 @import common.{ NewNavigation, LinkTo, Edition }
+@import conf.Configuration
+@import conf.switches.Switches.SearchSwitch
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     <li class="main-navigation__item navigation-border js-navigation-item">
-            <!-- TODO: Firefox -->
         <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
             <summary class="main-navigation__item__button js-navigation-button">
-                <i class="main-navigation__icon"></i>
+                <i class="main-menu__icon main-menu__icon--chevron"></i>
                 @topLevelSection.name
             </summary>
 
@@ -21,7 +22,7 @@
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
-                            <a href="@LinkTo { @sectionItem.url }">@sectionItem.name</a>
+                            <a href="@LinkTo { @sectionItem.url }" data-link-name="@sectionItem.name">@sectionItem.name</a>
                         </li>
                     }
                 </ul>
@@ -42,32 +43,49 @@
                 @sectionList(section)
             }
         </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item"><a href="https://profile.theguardian.com/signin?INTCMP=DOTCOM_HEADER_SIGNIN">
-                @fragments.inlineSvg("profile-36", "icon", List("navigation-group__icon", "navigation-group__profile-icon"))
-                Sign in
-            </a></li>
-        </ul>
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item navigation-group__item--search">
-                <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
-                    @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
-                    <label for="submit-google-search">
-                        <input class="u-h" type="submit" id="submit-google-search">
-                        @fragments.inlineSvg("search-36", "icon", List("navigation-group__search-icon"))
-                    </label>
-                    <label for="q" class="u-h">What term do you want to search?</label>
-                    <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
-                    <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
-                </form>
-            </li>
+
+        @if(SearchSwitch.isSwitchedOn) {
+            <ul class="navigation-group">
+                <li class="navigation-group__item navigation-group__item--search">
+                    <form class="navigation-group__search-container" action="https://www.google.co.uk/search">
+                        <input type="text" name="q" class="navigation-group__search-box" placeholder="search for...">
+                        <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
+                        @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
+                        <label for="submit-google-search">
+                            <input class="u-h" type="submit" id="submit-google-search">
+                            @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                        </label>
+                        <label for="q" class="u-h">What term do you want to search?</label>
+                    </form>
+                </li>
+            </ul>
+        }
+
+        <ul class="navigation-group navigation-group--grey secondary-navigation">
+
+            @Edition.all.map { edition =>
+
+                @NewNavigation.MembershipLinks.getEditionalisedNavLinks(edition).map { item =>
+                    <li class="navigation-group__item js-editionalise-secondary-nav"
+                        data-edition=@{edition.id.toLowerCase}
+                        @if(edition.id.toLowerCase != "uk") { hidden }>
+
+                            <a href="@item.url">
+                                @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
+                                @item.name
+                            </a>
+                    </li>
+                }
+            }
+
+            @fragments.nav.userAccountLinks()
+
         </ul>
 
         @Edition.all.map { edition =>
             <ul class="navigation-group
-                navigation-border
-                secondary-navigation
-                js-editionlise-secondary-nav"
+                js-editionalise-secondary-nav
+                secondary-navigation"
                 data-edition=@{edition.id.toLowerCase}
                 @if(edition.id.toLowerCase != "uk") { hidden }>
 
@@ -79,14 +97,13 @@
 
         <ul class="navigation-group navigation-border secondary-navigation">
             <li class="navigation-group__item"><a href="https://www.facebook.com/theguardian">
-                @fragments.inlineSvg("share-facebook", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
+                @fragments.inlineSvg("share-facebook", "icon", List("main-menu__icon", "main-menu__icon--social"))
                 Facebook
             </a></li>
             <li class="navigation-group__item"><a href="https://twitter.com/guardian">
-                @fragments.inlineSvg("share-twitter", "icon", List("navigation-group__icon", "navigation-group__social-icon"))
+                @fragments.inlineSvg("share-twitter", "icon", List("main-menu__icon", "main-menu__icon--social"))
                 Twitter
             </a></li>
         </ul>
     </div>
 </div>
-

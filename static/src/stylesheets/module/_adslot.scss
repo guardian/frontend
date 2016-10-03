@@ -129,7 +129,7 @@
         height: 250px;
     }
 
-    &.ad-slot--fluid {
+    &.ad-slot--fabric {
         > .ad-slot__label {
             box-sizing: content-box;
             // Copying stuff from _mixins.scss because I don't want to
@@ -655,6 +655,10 @@
 .ad-slot--fabric {
     overflow: hidden;
     width: auto;
+    min-height: 250px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 
 .ad-slot--fabric-v1,

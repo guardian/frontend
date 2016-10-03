@@ -1,9 +1,15 @@
 define([
     'fastdom',
+    'common/utils/$',
+    'bonzo',
+    'bean',
     'Promise',
     'common/utils/load-script'
 ], function (
     fastdom,
+    $,
+    bonzo,
+    bean,
     Promise,
     loadScript
 ) {
@@ -18,10 +24,52 @@ define([
     }, this);
 
     return {
-        init: function() {
-            return {
-                promise: promise
-            };
+        init: function(el, handlers) {
+            var wrapper = document.createElement('div');
+            var attrs = el.attributes;
+            Object.getOwnPropertyNames(attrs).forEach(function (attr) {
+                var attribute = attrs[attr];
+                if (attribute.name === 'class') {
+                    bonzo(wrapper).addClass(attribute.value);
+                    el.classname = 'youtube-player';
+                } else if (attribute.name === 'id') {
+                    var id = attribute.value;
+                    el.id += '_iframe';
+                    wrapper.id = id;
+                } else if(attribute.name !== 'src') {
+                    wrapper.setAttribute(attribute.name, attribute.value);
+                }
+            });
+            el.parentNode.insertBefore(wrapper, el);
+            wrapper.appendChild(el);
+
+            return promise.then(function () {
+                function onPlayerStateChange(event) {
+                    fastdom.write(function () {
+                        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
+                            bonzo(wrapper).toggleClass('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
+                        });
+                        bonzo(wrapper).addClass('youtube__video-started');
+                    });
+                    if(handlers && typeof handlers.onPlayerStateChange == 'function') {
+                        handlers.onPlayerStateChange(event);
+                    }
+                }
+                function onPlayerReady(event) {
+                    fastdom.write(function () {
+                        bonzo(wrapper).addClass('youtube__video-ready');
+                    });
+                    if(handlers && typeof handlers.onPlayerReady == 'function') {
+                        handlers.onPlayerReady(event);
+                    }
+                }
+                return new window.YT.Player(el.id, {
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            });
         }
     };
 });

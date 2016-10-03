@@ -1,0 +1,20 @@
+@import common.commercial.hosted.HostedPage
+@(trails: Seq[HostedPage])(implicit request: RequestHeader)
+
+@if(trails.isEmpty) {
+    <div></div>
+} else {
+    <div class="hosted__next-video">
+        <div class="hosted__next-video--header">
+            <div class="hosted__next-page-header--border hosted-tone-bg"></div>
+            <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
+            <h2 class="hosted__next-video--client-name hosted-tone">@{trails.head.campaign.owner}</h2>
+        </div>
+        @for(trail <- trails) {
+            <a href="@{trail.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                <img class="hosted__next-video-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                <p class="hosted__next-page-title">@{trail.title}</p>
+            </a>
+        }
+    </div>
+}

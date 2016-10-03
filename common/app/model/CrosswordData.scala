@@ -129,7 +129,7 @@ object CrosswordData {
     val crosswordType = crossword.`type`.name.toLowerCase
 
     CrosswordData(
-      s"$crosswordType/${crossword.number.toString}",
+      s"crosswords/$crosswordType/${crossword.number.toString}",
       crossword.number,
       crossword.name,
       creator = (for (

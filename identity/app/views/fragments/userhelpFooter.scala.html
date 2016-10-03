@@ -1,0 +1,6 @@
+@import model.IdentityUserhelp
+
+@(userhelp: model.Userhelp = IdentityUserhelp)(implicit request: RequestHeader)
+
+<li class="nav__item"><a class="nav__link" href="@userhelp.faq" data-link-name="FAQ">@userhelp.name FAQ</a></li>
+<li class="nav__item"><a class="nav__link" href="mailto:@userhelp.email" data-link-name="Email Userhelp">Email @userhelp.name Help</a></li>

@@ -1,6 +1,7 @@
 package implicits
 
-import common.dfp.DfpAgent
+import common.Edition
+import common.commercial.PaidContent
 import implicits.Dates._
 import model._
 import model.pressed._
@@ -27,14 +28,12 @@ object FaciaContentFrontendHelpers {
         case video: VideoElement => Some(video)
         case _ => None
       }
-      videos.find(_.properties.isMain).headOption
+      videos.find(_.properties.isMain)
     }
 
-    lazy val isAdvertisementFeature: Boolean =
-      DfpAgent.isAdvertisementFeature(frontendTags, faciaContent.properties.maybeSection)
-
     lazy val shouldHidePublicationDate: Boolean = {
-      isAdvertisementFeature && faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
+      faciaContent.branding(Edition.defaultEdition).exists(_.sponsorshipType == PaidContent) &&
+      faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
     def slideshow: Option[List[FaciaImageElement]] = faciaContent.properties.image match {
