@@ -24,13 +24,13 @@ define([
     }, this);
 
     return {
-        init: function(el) {
+        init: function(el, handlers) {
             var wrapper = document.createElement('div');
             var attrs = el.attributes;
             Object.getOwnPropertyNames(attrs).forEach(function (attr) {
                 var attribute = attrs[attr];
                 if (attribute.name === 'class') {
-                    wrapper.className = attribute.value;
+                    bonzo(wrapper).addClass(attribute.value);
                     el.classname = 'youtube-player';
                 } else if (attribute.name === 'id') {
                     var id = attribute.value;
@@ -51,11 +51,17 @@ define([
                         });
                         bonzo(wrapper).addClass('youtube__video-started');
                     });
+                    if(handlers && typeof handlers.onPlayerStateChange == 'function') {
+                        handlers.onPlayerStateChange(event);
+                    }
                 }
-                function onPlayerReady() {
+                function onPlayerReady(event) {
                     fastdom.write(function () {
                         bonzo(wrapper).addClass('youtube__video-ready');
                     });
+                    if(handlers && typeof handlers.onPlayerReady == 'function') {
+                        handlers.onPlayerReady(event);
+                    }
                 }
                 return new window.YT.Player(el.id, {
                     events: {

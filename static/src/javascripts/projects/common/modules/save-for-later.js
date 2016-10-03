@@ -16,7 +16,8 @@ define([
     'lodash/objects/assign',
     'lodash/collections/forEach',
     'lodash/collections/filter',
-    'lodash/collections/some'
+    'lodash/collections/some',
+    'bootstraps/enhanced/liveblog'
 ], function (
     qwery,
     bonzo,
@@ -35,7 +36,8 @@ define([
     assign,
     forEach,
     filter,
-    some
+    some,
+    liveBlog
 ) {
 
     function SaveForLater() {
@@ -80,6 +82,12 @@ define([
     var getCustomEventProperties = function (contentId) {
         var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
         return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
+
+    SaveForLater.prototype.conditionalInit = function(){
+        if (!liveBlog.notificationsCondition()) {
+            this.init();
+        }
     };
 
     SaveForLater.prototype.init = function () {

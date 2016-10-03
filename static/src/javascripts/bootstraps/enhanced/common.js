@@ -287,7 +287,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews && config.page.section !== 'identity' && config.page.tones !== 'Hosted') {
+                if (config.switches.breakingNews && config.page.section !== 'identity' && !config.page.isHosted) {
                     breakingNews();
                 }
             },
@@ -315,7 +315,7 @@ define([
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
-                    saveForLater.init();
+                    saveForLater.conditionalInit();
                 }
             },
 

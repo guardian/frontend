@@ -1,7 +1,7 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import conf.Configuration.site.host
-@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward}
+@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward, guardianHostedControlButtons}
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
 @main(page, Some("commercial")) { } {
@@ -47,10 +47,12 @@
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     @page.video.youtubeId.map { youtubeId =>
                         <iframe id="hosted-video-@youtubeId"
-                        class="js-hosted-youtube-video"
+                        data-duration="@{page.video.duration}"
+                        class="js-hosted-youtube-video hosted__youtube-video"
                         src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
+                        @guardianHostedControlButtons(page)
                     }.getOrElse {
                         <video
                         data-duration="@{page.video.duration}"

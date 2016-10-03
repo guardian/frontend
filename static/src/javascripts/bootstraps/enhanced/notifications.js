@@ -2,7 +2,7 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'fastdom',
+    'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/storage',
@@ -17,6 +17,7 @@ define([
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without',
+    'lodash/objects/isEmpty',
     'common/modules/analytics/omniture'
 ], function (
     bonzo,
@@ -37,10 +38,10 @@ define([
     some,
     uniq,
     without,
+    isEmpty,
     omniture
 ) {
-    var explainerDismissed = 'gu.notificationsExplainerDismissed',
-        modules = {
+    var modules = {
 
         getReg: function () {
             return navigator.serviceWorker.ready;
@@ -53,12 +54,18 @@ define([
         },
 
         init: function() {
-            var $followElement = modules.configureSubscribeButton();
-            if(!modules.hasSubscribed() && !modules.hasDismissedExplainer()) {
-                modules.showExplainer();
-            }
+            modules.addButtonPromise().then(function(){
+                var $followElement = modules.configureSubscribeButton();
+                modules.trackFollowButtonAttention($followElement.get(0));
+            });
+        },
 
-            modules.trackFollowButtonAttention($followElement.get(0));
+        addButtonPromise: function() {
+            var button = '<button class="js-notifications__toggle notifications__toggle notifications-follow-input--solo"></button><span class="live-notifications__label js-live-notifications__label--denied live-notifications__label--hidden">Oops! You need to <a href="https://support.google.com/chrome/answer/3220216">unblock notifications</a> for www.theguardian.com</span>';
+            var $container = $('.js-live-notifications');
+            return fastdom.write(function(){
+                $container.append(button);
+            });
         },
 
         trackFollowButtonAttention: function (followElement) {
@@ -70,54 +77,27 @@ define([
         },
 
         configureSubscribeButton: function () {
-            var $follow = bonzo($('.js-live-notifications')),
-                isSsubscribed = modules.checkSubscriptions(),
-                handler = isSsubscribed ? modules.unSubscribeHandler : modules.subscribeHandler,
+            var $follow = $('.js-notifications__toggle'),
+                isSubscribed = modules.checkSubscriptions(),
+                handler = isSubscribed ? modules.unSubscribeHandler: modules.subscribeHandler,
                 src = template(followLink, {
-                    isSubscribed: isSsubscribed,
-                    icon: svgs(isSsubscribed ? 'notificationsOff' : 'notificationsOn')
+                    isSubscribed: isSubscribed,
+                    icon: svgs(isSubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
-            fastdom.write( function() {
-                $follow.html(src);
-                bean.one($follow[0], 'click', '.js-notifications__button', handler);
-            });
+            if (!isEmpty($follow)) {
+                fastdom.write(function () {
+                    if (isSubscribed) {
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-off');
+                    } else {
+                        $follow.attr('data-link-name', 'live-blog-notifications-turned-on');
+                    }
 
+                    $follow.html(src);
+                    bean.one($follow[0], 'click', handler);
+                });
+            }
             return $follow;
-        },
-
-        showExplainer: function() {
-            var src = template(explainer,{
-                closeIcon : svgs('closeCentralIcon'),
-                imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'live-notifications-explainer-svg']),
-                imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'live-notifications-explainer-svg'])
-            });
-
-            fastdom.write(function () {
-                var $notifications = $('.js-live-notifications');
-                $notifications.append(src);
-               // bean.one($notifications[0], 'click', '.js-live-notifications__item__close', function() {
-                bean.one($('.js-live-notifications__item__close')[0], 'click', function() {
-                    fastdom.write(function() {
-                        userPrefs.set(explainerDismissed, true);
-                        $('.js-live-notifications-explainer').remove();
-                    });
-                });
-            });
-        },
-
-        closeDisplayMessage: function(){
-            $('.js-live-notifications-denied').remove();
-            bean.one($('.js-live-notifications')[0], 'click', '.js-notifications__button', modules.subscribeHandler);
-        },
-
-        notificationsDeniedMessage: function() {
-            var src = template(permissionsTemplate,{closeIcon : svgs('closeCentralIcon')});
-            fastdom.write(function () {
-                var blocked = $('.js-notifications-blocked');
-                blocked.prepend(src);
-                bean.one(blocked[0], 'click', '.js-live-notifications-denied__item__close', modules.closeDisplayMessage);
-            });
         },
 
         subscribeHandler: function () {
@@ -130,7 +110,6 @@ define([
                     }
                 }) .catch( function () {
                     if (Notification.permission === 'denied') {
-                        modules.notificationsDeniedMessage();
                         omniture.trackLinkImmediate('browser-notifications-denied');
                     }
                 });
@@ -148,6 +127,13 @@ define([
                     } else {
                         return reg.pushManager.subscribe({userVisibleOnly: true});
                     }
+                }).catch(function(e) {
+                    fastdom.write(function(){
+                        var $denied = $('.js-live-notifications__label--denied');
+                        $denied.removeClass('live-notifications__label--hidden');
+                        $denied.addClass('live-notifications__label--visible');
+                    });
+                    throw e;
                 });
             });
         },
@@ -219,10 +205,6 @@ define([
             return some(subscriptions, function (sub) {
                 return sub == config.page.pageId;
             });
-        },
-
-        hasDismissedExplainer: function() {
-           return userPrefs.get(explainerDismissed);
         }
     };
 

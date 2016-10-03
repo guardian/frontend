@@ -8,14 +8,14 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/video-button-duration',
-    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport'
+    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
+    'common/modules/experiments/tests/contributions-epic-short'
 ], function (
     reportError,
     config,
@@ -26,25 +26,25 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
-    LiveBlogChromeNotificationsProd,
     MembershipEngagementBannerTests,
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
     ContributionsStory,
     VideoButtonDuration,
-    UpgradeMobileRichLinksBelowViewport
+    UpgradeMobileRichLinksBelowViewport,
+    ContributionsEpicShort
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
-        new LiveBlogChromeNotificationsProd(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new ContributionsStory(),
         new VideoButtonDuration(),
-        new UpgradeMobileRichLinksBelowViewport()
+        new UpgradeMobileRichLinksBelowViewport(),
+        new ContributionsEpicShort()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

@@ -5,21 +5,28 @@ define([
 ], function (config, fetchJson, fastdom) {
 
     return {
-        init: loadOnwardComponent()
+        init: loadOnwardComponent
     };
 
     function loadOnwardComponent() {
 
-        var placeholder = document.querySelector('.js-onward-placeholder');
+        // todo: why is this necessary?  if it's not here get 404s all over the site
+        if (config.page.isHosted) {
 
-        return fetchJson(config.page.ajaxUrl + '/'
-            + config.page.pageId + '/'
-            + config.page.contentType.toLowerCase() + '/'
-            + 'onward.json')
-            .then(function (json) {
-                return fastdom.write(function () {
-                    placeholder.innerHTML = json.html;
+            var placeholders = document.querySelectorAll('.js-onward-placeholder');
+
+            return fetchJson(config.page.ajaxUrl + '/'
+                + config.page.pageId + '/'
+                + config.page.contentType.toLowerCase() + '/'
+                + 'onward.json')
+                .then(function (json) {
+                    return fastdom.write(function () {
+                        var i;
+                        for (i = 0; i < placeholders.length; i++) {
+                            placeholders[i].innerHTML = json.html;
+                        }
+                    });
                 });
-            });
+        }
     }
 });

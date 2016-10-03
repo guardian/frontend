@@ -19,7 +19,7 @@ define([
          * It's safe for the next page load though.
          */
         function resetProp71Cookie() {
-            if (config.isHosted) {
+            if (config.page.isHosted) {
                 s.getPreviousValue(s.prop71, 's_prev_ch');
             }
         }
@@ -56,7 +56,7 @@ define([
                 'prop39'    // media id
             ];
 
-        if (config.isHosted) {
+        if (config.page.isHosted) {
             trackingVars.push('prop71');    // previous site section
         }
 

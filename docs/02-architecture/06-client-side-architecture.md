@@ -34,7 +34,7 @@ See below for quick descriptions.
 			- Cloudwatch beacon
 		- [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
 			- getUserData.js
-			- detectAdblock 
+			- detectAdblock
 			- showUserName
 			- editionaliseMenu
 			- ophanConfig
@@ -42,18 +42,18 @@ See below for quick descriptions.
 			- Google
 			- Omniture
 			- Comscore
-		
-### Inline blocking JS 
+
+### Inline blocking JS
 
 The inline blocking JS is in the head of the document and will block render until it has finished executing. Each of these scripts are required to render the page correctly on first paint.
-		
+
 #### Curl config
 
 Contains the [config](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/curlConfig.scala.js) for the [curl AMD module loader](https://github.com/cujojs/curl). You can find the aliases for certain JS modules in here such as `fastdom` which helps you avoid having to add the full path for certain modules.
 
 #### shouldEnhance
 
-The [shouldEnhance JS](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/shouldEnhance.scala.js) defines whether we should run the enhanced Javascript. 
+The [shouldEnhance JS](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/shouldEnhance.scala.js) defines whether we should run the enhanced Javascript.
 
 There are ways to force enhancement, so take a look at the JS, but something of note is that we don't enhance devices running iOS < 8 on any pages and don't enhance iPads on Fronts.
 
@@ -100,7 +100,7 @@ do you have fonts in localStorage?
 - **no**  – did the localStorage check go ok?
 	- **yes** – ajax them in as JSON immediately, inject them and save them to localStorage
 	- **no**  – load font files async using @@font-face
-	
+
 #### Enable non-blocking stylesheets
 
 A util that borrows heavily from [loadCSS](https://github.com/filamentgroup/loadCSS), it loads CSS async so that non-critical CSS doesn't block rendering.
@@ -143,13 +143,13 @@ Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/master/comm
 
 ### Analytics
 
-The analytics for Dotcom are defined in [analytics/base.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html). It contains [Google Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/google.scala.html), [Omniture](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/omniture.scala.html) and [Comscore](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/comscore.scala.html). 
+The analytics for Dotcom are defined in [analytics/base.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html). It contains [Google Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/google.scala.html), [Omniture](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/omniture.scala.html) and [Comscore](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/comscore.scala.html).
 
 [Read more about the Google Analytics implementation](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/14-implement-google-analytics.md).
 
 ### Bootstraps
 
-In [javascripts/bootstraps](b.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps) we define all the entry points for each bundle described in [requirejs.js](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js). 
+In [javascripts/bootstraps](b.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps) we define all the entry points for each bundle described in [requirejs.js](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js).
 
 The top level entry points which call the bootstrap initialisation of all other bundles are [enhanced/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/enhanced/main.js), [standard/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js), [admin.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/admin.js) (for frontend.gutools, not theguardian.com), [commercial.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/commercial.js) and [video-embed.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/video-embed.js) (initialised when there is a video embed from [videoEmbed.scala.html](https://github.com/guardian/frontend/blob/master/applications/app/views/videoEmbed.scala.html)).
 
@@ -157,7 +157,7 @@ The top level entry points which call the bootstrap initialisation of all other 
 
 - [Builds a bundle](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js#L47) for [standard/main bootstrap](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js)
 	- Includes the [boot.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/boot.js) in the bundle
-	
+
 ```js
 boot: {
 	options: {
@@ -262,7 +262,7 @@ if (config.page.isFront) {
 or check if there `isMedia` or a video or audio element exists on the page in order to require the mainMedia JS:
 
 ```js
-if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
+if ((config.isMedia || qwery('video, audio').length) && !config.page.isHosted) {
 	require(['bootstraps/enhanced/media/main'], function (media) {
 		bootstrapContext('media', media);
 	});
@@ -302,7 +302,7 @@ There are five projects in the Javascript architecture:
 
 - [Admin](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/admin) - This is the Javascript for the frontend admin tools gutools (ask your neighbour what these are). It is the only JS file not related to theguardian.com.
 - [Commercial](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/commercial) - The modules and js views for the commercial Javascript
-- [Common](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/common) - The largest of the projects, common contains the modules, utilities and js views for much of the application. 
+- [Common](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/common) - The largest of the projects, common contains the modules, utilities and js views for much of the application.
 	- In modules you will find the Javascript for everything from articles to crosswords, identity to sport.
 	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familiarise yourself with these methods as you will likely end up finding what you need here.
 	- The Javascript views for the JS loaded content including a/b test experiments, breaking news, share buttons etc.
