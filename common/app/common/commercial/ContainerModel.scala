@@ -2,13 +2,11 @@ package common.commercial
 
 import common.Edition
 import model.facia.PressedCollection
-import views.support.{Commercial, SponsorDataAttributes}
 
 case class ContainerModel(
                            id: String,
                            layoutName: String,
                            content: ContainerContent,
-                           brandingAttributes: Option[SponsorDataAttributes],
                            branding: Option[Branding]
                          ) {
   val isSingleSponsorContainer: Boolean = branding.isDefined
@@ -66,7 +64,6 @@ object ContainerModel {
       id = collection.id,
       layoutName,
       content,
-      brandingAttributes = Commercial.container.mkSponsorDataAttributes(collection.config),
       branding = collection.branding(edition)
     )
   }

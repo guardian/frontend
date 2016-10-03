@@ -51,7 +51,6 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
       id = "",
       layoutName = "",
       mkContainerContent(),
-      brandingAttributes = None,
       branding = branding
     )
   }
