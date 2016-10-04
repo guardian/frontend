@@ -60,16 +60,18 @@
 }
 
 @stamp = {
-
-    <a @if(Edition(request).id == "AU") {
-            href="@LinkTo("/guardian-labs-australia")"
-        } else {
-            href="@LinkTo("/guardian-labs")"
+    @defining(
+        Edition(request).id match {
+            case "AU" => "-australia"
+            case "US" => "-us"
+            case _ => ""
         }
-        >
-        @inlineSvg("glabs-logo", "logo")
-        <span class='u-h'>Guardian Labs</span>
-    </a>
+    ) { glabsUrlSuffix =>
+        <a href="@LinkTo(s"""/guardian-labs$glabsUrlSuffix""")">
+            @inlineSvg("glabs-logo", "logo")
+            <span class='u-h'>Guardian Labs</span>
+        </a>
+    }
 }
 
 @badge = {

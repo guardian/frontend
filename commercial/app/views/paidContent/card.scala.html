@@ -18,13 +18,22 @@
         <a href="@optClickMacro@articleUrl" data-link-name="@linkTracking | article image">
             @pictureUrl.map{ url => <img src="@url" alt="@linkLabel" class="lineitem__image" /> }
         </a>
-        <a @if(Edition(request).id == "AU") {
-                href="@LinkTo("/guardian-labs-australia")"
-            } else {
-                href="@LinkTo("/guardian-labs")"
-            } class="paidfor-content__glabs-logo" title="glabs" data-link-name="@linkTracking | labs logo">
-            @fragments.inlineSvg("glabs-logo-small", "logo")
-        </a>
+
+        @defining(
+            Edition(request).id match {
+                case "AU" => "-australia"
+                case "US" => "-us"
+                case _ => ""
+            }
+        ) { glabsUrlSuffix =>
+            <a href="@LinkTo(s"""/guardian-labs$glabsUrlSuffix""")"
+                class="paidfor-content__glabs-logo"
+                title="glabs"
+                data-link-name="@linkTracking | labs logo"
+            >
+                @fragments.inlineSvg("glabs-logo-small", "logo")
+            </a>
+        }
     </div>
     @fragments.commercial.paidForMeta()
     <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--header" data-link-name="@linkTracking | article title">
