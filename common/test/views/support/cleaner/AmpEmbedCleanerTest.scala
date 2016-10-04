@@ -8,6 +8,8 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
+  val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
+
   private def clean(document: Document): Document = {
     val cleaner = AmpEmbedCleaner(article())
     cleaner.clean(document)
@@ -50,7 +52,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
-    val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
     val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
@@ -67,11 +68,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "create an amp-iframe element with an iframe from the iframe src" in {
-    val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
     val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-    
+
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
 

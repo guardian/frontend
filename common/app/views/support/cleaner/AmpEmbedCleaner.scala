@@ -151,26 +151,29 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def cleanAmpMaps(document: Document) = {
     document.getElementsByClass("element-map").foreach { embed: Element =>
-      embed.getElementsByTag("iframe").map { element: Element =>
+      embed.getElementsByTag("iframe").foreach { element: Element =>
         val src = element.attr("src")
         val frameBorder = element.attr("frameborder")
         val elementMap = document.createElement("amp-iframe")
-          elementMap
-      // In AMP, when using the layout `responsive`, width is 100%,
-      // and height is decided by the ratio between width and height.
-      // https://www.ampproject.org/docs/guides/responsive/control_layout.html
-            .attr("width", "4")
-            .attr("height", "3")
-            .attr("layout", "responsive")
-            .attr("sandbox", "allow-scripts allow-same-origin allow-popups")
-            .attr("frameborder", frameBorder)
-            .attr("src", src)
-          embed
-            .empty()
-            .appendChild(elementMap)
+
+        // In AMP, when using the layout `responsive`, width is 100%,
+        // and height is decided by the ratio between width and height.
+        // https://www.ampproject.org/docs/guides/responsive/control_layout.html
+        val attrs = Map(
+        "width" -> "4",
+        "height" -> "3",
+        "layout" -> "responsive",
+        "sandbox" -> "allow-scripts allow-same-origin allow-popups",
+        "frameborder" -> frameBorder,
+        "src" -> src
+        )
+        attrs.foreach {
+          case (key, value) => elementMap.attr(key, value)
+        }
+        embed
+        .replaceWith(elementMap)
       }
     }
-
   }
 
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
