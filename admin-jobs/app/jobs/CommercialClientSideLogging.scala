@@ -112,5 +112,6 @@ class CommercialClientSideLoggingLifecycle(
 }
 
 object S3CommercialReports extends S3 {
+  // A bucket owned by the Ophan team, it's not in Frontend. We have been given cross-account access.
   override lazy val bucket = "ophan-raw-client-side-ad-metrics"
 }
