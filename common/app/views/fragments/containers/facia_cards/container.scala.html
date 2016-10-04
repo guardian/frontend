@@ -94,7 +94,7 @@
                             @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
 
                                 <li class="tertiary-navigation__item">
-                                    <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="@tertiaryLink.name">
+                                    <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="nav2 : tertiary : @tertiaryLink.name">
                                         @Html(tertiaryLink.name)
                                         <i class="tertiary-navigation__icon rounded-icon"></i>
                                     </a>

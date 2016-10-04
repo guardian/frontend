@@ -168,7 +168,7 @@ define([
                         )
                     );
                 }
-            });
+            }.bind(this));
         }.bind(this));
     };
 
