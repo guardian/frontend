@@ -708,7 +708,7 @@ svg.main-menu__icon--social__svg {
 
 .tertiary-navigation__item {
     width: calc(50% - #{$gs-gutter / 2});
-    height: $gs-row-height;
+    min-height: $gs-row-height;
     border-top: 1px solid $neutral-5;
     padding-top: 2px;
     padding-bottom: $gs-baseline / 2;
