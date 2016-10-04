@@ -18,10 +18,10 @@
         <a href="@optClickMacro@articleUrl" data-link-name="@linkTracking | article image">
             @pictureUrl.map{ url => <img src="@url" alt="@linkLabel" class="lineitem__image" /> }
         </a>
-        <a @if(Edition(request).id == "AU") {
-                href="@LinkTo("/guardian-labs-australia")"
-            } else {
-                href="@LinkTo("/guardian-labs")"
+        <a @Edition(request).id match {
+                case "AU" => { href="@LinkTo("/guardian-labs-australia")" }
+                case "US" => { href="@LinkTo("/guardian-labs-us")" }
+                case _    => { href="@LinkTo("/guardian-labs")" }
             } class="paidfor-content__glabs-logo" title="glabs" data-link-name="@linkTracking | labs logo">
             @fragments.inlineSvg("glabs-logo-small", "logo")
         </a>

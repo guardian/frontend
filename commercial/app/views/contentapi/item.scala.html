@@ -61,12 +61,11 @@
 
 @stamp = {
 
-    <a @if(Edition(request).id == "AU") {
-            href="@LinkTo("/guardian-labs-australia")"
-        } else {
-            href="@LinkTo("/guardian-labs")"
-        }
-        >
+    <a @Edition(request).id match {
+            case "AU" => { href="@LinkTo("/guardian-labs-australia")" }
+            case "US" => { href="@LinkTo("/guardian-labs-us")" }
+            case _    => { href="@LinkTo("/guardian-labs")" }
+        }>
         @inlineSvg("glabs-logo", "logo")
         <span class='u-h'>Guardian Labs</span>
     </a>

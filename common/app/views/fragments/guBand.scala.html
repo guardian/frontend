@@ -5,10 +5,10 @@
     <div class="gs-container paidfor-band__inner">
         @fragments.commercial.paidForMeta()
         <a class="paidfor-branding"
-            @if(Edition(request).id == "AU") {
-                href="@LinkTo("/guardian-labs-australia")"
-            } else {
-                href="@LinkTo("/guardian-labs")"
+            @Edition(request).id match {
+                case "AU" => { href="@LinkTo("/guardian-labs-australia")" }
+                case "US" => { href="@LinkTo("/guardian-labs-us")" }
+                case _    => { href="@LinkTo("/guardian-labs")" }
             }>
             @fragments.inlineSvg("glabs-logo", "logo")
             <span class='u-h'>Guardian Labs</span>
