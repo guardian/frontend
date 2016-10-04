@@ -10,7 +10,9 @@
   trackingPixel: Option[String],
   cacheBuster: Option[String])(implicit request: RequestHeader)
 
+@import common.LinkTo
 @import views.html.fragments
+@import views.support.Commercial.glabsLink
 
 @for(trackingPx <- trackingPixel){ <img src="@trackingPx@cacheBuster" class="creative__tracking-pixel" height="1px" width="1px"/> }
 <div class="paidfor-content">
@@ -19,21 +21,14 @@
             @pictureUrl.map{ url => <img src="@url" alt="@linkLabel" class="lineitem__image" /> }
         </a>
 
-        @defining(
-            Edition(request).id match {
-                case "AU" => "-australia"
-                case "US" => "-us"
-                case _ => ""
-            }
-        ) { glabsUrlSuffix =>
-            <a href="@LinkTo(s"""/guardian-labs$glabsUrlSuffix""")"
-                class="paidfor-content__glabs-logo"
-                title="glabs"
-                data-link-name="@linkTracking | labs logo"
-            >
-                @fragments.inlineSvg("glabs-logo-small", "logo")
-            </a>
-        }
+        <a href="@LinkTo(glabsLink(request))"
+            class="paidfor-content__glabs-logo"
+            title="glabs"
+            data-link-name="@linkTracking | labs logo"
+        >
+            @fragments.inlineSvg("glabs-logo-small", "logo")
+        </a>
+
     </div>
     @fragments.commercial.paidForMeta()
     <a href="@optClickMacro@articleUrl" class="paidfor-box paidfor-box--header" data-link-name="@linkTracking | article title">
