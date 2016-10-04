@@ -20,14 +20,14 @@ object HostedTrails extends Logging {
 
       val (publishedBefore, publishedAfter) = otherItems.partition { item =>
         val pubDateTime = publishedDateTime(givenItem)
-        publishedDateTime(item) > pubDateTime
+        publishedDateTime(item) < pubDateTime
       }
 
       val laterItems = publishedAfter.sortBy(publishedDateTime) take trailCount
 
       val itemsToInclude = {
         if (laterItems.size < trailCount) {
-          publishedBefore.sortBy(publishedDateTime) take (trailCount - laterItems.size)
+          laterItems ++ publishedBefore.sortBy(publishedDateTime).take(trailCount - laterItems.size)
         } else {
           laterItems
         }
