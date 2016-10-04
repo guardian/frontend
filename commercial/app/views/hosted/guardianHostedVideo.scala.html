@@ -140,9 +140,8 @@
             @page.nextPage.map { nextPage =>
                 @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
             }.getOrElse {
-                <div class="js-onward-placeholder"></div>
+                <div class="js-onward-placeholder hosted__next-page"></div>
             }
-
         </section>
         @guardianHostedCta(page, page.cta)
     </div>

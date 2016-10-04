@@ -457,7 +457,7 @@ $hosted-video-height: 540px;
 .hosted__meta {
     position: absolute;
     left: 88px;
-    width: 100%;
+    right: 88px;
     bottom: 44px;
     color: #ffffff;
 
@@ -556,7 +556,7 @@ $hosted-video-height: 540px;
 
     @include mq(desktop) {
         font-size: 36px;
-        line-height: 34px;
+        line-height: 38px;
     }
 }
 
@@ -964,6 +964,7 @@ $hosted-video-height: 540px;
     padding: 10px;
     margin: 0;
     z-index: 1;
+    flex: 1;
 
     @include mq($until: phablet) {
         font-size: 18px;
