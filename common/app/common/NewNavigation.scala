@@ -29,9 +29,9 @@ object NewNavigation {
     val name = "news"
 
     val uk = List(
-      NavLink("headlines", "/uk"),
-      NavLink("UK", "/uk-news"),
-      NavLink("world", "/world"),
+      NavLink("headlines", "/uk", "home"),
+      NavLink("UK news", "/uk-news"),
+      NavLink("world news", "/world"),
       NavLink("environment", "/uk/environment"),
       NavLink("business", "/uk/business"),
       NavLink("tech", "/uk/technology"),
@@ -40,9 +40,9 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("headlines", "/au"),
-      NavLink("australia", "/australia-news"),
-      NavLink("world", "/world"),
+      NavLink("headlines", "/au", "home"),
+      NavLink("australia news", "/australia-news"),
+      NavLink("world news", "/world"),
       NavLink("australian politics", "/australia-news/australian-politics"),
       NavLink("environment", "/au/environment"),
       NavLink("economy", "/au/business"),
@@ -53,9 +53,9 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("headlines", "/us"),
+      NavLink("headlines", "/us", "home"),
       NavLink("US election", "/us-news/us-elections-2016"),
-      NavLink("US", "/us-news"),
+      NavLink("US news", "/us-news"),
       NavLink("world", "/world"),
       NavLink("environment", "/us/environment"),
       NavLink("business", "/us/business"),
@@ -66,9 +66,9 @@ object NewNavigation {
     )
 
     val int =  List(
-      NavLink("headlines", "/international"),
-      NavLink("world", "/world"),
-      NavLink("UK", "/uk-news"),
+      NavLink("headlines", "/international", "home"),
+      NavLink("world news", "/world"),
+      NavLink("UK news", "/uk-news"),
       NavLink("environment", "/uk/environment"),
       NavLink("business", "/uk/business"),
       NavLink("tech", "/uk/technology"),
@@ -82,7 +82,7 @@ object NewNavigation {
     val name = "opinion"
 
     val uk = List(
-      NavLink("opinion home", "/uk/commentisfree"),
+      NavLink("opinion home", "/uk/commentisfree", "home"),
       NavLink("Polly Toynbee", "/profile/pollytoynbee"),
       NavLink("Owen Jones", "/profile/owen-jones"),
       NavLink("Marina Hyde", "/profile/marinahyde"),
@@ -95,7 +95,7 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("opinion home", "/au/commentisfree"),
+      NavLink("opinion home", "/au/commentisfree", "home"),
       NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
       NavLink("Katharine Murphy", "/profile/katharine-murphy"),
       NavLink("Kristina Keneally", "/profile/kristina-keneally"),
@@ -108,7 +108,7 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("opinion home", "/us/commentisfree"),
+      NavLink("opinion home", "/us/commentisfree", "home"),
       NavLink("Jill Abramson", "/profile/jill-abramson"),
       NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
       NavLink("Steven W Thrasher", "/profile/steven-w-thrasher"),
@@ -119,7 +119,7 @@ object NewNavigation {
     )
 
     val int =  List(
-      NavLink("opinion home", "/uk/commentisfree"),
+      NavLink("opinion home", "/uk/commentisfree", "home"),
       NavLink("columnists", "/index/contributors"),
       NavLink("the guardian view", "/profile/editorial"),
       NavLink("cartoons", "/cartoons/archive")
@@ -130,7 +130,7 @@ object NewNavigation {
     val name = "sport"
 
     val uk = List(
-      NavLink("sport home", "/uk/sport"),
+      NavLink("sport home", "/uk/sport", "home"),
       NavLink("football", "/football"),
       NavLink("cricket", "/sport/cricket"),
       NavLink("rugby union", "/sport/rugby-union"),
@@ -145,7 +145,7 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("sport home", "/au/sport"),
+      NavLink("sport home", "/au/sport", "home"),
       NavLink("football", "/football"),
       NavLink("australia sport", "/au/sport"),
       NavLink("AFL", "/sport/afl"),
@@ -158,7 +158,7 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("sport home", "/us/sport"),
+      NavLink("sport home", "/us/sport", "home"),
       NavLink("soccer", "/football"),
       NavLink("NFL", "/sport/nfl"),
       NavLink("MLS", "/sport/mls"),
@@ -169,7 +169,7 @@ object NewNavigation {
     )
 
     val int =  List(
-      NavLink("sport home", "/uk/sport"),
+      NavLink("sport home", "/uk/sport", "home"),
       NavLink("football", "/football"),
       NavLink("cricket", "/sport/cricket"),
       NavLink("rugby union", "/sport/rugby-union"),
@@ -186,7 +186,7 @@ object NewNavigation {
     val name = "arts"
 
     val uk = List(
-      NavLink("culture home", "/uk/culture"),
+      NavLink("culture home", "/uk/culture", "home"),
       NavLink("film", "/uk/film"),
       NavLink("tv & radio", "/tv-and-radio"),
       NavLink("music", "/music"),
@@ -198,7 +198,7 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("culture home", "/au/culture"),
+      NavLink("culture home", "/au/culture", "home"),
       NavLink("film", "/au/film"),
       NavLink("music", "/music"),
       NavLink("tv & radio", "/culture/australian-television"),
@@ -209,7 +209,7 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("culture home", "/us/culture"),
+      NavLink("culture home", "/us/culture", "home"),
       NavLink("film", "/us/film"),
       NavLink("tv & radio", "/tv-and-radio"),
       NavLink("music", "/music"),
@@ -221,7 +221,7 @@ object NewNavigation {
     )
 
     val int =List(
-      NavLink("culture home", "/uk/culture"),
+      NavLink("culture home", "/uk/culture", "home"),
       NavLink("film", "/uk/film"),
       NavLink("tv & radio", "/tv-and-radio"),
       NavLink("music", "/music"),
@@ -237,7 +237,7 @@ object NewNavigation {
     val name = "life"
 
     val uk = List(
-      NavLink("lifestyle home", "/uk/lifeandstyle"),
+      NavLink("lifestyle home", "/uk/lifeandstyle", "home"),
       NavLink("fashion", "/fashion"),
       NavLink("food", "/lifeandstyle/food-and-drink"),
       NavLink("travel", "/uk/travel"),
@@ -250,7 +250,7 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("lifestyle home", "/au/lifeandstyle"),
+      NavLink("lifestyle home", "/au/lifeandstyle", "home"),
       NavLink("food", "/lifeandstyle/food-and-drink"),
       NavLink("family", "/lifeandstyle/family"),
       NavLink("love & sex", "/lifeandstyle/love-and-sex"),
@@ -262,7 +262,7 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("lifestyle home", "/us/lifeandstyle"),
+      NavLink("lifestyle home", "/us/lifeandstyle", "home"),
       NavLink("fashion", "/fashion"),
       NavLink("food", "/lifeandstyle/food-and-drink"),
       NavLink("travel", "/us/travel"),
@@ -275,7 +275,7 @@ object NewNavigation {
     )
 
     val int = List(
-      NavLink("lifestyle home", "/uk/lifeandstyle"),
+      NavLink("lifestyle home", "/uk/lifeandstyle", "home"),
       NavLink("fashion", "/fashion"),
       NavLink("food", "/lifeandstyle/food-and-drink"),
       NavLink("travel", "/uk/travel"),
