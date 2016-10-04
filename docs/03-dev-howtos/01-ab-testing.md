@@ -76,6 +76,10 @@ define(['bonzo'], function (bonzo) {
                 test: function (context, config) {
                 },
 
+                impression: function(track) {
+                    // call track() when the impression should be registered (e.g. your element is in view)
+                },
+
                 success: function(complete) {
                     // do something that determines whether the user has completed
                     // the test (e.g. set up an event listener) and call 'complete' afterwards
@@ -86,6 +90,10 @@ define(['bonzo'], function (bonzo) {
                 id: 'hide',
                 test: function (context, config) {
                     bonzo(context.querySelector('.js-related')).hide();
+                },
+
+                impression: function(track) {
+                    // call track() when the impression should be registered (e.g. your element is in view)
                 },
 
                 success: function(complete) {
@@ -122,7 +130,8 @@ The AMD module must return an object with the following properties,
     - the variant objects can contain three properties:
         - variant.id: the name of the variant
         - variant.test: the main test function that applies the treatment for the test
-        - variant.success: a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
+        - variant.impression (optional): a function that's called to register the impression of the test. it receives a callback that you should call when you want to fire the impression. if not provided, the impression will fire on pageload (as long as canRun is true)
+        - variant.success (optional): a function that's called alongside test that determines if the user has finished the test. it receives a callback as a parameter that you must call when the test is completed.
 
 
 When choosing your audience offset, it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
