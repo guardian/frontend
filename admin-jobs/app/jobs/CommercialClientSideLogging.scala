@@ -44,27 +44,37 @@ class CommercialClientSideLoggingLifecycle(
   }}
 
   // 5 minutes between each log write.
-  private val jobFrequency = 5.minutes
+  private val loggingJobFrequency = 5.minutes
+  // 15 minutes between each log upload.
+  private val uploadJobFrequency = 15.minutes
 
   override def start(): Unit = {
     jobs.deschedule("CommercialClientSideLoggingJob")
+    jobs.deschedule("CommercialClientSideUploadJob")
 
     jobs.scheduleEveryNMinutes("CommercialClientSideLoggingJob", 5) {
-      run(akkaAsync)
+      writeReportsFromRedis(akkaAsync)
+    }
+
+    jobs.scheduleEveryNMinutes("CommercialClientSideLoggingJob", 15) {
+      uploadReports(akkaAsync)
     }
   }
 
-  def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
+  private def writeReportsFromRedis(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
       if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
         // Start searching logs from two periods behind the current time. This allows fresh data to settle.
-        val timeStart = DateTime.now.minusSeconds(jobFrequency.toSeconds.toInt * 2)
+        val timeStart = DateTime.now.minusSeconds(loggingJobFrequency.toSeconds.toInt * 2)
         log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
-        val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(jobFrequency.toMillis))
+        val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(loggingJobFrequency.toMillis))
         log.logger.info(s"Fetched $numReports logs from Redis.")
       } else {
         log.logger.info(s"Job skipped, logging switch is turned off.")
       }
     }
+  }
+
+  private def uploadReports(akkaAgent: AkkaAsync): Future[Unit] = Future {
   }
 }
