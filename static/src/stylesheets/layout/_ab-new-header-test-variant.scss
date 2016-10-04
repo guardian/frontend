@@ -502,7 +502,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     text-align: center;
     width: $navigation-horizontal-padding - $gs-gutter/2;
 
-    & svg {
+    &__svg {
         fill: $news-support-2;
         margin-top: -.1em;
         vertical-align: middle;
@@ -516,7 +516,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     background-color: #003b5e;
     padding-bottom: $gs-baseline/2;
 
-    .main-menu__icon svg.inline-home__svg {
+    .main-menu__icon__svg {
         margin-top: -.24em;
         width: .8em;
         height: .8em;
@@ -600,7 +600,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     }
 }
 
-svg.main-menu__icon--social__svg {
+.main-menu__icon--social__svg {
     margin-top: -.4em;
     width: 1.8em;
     height: 1.8em;
