@@ -12,7 +12,7 @@ define([
 
         var placeholders = document.querySelectorAll('.js-onward-placeholder');
 
-        if (config.page.isHosted && placeholders.length) {
+        if (placeholders.length) {
             return fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
