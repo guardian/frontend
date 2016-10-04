@@ -166,7 +166,6 @@ define([
             var log = {};
 
             getActiveTests()
-                .filter(not(defersImpression))
                 .filter(isParticipating)
                 .filter(testCanBeRun)
                 .forEach(function (test) {
@@ -201,17 +200,9 @@ define([
         });
     }
 
-    /**
-     * Register a test and variant's complete state with Ophan
-     *
-     * @param test
-     * @param {string} variantId
-     * @param {boolean} complete
-     * @returns {Function} to fire the event
-     */
-    function recordTestComplete(test, variantId, complete) {
+    function recordTestComplete(test, variantId) {
         var data = {};
-        data[test.id] = abData(variantId, String(complete));
+        data[test.id] = abData(variantId, 'true');
 
         return function() {
             recordOphanAbEvent(data);
@@ -264,44 +255,22 @@ define([
     }
 
     /**
-     * Create a function that sets up listener to fire an Ophan `complete` event. This is used in the `success` and
-     * `impression` properties of test variants to allow test authors to control when these events are sent out.
-     *
-     * @see {@link defersImpression}
-     * @param {Boolean} complete
-     * @returns {Function}
+     * Set up the completion listener for a test
      */
-    function registerCompleteEvent(complete) {
-        return function initListener(test) {
-            var variantId = variantIdFor(test);
+    function registerCompleteEvent(test) {
+        var variantId = variantIdFor(test);
 
-            if (variantId !== 'notintest') {
-                var variant = getVariant(test, variantId);
-                var listener = (complete ? variant.success : variant.impression) || noop;
-
-                try {
-                    listener(recordTestComplete(test, variantId, complete));
-                } catch (err) {
-                    reportError(err, false, false);
-                }
+        if (variantId !== 'notintest') {
+            var variant = getVariant(test, variantId);
+            var onTestComplete = variant.success || noop;
+            try {
+                onTestComplete(recordTestComplete(test, variantId));
+            } catch(err) {
+                reportError(err, false, false);
             }
-        };
+        }
     }
 
-    /**
-     * Checks if this test will defer its impression by providing its own impression function.
-     *
-     * If it does, the test won't be included in the Ophan call that happens at pageload, and must fire the impression
-     * itself via the callback passed to the `impression` property in the variant.
-     *
-     * @param test
-     * @returns {boolean}
-     */
-    function defersImpression(test) {
-        return test.variants.every(function(variant) {
-            return typeof variant.impression === 'function';
-        });
-    }
 
     function isTestSwitchedOn(test) {
         return config.switches['ab' + test.id];
@@ -336,12 +305,6 @@ define([
         return Object.keys(config.tests).filter(function (test) { return !!config.tests[test]; });
     }
 
-    function not(f) {
-        return function () {
-            return !f.apply(this, arguments);
-        };
-    }
-
     var ab = {
 
         addTest: function (test) {
@@ -373,7 +336,7 @@ define([
                 })[0];
             var onTestComplete = variant && variant.success || noop;
 
-            onTestComplete(recordTestComplete(test, variantId, true));
+            onTestComplete(recordTestComplete(test, variantId));
         },
 
         segmentUser: function () {
@@ -401,11 +364,7 @@ define([
         },
 
         registerCompleteEvents: function() {
-            getActiveTests().forEach(registerCompleteEvent(true));
-        },
-
-        registerImpressionEvents: function () {
-            getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
+            getActiveTests().forEach(registerCompleteEvent);
         },
 
         isEventApplicableToAnActiveTest: function (event) {

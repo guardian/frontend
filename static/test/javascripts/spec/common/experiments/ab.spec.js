@@ -293,23 +293,6 @@ define([
 
                 expect(spy).toHaveBeenCalled();
             });
-
-            it('should defer firing the impression when the function is provided', function () {
-                var spy = sinon.spy();
-
-                ab.addTest(test.one);
-
-                /**
-                 * impression events are only registered if every variant has an `impression` function
-                 */
-                test.one.variants.forEach(function(t) {
-                    t.impression = spy;
-                });
-
-                ab.registerImpressionEvents();
-
-                expect(spy).toHaveBeenCalled();
-            });
         });
 
     });
