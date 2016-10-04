@@ -748,7 +748,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__cta-link,
-.hosted__next-video--tile {
+.hosted__next-page--tile {
     &:hover, &:active {
         text-decoration: none;
     }
@@ -899,7 +899,7 @@ $hosted-video-height: 540px;
     font-weight: 200;
 }
 
-.hosted__next-video--header {
+.hosted__next-page--header {
     padding-bottom: 10px;
     margin: $gs-baseline $gs-gutter 10px;
     border-bottom: 1px solid #eeeeee;
@@ -914,7 +914,7 @@ $hosted-video-height: 540px;
     }
 }
 
-.hosted__next-video {
+.hosted__next-page {
     @include f-headlineSans;
     @include mq(leftCol) {
         width: calc(300px + 2 * #{$gs-gutter});
@@ -922,32 +922,35 @@ $hosted-video-height: 540px;
     order: 3;
 }
 
-.hosted__next-video--up-next {
+.hosted__next-page--more-from {
     font-weight: bolder;
 }
 
-.hosted__next-video--client-name {
+.hosted__next-page--client-name {
     font-size: 20px;
     line-height: 20px;
 }
 
-.hosted__next-video .hosted__next-video--tile {
+.hosted__next-page .hosted__next-page--tile {
     display: flex;
     color: #333333;
     border-top: 2px solid;
     margin: 0 $gs-gutter $gs-gutter;
     text-decoration: none;
+    position: relative;
 
     &:active {
         color: #333333;
     }
 }
 
-.hosted__next-video-thumb {
+.hosted__next-page-thumb {
     height: 72px;
     width: 120px;
     align-self: flex-start;
     object-fit: cover;
+    flex: 0;
+    z-index: 1;
 
     @include mq($until: phablet) {
         height: 54px;
@@ -960,9 +963,18 @@ $hosted-video-height: 540px;
     line-height: 23px;
     padding: 10px;
     margin: 0;
+    z-index: 1;
 
     @include mq($until: phablet) {
         font-size: 18px;
         line-height: 20px;
     }
+}
+
+.hosted-next-page-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .1;
+    z-index: 0;
 }
