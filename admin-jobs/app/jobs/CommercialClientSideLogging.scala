@@ -29,6 +29,7 @@ object CommercialClientSideLogging extends Logging {
         report
       }
     })
+    timestamps.map(ClientSideLogging.cleanUpReports)
     reports.length
   }
 }
