@@ -632,13 +632,11 @@
  */
 .ad-slot--fluid {
     min-height: 250px;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
+    padding: 0;
+
     &:not(.ad-slot--im) {
         width: auto;
     }
-
 
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
