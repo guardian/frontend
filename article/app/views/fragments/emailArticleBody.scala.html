@@ -1,6 +1,6 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
-@import views.support.EmailImage
+@import views.support.{EmailImage, EmailVideoImage}
 @import views.support.EmailHelpers._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
@@ -105,9 +105,15 @@
                     }
 
                     case GuVideoBlockElement(video, media, data) => {
-                        @data.get("url").map { url =>
-                            @fullRowWithBackground(media) {
-                                <a class="play--button" href="@url"><img class="float-left play--icon" src="@Images.play"></a>
+                        @EmailVideoImage.bestFor(media).map { imageUrl =>
+                            @fullRow {
+                                @data.get("url").fold {
+                                    <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                }{ linkUrl =>
+                                    <a href="@linkUrl">
+                                        <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                    </a>
+                                }
                             }
                         }
                     }

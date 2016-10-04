@@ -49,16 +49,6 @@ object EmailHelpers {
     case p: PressedPage => p.frontProperties.onPageDescription
   }
 
-  def fullRowWithBackground(media: ImageMedia)(inner: Html): Html = {
-    EmailImage.bestFor(media).map { url =>
-      Html {
-        s"""<table style="background-image: url($url)" class="row background--image">
-          <tr>${columns(12)(inner)}</tr>
-        </table>"""
-      }
-    } getOrElse (fullRow(inner))
-  }
-
   def icon(name: String) = Html {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="float-left icon icon-$name">"""
   }

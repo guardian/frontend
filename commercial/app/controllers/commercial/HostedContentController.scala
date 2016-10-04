@@ -90,6 +90,9 @@ class HostedContentController(contentApiClient: ContentApiClient)
             case "article" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
               Cached(cacheDuration)(JsonComponent(hostedArticleOnward(trails)))
+            case "gallery" =>
+              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
             case _ =>
               Cached(0)(JsonNotFound())
           }

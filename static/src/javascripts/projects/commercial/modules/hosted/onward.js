@@ -10,11 +10,9 @@ define([
 
     function loadOnwardComponent() {
 
-        // todo: why is this necessary?  if it's not here get 404s all over the site
-        if (config.page.isHosted) {
+        var placeholders = document.querySelectorAll('.js-onward-placeholder');
 
-            var placeholders = document.querySelectorAll('.js-onward-placeholder');
-
+        if (placeholders.length) {
             return fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
@@ -28,5 +26,6 @@ define([
                     });
                 });
         }
+        return Promise.resolve();
     }
 });

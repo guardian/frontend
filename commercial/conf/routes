@@ -20,7 +20,7 @@ GET         /commercial/masterclasses.json                                  cont
 
 # Soulmates merchandising components
 GET        /commercial/soulmates/$subgroup<\w+>.json                        controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET        /commercial/soulmates/api/$subgroup<\w+>.json                    controllers.commercial.SoulmatesController.getSoulmates(subgroup)
+GET        /commercial/api/soulmates.json                                   controllers.commercial.SoulmatesController.getSoulmates
 
 # Book merchandising components
 GET         /commercial/books/book.json                                     controllers.commercial.BookOffersController.renderBook

@@ -155,6 +155,7 @@ define([
                 ab.segmentUser();
 
                 robust.catchErrorsAndLog('ab-tests-run', ab.run);
+                robust.catchErrorsAndLog('ab-tests-registerImpressionEvents', ab.registerImpressionEvents);
                 robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
 
                 ab.trackEvent();

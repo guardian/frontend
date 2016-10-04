@@ -1,6 +1,9 @@
 package common
 
-case class NavLink(name: String, url: String)
+import conf.Configuration
+
+case class NavLink(name: String, url: String, iconName: String = "")
+case class TertiaryLink(frontId: String, name: String, url: String)
 
 object NewNavigation {
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
@@ -325,5 +328,164 @@ object NewNavigation {
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
     )
+  }
+
+  case object MembershipLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/uk/supporter?INTCMP=mem_uk_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/uk?INTCMP=NGW_NEWHEADER_UK_GU_SUBSCRIBE", "device")
+    )
+
+    val au = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/au/supporter?INTCMP=mem_au_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/au?INTCMP=NGW_NEWHEADER_AU_GU_SUBSCRIBE", "device")
+    )
+
+    val us = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/us/supporter?INTCMP=mem_us_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/us?INTCMP=NGW_NEWHEADER_US_GU_SUBSCRIBE", "device")
+    )
+
+    val int = List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/int/supporter?INTCMP=mem_int_web_newheader", "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/int?INTCMP=NGW_NEWHEADER_INT_GU_SUBSCRIBE", "device")
+    )
+  }
+
+  object TertiaryNav {
+
+    val tertiaryLinks = List(
+      /**
+       * NEWS
+       */
+
+      // uk news
+      TertiaryLink("uk-news", "education", "/education"),
+      TertiaryLink("uk-news", "media", "/media"),
+      TertiaryLink("uk-news", "society", "/society"),
+      TertiaryLink("uk-news", "law", "/law"),
+      TertiaryLink("uk-news", "scotland", "/uk/scotland"),
+      TertiaryLink("uk-news", "wales", "/uk/wales"),
+      TertiaryLink("uk-news", "northern ireland", "/uk/northernireland"),
+
+      // world news
+      TertiaryLink("world", "europe", "/world/europe-news"),
+      TertiaryLink("world", "US", "/us-news"),
+      TertiaryLink("world", "americas", "/world/americas"),
+      TertiaryLink("world", "asia", "/world/asia"),
+      TertiaryLink("world", "australia", "/world/australia-news"),
+      TertiaryLink("world", "africa", "/world/africa"),
+      TertiaryLink("world", "middle east", "/world/middleeast"),
+      TertiaryLink("world", "cities", "/world/cities"),
+      TertiaryLink("world", "development", "/global-development"),
+
+      // business
+      TertiaryLink("uk/business", "economics", "/business/economics"),
+      TertiaryLink("uk/business", "banking", "/business/banking"),
+      TertiaryLink("uk/business", "retail", "/business/retail"),
+      TertiaryLink("uk/business", "markets", "/business/stock-markets"),
+      TertiaryLink("uk/business", "eurozone", "/business/eurozone"),
+
+      TertiaryLink("us/business", "economics", "/business/economics"),
+      TertiaryLink("us/business", "sustainable business", "/us/sustainable-business"),
+      TertiaryLink("us/business", "diversity & equality in business", "/business/diversity-and-equality"),
+      TertiaryLink("us/business", "small business", "business/us-small-business"),
+
+      TertiaryLink("au/business", "markets", "/business/stock-markets"),
+      TertiaryLink("au/business", "money", "/au/money"),
+
+      // environment
+      TertiaryLink("uk/environment", "climate change", "/environment/climate-change"),
+      TertiaryLink("uk/environment", "wildlife", "/environment/wildlife"),
+      TertiaryLink("uk/environment", "energy", "/environment/energy"),
+      TertiaryLink("uk/environment", "pollution", "/environment/pollution"),
+
+      TertiaryLink("us/environment", "climate change", "/environment/climate-change"),
+      TertiaryLink("us/environment", "wildlife", "/environment/wildlife"),
+      TertiaryLink("us/environment", "energy", "/environment/energy"),
+      TertiaryLink("us/environment", "pollution", "/environment/pollution"),
+
+      TertiaryLink("au/environment", "cities", "/cities"),
+      TertiaryLink("au/environment", "development", "/global-development"),
+      TertiaryLink("au/environment", "sustainable business", "/au/sustainable-business"),
+
+      // money
+      TertiaryLink("uk/money", "property", "/money/property"),
+      TertiaryLink("uk/money", "pensions", "/money/pensions"),
+      TertiaryLink("uk/money", "savings", "/money/savings"),
+      TertiaryLink("uk/money", "borrowing", "/money/debt"),
+      TertiaryLink("uk/money", "careers", "/money/work-and-careers"),
+
+      /**
+        * SPORT
+        */
+
+      // football
+      TertiaryLink("football", "live scores", "/football/live"),
+      TertiaryLink("football", "tables", "/football/tables"),
+      TertiaryLink("football", "competitions", "/football/competitions"),
+      TertiaryLink("football", "results", "/football/results"),
+      TertiaryLink("football", "fixtures", "/football/fixtures"),
+      TertiaryLink("football", "clubs", "/football/teams"),
+
+      /**
+        * LIFE
+        */
+
+      // travel
+      TertiaryLink("uk/travel", "UK", "/travel/uk"),
+      TertiaryLink("uk/travel", "europe", "/travel/europe"),
+      TertiaryLink("uk/travel", "US", "/travel/usa"),
+      TertiaryLink("uk/travel", "skiing", "/travel/skiing"),
+
+      TertiaryLink("us/travel", "USA", "/travel/usa"),
+      TertiaryLink("us/travel", "europe", "/travel/europe"),
+      TertiaryLink("us/travel", "UK", "/travel/uk"),
+      TertiaryLink("us/travel", "skiing", "/travel/skiing"),
+
+      TertiaryLink("au/travel", "australasia", "/travel/usa"),
+      TertiaryLink("au/travel", "asia", "/travel/europe"),
+      TertiaryLink("au/travel", "UK", "/travel/uk"),
+      TertiaryLink("au/travel", "europe", "/travel/europe"),
+      TertiaryLink("au/travel", "US", "/travel/usa"),
+      TertiaryLink("au/travel", "skiing", "/travel/skiing"),
+
+      /**
+        * OTHER
+        */
+
+      // today's paper
+      TertiaryLink("todayspaper", "editorials & letters", "/theguardian/mainsection/editorialsandreply"),
+      TertiaryLink("todayspaper", "obituaries", "/tone/obituaries"),
+      TertiaryLink("todayspaper", "g2", "/theguardian/g2"),
+      TertiaryLink("todayspaper", "weekend", "/theguardian/weekend"),
+      TertiaryLink("todayspaper", "the guide", "/theguardian/theguide"),
+      TertiaryLink("todayspaper", "saturday review", "/theguardian/guardianreview"),
+
+      // sunday's paper
+      TertiaryLink("theobserver", "comment", "/theobserver/news/comment"),
+      TertiaryLink("theobserver", "the new review", "/theobserver/new-review"),
+      TertiaryLink("theobserver", "observer magazine", "/theobserver/magazine"),
+
+      // crosswords
+      TertiaryLink("crosswords", "blog", "/crosswords/crossword-blog"),
+      TertiaryLink("crosswords", "editor", "/crosswords/series/crossword-editor-update"),
+      TertiaryLink("crosswords", "quick", "/crosswords/series/quick"),
+      TertiaryLink("crosswords", "cryptic", "/crosswords/series/cryptic"),
+      TertiaryLink("crosswords", "prize", "/crosswords/series/prize"),
+      TertiaryLink("crosswords", "quiptic", "/crosswords/series/quiptic"),
+      TertiaryLink("crosswords", "genius", "/crosswords/series/genius"),
+      TertiaryLink("crosswords", "speedy", "/crosswords/series/speedy"),
+      TertiaryLink("crosswords", "everyman", "/crosswords/series/everyman"),
+      TertiaryLink("crosswords", "azed", "/crosswords/series/azed")
+    )
+
+    def getTertiaryNavLinks(frontId: String): List[TertiaryLink] = {
+      tertiaryLinks.filter{ item =>
+        item.frontId == frontId
+      }
+    }
   }
 }
