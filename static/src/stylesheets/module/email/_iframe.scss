@@ -52,6 +52,7 @@ body {
     .email-sub__form--footer,
     .email-sub__form--article,
     .email-sub__form--plain,
+    .email-sub__form--newsletters,
     .email-sub__form--plaindark {
         // Rounded inline input
         .email-sub__text-input {
@@ -81,12 +82,19 @@ body {
         }
     }
 
+    .email-sub__form--newsletters {
+        .email-sub__submit-input--solo {
+            width: 100%;
+        }
+    }
+
     .email-sub--article.email-sub__form--has-mark .email-sub__text-input {
         margin-bottom: $gs-baseline;
     }
 
     .email-sub__form--footer,
     .email-sub__form--plain,
+    .email-sub__form--newsletters,
     .email-sub__form--plaindark {
         .email-sub__submit-input {
             padding-left: $gs-gutter / 2;
@@ -98,6 +106,7 @@ body {
 @include mq(183px, 183px) {
     .email-sub__form--footer,
     .email-sub__form--plain,
+    .email-sub__form--newsletters,
     .email-sub__form--plaindark {
         padding-right: $gs-gutter / 2;
 
@@ -145,6 +154,7 @@ body {
 * IFRAME PLAIN MODS
 */
 .email-sub--plain,
+.email-sub--newsletters,
 .email-sub--plaindark
 {
     .email-sub__header,

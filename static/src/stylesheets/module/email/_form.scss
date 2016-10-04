@@ -268,6 +268,7 @@
 
 .email-sub__form--article,
 .email-sub__form--plain,
+.email-sub__form--newsletters,
 .email-sub__form--plaindark
 {
     .label__icon {
@@ -296,7 +297,8 @@
 }
 
 // PLAIN MODS
-.email-sub__form--plain {
+.email-sub__form--plain,
+.email-sub__form--newsletters {
     padding: 0;
 
     .email-sub__text-input {
