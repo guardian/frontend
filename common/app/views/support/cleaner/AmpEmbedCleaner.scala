@@ -170,7 +170,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         attrs.foreach {
           case (key, value) => elementMap.attr(key, value)
         }
-        //embed
+        // The following replaces the iframe element with the newly created amp-iframe element
+        // with the figure element as its parent.
         element
         .replaceWith(elementMap)
       }
