@@ -29,7 +29,7 @@ object LoadBalancer extends Logging {
       LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
       LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
       LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-      LoadBalancer("frontend-Diagnost-1SCNCG3BR1RFE", "Diagnostics", "frontend-diagnostics" ),
+      LoadBalancer("frontend-Diagnost-11YL3E40NW4C2", "Diagnostics", "frontend-diagnostics" ),
       LoadBalancer("frontend-ArchiveL-C2GJNZE0TS7", "Archive", "frontend-archive" )
     )
 

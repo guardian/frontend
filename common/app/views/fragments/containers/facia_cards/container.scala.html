@@ -1,4 +1,5 @@
 @import common.commercial.ContainerModel
+@import common.{NewNavigation, LinkTo}
 @import layout.MetaDataHeader
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.commercial.containers.paidContainer
@@ -10,7 +11,8 @@
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
-  maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
+  maybeContainerModel: Option[ContainerModel] = None,
+  pageId: String = "")(implicit request: RequestHeader)
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -77,6 +79,29 @@
                         <div class="fc-container__inner">
                             @mostPopularContainer(containerDefinition, frontProperties)
                         </div>
+                    }
+                }
+
+                @defining((
+                    containerDefinition.index == 0,
+                    frontId.getOrElse(pageId)
+                    )) { case (isFirstContainer, id) =>
+
+                    @if(mvt.ABNewHeaderVariant.isParticipating && isFirstContainer) {
+
+                        <ul class="tertiary-navigation mobile-only">
+
+                            @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
+
+                                <li class="tertiary-navigation__item">
+                                    <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="nav2 : tertiary : @tertiaryLink.name">
+                                        <span class="tertiary-navigation__text">@Html(tertiaryLink.name)</span>
+                                        <i class="tertiary-navigation__icon rounded-icon"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+
                     }
                 }
             </section>

@@ -169,24 +169,24 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 
     .hide-on-desktop {
-        .hosted__next-video {
+        .hosted__next-page {
             margin-top: 30px;
         }
-        .hosted__next-video--header {
+        .hosted__next-page--header {
             margin: 0;
         }
-        .hosted__next-video--tile {
+        .hosted__next-page--tile {
             margin: 10px 0;
         }
     }
     .content__secondary-column {
-        .hosted__next-video {
+        .hosted__next-page {
             width: auto;
             position: absolute;
             margin: 70px 0;
             top: 0;
-            .hosted__next-video--header,
-            .hosted__next-video--tile {
+            .hosted__next-page--header,
+            .hosted__next-page--tile {
                 margin-right: 0;
             }
         }
@@ -218,12 +218,12 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             line-height: 16px;
         }
     }
-    .hosted__next-video .hosted__next-video--tile {
+    .hosted__next-page .hosted__next-page--tile {
         background: transparent;
         border-top: 2px solid #e0e0e0;
         margin-bottom: 10px;
     }
-    .hosted__next-video .hosted__next-video--header {
+    .hosted__next-page .hosted__next-page--header {
         border: 0;
         padding: 0;
     }

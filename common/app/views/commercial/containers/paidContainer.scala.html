@@ -5,7 +5,7 @@
 @import common.{Edition, LinkTo}
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
-@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 
@@ -72,6 +72,6 @@
 
 @logoSlot = {
     @for(branding <- containerModel.branding) {
-        @contentLogo(branding, isInteractivePage = false, isBranded = false, isOnTheLeft = false)
+        @containerLogo(branding, isOnTheLeft = false)
     }
 }

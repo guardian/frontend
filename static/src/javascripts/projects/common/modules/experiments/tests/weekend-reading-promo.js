@@ -28,7 +28,7 @@ define([
     return function () {
         this.id = 'WeekendReadingPromo';
         this.start = '2016-09-01';
-        this.expiry = '2016-10-03';
+        this.expiry = '2016-10-31';
         this.author = 'Kate Whalen';
         this.description = 'For just one pageview, show users a banner promoting the Weekend Reading email';
         this.audience = 1;

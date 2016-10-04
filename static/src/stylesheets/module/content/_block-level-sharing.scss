@@ -331,7 +331,7 @@
 
         &.element--supporting {
             figcaption {
-                @include mq(desktop) {
+                @include mq(tablet) {
                     max-width: gs-span(3) - 10;
                 }
                 @include mq(wide) {
