@@ -468,10 +468,15 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
     .main-menu__icon--chevron:before {
         border-color: $news-support-2;
+        //optical alignment
+        margin-left: -.3em;
     }
 }
 
 .main-menu__icon--chevron {
+    //optical alignment
+    margin-top: -.1em;
+
     &:before {
         content: '';
         display: inline-block;
@@ -482,13 +487,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         border-style: solid;
         border-top: 0;
         border-left: 0;
-        //optical alignment
-        margin-left: -2px;
     }
 
     details[open] &:before {
         transform: rotate(45deg);
-        margin-bottom: 4px;
+        margin-bottom: .14em;
         margin-left: 0;
     }
 }
@@ -500,6 +503,8 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     width: $navigation-horizontal-padding - $gs-gutter/2;
 
     & svg {
+        fill: $news-support-2;
+        margin-top: -.1em;
         vertical-align: middle;
         width: 1em;
         height: 1em;
@@ -509,10 +514,18 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 .main-navigation__secondary {
     color: #ffffff;
     background-color: #003b5e;
-    padding-bottom: $gs-baseline;
+    padding-bottom: $gs-baseline/2;
+
+    .main-menu__icon svg.inline-home__svg {
+        margin-top: -.24em;
+        width: .8em;
+        height: .8em;
+    }
 }
 
-.navigation-border {
+.navigation-border,
+[data-link-name="nav2 : crosswords"],
+[data-link-name="nav2 : today's paper"] {
     // Creates a seamless line when section has dark background
     margin-top: -1px;
     position: relative;
@@ -526,6 +539,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         height: 1px;
         background: #003b5e;
     }
+}
+
+[data-link-name="nav2 : crosswords"],
+[data-link-name="nav2 : today's paper"] {
+    margin-top: $gs-baseline;
 }
 
 .navigation-group {
@@ -559,7 +577,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         display: block;
         padding-top: $gs-baseline / 2;
         padding-left: $navigation-horizontal-padding;
-        padding-right: $navigation-horizontal-padding;
+        padding-right: $gs-gutter;
         padding-bottom: $gs-baseline;
         // Override a from user agent stylesheet
         color: inherit;
@@ -582,19 +600,15 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     }
 }
 
-.main-menu__icon--social {
-    fill: $news-support-2;
-    top: -.14em;
-}
-
 svg.main-menu__icon--social__svg {
+    margin-top: -.4em;
     width: 1.8em;
     height: 1.8em;
 }
 
 // Search bar
 .navigation-group__search-container {
-    @include fs-textSans(5);
+    font-size: .8em;
     margin: $gs-baseline/2 $gs-gutter*2 $gs-baseline $gs-gutter/2;
     overflow: hidden;
 }
@@ -606,7 +620,7 @@ svg.main-menu__icon--social__svg {
     padding-left: $navigation-horizontal-padding - $gs-gutter/2;
     border-radius: 1000px;
     box-sizing: border-box;
-    height: $gs-baseline*3;
+    height: 36px;
     width: 100%;
     max-width: gs-span(4);
 
@@ -631,8 +645,7 @@ svg.main-menu__icon--social__svg {
 }
 
 .main-menu__icon--search {
-    fill: $news-support-2;
-    top: $gs-baseline/2;
+    top: 10px;
 }
 
 .navigation-group__item--user-account {

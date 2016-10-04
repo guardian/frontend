@@ -25,6 +25,9 @@
                         <li class="navigation-group__item">
                             <a href="@LinkTo { @sectionItem.url }"
                                 data-link-name="nav2 : secondary : @sectionItem.name">
+                                    @if(sectionItem.iconName.length > 0) {
+                                        @fragments.inlineSvg(sectionItem.iconName, "icon", List("main-menu__icon"))
+                                    }
                                     @sectionItem.name
                             </a>
                         </li>
