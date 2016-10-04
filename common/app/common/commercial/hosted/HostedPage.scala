@@ -29,9 +29,6 @@ trait HostedPage extends StandalonePage {
   def emailSubjectText = title + " - Advertiser Content hosted by the Guardian"
   def emailBodyText = s"${socialShareText.getOrElse(standfirst)} ${URLEncoder.encode(pageUrl, "utf-8")}"
 
-  final val toneId = "tone/hosted"
-  final val toneName = "Hosted"
-
   def cta: HostedCallToAction
 
   def contentType = {
