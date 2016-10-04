@@ -181,7 +181,7 @@ define([
                         moveTargetListToTop(id);
                         menuButton.focus();
                         // Prevents scrolling on the body
-                        html.style.overflow = 'hidden';
+                        html.classList.add('nav-is-open');
                     });
                 });
             });
