@@ -170,7 +170,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         attrs.foreach {
           case (key, value) => elementMap.attr(key, value)
         }
-        embed
+        //embed
+        element
         .replaceWith(elementMap)
       }
     }
