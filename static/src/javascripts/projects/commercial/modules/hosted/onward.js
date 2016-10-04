@@ -16,7 +16,7 @@ define([
             return fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
-                + 'onward.json')
+                + 'onward.json', {mode: 'cors'})
                 .then(function (json) {
                     return fastdom.write(function () {
                         var i;
