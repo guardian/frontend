@@ -1,5 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.SaveForLaterSwitch
+@import conf.switches.Switches.{SaveForLaterSwitch, ExploreTemplateSwitch}
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
@@ -12,7 +12,7 @@
 }
 
 @metaBody() = {
-    @if(!item.content.isImmersiveGallery && !item.tags.isExploreSeries) {
+    @if(!item.content.isImmersiveGallery && !(ExploreTemplateSwitch.isSwitchedOn && item.tags.isExploreSeries)) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -39,20 +39,18 @@
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
             </div>
-
-            <div class="meta__numbers">
-                <div class="u-h meta__number js-sharecount">
+            @if(!(ExploreTemplateSwitch.isSwitchedOn && item.tags.isExploreSeries)) {
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !item.trail.isCommentable
+                    }">
+                    </div>
                 </div>
-                <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                    !item.trail.isCommentable
-                }">
-                </div>
-            </div>
-            @if(SaveForLaterSwitch.isSwitchedOn
-                && !item.content.isImmersiveGallery
-                && !item.tags.isExploreSeries
-            ) {
-                <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
+                    <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                }
             }
         </div>
     }
