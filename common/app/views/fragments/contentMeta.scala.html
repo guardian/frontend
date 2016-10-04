@@ -1,5 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.{SaveForLaterSwitch, ExploreTemplateSwitch}
+@import conf.switches.Switches.SaveForLaterSwitch
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
@@ -12,7 +12,7 @@
 }
 
 @metaBody() = {
-    @if(!item.content.isImmersiveGallery && !(ExploreTemplateSwitch.isSwitchedOn && item.tags.isExploreSeries)) {
+    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -39,7 +39,7 @@
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
             </div>
-            @if(!(ExploreTemplateSwitch.isSwitchedOn && item.tags.isExploreSeries)) {
+            @if(!item.content.isExplore) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">
                     </div>
@@ -62,7 +62,7 @@
     @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
-    @if(item.tags.isExploreSeries) {content__meta-container--explore}
+    @if(item.content.isExplore) {content__meta-container--explore}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 
