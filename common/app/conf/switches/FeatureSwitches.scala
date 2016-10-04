@@ -12,7 +12,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
