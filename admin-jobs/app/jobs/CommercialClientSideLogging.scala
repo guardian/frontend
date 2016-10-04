@@ -29,7 +29,7 @@ object CommercialClientSideLogging extends Logging {
         report
       }
     })
-    timestamps.map(ClientSideLogging.cleanUpReports)
+    timestamps.foreach(ClientSideLogging.cleanUpReports)
     reports.length
   }
 }
