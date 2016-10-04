@@ -1,11 +1,13 @@
 define([
     'qwery',
     'fastdom',
+    'ophan/ng',
     'common/modules/navigation/edition-picker',
     'common/modules/navigation/user-account'
 ], function (
     qwery,
     fastdom,
+    ophan,
     editionPicker,
     userAccount
 ) {
@@ -80,6 +82,14 @@ define([
                     applyEnhancementsTo(checkbox);
                     checkbox.removeEventListener('click', closeMenuHandler);
                 });
+                if (checkboxId === 'main-menu-toggle') {
+                    // record in Ophan that the menu was opened in a fully expanded state
+                    // i.e. standard JS had not been loaded when menu was first opened
+                    ophan.record({
+                        component: 'main-navigation',
+                        value: 'is fully expanded'
+                    });
+                }
             }
         });
     }
@@ -101,6 +111,7 @@ define([
                 button.setAttribute('aria-expanded', 'false');
                 mainMenu.setAttribute('aria-hidden', 'true');
                 veggieBurgerLink.classList.remove('new-header__nav__menu-button--open');
+                veggieBurgerLink.setAttribute('data-link-name', 'nav2 : veggie-burger : show');
                 removeOrderingFromLists();
 
                 // Users should be able to scroll again
@@ -113,6 +124,7 @@ define([
                 button.setAttribute('aria-expanded', 'true');
                 mainMenu.setAttribute('aria-hidden', 'false');
                 veggieBurgerLink.classList.add('new-header__nav__menu-button--open');
+                veggieBurgerLink.setAttribute('data-link-name', 'nav2 : veggie-burger : hide');
 
                 if (firstButton) {
                     firstButton.focus();
