@@ -10,6 +10,7 @@ import com.gu.facia.client.ApiClient
 import common._
 import common.commercial.Branding
 import conf.Configuration
+import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
@@ -31,7 +32,11 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
     useThrift = false
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
+  implicit def fapiClient: ApiClient =
+    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
+      FrontsApi.crossAccountClient
+    else
+      FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -58,7 +63,11 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
     useThrift = false
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
+  implicit def fapiClient: ApiClient =
+    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
+      FrontsApi.crossAccountClient
+    else
+      FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -89,7 +98,7 @@ object EmbedJsonHtml {
 trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
-  implicit val fapiClient: ApiClient
+  implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   def pressByPathId(path: String): Future[Unit]
