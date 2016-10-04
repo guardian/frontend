@@ -1,8 +1,12 @@
 package jobs
 
+import java.io.File
+
 import app.LifecycleComponent
 import common._
 import common.commercial.ClientSideLogging
+import org.apache.commons.io.FileUtils
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import org.joda.time.{Duration, DateTime}
 import org.slf4j.LoggerFactory
 import play.api.inject.ApplicationLifecycle
@@ -45,8 +49,7 @@ class CommercialClientSideLoggingLifecycle(
   }}
 
   // 5 minutes between each log write.
-  private val loggingJobFrequency = new Duration(5.minutes)
-
+  private val loggingJobFrequency = new Duration(5.minutes.toMillis)
 
   override def start(): Unit = {
     jobs.deschedule("CommercialClientSideLoggingJob")
@@ -58,7 +61,7 @@ class CommercialClientSideLoggingLifecycle(
     }
 
     // 15 minutes between each log upload.
-    jobs.scheduleEveryNMinutes("CommercialClientSideLoggingJob", 15) {
+    jobs.scheduleEveryNMinutes("CommercialClientSideUploadJob", 15) {
       uploadReports(akkaAsync)
     }
   }
@@ -77,9 +80,29 @@ class CommercialClientSideLoggingLifecycle(
     }
   }
 
+  private val loggingDirectory = new File("logs/frontend-commercial-client-side-archive")
+  private val dateFormatter: DateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd HH-mm")
+
   private def uploadReports(akkaAgent: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
-      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
+      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn && loggingDirectory.exists) {
+        val date = DateTime.now
+        val formattedDate = dateFormatter.print(date)
+        log.logger.info(s"Uploading commercial performance logs to S3 for period $formattedDate")
+
+        val outputFile = new File(formattedDate)
+        outputFile.createNewFile()
+
+        for { logFile <- loggingDirectory.listFiles() } {
+          val fileContents = FileUtils.readFileToString(logFile)
+          FileUtils.write(outputFile, fileContents, true)
+        }
+
+        S3CommercialReports.putPublic(s"date=${date.toString("yyyy-MM-dd")}/$formattedDate", outputFile, "text/plain")
+
+        log.logger.info(s"Uploaded ${outputFile.getAbsolutePath} to ${S3CommercialReports.bucket}")
+
+        FileUtils.deleteQuietly(outputFile)
 
       } else {
         log.logger.info(s"Log Upload Job skipped, logging switch is turned off.")
