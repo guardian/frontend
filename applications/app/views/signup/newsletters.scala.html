@@ -10,7 +10,7 @@
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card">
+            <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card @emailListing.theme">
 
                 <div class="newsletter-card__name">@emailListing.name
                     @if(emailListing.subheading.isDefined){ <br>@emailListing.subheading }
@@ -47,43 +47,30 @@
     </div>
 }
 
-
-
 @signupMain(signupPage) {
-
     <div class="content">
         <div class="gs-container">
-
             <div class="newsletters-heading">newsletters</div>
 
-            <div class="newsletters-category">
-                @emailListCategoryList("News", EmailSubscriptions.newsEmails())
+            <div class="newsletters-category" name="news">
+                @emailListCategoryList("news", EmailSubscriptions.newsEmails())
             </div>
-            <div class="newsletters-category">
-                @emailListCategoryList("Features", EmailSubscriptions.featureEmails())
+            <div class="newsletters-category" name="features">
+                @emailListCategoryList("features", EmailSubscriptions.featureEmails())
             </div>
-            <div class="newsletters-category">
-                @emailListCategoryList("Sport", EmailSubscriptions.sportEmails())
+            <div class="newsletters-category" name="sport">
+                @emailListCategoryList("sport", EmailSubscriptions.sportEmails())
             </div>
-            <div class="newsletters-category">
-                @emailListCategoryList("Culture", EmailSubscriptions.cultureEmails())
+            <div class="newsletters-category" name="culture">
+                @emailListCategoryList("culture", EmailSubscriptions.cultureEmails())
             </div>
-            <div class="newsletters-category">
-                @emailListCategoryList("Lifestyle", EmailSubscriptions.lifestyleEmails())
+            <div class="newsletters-category" name="lifestyle">
+                @emailListCategoryList("lifestyle", EmailSubscriptions.lifestyleEmails())
             </div>
-            <div class="newsletters-category">
-                @emailListCategoryList("Comment", EmailSubscriptions.commentEmails())
+            <div class="newsletters-category" name="comment">
+                @emailListCategoryList("comment", EmailSubscriptions.commentEmails())
             </div>
 
-        </div>
-    </div>
-
-    <div class="content">
-        <div class="gs-container">
-
-
-
-            </div>
         </div>
     </div>
 }

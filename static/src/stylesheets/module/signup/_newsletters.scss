@@ -1,6 +1,7 @@
 .newsletters-heading {
     @include fs-header(5);
     padding: $gs-baseline 0;
+    color: $guardian-brand-dark;
 
     @include mq($from: tablet) {
         font-size: 36px;
@@ -49,8 +50,8 @@
     width: 90%;
     margin: $gs-baseline 5%;
     background-color: $neutral-6;
-    border-top: $gs-baseline/4 solid $news-main-2;
-    border-bottom: $gs-baseline/4 solid $neutral-3;
+    border-top: 2px solid $news-accent;
+    border-bottom: 2px solid $neutral-3;
 
     @include mq(tablet) {
         height: 18rem;
@@ -132,13 +133,14 @@
 }
 
 .newsletters-category {
-    border-top: $gs-baseline/4 solid $news-main-2;
+    border-top: 2px solid $news-accent;
     display: inline-block;
     clear: both;
 }
 
 .newsletters-category__heading {
     @include fs-header(5);
+    color: $guardian-brand-dark;
     background: none;
     position: relative;
     margin: 0;
