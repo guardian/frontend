@@ -939,7 +939,10 @@ $hosted-video-height: 540px;
 }
 
 $nextPageThumbHeight: 72px;
+$nextPageThumbWidth: #{$nextPageThumbHeight * 5 / 3};
+
 $nextPageThumbHeightMobile: 54px;
+$nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
 
 .hosted__next-page .hosted__next-page--tile {
     display: block;
@@ -959,25 +962,29 @@ $nextPageThumbHeightMobile: 54px;
 
 .hosted__next-page-thumb {
     height: $nextPageThumbHeight;
-    width: #{$nextPageThumbHeight * 5 / 3};
+    width: $nextPageThumbWidth;
     object-fit: cover;
-    z-index: 1;
-    float: left;
+    position: absolute;
     margin-right: 6px;
 
     @include mq($until: phablet) {
         height: $nextPageThumbHeightMobile;
-        width: #{$nextPageThumbHeightMobile * 5 / 3};
+        width: $nextPageThumbWidthMobile;
     }
 }
 
-.hosted__next-video-title {
+.hosted__next-page-title {
+    z-index: 1;
+    margin: 0 0 0 $nextPageThumbWidth;
+    @include mq($until: phablet) {
+        margin-left: $nextPageThumbWidthMobile;
+    }
+}
+
+.hosted-video__next-page-title {
+    padding: 10px;
     font-size: 20px;
     line-height: 23px;
-    padding: 10px;
-    margin: 0;
-    z-index: 1;
-
     @include mq($until: phablet) {
         font-size: 18px;
         line-height: 20px;
