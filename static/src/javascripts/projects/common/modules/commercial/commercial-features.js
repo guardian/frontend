@@ -42,6 +42,8 @@ define([
 
         var isMatchReport = config.hasTone('Match reports');
 
+        var isChildrensSection = config.page.blogIds === 'childrens-books-site/childrens-books-site' || config.page.section === 'childrens-books-site' || config.page.pageId === 'childrens-books-site';
+
         var isIdentityPage =
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
@@ -128,7 +130,7 @@ define([
             switches.liveblogAdverts;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
-            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);
+            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature || isChildrensSection);
 
         this.canAskForAContribution =
             this.canReasonablyAskForMoney && config.page.edition === 'UK'; // Contributions only testing in UK so far
