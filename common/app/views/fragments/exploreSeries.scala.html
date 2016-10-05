@@ -61,7 +61,7 @@
             <div class="gs-container">
                 <div class="content__main-column">
                   <div class="series-identity-explore__container">
-                      @fragments.meta.metaInline(page.item)
+                      @fragments.meta.metaInline(page.item, page = page)
                       <div class="series-identity__byline">
                       <span class="byline-meta">with</span>  @fragments.meta.byline(page.item.trail.byline, page.item.tags)
                       </div>
