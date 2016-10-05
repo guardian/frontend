@@ -1,13 +1,11 @@
 define([
     'fastdom',
-    'bonzo',
     'Promise',
     'common/utils/$',
     'common/utils/load-script',
     'lodash/collections/forEach'
 ], function (
     fastdom,
-    bonzo,
     Promise,
     $,
     loadScript,
@@ -49,31 +47,39 @@ define([
         return wrapper;
     }
 
+    function _onPlayerStateChange(event, handlers, wrapper) {
+        //change class according to the current state
+        fastdom.write(function () {
+            ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
+                wrapper.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
+            });
+            wrapper.classList.add('youtube__video-started');
+        });
+        if (handlers && typeof handlers.onPlayerStateChange === 'function') {
+            handlers.onPlayerStateChange(event);
+        }
+    }
+
+    function _onPlayerReady(event, handlers, wrapper) {
+        fastdom.write(function () {
+            wrapper.classList.add('youtube__video-ready');
+        });
+        if (handlers && typeof handlers.onPlayerReady === 'function') {
+            handlers.onPlayerReady(event);
+        }
+    }
+
     function init(el, handlers) {
         //wrap <iframe/> in a div with almost the same class, id and data- attributes
         var wrapper = prepareWrapper(el);
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
-                //change class according to the current state
-                fastdom.write(function () {
-                    ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
-                        bonzo(wrapper).toggleClass('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
-                    });
-                    bonzo(wrapper).addClass('youtube__video-started');
-                });
-                if (handlers && typeof handlers.onPlayerStateChange === 'function') {
-                    handlers.onPlayerStateChange(event);
-                }
+                _onPlayerStateChange(event, handlers, wrapper);
             }
 
             function onPlayerReady(event) {
-                fastdom.write(function () {
-                    bonzo(wrapper).addClass('youtube__video-ready');
-                });
-                if (handlers && typeof handlers.onPlayerReady === 'function') {
-                    handlers.onPlayerReady(event);
-                }
+                _onPlayerReady(event, handlers, wrapper);
             }
 
             return new window.YT.Player(el.id, {
