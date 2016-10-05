@@ -81,7 +81,7 @@ define([
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedOnward', hostedOnward.init]),
+            ['cm-hostedOnward', hostedOnward.init],
             ['cm-hostedColours', hostedColours.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
