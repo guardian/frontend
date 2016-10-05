@@ -29,7 +29,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "9.5"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.2"
   val capiScalaModels = "com.gu" % "content-api-models-scala" % capiModelsVersion
   val capiJsonModels = "com.gu" % "content-api-models-json" % capiModelsVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
