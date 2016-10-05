@@ -7,10 +7,7 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
-
-        var contributionsEpicShort = {name: 'ContributionsEpicShort', variants: ['epic-short']};
-        var clashingTests = [contributionsEpicShort];
-
+        var clashingTests = [];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
