@@ -2,12 +2,13 @@
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
-@import common.{Edition, LinkTo}
+@import common.LinkTo
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
 @import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@import views.support.Commercial.glabsLink
 
 <div data-id="@containerModel.id" class="fc-container">
     @containerWrapper(
@@ -57,17 +58,10 @@
 </div>
 
 @stamp = {
-
-    <a @if(Edition(request).id == "AU") {
-            href="@LinkTo("/guardian-labs-australia")"
-        } else {
-            href="@LinkTo("/guardian-labs")"
-        }
-        >
+    <a href="@LinkTo(glabsLink(request))">
         @inlineSvg("glabs-logo", "logo")
         <span class='u-h'>Guardian Labs</span>
     </a>
-
 }
 
 @logoSlot = {

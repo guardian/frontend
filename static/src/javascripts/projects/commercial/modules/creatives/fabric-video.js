@@ -26,9 +26,9 @@ define([
         } else {
             if (hasVideo) {
                 params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
-            } else {
-                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
             }
+
+            params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
         }
 
         return Object.freeze({

@@ -28,6 +28,8 @@ object LeffeHostedPages {
     btnText = Some("Visit Leffe on Facebook")
   )
 
+  private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
+
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
     val pageUrl = s"$host/advertiser-content/${campaign.id}/$willardWiganPageName"
     val pageName = willardWiganPageName
@@ -39,10 +41,24 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 127,
       posterUrl = Static("images/commercial/willard-wigan_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629WillardWigan_V3.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629WillardWigan_V3_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629WillardWigan_V3_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629WillardWigan_V3.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -69,14 +85,24 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 116,
       posterUrl = Static("images/commercial/adrienne-treeby_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian" +
-                  ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian" +
-                   ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian" +
-                  ".tv/interactive/mp4/1080/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian" +
-                ".tv/interactive/2016/06/29/HLS/160629AdrienneTreeby_KP-28311272_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629AdrienneTreeby_KP-28311272_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -103,11 +129,24 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 138,
       posterUrl = Static("images/commercial/pete-lawrence_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid" +
-                  ".ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629PeteLawrence_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629PeteLawrence_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -117,7 +156,9 @@ object LeffeHostedPages {
       video,
       cta,
       socialShareText = None,
-      shortSocialShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
+      shortSocialShareText = Some(
+        "Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "
+      ),
       nextPage = None,
       metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
     )
@@ -134,11 +175,24 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 146,
       posterUrl = Static("images/commercial/susan-derges_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo" +
-                  ".ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -165,10 +219,24 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 134,
       posterUrl = Static("images/commercial/quay-brothers_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629QuayBrothers_V3.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629QuayBrothers_V3.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,

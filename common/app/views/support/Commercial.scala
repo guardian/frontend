@@ -8,6 +8,7 @@ import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{ContentType, MetaData, Page, Tags}
 import play.api.mvc.RequestHeader
 
+
 object Commercial {
 
   def shouldShowAds(page: Page): Boolean = page match {
@@ -15,6 +16,16 @@ object Commercial {
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
+  }
+
+  def glabsLink (request: RequestHeader): String = {
+    val glabsUrlSuffix = Edition(request).id match {
+      case "AU" => "-australia"
+      case "US" => "-us"
+      case _ => ""
+    }
+
+    s"/guardian-labs$glabsUrlSuffix"
   }
 
   private def isBrandedContent(page: Page, edition: Edition, sponsorshipType: SponsorshipType): Boolean =

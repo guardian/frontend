@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-story',
     'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
     'common/modules/experiments/tests/contributions-epic-short'
 ], function (
@@ -29,7 +28,6 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    ContributionsStory,
     UpgradeMobileRichLinksBelowViewport,
     ContributionsEpicShort
 ) {
@@ -39,7 +37,6 @@ define([
         new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new ContributionsStory(),
         new UpgradeMobileRichLinksBelowViewport(),
         new ContributionsEpicShort()
     ].concat(MembershipEngagementBannerTests);

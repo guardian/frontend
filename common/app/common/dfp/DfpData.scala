@@ -20,12 +20,6 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String) = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String) = isNegative("p") && values.contains(value)
 
-  val isSponsoredSlot = isSlot("spbadge")
-
-  val isAdvertisementFeatureSlot = isSlot("adbadge")
-
-  val isFoundationSupportedSlot = isSlot("fobadge")
-
   val isInlineMerchandisingSlot = isSlot("im")
 
   val isHighMerchandisingSlot = isSlot("merchandising-high")
@@ -67,12 +61,6 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
       targets.filter(tagCriteria).flatMap(_.values).distinct
     } else Nil
   }
-
-  val sponsoredTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isSponsoredSlot)
-
-  val advertisementFeatureTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isAdvertisementFeatureSlot)
-
-  val foundationSupportedTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isFoundationSupportedSlot)
 
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
@@ -251,10 +239,6 @@ case class GuLineItem(id: Long,
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
-
-  lazy val isAdFeatureLogo: Boolean = targeting.customTargetSets exists {
-    _.targets exists (_.isAdvertisementFeatureSlot)
-  }
 }
 
 object GuLineItem {
