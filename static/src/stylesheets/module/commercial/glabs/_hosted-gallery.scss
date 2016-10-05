@@ -578,7 +578,7 @@ $progressColor: #ffffff;
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(51, 51, 51, .8), rgba(51, 51, 51, .5), transparent);
+        background: linear-gradient(to top, rgba(51, 51, 51, .9) 0%, rgba(51, 51, 51, .7) 70%, transparent 100%);
         &:not(.hosted-gallery--show-caption) .hosted__social {
             display: none;
         }
@@ -596,6 +596,9 @@ $progressColor: #ffffff;
         }
     }
     .hosted-gallery--show-caption {
+        .hosted-gallery__image-title {
+            display: none;
+        }
         .icon-i {
             display: none;
         }

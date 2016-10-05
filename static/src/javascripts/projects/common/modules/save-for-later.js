@@ -145,28 +145,30 @@ define([
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
 
         $savers.each(function (saver) {
-            var $saver = bonzo(saver);
-            $saver.css('display', 'block');
-            var templateData = {
-                icon: bookmarkSvg,
-                isSaved: options.isSaved,
-                position: $saver.attr('data-position'),
-                config: config
-            };
-            if (options.url) {
-                $saver.html(template(saveLink,
-                    assign({ url: options.url }, templateData))
-                );
-            } else {
-                $saver.html(template(saveButton, templateData));
+             var $saver = bonzo(saver);
+             var templateData = {
+                 icon: bookmarkSvg,
+                 isSaved: options.isSaved,
+                 position: $saver.attr('data-position'),
+                 config: config
+             };
+            fastdom.write(function(){
+                $saver.css('display', 'block');
+                if (options.url) {
+                    $saver.html(template(saveLink,
+                        assign({ url: options.url }, templateData))
+                    );
+                } else {
+                    $saver.html(template(saveButton, templateData));
 
-                bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
-                    this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
-                        config.page.pageId,
-                        shortUrl
-                    )
-                );
-            }
+                    bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
+                        this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
+                            config.page.pageId,
+                            shortUrl
+                        )
+                    );
+                }
+            }.bind(this));
         }.bind(this));
     };
 

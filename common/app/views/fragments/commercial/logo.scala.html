@@ -1,0 +1,22 @@
+@(branding: common.commercial.Branding)(implicit request: RequestHeader)
+@import common.commercial.PaidContent
+
+@branding.label
+<a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+    @if(request.isAmp) {
+        @branding.sponsorLogo.dimensions.map { dim =>
+            <amp-img src="@branding.sponsorLogo.url"
+                     width="@dim.width"
+                     height="@dim.height"
+                     alt="@branding.sponsorName"
+                     class="badge__logo"></amp-img>
+    }.getOrElse {
+        <p>@branding.sponsorName</p>
+    }
+} else {
+    <img src="@branding.sponsorLogo.url" alt="@branding.sponsorName" class="badge__logo">
+    }
+</a>
+@if(branding.sponsorshipType != PaidContent) {
+    <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
+}

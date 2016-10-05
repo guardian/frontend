@@ -192,15 +192,16 @@ define([
             $gallery = this.$galleryEl[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
+            $meta = this.$meta,
             $images = this.$images,
             width = $gallery.clientWidth,
             height = $imagesContainer.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
-            ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            ctaSize = getFrame(0),
             ctaIndex = this.ctaIndex(),
             tabletSize = 740,
-            imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
+            imageSize = getFrame(imgRatio);
         fastdom.write(function () {
             $sizer.css('width', imageSize.width);
             $sizer.css('height', imageSize.height);
@@ -214,6 +215,9 @@ define([
             }
             if (imgIndex === $images.length - 1) {
                 bonzo($ojFloat).css('padding-bottom', (ctaSize.topBottom > 40 || width > tabletSize) ? 0 : 40);
+            }
+            if (imgIndex === 0) {
+                bonzo($meta).css('padding-bottom', (imageSize.topBottom > 40 || width > tabletSize) ? 20 : 40);
             }
         });
         function getFrame(desiredRatio, w, h) {
@@ -317,7 +321,8 @@ define([
                     bonzo(this.$galleryEl).toggleClass('show-cta', this.index === this.ctaIndex() + 1);
                 }
 
-                url.pushUrl({}, document.title, config.page.pageName + '#img-' + this.index, true);
+                var pageName = config.page.pageName || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
+                url.pushUrl({}, document.title, pageName + '#img-' + this.index, true);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },

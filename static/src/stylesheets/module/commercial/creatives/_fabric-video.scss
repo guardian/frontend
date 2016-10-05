@@ -1,6 +1,8 @@
 .creative--fabric-video {
     position: relative;
     height: 250px;
+    max-width: 1920px;
+    margin: auto;
 
     > .creative__link,
     .creative__video,

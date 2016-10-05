@@ -1,11 +1,16 @@
 package jobs
 
+import java.io.File
+
 import app.LifecycleComponent
 import common._
 import common.commercial.ClientSideLogging
+import org.apache.commons.io.FileUtils
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import org.joda.time.{Duration, DateTime}
 import org.slf4j.LoggerFactory
 import play.api.inject.ApplicationLifecycle
+import services.S3
 import scala.concurrent.{Future, ExecutionContext}
 import scala.concurrent.duration._
 
@@ -29,6 +34,7 @@ object CommercialClientSideLogging extends Logging {
         report
       }
     })
+    timestamps.foreach(ClientSideLogging.cleanUpReports)
     reports.length
   }
 }
@@ -43,27 +49,69 @@ class CommercialClientSideLoggingLifecycle(
   }}
 
   // 5 minutes between each log write.
-  private val jobFrequency = 600.seconds
+  private val loggingJobFrequency = new Duration(5.minutes.toMillis)
 
   override def start(): Unit = {
     jobs.deschedule("CommercialClientSideLoggingJob")
+    jobs.deschedule("CommercialClientSideUploadJob")
 
+    // 5 minutes between each log write.
     jobs.scheduleEveryNMinutes("CommercialClientSideLoggingJob", 5) {
-      run(akkaAsync)
+      writeReportsFromRedis(akkaAsync)
+    }
+
+    // 15 minutes between each log upload.
+    jobs.scheduleEveryNMinutes("CommercialClientSideUploadJob", 15) {
+      uploadReports(akkaAsync)
     }
   }
 
-  def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
+  private def writeReportsFromRedis(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
       if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
-        // Start searching logs by doubling the period, allowing fresh data to settle.
-        val timeStart = DateTime.now.minusSeconds(jobFrequency.toSeconds.toInt * 2)
+        // Start searching logs from two periods behind the current time. This allows fresh data to settle.
+        val timeStart = DateTime.now.minus(loggingJobFrequency.multipliedBy(2L))
         log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
-        val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, new Duration(jobFrequency.toMillis))
+        val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, loggingJobFrequency)
         log.logger.info(s"Fetched $numReports logs from Redis.")
       } else {
-        log.logger.info(s"Job skipped, logging switch is turned off.")
+        log.logger.info(s"Logging Job skipped, logging switch is turned off.")
       }
     }
   }
+
+  private val loggingDirectory = new File("logs/frontend-commercial-client-side-archive")
+  private val dateFormatter: DateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd HH-mm")
+
+  private def uploadReports(akkaAgent: AkkaAsync): Future[Unit] = Future {
+    akkaAsync.after1s {
+      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn && loggingDirectory.exists) {
+        val date = DateTime.now
+        val formattedDate = dateFormatter.print(date)
+        log.logger.info(s"Uploading commercial performance logs to S3 for period $formattedDate")
+
+        val outputFile = new File(formattedDate)
+        outputFile.createNewFile()
+
+        for { logFile <- loggingDirectory.listFiles() } {
+          val fileContents = FileUtils.readFileToString(logFile)
+          FileUtils.write(outputFile, fileContents, true)
+        }
+
+        S3CommercialReports.putPublic(s"date=${date.toString("yyyy-MM-dd")}/$formattedDate", outputFile, "text/plain")
+
+        log.logger.info(s"Uploaded ${outputFile.getAbsolutePath} to ${S3CommercialReports.bucket}")
+
+        FileUtils.deleteQuietly(outputFile)
+
+      } else {
+        log.logger.info(s"Log Upload Job skipped, logging switch is turned off.")
+      }
+    }
+  }
+}
+
+object S3CommercialReports extends S3 {
+  // A bucket owned by the Ophan team, it's not in Frontend. We have been given cross-account access.
+  override lazy val bucket = "ophan-raw-client-side-ad-metrics"
 }

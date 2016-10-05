@@ -26,16 +26,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-contributions-story",
-    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 6),
-    exposeClientSide = true
-  )
-
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
@@ -62,7 +52,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 
@@ -72,17 +62,7 @@ trait ABTestSwitches {
     "Show visitors a snap banner to promote the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-video-button-duration",
-    "Show visitors new video play button",
-    owners = Seq(Owner.withGithub("mr-mr")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 4),
+    sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
 

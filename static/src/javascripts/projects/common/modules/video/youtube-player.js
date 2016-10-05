@@ -45,6 +45,7 @@ define([
 
             return promise.then(function () {
                 function onPlayerStateChange(event) {
+                    //change class according to the current state
                     fastdom.write(function () {
                         ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
                             bonzo(wrapper).toggleClass('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);

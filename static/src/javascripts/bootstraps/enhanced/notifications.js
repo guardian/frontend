@@ -112,6 +112,7 @@ define([
                     if (Notification.permission === 'denied') {
                         omniture.trackLinkImmediate('browser-notifications-denied');
                     }
+                    modules.configureSubscribeButton();
                 });
         },
 

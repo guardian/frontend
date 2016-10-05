@@ -4,7 +4,7 @@ import java.awt.Color
 import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.Content
-import com.gu.contentapi.client.model.v1.ContentType.{Article, Video}
+import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import common.Logging
 import model.StandalonePage
 
@@ -29,15 +29,13 @@ trait HostedPage extends StandalonePage {
   def emailSubjectText = title + " - Advertiser Content hosted by the Guardian"
   def emailBodyText = s"${socialShareText.getOrElse(standfirst)} ${URLEncoder.encode(pageUrl, "utf-8")}"
 
-  final val toneId = "tone/hosted"
-  final val toneName = "Hosted"
-
   def cta: HostedCallToAction
 
   def contentType = {
     this match {
       case page: HostedVideoPage => HostedContentType.Video
       case page: HostedArticlePage => HostedContentType.Article
+      case page: HostedGalleryPage => HostedContentType.Gallery
       case _ => HostedContentType.Gallery
     }
   }
@@ -50,6 +48,7 @@ object HostedPage extends Logging {
       item.`type` match {
         case Video => HostedVideoPage.fromContent(item)
         case Article => HostedArticlePage.fromContent(item)
+        case Gallery => HostedGalleryPage.fromContent(item)
         case _ =>
           log.error(s"Failed to make unsupported hosted type: ${item.`type`}: ${item.id}")
           None
