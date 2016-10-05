@@ -1,0 +1,21 @@
+@import common.commercial.hosted.HostedVideoPage
+
+@(page: HostedVideoPage)(implicit request: RequestHeader)
+<div class="vjs-control-bar youtube-player">
+    <div class="vjs-current-time vjs-time-control vjs-control" aria-hidden="true">
+        <div class="vjs-current-time-display" aria-live="off">
+            <span class="vjs-control-text">Current Time </span><span class="js-youtube-current-time">0:00</span>
+        </div>
+    </div>
+    <div class="vjs-time-control vjs-time-divider" aria-hidden="true">
+        <div>
+            <span>/</span>
+        </div>
+    </div>
+    <div class="vjs-duration vjs-time-control vjs-control" aria-hidden="true">
+        <div class="vjs-duration-display" aria-live="off">
+            <span class="vjs-control-text">Duration Time</span>@{"%2d:%02d".format(page.video.duration/60, page.video.duration % 60)}
+        </div>
+    </div>
+</div>
+

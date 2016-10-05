@@ -26,6 +26,8 @@ object RenaultHostedPages {
     btnText = None
   )
 
+  private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
+
   private val teaserWithoutNextPage: HostedVideoPage = {
     val pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
     val pageName = teaserPageName
@@ -39,10 +41,24 @@ object RenaultHostedPages {
       title = videoTitle,
       duration = 86,
       posterUrl = Static("images/commercial/renault-video-poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/05/17/160516GlabsTestSD_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/05/17/160516GlabsTestSD_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/05/17/160516GlabsTestSD-3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/05/17/HLS/160516GlabsTestSD.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/05/17/160516GlabsTestSD_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/05/17/160516GlabsTestSD_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/05/17/160516GlabsTestSD-3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/05/17/HLS/160516GlabsTestSD.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -70,10 +86,24 @@ object RenaultHostedPages {
       title = videoTitle,
       duration = 160,
       posterUrl = Static("images/commercial/renault-video-poster-ep1.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/05/23/160523GlabsRenaultTestHD_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/05/23/160523GlabsRenaultTestHD_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/05/23/160523GlabsRenaultTestHD-3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/05/23/HLS/160523GlabsRenaultTestHD.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/05/23/160523GlabsRenaultTestHD_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/05/23/160523GlabsRenaultTestHD_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/05/23/160523GlabsRenaultTestHD-3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/05/23/HLS/160523GlabsRenaultTestHD.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,
@@ -101,10 +131,24 @@ object RenaultHostedPages {
       title = videoTitle,
       duration = 158,
       posterUrl = Static("images/commercial/renault-video-poster-ep2.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/03/160603GlabsRenaultTest3_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/03/160603GlabsRenaultTest3_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/03/160603GlabsRenaultTest3-3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/03/HLS/160603GlabsRenaultTest3.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/03/160603GlabsRenaultTest3_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/03/160603GlabsRenaultTest3_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/03/160603GlabsRenaultTest3-3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/03/HLS/160603GlabsRenaultTest3.m3u8"
+        )
+      )
     )
     HostedVideoPage(
       campaign,

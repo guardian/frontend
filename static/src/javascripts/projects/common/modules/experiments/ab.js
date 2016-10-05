@@ -8,15 +8,13 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
-    'common/modules/experiments/tests/live-blog-chrome-notifications-prod',
     'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-story',
-    'common/modules/experiments/tests/video-button-duration',
-    'common/modules/experiments/tests/hosted-more-from',
-    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport'
+    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
+    'common/modules/experiments/tests/contributions-epic-short',
+    'common/modules/experiments/tests/hosted-more-from'
 ], function (
     reportError,
     config,
@@ -27,27 +25,23 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
-    LiveBlogChromeNotificationsProd,
     MembershipEngagementBannerTests,
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    ContributionsStory,
-    VideoButtonDuration,
-    HostedMoreFrom,
-    UpgradeMobileRichLinksBelowViewport
+    UpgradeMobileRichLinksBelowViewport,
+    ContributionsEpicShort,
+    HostedMoreFrom
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
-        new LiveBlogChromeNotificationsProd(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new ContributionsStory(),
-        new VideoButtonDuration(),
-        new HostedMoreFrom(),
-        new UpgradeMobileRichLinksBelowViewport()
+        new UpgradeMobileRichLinksBelowViewport(),
+        new ContributionsEpicShort(),
+        new HostedMoreFrom()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
@@ -172,6 +166,7 @@ define([
             var log = {};
 
             getActiveTests()
+                .filter(not(defersImpression))
                 .filter(isParticipating)
                 .filter(testCanBeRun)
                 .forEach(function (test) {
@@ -206,9 +201,17 @@ define([
         });
     }
 
-    function recordTestComplete(test, variantId) {
+    /**
+     * Register a test and variant's complete state with Ophan
+     *
+     * @param test
+     * @param {string} variantId
+     * @param {boolean} complete
+     * @returns {Function} to fire the event
+     */
+    function recordTestComplete(test, variantId, complete) {
         var data = {};
-        data[test.id] = abData(variantId, 'true');
+        data[test.id] = abData(variantId, String(complete));
 
         return function() {
             recordOphanAbEvent(data);
@@ -261,22 +264,44 @@ define([
     }
 
     /**
-     * Set up the completion listener for a test
+     * Create a function that sets up listener to fire an Ophan `complete` event. This is used in the `success` and
+     * `impression` properties of test variants to allow test authors to control when these events are sent out.
+     *
+     * @see {@link defersImpression}
+     * @param {Boolean} complete
+     * @returns {Function}
      */
-    function registerCompleteEvent(test) {
-        var variantId = variantIdFor(test);
+    function registerCompleteEvent(complete) {
+        return function initListener(test) {
+            var variantId = variantIdFor(test);
 
-        if (variantId !== 'notintest') {
-            var variant = getVariant(test, variantId);
-            var onTestComplete = variant.success || noop;
-            try {
-                onTestComplete(recordTestComplete(test, variantId));
-            } catch(err) {
-                reportError(err, false, false);
+            if (variantId !== 'notintest') {
+                var variant = getVariant(test, variantId);
+                var listener = (complete ? variant.success : variant.impression) || noop;
+
+                try {
+                    listener(recordTestComplete(test, variantId, complete));
+                } catch (err) {
+                    reportError(err, false, false);
+                }
             }
-        }
+        };
     }
 
+    /**
+     * Checks if this test will defer its impression by providing its own impression function.
+     *
+     * If it does, the test won't be included in the Ophan call that happens at pageload, and must fire the impression
+     * itself via the callback passed to the `impression` property in the variant.
+     *
+     * @param test
+     * @returns {boolean}
+     */
+    function defersImpression(test) {
+        return test.variants.every(function(variant) {
+            return typeof variant.impression === 'function';
+        });
+    }
 
     function isTestSwitchedOn(test) {
         return config.switches['ab' + test.id];
@@ -311,6 +336,12 @@ define([
         return Object.keys(config.tests).filter(function (test) { return !!config.tests[test]; });
     }
 
+    function not(f) {
+        return function () {
+            return !f.apply(this, arguments);
+        };
+    }
+
     var ab = {
 
         addTest: function (test) {
@@ -342,7 +373,7 @@ define([
                 })[0];
             var onTestComplete = variant && variant.success || noop;
 
-            onTestComplete(recordTestComplete(test, variantId));
+            onTestComplete(recordTestComplete(test, variantId, true));
         },
 
         segmentUser: function () {
@@ -370,7 +401,11 @@ define([
         },
 
         registerCompleteEvents: function() {
-            getActiveTests().forEach(registerCompleteEvent);
+            getActiveTests().forEach(registerCompleteEvent(true));
+        },
+
+        registerImpressionEvents: function () {
+            getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
         },
 
         isEventApplicableToAnActiveTest: function (event) {

@@ -12,7 +12,7 @@
 }
 
 @metaBody() = {
-    @if(!item.content.isImmersiveGallery) {
+    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -39,17 +39,18 @@
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }
             </div>
-
-            <div class="meta__numbers">
-                <div class="u-h meta__number js-sharecount">
+            @if(!item.content.isExplore) {
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !item.trail.isCommentable
+                    }">
+                    </div>
                 </div>
-                <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                    !item.trail.isCommentable
-                }">
-                </div>
-            </div>
-            @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
-                <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
+                    <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
+                }
             }
         </div>
     }
@@ -61,6 +62,7 @@
     @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
+    @if(item.content.isExplore) {content__meta-container--explore}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 

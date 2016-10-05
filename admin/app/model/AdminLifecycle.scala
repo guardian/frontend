@@ -140,6 +140,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       rebuildIndexJob.run()
       videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
+      LoadBalancer.refresh()
     }
   }
 }

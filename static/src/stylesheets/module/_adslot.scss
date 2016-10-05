@@ -129,7 +129,7 @@
         height: 250px;
     }
 
-    &.ad-slot--fluid {
+    &.ad-slot--fabric {
         > .ad-slot__label {
             box-sizing: content-box;
             // Copying stuff from _mixins.scss because I don't want to
@@ -385,13 +385,19 @@
 }
 .ad-slot--im {
     float: left;
+    width: $gs-gutter * 6.5;
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
 
     &:not(.ad-slot--rendered) {
         width: 0;
         height: 0;
     }
 
-    &.ad-slot--rendered > * {
+    &.ad-slot--rendered {
         margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
         @include mq(mobileLandscape) {
             margin-bottom: $gs-baseline;
@@ -626,10 +632,11 @@
  */
 .ad-slot--fluid {
     min-height: 250px;
-    width: auto;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
+    padding: 0;
+
+    &:not(.ad-slot--im) {
+        width: auto;
+    }
 
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
@@ -655,6 +662,10 @@
 .ad-slot--fabric {
     overflow: hidden;
     width: auto;
+    min-height: 250px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 
 .ad-slot--fabric-v1,

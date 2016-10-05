@@ -38,8 +38,8 @@ case class ZootropolisPage(
       javascriptConfigOverrides = Map(
         "keywordIds" -> JsString(keywordId),
         "keywords" -> JsString(keywordName),
-        "toneIds" -> JsString(toneId),
-        "tones" -> JsString(toneName)
+        "toneIds" -> JsString("tone/hosted"),
+        "tones" -> JsString("Hosted")
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> pageUrl,

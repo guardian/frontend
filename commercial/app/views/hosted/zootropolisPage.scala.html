@@ -30,7 +30,7 @@
     .hosted-tone-btn svg {
         fill: #ffffff;
     }
-    .hosted-page .hosted__next-video .hosted__next-video--tile {
+    .hosted-page .hosted__next-page .hosted__next-page--tile {
         border-top-color: @{page.campaign.fontColour.brandColour};
         background: #d5f4e1;
     }
@@ -273,13 +273,13 @@
 
                             <div class="hide-on-desktop">
                             @for(nextPage <- page.nextPage) {
-                                <div class="hosted__next-video">
-                                    <div class="hosted__next-video--header">
-                                        <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                                        <h2 class="hosted__next-video--client-name hosted-tone">@{page.campaign.owner}</h2>
+                                <div class="hosted__next-page hosted-video__next-page">
+                                    <div class="hosted__next-page--header">
+                                        <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
+                                        <h2 class="hosted__next-page--client-name hosted-tone">@{page.campaign.owner}</h2>
                                     </div>
-                                    <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
-                                        <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
+                                    <a href="@{nextPage.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                                        <img class="hosted__next-page-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
                                         <p class="hosted__next-video-title">@{nextPage.title}</p>
                                     </a>
                                 </div>
@@ -296,13 +296,13 @@
                     </div>
                     <div class="content__secondary-column js-secondary-column">
                     @for(nextPage <- page.nextPage) {
-                        <div class="hosted__next-video">
-                            <div class="hosted__next-video--header">
-                                <h2 class="hosted__text hosted__next-video--up-next">More from</h2>
-                                <h2 class="hosted__next-video--client-name hosted-tone">@{page.campaign.owner}</h2>
+                        <div class="hosted__next-page hosted-video__next-page">
+                            <div class="hosted__next-page--header">
+                                <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
+                                <h2 class="hosted__next-page--client-name hosted-tone">@{page.campaign.owner}</h2>
                             </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
-                                <img class="hosted__next-video-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
+                            <a href="@{nextPage.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Video: @{nextPage.title}">
+                                <img class="hosted__next-page-thumb" src="@{nextPage.imageUrl}" alt="Next Video: @{nextPage.title}">
                                 <p class="hosted__next-video-title">@{nextPage.title}</p>
                             </a>
                         </div>

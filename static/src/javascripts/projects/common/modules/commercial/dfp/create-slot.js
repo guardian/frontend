@@ -49,7 +49,7 @@ define([
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.empty, adSizes.inlineMerchandising)
+                mobile: compile(adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid)
             }
         },
         inline: inlineDefinition,

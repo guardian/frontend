@@ -53,7 +53,7 @@ define([
         });
 
         if (adContainers.length < 1) {
-            return;
+            return Promise.resolve(false);
         }
 
         return fastdom.write(function () {

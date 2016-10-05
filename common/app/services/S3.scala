@@ -85,6 +85,11 @@ trait S3 extends Logging {
     put(key: String, value: String, contentType: String, PublicRead)
   }
 
+  def putPublic(key: String, file: File, contentType: String): Unit = {
+    val request = new PutObjectRequest(bucket, key, file).withCannedAcl(PublicRead)
+    client.foreach(_.putObject(request))
+  }
+
   def putPrivate(key: String, value: String, contentType: String) {
     put(key: String, value: String, contentType: String, Private)
   }

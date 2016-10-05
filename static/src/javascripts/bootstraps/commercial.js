@@ -17,6 +17,7 @@ define([
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/colours',
     'commercial/modules/hosted/onward-journey-carousel',
+    'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
@@ -43,6 +44,7 @@ define([
     hostedGallery,
     hostedColours,
     hostedOJCarousel,
+    hostedOnward,
     sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
@@ -74,11 +76,12 @@ define([
         }]
     ];
 
-    if (config.isHosted) {
+    if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedOnward', hostedOnward.init]),
             ['cm-hostedColours', hostedColours.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }

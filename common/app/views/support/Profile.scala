@@ -1,6 +1,7 @@
 package views.support
 
 import java.net.{URI, URISyntaxException}
+import java.util.Base64
 import common.Logging
 import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
 import conf.Configuration
@@ -126,6 +127,17 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
 }
 
 object EmailImage extends Profile(width = Some(640), autoFormat = false)
+object EmailVideoImage extends Profile(width = Some(640), autoFormat = false) {
+  override val fitParam = "fit=crop"
+  val blendModeParam = "bm=normal"
+  val blendOffsetParam = "ba=center"
+  val blendImageParam = s"blend64=${Base64.getUrlEncoder.encodeToString(EmailHelpers.Images.play.getBytes)}"
+
+  override def resizeString = {
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
+}
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))

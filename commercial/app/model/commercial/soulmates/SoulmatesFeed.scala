@@ -4,6 +4,7 @@ import java.lang.System._
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
+import model.commercial.Member
 import play.api.libs.json.{JsValue, Json}
 
 import scala.concurrent.Future

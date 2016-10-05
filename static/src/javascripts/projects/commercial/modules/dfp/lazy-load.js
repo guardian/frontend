@@ -6,8 +6,9 @@ define([
     'common/utils/user-timing',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
-    'commercial/modules/dfp/ophan-tracking'
-], function (fastdom, throttle, config, detect, userTiming, dfpEnv, loadAdvert, ophanTracking) {
+    'commercial/modules/dfp/ophan-tracking',
+    'commercial/modules/dfp/get-advert-by-id'
+], function (fastdom, throttle, config, detect, userTiming, dfpEnv, loadAdvert, ophanTracking, getAdvertById) {
     /* nbOfFrames: integer. Number of refresh frames we want to throttle the scroll handler */
     var nbOfFrames = 6;
 
@@ -31,22 +32,31 @@ define([
         fastdom.read(function () {
             loadQueued = false;
             var lazyLoad = dfpEnv.advertsToLoad
-                .filter(function (advert) {
-                    var rect = advert.node.getBoundingClientRect();
-                    var isNotHidden = rect.top + rect.left + rect.right + rect.bottom !== 0;
-                    var isNotTooFarFromTop = (1 - depthOfScreen) * viewportHeight < rect.bottom;
-                    var isNotTooFarFromBottom = rect.top < viewportHeight * depthOfScreen;
-                    // load the ad only if it's setting within an acceptable range
-                    return isNotHidden && isNotTooFarFromTop && isNotTooFarFromBottom;
-                });
-
-            lazyLoad.forEach(function(advert) {
-                ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
-                loadAdvert(advert);
+            .filter(function (advert) {
+                var rect = advert.node.getBoundingClientRect();
+                var isNotHidden = rect.top + rect.left + rect.right + rect.bottom !== 0;
+                var isNotTooFarFromTop = (1 - depthOfScreen) * viewportHeight < rect.bottom;
+                var isNotTooFarFromBottom = rect.top < viewportHeight * depthOfScreen;
+                // load the ad only if it's setting within an acceptable range
+                return isNotHidden && isNotTooFarFromTop && isNotTooFarFromBottom;
+            })
+            .map(function (advert) {
+                return advert.id;
             });
+
+            dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(function (advert) {
+                return lazyLoad.indexOf(advert.id) < 0;
+            });
+
             if (dfpEnv.advertsToLoad.length === 0) {
                 disableLazyLoad();
             }
+
+            lazyLoad.forEach(function(advertId) {
+                var advert = getAdvertById(advertId);
+                ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
+                loadAdvert(advert);
+            });
         });
     }, nbOfFrames * durationOfFrame);
 

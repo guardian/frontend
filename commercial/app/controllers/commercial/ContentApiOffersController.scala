@@ -3,7 +3,7 @@ package controllers.commercial
 import common.commercial._
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, Lookup}
+import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
 import model.{Cached, NoCache}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -121,23 +121,22 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }
   }
 
-  private def renderNative(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderNative(isMulti: Boolean) = Action.async { implicit request =>
 
-    retrieveContent().map(_.toList.headOption).map(
-      {
-        case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-        case Some(content) => {
-          val capiSingle = CapiSingle.fromContent(content)
-          Cached(60.seconds) {
-            JsonComponent(capiSingle)
-          }
-        }
+    retrieveContent().map {
+      case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+      case content if isMulti => Cached(60.seconds) {
+        JsonComponent(CapiMultiple.fromContent(content, Edition(request)))
       }
-    )
+      case first :: _ => Cached(60.seconds) {
+        JsonComponent(CapiSingle.fromContent(first, Edition(request)))
+      }
+    }
+
   }
 
-  def nativeJson = renderNative(jsonFormat, isMulti = false)
-  def nativeJsonMulti = renderNative(jsonFormat, isMulti = true)
+  def nativeJson = renderNative(isMulti = false)
+  def nativeJsonMulti = renderNative(isMulti = true)
 
   def itemsHtml = renderItems(htmlFormat, isMulti = true)
   def itemsJson = renderItems(jsonFormat, isMulti = true)
