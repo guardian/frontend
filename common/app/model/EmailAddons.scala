@@ -145,8 +145,7 @@ object EmailAddons {
     LabNotes,
     OlympicsDailyBriefing,
     MediaBriefing,
-    VaginaDispatches,
-    )
+    VaginaDispatches)
   private val frontEmails = Seq(
     TheFlyer
   )
