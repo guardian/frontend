@@ -29,12 +29,8 @@
                           <div class="email-sub__form-wrapper">
                             <div class="email-sub__inline-label js-email-sub__inline-label">
                               <label class="email-sub__label js-email-sub__label" for="article-email-sub-input">
-                                <span class="inline-envelope inline-icon label__icon">
-                                  <svg width="44" height="32" viewbox="0 0 44 32" class="label__icon__svg inline-envelope__svg inline-icon__svg">
-                                    <path d="M40 28H4V6l16 14h4L40 6v22zM36 4L22 16 8 4h28zm4-4H4L0 4v24l4 4h36l4-4V4l-4-4z"/>
-                                  </svg>
-                                </span>
-                                Email address
+                                  @fragments.inlineSvg("envelope", "icon", List("email-signup__svg--envelope"))
+                                  Email address
                               </label>
                               <input class="email-sub__lozenge email-sub__text-input js-email-sub__text-input"
                               data-link-name="weekend-reading-input" type="email" name="email" required/>
@@ -51,7 +47,7 @@
                         <div class="email-signup__aside-text">
                             <span>No spam ever. Unsubscribe in one click.</span>
                             <span class="email-signup__aside-text__frequency">
-                                @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                                @fragments.inlineSvg("clock", "icon", List("email-signup__svg--clock"))
                                 Every Sat
                             </span>
                         </div>

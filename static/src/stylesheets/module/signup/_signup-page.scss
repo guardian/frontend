@@ -84,11 +84,11 @@
             pointer-events: none;
         }
 
-        .label__icon__svg {
-            width: 1.143em;
-            height: .857em;
+        .email-signup__svg--envelope__svg {
             fill: $neutral-2;
             opacity: .65;
+            width: 28px;
+            height: 12px;
         }
 
         .email-sub__submit-input {
