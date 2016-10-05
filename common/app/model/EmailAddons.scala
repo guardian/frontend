@@ -144,6 +144,7 @@ object EmailAddons {
     EuReferendum,
     LabNotes,
     OlympicsDailyBriefing,
+    MediaBriefing,
     VaginaDispatches,
     )
   private val frontEmails = Seq(
