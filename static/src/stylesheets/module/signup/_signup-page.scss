@@ -74,6 +74,23 @@
             }
         }
 
+        .email-sub__label {
+            color: $neutral-2;
+            position: relative;
+            width: 100%;
+            line-height: 3;
+            left: 1.250em;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .label__icon__svg {
+            width: 1.143em;
+            height: .857em;
+            fill: $neutral-2;
+            opacity: .65;
+        }
+
         .email-sub__submit-input {
             width: 25%;
             margin: 0px 0px $gs-baseline 3%;
