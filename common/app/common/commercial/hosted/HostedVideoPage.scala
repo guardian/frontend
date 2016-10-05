@@ -75,10 +75,7 @@ object HostedVideoPage extends Logging {
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
           youtubeId = youtubeId,
-          srcUrlMp4 = videoUrl("video/mp4"),
-          srcUrlWebm = videoUrl("video/webm"),
-          srcUrlOgg = videoUrl("video/ogg"),
-          srcM3u8 = videoUrl("video/m3u8")
+          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => VideoSource(mimeType, asset.id)))
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
@@ -101,8 +98,7 @@ case class HostedVideo(
   duration: Int,
   posterUrl: String,
   youtubeId: Option[String] = None,
-  srcUrlMp4: String,
-  srcUrlWebm: String,
-  srcUrlOgg: String,
-  srcM3u8: String
+  sources: Seq[VideoSource]
 )
+
+case class VideoSource(mimeType: String, url: String)
