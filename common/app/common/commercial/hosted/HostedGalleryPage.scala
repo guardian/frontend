@@ -4,13 +4,11 @@ import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element, TagType}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
-import model.GuardianContentTypes._
-import model.{MetaData, SectionSummary}
-import play.api.libs.json.{JsArray, JsNumber, JsString}
+import model.MetaData
 
 case class HostedGalleryPage(
+  id: String,
   campaign: HostedCampaign,
-  pageUrl: String,
   pageName: String,
   title: String,
   standfirst: String,
@@ -28,7 +26,14 @@ case class HostedGalleryPage(
   val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
-    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl, contentType = page.contentType)
+    HostedPages.fromCampaignAndPageName(campaign.id, _)
+  ).map(
+    page => NextHostedPage(
+      id = page.id,
+      imageUrl = page.imageUrl,
+      title = page.title,
+      contentType = page.contentType
+    )
   )
 }
 
@@ -69,19 +74,21 @@ object HostedGalleryPage extends Logging {
 
       val galleryImages = {
         val elements: Seq[Element] = content.elements.map(
-          _.filter { element => element.`type` == Image && element.relation == "gallery"}
-        ).getOrElse(Seq())
+          _.filter { element => element.`type` == Image && element.relation == "gallery" }
+        ).getOrElse(Nil)
         elements.map { element =>
-          element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
-        }.map(asset => HostedGalleryImage(
-          url = asset.file.getOrElse(""),
-          title = asset.typeData.flatMap(_.altText).getOrElse(""),
-          caption = asset.typeData.flatMap(_.caption).getOrElse(""),
-          credit = asset.typeData.flatMap(_.credit).getOrElse("")
-        ))
+          val asset = element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
+          HostedGalleryImage(
+            url = asset.file.getOrElse(""),
+            title = asset.typeData.flatMap(_.altText).getOrElse(""),
+            caption = asset.typeData.flatMap(_.caption).getOrElse(""),
+            credit = asset.typeData.flatMap(_.credit).getOrElse("")
+          )
+        }
       }
 
       HostedGalleryPage(
+        id = content.id,
         campaign = HostedCampaign(
           id = campaignId,
           name = campaignName,
@@ -92,8 +99,7 @@ object HostedGalleryPage extends Logging {
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
-        images= galleryImages.toList,
-        pageUrl = content.webUrl,
+        images = galleryImages.toList,
         pageName = content.webTitle,
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup

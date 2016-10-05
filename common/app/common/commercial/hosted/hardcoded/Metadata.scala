@@ -2,6 +2,7 @@ package common.commercial.hosted.hardcoded
 
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery}
 import common.commercial.hosted.{HostedCampaign, HostedGalleryImage, HostedVideo}
+import conf.Configuration.site
 import model.GuardianContentTypes.Video
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.{JsArray, JsBoolean, JsNumber, JsString}
@@ -9,20 +10,20 @@ import views.html.fragments.items.elements.facia_cards.title
 
 object Metadata {
 
-  val toneId = "tone/hosted"
-  val toneName = "Hosted"
+  private val toneId = "tone/hosted"
+  private val toneName = "Hosted"
 
   def forHardcodedHostedVideoPage(
+    id: String,
     campaign: HostedCampaign,
     video: HostedVideo,
-    pageUrl: String,
     pageName: String,
     standfirst: String
   ): MetaData = {
     val campaignId = campaign.id
     val pageTitle = s"Advertiser content hosted by the Guardian: ${video.title} - video"
     MetaData.make(
-      id = s"commercial/advertiser-content/$campaignId/$pageName",
+      id,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaignId)),
       contentType = Video,
@@ -36,7 +37,7 @@ object Metadata {
         "tones" -> JsString(toneName)
       ),
       opengraphPropertiesOverrides = Map(
-        "og:url" -> pageUrl,
+        "og:url" -> s"${site.host}/$id",
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
@@ -47,14 +48,14 @@ object Metadata {
   }
 
   def forHardcodedHostedArticlePage(
+    id: String,
     campaign: HostedCampaign,
-    pageUrl: String,
     pageName: String,
     pageTitle: String,
     standfirst: String,
     mainPicture: String
   ): MetaData = MetaData.make(
-    id = s"commercial/advertiser-content/${campaign.id}/$pageName",
+    id,
     webTitle = pageTitle,
     section = Some(SectionSummary.fromId(campaign.id)),
     contentType = Article.name,
@@ -66,7 +67,7 @@ object Metadata {
       "tones" -> JsString(toneName)
     ),
     opengraphPropertiesOverrides = Map(
-      "og:url" -> pageUrl,
+      "og:url" -> s"${site.host}/$id",
       "og:title" -> pageTitle,
       "og:description" ->
       s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
@@ -76,15 +77,15 @@ object Metadata {
   )
 
   def forHardcodedHostedGalleryPage(
+    id: String,
     campaign: HostedCampaign,
-    pageUrl: String,
     pageName: String,
     pageTitle: String,
     images: List[HostedGalleryImage]
   ): MetaData = {
     val sectionId = campaign.id
     MetaData.make(
-      id = s"advertiser-content/$sectionId/$pageName",
+      id,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
       contentType = Gallery.name,
@@ -100,7 +101,7 @@ object Metadata {
         "ctaIndex" -> JsNumber(BigDecimal(images.length - 1))
       ),
       opengraphPropertiesOverrides = Map(
-        "og:url" -> pageUrl,
+        "og:url" -> s"${site.host}/$id",
         "og:title" -> pageTitle,
         "og:description" ->
         s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $title",

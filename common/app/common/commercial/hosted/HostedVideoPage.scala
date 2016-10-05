@@ -1,14 +1,14 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
-import com.gu.contentatom.thrift.{Atom, AtomData}
+import com.gu.contentatom.thrift.AtomData
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
 
 case class HostedVideoPage(
+  id: String,
   campaign: HostedCampaign,
-  pageUrl: String,
   pageName: String,
   standfirst: String,
   video: HostedVideo,
@@ -45,17 +45,15 @@ object HostedVideoPage extends Logging {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
-      def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
       def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
-      val pageId = content.id
-      val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
       HostedVideoPage(
+        id = content.id,
         campaign = HostedCampaign(
           id = campaignId,
           name = campaignName,
@@ -66,7 +64,6 @@ object HostedVideoPage extends Logging {
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
-        pageUrl,
         pageName = pageTitle,
         standfirst,
         video = HostedVideo(
