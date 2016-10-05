@@ -71,9 +71,8 @@ case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logo: HostedLogo,
-  fontColour: FontColour,
-  logoLink: Option[String] = None
+  logoUrl: String,
+  fontColour: FontColour
 )
 
 case class FontColour(brandColour: String) {
@@ -92,7 +91,3 @@ case class FontColour(brandColour: String) {
     lightness > 0.5
   }
 }
-
-case class HostedLogo(
-  url: String
-)

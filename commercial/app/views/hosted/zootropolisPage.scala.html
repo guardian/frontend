@@ -60,7 +60,7 @@
 
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader("hosted-article-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    @guardianHostedHeader("hosted-article-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page zootropolis">
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">

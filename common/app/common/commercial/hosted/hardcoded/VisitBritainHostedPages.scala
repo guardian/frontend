@@ -13,7 +13,7 @@ object VisitBritainHostedPages {
     id = "visit-britain",
     name = "#OMGB. Home of Amazing Moments. Great Britain & Northern Ireland",
     owner = "OMGB",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
+    logoUrl = "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
     fontColour = FontColour("#E41F13")
   )
 

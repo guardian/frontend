@@ -11,7 +11,7 @@ object ZootropolisHostedPages {
     id = "disney-zootropolis",
     name = "Zootropolis",
     owner = "Disney",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg"),
+    logoUrl = "https://static.theguardian.com/commercial/hosted/disney-zootropolis/zootropolis-logo.jpg",
     fontColour = FontColour("#2ec869")
   )
 
