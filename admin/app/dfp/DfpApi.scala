@@ -43,23 +43,6 @@ object DfpApi extends Logging {
     readLineItems(stmtBuilder)
   }
 
-  def readAdFeatureLogoLineItems(expiredSince: DateTime, expiringBefore: DateTime): Seq[GuLineItem] = {
-
-    val stmtBuilder = new StatementBuilder()
-                      .where(
-                        "LineItemType = :sponsored AND " +
-                        "Status != :draft AND " +
-                        "EndDateTime > :startTime AND " +
-                        "EndDateTime < :endTime"
-                      )
-                      .withBindVariableValue("sponsored", LineItemType.SPONSORSHIP.toString)
-                      .withBindVariableValue("draft", ComputedStatus.DRAFT.toString)
-                      .withBindVariableValue("startTime", expiredSince.getMillis)
-                      .withBindVariableValue("endTime", expiringBefore.getMillis)
-
-    readLineItems(stmtBuilder) filter (_.isAdFeatureLogo)
-  }
-
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
 
     val stmtBuilder = new StatementBuilder()

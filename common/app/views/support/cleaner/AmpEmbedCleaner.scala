@@ -149,6 +149,35 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+  def cleanAmpMaps(document: Document) = {
+    document.getElementsByClass("element-map").foreach { embed: Element =>
+      embed.getElementsByTag("iframe").foreach { element: Element =>
+        val src = element.attr("src")
+        val frameBorder = element.attr("frameborder")
+        val elementMap = document.createElement("amp-iframe")
+
+        // In AMP, when using the layout `responsive`, width is 100%,
+        // and height is decided by the ratio between width and height.
+        // https://www.ampproject.org/docs/guides/responsive/control_layout.html
+        val attrs = Map(
+        "width" -> "4",
+        "height" -> "3",
+        "layout" -> "responsive",
+        "sandbox" -> "allow-scripts allow-same-origin allow-popups",
+        "frameborder" -> frameBorder,
+        "src" -> src
+        )
+        attrs.foreach {
+          case (key, value) => elementMap.attr(key, value)
+        }
+        // The following replaces the iframe element with the newly created amp-iframe element
+        // with the figure element as its parent.
+        element
+        .replaceWith(elementMap)
+      }
+    }
+  }
+
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
   override def clean(document: Document): Document = {
@@ -156,6 +185,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpVideos(document)
     cleanAmpYouTube(document)
     AmpSoundcloud.clean(document)
+    cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpEmbed(document)
