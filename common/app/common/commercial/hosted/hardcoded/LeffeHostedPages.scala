@@ -16,7 +16,7 @@ object LeffeHostedPages {
     id = "leffe-rediscover-time",
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
-    logo = HostedLogo(Static("images/commercial/leffe.jpg")),
+    logoUrl = Static("images/commercial/leffe.jpg"),
     fontColour = FontColour("#dec190")
   )
 

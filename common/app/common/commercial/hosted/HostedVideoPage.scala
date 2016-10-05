@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
-import com.gu.contentatom.thrift.{Atom, AtomData}
+import com.gu.contentatom.thrift.AtomData
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
@@ -48,7 +48,6 @@ object HostedVideoPage extends Logging {
       def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
       def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
-      val pageId = content.id
       val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
@@ -60,11 +59,8 @@ object HostedVideoPage extends Logging {
           id = campaignId,
           name = campaignName,
           owner,
-          logo = HostedLogo(
-            url = sponsorship.sponsorLogo
-          ),
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
-          logoLink = None
+          logoUrl = sponsorship.sponsorLogo,
+          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
         ),
         pageUrl,
         pageName = pageTitle,

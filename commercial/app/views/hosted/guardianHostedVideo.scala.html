@@ -41,7 +41,7 @@
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
@@ -81,8 +81,8 @@
                             <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <a href="@page.campaign.logoLink.getOrElse(page.cta.url)" data-link-name="hosted-logo-top-left" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                            <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+                                <img class="hostedbadge__logo" src="@{page.campaign.logoUrl}" alt="logo @{page.campaign.owner}">
                             </a>
                         </div>
                     </div>
