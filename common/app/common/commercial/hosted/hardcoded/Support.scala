@@ -9,9 +9,9 @@ import model.MetaData
 object Support {
 
   def makeshiftPage(nextPage: NextHostedPage, hostedCampaign: HostedCampaign): HostedPage = new HostedPage {
-    override def campaign: HostedCampaign = hostedCampaign
+    override def id: String = nextPage.id
 
-    override def pageUrl: String = nextPage.pageUrl
+    override def campaign: HostedCampaign = hostedCampaign
 
     override def pageName: String = "unused"
 

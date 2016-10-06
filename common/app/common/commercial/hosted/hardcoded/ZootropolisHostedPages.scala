@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 
 object ZootropolisHostedPages {
 
@@ -24,7 +23,7 @@ object ZootropolisHostedPages {
   )
 
   private lazy val videoPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$videoPageName"
+    val id = s"advertiser-content/${campaign.id}/$videoPageName"
     val pageName = videoPageName
     val standfirst = "The residents of Zootropolis are leading the charge on Digital Download! " +
                      "Don’t let the sloths slow you down – download instantly through Sky Store, " +
@@ -56,8 +55,8 @@ object ZootropolisHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -66,7 +65,7 @@ object ZootropolisHostedPages {
       shortSocialShareText = Some(
         "Get to know the residents of Zootropolis and find out where to download the film instantly"
       ),
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
@@ -106,15 +105,15 @@ object ZootropolisHostedPages {
 
   private lazy val articlePageName = "meet-the-characters-of-zootropolis"
 
-  private val pageUrl: String = s"$host/advertiser-content/${campaign.id}/$articlePageName"
+  private val id = s"advertiser-content/${campaign.id}/$articlePageName"
   private val title: String = "Meet the characters of Zootropolis"
   private val standfirst: String = "Zootropolis is a city like no other. But when optimistic Judy Hopps arrives, " +
     "she discovers that being a bunny on a police force of big, tough animals isn’t so easy."
    private val mainPicture = "https://media.guim.co.uk/cb60581783874e022209cde845481bd4334cb7a0/0_116_1300_385/1300.png";
 
   private lazy val articlePage = HostedArticlePage(
+    id,
     campaign = campaign,
-    pageUrl = pageUrl,
     pageName = articlePageName,
     title = title,
     standfirst = standfirst,
@@ -127,12 +126,22 @@ object ZootropolisHostedPages {
                            " Download instantly with Sky Store & get the DVD in the post (no Sky subscription required)!"),
     shortSocialShareText = Some("Get to know the residents of Zootropolis and find out where to download the film instantly"),
     nextPageNames = List(videoPageName),
-    metadata = Metadata.forHardcodedHostedArticlePage(campaign, pageUrl, articlePageName, title, standfirst, mainPicture)
+    metadata = Metadata.forHardcodedHostedArticlePage(id, campaign, articlePageName, title, standfirst, mainPicture)
   )
 
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    hostedPage.copy(nextPage = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType)))
+    hostedPage
+    .copy(
+      nextPage = Some(
+        NextHostedPage(
+          id = newPage.id,
+          imageUrl = newPage.imageUrl,
+          title = newPage.title,
+          contentType = newPage.contentType
+        )
+      )
+    )
   }
 
   private lazy val videoPage = withNextPage(videoPageWithoutNextPage, articlePage)

@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 import conf.Static
 
 object RenaultHostedPages {
@@ -29,7 +28,7 @@ object RenaultHostedPages {
   private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
 
   private val teaserWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
     val pageName = teaserPageName
     val standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at " +
                      "Central St Martins are working with Renault to design the interior for cars that will drive " +
@@ -61,8 +60,8 @@ object RenaultHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -70,12 +69,12 @@ object RenaultHostedPages {
       socialShareText = None,
       shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName,  standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val episode1WithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1"
+    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1"
     val pageName = episode1PageName
     val standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning " +
                      "design will be announced at Clerkenwell Design Week (and on this site). Watch this short video " +
@@ -106,8 +105,8 @@ object RenaultHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -115,12 +114,12 @@ object RenaultHostedPages {
       socialShareText = None,
       shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val episode2WithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2"
+    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2"
     val pageName = episode2PageName
     val standfirst = "A group of Central St Martins students took part in a competition to dream up the car of the " +
                      "future. The winning design is radical and intriguing. Meet the team whose blue-sky thinking may" +
@@ -151,8 +150,8 @@ object RenaultHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -160,12 +159,19 @@ object RenaultHostedPages {
       socialShareText = None,
       shortSocialShareText = Some(videoTitle + " Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    val nextPage: Some[NextHostedPage] = Some(
+      NextHostedPage(
+        id = newPage.id,
+        imageUrl = newPage.imageUrl,
+        title = newPage.title,
+        contentType = newPage.contentType
+      )
+    )
     hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 
