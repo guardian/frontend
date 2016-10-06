@@ -1,6 +1,8 @@
 package common
 
 import conf.Configuration
+import model.Page
+import play.api.mvc.RequestHeader
 
 case class NavLink(name: String, url: String, iconName: String = "")
 case class TertiaryLink(frontId: String, name: String, url: String)
@@ -22,6 +24,19 @@ object NewNavigation {
       case editions.Au => au
       case editions.Us => us
       case editions.International => int
+    }
+  }
+
+  def getSubSectionOrSectionLink(navigation: Seq[NavItem], page: Page)(implicit request: RequestHeader): Option[SectionLink] = {
+
+    val topLevelLink = Navigation.topLevelItem(navigation, page)
+
+    if (topLevelLink.isDefined) {
+      val subLink = topLevelLink.get.searchForCurrentSublink(page)
+
+      Some(subLink.getOrElse(topLevelLink.get.name))
+    } else {
+      None
     }
   }
 
