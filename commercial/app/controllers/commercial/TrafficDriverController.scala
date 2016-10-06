@@ -18,8 +18,6 @@ class TrafficDriverController(
   with implicits.Requests
   with Logging {
 
-    private val lookup = new Lookup(contentApiClient)
-
     private def retrieveContent()(implicit request: Request[AnyContent]):
         Future[Seq[ContentType]] = {
 
@@ -36,11 +34,11 @@ class TrafficDriverController(
 
     }
 
-    private def renderJson() = Action.async { implicit request =>
+    def renderJson() = Action.async { implicit request =>
 
         retrieveContent().map {
             case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-            case content :: _ => Cached(60.seconds) {
+            case content +: _ => Cached(60.seconds) {
                 JsonComponent(CapiSingle.fromContent(content, Edition(request)))
             }
         }
