@@ -118,7 +118,7 @@ case object MediaBriefing extends ArticleEmailMetadata {
 case object VaginaDispatches extends ArticleEmailMetadata {
   val name = "Vagina Dispatches"
   override val banner = Some("vagina-dispatches.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "media/series/vagina-dispatches-newsletter")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "lifeandstyle/series/vagina-dispatches-newsletter")
 }
 
 case object TheFlyer extends FrontEmailMetadata {
