@@ -10,12 +10,7 @@
 **/javascripts/projects/common/utils/atob.js
 **/javascripts/projects/common/utils/picturefill.js
 
-**/flow/bower_components
-**/flow/components
-**/flow/vendor
-**/flow/polyfills
-**/flow/projects/common/utils/atob.js
-**/flow/projects/common/utils/picturefill.js
+**/flow
 
 **/deploys-radiator/node_modules
 **/deploys-radiator/jspm_packages
