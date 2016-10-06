@@ -505,8 +505,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
     &__svg {
         fill: $news-support-2;
-        margin-top: -.1em;
-        vertical-align: middle;
+        margin-top: -.05em;
         width: 1em;
         height: 1em;
     }
@@ -646,7 +645,13 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 }
 
 .main-menu__icon--search {
-    top: 10px;
+    top: 9px;
+}
+
+.main-menu__icon--search__svg {
+    margin-top: 0;
+    width: 18px;
+    height: 18px;
 }
 
 .navigation-group__item--user-account {
