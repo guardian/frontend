@@ -1,30 +1,19 @@
-# Lists all `make` targets.
-help:
+# Targets marked '# PRIVATE' will be hidden when running `make help`.
+# They're helper targets that you probably only need to know about
+# if you've got as far as reading the makefile.
+
+# Lists common targets.
+# Also the default task (`make` === `make help`).
+help: # PRIVATE
 	@node tools/messages.js describeMakefile
 
-# ********************************************************
+# Lists *all* targets.
+list: # PRIVATE
+	@node tools/messages.js describeMakefile --all
 
-# Watch and automatically reload all JS/SCSS.
-# Uses port 3000 insead of 9000.
-watch: compile-dev
-	@npm run sass-watch & \
-		npm run css-watch & \
-		npm run browser-sync
 
-# ********************************************************
 
-atomise-css:
-	@node tools/atomise-css
-
-# Compile all assets for production.
-compile: clean-assets
-	@grunt compile-assets
-
-# Compile all assets for development.
-compile-dev: clean-assets
-	@grunt compile-assets --dev
-
-# ********************************************************
+# *********************** SETUP ***********************
 
 # Install all 3rd party dependencies.
 install:
@@ -37,54 +26,73 @@ install:
 	@node tools/messages.js install
 
 # Remove all 3rd party dependencies.
-uninstall:
+uninstall: # PRIVATE
 	@rm -rf node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
-# Remove then reinstall all 3rd party dependencies.
-# The nuclear option if nothing else has worked.
+# Reinstall all 3rd party dependencies from scratch.
+# The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
-# ********************************************************
+
+
+# *********************** DEVELOPMENT ***********************
+
+# Watch and automatically compile/reload all JS/SCSS.
+# Uses port 3000 insead of 9000.
+watch: compile-dev
+	@npm run sass-watch & \
+		npm run css-watch & \
+		npm run browser-sync
+
+# Shrinkwrap NPM packages after updating package.json.
+shrinkwrap: # PRIVATE
+	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
+	@node tools/messages.js did-shrinkwrap
+
+
+
+# *********************** ASSETS ***********************
+
+# Compile all assets for production.
+compile: clean-assets
+	@grunt compile-assets
+
+# Compile all assets for development.
+compile-dev: clean-assets
+	@grunt compile-assets --dev
+
+# Delete all asset build artefacts, includes the builds themselves.
+clean-assets: # PRIVATE
+	@rm -rf static/target static/hash static/requirejs
+
+atomise-css: # PRIVATE
+	@node tools/atomise-css
+
+# * Not ready for primetime use yet... *
+pasteup: # PRIVATE
+	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
+
+
+
+# *********************** CHECKS ***********************
 
 # Run the JS test suite.
 test:
 	@grunt test --dev
-
-# ********************************************************
 
 # Lint all assets.
 validate:
 	@grunt validate
 
 # Lint all SCSS.
-validate-sass:
+validate-sass: # PRIVATE
 	@grunt validate:sass
 	@grunt validate:css
 
 # Lint all JS.
-validate-js:
+validate-js: # PRIVATE
 	@grunt validate:js
 
-validate-amp:
+validate-amp: # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
-
-# ********************************************************
-
-# Shrinkwrap NPM packages.
-shrinkwrap:
-	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
-	@node tools/messages.js did-shrinkwrap
-
-# ********************************************************
-
-# Deletes all asset build artefacts.
-# Includes the builds themselves.
-clean-assets:
-	@rm -rf static/target static/hash static/requirejs
-
-# ********************************************************
-
-# * Not ready for primetime use yet... *
-pasteup:
-	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
