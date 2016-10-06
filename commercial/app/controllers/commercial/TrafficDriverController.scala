@@ -2,7 +2,7 @@ package controllers.commercial
 
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, Lookup}
+import model.commercial.{CapiAgent, TrafficDriver, Lookup}
 import model.{Cached, ContentType}
 import play.api.mvc.{Action, AnyContent, Controller, Request}
 
@@ -39,7 +39,7 @@ class TrafficDriverController(
         retrieveContent().map {
             case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
             case content :: _ => Cached(60.seconds) {
-                JsonComponent(CapiSingle.fromContent(content, Edition(request)))
+                JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
             }
         }
 
