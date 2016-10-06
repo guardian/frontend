@@ -36,13 +36,14 @@ install:
 	@echo '…done.'
 	@node tools/messages.js install
 
-# Alias for `make uninstall install`.
-reinstall: uninstall install
-
-# Uninstall all 3rd party dependencies.
+# Remove all 3rd party dependencies.
 uninstall:
 	@rm -rf node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
+
+# Remove then reinstall all 3rd party dependencies.
+# The nuclear option if nothing else has worked.
+reinstall: uninstall install
 
 # ********************************************************
 
