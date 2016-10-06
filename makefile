@@ -17,11 +17,11 @@ atomise-css:
 	@node tools/atomise-css
 
 # Compile all assets for production.
-compile: clean-assets
+compile: detype clean-assets
 	@grunt compile-assets
 
 # Compile all assets for development.
-compile-dev: clean-assets
+compile-dev: detype clean-assets
 	@grunt compile-assets --dev
 
 # ********************************************************
@@ -88,3 +88,6 @@ clean-assets:
 # * Not ready for primetime use yet... *
 pasteup:
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
+detype:
+	@npm run detype
+
