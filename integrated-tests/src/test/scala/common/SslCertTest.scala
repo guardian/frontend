@@ -21,7 +21,6 @@ import sun.security.x509.X509CertImpl
   private val webTeamHosts = Seq(
     "api.nextgen.guardianapps.co.uk",
     "i.guim.co.uk",
-    "beacon.guim.co.uk",
     "profile.theguardian.com",
     "fronts.gutools.co.uk",
     "fronts.code.dev-gutools.co.uk"

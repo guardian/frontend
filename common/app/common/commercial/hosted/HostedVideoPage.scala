@@ -1,16 +1,14 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
-import com.gu.contentatom.thrift.{Atom, AtomData}
+import com.gu.contentatom.thrift.AtomData
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
-import model.GuardianContentTypes._
-import model.{MetaData, SectionSummary}
-import play.api.libs.json.JsString
+import model.MetaData
 
 case class HostedVideoPage(
+  id: String,
   campaign: HostedCampaign,
-  pageUrl: String,
   pageName: String,
   standfirst: String,
   video: HostedVideo,
@@ -47,50 +45,15 @@ object HostedVideoPage extends Logging {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
-      def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
       def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
-      val pageId = content.id
-      val pageUrl = content.webUrl
       val pageTitle = content.webTitle
       val owner = sponsorship.sponsorName
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
-      val toneId = toneTag.id
-      //val toneName = toneTag.webTitle //TODO the toneTag.webTitle value should be Hosted not Advertisement Feature
-      val toneName = "Hosted"
-
-      val keywordId = s"${campaignId}/${campaignId}"
-      val keywordName = campaignId
-
-      val metadata = MetaData.make(
-        id = pageId,
-        section = content.sectionId map SectionSummary.fromId,
-        webTitle = pageTitle,
-        analyticsName = s"GFE:$campaignId:$Video:$pageTitle",
-        url = Some(s"/$pageId"),
-        description = Some(standfirst),
-        contentType = Video,
-        iosType = Some(Video),
-        javascriptConfigOverrides = Map(
-          "keywordIds" -> JsString(keywordId),
-          "keywords" -> JsString(keywordName),
-          "toneIds" -> JsString(toneId),
-          "tones" -> JsString(toneName)
-        ),
-        opengraphPropertiesOverrides = Map(
-          "og:url" -> pageUrl,
-          "og:title" -> pageTitle,
-          "og:description" ->
-          s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
-          "og:image" -> video.posterUrl.getOrElse(""),
-          "fb:app_id" -> "180444840287"
-        ),
-        twitterPropertiesOverrides = Map()
-      )
-
       HostedVideoPage(
+        id = content.id,
         campaign = HostedCampaign(
           id = campaignId,
           name = campaignName,
@@ -101,7 +64,6 @@ object HostedVideoPage extends Logging {
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
-        pageUrl,
         pageName = pageTitle,
         standfirst,
         video = HostedVideo(
@@ -110,17 +72,14 @@ object HostedVideoPage extends Logging {
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
           youtubeId = youtubeId,
-          srcUrlMp4 = videoUrl("video/mp4"),
-          srcUrlWebm = videoUrl("video/webm"),
-          srcUrlOgg = videoUrl("video/ogg"),
-          srcM3u8 = videoUrl("video/m3u8")
+          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => VideoSource(mimeType, asset.id)))
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
-        metadata
+        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )
     }
 
@@ -136,8 +95,7 @@ case class HostedVideo(
   duration: Int,
   posterUrl: String,
   youtubeId: Option[String] = None,
-  srcUrlMp4: String,
-  srcUrlWebm: String,
-  srcUrlOgg: String,
-  srcM3u8: String
+  sources: Seq[VideoSource]
 )
+
+case class VideoSource(mimeType: String, url: String)

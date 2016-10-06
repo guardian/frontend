@@ -38,7 +38,7 @@
 }
 
 figure.element.element--supporting {
-    @include mq(desktop) {
+    @include mq(tablet) {
         position: relative;
         float: left;
         width: gs-span(4);

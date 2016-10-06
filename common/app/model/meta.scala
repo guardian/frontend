@@ -26,28 +26,10 @@ object Commercial {
     val isInappropriateForSponsorship =
       maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
 
-    DfpAgent.winningTagPair(capiTags = tags.tags, sectionId = section, edition = None) map { tagPair =>
-      val dfpTag = tagPair.dfpTag
-      model.Commercial(
-        tags,
-        metadata,
-        isInappropriateForSponsorship,
-        sponsorshipTag = Some(tagPair.capiTag),
-        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
-        isAdvertisementFeature = dfpTag.paidForType == AdvertisementFeature,
-        hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags.tags),
-        hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags.tags),
-        hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
-      )
-    } getOrElse model.Commercial(
+    model.Commercial(
       tags,
       metadata,
       isInappropriateForSponsorship,
-      sponsorshipTag = None,
-      isFoundationSupported = false,
-      isAdvertisementFeature = false,
-      hasMultipleSponsors = false,
-      hasMultipleFeatureAdvertisers = false,
       hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
     )
   }
@@ -61,16 +43,10 @@ object Commercial {
   }
 
   def make(section: Section): model.Commercial = {
-    val keywordSponsorship = section.keywordSponsorship
     model.Commercial(
       tags = Tags(Nil),
       metadata = section.metadata,
       isInappropriateForSponsorship = false,
-      sponsorshipTag = None,
-      isFoundationSupported = keywordSponsorship.isFoundationSupported,
-      isAdvertisementFeature = keywordSponsorship.isAdvertisementFeature,
-      hasMultipleSponsors = keywordSponsorship.hasMultipleSponsors,
-      hasMultipleFeatureAdvertisers = keywordSponsorship.hasMultipleFeatureAdvertisers,
       hasInlineMerchandise = false
     )
   }
@@ -80,39 +56,14 @@ final case class Commercial(
   tags: Tags,
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
-  sponsorshipTag: Option[Tag],
-  isFoundationSupported: Boolean,
-  isAdvertisementFeature: Boolean,
-  hasMultipleSponsors: Boolean,
-  hasMultipleFeatureAdvertisers: Boolean,
   hasInlineMerchandise: Boolean
 ) {
 
-  def sponsorshipType: Option[String] = {
-    if (isSponsored(None)) {
-      Option("sponsoredfeatures")
-    } else if (isAdvertisementFeature) {
-      Option("advertisement-features")
-    } else if (isFoundationSupported) {
-      Option("foundation-features")
-    } else {
-      None
-    }
+  def needsHighMerchandisingSlot(edition: Edition): Boolean = {
+    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix, tags.tags, edition, metadata.url)
   }
-
-  def isSponsored(maybeEdition: Option[Edition]): Boolean =
-    DfpAgent.isSponsored(tags.tags, Some(metadata.sectionId), maybeEdition)
-
-  def needsHighMerchandisingSlot(edition:Edition): Boolean = {
-    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix,tags.tags,edition,metadata.url)
-  }
-
-
-  def javascriptConfig: Map[String, JsValue] = Map(
-    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature))
-  )
-
 }
+
 /**
  * MetaData represents a page on the site, whether facia or content
  */
@@ -388,7 +339,6 @@ trait ContentPage extends Page {
     metadata.javascriptConfig ++
     item.tags.javascriptConfig ++
     item.trail.javascriptConfig ++
-    item.commercial.javascriptConfig ++
     item.content.conditionalConfig ++
     item.content.javascriptConfig ++
     metadata.javascriptConfigOverrides
@@ -581,7 +531,7 @@ final case class Tags(
   private def tagsOfTypeOrPaidContentSubtype(tagType: String, paidContentSubType: String): List[Tag] = {
     tags.filter { tag =>
       tag.properties.tagType == tagType ||
-      (tag.properties.tagType == "PaidContent" && tag.properties.paidContentType == Some(paidContentSubType))
+      (tag.properties.tagType == "PaidContent" && tag.properties.paidContentType.contains(paidContentSubType))
     }
   }
 
@@ -600,7 +550,6 @@ final case class Tags(
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
-  lazy val sponsor: Option[String] = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def isNews = !(isLiveBlog || isComment || isFeature)
@@ -648,7 +597,8 @@ final case class Tags(
 
   // Specific Series
   private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
-  lazy val isExploreSeries = isLabourLiverpool
+  private val isViewFromMiddleTown = tags.exists(t => t.id == "membership/series/election-2016-the-view-from-middletown")
+  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown
 
   lazy val keywordIds = keywords.map { _.id }
 

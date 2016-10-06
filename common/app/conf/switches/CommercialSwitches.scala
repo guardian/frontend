@@ -232,7 +232,7 @@ trait CommercialSwitches {
     "British Council's beacon",
     owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
+    sellByDate = new LocalDate(2016, 10, 17),
     exposeClientSide = false
   )
 

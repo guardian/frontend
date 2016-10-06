@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 import conf.Static
 
 object LeffeHostedPages {
@@ -28,8 +27,10 @@ object LeffeHostedPages {
     btnText = Some("Visit Leffe on Facebook")
   )
 
+  private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
+
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$willardWiganPageName"
+    val id = s"advertiser-content/${campaign.id}/$willardWiganPageName"
     val pageName = willardWiganPageName
     val standfirst = "Leffe presents a film about micro-sculptor Willard Wigan, who slows down his own heartbeat to " +
                      "create sculptures so tiny the eye can't see them."
@@ -39,14 +40,28 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 127,
       posterUrl = Static("images/commercial/willard-wigan_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629WillardWigan_V3_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629WillardWigan_V3.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629WillardWigan_V3_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629WillardWigan_V3_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629WillardWigan_V3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629WillardWigan_V3.m3u8"
+        )
+      )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -54,12 +69,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val adrienneTreebyPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$adrienneTreebyPageName"
+    val id = s"advertiser-content/${campaign.id}/$adrienneTreebyPageName"
     val pageName = adrienneTreebyPageName
     val standfirst = "Leffe presents a film about charcuterie producer Adrienne E. Treeby, who uses centuries-old " +
                      "recipe ideas to cure a delicious Leffe-infused salami."
@@ -69,18 +84,28 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 116,
       posterUrl = Static("images/commercial/adrienne-treeby_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian" +
-                  ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian" +
-                   ".tv/interactive/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian" +
-                  ".tv/interactive/mp4/1080/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian" +
-                ".tv/interactive/2016/06/29/HLS/160629AdrienneTreeby_KP-28311272_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629AdrienneTreeby_KP-28311272_h264_mezzanine_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629AdrienneTreeby_KP-28311272_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -88,12 +113,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val peteLawrencePageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$peteLawrencePageName"
+    val id = s"advertiser-content/${campaign.id}/$peteLawrencePageName"
     val pageName = peteLawrencePageName
     val standfirst = "Leffe presents a film featuring astronomical observer Pete Lawrence as he literally rediscovers" +
                      " time, capturing distance light using long exposures."
@@ -103,28 +128,43 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 138,
       posterUrl = Static("images/commercial/pete-lawrence_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid" +
-                  ".ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629PeteLawrence_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629PeteLawrence_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629PeteLawrence_h264_mezzanine_mid.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629PeteLawrence_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
       cta,
       socialShareText = None,
-      shortSocialShareText = Some("Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "),
+      shortSocialShareText = Some(
+        "Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "
+      ),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val susanDergesPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$susanDergesPageName"
+    val id = s"advertiser-content/${campaign.id}/$susanDergesPageName"
     val pageName = susanDergesPageName
     val standfirst = "Leffe presents a film about artist Susan Derges, who specialises in creating unique camera-less" +
                      " photos using natural light and water."
@@ -134,15 +174,28 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 146,
       posterUrl = Static("images/commercial/susan-derges_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo" +
-                  ".ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629SusanDerges_h264_mezzanine_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629SusanDerges_h264_mezzanine_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629SusanDerges_h264_mezzanine-1_lo.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629SusanDerges_h264_mezzanine.m3u8"
+        )
+      )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -150,12 +203,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val quayBrothersPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$quayBrothersPageName"
+    val id = s"advertiser-content/${campaign.id}/$quayBrothersPageName"
     val pageName = quayBrothersPageName
     val standfirst = "Leffe presents a film featuring influential stop-frame animators, Stephen and Timothy Quay, who" +
                      " give an insight into their unique appreciation of time."
@@ -165,14 +218,28 @@ object LeffeHostedPages {
       title = videoTitle,
       duration = 134,
       posterUrl = Static("images/commercial/quay-brothers_poster.jpg"),
-      srcUrlMp4 = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4",
-      srcUrlWebm = "https://cdn.theguardian.tv/interactive/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm",
-      srcUrlOgg = "https://cdn.theguardian.tv/interactive/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv",
-      srcM3u8 = "https://cdn.theguardian.tv/interactive/2016/06/29/HLS/160629QuayBrothers_V3.m3u8"
+      sources = Seq(
+        VideoSource(
+          "video/mp4",
+          s"$videoSrcRoot/2016/06/29/160629QuayBrothers_V3_2M_H264.mp4"
+        ),
+        VideoSource(
+          "video/webm",
+          s"$videoSrcRoot/2016/06/29/160629QuayBrothers_V3_2M_vp8.webm"
+        ),
+        VideoSource(
+          "video/ogg",
+          s"$videoSrcRoot/mp4/1080/2016/06/29/160629QuayBrothers_V3-3_hi.ogv"
+        ),
+        VideoSource(
+          "video/m3u8",
+          s"$videoSrcRoot/2016/06/29/HLS/160629QuayBrothers_V3.m3u8"
+        )
+      )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -180,12 +247,19 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    val nextPage: Some[NextHostedPage] = Some(
+      NextHostedPage(
+        id = newPage.id,
+        imageUrl = newPage.imageUrl,
+        title = newPage.title,
+        contentType = newPage.contentType
+      )
+    )
     hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 

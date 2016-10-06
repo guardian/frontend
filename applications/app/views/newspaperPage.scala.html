@@ -4,7 +4,7 @@
 
     @for(bookSection <- paper.bookSections) {
 
-        @fragments.containers.facia_cards.container(bookSection)
+        @fragments.containers.facia_cards.container(bookSection, pageId = paper.page.metadata.sectionId)
 
     }
 }

@@ -1,0 +1,5 @@
+@(branding: common.commercial.Branding, isInteractive: Boolean)(implicit request: RequestHeader)
+
+<div class="badge badge--alt @if(isInteractive){badge--interactive}">
+    @logo(branding)
+</div>

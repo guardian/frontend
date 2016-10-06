@@ -24,7 +24,6 @@ class HostedContentController(contentApiClient: ContentApiClient)
     hostedPage map {
       case Some(page: HostedVideoPage) => cached(guardianHostedVideo(page))
       case Some(page: HostedGalleryPage) => cached(guardianHostedGallery(page))
-      case Some(page: ZootropolisPage) => cached(zootropolisPage(page))
       case Some(page: HostedArticlePage) => cached(guardianHostedArticle(page))
       case _ => NoCache(NotFound)
     }
@@ -89,7 +88,10 @@ class HostedContentController(contentApiClient: ContentApiClient)
               Cached(cacheDuration)(JsonComponent(hostedVideoOnward(trails.headOption)))
             case "article" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
-              Cached(cacheDuration)(JsonComponent(hostedArticleOnwardComponent(trails)))
+              Cached(cacheDuration)(JsonComponent(hostedArticleOnward(trails)))
+            case "gallery" =>
+              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
             case _ =>
               Cached(0)(JsonNotFound())
           }

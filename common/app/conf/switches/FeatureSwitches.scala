@@ -12,7 +12,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -506,4 +506,16 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  // Owner: Francis Carr
+  val LiveBlogChromeNotificationsProd = Switch(
+    SwitchGroup.Feature,
+    "live-blog-chrome-notifications-prod",
+    "Live blog chrome notifications - prod",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 30),
+    exposeClientSide = true
+  )
+
 }

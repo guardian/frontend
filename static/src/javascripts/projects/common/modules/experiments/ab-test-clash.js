@@ -7,10 +7,7 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
-
-        var contributionsStory = {name: 'ContributionsStory', variants: ['control', 'story']};
-        var clashingTests = [contributionsStory];
-
+        var clashingTests = [];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

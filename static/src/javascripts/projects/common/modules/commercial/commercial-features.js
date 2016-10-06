@@ -38,7 +38,7 @@ define([
 
         var isLiveBlog = config.page.isLiveBlog;
 
-        var isHosted = config.page.tones === 'Hosted';
+        var isHosted = config.page.isHosted;
 
         var isMatchReport = config.hasTone('Match reports');
 
@@ -132,7 +132,7 @@ define([
 
         this.canAskForAContribution =
             this.canReasonablyAskForMoney && config.page.edition === 'UK'; // Contributions only testing in UK so far
-        
+
         this.async = {
             canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {
                 return !adblockUsed && self.canReasonablyAskForMoney;

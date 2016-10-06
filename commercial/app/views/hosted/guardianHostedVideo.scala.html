@@ -1,7 +1,8 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import conf.Configuration.site.host
-@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward}
+@import conf.Configuration.environment
+@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward, guardianHostedControlButtons}
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
 @main(page, Some("commercial")) { } {
@@ -27,7 +28,7 @@
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-video--tile {
+    .hosted-page .hosted__next-page--tile {
         border-top-color: @{page.campaign.fontColour.brandColour};
     }
 
@@ -47,10 +48,12 @@
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     @page.video.youtubeId.map { youtubeId =>
                         <iframe id="hosted-video-@youtubeId"
-                        class="js-hosted-youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(host != "") s"&origin=$host" else ""}"
+                        data-duration="@{page.video.duration}"
+                        class="js-hosted-youtube-video hosted__youtube-video"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
+                        @guardianHostedControlButtons(page)
                     }.getOrElse {
                         <video
                         data-duration="@{page.video.duration}"
@@ -61,10 +64,9 @@
                         data-block-video-ads="true"
                         poster="@{page.video.posterUrl}"
                         class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                            <source type="video/mp4" src="@{page.video.srcUrlMp4}">
-                            <source type="video/webm" src="@{page.video.srcUrlWebm}">
-                            <source type="video/ogg" src="@{page.video.srcUrlOgg}">
-                            <source type="video/m3u8" src="@{page.video.srcM3u8}">
+                            @for(source <- page.video.sources) {
+                                <source type="@source.mimeType" src="@source.url">
+                            }
                         </video>
                     }
                     @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
@@ -101,11 +103,11 @@
                                 <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
                                 <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
                             </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
+                            <a href="@{nextPage.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
                                 <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
+                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.url}">10s</div>
                             </a>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
+                            <a href="@{nextPage.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
                                 Watch now
                             </a>
                         </div>
@@ -137,9 +139,8 @@
             @page.nextPage.map { nextPage =>
                 @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
             }.getOrElse {
-                <div class="js-onward-placeholder"></div>
+                <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
-
         </section>
         @guardianHostedCta(page, page.cta)
     </div>

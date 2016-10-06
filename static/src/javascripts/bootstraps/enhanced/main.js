@@ -85,7 +85,7 @@ define([
             });
         }
 
-        if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
+        if ((config.isMedia || qwery('video, audio').length) && !config.page.isHosted) {
             require(['bootstraps/enhanced/media/main'], function (media) {
                 bootstrapContext('media', media);
             });

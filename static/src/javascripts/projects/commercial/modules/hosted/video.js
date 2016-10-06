@@ -4,16 +4,12 @@
 
 define([
     'Promise',
-    'bean',
-    'fastdom',
+    'commercial/modules/hosted/youtube',
+    'commercial/modules/hosted/next-video-autoplay',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/report-error',
-    'common/modules/video/youtube-player',
-    'common/modules/analytics/omniture',
-    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
@@ -21,16 +17,12 @@ define([
     'text!common/views/ui/loading.html'
 ], function (
     Promise,
-    bean,
-    fastdom,
+    hostedYoutube,
+    nextVideoAutoplay,
     $,
     deferToAnalytics,
     detect,
-    mediator,
     reportError,
-    youtubePlayer,
-    omniture,
-    ab,
     events,
     videojsOptions,
     fullscreener,
@@ -38,7 +30,10 @@ define([
     loadingTmpl
 ) {
     var player;
-    var nextVideoInterval;
+
+    function isDesktop() {
+        return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+    }
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -60,34 +55,15 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function cancelAutoplay($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('hosted-slide-out');
-        });
-        clearInterval(nextVideoInterval);
-    }
-
-    function cancelAutoplayMobile($hostedNext) {
-        fastdom.write(function () {
-            $hostedNext.addClass('u-h');
-        });
-    }
-
     function init() {
         return new Promise(function (resolve) {
-            var $youtubeIframe = $('.js-hosted-youtube-video');
-            $youtubeIframe.each(function(el){
-                youtubePlayer.init(el);
-            });
-
             require(['bootstraps/enhanced/media/main'], function () {
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
                     var $inlineVideoEl = $('video');
-                    var duration;
-                    var $hostedNext = $('.js-hosted-next-autoplay');
+                    var $youtubeIframe = $('.js-hosted-youtube-video');
 
-                    if ($videoEl.length === 0) {
+                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
                         if ($inlineVideoEl.length === 0) {
                             // halt execution
                             return resolve();
@@ -104,7 +80,6 @@ define([
                         player.ready(function () {
                             var vol;
                             var player = this;
-                            duration = parseInt(player.duration(), 10);
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 
@@ -136,51 +111,21 @@ define([
                                 }
                             });
                         });
+
+                        if (nextVideoAutoplay.canAutoplay()) {
+                            //on desktop show the next video link 10 second before the end of the currently watching video
+                            if (isDesktop()) {
+                                nextVideoAutoplay.addCancelListener();
+                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt(player.duration(), 10)));
+                            } else {
+                                player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                            }
+                        }
                     });
 
-                    if ($hostedNext.length) {
-                        //on desktop show the next video link 10 second before the end of the currently watching video
-                        if (contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint())) {
-
-                            var $timer = $('.js-autoplay-timer');
-                            var nextVideoPage;
-
-                            if ($timer.length) {
-                                nextVideoPage = $timer.data('next-page');
-
-                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                    cancelAutoplay($hostedNext);
-                                });
-
-                                player.one('timeupdate', function () {
-                                    nextVideoInterval = setInterval(function () {
-                                        var timeLeft = duration - parseInt(player.currentTime(), 10);
-                                        var countdownLength = 10; //seconds before the end when to show the timer
-
-                                        if (timeLeft <= countdownLength) {
-                                            fastdom.write(function () {
-                                                $hostedNext.addClass('js-autoplay-start');
-                                                $timer.text(timeLeft + 's');
-                                            });
-                                        }
-                                        if(timeLeft <= 0){
-                                            omniture.trackLinkImmediate('Immediately play the next video');
-                                            window.location = nextVideoPage;
-                                        }
-                                    }, 1000);
-                                });
-                            }
-                        } else {
-                            player.one('ended', function () {
-                                fastdom.write(function () {
-                                    $hostedNext.addClass('js-autoplay-start');
-                                });
-                                bean.on(document, 'click', $('.js-autoplay-cancel'), function () {
-                                    cancelAutoplayMobile($hostedNext);
-                                });
-                            });
-                        }
-                    }
+                    $youtubeIframe.each(function(el){
+                        hostedYoutube.init(el);
+                    });
 
                     resolve();
                 });

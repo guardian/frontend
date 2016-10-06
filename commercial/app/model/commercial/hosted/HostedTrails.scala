@@ -12,11 +12,6 @@ object HostedTrails extends Logging {
    */
   def fromContent(itemId: String, trailCount: Int, results: Seq[Content]): Seq[HostedPage] = {
 
-    log.info {
-      val resultStr = results.map(i => (i.id, i.webPublicationDate.map(_.iso8601).getOrElse(""))).mkString("\n")
-      s"Making $trailCount trails for item '$itemId' from content: $resultStr"
-    }
-
     val (givenItemIfExists, otherItems) = results partition (_.id == itemId)
 
     val trails = givenItemIfExists.headOption map { givenItem =>
@@ -25,14 +20,14 @@ object HostedTrails extends Logging {
 
       val (publishedBefore, publishedAfter) = otherItems.partition { item =>
         val pubDateTime = publishedDateTime(givenItem)
-        publishedDateTime(item) > pubDateTime
+        publishedDateTime(item) < pubDateTime
       }
 
       val laterItems = publishedAfter.sortBy(publishedDateTime) take trailCount
 
       val itemsToInclude = {
         if (laterItems.size < trailCount) {
-          publishedBefore.sortBy(publishedDateTime) take (trailCount - laterItems.size)
+          laterItems ++ publishedBefore.sortBy(publishedDateTime).take(trailCount - laterItems.size)
         } else {
           laterItems
         }
@@ -42,7 +37,12 @@ object HostedTrails extends Logging {
 
     } getOrElse Nil
 
-    log.info(s"Made ${trails.size} trails for item '$itemId': ${trails.map(_.pageUrl).mkString("\n")}")
+    log.info {
+      def mkString(ss: Seq[AnyRef]) = ss.mkString("'", "', '", "'")
+      val content = mkString(results.map(item => (item.id, item.webPublicationDate.map(_.iso8601).getOrElse(""))))
+      s"Tried to make $trailCount trails for item '$itemId' from content: $content.  " +
+      s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
+    }
 
     trails
   }

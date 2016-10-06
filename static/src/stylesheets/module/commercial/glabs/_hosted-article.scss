@@ -169,24 +169,26 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 
     .hide-on-desktop {
-        .hosted__next-video {
+        .hosted-article__next-page {
             margin-top: 30px;
         }
-        .hosted__next-video--header {
+        .hosted__next-page--header {
             margin: 0;
         }
-        .hosted__next-video--tile {
+        .hosted__next-page--tile {
             margin: 10px 0;
         }
     }
     .content__secondary-column {
-        .hosted__next-video {
+        .hosted-article__next-page {
             width: auto;
             position: absolute;
             margin: 70px 0;
             top: 0;
-            .hosted__next-video--header,
-            .hosted__next-video--tile {
+            right: 0;
+            left: #{2 * $gs-gutter};
+            .hosted__next-page--header,
+            .hosted__next-page--tile {
                 margin-right: 0;
             }
         }
@@ -207,23 +209,21 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         height: 10px;
         margin-bottom: 4px;
     }
-    .hosted__next-page-title {
+    .hosted-article__next-page-title {
         font-size: 16px;
         line-height: 18px;
         padding: 6px;
-        margin: 0;
-
         @include mq($until: phablet) {
             font-size: 14px;
             line-height: 16px;
         }
     }
-    .hosted__next-video .hosted__next-video--tile {
+    .hosted-article__next-page .hosted__next-page--tile {
         background: transparent;
         border-top: 2px solid #e0e0e0;
         margin-bottom: 10px;
     }
-    .hosted__next-video .hosted__next-video--header {
+    .hosted-article__next-page .hosted__next-page--header {
         border: 0;
         padding: 0;
     }
@@ -236,7 +236,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.hosted-article-page.zootropolis {
+.zootropolis {
     @mixin animal-stripe {
         position: absolute;
         z-index: 1;

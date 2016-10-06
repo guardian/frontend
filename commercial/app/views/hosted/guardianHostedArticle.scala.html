@@ -1,5 +1,6 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader)
+@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
 
 @main(page, Some("commercial")) { } {
@@ -20,7 +21,7 @@
         border-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-video--tile {
+    .hosted-page .hosted__next-page--tile {
         border-top-color: @{page.campaign.fontColour.brandColour};
     }
 
@@ -65,6 +66,7 @@
                             <p class="intro">@Html(page.standfirst)</p>
 
                             @page.pageName match {
+                                case "meet-the-characters-of-zootropolis" => { @zootropolisPage(page) }
                                 case "overview" => { @singaporeF1Overview(page) }
                                 case "offtrack" => { @singaporeF1Offtrack(page) }
                                 case "packages" => { @singaporeF1Packages(page) }
@@ -73,7 +75,13 @@
 
                         </div>
                         <div class="hide-on-desktop">
-                            @guardianHostedArticleOj(page.campaign.owner, page.nextPages)
+                            @if(page.nextPages.nonEmpty) {
+                                @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                    makeshiftPage(nextPage, page.campaign)
+                                })
+                            } else {
+                                <div class="js-onward-placeholder"></div>
+                            }
                         </div>
                         <div class="hosted__standfirst">
                             <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
@@ -83,8 +91,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content__secondary-column js-secondary-column">
-                        @guardianHostedArticleOj(page.campaign.owner, page.nextPages)
+                    <div class="content__secondary-column">
+                        @if(page.nextPages.nonEmpty) {
+                            @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                makeshiftPage(nextPage, page.campaign)
+                            })
+                        } else {
+                            <div class="js-onward-placeholder"></div>
+                        }
                     </div>
                 </div>
             </div>

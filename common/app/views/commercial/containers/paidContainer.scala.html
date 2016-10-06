@@ -2,30 +2,23 @@
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
-@import common.{Edition, LinkTo}
+@import common.LinkTo
 @import views.html.commercial.containerWrapper
 @import views.html.commercial.containers._
-@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@import views.support.Commercial.glabsLink
 
-<div data-id="@containerModel.id" class="fc-container@if(containerModel.isSingleSponsorContainer){ js-sponsored-container}"
-    @for(brandingAttributes <- containerModel.brandingAttributes){
-        data-sponsorship="@brandingAttributes.sponsorshipType"
-        @for(sponsor <- brandingAttributes.sponsor){ data-sponsor="@sponsor" }
-        @for(keywordId <- brandingAttributes.keywordId){ data-keywords="@keywordId" }
-        @for(seriesId <- brandingAttributes.seriesId){ data-series="@seriesId"}
-    }
-    >
+<div data-id="@containerModel.id" class="fc-container">
     @containerWrapper(
         Seq("legacy", "capi", "paidfor", "tone-paidfor"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
         optStamp = Some(stamp),
         optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
-
-        <a class="adverts__logo u-text-hyphenate" href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
-
+        <a class="adverts__logo u-text-hyphenate"
+           href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
     }{
 
         @containerModel.layoutName match {
@@ -65,21 +58,14 @@
 </div>
 
 @stamp = {
-
-    <a @if(Edition(request).id == "AU") {
-            href="@LinkTo("/guardian-labs-australia")"
-        } else {
-            href="@LinkTo("/guardian-labs")"
-        }
-        >
+    <a href="@LinkTo(glabsLink(request))">
         @inlineSvg("glabs-logo", "logo")
         <span class='u-h'>Guardian Labs</span>
     </a>
-
 }
 
 @logoSlot = {
     @for(branding <- containerModel.branding) {
-        @contentLogo(branding, isInteractivePage = false, isBranded = false, isOnTheLeft = false)
+        @containerLogo(branding, isOnTheLeft = false)
     }
 }

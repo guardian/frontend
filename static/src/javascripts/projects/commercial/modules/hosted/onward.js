@@ -5,21 +5,27 @@ define([
 ], function (config, fetchJson, fastdom) {
 
     return {
-        init: loadOnwardComponent()
+        init: loadOnwardComponent
     };
 
     function loadOnwardComponent() {
 
-        var placeholder = document.querySelector('.js-onward-placeholder');
+        var placeholders = document.querySelectorAll('.js-onward-placeholder');
 
-        return fetchJson(config.page.ajaxUrl + '/'
-            + config.page.pageId + '/'
-            + config.page.contentType.toLowerCase() + '/'
-            + 'onward.json')
-            .then(function (json) {
-                return fastdom.write(function () {
-                    placeholder.innerHTML = json.html;
+        if (placeholders.length) {
+            return fetchJson(config.page.ajaxUrl + '/'
+                + config.page.pageId + '/'
+                + config.page.contentType.toLowerCase() + '/'
+                + 'onward.json', {mode: 'cors'})
+                .then(function (json) {
+                    return fastdom.write(function () {
+                        var i;
+                        for (i = 0; i < placeholders.length; i++) {
+                            placeholders[i].innerHTML = json.html;
+                        }
+                    });
                 });
-            });
+        }
+        return Promise.resolve();
     }
 });

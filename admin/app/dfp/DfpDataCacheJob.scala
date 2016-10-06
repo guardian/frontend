@@ -9,9 +9,7 @@ import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 import scala.concurrent.Future
 
-class DfpDataCacheJob(capiLookupAgent: CapiLookupAgent) extends ExecutionContexts with Logging {
-
-  val paidForTagsFinder = new PaidForTagFinder(capiLookupAgent)
+object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   case class LineItemLoadSummary(prevCount: Int,
                                  loadThreshold: Option[DateTime],
@@ -44,11 +42,7 @@ class DfpDataCacheJob(capiLookupAgent: CapiLookupAgent) extends ExecutionContext
       _ <- CustomTargetingValueAgent.refresh()
       _ <- PlacementAgent.refresh()
     } {
-      val data = loadLineItems()
-      val paidForTags = paidForTagsFinder.fromLineItems(data.lineItems)
-      capiLookupAgent.refresh(paidForTags) map {
-        _ => write(data)
-      }
+      loadLineItems()
     }
   }
 
@@ -157,10 +151,6 @@ class DfpDataCacheJob(capiLookupAgent: CapiLookupAgent) extends ExecutionContext
 
     if (data.isValid) {
       val now = printLondonTime(DateTime.now())
-
-      val paidForTags = paidForTagsFinder.fromLineItems(data.lineItems)
-      capiLookupAgent.refresh(paidForTags)
-      Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
       Store.putInlineMerchandisingSponsorships(stringify(toJson(

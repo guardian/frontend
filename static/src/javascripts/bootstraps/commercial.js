@@ -15,7 +15,6 @@ define([
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
-    'commercial/modules/hosted/colours',
     'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
@@ -41,7 +40,6 @@ define([
     hostedAbout,
     hostedVideo,
     hostedGallery,
-    hostedColours,
     hostedOnward,
     sliceAdverts,
     liveblogAdverts,
@@ -74,12 +72,11 @@ define([
         }]
     ];
 
-    if (config.isHosted) {
+    if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedColours', hostedColours.init],
             ['cm-hostedOnward', hostedOnward.init]);
     }
 
