@@ -24,6 +24,7 @@
         }
     }
 
+    @* TODO: if this feature is proven successful, this should be refactored to remove the logic from the template as much as possible *@
     @if(mvt.ABNewHeaderVariant.isParticipating) {
         <div class="mobile-only">
             @defining(Edition(request).navigation) { navigation =>
@@ -41,11 +42,10 @@
                     }
 
                     @if(item.content.blogOrSeriesTag.isDefined) {
+
                         @if(item.content.blogOrSeriesTag.get.name.toLowerCase() == sectionLink.title.toLowerCase()) {
                             @ObserverOrSectionLabel()
-                        }
-
-                        @if(!(item.content.blogOrSeriesTag.get.name.toLowerCase() == sectionLink.title.toLowerCase())) {
+                        } else {
                             @item.content.blogOrSeriesTag.map { series =>
                                 <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
                                     <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
@@ -62,7 +62,6 @@
         </div>
     }
 
-    @* TODO: This should actually show, but just not on mobile. Above should only show on mobile*@
     <div class="@if(mvt.ABNewHeaderVariant.isParticipating) {hide-on-mobile}">
 
         @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
@@ -94,9 +93,7 @@
         <div class="content__series-label">
             <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
         </div>
-    }
-
-    @if(!item.content.isFromTheObserver) {
+    } else {
         <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
             <a class="content__series-label__link" href="@LinkTo {/@item.content.sectionLabelLink}">
                 @Html(Localisation(item.content.sectionLabelName))
