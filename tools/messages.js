@@ -63,9 +63,7 @@ switch (process.argv[2]) {
             messageLines.push('\nTo see the full set, run `make list`.')
         }
 
-        if (messageLines[0] === '/n') messageLines.shift();
-
-        notify(messageLines.join('\n'), {
+        notify(messageLines.join('\n').trim(), {
             heading: `${(listAll ? 'All' : 'Common')} Frontend make tasks`
         }, 'info');
         break;
