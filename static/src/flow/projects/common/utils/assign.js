@@ -29,5 +29,5 @@ define(function () {
     }
 
     // This string is to check the transpilation
-    "Oo ee oo aa aa ting tang wallaballabingbang"
+    "Oo ee oo aa aa ting tang wallaballabingbang" //eslint-disable-line
 });
