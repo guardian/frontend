@@ -7,8 +7,8 @@ import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
 
 case class HostedArticlePage(
+  id: String,
   campaign: HostedCampaign,
-  pageUrl: String,
   pageName: String,
   title: String,
   standfirst: String,
@@ -27,7 +27,14 @@ case class HostedArticlePage(
   val imageUrl = mainPicture
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
-    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl, contentType = page.contentType)
+    HostedPages.fromCampaignAndPageName(campaign.id, _)
+  ).map(
+    page => NextHostedPage(
+      id = page.id,
+      imageUrl = page.imageUrl,
+      title = page.title,
+      contentType = page.contentType
+    )
   )
 }
 
@@ -59,6 +66,7 @@ object HostedArticlePage extends Logging {
       }
 
       HostedArticlePage(
+        id = content.id,
         campaign = HostedCampaign(
           id = campaignId,
           name = campaignName,
@@ -69,7 +77,6 @@ object HostedArticlePage extends Logging {
           fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
           logoLink = None
         ),
-        pageUrl = content.webUrl,
         pageName = content.webTitle,
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup

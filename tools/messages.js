@@ -1,3 +1,7 @@
+const fs = require('fs');
+
+const takeWhile = require('lodash.takewhile');
+
 function notify(message, options, type) {
     options = options || {};
     type = type || 'log';
@@ -19,24 +23,40 @@ function notify(message, options, type) {
 
 switch (process.argv[2]) {
     case 'describeMakefile':
-        notify(
-            '`watch`           Watch and automatically reload all JS/SCSS.\n' +
-            '                Uses port 3000 insead of 9000.\n' +
-            '\n' +
-            '`compile`         Compile all assets for production. \n' +
-            '`compile-dev`     Compile all assets for development. \n' +
-            '\n' +
-            '`validate`        Lint all assets.\n' +
-            '`validate-sass`   Lint all SCSS.\n' +
-            '`validate-js`     Lint all JS.\n' +
-            '\n' +
-            '`test`            Run the JS test suite. \n'+
-            '\n' +
-            '`install`         Install all 3rd party dependencies. \n' +
-            '`uninstall`       Uninstall all 3rd party dependencies. \n' +
-            '`reinstall`       Alias for `make uninstall install`. \n' +
-            '\n' +
-            '`shrinkwrap`      Shrinkwrap NPM packages.', {
+        const message = fs.readFileSync('makefile', 'utf8')
+            .split('\n')
+            .reduce((messages, line, lineNumber, makefile) => {
+                const message = [];
+
+                // if this line is a target...
+                if (line.match(/^[^\s#]/)) {
+                    // see if there are any comments immediately before it
+                    const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), line => line.match(/^#/))
+                        // format the comments for output to CLI
+                        .map(comment => comment.replace(/#\s+/, ''))
+                        // put them back into correct order
+                        .reverse();
+
+                   // format the target name for output to CLI
+                    const targetName = line.split(':')[0];
+
+                    // if we have comments for this target...
+                    if (comments.length) {
+                        // add the target name with the first comment following it
+                        message.push(`\`${targetName}\`${new Array(20 - targetName.length).join(' ')}${comments.shift()}`);
+                        // then add any other comments
+                        [].push.apply(message, comments.map(comment => new Array(20).join(' ') + comment));
+                    } else {
+                        // just output the target name
+                        message.push(`\`${targetName}\``);
+                    }
+                }
+                // if we've got a divider, just add space to create a line break
+                if (line.match(/^# \*{3,}/)) message.push(' ');
+                return messages.concat(message);
+            }, []).join('\n');
+
+        notify(message, {
             heading: 'Frontend make options'
         }, 'info');
         break;
@@ -64,7 +84,7 @@ switch (process.argv[2]) {
     case 'dependency-update':
         notify('Run `make install`.', {
             heading: 'Dependencies have changed'
-        }, 'info');
+        }, 'warn');
         break;
 
     case 'pasteup':

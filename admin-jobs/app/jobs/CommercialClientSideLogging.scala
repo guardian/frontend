@@ -7,7 +7,7 @@ import common._
 import common.commercial.ClientSideLogging
 import org.apache.commons.io.FileUtils
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import org.joda.time.{Duration, DateTime}
+import org.joda.time.{Seconds, Duration, DateTime}
 import org.slf4j.LoggerFactory
 import play.api.inject.ApplicationLifecycle
 import services.S3
@@ -50,6 +50,8 @@ class CommercialClientSideLoggingLifecycle(
 
   // 5 minutes between each log write.
   private val loggingJobFrequency = new Duration(5.minutes.toMillis)
+  // 15 minutes between each S3 upload.
+  private val uploadJobFrequency = new Duration(15.minutes.toMillis)
 
   override def start(): Unit = {
     jobs.deschedule("CommercialClientSideLoggingJob")
@@ -71,7 +73,7 @@ class CommercialClientSideLoggingLifecycle(
       if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
         // Start searching logs from two periods behind the current time. This allows fresh data to settle.
         val timeStart = DateTime.now.minus(loggingJobFrequency.multipliedBy(2L))
-        log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MM-dd HH:mm")}")
+        log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MMM-dd HH:mm")}")
         val numReports = CommercialClientSideLogging.writeReportsToLog(timeStart, loggingJobFrequency)
         log.logger.info(s"Fetched $numReports logs from Redis.")
       } else {
@@ -81,7 +83,8 @@ class CommercialClientSideLoggingLifecycle(
   }
 
   private val loggingDirectory = new File("logs/frontend-commercial-client-side-archive")
-  private val dateFormatter: DateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd HH-mm")
+  // The date format used as the filename of both the local log file and the s3 object uploaded.
+  private val dateFormatter: DateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd--HH-mm").withZoneUTC()
 
   private def uploadReports(akkaAgent: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
@@ -93,7 +96,13 @@ class CommercialClientSideLoggingLifecycle(
         val outputFile = new File(formattedDate)
         outputFile.createNewFile()
 
-        for { logFile <- loggingDirectory.listFiles() } {
+        // Fetch any valid log data within the last half hour. It's all async, so we cannot guarantee that all the logs
+        // get written in time. That's why we double the fetching window based on uploadJobFrequency.
+        for { logFile <- loggingDirectory.listFiles.filter( file => {
+            val logDate = dateFormatter.parseDateTime(file.getName.replace(".log", ""))
+            Seconds.secondsBetween(logDate, date).isLessThan(uploadJobFrequency.toStandardSeconds.multipliedBy(2))
+          })
+        } {
           val fileContents = FileUtils.readFileToString(logFile)
           FileUtils.write(outputFile, fileContents, true)
         }

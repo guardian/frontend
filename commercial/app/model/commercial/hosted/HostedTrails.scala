@@ -41,7 +41,7 @@ object HostedTrails extends Logging {
       def mkString(ss: Seq[AnyRef]) = ss.mkString("'", "', '", "'")
       val content = mkString(results.map(item => (item.id, item.webPublicationDate.map(_.iso8601).getOrElse(""))))
       s"Tried to make $trailCount trails for item '$itemId' from content: $content.  " +
-      s"Actually made ${trails.size} trails: ${mkString(trails.map(_.pageUrl))}"
+      s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
     }
 
     trails

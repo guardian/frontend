@@ -12,8 +12,7 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
-    'common/modules/experiments/tests/contributions-epic-short'
+    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport'
 ], function (
     reportError,
     config,
@@ -28,8 +27,7 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    UpgradeMobileRichLinksBelowViewport,
-    ContributionsEpicShort
+    UpgradeMobileRichLinksBelowViewport
 ) {
 
     var TESTS = [
@@ -37,8 +35,7 @@ define([
         new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new UpgradeMobileRichLinksBelowViewport(),
-        new ContributionsEpicShort()
+        new UpgradeMobileRichLinksBelowViewport()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

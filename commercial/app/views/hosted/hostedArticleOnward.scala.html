@@ -11,9 +11,9 @@
             <h2 class="hosted__next-page--client-name hosted-tone">@{trails.head.campaign.owner}</h2>
         </div>
         @for(trail <- trails) {
-            <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+            <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
                 <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                <p class="hosted__next-page-title">@{trail.title}</p>
+                <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
             </a>
         }
     </div>
