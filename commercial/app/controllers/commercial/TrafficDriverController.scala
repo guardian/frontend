@@ -18,11 +18,12 @@ class TrafficDriverController(
   with implicits.Requests
   with Logging {
 
+    // Request information about the article from cAPI.
     private def retrieveContent()(implicit request: Request[AnyContent]):
-        Future[List[ContentType]] = {
+        Future[Option[ContentType]] = {
 
-        val content: Future[List[model.ContentType]] =
-            capiAgent.contentByShortUrls(specificIds).map(_.toList)
+        val content: Future[Option[model.ContentType]] =
+            capiAgent.contentByShortUrls(specificIds).map(_.headOption)
 
         content onFailure {
             case NonFatal(e) => log.error(
@@ -34,12 +35,16 @@ class TrafficDriverController(
 
     }
 
+    // Build model from cAPI data and return as JSON, or empty if nothing found.
     def renderJson() = Action.async { implicit request =>
 
         retrieveContent().map {
-            case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-            case content :: _ => Cached(60.seconds) {
-                JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
+            case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+            case Some(content) => Cached(60.seconds) {
+
+                val edition = Edition(request)
+                JsonComponent(TrafficDriver.fromContent(content, edition))
+
             }
         }
 
