@@ -23,4 +23,7 @@ The AMP validation results will appear in your console.
 
 <!--
 *Does this PR meet the [contributing guidelines](https://github.com/guardian/frontend/blob/issue_pr_templates/.github/CONTRIBUTING.md#submission)?*
+
+[We'd love some feedback on any struggles you had with this PR](https://goo.gl/forms/QRQaco334CdpfmNF2).
+All the questions are optional. Any amount of feedback is great!
 -->
