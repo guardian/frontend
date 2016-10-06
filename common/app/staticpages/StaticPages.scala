@@ -46,7 +46,7 @@ object StaticPages {
   def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="global", activeBrandings=None)),
+      section = Option(SectionSummary(id="email-signup-page", activeBrandings=None)),
       webTitle = webTitle,
       analyticsName = "global",
       // a currently running AB test is using `contentType = "survey"` change this to "signup" after 2016-09-13

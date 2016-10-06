@@ -54,48 +54,58 @@
             color: #ffffff;
             padding: 0 .3rem;
         }
+    }
 
-        .email-sub__lozenge {
-            border-color: $features-support-3;
-            border-radius: 100px;
-            float: left;
-            width: 70%;
-            height: 3em;
-            margin-bottom: $gs-baseline;
+    .email-sub__lozenge {
+        border-color: $features-support-3;
+        border-radius: 100px;
+        float: left;
+        width: 70%;
+        height: 3em;
+        margin-bottom: $gs-baseline;
 
-            &:hover,
-            &:focus,
-            &:active {
-                border-color: darken($features-support-3, 10%);
-            }
-
-            @include mq($until: tablet) {
-                width: 100%;
-            }
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: darken($features-support-3, 10%);
         }
 
-        .email-sub__label {
-            color: #ffffff;
+        @include mq($until: tablet) {
             width: 100%;
-            line-height: 3;
-            pointer-events: none;
         }
+    }
 
-        .email-signup__svg--envelope__svg {
-            fill: #ffffff;
-            width: 28px;
-            height: 12px;
+    .email-sub__label {
+        color: #ffffff;
+        width: 100%;
+        line-height: 3;
+        pointer-events: none;
+    }
+
+    .email-signup__svg--envelope__svg {
+        fill: #ffffff;
+        width: 28px;
+        height: 12px;
+    }
+
+    .email-sub__inline-label--enabled {
+        // recolour the text and svg if JS is enabled
+        // the label will move into the input field
+        color: $neutral-2;
+
+        svg {
+            fill: $neutral-2;
         }
+    }
 
-        .email-sub__submit-input {
-            width: 25%;
-            margin: 0px 0px $gs-baseline 3%;
-            background-color: inherit;
+    .email-sub__submit-input {
+        width: 25%;
+        margin: 0px 0px $gs-baseline 3%;
+        background-color: inherit;
 
-            @include mq($until: tablet) {
-                width: 100%;
-                margin-left: 0;
-            }
+        @include mq($until: tablet) {
+            width: 100%;
+            margin-left: 0;
         }
     }
 
