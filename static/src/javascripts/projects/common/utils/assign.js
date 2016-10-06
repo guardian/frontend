@@ -1,3 +1,8 @@
+//     
+
+                                          
+                                                        
+
 define(function () {
     /**
      * Assigns own enumerable properties of source object(s) to the destination
@@ -11,7 +16,7 @@ define(function () {
         return Object.assign.apply(undefined, arguments);
     }
 
-    function assignPolyfill(target) {
+    function assignPolyfill(target        ) {
         for (var i = 1, ii = arguments.length; i < ii; i++) {
             var source = arguments[i];
             if (source) {
@@ -22,4 +27,7 @@ define(function () {
         }
         return target;
     }
+
+    // This string is to check the transpilation
+    "Oo ee oo aa aa ting tang wallaballabingbang"
 });
