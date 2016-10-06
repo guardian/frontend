@@ -19,10 +19,10 @@ class TrafficDriverController(
   with Logging {
 
     private def retrieveContent()(implicit request: Request[AnyContent]):
-        Future[Seq[ContentType]] = {
+        Future[List[ContentType]] = {
 
-        val content: Future[Seq[model.ContentType]] =
-            capiAgent.contentByShortUrls(specificIds)
+        val content: Future[List[model.ContentType]] =
+            capiAgent.contentByShortUrls(specificIds).map(_.toList)
 
         content onFailure {
             case NonFatal(e) => log.error(
@@ -38,7 +38,7 @@ class TrafficDriverController(
 
         retrieveContent().map {
             case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-            case content +: _ => Cached(60.seconds) {
+            case content :: _ => Cached(60.seconds) {
                 JsonComponent(CapiSingle.fromContent(content, Edition(request)))
             }
         }
