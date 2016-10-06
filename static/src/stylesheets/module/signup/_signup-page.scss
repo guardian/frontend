@@ -75,16 +75,14 @@
         }
 
         .email-sub__label {
-            color: $neutral-2;
+            color: #ffffff;
             width: 100%;
             line-height: 3;
-            position: absolute;
             pointer-events: none;
         }
 
         .email-signup__svg--envelope__svg {
-            fill: $neutral-2;
-            opacity: .65;
+            fill: #ffffff;
             width: 28px;
             height: 12px;
         }
