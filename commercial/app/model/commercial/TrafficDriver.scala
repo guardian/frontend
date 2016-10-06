@@ -6,23 +6,23 @@ import play.api.libs.json.{Json, Writes}
 import CapiImages.ImageInfo
 
 case class TrafficDriver(articleHeadline: String, articleUrl: String,
-    articleText: Option[String], articleImage: ImageInfo, edition: String)
+  articleText: Option[String], articleImage: ImageInfo, edition: String)
 
 object TrafficDriver {
 
-    def fromContent(
-        contentType: ContentType,
-        edition: Edition): TrafficDriver = {
+  def fromContent(
+    contentType: ContentType,
+    edition: Edition): TrafficDriver = {
 
-        val content = contentType.content
-        val imageInfo = CapiImages.buildImageData(content.trail.trailPicture)
+    val content = contentType.content
+    val imageInfo = CapiImages.buildImageData(content.trail.trailPicture)
 
-        TrafficDriver(content.trail.headline, content.metadata.webUrl,
-            content.trail.fields.trailText, imageInfo, edition.id)
+    TrafficDriver(content.trail.headline, content.metadata.webUrl,
+      content.trail.fields.trailText, imageInfo, edition.id)
 
-    }
+  }
 
-    implicit val writesTrafficDriver: Writes[TrafficDriver] =
-        Json.writes[TrafficDriver]
+  implicit val writesTrafficDriver: Writes[TrafficDriver] =
+    Json.writes[TrafficDriver]
 
 }
