@@ -55,12 +55,41 @@ shrinkwrap: # PRIVATE
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: clean-assets
-	@grunt compile-assets
+compile: clean-assets \
+	compile-css \
+	compile-js \
+	compile-fonts \
+	compile-conf \
+	compile-deploys-radiator \
+	hash-assets
 
 # Compile all assets for development.
-compile-dev: clean-assets
-	@grunt compile-assets --dev
+compile-dev: clean-assets \
+	compile-css \
+	compile-js-dev \
+	compile-fonts \
+	compile-conf
+
+compile-js: # PRIVATE
+	@grunt compile:js
+
+compile-js-dev: # PRIVATE
+	@grunt develop:js
+
+compile-css: # PRIVATE
+	@grunt compile:css
+
+compile-fonts: # PRIVATE
+	@grunt compile:fonts
+
+compile-deploys-radiator: # PRIVATE
+	@grunt makeDeploysRadiator
+
+compile-conf: # PRIVATE
+	@grunt compile:conf
+
+hash-assets: # PRIVATE
+	@grunt asset_hash
 
 # Delete all asset build artefacts, includes the builds themselves.
 clean-assets: # PRIVATE
