@@ -9,7 +9,7 @@ object Dependencies {
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
   val faciaVersion = "2.0.2"
-  val capiModelsVersion = "9.24"
+  val capiModelsVersion = "10.1"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -29,7 +29,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "9.5"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.2"
   val capiScalaModels = "com.gu" % "content-api-models-scala" % capiModelsVersion
   val capiJsonModels = "com.gu" % "content-api-models-json" % capiModelsVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
