@@ -6,9 +6,13 @@ define([
     var w = window;
     var iframes = {};
     var iframeCounter = 0;
-    var observer, visibleIframeIds;
+    var taskQueued = false;
+    var lastViewport;
 
     messenger.register('viewport', onMessage, { persist: true });
+    fastdom.read(function() {
+        lastViewport = detect.getViewport();
+    });
 
     return {
         addResizeListener: addResizeListener,
@@ -41,6 +45,7 @@ define([
             respond: respond
         };
         iframeCounter += 1;
+        sendViewportDimensions.bind(lastViewport)(iframe.id);
     }
 
     function removeResizeListener(iframe) {
@@ -59,11 +64,10 @@ define([
             taskQueued = true;
 
             return fastdom.read(function () {
-                var viewport = detect.getViewport();
-                // perf hack: iteration methods accept a context object ("thisArg")
-                // freeing us from declaring sendViewportDimensions inside the
-                // current closure
+                return lastViewport = detect.getViewport();
+            }).then(function (viewport) {
                 Object.keys(iframes).forEach(sendViewportDimensions, viewport);
+                taskQueued = false;
             });
         }
     }
