@@ -127,7 +127,7 @@ class Multi(bestsellersAgent: BestsellersAgent,
         Cached(componentMaxAge) {
           JsonComponent(JsArray((offerTypes zip contents).map { case (contentType, content) => Json.obj(
               "type" -> contentType,
-              "value" -> Json.toJson(content)(Merchandise.writes)
+              "value" -> Json.toJson(content)(Merchandise.merchandiseWrites)
           )}))
         }
       } else {

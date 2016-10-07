@@ -97,26 +97,6 @@ case class Member(username: String,
   val profileUrl: String = s"https://soulmates.theguardian.com/" + ( profileId.map(id => s"landing/$id") getOrElse "" )
 }
 
-sealed trait Gender {
-  val name: String
-}
-
-object Gender {
-
-  def fromName(name: String) = name match {
-    case Woman.name => Woman
-    case _ => Man
-  }
-}
-
-case object Woman extends Gender {
-  val name: String = "Woman"
-}
-
-case object Man extends Gender {
-  val name: String = "Man"
-}
-
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
 
 case class Job(id: Int,
@@ -140,8 +120,29 @@ case class Job(id: Int,
   val mainIndustry: Option[String] = industries.headOption
 }
 
+sealed trait Gender {
+  val name: String
+}
+
+object Gender {
+
+  def fromName(name: String) = name match {
+    case Woman.name => Woman
+    case _ => Man
+  }
+}
+
+case object Woman extends Gender {
+  val name: String = "Woman"
+}
+
+case object Man extends Gender {
+  val name: String = "Man"
+}
+
 object Merchandise {
-  val writes: Writes[Merchandise] = new Writes[Merchandise] {
+
+  val merchandiseWrites: Writes[Merchandise] = new Writes[Merchandise] {
     def writes(m: Merchandise) = m match {
       case b: Book => Json.toJson(b)
       case j: Job  => Json.toJson(j)
@@ -176,29 +177,30 @@ object Book {
 
   implicit val bookReads: Reads[Book] = (
     (JsPath \ "name").read[String] and
-      authorReads and
-      (JsPath \ "isbn").read[String] and
-      stringOrDoubleAsDouble("regular_price_with_tax") and
-      stringOrDoubleAsDouble("final_price_with_tax") and
-      (JsPath \ "description").readNullable[String] and
-      (JsPath \ "images")(0).readNullable[String] and
-      (JsPath \ "product_url").readNullable[String] and
-      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
-      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
-      (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
+    authorReads and
+    (JsPath \ "isbn").read[String] and
+    stringOrDoubleAsDouble("regular_price_with_tax") and
+    stringOrDoubleAsDouble("final_price_with_tax") and
+    (JsPath \ "description").readNullable[String] and
+    (JsPath \ "images")(0).readNullable[String] and
+    (JsPath \ "product_url").readNullable[String] and
+    (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
+    ((JsPath \ "categories")(0) \ "name").readNullable[String] and
+    (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
     )(Book.apply _)
 
-  implicit val writesBook: Writes[Book] = Json.writes[Book]
+  implicit val bookWrites: Writes[Book] = Json.writes[Book]
 }
 
 object Masterclass {
 
   def fromEvent(event: Event): Option[Masterclass] = {
 
-    val doc: Document = Jsoup.parse(event.description)
-
     def extractGuardianUrl: Option[String] = {
-      val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
+      val guardianUrlLinkText: String = "Full course and returns information on the Masterclasses website"
+
+      val doc: Document = Jsoup.parse(event.description)
+
       val elements :Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)")
           .toArray(Array.empty[Element])
 
@@ -227,7 +229,7 @@ object Masterclass {
     }
   }
 
-  implicit val writesMasterclass: Writes[Masterclass] = new Writes[Masterclass] {
+  implicit val masterclassWrites: Writes[Masterclass] = new Writes[Masterclass] {
 
     def writes(m: Masterclass) = Json.obj(
       "id" -> m.id,
@@ -276,17 +278,17 @@ object TravelOffer {
     )
   }
 
-  implicit val writesTravelOffer: Writes[TravelOffer] = Json.writes[TravelOffer]
+  implicit val travelOfferWrites: Writes[TravelOffer] = Json.writes[TravelOffer]
 }
 
 
 object Member {
   val IdPattern = """.*/([\da-f]+)/.*""".r
 
-  implicit val readsGender: Reads[Gender] = JsPath.read[String].map (Gender.fromName)
-  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
+  implicit val genderReads: Reads[Gender] = JsPath.read[String].map (Gender.fromName)
+  implicit val genderWrites: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
 
-  implicit val readsMember: Reads[Member] =
+  implicit val memberReads: Reads[Member] =
     (
       (JsPath \ "username").read[String] and
         (JsPath \ "gender").read[Gender] and
@@ -295,7 +297,7 @@ object Member {
         (JsPath \ "location").read[String].map(locations => locations.split(",").head)
       ) (Member.apply _)
 
-  implicit val writesMember: Writes[Member] = new Writes[Member] {
+  implicit val memberWrites: Writes[Member] = new Writes[Member] {
 
     def writes(member: Member): JsValue = {
       Json.obj(
@@ -325,7 +327,7 @@ object Job {
     salaryDescription = (xml \ "SalaryDescription").text
   )
 
-  implicit val writesJob: Writes[Job] = new Writes[Job] {
+  implicit val jobWrites: Writes[Job] = new Writes[Job] {
       def writes(j: Job) = Json.obj(
           "id" -> j.id,
           "title" -> j.title,
@@ -353,5 +355,5 @@ object LiveEvent {
       imageUrl = eventMembershipInformation.mainImageUrl
     )
 
-  implicit val writesLiveEvent: Writes[LiveEvent] = Json.writes[LiveEvent]
+  implicit val liveEventWrites: Writes[LiveEvent] = Json.writes[LiveEvent]
 }
