@@ -52,11 +52,6 @@ module.exports = function (grunt) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
 
-    // Default task - used by grunt-tc
-    grunt.registerTask('default', function () {
-        grunt.task.run(['shell:install', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
-    });
-
     /**
      * Deprecated/retired tasks
      */
