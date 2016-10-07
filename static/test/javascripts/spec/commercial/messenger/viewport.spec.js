@@ -69,10 +69,10 @@ define([
 
         it('should send viewport dimensions when the window gets resized', function (done) {
             viewport.addResizeListener(iframe1, respond1)
-            .then(function () {;
+            .then(function () {
                 height = 768;
                 width = 1024;
-                return onResize()
+                return onResize();
             })
             .then(function () {
                 expect(respond1).toHaveBeenCalledWith(null, { width: width, height: height });
