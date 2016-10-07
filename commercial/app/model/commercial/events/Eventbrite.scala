@@ -5,7 +5,7 @@ import java.lang.System._
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
-import play.api.data.validation.ValidationError
+import model.commercial.transform.readsSeq
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
