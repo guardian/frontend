@@ -45,7 +45,7 @@ switch (process.argv[2]) {
 
                 if (comments.length) {
                     // add the target name with the first comment following it
-                    messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join((listAll ? '.' : '.'))}${comments.join(' ')}`);
+                    messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`);
                 } else {
                     // just add the target name
                     messageLines.push(`\`${targetName}\``);
