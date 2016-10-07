@@ -11,7 +11,6 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import scala.util.Try
@@ -308,16 +307,6 @@ object Member {
         "profile_id" -> member.profileId,
         "profile_url" -> member.profileUrl
       )
-    }
-  }
-
-  // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
-  implicit val readsMembers: Reads[Seq[Member]] = new Reads[Seq[Member]] {
-    override def reads(json: JsValue): JsResult[Seq[Member]] = {
-      json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[Member]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
-      }
     }
   }
 }
