@@ -74,11 +74,10 @@ case class TravelOffer(id: String,
                        duration: Option[Int],
                        position: Int) extends Merchandise {
 
-  val durationInWords: String = duration match {
-    case Some(1) => "1 night"
-    case Some(x) => s"$x nights"
-    case None => ""
-  }
+  val durationInWords: String = duration map {
+    case 1 => "1 night"
+    case multiple => s"$multiple nights"
+  } getOrElse ""
 
   def formattedPrice : Option[String] = fromPrice map { price =>
     if (price % 1 == 0)
