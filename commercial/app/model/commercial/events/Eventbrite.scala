@@ -113,10 +113,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   implicit val paginationFormats: Format[Pagination] = Json.format[Pagination]
 
-  implicit val responseReads: Reads[Response] = (
-    (JsPath \ "pagination").read[Pagination] and
-      (JsPath \ "events").read[Seq[Event]]
-    ) (Response.apply _)
+  implicit val responseFormats: Format[Response] = Json.format[Response]
 
   def buildEventWithImageSrc(event: Event, src: String) = {
     new Event(
