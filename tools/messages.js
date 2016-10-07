@@ -24,6 +24,7 @@ function notify(message, options, type) {
 switch (process.argv[2]) {
     case 'describeMakefile':
         const messageLines = [];
+        const gutterWidth = 27;
 
         // this flag could be anything, but the `--` makes it look real
         const listAll = process.argv[3] === '--all';
@@ -42,11 +43,18 @@ switch (process.argv[2]) {
                 // format the target name for output to CLI
                 const targetName = line.split(':')[0];
 
-                // add the target name with the first comment following it
-                messageLines.push(`\`${targetName}\`${new Array(20 - targetName.length).join((listAll ? '.' : ' '))}${comments.shift() || '?'}`);
+                if (comments.length) {
+                    // add the target name with the first comment following it
+                    messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join((listAll ? '.' : ' '))}${comments.shift()}`);
 
-                // then add any other comments on subsequent lines
-                [].push.apply(messageLines, comments.map(comment => new Array(20).join(' ') + comment));
+                    // then add any other comments on subsequent lines
+                    [].push.apply(messageLines, comments.map(comment => new Array(gutterWidth).join(' ') + comment));
+                } else {
+                    // just add the target name
+                    messageLines.push(`\`${targetName}\``);
+                }
+
+
             }
 
             // if we've got a divider, just add space to create a line break
