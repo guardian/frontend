@@ -63,10 +63,10 @@ object BodyCleaner {
       ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
-      MinuteCleaner(article),
-      YouTubeAtomCleaner(article)
+      MinuteCleaner(article)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
+      ListIf(!amp)(YouTubeAtomCleaner(article))
       ListIf(amp)(AmpEmbedCleaner(article)) ++
       ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
 
