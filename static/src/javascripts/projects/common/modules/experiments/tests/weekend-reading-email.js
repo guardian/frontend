@@ -27,7 +27,7 @@ define([
         this.idealOutcome = 'Users open and click-through on the Weekend Reading email';
 
         this.canRun = function () {
-            return config.page.contentType === 'survey';
+            return config.page.contentType === 'signup';
         };
 
         function passRefererParam(emailForm) {

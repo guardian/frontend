@@ -26,7 +26,8 @@ define([
     'common/utils/cookies',
     'common/utils/robust',
     'common/utils/user-timing',
-    'common/modules/navigation/newHeaderNavigation'
+    'common/modules/navigation/newHeaderNavigation',
+    'common/utils/detect'
 ], function (
     raven,
     qwery,
@@ -42,7 +43,8 @@ define([
     cookies,
     robust,
     userTiming,
-    newHeaderNavigation
+    newHeaderNavigation,
+    detect
 ) {
     return function () {
         var guardian = window.guardian;
@@ -78,6 +80,7 @@ define([
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
                     var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
+                    var adBlockerOn = detect.adblockInUseSync();
 
                     if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
@@ -89,6 +92,7 @@ define([
                     return config.switches.enableSentryReporting &&
                         Math.random() < 0.1 &&
                         !isIgnored &&
+                        !adBlockerOn &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }

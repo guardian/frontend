@@ -48,9 +48,8 @@ object StaticPages {
       id = id,
       section = Option(SectionSummary(id="global", activeBrandings=None)),
       webTitle = webTitle,
-      analyticsName = "global",
-      // a currently running AB test is using `contentType = "survey"` change this to "signup" after 2016-09-13
-      contentType = "survey",
+      analyticsName = "email-signup-page",
+      contentType = "signup",
       iosType = None,
       shouldGoogleIndex = false))
 }

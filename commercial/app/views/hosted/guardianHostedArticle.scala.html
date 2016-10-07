@@ -66,6 +66,7 @@
                             <p class="intro">@Html(page.standfirst)</p>
 
                             @page.pageName match {
+                                case "meet-the-characters-of-zootropolis" => { @zootropolisPage(page) }
                                 case "overview" => { @singaporeF1Overview(page) }
                                 case "offtrack" => { @singaporeF1Offtrack(page) }
                                 case "packages" => { @singaporeF1Packages(page) }
