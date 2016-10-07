@@ -84,8 +84,8 @@
 
     .email-signup__svg--envelope__svg {
         fill: #ffffff;
-        width: 28px;
-        height: 12px;
+        width: $gs-baseline * 2.5;
+        height: $gs-baseline;
     }
 
     .email-sub__inline-label--enabled {
