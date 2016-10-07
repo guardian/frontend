@@ -215,7 +215,7 @@ object Masterclass {
       new Masterclass(
         id = event.id,
         name = event.name,
-        startDate = event.startDate,
+        startDate = event.start_date,
         url = event.url,
         description = event.description,
         status = event.status,
@@ -355,7 +355,7 @@ object LiveEvent {
     new LiveEvent(
       eventId = event.id,
       name = event.name,
-      date = event.startDate,
+      date = event.start_date,
       eventUrl = eventMembershipInformation.url,
       description = event.description,
       status = event.status,

@@ -21,10 +21,10 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   case class Event(id: String,
                    name: String,
-                   startDate: DateTime,
+                   start_date: DateTime,
                    url: String,
                    description: String,
-                   imageUrl: Option[String],
+                   image_url: Option[String],
                    status: String,
                    venue: Venue,
                    tickets: Seq[Ticket],
@@ -121,7 +121,7 @@ object Eventbrite extends ExecutionContexts with Logging {
     new Event(
       event.id,
       event.name,
-      event.startDate,
+      event.start_date,
       event.url,
       event.description,
       Some(src),
