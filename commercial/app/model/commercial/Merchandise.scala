@@ -84,6 +84,21 @@ case class TravelOffer(id: String,
   }
 }
 
+case class Member(username: String,
+                  gender: Gender,
+                  age: Int,
+                  profilePhoto: String,
+                  location: String) extends Merchandise {
+
+  val profileId: Option[String] = profilePhoto match {
+    case Member.IdPattern(id) => Some(id)
+    case _ => None
+  }
+
+  val profileUrl: String = s"https://soulmates.theguardian.com/" + ( profileId.map(id => s"landing/$id") getOrElse "" )
+
+}
+
 sealed trait Gender {
   override def toString: String
 }
@@ -94,17 +109,7 @@ case object Man extends Gender {
   override def toString = "Man"
 }
 
-case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) extends Merchandise {
 
-  val profileId: Option[String] = profilePhoto match {
-    case Member.IdPattern(id) => Some(id)
-    case _ => None
-  }
-
-  val profileUrl: String = profileId.map(id => s"https://soulmates.theguardian.com/landing/$id")
-    .getOrElse("http://soulmates.theguardian.com/")
-
-}
 
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
 
