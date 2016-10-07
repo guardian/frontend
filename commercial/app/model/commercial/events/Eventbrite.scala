@@ -31,7 +31,7 @@ object Eventbrite extends ExecutionContexts with Logging {
                    capacity: Int
                   )
 
-  case class Ticket(price: Double, quantityTotal: Int, quantitySold: Int)
+  case class Ticket(price: Double, quantity_total: Int, quantity_sold: Int)
 
   case class Venue(name: Option[String],
                    address: Option[String],
@@ -175,7 +175,7 @@ object Eventbrite extends ExecutionContexts with Logging {
       } else f"£${priceList.head}%,.2f"
     }
 
-    lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
+    lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantity_sold).sum.toDouble / tickets.map(_.quantity_total).sum)
   }
 
   trait EventHandler {
