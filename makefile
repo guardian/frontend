@@ -3,7 +3,7 @@
 # if you've got as far as reading the makefile.
 
 # Lists common tasks.
-# Also the default task (`make` === `make help`).
+# Also the default task ('make' === 'make help').
 help:
 	@node tools/messages.js describeMakefile
 
@@ -31,7 +31,7 @@ uninstall: # PRIVATE
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.
-# The nuclear option if `make install` hasn't worked.
+# The nuclear option if 'make install' hasn't worked.
 reinstall: uninstall install
 
 
