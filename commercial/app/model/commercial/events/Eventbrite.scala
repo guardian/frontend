@@ -85,18 +85,22 @@ object Eventbrite extends ExecutionContexts with Logging {
   implicit val venueWrites: Writes[Venue] = Json.writes[Venue]
 
   implicit val eventReads: Reads[Event] = (
-
     (JsPath \ "id").read[String] and
-      (JsPath \ "name" \ "text").read[String] and
-      (JsPath \ "start" \ "utc").read[DateTime] and
-      (JsPath \ "url").read[String] and
-      (JsPath \ "description" \ "html").read[String] and
-      (JsPath \ "imageUrl").readNullable[String] and
-      (JsPath \ "status").read[String] and
-      (JsPath \ "venue").read[Venue] and
-      (JsPath \ "ticket_classes").read[Seq[Ticket]] and // we want to filter out donation and hidden tickets here
-      (JsPath \ "capacity").read[Int]
+    (JsPath \ "name" \ "text").read[String] and
+    (JsPath \ "start" \ "utc").read[DateTime] and
+    (JsPath \ "url").read[String] and
+    (JsPath \ "description" \ "html").read[String] and
+    (JsPath \ "image_url").readNullable[String] and // not present in the JSON; see usages of `buildEventWithImageSrc`
+    (JsPath \ "status").read[String] and
+    (JsPath \ "venue").read[Venue] and
+    (JsPath \ "ticket_classes").read[Seq[Ticket]].map(excludeFreeAndHiddenTickets) and // we want to filter out donation and hidden tickets here
+    (JsPath \ "capacity").read[Int]
     ) (Event.apply _)
+
+  implicit val eventWrites: Writes[Event] = Json.writes[Event]
+
+  def excludeFreeAndHiddenTickets(tickets: Seq[Ticket]): Seq[Ticket] =
+    tickets.filterNot(ticket => ticket.hidden || ticket.donation)
 
   implicit val eventsReads: Reads[Seq[Event]] = new Reads[Seq[Event]] {
     override def reads(json: JsValue): JsResult[Seq[Event]] = {
