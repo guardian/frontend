@@ -73,21 +73,14 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  implicit val venueReads: Reads[Venue] = {
-
-    def captureEmptyString(x: Reads[Option[String]]): Reads[Option[String]] = {
-      x map (el => if (el.getOrElse("").length == 0) None else el)
-    }
-
-    (
-      captureEmptyString((JsPath \ "name").readNullable[String]) and
-        captureEmptyString((JsPath \ "address" \ "address_1").readNullable[String]) and
-        captureEmptyString((JsPath \ "address" \ "address_2").readNullable[String]) and
-        captureEmptyString((JsPath \ "address" \ "city").readNullable[String]) and
-        captureEmptyString((JsPath \ "address" \ "country").readNullable[String]) and
-        captureEmptyString((JsPath \ "address" \ "postal_code").readNullable[String])
+  implicit val venueReads: Reads[Venue] = (
+      (JsPath \ "name").readNullable[String] and
+      (JsPath \ "address" \ "address_1").readNullable[String] and
+      (JsPath \ "address" \ "address_2").readNullable[String] and
+      (JsPath \ "address" \ "city").readNullable[String] and
+      (JsPath \ "address" \ "country").readNullable[String] and
+      (JsPath \ "address" \ "postal_code").readNullable[String]
       ) (Venue.apply _)
-  }
 
   implicit val venueWrites: Writes[Venue] = Json.writes[Venue]
 
