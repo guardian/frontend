@@ -55,7 +55,7 @@ define([
         }
 
         if (iframeCounter === 0) {
-            w.removeEventListener('resize', onRe);
+            w.removeEventListener('resize', onResize);
         }
     }
 
