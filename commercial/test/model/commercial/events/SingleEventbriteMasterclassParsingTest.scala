@@ -43,7 +43,6 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
     val masterclass = Masterclass.fromEvent(Json.parse(Fixtures.json).as[Event]).get
 
     masterclass.name should be("Travel writing weekend")
-    masterclass.truncatedFirstParagraph should be ("Everybody loves a good, juicy murder. So it's little wonder crime fiction is one of the UK's bestselling literary genres. Whether your tastes tend toward the gritty Jack Reacher procedural or the witty Father Brown whimsical, over the course of a ...")
   }
 
   "apply" should "produce a masterclass with one price if its second price is not visible" in {

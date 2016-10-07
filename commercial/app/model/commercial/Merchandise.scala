@@ -42,13 +42,10 @@ case class Masterclass(id: String,
                        tickets: Seq[Ticket],
                        capacity: Int,
                        guardianUrl: String,
-                       firstParagraph: String,
                        keywordIdSuffixes: Seq[String],
                        mainPicture: Option[ImageElement]) extends Merchandise with TicketHandler with EventHandler {
 
-  lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
-
-  lazy val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
+  lazy val readableDate: String = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 }
 
 case class LiveEvent(eventId: String,
@@ -201,14 +198,6 @@ object Masterclass {
       }
     }
 
-    def extractFirstParagraph(html: String) = {
-      val firstParagraph: Option[Element] = Some(doc.select("p").first())
-      firstParagraph match {
-        case Some(p) => p.text
-        case _ => ""
-      }
-    }
-
     extractGuardianUrl map { extractedUrl =>
 
       new Masterclass(
@@ -222,7 +211,6 @@ object Masterclass {
         tickets = event.tickets,
         capacity = event.capacity,
         guardianUrl = extractedUrl,
-        firstParagraph = extractFirstParagraph(event.description),
         keywordIdSuffixes = Nil,
         mainPicture = None
       )
