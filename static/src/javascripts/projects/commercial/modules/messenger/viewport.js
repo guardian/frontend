@@ -7,10 +7,10 @@ define([
     var iframes = {};
     var iframeCounter = 0;
     var taskQueued = false;
-    var lastViewport;
+    var lastViewportRead, lastViewport;
 
     messenger.register('viewport', onMessage, { persist: true });
-    fastdom.read(function() {
+    lastViewportRead = fastdom.read(function() {
         lastViewport = detect.getViewport();
     });
 
@@ -45,7 +45,9 @@ define([
             respond: respond
         };
         iframeCounter += 1;
-        sendViewportDimensions.bind(lastViewport)(iframe.id);
+        return lastViewportRead.then(function () {
+            sendViewportDimensions.bind(lastViewport)(iframe.id);
+        });
     }
 
     function removeResizeListener(iframe) {
