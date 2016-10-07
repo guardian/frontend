@@ -100,16 +100,24 @@ case class Member(username: String,
 }
 
 sealed trait Gender {
-  override def toString: String
+  val name: String
 }
+
+object Gender {
+
+  def fromName(name: String) = name match {
+    case Woman.name => Woman
+    case _ => Man
+  }
+}
+
 case object Woman extends Gender {
-  override def toString = "Woman"
+  val name: String = "Woman"
 }
+
 case object Man extends Gender {
-  override def toString = "Man"
+  val name: String = "Man"
 }
-
-
 
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
 
@@ -277,8 +285,8 @@ object TravelOffer {
 object Member {
   val IdPattern = """.*/([\da-f]+)/.*""".r
 
-  implicit val readsGender: Reads[Gender] = JsPath.read[String].map (gender => if(gender == "Woman") Woman else Man)
-  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.toString))
+  implicit val readsGender: Reads[Gender] = JsPath.read[String].map (Gender.fromName)
+  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
 
   implicit val readsMember: Reads[Member] =
     (
