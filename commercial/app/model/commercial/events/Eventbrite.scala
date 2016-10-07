@@ -15,39 +15,39 @@ import scala.util.control.NonFatal
 
 object Eventbrite extends ExecutionContexts with Logging {
 
-  case class EBResponse(pagination: EBPagination, events: Seq[EBEvent])
+  case class Response(pagination: Pagination, events: Seq[Event])
 
-  object EBResponse {
+  object Response {
 
-    implicit val ebResponseReads: Reads[EBResponse] = (
-      (JsPath \ "pagination").read[EBPagination] and
-        (JsPath \ "events").read[Seq[EBEvent]]
-      ) (EBResponse.apply _)
+    implicit val ebResponseReads: Reads[Response] = (
+      (JsPath \ "pagination").read[Pagination] and
+        (JsPath \ "events").read[Seq[Event]]
+      ) (Response.apply _)
   }
 
-  case class EBPagination(pageNumber: Int, pageCount: Int)
+  case class Pagination(pageNumber: Int, pageCount: Int)
 
-  object EBPagination {
+  object Pagination {
 
-    implicit val readsPagination: Reads[EBPagination] = (
+    implicit val readsPagination: Reads[Pagination] = (
       (JsPath \ "page_number").read[Int] and
         (JsPath \ "page_count").read[Int]
-      ) (EBPagination.apply _)
+      ) (Pagination.apply _)
   }
 
-  case class EBEvent(id: String,
-                     name: String,
-                     startDate: DateTime,
-                     url: String,
-                     description: String,
-                     imageUrl: Option[String],
-                     status: String,
-                     venue: EBVenue,
-                     tickets: Seq[EBTicket],
-                     capacity: Int
+  case class Event(id: String,
+                   name: String,
+                   startDate: DateTime,
+                   url: String,
+                   description: String,
+                   imageUrl: Option[String],
+                   status: String,
+                   venue: Venue,
+                   tickets: Seq[Ticket],
+                   capacity: Int
                     )
 
-  object EBEvent {
+  object Event {
 
     def apply(id: String,
               name: String,
@@ -55,11 +55,11 @@ object Eventbrite extends ExecutionContexts with Logging {
               url: String,
               description: String,
               status: String,
-              venue: EBVenue,
-              tickets: Seq[Option[EBTicket]],
-              capacity: Int): EBEvent = {
+              venue: Venue,
+              tickets: Seq[Option[Ticket]],
+              capacity: Int): Event = {
 
-      new EBEvent(
+      new Event(
         id,
         name,
         startDate,
@@ -75,7 +75,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
     private lazy val dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     implicit val jodaDateTimeReads: Reads[DateTime] = Reads.jodaDateReads(dateFormat)
-    implicit val eventReads: Reads[EBEvent] = (
+    implicit val eventReads: Reads[Event] = (
 
       (JsPath \ "id").read[String] and
         (JsPath \ "name" \ "text").read[String] and
@@ -83,22 +83,22 @@ object Eventbrite extends ExecutionContexts with Logging {
         (JsPath \ "url").read[String] and
         (JsPath \ "description" \ "html").read[String] and
         (JsPath \ "status").read[String] and
-        (JsPath \ "venue").read[EBVenue] and
-        (JsPath \ "ticket_classes").read[Seq[Option[EBTicket]]] and
+        (JsPath \ "venue").read[Venue] and
+        (JsPath \ "ticket_classes").read[Seq[Option[Ticket]]] and
         (JsPath \ "capacity").read[Int]
-      ) (EBEvent.apply(_: String, _: String, _: DateTime, _: String, _: String, _: String, _: EBVenue, _: Seq[Option[EBTicket]], _: Int))
+      ) (Event.apply(_: String, _: String, _: DateTime, _: String, _: String, _: String, _: Venue, _: Seq[Option[Ticket]], _: Int))
 
-    implicit val eventsReads: Reads[Seq[EBEvent]] = new Reads[Seq[EBEvent]] {
-      override def reads(json: JsValue): JsResult[Seq[EBEvent]] = {
+    implicit val eventsReads: Reads[Seq[Event]] = new Reads[Seq[Event]] {
+      override def reads(json: JsValue): JsResult[Seq[Event]] = {
         json match {
-          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[EBEvent]))
+          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[Event]))
           case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
         }
       }
     }
 
-    def buildEventWithImageSrc(event: EBEvent, src: String) = {
-      new EBEvent(
+    def buildEventWithImageSrc(event: Event, src: String) = {
+      new Event(
         event.id,
         event.name,
         event.startDate,
@@ -113,51 +113,51 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  case class EBTicket(price: Double, quantityTotal: Int, quantitySold: Int)
+  case class Ticket(price: Double, quantityTotal: Int, quantitySold: Int)
 
-  object EBTicket {
+  object Ticket {
 
-    def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[EBTicket] = {
+    def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[Ticket] = {
       if (hidden || donation) {
         None
       } else {
-        Some(EBTicket(valuePence / 100, quantityTotal, quantitySold))
+        Some(Ticket(valuePence / 100, quantityTotal, quantitySold))
       }
     }
 
-    implicit val ticketReads: Reads[Option[EBTicket]] = (
+    implicit val ticketReads: Reads[Option[Ticket]] = (
       (JsPath \ "hidden").read[Boolean] and
         (JsPath \ "donation").read[Boolean] and
         (JsPath \ "cost" \ "value").read[Double].orElse(Reads.pure(0.00)) and
         (JsPath \ "quantity_total").read[Int] and
         (JsPath \ "quantity_sold").read[Int]
-      ) (EBTicket.buildTicket _)
+      ) (Ticket.buildTicket _)
 
-    implicit val ticketsReads: Reads[Seq[EBTicket]] = new Reads[Seq[EBTicket]] {
-      override def reads(json: JsValue): JsResult[Seq[EBTicket]] = {
+    implicit val ticketsReads: Reads[Seq[Ticket]] = new Reads[Seq[Ticket]] {
+      override def reads(json: JsValue): JsResult[Seq[Ticket]] = {
         json match {
-          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.as[Option[EBTicket]]))
+          case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.as[Option[Ticket]]))
           case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
         }
       }
     }
 
-    implicit val ticketWrites: Writes[EBTicket] = Json.writes[EBTicket]
+    implicit val ticketWrites: Writes[Ticket] = Json.writes[Ticket]
   }
 
-  case class EBVenue(name: Option[String],
-                     address: Option[String],
-                     address2: Option[String],
-                     city: Option[String],
-                     country: Option[String],
-                     postcode: Option[String]) {
+  case class Venue(name: Option[String],
+                   address: Option[String],
+                   address2: Option[String],
+                   city: Option[String],
+                   country: Option[String],
+                   postcode: Option[String]) {
 
     val description = Seq(name, city orElse country).flatten mkString ", "
   }
 
-  object EBVenue {
+  object Venue {
 
-    implicit val venueReads: Reads[EBVenue] = {
+    implicit val venueReads: Reads[Venue] = {
 
       def captureEmptyString(x: Reads[Option[String]]): Reads[Option[String]] = {
         x map (el => if (el.getOrElse("").length == 0) None else el)
@@ -170,18 +170,18 @@ object Eventbrite extends ExecutionContexts with Logging {
           captureEmptyString((JsPath \ "address" \ "city").readNullable[String]) and
           captureEmptyString((JsPath \ "address" \ "country").readNullable[String]) and
           captureEmptyString((JsPath \ "address" \ "postal_code").readNullable[String])
-        ) (EBVenue.apply _)
+        ) (Venue.apply _)
     }
 
-    implicit val venueWrites: Writes[EBVenue] = Json.writes[EBVenue]
+    implicit val venueWrites: Writes[Venue] = Json.writes[Venue]
   }
-  def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[EBEvent]] = {
+  def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
 
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis
         feedContent map { body =>
-          val responses = Json.parse(body).as[Seq[EBResponse]]
+          val responses = Json.parse(body).as[Seq[Response]]
           val events = responses flatMap {_.events}
 
           Future(ParsedFeed(
@@ -199,8 +199,8 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  trait EBTicketHandler {
-    def tickets: Seq[EBTicket]
+  trait TicketHandler {
+    def tickets: Seq[Ticket]
 
     lazy val displayPrice = {
       val priceList = tickets.map(_.price).sorted.distinct
@@ -213,7 +213,7 @@ object Eventbrite extends ExecutionContexts with Logging {
     lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
   }
 
-  trait EBEventHandler {
+  trait EventHandler {
     def status: String
     lazy val isOpen = { status == "live" }
   }

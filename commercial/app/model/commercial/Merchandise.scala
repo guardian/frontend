@@ -1,6 +1,5 @@
 package model.commercial
 
-import common.JsonComponent
 import model.ImageElement
 import model.commercial.events.LiveEventMembershipInfo
 import model.commercial.events.Eventbrite._
@@ -39,13 +38,13 @@ case class Masterclass(id: String,
                        url: String,
                        description: String,
                        status: String,
-                       venue: EBVenue,
-                       tickets: Seq[EBTicket],
+                       venue: Venue,
+                       tickets: Seq[Ticket],
                        capacity: Int,
                        guardianUrl: String,
                        firstParagraph: String,
                        keywordIdSuffixes: Seq[String],
-                       mainPicture: Option[ImageElement]) extends Merchandise with EBTicketHandler with EBEventHandler {
+                       mainPicture: Option[ImageElement]) extends Merchandise with TicketHandler with EventHandler {
 
   lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 
@@ -58,9 +57,9 @@ case class LiveEvent(eventId: String,
                      eventUrl: String,
                      description: String,
                      status: String,
-                     venue: EBVenue,
-                     tickets: Seq[EBTicket],
-                     imageUrl: String) extends Merchandise with EBTicketHandler with EBEventHandler
+                     venue: Venue,
+                     tickets: Seq[Ticket],
+                     imageUrl: String) extends Merchandise with TicketHandler with EventHandler
 
 case class TravelOffer(id: String,
                        title: String,
@@ -189,7 +188,7 @@ object Book {
 object Masterclass {
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
-  def fromEvent(event: EBEvent): Option[Masterclass] = {
+  def fromEvent(event: Event): Option[Masterclass] = {
 
     val doc: Document = Jsoup.parse(event.description)
 
@@ -352,7 +351,7 @@ object Job {
 
 object LiveEvent {
 
-  def fromEvent(event: EBEvent, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
+  def fromEvent(event: Event, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
     new LiveEvent(
       eventId = event.id,
       name = event.name,
