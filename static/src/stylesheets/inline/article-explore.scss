@@ -367,11 +367,6 @@ $explore-series-header-element-opacity: .85;
         border-top: 1px dotted $neutral-4;
     }
 
-    //only show first three social links
-    .social__item:nth-child(n+4) {
-        display: none;
-    }
-
     @include mq($from: desktop) {
         position: absolute;
         margin-left: 0;
