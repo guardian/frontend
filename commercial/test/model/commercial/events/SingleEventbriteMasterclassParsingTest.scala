@@ -18,7 +18,7 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPrice should be ("£400.00")
+    masterclass.displayPriceRange should be ("£400.00")
     masterclass.ratioTicketsLeft should be (0.5)
     masterclass.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
     masterclass.readableDate should be ("20 April 2013")
@@ -35,7 +35,7 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPrice should be ("£400.00 to £2,600.00")
+    masterclass.displayPriceRange should be ("£400.00 to £2,600.00")
     masterclass.ratioTicketsLeft should be (0.5)
   }
 
