@@ -78,5 +78,4 @@ bower_components
 local.conf
 
 static/src/stylesheets/pasteup/.npmrc
-static/src/javascripts
 
