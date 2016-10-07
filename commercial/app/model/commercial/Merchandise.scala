@@ -95,7 +95,6 @@ case class Member(username: String,
   }
 
   val profileUrl: String = s"https://soulmates.theguardian.com/" + ( profileId.map(id => s"landing/$id") getOrElse "" )
-
 }
 
 sealed trait Gender {
@@ -160,16 +159,15 @@ object Merchandise {
 
 object Book {
 
-  private val authorReads = {
-    ((JsPath \ "author_firstname").readNullable[String] and
-      (JsPath \ "author_lastname").readNullable[String])
-      .tupled.map { case (optFirstName, optLastName) =>
+  private val authorReads = (
+    (JsPath \ "author_firstname").readNullable[String] and
+    (JsPath \ "author_lastname").readNullable[String]).tupled.map {
+    case (optFirstName, optLastName) =>
       for {
         firstName <- optFirstName
         lastName <- optLastName
       } yield s"$firstName $lastName"
     }
-  }
 
   private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
     val path = JsPath \ value
@@ -194,13 +192,13 @@ object Book {
 }
 
 object Masterclass {
-  private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
   def fromEvent(event: Event): Option[Masterclass] = {
 
     val doc: Document = Jsoup.parse(event.description)
 
     def extractGuardianUrl: Option[String] = {
+      val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
       val elements :Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)")
           .toArray(Array.empty[Element])
 
@@ -230,6 +228,7 @@ object Masterclass {
   }
 
   implicit val writesMasterclass: Writes[Masterclass] = new Writes[Masterclass] {
+
     def writes(m: Masterclass) = Json.obj(
       "id" -> m.id,
       "name" -> m.name,
@@ -297,6 +296,7 @@ object Member {
       ) (Member.apply _)
 
   implicit val writesMember: Writes[Member] = new Writes[Member] {
+
     def writes(member: Member): JsValue = {
       Json.obj(
         "username" -> member.username,
@@ -313,7 +313,7 @@ object Member {
 
 object Job {
 
-  def apply(xml: Node): Job = Job(
+  def fromXml(xml: Node): Job = Job(
     id = (xml \ "JobID").text.toInt,
     title = (xml \ "JobTitle").text,
     shortDescription = StringEscapeUtils.unescapeHtml((xml \ "ShortJobDescription").text),
