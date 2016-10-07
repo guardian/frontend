@@ -17,7 +17,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   case class Response(pagination: Pagination, events: Seq[Event])
 
-  case class Pagination(pageNumber: Int, pageCount: Int)
+  case class Pagination(page_number: Int, page_count: Int)
 
   case class Event(id: String,
                    name: String,
@@ -110,10 +110,7 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  implicit val paginationReads: Reads[Pagination] = (
-    (JsPath \ "page_number").read[Int] and
-      (JsPath \ "page_count").read[Int]
-    ) (Pagination.apply _)
+  implicit val paginationFormats: Format[Pagination] = Json.format[Pagination]
 
   implicit val responseReads: Reads[Response] = (
     (JsPath \ "pagination").read[Pagination] and

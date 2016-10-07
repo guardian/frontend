@@ -11,8 +11,8 @@ class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers {
     val eventBriteFeed: JsValue = Json.parse(Fixtures.rawEventBriteFeed)
     val response = eventBriteFeed.as[Response]
 
-    response.pagination.pageCount should be (2)
-    response.pagination.pageNumber should be (1)
+    response.pagination.page_count should be (2)
+    response.pagination.page_number should be (1)
 
     response.events.size should be (50)
 
