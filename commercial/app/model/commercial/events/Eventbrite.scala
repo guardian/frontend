@@ -17,23 +17,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   case class Response(pagination: Pagination, events: Seq[Event])
 
-  object Response {
-
-    implicit val ebResponseReads: Reads[Response] = (
-      (JsPath \ "pagination").read[Pagination] and
-        (JsPath \ "events").read[Seq[Event]]
-      ) (Response.apply _)
-  }
-
   case class Pagination(pageNumber: Int, pageCount: Int)
-
-  object Pagination {
-
-    implicit val readsPagination: Reads[Pagination] = (
-      (JsPath \ "page_number").read[Int] and
-        (JsPath \ "page_count").read[Int]
-      ) (Pagination.apply _)
-  }
 
   case class Event(id: String,
                    name: String,
@@ -45,7 +29,37 @@ object Eventbrite extends ExecutionContexts with Logging {
                    venue: Venue,
                    tickets: Seq[Ticket],
                    capacity: Int
-                    )
+                  )
+
+  case class Ticket(price: Double, quantityTotal: Int, quantitySold: Int)
+
+  case class Venue(name: Option[String],
+                   address: Option[String],
+                   address2: Option[String],
+                   city: Option[String],
+                   country: Option[String],
+                   postcode: Option[String]) {
+
+    val description = Seq(name, city orElse country).flatten mkString ", "
+  }
+
+  object Response {
+
+    implicit val ebResponseReads: Reads[Response] = (
+      (JsPath \ "pagination").read[Pagination] and
+        (JsPath \ "events").read[Seq[Event]]
+      ) (Response.apply _)
+  }
+
+
+
+  object Pagination {
+
+    implicit val readsPagination: Reads[Pagination] = (
+      (JsPath \ "page_number").read[Int] and
+        (JsPath \ "page_count").read[Int]
+      ) (Pagination.apply _)
+  }
 
   object Event {
 
@@ -113,8 +127,6 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
   }
 
-  case class Ticket(price: Double, quantityTotal: Int, quantitySold: Int)
-
   object Ticket {
 
     def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[Ticket] = {
@@ -143,16 +155,6 @@ object Eventbrite extends ExecutionContexts with Logging {
     }
 
     implicit val ticketWrites: Writes[Ticket] = Json.writes[Ticket]
-  }
-
-  case class Venue(name: Option[String],
-                   address: Option[String],
-                   address2: Option[String],
-                   city: Option[String],
-                   country: Option[String],
-                   postcode: Option[String]) {
-
-    val description = Seq(name, city orElse country).flatten mkString ", "
   }
 
   object Venue {
