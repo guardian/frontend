@@ -64,15 +64,6 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   implicit val ticketWrites: Writes[Ticket] = Json.writes[Ticket]
 
-  implicit val ticketsReads: Reads[Seq[Ticket]] = new Reads[Seq[Ticket]] {
-    override def reads(json: JsValue): JsResult[Seq[Ticket]] = {
-      json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.map(_.as[Ticket]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
-      }
-    }
-  }
-
   implicit val venueReads: Reads[Venue] = (
       (JsPath \ "name").readNullable[String] and
       (JsPath \ "address" \ "address_1").readNullable[String] and
@@ -101,15 +92,6 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   def excludeFreeAndHiddenTickets(tickets: Seq[Ticket]): Seq[Ticket] =
     tickets.filterNot(ticket => ticket.hidden || ticket.donation)
-
-  implicit val eventsReads: Reads[Seq[Event]] = new Reads[Seq[Event]] {
-    override def reads(json: JsValue): JsResult[Seq[Event]] = {
-      json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[Event]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
-      }
-    }
-  }
 
   implicit val paginationFormats: Format[Pagination] = Json.format[Pagination]
 
