@@ -31,7 +31,11 @@ object Eventbrite extends ExecutionContexts with Logging {
                    capacity: Int
                   )
 
-  case class Ticket(price: Double, quantity_total: Int, quantity_sold: Int)
+  case class Ticket(hidden: Boolean,
+                    donation: Boolean,
+                    price: Double,
+                    quantity_total: Int,
+                    quantity_sold: Int)
 
   case class Venue(name: Option[String],
                    address: Option[String],
@@ -50,24 +54,24 @@ object Eventbrite extends ExecutionContexts with Logging {
     Format(Reads.jodaDateReads(dateFormat), Writes.jodaDateWrites(dateFormat))
   }
 
-  implicit val ticketReads: Reads[Option[Ticket]] = (
+  implicit val ticketReads: Reads[Ticket] = (
     (JsPath \ "hidden").read[Boolean] and
-      (JsPath \ "donation").read[Boolean] and
-      (JsPath \ "cost" \ "value").read[Double].orElse(Reads.pure(0.00)) and
-      (JsPath \ "quantity_total").read[Int] and
-      (JsPath \ "quantity_sold").read[Int]
-    ) (buildTicket _)
+    (JsPath \ "donation").read[Boolean] and
+    (JsPath \ "cost" \ "value").read[Double].map(pence => pence / 100) and
+    (JsPath \ "quantity_total").read[Int] and
+    (JsPath \ "quantity_sold").read[Int]
+    ) (Ticket.apply _)
+
+  implicit val ticketWrites: Writes[Ticket] = Json.writes[Ticket]
 
   implicit val ticketsReads: Reads[Seq[Ticket]] = new Reads[Seq[Ticket]] {
     override def reads(json: JsValue): JsResult[Seq[Ticket]] = {
       json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.as[Option[Ticket]]))
+        case JsArray(jsValues) => JsSuccess(jsValues.map(_.as[Ticket]))
         case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
       }
     }
   }
-
-  implicit val ticketWrites: Writes[Ticket] = Json.writes[Ticket]
 
   implicit val venueReads: Reads[Venue] = {
 
@@ -97,7 +101,7 @@ object Eventbrite extends ExecutionContexts with Logging {
       (JsPath \ "imageUrl").readNullable[String] and
       (JsPath \ "status").read[String] and
       (JsPath \ "venue").read[Venue] and
-      (JsPath \ "ticket_classes").read[Seq[Ticket]] and
+      (JsPath \ "ticket_classes").read[Seq[Ticket]] and // we want to filter out donation and hidden tickets here
       (JsPath \ "capacity").read[Int]
     ) (Event.apply _)
 
@@ -130,14 +134,6 @@ object Eventbrite extends ExecutionContexts with Logging {
       event.tickets,
       event.capacity
     )
-  }
-
-  def buildTicket(hidden: Boolean, donation: Boolean, valuePence: Double, quantityTotal: Int, quantitySold: Int): Option[Ticket] = {
-    if (hidden || donation) {
-      None
-    } else {
-      Some(Ticket(valuePence / 100, quantityTotal, quantitySold))
-    }
   }
 
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
