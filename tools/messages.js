@@ -9,7 +9,8 @@ function notify(message, options, type) {
     // Set the default text colour for info to black as white was hard to see
     if (type === 'info') {
        options = Object.assign({
-           colour: 'black'
+           colour: 'black',
+           codeColour: 'white'
        }, options);
     }
 
@@ -20,44 +21,50 @@ function notify(message, options, type) {
     };
 }
 
-
 switch (process.argv[2]) {
     case 'describeMakefile':
-        const message = fs.readFileSync('makefile', 'utf8')
-            .split('\n')
-            .reduce((messages, line, lineNumber, makefile) => {
-                const message = [];
+        const messageLines = [];
 
-                // if this line is a target...
-                if (line.match(/^[^\s#]/)) {
-                    // see if there are any comments immediately before it
-                    const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), line => line.match(/^#/))
-                        // format the comments for output to CLI
-                        .map(comment => comment.replace(/#\s+/, ''))
-                        // put them back into correct order
-                        .reverse();
+        // this flag could be anything, but the `--` makes it look real
+        const listAll = process.argv[3] === '--all';
 
-                   // format the target name for output to CLI
-                    const targetName = line.split(':')[0];
+        // for all the lines in the makefile, construct the message
+        fs.readFileSync('makefile', 'utf8').split('\n').forEach((line, lineNumber, makefile) => {
+            // if this line is a target...
+            if (line.match(/^[^\.\s#]/) && (listAll || !line.match(/# PRIVATE$/))) {
+                // see if there are any comments immediately before it
+                const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), line => line.match(/^#/))
+                    // format the comments for output to CLI
+                    .map(comment => comment.replace(/#\s+/, ''))
+                    // put them back into correct order
+                    .reverse();
 
-                    // if we have comments for this target...
-                    if (comments.length) {
-                        // add the target name with the first comment following it
-                        message.push(`\`${targetName}\`${new Array(20 - targetName.length).join(' ')}${comments.shift()}`);
-                        // then add any other comments
-                        [].push.apply(message, comments.map(comment => new Array(20).join(' ') + comment));
-                    } else {
-                        // just output the target name
-                        message.push(`\`${targetName}\``);
-                    }
+                // format the target name for output to CLI
+                const targetName = line.split(':')[0];
+
+                // add the target name with the first comment following it
+                messageLines.push(`\`${targetName}\`${new Array(20 - targetName.length).join((listAll ? '.' : ' '))}${comments.shift() || '?'}`);
+
+                // then add any other comments on subsequent lines
+                [].push.apply(messageLines, comments.map(comment => new Array(20).join(' ') + comment));
+            }
+
+            // if we've got a divider, just add space to create a line break
+            if (line.match(/^# \*{3,}/)) {
+                if (listAll) {
+                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`)
+                } else {
+                    messageLines.push(' ');
                 }
-                // if we've got a divider, just add space to create a line break
-                if (line.match(/^# \*{3,}/)) message.push(' ');
-                return messages.concat(message);
-            }, []).join('\n');
+            };
+        });
 
-        notify(message, {
-            heading: 'Frontend make options'
+        if (!listAll) {
+            messageLines.push('\nTo see the full set, run `make list`.')
+        }
+
+        notify(messageLines.join('\n').trim(), {
+            heading: `${(listAll ? 'All' : 'Common')} Frontend make tasks`
         }, 'info');
         break;
 
