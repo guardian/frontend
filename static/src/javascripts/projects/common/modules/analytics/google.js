@@ -9,8 +9,8 @@ define([
 
     function extractLinkText(el) {
         var text;
-        if (el && typeof el.innerText === 'string') {
-            text = el.innerText.trim();
+        if (el && typeof el.textContent === 'string') {
+            text = el.textContent.trim();
         }
         return text;
     }
