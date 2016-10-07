@@ -34,9 +34,14 @@ define([
         });
     }
 
+    function trackNativeAdLinkClick(slotName, tag) {
+        ga(send, 'event', 'Click', 'Native Ad', tag);
+    }
+
     return {
         trackNonClickInteraction: trackNonClickInteraction,
         trackSamePageLinkClick: trackSamePageLinkClick,
-        trackExternalLinkClick: trackExternalLinkClick
+        trackExternalLinkClick: trackExternalLinkClick,
+        trackNativeAdLinkClick: trackNativeAdLinkClick
     };
 });
