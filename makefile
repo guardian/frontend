@@ -2,9 +2,9 @@
 # They're helper targets that you probably only need to know about
 # if you've got as far as reading the makefile.
 
-# Lists common targets.
+# Lists common tasks.
 # Also the default task (`make` === `make help`).
-help: # PRIVATE
+help:
 	@node tools/messages.js describeMakefile
 
 # Lists *all* targets.
