@@ -32,7 +32,6 @@ sealed trait ContentType {
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial
   final def sharelinks: ShareLinks = content.sharelinks
-  final def atoms = content.atoms
 }
 
 final case class GenericContent(override val content: Content) extends ContentType
@@ -507,7 +506,6 @@ final case class Article (
   lightboxProperties: GenericLightboxProperties) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
-  val videos = content.atoms.map(_.all)
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
