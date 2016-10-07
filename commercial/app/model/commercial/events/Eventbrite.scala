@@ -115,20 +115,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   implicit val responseFormats: Format[Response] = Json.format[Response]
 
-  def buildEventWithImageSrc(event: Event, src: String) = {
-    new Event(
-      event.id,
-      event.name,
-      event.start_date,
-      event.url,
-      event.description,
-      Some(src),
-      event.status,
-      event.venue,
-      event.tickets,
-      event.capacity
-    )
-  }
+  def buildEventWithImageSrc(event: Event, src: String) = event.copy(image_url = Some(src))
 
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
 
