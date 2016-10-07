@@ -71,25 +71,25 @@ compile-dev: clean-assets \
 	compile-conf
 
 compile-js: # PRIVATE
-	@grunt compile:js
+	@grunt compile:js ${ARGS}
 
 compile-js-dev: # PRIVATE
-	@grunt develop:js
+	@grunt develop:js ${ARGS}
 
 compile-css: # PRIVATE
-	@grunt compile:css
+	@grunt compile:css ${ARGS}
 
 compile-fonts: # PRIVATE
-	@grunt compile:fonts
+	@grunt compile:fonts ${ARGS}
 
 compile-deploys-radiator: # PRIVATE
-	@grunt makeDeploysRadiator
+	@grunt makeDeploysRadiator ${ARGS}
 
 compile-conf: # PRIVATE
-	@grunt compile:conf
+	@grunt compile:conf ${ARGS}
 
 hash-assets: # PRIVATE
-	@grunt asset_hash
+	@grunt asset_hash ${ARGS}
 
 # Delete all asset build artefacts, includes the builds themselves.
 clean-assets: # PRIVATE
