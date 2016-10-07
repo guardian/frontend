@@ -11,7 +11,8 @@
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
-    "virtual-dom": "^2.1.1"
+    "virtual-dom": "^2.1.1",
+    "watch": "1.0.1"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.10",
@@ -107,6 +108,7 @@
     "css-watch": "gulp --cwd ./dev watch:css",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
     "compile-deploy-radiator": "webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator",
-    "detype": "flow-remove-types --out-dir static/src/javascripts static/src/flow"
+    "detype": "flow-remove-types --out-dir static/src/javascripts static/src/flow",
+    "detype-watch": "watch 'npm run detype' static/src/flow"
   }
 }

@@ -9,6 +9,7 @@ help:
 watch: compile-dev
 	@npm run sass-watch & \
 		npm run css-watch & \
+		npm run detype-watch & \
 		npm run browser-sync
 
 # ********************************************************
