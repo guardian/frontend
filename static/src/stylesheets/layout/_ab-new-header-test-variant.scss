@@ -58,6 +58,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     @include fs-textSans(5);
     line-height: $gs-baseline * 2.5;
     width: 100%;
+    overflow: hidden;
 
     @include mq($until: mobile) {
         font-size: 16px;
@@ -67,7 +68,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 5.2vw;
+        font-size: 5.1vw;
     }
 
     @include mq($from: $mobile-medium, $until: mobileLandscape) {
