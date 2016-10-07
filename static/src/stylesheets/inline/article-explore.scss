@@ -177,8 +177,9 @@ $explore-series-header-element-opacity: .85;
         font-weight: 900;
 
         @include mq($from: tablet) {
-            @include fs-headline(6);
+            @include fs-headline(7);
             font-weight: 900;
+            line-height: 38px;
         }
 
         @include mq($until: leftCol) {
