@@ -1,4 +1,5 @@
-import commercial.CommercialLifecycle
+package commercial
+
 import http.CorsHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._

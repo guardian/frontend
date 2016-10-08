@@ -1,6 +1,6 @@
 import app.{FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
+import commercial.{CommercialLifecycle, CommercialServices}
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.FootballLifecycle
