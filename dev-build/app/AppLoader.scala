@@ -1,7 +1,6 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle

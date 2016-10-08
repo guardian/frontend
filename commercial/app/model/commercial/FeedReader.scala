@@ -5,11 +5,11 @@ import commercial.CommercialMetrics
 import common.Logging
 import conf.switches.Switch
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.{WSResponse, WSRequest, WSClient, WSSignatureCalculator}
+import play.api.libs.ws.{WSClient, WSRequest, WSResponse, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Try, Failure, Success}
+import scala.util.{Failure, Success, Try}
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
