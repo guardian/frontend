@@ -1,7 +1,8 @@
 package controllers.commercial
 
 import common.JsonComponent
-import model.commercial.{Segment, Job}
+import model.Segment
+import model.commercial.Job
 import model.commercial.jobs.{JobSector, JobsAgent}
 import model.{Cached, NoCache}
 import play.api.mvc._

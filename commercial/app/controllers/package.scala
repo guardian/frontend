@@ -2,7 +2,7 @@ package controllers
 
 import common.{JsonNotFound, JsonComponent}
 import model.Cached.RevalidatableResult
-import model.commercial.{Context, Segment}
+import model.{Context, Segment}
 import play.api.mvc._
 import scala.concurrent.duration._
 import play.twirl.api.Html

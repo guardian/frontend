@@ -2,6 +2,7 @@ package model.commercial.books
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
+import model.Segment
 import model.commercial._
 import play.api.libs.functional.syntax._
 import play.api.libs.json._

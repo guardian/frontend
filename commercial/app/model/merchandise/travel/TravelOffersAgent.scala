@@ -3,7 +3,8 @@ package model.commercial.travel
 import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import contentapi.ContentApiClient
-import model.commercial.{Keyword, Lookup, MerchandiseAgent, Segment, TravelOffer}
+import model.Segment
+import model.commercial.{Keyword, Lookup, MerchandiseAgent, TravelOffer}
 
 import scala.concurrent.Future
 

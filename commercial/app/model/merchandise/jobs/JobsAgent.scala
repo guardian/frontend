@@ -2,6 +2,7 @@ package model.commercial.jobs
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
+import model.Segment
 import model.commercial._
 
 import scala.concurrent.Future

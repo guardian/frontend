@@ -1,7 +1,8 @@
 package controllers.commercial
 
 import common.JsonComponent
-import model.commercial.{Segment, TravelOffer}
+import model.commercial.TravelOffer
+import model.Segment
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
