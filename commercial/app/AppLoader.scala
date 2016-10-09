@@ -3,8 +3,7 @@ package commercial
 import http.CorsHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
-import common._
-import _root_.commercial.feeds.{FeedsFetcher, FeedsParser}
+import commercial.feeds.{FeedsFetcher, FeedsParser}
 import akka.actor.ActorSystem
 import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
 import common.Logback.LogstashLifecycle
@@ -12,7 +11,9 @@ import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.HealthCheck
-import controllers.commercial.CommercialControllers
+import commercial.controllers.CommercialControllers
+import common.CloudWatchMetricsLifecycle
+import model.ApplicationIdentity
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import model.commercial.CapiAgent

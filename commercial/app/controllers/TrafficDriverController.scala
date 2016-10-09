@@ -1,7 +1,8 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
+import commercial.controllers.util.{specificIds, jsonFormat, componentNilMaxAge}
 import model.commercial.{CapiAgent, TrafficDriver, Lookup}
 import model.{Cached, ContentType}
 import play.api.mvc.{Action, AnyContent, Controller, Request}

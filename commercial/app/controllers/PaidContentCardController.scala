@@ -1,7 +1,8 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
+import commercial.controllers.util.{htmlFormat, jsonFormat, componentMaxAge}
 import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
@@ -12,7 +13,7 @@ class PaidContentCardController(contentApiClient: ContentApiClient) extends Cont
 
   private val lookup = new Lookup(contentApiClient)
 
-  private def renderCard(format: Format) = Action.async { implicit request =>
+  private def renderCard(format: util.Format) = Action.async { implicit request =>
 
     val shortUrl = request.getParameter("articleUrl")
 

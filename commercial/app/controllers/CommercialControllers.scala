@@ -1,4 +1,4 @@
-package controllers.commercial
+package commercial.controllers
 
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient

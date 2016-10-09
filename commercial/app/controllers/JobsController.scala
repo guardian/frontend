@@ -1,6 +1,7 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.JsonComponent
+import commercial.controllers.util.{specificIds, segment, jsonFormat, componentMaxAge}
 import model.Segment
 import model.commercial.Job
 import model.commercial.jobs.{JobSector, JobsAgent}

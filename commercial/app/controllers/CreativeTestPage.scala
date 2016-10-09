@@ -1,4 +1,4 @@
-package controllers.commercial
+package commercial.controllers
 
 import conf.Configuration
 import model.{GuardianContentTypes, MetaData, SectionSummary}

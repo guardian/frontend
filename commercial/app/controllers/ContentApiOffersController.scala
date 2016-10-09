@@ -1,5 +1,6 @@
-package controllers.commercial
+package commercial.controllers
 
+import commercial.controllers.util.{specificIds, componentNilMaxAge, componentMaxAge, jsonFormat, htmlFormat}
 import common.commercial._
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
@@ -64,7 +65,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
 
-  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderItems(format: util.Format, isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)

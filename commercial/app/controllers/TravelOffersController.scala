@@ -1,6 +1,7 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.JsonComponent
+import commercial.controllers.util.{specificIds, segment, jsonFormat, componentMaxAge, componentNilMaxAge}
 import model.commercial.TravelOffer
 import model.Segment
 import model.commercial.travel.TravelOffersAgent

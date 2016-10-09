@@ -1,4 +1,4 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.ExecutionContexts
 import implicits.Requests

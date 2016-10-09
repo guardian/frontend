@@ -1,6 +1,7 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.{ExecutionContexts, JsonComponent}
+import commercial.controllers.util.{segment, jsonFormat, componentMaxAge}
 import model.commercial._
 import model.commercial.books.BestsellersAgent
 import model.commercial.events.MasterclassAgent

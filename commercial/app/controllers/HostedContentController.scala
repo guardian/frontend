@@ -1,4 +1,4 @@
-package controllers.commercial
+package commercial.controllers
 
 import common.commercial.hosted._
 import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}

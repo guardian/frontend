@@ -1,6 +1,7 @@
-package controllers.commercial
+package commercial.controllers
 
-import common.{JsonComponent, ExecutionContexts, Logging}
+import commercial.controllers.util._
+import common.{ExecutionContexts, JsonComponent, Logging}
 import model.commercial.Book
 import model.Segment
 import model.commercial.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
@@ -8,6 +9,7 @@ import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffExcepti
 import model.{Cached, NoCache}
 import play.api.mvc._
 import play.api.libs.json.Json
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal

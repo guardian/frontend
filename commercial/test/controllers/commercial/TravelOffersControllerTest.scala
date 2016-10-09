@@ -1,4 +1,4 @@
-package controllers.commercial
+package commercial.controllers
 
 import model.commercial.travel.TravelOffersAgent
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
