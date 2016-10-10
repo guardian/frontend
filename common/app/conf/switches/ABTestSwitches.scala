@@ -29,7 +29,7 @@ trait ABTestSwitches {
   for (edition <- Edition.all) Switch(
     ABTests,
     "ab-membership-engagement-banner-"+edition.id.toLowerCase,
-    "Test effectiveness of header for driving contributions vs membership.",
+    "Test effectiveness of banner for driving membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
     sellByDate = new LocalDate(2017, 9, 8),
