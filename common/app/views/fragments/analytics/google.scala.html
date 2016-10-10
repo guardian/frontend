@@ -74,6 +74,7 @@
         ga('@{trackerName}.set', 'dimension21', getQueryParam('INTCMP')); @* internal campaign code *@
         ga('@{trackerName}.set', 'dimension22', getQueryParam('CMP_BUNIT')); @* campaign business unit*@
         ga('@{trackerName}.set', 'dimension23', getQueryParam('CMP_TU')); @* campaign team*@
+        ga('@{trackerName}.set', 'dimension26', guardian.config.page.isHosted.toString());
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
