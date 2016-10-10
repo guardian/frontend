@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 import conf.Static
 
 object LeffeHostedPages {
@@ -31,7 +30,7 @@ object LeffeHostedPages {
   private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
 
   private val willardWiganPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$willardWiganPageName"
+    val id = s"advertiser-content/${campaign.id}/$willardWiganPageName"
     val pageName = willardWiganPageName
     val standfirst = "Leffe presents a film about micro-sculptor Willard Wigan, who slows down his own heartbeat to " +
                      "create sculptures so tiny the eye can't see them."
@@ -61,8 +60,8 @@ object LeffeHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -70,12 +69,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: What Is Nothing? Features @willard_wigan. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val adrienneTreebyPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$adrienneTreebyPageName"
+    val id = s"advertiser-content/${campaign.id}/$adrienneTreebyPageName"
     val pageName = adrienneTreebyPageName
     val standfirst = "Leffe presents a film about charcuterie producer Adrienne E. Treeby, who uses centuries-old " +
                      "recipe ideas to cure a delicious Leffe-infused salami."
@@ -105,8 +104,8 @@ object LeffeHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -114,12 +113,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Tasting The Past, feat @crownandqueue. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val peteLawrencePageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$peteLawrencePageName"
+    val id = s"advertiser-content/${campaign.id}/$peteLawrencePageName"
     val pageName = peteLawrencePageName
     val standfirst = "Leffe presents a film featuring astronomical observer Pete Lawrence as he literally rediscovers" +
                      " time, capturing distance light using long exposures."
@@ -149,8 +148,8 @@ object LeffeHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -160,12 +159,12 @@ object LeffeHostedPages {
         "Leffe presents Slow Time: Capturing Time, featuring @Avertedvision. Watch full film: "
       ),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val susanDergesPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$susanDergesPageName"
+    val id = s"advertiser-content/${campaign.id}/$susanDergesPageName"
     val pageName = susanDergesPageName
     val standfirst = "Leffe presents a film about artist Susan Derges, who specialises in creating unique camera-less" +
                      " photos using natural light and water."
@@ -195,8 +194,8 @@ object LeffeHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -204,12 +203,12 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Still The River. Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private val quayBrothersPageWithoutNextPage: HostedVideoPage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$quayBrothersPageName"
+    val id = s"advertiser-content/${campaign.id}/$quayBrothersPageName"
     val pageName = quayBrothersPageName
     val standfirst = "Leffe presents a film featuring influential stop-frame animators, Stephen and Timothy Quay, who" +
                      " give an insight into their unique appreciation of time."
@@ -239,8 +238,8 @@ object LeffeHostedPages {
       )
     )
     HostedVideoPage(
+      id,
       campaign,
-      pageUrl,
       pageName,
       standfirst,
       video,
@@ -248,12 +247,19 @@ object LeffeHostedPages {
       socialShareText = None,
       shortSocialShareText = Some("Leffe presents Slow Time: Quay Brothers . Watch full film: "),
       nextPage = None,
-      metadata = Metadata.forHardcodedHostedVideoPage(campaign, video, pageUrl, pageName, standfirst)
+      metadata = Metadata.forHardcodedHostedVideoPage(id, campaign, video, pageName, standfirst)
     )
   }
 
   private def withNextPage(hostedPage: HostedVideoPage, newPage: HostedPage): HostedPage = {
-    val nextPage: Some[NextHostedPage] = Some(NextHostedPage(imageUrl = newPage.imageUrl, pageUrl = newPage.pageUrl, title = newPage.title, contentType = newPage.contentType))
+    val nextPage: Some[NextHostedPage] = Some(
+      NextHostedPage(
+        id = newPage.id,
+        imageUrl = newPage.imageUrl,
+        title = newPage.title,
+        contentType = newPage.contentType
+      )
+    )
     hostedPage.copy(nextPage = nextPage, nextVideo = nextPage)
   }
 

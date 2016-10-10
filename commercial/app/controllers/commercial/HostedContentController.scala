@@ -24,7 +24,6 @@ class HostedContentController(contentApiClient: ContentApiClient)
     hostedPage map {
       case Some(page: HostedVideoPage) => cached(guardianHostedVideo(page))
       case Some(page: HostedGalleryPage) => cached(guardianHostedGallery(page))
-      case Some(page: ZootropolisPage) => cached(zootropolisPage(page))
       case Some(page: HostedArticlePage) => cached(guardianHostedArticle(page))
       case _ => NoCache(NotFound)
     }

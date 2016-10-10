@@ -238,7 +238,8 @@ final case class MetaData (
     contentType == "Interactive" ||
       sectionId == "identity" ||
       contentType.toLowerCase == "gallery" ||
-      contentType.toLowerCase == "survey"
+      contentType.toLowerCase == "survey" ||
+      contentType.toLowerCase == "signup"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")

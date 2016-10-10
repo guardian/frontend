@@ -3,18 +3,19 @@ package recorder
 import java.io._
 import java.net.URI
 import java.nio.ByteBuffer
+import java.nio.file.{Files, Paths}
 import java.util
 
-import common.ExecutionContexts
-import conf.Configuration
 import com.ning.http.client.uri.Uri
 import com.ning.http.client.{FluentCaseInsensitiveStringsMap, Response => AHCResponse}
+import common.ExecutionContexts
+import conf.Configuration
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ning.NingWSResponse
 
 import scala.concurrent.Future
-import scala.io.Source
+import scala.io.Codec.UTF8
 
 trait HttpRecorder[A] extends ExecutionContexts {
 
@@ -49,9 +50,9 @@ trait HttpRecorder[A] extends ExecutionContexts {
     baseDir.mkdir()
   }
 
-  private def put(name: String, value: String): File = {
+  private def put(name: String, value: Array[Byte]): File = {
     val file = new File(baseDir, name)
-    val out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")
+    val out = new FileOutputStream(file)
     out.write(value)
     out.close()
     file
@@ -66,11 +67,11 @@ trait HttpRecorder[A] extends ExecutionContexts {
     }
   }
 
-  private def contentFromFile(file: File): String = Source.fromFile(file, "UTF-8").getLines().mkString
+  private def contentFromFile(file: File): Array[Byte] = Files.readAllBytes(Paths.get(file.getPath))
 
-  def toResponse(str: String): A
+  def toResponse(str: Array[Byte]): A
 
-  def fromResponse(response: A): String
+  def fromResponse(response: A): Array[Byte]
 
   private def headersFormat(headers: Map[String, String]): String = {
     headers.toList.sortBy(_._1).map{ case (key, value) => key + value }.mkString
@@ -88,7 +89,8 @@ trait HttpRecorder[A] extends ExecutionContexts {
 trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
 
   val errorPrefix = "Error:"
-  override def toResponse(str: String) = {
+  override def toResponse(b: Array[Byte]) = {
+    val str = new String(b, UTF8.charSet)
     if (str.startsWith(errorPrefix)) {
       NingWSResponse(Response("", str.replace(errorPrefix, "").toInt))
     } else {
@@ -96,12 +98,13 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     }
   }
 
-  override def fromResponse(response: WSResponse) = {
-    if (response.status == 200) {
+  override def fromResponse(response: WSResponse): Array[Byte] = {
+    val strResponse = if (response.status == 200) {
       response.body
     } else {
       errorPrefix + response.status
     }
+    strResponse.getBytes(UTF8.charSet)
   }
 
   private case class Response(getResponseBody: String, status: Int) extends AHCResponse {

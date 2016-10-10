@@ -12,6 +12,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val viewpoints = None
     val media = None
     val explainers = None
+    val interactives = None
     val cta = Some(
       Seq(
         new Atom {
@@ -48,6 +49,8 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val targeting = None
     val aboutLink = None
     val sponsorLogoDimensions = None
+    val highContrastSponsorLogo = None
+    val highContrastSponsorLogoDimensions = None
   }
 
   private def mkTag(
@@ -124,19 +127,19 @@ class HostedTrailsTest extends FlatSpec with Matchers {
   "fromContent" should "give later trails when later content available" in {
     val trails = HostedTrails.fromContent("advertiser-content/campaign/page1", 2, content)
     trails.size shouldBe 2
-    trails.map(_.pageUrl) shouldBe Seq("advertiser-content/campaign/page2", "advertiser-content/campaign/page3")
+    trails.map(_.id) shouldBe Seq("advertiser-content/campaign/page2", "advertiser-content/campaign/page3")
   }
 
   it should "give mixture of later and earlier trails if not enough later content available" in {
     val trails = HostedTrails.fromContent("advertiser-content/campaign/page3", 2, content)
     trails.size shouldBe 2
-    trails.map(_.pageUrl) shouldBe Seq("advertiser-content/campaign/page1", "advertiser-content/campaign/page4")
+    trails.map(_.id) shouldBe Seq("advertiser-content/campaign/page1", "advertiser-content/campaign/page4")
   }
 
   it should "give earlier trails only if no later content available" in {
     val trails = HostedTrails.fromContent("advertiser-content/campaign/page4", 2, content)
     trails.size shouldBe 2
-    trails.map(_.pageUrl) shouldBe Seq("advertiser-content/campaign/page1", "advertiser-content/campaign/page2")
+    trails.map(_.id) shouldBe Seq("advertiser-content/campaign/page1", "advertiser-content/campaign/page2")
   }
 
   it should "give fewer trails if not enough content in campaign" in {
@@ -146,7 +149,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     )
     val trails = HostedTrails.fromContent("advertiser-content/campaign/page1", 2, content)
     trails.size shouldBe 1
-    trails.map(_.pageUrl) shouldBe Seq("advertiser-content/campaign/page2")
+    trails.map(_.id) shouldBe Seq("advertiser-content/campaign/page2")
   }
 
   it should "give no trails if only one item in campaign" in {

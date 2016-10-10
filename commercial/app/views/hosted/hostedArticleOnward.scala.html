@@ -16,30 +16,30 @@
         </div>
         <div class="hosted__next-video__carousel-wrapper js-carousel-wrapper" data-number-of-items="10">
             <ul>
-                @for(trail <- trails) {
-                    <li class="hosted__next-video__carousel-item">
-                        <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                            <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                            <p class="hosted__next-page-title">@{trail.title}</p>
-                        </a>
-                        <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                            <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                            <p class="hosted__next-page-title">@{trail.title}</p>
-                        </a>
-                        <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                            <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                            <p class="hosted__next-page-title">@{trail.title}</p>
-                        </a>
-                        <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                            <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                            <p class="hosted__next-page-title">@{trail.title}</p>
-                        </a>
-                        <a href="@{trail.pageUrl}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                            <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                            <p class="hosted__next-page-title">@{trail.title}</p>
-                        </a>
-                    </li>
-                }
+            @for(trail <- trails) {
+                <li class="hosted__next-video__carousel-item">
+                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                    </a>
+                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                    </a>
+                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                    </a>
+                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                    </a>
+                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                    </a>
+                </li>
+            }
             </ul>
         </div>
     </div>

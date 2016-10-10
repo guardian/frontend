@@ -13,7 +13,6 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
-    'common/modules/experiments/tests/contributions-epic-short',
     'common/modules/experiments/tests/hosted-more-from'
 ], function (
     reportError,
@@ -30,7 +29,6 @@ define([
     WeekendReadingEmail,
     WeekendReadingPromo,
     UpgradeMobileRichLinksBelowViewport,
-    ContributionsEpicShort,
     HostedMoreFrom
 ) {
 
@@ -40,7 +38,6 @@ define([
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new UpgradeMobileRichLinksBelowViewport(),
-        new ContributionsEpicShort(),
         new HostedMoreFrom()
     ].concat(MembershipEngagementBannerTests);
 

@@ -42,6 +42,7 @@ GET         /commercial/api/capi-multiple.json                            contro
 GET         /commercial/capi-single                                       controllers.commercial.ContentApiOffersController.itemHtml
 GET         /commercial/capi-single-merch.json                            controllers.commercial.ContentApiOffersController.itemJson
 GET         /commercial/capi-single-merch                                 controllers.commercial.ContentApiOffersController.itemHtml
+GET         /commercial/api/traffic-driver.json                           controllers.commercial.TrafficDriverController.renderJson
 GET         /commercial/paid.json                                         controllers.commercial.PaidContentCardController.cardJson
 GET         /commercial/paid                                              controllers.commercial.PaidContentCardController.cardHtml
 

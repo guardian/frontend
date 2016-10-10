@@ -302,6 +302,7 @@ GET            /commercial/api/capi-single.json                                 
 GET            /commercial/api/capi-multiple.json                                                                                controllers.commercial.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
 GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
+GET            /commercial/api/traffic-driver.json                                                                               controllers.commercial.TrafficDriverController.renderJson
 GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti

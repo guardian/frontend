@@ -28,8 +28,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiHost,
-    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
-    useThrift = false
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
   implicit def fapiClient: ApiClient =
@@ -59,8 +58,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiDraftHost,
-    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
-    useThrift = false
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
   implicit def fapiClient: ApiClient =
