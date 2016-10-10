@@ -65,7 +65,6 @@ object BodyCleaner {
       TimestampCleaner(article),
       MinuteCleaner(article),
       YouTubeAtomCleaner(article)
-
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
