@@ -1,8 +1,16 @@
 @()(implicit request: RequestHeader)
 
-@admin_main("Clear page", "PROD", isAuthed = true) {
+@admin_main("Purge Cache", "PROD", isAuthed = true) {
 
-    <h1>Clear page</h1>
+    <h1>Purge Cache</h1>
+
+    <h3>Usage Warnings:</h3>
+    <ul>
+        <li>This tool performs a <b><i>hard</i></b> purge of the cached content on www.theguardian.com. This will <b>immediately stop the cached content from being served</b> to visitors to the site.</li>
+        <li>If the backend service that provides the content is not healthy, <b>errors will immediately be served to all visitors trying to reach the content.</b></li>
+        <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
+        <li>If the initial test below is unsuccessful, continuing with the purge should only be done in the case of takedowns.</li>
+    </ul>
 
     <div>
         <p>
@@ -15,8 +23,10 @@
             Only works on <code>www.theguardian.com</code>
         </p>
     </div>
+
     <form method="POST">
         <input class="img-url" name="url" type="text" value="" placeholder="http://www.theguardian.com/books/xxxxx"/>
-        <button type="submit">Clear</button>
+        <button class="btn btn-danger" type="submit">Purge</button>
     </form>
+
 }
