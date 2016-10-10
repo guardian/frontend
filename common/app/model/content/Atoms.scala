@@ -3,7 +3,8 @@ package model.content
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.{AtomData, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomMediaAsset}
+import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
+import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
@@ -82,7 +83,7 @@ object Atoms extends common.Logging {
 
 object MediaAtom extends common.Logging {
 
-  def mediaAtomMake(id: String, mediaAtom: com.gu.contentatom.thrift.atom.media.MediaAtom): MediaAtom =
+  def mediaAtomMake(id: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
     MediaAtom(id = id,
       assets = mediaAtom.assets.map(mediaAssetMake),
       title = mediaAtom.title,
@@ -90,7 +91,7 @@ object MediaAtom extends common.Logging {
       source = mediaAtom.source,
       posterUrl = mediaAtom.posterUrl)
 
-  def mediaAssetMake(mediaAsset: AtomMediaAsset): MediaAsset =
+  def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
   {
     MediaAsset(id = mediaAsset.id,
       version = mediaAsset.version,
