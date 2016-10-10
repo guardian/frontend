@@ -24,15 +24,15 @@ define([
     var EditionTest = function (edition) {
 
         this.edition = edition;
-        this.id = 'MembershipEngagementBanner'+edition[0].toUpperCase() + edition.substr(1);
-        this.start = '2016-09-08';
-        this.expiry = '2016-10-08';
+        this.id = 'MembershipEngagementBannerExtended'+edition[0].toUpperCase() + edition.substr(1);
+        this.start = '2016-10-10';
+        this.expiry = '2017-10-10';
         this.author = 'Roberto Tyley';
-        this.description = 'Show contributions as well as membership messages for the ' + edition + ' edition.';
+        this.description = 'Show membership messages for the ' + edition + ' edition.';
         this.showForSensitive = false;
         this.audience = 1.0;
         this.audienceOffset = 0;
-        this.successMeasure = 'Conversion for contributions';
+        this.successMeasure = 'Conversion for membership';
         this.audienceCriteria = 'All users in the ' + edition + ' edition.';
         this.dataLinkNames = '';
         this.idealOutcome = '';
@@ -111,7 +111,6 @@ define([
     return [
         new EditionTest('uk')
             .addMembershipVariant('coffee', 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.')
-            .addMembershipVariant('voice', 'The Guardian’s voice is needed now more than ever. Support our journalism for just £49 per year.')
         ,new EditionTest('us')
             .addMembershipVariant('fearless', 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $49 a year.')
             .addMembershipVariant('accountable', 'We’re accountable to readers, not shareholders. Support The Guardian for $49 a year.')
