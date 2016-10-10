@@ -54,30 +54,9 @@ trait LinkTo extends Logging {
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() =>
-        if (isHttpOnly(editionalisedPath)) {
-          url.replace("https://", "http://")
-        } else {
-          url.replace("http://", "https://")
-        }
-
+      case ProdURL() => url.replace("http://", "https://")
       case _ => url
     }
-  }
-
-  private def isHttpOnly(path: String) = {
-    // check if the url has _any_ edition prefix (/au/, /us/ ... )
-    // as users can have au edition cookie but be on a us edition url
-
-    val hasEditionPrefix = Edition.all.exists{ edition =>
-      path.startsWith(edition.id.toLowerCase + "/")
-    }
-
-    def sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
-
-    val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
-
-    httpSections.exists(pathWithoutEdition.startsWith) || InteractiveUrl.findFirstIn(path).nonEmpty
   }
 
   private def clean(path: String) = path match {
