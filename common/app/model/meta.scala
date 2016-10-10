@@ -548,6 +548,7 @@ final case class Tags(
   lazy val types: List[Tag] = tagsOfType("Type")
   lazy val tracking: List[Tag] = tagsOfType("Tracking")
   lazy val paidContent: List[Tag] = tagsOfType("PaidContent")
+  lazy val isHosted: Boolean = tagsOfTypeOrPaidContentSubtype("PaidContent", "HostedContent").nonEmpty
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
   lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
