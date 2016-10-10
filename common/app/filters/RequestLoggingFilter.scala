@@ -10,9 +10,9 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
 
   override def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
 
-    implicit val stopWatch = new StopWatch
+    val stopWatch = new StopWatch
     val result = next(rh)
-    val requestLogger = RequestLogger(rh)
+    val requestLogger = RequestLogger().withRequestHeaders(rh).withStopWatch(stopWatch)
     result onComplete {
       case Success(response) =>
         response.header.headers.get("X-Accel-Redirect") match {

@@ -15,8 +15,7 @@ class RequestLoggerTest extends FlatSpec with Matchers {
       ("NotSupported", "value")
     )
     val req = FakeRequest("GET", "/some/path").withHeaders(headers:_*)
-    implicit val stopWatch = new StopWatch
-    val logger = RequestLogger(req)
+    val logger = RequestLogger().withRequestHeaders(req)
     val expectedFields: List[LogField] = List(
       "req.method" -> "GET",
       "req.url" -> "/some/path",
