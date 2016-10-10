@@ -3,6 +3,8 @@ package common
 import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
 
+import scala.util.Random
+
 case class RequestLoggerFields(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) {
 
   private lazy val requestHeadersFields: List[LogField] = {
@@ -36,7 +38,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       List[LogField](
         "req.method" -> r.method,
         "req.url" -> r.uri,
-        "req.id" -> r.id.toString
+        "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString
       )
     }.getOrElse(Nil)
 

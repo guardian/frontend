@@ -15,15 +15,13 @@ class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
     val requestLogger = RequestLogger().withRequestHeaders(rh).withStopWatch(stopWatch)
     result onComplete {
       case Success(response) =>
-        response.header.headers.get("X-Accel-Redirect") match {
-          case Some(internalRedirect) =>
-            requestLogger.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed} ms and redirected to $internalRedirect")
-          case None =>
-            requestLogger.info(s"${rh.method} ${rh.uri} took ${stopWatch.elapsed} ms and returned ${response.header.status}")
+        val additionalInfo = response.header.headers.get("X-Accel-Redirect") match {
+          case Some(internalRedirect) => s" - internal redirect to $internalRedirect"
+          case None => ""
         }
-
+        requestLogger.withResponse(response).info(s"${rh.method} ${rh.uri}$additionalInfo")
       case Failure(error) =>
-        requestLogger.warn(s"${rh.method} ${rh.uri} failed after ${stopWatch.elapsed} ms", error)
+        requestLogger.warn(s"${rh.method} ${rh.uri} failed", error)
     }
     result
   }
