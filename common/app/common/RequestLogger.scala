@@ -1,10 +1,11 @@
 package common
 
-import play.api.mvc.RequestHeader
+import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
 
-case class RequestLogger(rh: Option[RequestHeader], sw: Option[StopWatch]) extends Logging {
-  private lazy val headersFields: List[LogField] = {
+case class RequestLoggerFields(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) {
+
+  private lazy val requestHeadersFields: List[LogField] = {
     val whitelistedHeaderNames = Set(
       "Host",
       "From",
@@ -20,7 +21,7 @@ case class RequestLogger(rh: Option[RequestHeader], sw: Option[StopWatch]) exten
       "Fastly-SSL",
       "Fastly-Digest"
     )
-    val allHeadersFields = rh.map {
+    val allHeadersFields = request.map {
       _.headers.toMap.map {
         case (headerName, headerValues) => (headerName, headerValues.mkString(","))
       }
@@ -31,7 +32,7 @@ case class RequestLogger(rh: Option[RequestHeader], sw: Option[StopWatch]) exten
     (whitelistedHeaders ++ guardianSpecificHeaders).toList.map(t => LogFieldString(s"req.header.${t._1}", t._2))
   }
   private lazy val customFields: List[LogField] = {
-    val requestHeaders: List[LogField] = rh.map { r: RequestHeader =>
+    val requestHeaders: List[LogField] = request.map { r: RequestHeader =>
       List[LogField](
         "req.method" -> r.method,
         "req.url" -> r.uri,
@@ -39,23 +40,38 @@ case class RequestLogger(rh: Option[RequestHeader], sw: Option[StopWatch]) exten
       )
     }.getOrElse(Nil)
 
-    val stopWatchHeaders: List[LogField] = sw.map { s: StopWatch =>
+    val responseHeaders: List[LogField] = response.map { r: Result =>
+      List[LogField](
+        "resp.status" -> r.header.status
+      )
+    }.getOrElse(Nil)
+
+    val stopWatchHeaders: List[LogField] = stopWatch.map { s: StopWatch =>
       List[LogField](
         "req.latency_millis" -> s.elapsed
       )
     }.getOrElse(Nil)
 
-    requestHeaders ++ stopWatchHeaders
+    requestHeaders ++ responseHeaders ++ stopWatchHeaders
   }
 
-  private[common] lazy val allFields: List[LogField] = customFields ++ headersFields
+  def toList: List[LogField] = customFields ++ requestHeadersFields
+}
 
-  def withRequestHeaders(requestHeader: RequestHeader): RequestLogger = {
-    copy(Some(requestHeader), sw)
+case class RequestLogger(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) extends Logging {
+
+  private def allFields: List[LogField] = RequestLoggerFields(request, response, stopWatch).toList
+
+  def withRequestHeaders(rh: RequestHeader): RequestLogger = {
+    copy(Some(rh), response, stopWatch)
   }
 
-  def withStopWatch(stopWatch: StopWatch): RequestLogger = {
-    copy(rh, Some(stopWatch))
+  def withResponse(resp: Result): RequestLogger = {
+    copy(request, Some(resp), stopWatch)
+  }
+
+  def withStopWatch(sw: StopWatch): RequestLogger = {
+    copy(request, response, Some(sw))
   }
 
   def info(message: String): Unit = {
@@ -70,5 +86,5 @@ case class RequestLogger(rh: Option[RequestHeader], sw: Option[StopWatch]) exten
 }
 
 object RequestLogger {
-  def apply(): RequestLogger = RequestLogger(None, None)
+  def apply(): RequestLogger = RequestLogger(None, None, None)
 }
