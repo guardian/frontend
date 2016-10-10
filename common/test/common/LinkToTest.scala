@@ -64,7 +64,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/rss", edition) should be ("http://www.foo.com/uk/rss")
     // not editionalised
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
-  }s
+  }
 
   it should "always write interactives as https links" in {
     val interactives = Seq(
