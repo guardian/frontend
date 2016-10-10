@@ -8,7 +8,8 @@ import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import controllers.commercial._
+import _root_.commercial.controllers.CommercialControllers
+import _root_.commercial.{CommercialServices, CommercialLifecycle}
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
