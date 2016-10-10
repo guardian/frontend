@@ -1,9 +1,10 @@
-package test
+package commercial.test
 
 import commercial.controllers.HealthCheck
 import model.commercial._
 import model.commercial.books._
 import org.scalatest.{BeforeAndAfterAll, Suites}
+import test.{SingleServerSuite, WithTestWsClient}
 
 class CommercialTestSuite extends Suites (
   new commercial.controllers.TravelOffersControllerTest,
