@@ -318,5 +318,5 @@ object Fixtures {
                                  |}""".stripMargin
 
 
-  lazy val rawEventBriteFeed =   scala.io.Source.fromFile("commercial/test/model/commercial/events/masterclasses_full_page.json").getLines.mkString
+  lazy val rawEventBriteFeed =   scala.io.Source.fromFile("commercial/test/model/events/masterclasses_full_page.json").getLines.mkString
   }
