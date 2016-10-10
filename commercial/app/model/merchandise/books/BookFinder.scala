@@ -1,12 +1,12 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.commercial.{Book, FeedParseException, FeedReadException, FeedReader, FeedRequest}
-import play.api.libs.concurrent.Akka
+import commercial.model.merchandise.Book
+import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.WSSignatureCalculator

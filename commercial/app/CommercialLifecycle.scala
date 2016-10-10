@@ -1,10 +1,10 @@
 package commercial
 
 import app.LifecycleComponent
-import commercial.feeds._
-import common._
+import commercial.model.feeds._
+import commercial.model.merchandise.jobs.Industries
+import common.{AkkaAsync, JobScheduler, Logging}
 import metrics.MetricUploader
-import model.commercial.jobs.Industries
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,12 +1,11 @@
-package commercial.feeds
+package commercial.model.feeds
 
 import java.lang.System.currentTimeMillis
 
 import com.ning.http.client.Response
 import conf.Configuration
-import model.commercial.events.Eventbrite.EBResponse
-import model.commercial.soulmates.SoulmatesAgent
-import play.api.Play.current
+import commercial.model.merchandise.events.Eventbrite.EBResponse
+import commercial.model.merchandise.soulmates.SoulmatesAgent
 import play.api.libs.json.{JsArray, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 

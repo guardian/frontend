@@ -4,7 +4,7 @@ import common.commercial.hosted._
 import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
-import model.commercial.hosted.HostedTrails
+import commercial.model.hosted.HostedTrails
 import model.{Cached, NoCache}
 import play.api.mvc._
 import play.twirl.api.Html

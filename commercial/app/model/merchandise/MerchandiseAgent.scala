@@ -1,7 +1,7 @@
-package model.commercial
+package commercial.model.merchandise
 
 import common.{AkkaAgent, Logging}
-import model.Segment
+import commercial.model.Segment
 
 import scala.concurrent.Future
 import scala.util.Random

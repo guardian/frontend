@@ -1,13 +1,10 @@
 package commercial.controllers
 
-import commercial.controllers.util.{specificIds, componentNilMaxAge, componentMaxAge, jsonFormat, htmlFormat}
 import common.commercial._
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
+import commercial.model.capi.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
 import model.{Cached, NoCache}
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
 import play.api.mvc._
 import model._
 
@@ -65,7 +62,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
 
-  private def renderItems(format: util.Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)

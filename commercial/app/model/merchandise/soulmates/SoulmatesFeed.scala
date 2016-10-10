@@ -1,10 +1,10 @@
-package model.commercial.soulmates
+package commercial.model.merchandise.soulmates
 
 import java.lang.System._
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import model.commercial.Member
+import commercial.model.merchandise.Member
 import play.api.libs.json.{JsValue, Json}
 
 import scala.concurrent.Future

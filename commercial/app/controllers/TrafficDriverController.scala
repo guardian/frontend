@@ -2,8 +2,8 @@ package commercial.controllers
 
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import commercial.controllers.util.{specificIds, jsonFormat, componentNilMaxAge}
-import model.commercial.{CapiAgent, TrafficDriver, Lookup}
+import commercial.model.capi.CapiAgent
+import commercial.model.merchandise.TrafficDriver
 import model.{Cached, ContentType}
 import play.api.mvc.{Action, AnyContent, Controller, Request}
 

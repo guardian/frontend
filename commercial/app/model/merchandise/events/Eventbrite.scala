@@ -1,8 +1,8 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 import java.lang.System._
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
 import play.api.data.validation.ValidationError

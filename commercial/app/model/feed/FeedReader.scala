@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.feeds
 
 import com.ning.http.client.{Response => AHCResponse}
 import commercial.CommercialMetrics

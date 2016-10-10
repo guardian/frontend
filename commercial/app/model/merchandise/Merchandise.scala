@@ -1,13 +1,13 @@
-package model.commercial
+package commercial.model.merchandise
 
+import commercial.model.OptString
 import common.JsonComponent
 import model.ImageElement
-import model.commercial.events.LiveEventMembershipInfo
-import model.commercial.events.Eventbrite._
-import model.commercial.jobs.Industries
+import commercial.model.merchandise.events.LiveEventMembershipInfo
+import commercial.model.merchandise.events.Eventbrite._
+import commercial.model.merchandise.jobs.Industries
 import views.support.Item300
-
-import org.apache.commons.lang.{StringUtils, StringEscapeUtils}
+import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
@@ -15,6 +15,7 @@ import org.jsoup.nodes.{Document, Element}
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+
 import scala.util.Try
 import scala.util.control.NonFatal
 import scala.xml.Node

@@ -1,4 +1,4 @@
-package model.commercial.hosted
+package commercial.model.hosted
 
 import com.gu.contentapi.client.model.v1.Content
 import common.Logging
