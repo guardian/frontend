@@ -12,34 +12,41 @@
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
             <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card @emailListing.theme">
 
-                <div class="newsletter-card__name">@emailListing.name
-                    @if(emailListing.subheading.isDefined){ <br>@emailListing.subheading }
+                <div class="newsletter-card__header">
+
                 </div>
 
                 <div class="newsletter-card__content">
+
+                    <div class="newsletter-card__name">@emailListing.name
+                        @if(emailListing.subheading.isDefined){ @emailListing.subheading }
+                    </div>
+
                     @emailListing.teaser
-                </div>
-                <div class="newsletter-card__meta">
+
                     <div class="newsletter-card__frequency">
                         @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
                         @emailListing.frequency
                     </div>
+                </div>
+
+                <div class="newsletter-card__meta">
+                    <div class="newsletter-card__signup">
+                        <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup"
+                                data-link-name="Signup @emailListing.name"
+                                type="button">
+                            <span>Sign up</span>
+                        </button>
+                    </div>
                     <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                            <button class="button button--tertiary newsletter-card__lozenge"
+                            <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview"
                                     data-link-name="Preview @emailListing.name"
-                                    type="button"
-                                    value="@emailListing.listId">
+                                    type="button">
                                 <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
                             </button>
                         </a>}
-                    </div>
-                </div>
-
-                <div class="newsletter-card__signup">
-                    <div>
-                        <iframe src="/email/form/newsletters/@emailListing.listId" height="218px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=""></iframe>
                     </div>
                 </div>
             </div>
@@ -47,7 +54,7 @@
     </div>
 }
 
-@signupMain(signupPage) {
+@main(signupPage, projectName = Some("signup")) { } {
     <div class="content">
         <div class="gs-container">
             <div class="newsletters-heading">newsletters</div>
