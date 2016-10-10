@@ -22,10 +22,6 @@ trait LinkTo extends Logging {
   private val GuardianUrl = "^(http[s]?://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
-  private val InteractiveUrl = """(/(ng-)?interactive/.*)$""".r
-
-  val httpSections: Seq[String] =
-    Seq("politics")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
