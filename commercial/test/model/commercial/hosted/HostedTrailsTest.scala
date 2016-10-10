@@ -12,6 +12,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val viewpoints = None
     val media = None
     val explainers = None
+    val interactives = None
     val cta = Some(
       Seq(
         new Atom {
@@ -48,6 +49,8 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val targeting = None
     val aboutLink = None
     val sponsorLogoDimensions = None
+    val highContrastSponsorLogo = None
+    val highContrastSponsorLogoDimensions = None
   }
 
   private def mkTag(
