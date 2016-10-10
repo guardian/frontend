@@ -9,7 +9,7 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
 import _root_.commercial.controllers.CommercialControllers
-import _root_.commercial.{CommercialServices, CommercialLifecycle}
+import _root_.commercial.CommercialLifecycle
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
