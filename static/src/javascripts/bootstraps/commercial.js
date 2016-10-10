@@ -15,7 +15,6 @@ define([
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
-    'commercial/modules/hosted/colours',
     'commercial/modules/hosted/onward-journey-carousel',
     'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
@@ -42,7 +41,6 @@ define([
     hostedAbout,
     hostedVideo,
     hostedGallery,
-    hostedColours,
     hostedOJCarousel,
     hostedOnward,
     sliceAdverts,
@@ -82,7 +80,6 @@ define([
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init],
-            ['cm-hostedColours', hostedColours.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
