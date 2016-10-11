@@ -52,11 +52,6 @@ module.exports = function (grunt) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
 
-    // Default task - used by grunt-tc
-    grunt.registerTask('default', function () {
-        grunt.task.run(['shell:install', 'clean', 'validate', 'compile-assets', 'test', 'analyse']);
-    });
-
     /**
      * Deprecated/retired tasks
      */
@@ -119,15 +114,6 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
-    var identity = function (x) { return x; };
-    grunt.registerTask('compile-assets', [
-        'compile:css',
-        (options.isDev ? 'develop:js' : 'compile:js'),
-        'compile:fonts',
-        !options.isDev && 'makeDeploysRadiator',
-        !options.isDev && 'asset_hash',
-        'compile:conf'
-    ].filter(identity));
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

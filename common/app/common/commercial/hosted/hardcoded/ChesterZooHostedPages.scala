@@ -9,7 +9,7 @@ object ChesterZooHostedPages {
     id = "chester-zoo-act-for-wildlife",
     name = "What we fight for",
     owner = "Chester Zoo",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png"),
+    logoUrl = "https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png",
     fontColour = FontColour("#E31B22")
   )
 
