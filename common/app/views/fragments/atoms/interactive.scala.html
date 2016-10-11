@@ -7,8 +7,27 @@
     @HtmlFormat.raw(interactive.html)
 }
 
+@iframeBody = {
+    @body
+    <script>
+        function resize() {
+            window.frameElement.height = document.body.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+    </script>
+    @for(js <- interactive.mainJS) {
+        <script src="https://interactive.guim.co.uk/libs/require.js/2.3.2/require.min.js"></script>
+        <script>
+            require(['@js'], function (interactive) {
+                interactive.main(document.body);
+            });
+        </script>
+    }
+}
+
 @if(shouldFence) {
-    <iframe class="fenced" srcdoc="@body.toString"></iframe>
+    <iframe srcdoc="@iframeBody.toString"></iframe>
 } else {
     <figure class="interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
         @body
