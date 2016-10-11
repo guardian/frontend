@@ -3,7 +3,7 @@
 # if you've got as far as reading the makefile.
 
 # Lists common tasks.
-# Also the default task ('make' === 'make help').
+# Also the default task (`make` === `make help`).
 help:
 	@node tools/messages.js describeMakefile
 
@@ -31,7 +31,7 @@ uninstall: # PRIVATE
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.
-# The nuclear option if 'make install' hasn't worked.
+# The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
 
@@ -55,41 +55,12 @@ shrinkwrap: # PRIVATE
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: clean-assets \
-	compile-css \
-	compile-js \
-	compile-fonts \
-	compile-conf \
-	compile-deploys-radiator \
-	hash-assets
+compile: clean-assets
+	@grunt compile-assets
 
 # Compile all assets for development.
-compile-dev: clean-assets \
-	compile-css \
-	compile-js-dev \
-	compile-fonts \
-	compile-conf
-
-compile-js: # PRIVATE
-	@grunt compile:js ${ARGS}
-
-compile-js-dev: # PRIVATE
-	@grunt develop:js ${ARGS}
-
-compile-css: # PRIVATE
-	@grunt compile:css ${ARGS}
-
-compile-fonts: # PRIVATE
-	@grunt compile:fonts ${ARGS}
-
-compile-deploys-radiator: # PRIVATE
-	@grunt makeDeploysRadiator ${ARGS}
-
-compile-conf: # PRIVATE
-	@grunt compile:conf ${ARGS}
-
-hash-assets: # PRIVATE
-	@grunt asset_hash ${ARGS}
+compile-dev: clean-assets
+	@grunt compile-assets --dev
 
 # Delete all asset build artefacts, includes the builds themselves.
 clean-assets: # PRIVATE

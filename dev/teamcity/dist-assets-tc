@@ -17,8 +17,7 @@ echo "##teamcity[progressFinish 'asset validation and tests']"
 
 echo "##teamcity[progressStart 'asset dist']"
 set -x
-make ARGS="--stack --no-color" compile
-./grunt-tc emitAbTestInfo
+./grunt-tc compile-assets emitAbTestInfo
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
