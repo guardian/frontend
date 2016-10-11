@@ -60,7 +60,7 @@ class HostedContentController(contentApiClient: ContentApiClient)
     renderPage(page)
   }
 
-  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String) = Action.async {
+  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String, items: Option[Int]) = Action.async {
     implicit request =>
 
       val capiResponse = {
@@ -84,13 +84,13 @@ class HostedContentController(contentApiClient: ContentApiClient)
           val itemId = s"advertiser-content/$campaignName/$pageName"
           contentType match {
             case "video" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 1, results)
+              val trails = HostedTrails.fromContent(itemId, trailCount = items.getOrElse(1), results)
               Cached(cacheDuration)(JsonComponent(hostedVideoOnward(trails.headOption)))
             case "article" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              val trails = HostedTrails.fromContent(itemId, trailCount = items.getOrElse(2), results)
               Cached(cacheDuration)(JsonComponent(hostedArticleOnward(trails)))
             case "gallery" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              val trails = HostedTrails.fromContent(itemId, trailCount = items.getOrElse(2), results)
               Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
             case _ =>
               Cached(0)(JsonNotFound())

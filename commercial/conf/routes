@@ -49,7 +49,7 @@ GET         /commercial/paid                                              contro
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
-GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType, items: Option[Int])
 
 # Subscriber number input page
 GET         /commercial/subscriber-number                                   controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage

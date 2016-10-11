@@ -171,6 +171,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .hide-on-desktop {
         .hosted-article__next-page {
             margin-top: 30px;
+            position: relative;
         }
         .hosted__next-page--header {
             margin: 0;
@@ -492,6 +493,42 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 }
 
 .hosted__next-video__carousel-wrapper {
-    overflow: hidden;
     position: relative;
+    transform: translate(0, 0);
+    transition: transform 1s ease;
+}
+
+.carousel-page {
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    &:first-child {
+        position: relative;
+    }
+}
+.ab-test-variant1 {
+    overflow: hidden;
+    .prev-oj-item {
+        opacity: 0.5;
+    }
+}
+
+.hosted__carousel-marker {
+    text-align: center;
+}
+
+$dotSize: 8px;
+
+.hosted__carousel-dot {
+    width: $dotSize;
+    height: $dotSize;
+    border-radius: $dotSize;
+    display: inline-block;
+    pointer-events: none;
+    border: 1px solid;
+    transition: background-color 750ms ease;
+    &:not(.highlighted){
+        background: transparent;
+    }
 }

@@ -9,37 +9,62 @@ define([
     Promise,
     $
 ) {
-    function moveCarousel($carousel, translateWidth) {
+
+    function HostedCarousel() {
+
+    }
+
+    HostedCarousel.prototype.moveCarousel = function(direction) {
+        var that = this;
+        var pageNo = Math.min(Math.max(this.index + direction, 0), this.pageCount - 1);
+        this.index = pageNo;
+
         fastdom.write(function () {
-            $carousel.css({
-                '-webkit-transform': 'translate(' + translateWidth + 'px);',
-                'transform': 'translate(' + translateWidth + 'px);'
+            var translate = 'translate(-' + pageNo + '00%, 0)';
+            that.$carousel.css({
+                '-webkit-transform': translate,
+                'transform': translate
+            });
+            for(var i = 0; i < that.pageCount; i++){
+                $('.js-carousel-dot-' + i).toggleClass('highlighted', i === pageNo);
+            }
+            that.$prevItem.css({
+                opacity: pageNo === 0 ? 0.5 : 1
+            });
+            that.$nextItem.css({
+                opacity: pageNo === that.pageCount - 1 ? 0.5 : 1
             });
         });
-    }
+    };
+
+    HostedCarousel.prototype.bindButtons = function() {
+        this.$carousel = $('.js-carousel-wrapper');
+        this.$nextItem = $('.next-oj-item');
+        this.$prevItem = $('.prev-oj-item');
+        this.pageCount = $('.carousel-page', this.$carousel).length;
+        this.index = 0;
+
+        if (this.$carousel.length) {
+            var that = this;
+            this.$nextItem.each(function(el){
+                bean.on(el, 'click', that.moveCarousel.bind(that, 1));
+            });
+            this.$prevItem.each(function(el){
+                bean.on(el, 'click', that.moveCarousel.bind(that, -1));
+            });
+        }
+
+    };
 
     function init() {
         return new Promise(function(resolve) {
-            var $carousel = $('.js-carousel-wrapper');
-            var $carouselItems = $('.hosted__next-video__carousel-item', $carousel);
-            var $nextItem = $('.next-oj-item');
-            var $prevItem = $('.prev-oj-item');
-
-            if ($carouselItems.length) {
-                var translateWidth = 280; //TODO this should be read from styles not hardcoded
-                bean.on($nextItem, 'click', function() {
-                    moveCarousel($carousel, translateWidth);
-                });
-                bean.on($prevItem, 'click', function() {
-                    moveCarousel($carousel, translateWidth * -1);
-                });
-            }
-
+            new HostedCarousel().bindButtons();
             resolve();
         });
     }
 
     return {
-        init: init
+        init: init,
+        HostedCarousel: HostedCarousel
     };
 });

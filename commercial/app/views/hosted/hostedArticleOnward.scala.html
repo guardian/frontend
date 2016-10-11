@@ -10,37 +10,39 @@
             <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
             <h2 class="hosted__next-page--client-name hosted-tone">@{trails.head.campaign.owner}</h2>
         </div>
-        <div class="hosted__next-video__carousel-arrows">
-            @fragments.inlineSvg("arrow-right", "icon", List("arrow-left", "prev-oj-item"))
-            @fragments.inlineSvg("arrow-right", "icon", List("arrow-right", "next-oj-item"))
-        </div>
-        <div class="hosted__next-video__carousel-wrapper js-carousel-wrapper" data-number-of-items="10">
-            <ul>
-            @for(trail <- trails) {
-                <li class="hosted__next-video__carousel-item">
-                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
-                    </a>
-                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
-                    </a>
-                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
-                    </a>
-                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
-                    </a>
-                    <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
-                    </a>
-                </li>
+        <div class="ab-test-control">
+            @for(trail <- trails.slice(0, 2)) {
+                <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                    <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                </a>
             }
-            </ul>
+        </div>
+        <div class="ab-test-variant1" style="display: none;">
+            <div class="hosted__next-video__carousel-arrows">
+                @fragments.inlineSvg("arrow-right", "icon", List("arrow-left", "prev-oj-item"))
+                @fragments.inlineSvg("arrow-right", "icon", List("arrow-right", "next-oj-item"))
+            </div>
+            <div class="hosted__next-video__carousel-wrapper js-carousel-wrapper">
+                @for(i <- 0 to trails.length if i % 4 == 0) {
+                    <div class="carousel-page" style="left: @{i*25}%;">
+                        @for(trail <- trails.slice(i, i + 4)) {
+                            <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                                <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                                <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="hosted__carousel-marker">
+                @for(i <- 0 to trails.length if i % 4 == 0) {
+                    <div class="hosted__carousel-dot hosted-tone-btn js-carousel-dot-@{i/4} @{if(i == 0) "highlighted" else ""}"></div>
+                }
+            </div>
+        </div>
+        <div class="ab-test-variant2">
+
         </div>
     </div>
 }
