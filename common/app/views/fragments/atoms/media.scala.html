@@ -1,9 +1,14 @@
 @import conf.Configuration.site.host
 @(media: model.content.MediaAtom)(implicit request: RequestHeader)
-@defining(if (!host.isEmpty) "&origin="+host else "") { origin =>
-
-    <iframe id="youtube-@media.assets.head.id" width="420" height="315"
-    src="https://www.youtube.com/embed/@media.assets.head.id?modestbranding=1&enablejsapi=1&rel=0&showinfo=0@origin" frameborder="0"
-    allowfullscreen="">
-    </iframe>
+@defining(media.assets.head.platform == "Youtube") { isYouTube =>
+    @if(isYouTube) {
+        @defining(if(!host.isEmpty) "&origin=" + host else "") { origin =>
+            <iframe id="youtube-@media.assets.head.id" width="420" height="315"
+            src="https://www.youtube.com/embed/@media.assets.head.id?modestbranding=1&enablejsapi=1&rel=0&showinfo=0@origin" frameborder="0"
+            allowfullscreen="">
+            </iframe>
+        }
+    } else {
+        @media.defaultHtml
+    }
 }
