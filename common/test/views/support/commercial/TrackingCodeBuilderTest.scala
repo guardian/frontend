@@ -10,6 +10,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     sponsorshipType = Sponsored,
     sponsorName,
     sponsorLogo = Logo("", None),
+    highContrastSponsorLogo = None,
     sponsorLink = "",
     aboutThisLink = "",
     targeting = None,

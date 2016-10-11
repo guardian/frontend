@@ -1,0 +1,51 @@
+package commercial.controllers
+
+import common.{Edition, ExecutionContexts, JsonComponent, Logging}
+import contentapi.ContentApiClient
+import commercial.controllers.util.{specificIds, jsonFormat, componentNilMaxAge}
+import model.commercial.{CapiAgent, TrafficDriver, Lookup}
+import model.{Cached, ContentType}
+import play.api.mvc.{Action, AnyContent, Controller, Request}
+
+import scala.concurrent.Future
+import scala.util.control.NonFatal
+import scala.concurrent.duration.DurationInt
+
+class TrafficDriverController(
+    contentApiClient: ContentApiClient,
+    capiAgent: CapiAgent)
+  extends Controller
+  with ExecutionContexts
+  with implicits.Requests
+  with Logging {
+
+  // Request information about the article from cAPI.
+  private def retrieveContent()(
+    implicit request: Request[AnyContent]): Future[Option[ContentType]] = {
+
+    val content: Future[Option[model.ContentType]] =
+      capiAgent.contentByShortUrls(specificIds).map(_.headOption)
+
+    content onFailure {
+      case NonFatal(e) => log.error(
+        s"Looking up content by short URL failed: ${e.getMessage}"
+      )
+    }
+
+    content
+
+  }
+
+  // Build model from cAPI data and return as JSON, or empty if nothing found.
+  def renderJson() = Action.async { implicit request =>
+
+    retrieveContent().map {
+      case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
+      case Some(content) => Cached(60.seconds) {
+        JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
+      }
+    }
+
+  }
+
+}
