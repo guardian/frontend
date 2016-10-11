@@ -7,23 +7,22 @@ import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
 
 case class HostedGalleryPage(
-  id: String,
-  campaign: HostedCampaign,
-  pageName: String,
-  title: String,
-  standfirst: String,
-  cta: HostedCallToAction,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val title: String,
+  override val standfirst: String,
+  override val cta: HostedCallToAction,
   ctaIndex: Option[Integer] = None,
-  socialShareText: Option[String] = None,
-  shortSocialShareText: Option[String] = None,
+  override val socialShareText: Option[String] = None,
+  override val shortSocialShareText: Option[String] = None,
   images: List[HostedGalleryImage],
   nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List(),
-  metadata: MetaData
+  override val metadata: MetaData
 ) extends HostedPage {
 
-  val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
-  val imageUrl = images.headOption.map(_.url).getOrElse("")
+  override val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
     HostedPages.fromCampaignAndPageName(campaign.id, _)

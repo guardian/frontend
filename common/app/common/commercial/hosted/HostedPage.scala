@@ -15,16 +15,17 @@ object HostedContentType extends Enumeration {
 }
 
 trait HostedPage extends StandalonePage {
+
   def id: String
   def url = s"/$id"
   def encodedUrl = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
+  // Todo: remove when hardcoded go
+  def pageName: String
+
   def campaign: HostedCampaign
   def title: String
-  // todo where is this set?
   def imageUrl: String
-  // todo remove and replace with title
-  def pageTitle: String
   def standfirst: String
 
   def socialShareText: Option[String]

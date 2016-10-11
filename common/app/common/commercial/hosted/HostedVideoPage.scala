@@ -7,22 +7,20 @@ import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
 
 case class HostedVideoPage(
-  id: String,
-  campaign: HostedCampaign,
-  pageName: String,
-  standfirst: String,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val standfirst: String,
   video: HostedVideo,
-  cta: HostedCallToAction,
-  socialShareText: Option[String],
-  shortSocialShareText: Option[String],
+  override val cta: HostedCallToAction,
+  override val socialShareText: Option[String],
+  override val shortSocialShareText: Option[String],
   nextPage: Option[NextHostedPage] = None,
   nextVideo: Option[NextHostedPage] = None,
-  metadata: MetaData
+  override val metadata: MetaData
 ) extends HostedPage {
-
-  val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
-  val title = video.title
-  val imageUrl = video.posterUrl
+  override val title = video.title
+  override val imageUrl = video.posterUrl
 }
 
 object HostedVideoPage extends Logging {
@@ -41,14 +39,13 @@ object HostedVideoPage extends Logging {
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
 
-      val pageTitle = content.webTitle
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
       HostedVideoPage(
         id = content.id,
         campaign,
-        pageName = pageTitle,
+        pageName = "only used in hardcoded content",
         standfirst,
         video = HostedVideo(
           mediaId = campaignId,
