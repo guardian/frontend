@@ -93,11 +93,8 @@ object HostedGalleryPage extends Logging {
           id = campaignId,
           name = campaignName,
           owner = sponsorship.sponsorName,
-          logo = HostedLogo(
-            url = sponsorship.sponsorLogo
-          ),
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
-          logoLink = None
+          logoUrl = sponsorship.sponsorLogo,
+          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
         ),
         images = galleryImages.toList,
         pageName = content.webTitle,
