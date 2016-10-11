@@ -3,17 +3,18 @@ package contentapi
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
-import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model._
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
 import conf.Configuration.contentApi
-import conf.switches.Switches.{CircuitBreakerSwitch, ContentApiUseThrift}
+import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.libs.ws.WS
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -129,8 +130,8 @@ trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQuery
 final case class CircuitBreakingContentApiClient(
   override val httpClient: HttpClient,
   override val targetUrl: String,
-  val apiKey: String,
-  val useThrift: Boolean) extends MonitoredContentApiClientLogic {
+  apiKey: String
+) extends MonitoredContentApiClientLogic {
 
   private val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
 
@@ -177,21 +178,14 @@ object WSCapiHttpClient extends HttpClient {
 class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
 
   // Public val for test.
-  val jsonClient = CircuitBreakingContentApiClient(
-    httpClient = httpClient,
-    targetUrl = contentApi.contentApiHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = false)
-
-  // Public val for test.
   val thriftClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = contentApi.contentApiHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = true)
+    apiKey = contentApi.key.getOrElse("")
+  )
 
   private def getClient: CircuitBreakingContentApiClient = {
-    if (ContentApiUseThrift.isSwitchedOn) thriftClient else jsonClient
+    thriftClient
   }
 
   def item(id: String) = getClient.item(id)
@@ -217,7 +211,6 @@ class PreviewContentApi(httpClient: HttpClient) {
   val client = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = Configuration.contentApi.previewHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = false
+    apiKey = contentApi.key.getOrElse("")
   )
 }

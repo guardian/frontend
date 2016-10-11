@@ -54,6 +54,10 @@ define([
 
         beforeEach(function (done) {
 
+            injector.mock('common/modules/analytics/google', function noop() {
+                // No implementation
+            });
+
             injector.mock('common/modules/commercial/dfp/PrebidService', function MockPrebidService() {
                 // No implementation
             });

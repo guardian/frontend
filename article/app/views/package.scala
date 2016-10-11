@@ -6,7 +6,7 @@ import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpAdCleaner, AmpEmbedCleaner, CmpParamCleaner, VideoEmbedCleaner}
+import views.support.cleaner._
 
 object MainMediaWidths {
 
@@ -63,7 +63,8 @@ object BodyCleaner {
       ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
-      MinuteCleaner(article)
+      MinuteCleaner(article),
+      YouTubeAtomCleaner(article)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++

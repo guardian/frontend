@@ -2,6 +2,9 @@
 @import common.Edition
 @import views.html.fragments.commercial.pageLogo
 
-    @for(branding <- page.branding(Edition(request))) {
-        @pageLogo(branding, content.tags.isInteractive)
-    }
+@for(branding <- page.branding(Edition(request))) {
+    @pageLogo(branding,
+              content.tags.isInteractive,
+              onDarkBackground = content.tags.isAudio || content.tags.isVideo || content.tags.isGallery
+    )
+}
