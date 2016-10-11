@@ -1,8 +1,8 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
-@import conf.Configuration.site.host
 @import conf.Configuration.environment
-@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward, guardianHostedControlButtons}
+@import conf.Configuration.site.host
+@import views.html.hosted._
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
 @main(page, Some("commercial")) { } {
@@ -41,7 +41,7 @@
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page)
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">

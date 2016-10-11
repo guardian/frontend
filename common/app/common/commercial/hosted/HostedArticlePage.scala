@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content, TagType}
+import com.gu.contentapi.client.model.v1.{Asset, Content}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
@@ -43,12 +43,7 @@ object HostedArticlePage extends Logging {
   def fromContent(content: Content): Option[HostedArticlePage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       ctaAtoms <- atoms.cta
       ctaAtom <- ctaAtoms.headOption
@@ -67,13 +62,7 @@ object HostedArticlePage extends Logging {
 
       HostedArticlePage(
         id = content.id,
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner = sponsorship.sponsorName,
-          logoUrl = sponsorship.sponsorLogo,
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
-        ),
+        campaign,
         pageName = content.webTitle,
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup

@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content, Element, TagType}
+import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
 import model.MetaData
@@ -49,12 +49,7 @@ object HostedGalleryPage extends Logging {
   def fromContent(content: Content): Option[HostedGalleryPage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       ctaAtoms <- atoms.cta
       ctaAtom <- ctaAtoms.headOption
@@ -89,13 +84,7 @@ object HostedGalleryPage extends Logging {
 
       HostedGalleryPage(
         id = content.id,
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner = sponsorship.sponsorName,
-          logoUrl = sponsorship.sponsorLogo,
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
-        ),
+        campaign,
         images = galleryImages.toList,
         pageName = content.webTitle,
         title = content.webTitle,

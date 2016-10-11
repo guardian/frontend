@@ -13,8 +13,6 @@ object Support {
 
     override def campaign: HostedCampaign = hostedCampaign
 
-    override def pageName: String = "unused"
-
     override def title: String = nextPage.title
 
     override def imageUrl: String = nextPage.imageUrl

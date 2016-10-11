@@ -9,6 +9,7 @@ import common.Logging
 import conf.Configuration.site
 import model.StandalonePage
 
+// todo remove
 object HostedContentType extends Enumeration {
   val Video, Article, Gallery = Value
 }
@@ -19,9 +20,10 @@ trait HostedPage extends StandalonePage {
   def encodedUrl = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
   def campaign: HostedCampaign
-  def pageName: String
   def title: String
+  // todo where is this set?
   def imageUrl: String
+  // todo remove and replace with title
   def pageTitle: String
   def standfirst: String
 
@@ -35,6 +37,7 @@ trait HostedPage extends StandalonePage {
 
   def cta: HostedCallToAction
 
+  // todo remove
   def contentType = {
     this match {
       case page: HostedVideoPage => HostedContentType.Video
@@ -64,6 +67,7 @@ object HostedPage extends Logging {
   }
 }
 
+// todo move to hardcoded
 case class NextHostedPage(
   id: String,
   title: String,
@@ -81,6 +85,26 @@ case class HostedCampaign(
   logoUrl: String,
   fontColour: FontColour
 )
+
+object HostedCampaign {
+
+  def fromContent(item: Content): Option[HostedCampaign] = {
+    for {
+      section <- item.section
+      hostedTag <- item.tags find (_.paidContentType.contains("HostedContent"))
+      sponsorships <- hostedTag.activeSponsorships
+      sponsorship <- sponsorships.headOption
+    } yield {
+      HostedCampaign(
+        id = section.id.stripPrefix("advertiser-content/"),
+        name = section.webTitle,
+        owner = sponsorship.sponsorName,
+        logoUrl = sponsorship.sponsorLogo,
+        fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
+      )
+    }
+  }
+}
 
 case class FontColour(brandColour: String) {
 

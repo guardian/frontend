@@ -1,6 +1,6 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.{Content, TagType}
+import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
 import common.commercial.hosted.hardcoded.HostedPages
@@ -30,12 +30,7 @@ object HostedVideoPage extends Logging {
   def fromContent(content: Content): Option[HostedVideoPage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       videoAtoms <- atoms.media
       videoAtom <- videoAtoms.headOption
@@ -45,22 +40,14 @@ object HostedVideoPage extends Logging {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
-      def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
       val pageTitle = content.webTitle
-      val owner = sponsorship.sponsorName
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
       HostedVideoPage(
         id = content.id,
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner,
-          logoUrl = sponsorship.sponsorLogo,
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
-        ),
+        campaign,
         pageName = pageTitle,
         standfirst,
         video = HostedVideo(
@@ -68,7 +55,7 @@ object HostedVideoPage extends Logging {
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
-          youtubeId = youtubeId,
+          youtubeId = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id),
           sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => VideoSource(mimeType, asset.id)))
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
