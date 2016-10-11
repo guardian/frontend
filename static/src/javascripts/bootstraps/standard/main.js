@@ -129,7 +129,10 @@ define([
 
         if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
-                require([el.getAttribute('data-interactive')], function (interactive) {
+                var mainJS = el.getAttribute('data-interactive');
+                if (!mainJS) return;
+
+                require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
@@ -144,19 +147,6 @@ define([
                     if (href) {
                         ophan.trackComponentAttention(href, el);
                     }
-                });
-            });
-
-            qwery('figure.interactive-atom').forEach(function (el) {
-                var mainJS = el.getAttribute('data-interactive');
-                if (!mainJS) return;
-
-                require([mainJS], function (interactive) {
-                    fastdom.defer(function () {
-                        robust.catchErrorsAndLog('interactive-atom-bootstrap', function () {
-                            interactive.main(el, config);
-                        });
-                    });
                 });
             });
         }

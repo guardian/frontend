@@ -20,16 +20,16 @@
         <script src="https://interactive.guim.co.uk/libs/require.js/2.3.2/require.min.js"></script>
         <script>
             require(['@js'], function (interactive) {
-                interactive.main(document.body);
+                interactive.boot(document.body);
             });
         </script>
     }
 }
 
 @if(shouldFence) {
-    <iframe srcdoc="@iframeBody.toString"></iframe>
+    <iframe class="interactive-atom" srcdoc="@iframeBody.toString"></iframe>
 } else {
-    <figure class="interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
+    <figure class="interactive interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
         @body
     </figure>
 }
