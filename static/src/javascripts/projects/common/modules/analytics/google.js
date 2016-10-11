@@ -35,7 +35,10 @@ define([
     }
 
     function trackNativeAdLinkClick(slotName, tag) {
-        ga(send, 'event', 'Click', 'Native Ad', tag);
+        ga(send, 'event', 'Click', 'Native Ad', tag, {
+            nonInteraction: true,
+            dimension25: slotName
+        });
     }
 
     return {
