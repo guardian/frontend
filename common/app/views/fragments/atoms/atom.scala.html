@@ -1,9 +1,11 @@
 @(model: _root_.model.content.Atom)(implicit request: RequestHeader)
 @import _root_.model.content.Quiz
+@import _root_.model.content.MediaAtom
 
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, false, Nil)
-        case _ =>
+        case media: MediaAtom => views.html.fragments.atoms.media(media)
+        case _ => println("IN CATCH ALL")
     }
 }
