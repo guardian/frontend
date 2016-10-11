@@ -32,7 +32,7 @@ case class HostedArticlePage(
       id = page.id,
       imageUrl = page.imageUrl,
       title = page.title,
-      contentType = page.contentType
+      contentType = HostedPages.contentType(page)
     )
   )
 }

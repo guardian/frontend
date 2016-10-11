@@ -9,19 +9,10 @@ import common.Logging
 import conf.Configuration.site
 import model.StandalonePage
 
-// todo remove
-object HostedContentType extends Enumeration {
-  val Video, Article, Gallery = Value
-}
-
 trait HostedPage extends StandalonePage {
-
   def id: String
   def url = s"/$id"
   def encodedUrl = URLEncoder.encode(s"${site.host}/$id", "utf-8")
-
-  // Todo: remove when hardcoded go
-  def pageName: String
 
   def campaign: HostedCampaign
   def title: String
@@ -38,15 +29,8 @@ trait HostedPage extends StandalonePage {
 
   def cta: HostedCallToAction
 
-  // todo remove
-  def contentType = {
-    this match {
-      case page: HostedVideoPage => HostedContentType.Video
-      case page: HostedArticlePage => HostedContentType.Article
-      case page: HostedGalleryPage => HostedContentType.Gallery
-      case _ => HostedContentType.Gallery
-    }
-  }
+  // Todo: remove when hardcoded go
+  def pageName: String
 }
 
 object HostedPage extends Logging {

@@ -138,7 +138,7 @@ object ZootropolisHostedPages {
           id = newPage.id,
           imageUrl = newPage.imageUrl,
           title = newPage.title,
-          contentType = newPage.contentType
+          contentType = HostedPages.contentType(newPage)
         )
       )
     )

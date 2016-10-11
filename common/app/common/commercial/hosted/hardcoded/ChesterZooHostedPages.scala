@@ -1,6 +1,5 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted
 import common.commercial.hosted._
 import conf.switches.Switches
 
