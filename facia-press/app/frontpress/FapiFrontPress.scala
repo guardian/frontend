@@ -273,18 +273,6 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 
-  private def mapContent(content: PressedContent)(f: ContentType => ContentType): PressedContent = {
-    val mappedContent: Option[ContentType] = content.properties.maybeContent.map(f)
-    val mappedProperties = content.properties.copy(maybeContent = mappedContent)
-
-    content match {
-      case curatedContent: CuratedContent => curatedContent.copy(properties = mappedProperties)
-      case supporting: SupportingCuratedContent => supporting.copy(properties = mappedProperties)
-      case linkSnap: LinkSnap => linkSnap.copy(properties = mappedProperties)
-      case latestSnap: LatestSnap => latestSnap.copy(properties = mappedProperties)
-    }
-  }
-
   def slimContent(pressedContent: PressedContent): PressedContent = {
     val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
 
