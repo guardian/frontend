@@ -2,6 +2,7 @@ package commercial
 
 import app.LifecycleComponent
 import commercial.feeds._
+import common.LoggingField._
 import common._
 import metrics.MetricUploader
 import model.commercial.jobs.Industries
@@ -9,7 +10,6 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
 
 object CommercialMetrics {
   val metrics = MetricUploader("Commercial")
