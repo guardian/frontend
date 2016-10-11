@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage, NextHostedPage}
+import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage}
 import model.MetaData
 
 /*

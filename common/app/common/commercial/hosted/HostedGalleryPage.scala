@@ -3,7 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
 import common.Logging
-import common.commercial.hosted.hardcoded.HostedPages
+import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedGalleryPage(

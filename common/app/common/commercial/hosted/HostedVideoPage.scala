@@ -3,7 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.hardcoded.HostedPages
+import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedVideoPage(

@@ -68,17 +68,6 @@ object HostedPage extends Logging {
   }
 }
 
-// todo move to hardcoded
-case class NextHostedPage(
-  id: String,
-  title: String,
-  contentType: HostedContentType.Value,
-  imageUrl: String
-) {
-
-  val url = s"/$id"
-}
-
 case class HostedCampaign(
   id: String,
   name: String,

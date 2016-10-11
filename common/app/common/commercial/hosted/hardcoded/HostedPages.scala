@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedContentType, HostedPage, NextHostedPage}
+import common.commercial.hosted.{HostedContentType, HostedPage}
 
 object LegacyHostedPages {
 
