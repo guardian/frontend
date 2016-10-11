@@ -204,7 +204,7 @@ trait PerformanceSwitches {
     "If this switch is on then link preconnect hints will be on the page",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 10),
+    sellByDate = new LocalDate(2016, 12, 1),
     exposeClientSide = false
   )
 }

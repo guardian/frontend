@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport',
     'common/modules/experiments/tests/hosted-more-from'
 ], function (
     reportError,
@@ -28,7 +27,6 @@ define([
     AdBlockingResponse,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    UpgradeMobileRichLinksBelowViewport,
     HostedMoreFrom
 ) {
 
@@ -37,7 +35,6 @@ define([
         new AdBlockingResponse(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new UpgradeMobileRichLinksBelowViewport(),
         new HostedMoreFrom()
     ].concat(MembershipEngagementBannerTests);
 
