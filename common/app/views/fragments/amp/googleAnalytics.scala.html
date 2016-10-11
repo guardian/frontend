@@ -27,7 +27,7 @@
                     "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
                     "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
                     "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}",
-                    "isHostedFlag": "@{content.tags.isHosted.toString()}"
+                    "isHostedFlag": "@{content.metadata.isHosted.toString}"
                   }
                 }
               }
