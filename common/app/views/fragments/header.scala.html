@@ -56,7 +56,7 @@
                                  hide-on-slim-header hide-on-tablet"
                          data-component="subscribe">
                         @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                        <a href="@Configuration.id.membershipUrl/supporter?INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
+                        <a href="@Configuration.id.membershipUrl/supporter?countryGroup=@Edition(request).id.toLowerCase&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
                         data-link-name="Register link"
                         class="brand-bar__item--action brand-bar__item--split--first js-become-member">
                             <span class="control__info js-control-info control__info--supporting">become a supporter</span>
