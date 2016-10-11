@@ -19,14 +19,14 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 
 
 # Commercial
-GET        /commercial/travel/offers.json                                                      controllers.commercial.TravelOffersController.renderTravel
-GET        /commercial/jobs.json                                                               controllers.commercial.JobsController.renderJobs
-GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterclassesController.renderMasterclasses
-GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET        /commercial/books/book.json                                                         controllers.commercial.BookOffersController.renderBook
-GET        /commercial/books/books.json                                                        controllers.commercial.BookOffersController.renderBooks
-GET        /advertiser-content/:campaignName/:pageName                                         controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
-GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      controllers.commercial.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET        /commercial/travel/offers.json                                                      commercial.controllers.TravelOffersController.renderTravel
+GET        /commercial/jobs.json                                                               commercial.controllers.JobsController.renderJobs
+GET        /commercial/masterclasses.json                                                      commercial.controllers.MasterclassesController.renderMasterclasses
+GET        /commercial/soulmates/$subgroup<\w+>.json                                           commercial.controllers.SoulmatesController.renderSoulmates(subgroup)
+GET        /commercial/books/book.json                                                         commercial.controllers.BookOffersController.renderBook
+GET        /commercial/books/books.json                                                        commercial.controllers.BookOffersController.renderBooks
+GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
+GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 
 
 # Onward

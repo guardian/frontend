@@ -1,12 +1,13 @@
-package test
+package commercial.test
 
-import controllers.HealthCheck
+import commercial.controllers.HealthCheck
 import model.commercial._
 import model.commercial.books._
 import org.scalatest.{BeforeAndAfterAll, Suites}
+import test.{SingleServerSuite, WithTestWsClient}
 
 class CommercialTestSuite extends Suites (
-  new controllers.commercial.TravelOffersControllerTest,
+  new commercial.controllers.TravelOffersControllerTest,
   new MagentoBestsellersFeedTest,
   new books.MagentoExceptionTest,
   new jobs.JobTest,

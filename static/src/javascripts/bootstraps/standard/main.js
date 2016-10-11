@@ -16,7 +16,6 @@ define([
     'qwery',
     'fastdom',
     'common/modules/user-prefs',
-    'common/modules/experiments/ab',
     'common/modules/ui/images',
     'common/utils/storage',
     'common/utils/ajax',
@@ -33,7 +32,6 @@ define([
     qwery,
     fastdom,
     userPrefs,
-    ab,
     images,
     storage,
     ajax,
@@ -149,22 +147,6 @@ define([
                 });
             });
         }
-
-        //
-        // A/B tests
-        //
-
-        robust.catchErrorsAndLog('ab-tests', function () {
-            if (guardian.isEnhanced) {
-                ab.segmentUser();
-
-                robust.catchErrorsAndLog('ab-tests-run', ab.run);
-                robust.catchErrorsAndLog('ab-tests-registerImpressionEvents', ab.registerImpressionEvents);
-                robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
-
-                ab.trackEvent();
-            }
-        });
 
         //
         // Set adtest query if url param declares it.

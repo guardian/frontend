@@ -1,7 +1,6 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
@@ -9,7 +8,8 @@ import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import controllers.commercial._
+import _root_.commercial.controllers.CommercialControllers
+import _root_.commercial.CommercialLifecycle
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers

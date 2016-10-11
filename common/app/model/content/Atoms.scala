@@ -1,20 +1,42 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{atom => atomapi, AtomData}
+import com.gu.contentatom.thrift.{AtomData, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
+import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
+import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
 final case class Atoms(
-  quizzes: Seq[Quiz]
+  quizzes: Seq[Quiz],
+  media: Seq[MediaAtom]
 ) {
-  val all: Seq[Atom] = quizzes
+  val all: Seq[Atom] = quizzes ++ media
+
 }
 
 sealed trait Atom {
   def id: String
 }
+
+final case class MediaAtom(
+  override val id: String,
+  assets: Seq[MediaAsset],
+  title: String,
+  duration: Option[Long],
+  source: Option[String],
+  posterUrl: Option[String]
+) extends Atom
+
+
+final case class MediaAsset(
+  id: String,
+  version: Long,
+  platform: String,
+  mimeType: Option[String]
+)
+
 
 final case class Quiz(
   override val id: String,
@@ -24,6 +46,9 @@ final case class Quiz(
   content: QuizContent,
   revealAtEnd: Boolean
 ) extends Atom
+
+
+
 
 object Atoms extends common.Logging {
   def make(content: contentapi.Content): Option[Atoms] = {
@@ -37,9 +62,45 @@ object Atoms extends common.Logging {
           logException(e)
           Nil
       }
-      Atoms(quizzes = quizzes.map(Quiz.make(content.id, _)))
+      val media: Seq[MediaAtom] = try {
+        atoms.media.getOrElse(Nil).map(atom => {
+          val id = atom.id
+          val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
+          MediaAtom.mediaAtomMake(id, mediaAtom)
+        })
+      } catch {
+        case e: Exception =>
+          logException(e)
+          Nil
+      }
+
+
+      Atoms(quizzes = quizzes.map(Quiz.make(content.id, _)), media = media)
     }
   }
+}
+
+
+object MediaAtom extends common.Logging {
+
+  def mediaAtomMake(id: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
+    MediaAtom(
+      id = id,
+      assets = mediaAtom.assets.map(mediaAssetMake),
+      title = mediaAtom.title,
+      duration = mediaAtom.duration,
+      source = mediaAtom.source,
+      posterUrl = mediaAtom.posterUrl)
+
+  def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
+  {
+    MediaAsset(
+      id = mediaAsset.id,
+      version = mediaAsset.version,
+      platform = mediaAsset.platform.toString,
+      mimeType = mediaAsset.mimeType)
+  }
+
 }
 
 object Quiz extends common.Logging {
@@ -72,6 +133,8 @@ object Quiz extends common.Logging {
       }
     }
   }
+
+
 
   def make(path: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
     val questions = quiz.content.questions.map { question =>
