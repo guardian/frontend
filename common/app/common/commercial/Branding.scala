@@ -1,6 +1,7 @@
 package common.commercial
 
-import com.gu.contentapi.client.model.v1.{Sponsorship => ApiSponsorship, SponsorshipTargeting => ApiSponsorshipTargeting, SponsorshipType => ApiSponsorshipType}
+import com.gu.contentapi.client.model.v1.{SponsorshipLogoDimensions, Sponsorship => ApiSponsorship,
+SponsorshipTargeting => ApiSponsorshipTargeting, SponsorshipType => ApiSponsorshipType}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition
 import org.joda.time.DateTime
@@ -77,6 +78,7 @@ case class Branding(
   sponsorshipType: SponsorshipType,
   sponsorName: String,
   sponsorLogo: Logo,
+  highContrastSponsorLogo: Option[Logo],
   sponsorLink: String,
   aboutThisLink: String,
   targeting: Option[SponsorshipTargeting],
@@ -116,6 +118,10 @@ object Branding {
   implicit val brandingFormat = Json.format[Branding]
 
   def make(sectionOrTagName: String)(sponsorship: ApiSponsorship): Branding = {
+
+    def mkLogo(url: String, dimensions: Option[SponsorshipLogoDimensions]) =
+      Logo(url, dimensions map (d => Dimensions(d.width, d.height)))
+
     Branding(
       sponsorshipType = sponsorship.sponsorshipType match {
         case ApiSponsorshipType.PaidContent => PaidContent
@@ -123,8 +129,10 @@ object Branding {
         case _ => Sponsored
       },
       sponsorName = sponsorship.sponsorName,
-      sponsorLogo =
-        Logo(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions map (d => Dimensions(d.width, d.height))),
+      sponsorLogo = mkLogo(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
+      highContrastSponsorLogo = sponsorship.highContrastSponsorLogo map { url =>
+        mkLogo(url, sponsorship.highContrastSponsorLogoDimensions)
+      },
       sponsorLink = sponsorship.sponsorLink,
       aboutThisLink = sponsorship.aboutLink getOrElse "/sponsored-content",
       targeting = sponsorship.targeting map SponsorshipTargeting.make,
