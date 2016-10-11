@@ -5,8 +5,6 @@ import com.gu.contentatom.thrift.{AtomData, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
 import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
