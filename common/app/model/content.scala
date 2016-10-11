@@ -345,6 +345,7 @@ object Content {
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
 
+
     Content(
       trail = trail,
       metadata = metadata,
@@ -574,6 +575,7 @@ final case class Audio (override val content: Content) extends ContentType {
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
+
 }
 
 object Video {
