@@ -38,16 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
