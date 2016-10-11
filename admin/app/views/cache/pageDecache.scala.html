@@ -1,17 +1,18 @@
-@()(implicit request: RequestHeader)
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None)(implicit request: RequestHeader)
 
 @admin_main("Purge Cache", "PROD", isAuthed = true) {
 
     <h1>Purge Cache</h1>
 
-    <h3>Usage Warnings:</h3>
+    <h3>Warnings:</h3>
     <ul>
-        <li>This tool performs a <b><i>hard</i></b> purge of the cached content on www.theguardian.com. This will <b>immediately stop the cached content from being served</b> to visitors to the site.</li>
-        <li>If the backend service that provides the content is not healthy, <b>errors will immediately be served to all visitors trying to reach the content.</b></li>
+        <li>This tool performs a <strong><i>hard</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately stop the cached content from being served</strong> to visitors to the site.</li>
+        <li>If the backend service that provides the content is not healthy, <strong>errors will immediately be served to all visitors trying to reach the content.</strong></li>
         <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
         <li>If the initial test below is unsuccessful, continuing with the purge should only be done in the case of takedowns.</li>
     </ul>
 
+    <h3>Usage:</h3>
     <div>
         <p>
             Paste the url of the page (content) you want to clear below. Include the entire url.
@@ -23,10 +24,7 @@
             Only works on <code>www.theguardian.com</code>
         </p>
     </div>
+    <hr/>
 
-    <form method="POST">
-        <input class="img-url" name="url" type="text" value="" placeholder="http://www.theguardian.com/books/xxxxx"/>
-        <button class="btn btn-danger" type="submit">Purge</button>
-    </form>
-
+    @fragments.pageDecacheForm(maybeTestResult)
 }

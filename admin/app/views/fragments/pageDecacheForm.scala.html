@@ -1,0 +1,21 @@
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult])
+
+@maybeTestResult match {
+    case Some(testResult) => {
+        <form method="POST">
+            <input class="img-url form-control" name="url" type="text" value="@testResult.url" disabled />
+            @if(!testResult.passed) {
+                <p class="text-danger"><span class="label label-danger">FAILED</span> Warning: page not being served by backend, purging will serve errors to users!</p>
+            } else {
+                <p class="text-success"><span class="label label-success">OK</span> Test successful, purged content should be available from origin</p>
+            }
+            <button class="btn btn-danger" type="submit">Purge</button>
+        </form>
+    }
+    case None => {
+        <form method="GET">
+            <input class="img-url form-control" name="url" type="text" value="" placeholder="https://www.theguardian.com/books/xxxxx"/>
+            <button class="btn btn-default" type="submit">Test</button>
+        </form>
+    }
+}

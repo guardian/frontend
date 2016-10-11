@@ -9,31 +9,60 @@ import controllers.admin.AuthActions
 import model.NoCache
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc._
 import purge.CdnPurge
+import tools.LoadBalancer
 
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
+
+case class PrePurgeTestResult(url: String, passed: Boolean)
 
 class PageDecacheController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
-  def renderPageDecacheForm() = Action { implicit request =>
-    NoCache(Ok(views.html.cache.pageDecacheForm()))
+  def renderPageDecache(url: Option[String] = None) = Action.async { implicit request =>
+    url match {
+      case Some(s) => renderPrePurgeTestResult(s)
+      case None => Future(NoCache(Ok(views.html.cache.pageDecache())))
+    }
+  }
+
+  private def renderPrePurgeTestResult(purgeUrl: String)(implicit request: Request[AnyContent]) = {
+    getRouterUrl(purgeUrl).map { routerUrl =>
+      wsClient.url(routerUrl)
+        .withRequestTimeout(2000)
+        .withVirtualHost("www.theguardian.com")
+        .get().map {
+          response => PrePurgeTestResult(purgeUrl, response.status == 200)
+
+      } recoverWith {
+        case t: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
+      } map { result =>
+        NoCache(Ok(views.html.cache.pageDecache(Some(result))))
+      }
+    } getOrElse successful(InternalServerError("Couldn't get router URL"))
   }
 
   def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       new CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
-      successful(NoCache(Ok(views.html.cache.pageDecacheForm())))
-    }.getOrElse(successful(BadRequest("No image submitted")))
-
+      successful(NoCache(Ok(views.html.cache.pageDecache())))
+    } getOrElse successful(BadRequest("No page submitted"))
   }
 
-  private def getSubmittedUrl(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] = request
-    .body.asFormUrlEncoded
-    .getOrElse(Map.empty)
-    .get("url")
-    .flatMap(_.headOption)
-    .map(_.trim)
+  private def getRouterUrl(url: String): Option[String] =
+    LoadBalancer("frontend-router")
+      .flatMap(_.url)
+      .map(router => url.replaceFirst("^https?:\\/\\/www\\.theguardian\\.com", s"http://$router"))
+
+
+  private def getSubmittedUrl(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] =
+    request
+      .body.asFormUrlEncoded
+      .getOrElse(Map.empty)
+      .get("url")
+      .flatMap(_.headOption)
+      .map(_.trim)
 
 }
