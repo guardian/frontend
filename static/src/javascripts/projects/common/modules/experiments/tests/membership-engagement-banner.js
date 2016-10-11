@@ -24,27 +24,26 @@ define([
     var EditionTest = function (edition) {
 
         this.edition = edition;
-        this.id = 'MembershipEngagementBannerExtended'+edition[0].toUpperCase() + edition.substr(1);
-        this.start = '2016-10-10';
-        this.expiry = '2017-10-10';
+        this.id = 'MembershipEngagementBannerTenPercent'+edition[0].toUpperCase() + edition.substr(1);
+        this.start = '2016-10-12';
+        this.expiry = '2016-10-14';
         this.author = 'Roberto Tyley';
         this.description = 'Show membership messages for the ' + edition + ' edition.';
         this.showForSensitive = false;
-        this.audience = 1.0;
+        this.audience = 0.1;
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion for membership';
-        this.audienceCriteria = 'All users in the ' + edition + ' edition.';
+        this.audienceCriteria = 'Ten percent of users in the ' + edition + ' edition.';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.hypothesis = 'Although the conversion rate will likely drop slightly, we may see an uplift in the absolute value of contributions due to reaching a larger, and perhaps new audience segment.';
 
-        var minVisited= 10;
+        var minVisited = 0;
 
         // Required by the A/B testing framework - can not be async, unfortunately
         this.canRun = function () {
             var matchesEdition = config.page.edition.toLowerCase() == edition;
-
             var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= minVisited;
-
             return userHasMadeEnoughVisits && commercialFeatures.canReasonablyAskForMoney && matchesEdition;
         };
 
@@ -58,7 +57,6 @@ define([
 
     };
 
-
     EditionTest.prototype.addMessageVariant = function (id, messageText, linkHref, cssModifierClass) {
         var self = this;
 
@@ -70,7 +68,7 @@ define([
                     if (canShow && self.canRun()) {
                         var renderedBanner = template(messageTemplate, { messageText: messageText, linkHref: linkHref });
                         var messageShown = new Message(
-                            'engagement-banner-2016-09-08', // change this to redisplay banners to everyone who has previously closed them
+                            'engagement-banner-2016-10-11', // change this to redisplay banners to everyone who has previously closed them
                             {
                                 pinOnHide: false,
                                 siteMessageLinkName: 'membership message',
@@ -101,11 +99,6 @@ define([
         var cssModifierClass = 'membership-message-' + colours[colourIndex];
 
         return this.addMessageVariant(id, messageText, 'https://membership.theguardian.com/'+this.edition+'/supporter?INTCMP=' + id, cssModifierClass);
-    };
-
-    EditionTest.prototype.addContributionsVariant = function (suffix, messageText) {
-        var id = 'co_' + this.edition + '_banner_' + suffix;
-        return this.addMessageVariant(id, messageText, 'https://contribute.theguardian.com/'+this.edition+'?INTCMP='+id, 'contributions-message');
     };
 
     return [
