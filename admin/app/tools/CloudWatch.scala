@@ -48,7 +48,8 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-onward"),
     LoadBalancer("frontend-diagnostics"),
     LoadBalancer("frontend-archive"),
-    LoadBalancer("frontend-rss")
+    LoadBalancer("frontend-rss"),
+    LoadBalancer("frontend-adminJobs")
   ).flatten
 
   private val chartColours = Map(
