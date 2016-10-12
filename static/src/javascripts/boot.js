@@ -73,7 +73,7 @@ define([
                 .then(function (boot) {
                     boot();
                 });
-        } else Promise.resolve();
+        }
     };
 
     domReadyPromise
