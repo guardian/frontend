@@ -32,9 +32,10 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
       wsClient.url(routerUrl)
         .withRequestTimeout(2000)
         .withVirtualHost("www.theguardian.com")
+        .withFollowRedirects(true)
         .get()
         .map { response =>
-          PrePurgeTestResult(purgeUrl, response.status == 200)
+          PrePurgeTestResult(purgeUrl, response.status >= 200 && response.status < 300)
         }.recoverWith {
           case t: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
         }.map { result =>
