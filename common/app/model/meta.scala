@@ -131,6 +131,7 @@ object MetaData {
     iosType: Option[String] = Some("Article"),
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
+    isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map()
     ): MetaData = {
 
@@ -155,6 +156,7 @@ object MetaData {
       iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
+      isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
   }
 
@@ -179,7 +181,8 @@ object MetaData {
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
-      }
+      },
+      isHosted = apiContent.isHosted
     )
   }
 }
@@ -211,6 +214,7 @@ final case class MetaData (
   customSignPosting: Option[NavItem] = None,
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
+  isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
   val sectionId = section map (_.id) getOrElse ""
