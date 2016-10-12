@@ -11,8 +11,7 @@ define([
     'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/hosted-more-from'
+    'common/modules/experiments/tests/weekend-reading-promo'
 ], function (
     reportError,
     config,
@@ -26,16 +25,14 @@ define([
     MembershipEngagementBannerTests,
     AdBlockingResponse,
     WeekendReadingEmail,
-    WeekendReadingPromo,
-    HostedMoreFrom
+    WeekendReadingPromo
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new AdBlockingResponse(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo(),
-        new HostedMoreFrom()
+        new WeekendReadingPromo()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

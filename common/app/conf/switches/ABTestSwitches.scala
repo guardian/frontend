@@ -28,7 +28,7 @@ trait ABTestSwitches {
 
   for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
+    "ab-membership-engagement-banner-extended-" + edition.id.toLowerCase,
     "Test effectiveness of banner for driving membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Prominent adblocker ad-free test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2016, 10, 13), // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
@@ -63,16 +63,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-hosted-more-from",
-    "Show more onward journey links in the hosted article pages",
-    owners = Seq(Owner.withGithub("Calanthe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 27),
     exposeClientSide = true
   )
 }

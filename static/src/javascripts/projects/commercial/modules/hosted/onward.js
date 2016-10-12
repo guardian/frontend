@@ -14,12 +14,10 @@ define([
         var placeholders = document.querySelectorAll('.js-onward-placeholder');
 
         if (placeholders.length) {
-            var contentType = config.page.contentType.toLowerCase();
-            var query = contentType === 'article' ? '?items=12' : '';
             return fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
-                + contentType + '/'
-                + 'onward.json' + query, {mode: 'cors'})
+                + config.page.contentType.toLowerCase() + '/'
+                + 'onward.json', {mode: 'cors'})
                 .then(function (json) {
                     return fastdom.write(function () {
                         var i;
