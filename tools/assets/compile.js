@@ -7,7 +7,7 @@ module.exports = [{
     task: [
         require('./css/compile'),
         require('./javascript/compile'),
-        // require('./fonts'),
+        require('./fonts/compile'),
         // require('./deploys-radiator'),
         require('./hash'),
         // require('./conf')

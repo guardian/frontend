@@ -3,7 +3,7 @@ module.exports = [{
     task: [
         require('./css/compile.dev'),
         require('./javascript/compile.dev'),
-        // require('./fonts'),
+        require('./fonts/compile'),
         // require('./conf')
     ]
 }];
