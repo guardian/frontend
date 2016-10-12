@@ -1,6 +1,6 @@
 package controllers.cache
 
-import java.net.URI
+import java.net.{URI, URL}
 
 import cache.SurrogateKey
 import com.gu.googleauth.UserIdentity
@@ -47,17 +47,20 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       new CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
-        .map(purgeSent => {
+        .map { purgeSent =>
           val message = if(purgeSent) "Purge request successfully sent" else "Purge request was not successful, please report this issue"
           NoCache(Ok(views.html.cache.pageDecache(None, message)))
-        })
+        }
     } getOrElse successful(BadRequest("No page submitted"))
   }
 
   private def getRouterUrl(url: String): Option[String] =
     LoadBalancer("frontend-router")
       .flatMap(_.url)
-      .map(router => url.replaceFirst("^https?:\\/\\/www\\.theguardian\\.com", s"http://$router"))
+      .map { router =>
+        val path = new URL(url).getPath
+        s"http://$router$path"
+      }
 
   private def getSubmittedUrl(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] =
     request
