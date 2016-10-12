@@ -58,11 +58,8 @@ object HostedVideoPage extends Logging {
           id = campaignId,
           name = campaignName,
           owner,
-          logo = HostedLogo(
-            url = sponsorship.sponsorLogo
-          ),
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
-          logoLink = None
+          logoUrl = sponsorship.sponsorLogo,
+          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
         ),
         pageName = pageTitle,
         standfirst,

@@ -1,4 +1,4 @@
-package controllers
+package commercial.controllers
 
 import conf.{AnyGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import play.api.libs.ws.WSClient

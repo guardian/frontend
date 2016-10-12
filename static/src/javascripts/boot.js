@@ -41,6 +41,10 @@ define([
     };
 
     var bootCommercial = function () {
+        if (!config.switches.commercial) {
+            return;
+        }
+
         if (config.page.isDev) {
             guardian.adBlockers.onDetect.push(function (isInUse) {
                 var needsMessage = isInUse && window.console && window.console.warn;
@@ -53,18 +57,13 @@ define([
 
         return promiseRequire(['raven'])
             .then(function (raven) {
-                // Preference pages are served via HTTPS for service worker support.
-                // These pages must not have mixed (HTTP/HTTPS) content, so
-                // we disable ads (until the day comes when all ads are HTTPS).
-                if (config.switches.commercial && !config.page.isPreferencesPage) {
-                    return promiseRequire(['bootstraps/commercial'])
-                        .then(raven.wrap(
-                            { tags: { feature: 'commercial' } },
-                            function (commercial) {
-                                commercial.init();
-                            }
-                        ));
-                }
+                return promiseRequire(['bootstraps/commercial'])
+                    .then(raven.wrap(
+                        { tags: { feature: 'commercial' } },
+                        function (commercial) {
+                            commercial.init();
+                        }
+                    ));
             });
     };
 
@@ -74,7 +73,7 @@ define([
                 .then(function (boot) {
                     boot();
                 });
-        } else Promise.resolve();
+        }
     };
 
     domReadyPromise

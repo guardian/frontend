@@ -13,7 +13,7 @@ object RenaultHostedPages {
     id = "renault-car-of-the-future",
     name = "Discover your Renault Zoe",
     owner = "Renault",
-    logo = HostedLogo(Static("images/commercial/logo_renault.jpg")),
+    logoUrl = Static("images/commercial/logo_renault.jpg"),
     fontColour = FontColour("#ffc421")
   )
 

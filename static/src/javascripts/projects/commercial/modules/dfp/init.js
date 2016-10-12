@@ -16,7 +16,9 @@ define([
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
     'commercial/modules/messenger/resize',
-    'commercial/modules/messenger/scroll'
+    'commercial/modules/messenger/scroll',
+    'commercial/modules/messenger/viewport',
+    'commercial/modules/messenger/click'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
              ophanTracking) {

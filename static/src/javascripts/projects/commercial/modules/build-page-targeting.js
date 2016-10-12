@@ -95,7 +95,8 @@ define([
             });
 
             forIn(keys(config.tests), function (n) {
-                if (n.toLowerCase().match(/^cm/)) {
+                if (n.toLowerCase().match(/^cm/) ||
+                    n.toLowerCase().match(/^commercial/)) {
                     abParams.push(n);
                 }
             });

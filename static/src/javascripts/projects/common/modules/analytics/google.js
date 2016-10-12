@@ -9,8 +9,8 @@ define([
 
     function extractLinkText(el) {
         var text;
-        if (el && typeof el.innerText === 'string') {
-            text = el.innerText.trim();
+        if (el && typeof el.textContent === 'string') {
+            text = el.textContent.trim();
         }
         return text;
     }
@@ -34,9 +34,17 @@ define([
         });
     }
 
+    function trackNativeAdLinkClick(slotName, tag) {
+        ga(send, 'event', 'Click', 'Native Ad', tag, {
+            nonInteraction: true,
+            dimension25: slotName
+        });
+    }
+
     return {
         trackNonClickInteraction: trackNonClickInteraction,
         trackSamePageLinkClick: trackSamePageLinkClick,
-        trackExternalLinkClick: trackExternalLinkClick
+        trackExternalLinkClick: trackExternalLinkClick,
+        trackNativeAdLinkClick: trackNativeAdLinkClick
     };
 });

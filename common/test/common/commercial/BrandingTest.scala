@@ -13,6 +13,7 @@ class BrandingTest extends FlatSpec with Matchers {
         "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
         None
       ),
+      highContrastSponsorLogo = None,
       sponsorLink = "http://www.theguardian.com/global-development",
       aboutThisLink = "/sponsored-content",
       targeting = None,
