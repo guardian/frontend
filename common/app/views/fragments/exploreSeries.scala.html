@@ -45,7 +45,7 @@
                 @if(page.item.elements.hasMainVideo) {
                   @fragments.immersiveVideo(page)
                 }
-                @if(hasMainMedia && !page.item.elements.hasMainVideo) {
+                @if(hasMainMedia && !hasVideo) {
                     <div class="immersive-main-media__media__loading">
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>
@@ -54,7 +54,7 @@
                 }
             }
         </div>
-        @if(!page.item.elements.hasMainVideo && !page.item.elements.hasMainEmbed){
+        @if(!page.item.elements.hasMainVideo){
           <div class="immersive-main-media__image-overlay"></div>
         }
         <div class="series-identity-explore">
