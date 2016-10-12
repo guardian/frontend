@@ -15,6 +15,7 @@ module.exports = [{
 }];
 
 const megalog = require('megalog');
+const capitalize = require('lodash.capitalize');
 const runner = require('./runner');
 
 const {dev: isDev, _: target} = require('yargs').argv;
@@ -24,7 +25,7 @@ function getTasks() {
     try {
         return require(taskModule);
     } catch (e) {
-        megalog.error(`Cannot find a compilation task for \`${target}\`.`)
+        megalog.error(`Cannot find a compilation task for \`${target}\`.`);
     }
     return null;
 }
@@ -32,6 +33,13 @@ function getTasks() {
 const tasks = getTasks();
 
 if (tasks) {
-    runner(tasks).run().catch(console.log);
+    const taskName = capitalize(target.length ? target.toString() : 'asset');
+    runner(tasks).run().then(() => {
+        megalog.info(`${taskName} compilation is complete.`, {
+            heading: 'Done'
+        });
+    }).catch(e => {
+        megalog.error(`${taskName} compilation failed:\n\n${e}`);
+    });
 }
 
