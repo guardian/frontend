@@ -28,21 +28,11 @@ trait ABTestSwitches {
 
   for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-banner-extended-" + edition.id.toLowerCase,
+    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
     "Test effectiveness of banner for driving membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
     sellByDate = new LocalDate(2017, 10, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13), // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
@@ -65,4 +55,5 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 10, 31),
     exposeClientSide = true
   )
+
 }
