@@ -28,11 +28,11 @@ trait ABTestSwitches {
 
   for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
-    "Test effectiveness of banner for driving membership.",
-    owners = Seq(Owner.withGithub("rtyley")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 10, 10),
+    "ab-membership-engagement-banner-ten-percent-"+edition.id.toLowerCase,
+    "Test effectiveness of banner for driving membership to a wider audience.",
+    owners = Seq(Owner.withGithub("rtyley"), Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 14),
     exposeClientSide = true
   )
 
