@@ -71,6 +71,15 @@ compile-javascript-dev: # PRIVATE
 compile-css: # PRIVATE
 	@./tools/assets/compile.js css
 
+compile-images: # PRIVATE
+	@./tools/assets/compile.js images
+
+compile-svgs: # PRIVATE
+	@./tools/assets/compile.js inline-svgs
+
+compile-fonts: # PRIVATE
+	@./tools/assets/compile.js fonts
+
 atomise-css: # PRIVATE
 	@node tools/atomise-css
 
