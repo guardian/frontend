@@ -2,8 +2,8 @@
 
 @maybeTestResult match {
     case Some(testResult) => {
-        <form method="POST">
-            <input class="img-url form-control" name="url" type="text" value="@testResult.url" disabled />
+        <form method="POST" action="/page/clear">
+            <input class="img-url form-control" name="url" type="text" value="@testResult.url" readonly />
             @if(!testResult.passed) {
                 <p class="text-danger"><span class="label label-danger">FAILED</span> Warning: page not being served by backend, purging will serve errors to users!</p>
             } else {

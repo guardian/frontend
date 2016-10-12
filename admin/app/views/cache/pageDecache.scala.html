@@ -1,4 +1,4 @@
-@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None)(implicit request: RequestHeader)
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader)
 
 @admin_main("Purge Cache", "PROD", isAuthed = true) {
 
@@ -27,4 +27,6 @@
     <hr/>
 
     @fragments.pageDecacheForm(maybeTestResult)
+
+    @if(!message.isEmpty) { <p class="bg-info purge-message">@message</p> }
 }
