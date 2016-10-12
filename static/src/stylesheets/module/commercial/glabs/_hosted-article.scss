@@ -533,3 +533,15 @@ $dotSize: 8px;
         background: transparent;
     }
 }
+
+.hosted__ab-test-control,
+.hosted__ab-test-variant1,
+.hosted__ab-test-variant2 {
+    display: none;
+}
+
+.hosted__next-page.ab-test-control .hosted__ab-test-control,
+.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
+.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+    display: block;
+}
