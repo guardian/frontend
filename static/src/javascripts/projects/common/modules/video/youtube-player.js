@@ -17,9 +17,11 @@ define([
         window.onYouTubeIframeAPIReady = resolve;
     });
 
-    fastdom.write(function () {
-        loadScript({ id: scriptId, src: scriptSrc });
-    }, this);
+    function loadYoutubeJs() {
+        fastdom.write(function () {
+            loadScript({ id: scriptId, src: scriptSrc });
+        }, this);
+    }
 
     function prepareWrapper(el) {
         var wrapper = document.createElement('div');
@@ -71,6 +73,9 @@ define([
 
     function init(el, handlers) {
         //wrap <iframe/> in a div with almost the same class, id and data- attributes
+
+        loadYoutubeJs();
+
         var wrapper = prepareWrapper(el);
 
         return promise.then(function () {

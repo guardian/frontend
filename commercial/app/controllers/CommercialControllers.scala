@@ -28,7 +28,5 @@ trait CommercialControllers {
   lazy val paidContentCardController = wire[PaidContentCardController]
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val travelOffersController = wire[TravelOffersController]
-  lazy val subscriberNumberPageController = wire[SubscriberNumberPageController]
-  lazy val contributorEmailPageController = wire[ContributorEmailPageController]
   lazy val trafficDriverController = wire[TrafficDriverController]
 }

@@ -80,7 +80,8 @@ define([
         var link = $(selector);
 
         if (link.length) {
-            bean.on(link[0], 'click', addEmailHeaders(link));
+            for (var i=0; i < link.length; ++i)
+                bean.on(link[i], 'click', addEmailHeaders(link));
         }
     }
 

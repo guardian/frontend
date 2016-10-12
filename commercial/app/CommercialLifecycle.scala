@@ -4,12 +4,13 @@ import app.LifecycleComponent
 import commercial.model.feeds._
 import commercial.model.merchandise.jobs.Industries
 import common.{AkkaAsync, JobScheduler, Logging}
+import common.LoggingField._
+import common._
 import metrics.MetricUploader
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
 
 object CommercialMetrics {
   val metrics = MetricUploader("Commercial")

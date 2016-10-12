@@ -20,9 +20,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("piuccio")),
+    owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 12),
+    sellByDate = new LocalDate(2016, 11, 9),
     exposeClientSide = true
   )
 
@@ -33,16 +33,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
     sellByDate = new LocalDate(2017, 10, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
     exposeClientSide = true
   )
 
