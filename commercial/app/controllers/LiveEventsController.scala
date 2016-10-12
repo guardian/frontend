@@ -1,10 +1,11 @@
 package commercial.controllers
 
-import common.{ExecutionContexts}
+import common.{ExecutionContexts, JsonComponent}
 import commercial.controllers.util.{specificId, jsonFormat}
 import model.{Cached, NoCache}
 import model.commercial.events.LiveEventAgent
 import play.api.mvc._
+import util.{componentMaxAge, componentNilMaxAge}
 
 import scala.concurrent.Future
 
@@ -35,6 +36,11 @@ class LiveEventsController(liveEventAgent: LiveEventAgent)
   }
 
   def getLiveEvent = Action { implicit request =>
-    ???
+    {
+      for {
+        id <- specificId
+        event <- liveEventAgent.specificLiveEvent(id)
+      } yield Cached(componentMaxAge) { JsonComponent(event) }
+    } getOrElse Cached(componentNilMaxAge) { jsonFormat.nilResult }
   }
 }
