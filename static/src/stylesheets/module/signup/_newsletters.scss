@@ -51,7 +51,7 @@
     text-align: right;
     color: #ffffff;
     background-color: $news-main-1;
-    padding: .5rem;
+    padding: $gs-baseline / 2;
     height: 3.5rem;
 }
 
@@ -59,12 +59,13 @@
     @include fs-bodyHeading(4, true);
     @include f-textSans;
     font-weight: 900;
+    padding-bottom: $gs-baseline / 2;
 }
 
 .newsletter-card__content {
     background-color: $comment-support-2;
     @include fs-textSans(4);
-    padding: .5rem;
+    padding: $gs-baseline / 2;
     height: 8rem;
 
     @include mq(tablet) {
@@ -79,7 +80,7 @@
 .newsletter-card__meta {
     background-color: $comment-support-2;
     border-bottom: 2px solid $neutral-3;
-    padding: .5rem;
+    padding: $gs-baseline / 2;
     height: 3rem;
 
     .newsletter-card__lozenge {
@@ -123,7 +124,7 @@
 .newsletter-card__frequency {
     @include fs-textSans(4);
     color: $neutral-2;
-    padding:.5rem 0;
+    padding: $gs-baseline / 2 0;
 
     .inline-icon {
         fill: $neutral-2;
@@ -132,12 +133,14 @@
 
 .newsletter-card__iframe {
     width: 100%;
+    height: 100px;
 }
 
 .newsletters-category {
     border-top: 2px solid $news-accent;
     display: inline-block;
     clear: both;
+    width: 100%;
 }
 
 .newsletters-category__heading {

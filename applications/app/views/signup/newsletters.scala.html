@@ -16,23 +16,27 @@
 
                 </div>
 
-                <div class="newsletter-card__content">
+                <div class="newsletter-card__content js-newsletter-content">
 
                     <div class="newsletter-card__name">@emailListing.name
                         @if(emailListing.subheading.isDefined){ @emailListing.subheading }
                     </div>
 
-                    @emailListing.teaser
+                    <div class="is-hidden">
+                        @emailListing.teaser
 
-                    <div class="newsletter-card__frequency">
-                        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
-                        @emailListing.frequency
+                        <div class="newsletter-card__frequency">
+                            @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                            @emailListing.frequency
+                        </div>
                     </div>
+
+                        <iframe src="/email/form/newsletters/@emailListing.listId" height="100px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=""></iframe>
                 </div>
 
-                <div class="newsletter-card__meta">
+                <div class="newsletter-card__meta js-newsletter-meta">
                     <div class="newsletter-card__signup">
-                        <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup"
+                        <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup-button"
                                 data-link-name="Signup @emailListing.name"
                                 type="button">
                             <span>Sign up</span>

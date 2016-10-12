@@ -297,14 +297,12 @@
 }
 
 // PLAIN MODS
-.email-sub__form--plain,
-.email-sub__form--newsletters {
+.email-sub__form--plain {
     padding: 0;
 
     .email-sub__text-input {
         border-color: $guardian-brand;
     }
-
 }
 
 // PLAIN-DARK MODS
@@ -323,6 +321,40 @@
 
     .email-sub__message__headline {
         color: #ffffff;
+    }
+}
+
+// NEWSLETTER MODS
+.email-sub--newsletters {
+    padding: 0;
+
+    .email-sub__text-input {
+        border-radius: 65.5rem;
+        display: block;
+        width: 100%;
+    }
+
+    .email-sub__submit-input {
+        border-radius: 65.5rem;
+        display: block;
+        width: 100%;
+        float: none;
+        position: absolute;
+        top: 3rem;
+        border: 0;
+    }
+
+    .email-sub__text-input {
+        vertical-align: middle;
+    }
+
+    .email-sub__label,
+    .label__icon {
+        display: inline-block;
+    }
+
+    .email-sub__message__headline {
+        color: $neutral-1;
     }
 }
 
