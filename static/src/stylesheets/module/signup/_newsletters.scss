@@ -52,28 +52,28 @@
     color: #ffffff;
     background-color: $news-main-1;
     padding: $gs-baseline / 2;
-    height: 3.5rem;
+    height: $gs-baseline * 5;
 }
 
 .newsletter-card__name {
     @include fs-bodyHeading(4, true);
     @include f-textSans;
     font-weight: 900;
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
 }
 
 .newsletter-card__content {
     @include fs-textSans(4);
     background-color: $comment-support-2;
     padding: $gs-baseline / 2;
-    height: 8rem;
+    height: 12em;
 
     @include mq(tablet) {
-        height: 7.5rem;
+        height: 12em;
     }
 
     @include mq(desktop) {
-        height: 8rem;
+        height: 12em;
     }
 }
 

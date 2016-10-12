@@ -3,6 +3,17 @@
 @import model.Page
 @import model.EmailSubscriptions
 
+@newsletterSignup(route: String, placeholder: String, listId: String, emailName: String) = {
+    <iframe src="/email/form/@route/@listId"
+        data-form-title="Sign up for @emailName"
+        data-form-description=""
+        data-form-campaign-code="newsletters-page"
+        scrolling="no"
+        seamless frameborder="0"
+        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
+        data-form-success-desc="">
+    </iframe>
+}
 
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
@@ -10,7 +21,8 @@
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card @emailListing.theme">
+            <div class="newsletter-card newsletter-card--@emailListing.theme"
+                data-component="newsletter-card @emailListing.theme">
 
                 <div class="newsletter-card__header">
 
@@ -30,32 +42,27 @@
                             @emailListing.frequency
                         </div>
                     </div>
-
-                    <iframe src="/email/form/newsletters/@emailListing.listId"
-                        data-form-title="Sign up for @emailListing.name"
-                        data-form-description=""
-                        data-form-campaign-code="newsletters-page"
-                        scrolling="no"
-                        seamless frameborder="0"
-                        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe is-hidden"
-                        data-form-success-desc="">
-                    </iframe>
                 </div>
 
                 <div class="newsletter-card__meta js-newsletter-meta">
-                    <div class="newsletter-card__signup">
+
+                    <div class="newsletter-card__iframe-wrapper">
+                        @newsletterSignup("plain", "placeholder", emailListing.listId, emailListing.name)
+                    </div>
+
+                    <div class="newsletter-card__signup is-hidden">
                         <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup-button"
-                                data-link-name="Signup @emailListing.name"
-                                type="button">
+                            data-link-name="Signup @emailListing.name"
+                            type="button">
                             <span>Sign up</span>
                         </button>
                     </div>
-                    <div class="newsletter-card__example">
+                    <div class="newsletter-card__example is-hidden">
                         @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
                             <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview"
-                                    data-link-name="Preview @emailListing.name"
-                                    type="button">
+                                data-link-name="Preview @emailListing.name"
+                                type="button">
                                 <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
                             </button>
                         </a>}
