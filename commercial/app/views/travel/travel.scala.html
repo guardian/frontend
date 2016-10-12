@@ -1,4 +1,6 @@
-@(offers: Seq[model.commercial.TravelOffer],
+@import  _root_.commercial.model.merchandise.TravelOffer
+
+@(offers: Seq[TravelOffer],
   omnitureId: Option[String],
   clickMacro: Option[String],
   isProminent: Boolean = false)(implicit request: RequestHeader)

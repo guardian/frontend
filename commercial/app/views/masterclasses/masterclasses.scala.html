@@ -1,4 +1,6 @@
-@(events: Seq[model.commercial.Masterclass],
+@import  _root_.commercial.model.merchandise.Masterclass
+
+@(events: Seq[Masterclass],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 

@@ -1,5 +1,7 @@
-@import _root_.commercial.model.jobs.JobSector
-@(jobs: Seq[_root_.commercial.model.Job],
+@import _root_.commercial.model.merchandise.jobs.JobSector
+@import _root_.commercial.model.merchandise.Job
+
+@(jobs: Seq[Job],
   jobSectors: Seq[JobSector],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
