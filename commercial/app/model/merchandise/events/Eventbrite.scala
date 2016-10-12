@@ -125,7 +125,7 @@ object Eventbrite extends ExecutionContexts with Logging {
   trait TicketHandler {
     def tickets: Seq[Ticket]
 
-    lazy val displayPriceRange = {
+    val displayPriceRange = {
 
       def format(price: Double): String = f"£$price%,.2f"
 
@@ -140,11 +140,11 @@ object Eventbrite extends ExecutionContexts with Logging {
       }
     }
 
-    lazy val ratioTicketsLeft = 1 - (tickets.map(_.quantity_sold).sum.toDouble / tickets.map(_.quantity_total).sum)
+    val ratioTicketsLeft = 1 - (tickets.map(_.quantity_sold).sum.toDouble / tickets.map(_.quantity_total).sum)
   }
 
   trait EventHandler {
     def status: String
-    lazy val isOpen = { status == "live" }
+    val isOpen = { status == "live" }
   }
 }

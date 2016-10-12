@@ -94,7 +94,7 @@ case class Member(username: String,
     case _ => None
   }
 
-  val profileUrl: String = "https://soulmates.theguardian.com/" + ( profileId.map(id => s"landing/$id") getOrElse "" )
+  val profileUrl: String = s"https://soulmates.theguardian.com/${profileId.map(id => s"landing/$id") getOrElse "" }"
 }
 
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
