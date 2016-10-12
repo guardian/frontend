@@ -3,12 +3,11 @@ package model.commercial.events
 import java.lang.System._
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import model.commercial.readsSeq
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
-import model.commercial.transform.readsSeq
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
