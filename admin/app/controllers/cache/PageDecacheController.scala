@@ -48,7 +48,7 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       new CdnPurge(wsClient)
-        .hard(SurrogateKey(urlToDecache.getPath))
+        .soft(SurrogateKey(urlToDecache.getPath))
         .map { purgeSent =>
           val message = if(purgeSent) "Purge request successfully sent" else "Purge request was not successful, please report this issue"
           NoCache(Ok(views.html.cache.pageDecache(None, message)))

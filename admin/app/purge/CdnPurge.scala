@@ -12,13 +12,14 @@ class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Log
 
   private val serviceId = "2eYr6Wx3ZCUoVPShlCM61l"
 
-  // removes from cache
-  def hard(key:String): Future[Boolean] = {
+  // Performs soft purge which will still serve stale if there is an error
+  def soft(key:String): Future[Boolean] = {
     // under normal circumstances we only ever want this called from PROD.
     // Don't want too much decache going on.
     if (environment.isProd) {
       val purgeRequest = wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
-        .withHeaders("Fastly-Key" -> fastly.key)
+        .withHeaders("Fastly-Key" -> fastly.key,
+                     "Fastly-Soft-Purge" -> "1")
         .post("")
 
       purgeRequest.foreach(r => log.info(s"purge $key from Fastly with response ${r.statusText}"))
