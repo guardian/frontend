@@ -206,6 +206,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val MembershipEngagementBanner = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner",
+    "Master switch for the membership engagement banner.",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdBlockMessage = Switch(
     SwitchGroup.Commercial,
     "adblock",
