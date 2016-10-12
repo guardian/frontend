@@ -50,10 +50,3 @@ GET         /commercial/paid                                              commer
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
-
-# Subscriber number input page
-GET         /commercial/subscriber-number                                   commercial.controllers.SubscriberNumberPageController.renderSubscriberNumberPage
-
-# Contributor email input page
-GET         /commercial/contributor-email                                   commercial.controllers.ContributorEmailPageController.renderContributorEmailPage
-GET         /commercial/contributor-email/do                                commercial.controllers.ContributorEmailPageController.renderContributorEmailPageResult
