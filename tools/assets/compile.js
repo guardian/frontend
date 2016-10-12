@@ -16,9 +16,10 @@ module.exports = [{
 
 const megalog = require('megalog');
 const capitalize = require('lodash.capitalize');
+const stripAnsi = require('strip-ansi');
 const runner = require('./runner');
 
-const {dev: isDev, _: target} = require('yargs').argv;
+const {dev: isDev, _: target, verbose: verbose} = require('yargs').argv;
 const taskModule = isDev ? `./${target}/compile.dev` : `./${target}/compile`;
 
 function getTasks() {
@@ -34,12 +35,13 @@ const tasks = getTasks();
 
 if (tasks) {
     const taskName = capitalize(target.length ? target.toString() : 'asset');
-    runner(tasks).run().then(() => {
-        megalog.info(`${taskName} compilation is complete.`, {
-            heading: 'Done'
-        });
+    runner(tasks, {verbose: verbose}).run().then(() => {
+        const message = `${taskName} compilation is complete.`;
+        verbose ? console.log(message) : megalog.info(message, {heading: 'Done'});
     }).catch(e => {
-        megalog.error(`${taskName} compilation failed:\n\n${e}`);
+        const message = `${taskName} compilation failed...`;
+        verbose ? console.log(message) : megalog.error(message);
+        console.error(verbose ? stripAnsi(e.stdout || e) : (e.stdout || e));
     });
 }
 

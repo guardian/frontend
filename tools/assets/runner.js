@@ -9,7 +9,7 @@ const flatten = require('lodash.flatten');
 // don't duplicate tasks
 const cache = [];
 
-function listrify(steps, {concurrent = false} = {}) {
+function listrify(steps, {concurrent = false, verbose = false} = {}) {
     const listrTasks = steps
         .map(step => {
             const { title, task, concurrent } = step;
@@ -31,7 +31,11 @@ function listrify(steps, {concurrent = false} = {}) {
 
             return { title, task, skip };
         });
-    return new Listr(listrTasks, {concurrent});
+
+    return new Listr(listrTasks, {
+        concurrent,
+        renderer: verbose ? 'verbose' : 'default'
+    });
 }
 
 module.exports = listrify;

@@ -17,7 +17,8 @@ echo "##teamcity[progressFinish 'asset validation and tests']"
 
 echo "##teamcity[progressStart 'asset dist']"
 set -x
-./grunt-tc compile-assets emitAbTestInfo
+./tools/assets/compile.js --verbose
+./grunt-tc emitAbTestInfo
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
