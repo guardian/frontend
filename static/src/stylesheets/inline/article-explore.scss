@@ -24,8 +24,8 @@ $explore-series-header-element-opacity: .85;
         min-height: 548px;
 
         @include mq($until: desktop) {
-          height: auto;
-          min-height: auto;
+            height: auto;
+            min-height: auto;
         }
     }
 
@@ -164,7 +164,7 @@ $explore-series-header-element-opacity: .85;
     bottom: 0;
 
     .explore--video & {
-      bottom: $gs-gutter * 3;
+        bottom: $gs-gutter * 3;
     }
 }
 
