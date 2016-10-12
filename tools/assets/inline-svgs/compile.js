@@ -1,4 +1,7 @@
 module.exports = [{
     title: 'Copy/minify SVGs',
-    task: 'grunt compile:inlineSvgs'
+    task: [
+        require('./copy'),
+        require('./minify')
+    ]
 }];
