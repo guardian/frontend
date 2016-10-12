@@ -177,8 +177,9 @@ $explore-series-header-element-opacity: .85;
         font-weight: 900;
 
         @include mq($from: tablet) {
-            @include fs-headline(6);
+            @include fs-headline(7);
             font-weight: 900;
+            line-height: 38px;
         }
 
         @include mq($until: leftCol) {
@@ -364,11 +365,6 @@ $explore-series-header-element-opacity: .85;
 
     .meta__social {
         border-top: 1px dotted $neutral-4;
-    }
-
-    //only show first three social links
-    .social__item:nth-child(n+4) {
-        display: none;
     }
 
     @include mq($from: desktop) {

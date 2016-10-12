@@ -28,21 +28,11 @@ trait ABTestSwitches {
 
   for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
-    "Test effectiveness of header for driving contributions vs membership.",
+    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
+    "Test effectiveness of banner for driving membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2017, 10, 10),
     exposeClientSide = true
   )
 
@@ -66,13 +56,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-upgrade-mobile-rich-links-below-viewport",
-    "Only upgrade rich links if they are below the current viewport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),
-    exposeClientSide = true
-  )
 }

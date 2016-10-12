@@ -9,10 +9,8 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/membership-engagement-banner',
-    'common/modules/experiments/tests/adblocking-response',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/upgrade-mobile-rich-links-below-viewport'
+    'common/modules/experiments/tests/weekend-reading-promo'
 ], function (
     reportError,
     config,
@@ -24,18 +22,14 @@ define([
     noop,
     DiscussionPromoteBottomBanner,
     MembershipEngagementBannerTests,
-    AdBlockingResponse,
     WeekendReadingEmail,
-    WeekendReadingPromo,
-    UpgradeMobileRichLinksBelowViewport
+    WeekendReadingPromo
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
-        new AdBlockingResponse(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo(),
-        new UpgradeMobileRichLinksBelowViewport()
+        new WeekendReadingPromo()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

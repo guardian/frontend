@@ -30,8 +30,7 @@ define([
     spaceFiller,
     imagesModule,
     richLinkTagTmpl,
-    contains,
-    ab
+    contains
 ) {
 
     function elementIsBelowViewport (el) {
@@ -44,7 +43,7 @@ define([
     function upgradeRichLink(el) {
         var href = $('a', el).attr('href');
         var matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
-        var isInRichLinkTest = ab.isInVariant('UpgradeMobileRichLinksBelowViewport', 'no-upgrade');
+        var isOnMobile = detect.isBreakpoint({max: 'mobileLandscape'});
 
         function doUpgrade(shouldUpgrade, resp) {
             if (shouldUpgrade) {
@@ -65,13 +64,14 @@ define([
             }).then(function (resp) {
                 if (resp.html) {
 
-                    // Fastdom read the viewport height before upgrading if we're in the test
-                    if (isInRichLinkTest) {
+                    // Fastdom read the viewport height before upgrading if on mobile
+                    if (isOnMobile) {
                         elementIsBelowViewport(el).then(function(shouldUpgrade){
                             doUpgrade(shouldUpgrade, resp);
                         });
                     } else {
-                        doUpgrade(true, resp); }
+                        doUpgrade(true, resp);
+                    }
                 }
             })
             .catch(function (ex) {

@@ -12,7 +12,7 @@ import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, Quiz}
+import model.content.{Atoms, MediaAtom, Quiz}
 import model.pressed._
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -313,6 +313,7 @@ final case class Content(
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
+  val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 }
 
 object Content {
@@ -343,6 +344,7 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
+
 
     Content(
       trail = trail,
@@ -505,7 +507,6 @@ final case class Article (
   lightboxProperties: GenericLightboxProperties) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
-
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
@@ -574,6 +575,7 @@ final case class Audio (override val content: Content) extends ContentType {
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
+
 }
 
 object Video {

@@ -43,7 +43,7 @@
 
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
@@ -67,9 +67,9 @@
 
                             @page.pageName match {
                                 case "meet-the-characters-of-zootropolis" => { @zootropolisPage(page) }
-                                case "overview" => { @singaporeF1Overview(page) }
-                                case "offtrack" => { @singaporeF1Offtrack(page) }
-                                case "packages" => { @singaporeF1Packages(page) }
+                                case "overview" => { @singaporeF1Overview() }
+                                case "offtrack" => { @singaporeF1Offtrack() }
+                                case "packages" => { @singaporeF1Packages() }
                                 case _ => { @Html(page.body) }
                             }
 

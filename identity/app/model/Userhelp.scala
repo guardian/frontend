@@ -9,7 +9,7 @@ sealed trait Userhelp {
 case object IdentityUserhelp extends Userhelp {
   val name = "Account"
   val faq = "http://www.theguardian.com/help/identity-faq"
-  val email = "userhelp@theguardian.com?subject=Account%20help"
+  val email = "userhelp@theguardian.com"
 }
 
 case object MembershipUserhelp extends Userhelp {

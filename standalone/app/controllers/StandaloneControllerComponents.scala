@@ -2,7 +2,7 @@ package controllers
 
 import com.softwaremill.macwire._
 import contentapi.{CapiHttpClient, ContentApiClient}
-import controllers.commercial.CommercialControllers
+import commercial.controllers.CommercialControllers
 import controllers.front.FrontJsonFapiDraft
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController

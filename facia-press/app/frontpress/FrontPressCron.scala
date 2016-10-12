@@ -26,15 +26,15 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
   }
 
   override def process(message: common.Message[SNSNotification]): Future[Unit] = {
-    val path = message.get.Message
+    val path: String = message.get.Message
 
     if (FrontPressJobSwitch.isSwitchedOn) {
       log.info(s"Cron pressing path $path")
-      val stopWatch = new StopWatch
+      val stopWatch: StopWatch = new StopWatch
 
-      val pressFuture = liveFapiFrontPress.pressByPathId(path)
+      val pressFuture: Future[Unit] = liveFapiFrontPress.pressByPathId(path)
 
-      pressFuture onComplete {
+      pressFuture.onComplete {
         case Success(_) =>
           if (Edition.all.map(_.id.toLowerCase).contains(path)) {
             toolPressQueueWorker.metricsByPath.get(path) foreach { metric =>
@@ -48,7 +48,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
 
           FrontPressCronSuccess.increment()
         case Failure(error) =>
-          log.warn("Error updating collection via cron", error)
+          log.warn(s"Error pressing $path:", error)
       }
 
       pressFuture.map(Function.const(()))
