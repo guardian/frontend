@@ -33,4 +33,8 @@ class LiveEventsController(liveEventAgent: LiveEventAgent)
       Future.successful(NoCache(jsonFormat.nilResult.result))
     }
   }
+
+  def getLiveEvent = Action { implicit request =>
+    ???
+  }
 }
