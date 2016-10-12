@@ -25,9 +25,9 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
     masterclass.capacity should be (18)
     masterclass.url should be ("https://www.eventurl.com")
     masterclass.venue should be {
-      Venue(None, Some("Kings Place"), Some("90 York Way"), Some("London"), Some("United Kingdom"), Some("N1 9GU"))
+      Venue(Some("The Guardian"), Some("Kings Place"), Some("90 York Way"), Some("London"), Some("United Kingdom"), Some("N1 9GU"))
     }
-    masterclass.venue.description should be("London")
+    masterclass.venue.description should be("The Guardian, London")
   }
 
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {
