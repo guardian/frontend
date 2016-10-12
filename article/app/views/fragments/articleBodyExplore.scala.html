@@ -24,6 +24,19 @@
 
             @fragments.headerImmersive(article)
 
+            @if(article.content.elements.hasMainVideo){
+              <div class="explore-series-standfirst explore-video-standfirst">
+                <div class="gs-container">
+                  <div class="content__main-column">
+                    <div class="explore-series-byline-image hide-on-mobile">
+                      @fragments.meta.bylineImage(article.content.tags)
+                    </div>
+                    @fragments.standfirst(article)
+                  </div>
+                </div>
+              </div>
+            }
+
             <div class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
