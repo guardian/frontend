@@ -22,7 +22,7 @@
                         @if(emailListing.subheading.isDefined){ @emailListing.subheading }
                     </div>
 
-                    <div class="is-hidden">
+                    <div class="">
                         @emailListing.teaser
 
                         <div class="newsletter-card__frequency">
@@ -31,7 +31,15 @@
                         </div>
                     </div>
 
-                        <iframe src="/email/form/newsletters/@emailListing.listId" height="100px" data-form-title="Sign up for @emailListing.name" data-form-description="" data-form-campaign-code="newsletters-page" scrolling="no" seamless frameborder="0" class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe" data-form-success-desc=""></iframe>
+                    <iframe src="/email/form/newsletters/@emailListing.listId"
+                        data-form-title="Sign up for @emailListing.name"
+                        data-form-description=""
+                        data-form-campaign-code="newsletters-page"
+                        scrolling="no"
+                        seamless frameborder="0"
+                        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe is-hidden"
+                        data-form-success-desc="">
+                    </iframe>
                 </div>
 
                 <div class="newsletter-card__meta js-newsletter-meta">

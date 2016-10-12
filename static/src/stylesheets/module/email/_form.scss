@@ -354,7 +354,20 @@
     }
 
     .email-sub__message__headline {
+        margin: $gs-baseline / 2;
         color: $neutral-1;
+        vertical-align: middle;
+        position: absolute;
+    }
+
+    .email-sub__message--success {
+        height: 2em;
+        position: relative;
+        margin: $gs-baseline 0;
+    }
+
+    .inline-icon {
+        margin-left: $gs-baseline / 2;
     }
 }
 

@@ -63,8 +63,8 @@
 }
 
 .newsletter-card__content {
-    background-color: $comment-support-2;
     @include fs-textSans(4);
+    background-color: $comment-support-2;
     padding: $gs-baseline / 2;
     height: 8rem;
 
