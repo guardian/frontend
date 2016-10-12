@@ -55,16 +55,21 @@ shrinkwrap: # PRIVATE
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: clean-assets
-	@grunt compile-assets
+compile:
+	@./tools/assets/compile.js
 
 # Compile all assets for development.
-compile-dev: clean-assets
-	@grunt compile-assets --dev
+compile-dev:
+	@./tools/assets/compile.js --dev
 
-# Delete all asset build artefacts, includes the builds themselves.
-clean-assets: # PRIVATE
-	@rm -rf static/target static/hash static/requirejs
+compile-javascript: # PRIVATE
+	@./tools/assets/compile.js javascript
+
+compile-javascript-dev: # PRIVATE
+	@./tools/assets/compile.js javascript --dev
+
+compile-css: # PRIVATE
+	@./tools/assets/compile.js css
 
 atomise-css: # PRIVATE
 	@node tools/atomise-css
@@ -91,7 +96,7 @@ validate-sass: # PRIVATE
 	@grunt validate:css
 
 # Lint all JS.
-validate-js: # PRIVATE
+validate-javascript: # PRIVATE
 	@grunt validate:js
 
 validate-amp: # PRIVATE

@@ -70,36 +70,9 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('sass:compile', ['concurrent:sass']);
 
-    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
-    grunt.registerTask('compile:css', function () {
-        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile']);
-
-        if (!options.isDev) {
-            grunt.task.run(['shell:updateCanIUse']);
-        }
-
-        grunt.task.run(['shell:atomiseCSS', 'px_to_rem', 'postcss']);
-    });
-    grunt.registerTask('compile:js', function () {
-        grunt.task.run(['clean:js', 'compile:inlineSvgs']);
-
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript', 'concat:app', 'concat:shivsAndShims', 'uglify:javascript']);
-    });
-    grunt.registerTask('develop:js', function () {
-        grunt.task.run(['copy:inlineSVGs', 'clean:js', 'copy:javascript']);
-    });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
-    var identity = function (x) { return x; };
-    grunt.registerTask('compile-assets', [
-        'compile:css',
-        (options.isDev ? 'develop:js' : 'compile:js'),
-        'compile:fonts',
-        !options.isDev && 'makeDeploysRadiator',
-        !options.isDev && 'asset_hash',
-        'compile:conf'
-    ].filter(identity));
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
