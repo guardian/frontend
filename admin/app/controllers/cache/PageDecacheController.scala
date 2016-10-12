@@ -32,26 +32,27 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
       wsClient.url(routerUrl)
         .withRequestTimeout(2000)
         .withVirtualHost("www.theguardian.com")
-        .get().map {
-          response => PrePurgeTestResult(purgeUrl, response.status == 200)
-
-      } recoverWith {
-        case t: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
-      } map { result =>
-        NoCache(Ok(views.html.cache.pageDecache(Some(result))))
-      }
-    } getOrElse successful(InternalServerError("Couldn't get router URL - please go back and try again"))
+        .get()
+        .map { response =>
+          PrePurgeTestResult(purgeUrl, response.status == 200)
+        }.recoverWith {
+          case t: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
+        }.map { result =>
+          NoCache(Ok(views.html.cache.pageDecache(Some(result))))
+        }
+    }.getOrElse(successful(InternalServerError("Couldn't get router URL - please go back and try again")))
   }
 
   def decache() = AuthActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
-      new CdnPurge(wsClient).hard(SurrogateKey(urlToDecache.getPath))
+      new CdnPurge(wsClient)
+        .hard(SurrogateKey(urlToDecache.getPath))
         .map { purgeSent =>
           val message = if(purgeSent) "Purge request successfully sent" else "Purge request was not successful, please report this issue"
           NoCache(Ok(views.html.cache.pageDecache(None, message)))
         }
-    } getOrElse successful(BadRequest("No page submitted"))
+    }.getOrElse(successful(BadRequest("No page submitted")))
   }
 
   private def getRouterUrl(url: String): Option[String] =
