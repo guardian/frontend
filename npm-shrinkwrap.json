@@ -1067,6 +1067,20 @@
     "events": {
       "version": "1.1.1"
     },
+    "execa": {
+      "version": "0.5.0",
+      "dependencies": {
+        "cross-spawn": {
+          "version": "4.0.2"
+        },
+        "lru-cache": {
+          "version": "4.0.1"
+        },
+        "which": {
+          "version": "1.2.11"
+        }
+      }
+    },
     "exit": {
       "version": "0.1.2"
     },
@@ -1266,6 +1280,9 @@
     },
     "get-stdin": {
       "version": "4.0.1"
+    },
+    "get-stream": {
+      "version": "2.3.1"
     },
     "getobject": {
       "version": "0.1.0"
@@ -2919,6 +2936,9 @@
     "normalize-url": {
       "version": "1.6.0"
     },
+    "npm-run-path": {
+      "version": "2.0.2"
+    },
     "npmlog": {
       "version": "3.1.2",
       "dependencies": {
@@ -3050,6 +3070,9 @@
     },
     "path-is-inside": {
       "version": "1.0.1"
+    },
+    "path-key": {
+      "version": "2.0.1"
     },
     "path-type": {
       "version": "1.1.0"
@@ -3766,6 +3789,9 @@
       "version": "2.0.0"
     },
     "strip-bom-stream": {
+      "version": "1.0.0"
+    },
+    "strip-eof": {
       "version": "1.0.0"
     },
     "strip-indent": {
