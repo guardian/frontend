@@ -97,7 +97,7 @@ class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMe
       if (reallyOn) {
 
         fetchPage(0) flatMap { initialFetch =>
-          val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.page_count
+          val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.pageCount
           val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
           subsequentFetches map { fetches =>

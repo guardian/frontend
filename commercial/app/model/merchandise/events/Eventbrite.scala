@@ -16,14 +16,14 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   case class Response(pagination: Pagination, events: Seq[Event])
 
-  case class Pagination(page_number: Int, page_count: Int)
+  case class Pagination(pageNumber: Int, pageCount: Int)
 
   case class Event(id: String,
                    name: String,
-                   start_date: DateTime,
+                   startDate: DateTime,
                    url: String,
                    description: String,
-                   image_url: Option[String],
+                   imageUrl: Option[String],
                    status: String,
                    venue: Venue,
                    tickets: Seq[Ticket],
@@ -33,8 +33,8 @@ object Eventbrite extends ExecutionContexts with Logging {
   case class Ticket(hidden: Boolean,
                     donation: Boolean,
                     price: Double,
-                    quantity_total: Int,
-                    quantity_sold: Int)
+                    quantityTotal: Int,
+                    quantitySold: Int)
 
   case class Venue(name: Option[String],
                    address: Option[String],
@@ -92,11 +92,14 @@ object Eventbrite extends ExecutionContexts with Logging {
   def excludeFreeAndHiddenTickets(tickets: Seq[Ticket]): Seq[Ticket] =
     tickets.filterNot(ticket => ticket.hidden || ticket.donation)
 
-  implicit val paginationFormats: Format[Pagination] = Json.format[Pagination]
+  implicit val paginationReads: Reads[Pagination] = (
+    (JsPath \ "page_number").read[Int] and
+    (JsPath \ "page_count").read[Int]
+    ) (Pagination.apply _)
 
-  implicit val responseFormats: Format[Response] = Json.format[Response]
+  implicit val responseReads: Reads[Response] = Json.reads[Response]
 
-  def buildEventWithImageSrc(event: Event, src: String) = event.copy(image_url = Some(src))
+  def buildEventWithImageSrc(event: Event, src: String) = event.copy(imageUrl = Some(src))
 
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
 
@@ -140,7 +143,7 @@ object Eventbrite extends ExecutionContexts with Logging {
       }
     }
 
-    val ratioTicketsLeft = 1 - (tickets.map(_.quantity_sold).sum.toDouble / tickets.map(_.quantity_total).sum)
+    val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
   }
 
   trait EventHandler {
