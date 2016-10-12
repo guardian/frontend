@@ -57,12 +57,7 @@ final case class Commercial(
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   hasInlineMerchandise: Boolean
-) {
-
-  def needsHighMerchandisingSlot(edition: Edition): Boolean = {
-    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix, tags.tags, edition, metadata.url)
-  }
-}
+) 
 
 /**
  * MetaData represents a page on the site, whether facia or content
