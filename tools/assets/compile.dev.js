@@ -4,6 +4,6 @@ module.exports = [{
         require('./css/compile.dev'),
         require('./javascript/compile.dev'),
         require('./fonts/compile'),
-        // require('./conf')
+        require('./conf/compile')
     ]
 }];

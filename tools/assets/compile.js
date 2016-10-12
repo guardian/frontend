@@ -10,7 +10,7 @@ module.exports = [{
         require('./fonts/compile'),
         // require('./deploys-radiator'),
         require('./hash'),
-        // require('./conf')
+        require('./conf/compile')
     ]
 }];
 

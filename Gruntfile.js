@@ -66,11 +66,6 @@ module.exports = function (grunt) {
     });
 
     /**
-     * Compile tasks
-     */
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
-
-    /**
      * compile:js:<requiretask> tasks. Generate one for each require task
      */
     function compileSpecificJs(requirejsName) {
