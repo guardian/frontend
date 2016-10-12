@@ -1,4 +1,4 @@
 module.exports = [{
     title: 'Transpile Sass',
-    task: 'grunt sass:compile'
+    task: 'grunt concurrent:sass'
 }];

@@ -68,7 +68,6 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
-    grunt.registerTask('sass:compile', ['concurrent:sass']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:inlineCss', 'copy:assetMaps', 'compile:inlineSvgs', 'uglify:conf']);
 
     /**
