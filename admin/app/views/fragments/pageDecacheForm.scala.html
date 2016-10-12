@@ -5,7 +5,7 @@
         <form method="POST" action="/page/clear">
             <input class="img-url form-control" name="url" type="text" value="@testResult.url" readonly />
             @if(!testResult.passed) {
-                <p class="text-danger"><span class="label label-danger">FAILED</span> Warning: page not being served by backend, purging will serve errors to users!</p>
+                <p class="text-danger"><span class="label label-danger">FAILED</span> Warning: page not being served by backend, stale content will be served</p>
             } else {
                 <p class="text-success"><span class="label label-success">OK</span> Test successful, purged content should be available from origin</p>
             }

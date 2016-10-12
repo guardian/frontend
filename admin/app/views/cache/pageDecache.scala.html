@@ -6,8 +6,8 @@
 
     <h3>Warnings:</h3>
     <ul>
-        <li>This tool performs a <strong><i>hard</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately stop the cached content from being served</strong> to visitors to the site.</li>
-        <li>If the backend service that provides the content is not healthy, <strong>errors will immediately be served to visitors trying to reach the content.</strong></li>
+        <li>This tool performs a <strong><i>soft</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately attempt to refresh the cached content</strong>.</li>
+        <li>If the backend service that provides the content is not healthy, <strong>stale content will continue to be served.</strong></li>
         <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
         <li>If the initial test below is unsuccessful, continuing with the purge should only be done in the case of takedowns.</li>
     </ul>
@@ -20,7 +20,7 @@
             E.g. <code>https://www.theguardian.com/artanddesign/2015/nov/17/12-designs-that-revolutionised-cycling-fold-up-helmets-and-sandwich-bikes</code>
         </li>
         <li>Click <i>Test</i> to check the page can still be served by the backend.</li>
-        <li>Click <i>Purge</i> to purge the page from the cache.  You may purge even if the test fails, but be aware it will stop users reaching the content.</li>
+        <li>Click <i>Purge</i> to clear the page from the cache.  You may purge even if the test fails, but be aware it may stop users reaching the content, or continue to serve stale content.</li>
     </ol>
     <hr/>
 
