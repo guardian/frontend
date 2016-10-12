@@ -126,9 +126,12 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
   override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
-object EmailImage extends Profile(width = Some(580), autoFormat = false)
+object EmailImage extends Profile(width = Some(580), autoFormat = false) {
+  override val qualityparam = "q=30"
+}
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
   override val fitParam = "fit=crop"
+  override val qualityparam = "q=30"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=center"
   val blendImageParam = s"blend64=${Base64.getUrlEncoder.encodeToString(EmailHelpers.Images.play.getBytes)}"
