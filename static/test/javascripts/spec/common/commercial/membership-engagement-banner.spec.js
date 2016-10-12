@@ -136,7 +136,7 @@ define([
             describe('but has already closed a message', function () {
                 it('should not redisplay that message', function (done) {
                     var edition = 'UK';
-                    var message = new Message(membershipMessages.messages[edition].code);
+                    var message = new Message(membershipMessages.messageCode);
                     message.acknowledge();
 
                     config.page = { edition: edition };
