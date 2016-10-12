@@ -57,3 +57,9 @@
     width: 100%;
     margin-bottom: 10px;
 }
+
+.purge-message {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}

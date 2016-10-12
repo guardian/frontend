@@ -25,12 +25,13 @@ object LoadBalancer extends Logging {
       LoadBalancer("frontend-Applicat-V36EHVHAEI15", "Applications", "frontend-applications", testPath = Some("/books")),
       LoadBalancer("frontend-Discussi-KC65SADEVHIE", "Discussion", "frontend-discussion"),
       LoadBalancer("frontend-Identity-1ITBJ706CLQIC", "Identity", "frontend-identity"),
-      LoadBalancer("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image", "frontend-image"),
       LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
       LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
       LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
       LoadBalancer("frontend-Diagnost-11YL3E40NW4C2", "Diagnostics", "frontend-diagnostics" ),
-      LoadBalancer("frontend-ArchiveL-C2GJNZE0TS7", "Archive", "frontend-archive" )
+      LoadBalancer("frontend-ArchiveL-C2GJNZE0TS7", "Archive", "frontend-archive"),
+      LoadBalancer("frontend-AdminJob-X3KHAAPYCDQK", "AdminJobs", "frontend-adminJobs"),
+      LoadBalancer("frontend-RssLoadB-13ARAHHNKEUTL", "Rss", "frontend-rss")
     )
 
 
