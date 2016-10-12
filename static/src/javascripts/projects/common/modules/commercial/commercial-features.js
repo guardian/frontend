@@ -103,10 +103,6 @@ define([
             externalAdvertising &&
             !isIdentityPage;
 
-        this.badges =
-            externalAdvertising &&
-            switches.sponsored;
-
         this.outbrain =
             externalAdvertising &&
             !sensitiveContent &&

@@ -230,13 +230,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
-        describe('Sponsored / paid content badges', function () {
-            it('Runs by default', function () {
-                features = new CommercialFeatures;
-                expect(features.badges).toBe(true);
-            });
-        });
-
         describe('Outbrain / Plista', function () {
             // These are the 'promoted links from around the web' widgets
             it('Runs by default', function () {

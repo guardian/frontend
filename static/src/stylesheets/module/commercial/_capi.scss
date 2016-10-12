@@ -76,16 +76,6 @@
 .paid-content--advertisement-feature {
     background-color: $paid-article;
 
-    .ad-slot--paid-for-badge--front {
-        border-top-color: $neutral-2;
-
-        .ad-slot--paid-for-badge__link {
-            &:after {
-                border-bottom-color: $neutral-2;
-            }
-        }
-    }
-
     .fc-item--list-compact--media {
         border-color: $paid-article-header-bg;
     }
@@ -102,8 +92,7 @@
     }
 
     .tone-news--item.fc-item,
-    .tone-media--item,
-    .ad-slot--container-inline .ad-slot__label {
+    .tone-media--item {
         background-color: $paid-article-subheader;
         border-top: 0;
     }
