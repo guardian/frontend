@@ -8,7 +8,7 @@ module.exports = [{
         require('./css/compile'),
         require('./javascript/compile'),
         require('./fonts/compile'),
-        // require('./deploys-radiator'),
+        require('./deploys-radiator/compile'),
         require('./hash'),
         require('./conf/compile')
     ]
