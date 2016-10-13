@@ -489,6 +489,7 @@
 .adverts__2cols {
     > * {
         flex-basis: calc(50% - #{$gs-gutter / 2});
+        flex-grow: 0;
     }
 
     > :nth-child(even) {
@@ -518,6 +519,7 @@
 .adverts__3cols {
     > * {
         flex-basis: calc(33.33% - #{$gs-gutter});
+        flex-grow: 0;
     }
 
     > :nth-child(3) ~ * {
