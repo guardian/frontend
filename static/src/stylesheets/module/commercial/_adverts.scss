@@ -563,7 +563,7 @@
 
 .adverts__column {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 
     &:not(.adverts__2cols) {
         > * + * {
