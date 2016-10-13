@@ -84,7 +84,11 @@ define([
 
     function isInTest(testId, variant) {
         var participations = storage.local.get('gu.ab.participations');
-        return variant === undefined ? participations[testId] : participations[testId].variant === variant;
+        if (participations) {
+            return variant === undefined ? participations[testId] : participations[testId].variant === variant;
+        } else {
+            return false;
+        }
     }
 
     function init() {

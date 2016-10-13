@@ -7,7 +7,8 @@ define([
     'helpers/fixtures',
     'helpers/injector',
     'Promise',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
     fastdom,
@@ -17,10 +18,11 @@ define([
     fixtures,
     Injector,
     Promise,
-    Message
+    Message,
+    ab
 ) {
     var commercialFeatures, membershipMessages,
-        showMembershipMessages, alreadyVisited, storage, config;
+        showMembershipMessages, alreadyVisited, storage, config, participations;
 
     var injector = new Injector();
 
@@ -85,12 +87,15 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(false);
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 storage.local.set('gu.alreadyVisited', 10);
+                participations = storage.local.get('gu.ab.participations');
+                storage.local.remove('gu.ab.participations');
                 done();
             });
 
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
+                storage.local.set('gu.ab.participations', participations)
             });
 
             it('should not show any messages even to engaged readers', expectMessageNotToBeShown);
