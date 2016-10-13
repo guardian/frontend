@@ -13,10 +13,11 @@
   optImgRatio: Option[String] = None,
   useCardBranding: Boolean)(implicit request: RequestHeader)
 
-<div class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, optClassNames, useCardBranding)">
+<div class="@CssClassBuilder.advertContainer(optClassNames)">
     <a href="@item.targetUrl"
         data-link-name="@omnitureId"
-        class="advert @if(useCardBranding) {advert--branded}">
+        class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, useCardBranding)"
+        >
         <h2 class="advert__title">
             @for(icon <- item.icon){@inlineSvg(icon, "icon")}
             @item.headline
