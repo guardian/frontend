@@ -133,16 +133,6 @@
         }
     }
 
-    .advert__container {
-        display: block;
-        color: $neutral-1;
-        max-width: 100%;
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
     .advert__title,
     .advert__meta,
     .advert__standfirst {

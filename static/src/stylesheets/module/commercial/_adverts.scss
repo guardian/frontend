@@ -175,10 +175,6 @@
         }
     }
 
-    .advert {
-        position: relative;
-    }
-
     /* [1] Forces text wrap in IE11 */
     .advert__title,
     .advert__standfirst,
@@ -192,6 +188,7 @@
 
         > * {
             margin: 0 $gs-gutter / 2;
+            position: relative;
 
             /* In Firefox, flex items have a min-width: auto, which prevents
                them from shrinking when they have an image larger than the
