@@ -26,7 +26,8 @@
                     "contributorIds": "@{content.tags.contributors.map(_.id).mkString(",")}",
                     "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
                     "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
-                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}"
+                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}",
+                    "isHostedFlag": "@{content.metadata.isHosted.toString}"
                   }
                 }
               }

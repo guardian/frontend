@@ -58,10 +58,6 @@
         }
     }
 
-    &:not(.content--advertisement-feature) .brandbadge__logo {
-        filter: invert(50%);
-    }
-
     .brandbadge__header,
     .brandbadge__help {
         color: $neutral-6;

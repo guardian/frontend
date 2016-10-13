@@ -19,7 +19,7 @@ object JobsFeed extends ExecutionContexts with Logging {
     jobXml <- xml \\ "Job"
     if (jobXml \ "RecruiterLogoURL").nonEmpty
     if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
-  } yield Job(jobXml)
+  } yield Job.fromXml(jobXml)
 
   def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
     JobsFeedParseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>

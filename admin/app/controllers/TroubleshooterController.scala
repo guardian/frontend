@@ -70,8 +70,7 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
       }
     }
 
-    LoadBalancer.all
-      .find(_.project == "frontend-router")
+    LoadBalancer("frontend-router")
       .flatMap(_.url)
       .map(fetchWithRouterUrl(_))
       .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))

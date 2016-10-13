@@ -23,7 +23,7 @@ class ImageDecacheController(wsClient: WSClient) extends Controller with Logging
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
   def renderImageDecacheForm() = Action { implicit request =>
-    NoCache(Ok(views.html.cache.imageDecacheForm()))
+    NoCache(Ok(views.html.cache.imageDecache()))
   }
 
   def decache() = AuthActions.AuthActionTest.async { implicit request =>
@@ -45,17 +45,17 @@ class ImageDecacheController(wsClient: WSClient) extends Controller with Logging
 
       val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
       decacheRequest.map(_.status).map{
-        case NOT_FOUND => Ok(views.html.cache.imageDecacheForm(
+        case NOT_FOUND => Ok(views.html.cache.imageDecache(
           messageType = Cleared,
           image = image.toString,
           originImage = Some(originUrl)
         ))
-        case OK => Ok(views.html.cache.imageDecacheForm(
+        case OK => Ok(views.html.cache.imageDecache(
           messageType = ImageStillOnOrigin,
           image = image.toString,
           originImage = Some(originUrl)
         ))
-        case status => Ok(views.html.cache.imageDecacheForm(
+        case status => Ok(views.html.cache.imageDecache(
           messageType = Error,
           image = image.toString,
           originImage = Some(originUrl)
