@@ -63,8 +63,7 @@ object BodyCleaner {
       ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
-      MinuteCleaner(article),
-      YouTubeAtomCleaner(article)
+      MinuteCleaner(article)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
