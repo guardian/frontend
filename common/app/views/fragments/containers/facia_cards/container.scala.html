@@ -94,7 +94,6 @@
                             @* TODO: we should make sure that sport, culture, and life have tertiary links *@
                             @* TODO: should this only happen on the second variant?*@
                             @defining(Edition(request)) { edition: Edition =>
-                                @println(edition.networkFrontId)
 
                                 @id match {
                                     case news if id == edition.networkFrontId => {
