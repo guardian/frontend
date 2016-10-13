@@ -3,6 +3,17 @@
 @import model.Page
 @import model.EmailSubscriptions
 
+@newsletterSignup(route: String, placeholder: String, listId: String, emailName: String) = {
+    <iframe src="/email/form/@route/@listId"
+        data-form-title="Sign up for @emailName"
+        data-form-description=""
+        data-form-campaign-code="newsletters-page"
+        scrolling="no"
+        seamless frameborder="0"
+        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
+        data-form-success-desc="">
+    </iframe>
+}
 
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
@@ -10,10 +21,13 @@
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card newsletter-card--@emailListing.theme" data-component="newsletter-card @emailListing.theme">
+            <div class="newsletter-card newsletter-card--@emailListing.theme"
+                data-component="newsletter-card @emailListing.theme">
 
-                <div class="newsletter-card__header">
-
+                <div class="newsletter-card__imagewrapper">
+                    <img class="newsletter-card__image"
+                        width="100%"
+                        src="@{ Static("images/email" + emailListing.listId + ".png") }"/>
                 </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
@@ -67,7 +81,7 @@
 }
 
 @main(signupPage, projectName = Some("signup")) { } {
-    <div class="l-side-margins">
+  <div class="l-side-margins">
     <div class="content">
         <div class="gs-container">
             <div class="newsletters-heading">newsletters</div>
@@ -94,4 +108,5 @@
         </div>
     </div>
   </div>
+
 }
