@@ -1,33 +1,39 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content, TagType}
+import com.gu.contentapi.client.model.v1.{Asset, Content}
 import common.Logging
-import common.commercial.hosted.hardcoded.HostedPages
+import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedArticlePage(
-  campaign: HostedCampaign,
-  pageUrl: String,
-  pageName: String,
-  title: String,
-  standfirst: String,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val title: String,
+  override val standfirst: String,
   body: String,
-  cta: HostedCallToAction,
+  override val cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
-  socialShareText: Option[String],
-  shortSocialShareText: Option[String],
+  override val socialShareText: Option[String],
+  override val shortSocialShareText: Option[String],
   nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List(),
-  metadata: MetaData
+  override val metadata: MetaData
 ) extends HostedPage {
 
-  val pageTitle = s"Advertiser content hosted by the Guardian: $title"
-  val imageUrl = mainPicture
+  override val imageUrl = mainPicture
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
-    HostedPages.fromCampaignAndPageName(campaign.id, _)).map(page => NextHostedPage(imageUrl = page.imageUrl, title = page.title, pageUrl = page.pageUrl, contentType = page.contentType)
+    HostedPages.fromCampaignAndPageName(campaign.id, _)
+  ).map(
+    page => NextHostedPage(
+      id = page.id,
+      imageUrl = page.imageUrl,
+      title = page.title,
+      contentType = HostedPages.contentType(page)
+    )
   )
 }
 
@@ -36,12 +42,7 @@ object HostedArticlePage extends Logging {
   def fromContent(content: Content): Option[HostedArticlePage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       ctaAtoms <- atoms.cta
       ctaAtom <- ctaAtoms.headOption
@@ -59,17 +60,8 @@ object HostedArticlePage extends Logging {
       }
 
       HostedArticlePage(
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner = sponsorship.sponsorName,
-          logo = HostedLogo(
-            url = sponsorship.sponsorLogo
-          ),
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
-          logoLink = None
-        ),
-        pageUrl = content.webUrl,
+        id = content.id,
+        campaign,
         pageName = content.webTitle,
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup

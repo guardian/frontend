@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 
 object VisitBritainHostedPages {
 
@@ -13,7 +12,7 @@ object VisitBritainHostedPages {
     id = "visit-britain",
     name = "#OMGB. Home of Amazing Moments. Great Britain & Northern Ireland",
     owner = "OMGB",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg"),
+    logoUrl = "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
     fontColour = FontColour("#E41F13")
   )
 
@@ -200,13 +199,13 @@ object VisitBritainHostedPages {
 
   val activitiesGallery: HostedGalleryPage = {
     val images = activityImages
-    val pageUrl = s"$host/advertiser-content/visit-britain/activities"
+    val id = "advertiser-content/visit-britain/activities"
     val pageName = activitiesPageName
     val title = "Don’t be a sloth this summer"
     HostedGalleryPage(
+      id,
       campaign = campaign,
       images = activityImages,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       cta = cta(activitiesPageName),
@@ -216,64 +215,64 @@ object VisitBritainHostedPages {
       ),
       standfirst = "Get your heart pumping with a daring dip in the Lake District or learn how to paddleboard along " +
                    "the Isle of Wight’s scenic coastline.",
-      metadata = Metadata.forHardcodedHostedGalleryPage(campaign, pageUrl, pageName, title, images)
+      metadata = Metadata.forHardcodedHostedGalleryPage(id, campaign, pageName, title, images)
     )
   }
 
   val cityGallery: HostedGalleryPage = {
+    val id = s"advertiser-content/visit-britain/city"
     val images = cityImages
-    val pageUrl = s"$host/advertiser-content/visit-britain/city"
     val pageName = cityPageName
     val title = "Take a city break from the norm"
     HostedGalleryPage(
+      id,
       campaign = campaign,
       images = images,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       cta = cta(cityPageName),
       nextPageNames = List(coastPageName, countrysidePageName),
       standfirst = "Discover instagrammable events like the Bristol Balloon Fiesta; theatre under the stars and " +
                    "hotly-tipped comedy acts at Edinburgh Fringe.",
-      metadata = Metadata.forHardcodedHostedGalleryPage(campaign, pageUrl, pageName, title, images)
+      metadata = Metadata.forHardcodedHostedGalleryPage(id, campaign, pageName, title, images)
     )
   }
 
   private val coastGallery: HostedGalleryPage = {
+    val id = "advertiser-content/visit-britain/coast"
     val images = coastImages
-    val pageUrl = s"$host/advertiser-content/visit-britain/coast"
     val pageName = coastPageName
     val title = "Find cool-on-sea this summer"
     HostedGalleryPage(
+      id,
       campaign = campaign,
       images = images,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       cta = cta(coastPageName),
       nextPageNames = List(countrysidePageName, activitiesPageName),
       standfirst = "Catch a show at an amphitheatre overlooking the Atlantic, go island hopping in sub-tropical " +
                    "climes and join the party at the Whitby Regatta.",
-      metadata = Metadata.forHardcodedHostedGalleryPage(campaign, pageUrl, pageName, title, images)
+      metadata = Metadata.forHardcodedHostedGalleryPage(id, campaign, pageName, title, images)
     )
   }
 
   private val countrysideGallery: HostedGalleryPage = {
+    val id = "advertiser-content/visit-britain/countryside"
     val images = countrysideImages
-    val pageUrl = s"$host/advertiser-content/visit-britain/countryside"
     val pageName = countrysidePageName
     val title = "Mend your relationship with Mother Nature"
     HostedGalleryPage(
+      id,
       campaign = campaign,
       images = images,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       cta = cta(countrysidePageName),
       nextPageNames = List(activitiesPageName, cityPageName),
       standfirst = "Switch off and soak up the country air as you ramble through the heather-coated North York Moors " +
                    "or explore the dramatic scenery of Glen Coe.",
-      metadata = Metadata.forHardcodedHostedGalleryPage(campaign, pageUrl, pageName, title, images)
+      metadata = Metadata.forHardcodedHostedGalleryPage(id, campaign, pageName, title, images)
     )
   }
 

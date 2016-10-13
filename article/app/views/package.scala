@@ -6,7 +6,7 @@ import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpAdCleaner, AmpEmbedCleaner, CmpParamCleaner, VideoEmbedCleaner}
+import views.support.cleaner._
 
 object MainMediaWidths {
 

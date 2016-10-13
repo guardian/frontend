@@ -1,6 +1,6 @@
 @import common.commercial.ContainerModel
 @import common.{Edition, Localisation}
-@import views.html.fragments.commercial.contentLogo
+@import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.containers.facia_cards.{containerHeader, showMore, showMoreButton, slice}
 @import views.support.RenderClasses
 @(containerDefinition: layout.FaciaContainer,
@@ -11,12 +11,12 @@
 
 @if(containerDefinition.index == 0) {
     @for(frontBranding <- frontProperties.branding(Edition(request))) {
-        @contentLogo(frontBranding, isInteractivePage = false, isBranded = false, isOnTheLeft = true)
+        @containerLogo(frontBranding, isOnTheLeft = true)
     }
 } else {
     @for(containerModel <- maybeContainerModel) {
         @for(containerBranding <- containerModel.branding) {
-            @contentLogo(containerBranding, isInteractivePage = false, isBranded = false, isOnTheLeft = true)
+            @containerLogo(containerBranding, isOnTheLeft = true)
         }
     }
 }

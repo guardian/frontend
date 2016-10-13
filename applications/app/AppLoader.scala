@@ -1,4 +1,5 @@
 import app.{FrontendApplicationLoader, FrontendComponents}
+import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
@@ -57,7 +58,8 @@ trait AppLifecycleComponents {
     wire[SectionsLookUpLifecycle],
     wire[SwitchboardLifecycle],
     wire[SiteMapLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[DiscussionExternalAssetsLifecycle]
   )
 }
 

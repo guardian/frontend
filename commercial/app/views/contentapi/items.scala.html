@@ -1,12 +1,14 @@
+@import _root_.commercial.controllers.{PaidFor, SponsorType, Supported}
 @import common.commercial.CardContent
-@import common.{Edition, LinkTo}
-@import controllers.commercial.{PaidFor, SponsorType, Supported}
+@import common.LinkTo
 @import fragments.commercial.paidForMeta
 @import views.html.commercial.cards.itemCard
 @import views.html.commercial.containerWrapper
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkCapiCardTrackingCode
 @import cards.{Half, Third, Standard}
+@import views.support.Commercial.glabsLink
+
 @(cards: Seq[CardContent],
   optSection: Option[String],
   optLogo: Option[String],
@@ -69,18 +71,12 @@
 }
 
 @stamp = {
-
-    <a @if(Edition(request).id == "AU") {
-            href="@LinkTo("/guardian-labs-australia")"
-        } else {
-            href="@LinkTo("/guardian-labs")"
-        }
-        >
+    <a href="@LinkTo(glabsLink(request))">
         @inlineSvg("glabs-logo", "logo")
         <span class='u-h'>Guardian Labs</span>
     </a>
-
 }
+
 
 @badge = {
 

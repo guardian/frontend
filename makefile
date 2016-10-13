@@ -1,19 +1,21 @@
-default: help
+# Targets marked '# PRIVATE' will be hidden when running `make help`.
+# They're helper targets that you probably only need to know about
+# if you've got as far as reading the makefile.
 
-watch: compile-dev
-	@npm run sass-watch & \
-		npm run css-watch & \
-		npm run browser-sync
+# Lists common tasks.
+# Also the default task (`make` === `make help`).
+help:
+	@node tools/messages.js describeMakefile
 
-atomise-css:
-	@node tools/atomise-css
+# Lists *all* targets.
+list: # PRIVATE
+	@node tools/messages.js describeMakefile --all
 
-compile: clean-assets
-	@grunt compile-assets
 
-compile-dev: clean-assets
-	@grunt compile-assets --dev
 
+# *********************** SETUP ***********************
+
+# Install all 3rd party dependencies.
 install:
 	@echo 'Installing 3rd party dependencies…'
 	@npm install
@@ -23,38 +25,74 @@ install:
 	@echo '…done.'
 	@node tools/messages.js install
 
-reinstall: uninstall install
-
-uninstall:
+# Remove all 3rd party dependencies.
+uninstall: # PRIVATE
 	@rm -rf node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
-test:
-	@grunt test --dev
+# Reinstall all 3rd party dependencies from scratch.
+# The nuclear option if `make install` hasn't worked.
+reinstall: uninstall install
 
-validate:
-	@grunt validate
 
-validate-sass:
-	@grunt validate:sass
-	@grunt validate:css
 
-validate-js:
-	@grunt validate:js
+# *********************** DEVELOPMENT ***********************
 
-validate-amp:
-	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
+# Watch and automatically compile/reload all JS/SCSS.
+# Uses port 3000 insead of 9000.
+watch: compile-dev
+	@npm run sass-watch & \
+		npm run css-watch & \
+		npm run browser-sync
 
-shrinkwrap:
+# Shrinkwrap NPM packages after updating package.json.
+shrinkwrap: # PRIVATE
 	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
 	@node tools/messages.js did-shrinkwrap
 
-clean-assets:
+
+
+# *********************** ASSETS ***********************
+
+# Compile all assets for production.
+compile: clean-assets
+	@grunt compile-assets
+
+# Compile all assets for development.
+compile-dev: clean-assets
+	@grunt compile-assets --dev
+
+# Delete all asset build artefacts, includes the builds themselves.
+clean-assets: # PRIVATE
 	@rm -rf static/target static/hash static/requirejs
 
-pasteup:
+atomise-css: # PRIVATE
+	@node tools/atomise-css
+
+# * Not ready for primetime use yet... *
+pasteup: # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
 
-# internal targets
-help:
-	@node tools/messages.js describeMakefile
+
+
+# *********************** CHECKS ***********************
+
+# Run the JS test suite.
+test:
+	@grunt test --dev
+
+# Lint all assets.
+validate:
+	@grunt validate
+
+# Lint all SCSS.
+validate-sass: # PRIVATE
+	@grunt validate:sass
+	@grunt validate:css
+
+# Lint all JS.
+validate-js: # PRIVATE
+	@grunt validate:js
+
+validate-amp: # PRIVATE
+	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

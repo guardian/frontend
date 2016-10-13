@@ -40,7 +40,7 @@ object EmailSubscriptions {
       about = "News",
       teaser = "Our editors break down the big news for you in the daily briefing",
       description = "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
-      frequency = "Every day",
+      frequency = "Every weekday",
       listId = "1493",
       subscribedTo = subscribedListIds.exists{ x => x == "1493" },
       subheading = Some("US"),
@@ -53,7 +53,7 @@ object EmailSubscriptions {
       about = "News",
       teaser = "All the day's top news, commentary and features in one handy lunchtime email",
       description = "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
-      frequency = "Every day",
+      frequency = "Every weekday",
       listId = "1506",
       subscribedTo = subscribedListIds.exists{ x => x == "1506" },
       subheading = Some("AUS"),
@@ -185,7 +185,7 @@ object EmailSubscriptions {
   def featureEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "Weekend Reading",
-      theme = "feature",
+      theme = "news",
       about = "Feature",
       teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
       description = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
@@ -197,7 +197,7 @@ object EmailSubscriptions {
     ),
     EmailSubscription(
       name = "The Long Read",
-      theme = "feature",
+      theme = "news",
       about = "Feature",
       teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
       description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",

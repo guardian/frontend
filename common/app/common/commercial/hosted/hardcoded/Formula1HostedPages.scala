@@ -1,7 +1,6 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
-import conf.Configuration.site.host
 
 object Formula1HostedPages {
 
@@ -9,7 +8,7 @@ object Formula1HostedPages {
     id = "singapore-grand-prix",
     name = "Singapore Grand Prix",
     owner = "First Stop Singapore",
-    logo = HostedLogo("https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg"),
+    logoUrl = "https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg",
     fontColour = FontColour("#063666")
   )
 
@@ -26,7 +25,7 @@ object Formula1HostedPages {
   val offtrackPageName = "offtrack"
 
   val overviewArticlePage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$overviewPageName"
+    val id = s"advertiser-content/${campaign.id}/$overviewPageName"
     val pageName = overviewPageName
     val title = "Get revved up for the Singapore Grand Prix"
     val standfirst = "‘This race is always a highlight of the season: a great city, which looks really spectacular " +
@@ -34,8 +33,8 @@ object Formula1HostedPages {
                      "Lewis Hamilton, 3-time Formula1 World Champion, Mercedes AMG Petronas F1 Team"
     val mainPicture = "https://media.guim.co.uk/18ad0d659d2cf5b961b7c7c9548283cc6e4559e1/0_346_5184_3110/2000.jpg"
     HostedArticlePage(
+      id,
       campaign,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       standfirst = standfirst,
@@ -46,20 +45,20 @@ object Formula1HostedPages {
       mainPictureCaption = "A bird's eye view of the illuminated Marina Bay Street Circuit",
       socialShareText = None,
       shortSocialShareText = None,
-      metadata = Metadata.forHardcodedHostedArticlePage(campaign, pageUrl, pageName, title, standfirst, mainPicture)
+      metadata = Metadata.forHardcodedHostedArticlePage(id, campaign, pageName, title, standfirst, mainPicture)
     )
   }
 
   val packagesArticlePage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$packagesPageName"
+    val id = s"advertiser-content/${campaign.id}/$packagesPageName"
     val pageName = packagesPageName
     val title = "Singapore Airlines Singapore Grand Prix packages"
     val standfirst = "'This is such a special race. The whole weekend feels\n\ndifferent – there's a buzz to the F1 " +
                  "Paddock when you first walk in on Thursday afternoon \n\nand it never goes away.' Jenson Button, 2009 Formula 1 World Champion, McLaren-Honda"
     val mainPicture = "https://media.guim.co.uk/5dfce3ee95c325437fd26d1757a5a9032c514400/0_0_3008_1997/2000.jpg"
     HostedArticlePage(
+      id,
       campaign,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       standfirst = standfirst,
@@ -70,12 +69,12 @@ object Formula1HostedPages {
       mainPictureCaption = "",
       socialShareText = None,
       shortSocialShareText = None,
-      metadata = Metadata.forHardcodedHostedArticlePage(campaign, pageUrl, pageName, title, standfirst, mainPicture)
+      metadata = Metadata.forHardcodedHostedArticlePage(id, campaign, pageName, title, standfirst, mainPicture)
     )
   }
 
   val offtrackArticlePage = {
-    val pageUrl = s"$host/advertiser-content/${campaign.id}/$offtrackPageName"
+    val id = s"advertiser-content/${campaign.id}/$offtrackPageName"
     val pageName = offtrackPageName
     val title = "Get the most out of the Singapore Grand Prix"
     val standfirst = "'Singapore is definitely one of the highlights of the\n\nyear. There's an amazing atmosphere and " +
@@ -85,8 +84,8 @@ object Formula1HostedPages {
                      "driver, Mercedes AMG Petronas F1 Team"
     val mainPicture = "https://media.guim.co.uk/797e2c3ecf6631e647f31978073404e1b78974a7/0_0_5184_3456/2000.jpg"
     HostedArticlePage(
+      id,
       campaign,
-      pageUrl = pageUrl,
       pageName = pageName,
       title = title,
       standfirst = standfirst,
@@ -97,7 +96,7 @@ object Formula1HostedPages {
       mainPictureCaption = "Take a break from the action and cool off within the Circuit Park",
       socialShareText = None,
       shortSocialShareText = None,
-      metadata = Metadata.forHardcodedHostedArticlePage(campaign, pageUrl, pageName, title, standfirst, mainPicture)
+      metadata = Metadata.forHardcodedHostedArticlePage(id, campaign, pageName, title, standfirst, mainPicture)
     )
   }
 

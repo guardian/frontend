@@ -1,7 +1,8 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
+@import conf.Configuration.environment
 @import conf.Configuration.site.host
-@import views.html.hosted.{guardianHostedCta, guardianHostedHeader, guardianHostedShareButtons, hostedVideoOnward, guardianHostedControlButtons}
+@import views.html.hosted._
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
 @main(page, Some("commercial")) { } {
@@ -27,7 +28,7 @@
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-video--tile {
+    .hosted-page .hosted__next-page--tile {
         border-top-color: @{page.campaign.fontColour.brandColour};
     }
 
@@ -40,7 +41,7 @@
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page)
     <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
@@ -49,7 +50,7 @@
                         <iframe id="hosted-video-@youtubeId"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
@@ -63,10 +64,9 @@
                         data-block-video-ads="true"
                         poster="@{page.video.posterUrl}"
                         class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                            <source type="video/mp4" src="@{page.video.srcUrlMp4}">
-                            <source type="video/webm" src="@{page.video.srcUrlWebm}">
-                            <source type="video/ogg" src="@{page.video.srcUrlOgg}">
-                            <source type="video/m3u8" src="@{page.video.srcM3u8}">
+                            @for(source <- page.video.sources) {
+                                <source type="@source.mimeType" src="@source.url">
+                            }
                         </video>
                     }
                     @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
@@ -80,8 +80,8 @@
                             <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
-                            <a href="@page.campaign.logoLink.getOrElse(page.cta.url)" data-link-name="hosted-logo-top-left" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                            <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+                                <img class="hostedbadge__logo" src="@{page.campaign.logoUrl}" alt="logo @{page.campaign.owner}">
                             </a>
                         </div>
                     </div>
@@ -103,11 +103,11 @@
                                 <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
                                 <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
                             </div>
-                            <a href="@{nextPage.pageUrl}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
+                            <a href="@{nextPage.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
                                 <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.pageUrl}">10s</div>
+                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.url}">10s</div>
                             </a>
-                            <a href="@{nextPage.pageUrl}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
+                            <a href="@{nextPage.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
                                 Watch now
                             </a>
                         </div>
@@ -139,9 +139,8 @@
             @page.nextPage.map { nextPage =>
                 @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
             }.getOrElse {
-                <div class="js-onward-placeholder"></div>
+                <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
-
         </section>
         @guardianHostedCta(page, page.cta)
     </div>

@@ -10,6 +10,7 @@ import com.gu.facia.client.ApiClient
 import common._
 import common.commercial.Branding
 import conf.Configuration
+import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
@@ -27,11 +28,14 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiHost,
-    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
-    useThrift = false
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
+  implicit def fapiClient: ApiClient =
+    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
+      FrontsApi.crossAccountClient
+    else
+      FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -54,11 +58,14 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiDraftHost,
-    apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
-    useThrift = false
+    apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.amazonClient
+  implicit def fapiClient: ApiClient =
+    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
+      FrontsApi.crossAccountClient
+    else
+      FrontsApi.amazonClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -89,7 +96,7 @@ object EmbedJsonHtml {
 trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
-  implicit val fapiClient: ApiClient
+  implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   def pressByPathId(path: String): Future[Unit]
@@ -264,18 +271,6 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
-  }
-
-  private def mapContent(content: PressedContent)(f: ContentType => ContentType): PressedContent = {
-    val mappedContent: Option[ContentType] = content.properties.maybeContent.map(f)
-    val mappedProperties = content.properties.copy(maybeContent = mappedContent)
-
-    content match {
-      case curatedContent: CuratedContent => curatedContent.copy(properties = mappedProperties)
-      case supporting: SupportingCuratedContent => supporting.copy(properties = mappedProperties)
-      case linkSnap: LinkSnap => linkSnap.copy(properties = mappedProperties)
-      case latestSnap: LatestSnap => latestSnap.copy(properties = mappedProperties)
-    }
   }
 
   def slimContent(pressedContent: PressedContent): PressedContent = {

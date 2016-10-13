@@ -24,7 +24,7 @@ object Title {
       case s: Section =>
         s"${Localisation(s.metadata.webTitle)}${pagination(page)}"
       case hostedPage: HostedPage =>
-        s"${Localisation(hostedPage.pageTitle)}"
+        s"${Localisation(s"Advertiser content hosted by the Guardian: ${hostedPage.title}")}"
       case _          =>
         page.metadata.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
           s"${Localisation(page.metadata.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.metadata.webTitle, Option(page.metadata.sectionId))}"

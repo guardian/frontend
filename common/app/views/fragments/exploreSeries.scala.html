@@ -45,7 +45,7 @@
                 @if(page.item.elements.hasMainVideo) {
                   @fragments.immersiveVideo(page)
                 }
-                @if(page.item.elements.hasMainEmbed) {
+                @if(hasMainMedia && !hasVideo) {
                     <div class="immersive-main-media__media__loading">
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>
@@ -54,35 +54,43 @@
                 }
             }
         </div>
-
-        <div class="content--explore-series-article__headline-background">
-             @fragments.inlineSvg("explore-series-headline-bg", "membership")
-        </div>
-        <div class="series-identity">
+        @if(!page.item.elements.hasMainVideo){
+          <div class="immersive-main-media__image-overlay"></div>
+        }
+        <div class="series-identity-explore">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <div class="series-identity__background">
-                        @fragments.inlineSvg("explore-series-identity-bg", "membership")
-                    </div>
-                    <a class="series-identity__links" href="/membership/ng-interactive/2016/jun/23/explore-series">
-                        <div class="series-identity__title">Labour &amp; Liverpool</div>
-                        <div class="series-identity__byline">with Ewen MacAskill</div>
-                    </a>
+                  <div class="series-identity-explore__container">
+                      @fragments.meta.metaInline(page.item, page = page)
+                      <div class="series-identity__byline">
+                      <span class="byline-meta">with</span>  @fragments.meta.byline(page.item.trail.byline, page.item.tags)
+                      </div>
+                  </div>
                 </div>
             </div>
-        </div>
+          </div>
+        <div class="explore-series-trail-wrapper">
+          <div class="explore-series-headline">
+              <div class="gs-container">
+                  <div class="content__main-column">
+                      <h1 class="explore-series-headline__content">
+                          @Html(page.item.trail.headline)
+                      </h1>
+                  </div>
+              </div>
+          </div>
 
-        <div class="explore-series-headline">
+          <div class="explore-series-standfirst">
             <div class="gs-container">
-                <div class="content__main-column">
-                    <div class="explore-series-headline__background">
-                        @fragments.inlineSvg("explore-series-header-bg", "membership")
-                    </div>
-                    <h1 class="explore-series-headline__content">
-                        @Html(page.item.trail.headline)
-                    </h1>
+              <div class="content__main-column">
+                <div class="explore-series-byline-image hide-on-mobile">
+                  @fragments.meta.bylineImage(page.item.tags)
                 </div>
+                @fragments.standfirst(page.item)
+              </div>
             </div>
-        </div>
+          </div>
+      </div>
+
     </div>
 }

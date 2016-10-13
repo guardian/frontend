@@ -1,28 +1,26 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.{Content, TagType}
-import com.gu.contentatom.thrift.{Atom, AtomData}
+import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.hardcoded.HostedPages
+import common.commercial.hosted.hardcoded.{HostedContentType, HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedVideoPage(
-  campaign: HostedCampaign,
-  pageUrl: String,
-  pageName: String,
-  standfirst: String,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val standfirst: String,
   video: HostedVideo,
-  cta: HostedCallToAction,
-  socialShareText: Option[String],
-  shortSocialShareText: Option[String],
+  override val cta: HostedCallToAction,
+  override val socialShareText: Option[String],
+  override val shortSocialShareText: Option[String],
   nextPage: Option[NextHostedPage] = None,
   nextVideo: Option[NextHostedPage] = None,
-  metadata: MetaData
+  override val metadata: MetaData
 ) extends HostedPage {
-
-  val pageTitle: String  = s"Advertiser content hosted by the Guardian: ${video.title} - video"
-  val title = video.title
-  val imageUrl = video.posterUrl
+  override val title = video.title
+  override val imageUrl = video.posterUrl
 }
 
 object HostedVideoPage extends Logging {
@@ -30,12 +28,7 @@ object HostedVideoPage extends Logging {
   def fromContent(content: Content): Option[HostedVideoPage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       videoAtoms <- atoms.media
       videoAtom <- videoAtoms.headOption
@@ -45,40 +38,22 @@ object HostedVideoPage extends Logging {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
-      def videoUrl(mimeType: String) = videoVariants.find(_.mimeType.contains(mimeType)).map(_.id) getOrElse ""
-      def youtubeId: Option[String] = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id)
 
-      val pageId = content.id
-      val pageUrl = content.webUrl
-      val pageTitle = content.webTitle
-      val owner = sponsorship.sponsorName
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
       HostedVideoPage(
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner,
-          logo = HostedLogo(
-            url = sponsorship.sponsorLogo
-          ),
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse ""),
-          logoLink = None
-        ),
-        pageUrl,
-        pageName = pageTitle,
+        id = content.id,
+        campaign,
+        pageName = "only used in hardcoded content",
         standfirst,
         video = HostedVideo(
           mediaId = campaignId,
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
-          youtubeId = youtubeId,
-          srcUrlMp4 = videoUrl("video/mp4"),
-          srcUrlWebm = videoUrl("video/webm"),
-          srcUrlOgg = videoUrl("video/ogg"),
-          srcM3u8 = videoUrl("video/m3u8")
+          youtubeId = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id),
+          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => VideoSource(mimeType, asset.id)))
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
@@ -101,8 +76,7 @@ case class HostedVideo(
   duration: Int,
   posterUrl: String,
   youtubeId: Option[String] = None,
-  srcUrlMp4: String,
-  srcUrlWebm: String,
-  srcUrlOgg: String,
-  srcM3u8: String
+  sources: Seq[VideoSource]
 )
+
+case class VideoSource(mimeType: String, url: String)

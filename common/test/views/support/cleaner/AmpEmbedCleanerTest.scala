@@ -8,6 +8,8 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
+  val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
+
   private def clean(document: Document): Document = {
     val cleaner = AmpEmbedCleaner(article())
     cleaner.clean(document)
@@ -33,11 +35,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src" in {
     val trackId = "1234"
-    val soundcloudUrl = s"http://www.soundcloud.com%2Ftracks%2F$trackId"
+    val soundcloudUrl = s"https://www.soundcloud.com%2Ftracks%2F$trackId"
     val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(trackId)
   }
 
@@ -49,6 +50,31 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
+
+  "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
+    val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+
+    result.getElementsByTag("amp-iframe").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "not add an amp-iframe element if an map element does not contain an iframe" in {
+    val doc = s"""<html><body><figure class="element-map"></figure></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+
+    result.getElementsByTag("amp-iframe").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "create an amp-iframe element with an iframe from the iframe src" in {
+    val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+
+    result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
+  }
+
 
   private def article() = {
     val contentApiItem = contentApi()

@@ -1,6 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
+import conf.Configuration.site
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.{JsBoolean, JsString}
 
@@ -8,8 +9,6 @@ object HostedMetadata {
 
   def fromContent(item: Content): MetaData = {
 
-    val url = s"/${item.id}"
-    val title = item.webTitle
     val contentType = item.`type`.name
     val sectionId = item.sectionId
     val toneTags = item.tags.filter(_.`type` == TagType.Tone)
@@ -25,9 +24,9 @@ object HostedMetadata {
     MetaData.make(
       id = item.id,
       section = sectionId map SectionSummary.fromId,
-      webTitle = title,
-      analyticsName = s"GFE:${sectionId.getOrElse("")}:$contentType:$title",
-      url = Some(url),
+      webTitle = item.webTitle,
+      analyticsName = s"GFE:${sectionId.getOrElse("")}:$contentType:${item.webTitle}",
+      url = Some(s"/${item.id}"),
       description = Some(description),
       contentType = contentType,
       iosType = Some(contentType),
@@ -37,8 +36,8 @@ object HostedMetadata {
         "tones" -> JsString(toneNames)
       ),
       opengraphPropertiesOverrides = Map(
-        "og:url" -> url,
-        "og:title" -> title,
+        "og:url" -> s"${site.host}/${item.id}",
+        "og:title" -> item.webTitle,
         "og:description" -> s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $description",
         "fb:app_id" -> "180444840287"
       )

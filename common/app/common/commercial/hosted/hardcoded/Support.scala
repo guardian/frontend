@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage, NextHostedPage}
+import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage}
 import model.MetaData
 
 /*
@@ -9,17 +9,15 @@ import model.MetaData
 object Support {
 
   def makeshiftPage(nextPage: NextHostedPage, hostedCampaign: HostedCampaign): HostedPage = new HostedPage {
-    override def campaign: HostedCampaign = hostedCampaign
+    override def id: String = nextPage.id
 
-    override def pageUrl: String = nextPage.pageUrl
+    override def campaign: HostedCampaign = hostedCampaign
 
     override def pageName: String = "unused"
 
     override def title: String = nextPage.title
 
     override def imageUrl: String = nextPage.imageUrl
-
-    override def pageTitle: String = "unused"
 
     override def standfirst: String = "unused"
 

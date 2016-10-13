@@ -2,30 +2,32 @@
 
 @import common.{Edition, LinkTo}
 
-<div class="edition-picker js-edition-picker-container">
+<div class="edition-picker js-edition-picker-container" data-component="edition-picker">
 
     <input class="edition-picker__button js-enhance-checkbox"
-        type="checkbox"
-        id="edition-picker"
+        type="checkbox" id="edition-picker"
         aria-controls="edition-picker__dropdown">
 
-    <label class="edition-picker__current-edition js-on-enter-click" for="edition-picker" tabindex="0">
-        @fragments.inlineSvg("world", "icon")
-        <span class="u-h"> Change editions from the </span>
-        @Edition(request).displayName
+    <label class="edition-picker__current-edition js-on-enter-click"
+        for="edition-picker" tabindex="0"
+        data-link-name="nav2 : edition-picker">
+
+            @fragments.inlineSvg("world", "icon")
+            <span class="u-h"> Change editions from the </span>
+            @Edition(request).displayName
     </label>
 
     <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" aria-hidden="true">
         @Edition.others(request).map { edition =>
             <li class="edition-picker__dropdown__item">
                 <a class="edition-picker__dropdown-item-link"
-                data-edition="@edition.id"
-                data-link-name="new header switch to @edition.id edition"
-                title="Switch to the @edition.id edition"
-                tabindex="0"
-                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-                    <span class="u-h"> switch to the </span>
-                    <span> @edition.displayName </span>
+                    data-edition="@edition.id"
+                    data-link-name="nav2 : edition-picker : @edition.id"
+                    title="Switch to the @edition.id edition"
+                    tabindex="0"
+                    href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                        <span class="u-h"> switch to the </span>
+                        <span> @edition.displayName </span>
                 </a>
             </li>
         }

@@ -1,6 +1,7 @@
 package discussion.util
 
-import play.api.libs.ws.{WS, WSClient, WSResponse}
+import common.LoggingField.LogField
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.libs.json.{JsValue, Json}
 import common.{ExecutionContexts, Logging, StopWatch}
 

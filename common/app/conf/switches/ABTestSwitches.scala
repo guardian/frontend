@@ -20,39 +20,19 @@ trait ABTestSwitches {
     ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("piuccio")),
+    owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 12),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-story",
-    "Test whether telling the story of the guardian through 3 staggered messages over time in a component at the end of an article results in more contributions than always showing the epic component at the end of an article (which was a long message of text over 3 paragraphs)",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 6),
+    sellByDate = new LocalDate(2016, 11, 9),
     exposeClientSide = true
   )
 
   for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
-    "Test effectiveness of header for driving contributions vs membership.",
+    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
+    "Test effectiveness of banner for driving membership.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
+    sellByDate = new LocalDate(2017, 10, 10),
     exposeClientSide = true
   )
 
@@ -76,23 +56,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-upgrade-mobile-rich-links-below-viewport",
-    "Only upgrade rich links if they are below the current viewport",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-short",
-    "Test whether epics design or copy lead to its success.",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 10),
-    exposeClientSide = true
-  )
 }

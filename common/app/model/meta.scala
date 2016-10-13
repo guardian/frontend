@@ -57,12 +57,7 @@ final case class Commercial(
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   hasInlineMerchandise: Boolean
-) {
-
-  def needsHighMerchandisingSlot(edition: Edition): Boolean = {
-    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix, tags.tags, edition, metadata.url)
-  }
-}
+) 
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -131,6 +126,7 @@ object MetaData {
     iosType: Option[String] = Some("Article"),
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
+    isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map()
     ): MetaData = {
 
@@ -155,6 +151,7 @@ object MetaData {
       iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
+      isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
   }
 
@@ -179,7 +176,8 @@ object MetaData {
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
-      }
+      },
+      isHosted = apiContent.isHosted
     )
   }
 }
@@ -211,6 +209,7 @@ final case class MetaData (
   customSignPosting: Option[NavItem] = None,
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
+  isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map()
 ){
   val sectionId = section map (_.id) getOrElse ""
@@ -598,7 +597,8 @@ final case class Tags(
 
   // Specific Series
   private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
-  lazy val isExploreSeries = isLabourLiverpool
+  private val isViewFromMiddleTown = tags.exists(t => t.id == "membership/series/election-2016-the-view-from-middletown")
+  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown
 
   lazy val keywordIds = keywords.map { _.id }
 

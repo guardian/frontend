@@ -18,12 +18,23 @@ import conf.switches.Switches.ServerSideTests
 
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
-  description = "Feature switch (0% test) for the new header",
+  description = "users in this test will see the new header",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variant")
+  }
+}
+
+object ABNewHeaderControl extends TestDefinition(
+  name = "ab-new-header-control",
+  description = "control for the new header test",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2016, 12, 8) // Thursday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("control")
   }
 }
 
@@ -49,6 +60,17 @@ object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
   }
 }
 
+object CommercialHeaderBiddingControl extends TestDefinition(
+  name = "commercial-hb-control",
+  description = "A control group for the header bidding test",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("control")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -63,8 +85,10 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
+    ABNewHeaderControl,
     CommercialClientLoggingVariant,
-    CommercialHeaderBiddingSonobiVariant
+    CommercialHeaderBiddingSonobiVariant,
+    CommercialHeaderBiddingControl
   )
 }
 
