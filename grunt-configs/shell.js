@@ -36,10 +36,6 @@ module.exports = function () {
             command: 'node dev/eslint-rules/tests/*'
         },
 
-        makeDeploysRadiator: {
-            command: 'npm run compile-deploy-radiator'
-        },
-
         atomiseCSS: {
             command: 'make atomise-css'
         }
