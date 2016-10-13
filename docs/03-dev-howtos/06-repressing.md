@@ -1,5 +1,7 @@
 # Repressing fronts
 
+The JSON output created by `Facia-press` that is ingested by `Facia` does not have the properties that `Facia` is expecting. You need to re-press the fronts to re-create the JSON. [Read the Fronts architecture here](https://github.com/guardian/frontend/blob/d4422b4537165424e70a898d150db4e806ba04d6/docs/02-architecture/02-fronts-architecture.md).
+
 ## Tests failing (PR Build & Locally)
 
 Tests are failing because of mis pressed data committed. In the Teamcity PR build, you can see things like:
@@ -9,8 +11,6 @@ Tests are failing because of mis pressed data committed. In the Teamcity PR buil
 - `FaciaControllerTest.should render fronts in mf2 format` 
 - `FaciaControllerTest.should render fronts in mf2 format (no section provided)` 
 - `FaciaControllerTest.should render fronts with content that has been pre-fetched from facia-press` 
-
-This is because the pressed JSON does not match what `Facia` is expecting. [Read the Fronts architecture here](https://github.com/guardian/frontend/blob/d4422b4537165424e70a898d150db4e806ba04d6/docs/02-architecture/02-fronts-architecture.md).
 
 ### Repressing fronts locally.
 
