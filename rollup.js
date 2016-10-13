@@ -68,7 +68,7 @@ const REQUIREJS_PATHS = {
     inlineSvg:                      'projects/common/utils/inlineSvg'
 };
 
-var madge = require('piuccio.madge');
+var madge = require('madge');
 var rollup = require('rollup');
 var amd = require('rollup-plugin-amd');
 var buble = require('rollup-plugin-buble');
