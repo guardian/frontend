@@ -46,8 +46,7 @@ define([
             // Rotate through different colours on successive page views
             var colourIndex = storage.local.get('gu.alreadyVisited') % colours.length;
             var cssModifierClass = 'membership-message-' + colours[colourIndex];
-            //var messageText = 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.';
-            var messageText = 'You\'re seeing the variant message.' ;
+            var messageText = 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.';
             var renderedBanner = template(messageTemplate, {messageText: messageText, linkHref: linkHref});
             return new Message(
                 // change this to redisplay banners to everyone who has previously closed them
