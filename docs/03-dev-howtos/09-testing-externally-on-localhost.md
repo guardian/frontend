@@ -4,7 +4,7 @@
 There are two options for this. Proxylocal and ngrok. Proxy local has the advantage of being able to set a
 constant url for your personal use, however ngrok is useful for
 
-To use Proxylocal:
+#To use Proxylocal:
 
 Prerequisites: [Ruby](https://www.ruby-lang.org/en/) & [RubyGems](http://rubygems.org/)
 
@@ -42,7 +42,8 @@ open http://f601.t.proxylocal.com/
 ```
 
 
-To use ngrok:
+
+#To use ngrok:
 
 Install ngrok via their website: https://ngrok.com/download or use homebrew :
 ```bash
