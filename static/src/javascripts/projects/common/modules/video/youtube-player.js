@@ -23,7 +23,7 @@ define([
 
     function prepareWrapper(el) {
         var wrapper = document.createElement('div');
-        wrapper.className += el.getAttribute('class');
+        wrapper.className += el.className;
 
 
         fastdom.write(function () {
