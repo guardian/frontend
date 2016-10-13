@@ -59,7 +59,7 @@ define([
     }
 
     function init(el, handlers) {
-        //wrap <iframe/> in a div with almost the same class, id and data- attributes
+        //wrap <iframe/> in a div with dynamically updating class attributes
 
         loadYoutubeJs();
 
