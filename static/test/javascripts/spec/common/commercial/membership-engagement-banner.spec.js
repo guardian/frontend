@@ -93,7 +93,7 @@ define([
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
-                storage.local.set('gu.ab.participations', participations)
+                storage.local.set('gu.ab.participations', participations);
             });
 
             it('should not show any messages even to engaged readers', expectMessageNotToBeShown);
