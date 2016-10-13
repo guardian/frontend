@@ -96,6 +96,7 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewHeaderVariant,
+    ABNewHeaderVariantTwo,
     ABNewHeaderControl,
     CommercialClientLoggingVariant,
     CommercialHeaderBiddingSonobiVariant,
