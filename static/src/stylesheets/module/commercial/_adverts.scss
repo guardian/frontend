@@ -198,7 +198,7 @@
                otherwise it will overflow.
                See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
             min-width: 0;
-            > .advert__image-container {
+            .advert__image-container {
                 max-width: 100%;
             }
         }
