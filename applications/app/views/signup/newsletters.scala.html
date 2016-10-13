@@ -24,8 +24,10 @@
             <div class="newsletter-card newsletter-card--@emailListing.theme"
                 data-component="newsletter-card @emailListing.theme">
 
-                <div class="newsletter-card__header">
-
+                <div class="newsletter-card__imagewrapper" style="height: 0; padding-bottom: 60%;">
+                    <img class="newsletter-card__image"
+                        width="100%"
+                        src="@{ Static("images/email" + emailListing.listId + ".png") }"/>
                 </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
@@ -47,7 +49,7 @@
                 <div class="newsletter-card__meta js-newsletter-meta">
 
                     <div class="newsletter-card__iframe-wrapper">
-                        @newsletterSignup("plain", "placeholder", emailListing.listId, emailListing.name)
+                        @newsletterSignup("newsletters", "placeholder", emailListing.listId, emailListing.name)
                     </div>
 
                     <div class="newsletter-card__signup is-hidden">
@@ -74,7 +76,6 @@
 }
 
 @main(signupPage, projectName = Some("signup")) { } {
-    <div class="content">
         <div class="gs-container">
             <div class="newsletters-heading">newsletters</div>
 
@@ -98,5 +99,4 @@
             </div>
 
         </div>
-    </div>
 }
