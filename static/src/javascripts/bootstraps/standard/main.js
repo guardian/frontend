@@ -130,7 +130,9 @@ define([
         if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
                 var mainJS = el.getAttribute('data-interactive');
-                if (!mainJS) return;
+                if (!mainJS) {
+                    return;
+                }
 
                 require([mainJS], function (interactive) {
                     fastdom.defer(function () {
