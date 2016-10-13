@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 // This script is only used to generate leaves, things that are loaded
 // asynchronously from a root module.
+
 // Any transitive dependency of the root module
 const ROOT_MODULES = [
     'boot',
@@ -144,9 +145,9 @@ function bundleRollup (module, excludedDependencies) {
                         console.error('There should not be a relative module here', moduleId);
                         return moduleId;
                     } else if (excludedDependencies.indexOf(moduleId) === -1) {
-                        logExternal('Module', moduleId, 'should be excluded');
                         return moduleIdToRelativePath(moduleId, parent);
                     } else {
+                        logExternal('Module', moduleId, 'should be excluded');
                         return moduleId;
                     }
                 }
