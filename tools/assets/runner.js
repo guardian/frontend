@@ -25,7 +25,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
 
             // treat tasks that are strings as terminal commands
             if (typeof task === 'string') {
-                const [binary, ...options] = task.trim().split(' ');
+                const [binary, ...options] = task.split(' ');
                 return { title, task: () => execa(binary, options), skip};
             }
 
@@ -34,7 +34,6 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
 
     return new Listr(listrTasks, {
         concurrent,
-        collapse: true,
         renderer: verbose ? 'verbose' : 'default'
     });
 }
