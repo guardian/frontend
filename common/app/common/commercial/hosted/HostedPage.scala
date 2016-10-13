@@ -9,20 +9,14 @@ import common.Logging
 import conf.Configuration.site
 import model.StandalonePage
 
-object HostedContentType extends Enumeration {
-  val Video, Article, Gallery = Value
-}
-
 trait HostedPage extends StandalonePage {
   def id: String
   def url = s"/$id"
   def encodedUrl = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
   def campaign: HostedCampaign
-  def pageName: String
   def title: String
   def imageUrl: String
-  def pageTitle: String
   def standfirst: String
 
   def socialShareText: Option[String]
@@ -35,14 +29,8 @@ trait HostedPage extends StandalonePage {
 
   def cta: HostedCallToAction
 
-  def contentType = {
-    this match {
-      case page: HostedVideoPage => HostedContentType.Video
-      case page: HostedArticlePage => HostedContentType.Article
-      case page: HostedGalleryPage => HostedContentType.Gallery
-      case _ => HostedContentType.Gallery
-    }
-  }
+  // Todo: remove when hardcoded go
+  def pageName: String
 }
 
 object HostedPage extends Logging {
@@ -64,16 +52,6 @@ object HostedPage extends Logging {
   }
 }
 
-case class NextHostedPage(
-  id: String,
-  title: String,
-  contentType: HostedContentType.Value,
-  imageUrl: String
-) {
-
-  val url = s"/$id"
-}
-
 case class HostedCampaign(
   id: String,
   name: String,
@@ -81,6 +59,26 @@ case class HostedCampaign(
   logoUrl: String,
   fontColour: FontColour
 )
+
+object HostedCampaign {
+
+  def fromContent(item: Content): Option[HostedCampaign] = {
+    for {
+      section <- item.section
+      hostedTag <- item.tags find (_.paidContentType.contains("HostedContent"))
+      sponsorships <- hostedTag.activeSponsorships
+      sponsorship <- sponsorships.headOption
+    } yield {
+      HostedCampaign(
+        id = section.id.stripPrefix("advertiser-content/"),
+        name = section.webTitle,
+        owner = sponsorship.sponsorName,
+        logoUrl = sponsorship.sponsorLogo,
+        fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
+      )
+    }
+  }
+}
 
 case class FontColour(brandColour: String) {
 

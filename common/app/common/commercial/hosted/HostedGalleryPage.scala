@@ -1,29 +1,28 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content, Element, TagType}
+import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
 import common.Logging
-import common.commercial.hosted.hardcoded.HostedPages
+import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedGalleryPage(
-  id: String,
-  campaign: HostedCampaign,
-  pageName: String,
-  title: String,
-  standfirst: String,
-  cta: HostedCallToAction,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val title: String,
+  override val standfirst: String,
+  override val cta: HostedCallToAction,
   ctaIndex: Option[Integer] = None,
-  socialShareText: Option[String] = None,
-  shortSocialShareText: Option[String] = None,
+  override val socialShareText: Option[String] = None,
+  override val shortSocialShareText: Option[String] = None,
   images: List[HostedGalleryImage],
   nextPagesList: List[NextHostedPage] = List(),
   nextPageNames: List[String] = List(),
-  metadata: MetaData
+  override val metadata: MetaData
 ) extends HostedPage {
 
-  val pageTitle: String = s"Advertiser content hosted by the Guardian: $title - gallery"
-  val imageUrl = images.headOption.map(_.url).getOrElse("")
+  override val imageUrl = images.headOption.map(_.url).getOrElse("")
 
   def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
     HostedPages.fromCampaignAndPageName(campaign.id, _)
@@ -32,7 +31,7 @@ case class HostedGalleryPage(
       id = page.id,
       imageUrl = page.imageUrl,
       title = page.title,
-      contentType = page.contentType
+      contentType = HostedPages.contentType(page)
     )
   )
 }
@@ -49,12 +48,7 @@ object HostedGalleryPage extends Logging {
   def fromContent(content: Content): Option[HostedGalleryPage] = {
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
-      campaignName <- content.sectionName
-      tags = content.tags
-      hostedTag <- tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
-      toneTag <- tags find (_.`type` == TagType.Tone)
+      campaign <- HostedCampaign.fromContent(content)
       atoms <- content.atoms
       ctaAtoms <- atoms.cta
       ctaAtom <- ctaAtoms.headOption
@@ -89,13 +83,7 @@ object HostedGalleryPage extends Logging {
 
       HostedGalleryPage(
         id = content.id,
-        campaign = HostedCampaign(
-          id = campaignId,
-          name = campaignName,
-          owner = sponsorship.sponsorName,
-          logoUrl = sponsorship.sponsorLogo,
-          fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
-        ),
+        campaign,
         images = galleryImages.toList,
         pageName = content.webTitle,
         title = content.webTitle,

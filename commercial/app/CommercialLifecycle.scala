@@ -5,7 +5,7 @@ import commercial.feeds._
 import common.LoggingField._
 import common._
 import metrics.MetricUploader
-import model.commercial.jobs.Industries
+import _root_.model.commercial.jobs.Industries
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
