@@ -1,5 +1,7 @@
 @(interactive: _root_.model.content.InteractiveAtom, shouldFence: Boolean)
 
+@import templates.inlineJS.nonBlocking.js._
+
 @iframeBody = {
     <!DOCTYPE html>
     <html>
@@ -7,13 +9,7 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
             <script>
-                var fonts = [].slice.apply(window.parent.document.styleSheets)
-                    .filter(function (sheet) { return sheet.ownerNode.className.indexOf("webfont") > - 1; })
-                    .map(function (sheet) { return sheet.ownerNode.textContent; })
-                    .join(' ');
-                var css = document.createElement('style');
-                css.textContent = fonts;
-                document.head.appendChild(css);
+                @InlineJs(interactiveFonts().body, "interactiveFonts.js")
             </script>
             <style>
                 @HtmlFormat.raw(interactive.css)
@@ -31,11 +27,7 @@
                 </script>
             }
             <script>
-                function resize() {
-                    window.frameElement.height = document.body.offsetHeight;
-                }
-                window.addEventListener('resize', resize);
-                resize();
+                @InlineJs(interactiveResize().body, "interactiveResize.js")
             </script>
         </body>
     </html>
