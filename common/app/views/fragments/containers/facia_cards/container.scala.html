@@ -87,7 +87,7 @@
                     frontId.getOrElse(pageId)
                     )) { case (isFirstContainer, id) =>
 
-                    @if(mvt.ABNewHeaderVariant.isParticipating && isFirstContainer) {
+                    @if((mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating) && isFirstContainer) {
 
                         <ul class="tertiary-navigation mobile-only">
 

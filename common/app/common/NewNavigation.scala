@@ -40,6 +40,42 @@ object NewNavigation {
     }
   }
 
+  case object PrimaryLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = List(
+      NavLink("news", "/uk-news"),
+      NavLink("opinion", "/uk/commentisfree"),
+      NavLink("sport", "/uk/sport"),
+      NavLink("arts", "/uk/culture"),
+      NavLink("life", "/uk/lifeandstyle")
+    )
+
+    val au = List(
+      NavLink("news", "/australia-news"),
+      NavLink("opinion", "/au/commentisfree"),
+      NavLink("sport", "/au/sport"),
+      NavLink("arts", "/au/culture"),
+      NavLink("life", "/au/lifeandstyle")
+    )
+
+    val us = List(
+      NavLink("news", "/us-news"),
+      NavLink("opinion", "/us/commentisfree"),
+      NavLink("sport", "/us/sport"),
+      NavLink("arts", "/us/culture"),
+      NavLink("life", "/us/lifeandstyle")
+    )
+
+    val int = List(
+      NavLink("news", "/world"),
+      NavLink("opinion", "/uk/commentisfree"),
+      NavLink("sport", "/uk/sport"),
+      NavLink("arts", "/uk/culture"),
+      NavLink("life", "/uk/lifeandstyle")
+    )
+  }
+
   case object News extends EditionalisedNavigationSection {
     val name = "news"
 
