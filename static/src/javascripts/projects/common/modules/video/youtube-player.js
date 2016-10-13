@@ -25,14 +25,8 @@ define([
 
     function prepareWrapper(el) {
         var wrapper = document.createElement('div');
-        var attrs = el.attributes;
+        wrapper.className += el.getAttribute('class');
 
-        forEach(attrs, function (attribute) {
-            //parent div should have the same class names
-            if (attribute.name === 'class') {
-                wrapper.className += attribute.value;
-            }
-        });
 
         fastdom.write(function () {
             el.parentNode.insertBefore(wrapper, el);
