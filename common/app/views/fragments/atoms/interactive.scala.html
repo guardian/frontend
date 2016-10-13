@@ -34,7 +34,7 @@
 }
 
 @if(shouldFence) {
-    <iframe class="interactive-atom" srcdoc="@iframeBody.toString"></iframe>
+    <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
 } else {
     <figure class="interactive interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
         <style>

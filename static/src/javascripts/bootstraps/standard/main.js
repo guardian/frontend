@@ -151,6 +151,19 @@ define([
                     }
                 });
             });
+
+            qwery('iframe.interactive-atom-fence').forEach(function (el) {
+                var srcdoc;
+                if (!el.srcdoc) {
+                    fastdom.read(function () {
+                       srcdoc = el.getAttribute('srcdoc');
+                    });
+                    fastdom.write(function () {
+                        el.contentWindow.contents = srcdoc;
+                        el.src = 'javascript:window["contents"]';
+                    });
+                }
+            });
         }
 
         //
