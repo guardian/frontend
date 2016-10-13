@@ -53,7 +53,7 @@ define([
                 fastdom.write(function () { open(isClosed); });
             });
 
-            bean.on($adSlot[0], 'click', '.creative__cta', function () {
+            bean.on($adSlot[0], 'click', '.video-container__cta, .creative__cta', function () {
                 fastdom.write(function () { open(false); });
             });
 
