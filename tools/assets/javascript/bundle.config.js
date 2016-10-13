@@ -48,7 +48,7 @@
             exports: 's'
         }
     },
-    optimize: 'none',
+    optimize: 'uglify2',
     generateSourceMaps: true,
     preserveLicenseComments: false,
     fileExclusionRegExp: /^bower_components/i
