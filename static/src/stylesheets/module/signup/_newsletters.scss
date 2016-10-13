@@ -22,8 +22,8 @@
 .newsletter-card__wrapper {
     position: relative;
 
-    @include mq(desktop) {
-        margin-left: 12%;
+    @include mq(leftCol) {
+        margin-left: gs-span(3) + $gs-gutter;
     }
 }
 
@@ -33,15 +33,23 @@
     margin-bottom: $gs-baseline;
     background-color: $neutral-6;
     border-top: 2px solid $news-accent;
+    width: 100%;
 
     @include mq(tablet) {
-        width: 20rem;
-        margin: $gs-baseline;
+        width: gs-span(4);
+        margin-right: $gs-gutter;
     }
 
     @include mq(desktop) {
-        width: 22.5%;
-        margin: $gs-baseline;
+        width: 30%;
+    }
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
     }
 }
 
@@ -59,17 +67,19 @@
 }
 
 .newsletter-card__name {
-    @include fs-bodyHeading(4, true);
-    @include f-textSans;
+    @include fs-header(5);
     font-weight: 900;
-    padding-bottom: $gs-baseline;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
 }
 
 .newsletter-card__content {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
+    line-height: 18px;
     background-color: $comment-support-2;
-    padding: $gs-baseline;
-    height: 12em;
+    height: 9em;
+    padding: 0 $gs-gutter / 2 0 $gs-gutter / 2;
+
 
     @include mq(tablet) {
         height: 12em;
@@ -82,9 +92,8 @@
 
 .newsletter-card__meta {
     background-color: $comment-support-2;
-    border-bottom: 2px solid $neutral-3;
-    padding: $gs-baseline;
-    height: 3rem;
+    border-bottom: 1px solid $neutral-3;
+    padding: 8px;
 
     .newsletter-card__lozenge {
         color: #ffffff;
@@ -104,8 +113,12 @@
         &:hover,
         &:focus,
         &:active {
-            background-color: darken($comment-support-2, 10%);
-            border-color: darken($comment-support-2, 10%);
+            background-color: darken($news-main-1, 10%);
+            color: $neutral-6;
+
+            .inline-arrow-right {
+              fill: $neutral-6;
+            }
         }
     }
 
@@ -125,12 +138,12 @@
 }
 
 .newsletter-card__frequency {
-    @include fs-textSans(4);
+    @include fs-textSans(1);
     color: $neutral-2;
-    padding: $gs-baseline / 2 0;
+    padding: $gs-baseline 0 0;
 
     .inline-icon {
-        fill: $neutral-2;
+        fill: $neutral-3;
     }
 }
 
@@ -149,14 +162,17 @@
 
 .newsletters-category__heading {
     @include fs-header(5);
-    color: $guardian-brand-dark;
-    background: none;
+    color: $neutral-1;
     position: relative;
     margin: 0;
+    margin-top: $gs-baseline / 2;
     margin-bottom: $gs-baseline;
-    height: 1.5rem;
 
     @include mq(desktop) {
+        width: gs-span(4);
+  }
+
+    @include mq(leftCol) {
         position: absolute;
   }
 }
