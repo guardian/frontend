@@ -38,6 +38,10 @@ module.exports = function () {
 
         atomiseCSS: {
             command: 'make atomise-css'
+        },
+
+        validateCCS: {
+            command: 'make compile-css'
         }
     };
 };
