@@ -3,45 +3,82 @@ package common.commercial.hosted
 import java.awt.Color
 import java.net.URLEncoder
 
+import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import common.Logging
+import conf.Configuration.site
 import model.StandalonePage
 
 trait HostedPage extends StandalonePage {
+  def id: String
+  def url = s"/$id"
+  def encodedUrl = URLEncoder.encode(s"${site.host}/$id", "utf-8")
+
   def campaign: HostedCampaign
-  def pageUrl: String
-  def pageName: String
   def title: String
   def imageUrl: String
-  def pageTitle: String
   def standfirst: String
 
   def socialShareText: Option[String]
   def shortSocialShareText: Option[String]
 
-  def twitterText = shortSocialShareText.getOrElse(if(standfirst.length < 136) standfirst else title) + " #ad"
+  def twitterText = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
   def facebookText = socialShareText.getOrElse(standfirst)
   def emailSubjectText = title + " - Advertiser Content hosted by the Guardian"
-  def emailBodyText = s"${socialShareText.getOrElse(standfirst)} ${URLEncoder.encode(pageUrl, "utf-8")}"
+  def emailBodyText = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
-  final val toneId = "tone/hosted"
-  final val toneName = "Hosted"
+  def cta: HostedCallToAction
 
+  // Todo: remove when hardcoded go
+  def pageName: String
 }
 
-case class NextHostedPage(
-  pageUrl: String,
-  title: String,
-  imageUrl: String
-)
+object HostedPage extends Logging {
+
+  def fromContent(item: Content): Option[HostedPage] = {
+    if (item.isHosted) {
+      item.`type` match {
+        case Video => HostedVideoPage.fromContent(item)
+        case Article => HostedArticlePage.fromContent(item)
+        case Gallery => HostedGalleryPage.fromContent(item)
+        case _ =>
+          log.error(s"Failed to make unsupported hosted type: ${item.`type`}: ${item.id}")
+          None
+      }
+    } else {
+      log.error(s"Failed to make non-hosted content: ${item.id}")
+      None
+    }
+  }
+}
 
 case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logo: HostedLogo,
-  cssClass: String,
-  fontColour: FontColour,
-  logoLink: Option[String] = None
+  logoUrl: String,
+  fontColour: FontColour
 )
+
+object HostedCampaign {
+
+  def fromContent(item: Content): Option[HostedCampaign] = {
+    for {
+      section <- item.section
+      hostedTag <- item.tags find (_.paidContentType.contains("HostedContent"))
+      sponsorships <- hostedTag.activeSponsorships
+      sponsorship <- sponsorships.headOption
+    } yield {
+      HostedCampaign(
+        id = section.id.stripPrefix("advertiser-content/"),
+        name = section.webTitle,
+        owner = sponsorship.sponsorName,
+        logoUrl = sponsorship.sponsorLogo,
+        fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
+      )
+    }
+  }
+}
 
 case class FontColour(brandColour: String) {
 
@@ -51,16 +88,11 @@ case class FontColour(brandColour: String) {
     val hexColour = brandColour.stripPrefix("#")
     val rgb = Integer.parseInt(hexColour, 16)
     val c = new Color(rgb)
-    val hsb = Color.RGBtoHSB(c.getRed, c.getGreen, c.getBlue, null)
-    val brightness = hsb(2)
-    if(brandColour == "#E31B22" || brandColour == "#E41F13") {
-      false
-    } else {
-      brightness > 0.5
-    }
+    // the conversion in java.awt.Color uses HSB colour space, whereas we want HSL here
+    // see http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
+    val min = Math.min(Math.min(c.getRed, c.getGreen), c.getBlue)
+    val max = Math.max(Math.max(c.getRed, c.getGreen), c.getBlue)
+    val lightness = (min + max).toDouble / 510
+    lightness > 0.5
   }
 }
-
-case class HostedLogo(
-  url: String
-)

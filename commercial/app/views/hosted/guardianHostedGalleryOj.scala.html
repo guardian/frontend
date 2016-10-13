@@ -1,4 +1,4 @@
-@import common.commercial.hosted.NextHostedPage
+@import common.commercial.hosted.hardcoded.NextHostedPage
 @(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextPages: List[NextHostedPage])
     <div class="hosted-gallery__oj js-hosted-gallery-oj">
         <div class="hosted-gallery__oj-cta hosted-tone-border">
@@ -10,7 +10,7 @@
             </a>
         </div>
         @for(nextPage <- nextPages){
-            <a href="@{nextPage.pageUrl}" class="hosted-gallery__oj-next-gallery hosted-tone-border">
+            <a href="@{nextPage.url}" class="hosted-gallery__oj-next-gallery hosted-tone-border">
                 <div class="hosted-gallery__next-gallery-title">
                     <div class="hosted-gallery__oj-sub-header hosted-tone">
                         More
@@ -21,6 +21,9 @@
                 </div>
                 <img class="hosted-gallery__next-gallery-image" src="@nextPage.imageUrl"/>
             </a>
+        }
+        @if(nextPages.isEmpty){
+            <div class="js-onward-placeholder"></div>
         }
     </div>
 

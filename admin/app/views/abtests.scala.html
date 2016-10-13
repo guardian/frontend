@@ -15,7 +15,7 @@
 
     <h1>A/B Tests</h1>
 
-    @fragments.serverBasedTests()
+    <div class="abtests-audience"></div>
 
     <div class="abtests-active">
         <h3>Active tests</h3>
@@ -25,11 +25,11 @@
         @fragments.abTestReport()
     </div>
 
-    <div class="abtests-audience"></div>
-
     <h3 class="abtests-expired-title">Expired tests <a href="#">show</a></h3>
 
     <div class="abtests-expired"></div>
+
+    @fragments.serverBasedTests()
 
     <script type="text/template" id="tmpl-abtest-item-template">@fragments.abTestReportItem()</script>
     <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>

@@ -10,21 +10,19 @@ define([
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/init',
     'commercial/modules/dfp/load',
-    'commercial/modules/dfp/sponsorships',
     'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
-    'commercial/modules/hosted/colours',
+    'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/ophan-tracking',
-    'commercial/modules/badges'
+    'commercial/modules/dfp/ophan-tracking'
 ], function (
     Promise,
     config,
@@ -37,21 +35,19 @@ define([
     closeDisabledSlots,
     dfpInit,
     dfpLoad,
-    sponsorships,
     frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
-    hostedColours,
+    hostedOnward,
     sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    ophanTracking,
-    badges
+    ophanTracking
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
@@ -67,7 +63,6 @@ define([
 
     var secondaryModules = [
         ['cm-load', dfpLoad],
-        ['cm-sponsorships', sponsorships.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
@@ -77,21 +72,16 @@ define([
         }]
     ];
 
-    if (config.isHosted) {
+    if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedColours', hostedColours.init]);
-    }
-
-    if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
-        primaryModules.push(['cm-badges', badges.init]);
+            ['cm-hostedOnward', hostedOnward.init]);
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner ||
-         config.tests.abNewHeaderVariant
+         config.page.disableStickyTopBanner
     ) {
         config.page.hasStickyAdBanner = false;
     } else {

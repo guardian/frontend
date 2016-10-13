@@ -1,22 +1,15 @@
 package common.commercial
 
 import common.Edition
-import conf.switches.Switches.containerBrandingFromCapi
 import model.facia.PressedCollection
-import views.support.{Commercial, SponsorDataAttributes}
 
 case class ContainerModel(
                            id: String,
                            layoutName: String,
                            content: ContainerContent,
-                           brandingAttributes: Option[SponsorDataAttributes],
                            branding: Option[Branding]
                          ) {
-  val isSingleSponsorContainer: Boolean = {
-    if (containerBrandingFromCapi.isSwitchedOn) {
-      branding.isDefined
-    } else brandingAttributes.isDefined
-  }
+  val isSingleSponsorContainer: Boolean = branding.isDefined
 }
 
 case class ContainerContent(
@@ -71,7 +64,6 @@ object ContainerModel {
       id = collection.id,
       layoutName,
       content,
-      brandingAttributes = Commercial.container.mkSponsorDataAttributes(collection.config),
       branding = collection.branding(edition)
     )
   }

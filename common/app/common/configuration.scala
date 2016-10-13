@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 4
+    val s3ConfigVersion = 8
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -363,7 +363,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.2.0"
+    lazy val frontendAssetsVersion = "v1.4.0"
   }
 
   object witness {
@@ -396,7 +396,6 @@ class GuardianConfiguration extends Logging {
     }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
@@ -472,6 +471,10 @@ class GuardianConfiguration extends Logging {
 
   object front {
     lazy val config = configuration.getMandatoryStringProperty("front.config")
+  }
+
+  object targeting {
+    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
   }
 
   object facia {

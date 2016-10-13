@@ -16,7 +16,7 @@ define([
     return function () {
         this.id = 'WeekendReadingEmail';
         this.start = '2016-08-23';
-        this.expiry = '2016-09-23';
+        this.expiry = '2016-10-31';
         this.author = 'Kate Whalen';
         this.description = '';
         this.audience = 1;
@@ -27,7 +27,7 @@ define([
         this.idealOutcome = 'Users open and click-through on the Weekend Reading email';
 
         this.canRun = function () {
-            return config.page.contentType === 'survey';
+            return config.page.contentType === 'signup';
         };
 
         function passRefererParam(emailForm) {

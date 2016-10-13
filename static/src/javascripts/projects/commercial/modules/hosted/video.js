@@ -4,15 +4,12 @@
 
 define([
     'Promise',
-    'bean',
-    'fastdom',
+    'commercial/modules/hosted/youtube',
+    'commercial/modules/hosted/next-video-autoplay',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/report-error',
-    'common/modules/analytics/omniture',
-    'common/modules/experiments/ab',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
@@ -20,15 +17,12 @@ define([
     'text!common/views/ui/loading.html'
 ], function (
     Promise,
-    bean,
-    fastdom,
+    hostedYoutube,
+    nextVideoAutoplay,
     $,
     deferToAnalytics,
     detect,
-    mediator,
     reportError,
-    omniture,
-    ab,
     events,
     videojsOptions,
     fullscreener,
@@ -36,6 +30,10 @@ define([
     loadingTmpl
 ) {
     var player;
+
+    function isDesktop() {
+        return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+    }
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -63,8 +61,9 @@ define([
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                     var $videoEl = $('.vjs-hosted__video');
                     var $inlineVideoEl = $('video');
+                    var $youtubeIframe = $('.js-hosted-youtube-video');
 
-                    if ($videoEl.length === 0) {
+                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
                         if ($inlineVideoEl.length === 0) {
                             // halt execution
                             return resolve();
@@ -80,6 +79,7 @@ define([
 
                         player.ready(function () {
                             var vol;
+                            var player = this;
                             initLoadingSpinner(player);
                             upgradeVideoPlayerAccessibility(player);
 
@@ -111,6 +111,20 @@ define([
                                 }
                             });
                         });
+
+                        if (nextVideoAutoplay.canAutoplay()) {
+                            //on desktop show the next video link 10 second before the end of the currently watching video
+                            if (isDesktop()) {
+                                nextVideoAutoplay.addCancelListener();
+                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt(player.duration(), 10)));
+                            } else {
+                                player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                            }
+                        }
+                    });
+
+                    $youtubeIframe.each(function(el){
+                        hostedYoutube.init(el);
                     });
 
                     resolve();

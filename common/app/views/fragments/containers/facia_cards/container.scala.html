@@ -1,7 +1,7 @@
 @import common.commercial.ContainerModel
-@import common.dfp.{Keyword, Series}
+@import common.{NewNavigation, LinkTo}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, SingleCampaign, Video}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
@@ -11,20 +11,8 @@
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
-  maybeContainerModel: Option[ContainerModel] = None)(implicit request: RequestHeader)
-
-@renderBrandingDataAttributes() = {
-    @for(sponsor <- containerDefinition.commercialOptions.sponsor) { data-sponsor="@sponsor"}
-    @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
-        @tag.tagType match {
-            case Series => { data-series="@{ tag.tagId}"}
-            case Keyword => { data-keywords="@{ tag.tagId}"}
-        }
-    }
-    @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
-    data-sponsorship="@sponsorshipType"
-    }
-}
+  maybeContainerModel: Option[ContainerModel] = None,
+  pageId: String = "")(implicit request: RequestHeader)
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -35,6 +23,7 @@
     }
 
     @containerDefinition.container match {
+
         case _: model.MostPopular if isPaidFront => {}
 
         case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
@@ -46,76 +35,76 @@
             }
         }
 
-        case slices.Commercial(SingleCampaign(_)) => {
-            @maybeContainerModel match {
-                case Some(containerModel) => {
-                    @paidContainer(
-                        frontId.getOrElse(""),
-                        containerDefinition.index,
-                        containerModel.copy(
-                            layoutName = "fixed/small/slow-IV",
-                            content = containerModel.content.copy(showMoreCards = Nil)
-                        )
-                    )
-                }
-                case None => {}
-            }
-        }
-
         case _ => {
-        <section id="@componentName"
+            <section id="@componentName"
                  class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
                  data-link-name="container-@{containerDefinition.index + 1} | @componentName"
                  data-id="@containerDefinition.dataId"
-                 @renderBrandingDataAttributes()
                  data-component="@componentName"
                  aria-expanded="true">
 
-            @if(containerDefinition.isStoryPackage){
-                <style>
-                @Html(common.Assets.css.inlineStoryPackage)
-                </style>
-            }
-
-            @containerDefinition.container match {
-
-                case _: Dynamic | _: Fixed => {
-                    <div class="fc-container__inner">
-                        @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
-                    </div>
+                @if(containerDefinition.isStoryPackage){
+                    <style>
+                    @Html(common.Assets.css.inlineStoryPackage)
+                    </style>
                 }
 
-                case NavList => {
-                    <div class="fc-container__inner">
-                        @navListContainer(containerDefinition, frontProperties)
-                    </div>
+                @containerDefinition.container match {
+
+                    case _: Dynamic | _: Fixed => {
+                        <div class="fc-container__inner">
+                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
+                        </div>
+                    }
+
+                    case NavList => {
+                        <div class="fc-container__inner">
+                            @navListContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
+
+                    case Video => {
+                        <div class="gs-container">
+                            @videoContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
+
+                    case NavMediaList => {
+                        <div class="fc-container__inner">
+                            @navMediaListContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
+
+                    case MostPopular => {
+                        <div class="fc-container__inner">
+                            @mostPopularContainer(containerDefinition, frontProperties)
+                        </div>
+                    }
                 }
 
-                case Video => {
-                    <div class="gs-container">
-                        @videoContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                @defining((
+                    containerDefinition.index == 0,
+                    frontId.getOrElse(pageId)
+                    )) { case (isFirstContainer, id) =>
 
-                case NavMediaList => {
-                    <div class="fc-container__inner">
-                        @navMediaListContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                    @if(mvt.ABNewHeaderVariant.isParticipating && isFirstContainer) {
 
-                case MostPopular => {
-                    <div class="fc-container__inner">
-                        @mostPopularContainer(containerDefinition, frontProperties)
-                    </div>
-                }
+                        <ul class="tertiary-navigation mobile-only">
 
-                case slices.Commercial(container) => {
-                    <div class="fc-container__inner--full-span fc-container__inner--paidfor fc-container__inner">
-                        @commercialContainer(container, containerDefinition, frontProperties)
-                    </div>
+                            @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
+
+                                <li class="tertiary-navigation__item">
+                                    <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="nav2 : tertiary : @tertiaryLink.name">
+                                        <span class="tertiary-navigation__text">@Html(tertiaryLink.name)</span>
+                                        <i class="tertiary-navigation__icon rounded-icon"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+
+                    }
                 }
-            }
-        </section>
+            </section>
         }
     }
 }

@@ -5,16 +5,15 @@ import java.net.URL
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
+import com.gu.targeting.client.Campaign
 import common._
 import common.commercial.{BrandHunter, PaidContent}
-import common.dfp.DfpAgent
 import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, Quiz}
+import model.content.{Atoms, MediaAtom, Quiz}
 import model.pressed._
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -80,20 +79,18 @@ final case class Content(
   lazy val isImmersiveGallery = {
     metadata.contentType.toLowerCase == "gallery" &&
     (
-      (staticBadgesSwitch.isSwitchedOff && !trail.commercial.isAdvertisementFeature) ||
-      (
-        staticBadgesSwitch.isSwitchedOn && {
+        {
           val branding = tags.tags.flatMap { tag =>
             BrandHunter.findBranding( tag.properties.activeBrandings, Edition.defaultEdition, None)
           }.headOption
           branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
         }
-        )
-      )
+    )
   }
-  lazy val isHeroic = HeroicTemplateSwitch.isSwitchedOn && tags.isLabourLiverpoolSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isUSMinuteSeries || isHeroic
+  lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
   lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
+  lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -162,17 +159,14 @@ final case class Content(
       tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
     }
 
-    lazy val isPaidContentInDfp =
-      staticBadgesSwitch.isSwitchedOff && DfpAgent.isAdvertisementFeature(tags.tags, Some(metadata.sectionId))
-
-    lazy val isPaidContentInCapi = staticBadgesSwitch.isSwitchedOn && {
+    lazy val isPaidContent = {
       val branding = tags.tags.flatMap { tag =>
         BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
       }.headOption
       branding.exists(_.sponsorshipType == PaidContent)
     }
 
-    isChildrensBookBlog || isPaidContentInDfp || isPaidContentInCapi
+    isChildrensBookBlog || isPaidContent
   }
 
   lazy val sectionLabelLink : String = {
@@ -230,10 +224,12 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isUSMinuteSeries) { false } else (showInRelated && !legallySensitive))),
+    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isHeroic", JsBoolean(isHeroic))
+    ("isExplore", JsBoolean(isExplore)),
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -267,8 +263,8 @@ final case class Content(
       case trackingTags => Some("trackingNames", JsString(trackingTags.map(_.name).mkString(",")))
     }
 
-    val articleMeta = if (tags.isUSMinuteSeries) {
-      Some("isMinuteArticle", JsBoolean(tags.isUSMinuteSeries))
+    val articleMeta = if (tags.isTheMinuteArticle) {
+      Some("isMinuteArticle", JsBoolean(tags.isTheMinuteArticle))
     } else None
 
     val atomsMeta = atoms.map { atoms =>
@@ -280,10 +276,9 @@ final case class Content(
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
-      commercial.isAdvertisementFeature ||
+      isAdvertisementFeature ||
       metadata.contentType == "Interactive" ||
-      metadata.contentType == "Crossword" ||
-      metadata.contentType == "Hosted"
+      metadata.contentType == "Crossword"
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
@@ -318,6 +313,7 @@ final case class Content(
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
+  val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 }
 
 object Content {
@@ -348,6 +344,7 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
+
 
     Content(
       trail = trail,
@@ -440,6 +437,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
+      ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       ("videoDuration" -> videoDuration)
     ) ++ bookReviewIsbn
@@ -469,7 +467,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isUSMinuteSeries || content.isImmersive) && content.tags.isArticle
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || content.isImmersive) && content.tags.isArticle
     )
   }
 
@@ -509,12 +507,10 @@ final case class Article (
   lightboxProperties: GenericLightboxProperties) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
-
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
-  val isUSMinute: Boolean = content.tags.isUSMinuteSeries
+  val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
-  val isHeroic: Boolean = content.isHeroic
-  val isSixtyDaysModified: Boolean = fields.lastModified.isAfter(DateTime.now().minusDays(60))
+  val isExplore: Boolean = content.isExplore
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -579,6 +575,7 @@ final case class Audio (override val content: Content) extends ContentType {
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
+
 }
 
 object Video {
@@ -840,6 +837,15 @@ final case class Interactive(
     }
   }
 
+  lazy val hasSrcdoc = {
+    val iframe = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe")
+
+    if (iframe.length > 0) {
+        iframe.first().hasAttr("srcdoc")
+    } else {
+        false
+    }
+  }
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 

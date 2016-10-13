@@ -33,8 +33,8 @@
     }
     </style>
         <!--<![endif]-->
-    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @{page.campaign.cssClass} @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
-        @guardianHostedHeader("hosted-gallery-page", page.campaign.logo.url, page.campaign.owner, page.campaign.logoLink.getOrElse(page.cta.url))
+    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+        @guardianHostedHeader("hosted-gallery-page", page)
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
                 <div class="js-hosted-gallery-container hosted-gallery__gallery-container">

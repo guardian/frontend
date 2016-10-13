@@ -2,6 +2,7 @@
 
 @import views.support.GoogleAnalyticsAccount
 
+@* TODO: Abstract this out so its shared with the main GA tracking *@
 <amp-analytics type="googleanalytics" id="google-analytics">
     <script type="application/json">
             {
@@ -25,7 +26,8 @@
                     "contributorIds": "@{content.tags.contributors.map(_.id).mkString(",")}",
                     "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
                     "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
-                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}"
+                    "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}",
+                    "isHostedFlag": "@{content.metadata.isHosted.toString}"
                   }
                 }
               }
@@ -33,4 +35,4 @@
             </script>
 </amp-analytics>
 @* GA pageview confidence pixel *@
-<amp-pixel src="//beacon.guim.co.uk/count/pvg.gif"></amp-pixel>
+<amp-pixel src="@{Configuration.debug.beaconUrl}/count/pvg.gif"></amp-pixel>

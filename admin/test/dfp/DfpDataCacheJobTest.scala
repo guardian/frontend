@@ -1,21 +1,16 @@
 package dfp
 
-import common.dfp.{CapiLookupAgent, GuLineItem, GuTargeting}
+import common.dfp.{GuLineItem, GuTargeting}
 import org.joda.time.DateTime
 import org.scalatest._
-import test.{WithTestContentApiClient, WithTestWsClient}
 
 class DfpDataCacheJobTest
   extends FlatSpec
-  with Matchers
-  with BeforeAndAfterAll
-  with WithTestWsClient
-  with WithTestContentApiClient {
-
-  lazy val dfpDataCacheJob = new DfpDataCacheJob(new CapiLookupAgent(testContentApiClient))
+    with Matchers {
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
-    GuLineItem(id,
+    GuLineItem(
+      id,
       name,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
@@ -29,8 +24,10 @@ class DfpDataCacheJobTest
         adUnitsExcluded = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
-        customTargetSets = Nil),
-      lastModified = DateTime.now.withTimeAtStartOfDay)
+        customTargetSets = Nil
+      ),
+      lastModified = DateTime.now.withTimeAtStartOfDay
+    )
   }
 
   private val cachedLineItems = Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))
@@ -43,7 +40,7 @@ class DfpDataCacheJobTest
       lineItem(3, "c")
     )
 
-    val lineItems = dfpDataCacheJob.loadLineItems(
+    val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems
@@ -64,7 +61,7 @@ class DfpDataCacheJobTest
       lineItem(4, "f")
     )
 
-    val lineItems = dfpDataCacheJob.loadLineItems(
+    val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems
@@ -90,7 +87,7 @@ class DfpDataCacheJobTest
       lineItem(4, "f")
     )
 
-    val lineItems = dfpDataCacheJob.loadLineItems(
+    val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems

@@ -7,9 +7,9 @@
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     }
 
-    @fragments.onwardPlaceholder(crosswordPage.content.commercial.isAdvertisementFeature)
+    @fragments.onwardPlaceholder(isAdvertisementFeature = false)
 
-    @if(!crosswordPage.content.content.shouldHideAdverts && crosswordPage.content.commercial.needsHighMerchandisingSlot(Edition(request))) {
+    @if(!crosswordPage.content.content.shouldHideAdverts) {
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponentHigh(false)
         </div>

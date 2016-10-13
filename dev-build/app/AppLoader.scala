@@ -1,7 +1,6 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
@@ -9,7 +8,8 @@ import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import controllers.commercial._
+import _root_.commercial.controllers.CommercialControllers
+import _root_.commercial.CommercialLifecycle
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
@@ -27,6 +27,7 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
+import targeting.TargetingLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -92,6 +93,7 @@ trait AppComponents
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
+    wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
 

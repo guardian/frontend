@@ -46,7 +46,7 @@ GET         /json/proxy/*absUrl                                                 
 GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
 POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
-GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecacheForm()
+GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecache(url: Option[String])
 POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
 
 # Ophan proxying for https
@@ -75,7 +75,6 @@ GET         /deduped/*path                                                      
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercial/specialadunits                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
-GET         /commercial/sponsorships                                                                controllers.admin.CommercialController.renderPaidForTags()
 GET         /commercial/pageskins                                                                   controllers.admin.CommercialController.renderPageskins()
 GET         /commercial/surging                                                                     controllers.admin.CommercialController.renderSurgingContent()
 GET         /commercial/inline-merchandising                                                        controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()

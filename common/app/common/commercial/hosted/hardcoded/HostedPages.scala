@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedPage, NextHostedPage}
+import common.commercial.hosted._
 
 object LegacyHostedPages {
 
@@ -34,10 +34,24 @@ object HostedPages {
     }
   }
 
-  def nextPages(campaignName: String, pageName: String): List[NextHostedPage] = {
+  def nextPages(campaignName: String, pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = {
     campaignName match {
-      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName)
+      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName, contentType)
       case _ => Nil;
     }
   }
+
+  def contentType(page: HostedPage): HostedContentType.Value = {
+    page match {
+      case _: HostedVideoPage => HostedContentType.Video
+      case _: HostedArticlePage => HostedContentType.Article
+      case _: HostedGalleryPage => HostedContentType.Gallery
+      case _ => HostedContentType.Gallery
+    }
+  }
+}
+
+object HostedContentType extends Enumeration {
+
+  val Video, Article, Gallery = Value
 }

@@ -19,6 +19,11 @@
     @InlineJs(showUserName().body, "showUserName.js")
 }
 
+@if(mvt.ABNewHeaderVariant.canRun) {
+    // editionalise new header navigation
+    @InlineJs(editionaliseMenu().body, "editionaliseMenu.js")
+}
+
 // ************* ANALYTICS *************
 
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag

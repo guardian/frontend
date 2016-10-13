@@ -1095,6 +1095,7 @@ $ima-controls-height: 70px;
 // we had major refactoring issues.
 .gu-media--show-controls-at-start.vjs-paused {
     .vjs-control-bar {
+        //Hides control bar but still shows the seeker
         bottom: 0;
     }
 

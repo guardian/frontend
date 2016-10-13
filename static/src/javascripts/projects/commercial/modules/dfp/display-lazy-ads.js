@@ -20,17 +20,19 @@ define([
     }
 
     function instantLoad() {
-        var instantLoadAdverts = [];
-
-        // loadAdvert splices the advertsToLoad array, so we can't perform forEach on advertsToLoad with loadAdvert.
-        dfpEnv.advertsToLoad.forEach(function(advert) {
+        var instantLoadAdverts = dfpEnv.advertsToLoad.filter(function(advert) {
             if (advertsToInstantlyLoad.indexOf(advert.id) > -1) {
                 ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'instant');
                 ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
-                instantLoadAdverts.push(advert);
+                return true;
             } else {
                 ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'lazy-load');
+                return false;
             }
+        });
+
+        dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(function (advert) {
+            return advertsToInstantlyLoad.indexOf(advert.id) < 0;
         });
 
         instantLoadAdverts.forEach(loadAdvert);

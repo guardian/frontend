@@ -1,11 +1,10 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false)(implicit request: RequestHeader)
-@import conf.switches.Switches.staticBadgesSwitch
 
 <header class="content__head u-cf">
     <div class="gs-container">
         <div class="content__main-column">
 
-            @fragments.meta.metaInline(item)
+            @fragments.meta.metaInline(item, page = page)
 
             <h1 class="content__headline js-score" itemprop="headline">@Html(item.trail.headline)</h1>
 
@@ -13,9 +12,7 @@
                 @fragments.standfirst(item)
             }
 
-            @if(showBadge || staticBadgesSwitch.isSwitchedOn) {
-                @fragments.commercial.badge(item, page)
-            }
+            @fragments.commercial.badge(item, page)
 
             @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {
                 @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified)

@@ -27,7 +27,7 @@ module.exports = function (grunt, options) {
             files: [{
                 expand: true,
                 cwd: dir,
-                src: ['*.css', '!{_*,ie9.*,old-ie.*,webfonts*}'],
+                src: ['*.css', '!{_*,ie9.*,old-ie.*,webfonts*}','inline/*.css'],
                 dest: dir
             }],
             options: {

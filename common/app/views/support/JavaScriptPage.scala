@@ -4,7 +4,6 @@ import common.Edition
 import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
-import conf.switches.Switches.staticBadgesSwitch
 import model._
 import play.api.Play
 import play.api.Play.current
@@ -27,13 +26,9 @@ object JavaScriptPage {
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
     val isInappropriateForSponsorship = content.exists(_.commercial.isInappropriateForSponsorship)
     val sponsorshipType = {
-      val maybeSponsorshipType = {
-        if (staticBadgesSwitch.isSwitchedOn) page.branding(edition).map(_.sponsorshipType.name)
-        else content.flatMap(_.commercial.sponsorshipType)
-      }
+      val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
     }
-    val sponsorshipTag = content.flatMap(_.commercial.sponsorshipTag).map( tag => "sponsorshipTag" -> JsString(tag.name))
     val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
     val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
@@ -52,7 +47,7 @@ object JavaScriptPage {
         case _ => false
       }),
       "isInappropriateForSponsorship" -> JsBoolean(isInappropriateForSponsorship)
-    ) ++ sponsorshipType ++ sponsorshipTag
+    ) ++ sponsorshipType
 
     val javascriptConfig = page match {
       case c: ContentPage => c.getJavascriptConfig

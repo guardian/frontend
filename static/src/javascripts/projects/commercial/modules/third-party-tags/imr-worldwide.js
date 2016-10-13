@@ -3,6 +3,8 @@ define([
 ], function (
     config
 ) {
+    // The Nielsen NetRatings tag. Also known as IMR worldwide.
+
     var imrWorldwideUrl = '//secure-au.imrworldwide.com/v60.js';
 
     function onLoad() {

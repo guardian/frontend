@@ -146,24 +146,8 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-.discussion__comment-count {
-    font-weight: bold;
-    color: $neutral-2;
-}
-
 .discussion--not-staff .d-staff-required {
     display: none !important;
-}
-
-.discussion__meta {
-    display: none;
-
-    .id--signed-out .discussion--open &.discussion__meta--open-signed-out,
-    .discussion--closed &.discussion__meta--closed,
-    .discussion--banned &.discussion__meta--banned,
-    .discussion--readonly &.discussion__meta--readonly {
-        display: block;
-    }
 }
 
 .discussion__show-button {
