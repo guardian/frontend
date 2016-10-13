@@ -1,11 +1,12 @@
 .newsletters-heading {
     @include fs-header(5);
-    padding: $gs-baseline 0;
-    color: $guardian-brand-dark;
+    font-size: 40px;
+    color: $neutral-1;
+    padding-top: $gs-baseline;
 
     @include mq($from: tablet) {
-        font-size: 36px;
-        margin-top: 8px;
+        font-size: 60px;
+        padding-top: $gs-baseline * 2;
   }
 }
 
@@ -29,8 +30,7 @@
 .newsletter-card {
     display: inline-block;
     float: left;
-    width: 90%;
-    margin: $gs-baseline 5%;
+    margin-bottom: $gs-baseline;
     background-color: $neutral-6;
     border-top: 2px solid $news-accent;
 
@@ -144,6 +144,7 @@
     display: inline-block;
     clear: both;
     width: 100%;
+    margin-top: $gs-baseline * 2;
 }
 
 .newsletters-category__heading {
@@ -152,7 +153,7 @@
     background: none;
     position: relative;
     margin: 0;
-    padding: $gs-baseline 0;
+    margin-bottom: $gs-baseline;
     height: 1.5rem;
 
     @include mq(desktop) {
