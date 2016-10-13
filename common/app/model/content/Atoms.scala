@@ -22,6 +22,7 @@ sealed trait Atom {
 
 final case class MediaAtom(
   override val id: String,
+  defaultHtml: String,
   assets: Seq[MediaAsset],
   title: String,
   duration: Option[Long],
@@ -50,6 +51,7 @@ final case class Quiz(
 
 
 
+
 object Atoms extends common.Logging {
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
@@ -65,8 +67,9 @@ object Atoms extends common.Logging {
       val media: Seq[MediaAtom] = try {
         atoms.media.getOrElse(Nil).map(atom => {
           val id = atom.id
+          val defaultHtml = atom.defaultHtml
           val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
-          MediaAtom.mediaAtomMake(id, mediaAtom)
+          MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
         })
       } catch {
         case e: Exception =>
@@ -83,9 +86,10 @@ object Atoms extends common.Logging {
 
 object MediaAtom extends common.Logging {
 
-  def mediaAtomMake(id: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
     MediaAtom(
       id = id,
+      defaultHtml = defaultHtml,
       assets = mediaAtom.assets.map(mediaAssetMake),
       title = mediaAtom.title,
       duration = mediaAtom.duration,

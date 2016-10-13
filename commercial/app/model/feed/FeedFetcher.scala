@@ -4,7 +4,7 @@ import java.lang.System.currentTimeMillis
 
 import com.ning.http.client.Response
 import conf.Configuration
-import model.commercial.events.Eventbrite.EBResponse
+import model.commercial.events.Eventbrite.{Response => EbResponse}
 import model.commercial.soulmates.SoulmatesAgent
 import play.api.Play.current
 import play.api.libs.json.{JsArray, Json}
@@ -97,7 +97,7 @@ class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMe
       if (reallyOn) {
 
         fetchPage(0) flatMap { initialFetch =>
-          val pageCount = Json.parse(initialFetch.feed.content).as[EBResponse].pagination.pageCount
+          val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.pageCount
           val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
           subsequentFetches map { fetches =>

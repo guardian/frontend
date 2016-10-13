@@ -45,7 +45,7 @@
                 @if(page.item.elements.hasMainVideo) {
                   @fragments.immersiveVideo(page)
                 }
-                @if(page.item.elements.hasMainEmbed) {
+                @if(hasMainMedia && !hasVideo) {
                     <div class="immersive-main-media__media__loading">
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>

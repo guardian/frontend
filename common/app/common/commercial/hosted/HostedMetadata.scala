@@ -9,7 +9,6 @@ object HostedMetadata {
 
   def fromContent(item: Content): MetaData = {
 
-    val title = item.webTitle
     val contentType = item.`type`.name
     val sectionId = item.sectionId
     val toneTags = item.tags.filter(_.`type` == TagType.Tone)
@@ -25,8 +24,8 @@ object HostedMetadata {
     MetaData.make(
       id = item.id,
       section = sectionId map SectionSummary.fromId,
-      webTitle = title,
-      analyticsName = s"GFE:${sectionId.getOrElse("")}:$contentType:$title",
+      webTitle = item.webTitle,
+      analyticsName = s"GFE:${sectionId.getOrElse("")}:$contentType:${item.webTitle}",
       url = Some(s"/${item.id}"),
       description = Some(description),
       contentType = contentType,
@@ -38,7 +37,7 @@ object HostedMetadata {
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> s"${site.host}/${item.id}",
-        "og:title" -> title,
+        "og:title" -> item.webTitle,
         "og:description" -> s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $description",
         "fb:app_id" -> "180444840287"
       )

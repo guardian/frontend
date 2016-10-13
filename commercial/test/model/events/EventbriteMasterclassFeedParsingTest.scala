@@ -1,7 +1,7 @@
 package model.commercial.events
 
 import model.commercial.Masterclass
-import model.commercial.events.Eventbrite.EBResponse
+import model.commercial.events.Eventbrite.Response
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
 
@@ -9,7 +9,7 @@ class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers {
 
   "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(Fixtures.rawEventBriteFeed)
-    val response = eventBriteFeed.as[EBResponse]
+    val response = eventBriteFeed.as[Response]
 
     response.pagination.pageCount should be (2)
     response.pagination.pageNumber should be (1)

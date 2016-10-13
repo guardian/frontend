@@ -1,6 +1,5 @@
 package model.commercial
 
-import common.JsonComponent
 import model.ImageElement
 import model.commercial.events.LiveEventMembershipInfo
 import model.commercial.events.Eventbrite._
@@ -12,7 +11,6 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import scala.util.Try
@@ -39,17 +37,14 @@ case class Masterclass(id: String,
                        url: String,
                        description: String,
                        status: String,
-                       venue: EBVenue,
-                       tickets: Seq[EBTicket],
+                       venue: Venue,
+                       tickets: Seq[Ticket],
                        capacity: Int,
                        guardianUrl: String,
-                       firstParagraph: String,
                        keywordIdSuffixes: Seq[String],
-                       mainPicture: Option[ImageElement]) extends Merchandise with EBTicketHandler with EBEventHandler {
+                       mainPicture: Option[ImageElement]) extends Merchandise with TicketHandler with EventHandler {
 
-  lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
-
-  lazy val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
+  lazy val readableDate: String = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 }
 
 case class LiveEvent(eventId: String,
@@ -58,9 +53,9 @@ case class LiveEvent(eventId: String,
                      eventUrl: String,
                      description: String,
                      status: String,
-                     venue: EBVenue,
-                     tickets: Seq[EBTicket],
-                     imageUrl: String) extends Merchandise with EBTicketHandler with EBEventHandler
+                     venue: Venue,
+                     tickets: Seq[Ticket],
+                     imageUrl: String) extends Merchandise with TicketHandler with EventHandler
 
 case class TravelOffer(id: String,
                        title: String,
@@ -75,11 +70,10 @@ case class TravelOffer(id: String,
                        duration: Option[Int],
                        position: Int) extends Merchandise {
 
-  val durationInWords: String = duration match {
-    case Some(1) => "1 night"
-    case Some(x) => s"$x nights"
-    case None => ""
-  }
+  val durationInWords: String = duration map {
+    case 1 => "1 night"
+    case multiple => s"$multiple nights"
+  } getOrElse ""
 
   def formattedPrice : Option[String] = fromPrice map { price =>
     if (price % 1 == 0)
@@ -89,26 +83,18 @@ case class TravelOffer(id: String,
   }
 }
 
-sealed trait Gender {
-  override def toString: String
-}
-case object Woman extends Gender {
-  override def toString = "Woman"
-}
-case object Man extends Gender {
-  override def toString = "Man"
-}
-
-case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) extends Merchandise {
+case class Member(username: String,
+                  gender: Gender,
+                  age: Int,
+                  profilePhoto: String,
+                  location: String) extends Merchandise {
 
   val profileId: Option[String] = profilePhoto match {
     case Member.IdPattern(id) => Some(id)
     case _ => None
   }
 
-  val profileUrl: String = profileId.map(id => s"https://soulmates.theguardian.com/landing/$id")
-    .getOrElse("http://soulmates.theguardian.com/")
-
+  val profileUrl: String = s"https://soulmates.theguardian.com/${profileId.map(id => s"landing/$id") getOrElse "" }"
 }
 
 case class MemberPair(member1: Member, member2: Member) extends Merchandise
@@ -134,8 +120,29 @@ case class Job(id: Int,
   val mainIndustry: Option[String] = industries.headOption
 }
 
+sealed trait Gender {
+  val name: String
+}
+
+object Gender {
+
+  def fromName(name: String) = name match {
+    case Woman.name => Woman
+    case _ => Man
+  }
+}
+
+case object Woman extends Gender {
+  val name: String = "Woman"
+}
+
+case object Man extends Gender {
+  val name: String = "Man"
+}
+
 object Merchandise {
-  val writes: Writes[Merchandise] = new Writes[Merchandise] {
+
+  val merchandiseWrites: Writes[Merchandise] = new Writes[Merchandise] {
     def writes(m: Merchandise) = m match {
       case b: Book => Json.toJson(b)
       case j: Job  => Json.toJson(j)
@@ -153,16 +160,15 @@ object Merchandise {
 
 object Book {
 
-  private val authorReads = {
-    ((JsPath \ "author_firstname").readNullable[String] and
-      (JsPath \ "author_lastname").readNullable[String])
-      .tupled.map { case (optFirstName, optLastName) =>
+  private val authorReads = (
+    (JsPath \ "author_firstname").readNullable[String] and
+    (JsPath \ "author_lastname").readNullable[String]).tupled.map {
+    case (optFirstName, optLastName) =>
       for {
         firstName <- optFirstName
         lastName <- optLastName
       } yield s"$firstName $lastName"
     }
-  }
 
   private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
     val path = JsPath \ value
@@ -171,43 +177,36 @@ object Book {
 
   implicit val bookReads: Reads[Book] = (
     (JsPath \ "name").read[String] and
-      authorReads and
-      (JsPath \ "isbn").read[String] and
-      stringOrDoubleAsDouble("regular_price_with_tax") and
-      stringOrDoubleAsDouble("final_price_with_tax") and
-      (JsPath \ "description").readNullable[String] and
-      (JsPath \ "images")(0).readNullable[String] and
-      (JsPath \ "product_url").readNullable[String] and
-      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
-      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
-      (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
+    authorReads and
+    (JsPath \ "isbn").read[String] and
+    stringOrDoubleAsDouble("regular_price_with_tax") and
+    stringOrDoubleAsDouble("final_price_with_tax") and
+    (JsPath \ "description").readNullable[String] and
+    (JsPath \ "images")(0).readNullable[String] and
+    (JsPath \ "product_url").readNullable[String] and
+    (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
+    ((JsPath \ "categories")(0) \ "name").readNullable[String] and
+    (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
     )(Book.apply _)
 
-  implicit val writesBook: Writes[Book] = Json.writes[Book]
+  implicit val bookWrites: Writes[Book] = Json.writes[Book]
 }
 
 object Masterclass {
-  private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
-  def fromEvent(event: EBEvent): Option[Masterclass] = {
-
-    val doc: Document = Jsoup.parse(event.description)
+  def fromEvent(event: Event): Option[Masterclass] = {
 
     def extractGuardianUrl: Option[String] = {
+      val guardianUrlLinkText: String = "Full course and returns information on the Masterclasses website"
+
+      val doc: Document = Jsoup.parse(event.description)
+
       val elements :Array[Element] = doc.select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)")
           .toArray(Array.empty[Element])
 
       elements.headOption match {
         case Some(e) => Some(e.attr("href"))
         case _ => None
-      }
-    }
-
-    def extractFirstParagraph(html: String) = {
-      val firstParagraph: Option[Element] = Some(doc.select("p").first())
-      firstParagraph match {
-        case Some(p) => p.text
-        case _ => ""
       }
     }
 
@@ -224,14 +223,14 @@ object Masterclass {
         tickets = event.tickets,
         capacity = event.capacity,
         guardianUrl = extractedUrl,
-        firstParagraph = extractFirstParagraph(event.description),
         keywordIdSuffixes = Nil,
         mainPicture = None
       )
     }
   }
 
-  implicit val writesMasterclass: Writes[Masterclass] = new Writes[Masterclass] {
+  implicit val masterclassWrites: Writes[Masterclass] = new Writes[Masterclass] {
+
     def writes(m: Masterclass) = Json.obj(
       "id" -> m.id,
       "name" -> m.name,
@@ -279,17 +278,17 @@ object TravelOffer {
     )
   }
 
-  implicit val writesTravelOffer: Writes[TravelOffer] = Json.writes[TravelOffer]
+  implicit val travelOfferWrites: Writes[TravelOffer] = Json.writes[TravelOffer]
 }
 
 
 object Member {
   val IdPattern = """.*/([\da-f]+)/.*""".r
 
-  implicit val readsGender: Reads[Gender] = JsPath.read[String].map (gender => if(gender == "Woman") Woman else Man)
-  implicit val writesGender: Writes[Gender] = Writes[Gender](gender => JsString(gender.toString))
+  implicit val genderReads: Reads[Gender] = JsPath.read[String].map (Gender.fromName)
+  implicit val genderWrites: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))
 
-  implicit val readsMember: Reads[Member] =
+  implicit val memberReads: Reads[Member] =
     (
       (JsPath \ "username").read[String] and
         (JsPath \ "gender").read[Gender] and
@@ -298,7 +297,8 @@ object Member {
         (JsPath \ "location").read[String].map(locations => locations.split(",").head)
       ) (Member.apply _)
 
-  implicit val writesMember: Writes[Member] = new Writes[Member] {
+  implicit val memberWrites: Writes[Member] = new Writes[Member] {
+
     def writes(member: Member): JsValue = {
       Json.obj(
         "username" -> member.username,
@@ -311,21 +311,11 @@ object Member {
       )
     }
   }
-
-  // based on play.api.libs.json.LowPriorityDefaultReads.traversableReads
-  implicit val readsMembers: Reads[Seq[Member]] = new Reads[Seq[Member]] {
-    override def reads(json: JsValue): JsResult[Seq[Member]] = {
-      json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[Member]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray"))))
-      }
-    }
-  }
 }
 
 object Job {
 
-  def apply(xml: Node): Job = Job(
+  def fromXml(xml: Node): Job = Job(
     id = (xml \ "JobID").text.toInt,
     title = (xml \ "JobTitle").text,
     shortDescription = StringEscapeUtils.unescapeHtml((xml \ "ShortJobDescription").text),
@@ -337,7 +327,7 @@ object Job {
     salaryDescription = (xml \ "SalaryDescription").text
   )
 
-  implicit val writesJob: Writes[Job] = new Writes[Job] {
+  implicit val jobWrites: Writes[Job] = new Writes[Job] {
       def writes(j: Job) = Json.obj(
           "id" -> j.id,
           "title" -> j.title,
@@ -352,7 +342,7 @@ object Job {
 
 object LiveEvent {
 
-  def fromEvent(event: EBEvent, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
+  def fromEvent(event: Event, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
     new LiveEvent(
       eventId = event.id,
       name = event.name,
@@ -365,5 +355,5 @@ object LiveEvent {
       imageUrl = eventMembershipInformation.mainImageUrl
     )
 
-  implicit val writesLiveEvent: Writes[LiveEvent] = Json.writes[LiveEvent]
+  implicit val liveEventWrites: Writes[LiveEvent] = Json.writes[LiveEvent]
 }

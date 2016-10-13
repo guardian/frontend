@@ -6,9 +6,9 @@ import commercial.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import model.commercial.LiveEvent
-import play.api.Play.current
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
+import model.commercial.readsSeq
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

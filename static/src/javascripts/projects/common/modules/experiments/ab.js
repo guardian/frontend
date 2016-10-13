@@ -8,7 +8,6 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
-    'common/modules/experiments/tests/membership-engagement-banner',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo'
 ], function (
@@ -21,7 +20,6 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
-    MembershipEngagementBannerTests,
     WeekendReadingEmail,
     WeekendReadingPromo
 ) {
@@ -30,7 +28,7 @@ define([
         new DiscussionPromoteBottomBanner(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo()
-    ].concat(MembershipEngagementBannerTests);
+    ];
 
     var participationsKey = 'gu.ab.participations';
 

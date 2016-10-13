@@ -20,9 +20,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("piuccio")),
+    owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 12),
+    sellByDate = new LocalDate(2016, 11, 9),
     exposeClientSide = true
   )
 
