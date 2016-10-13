@@ -44,7 +44,7 @@ object NewNavigation {
     val name = ""
 
     val uk = List(
-      NavLink("news", "/uk-news"),
+      NavLink("news", "/uk"),
       NavLink("opinion", "/uk/commentisfree"),
       NavLink("sport", "/uk/sport"),
       NavLink("arts", "/uk/culture"),
@@ -52,7 +52,7 @@ object NewNavigation {
     )
 
     val au = List(
-      NavLink("news", "/australia-news"),
+      NavLink("news", "/au"),
       NavLink("opinion", "/au/commentisfree"),
       NavLink("sport", "/au/sport"),
       NavLink("arts", "/au/culture"),
@@ -60,7 +60,7 @@ object NewNavigation {
     )
 
     val us = List(
-      NavLink("news", "/us-news"),
+      NavLink("news", "/us"),
       NavLink("opinion", "/us/commentisfree"),
       NavLink("sport", "/us/sport"),
       NavLink("arts", "/us/culture"),
@@ -68,7 +68,7 @@ object NewNavigation {
     )
 
     val int = List(
-      NavLink("news", "/world"),
+      NavLink("news", "/international"),
       NavLink("opinion", "/uk/commentisfree"),
       NavLink("sport", "/uk/sport"),
       NavLink("arts", "/uk/culture"),
