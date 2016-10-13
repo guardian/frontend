@@ -18,23 +18,12 @@ import conf.switches.Switches.ServerSideTests
 
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
-  description = "users in this test will see the new header first variant",
+  description = "users in this test will see the new header",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variant")
-  }
-}
-
-object ABNewHeaderVariantTwo extends TestDefinition(
-  name = "ab-new-header-variant-two",
-  description = "users in this test will see the new header second variant",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 12, 8) // Thursday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("varianttwo")
   }
 }
 
