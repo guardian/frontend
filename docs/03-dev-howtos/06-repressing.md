@@ -104,3 +104,19 @@ Follow the above instructions, only deploy the new facia (that doesn't need the 
 ### Renaming/changing a field
 
 This is a real pain because at the moment you just have to ship one change to add the new field, and another to remove the old field.  If you hit this situation, you're going to need to think hard.
+
+### A front won't re-press and facia-press is returning not found
+
+If you are seeing a `500` for a front and you can't re-press it try to access it via the elb (`http://<frontend-faciapre-elb>/pressed/live/uk/money`).
+
+If it returns `Not found`:
+
+* Check whether the fronts tool for that front has any error messages. If so - delete that item.
+* Check the fronts tool `/editorial/config`
+	* Open each item in the front and click `check` on each of the backfills
+* If the backfills are fine, check the snaps
+	* In the fronts tool `/editorial`, find the sections that contain snaps, the titles are surrounded by { curly braces }
+	* In the fronts tool `/config` find the collections associated with those snap sections and go to `/config/<collection-id>` for each one
+	* Make sure that all `snapUri` values, where the path is a realtive tag path and `snapType` is `latest`, return a valid response from internal CAPI
+	* Eg: If `"snapUri": "lifeandstyle/series/modern-tribes"` check `http://<capi>/lifeandstyle/series/gardening-what-to-do-this-week`
+	* When you find it... delete it from the fronts tool and refresh
