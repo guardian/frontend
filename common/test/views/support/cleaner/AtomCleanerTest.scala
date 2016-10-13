@@ -18,11 +18,12 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
       duration = None,
       source = None,
       posterUrl = None)
-    )
+    ),
+    interactives = Nil
   )
 )
  private def clean(document: Document, atom:Option[Atoms]): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom)(TestRequest())
+    val cleaner = AtomsCleaner(youTubeAtom, shouldFence = false)(TestRequest())
     cleaner.clean(document)
     document
   }
