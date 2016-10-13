@@ -31,13 +31,6 @@ define([
             //parent div should have the same class names
             if (attribute.name === 'class') {
                 wrapper.className += attribute.value;
-            } else if (attribute.name === 'id') {
-                //parent div should have almost the same id (without the `_iframe` part)
-                wrapper.id = attribute.value;
-                el.id += '_iframe';
-            } else if (attribute.name.substring(0, 5) === 'data-') {
-                //copy all of the data- attributes
-                wrapper.setAttribute(attribute.name, attribute.value);
             }
         });
 
