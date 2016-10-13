@@ -2,14 +2,12 @@ define([
     'fastdom',
     'Promise',
     'common/utils/$',
-    'common/utils/load-script',
-    'lodash/collections/forEach'
+    'common/utils/load-script'
 ], function (
     fastdom,
     Promise,
     $,
-    loadScript,
-    forEach
+    loadScript
 ) {
     var scriptId = 'youtube-player';
     var scriptSrc = 'https://www.youtube.com/player_api';
