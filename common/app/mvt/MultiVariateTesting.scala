@@ -60,6 +60,17 @@ object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
   }
 }
 
+object CommercialHeaderBiddingControl extends TestDefinition(
+  name = "commercial-hb-control",
+  description = "A control group for the header bidding test",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-comm-hb-test").contains("control")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -76,7 +87,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewHeaderVariant,
     ABNewHeaderControl,
     CommercialClientLoggingVariant,
-    CommercialHeaderBiddingSonobiVariant
+    CommercialHeaderBiddingSonobiVariant,
+    CommercialHeaderBiddingControl
   )
 }
 
