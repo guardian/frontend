@@ -26,13 +26,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
+  for (edition <- Edition.all) Switch(
     ABTests,
-    "ab-membership-engagement-immediate",
-    "Test effectiveness of not waiting for 10 page reads before showing membership engagement banner to UK users.",
-    owners = Seq(Owner.withGithub("justinpinner")),
+    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
+    "Test effectiveness of banner for driving membership.",
+    owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 18),
+    sellByDate = new LocalDate(2017, 10, 10),
     exposeClientSide = true
   )
 
