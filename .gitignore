@@ -78,3 +78,7 @@ bower_components
 local.conf
 
 static/src/stylesheets/pasteup/.npmrc
+
+# http://ensime.github.io/
+.ensime
+.ensime_cache/
