@@ -51,7 +51,7 @@ define([
             return new Message(
                 // change this to redisplay banners to everyone who has previously closed them
                 // 2016-10-12 matches the current PROD message id
-                id,
+                'engagement-banner-2016-10-12',
                 {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
