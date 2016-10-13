@@ -7,8 +7,7 @@ define([
     'helpers/fixtures',
     'helpers/injector',
     'Promise',
-    'common/modules/ui/message',
-    'common/modules/experiments/ab'
+    'common/modules/ui/message'
 ], function (
     bonzo,
     fastdom,
@@ -18,8 +17,7 @@ define([
     fixtures,
     Injector,
     Promise,
-    Message,
-    ab
+    Message
 ) {
     var commercialFeatures, membershipMessages,
         showMembershipMessages, alreadyVisited, storage, config, participations;
