@@ -18,7 +18,7 @@ import conf.switches.Switches.ServerSideTests
 
 object ABNewHeaderVariant extends TestDefinition(
   name = "ab-new-header-variant",
-  description = "users in this test will see the new header",
+  description = "users in this test will see the new header first variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
@@ -28,8 +28,8 @@ object ABNewHeaderVariant extends TestDefinition(
 }
 
 object ABNewHeaderVariantTwo extends TestDefinition(
-  name = "ab-new-header-variant",
-  description = "users in this test will see the new header",
+  name = "ab-new-header-variant-two",
+  description = "users in this test will see the new header second variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
