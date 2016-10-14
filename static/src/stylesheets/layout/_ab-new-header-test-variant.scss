@@ -717,6 +717,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     flex-direction: row;
     flex-flow: row wrap;
     justify-content: space-between;
+    margin-top: -$gs-baseline;
     margin-bottom: -$gs-baseline/2;
     margin-left: $gs-gutter / 2;
     margin-right: $gs-gutter / 2;
