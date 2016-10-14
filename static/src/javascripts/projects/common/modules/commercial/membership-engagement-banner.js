@@ -94,7 +94,9 @@ define([
     function init() {
         // block default behaviour for participants of the MembershipEngagementImmediate AB test
         var edition = config.page.edition;
-        if (!(isInTest('MembershipEngagementImmediate') && edition.toLowerCase() === 'uk')) {
+        if (!isInTest('MembershipEngagementImmediate','control') &&
+            !isInTest('MembershipEngagementImmediate','immediate-display') ||
+            edition.toLowerCase() !== 'uk') {
             var message = messages[edition];
             if (message) {
                 var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
