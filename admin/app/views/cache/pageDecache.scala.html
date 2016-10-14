@@ -1,0 +1,30 @@
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader)
+
+@admin_main("Purge Cache", "PROD", isAuthed = true) {
+
+    <h1>Purge Cache</h1>
+
+    <h3>Warnings:</h3>
+    <ul>
+        <li>This tool performs a <strong><i>soft</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately attempt to refresh the cached content</strong>.</li>
+        <li>If the backend service that provides the content is not healthy, <strong>stale content will continue to be served.</strong></li>
+        <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
+        <li>If the initial test below is unsuccessful, continuing with the purge should only be done in the case of takedowns.</li>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ol>
+        <li>
+            Paste the url of the page (content) you want to clear below, including the entire url. Only works on <code>www.theguardian.com</code>.
+            <br>
+            E.g. <code>https://www.theguardian.com/artanddesign/2015/nov/17/12-designs-that-revolutionised-cycling-fold-up-helmets-and-sandwich-bikes</code>
+        </li>
+        <li>Click <i>Test</i> to check the page can still be served by the backend.</li>
+        <li>Click <i>Purge</i> to clear the page from the cache.  You may purge even if the test fails, but be aware it may stop users reaching the content, or continue to serve stale content.</li>
+    </ol>
+    <hr/>
+
+    @fragments.pageDecacheForm(maybeTestResult)
+
+    @if(!message.isEmpty) { <p class="bg-info purge-message">@message</p> }
+}

@@ -47,7 +47,7 @@
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">

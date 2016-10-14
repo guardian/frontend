@@ -69,7 +69,7 @@ object Fixtures {
                |    "id" : 645187,
                |    "latitude" : 51.534908999999999,
                |    "longitude" : -0.121693,
-               |    "name" : ""
+               |    "name" : "The Guardian"
                |  }
                |}""".stripMargin('|')
 

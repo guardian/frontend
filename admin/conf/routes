@@ -46,7 +46,7 @@ GET         /json/proxy/*absUrl                                                 
 GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
 POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
-GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecacheForm()
+GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecache(url: Option[String])
 POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
 
 # Ophan proxying for https

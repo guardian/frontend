@@ -32,6 +32,7 @@
 - [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
 - [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
 - [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
+- [Overriding default configuration](03-dev-howtos/15-override-default-configuration.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
