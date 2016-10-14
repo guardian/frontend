@@ -2,12 +2,14 @@ define([
     'fastdom',
     'Promise',
     'common/utils/$',
-    'common/utils/load-script'
+    'common/utils/load-script',
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     Promise,
     $,
-    loadScript
+    loadScript,
+    forEach
 ) {
     var scriptId = 'youtube-player';
     var scriptSrc = 'https://www.youtube.com/player_api';
@@ -23,8 +25,21 @@ define([
 
     function prepareWrapper(el) {
         var wrapper = document.createElement('div');
-        wrapper.className += el.className;
+        var attrs = el.attributes;
 
+        forEach(attrs, function (attribute) {
+            //parent div should have the same class names
+            if (attribute.name === 'class') {
+                wrapper.className += attribute.value;
+            } else if (attribute.name === 'id') {
+                //parent div should have almost the same id (without the `_iframe` part)
+                wrapper.id = attribute.value;
+                el.id += '_iframe';
+            } else if (attribute.name.substring(0, 5) === 'data-') {
+                //copy all of the data- attributes
+                wrapper.setAttribute(attribute.name, attribute.value);
+            }
+        });
 
         fastdom.write(function () {
             el.parentNode.insertBefore(wrapper, el);
@@ -57,7 +72,7 @@ define([
     }
 
     function init(el, handlers) {
-        //wrap <iframe/> in a div with dynamically updating class attributes
+        //wrap <iframe/> in a div with almost the same class, id and data- attributes
 
         loadYoutubeJs();
 
