@@ -15,13 +15,14 @@ list: # PRIVATE
 
 # *********************** SETUP ***********************
 
+# make sure we have yarn available to run
+check-yarn: # PRIVATE
+	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
+
 # Install all 3rd party dependencies.
-install:
+install: check-yarn
 	@echo 'Installing 3rd party dependencies…'
-	@npm install
-	@echo '…done.'
-	@echo 'Removing any unused 3rd party dependencies…'
-	@npm prune
+	@yarn install
 	@echo '…done.'
 	@node tools/messages.js install
 
@@ -33,8 +34,6 @@ uninstall: # PRIVATE
 # Reinstall all 3rd party dependencies from scratch.
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
-
-
 
 # *********************** DEVELOPMENT ***********************
 
