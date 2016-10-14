@@ -29,7 +29,7 @@
 @inputId = @{ componentClass + "-email-sub-input" }
 
 @wrapperClass = @{ "email-sub js-email-sub" + " email-sub--" + componentClass + " js-email-sub--" + componentClass }
-@wrapperToneClass = @{ if (componentClass == "article" || componentClass == "newsletters") "email-sub--tone-" + listIdTones.getOrElse(listId, "news") }
+@wrapperToneClass = @{ if (componentClass == "article" || componentClass == "newsletters" || componentClass == "plaintone") "email-sub--tone-" + listIdTones.getOrElse(listId, "news") }
 @formClass = @{ "email-sub__form js-email-sub__form" + " email-sub__form--" + componentClass }
 
 <div class="@wrapperClass @wrapperToneClass">

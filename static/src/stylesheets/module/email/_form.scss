@@ -268,7 +268,6 @@
 
 .email-sub__form--article,
 .email-sub__form--plain,
-.email-sub__form--newsletters,
 .email-sub__form--plaindark
 {
     .label__icon {
@@ -350,7 +349,7 @@
 
     .email-sub__label,
     .label__icon {
-        display: inline-block;
+        display: none;
     }
 
     .email-sub__message__headline {

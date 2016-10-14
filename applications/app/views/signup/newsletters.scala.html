@@ -44,27 +44,28 @@
                             @emailListing.frequency
                         </div>
                     </div>
+                </div>
 
-                    <iframe src="/email/form/newsletters/@emailListing.listId"
+                <div class="newsletter-card__meta js-newsletter-meta">
+                    <iframe src="/email/form/plaintone/@emailListing.listId"
                         data-form-title="Sign up for @emailListing.name"
                         data-form-description=""
                         data-form-campaign-code="newsletters-page"
                         scrolling="no"
                         seamless frameborder="0"
-                        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe is-hidden"
+                        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
                         data-form-success-desc="">
                     </iframe>
-                </div>
 
-                <div class="newsletter-card__meta js-newsletter-meta">
-                    <div class="newsletter-card__signup">
+                    <div class="newsletter-card__signup is-hidden">
                         <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup-button"
                                 data-link-name="Signup @emailListing.name"
                                 type="button">
                             <span>Sign up</span>
                         </button>
                     </div>
-                    <div class="newsletter-card__example">
+
+                    <div class="newsletter-card__example is-hidden">
                         @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
                             <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview"
