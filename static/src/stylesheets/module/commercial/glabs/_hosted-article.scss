@@ -171,6 +171,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .hide-on-desktop {
         .hosted-article__next-page {
             margin-top: 30px;
+            position: relative;
         }
         .hosted__next-page--header {
             margin: 0;
@@ -465,4 +466,82 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             fill: #ffffff;
         }
     }
+}
+
+/* Hosted More From Carousel AB test */
+.hosted__next-video__carousel-arrows {
+    position: absolute;
+    right: 0;
+    top: 26px;
+
+    .inline-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        cursor: pointer;
+    }
+
+    .arrow-left {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+.hosted__next-video__carousel-wrapper {
+    position: relative;
+    transform: translate(0, 0);
+    transition: transform 1s ease;
+}
+
+.carousel-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    &:first-child {
+        position: relative;
+    }
+}
+
+.ab-test-variant1 {
+    overflow: hidden;
+    .prev-oj-item {
+        opacity: .5;
+    }
+}
+
+.hosted__carousel-marker {
+    text-align: center;
+}
+
+$dotSize: 8px;
+
+.hosted__carousel-dot {
+    width: $dotSize;
+    height: $dotSize;
+    border-radius: $dotSize;
+    display: inline-block;
+    pointer-events: none;
+    border: 1px solid;
+    transition: background-color 750ms ease;
+    &:not(.highlighted) {
+        background: transparent;
+    }
+}
+
+.hosted__ab-test-control,
+.hosted__ab-test-variant1,
+.hosted__ab-test-variant2 {
+    display: none;
+}
+
+.hosted__next-page.ab-test-control .hosted__ab-test-control,
+.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
+.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+    display: block;
 }

@@ -1,0 +1,45 @@
+@(interactive: _root_.model.content.InteractiveAtom, shouldFence: Boolean)
+
+@import templates.inlineJS.nonBlocking.js._
+
+@iframeBody = {
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+            <script>
+                @InlineJs(interactiveFonts().body, "interactiveFonts.js")
+            </script>
+            <style>
+                @HtmlFormat.raw(interactive.css)
+            </style>
+        </head>
+        <body>
+            @HtmlFormat.raw(interactive.html)
+
+            @for(js <- interactive.mainJS) {
+                <script src="https://interactive.guim.co.uk/libs/require.js/2.3.2/require.min.js"></script>
+                <script>
+                    require(['@js'], function (interactive) {
+                        interactive.boot(document.body);
+                    });
+                </script>
+            }
+            <script>
+                @InlineJs(interactiveResize().body, "interactiveResize.js")
+            </script>
+        </body>
+    </html>
+}
+
+@if(shouldFence) {
+    <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
+} else {
+    <figure class="interactive interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
+        <style>
+            @HtmlFormat.raw(interactive.css)
+        </style>
+        @HtmlFormat.raw(interactive.html)
+    </figure>
+}
