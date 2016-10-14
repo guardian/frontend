@@ -30,7 +30,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion for membership';
         this.showForSensitive = false;
-        this.audienceCriteria = 'Twenty percent of uk edition readers (desktop and mobile web)';
+        this.audienceCriteria = 'Forty percent of uk edition readers (desktop and mobile web)';
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.hypothesis = 'Although the conversion rate will likely drop slightly, we may see an uplift in the absolute value of contributions due to reaching a larger, and perhaps new audience segment.';
