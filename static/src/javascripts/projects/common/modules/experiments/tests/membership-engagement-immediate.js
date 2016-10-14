@@ -22,11 +22,11 @@ define([
     return function () {
 
         this.id = 'MembershipEngagementImmediate';
-        this.start = '2016-10-13';
-        this.expiry = '2016-10-15';
+        this.start = '2016-10-14';
+        this.expiry = '2016-10-16';
         this.author = 'Justin Pinner';
         this.description = 'Test if showing engagement banner to users with less than 10 page views drives additional contributions.';
-        this.audience = 0.2;
+        this.audience = 0.4;
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion for membership';
         this.showForSensitive = false;
@@ -63,6 +63,14 @@ define([
 
         };
 
+        var success = function (complete) {
+            if (this.canRun()) {
+                mediator.on('membership-message:display', function () {
+                    bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
+                });
+            }
+        };
+
         this.variants = [
             {
                 id: 'control',
@@ -71,7 +79,7 @@ define([
                     if (userHasMadeEnoughVisits) {
                         commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                             if (canShow) {
-                                var messageShown = makeMessage('mem_uk_banner_immediate_80pc');
+                                var messageShown = makeMessage('mem_uk_banner_immediate_control');
                                 if (messageShown) {
                                     mediator.emit('membership-message:display');
                                 }
@@ -80,20 +88,14 @@ define([
                         });
                     }
                 },
-                success: function (complete) {
-                    if (this.canRun()) {
-                        mediator.on('membership-message:display', function () {
-                            bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
-                        });
-                    }
-                }.bind(this)
+                success: success.bind(this)
             },
             {
                 id: 'immediate-display',
                 test: function () {
                     commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                         if (canShow) {
-                            var messageShown = makeMessage('mem_uk_banner_immediate_20pc');
+                            var messageShown = makeMessage('mem_uk_banner_immediate_variant');
                             if (messageShown) {
                                 mediator.emit('membership-message:display');
                             }
@@ -101,13 +103,7 @@ define([
                         }
                     });
                 },
-                success: function (complete) {
-                    if (this.canRun()) {
-                        mediator.on('membership-message:display', function () {
-                            bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
-                        });
-                    }
-                }.bind(this)
+                success: success.bind(this)
             }
         ];
     };
