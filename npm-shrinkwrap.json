@@ -1558,14 +1558,6 @@
     "grunt-bytesize": {
       "version": "0.1.1"
     },
-    "grunt-concurrent": {
-      "version": "1.0.0",
-      "dependencies": {
-        "async": {
-          "version": "0.9.2"
-        }
-      }
-    },
     "grunt-contrib-clean": {
       "version": "0.6.0",
       "dependencies": {
@@ -2644,9 +2636,6 @@
     "loud-rejection": {
       "version": "1.6.0"
     },
-    "lpad": {
-      "version": "1.0.0"
-    },
     "lru-cache": {
       "version": "2.7.3"
     },
@@ -3019,9 +3008,6 @@
     },
     "osenv": {
       "version": "0.0.3"
-    },
-    "pad-stdio": {
-      "version": "1.0.0"
     },
     "pako": {
       "version": "0.2.8"
