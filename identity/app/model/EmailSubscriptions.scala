@@ -189,6 +189,19 @@ object EmailSubscriptions {
 
   def featureEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
+      name = "Guardian Documentaries",
+      theme = "feature",
+      about = "",
+      teaser = "Be the first to find out about our new documentary films, created by top international filmmakers and get background on our film-makers and the subjects that they cover",
+      description = "Be the first to find out about our new documentary films, created by top international filmmakers and following unseen global stories. Discover our latest documentaries, get background on our film-makers and the subjects that they cover, and find out about live documentary screenings.",
+      frequency = "Every four weeks",
+      listId = "3745",
+      subscribedTo = subscribedListIds.exists{ x => x == "3745" },
+      tone = Some("media"),
+      signupPage = Some("https://www.theguardian.com/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
+      exampleUrl = Some("https://www.theguardian.com/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
+    ),
+    EmailSubscription(
       name = "Weekend Reading",
       theme = "feature",
       about = "Feature",
