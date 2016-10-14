@@ -35,6 +35,8 @@ uninstall: # PRIVATE
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
+
+
 # *********************** DEVELOPMENT ***********************
 
 # Watch and automatically compile/reload all JS/SCSS.
@@ -43,11 +45,6 @@ watch: compile-dev
 	@npm run sass-watch & \
 		npm run css-watch & \
 		npm run browser-sync
-
-# Shrinkwrap NPM packages after updating package.json.
-shrinkwrap: # PRIVATE
-	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
-	@node tools/messages.js did-shrinkwrap
 
 
 
