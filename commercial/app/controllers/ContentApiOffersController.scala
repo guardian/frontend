@@ -35,7 +35,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     "foundation-supported" -> "Supported by"
   )
 
-  private def retrieveContent()(implicit request: Request[AnyContent]): Future[Seq[ContentType]]  = {
+  private def retrieveContent()(implicit request: Request[AnyContent]): Future[List[ContentType]]  = {
 
     val optKeyword = request.getParameter("k")
 
@@ -61,7 +61,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents
+    futureContents.map(_.toList)
   }
 
 
