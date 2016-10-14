@@ -745,6 +745,10 @@ $hosted-video-height: 540px;
     &:visited {
         text-decoration: none;
     }
+
+    .hostedbadge {
+        z-index: $zindex-ads;
+    }
 }
 
 .hosted__cta-link,
