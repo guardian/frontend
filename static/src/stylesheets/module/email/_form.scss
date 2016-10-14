@@ -260,6 +260,10 @@
         padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
     }
 
+    .email-sub__text-input {
+        border-color: $neutral-3;
+    }
+
     .email-sub__message__headline,
     .email-sub__message__description {
         color: $neutral-1;
@@ -268,8 +272,7 @@
 
 .email-sub__form--article,
 .email-sub__form--plain,
-.email-sub__form--plaindark
-{
+.email-sub__form--plaindark {
     .label__icon {
         display: inline-block;
         margin-right: $gs-gutter / 4;
@@ -321,6 +324,13 @@
     .email-sub__message__headline {
         color: #ffffff;
     }
+}
+
+// PLAINTONE MODS
+.email-sub__form--plaintone {
+    .email-sub__text-input {
+        border-color: $neutral-3;
+  }
 }
 
 // NEWSLETTER MODS
