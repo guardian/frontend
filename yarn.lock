@@ -3049,12 +3049,6 @@ grunt-contrib-copy@0.6.0:
   dependencies:
     chalk "~0.5.1"
 
-grunt-contrib-requirejs@0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/grunt-contrib-requirejs/-/grunt-contrib-requirejs-0.4.4.tgz#87f2165a981e48a45d22f8cc5299d0934031b972"
-  dependencies:
-    requirejs "~2.1.0"
-
 grunt-contrib-uglify@0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/grunt-contrib-uglify/-/grunt-contrib-uglify-0.9.1.tgz#1eb8420009f15ed1a97368077479ab25ded28d1b"
@@ -6153,9 +6147,9 @@ requirefresh@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/requirefresh/-/requirefresh-1.1.2.tgz#d8eb744927c6d912de3418f93dcbab27b959f2f3"
 
-requirejs@~2.1.0:
-  version "2.1.22"
-  resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.1.22.tgz#dd78fd2d34180c0d62c724b5b8aebc0664e0366f"
+requirejs@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.3.2.tgz#0eaa870d4c7db3b15dd1322e6b65b0388fc4b2c6"
 
 requires-port@1.x.x:
   version "1.0.0"
