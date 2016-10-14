@@ -142,9 +142,9 @@ define([
 
     try {
         config.commercial = config.commercial || {};
-        return config.commercial.featuresDebug = new CommercialFeatures();
+        config.commercial.featuresDebug = new CommercialFeatures();
     } catch (error) {
         robust.log('cm-commercialFeatures', error);
     }
-
+    return config.commercial.featuresDebug;
 });

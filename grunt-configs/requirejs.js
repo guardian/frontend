@@ -207,20 +207,6 @@ module.exports = function (grunt, options) {
                 ]
             }
         },
-        facia: {
-            options: {
-                name: 'bootstraps/enhanced/facia',
-                out: options.staticTargetDir + 'javascripts/bootstraps/enhanced/facia.js',
-                exclude: [
-                    'boot',
-                    'bootstraps/standard/main',
-                    'bootstraps/commercial',
-                    'bootstraps/enhanced/main',
-                    'text',
-                    'inlineSvg'
-                ]
-            }
-        },
         football: {
             options: {
                 name: 'bootstraps/enhanced/football',
