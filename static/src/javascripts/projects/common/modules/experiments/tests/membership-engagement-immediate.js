@@ -79,7 +79,7 @@ define([
                     if (userHasMadeEnoughVisits) {
                         commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                             if (canShow) {
-                                var messageShown = makeMessage('mem_uk_banner_immediate_control');
+                                var messageShown = makeMessage('mem_uk_banner_20percentcontrol');
                                 if (messageShown) {
                                     mediator.emit('membership-message:display');
                                 }
@@ -95,7 +95,7 @@ define([
                 test: function () {
                     commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                         if (canShow) {
-                            var messageShown = makeMessage('mem_uk_banner_immediate_variant');
+                            var messageShown = makeMessage('mem_uk_banner_20percentvariant');
                             if (messageShown) {
                                 mediator.emit('membership-message:display');
                             }
