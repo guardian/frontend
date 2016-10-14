@@ -15,10 +15,6 @@ list: # PRIVATE
 
 # *********************** SETUP ***********************
 
-# make sure we have yarn available to run
-check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
-
 # Install all 3rd party dependencies.
 install: check-node check-yarn
 	@echo 'Installing 3rd party dependencies…'
@@ -35,8 +31,13 @@ uninstall: # PRIVATE
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
+# Make sure we running a recent-enough version of Node.
 check-node:
 	@./dev/check-node-version.js
+
+# Make sure yarn is installed.
+check-yarn: # PRIVATE
+	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
 
 # *********************** DEVELOPMENT ***********************
 
