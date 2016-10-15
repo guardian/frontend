@@ -19,7 +19,7 @@ define([
     'commercial/modules/messenger/scroll',
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
-    'commercial/modules/messenger/background'
+    'commercial/modules/messenger/fixed-background'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
              ophanTracking) {
