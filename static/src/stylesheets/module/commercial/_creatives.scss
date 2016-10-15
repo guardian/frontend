@@ -913,3 +913,39 @@
         transform: (translateY(5px));
     }
 }
+
+.creative__background-parent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+
+    .creative__canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 500px;
+
+        @include mq(tablet) {
+            left: calc(50% - #{(gs-span(9) + $gs-gutter * 2) / 2});
+            width: calc(100% - #{(gs-span(9) - $gs-gutter * 4) / 2});
+        }
+
+        @include mq(desktop) {
+            left: calc(50% - #{(gs-span(12) + $gs-gutter * 2) / 2});
+            width: calc(100% - #{(gs-span(12) - $gs-gutter * 4) / 2});
+        }
+
+        @include mq(leftCol) {
+            left: calc(50% - #{(gs-span(14) + $gs-gutter * 2) / 2});
+            width: calc(100% - #{gs-span(7) - $gs-gutter * 4});
+        }
+
+        @include mq(wide) {
+            left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
+            width: calc(100% - #{(gs-span($gs-max-columns) - $gs-gutter * 4) / 2});
+        }
+    }
+}
