@@ -30,7 +30,7 @@ define([
                     fastdom.read(updateBackgroundPosition);
                 }
             });
-        }
+        };
 
         var backgroundParent = document.createElement('div');
         backgroundParent.className = 'creative__background-parent';
@@ -52,7 +52,7 @@ define([
                 background.width = rect.width;
             });
         })
-        .then(function (rect) {
+        .then(function () {
             return fastdom.read(function () {
                 updateBackgroundPosition();
             });
