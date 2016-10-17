@@ -32,16 +32,16 @@ See below for quick descriptions.
 				- commercial.js
 				- enhanced/main.js
 			- Cloudwatch beacon
-		- [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
-			- getUserData.js
-			- detectAdblock
-			- showUserName
-			- editionaliseMenu
-			- ophanConfig
-		- [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
-			- Google
-			- Omniture
-			- Comscore
+    - [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
+        - getUserData.js
+        - detectAdblock
+        - showUserName
+        - editionaliseMenu
+        - ophanConfig
+    - [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
+        - Google
+        - Omniture
+        - Comscore
 
 ### Inline blocking JS
 
