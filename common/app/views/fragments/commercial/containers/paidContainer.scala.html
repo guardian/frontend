@@ -3,8 +3,8 @@
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import views.html.commercial.containerWrapper
-@import views.html.commercial.containers._
+@import views.html.fragments.commercial.containerWrapper
+@import views.html.fragments.commercial.containers._
 @import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.inlineSvg
 @import views.support.commercial.TrackingCodeBuilder.mkInteractionTrackingCode
@@ -45,7 +45,7 @@
                     <span class="js-button__label">More @containerModel.content.title</span>
                 </summary>
                 <div class="adverts__row adverts__row--wrap adverts__3cols">
-                    @containerModel.content.showMoreCards.map(card => views.html.commercial.cards.itemSmallCard(
+                    @containerModel.content.showMoreCards.map(card => views.html.fragments.commercial.cards.itemSmallCard(
                                             card,
                                             optAdvertClassNames = Some(Seq("paidfor")),
                                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
