@@ -170,6 +170,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      tone = Some("feature"),
       signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
@@ -182,8 +183,21 @@ object EmailSubscriptions {
       frequency = "Every Tuesday",
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      tone = Some("feature"),
       signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
+    ),
+    EmailSubscription(
+      name = "Guardian Australia sports",
+      theme = "sport",
+      about = "Sport",
+      teaser = "The latest sports news, features and comment from Guardian Australia",
+      description = "The latest sports news, features and comment from Guardian Australia, delivered to your inbox each morning.",
+      frequency = "Every day",
+      listId = "3766",
+      subscribedTo = subscribedListIds.exists{ x => x == "3766" },
+      tone = Some("feature"),
+      signupPage = Some("https://www.theguardian.com/info/2015/jun/05/guardian-australia-sport-newsletter-subscribe-by-email")
     )
   )
 
