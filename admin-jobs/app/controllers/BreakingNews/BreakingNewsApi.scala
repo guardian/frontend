@@ -4,11 +4,11 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import play.api.libs.json._
 import services.S3
-import play.api.Mode
+import play.api.{Environment, Mode}
 
-class S3BreakingNews(mode: Mode.Mode) extends S3 {
+class S3BreakingNews(environment: Environment) extends S3 {
   override lazy val bucket = Configuration.aws.bucket
-  lazy val stage = if(mode == Mode.Test) "TEST" else Configuration.environment.stage.toUpperCase
+  lazy val stage = if(environment.mode == Mode.Test) "TEST" else Configuration.environment.stage.toUpperCase
   val namespace = "notifications"
   lazy val location = s"$stage/$namespace"
   def getKeyForPath(path: String): String = s"$location/$path.json"
