@@ -86,13 +86,6 @@ switch (process.argv[2]) {
         }, 'error');
         break;
 
-    case 'did-shrinkwrap':
-        notify(
-            'NPM packages have been shrinkwrapped.', {
-            heading: 'make shrinkwrap'
-        }, 'info');
-        break;
-
     case 'dependency-update':
         notify('Run `make install`.', {
             heading: 'Dependencies have changed'

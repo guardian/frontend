@@ -16,12 +16,9 @@ list: # PRIVATE
 # *********************** SETUP ***********************
 
 # Install all 3rd party dependencies.
-install: check-node
+install: check-node check-yarn
 	@echo 'Installing 3rd party dependencies…'
-	@npm install
-	@echo '…done.'
-	@echo 'Removing any unused 3rd party dependencies…'
-	@npm prune
+	@yarn install
 	@echo '…done.'
 	@node tools/messages.js install
 
@@ -34,8 +31,13 @@ uninstall: # PRIVATE
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
+# Make sure we running a recent-enough version of Node.
 check-node:
 	@./dev/check-node-version.js
+
+# Make sure yarn is installed.
+check-yarn: # PRIVATE
+	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
 
 # *********************** DEVELOPMENT ***********************
 
@@ -45,11 +47,6 @@ watch: compile-dev
 	@npm run sass-watch & \
 		npm run css-watch & \
 		npm run browser-sync
-
-# Shrinkwrap NPM packages after updating package.json.
-shrinkwrap: # PRIVATE
-	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
-	@node tools/messages.js did-shrinkwrap
 
 
 
