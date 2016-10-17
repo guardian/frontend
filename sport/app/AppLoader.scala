@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import http.CorsHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -33,6 +34,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
+  def actorSystem: ActorSystem
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val footballClient = wire[FootballClient]
