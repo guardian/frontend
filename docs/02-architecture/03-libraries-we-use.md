@@ -18,12 +18,10 @@ Play - the application server
 https://playframework.com/
 
 ### Node dependencies
-We also have a set of Node dependencies, used mostly by our static asset pipeline. We use npm to manage these.
+We also have a set of Node dependencies, used mostly by our static asset pipeline. We use `yarn` to manage these.
 
 When you want to add or update a dependency:
 
 ```
-npm install <package>@<version> --save
-npm shrinkwrap
-node dev/clean-shrinkwrap.js
+yarn add <package>@<version>
 ```
