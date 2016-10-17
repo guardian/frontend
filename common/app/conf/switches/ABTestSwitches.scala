@@ -26,16 +26,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  for (edition <- Edition.all) Switch(
-    ABTests,
-    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
-    "Test effectiveness of banner for driving membership.",
-    owners = Seq(Owner.withGithub("rtyley")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 10, 10),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-weekend-reading-email",

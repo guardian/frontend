@@ -8,17 +8,18 @@
 @import views.html.fragments.inlineSvg
 @import views.support.Commercial.CssClassBuilder
 
-<a href="@item.targetUrl"
-   class="@CssClassBuilder.linkFromSmallCard(item, optAdvertClassNames, optClassNames, useCardBranding)"
-   data-link-name="@omnitureId"
-    >
-    <p class="advert__title">
-        @for(icon <- item.icon){@inlineSvg(icon, "icon")}
-        @item.headline
-    </p>
+<div class="@CssClassBuilder.advertContainer(optClassNames)">
+    <a href="@item.targetUrl"
+        class="@CssClassBuilder.linkFromSmallCard(item, optAdvertClassNames, useCardBranding)"
+        data-link-name="@omnitureId">
+        <p class="advert__title">
+            @for(icon <- item.icon){@inlineSvg(icon, "icon")}
+            @item.headline
+        </p>
+    </a>
     @if(useCardBranding) {
         @for(branding <- item.branding) {
-            @cardLogo(branding, isStandardSizeCard = false)
+            @cardLogo(branding, isStandardSizeCard = true)
         }
     }
-</a>
+</div>

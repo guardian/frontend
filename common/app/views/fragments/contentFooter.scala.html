@@ -17,11 +17,7 @@
     } {
         @fragments.mostPopularPlaceholder(content.metadata.sectionId)
     } {
-        @if(content.commercial.needsHighMerchandisingSlot(Edition(request))) {
-            <div class="fc-container fc-container--commercial">
-                @fragments.commercial.commercialComponentHigh(isPaidContent)
-            </div>
-        }
+        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponentHigh(isPaidContent)</div>
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
     } {

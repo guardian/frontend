@@ -95,6 +95,16 @@ class HostedTrailsTest extends FlatSpec with Matchers {
   private def mkContent(itemId: String, publishedDateTime: Long): Content = new Content {
     val id = itemId
     val `type` = ContentType.Article
+    val section = Some(
+      Section(
+        id = "advertiser-content/campaign",
+        webTitle = "sectionName",
+        webUrl = "webUrl",
+        apiUrl = "apiUrl",
+        editions = Nil,
+        activeSponsorships = None
+      )
+    )
     val sectionId = Some("advertiser-content/campaign")
     val sectionName = Some("sectionName")
     val webPublicationDate = Some(CapiDateTime(dateTime = publishedDateTime, iso8601 = ""))
@@ -111,7 +121,6 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val crossword = None
     val atoms = Some(mkAtom())
     val stats = None
-    val section = None
     val debug = None
     val isGone = None
     val isHosted = true

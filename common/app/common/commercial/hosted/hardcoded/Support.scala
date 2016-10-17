@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage, NextHostedPage}
+import common.commercial.hosted.{HostedCallToAction, HostedCampaign, HostedPage}
 import model.MetaData
 
 /*
@@ -18,8 +18,6 @@ object Support {
     override def title: String = nextPage.title
 
     override def imageUrl: String = nextPage.imageUrl
-
-    override def pageTitle: String = "unused"
 
     override def standfirst: String = "unused"
 

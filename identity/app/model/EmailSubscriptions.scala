@@ -11,6 +11,7 @@ case class EmailSubscription(
   listId: String,
   subscribedTo: Boolean = false,
   subheading: Option[String] = None,
+  tone: Option[String] = None,
   signupPage: Option[String] = None,
   exampleUrl: Option[String] = None
 )
@@ -21,7 +22,7 @@ object EmailSubscription {
 
 object EmailSubscriptions {
 
-  def newsEmails(subscribedListIds: Iterable[String] = None) = List(
+  def newsRoundUpEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "The Guardian Today",
       theme = "news",
@@ -70,7 +71,10 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2636" },
       subheading = Some("AUS"),
       signupPage = Some("https://www.theguardian.com/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
-    ),
+    )
+  )
+
+  def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "MediaGuardian briefing",
       theme = "news",
@@ -80,6 +84,7 @@ object EmailSubscriptions {
       frequency = "Weekday mornings",
       listId = "217",
       subscribedTo = subscribedListIds.exists{ x => x == "217" },
+      tone = Some("media"),
       signupPage = Some("https://www.theguardian.com/info/2016/feb/15/sign-up-to-the-media-briefing"),
       exampleUrl = Some("https://www.theguardian.com/media/series/mediaguardian-briefing/latest/email")
     ),
@@ -165,6 +170,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
+      tone = Some("feature"),
       signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
     ),
@@ -177,15 +183,41 @@ object EmailSubscriptions {
       frequency = "Every Tuesday",
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
+      tone = Some("feature"),
       signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
+    ),
+    EmailSubscription(
+      name = "Guardian Australia sports",
+      theme = "sport",
+      about = "Sport",
+      teaser = "The latest sports news, features and comment from Guardian Australia",
+      description = "The latest sports news, features and comment from Guardian Australia, delivered to your inbox each morning.",
+      frequency = "Every day",
+      listId = "3766",
+      subscribedTo = subscribedListIds.exists{ x => x == "3766" },
+      tone = Some("feature"),
+      signupPage = Some("https://www.theguardian.com/info/2015/jun/05/guardian-australia-sport-newsletter-subscribe-by-email")
     )
   )
 
   def featureEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
+      name = "Guardian Documentaries",
+      theme = "feature",
+      about = "",
+      teaser = "Be the first to find out about our new documentary films, created by top international filmmakers and get background on our film-makers and the subjects that they cover",
+      description = "Be the first to find out about our new documentary films, created by top international filmmakers and following unseen global stories. Discover our latest documentaries, get background on our film-makers and the subjects that they cover, and find out about live documentary screenings.",
+      frequency = "Every four weeks",
+      listId = "3745",
+      subscribedTo = subscribedListIds.exists{ x => x == "3745" },
+      tone = Some("media"),
+      signupPage = Some("https://www.theguardian.com/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
+      exampleUrl = Some("https://www.theguardian.com/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
+    ),
+    EmailSubscription(
       name = "Weekend Reading",
-      theme = "news",
+      theme = "feature",
       about = "Feature",
       teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
       description = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
@@ -197,7 +229,7 @@ object EmailSubscriptions {
     ),
     EmailSubscription(
       name = "The Long Read",
-      theme = "news",
+      theme = "feature",
       about = "Feature",
       teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
       description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
@@ -348,6 +380,7 @@ object EmailSubscriptions {
       listId = "2313",
       subscribedTo = subscribedListIds.exists{ x => x == "2313" },
       subheading = Some("UK"),
+      tone = Some("comment"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
     ),
     EmailSubscription(
@@ -360,6 +393,7 @@ object EmailSubscriptions {
       listId = "3228",
       subscribedTo = subscribedListIds.exists{ x => x == "3228" },
       subheading = Some("US"),
+      tone = Some("comment"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
     ),
     EmailSubscription(
@@ -372,6 +406,7 @@ object EmailSubscriptions {
       listId = "2976",
       subscribedTo = subscribedListIds.exists{ x => x == "2976" },
       subheading = Some("AUS"),
+      tone = Some("comment"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
     ),
     EmailSubscription(
@@ -383,11 +418,12 @@ object EmailSubscriptions {
       frequency = "About three times a week",
       listId = "2635",
       subscribedTo = subscribedListIds.exists{ x => x == "2635" },
+      tone = Some("media"),
       signupPage = Some("https://www.theguardian.com/commentisfree/2014/jun/16/-sp-first-dog-on-the-moon-subscribe-by-email")
     )
   )
 
   def apply(subscribedListIds: Iterable[String] = None): EmailSubscriptions = EmailSubscriptions(List(
 
-  ) ++ newsEmails(subscribedListIds) ++ featureEmails(subscribedListIds) ++ sportEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ lifestyleEmails(subscribedListIds) ++ commentEmails(subscribedListIds))
+  ) ++ newsRoundUpEmails(subscribedListIds) ++ newsEmails(subscribedListIds) ++ featureEmails(subscribedListIds) ++ sportEmails(subscribedListIds) ++ cultureEmails(subscribedListIds) ++ lifestyleEmails(subscribedListIds) ++ commentEmails(subscribedListIds))
 }

@@ -2,7 +2,7 @@ package commercial.model.hosted
 
 import com.gu.contentapi.client.model.v1.Content
 import common.Logging
-import common.commercial.hosted._
+import common.commercial.hosted.HostedPage
 
 object HostedTrails extends Logging {
 
@@ -18,8 +18,9 @@ object HostedTrails extends Logging {
 
       def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
 
+      val pubDateTime = publishedDateTime(givenItem)
+
       val (publishedBefore, publishedAfter) = otherItems.partition { item =>
-        val pubDateTime = publishedDateTime(givenItem)
         publishedDateTime(item) < pubDateTime
       }
 
