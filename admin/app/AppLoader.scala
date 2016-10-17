@@ -20,6 +20,7 @@ import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
+import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
 import services.{ConfigAgentLifecycle, EmailService, FastlyStatisticService, OphanApi}
 import router.Routes
@@ -45,7 +46,9 @@ trait AdminServices {
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }
 
-trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
+trait AppComponents extends FrontendComponents with AdminControllers with AdminServices with I18nComponents {
+
+  lazy val messages: Messages = Messages(Lang.defaultLang, messagesApi)
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
