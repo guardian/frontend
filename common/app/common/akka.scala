@@ -11,7 +11,6 @@ object ExecutionContexts extends ExecutionContexts
 
 trait ExecutionContexts {
   implicit lazy val executionContext: ExecutionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
-  lazy val feedsRecorderExecutionContext: ExecutionContext = PlayAkka.system(Play.current).dispatchers.lookup("akka.actor.feed-recorder")
 }
 
 object AkkaAgent extends ExecutionContexts {

@@ -6,7 +6,8 @@ import dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
 import controllers.{AdminControllers, HealthCheck}
-import _root_.dfp.{DfpDataCacheJob, DfpDataCacheLifecycle}
+import _root_.dfp.DfpDataCacheLifecycle
+import akka.actor.ActorSystem
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.AdminHttpErrorHandler
 import dev.DevAssetsController
@@ -30,6 +31,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
+  def actorSystem: ActorSystem
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
