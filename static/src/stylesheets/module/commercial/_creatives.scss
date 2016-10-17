@@ -929,7 +929,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 500px;
 
         @include mq(tablet) {
             left: calc(50% - #{(gs-span(9) + $gs-gutter * 2) / 2});

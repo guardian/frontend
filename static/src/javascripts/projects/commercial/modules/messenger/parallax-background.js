@@ -10,7 +10,10 @@ define([
     return setBackground;
 
     function setBackground(specs, adSlot) {
-        if (!specs || !('backgroundImage' in specs) || !('backgroundRepeat' in specs)) {
+        if (!specs ||
+            !('backgroundImage' in specs) ||
+            !('backgroundRepeat' in specs) ||
+            !('maxHeight' in specs)) {
             return null;
         }
 
@@ -18,7 +21,7 @@ define([
 
         var background = document.createElement('canvas');
         background.className = 'creative__canvas';
-        background.height = 500;
+        background.height = specs.maxHeight;
         var ctx = background.getContext('2d');
 
         var image = new Image();
