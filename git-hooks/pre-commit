@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# ensure npm-shrinkwrap is committed with package.json changes
+# ensure yarn.lock is committed with package.json changes
 readonly staged=$(git diff --name-only --cached)
 
-if [[ $staged == package.json* && $staged != *"npm-shrinkwrap.json"* ]]; then
-  node tools/messages.js should-shrinkwrap;
+if [[ $staged == package.json* && $staged != *"yarn.lock"* ]]; then
+  node tools/messages.js should-yarn;
   exit 1;
 fi
 
