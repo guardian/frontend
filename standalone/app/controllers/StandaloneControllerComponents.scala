@@ -6,8 +6,7 @@ import controllers.front.FrontJsonFapiDraft
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import football.controllers._
-import googleAuth.OAuthLoginController
-import play.api.{Application, BuiltInComponents}
+import play.api.BuiltInComponents
 import play.api.libs.ws.WSClient
 import rugby.controllers.RugbyControllers
 
@@ -25,7 +24,6 @@ trait StandaloneControllerComponents
 
   def wsClient: WSClient
   def frontJsonFapiDraft: FrontJsonFapiDraft
-  val application: Application
 
   lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]

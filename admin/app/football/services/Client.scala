@@ -2,7 +2,7 @@ package football.services
 
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WSClient
-import play.api.{Application, Environment, Mode}
+import play.api.{Environment, Mode}
 import org.joda.time.LocalDate
 import java.io.File
 
