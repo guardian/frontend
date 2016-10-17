@@ -47,14 +47,14 @@ trait SportServices {
   lazy val capiFeed = wire[CapiFeed]
 }
 
-trait Controllers extends FootballControllers with CricketControllers with RugbyControllers {
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents
+  with FootballControllers
+  with CricketControllers
+  with RugbyControllers
+  with SportServices {
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers with SportServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -66,9 +66,6 @@ trait AppLifecycleComponents {
     wire[RugbyLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with SportServices {
 
   lazy val router: Router = wire[Routes]
 

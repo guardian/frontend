@@ -45,14 +45,10 @@ trait AdminServices {
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }
 
-trait Controllers extends AdminControllers {
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-}
-
-trait AdminLifecycleComponents {
-  self: AppComponents with Controllers with AdminServices =>
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
@@ -65,9 +61,6 @@ trait AdminLifecycleComponents {
     wire[DfpDataCacheLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AdminLifecycleComponents with Controllers with AdminServices {
 
   lazy val router: Router = wire[Routes]
 
