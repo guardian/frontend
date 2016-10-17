@@ -6,7 +6,6 @@ object CssClassBuilder {
 
   private def cardLink(cardContent: CardContent,
                        adClasses: Option[Seq[String]],
-                       otherClasses: Option[Seq[String]],
                        sizeClass: Option[String],
                        useCardBranding: Boolean): String = {
     val classes: Seq[String] = Seq(
@@ -15,30 +14,29 @@ object CssClassBuilder {
       "advert--capi",
       cardContent.icon map (_ => "advert--media") getOrElse "advert--text",
       adClasses.map(_.map(c => s"advert--$c").mkString(" ")).getOrElse(""),
-      otherClasses.map(_.mkString(" ")).getOrElse(""),
-      if (useCardBranding) "js-sponsored-card" else ""
+      if (useCardBranding) "advert--branded" else ""
     )
     classes mkString " "
   }
 
   def linkFromStandardCard(cardContent: CardContent,
                        adClasses: Option[Seq[String]],
-                       otherClasses: Option[Seq[String]],
                        useCardBranding: Boolean): String = {
-    cardLink(cardContent, adClasses, otherClasses, sizeClass = None, useCardBranding)
+    cardLink(cardContent, adClasses, sizeClass = None, useCardBranding)
   }
 
   def linkFromSmallCard(cardContent: CardContent,
                     adClasses: Option[Seq[String]],
-                    otherClasses: Option[Seq[String]],
                     useCardBranding: Boolean): String = {
-    cardLink(cardContent, adClasses, otherClasses, sizeClass = Some("advert--small"), useCardBranding)
+    cardLink(cardContent, adClasses, sizeClass = Some("advert--small"), useCardBranding)
   }
 
   def linkFromLargeCard(cardContent: CardContent,
                     adClasses: Option[Seq[String]],
-                    otherClasses: Option[Seq[String]],
                     useCardBranding: Boolean): String = {
-    cardLink(cardContent, adClasses, otherClasses, sizeClass = Some("advert--large"), useCardBranding)
+    cardLink(cardContent, adClasses, sizeClass = Some("advert--large"), useCardBranding)
   }
+
+  def advertContainer(otherClasses: Option[Seq[String]]): String =
+    "advert-container " + otherClasses.map(_.mkString(" ")).getOrElse("")
 }

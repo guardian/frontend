@@ -50,7 +50,7 @@ object BodyCleaner {
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
-      AtomsCleaner(article.content.atoms),
+      AtomsCleaner(article.content.atoms, shouldFence = true),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
