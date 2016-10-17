@@ -58,6 +58,13 @@ define([
         if (useIO) {
             observer.observe(iframe);
         }
+
+        fastdom.read(function() {
+            return iframe.getBoundingClientRect();
+        })
+        .then(function (domRect) {
+            sendCoordinates(iframe.id, domRect);
+        });
     }
 
     function removeScrollListener(iframe) {
@@ -132,5 +139,9 @@ define([
             left:   rect.left,
             right:  rect.right
         };
+    }
+
+    function sendCoordinates(iframeId, domRect) {
+        iframes[iframeId].respond(null, domRectToRect(domRect));
     }
 });
