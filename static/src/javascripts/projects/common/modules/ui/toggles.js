@@ -26,7 +26,7 @@ define([
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
-                    var target = self.getTarget(control);
+                    var target = self.getTarget(component, control);
 
                     if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
@@ -63,10 +63,10 @@ define([
         });
     };
 
-    Toggles.prototype.getTarget = function (control) {
+    Toggles.prototype.getTarget = function (parent, control) {
         var targetClass = bonzo(control).data('toggle');
         if (targetClass) {
-            return document.body.querySelector('.' + targetClass);
+            return parent.querySelector('.' + targetClass);
         }
     };
 
