@@ -1,12 +1,11 @@
 package commercial.model.merchandise.travel
 
 import commercial.model.Segment
-import commercial.model.capi.Keyword
+import commercial.model.capi.{Keyword, Lookup}
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import contentapi.ContentApiClient
 import commercial.model.merchandise.{MerchandiseAgent, TravelOffer}
-import model.commercial.Lookup
 
 import scala.concurrent.Future
 

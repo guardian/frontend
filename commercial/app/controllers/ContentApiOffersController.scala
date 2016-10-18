@@ -1,10 +1,9 @@
 package commercial.controllers
 
-import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle}
+import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
 import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.Lookup
 import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
 

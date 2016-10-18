@@ -2,7 +2,7 @@ package commercial.test
 
 import commercial.controllers.HealthCheck
 import commercial.model.merchandise.{books, events, jobs, soulmates}
-import model.commercial._
+import commercial.model.capi.LookupTest
 import org.scalatest.{BeforeAndAfterAll, Suites}
 import test.{SingleServerSuite, WithTestWsClient}
 

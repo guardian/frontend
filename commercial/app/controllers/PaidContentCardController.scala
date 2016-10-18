@@ -1,8 +1,8 @@
 package commercial.controllers
 
+import commercial.model.capi.Lookup
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
 import views.support.Commercial.TrackingCodeBuilder
