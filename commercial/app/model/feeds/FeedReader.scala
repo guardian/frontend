@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.feeds
 
 import com.ning.http.client.{Response => AHCResponse}
 import commercial.CommercialMetrics
@@ -9,8 +9,8 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse, WSSignatureCalculator}
 
 import scala.concurrent.duration.{Duration, _}
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success, Try}
 import scala.util.control.NonFatal
+import scala.util.{Failure, Success, Try}
 import scala.xml.{Elem, XML}
 
 class FeedReader(wsClient: WSClient) extends Logging {

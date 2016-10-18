@@ -1,7 +1,7 @@
 package model.commercial.events
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.Segment
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import model.commercial._

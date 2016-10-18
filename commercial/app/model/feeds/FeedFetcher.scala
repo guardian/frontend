@@ -1,4 +1,4 @@
-package commercial.feeds
+package commercial.model.feeds
 
 import java.lang.System.currentTimeMillis
 

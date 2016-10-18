@@ -1,7 +1,7 @@
 package model.commercial.jobs
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.Segment
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial.{Job, Keyword, MerchandiseAgent}
 

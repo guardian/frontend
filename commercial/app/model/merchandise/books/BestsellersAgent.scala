@@ -1,7 +1,7 @@
 package model.commercial.books
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.Segment
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import model.commercial.{Book, Keyword, MerchandiseAgent}
 

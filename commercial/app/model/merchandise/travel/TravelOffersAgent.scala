@@ -1,7 +1,7 @@
 package model.commercial.travel
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.Segment
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
 import contentapi.ContentApiClient
 import model.commercial.{Keyword, Lookup, MerchandiseAgent, TravelOffer}

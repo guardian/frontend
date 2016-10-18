@@ -1,13 +1,13 @@
 package commercial.controllers
 
+import commercial.model.Segment
+import commercial.model.feeds.{FeedMissingConfigurationException, FeedSwitchOffException}
 import common.{ExecutionContexts, JsonComponent, Logging}
 import model.commercial.Book
-import commercial.model.Segment
 import model.commercial.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
-import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
-import play.api.mvc._
 import play.api.libs.json.Json
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

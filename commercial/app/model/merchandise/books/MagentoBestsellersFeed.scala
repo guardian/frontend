@@ -2,8 +2,8 @@ package model.commercial.books
 
 import java.lang.System._
 
-import commercial.feeds._
 import commercial.model.OptString
+import commercial.model.feeds._
 import common.{ExecutionContexts, Logging}
 import model.commercial.Book
 

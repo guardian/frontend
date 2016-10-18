@@ -1,8 +1,8 @@
 package model.commercial.soulmates
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.AkkaAgent
-import model.commercial.{Member, Man, Woman}
+import model.commercial.{Man, Member, Woman}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random

@@ -2,15 +2,14 @@ package model.commercial.books
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
+import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.commercial.{Book, FeedParseException, FeedReadException, FeedReader, FeedRequest}
-import play.api.libs.concurrent.Akka
+import model.commercial.Book
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
-import play.api.libs.ws.WSSignatureCalculator
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSSignatureCalculator}
 import shade.memcached.{Memcached, MemcachedCodecs, Configuration => MemcachedConfiguration}
 
 import scala.concurrent.duration._

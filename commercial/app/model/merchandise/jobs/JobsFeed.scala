@@ -3,15 +3,15 @@ package model.commercial.jobs
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
+import conf.switches.Switches.JobsFeedParseSwitch
 import model.commercial.Job
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
-import conf.switches.Switches.JobsFeedParseSwitch
 
 object JobsFeed extends ExecutionContexts with Logging {
 

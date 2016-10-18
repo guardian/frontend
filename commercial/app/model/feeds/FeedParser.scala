@@ -1,13 +1,13 @@
-package commercial.feeds
+package commercial.model.feeds
 
 import common.ExecutionContexts
 import conf.Configuration
-import model.commercial.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 import model.commercial.books.BestsellersAgent
 import model.commercial.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
+import model.commercial.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
