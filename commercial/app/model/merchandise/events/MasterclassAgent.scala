@@ -1,11 +1,12 @@
 package commercial.model.merchandise.events
 
 import commercial.model.Segment
+import commercial.model.capi.Keyword
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import commercial.model.merchandise._
-import model.commercial.{Keyword, Lookup}
+import commercial.model.merchandise.{Masterclass, MerchandiseAgent}
+import model.commercial.Lookup
 
 import scala.concurrent.Future
 
