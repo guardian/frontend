@@ -10,6 +10,7 @@ module.exports = function (grunt, options) {
             options.staticHashDir + 'stylesheets'
         ],
         images: [
+            options.staticSrcDir + 'stylesheets/icons',
             options.staticTargetDir + 'images',
             options.staticHashDir + 'images'
         ],
