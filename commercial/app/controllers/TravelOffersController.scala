@@ -4,7 +4,7 @@ import commercial.model.Segment
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.JsonComponent
 import model.Cached
-import model.commercial.TravelOffer
+import commercial.model.merchandise.TravelOffer
 import play.api.libs.json.Json
 import play.api.mvc._
 

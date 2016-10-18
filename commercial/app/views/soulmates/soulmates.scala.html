@@ -1,4 +1,6 @@
-@(members: Seq[model.commercial.Member],
+@import commercial.model.merchandise.Member
+
+@(members: Seq[Member],
   omnitureId: Option[String],
   clickMacro: Option[String])(implicit request: RequestHeader)
 

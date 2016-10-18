@@ -4,7 +4,7 @@ import commercial.model.Segment
 import commercial.model.feeds.{FeedMissingConfigurationException, FeedSwitchOffException}
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
 import common.{ExecutionContexts, JsonComponent, Logging}
-import model.commercial.Book
+import commercial.model.merchandise.Book
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc._

@@ -1,6 +1,6 @@
 package commercial.model.merchandise.jobs
 
-import model.commercial.Job
+import commercial.model.merchandise.Job
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import test.ConfiguredTestSuite
 

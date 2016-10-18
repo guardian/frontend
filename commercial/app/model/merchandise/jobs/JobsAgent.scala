@@ -3,7 +3,8 @@ package commercial.model.merchandise.jobs
 import commercial.model.Segment
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.ExecutionContexts
-import model.commercial.{Job, Keyword, MerchandiseAgent}
+import commercial.model.merchandise.{Job, MerchandiseAgent}
+import model.commercial.Keyword
 
 import scala.concurrent.Future
 

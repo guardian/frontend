@@ -4,7 +4,8 @@ import commercial.model.Segment
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import model.commercial._
+import commercial.model.merchandise._
+import model.commercial.{Keyword, Lookup}
 
 import scala.concurrent.Future
 

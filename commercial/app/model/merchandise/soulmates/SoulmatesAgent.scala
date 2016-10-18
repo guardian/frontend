@@ -2,7 +2,7 @@ package commercial.model.merchandise.soulmates
 
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.AkkaAgent
-import model.commercial.{Man, Member, Woman}
+import commercial.model.merchandise.{Man, Member, Woman}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random

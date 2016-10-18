@@ -7,7 +7,7 @@ import commercial.model.merchandise.soulmates.SoulmatesAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.ExecutionContexts
 import conf.Configuration
-import model.commercial.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
+import commercial.model.merchandise.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration

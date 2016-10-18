@@ -1,10 +1,13 @@
-@(events: Seq[model.commercial.Masterclass],
-  omnitureId: Option[String],
-  clickMacro: Option[String])(implicit request: RequestHeader)
-
+@import commercial.model.merchandise.Masterclass
 @import conf.Configuration
 @import views.html.fragments.commercial.containerWrapper
 @import views.html.masterclasses.masterclassCard
+
+@(events: Seq[Masterclass],
+  omnitureId: Option[String],
+  clickMacro: Option[String])(implicit request: RequestHeader)
+
+
 
 @containerWrapper(Seq("legacy", "masterclasses", "tone-masterclasses"),
                   omnitureId.map(id => s"commercial-low | masterclasses | ${id}"),

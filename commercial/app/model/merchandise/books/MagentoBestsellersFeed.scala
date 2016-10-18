@@ -5,7 +5,7 @@ import java.lang.System._
 import commercial.model.OptString
 import commercial.model.feeds._
 import common.{ExecutionContexts, Logging}
-import model.commercial.Book
+import commercial.model.merchandise.Book
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

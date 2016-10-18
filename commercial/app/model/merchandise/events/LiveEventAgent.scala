@@ -5,7 +5,7 @@ import java.lang.System._
 import commercial.model.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
-import model.commercial.LiveEvent
+import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
 

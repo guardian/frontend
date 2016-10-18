@@ -6,7 +6,7 @@ import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.commercial.Book
+import commercial.model.merchandise.Book
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
@@ -172,7 +172,7 @@ class MemcachedBookDataCache(actorSystem: ActorSystem) extends BookDataCache wit
     for (host <- maybeHost) yield {
       val config = MemcachedConfiguration(
         addresses = host,
-        keysPrefix = Some("model.commercial.book")
+        keysPrefix = Some("commercial.model.merchandise.book")
       )
       Memcached(config, executionContext)
     }

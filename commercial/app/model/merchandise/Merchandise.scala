@@ -1,11 +1,11 @@
-package model.commercial
+package commercial.model.merchandise
 
 import commercial.model.OptString
 import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
-import commercial.model.merchandise.events.Eventbrite._
-import commercial.model.merchandise.events.LiveEventMembershipInfo
-import commercial.model.merchandise.jobs.Industries
+import events.Eventbrite._
+import events.LiveEventMembershipInfo
+import jobs.Industries
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat

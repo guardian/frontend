@@ -1,4 +1,6 @@
-@(books: Seq[model.commercial.Book],
+@import commercial.model.merchandise.Book
+
+@(books: Seq[Book],
   omnitureId: Option[String],
   clickMacro: Option[String],
   isProminent: Boolean = false)(implicit request: RequestHeader)

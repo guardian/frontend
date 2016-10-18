@@ -2,7 +2,7 @@ package commercial.controllers
 
 import common.JsonComponent
 import commercial.model.Segment
-import model.commercial.Job
+import commercial.model.merchandise.Job
 import commercial.model.merchandise.jobs.{JobSector, JobsAgent}
 import model.Cached
 import play.api.mvc._
