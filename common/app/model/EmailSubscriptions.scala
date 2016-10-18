@@ -207,7 +207,7 @@ object EmailSubscriptions {
       name = "Guardian Documentaries",
       theme = "feature",
       about = "",
-      teaser = "Be the first to find out about our new documentary films, created by top international filmmakers and get background on our film-makers and the subjects that they cover",
+      teaser = "Find out about our new documentary films and get background on our film-makers and the subjects that they cover",
       description = "Be the first to find out about our new documentary films, created by top international filmmakers and following unseen global stories. Discover our latest documentaries, get background on our film-makers and the subjects that they cover, and find out about live documentary screenings.",
       frequency = "Every four weeks",
       listId = "3745",

@@ -15,6 +15,12 @@
     </iframe>
 }
 
+@newsletterImage(emailName: String, listId: String) = {
+    <img class="newsletter-image"
+        src="@{ Static("images/email" + listId + ".png") }"
+        alt="cover image for @emailName"/>
+}
+
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
         @theme
@@ -25,6 +31,10 @@
             @if(emailListing.tone.isDefined) {  newsletter-card--tone-@emailListing.tone
             } else { newsletter-card--tone-news }"
                 data-component="newsletter-card @emailListing.theme">
+
+                <div class="newsletter-card__imagewrapper">
+                    @newsletterImage(emailListing.name, emailListing.listId)
+                </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
 
@@ -44,7 +54,7 @@
 
                 <div class="newsletter-card__meta js-newsletter-meta">
                     <div class="newsletter-card__signup">
-                        <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup-button"
+                        <button class="button button--primary newsletter-card__lozenge js-newsletter-signup-button"
                                 data-link-name="Signup @emailListing.name"
                                 type="button">
                             <span>Sign up</span>

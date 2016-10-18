@@ -181,6 +181,7 @@
 
             &:hover,
             &:focus {
+                border-color: darken($features-support-1, 10%);
                 background-color: darken($features-support-1, 10%);
             }
         }
@@ -211,6 +212,7 @@
 
             &:hover,
             &:focus {
+                border-color: darken($comment-support-4, 10%);
                 background-color: darken($comment-support-4, 10%);
             }
         }
@@ -241,6 +243,7 @@
 
             &:hover,
             &:focus {
+                border-color: darken($neutral-1, 10%);
                 background-color: darken($neutral-1, 10%);
             }
         }
