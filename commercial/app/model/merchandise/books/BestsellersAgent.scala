@@ -1,13 +1,10 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
-import commercial.feeds.{FeedMetaData, ParsedFeed}
+import commercial.model.feeds.{FeedMetaData, ParsedFeed}
+import commercial.model.Segment
+import commercial.model.capi.Keyword
+import commercial.model.merchandise.{Book, MerchandiseAgent}
 import common.ExecutionContexts
-import model.Segment
-import model.commercial._
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
-import play.api.libs.json.Reads._
-import play.api.libs.json.{JsPath, Reads, Writes}
 
 import scala.concurrent.Future
 

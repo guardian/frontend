@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import model.ContentType
 import play.api.libs.json.{Json, Writes}
@@ -17,7 +17,5 @@ object CapiMultiple {
 
   }
 
-  implicit val writesCapiMultiple: Writes[CapiMultiple] =
-      Json.writes[CapiMultiple]
-
+  implicit val writesCapiMultiple: Writes[CapiMultiple] = Json.writes[CapiMultiple]
 }

@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import views.support.ImgSrc
 import cards.{Half, Standard, Third}
@@ -46,6 +46,7 @@ object CapiImages {
     ImageInfo(sources, fallbackImageUrl)
 
   }
+}
 
   // Holds the source element data for the images.
   case class ImageSource (

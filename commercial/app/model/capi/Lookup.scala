@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import com.gu.contentapi.client.model.v1.Tag
 import common.Edition.defaultEdition

@@ -1,13 +1,13 @@
-package commercial.controllers
+package commercial
 
 import common.{JsonNotFound, JsonComponent}
-import model.Cached.RevalidatableResult
+import _root_.model.Cached.RevalidatableResult
 import model.{Context, Segment}
 import play.api.mvc._
 import scala.concurrent.duration._
 import play.twirl.api.Html
 
-package object util {
+package object controllers {
 
   val componentMaxAge = 15.minutes
 

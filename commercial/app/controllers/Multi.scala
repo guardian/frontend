@@ -1,14 +1,14 @@
 package commercial.controllers
 
 import common.{ExecutionContexts, JsonComponent}
-import commercial.controllers.util.{segment, jsonFormat, componentMaxAge}
-import model.commercial._
-import model.commercial.books.BestsellersAgent
-import model.commercial.events.MasterclassAgent
-import model.commercial.jobs.JobsAgent
-import model.commercial.soulmates.SoulmatesAgent
-import model.commercial.travel.TravelOffersAgent
-import model.{Cached, NoCache, Segment}
+import commercial.model.merchandise.books.BestsellersAgent
+import commercial.model.merchandise.events.MasterclassAgent
+import commercial.model.merchandise.jobs.JobsAgent
+import commercial.model.merchandise.soulmates.SoulmatesAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
+import commercial.model.Segment
+import commercial.model.merchandise._
+import model.Cached
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 

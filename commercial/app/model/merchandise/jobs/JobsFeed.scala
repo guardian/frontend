@@ -1,11 +1,11 @@
-package model.commercial.jobs
+package commercial.model.merchandise.jobs
 
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.merchandise.Job
 import common.{ExecutionContexts, Logging}
-import model.commercial.Job
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
