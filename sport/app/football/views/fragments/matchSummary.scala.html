@@ -1,5 +1,11 @@
-@(theMatch: FootballMatch, competition: Option[model.Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
+@import common.LinkTo
 @import implicits.Football._
+@import model.Competition
+@import pa.FootballMatch
+@import views.support.RenderClasses
+
+@(theMatch: FootballMatch, competition: Option[Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
+
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
 <@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div}
