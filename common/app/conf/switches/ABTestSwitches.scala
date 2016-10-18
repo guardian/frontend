@@ -28,16 +28,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-immediate",
-    "Test effectiveness of not waiting for 10 page reads before showing membership engagement banner to UK users.",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 10, 18),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),

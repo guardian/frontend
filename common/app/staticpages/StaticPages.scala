@@ -19,7 +19,7 @@ object StaticPages {
       section = Option(SectionSummary(id="email-signup-page", activeBrandings=None)),
       webTitle = webTitle,
       analyticsName = "email-signup-page",
-      contentType = "signup",
+      contentType = "Signup",
       iosType = None,
       shouldGoogleIndex = false))
 

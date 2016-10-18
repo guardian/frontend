@@ -32,16 +32,16 @@ See below for quick descriptions.
 				- commercial.js
 				- enhanced/main.js
 			- Cloudwatch beacon
-		- [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
-			- getUserData.js
-			- detectAdblock
-			- showUserName
-			- editionaliseMenu
-			- ophanConfig
-		- [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
-			- Google
-			- Omniture
-			- Comscore
+    - [inlineJSNonBlocking.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/inlineJSNonBlocking.scala.html)
+        - getUserData.js
+        - detectAdblock
+        - showUserName
+        - editionaliseMenu
+        - ophanConfig
+    - [Analytics](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html)
+        - Google
+        - Omniture
+        - Comscore
 
 ### Inline blocking JS
 
@@ -204,7 +204,6 @@ The [standard main.js](https://github.com/guardian/frontend/blob/master/static/s
 
 - Sets-up error handling
 - Bootstraps interactives immediately as they're content
-- Initialises A/B tests (so be **very** careful about what you require into AB tests as they're bundled with the standard JS)
 - Upgrades images
 - Adds some event listeners for use elsewhere in the app (throttled scroll)
 - Initialises membership and identity
@@ -303,7 +302,7 @@ There are five projects in the Javascript architecture:
 - [Admin](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/admin) - This is the Javascript for the frontend admin tools gutools (ask your neighbour what these are). It is the only JS file not related to theguardian.com.
 - [Commercial](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/commercial) - The modules and js views for the commercial Javascript
 - [Common](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/common) - The largest of the projects, common contains the modules, utilities and js views for much of the application.
-	- In modules you will find the Javascript for everything from articles to crosswords, identity to sport.
+	- In modules you will find the Javascript for everything from articles to crosswords, identity to A/B tests.
 	- Utils contains the reusable utilities we use across the site for dom querying, fastdom promises, array methods, fetch, inlineSvg, event listeners, localStorage methods etc. Take some to familiarise yourself with these methods as you will likely end up finding what you need here.
 	- The Javascript views for the JS loaded content including a/b test experiments, breaking news, share buttons etc.
 - [Facia](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/facia) - Contains JS modules and views for the weather, snaps and fronts containers

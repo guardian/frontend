@@ -82,30 +82,16 @@ define([
         return messageShown;
     }
 
-    function isInTest(testId, variant) {
-        var participations = storage.local.get('gu.ab.participations');
-        if (participations) {
-            return variant === undefined ? participations[testId] : participations[testId].variant === variant;
-        } else {
-            return false;
-        }
-    }
-
     function init() {
-        // block default behaviour for participants of the MembershipEngagementImmediate AB test
         var edition = config.page.edition;
-        if (!isInTest('MembershipEngagementImmediate','control') &&
-            !isInTest('MembershipEngagementImmediate','immediate-display') ||
-            edition.toLowerCase() !== 'uk') {
-            var message = messages[edition];
-            if (message) {
-                var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
-                    if (canShow && userHasMadeEnoughVisits) {
-                        show(edition, message);
-                    }
-                });
-            }
+        var message = messages[edition];
+        if (message) {
+            var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
+            return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                if (canShow && userHasMadeEnoughVisits) {
+                    show(edition, message);
+                }
+            });
         }
         return Promise.resolve();
     }
