@@ -26,7 +26,7 @@ define([
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
-                    var target = self.getTarget(parent, control);
+                    var target = self.getTarget(component, control);
 
                     if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
