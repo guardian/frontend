@@ -1,4 +1,4 @@
-package model.commercial.jobs
+package commercial.model.merchandise.jobs
 
 import commercial.model.Segment
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}

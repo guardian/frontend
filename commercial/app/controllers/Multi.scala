@@ -6,7 +6,7 @@ import common.{ExecutionContexts, JsonComponent}
 import model.Cached
 import model.commercial._
 import commercial.model.merchandise.events.MasterclassAgent
-import model.commercial.jobs.JobsAgent
+import commercial.model.merchandise.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import play.api.libs.json.{JsArray, Json}

@@ -1,4 +1,4 @@
-package model.commercial.jobs
+package commercial.model.merchandise.jobs
 
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS

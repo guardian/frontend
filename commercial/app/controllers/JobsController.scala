@@ -3,7 +3,7 @@ package commercial.controllers
 import common.JsonComponent
 import commercial.model.Segment
 import model.commercial.Job
-import model.commercial.jobs.{JobSector, JobsAgent}
+import commercial.model.merchandise.jobs.{JobSector, JobsAgent}
 import model.Cached
 import play.api.mvc._
 import scala.concurrent.duration._

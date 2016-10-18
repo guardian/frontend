@@ -5,7 +5,7 @@ import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
 import commercial.model.merchandise.events.Eventbrite._
 import commercial.model.merchandise.events.LiveEventMembershipInfo
-import model.commercial.jobs.Industries
+import commercial.model.merchandise.jobs.Industries
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat

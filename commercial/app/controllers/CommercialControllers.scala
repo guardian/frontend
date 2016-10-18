@@ -5,7 +5,7 @@ import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
 import contentapi.ContentApiClient
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
-import model.commercial.jobs.JobsAgent
+import commercial.model.merchandise.jobs.JobsAgent
 import model.commercial.travel.TravelOffersAgent
 
 trait CommercialControllers {

@@ -1,4 +1,4 @@
-package model.commercial.jobs
+package commercial.model.merchandise.jobs
 
 import common.{AkkaAgent, ExecutionContexts}
 import contentapi.ContentApiClient

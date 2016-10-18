@@ -1,6 +1,6 @@
 package commercial
 
-import _root_.model.commercial.jobs.Industries
+import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
 import common.LoggingField._
