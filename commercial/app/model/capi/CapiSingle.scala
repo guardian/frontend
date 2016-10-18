@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import common.Edition
 import common.commercial.{BrandHunter, Branding}

@@ -13,7 +13,7 @@ import commercial.controllers.{CommercialControllers, HealthCheck}
 import common.CloudWatchMetricsLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
-import model.commercial.CapiAgent
+import commercial.model.capi.CapiAgent
 import model.commercial.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.travel.TravelOffersAgent

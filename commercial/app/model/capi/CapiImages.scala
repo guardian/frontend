@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import views.support.ImgSrc
 import cards.{Half, Standard, Third}

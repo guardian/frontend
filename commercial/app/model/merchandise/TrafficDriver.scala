@@ -1,9 +1,11 @@
 package model.commercial
 
+import commercial.model.capi.CapiImages
+import commercial.model.capi.CapiImages.ImageInfo
 import common.Edition
 import model.ContentType
 import play.api.libs.json.{Json, Writes}
-import CapiImages.ImageInfo
+
 
 case class TrafficDriver(articleHeadline: String, articleUrl: String,
   articleText: Option[String], articleImage: ImageInfo, edition: String)

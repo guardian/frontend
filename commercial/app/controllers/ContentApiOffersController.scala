@@ -1,12 +1,12 @@
 package commercial.controllers
 
-import common.commercial._
+import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle}
+import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
-import model.{Cached, NoCache}
+import model.commercial.Lookup
+import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
-import model._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

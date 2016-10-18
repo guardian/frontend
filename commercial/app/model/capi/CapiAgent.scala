@@ -1,8 +1,9 @@
-package model.commercial
+package commercial.model.capi
 
 import common.{AkkaAgent, Logging}
 import contentapi.ContentApiClient
 import model.ContentType
+import model.commercial.Lookup
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
