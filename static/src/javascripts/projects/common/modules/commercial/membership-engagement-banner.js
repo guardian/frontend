@@ -9,7 +9,10 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
     'common/utils/mediator',
-    'Promise'
+    'Promise',
+    'common/modules/experiments/ab',
+    'common/utils/$',
+    'common/views/svgs'
 ], function (
     bean,
     qwery,
@@ -21,7 +24,10 @@ define([
     commercialFeatures,
     userFeatures,
     mediator,
-    Promise
+    Promise,
+    ab,
+    $,
+    svgs
 ) {
 
     var endpoints = {
@@ -58,22 +64,62 @@ define([
         return endpoints[edition] + '?INTCMP=' + message.campaign;
     }
 
-    function show(edition, message) {
-        var colours = ['default','vibrant-blue','yellow','light-blue','deep-purple','teal'];
+    function thisInstanceColour(colours) {
         // Rotate through different colours on successive page views
-        var colourIndex = storage.local.get('gu.alreadyVisited') % colours.length;
-        var cssModifierClass = 'membership-message-' + colours[colourIndex];
+        return colours[storage.local.get('gu.alreadyVisited') % colours.length];
+    }
+
+    var getCustomJs = function(options) {
+        var opts = options || {};
+        var buttonEl = $('#membership__engagement-message-button');
+        buttonEl.removeClass('is-hidden');
+        if (opts.addButtonClass) {
+            buttonEl.addClass(opts.addButtonClass);
+        }
+        if (opts.setButtonText) {
+            var buttonLink = $('#membership__engagement-message-button-link');
+            buttonLink.text(opts.setButtonText);
+        }
+        if (opts.parentColour) {
+            buttonEl.addClass(opts.parentColour);
+        }
+    };
+
+    function show(edition, message) {
+        var colours = ['default','vibrant-blue','yellow','light-blue','deep-purple','teal'],
+            thisColour = thisInstanceColour(colours),
+            cssModifierClass = 'membership-message-' + thisColour,
+            campaignCode = message.campaign,
+            customJs = null,
+            customOpts = {},
+            testVariant = ab.getTestVariantId('MembershipEngagementWarpFactorOne');
+
+        if (testVariant && testVariant === 'engage') {
+            colours = ['yellow','purple','bright-blue','dark-blue'];
+            thisColour = thisInstanceColour(colours);
+            cssModifierClass = 'membership-message-' + thisColour + ' warp-factor-one__' + testVariant;
+            campaignCode = campaignCode + '_warp_factor_one_' + testVariant;
+            customOpts = {
+                addButtonClass: 'warp_factor_one_' + testVariant,
+                setButtonText: 'Become a supporter',
+                parentColour: thisColour
+            };
+            customJs = getCustomJs;
+        }
+
         var linkHref = formatEndpointUrl(edition, message);
-        var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref });
+        var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
         var messageShown = new Message(
             messageCode,
             {
                 pinOnHide: false,
                 siteMessageLinkName: 'membership message',
                 siteMessageCloseBtn: 'hide',
-                siteMessageComponentName: message.campaign,
+                siteMessageComponentName: campaignCode,
                 trackDisplay: true,
-                cssModifierClass: cssModifierClass
+                cssModifierClass: cssModifierClass,
+                customJs: customJs,
+                customOpts: customOpts
             }).show(renderedBanner);
         if (messageShown) {
             mediator.emit('membership-message:display');

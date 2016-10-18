@@ -1,0 +1,59 @@
+define([
+    'bean',
+    'reqwest',
+    'fastdom',
+    'qwery',
+    'common/utils/$',
+    'common/utils/config',
+    'common/modules/commercial/commercial-features'
+], function (
+    bean,
+    reqwest,
+    fastdom,
+    qwery,
+    $,
+    config,
+    commercialFeatures
+) {
+    return function () {
+        this.id = 'MembershipEngagementWarpFactorOne';
+        this.start = '2016-10-17';
+        this.expiry = '2016-10-31';
+        this.author = 'Justin Pinner';
+        this.description = 'The first level of prominent engagement messaging';
+        this.audience = 0.2;
+        this.audienceOffset = 0;
+        this.successMeasure = 'More readers become members';
+        this.audienceCriteria = '20 percent of (non-member) UK edition readers';
+        this.dataLinkNames = '';
+        this.idealOutcome = 'Messaging promotes additional membership sign-up';
+        this.hypothesis = 'Showing larger, bolder messages will encourage more readers to take up membership';
+
+        this.canRun = function () {
+            return config.page.edition.toLowerCase() === 'uk' &&
+                commercialFeatures.canReasonablyAskForMoney &&
+                config.page.contentType !== 'signup';
+        };
+
+        var success = function (complete) {
+            if (this.canRun()) {
+                mediator.on('membership-message:display', function () {
+                    bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
+                });
+            }
+        };
+
+        this.variants = [
+            {
+                id: 'control',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'engage',
+                test: function () {},
+                success: success.bind(this)
+            }
+        ];
+    };
+});

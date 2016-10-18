@@ -495,6 +495,126 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 /*
+ * Prominent membership messaging AB tests
+ */
+.warp-factor-one__engage {
+    .site-message__media {
+        vertical-align: top;
+        svg {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+    }
+    .site-message__close {
+        vertical-align: top;
+        width: 36px;
+        height: 36px;
+        padding-right: 20px;
+    }
+    .site-message__inner {
+        padding: 5px;
+    }
+    .site-message__message--membership {
+        margin-right: 5px;
+        font-weight: bold;
+        @include mq($from: mobile) {
+            font-size: 16px;
+            line-height: 18px;
+            margin-right: 10px;
+        }
+        @include mq($from: tablet) {
+            font-size: 18px;
+            line-height: 20px;
+            margin-right: 15px;
+        }
+        @include mq($from: desktop) {
+            font-size: 20px;
+            line-height: 22px;
+            margin-right: 20px;
+        }
+    }
+    .site-message__membership-message-yellow {
+        svg {
+            stroke: #000000;
+            fill: #000000;
+        }
+    }
+    .site-message--membership-message-purple {
+        background: #710d75;
+    }
+    .site-message--membership-message-bright-blue {
+        @include site-message-dark-text;
+        background: #09abdf;
+    }
+    .site-message--membership-message-dark-blue {
+        background: #112f66;
+    }
+    .message-button-rounded__cta {
+        @include clearfix;
+        @include circular;
+        border: 1px solid rgba(#ffffff, .3);
+        display: inline-block;
+        @include mq($until: mobile) {
+            width: 200px;
+            margin-bottom: $gs-row-height / 4;
+        }
+        @include mq($from: tablet) {
+            width: 260px;
+            margin-left: 1px;
+            margin-bottom: $gs-row-height / 2;
+        }
+        @include mq($from: desktop) {
+            width: 300px;
+            margin-left: 20px;
+            margin-bottom: $gs-row-height / 2;
+        }
+        padding: 1px 24px;
+        position: relative;
+        cursor: pointer;
+        margin-top: 10px;
+        background-color: transparent;
+        top: 25%;
+        height: 50%;
+        line-height: 30px;
+        a {
+            @include mq($from: mobile) {
+                font-size: 14px;
+            }
+            @include mq($from: tablet) {
+                font-size: 16px;
+            }
+            @include mq($from: desktop) {
+                font-size: 20px;
+            }
+            text-decoration: none;
+            color: #ffffff;
+            vertical-align: middle;
+        }
+    }
+    .message-button-rounded__cta.yellow {
+        background-color: #bc9405;
+    }
+    .message-button-rounded__cta.purple {
+        background-color: #b50fb5;
+    }
+    .message-button-rounded__cta.bright-blue {
+        background-color: #0000FF;
+    }
+    .message-button-rounded__cta.dark-blue {
+        background-color: #2499c3;
+    }
+    .inline-arrow-white-right {
+        svg path {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+        display: block;
+        float: right;
+        height: $gs-column-width/2;
+    }
+}
+
+/*
  * Coin based adblock message
  */
 .adblock-sticky__coin {
