@@ -1,5 +1,8 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 @import conf.Configuration
+@import discussion.model.Comment
+@import views.support.{BulletCleaner, Format, InBodyLinkCleaner, TruncateCleaner, withJsoup}
+
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-top-comment"

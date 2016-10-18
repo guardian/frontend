@@ -1,6 +1,8 @@
-@(page: model.Page, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+@import model.Page
+@import common.{Edition, LinkTo, NavItem, Navigation}
+@import views.support.RenderClasses
 
-@import _root_.common._
+@(page: Page, navigation: Seq[NavItem])(implicit request: RequestHeader)
 
 <ul class="top-navigation js-top-navigation">
     <li class="top-navigation__item top-navigation__item--home">

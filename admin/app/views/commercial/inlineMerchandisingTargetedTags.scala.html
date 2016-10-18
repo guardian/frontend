@@ -1,6 +1,7 @@
-@(env: String, report: dfp.InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
-@import tools.SiteLink
-@import tools.CapiLink
+@import common.dfp.InlineMerchandisingTargetedTagsReport
+@import tools.{CapiLink, SiteLink}
+
+@(env: String, report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
 
 @admin_main("Commercial IM Slot", env, isAuthed = true, hasCharts = false) {
 

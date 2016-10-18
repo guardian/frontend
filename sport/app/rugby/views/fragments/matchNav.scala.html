@@ -1,6 +1,10 @@
-@(matchNav: rugby.feed.MatchNavigation, currentPage: Option[String])(implicit request: RequestHeader)
+@import common.LinkTo
+@import model.ContentType
+@import rugby.feed.MatchNavigation
 
-@tab(content: model.ContentType, text: String) = {
+@(matchNav: MatchNavigation, currentPage: Option[String])(implicit request: RequestHeader)
+
+@tab(content: ContentType, text: String) = {
     @if(currentPage.exists( _.endsWith(content.metadata.id))) {
         <li class="tabs__tab tab--@text.toLowerCase tabs__tab--selected tone-colour tone-accent-border">
             <span class="tab__link">@text</span>

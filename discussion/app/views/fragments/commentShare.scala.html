@@ -1,7 +1,10 @@
-@(comment: Comment)
+@import _root_.model.{Facebook, ShareLinks, SharePlatform, Twitter}
+@import discussion.model.Comment
+@import org.apache.commons.lang.StringEscapeUtils
 @import org.jsoup.Jsoup
 @import org.jsoup.safety.Whitelist
-@import org.apache.commons.lang.StringEscapeUtils
+
+@(comment: Comment)
 
 <div class="d-comment__action d-comment__action--share">
 
