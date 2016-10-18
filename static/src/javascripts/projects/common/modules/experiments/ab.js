@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/contributions-usa'
-
 ], function (
     reportError,
     config,
@@ -360,8 +359,8 @@ define([
             var test = getTest(testId);
 
             var variant = test && test.variants.filter(function (v) {
-                return v.id.toLowerCase() === variantId.toLowerCase();
-            })[0];
+                    return v.id.toLowerCase() === variantId.toLowerCase();
+                })[0];
 
             var impression = variant && variant.impression || noop;
             var complete = variant && variant.success || noop;

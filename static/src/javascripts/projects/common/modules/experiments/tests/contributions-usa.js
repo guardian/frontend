@@ -41,15 +41,15 @@ define([
         this.author = 'Jonathan Rankin';
         this.description = 'Test whether contributions embed performs better inline and in-article than at the bottom of the article.';
         this.showForSensitive = false;
-        this.audience = 0.60;
-        this.audienceOffset = 0.10;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-            return commercialFeatures.canAskForAContribution && worksWellWithPageTemplate
+            return commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate
         };
 
         var bottomWriter = function (component) {
@@ -61,11 +61,12 @@ define([
                         contentType: 'application/json',
                         crossOrigin: true
                     }).then(function (resp) {
-                        if(resp.country == 'GB') {
+                        if(resp.country == 'US') {
                             var submetaElement = $('.submeta');
                             component.insertBefore(submetaElement);
                             embed.init();
                             mediator.emit('contributions-embed:insert', component);
+                            mediator.emit('contributions-embed:impression', component);
                         }
                     });
                 } catch (e) {
@@ -76,8 +77,7 @@ define([
         };
 
         function addInviewLIstener(track) {
-            mediator.on('contributions-embed:insert', function () {
-                alert("hello");
+            mediator.on('contributions-embed:impression', function () {
                 $('.contributions__contribute').each(function (el) {
                     //top offset of 18 ensures view only counts when half of element is on screen
                     var elementInview = ElementInview(el, window, {top: 18});
@@ -91,7 +91,6 @@ define([
 
 
         var completer = function (complete) {
-            console.log("completer");
             mediator.on('contributions-embed:insert', function () {
                 bean.on(qwery('.js-submit-input')[0], 'click', function (){
                     complete();
