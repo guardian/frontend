@@ -9,7 +9,7 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import feed.OnwardJourneyLifecycle
 import rugby.conf.RugbyLifecycle
-import services.ConfigAgentLifecycle
+import services.{ConfigAgentLifecycle, OphanApi}
 
 trait StandaloneLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
   self: FrontendComponents =>
@@ -17,6 +17,7 @@ trait StandaloneLifecycleComponents extends SportServices with CommercialService
   //Override conflicting members
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
+  override lazy val ophanApi = wire[OphanApi]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
