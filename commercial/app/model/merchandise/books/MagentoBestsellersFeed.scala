@@ -3,8 +3,9 @@ package model.commercial.books
 import java.lang.System._
 
 import commercial.feeds._
+import commercial.model.OptString
 import common.{ExecutionContexts, Logging}
-import model.commercial._
+import model.commercial.Book
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

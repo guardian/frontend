@@ -1,11 +1,10 @@
 package commercial.controllers
 
 import common.JsonComponent
-import commercial.controllers.util.{specificIds, segment, jsonFormat, componentMaxAge, componentNilMaxAge}
 import model.commercial.TravelOffer
-import model.Segment
+import commercial.model.Segment
 import model.commercial.travel.TravelOffersAgent
-import model.{Cached, NoCache}
+import model.Cached
 import play.api.libs.json.Json
 import play.api.mvc._
 

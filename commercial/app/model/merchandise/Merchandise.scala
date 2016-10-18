@@ -1,5 +1,6 @@
 package model.commercial
 
+import commercial.model.OptString
 import model.ImageElement
 import model.commercial.CapiImages.ImageInfo
 import model.commercial.events.LiveEventMembershipInfo

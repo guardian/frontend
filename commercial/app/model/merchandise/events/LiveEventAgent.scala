@@ -8,7 +8,7 @@ import conf.Configuration
 import model.commercial.LiveEvent
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
-import model.commercial.readsSeq
+import commercial.model.readsSeq
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

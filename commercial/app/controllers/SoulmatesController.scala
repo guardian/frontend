@@ -1,10 +1,8 @@
 package commercial.controllers
 
 import common.JsonComponent
-import commercial.controllers.util.{jsonFormat, specificId, componentMaxAge, componentNilMaxAge}
 import model.commercial.soulmates.{SoulmatesAgent, Sample}
 import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
-import model.commercial.soulmates._
 import model.commercial.Member
 import model.Cached
 import play.api.mvc._

@@ -1,11 +1,9 @@
 package commercial.controllers
 
 import common.{ExecutionContexts, JsonComponent}
-import commercial.controllers.util.{specificId, jsonFormat}
 import model.Cached
 import model.commercial.events.LiveEventAgent
 import play.api.mvc._
-import util.{componentMaxAge, componentNilMaxAge}
 
 class LiveEventsController(liveEventAgent: LiveEventAgent)
   extends Controller

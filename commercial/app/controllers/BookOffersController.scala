@@ -1,9 +1,8 @@
 package commercial.controllers
 
-import commercial.controllers.util._
 import common.{ExecutionContexts, JsonComponent, Logging}
 import model.commercial.Book
-import model.Segment
+import commercial.model.Segment
 import model.commercial.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}

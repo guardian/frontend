@@ -3,7 +3,7 @@ package model.commercial.events
 import java.lang.System._
 
 import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import model.commercial.readsSeq
+import commercial.model.readsSeq
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._

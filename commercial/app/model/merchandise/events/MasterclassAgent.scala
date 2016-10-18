@@ -1,9 +1,9 @@
 package model.commercial.events
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
+import commercial.model.Segment
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
-import model.Segment
 import model.commercial._
 
 import scala.concurrent.Future

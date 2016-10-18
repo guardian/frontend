@@ -1,9 +1,9 @@
 package model.commercial.jobs
 
 import commercial.feeds.{FeedMetaData, ParsedFeed}
+import commercial.model.Segment
 import common.ExecutionContexts
-import model.Segment
-import model.commercial._
+import model.commercial.{Job, Keyword, MerchandiseAgent}
 
 import scala.concurrent.Future
 
