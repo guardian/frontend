@@ -4,29 +4,34 @@
 @import layout.ContentWidths.BodyMedia
 @import views.support.RenderClasses
 
-@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink])(implicit request: RequestHeader)
+@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: Seq[model.ShareLink], amp: Boolean)(implicit request: RequestHeader)
 
-<form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
-    ("atom-quiz", true),
-    ("atom-quiz--personality", quiz.quizType == "personality"),
-    ("atom-quiz--knowledge", quiz.quizType == "knowledge"),
-    ("atom-quiz--is-not-results", !showResults),
-    ("atom-quiz--is-results", showResults),
-    ("atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge"),
-    ("js-atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge")
-))">
-    @renderHeader(maybeResults)
-    @quiz.content.questions.zipWithIndex.map { case (question, index) =>
-        @renderQuestion(question,
-            playForm(s"answers[$index]"),
-            maybeResults.flatMap(_.getAnswerFor(question))
-        )
-    }
-    @renderFooter(maybeResults)
-    @if(maybeResults.isEmpty) {
-        <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
-    }
-</form>
+@if(amp) {
+    @HtmlFormat.raw(quiz.defaultHtml)
+} else {
+
+    <form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
+        ("atom-quiz", true),
+        ("atom-quiz--personality", quiz.quizType == "personality"),
+        ("atom-quiz--knowledge", quiz.quizType == "knowledge"),
+        ("atom-quiz--is-not-results", !showResults),
+        ("atom-quiz--is-results", showResults),
+        ("atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge"),
+        ("js-atom-quiz--instant-reveal", !quiz.revealAtEnd && quiz.quizType == "knowledge")
+    ))">
+        @renderHeader(maybeResults)
+        @quiz.content.questions.zipWithIndex.map { case (question, index) =>
+            @renderQuestion(question,
+                playForm(s"answers[$index]"),
+                maybeResults.flatMap(_.getAnswerFor(question))
+            )
+        }
+        @renderFooter(maybeResults)
+        @if(maybeResults.isEmpty) {
+            <button class="button button--xlarge button--primary" type="submit">Submit answers</button>
+        }
+    </form>
+}
 
 @renderQuestion(question: Question, field: play.api.data.Field, maybeUserAnswer: Option[Answer]) = {
     <fieldset class="atom-quiz__question">

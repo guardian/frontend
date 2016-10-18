@@ -41,6 +41,7 @@ final case class MediaAsset(
 
 final case class Quiz(
   override val id: String,
+  defaultHtml: String,
   title: String,
   path: String,
   quizType: String,
@@ -74,7 +75,7 @@ object Atoms extends common.Logging {
     content.atoms.map { atoms =>
       val quizzes = extract(atoms.quizzes, atom => {
         val quizAtom = atom.data.asInstanceOf[AtomData.Quiz].quiz
-        Quiz.make(content.id, quizAtom)
+        Quiz.make(content.id, atom.defaultHtml, quizAtom)
       })
 
       val media = extract(atoms.media, atom => {
@@ -151,7 +152,7 @@ object Quiz extends common.Logging {
 
 
 
-  def make(path: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
+  def make(path: String, defaultHtml: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
     val questions = quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
@@ -196,6 +197,7 @@ object Quiz extends common.Logging {
 
     Quiz(
       id = quiz.id,
+      defaultHtml = defaultHtml,
       path = path,
       title = quiz.title,
       quizType = quiz.quizType,
