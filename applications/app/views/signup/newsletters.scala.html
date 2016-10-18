@@ -15,10 +15,13 @@
     </iframe>
 }
 
-@newsletterImage(emailName: String, listId: String) = {
-    <img class="newsletter-image"
-        src="@{ Static("images/email" + listId + ".png") }"
-        alt="cover image for @emailName"/>
+@newsletterImage(emailListing: EmailSubscription) = {
+    @defining(emailListing.imageFilename.getOrElse("2211.png")) { imageFilename =>
+        <img class="newsletter-image"
+            src="@{ Static("images/email" + imageFilename) }"
+            alt="cover image for @emailListing.name"
+        />
+    }
 }
 
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
@@ -33,7 +36,7 @@
                 data-component="newsletter-card @emailListing.theme">
 
                 <div class="newsletter-card__imagewrapper">
-                    @newsletterImage(emailListing.name, emailListing.listId)
+                    @newsletterImage(emailListing)
                 </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
