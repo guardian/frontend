@@ -4,9 +4,8 @@ import java.net.URLEncoder
 
 import common.{BadConfigurationException, ExecutionContexts, Logging}
 import conf.Configuration._
-import play.api.Play.current
 import play.api.libs.json._
-import play.api.libs.ws.{WS, WSClient}
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
 
