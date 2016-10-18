@@ -1,12 +1,12 @@
 package commercial.model.feeds
 
 import commercial.model.merchandise.books.BestsellersAgent
-import common.ExecutionContexts
-import conf.Configuration
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.soulmates.SoulmatesAgent
-import model.commercial.travel.TravelOffersAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
+import common.ExecutionContexts
+import conf.Configuration
 import model.commercial.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 
 import scala.concurrent.Future

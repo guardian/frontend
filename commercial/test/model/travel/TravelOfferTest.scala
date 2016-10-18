@@ -1,4 +1,4 @@
-package model.commercial.travel
+package commercial.model.merchandise.travel
 
 import model.commercial.TravelOffer
 import org.joda.time.DateTime

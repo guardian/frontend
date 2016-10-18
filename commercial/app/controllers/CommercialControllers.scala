@@ -3,10 +3,10 @@ package commercial.controllers
 import com.softwaremill.macwire._
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
-import contentapi.ContentApiClient
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
-import model.commercial.travel.TravelOffersAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
+import contentapi.ContentApiClient
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient

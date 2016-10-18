@@ -1,4 +1,4 @@
-package model.commercial.travel
+package commercial.model.merchandise.travel
 
 import java.lang.System.currentTimeMillis
 

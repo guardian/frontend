@@ -2,13 +2,13 @@ package commercial.controllers
 
 import commercial.model.Segment
 import commercial.model.merchandise.books.BestsellersAgent
-import common.{ExecutionContexts, JsonComponent}
-import model.Cached
-import model.commercial._
 import commercial.model.merchandise.events.MasterclassAgent
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.soulmates.SoulmatesAgent
-import model.commercial.travel.TravelOffersAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
+import common.{ExecutionContexts, JsonComponent}
+import model.Cached
+import model.commercial._
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html

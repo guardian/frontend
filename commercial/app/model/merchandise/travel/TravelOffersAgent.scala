@@ -1,4 +1,4 @@
-package model.commercial.travel
+package commercial.model.merchandise.travel
 
 import commercial.model.Segment
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}

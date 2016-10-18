@@ -6,6 +6,9 @@ import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import commercial.model.feeds.{FeedsFetcher, FeedsParser}
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, MagentoService}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.jobs.{Industries, JobsAgent}
+import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
@@ -14,9 +17,6 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
 import model.ApplicationIdentity
-import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
-import commercial.model.merchandise.jobs.{Industries, JobsAgent}
-import model.commercial.travel.TravelOffersAgent
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}

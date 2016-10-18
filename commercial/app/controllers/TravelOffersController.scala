@@ -1,10 +1,10 @@
 package commercial.controllers
 
-import common.JsonComponent
-import model.commercial.TravelOffer
 import commercial.model.Segment
-import model.commercial.travel.TravelOffersAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
+import common.JsonComponent
 import model.Cached
+import model.commercial.TravelOffer
 import play.api.libs.json.Json
 import play.api.mvc._
 
