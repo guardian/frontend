@@ -1,10 +1,12 @@
-@(page: model.GalleryPage)(implicit request: RequestHeader)
-
 @import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
+@import model.{GalleryPage, ImageAsset, ImageElement}
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{RenderClasses, GalleryCaptionCleaner}
+@import views.support.`package`.Seq2zipWithRowInfo
+@import views.support.{GalleryCaptionCleaner, RenderClasses}
+
+@(page: GalleryPage)(implicit request: RequestHeader)
 
 <div class="l-side-margins l-side-margins--media l-side-margins--gallery">
 
@@ -47,7 +49,7 @@
     @fragments.contentFooter(page.item, page.related, "media", isPaidContent(page.item, page))
 </div>
 
-@galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
+@galleryItem(adSlots: Seq[String], adInterval: Int, image: ImageAsset, rowNum: Int, imageElement: ImageElement) = {
 
     <li id="img-@rowNum" class="gallery__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">

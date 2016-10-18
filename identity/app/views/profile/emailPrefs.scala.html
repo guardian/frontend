@@ -1,7 +1,10 @@
-@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
-
-@import views.html.fragments.form.{checkboxField, radioField}
 @import form.IdFormHelpers._
+@import model.{EmailSubscription, EmailSubscriptions}
+@import views.html.fragments.form.radioField
+@import views.support.RenderClasses
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {

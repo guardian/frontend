@@ -1,4 +1,8 @@
-@(competition: model.Competition, group: Group,
+@import model.{Competition, Group, TeamUrl}
+@import views.support.RenderClasses
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(competition: Competition, group: Group,
     heading: Option[String] = None,
     headingLink: Option[String] = None,
     highlightTeamId: Option[String] = None, striped: Boolean = false,

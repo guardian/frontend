@@ -1,6 +1,8 @@
-@(interactive: _root_.model.content.InteractiveAtom, shouldFence: Boolean)
+@import common.InlineJs
+@import _root_.model.content.InteractiveAtom
+@import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
 
-@import templates.inlineJS.nonBlocking.js._
+@(interactive: InteractiveAtom, shouldFence: Boolean)
 
 @iframeBody = {
     <!DOCTYPE html>

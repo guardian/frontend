@@ -1,8 +1,11 @@
-@(page: model.GalleryPage)(implicit request: RequestHeader)
-@import common.{Edition, LinkTo}
+@import common.LinkTo
 @import layout.ContentWidths.GalleryMedia
+@import model.GalleryPage
 @import views.support.TrailCssClasses.toneClass
+@import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.{ImgSrc, RenderClasses}
+
+@(page: GalleryPage)(implicit request: RequestHeader)
 
 <div class="l-side-margins l-side-margins--media">
 

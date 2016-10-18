@@ -1,12 +1,12 @@
-@(page: ContentPage)(implicit request: RequestHeader)
-
 @import common.{LinkTo, Localisation}
-@import layout.ContentWidths.MainMedia
-@import model.ContentPage
-@import views.support.TrailCssClasses.toneClass
-@import views.support.RenderClasses
 @import conf.switches.Switches._
+@import layout.ContentWidths.MainMedia
 @import model.Badges.badgeFor
+@import model.ContentPage
+@import views.support.RenderClasses
+@import views.support.TrailCssClasses.toneClass
+
+@(page: ContentPage)(implicit request: RequestHeader)
 
 @defining((
     page.item.tags.isTheMinuteArticle,

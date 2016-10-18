@@ -1,4 +1,7 @@
-@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStageLike])(implicit request: RequestHeader)
+@import _root_.football.model.CompetitionStageLike
+@import model.{Competition, Page}
+
+@(page: Page, competition: Competition, competitionStages: List[CompetitionStageLike])(implicit request: RequestHeader)
 
 @main(page, "football"){
 }{

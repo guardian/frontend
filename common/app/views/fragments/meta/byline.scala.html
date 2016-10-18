@@ -1,3 +1,6 @@
+@import model.Tags
+@import views.support.ContributorLinks
+
 @(byline: Option[String], tags: Tags)(implicit request: RequestHeader)
 
 @byline.map { text =>
