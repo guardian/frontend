@@ -14,7 +14,7 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
 import model.ApplicationIdentity
-import model.commercial.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.travel.TravelOffersAgent
 import play.api.ApplicationLoader.Context

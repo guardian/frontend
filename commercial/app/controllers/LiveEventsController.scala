@@ -2,7 +2,7 @@ package commercial.controllers
 
 import common.{ExecutionContexts, JsonComponent}
 import model.Cached
-import model.commercial.events.LiveEventAgent
+import commercial.model.merchandise.events.LiveEventAgent
 import play.api.mvc._
 
 class LiveEventsController(liveEventAgent: LiveEventAgent)

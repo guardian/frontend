@@ -5,7 +5,7 @@ import commercial.model.merchandise.books.BestsellersAgent
 import common.{ExecutionContexts, JsonComponent}
 import model.Cached
 import model.commercial._
-import model.commercial.events.MasterclassAgent
+import commercial.model.merchandise.events.MasterclassAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent

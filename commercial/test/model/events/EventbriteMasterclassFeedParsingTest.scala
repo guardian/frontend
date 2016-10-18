@@ -1,7 +1,7 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 import model.commercial.Masterclass
-import model.commercial.events.Eventbrite.Response
+import commercial.model.merchandise.events.Eventbrite.Response
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
 

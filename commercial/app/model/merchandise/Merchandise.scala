@@ -3,8 +3,8 @@ package model.commercial
 import commercial.model.OptString
 import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
-import model.commercial.events.Eventbrite._
-import model.commercial.events.LiveEventMembershipInfo
+import commercial.model.merchandise.events.Eventbrite._
+import commercial.model.merchandise.events.LiveEventMembershipInfo
 import model.commercial.jobs.Industries
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime

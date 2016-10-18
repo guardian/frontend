@@ -3,7 +3,7 @@ package commercial.model.feeds
 import commercial.model.merchandise.books.BestsellersAgent
 import common.ExecutionContexts
 import conf.Configuration
-import model.commercial.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent

@@ -4,7 +4,7 @@ import com.softwaremill.macwire._
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
 import contentapi.ContentApiClient
-import model.commercial.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.JobsAgent
 import model.commercial.travel.TravelOffersAgent
 
