@@ -106,5 +106,3 @@ class OphanApi(wsClient: WSClient) extends ExecutionContexts with Logging with i
     getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString))
 }
 
-object OphanApi extends OphanApi(WS.client) //Do not use. TODO: To delete once we find an elegant way to inject OphanApi into SurgingContentAgent
-

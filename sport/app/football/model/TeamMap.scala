@@ -2,9 +2,8 @@ package model
 
 import common._
 import contentapi.ContentApiClient
-import feed.Competitions
+import _root_.feed.Competitions
 import pa._
-import ContentApiClient.getResponse
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.metadata.url)
@@ -106,9 +105,9 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
-  def refresh(page: Int = 1) { //pages are 1 based
+  def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient) { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
-    getResponse(ContentApiClient.tags
+    contentApiClient.getResponse(contentApiClient.tags
       .page(page)
       .pageSize(50)
       .referenceType("pa-football-team")
