@@ -29,10 +29,11 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait AdminServices {
+trait AdminServices extends I18nComponents  {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
   def actorSystem: ActorSystem
+  lazy val messages: Messages = Messages(Lang.defaultLang, messagesApi)
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
@@ -46,9 +47,7 @@ trait AdminServices {
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }
 
-trait AppComponents extends FrontendComponents with AdminControllers with AdminServices with I18nComponents {
-
-  lazy val messages: Messages = Messages(Lang.defaultLang, messagesApi)
+trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
