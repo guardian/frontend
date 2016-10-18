@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.merchandise
 
 import commercial.model.capi.{CapiImages, ImageInfo}
 import common.Edition
