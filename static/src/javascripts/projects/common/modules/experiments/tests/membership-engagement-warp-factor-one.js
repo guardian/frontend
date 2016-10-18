@@ -5,7 +5,8 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/utils/mediator'
 ], function (
     bean,
     reqwest,
@@ -13,7 +14,8 @@ define([
     qwery,
     $,
     config,
-    commercialFeatures
+    commercialFeatures,
+    mediator
 ) {
     return function () {
         this.id = 'MembershipEngagementWarpFactorOne';
