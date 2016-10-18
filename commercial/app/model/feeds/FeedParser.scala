@@ -5,7 +5,7 @@ import common.ExecutionContexts
 import conf.Configuration
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
-import model.commercial.soulmates.SoulmatesAgent
+import commercial.model.merchandise.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.commercial.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 

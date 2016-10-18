@@ -2,7 +2,7 @@ package commercial.model.feeds
 
 import commercial.model.feeds.ResponseEncoding.utf8
 import conf.switches.{Switch, Switches}
-import model.commercial.soulmates.SoulmatesAgent
+import commercial.model.merchandise.soulmates.SoulmatesAgent
 
 import scala.concurrent.duration.{Duration, _}
 

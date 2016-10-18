@@ -1,4 +1,4 @@
-package model.commercial.soulmates
+package commercial.model.merchandise.soulmates
 
 import model.commercial.{Member, Man, Woman}
 

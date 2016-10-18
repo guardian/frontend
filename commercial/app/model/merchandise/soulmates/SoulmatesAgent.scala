@@ -1,4 +1,4 @@
-package model.commercial.soulmates
+package commercial.model.merchandise.soulmates
 
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import common.AkkaAgent
