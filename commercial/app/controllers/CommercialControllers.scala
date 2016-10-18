@@ -1,9 +1,9 @@
 package commercial.controllers
 
 import com.softwaremill.macwire._
-import contentapi.ContentApiClient
 import commercial.model.capi.CapiAgent
-import model.commercial.books.{BestsellersAgent, BookFinder}
+import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
+import contentapi.ContentApiClient
 import model.commercial.events.{LiveEventAgent, MasterclassAgent}
 import model.commercial.jobs.JobsAgent
 import model.commercial.travel.TravelOffersAgent

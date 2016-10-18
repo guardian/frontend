@@ -1,4 +1,4 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker

@@ -1,20 +1,20 @@
 package commercial.controllers
 
+import commercial.model.Segment
+import commercial.model.merchandise.books.BestsellersAgent
 import common.{ExecutionContexts, JsonComponent}
+import model.Cached
 import model.commercial._
-import model.commercial.books.BestsellersAgent
 import model.commercial.events.MasterclassAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
-import model.Cached
-import commercial.model.Segment
-import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
+import play.api.mvc._
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 import scala.util.Random
-import play.twirl.api.Html
 
 class Multi(bestsellersAgent: BestsellersAgent,
             masterclassAgent: MasterclassAgent,

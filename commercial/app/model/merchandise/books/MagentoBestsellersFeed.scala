@@ -1,4 +1,4 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import java.lang.System._
 
