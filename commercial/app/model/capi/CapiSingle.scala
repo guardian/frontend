@@ -4,7 +4,6 @@ import common.Edition
 import common.commercial.{BrandHunter, Branding}
 import model.{ContentType, ElementsFormat}
 import play.api.libs.json.{Json, Writes}
-import CapiImages.ImageInfo
 
 case class CapiSingle(articleHeadline: String, articleUrl: String,
                       articleText: Option[String], articleImage: ImageInfo,
@@ -13,7 +12,6 @@ case class CapiSingle(articleHeadline: String, articleUrl: String,
                       edition: String)
 
 object CapiSingle {
-  import ElementsFormat._
 
   def fromContent(
     contentType: ContentType,

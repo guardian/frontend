@@ -1,8 +1,7 @@
 package model.commercial
 
 import commercial.model.OptString
-import commercial.model.capi.CapiImages
-import commercial.model.capi.CapiImages.ImageInfo
+import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
 import model.commercial.events.Eventbrite._
 import model.commercial.events.LiveEventMembershipInfo

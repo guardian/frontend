@@ -1,7 +1,6 @@
 package model.commercial
 
-import commercial.model.capi.CapiImages
-import commercial.model.capi.CapiImages.ImageInfo
+import commercial.model.capi.{CapiImages, ImageInfo}
 import common.Edition
 import model.ContentType
 import play.api.libs.json.{Json, Writes}
