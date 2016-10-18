@@ -113,12 +113,7 @@
         &:hover,
         &:focus,
         &:active {
-            background-color: darken($news-main-1, 10%);
-            color: $neutral-6;
-
-            .inline-arrow-right {
-                fill: $neutral-6;
-            }
+            background-color: darken($comment-support-2, 10%);
         }
     }
 
@@ -149,7 +144,6 @@
 
 .newsletter-card__iframe {
     width: 100%;
-    height: 100px;
 }
 
 .newsletters-category {
@@ -175,4 +169,95 @@
     @include mq(leftCol) {
         position: absolute;
   }
+}
+
+// TONE SPECIFIC MODS
+.newsletter-card--tone-feature {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $features-support-1;
+            background-color: $features-support-1;
+
+            &:hover,
+            &:focus {
+                background-color: darken($features-support-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $features-support-1;
+        color: $features-support-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $features-support-1;
+        }
+
+        .inline-arrow-right {
+            fill: $features-support-1;
+        }
+    }
+}
+
+.newsletter-card--tone-comment {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $comment-support-4;
+            background-color: $comment-support-4;
+
+            &:hover,
+            &:focus {
+                background-color: darken($comment-support-4, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $comment-support-4;
+        color: $comment-support-4;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $comment-support-4;
+        }
+
+        .inline-arrow-right {
+            fill: $comment-support-4;
+        }
+    }
+}
+
+.newsletter-card--tone-media {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $neutral-1;
+            background-color: $neutral-1;
+
+            &:hover,
+            &:focus {
+                background-color: darken($neutral-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $neutral-1;
+        color: $neutral-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $neutral-1;
+        }
+
+        .inline-arrow-right {
+            fill: $neutral-1;
+        }
+    }
 }

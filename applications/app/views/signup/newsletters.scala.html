@@ -21,14 +21,10 @@
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card newsletter-card--@emailListing.theme"
+            <div class="newsletter-card
+            @if(emailListing.tone.isDefined) {  newsletter-card--tone-@emailListing.tone
+            } else { newsletter-card--tone-news }"
                 data-component="newsletter-card @emailListing.theme">
-
-                <div class="newsletter-card__imagewrapper">
-                    <img class="newsletter-card__image"
-                        width="100%"
-                        src="@{ Static("images/email" + emailListing.listId + ".png") }"/>
-                </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
 
@@ -47,17 +43,7 @@
                 </div>
 
                 <div class="newsletter-card__meta js-newsletter-meta">
-                    <iframe src="/email/form/plaintone/@emailListing.listId"
-                        data-form-title="Sign up for @emailListing.name"
-                        data-form-description=""
-                        data-form-campaign-code="newsletters-page"
-                        scrolling="no"
-                        seamless frameborder="0"
-                        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
-                        data-form-success-desc="">
-                    </iframe>
-
-                    <div class="newsletter-card__signup is-hidden">
+                    <div class="newsletter-card__signup">
                         <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge js-newsletter-signup-button"
                                 data-link-name="Signup @emailListing.name"
                                 type="button">
@@ -65,7 +51,7 @@
                         </button>
                     </div>
 
-                    <div class="newsletter-card__example is-hidden">
+                    <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
                         <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
                             <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview"
@@ -86,6 +72,10 @@
     <div class="content">
         <div class="gs-container">
             <div class="newsletters-heading">newsletters</div>
+
+            <div class="newsletters-category" name="news round ups">
+                @emailListCategoryList("news round ups", EmailSubscriptions.newsRoundUpEmails())
+            </div>
 
             <div class="newsletters-category" name="news">
                 @emailListCategoryList("news", EmailSubscriptions.newsEmails())
