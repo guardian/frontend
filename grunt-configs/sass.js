@@ -3,7 +3,7 @@ module.exports = function (grunt, options) {
 
     return {
         options: {
-            outputStyle: 'compressed',
+            outputStyle: 'compact',
             sourceMap: options.isDev,
             precision: 5
         },
