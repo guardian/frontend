@@ -5,8 +5,8 @@ import contentapi.ContentApiClient
 import model.commercial.Lookup
 import model.{Cached, NoCache}
 import play.api.mvc._
+import views.support.Commercial.TrackingCodeBuilder
 import views.support.Item300
-import views.support.commercial.TrackingCodeBuilder
 
 class PaidContentCardController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
