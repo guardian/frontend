@@ -1,5 +1,7 @@
-@(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
 @import implicits.Football._
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
 
 <ul class="football-groups u-unstyled u-cf">
     @groupStage.groupTables.zipWithRowInfo.map{ case ((round, leagueTableEntries), row) =>

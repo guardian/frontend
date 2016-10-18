@@ -80,8 +80,8 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'should-shrinkwrap':
-        notify('Run `make shrinkwrap` and include the changes to `/npm-shrinkwrap.json` in your commit.', {
+    case 'should-yarn':
+        notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
             heading: 'Dependencies have changed'
         }, 'error');
         break;

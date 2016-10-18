@@ -90,15 +90,19 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     outline: none;
     // Override button from user agent stylesheet
     border-radius: 100%;
-    z-index: 1071;
+    z-index: 1049;
     background-color: $news-main-2;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
 
-    &--open:before {
-        // Extended hit area for veggie burger close state, for fat fingers
-        content: '';
-        position: absolute;
+    &--open {
+        z-index: 1071;
+
+        &:before {
+            // Extended hit area for veggie burger close state, for fat fingers
+            content: '';
+            position: absolute;
+        }
     }
 
     @include mq($until: $mobile-medium) {

@@ -20,7 +20,7 @@ Examples:
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/facia/conf/routes)
 
-[Architectural diagram](https://github.com/guardian/frontend/blob/master/docs/fronts.md)
+[Architectural diagram](02-fronts-architecture.md)
 
 # Article
 Article app serves all Guardian [articles](https://www.theguardian.com/world/2016/jul/18/european-leaders-urge-turkey-to-respect-rule-of-law-after-failed-coup), [live blogs](https://www.theguardian.com/sport/live/2016/jul/18/county-cricket-hampshire-v-surrey-and-more-live) or minute emails.
@@ -42,7 +42,7 @@ Applications app is responsible to serve:
 
 - Crosswords and Sudoku
 
-- Index pages 
+- Index pages
 
 - Email signup pages
 
@@ -84,7 +84,7 @@ Commercial app serves all commercial components (Travel offers, Masterclassses, 
 [All supported routes](https://github.com/guardian/frontend/blob/master/commercial/conf/routes)
 
 # Facia-Press
-Facia-press's only task is to press fronts. 
+Facia-press's only task is to press fronts.
 _Pressing a front means creating a json representation of the front content and storing it in a S3 bucket for further use by the Facia app._
 
 Since a front page is made up of one or more pieces of content, to render a page efficiently the system reads the cached output of Facia-press to drastically improve the render time of Facia. Without Facia-Press, the Facia server would have to lookup many content IDs from Content API, causing a large amount of work to be done on Facia itself, giving the server group poor performance under load, and breaking the golden response time rule (respond in under 2000ms).
@@ -93,11 +93,11 @@ Pressing happens automatically as the Facia-Press app listens to a job queue and
 
 Pressing tasks are also scheduled via a cron job to be triggered on a regular basis.
 
-It is also possible to run a pressing task by manually sending a request to one of the supported endpoints. 
+It is also possible to run a pressing task by manually sending a request to one of the supported endpoints.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/facia-press/conf/routes)
 
-[Architectural diagram](https://github.com/guardian/frontend/blob/master/docs/fronts.md)
+[Architectural diagram](02-fronts-architecture.md)
 
 # Identity
 Identity app is responsible for all account related endpoints (signin, register, account edit, email prefs, saved for later).
@@ -112,7 +112,7 @@ Rss app is rendering the RSS version for all Guardian content.
 [All supported routes](https://github.com/guardian/frontend/blob/master/rss/conf/routes)
 
 # Admin
-Admin app hosts a set of dashboards and tools used by Guardian developers to monitor, manage and troubleshoot the Guardian website. 
+Admin app hosts a set of dashboards and tools used by Guardian developers to monitor, manage and troubleshoot the Guardian website.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/admin/conf/routes)
 
@@ -128,7 +128,7 @@ Admin-jobs app has currently two endpoints to:
 # Archive
 In case none of the other apps can serve a given request, it is finally passed to the Archive app which checks if there is any redirect setup for this url or any old static content attached to it.
 
-If yes the Archive app returns this old static content or redirect, otherwise a 404 is eventually served to the client. 
+If yes the Archive app returns this old static content or redirect, otherwise a 404 is eventually served to the client.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/archive/conf/routes)
 

@@ -1,7 +1,0 @@
-{
-    "src":        "../../static/src/images/membership/",
-    "imgDest":    "../../static/target/images/membership/",
-    "cssDest":    "../../static/src/stylesheets/icons/",
-    "cssSvgName": "_membership-icons-svg.scss",
-    "cssPngName": "_membership-icons-sprite.scss"
-}

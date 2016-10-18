@@ -1,23 +1,31 @@
 package controllers
 
+import java.io.File
 import java.net.URI
 import java.util.UUID
 
 import akka.actor.Status.{Failure => ActorFailure}
-import akka.actor.{Actor, Props}
+import akka.actor.{Actor, ActorSystem, Props}
 import common.ExecutionContexts
 import controllers.BreakingNews.{BreakingNewsApi, S3BreakingNews}
 import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
+import play.api.Environment
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestEnvironment}
 
-@DoNotDiscover class NewsAlertControllerTest extends WordSpec with Matchers with ConfiguredTestSuite with ExecutionContexts {
+@DoNotDiscover class NewsAlertControllerTest
+  extends WordSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with WithTestEnvironment {
 
   val testApiKey = "test-api-key"
+
+  lazy val actorSystem: ActorSystem = app.actorSystem
 
   class MockUpdaterActor(mockResponse: Any) extends Actor {
     override def receive = { case _ => sender ! mockResponse }
@@ -28,8 +36,8 @@ import test.ConfiguredTestSuite
 
   def controllerWithActorReponse(mockResponse: Any) = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
-    val fakeApi = new BreakingNewsApi(new S3BreakingNews(app.mode)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
-    new NewsAlertController(fakeApi) {
+    val fakeApi = new BreakingNewsApi(new S3BreakingNews(testEnvironment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
+    new NewsAlertController(fakeApi)(actorSystem) {
       override lazy val breakingNewsUpdater = updaterActor
       override lazy val apiKey = testApiKey
     }

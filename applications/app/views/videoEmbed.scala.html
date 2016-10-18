@@ -1,10 +1,9 @@
-@(page: model.EmbedPage)(implicit request: RequestHeader)
-
-@import model.{Video, VideoPlayer}
-@import views.support.Video640
-@import conf.Static
-@import conf.Configuration
+@import conf.{Configuration, Static}
+@import model.{EmbedPage, VideoPlayer}
 @import templates.inlineJS.blocking.js.curlConfig
+@import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
+
+@(page: EmbedPage)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">

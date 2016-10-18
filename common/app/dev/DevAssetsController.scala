@@ -3,16 +3,15 @@ package dev
 import common.Assets.AssetNotFoundException
 import common.ExecutionContexts
 import java.io.File
-import model.{NoCache, Cached}
+
+import model.{Cached, NoCache}
 import model.Cached.WithoutRevalidationResult
-import play.api.Play
+import play.api.{Environment, Mode}
 import play.api.libs.MimeTypes
 import play.api.mvc._
 import play.api.libs.iteratee.Enumerator
-import play.api.Play.current
 
-object DevAssetsController extends DevAssetsController
-class DevAssetsController extends Controller with ExecutionContexts {
+class DevAssetsController(val environment: Environment) extends Controller with ExecutionContexts {
 
   // This allows:
   //  - unbuilt javascript to be loaded from src or public folders.
@@ -54,7 +53,7 @@ class DevAssetsController extends Controller with ExecutionContexts {
       )
 
       // WebDriver caches during tests. Caching CSS during tests might speed some things up.
-      if (Play.isTest) {
+      if (environment.mode == Mode.Test) {
         Cached(84000)(WithoutRevalidationResult(result))
       } else {
         // but we don't want caching during development...

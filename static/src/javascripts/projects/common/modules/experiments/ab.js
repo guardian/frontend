@@ -355,14 +355,18 @@ define([
             });
         },
 
-        forceRegisterCompleteEvent: function(testId, variantId) {
+        forceVariantCompleteFunctions: function(testId, variantId) {
             var test = getTest(testId);
-            var variant = test && test.variants.filter(function (v) {
-                    return v.id.toLowerCase() === variantId.toLowerCase();
-                })[0];
-            var onTestComplete = variant && variant.success || noop;
 
-            onTestComplete(recordTestComplete(test, variantId, true));
+            var variant = test && test.variants.filter(function (v) {
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
+
+            var impression = variant && variant.impression || noop;
+            var complete = variant && variant.success || noop;
+
+            impression(recordTestComplete(test, variantId, false));
+            complete(recordTestComplete(test, variantId, true));
         },
 
         segmentUser: function () {
@@ -376,7 +380,7 @@ define([
                     test = abParam[0];
                     variant = abParam[1];
                     ab.forceSegment(test, variant);
-                    ab.forceRegisterCompleteEvent(test, variant);
+                    ab.forceVariantCompleteFunctions(test, variant);
                 });
             } else {
                 ab.segment();

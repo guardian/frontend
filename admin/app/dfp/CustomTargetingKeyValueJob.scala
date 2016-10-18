@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
-import com.google.api.ads.dfp.axis.v201508.{CustomTargetingValue, CustomTargetingKey}
+import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
+import com.google.api.ads.dfp.axis.v201608.{CustomTargetingValue, CustomTargetingKey}
 import play.api.libs.json._
 import tools.Store
 

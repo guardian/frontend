@@ -1,6 +1,9 @@
-@(webPublicationDate: org.joda.time.DateTime, lastModified: org.joda.time.DateTime, hasBeenModified: Boolean, isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
-@import views.support.AuFriendlyFormat
+@import common.RichRequestHeader
 @import conf.switches.Switches.AmpLiveBlogNewsArticleSwitch
+@import org.joda.time.DateTime
+@import views.support.{AuFriendlyFormat, Format}
+
+@(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
 @* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
 @isAmpAndStructuredAsNewsArticle() = @{

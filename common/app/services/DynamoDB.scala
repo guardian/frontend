@@ -19,12 +19,10 @@ case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
 class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
-  import play.api.Play.current
   private val tableName = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
-  // should not directly call AWS during tests.
-  private lazy val credentials  = Configuration.aws.credentials.filterNot(_ => Play.isTest)
+  private lazy val credentials  = Configuration.aws.credentials
 
   def destinationFor(source: String): Future[Option[Destination]] = {
     credentials.map{ credentialsProvider =>

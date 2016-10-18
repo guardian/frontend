@@ -29,12 +29,6 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers extends CommercialControllers {
-  def wsClient: WSClient
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val healthCheck = wire[HealthCheck]
-}
-
 trait CommercialServices {
   def wsClient: WSClient
   def actorSystem: ActorSystem
@@ -56,8 +50,10 @@ trait CommercialServices {
   lazy val feedsParser = wire[FeedsParser]
 }
 
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers with CommercialServices =>
+trait AppComponents extends FrontendComponents with CommercialControllers with CommercialServices {
+
+  lazy val devAssetsController = wire[DevAssetsController]
+  lazy val healthCheck = wire[HealthCheck]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -66,9 +62,6 @@ trait AppLifecycleComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with CommercialServices {
 
   lazy val router: Router = wire[Routes]
 

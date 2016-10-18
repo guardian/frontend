@@ -21,20 +21,16 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers extends DiscussionControllers {
-  def wsClient: WSClient
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-}
-
 trait DiscussionServices {
   def wsClient: WSClient
 
   lazy val discussionApi = wire[DiscussionApi]
 }
 
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+trait AppComponents extends FrontendComponents with DiscussionControllers with DiscussionServices {
+
+  lazy val healthCheck = wire[HealthCheck]
+  lazy val devAssetsController = wire[DevAssetsController]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -42,9 +38,6 @@ trait AppLifecycleComponents {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with DiscussionServices {
 
   lazy val router: Router = wire[Routes]
 

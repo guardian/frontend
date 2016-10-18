@@ -1,6 +1,7 @@
+@import model.{InvalidEmail, OtherError, Subscribed, SubscriptionResult}
+
 @(result: SubscriptionResult)
 
-@import model.{SubscriptionResult, Subscribed, InvalidEmail, OtherError}
 <div class="email-sub email-sub--article">
     <div class="email-sub__message">
         @result match {

@@ -3,6 +3,7 @@ package controllers.BreakingNews
 import java.net.URI
 import java.util.UUID
 
+import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
 import models.{NewsAlertNotification, NewsAlertTypes}
@@ -19,6 +20,7 @@ import test.ConfiguredTestSuite
 import scala.concurrent.duration._
 
 @DoNotDiscover class BreakingNewsUpdaterTest extends WordSpec with Matchers with ConfiguredTestSuite with MockitoSugar with ScalaFutures {
+  lazy val actorSystem: ActorSystem = app.actorSystem
   implicit val actorTimeout = Timeout(30.seconds)
   implicit override val patienceConfig = PatienceConfig(timeout = Span(5, Seconds), interval = Span(1, Seconds))
 

@@ -1,8 +1,9 @@
-@(page: model.Page)(implicit request: RequestHeader)
-@import conf.switches.Switches._
 @import common.InlineJs
-@import templates.inlineJS.blocking.js._
-@import templates.inlineJS.blocking.polyfills.js._
+@import conf.switches.Switches.{AsyncCss, FontSwitch}
+@import templates.inlineJS.blocking.js.{applyRenderConditions, cloudwatchBeacons, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
+@import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
+
+@(page: model.Page)(implicit request: RequestHeader)
 
 <!--[if lt IE 8]>
     <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
