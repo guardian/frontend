@@ -1,24 +1,18 @@
-@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: String = "", isGallery: Boolean = false)
+@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
-    @sharelinks.map { item: model.ShareLink =>
-        <li class="social__item social__item--@item.css" data-link-name="@item.css">
-            <a  class="social__action js-social__action--@position social-icon-wrapper"
-                data-link-name="social @position"
-                href="@item.href"
-                target="_blank"
-                title="@item.text">
-                <span class='@if(item.css.matches("facebook|twitter|email")) {inline-icon__fallback button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
-                @defining(
-                    if(isGallery){
-                        List("rounded-icon", "social-icon", "social-icon--" + item.css, "social-icon--media")
-                    } else {
-                        List("rounded-icon", "social-icon", "social-icon--" + item.css)
-                    }
-                ) { classNames =>
-                    @fragments.inlineSvg("share-" + item.css, "icon", classNames)
-                }
-            </a>
-        </li>
-    }
+    @sharelinks.visible.map(item => ShareLink(item))
 </ul>
+
+@ShareLink(item: model.ShareLink) = {
+    <li class="social__item social__item--@item.css" data-link-name="@item.css">
+        <a  class="social__action js-social__action--@position social-icon-wrapper"
+        data-link-name="social @position"
+        href="@item.href"
+        target="_blank"
+        title="@item.text">
+            <span class='@if(item.css.matches("facebook|twitter|email")) {inline-icon__fallback button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
+            @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css) ++ iconModifier)
+        </a>
+    </li>
+}
