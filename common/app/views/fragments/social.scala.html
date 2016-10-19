@@ -1,4 +1,4 @@
-@(sharelinks: Seq[model.ShareLink], position: String = "bottom", iconModifier: String = "", isGallery: Boolean = false)
+@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: String = "", isGallery: Boolean = false)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.map { item: model.ShareLink =>

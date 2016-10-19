@@ -22,6 +22,7 @@ object Frontend extends Build with Prototypes {
       awsSns,
       awsSts,
       awsSqs,
+      cats,
       contentApiClient,
       filters,
       commonsLang,
