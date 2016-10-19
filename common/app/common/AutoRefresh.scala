@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration, actorSystem: => ActorSystem = Akka.system()) extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
   private lazy val agent = Agent[Option[A]](None)
 
   @volatile private var subscription: Option[Cancellable] = None
@@ -23,7 +23,7 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
     a <- get
   } yield Future.successful(a)).getOrElse(refresh())
 
-  final def start() = {
+  final def start()(implicit actorSystem: ActorSystem) = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
 
     subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {
