@@ -5,9 +5,8 @@ import java.io.File
 import common.ExecutionContexts
 import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
-import football.controllers.HealthCheck
 import football.model._
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 import pa.{Http, Response => PaResponse}
 import play.api.libs.ws.WSClient
 import recorder.{DefaultHttpRecorder, HttpRecorder}
@@ -34,8 +33,8 @@ class SportTestSuite extends Suites (
   new MatchFeatureTest,
   new ResultsFeatureTest,
   new rugby.model.MatchParserTest
-) with SingleServerSuite with BeforeAndAfterAll with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19013
 }
 
 trait WithTestFootballClient {
