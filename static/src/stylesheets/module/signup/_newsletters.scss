@@ -12,7 +12,6 @@
 
 .newsletter-card__signup {
     display: inline;
-    margin-right: 2%;
 }
 
 .newsletter-card__example {
@@ -31,7 +30,6 @@
     display: inline-block;
     float: left;
     margin-bottom: $gs-baseline;
-    background-color: $neutral-6;
     border-top: 2px solid $news-accent;
     width: 100%;
 
@@ -93,17 +91,49 @@
 .newsletter-card__meta {
     background-color: $comment-support-2;
     border-bottom: 1px solid $neutral-3;
-    padding: 8px;
+    padding: $gs-gutter / 2;
+    height: 3em;
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+    .newsletter-card__text-input {
+        @include fs-textSans(2);
+        -webkit-border-radius: 62.5rem 0 0 62.5rem;
+        border-radius: 62.5rem 0 0 62.5rem;
+        border: 1px solid $neutral-3;
+        border-right: 0;
+        float: left;
+        padding-left: $gs-baseline;
+        width: 60%;
+        height: 3em;
+    }
 
     .newsletter-card__lozenge {
         color: #ffffff;
-        border-color: $news-main-1;
+        border: 1px solid $news-main-1;
+        background-color: $news-main-1;
         -webkit-border-radius: 62.5rem;
-        border-radius: 100px;
+        border-radius: 62.5rem;
+        border-width: 1px;
         height: 3em;
         width: 48%;
         margin: 0;
         padding: 0;
+    }
+
+    .newsletter-card__lozenge--submit {
+        @include fs-textSans(2);
+        -webkit-border-radius: 0 62.5rem 62.5rem 0;
+        border-radius: 0 62.5rem 62.5rem 0;
+        border-left: 0;
+        float: left;
+        margin-right: 0;
+        width: 40%;
     }
 
     .newsletter-card__lozenge--preview {
@@ -171,7 +201,7 @@
   }
 }
 
-// TONE SPECIFIC MODS
+// TONE SPECIFIC MODS - FEATURE
 .newsletter-card--tone-feature {
 
     .newsletter-card__signup {
@@ -203,6 +233,7 @@
     }
 }
 
+// TONE SPECIFIC MODS - COMMENT
 .newsletter-card--tone-comment {
 
     .newsletter-card__signup {
@@ -234,6 +265,7 @@
     }
 }
 
+// TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
 
     .newsletter-card__signup {

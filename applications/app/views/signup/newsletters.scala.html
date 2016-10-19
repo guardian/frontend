@@ -57,22 +57,29 @@
 
                 <div class="newsletter-card__meta js-newsletter-meta">
                     <div class="newsletter-card__signup">
-                        <button class="button button--primary newsletter-card__lozenge js-newsletter-signup-button"
-                                data-link-name="Signup @emailListing.name"
-                                type="button">
-                            <span>Sign up</span>
+                        <input class="newsletter-card__text-input js-newsletter-card__text-input"
+                          type="email"
+                          name="email"
+                          placeholder="Email address" required
+                        />
+                        <button class="newsletter-card__lozenge newsletter-card__lozenge--submit js-newsletter-signup-button"
+                          data-link-name="Signup @emailListing.name"
+                          type="button"
+                          value="@emailListing.listId">
+                          <span>Sign up</span>
                         </button>
                     </div>
 
                     <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
-                        <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                            <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview"
-                                    data-link-name="Preview @emailListing.name"
-                                    type="button">
-                                <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
-                            </button>
-                        </a>}
+                          <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
+                              <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview is-hidden"
+                                  data-link-name="Preview @emailListing.name"
+                                  type="button">
+                                  <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
+                              </button>
+                          </a>
+                        }
                     </div>
                 </div>
             </div>
