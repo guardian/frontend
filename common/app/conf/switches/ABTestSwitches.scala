@@ -28,8 +28,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-usa",
-    "Test effectiveness of different USA-targetted messages.",
+    "ab-contributions-usa-1",
+    "Test which of our 5 initial US targeted messages results in the most contributions",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2016, 10, 27),

@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-usa'
+    'common/modules/experiments/tests/contributions-usa-1'
 ], function (
     reportError,
     config,
@@ -23,14 +23,14 @@ define([
     DiscussionPromoteBottomBanner,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    ContributionsUsa
+    ContributionsUsa1
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new ContributionsUsa()
+        new ContributionsUsa1()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -359,8 +359,8 @@ define([
             var test = getTest(testId);
 
             var variant = test && test.variants.filter(function (v) {
-                    return v.id.toLowerCase() === variantId.toLowerCase();
-                })[0];
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
 
             var impression = variant && variant.impression || noop;
             var complete = variant && variant.success || noop;
