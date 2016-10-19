@@ -57,7 +57,7 @@ final case class Commercial(
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   hasInlineMerchandise: Boolean
-) 
+)
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -210,7 +210,8 @@ final case class MetaData (
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   isHosted: Boolean = false,
-  twitterPropertiesOverrides: Map[String, String] = Map()
+  twitterPropertiesOverrides: Map[String, String] = Map(),
+  isImmersiveArticle: Boolean = false
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -238,7 +239,8 @@ final case class MetaData (
       sectionId == "identity" ||
       contentType.toLowerCase == "gallery" ||
       contentType.toLowerCase == "survey" ||
-      contentType.toLowerCase == "signup"
+      contentType.toLowerCase == "signup" ||
+      isImmersiveArticle
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
