@@ -1,15 +1,11 @@
 package commercial.controllers
 
-import commercial.controllers.util.{specificIds, componentNilMaxAge, componentMaxAge, jsonFormat, htmlFormat}
-import common.commercial._
+import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
+import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
-import model.{Cached, NoCache}
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
-import model._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -65,7 +61,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
   }
 
 
-  private def renderItems(format: util.Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)

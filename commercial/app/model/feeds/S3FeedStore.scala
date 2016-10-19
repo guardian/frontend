@@ -1,4 +1,4 @@
-package commercial.feeds
+package commercial.model.feeds
 
 import conf.Configuration.commercial.merchandisingFeedsLatest
 import services.S3

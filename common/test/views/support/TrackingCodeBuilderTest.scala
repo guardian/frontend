@@ -1,8 +1,9 @@
-package views.support.commercial
+package views.support
 
 import common.commercial._
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
+import Commercial.TrackingCodeBuilder
 
 class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 

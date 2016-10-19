@@ -1,9 +1,8 @@
-package commercial.feeds
+package commercial.model.feeds
 
-import commercial.feeds.ResponseEncoding.utf8
+import commercial.model.feeds.ResponseEncoding.utf8
 import conf.switches.{Switch, Switches}
-import model.commercial.soulmates.SoulmatesAgent
-import org.joda.time.{DateTime, DateTimeZone}
+import commercial.model.merchandise.soulmates.SoulmatesAgent
 
 import scala.concurrent.duration.{Duration, _}
 

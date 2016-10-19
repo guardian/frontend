@@ -1,11 +1,13 @@
-@(books: Seq[model.commercial.Book],
+@import commercial.model.merchandise.Book
+
+@(books: Seq[Book],
   omnitureId: Option[String],
   clickMacro: Option[String],
   isProminent: Boolean = false)(implicit request: RequestHeader)
 
 @import conf.Configuration
 @import views.html.books.{bookCard, searchForm}
-@import views.html.commercial.containerWrapper
+@import views.html.fragments.commercial.containerWrapper
 
 @containerWrapper(Seq("legacy", "books", "tone-books"),
                   dataLinkName = omnitureId.map(id => s"merchandising | books standard | ${id}"),

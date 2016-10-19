@@ -1,10 +1,11 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import java.lang.System._
 
-import commercial.feeds._
+import commercial.model.OptString
+import commercial.model.feeds._
 import common.{ExecutionContexts, Logging}
-import model.commercial._
+import commercial.model.merchandise.Book
 
 import scala.concurrent.Future
 import scala.concurrent.duration._

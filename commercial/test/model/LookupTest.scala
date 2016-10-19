@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test.{ConfiguredTestSuite, WithTestContentApiClient, WithTestWsClient}
