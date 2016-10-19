@@ -3,10 +3,10 @@ package controllers
 import common.ExecutionContexts
 import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import dispatch.{FunctionHandler, Http}
-
 import scala.concurrent.Future
-import contentapi.{ContentApiClient, HttpClient, Response}
+import contentapi.{HttpClient, Response}
 import conf.Configuration.contentApi.previewAuth
+import play.api.Environment
 import play.api.libs.ws.WSClient
 
 class TrainingHttp extends HttpClient with ExecutionContexts {
@@ -40,8 +40,6 @@ class TrainingHttp extends HttpClient with ExecutionContexts {
   }
 }
 
-class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
-  wsClient,
-  9016,
+class HealthCheck(wsClient: WSClient) extends AllGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/info/developer-blog/2016/apr/14/training-preview-healthcheck")
-)
+)(wsClient)
