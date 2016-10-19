@@ -2,7 +2,8 @@
 ====================================
 
 There are two options for this. Proxylocal and ngrok. Proxy local has the advantage of being able to set a
-constant url for your personal use, however ngrok is useful for
+constant url for your personal use, however ngrok is a useful backup for times when the proxylocal service is down
+(See https://github.com/proxylocal/proxylocal-gem/issues/16). In fact many developers use it by default.
 
 #To use Proxylocal:
 
@@ -19,7 +20,7 @@ export PATH=$PATH:/var/lib/gems/1.8/bin
 ```
 In one terminal run the _core-navigation_ server on a given port:
 ```bash
-./sbt001
+./sbt
 > project core-navigation
 > run 9001
 ```
