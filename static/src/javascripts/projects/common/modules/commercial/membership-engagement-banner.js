@@ -94,14 +94,20 @@ define([
             customOpts = {},
             testVariant = ab.getTestVariantId('MembershipEngagementWarpFactorOne');
 
-        if (testVariant && testVariant === 'engage') {
+        if (testVariant && (testVariant === 'become' || testVariant === 'join')) {
+            var testPrefix = 'prominent-level-1',
+                variantMessages = {
+                    become: 'Become a member',
+                    join: 'Join today'
+                };
+
             colours = ['yellow','purple','bright-blue','dark-blue'];
             thisColour = thisInstanceColour(colours);
-            cssModifierClass = 'membership-message-' + thisColour + ' warp-factor-one__' + testVariant;
-            campaignCode = campaignCode + '_warp_factor_one_' + testVariant;
+            cssModifierClass = 'membership-message' + ' ' + testPrefix + ' ' + thisColour;
+            campaignCode = campaignCode + '_' + testPrefix + '_' + testVariant;
             customOpts = {
-                addButtonClass: 'warp_factor_one_' + testVariant,
-                setButtonText: 'Become a supporter',
+                addButtonClass: testPrefix + '_' + testVariant,
+                setButtonText: variantMessages[testVariant],
                 parentColour: thisColour
             };
             customJs = getCustomJs;

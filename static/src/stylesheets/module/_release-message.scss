@@ -497,7 +497,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /*
  * Prominent membership messaging AB tests
  */
-.warp-factor-one__engage {
+.site-message--membership-message.prominent-level-1 {
     .site-message__media {
         vertical-align: top;
         svg {
@@ -532,22 +532,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             line-height: 22px;
             margin-right: 20px;
         }
-    }
-    .site-message__membership-message-yellow {
-        svg {
-            stroke: #000000;
-            fill: #000000;
-        }
-    }
-    .site-message--membership-message-purple {
-        background: #710d75;
-    }
-    .site-message--membership-message-bright-blue {
-        @include site-message-dark-text;
-        background: #09abdf;
-    }
-    .site-message--membership-message-dark-blue {
-        background: #112f66;
     }
     .message-button-rounded__cta {
         @include clearfix;
@@ -591,18 +575,20 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             vertical-align: middle;
         }
     }
+
     .message-button-rounded__cta.yellow {
         background-color: #bc9405;
     }
     .message-button-rounded__cta.purple {
         background-color: #b50fb5;
     }
-    .message-button-rounded__cta.bright-blue {
-        background-color: #0000ff;
-    }
     .message-button-rounded__cta.dark-blue {
         background-color: #2499c3;
     }
+    .message-button-rounded__cta.bright-blue {
+        background-color: #0000ff;
+    }
+
     .inline-arrow-white-right {
         svg path {
             stroke: #ffffff;
@@ -612,6 +598,25 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         float: right;
         height: $gs-column-width/2;
     }
+}
+
+.site-message--membership-message.prominent-level-1.yellow {
+    @include site-message-dark-text;
+    background-color: #fffd05;
+    svg {
+        stroke: #000000;
+        fill: #000000;
+    }
+}
+.site-message--membership-message.prominent-level-1.purple {
+    background-color: #860e86;
+}
+.site-message--membership-message.prominent-level-1.bright-blue {
+    @include site-message-dark-text;
+    background-color: #2499c3;
+}
+.site-message--membership-message.prominent-level-1.dark-blue {
+    background-color: #0000ff;
 }
 
 /*

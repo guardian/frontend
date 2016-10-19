@@ -52,7 +52,12 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'engage',
+                id: 'become',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'join',
                 test: function () {},
                 success: success.bind(this)
             }
