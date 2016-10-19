@@ -28,9 +28,8 @@ define([
              config,
              embed,
              ajax,
-             commercialFeatures,
-             ElementInview
-) {
+             commercialFeatures
+    ) {
 
 
     return function () {
@@ -61,7 +60,8 @@ define([
                         contentType: 'application/json',
                         crossOrigin: true
                     }).then(function (resp) {
-                        if(resp.country == 'US') {
+                        //IF THIS SAYS GB, CHANGE TO US! JUST GB FOR TESTING!!
+                        if(resp.country == 'GB') {
                             var submetaElement = $('.submeta');
                             component.insertBefore(submetaElement);
                             embed.init();
@@ -75,20 +75,6 @@ define([
 
             });
         };
-
-        function addInviewLIstener(track) {
-            mediator.on('contributions-embed:impression', function () {
-                $('.contributions__contribute').each(function (el) {
-                    //top offset of 18 ensures view only counts when half of element is on screen
-                    var elementInview = ElementInview(el, window, {top: 18});
-                    elementInview.on('firstview', function () {
-                        track();
-                    });
-                });
-
-            });
-        }
-
 
         var completer = function (complete) {
             mediator.on('contributions-embed:insert', function () {
@@ -113,8 +99,8 @@ define([
                     bottomWriter(component);
                 },
                 impression: function(track) {
-                    mediator.on('contributions-embed:insert', function() {
-                       addInviewLIstener(track);
+                    mediator.on('contributions-embed:impression', function() {
+                       track();
                    });
                 },
                 success: completer
