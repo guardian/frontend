@@ -10,13 +10,13 @@ Install ngrok via their website: https://ngrok.com/download or use homebrew :
 ```bash
 brew cask install ngrok
 ```
-In sbt run your article server or dev-build server:
+In sbt run your desired project:
 ```bash
 ./sbt
 > project article
 > run
 ```
-In a seperate terminal, run ngrok, assigning the port number you are using for frontend (default is 9000):
+In a separate terminal, run ngrok, assigning the port number you are using for frontend (default is 9000):
 ```bash
 ngrok http 9000
 ```
