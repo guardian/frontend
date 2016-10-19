@@ -1,15 +1,15 @@
 package commercial.controllers
 
+import commercial.model.capi.CapiAgent
+import commercial.model.merchandise.TrafficDriver
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import commercial.controllers.util.{specificIds, jsonFormat, componentNilMaxAge}
-import model.commercial.{CapiAgent, TrafficDriver, Lookup}
 import model.{Cached, ContentType}
 import play.api.mvc.{Action, AnyContent, Controller, Request}
 
 import scala.concurrent.Future
-import scala.util.control.NonFatal
 import scala.concurrent.duration.DurationInt
+import scala.util.control.NonFatal
 
 class TrafficDriverController(
     contentApiClient: ContentApiClient,

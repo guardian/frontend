@@ -1,12 +1,12 @@
-package model.commercial.soulmates
+package commercial.model.merchandise.soulmates
 
 import java.lang.System._
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
-import model.commercial.Member
-import model.commercial.readsSeq
+import commercial.model.merchandise.Member
 import play.api.libs.json.{JsValue, Json}
+import commercial.model.readsSeq
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -18,7 +18,7 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
 
   def path: String
 
-  def parse(json: JsValue): Seq[Member] = json.as[Seq[Member]]
+  def parse(json: JsValue): Seq[Member] = json.as[Seq[Member]](readsSeq[Member])
 
   def parsedMembers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Member]] = {
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
