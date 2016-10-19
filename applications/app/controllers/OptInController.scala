@@ -32,6 +32,7 @@ class OptInController extends Controller {
       case "https" => https.opt(choice)
       case "hsts" => hsts.opt(choice)
       case "header" => header.opt(choice)
+      case "headertwo" => header.opt(choice)
       case "gallery" => gallery.opt(choice)
       case _ => NotFound
     }))
@@ -40,5 +41,6 @@ class OptInController extends Controller {
   val https = HttpsOptFeature("https_opt_in")
   val hsts = OptInFeature("hsts_opt_in")
   val header = OptInFeature("new_header_opt_in")
+  val headerTwo = OptInFeature("new_header_two_opt_in")
   val gallery = OptInFeature("gallery_redesign_opt_in")
 }
