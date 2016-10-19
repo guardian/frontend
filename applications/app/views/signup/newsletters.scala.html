@@ -33,7 +33,7 @@
             <div class="newsletter-card
             @if(emailListing.tone.isDefined) {  newsletter-card--tone-@emailListing.tone
             } else { newsletter-card--tone-news }"
-                data-component="newsletter-card @emailListing.theme">
+                data-component="newsletter-card @emailListing.name">
 
                 <div class="newsletter-card__imagewrapper">
                     @newsletterImage(emailListing)
@@ -56,24 +56,24 @@
                 </div>
 
                 <div class="newsletter-card__meta js-newsletter-meta">
-                    <div class="newsletter-card__signup">
+                    <form action="@LinkTo("/email")" method="post" class="newsletter-card__signup">
                         <input class="newsletter-card__text-input js-newsletter-card__text-input"
                           type="email"
                           name="email"
-                          placeholder="Email address" required
-                        />
-                        <button class="newsletter-card__lozenge newsletter-card__lozenge--submit js-newsletter-signup-button"
-                          data-link-name="Signup @emailListing.name"
-                          type="button"
+                          placeholder="Email address" required />
+                        <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@emailListing.listId" />
+                        <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit"
+                          data-link-name="Subscribe to @emailListing.name"
+                          type="submit"
                           value="@emailListing.listId">
                           <span>Sign up</span>
                         </button>
-                    </div>
+                    </form>
 
                     <div class="newsletter-card__example">
                         @if(emailListing.exampleUrl.isDefined){
                           <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                              <button class="button button--primary newsletter-card__lozenge newsletter-card__lozenge--preview is-hidden"
+                              <button class="newsletter-card__lozenge newsletter-card__lozenge--preview is-hidden js-newsletter-preview-button"
                                   data-link-name="Preview @emailListing.name"
                                   type="button">
                                   <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>

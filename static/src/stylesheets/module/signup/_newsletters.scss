@@ -92,7 +92,7 @@
     background-color: $comment-support-2;
     border-bottom: 1px solid $neutral-3;
     padding: $gs-gutter / 2;
-    height: 3em;
+    padding-bottom: $gs-baseline;
 
     * {
         -webkit-box-sizing: border-box;
@@ -114,6 +114,7 @@
     }
 
     .newsletter-card__lozenge {
+        @include fs-textSans(2);
         color: #ffffff;
         border: 1px solid $news-main-1;
         background-color: $news-main-1;
@@ -127,11 +128,9 @@
     }
 
     .newsletter-card__lozenge--submit {
-        @include fs-textSans(2);
         -webkit-border-radius: 0 62.5rem 62.5rem 0;
         border-radius: 0 62.5rem 62.5rem 0;
         border-left: 0;
-        float: left;
         margin-right: 0;
         width: 40%;
     }
@@ -139,6 +138,7 @@
     .newsletter-card__lozenge--preview {
         color: $news-main-1;
         background-color: transparent;
+        float: right;
 
         &:hover,
         &:focus,
