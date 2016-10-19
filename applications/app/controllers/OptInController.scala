@@ -32,7 +32,7 @@ class OptInController extends Controller {
       case "https" => https.opt(choice)
       case "hsts" => hsts.opt(choice)
       case "header" => header.opt(choice)
-      case "headertwo" => header.opt(choice)
+      case "headertwo" => headerTwo.opt(choice)
       case "gallery" => gallery.opt(choice)
       case _ => NotFound
     }))
