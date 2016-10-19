@@ -1,5 +1,9 @@
-@(component: football.controllers.MatchNav)(implicit request: RequestHeader)
+@import common.LinkTo
+@import football.controllers.MatchNav
 @import football.model.FootballMatchTrail
+
+@(component: MatchNav)(implicit request: RequestHeader)
+
 
 @report(trail: FootballMatchTrail, text: String) = {
     @if(component.currentPage.exists(_.url == trail.url)){

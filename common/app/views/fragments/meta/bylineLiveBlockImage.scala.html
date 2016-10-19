@@ -1,3 +1,7 @@
+@import common.RichRequestHeader
+@import model.Tag
+@import views.support.{ImgSrc, Item300}
+
 @(profileTag: Tag)(implicit request: RequestHeader)
 <div class="liveblog-block-byline">
     @profileTag.contributorImagePath.map { src =>

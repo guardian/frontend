@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
+    grunt.registerTask('validate:css', ['shell:validateCCS']);
     grunt.registerTask('validate:sass', ['sasslint']);
     grunt.registerTask('validate:js', function (app) {
         var target = (app) ? ':' + app : '';
@@ -64,21 +64,6 @@ module.exports = function (grunt) {
     grunt.registerTask('validate', function (app) {
         grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
     });
-
-    /**
-     * compile:js:<requiretask> tasks. Generate one for each require task
-     */
-    function compileSpecificJs(requirejsName) {
-        if (!options.isDev && requirejsName !== 'common') {
-            grunt.task.run('requirejs:common');
-        }
-        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'concat:app', 'uglify:javascript', 'asset_hash']);
-    }
-    for (var requireTaskName in grunt.config('requirejs')) {
-        if (requireTaskName !== 'options') {
-            grunt.registerTask('compile:js:' + requireTaskName, compileSpecificJs.bind(this, requireTaskName));
-        }
-    }
 
     /**
      * Test tasks

@@ -1,15 +1,11 @@
 package commercial.controllers
 
-import commercial.controllers.util.{specificIds, componentNilMaxAge, componentMaxAge, jsonFormat, htmlFormat}
-import common.commercial._
+import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
+import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import model.commercial.{CapiAgent, CapiSingle, CapiMultiple, Lookup}
-import model.{Cached, NoCache}
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
-import model._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -35,7 +31,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     "foundation-supported" -> "Supported by"
   )
 
-  private def retrieveContent()(implicit request: Request[AnyContent]): Future[Seq[ContentType]]  = {
+  private def retrieveContent()(implicit request: Request[AnyContent]): Future[List[ContentType]]  = {
 
     val optKeyword = request.getParameter("k")
 
@@ -61,11 +57,11 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
       (specific ++ latestByKeyword.filter(_.trail.trailPicture.nonEmpty)).distinct take 4
     }
 
-    futureContents
+    futureContents.map(_.toList)
   }
 
 
-  private def renderItems(format: util.Format, isMulti: Boolean) = Action.async { implicit request =>
+  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map(_.toList) map {
       case Nil => NoCache(format.nilResult.result)

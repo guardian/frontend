@@ -1,13 +1,5 @@
 module.exports = function () {
     return {
-        spriteGeneration: {
-            command: 'node spricon',
-            options: {
-                execOptions: {
-                    cwd: 'tools/sprites'
-                }
-            }
-        },
         /**
          * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
          */
@@ -38,6 +30,10 @@ module.exports = function () {
 
         atomiseCSS: {
             command: 'make atomise-css'
+        },
+
+        validateCCS: {
+            command: 'make compile-css'
         }
     };
 };

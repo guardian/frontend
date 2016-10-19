@@ -1,3 +1,6 @@
+@import football.controllers.CompetitionFilter
+@import common.LinkTo
+
 @(competitions: Map[String, Seq[CompetitionFilter]], page: model.Page, competitionList: List[String])(implicit request: RequestHeader)
 <div class="l-side-margins">
     <div class="monocolumn-wrapper">

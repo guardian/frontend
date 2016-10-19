@@ -6,7 +6,12 @@ define([
     Injector
 ) {
     describe('Cross-frame messenger: scroll', function () {
-        var scroll, iframe1, iframe2, respond1, respond2, onScroll;
+        var scroll, iframe1, iframe2, onScroll;
+        var callsToRespond1 = 0;
+        var callsToRespond2 = 0;
+
+        function respond1() { callsToRespond1 += 1; }
+        function respond2() { callsToRespond2 += 1; }
 
         var fixturesConfig = {
             id: 'page',
@@ -64,14 +69,13 @@ define([
             };
 
             beforeEach(function () {
-                respond1 = jasmine.createSpy('respond1');
-                respond2 = jasmine.createSpy('respond2');
                 scroll.reset(mockWindow);
                 scroll.addScrollListener(iframe1, respond1);
                 scroll.addScrollListener(iframe2, respond2);
             });
 
             afterEach(function () {
+                callsToRespond2 = callsToRespond1 = 0;
                 scroll.removeScrollListener(iframe1);
                 scroll.removeScrollListener(iframe2);
                 scroll.reset();
@@ -84,8 +88,8 @@ define([
                 ]);
                 onScroll()
                 .then(function () {
-                    expect(respond1).toHaveBeenCalled();
-                    expect(respond2).not.toHaveBeenCalled();
+                    expect(callsToRespond1).toEqual(2);
+                    expect(callsToRespond2).toEqual(1);
                 })
                 .then(done)
                 .catch(done.fail);
@@ -98,8 +102,8 @@ define([
                 ]);
                 onScroll()
                 .then(function () {
-                    expect(respond1).not.toHaveBeenCalled();
-                    expect(respond2).toHaveBeenCalled();
+                    expect(callsToRespond1).toEqual(1);
+                    expect(callsToRespond2).toEqual(2);
                 })
                 .then(done)
                 .catch(done.fail);
@@ -115,14 +119,13 @@ define([
             };
 
             beforeEach(function () {
-                respond1 = jasmine.createSpy('respond1');
-                respond2 = jasmine.createSpy('respond2');
                 scroll.reset(mockWindow);
                 scroll.addScrollListener(iframe1, respond1);
                 scroll.addScrollListener(iframe2, respond2);
             });
 
             afterEach(function () {
+                callsToRespond2 = callsToRespond1 = 0;
                 scroll.removeScrollListener(iframe1);
                 scroll.removeScrollListener(iframe2);
                 scroll.reset();
@@ -131,8 +134,8 @@ define([
             it('should call respond1 but not respond2 at the top of the page', function (done) {
                 onScroll()
                 .then(function () {
-                    expect(respond1).toHaveBeenCalled();
-                    expect(respond2).not.toHaveBeenCalled();
+                    expect(callsToRespond1).toEqual(2);
+                    expect(callsToRespond2).toEqual(1);
                 })
                 .then(done)
                 .catch(done.fail);
@@ -142,8 +145,8 @@ define([
                 window.scrollTo(0, 6300);
                 onScroll()
                 .then(function () {
-                    //expect(respond1).not.toHaveBeenCalled();
-                    expect(respond2).toHaveBeenCalled();
+                    // expect(callsToRespond1).toEqual(1);
+                    expect(callsToRespond2).toEqual(2);
                 })
                 .then(done)
                 .catch(done.fail);

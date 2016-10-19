@@ -1,4 +1,4 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import common.Logging
 import play.api.libs.json.{JsError, JsSuccess, JsValue}

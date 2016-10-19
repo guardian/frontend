@@ -58,6 +58,13 @@ define([
         if (useIO) {
             observer.observe(iframe);
         }
+
+        fastdom.read(function() {
+            return iframe.getBoundingClientRect();
+        })
+        .then(function (domRect) {
+            sendCoordinates(iframe.id, domRect);
+        });
     }
 
     function removeScrollListener(iframe) {
@@ -91,27 +98,27 @@ define([
                 if (useIO) {
                     visibleIframeIds
                     .map(getDimensions)
-                    .forEach(sendCoordinates);
+                    .forEach(function (data) {
+                        sendCoordinates(data[0], data[1]);
+                    });
                 } else {
                     iframeIds
                     .map(getDimensions)
-                    .filter(isIframeInViewport)
-                    .forEach(sendCoordinates);
+                    .filter(isIframeInViewport, viewport)
+                    .forEach(function (data) {
+                        sendCoordinates(data[0], data[1]);
+                    });
                 }
             });
         }
+    }
 
-        function isIframeInViewport(item) {
-            return item[1].bottom > 0 && item[1].top < viewport.height;
-        }
+    function isIframeInViewport(item) {
+        return item[1].bottom > 0 && item[1].top < this.height;
+    }
 
-        function getDimensions(id) {
-            return [id, iframes[id].node.getBoundingClientRect()];
-        }
-
-        function sendCoordinates(item) {
-            iframes[item[0]].respond(null, domRectToRect(item[1]));
-        }
+    function getDimensions(id) {
+        return [id, iframes[id].node.getBoundingClientRect()];
     }
 
     function onIntersect(changes) {
@@ -132,5 +139,9 @@ define([
             left:   rect.left,
             right:  rect.right
         };
+    }
+
+    function sendCoordinates(iframeId, domRect) {
+        iframes[iframeId].respond(null, domRectToRect(domRect));
     }
 });

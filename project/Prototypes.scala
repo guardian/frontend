@@ -71,10 +71,6 @@ trait Prototypes {
   val frontendClientSideSettings = Seq(
 
     TwirlKeys.templateImports ++= Seq(
-      "common._",
-      "model._",
-      "views._",
-      "views.support._",
       "conf._",
       "play.api.Play",
       "play.api.Play.current"

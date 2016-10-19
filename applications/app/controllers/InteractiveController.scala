@@ -27,6 +27,7 @@ class InteractiveController(contentApiClient: ContentApiClient) extends Controll
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient.item(path, edition)
         .showFields("all")
+        .showAtoms("all")
     )
 
     val result = response map { response =>

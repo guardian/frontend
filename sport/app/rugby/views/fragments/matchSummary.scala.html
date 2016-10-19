@@ -1,5 +1,9 @@
-@import rugby.model.Status._
-@(page: model.Page, theMatch: rugby.model.Match)
+@import model.Page
+@import rugby.model.Match
+@import rugby.model.Status.{FirstHalf, HalfTime, Result, SecondHalf}
+@import views.support.RenderClasses
+
+@(page: Page, theMatch: Match)
 
 @status() = {
     @theMatch.status match {
