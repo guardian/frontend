@@ -467,8 +467,8 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && content.elements.hasMainPicture)) && content.tags.isArticle,
-      isImmersiveArticle = content.isImmersive && content.tags.isArticle
+      shouldHideHeaderAndTopAds = content.tags.isTheMinuteArticle || (content.isImmersive && content.elements.hasMainMedia) && content.tags.isArticle,
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
 
@@ -696,7 +696,8 @@ object Gallery {
       openGraphImages = lightbox.openGraphImages,
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = twitterProperties,
-      opengraphPropertiesOverrides = openGraph
+      opengraphPropertiesOverrides = openGraph,
+      contentWithSlimHeader = true
     )
 
     val contentOverrides = content.copy(
@@ -857,7 +858,8 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      contentWithSlimHeader = true
     )
     val contentOverrides = content.copy(
       metadata = metadata

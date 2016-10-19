@@ -211,7 +211,7 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
-  isImmersiveArticle: Boolean = false
+  contentWithSlimHeader: Boolean = false
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -235,12 +235,10 @@ final case class MetaData (
   }
 
   val hasSlimHeader: Boolean =
-    contentType == "Interactive" ||
+    contentWithSlimHeader ||
       sectionId == "identity" ||
-      contentType.toLowerCase == "gallery" ||
       contentType.toLowerCase == "survey" ||
-      contentType.toLowerCase == "signup" ||
-      isImmersiveArticle
+      contentType.toLowerCase == "signup"
 
   // Special means "Next Gen platform only".
   private val special = id.contains("-sp-")
@@ -484,6 +482,8 @@ final case class Elements(elements: Seq[Element]) {
 
   def mainEmbed: Option[EmbedElement] = embeds.find(_.properties.isMain)
   lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embeds.embedAssets.headOption).isDefined
+
+  lazy val hasMainMedia: Boolean = hasMainPicture || hasMainVideo || hasMainEmbed || hasMainAudio
 
   lazy val bodyImages: Seq[ImageElement] = images.filter(_.properties.isBody)
   lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.properties.isBody)
