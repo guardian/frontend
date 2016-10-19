@@ -97,6 +97,7 @@ object EmailSubscriptions {
       frequency = "Tuesday mornings",
       listId = "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
+      signupPage = Some("https://www.theguardian.com/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
       exampleUrl = Some("https://www.theguardian.com/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
@@ -249,7 +250,8 @@ object EmailSubscriptions {
       description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
       frequency = "Every Friday",
       listId = "39",
-      subscribedTo = subscribedListIds.exists{ x => x == "39" }
+      subscribedTo = subscribedListIds.exists{ x => x == "39" },
+      signupPage = Some("https://www.theguardian.com/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
     EmailSubscription(
       name = "Close up",
@@ -270,8 +272,7 @@ object EmailSubscriptions {
       frequency = "Every weekday",
       listId = "1950",
       subscribedTo = subscribedListIds.exists{ x => x == "1950" },
-      signupPage = Some("https://www.theguardian.com/info/2016/feb/12/film-today-email-sign-up"),
-      exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
+      signupPage = Some("https://www.theguardian.com/info/2016/feb/12/film-today-email-sign-up")
     ),
     EmailSubscription(
       name = "Bookmarks",
@@ -307,7 +308,8 @@ object EmailSubscriptions {
       description = "For all you need to know about technology in the world this week, news, analysis and comment.",
       frequency = "Every Thursday",
       listId = "1902",
-      subscribedTo = subscribedListIds.exists{ x => x == "1902" }
+      subscribedTo = subscribedListIds.exists{ x => x == "1902" },
+      signupPage = Some("https://www.theguardian.com/info/2016/sep/22/sign-up-to-the-zip-file-email")
     ),
     EmailSubscription(
       name = "The Flyer",
