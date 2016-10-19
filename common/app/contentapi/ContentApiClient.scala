@@ -13,8 +13,6 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import play.api.libs.ws.WS
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -161,17 +159,6 @@ final case class CircuitBreakingContentApiClient(
     } else {
       super.fetch(url)
     }
-  }
-}
-
-//TODO: Do not use. For legacy reason only.
-//To delete once all references to ContentApiClient are via the class
-object ContentApiClient extends ContentApiClient(WSCapiHttpClient)
-object WSCapiHttpClient extends HttpClient {
-  import play.api.Play.current
-  lazy val httpClient = new CapiHttpClient(WS.client)
-  def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
-    httpClient.GET(url, headers)
   }
 }
 

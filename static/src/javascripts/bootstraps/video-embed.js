@@ -112,7 +112,7 @@ define([
                 plugins: {
                     embed: {
                         embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
-                        location: 'https://embed.theguardian.com/embed/video/' + guardian.config.page.pageId
+                        location: guardian.config.page.externalEmbedHost + '/embed/video/' + guardian.config.page.pageId
                     }
                 }
             }));

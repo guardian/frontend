@@ -19,7 +19,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -32,21 +32,18 @@ trait ApplicationsServices {
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val siteMapJob = wire[SiteMapJob]
   lazy val sectionsLookUp = wire[SectionsLookUp]
+  lazy val ophanApi = wire[OphanApi]
 }
 
-trait Controllers extends ApplicationsControllers {
-  self: FrontendComponents with ApplicationsServices =>
-  def wsClient: WSClient
+
+trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
+
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val assets = wire[Assets]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers with ApplicationsServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -61,9 +58,6 @@ trait AppLifecycleComponents {
     wire[CachedHealthCheckLifeCycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ApplicationsServices {
 
   lazy val router: Router = wire[Routes]
 

@@ -27,6 +27,7 @@ import router.Routes
 import rugby.controllers.RugbyControllers
 import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
+import services.OphanApi
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -45,6 +46,7 @@ trait SportServices {
   lazy val rugbyFeed = wire[OptaFeed]
   lazy val rugbyStatsJob = wire[RugbyStatsJob]
   lazy val capiFeed = wire[CapiFeed]
+  lazy val ophanApi = wire[OphanApi]
 }
 
 trait AppComponents extends FrontendComponents

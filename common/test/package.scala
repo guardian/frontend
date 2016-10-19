@@ -31,8 +31,6 @@ trait TestSettings {
       }
     }
   }
-
-  ContentApiClient.thriftClient._httpClient = toRecorderHttp(ContentApiClient.thriftClient._httpClient)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
