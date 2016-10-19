@@ -49,7 +49,7 @@ define([
         this.idealOutcome = 'The embed performs 20% better inline and in-article than it does at the bottom of the article';
         this.canRun = function () {
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-            return commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate
+            return commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
         };
 
         var bottomWriter = function (component) {
@@ -113,7 +113,6 @@ define([
                     bottomWriter(component);
                 },
                 impression: function(track) {
-                    console.log("impression");
                     mediator.on('contributions-embed:insert', function() {
                        addInviewLIstener(track);
                    });
