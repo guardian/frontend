@@ -1,5 +1,6 @@
 package services
 
+import akka.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.TagIndexListings
@@ -9,7 +10,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
-class IndexListingsLifecycle extends LifecycleComponent {
+class IndexListingsLifecycle(implicit actorSystem: ActorSystem) extends LifecycleComponent {
   override def start(): Unit = {
     KeywordSectionIndexAutoRefresh.start()
     KeywordAlphaIndexAutoRefresh.start()

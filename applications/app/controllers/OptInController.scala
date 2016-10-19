@@ -31,10 +31,12 @@ class OptInController extends Controller {
     Cached(60)(WithoutRevalidationResult(feature match {
       case "hsts" => hsts.opt(choice)
       case "header" => header.opt(choice)
+      case "headertwo" => headerTwo.opt(choice)
       case _ => NotFound
     }))
   }
 
   val hsts = OptInFeature("hsts_opt_in")
   val header = OptInFeature("new_header_opt_in")
+  val headerTwo = OptInFeature("new_header_two_opt_in")
 }
