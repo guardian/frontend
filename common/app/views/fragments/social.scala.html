@@ -1,7 +1,8 @@
 @(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
-    @sharelinks.visible.map(item => ShareLink(item))
+    @sharelinks.visible.map { item => @ShareLink(item) }
+    @sharelinks.hidden.fold(Html(""))(_ => SocialMore)
 </ul>
 
 @ShareLink(item: model.ShareLink) = {
@@ -15,4 +16,8 @@
             @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css) ++ iconModifier)
         </a>
     </li>
+}
+
+@SocialMore() = {
+    <li class="social-icon--more social-icon">&bull;&bull;&bull;</li>
 }
