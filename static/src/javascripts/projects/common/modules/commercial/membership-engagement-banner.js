@@ -70,18 +70,30 @@ define([
     }
 
     var getCustomJs = function(options) {
-        var opts = options || {};
-        var buttonEl = $('#membership__engagement-message-button');
+        var opts = options || {},
+            textLink = $('#membership__engagement-message-link'),
+            buttonLink = $('#membership__engagement-message-button-link'),
+            buttonEl = $('#membership__engagement-message-button');
+
         buttonEl.removeClass('is-hidden');
         if (opts.addButtonClass) {
             buttonEl.addClass(opts.addButtonClass);
         }
         if (opts.setButtonText) {
-            var buttonLink = $('#membership__engagement-message-button-link');
             buttonLink.text(opts.setButtonText);
         }
         if (opts.parentColour) {
             buttonEl.addClass(opts.parentColour);
+        }
+        if (opts.appendLinkClickIdentifier) {
+            if (!textLink.attr('href').endsWith(opts.appendLinkClickIdentifier)) {
+                textLink.attr('href', textLink.attr('href') + opts.appendLinkClickIdentifier);
+            }
+        }
+        if (opts.appendButtonClickIdentifier) {
+            if (!buttonLink.attr('href').endsWith(opts.appendButtonClickIdentifier)) {
+                buttonLink.attr('href', buttonLink.attr('href') + opts.appendButtonClickIdentifier);
+            }
         }
     };
 
@@ -114,7 +126,9 @@ define([
                 customOpts = {
                     addButtonClass: testName + '_' + testVariant,
                     setButtonText: variantMessages[testVariant],
-                    parentColour: thisColour
+                    parentColour: thisColour,
+                    appendLinkClickIdentifier: '_link',
+                    appendButtonClickIdentifier: '_button'
                 };
                 customJs = getCustomJs;
             }

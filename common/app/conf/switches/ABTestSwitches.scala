@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "The first level of prominent membership engagement messaging",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 27),
+    sellByDate = new LocalDate(2016, 11, 3),
     exposeClientSide = true
   )
 }

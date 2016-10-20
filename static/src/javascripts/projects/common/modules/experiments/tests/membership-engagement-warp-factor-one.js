@@ -19,14 +19,14 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementWarpFactorOne';
-        this.start = '2016-10-17';
-        this.expiry = '2016-10-31';
+        this.start = '2016-10-20';
+        this.expiry = '2016-11-3';
         this.author = 'Justin Pinner';
         this.description = 'The first level of prominent engagement messaging';
-        this.audience = 0.2;
+        this.audience = 0.3;
         this.audienceOffset = 0;
         this.successMeasure = 'More readers become members';
-        this.audienceCriteria = '20 percent of (non-member) UK edition readers';
+        this.audienceCriteria = '30 percent of (non-member) UK edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'Messaging promotes additional membership sign-up';
         this.hypothesis = 'Showing larger, bolder messages will encourage more readers to take up membership';
