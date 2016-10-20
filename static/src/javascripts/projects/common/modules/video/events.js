@@ -7,7 +7,6 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle',
@@ -20,7 +19,6 @@ define([
     $,
     config,
     detect,
-    OmnitureMedia,
     history,
     indexOf,
     throttle,
@@ -195,10 +193,6 @@ define([
         });
     }
 
-    function initOmnitureTracking(player, mediaId) {
-        new OmnitureMedia(player, mediaId).init();
-    }
-
     function bindPrerollEvents(player) {
         var events = {
             end: function () {
@@ -351,7 +345,6 @@ define([
         bindPrerollEvents: bindPrerollEvents,
         bindGlobalEvents: bindGlobalEvents,
         initOphanTracking: initOphanTracking,
-        initOmnitureTracking: initOmnitureTracking,
         handleInitialMediaError: handleInitialMediaError,
         bindErrorHandler: bindErrorHandler,
         addContentEvents: addContentEvents,
