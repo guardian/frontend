@@ -104,7 +104,7 @@ define([
             campaignCode = message.campaign,
             customJs = null,
             customOpts = {},
-            testVariant = ab.getTestVariantId('MembershipEngagementWarpFactorOne'),
+            testVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
             linkHref = formatEndpointUrl(edition, message);
 
         if (testVariant) {
