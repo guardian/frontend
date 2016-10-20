@@ -5,7 +5,7 @@ define([
     'common/utils/fastdom-promise',
     'raven',
     'Promise',
-    'common/modules/video/events',
+    'common/modules/video/events'
 ], function (
     bean,
     bonzo,
@@ -16,4 +16,4 @@ define([
     events
 ) {
 
-}
+});
