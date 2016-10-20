@@ -92,28 +92,34 @@ define([
             campaignCode = message.campaign,
             customJs = null,
             customOpts = {},
-            testVariant = ab.getTestVariantId('MembershipEngagementWarpFactorOne');
+            testVariant = ab.getTestVariantId('MembershipEngagementWarpFactorOne'),
+            linkHref = formatEndpointUrl(edition, message);
 
-        if (testVariant && (testVariant === 'become' || testVariant === 'join')) {
-            var testPrefix = 'prominent-level-1',
-                variantMessages = {
+        if (testVariant) {
+            var testName = 'prominent-level-1';
+
+            if (testVariant !== 'notintest') {
+                campaignCode = campaignCode + '_' + testName + '_' + testVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+            }
+
+            if (testVariant === 'become' || testVariant === 'join') {
+                var variantMessages = {
                     become: 'Become a member',
                     join: 'Join today'
                 };
-
-            colours = ['yellow','purple','bright-blue','dark-blue'];
-            thisColour = thisInstanceColour(colours);
-            cssModifierClass = 'membership-message' + ' ' + testPrefix + ' ' + thisColour;
-            campaignCode = campaignCode + '_' + testPrefix + '_' + testVariant;
-            customOpts = {
-                addButtonClass: testPrefix + '_' + testVariant,
-                setButtonText: variantMessages[testVariant],
-                parentColour: thisColour
-            };
-            customJs = getCustomJs;
+                colours = ['yellow','purple','bright-blue','dark-blue'];
+                thisColour = thisInstanceColour(colours);
+                cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
+                customOpts = {
+                    addButtonClass: testName + '_' + testVariant,
+                    setButtonText: variantMessages[testVariant],
+                    parentColour: thisColour
+                };
+                customJs = getCustomJs;
+            }
         }
 
-        var linkHref = formatEndpointUrl(edition, message);
         var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
         var messageShown = new Message(
             messageCode,
