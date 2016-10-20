@@ -504,10 +504,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .site-message__media {
         display: table-cell;
         vertical-align: top;
-        padding-top: 5px;
-        svg {
-            stroke: #ffffff;
-            fill: #ffffff;
+        @include mq($from: mobile) {
+            padding-top: 4px;
+        }
+        @include mq($from: tablet) {
+            padding-top: 1px;
         }
     }
     .site-message__close {
@@ -517,7 +518,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         padding-right: 20px;
     }
     .site-message__inner {
-        padding: 5px;
+        padding-top: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
     }
     .site-message__message--membership {
         margin-right: 5px;
@@ -536,7 +540,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .message-button-rounded__cta {
         @include clearfix;
         @include circular;
-        @include fs-bodyCopy(2);
+        @include fs-textSans(2);
         border: none;
         display: inline-block;
         width: auto;
@@ -554,6 +558,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             margin-bottom: $gs-row-height / 4;
         }
         @include mq($from: tablet) {
+            //margin-left: 20px;
             font-size: 14px;
             line-height: 28px;
             height: 28px;
@@ -562,7 +567,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
                 height: 28px;
                 width: 28px;
             }
-            margin-left: 1px;
+            margin-left: 10px;
             margin-bottom: $gs-row-height / 2;
         }
         padding: 1px 24px;
@@ -572,7 +577,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         background-color: transparent;
         top: 25%;
         height: 50%;
-//        line-height: 30px;
         font-weight: bold;
         a {
             text-decoration: none;
@@ -599,14 +603,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
     .message-button-rounded__cta.dark-blue {
         svg path {
-            stroke: #ffffff;
-            fill: #ffffff;
+            stroke: #000333;
+            fill: #000333;
         }
         a {
-            color: #ffffff;
+            color: #000333;
         }
         color: #ffffff;
-        background-color: #4b6cdf;
+        background-color: #4bc6df;
     }
     .message-button-rounded__cta.bright-blue {
         svg path {
@@ -616,7 +620,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         a {
             color: #ffffff;
         }
-        color: #ffffff;
+        color: #000000;
         background-color: #005689;
     }
 
@@ -639,7 +643,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background-color: #7d0068;
 }
 .site-message--membership-message.prominent-level-1.bright-blue {
-    background-color: #4b6cdf;
+    @include site-message-dark-text;
+    background-color: #4bc6df;
+    svg {
+        stroke: #000000;
+        fill: #000000;
+    }
 }
 .site-message--membership-message.prominent-level-1.dark-blue {
     background-color: #005689;
