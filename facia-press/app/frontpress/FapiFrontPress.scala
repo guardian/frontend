@@ -31,11 +31,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit def fapiClient: ApiClient =
-    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
-      FrontsApi.crossAccountClient
-    else
-      FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -61,11 +57,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit def fapiClient: ApiClient =
-    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
-      FrontsApi.crossAccountClient
-    else
-      FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)

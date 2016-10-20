@@ -398,6 +398,14 @@
         width: auto;
     }
 
+    &.ad-slot--commercial-component-high {
+
+        &,
+        & > .ad-slot__content > iframe {
+            transition: height 1s;
+        }
+    }
+
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
             margin-left: $gs-gutter / -2;

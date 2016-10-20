@@ -15,7 +15,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
-import services.ConfigAgentLifecycle
+import services.{ConfigAgentLifecycle, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -28,6 +28,7 @@ trait AppComponents extends FrontendComponents {
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val sectionsLookUp = wire[SectionsLookUp]
+  lazy val ophanApi = wire[OphanApi]
 
   // Controllers
   lazy val healthCheck = wire[HealthCheck]

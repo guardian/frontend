@@ -1,9 +1,9 @@
-@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
-
 @import crosswords.{CrosswordGrid, CrosswordPreview}
-@import views.support.{Treat, CrosswordTreat, SnappableTreat, ClimateTreat, NormalTreat}
-@import model.SupportedUrl
 @import implicits.Requests.RichRequestHeader
+@import model.SupportedUrl
+@import views.support.{ClimateTreat, CrosswordTreat, GlastoTreat, NormalTreat, SnappableTreat, Treat}
+
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">

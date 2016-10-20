@@ -112,6 +112,7 @@
     @include fs-headline(7, true);
     line-height: 1;
     font-weight: 200;
+    color: #ffffff;
 
     @include mq(desktop) {
         font-size: 4rem;

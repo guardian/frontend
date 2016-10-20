@@ -1,0 +1,8 @@
+module.exports = [{
+    title: 'Compile images',
+    task: [
+        require('./clean'),
+        require('./copy'),
+        require('./icons')
+    ]
+}];

@@ -1,18 +1,20 @@
-package model.commercial
+package commercial.model.merchandise
 
+import commercial.model.OptString
+import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
-import model.commercial.events.LiveEventMembershipInfo
-import model.commercial.events.Eventbrite._
-import model.commercial.jobs.Industries
-import views.support.Item300
-
-import org.apache.commons.lang.{StringUtils, StringEscapeUtils}
+import events.Eventbrite._
+import events.LiveEventMembershipInfo
+import jobs.Industries
+import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
+import views.support.Item300
+
 import scala.util.Try
 import scala.util.control.NonFatal
 import scala.xml.Node
@@ -55,7 +57,7 @@ case class LiveEvent(eventId: String,
                      status: String,
                      venue: Venue,
                      tickets: Seq[Ticket],
-                     imageUrl: String) extends Merchandise with TicketHandler with EventHandler
+                     image: ImageInfo) extends Merchandise with TicketHandler with EventHandler
 
 case class TravelOffer(id: String,
                        title: String,
@@ -352,7 +354,7 @@ object LiveEvent {
       status = event.status,
       venue = event.venue,
       tickets = event.tickets,
-      imageUrl = eventMembershipInformation.mainImageUrl
+      image = CapiImages.buildImageDataFromUrl(eventMembershipInformation.mainImageUrl)
     )
 
   implicit val liveEventWrites: Writes[LiveEvent] = Json.writes[LiveEvent]

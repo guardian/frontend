@@ -21,20 +21,12 @@ class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait ArchiveServices {
-  def wsClient: WSClient
-  lazy val dynamoDB = wire[DynamoDB]
-}
+trait AppComponents extends FrontendComponents {
 
-trait Controllers {
-  def wsClient: WSClient
-  def dynamoDB: DynamoDB
+  lazy val dynamoDB = wire[DynamoDB]
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val archiveController = wire[ArchiveController]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -43,9 +35,6 @@ trait AppLifecycleComponents {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ArchiveServices {
 
   lazy val router: Router = wire[Routes]
 

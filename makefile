@@ -16,12 +16,9 @@ list: # PRIVATE
 # *********************** SETUP ***********************
 
 # Install all 3rd party dependencies.
-install:
+install: check-node check-yarn
 	@echo 'Installing 3rd party dependencies…'
-	@npm install
-	@echo '…done.'
-	@echo 'Removing any unused 3rd party dependencies…'
-	@npm prune
+	@yarn install
 	@echo '…done.'
 	@node tools/messages.js install
 
@@ -34,7 +31,13 @@ uninstall: # PRIVATE
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
+# Make sure we running a recent-enough version of Node.
+check-node:
+	@./dev/check-node-version.js
 
+# Make sure yarn is installed.
+check-yarn: # PRIVATE
+	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
 
 # *********************** DEVELOPMENT ***********************
 
@@ -45,32 +48,41 @@ watch: compile-dev
 		npm run css-watch & \
 		npm run browser-sync
 
-# Shrinkwrap NPM packages after updating package.json.
-shrinkwrap: # PRIVATE
-	@npm prune && npm shrinkwrap --dev && node dev/clean-shrinkwrap.js
-	@node tools/messages.js did-shrinkwrap
-
 
 
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: clean-assets
-	@grunt compile-assets
+compile: check-node
+	@./tools/assets/compile.js
 
 # Compile all assets for development.
-compile-dev: clean-assets
-	@grunt compile-assets --dev
+compile-dev: check-node
+	@./tools/assets/compile.js --dev
 
-# Delete all asset build artefacts, includes the builds themselves.
-clean-assets: # PRIVATE
-	@rm -rf static/target static/hash static/requirejs
+compile-javascript: check-node # PRIVATE
+	@./tools/assets/compile.js javascript
 
-atomise-css: # PRIVATE
+compile-javascript-dev: check-node # PRIVATE
+	@./tools/assets/compile.js javascript --dev
+
+compile-css: check-node # PRIVATE
+	@./tools/assets/compile.js css
+
+compile-images: check-node # PRIVATE
+	@./tools/assets/compile.js images
+
+compile-svgs: check-node # PRIVATE
+	@./tools/assets/compile.js inline-svgs
+
+compile-fonts: check-node # PRIVATE
+	@./tools/assets/compile.js fonts
+
+atomise-css: check-node # PRIVATE
 	@node tools/atomise-css
 
 # * Not ready for primetime use yet... *
-pasteup: # PRIVATE
+pasteup: check-node # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
 
 
@@ -78,21 +90,21 @@ pasteup: # PRIVATE
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.
-test:
+test: check-node
 	@grunt test --dev
 
 # Lint all assets.
-validate:
+validate: check-node
 	@grunt validate
 
 # Lint all SCSS.
-validate-sass: # PRIVATE
+validate-sass: check-node # PRIVATE
 	@grunt validate:sass
 	@grunt validate:css
 
 # Lint all JS.
-validate-js: # PRIVATE
+validate-javascript: check-node # PRIVATE
 	@grunt validate:js
 
-validate-amp: # PRIVATE
+validate-amp: check-node # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

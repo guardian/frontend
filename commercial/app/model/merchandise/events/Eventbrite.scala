@@ -1,13 +1,14 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 import java.lang.System._
 
-import commercial.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import model.commercial.readsSeq
+import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+import commercial.model.readsSeq
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -47,11 +48,8 @@ object Eventbrite extends ExecutionContexts with Logging {
   }
 
 
-  implicit val jodaDateTimeFormats: Format[DateTime] = {
-
-    val dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-    Format(Reads.jodaDateReads(dateFormat), Writes.jodaDateWrites(dateFormat))
-  }
+  implicit val jodaDateTimeFormats: Format[DateTime] =
+    Format(Reads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), Writes.jodaDateWrites("dd MMM yyyy"))
 
   implicit val ticketReads: Reads[Ticket] = (
     (JsPath \ "hidden").read[Boolean] and
@@ -83,7 +81,7 @@ object Eventbrite extends ExecutionContexts with Logging {
     (JsPath \ "image_url").readNullable[String] and // not present in the JSON; see usages of `buildEventWithImageSrc`
     (JsPath \ "status").read[String] and
     (JsPath \ "venue").read[Venue] and
-    (JsPath \ "ticket_classes").read[Seq[Ticket]].map(excludeFreeAndHiddenTickets) and // we want to filter out donation and hidden tickets here
+    (JsPath \ "ticket_classes").read[Seq[Ticket]](readsSeq[Ticket]).map(excludeFreeAndHiddenTickets) and // we want to filter out donation and hidden tickets here
     (JsPath \ "capacity").read[Int]
     ) (Event.apply _)
 
@@ -97,7 +95,11 @@ object Eventbrite extends ExecutionContexts with Logging {
     (JsPath \ "page_count").read[Int]
     ) (Pagination.apply _)
 
-  implicit val responseReads: Reads[Response] = Json.reads[Response]
+  implicit val responseReads: Reads[Response] = (
+    (JsPath \ "pagination").read[Pagination] and
+    (JsPath \ "events").read[Seq[Event]](readsSeq[Event])
+    )(Response.apply _)
+
 
   def buildEventWithImageSrc(event: Event, src: String) = event.copy(imageUrl = Some(src))
 

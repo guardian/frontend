@@ -65,14 +65,4 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaPressCrossAccountSwitch = Switch(
-    SwitchGroup.Facia,
-    "facia-press-cross-account",
-    "If this is switched on, facia-press will use the cross account FAPI client, reading from the tools bucket",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
 }
