@@ -7,7 +7,13 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [];
+
+        var contributionsUsa1 = {
+            name: 'ContributionsUsa1', 
+            variants: ['control', 'vital', 'fresh', 'independent', 'chips']
+        };
+
+        var clashingTests = [contributionsUsa1];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
