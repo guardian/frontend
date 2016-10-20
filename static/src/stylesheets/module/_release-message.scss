@@ -519,17 +519,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         font-weight: bold;
         @include mq($from: mobile) {
             font-size: 16px;
-            line-height: 18px;
+            line-height: 20px;
             margin-right: 10px;
         }
         @include mq($from: tablet) {
-            font-size: 18px;
-            line-height: 20px;
-            margin-right: 15px;
-        }
-        @include mq($from: desktop) {
-            font-size: 20px;
-            line-height: 22px;
+            font-size: 28px;
+            line-height: 32px;
             margin-right: 20px;
         }
     }
@@ -538,18 +533,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include circular;
         border: 1px solid rgba(#ffffff, .3);
         display: inline-block;
-        @include mq($until: mobile) {
+        @include mq($from: mobile) {
+            font-size: 12px;
+            height: 24px;
             width: 200px;
             margin-bottom: $gs-row-height / 4;
         }
         @include mq($from: tablet) {
-            width: 260px;
+            font-size: 14px;
+            height: 28px;
+            width: auto;
             margin-left: 1px;
-            margin-bottom: $gs-row-height / 2;
-        }
-        @include mq($from: desktop) {
-            width: 300px;
-            margin-left: 20px;
             margin-bottom: $gs-row-height / 2;
         }
         padding: 1px 24px;
@@ -560,40 +554,54 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         top: 25%;
         height: 50%;
         line-height: 30px;
+        font-weight: bold;
         a {
-            @include mq($from: mobile) {
-                font-size: 14px;
-            }
-            @include mq($from: tablet) {
-                font-size: 16px;
-            }
-            @include mq($from: desktop) {
-                font-size: 20px;
-            }
             text-decoration: none;
-            color: #ffffff;
-            vertical-align: middle;
         }
     }
 
     .message-button-rounded__cta.yellow {
-        background-color: #bc9405;
+        svg path {
+            stroke: #000333;
+            fill: #000333;
+        }
+        background-color: #ff9b0b;
     }
     .message-button-rounded__cta.purple {
-        background-color: #b50fb5;
-    }
-    .message-button-rounded__cta.dark-blue {
-        background-color: #2499c3;
-    }
-    .message-button-rounded__cta.bright-blue {
-        background-color: #0000ff;
-    }
-
-    .inline-arrow-white-right {
         svg path {
             stroke: #ffffff;
             fill: #ffffff;
         }
+        a {
+            color: #ffffff;
+        }
+        color: #ffffff;
+        background-color: #dc2a7d;
+    }
+    .message-button-rounded__cta.dark-blue {
+        svg path {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+        a {
+            color: #ffffff;
+        }
+        color: #ffffff;
+        background-color: #4b6cdf;
+    }
+    .message-button-rounded__cta.bright-blue {
+        svg path {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+        a {
+            color: #ffffff;
+        }
+        color: #ffffff;
+        background-color: #005689;
+    }
+
+    .inline-arrow-white-right {
         display: block;
         float: right;
         height: $gs-column-width/2;
@@ -602,21 +610,20 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-message.prominent-level-1.yellow {
     @include site-message-dark-text;
-    background-color: #fffd05;
+    background-color: #ffce4b;
     svg {
         stroke: #000000;
         fill: #000000;
     }
 }
 .site-message--membership-message.prominent-level-1.purple {
-    background-color: #860e86;
+    background-color: #7d0068;
 }
 .site-message--membership-message.prominent-level-1.bright-blue {
-    @include site-message-dark-text;
-    background-color: #2499c3;
+    background-color: #4b6cdf;
 }
 .site-message--membership-message.prominent-level-1.dark-blue {
-    background-color: #0000ff;
+    background-color: #005689;
 }
 
 /*
