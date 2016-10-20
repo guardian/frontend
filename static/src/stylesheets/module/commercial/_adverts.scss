@@ -674,66 +674,6 @@
     }
 }
 
-/* Let's remove this shit when we revamp badges: */
-.adverts {
-    .ad-slot--paid-for-badge--front {
-        border: 0;
-        clear: none;
-        float: none;
-        min-height: 0;
-        overflow: visible;
-        margin: auto 0 0;
-        padding: 0;
-        position: static;
-        width: 100%;
-
-        &::before,
-        &::after {
-            content: none;
-        }
-    }
-
-    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-        margin-top: 0;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__inner {
-        overflow: visible;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: $gs-gutter / 4;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {
-        clear: none;
-        display: inline;
-        overflow: visible;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
-        display: inline-block;
-        float: none;
-        clear: none;
-        margin-left: $gs-gutter / 2;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__logo {
-        display: inline-block;
-        vertical-align: middle;
-        max-height: 5 * $gs-baseline;
-    }
-
-    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
-        content: none;
-    }
-
-    .ad-slot--paid-for-badge__help {
-        display: none;
-    }
-}
-/* /remove */
-
 @import '_adverts-books';
 @import '_adverts-masterclasses';
 @import '_adverts-jobs';
