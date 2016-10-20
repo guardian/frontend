@@ -1,4 +1,4 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 object Fixtures {
 

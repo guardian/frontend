@@ -1,8 +1,7 @@
 package test
 
 import conf.Configuration
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 import recorder.DefaultHttpRecorder
 import play.api.libs.ws.WSClient
 import java.io.File
@@ -39,8 +38,6 @@ class DiscussionTestSuite extends Suites (
   new discussion.DiscussionApiTest,
   new CommentCountControllerTest,
   new ProfileTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19008
 }

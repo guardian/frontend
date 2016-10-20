@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import views.support.ImgSrc
 import cards.{Half, Standard, Third}
@@ -46,24 +46,23 @@ object CapiImages {
     ImageInfo(sources, fallbackImageUrl)
 
   }
+}
 
-  // Holds the source element data for the images.
-  case class ImageSource (
-    minWidth: String,
-    sizes: String,
-    hidpiSrcset: String,
-    lodpiSrcset: String
-  )
+// Holds the source element data for the images.
+case class ImageSource (
+                         minWidth: String,
+                         sizes: String,
+                         hidpiSrcset: String,
+                         lodpiSrcset: String
+                       )
 
-  object ImageSource {
-    implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
-  }
+object ImageSource {
+  implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
+}
 
-  // Holds all source element data, and the backup image src for older browsers.
-  case class ImageInfo (sources: Seq[ImageSource], backupSrc: Option[String])
+// Holds all source element data, and the backup image src for older browsers.
+case class ImageInfo (sources: Seq[ImageSource], backupSrc: Option[String])
 
-  object ImageInfo {
-    implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
-  }
-
+object ImageInfo {
+  implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]
 }

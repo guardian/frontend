@@ -1,14 +1,14 @@
-package model
+package commercial
 
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
-package object commercial {
+package object model {
   object OptString {
     def apply(s: String): Option[String] = Option(s) filter (_.trim.nonEmpty)
   }
 
-  implicit def readsSeq[A](implicit readsA: Reads[A]): Reads[Seq[A]] = new Reads[Seq[A]] {
+  def readsSeq[A](implicit readsA: Reads[A]): Reads[Seq[A]] = new Reads[Seq[A]] {
 
     /*
         External feeds (Merchandise and Events) can sometimes contain malformed elements.
@@ -22,14 +22,16 @@ package object commercial {
       }
     }
   }
+
+  case class Context(section: Option[String], keywords: Seq[String]) {
+
+    def isInSection(name: String) = section exists (_ == name)
+  }
+
+  case class Segment(context: Context, userSegments: Seq[String]) {
+
+    val isRepeatVisitor = userSegments contains "repeat"
+  }
 }
 
-case class Context(section: Option[String], keywords: Seq[String]) {
 
-  def isInSection(name: String) = section exists (_ == name)
-}
-
-case class Segment(context: Context, userSegments: Seq[String]) {
-
-  val isRepeatVisitor = userSegments contains "repeat"
-}

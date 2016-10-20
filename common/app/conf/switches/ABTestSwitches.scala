@@ -28,6 +28,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-usa-1",
+    "Test which of our 5 initial US targeted messages results in the most contributions",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 10, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),

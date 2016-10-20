@@ -14,7 +14,6 @@ import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import play.api.libs.ws.WSClient
 import services.ConfigAgentLifecycle
 import jobs.CommercialClientSideLoggingLifecycle
 import router.Routes
@@ -29,13 +28,10 @@ trait AdminJobsServices {
   lazy val breakingNewsApi = wire[BreakingNewsApi]
 }
 
-trait Controllers extends AdminJobsControllers {
-  def wsClient: WSClient
-  lazy val healthCheck = wire[HealthCheck]
-}
 
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+trait AppComponents extends FrontendComponents with AdminJobsControllers with AdminJobsServices {
+
+  lazy val healthCheck = wire[HealthCheck]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -45,9 +41,6 @@ trait AppLifecycleComponents {
     wire[CachedHealthCheckLifeCycle],
     wire[CommercialClientSideLoggingLifecycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with AdminJobsServices {
 
   lazy val router: Router = wire[Routes]
 

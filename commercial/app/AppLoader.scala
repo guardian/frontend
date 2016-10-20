@@ -1,28 +1,28 @@
-import http.CorsHttpErrorHandler
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
-import commercial.feeds.{FeedsFetcher, FeedsParser}
-import akka.actor.ActorSystem
 import commercial.CommercialLifecycle
-import model.commercial.books.{BestsellersAgent, BookFinder, MagentoService}
+import commercial.controllers.{CommercialControllers, HealthCheck}
+import commercial.model.capi.CapiAgent
+import commercial.model.feeds.{FeedsFetcher, FeedsParser}
+import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, MagentoService}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.jobs.{Industries, JobsAgent}
+import commercial.model.merchandise.travel.TravelOffersAgent
+import common.CloudWatchMetricsLifecycle
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import commercial.controllers.{CommercialControllers, HealthCheck}
-import common.CloudWatchMetricsLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import http.CorsHttpErrorHandler
 import model.ApplicationIdentity
-import model.commercial.CapiAgent
-import model.commercial.events.{LiveEventAgent, MasterclassAgent}
-import model.commercial.jobs.{Industries, JobsAgent}
-import model.commercial.travel.TravelOffersAgent
 import play.api.ApplicationLoader.Context
+import play.api._
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
-import play.api.libs.ws.WSClient
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {

@@ -1,11 +1,12 @@
 package business
 
+import akka.actor.ActorSystem
 import app.LifecycleComponent
 import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
-class StocksDataLifecycle(appLifecycle: ApplicationLifecycle, stocksData: StocksData)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class StocksDataLifecycle(appLifecycle: ApplicationLifecycle, stocksData: StocksData)(implicit ec: ExecutionContext, actorSystem: ActorSystem) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     stocksData.stop()
