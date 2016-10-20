@@ -5,7 +5,7 @@ define([
 ) {
     describe('interaction-tracking', function () {
 
-        var google, omniture, mediator, interactionTracking, injector;
+        var google, mediator, interactionTracking, injector;
 
         beforeEach(function (done) {
             injector = new Injector();
