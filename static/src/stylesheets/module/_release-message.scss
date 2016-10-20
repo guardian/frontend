@@ -541,7 +541,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include clearfix;
         @include circular;
         @include fs-textSans(2);
-        border: none;
+        border: 0;
         display: inline-block;
         width: auto;
         margin-left: 10px;
