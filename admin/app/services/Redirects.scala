@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue
 
 object Redirects {
 
-  private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-DEV"
+  private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
   private lazy val client = {
     val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)
