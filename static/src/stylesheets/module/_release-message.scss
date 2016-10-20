@@ -498,8 +498,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
  * Prominent membership messaging AB tests
  */
 .site-message--membership-message.prominent-level-1 {
+    .site-message__message {
+        padding-left: 10px;
+    }
     .site-message__media {
+        display: table-cell;
         vertical-align: top;
+        padding-top: 5px;
         svg {
             stroke: #ffffff;
             fill: #ffffff;
@@ -531,18 +536,32 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .message-button-rounded__cta {
         @include clearfix;
         @include circular;
-        border: 1px solid rgba(#ffffff, .3);
+        @include fs-bodyCopy(2);
+        border: none;
         display: inline-block;
+        width: auto;
+        margin-left: 10px;
         @include mq($from: mobile) {
             font-size: 12px;
+            line-height: 24px;
             height: 24px;
-            width: 200px;
+            svg {
+                position: relative;
+                top: -4px;
+                height: 24px;
+                width: 24px;
+            }
             margin-bottom: $gs-row-height / 4;
         }
         @include mq($from: tablet) {
             font-size: 14px;
+            line-height: 28px;
             height: 28px;
-            width: auto;
+            svg {
+                top: 0px;
+                height: 28px;
+                width: 28px;
+            }
             margin-left: 1px;
             margin-bottom: $gs-row-height / 2;
         }
@@ -553,7 +572,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         background-color: transparent;
         top: 25%;
         height: 50%;
-        line-height: 30px;
+//        line-height: 30px;
         font-weight: bold;
         a {
             text-decoration: none;
