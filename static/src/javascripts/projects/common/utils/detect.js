@@ -126,8 +126,10 @@ define([
         var breakpointIndex = breakpointNames.indexOf(breakpointName);
         if( breakpoints[breakpointIndex].isTweakpoint ) {
             currentTweakpoint = breakpointName;
+            currentBreakpoint = findBreakpoint(currentTweakpoint);
         } else {
             currentBreakpoint = breakpointName;
+            currentTweakpoint = undefined;
         }
     }
 
