@@ -297,7 +297,7 @@ define([
     function isBreakpoint(criteria) {
         var indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
         var indexMax = criteria.max ? breakpointNames.indexOf(criteria.max) : breakpointNames.length - 1;
-        var indexCur = breakpointNames.indexOf(currentBreakpoint);
+        var indexCur = breakpointNames.indexOf(currentTweakpoint || currentBreakpoint);
         return indexMin <= indexCur && indexCur <= indexMax;
     }
 
