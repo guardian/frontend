@@ -3,13 +3,15 @@
 @import views.html.fragments.commercial.containerLogo
 @import views.html.fragments.containers.facia_cards.{containerHeader, showMore, showMoreButton, slice}
 @import views.support.RenderClasses
+
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties,
-  maybeContainerModel: Option[ContainerModel])(implicit request: RequestHeader)
+  maybeContainerModel: Option[ContainerModel],
+  showFrontBranding: Boolean)(implicit request: RequestHeader)
 
 @containerHeader(containerDefinition, frontProperties)
 
-@if(containerDefinition.index == 0) {
+@if(showFrontBranding) {
     @for(frontBranding <- frontProperties.branding(Edition(request))) {
         @containerLogo(frontBranding, isOnTheLeft = true)
     }

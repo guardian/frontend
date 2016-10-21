@@ -28,8 +28,14 @@
                 }
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-                    @containers.map { containerDefinition =>
-                        @container(containerDefinition, frontProperties = FrontProperties.fromBranding(branding))
+                    @defining(( containers filterNot (_.isThrasher) map (_.index) ).min ) { containerIndexForBadge =>
+                        @containers.map { containerDefinition =>
+
+                            @container( containerDefinition,
+                                        frontProperties = FrontProperties.fromBranding(branding),
+                                        showFrontBranding =  containerDefinition.index == containerIndexForBadge)
+                        }
+
                     }
                 }
 
