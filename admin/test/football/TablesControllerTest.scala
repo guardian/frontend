@@ -8,7 +8,7 @@ import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestEnvironment, WithTestWsClient}
 
 import scala.annotation.tailrec
 import scala.language.postfixOps
