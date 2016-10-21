@@ -499,15 +499,20 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
  */
 .site-message--membership-message.prominent-level-1 {
     .site-message__message {
-        padding-left: 10px;
+        @include mq($until: tablet) {
+            padding-left: 5px;
+        }
+        @include mq($from: tablet) {
+            padding-left: 10px;
+        }
     }
     .site-message__media {
-        display: table-cell;
         vertical-align: top;
         @include mq($from: mobile) {
             padding-top: 4px;
         }
         @include mq($from: tablet) {
+            display: table-cell;
             padding-top: 1px;
         }
     }
@@ -515,7 +520,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         vertical-align: top;
         width: 36px;
         height: 36px;
-        padding-right: 20px;
+        @include mq($from: mobile) {
+            padding-right: 10px;
+        }
+        @include mq($from: tablet) {
+            padding-right: 20px;
+        }
     }
     .site-message__inner {
         padding-top: 10px;
@@ -525,7 +535,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
     .site-message__message--membership {
         margin-right: 5px;
-        font-weight: bold;
+        font-weight: 900;
         @include mq($from: mobile) {
             font-size: 16px;
             line-height: 20px;
@@ -544,8 +554,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         border: 0;
         display: inline-block;
         width: auto;
-        margin-left: 10px;
         @include mq($from: mobile) {
+            margin-left: 5px;
             font-size: 12px;
             line-height: 24px;
             height: 24px;
@@ -558,7 +568,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             margin-bottom: $gs-row-height / 4;
         }
         @include mq($from: tablet) {
-            //margin-left: 20px;
+            margin-left: 10px;
             font-size: 14px;
             line-height: 28px;
             height: 28px;
