@@ -80,41 +80,41 @@ define([
     }
 
     function initMediaQueryListeners() {
-        // Breakpoints are turned into (min-width: breakpoint) and (max-width: next breakpoint) media queries,
-        // so we filter out tweakpoints
-        addMediaQueryListeners(breakpoints.filter(function (_) { return !_.isTweakpoint; }), false);
-
-        // Tweakpoints are turned into (min-width: tweakpoint) and (max-width: next breakpoint|tweakpoint) media queries,
-        // and so we need all breakpoints
-        addMediaQueryListeners(breakpoints, true);
-
-        function addMediaQueryListeners(breakpoints, includesTweakpoints) {
-            breakpoints
-            // We create media queries of the form (min-width: <val>) (and (max-width: <val>))?
-            // For breakpoints, this is trivial
-            // For tweakpoints, we add an additional constraint that the min-width value must be a tweakpoint
-            .forEach(function (bp, index, bps) {
-                if (includesTweakpoints && !bp.isTweakpoint) {
-                    return;
-                }
-                bp.mql = index < bps.length - 1 ?
-                    window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
-                    window.matchMedia('(min-width:'+ bp.width +'px)');
-                bp.listener = onMatchingBreakpoint.bind(bp);
-                bp.mql.addListener(bp.listener);
-                bp.listener(bp.mql);
-            });
-        }
+        breakpoints
+        .forEach(function (bp, index, bps) {
+            // We create mutually exclusive (min-width) and (max-width) media queries
+            // to facilitate the breakpoint/tweakpoint logic.
+            bp.mql = index < bps.length - 1 ?
+                window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
+                window.matchMedia('(min-width:'+ bp.width +'px)');
+            bp.listener = onMatchingBreakpoint.bind(bp);
+            bp.mql.addListener(bp.listener);
+            bp.listener(bp.mql);
+        });
     }
 
     function onMatchingBreakpoint(mql) {
+        // When a tweakpoint matches, then we must also find the corresponding breakpoint.
+        // When a breakpoint matches, then we must reset the tweakpoint
         if (mql.matches) {
             if (this.isTweakpoint) {
                 currentTweakpoint = this.name;
+                currentBreakpoint = findBreakpoint(currentTweakpoint);
             } else {
                 currentBreakpoint = this.name;
+                currentTweakpoint = undefined;
             }
         }
+    }
+
+    function findBreakpoint(tweakpoint) {
+        var breakpointIndex = breakpointNames.indexOf(tweakpoint);
+        var breakpoint = breakpoints[breakpointIndex];
+        while (breakpointIndex >= 0 && breakpoint.isTweakpoint) {
+            breakpointIndex -= 1;
+            breakpoint = breakpoints[breakpointIndex];
+        }
+        return breakpoint.name;
     }
 
     function updateBreakpoints() {
