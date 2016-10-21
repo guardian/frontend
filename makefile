@@ -32,7 +32,7 @@ uninstall: # PRIVATE
 reinstall: uninstall install
 
 # Make sure we running a recent-enough version of Node.
-check-node:
+check-node: # PRIVATE
 	@./dev/check-node-version.js
 
 # Make sure yarn is installed.
@@ -54,29 +54,29 @@ watch: compile-dev
 
 # Compile all assets for production.
 compile: check-node
-	@./tools/assets/compile.js
+	@./tools/run-task compile
 
 # Compile all assets for development.
 compile-dev: check-node
-	@./tools/assets/compile.js --dev
+	@./tools/run-task compile --dev
 
 compile-javascript: check-node # PRIVATE
-	@./tools/assets/compile.js javascript
+	@./tools/run-task javascript/compile
 
 compile-javascript-dev: check-node # PRIVATE
-	@./tools/assets/compile.js javascript --dev
+	@./tools/run-task javascript/compile --dev
 
 compile-css: check-node # PRIVATE
-	@./tools/assets/compile.js css
+	@./tools/run-task css/compile
 
 compile-images: check-node # PRIVATE
-	@./tools/assets/compile.js images
+	@./tools/run-task images/compile
 
 compile-svgs: check-node # PRIVATE
-	@./tools/assets/compile.js inline-svgs
+	@./tools/run-task inline-svgs/compile
 
 compile-fonts: check-node # PRIVATE
-	@./tools/assets/compile.js fonts
+	@./tools/run-task fonts/compile
 
 atomise-css: check-node # PRIVATE
 	@node tools/atomise-css
