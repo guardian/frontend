@@ -4,8 +4,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
 import conf.Configuration
 import scala.collection.JavaConversions._
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
-import play.api.Play.current
-import play.api.Play
 
 object Redirects {
 

@@ -1,8 +1,9 @@
-package model.commercial.jobs
+package commercial.model.merchandise.jobs
 
+import commercial.model.capi.Lookup
 import common.{AkkaAgent, ExecutionContexts}
 import contentapi.ContentApiClient
-import model.commercial.Lookup
+
 import scala.concurrent.Future
 
 case class JobSector(path: String, name: String)

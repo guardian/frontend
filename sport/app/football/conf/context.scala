@@ -2,19 +2,20 @@ package conf
 
 import app.LifecycleComponent
 import common._
+import contentapi.ContentApiClient
 import feed.CompetitionsService
 import model.TeamMap
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class FootballLifecycle(
   appLifeCycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
-  competitionsService: CompetitionsService)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  competitionsService: CompetitionsService,
+  contentApiClient: ContentApiClient)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     descheduleJobs()
@@ -41,7 +42,7 @@ class FootballLifecycle(
     }
 
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
-      TeamMap.refresh()
+      TeamMap.refresh()(contentApiClient)
     }
   }
 
@@ -63,7 +64,7 @@ class FootballLifecycle(
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
-      TeamMap.refresh()
+      TeamMap.refresh()(contentApiClient)
     }
   }
 }

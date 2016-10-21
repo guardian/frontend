@@ -1,18 +1,19 @@
-package model.commercial
+package commercial.model.merchandise
 
+import commercial.model.OptString
+import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
-import model.commercial.CapiImages.ImageInfo
-import model.commercial.events.LiveEventMembershipInfo
-import model.commercial.events.Eventbrite._
-import model.commercial.jobs.Industries
-import views.support.Item300
+import events.Eventbrite._
+import events.LiveEventMembershipInfo
+import jobs.Industries
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
+import views.support.Item300
 
 import scala.util.Try
 import scala.util.control.NonFatal

@@ -1,6 +1,7 @@
-@(branding: common.commercial.Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
-@import common.commercial.{Logo, PaidContent}
+@import common.commercial.{Branding, Logo, PaidContent}
+@import implicits.Requests.RichRequestHeader
 
+@(branding: common.commercial.Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
 @standardLogo(logo: Logo) = {
     <img src="@logo.url" alt="@branding.sponsorName" class="badge__logo">
 }

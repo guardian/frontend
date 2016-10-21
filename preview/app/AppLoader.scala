@@ -11,6 +11,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
+import services.OphanApi
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -33,6 +34,7 @@ trait AppComponents
 
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
+  override lazy val ophanApi = wire[OphanApi]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 

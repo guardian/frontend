@@ -1,4 +1,4 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 import play.api.data.validation.ValidationError
 import play.api.libs.json._

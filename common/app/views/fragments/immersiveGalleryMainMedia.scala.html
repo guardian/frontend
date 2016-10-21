@@ -1,9 +1,9 @@
-@(page: ContentPage)(implicit request: RequestHeader)
-
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
-@import views.support.TrailCssClasses.toneClass
 @import views.support.ContributorLinks
+@import views.support.TrailCssClasses.toneClass
+
+@(page: ContentPage)(implicit request: RequestHeader)
 
 <div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
 

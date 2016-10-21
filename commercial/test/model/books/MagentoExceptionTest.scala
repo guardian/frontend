@@ -1,4 +1,4 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.Json

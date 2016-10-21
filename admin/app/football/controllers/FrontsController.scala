@@ -4,7 +4,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import play.api.mvc.{Action, Controller, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import play.api.Mode
+import play.api.Environment
 import common.{ExecutionContexts, Logging}
 import football.services.PaFootballClient
 import football.model.PA
@@ -19,8 +19,7 @@ import pa.Season
 import pa.Fixture
 import pa.LiveMatch
 
-
-class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+class FrontsController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
@@ -188,7 +187,6 @@ class FrontsController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   private def hasTeam(m: FootballMatch, teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
   private def previewFrontsComponent(snapFields: SnapFields)(implicit requestHeader: RequestHeader): Future[PlayResult] = {
-    import play.api.Play.current
     val result = (for {
       previewResponse <- wsClient.url(snapFields.uri).get()
     } yield {

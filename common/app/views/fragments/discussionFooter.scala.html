@@ -1,5 +1,8 @@
-@(content: model.Content, isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+@import common.LinkTo
 @import conf.switches.Switches._
+@import model.Content
+
+@(content: Content, isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
 
 @sectionHeading = {
 
