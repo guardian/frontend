@@ -97,13 +97,17 @@ define([
         // When a tweakpoint matches, then we must also find the corresponding breakpoint.
         // When a breakpoint matches, then we must reset the tweakpoint
         if (mql.matches) {
-            if (this.isTweakpoint) {
-                currentTweakpoint = this.name;
-                currentBreakpoint = findBreakpoint(currentTweakpoint);
-            } else {
-                currentBreakpoint = this.name;
-                currentTweakpoint = undefined;
-            }
+            updateBreakpoint(this);
+        }
+    }
+
+    function updateBreakpoint(breakpoint) {
+        if (breakpoint.isTweakpoint) {
+            currentTweakpoint = breakpoint.name;
+            currentBreakpoint = findBreakpoint(currentTweakpoint);
+        } else {
+            currentBreakpoint = breakpoint.name;
+            currentTweakpoint = undefined;
         }
     }
 
@@ -124,13 +128,7 @@ define([
         var bodyStyle = window.getComputedStyle(document.body, '::after');
         var breakpointName = bodyStyle.content.substring(1, bodyStyle.content.length - 1);
         var breakpointIndex = breakpointNames.indexOf(breakpointName);
-        if( breakpoints[breakpointIndex].isTweakpoint ) {
-            currentTweakpoint = breakpointName;
-            currentBreakpoint = findBreakpoint(currentTweakpoint);
-        } else {
-            currentBreakpoint = breakpointName;
-            currentTweakpoint = undefined;
-        }
+        updateBreakpoint(breakpoints[breakpointIndex]);
     }
 
     /**
