@@ -29,7 +29,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
   val contentApiClient = "com.gu" %% "content-api-client" % "10.5"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"

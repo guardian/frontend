@@ -2,10 +2,10 @@ package football.services
 
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WSClient
-import play.api.Play.current
-import play.api.Mode
+import play.api.{Environment, Mode}
 import org.joda.time.LocalDate
 import java.io.File
+
 import scala.util.{Failure, Success}
 import play.Logger
 import common.{ExecutionContexts, Logging}
@@ -34,7 +34,8 @@ private case class RealClient(wsClient: WSClient) extends Client {
   }
 
 }
-private case class TestClient(wsClient: WSClient) extends Client {
+private case class TestClient(wsClient: WSClient, environment: Environment) extends Client {
+
   override def GET(urlString: String): Future[Response] = ???
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
@@ -51,7 +52,7 @@ private case class TestClient(wsClient: WSClient) extends Client {
         .replace("KEY", realClient.apiKey)
     }
 
-    current.getExistingFile(s"/admin/test/football/testdata/$filename.xml") match {
+    environment.getExistingFile(s"/admin/test/football/testdata/$filename.xml") match {
       case Some(file) => {
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
@@ -62,7 +63,7 @@ private case class TestClient(wsClient: WSClient) extends Client {
         response.onComplete {
           case Success(str) => {
             Logger.info(s"writing response to testdata, $filename.xml, $str")
-            writeToFile(s"${current.path}/admin/test/football/testdata/$filename.xml", str)
+            writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
         }(context)
@@ -86,9 +87,10 @@ trait PaFootballClient {
 
   implicit val executionContext: ExecutionContext
   val wsClient: WSClient
-  val mode: Mode.Mode
+  val environment: Environment
+  val mode: Mode.Mode = environment.mode
 
-  lazy val client: Client = if (mode == Mode.Test) TestClient(wsClient) else RealClient(wsClient)
+  lazy val client: Client = if (mode == Mode.Test) TestClient(wsClient, environment) else RealClient(wsClient)
 
   def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] = for {
     competitions <- client.competitions.map(PA.filterCompetitions _)

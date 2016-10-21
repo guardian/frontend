@@ -61,8 +61,6 @@ define([
         userPrefs.remove('front-trailblocks');
 
         function setState(state) {
-            var adSlotBadge = $('.ad-slot--paid-for-badge', container);
-
             _state = state;
 
             fastdom.write(function () {
@@ -71,8 +69,6 @@ define([
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
                 buttonText.text(_toggleText[_state]);
-                // hide/show the badge
-                adSlotBadge.css('display', _state === 'hidden' ? 'none' : 'block');
             });
         }
 

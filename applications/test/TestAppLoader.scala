@@ -4,7 +4,7 @@ import play.api.BuiltInComponentsFromContext
 import test.WithTestContentApiClient
 
 trait TestComponents extends WithTestContentApiClient {
-  self: ApplicationsServices =>
+  self: AppComponents =>
   override lazy val contentApiClient = testContentApiClient
 }
 

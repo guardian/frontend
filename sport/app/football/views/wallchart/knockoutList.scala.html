@@ -1,4 +1,8 @@
-@(competition: model.Competition, knockoutStage: _root_.football.model.Knockout, hasSpider: Boolean = false)(implicit request: RequestHeader)
+@import _root_.football.model.Knockout
+@import model.Competition
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(competition: Competition, knockoutStage: Knockout, hasSpider: Boolean = false)(implicit request: RequestHeader)
 
 <div class="football-knockouts @if(hasSpider){football-knockouts--has-spider}">
     @knockoutStage.rounds.zipWithRowInfo.map{ case (round, row) =>

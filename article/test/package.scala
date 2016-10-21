@@ -1,7 +1,7 @@
 package test
 
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites, Tag}
+import org.scalatest.{Suites, Tag}
+import play.api.test.Helpers
 
 object ArticleComponents extends Tag("article components")
 
@@ -16,9 +16,6 @@ class ArticleTestSuite extends Suites (
   new SectionsNavigationFeatureTest,
   new MembershipAccessTest,
   new PublicationControllerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19005
 }

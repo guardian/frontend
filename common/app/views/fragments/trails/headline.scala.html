@@ -1,6 +1,9 @@
-@(trail: model.pressed.PressedContent, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
-
+@import common.{Edition, LinkTo}
 @import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
+@import model.pressed.PressedContent
+@import views.support.cleanTrailText
+
+@(trail: PressedContent, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
 <@element class="trail trail--headline t@rowNum"
     @if(trail.discussion.isCommentable) {

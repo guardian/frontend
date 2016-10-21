@@ -1,4 +1,8 @@
-@(item: model.ContentType)(implicit request: RequestHeader)
+@import common.Edition
+@import model.ContentType
+@import views.support.{BulletCleaner, ContributorLinks, InBodyLinkCleaner, RenderClasses, withJsoup}
+
+@(item: ContentType)(implicit request: RequestHeader)
 
 <div class="@RenderClasses(Map(
     "content__standfirst--gallery" -> item.content.isImmersiveGallery,

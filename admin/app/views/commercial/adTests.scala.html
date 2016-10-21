@@ -1,28 +1,30 @@
-@(env: String, timestamp: Option[String], groupedLineItems: Seq[(String, Seq[dfp.GuLineItem])])(implicit request: RequestHeader)
-    @import tools.DfpLink
+@import common.dfp.GuLineItem
+@import tools.DfpLink
 
-    @admin_main("Ad Tests", env, isAuthed = true) {
+@(env: String, timestamp: Option[String], groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader)
 
-    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")" />
+@admin_main("Ad Tests", env, isAuthed = true) {
 
-    <h1>Current Ad Tests</h1>
-    <p>Last updated: @timestamp</p>
-    <p>This page shows ready and delivering line items that are hidden behind a test cookie.</p >
+<link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")" />
 
-    <table>
-        <thead><tr><th>Cookie</th><th>Line items</th></tr></thead>
-        <tbody>
-        @for((testValue, lineItems) <- groupedLineItems) {
-            <tr id="cookie-@testValue" class="cookie-row">
-                <td align="right" valign="top"><button value="@testValue" class="cookie">@testValue</button></td>
-                <td>
-                @for(lineItem <- lineItems) {
-                    @{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>
-                    )<br />
-                }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+<h1>Current Ad Tests</h1>
+<p>Last updated: @timestamp</p>
+<p>This page shows ready and delivering line items that are hidden behind a test cookie.</p >
+
+<table>
+    <thead><tr><th>Cookie</th><th>Line items</th></tr></thead>
+    <tbody>
+    @for((testValue, lineItems) <- groupedLineItems) {
+        <tr id="cookie-@testValue" class="cookie-row">
+            <td align="right" valign="top"><button value="@testValue" class="cookie">@testValue</button></td>
+            <td>
+            @for(lineItem <- lineItems) {
+                @{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>
+                )<br />
+            }
+            </td>
+        </tr>
     }
+    </tbody>
+</table>
+}

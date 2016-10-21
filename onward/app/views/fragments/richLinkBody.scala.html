@@ -1,9 +1,10 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
-
-
+@import model.ContentType
 @import model.pressed.{Comment, DefaultCardstyle, Feature, Media, SpecialReport}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{ImgSrc, RichLinkContributor, Item460, RenderClasses}
+@import views.support.{BulletCleaner, ImgSrc, Item460, RenderClasses, RichLinkContributor}
+
+@(content: ContentType)(implicit request: RequestHeader)
+
 
 @kicker = {
     @if(content.tags.isAnalysis) {
