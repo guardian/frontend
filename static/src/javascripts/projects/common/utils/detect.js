@@ -86,55 +86,54 @@ define([
     }
 
     function initMediaQueryListeners() {
-        processBreakpoints(false);
-        processBreakpoints(true);
+        // Breakpoints are turned into (min-width: breakpoint) and (max-width: next breakpoint) media queries,
+        // so we filter out tweakpoints
+        addMediaQueryListeners(breakpoints.filter(function (_) { return !_.isTweakpoint; }), false);
 
-        function processBreakpoints(isTweakpoint) {
+        // Tweakpoints are turned into (min-width: tweakpoint) and (max-width: next breakpoint|tweakpoint) media queries,
+        // and so we need all breakpoints
+        addMediaQueryListeners(breakpoints, true);
+
+        function addMediaQueryListeners(breakpoints, includesTweakpoints) {
             breakpoints
-            // Major breakpoints lead to (min-width: major breakpoint) and (max-width: next major breakpoint) media queries
-            // Minor breakpoints lead to (min-width: minor breakpoint) and (max-width: next major|minor breakpoint) media queries
-            .filter(function (_) {
-                return isTweakpoint || !_.isTweakpoint;
-            })
+            // We create media queries of the form (min-width: <val>) (and (max-width: <val>))?
+            // For breakpoints, this is trivial
+            // For tweakpoints, we add an additional constraint that the min-width value must be a tweakpoint
             .forEach(function (bp, index, bps) {
-                // If this is the tweakpoint phase, we are only interested in creating media queries for minor breakpoints
-                if (isTweakpoint && !bp.isTweakpoint) {
+                if (includesTweakpoints && !bp.isTweakpoint) {
                     return;
                 }
                 bp.mql = index < bps.length - 1 ?
                     window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
                     window.matchMedia('(min-width:'+ bp.width +'px)');
-                bp.mql.addListener(onMatchingBreakpoint);
-                onMatchingBreakpoint(bp.mql);
-
-                function onMatchingBreakpoint(mql) {
-                    if (mql.matches) {
-                        if (bp.isTweakpoint) {
-                            currentTweakpoint = bp.name;
-                        } else {
-                            currentBreakpoint = bp.name;
-                        }
-                    }
-                }
+                bp.listener = onMatchingBreakpoint.bind(bp);
+                bp.mql.addListener(bp.listener);
+                bp.listener(bp.mql);
             });
         }
     }
 
-    function updateBreakpoints() {
-        var viewportWidth = getViewport().width;
-        var i = 0;
-        while (i < breakpoints.length) {
-            var bp = breakpoints[i];
-            if (bp.width <= viewportWidth) {
-                if (bp.isTweakpoint) {
-                    currentTweakpoint = bp.name;
-                } else {
-                    currentBreakpoint = currentTweakpoint = bp.name;
-                }
-                i += 1;
+    function onMatchingBreakpoint(mql) {
+        if (mql.matches) {
+            if (this.isTweakpoint) {
+                currentTweakpoint = this.name;
             } else {
-                break;
+                currentBreakpoint = this.name;
             }
+        }
+    }
+
+    function updateBreakpoints() {
+        // The implementation for browsers that don't support window.matchMedia is simpler,
+        // but relies on (1) the resize event, (2) layout and (2) hidden generated content
+        // on a pseudo-element
+        var bodyStyle = window.getComputedStyle(document.body, '::after');
+        var breakpointName = bodyStyle.content.substring(1, bodyStyle.content.length - 1);
+        var breakpointIndex = breakpointNames.indexOf(breakpointName);
+        if( breakpoints[breakpointIndex].isTweakpoint ) {
+            currentTweakpoint = breakpointName;
+        } else {
+            currentBreakpoint = breakpointName;
         }
     }
 
@@ -308,7 +307,7 @@ define([
     function isBreakpoint(criteria) {
         var indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
         var indexMax = criteria.max ? breakpointNames.indexOf(criteria.max) : breakpointNames.length - 1;
-        var indexCur = breakpointNames.indexOf(currentTweakpoint);
+        var indexCur = breakpointNames.indexOf(currentBreakpoint);
         return indexMin <= indexCur && indexCur <= indexMax;
     }
 
