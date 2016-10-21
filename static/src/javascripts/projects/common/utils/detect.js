@@ -94,14 +94,14 @@ define([
     }
 
     function onMatchingBreakpoint(mql) {
-        // When a tweakpoint matches, then we must also find the corresponding breakpoint.
-        // When a breakpoint matches, then we must reset the tweakpoint
         if (mql.matches) {
             updateBreakpoint(this);
         }
     }
 
     function updateBreakpoint(breakpoint) {
+        // When a tweakpoint matches, then we must also find the corresponding breakpoint.
+        // When a breakpoint matches, then we must reset the tweakpoint
         if (breakpoint.isTweakpoint) {
             currentTweakpoint = breakpoint.name;
             currentBreakpoint = findBreakpoint(currentTweakpoint);
