@@ -46,6 +46,7 @@ category: Common
     float: left;
     min-width: 36px;
     padding: 0 3px $gs-baseline/2 0;
+    cursor: pointer;
 
     @include mq(leftCol) {
         min-width: 32px;
@@ -64,10 +65,66 @@ category: Common
     }
 }
 
+.social-icon--more {
+    background: $neutral-6;
+    border-radius: 50%;
+    color: $neutral-2;
+    display: inline-block;
+    line-height: 32px;
+    text-align: center;
+}
+
+.social--hidden {
+    display: none;
+}
+
 .social__action {
     display: inline-block;
 }
 
+.social__saveforlater-lozenge {
+     @include fs-textSans(2);
+     font-weight: bold;
+     position: absolute;
+     bottom: 8px;
+     left: 10px;
+     padding: 5px 10px;
+     border: 1px solid $neutral-4;
+     border-radius: 15%/50%;
+ }
+
+.social__tray-close {
+    @include fs-textSans(2);
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    color: $neutral-2;
+}
+
+.social--expanded-top {
+    position: absolute;
+    padding-left: 8px;
+    left: -8px;
+    height: 70px;
+    background: white;
+    box-shadow: 0px 0px 20px $neutral-3;
+    z-index: $zindex-popover;
+    width: 280px; // (36 + 4) * 7
+
+    @include mq(tablet) {
+        width: 200px; // (36 + 4) * 4
+    }
+
+    @include mq(leftCol) {
+        width: 184px; // (32 + 4) * 4
+    }
+}
+
+.meta__social {
+    height: 45px;
+    position: relative;
+}
 
 /**
  * Social icons
@@ -201,16 +258,6 @@ category: Common
         background-color: darken($social-email, 10%);
     }
 }
-
-.social-icon--more {
-    background: $neutral-6;
-    border-radius: 50%;
-    color: $neutral-2;
-    display: inline-block;
-    line-height: 32px;
-    text-align: center;
-}
-
 
 .selection-sharing {
     position: absolute;

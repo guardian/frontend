@@ -4,8 +4,10 @@
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }
     @sharelinks.hidden.fold(Html("")){ hiddenLinks =>
         @SocialMore
-        @hiddenLinks.map { link => @ShareLink(List("social__item--hidden", "social__item--secondary"), link) }.toList
+        @hiddenLinks.map { link => @ShareLink(List("social--hidden", "social__secondary"), link) }.toList
     }
+    @SaveForLater
+    @CloseTray
 </ul>
 
 @ShareLink(extraClasses: List[String], item: model.ShareLink) = {
@@ -21,6 +23,14 @@
     </li>
 }
 
-@SocialMore() = {
-    <li class="social-icon--more social-icon">&bull;&bull;&bull;</li>
+@SocialMore = {
+    <li class="social__secondary social__item"><span class="social-icon social-icon--more ">&bull;&bull;&bull;</span></li>
+}
+
+@SaveForLater = {
+    <li class="social--hidden social__item social__secondary"><span class="social__saveforlater-lozenge js-save-for-later">Save for later</span></li>
+}
+
+@CloseTray = {
+    <li class="social__item social__secondary social--hidden"><span class="social__tray-close">Close</span></li>
 }
