@@ -7,18 +7,12 @@
 
 define([
     'common/utils/mediator',
-    'common/utils/take-while',
-    'common/utils/drop-while',
     'lodash/functions/memoize',
-    'lodash/functions/compose',
     'lodash/functions/debounce',
     'Promise'
 ], function (
     mediator,
-    takeWhile,
-    dropWhile,
     memoize,
-    compose,
     debounce,
     Promise
 ) {
@@ -286,10 +280,6 @@ define([
 
     function getBreakpointName(breakpoint) {
         return breakpoint.name;
-    }
-
-    function reverseArray(arr) {
-        return arr.reverse();
     }
 
     function getBreakpoint(includeTweakpoint) {
