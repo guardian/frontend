@@ -61,22 +61,22 @@ compile-dev: check-node
 	@./tools/run-task compile --dev
 
 compile-javascript: check-node # PRIVATE
-	@./tools/run-task javascript/compile
+	@./tools/run-task compile/javascript
 
 compile-javascript-dev: check-node # PRIVATE
-	@./tools/run-task javascript/compile --dev
+	@./tools/run-task compile/javascript --dev
 
 compile-css: check-node # PRIVATE
-	@./tools/run-task css/compile
+	@./tools/run-task compile/css
 
 compile-images: check-node # PRIVATE
-	@./tools/run-task images/compile
+	@./tools/run-task compile/images
 
 compile-svgs: check-node # PRIVATE
-	@./tools/run-task inline-svgs/compile
+	@./tools/run-task compile/inline-svgs
 
 compile-fonts: check-node # PRIVATE
-	@./tools/run-task fonts/compile
+	@./tools/run-task compile/fonts
 
 atomise-css: check-node # PRIVATE
 	@node tools/atomise-css

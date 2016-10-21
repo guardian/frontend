@@ -2,7 +2,7 @@ const path = require('path');
 const pify = require('pify');
 const rjs = require('requirejs');
 
-const {target} = require('../config').paths;
+const {target} = require('../../config').paths;
 
 const bundles = [{
     name: 'boot',

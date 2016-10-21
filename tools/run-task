@@ -102,6 +102,11 @@ const getModuleForTask = task => {
             } catch (e) {
                 // do nothing
             }
+            try {
+                module = require(testPath + '/index.dev');
+            } catch (e) {
+                // do nothing
+            }
         }
         if (module[targetName]) {
             return module[targetName];

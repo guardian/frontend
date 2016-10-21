@@ -2,7 +2,7 @@
 
 /* eslint-disable no-console */
 
-const {static: staticDir} = require('../config').paths;
+const {static: staticDir} = require('../../config').paths;
 
 const fs = require('fs');
 const path = require('path');

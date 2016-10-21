@@ -1,5 +1,5 @@
 ({
-    baseUrl: '../../../static/src/javascripts',
+    baseUrl: '../../../../static/src/javascripts',
     paths: {
         admin: 'projects/admin',
         common: 'projects/common',
@@ -52,4 +52,4 @@
     generateSourceMaps: true,
     preserveLicenseComments: false,
     fileExclusionRegExp: /^bower_components/i
-})
+});
