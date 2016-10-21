@@ -7,7 +7,6 @@ import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
-import conf.switches.Switches
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}
@@ -23,6 +22,8 @@ case class CollectionConfigWithId(id: String, config: CollectionConfig)
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
+
+  def isLoaded() = configAgent.get().isDefined
 
   def getClient: ApiClient = {
     FrontsApi.crossAccountClient

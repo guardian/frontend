@@ -62,11 +62,8 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
   //
 
   def notifyStep(number: String) = ApiKeyAuthenticatedAction.async(BodyJson[NotifyRequestBody]) { implicit request =>
-    teamcity.getTeamCityBuild(number).flatMap { teamcityBuild =>
-      val notices = for {
-        build <- teamcityBuild.right
-        ns <- allNotices(build, request).right
-      } yield ns
+    teamcity.getBuild(number).flatMap { build =>
+      val notices = allNotices(build, request)
       notices match {
         case Right(ns) => notifyAll(request.body.step, ns).map(ApiResults(_))
         case Left(errors) => Future.successful(ApiResults(notices))

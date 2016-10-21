@@ -27,7 +27,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         @include fs-textSans(4);
         position: absolute;
         z-index: 3;
-        bottom: 38px;
+        bottom: $gs-gutter;
         color: #ffffff;
         font-size: 36px;
         line-height: 36px;
@@ -67,6 +67,25 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
     .content__article-body {
+        p {
+            font-size: 18px;
+            line-height: 24px;
+
+            &.intro + p::first-letter {
+                @include fs-textSans(4);
+                display: inline-block;
+                float: left;
+                color: #000000;
+                padding: 12px 16px 4px;
+                font-size: 480%;
+                line-height: 4.25rem;
+                width: 4.8125rem;
+                height: 4.8125rem;
+                margin-right: .5rem;
+                margin-top: 4px;
+                text-align: center;
+            }
+        }
         .intro {
             font-size: 26px;
             line-height: 30px;
@@ -78,6 +97,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .drop-cap {
             @include fs-textSans(4);
+            background-color: $zootropolisColor;
             display: inline-block;
             float: left;
             color: #ffffff;
@@ -89,16 +109,57 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             margin-right: 8px;
             text-align: center;
         }
-        .text {
-            line-height: 20px;
-        }
         h1 {
             line-height: 28px;
+        }
+        figcaption {
+            font-size: 12px;
+            line-height: 16px;
+            color: $neutral-2;
+
+            &:before {
+                @include icon(image);
+                content: '';
+                vertical-align: top;
+                margin-top: 1px;
+            }
+        }
+
+        //inline video element
+        .vjs-controls-enabled { //this is temporary solution, we don't have other common class on every inline videos
+            width: 100%;
+            height: auto;
+
+            @include mq(desktop) {
+                width: gs-span(8);
+            }
+
+            @include mq(wide) {
+                width: gs-span(11) + $gs-gutter;
+                margin-left: gs-span(-3);
+            }
+
+            video {
+                width: 100%;
+            }
+
+            .vjs-poster,
+            .vjs-big-play-button {
+                width: 100%;
+
+                @include mq(desktop) {
+                    width: gs-span(8);
+                }
+
+                @include mq(wide) {
+                    width: gs-span(11) + $gs-gutter;
+                    margin-left: gs-span(-3);
+                }
+            }
         }
     }
     .hosted__standfirst {
         padding: 0;
-        margin: 50px 0 0;
 
         .hosted__terms {
             margin-top: 0;
@@ -108,24 +169,27 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 
     .hide-on-desktop {
-        .hosted__next-video {
+        .hosted-article__next-page {
             margin-top: 30px;
+            position: relative;
         }
-        .hosted__next-video--header {
+        .hosted__next-page--header {
             margin: 0;
         }
-        .hosted__next-video--tile {
+        .hosted__next-page--tile {
             margin: 10px 0;
         }
     }
     .content__secondary-column {
-        .hosted__next-video {
+        .hosted-article__next-page {
             width: auto;
             position: absolute;
             margin: 70px 0;
             top: 0;
-            .hosted__next-video--header,
-            .hosted__next-video--tile {
+            right: 0;
+            left: #{2 * $gs-gutter};
+            .hosted__next-page--header,
+            .hosted__next-page--tile {
                 margin-right: 0;
             }
         }
@@ -146,32 +210,34 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         height: 10px;
         margin-bottom: 4px;
     }
-    .hosted__next-page-title {
+    .hosted-article__next-page-title {
         font-size: 16px;
         line-height: 18px;
         padding: 6px;
-        margin: 0;
-
         @include mq($until: phablet) {
             font-size: 14px;
             line-height: 16px;
         }
     }
-    .hosted__next-video .hosted__next-video--tile {
+    .hosted-article__next-page .hosted__next-page--tile {
         background: transparent;
         border-top: 2px solid #e0e0e0;
         margin-bottom: 10px;
     }
-    .hosted__next-video .hosted__next-video--header {
+    .hosted-article__next-page .hosted__next-page--header {
         border: 0;
         padding: 0;
     }
     .from-content-api > ul li {
         margin-bottom: 0;
     }
+
+    .gu-image {
+        height: auto;
+    }
 }
 
-.hosted-article-page.zootropolis {
+.zootropolis {
     @mixin animal-stripe {
         position: absolute;
         z-index: 1;
@@ -400,4 +466,82 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             fill: #ffffff;
         }
     }
+}
+
+/* Hosted More From Carousel AB test */
+.hosted__next-video__carousel-arrows {
+    position: absolute;
+    right: 0;
+    top: 26px;
+
+    .inline-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid;
+        cursor: pointer;
+    }
+
+    .arrow-left {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+.hosted__next-video__carousel-wrapper {
+    position: relative;
+    transform: translate(0, 0);
+    transition: transform 1s ease;
+}
+
+.carousel-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    &:first-child {
+        position: relative;
+    }
+}
+
+.ab-test-variant1 {
+    overflow: hidden;
+    .prev-oj-item {
+        opacity: .5;
+    }
+}
+
+.hosted__carousel-marker {
+    text-align: center;
+}
+
+$dotSize: 8px;
+
+.hosted__carousel-dot {
+    width: $dotSize;
+    height: $dotSize;
+    border-radius: $dotSize;
+    display: inline-block;
+    pointer-events: none;
+    border: 1px solid;
+    transition: background-color 750ms ease;
+    &:not(.highlighted) {
+        background: transparent;
+    }
+}
+
+.hosted__ab-test-control,
+.hosted__ab-test-variant1,
+.hosted__ab-test-variant2 {
+    display: none;
+}
+
+.hosted__next-page.ab-test-control .hosted__ab-test-control,
+.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
+.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+    display: block;
 }

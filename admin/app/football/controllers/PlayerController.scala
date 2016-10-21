@@ -2,7 +2,7 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
-import play.api.Mode
+import play.api.Environment
 import football.services.PaFootballClient
 import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
@@ -16,7 +16,7 @@ import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
+class PlayerController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
 
   def playerIndex = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {
@@ -75,9 +75,7 @@ class PlayerController(val wsClient: WSClient, val mode: Mode.Mode) extends Cont
   private def renderPlayerCard(card: HtmlFormat.Appendable)(implicit request: RequestHeader) = {
     if(!request.isJson) Cors(NoCache(Ok(card)))
     else NoCache {
-      JsonComponent(
-          "html" -> card
-      ).result
+      JsonComponent(card).result
     }
   }
 

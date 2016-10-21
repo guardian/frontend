@@ -88,6 +88,7 @@ object MetaDataFormat {
     customSignPosting: Option[NavItem],
     javascriptConfigOverrides: Map[String, JsValue],
     opengraphPropertiesOverrides: Map[String, String],
+    isHosted: Boolean,
     twitterPropertiesOverrides: Map[String, String])
 
   val readsMetadata: Reads[MetaData] = {
@@ -123,6 +124,7 @@ object MetaDataFormat {
       part2.customSignPosting,
       part2.javascriptConfigOverrides,
       part2.opengraphPropertiesOverrides,
+      part2.isHosted,
       part2.twitterPropertiesOverrides
       )
     }
@@ -161,6 +163,7 @@ object MetaDataFormat {
           meta.customSignPosting,
           meta.javascriptConfigOverrides,
           meta.opengraphPropertiesOverrides,
+          meta.isHosted,
           meta.twitterPropertiesOverrides
         )
       )
@@ -187,6 +190,9 @@ object ContentTypeFormat {
   implicit val quizResultGroupFormat = Json.format[ResultGroup]
   implicit val quizContentFormat = Json.format[QuizContent]
   implicit val quizFormat = Json.format[Quiz]
+  implicit val mediaAssetFormat = Json.format[MediaAsset]
+  implicit val mediaAtomFormat = Json.format[MediaAtom]
+  implicit val interactiveAtomFormat = Json.format[InteractiveAtom]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
@@ -225,11 +231,6 @@ object ContentTypeFormat {
 
   private case class JsonCommercial(
     isInappropriateForSponsorship: Boolean,
-    sponsorshipTag: Option[Tag],
-    isFoundationSupported: Boolean,
-    isAdvertisementFeature: Boolean,
-    hasMultipleSponsors: Boolean,
-    hasMultipleFeatureAdvertisers: Boolean,
     hasInlineMerchandise: Boolean
   )
 
@@ -261,14 +262,12 @@ object ContentTypeFormat {
        ) => {
 
        val sharelinks = ShareLinks.apply(tags, fields, metadata)
-       val commercial = Commercial.apply(tags, metadata,
-        jsonCommercial.isInappropriateForSponsorship,
-        jsonCommercial.sponsorshipTag,
-        jsonCommercial.isFoundationSupported,
-        jsonCommercial.isAdvertisementFeature,
-        jsonCommercial.hasMultipleSponsors,
-        jsonCommercial.hasMultipleFeatureAdvertisers,
-        jsonCommercial.hasInlineMerchandise)
+       val commercial = Commercial.apply(
+         tags,
+         metadata,
+         jsonCommercial.isInappropriateForSponsorship,
+         jsonCommercial.hasInlineMerchandise
+       )
        val trail = Trail.apply(tags, commercial, fields, metadata, elements,
         jsonTrail.webPublicationDate,
         jsonTrail.headline,
@@ -339,11 +338,6 @@ object ContentTypeFormat {
         ),
         JsonCommercial.apply(
           content.commercial.isInappropriateForSponsorship,
-          content.commercial.sponsorshipTag,
-          content.commercial.isFoundationSupported,
-          content.commercial.isAdvertisementFeature,
-          content.commercial.hasMultipleSponsors,
-          content.commercial.hasMultipleFeatureAdvertisers,
           content.commercial.hasInlineMerchandise
         ),
         JsonTrail.apply(

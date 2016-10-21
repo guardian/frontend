@@ -1,5 +1,7 @@
-@(book: model.commercial.books.Book, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@import commercial.model.merchandise.Book
 @import views.support.{ImgSrc, Item300}
+
+@(book: Book, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
 
 <aside class="adverts adverts--manual adverts--legacy-inline adverts--tone-books advert--book" data-link-name="merchandising | book | @omnitureId">
     <header class="adverts__header">

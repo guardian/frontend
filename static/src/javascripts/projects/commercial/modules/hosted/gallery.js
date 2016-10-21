@@ -59,6 +59,7 @@ define([
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
         this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
         this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
+        this.$meta = $('.js-hosted-gallery-meta', this.$galleryEl)[0];
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');
@@ -191,15 +192,16 @@ define([
             $gallery = this.$galleryEl[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
+            $meta = this.$meta,
             $images = this.$images,
             width = $gallery.clientWidth,
             height = $imagesContainer.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
-            ctaSize = getFrame(imgRatio < 1 ? 0 : 5 / 3),
+            ctaSize = getFrame(0),
             ctaIndex = this.ctaIndex(),
             tabletSize = 740,
-            imageSize = getFrame(imgRatio < 1 ? imgRatio : 5 / 3);
+            imageSize = getFrame(imgRatio);
         fastdom.write(function () {
             $sizer.css('width', imageSize.width);
             $sizer.css('height', imageSize.height);
@@ -213,6 +215,9 @@ define([
             }
             if (imgIndex === $images.length - 1) {
                 bonzo($ojFloat).css('padding-bottom', (ctaSize.topBottom > 40 || width > tabletSize) ? 0 : 40);
+            }
+            if (imgIndex === 0) {
+                bonzo($meta).css('padding-bottom', (imageSize.topBottom > 40 || width > tabletSize) ? 20 : 40);
             }
         });
         function getFrame(desiredRatio, w, h) {
@@ -240,7 +245,8 @@ define([
 
     HostedGallery.prototype.translateContent = function (imgIndex, offset, duration) {
         var px = -1 * (imgIndex - 1) * this.swipeContainerWidth,
-            galleryEl = this.$imagesContainer[0];
+            galleryEl = this.$imagesContainer[0],
+            $meta = this.$meta;
         galleryEl.style.webkitTransitionDuration = duration + 'ms';
         galleryEl.style.mozTransitionDuration = duration + 'ms';
         galleryEl.style.msTransitionDuration = duration + 'ms';
@@ -249,6 +255,9 @@ define([
         galleryEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
         galleryEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
         galleryEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        fastdom.write(function () {
+            bonzo($meta).css('opacity', offset != 0 ? 0 : 1);
+        });
     };
 
     HostedGallery.prototype.fadeContent = function (e) {
@@ -262,7 +271,7 @@ define([
         var ctaIndex = this.ctaIndex();
         fastdom.write(function () {
             this.$images.each(function (image, index) {
-                var opacity = (progress - index + 1) * 4 / 3;
+                var opacity = ((progress - index + 1) * 16 / 11) - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
@@ -274,6 +283,7 @@ define([
 
             bonzo(this.$progress).toggleClass('first-half', fractionProgress && fractionProgress < 0.5);
 
+            bonzo(this.$meta).css('opacity', progress != 0 ? 0 : 1);
         }.bind(this));
 
         if (newIndex && newIndex !== this.index) {
@@ -311,7 +321,8 @@ define([
                     bonzo(this.$galleryEl).toggleClass('show-cta', this.index === this.ctaIndex() + 1);
                 }
 
-                url.pushUrl({}, document.title, config.page.pageName + '#img-' + this.index, true);
+                var pageName = config.page.pageName || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
+                url.pushUrl({}, document.title, pageName + '#img-' + this.index, true);
                 // event bindings
                 mediator.on('window:resize', this.resize);
             },

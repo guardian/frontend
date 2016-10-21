@@ -16,7 +16,6 @@ define([
     'qwery',
     'fastdom',
     'common/modules/user-prefs',
-    'common/modules/experiments/ab',
     'common/modules/ui/images',
     'common/utils/storage',
     'common/utils/ajax',
@@ -25,13 +24,14 @@ define([
     'common/utils/url',
     'common/utils/cookies',
     'common/utils/robust',
-    'common/utils/user-timing'
+    'common/utils/user-timing',
+    'common/modules/navigation/newHeaderNavigation',
+    'common/utils/detect'
 ], function (
     raven,
     qwery,
     fastdom,
     userPrefs,
-    ab,
     images,
     storage,
     ajax,
@@ -40,7 +40,9 @@ define([
     url,
     cookies,
     robust,
-    userTiming
+    userTiming,
+    newHeaderNavigation,
+    detect
 ) {
     return function () {
         var guardian = window.guardian;
@@ -75,7 +77,10 @@ define([
                 },
                 shouldSendCallback: function (data) {
                     var isDev = config.page.isDev;
-                    if (isDev) {
+                    var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
+                    var adBlockerOn = detect.adblockInUseSync();
+
+                    if (isDev && !isIgnored) {
                         // Some environments don't support or don't always expose the console object
                         if (window.console && window.console.warn) {
                             window.console.warn('Raven captured error.', data);
@@ -84,6 +89,8 @@ define([
 
                     return config.switches.enableSentryReporting &&
                         Math.random() < 0.1 &&
+                        !isIgnored &&
+                        !adBlockerOn &&
                         !isDev; // don't actually notify sentry in dev mode
                 }
             }
@@ -122,7 +129,12 @@ define([
 
         if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
-                require([el.getAttribute('data-interactive')], function (interactive) {
+                var mainJS = el.getAttribute('data-interactive');
+                if (!mainJS) {
+                    return;
+                }
+
+                require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
@@ -139,22 +151,20 @@ define([
                     }
                 });
             });
+
+            qwery('iframe.interactive-atom-fence').forEach(function (el) {
+                var srcdoc;
+                if (!el.srcdoc) {
+                    fastdom.read(function () {
+                       srcdoc = el.getAttribute('srcdoc');
+                    });
+                    fastdom.write(function () {
+                        el.contentWindow.contents = srcdoc;
+                        el.src = 'javascript:window["contents"]';
+                    });
+                }
+            });
         }
-
-        //
-        // A/B tests
-        //
-
-        robust.catchErrorsAndLog('ab-tests', function () {
-            if (guardian.isEnhanced) {
-                ab.segmentUser();
-
-                robust.catchErrorsAndLog('ab-tests-run', ab.run);
-                robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
-
-                ab.trackEvent();
-            }
-        });
 
         //
         // Set adtest query if url param declares it.
@@ -288,6 +298,11 @@ define([
         } catch (e) {
             // do nothing
         }
+
+        /**
+         *  New Header Navigation
+         */
+        newHeaderNavigation();
 
         userTiming.mark('standard end');
     };

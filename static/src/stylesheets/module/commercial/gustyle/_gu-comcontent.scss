@@ -4,6 +4,11 @@
 
 .gu-display {
     position: relative;
+
+    .hostedbadge__info {
+        @include font-size(13, 10);
+        font-weight: normal;
+    }
 }
 
 .gu-display__image-layer {
@@ -230,7 +235,7 @@ $mobile-max-container-width: gs-span(8);
         }
     }
 
-    .gu-display__content-title--hosted {
+    .gu-display__content-title.gu-display__content-title--hosted {
         @include f-headlineSans;
         @include font-size(22, 24);
 

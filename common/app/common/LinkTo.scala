@@ -3,8 +3,6 @@ package common
 import common.editions.{Au, Us, International}
 import common.Edition.editionRegex
 import conf.Configuration
-import conf.switches.Switches
-import implicits.Requests
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup
@@ -24,10 +22,6 @@ trait LinkTo extends Logging {
   private val GuardianUrl = "^(http[s]?://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
-  private val InteractiveUrl = """(/(ng-)?interactive/.*)$""".r
-
-  val httpSections: Seq[String] =
-    Seq("politics")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -56,30 +50,9 @@ trait LinkTo extends Logging {
 
     val url = s"$host/$editionalisedPath"
     url match {
-      case ProdURL() =>
-        if (isHttpOnly(editionalisedPath)) {
-          url.replace("https://", "http://")
-        } else {
-          url.replace("http://", "https://")
-        }
-
+      case ProdURL() => url.replace("http://", "https://")
       case _ => url
     }
-  }
-
-  private def isHttpOnly(path: String) = {
-    // check if the url has _any_ edition prefix (/au/, /us/ ... )
-    // as users can have au edition cookie but be on a us edition url
-
-    val hasEditionPrefix = Edition.all.exists{ edition =>
-      path.startsWith(edition.id.toLowerCase + "/")
-    }
-
-    def sectionPath = path.replaceFirst(s"^(${editionRegex})/", "")
-
-    val pathWithoutEdition = if (hasEditionPrefix) sectionPath else path
-
-    httpSections.exists(pathWithoutEdition.startsWith) || InteractiveUrl.findFirstIn(path).nonEmpty
   }
 
   private def clean(path: String) = path match {

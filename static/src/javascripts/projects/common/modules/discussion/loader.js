@@ -3,6 +3,7 @@ define([
     'bonzo',
     'qwery',
     'raven',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -27,6 +28,7 @@ define([
     bonzo,
     qwery,
     raven,
+    Promise,
     $,
     config,
     detect,
@@ -86,13 +88,7 @@ Loader.prototype.initMainComments = function() {
     var self = this,
         commentId = this.getCommentIdFromHash();
 
-
-    if (commentId) {
-        mediator.emit('discussion:seen:comment-permalink');
-    }
-
-    //We want to test the effect of comment ordering, but not mess with users who have already re-ordered their comments
-    var order = userPrefs.get('discussion.order') || userPrefs.get('discussion.order.test') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
     var threading = userPrefs.get('discussion.threading') || 'collapsed';
 
     var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
@@ -108,8 +104,8 @@ Loader.prototype.initMainComments = function() {
 
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.on('click,', '.js-discussion-author-link, .js-discussion-change-page', this.removeTruncation.bind(this));
-    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button', function () {
+    this.on('click,', '.js-discussion-author-link', this.removeTruncation.bind(this));
+    this.on('click', '.js-discussion-change-page, .js-discussion-show-button, .d-show-more-replies__button', function () {
         mediator.emit('discussion:comments:get-more-replies');
         self.removeTruncation();
     });
@@ -277,6 +273,8 @@ Loader.prototype.ready = function() {
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         mediator.emit('discussion:seen:comments-anchor');
+    } else if (this.getCommentIdFromHash()) {
+        mediator.emit('discussion:seen:comment-permalink');
     }
 
     mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
@@ -339,7 +337,8 @@ Loader.prototype.renderCommentBox = function(elem) {
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
-        newCommenter: !this.user.privateFields.hasCommented
+        newCommenter: !this.user.privateFields.hasCommented,
+        shouldRenderMainAvatar: false
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
@@ -351,42 +350,21 @@ Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-Loader.prototype.renderBonzoCommentCount = function() {
-    fetchJson('/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(), {
-        mode: 'cors'
-    })
-    .then(function (response) {
-        if(response && response.counts && response.counts.length) {
-            var commentCount = response.counts[0].count;
-            if (commentCount > 0) {
-                // Remove non-JS links
-                bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
-
-                var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
-                    html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
-                           '  <i class="i"></i>' + commentCount +
-                           '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
-                           '</a>';
-                $('.js-comment-count').html(html);
-
-                $('.js-discussion-comment-count').text('(' + commentCount + ')');
-            } else {
-                this.setState('empty');
-            }
-        }
-    }.bind(this))
-    .catch(this.logError.bind(this, 'CommentCount'));
-};
-
 Loader.prototype.renderCommentCount = function () {
-    if (discussionFrontend.canRun(ab, window.curlConfig)) {
+    if (window.curlConfig.paths['discussion-frontend-preact']) {
         return discussionFrontend.load(ab, this, {
             apiHost: config.page.discussionApiUrl,
+            avatarImagesHost: config.page.avatarImagesUrl,
+            closed: this.getDiscussionClosed(),
             discussionId: this.getDiscussionId(),
-            element: document.querySelector('.js-discussion-comment-count').parentNode
+            element: document.getElementsByClassName('js-discussion-external-frontend')[0],
+            userFromCookie: !!Id.getUserFromCookie(),
+            profileUrl: config.page.idUrl,
+            profileClientId: config.switches.registerWithPhone ? 'comments' : '',
+            Promise: Promise
         });
     } else {
-        return this.renderBonzoCommentCount();
+        this.setState('empty');
     }
 };
 

@@ -1,6 +1,6 @@
 package controllers.admin
 
-import contentapi.PreviewContentApi
+import contentapi.{CapiHttpClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
@@ -20,27 +20,27 @@ object TestFailed{
 
 class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
+  val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
+
   def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
   def test(id: String, testPath: String) = Action.async{ implicit request =>
 
+    val pathToTest = if(testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
+
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
-    val thisLoadBalancer = loadBalancers.find(_.project == id).head
+    val thisLoadBalancer = loadBalancers.find(_.project == id).headOption
 
-    val viaWebsite = testOnGuardianSite(testPath, id)
-
-    val directToContentApi = testOnContentApi(testPath, id)
-
-    val directToLoadBalancer = testOnLoadBalancer(thisLoadBalancer, testPath, id)
-
-    val directToRouter = testOnRouter(testPath, id)
-
-    val directToPreviewContentApi = testOnPreviewContentApi(testPath, id)
-
-    val viaPreviewWebsite = testOnPreviewSite(testPath, id)
+    val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, pathToTest, id))
+      .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
+    val viaWebsite = testOnGuardianSite(pathToTest, id)
+    val directToContentApi = testOnContentApi(pathToTest, id)
+    val directToRouter = testOnRouter(pathToTest, id)
+    val directToPreviewContentApi = testOnPreviewContentApi(pathToTest, id)
+    val viaPreviewWebsite = testOnPreviewSite(pathToTest, id)
 
     // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
     // in the stack
@@ -58,25 +58,35 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
 
   private def testOnRouter(testPath: String, id: String): Future[EndpointStatus] = {
-    val router = LoadBalancer.all.find(_.project == "frontend-router").flatMap(_.url).head
-    val result = httpGet("Can fetch directly from Router load balancer", s"http://$router$testPath")
-    result.map{ result =>
-      if (result.isOk)
-        result
-      else
-        TestFailed(result.name, result.messages.toSeq :+
-          "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
+
+    def fetchWithRouterUrl(url: String) = {
+      val result = httpGet("Can fetch directly from Router load balancer", s"http://$url$testPath")
+      result.map{ result =>
+        if (result.isOk)
+          result
+        else
+          TestFailed(result.name, result.messages.toSeq :+
+            "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
+      }
     }
+
+    LoadBalancer("frontend-router")
+      .flatMap(_.url)
+      .map(fetchWithRouterUrl(_))
+      .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))
+
   }
 
   private def testOnLoadBalancer(thisLoadBalancer: LoadBalancer, testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://${thisLoadBalancer.url.head}$testPath")
+    thisLoadBalancer.url.map { url =>
+      httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://${url}$testPath")
+    }.getOrElse(Future(TestFailed(s"Can get ${thisLoadBalancer.name}'s loadbalancer url")))
   }
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
-    PreviewContentApi.client.getResponse(request).map {
+    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
+    previewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -90,8 +100,8 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
-    val request = PreviewContentApi.client.item(testPath, "UK").showFields("all")
-    PreviewContentApi.client.getResponse(request).map {
+    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
+    previewContentApi.client.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -104,15 +114,14 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
   }
 
   private def testOnGuardianSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from www.theguardian.com", s"http://www.theguardian.com$testPath")
+    httpGet("Can fetch from www.theguardian.com", s"https://www.theguardian.com$testPath")
   }
 
   private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from preview.gutools.co.uk", s"http://preview.gutools.co.uk$testPath")
+    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath")
   }
 
   private def httpGet(testName: String, url: String) =  {
-    import play.api.Play.current
     wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {

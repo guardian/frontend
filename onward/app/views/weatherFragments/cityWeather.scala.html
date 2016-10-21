@@ -5,6 +5,7 @@
 
 <div class="weather js-weather">
     <div class="u-unstyled weather__current js-weather-current">
+        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
         <p class="weather__desc">
             <span class="u-h">The temperature</span>
             <span class="weather__time">Now</span>
@@ -13,7 +14,6 @@
                 <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             }
         </p>
-        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
     href="#toggle-forecast"><span class="u-h">Toggle forecast</span>@fragments.inlineSvg("arrow", "icon", List("weather__toggle-icon"))

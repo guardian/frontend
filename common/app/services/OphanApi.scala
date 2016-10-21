@@ -1,12 +1,11 @@
 package services
 
-import java.net.{URL, URLEncoder}
+import java.net.URLEncoder
 
 import common.{BadConfigurationException, ExecutionContexts, Logging}
 import conf.Configuration._
-import play.api.Play.current
 import play.api.libs.json._
-import play.api.libs.ws.WS
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
 
@@ -16,7 +15,7 @@ object MostReadItem {
 
 case class MostReadItem(url: String, count: Int)
 
-object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests {
+class OphanApi(wsClient: WSClient) extends ExecutionContexts with Logging with implicits.WSRequests {
 
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
     val maybeJson = for {
@@ -28,7 +27,7 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
         } mkString "&"
         val url = s"$host/$path?$queryString&api-key=$key"
         log.info(s"Making request to Ophan API: $url")
-        WS.url(url).withRequestTimeout(10000).getOKResponse().map(_.json)
+        wsClient.url(url).withRequestTimeout(10000).getOKResponse().map(_.json)
       }
 
     maybeJson getOrElse {
@@ -105,3 +104,4 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] =
     getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString))
 }
+

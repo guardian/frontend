@@ -8,7 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
-  val faciaVersion = "2.0.2"
+  val faciaVersion = "2.0.3"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -28,14 +28,14 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "9.5"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.8.0"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.5"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
-  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.1"
-  val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.0"
+  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.2"
+  val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.2"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
@@ -43,6 +43,7 @@ object Dependencies {
   val jodaConvert = "org.joda" % "joda-convert" % "1.2"
   val jSoup = "org.jsoup" % "jsoup" % "1.8.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
+  val json4s = "org.json4s" %% "json4s-native" % "3.4.0"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.2.3" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
@@ -68,6 +69,7 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
+  val targetingClient = "com.gu" %% "targeting-client-play24" % "0.8.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

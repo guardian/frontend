@@ -1,8 +1,8 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import conf.{CachedHealthCheckLifeCycle, StandaloneFilters}
-import contentapi.ContentApiClient
-import controllers.{TrainingHttp, HealthCheck, StandaloneControllerComponents}
+import contentapi.{ContentApiClient, HttpClient}
+import controllers.{HealthCheck, StandaloneControllerComponents, TrainingHttp}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -10,23 +10,24 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
+import services.OphanApi
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait Controllers {
-  def wsClient: WSClient
-  lazy val healthCheck = wire[HealthCheck]
-  ContentApiClient.setHttp(wire[TrainingHttp]) // adds auth as a side effect - can be fixed when ContentApiClient uses DI instead of setHttp
-}
-
 trait AppComponents
   extends FrontendComponents
   with StandaloneControllerComponents
-  with Controllers
   with StandaloneLifecycleComponents
-  with AdminJobsServices {
+  with AdminJobsServices
+  with ApplicationsServices {
+
+  override lazy val capiHttpClient: HttpClient = wire[TrainingHttp]
+  override lazy val contentApiClient = wire[ContentApiClient]
+  override lazy val ophanApi = wire[OphanApi]
+
+  lazy val healthCheck = wire[HealthCheck]
 
   lazy val standaloneRoutes: standalone.Routes = wire[standalone.Routes]
 

@@ -62,6 +62,8 @@
 
 @import 'module/_save-for-later';
 
+@import 'module/content/_tweets';
+
 /* ==========================================================================
    External modules
    ========================================================================== */
@@ -114,12 +116,12 @@
 // Consider head.*.scss instead
 
 @import 'module/experiments/_affix';
+@import 'module/experiments/_weekend-reading';
 
 /* ==========================================================================
    Icons
    ========================================================================== */
 
-@import 'icons/_global-icons-sprite';
 @import 'icons/_global-icons-svg';
 @import 'module/_icons';
 

@@ -76,16 +76,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AudienceScienceSwitch = Switch(
-    SwitchGroup.Commercial,
-    "audience-science",
-    "If this switch is on, Audience Science segments will be used to target ads.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",
@@ -216,6 +206,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val MembershipEngagementBanner = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner",
+    "Master switch for the membership engagement banner.",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdBlockMessage = Switch(
     SwitchGroup.Commercial,
     "adblock",
@@ -242,17 +242,7 @@ trait CommercialSwitches {
     "British Council's beacon",
     owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 30),
-    exposeClientSide = false
-  )
-
-  val highMerchandisingComponentSwitch = Switch(
-    SwitchGroup.Commercial,
-    "optimise-high-merchandising",
-    "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
-    owners = Seq(Owner.withGithub("Calum Campbell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016,10,12),
+    sellByDate = new LocalDate(2016, 11, 1),
     exposeClientSide = false
   )
 
@@ -266,43 +256,44 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val staticBadgesSwitch = Switch(
+  val showChesterZooGallery = Switch(
     group = CommercialLabs,
-    "static-badges",
-    "If on, all badges are served server side",
+    "chester-zoo-gallery",
+    "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
-    exposeClientSide = true
-  )
-
-  val containerBrandingFromCapi = Switch(
-    group = CommercialLabs,
-    "static-container-badges",
-    "Serve container branding from capi",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
-    exposeClientSide = true
-  )
-
-  val showPaidSeriesContainer = Switch(
-    group = CommercialLabs,
-    "show-paid-series-containers",
-    "Show series containers on paid content pages.",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
+    sellByDate = new LocalDate(2016, 10, 28),
     exposeClientSide = false
   )
 
-  val surgingContentEmail = Switch(
-    SwitchGroup.Commercial,
-    "surging-sports-content-email",
-    "If on email will be sent to Rio Olympic surging content team every 30 minutes with update on surging content.",
-    owners = Seq(Owner.withGithub("Calum Campbell")),
+  val showChesterZooArticles = Switch(
+    group = CommercialLabs,
+    "chester-zoo-articles",
+    "Make the Chester Zoo article pages available",
+    owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016,8,31),
+    sellByDate = new LocalDate(2016, 10, 28),
     exposeClientSide = false
   )
+
+  val showChesterZooArticlesWithVideo = Switch(
+    group = CommercialLabs,
+    "chester-zoo-articles-with-video",
+    "Make the Chester Zoo article (with video) pages available",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
+  )
+
+  val showChesterZooVideos = Switch(
+    group = CommercialLabs,
+    "chester-zoo-videos",
+    "Make the Chester Zoo video pages available",
+    owners = Owner.group(CommercialLabs),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 10, 28),
+    exposeClientSide = false
+  )
+
 }

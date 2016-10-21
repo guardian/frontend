@@ -1,18 +1,18 @@
 package test
 
-import common.ExecutionContexts
 import java.io.File
 
-import football.controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
-import recorder.{DefaultHttpRecorder, HttpRecorder}
-import play.api.libs.ws.WSClient
-import conf.{SportConfiguration, FootballClient}
-import football.model._
+import common.ExecutionContexts
+import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
+import football.model._
+import org.scalatest.Suites
 import pa.{Http, Response => PaResponse}
+import play.api.libs.ws.WSClient
+import recorder.{DefaultHttpRecorder, HttpRecorder}
 
 import scala.concurrent.Future
+import scala.io.Codec.UTF8
 
 class SportTestSuite extends Suites (
   new CompetitionListControllerTest,
@@ -33,8 +33,8 @@ class SportTestSuite extends Suites (
   new MatchFeatureTest,
   new ResultsFeatureTest,
   new rugby.model.MatchParserTest
-) with SingleServerSuite with BeforeAndAfterAll with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19013
 }
 
 trait WithTestFootballClient {
@@ -79,7 +79,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
 object FootballHttpRecorder extends HttpRecorder[PaResponse] {
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/football")
 
-  def toResponse(str: String) = PaResponse(200, str, "ok")
+  override def toResponse(b: Array[Byte]): PaResponse = PaResponse(200, new String(b, UTF8.charSet), "ok")
 
-  def fromResponse(response: PaResponse) = response.body
+  override def fromResponse(response: PaResponse): Array[Byte] = response.body.getBytes(UTF8.charSet)
 }

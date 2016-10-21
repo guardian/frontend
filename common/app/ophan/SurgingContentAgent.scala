@@ -13,9 +13,9 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[SurgingContent](SurgingContent())
 
-  def update() {
+  def update(implicit ophanApi: OphanApi) {
     log.info("Refreshing surging content.")
-    val ophanQuery = OphanApi.getSurgingContent()
+    val ophanQuery = ophanApi.getSurgingContent()
     ophanQuery.map { ophanResults =>
       val surging: Seq[(String, Int)] = SurgeUtils.parse(ophanResults)
       agent.send(SurgingContent(surging.toMap))
@@ -43,10 +43,11 @@ object SurgeUtils {
       case Some(x) if x >= 300 => 2
       case Some(x) if x >= 200 => 3
       case Some(x) if x >= 100 => 4
+      case Some(x) if x >= 50 => 5
       case _ => 0
     }
 
-    if (level == 0) Seq(0) else Seq.range(level, 5)
+    if (level == 0) Seq(0) else Seq.range(level, 6)
   }
 
   def parse(json: JsValue) = {
@@ -63,7 +64,8 @@ object SurgeUtils {
 class SurgingContentAgentLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  akkaAsync: AkkaAsync,
+  ophanApi: OphanApi)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
     jobs.deschedule("SurgingContentAgentRefreshJob")
@@ -74,11 +76,11 @@ class SurgingContentAgentLifecycle(
 
     // update every 30 min, on the 51st second past the minute (e.g 13:09:51, 13:39:51)
     jobs.schedule("SurgingContentAgentRefreshJob", "51 9/30 * * * ?") {
-      SurgingContentAgent.update()
+      SurgingContentAgent.update(ophanApi)
     }
 
     akkaAsync.after1s {
-      SurgingContentAgent.update()
+      SurgingContentAgent.update(ophanApi)
     }
   }
 }

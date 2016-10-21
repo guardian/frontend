@@ -1,3 +1,7 @@
+@import common.Edition
+@import discussion.model.Comment
+@import views.support.{BulletCleaner, InBodyLinkCleaner, withJsoup}
+
 @(comment: Comment, canRecommend: Boolean = false)(implicit request: RequestHeader)
 <div class="disc-comment u-cf">
     <div class="disc-comment__meta u-cf">

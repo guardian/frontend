@@ -111,6 +111,7 @@ object EmailTypes {
   val article = "article"
   val landing = "landing"
   val plain = "plain"
+  val plaindark = "plaindark"
 }
 
 class EmailFormService(wsClient: WSClient) {
@@ -191,7 +192,7 @@ class EmailSignupController(wsClient: WSClient) extends Controller with Executio
 
     emailForm.bindFromRequest.fold(
       formWithErrors => {
-        log.error(s"FormErrors: ${formWithErrors.errors}")
+        log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 

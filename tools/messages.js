@@ -1,3 +1,7 @@
+const fs = require('fs');
+
+const takeWhile = require('lodash.takewhile');
+
 function notify(message, options, type) {
     options = options || {};
     type = type || 'log';
@@ -5,7 +9,8 @@ function notify(message, options, type) {
     // Set the default text colour for info to black as white was hard to see
     if (type === 'info') {
        options = Object.assign({
-           colour: 'black'
+           colour: 'black',
+           codeColour: 'white'
        }, options);
     }
 
@@ -16,28 +21,55 @@ function notify(message, options, type) {
     };
 }
 
-
 switch (process.argv[2]) {
     case 'describeMakefile':
-        notify(
-            '`watch`           Watch and automatically reload all JS/SCSS.\n' +
-            '                Uses port 3000 insead of 9000.\n' +
-            '\n' +
-            '`compile`         Compile all assets for production. \n' +
-            '`compile-dev`     Compile all assets for development. \n' +
-            '\n' +
-            '`validate`        Lint all assets.\n' +
-            '`validate-sass`   Lint all SCSS.\n' +
-            '`validate-js`     Lint all JS.\n' +
-            '\n' +
-            '`test`            Run the JS test suite. \n'+
-            '\n' +
-            '`install`         Install all 3rd party dependencies. \n' +
-            '`uninstall`       Uninstall all 3rd party dependencies. \n' +
-            '`reinstall`       Alias for `make uninstall install`. \n' +
-            '\n' +
-            '`shrinkwrap`      Shrinkwrap NPM packages.', {
-            heading: 'Frontend make options'
+        const messageLines = [];
+        const gutterWidth = 27;
+
+        // this flag could be anything, but the `--` makes it look real
+        const listAll = process.argv[3] === '--all';
+
+        // for all the lines in the makefile, construct the message
+        fs.readFileSync('makefile', 'utf8').split('\n').forEach((line, lineNumber, makefile) => {
+            // if this line is a target...
+            if (line.match(/^[^\.\s#]/) && (listAll || !line.match(/# PRIVATE$/))) {
+                // see if there are any comments immediately before it
+                const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), line => line.match(/^#/))
+                    // format the comments for output to CLI
+                    .map(comment => comment.replace(/#\s+/, ''))
+                    // put them back into correct order
+                    .reverse();
+
+                // format the target name for output to CLI
+                const targetName = line.split(':')[0];
+
+                console.log(targetName)
+
+                if (comments.length) {
+                    // add the target name with the first comment following it
+                    messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`);
+                } else {
+                    // just add the target name
+                    messageLines.push(`\`${targetName}\``);
+                }
+            }
+
+            // if we've got a divider, just add space to create a line break
+            if (line.match(/^# \*{3,}/)) {
+                if (listAll) {
+                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`)
+                } else {
+                    messageLines.push(' ');
+                }
+            };
+        });
+
+        if (!listAll) {
+            messageLines.push('\nTo see the full set, run `make list`.')
+        }
+
+        notify(messageLines.join('\n').trim(), {
+            heading: `${(listAll ? 'All' : 'Common')} Frontend make tasks`
         }, 'info');
         break;
 
@@ -48,23 +80,16 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'should-shrinkwrap':
-        notify('Run `make shrinkwrap` and include the changes to `/npm-shrinkwrap.json` in your commit.', {
+    case 'should-yarn':
+        notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
             heading: 'Dependencies have changed'
         }, 'error');
-        break;
-
-    case 'did-shrinkwrap':
-        notify(
-            'NPM packages have been shrinkwrapped.', {
-            heading: 'make shrinkwrap'
-        }, 'info');
         break;
 
     case 'dependency-update':
         notify('Run `make install`.', {
             heading: 'Dependencies have changed'
-        }, 'info');
+        }, 'warn');
         break;
 
     case 'pasteup':

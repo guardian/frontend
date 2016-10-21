@@ -15,7 +15,7 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-class InteractiveController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -24,9 +24,10 @@ class InteractiveController extends Controller with RendersItemResponse with Log
                     (implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = ContentApiClient.getResponse(
-      ContentApiClient.item(path, edition)
+    val response: Future[ItemResponse] = contentApiClient.getResponse(
+      contentApiClient.item(path, edition)
         .showFields("all")
+        .showAtoms("all")
     )
 
     val result = response map { response =>
@@ -54,5 +55,3 @@ class InteractiveController extends Controller with RendersItemResponse with Log
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 }
-
-object InteractiveController extends InteractiveController

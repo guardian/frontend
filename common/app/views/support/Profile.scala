@@ -1,6 +1,7 @@
 package views.support
 
 import java.net.{URI, URISyntaxException}
+import java.util.Base64
 import common.Logging
 import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
 import conf.Configuration
@@ -17,6 +18,7 @@ sealed trait ElementProfile {
   def hidpi: Boolean
   def compression: Int
   def isPng: Boolean
+  def autoFormat: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
@@ -38,7 +40,7 @@ sealed trait ElementProfile {
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
-  val autoParam = "auto=format"
+  val autoParam = if (autoFormat) "auto=format" else ""
   val sharpParam = "usm=12"
   val fitParam = "fit=max"
   val dprParam = if (hidpi) {
@@ -66,7 +68,8 @@ case class Profile(
   override val height: Option[Int] = None,
   override val hidpi: Boolean = false,
   override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile
+  override val isPng: Boolean = false,
+  override val autoFormat: Boolean = true) extends ElementProfile
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
@@ -77,7 +80,8 @@ case class VideoProfile(
   override val height: Some[Int],
   override val hidpi: Boolean = false,
   override val compression: Int = 95,
-  override val isPng: Boolean = false) extends ElementProfile {
+  override val isPng: Boolean = false,
+  override val autoFormat: Boolean = true) extends ElementProfile {
 
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
@@ -122,7 +126,21 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
   override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
-object EmailArticleImage extends Profile(width = Some(640))
+object EmailImage extends Profile(width = Some(580), autoFormat = false) {
+  override val qualityparam = "q=30"
+}
+object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
+  override val fitParam = "fit=crop"
+  override val qualityparam = "q=30"
+  val blendModeParam = "bm=normal"
+  val blendOffsetParam = "ba=center"
+  val blendImageParam = s"blend64=${Base64.getUrlEncoder.encodeToString(EmailHelpers.Images.play.getBytes)}"
+
+  override def resizeString = {
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+    s"?$params"
+  }
+}
 
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))

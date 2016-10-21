@@ -1,15 +1,15 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
-import contentapi.SectionsLookUpLifecycle
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import controllers.commercial._
+import _root_.commercial.controllers.CommercialControllers
+import _root_.commercial.CommercialLifecycle
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
@@ -27,6 +27,7 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
+import targeting.TargetingLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -52,6 +53,7 @@ trait Controllers
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
+  lazy val signupPageController = wire[SignupPageController]
 }
 
 trait AppComponents
@@ -61,8 +63,15 @@ trait AppComponents
   with SportServices
   with CommercialServices
   with DiscussionServices
+  with AdminJobsServices
+  with OnwardServices
   with FapiServices
-  with AdminJobsServices {
+  with ApplicationsServices {
+
+  //Overriding conflicting members
+  override lazy val ophanApi = wire[OphanApi]
+  override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  override lazy val contentApiClient = wire[ContentApiClient]
 
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
@@ -84,6 +93,7 @@ trait AppComponents
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
+    wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
 

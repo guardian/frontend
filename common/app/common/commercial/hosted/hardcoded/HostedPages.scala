@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.hosted.HostedPage
+import common.commercial.hosted._
 
 object LegacyHostedPages {
 
@@ -21,6 +21,7 @@ object HostedPages {
   private val leffeCampaignName = "leffe-rediscover-time"
   private val zootropolisCampaignName = "disney-zootropolis"
   private val singaporeGrandPrixCampaignName = "singapore-grand-prix"
+  private val chesterZooCampaignName = "chester-zoo-act-for-wildlife"
 
   def fromCampaignAndPageName(campaignName: String, pageName: String): Option[HostedPage] = {
     campaignName match {
@@ -28,7 +29,29 @@ object HostedPages {
       case `leffeCampaignName` => LeffeHostedPages.fromPageName(pageName)
       case `zootropolisCampaignName` => ZootropolisHostedPages.fromPageName(pageName)
       case `singaporeGrandPrixCampaignName` => Formula1HostedPages.fromPageName(pageName)
+      case `chesterZooCampaignName` => ChesterZooHostedPages.fromPageName(pageName)
       case _ => None;
     }
   }
+
+  def nextPages(campaignName: String, pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = {
+    campaignName match {
+      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName, contentType)
+      case _ => Nil;
+    }
+  }
+
+  def contentType(page: HostedPage): HostedContentType.Value = {
+    page match {
+      case _: HostedVideoPage => HostedContentType.Video
+      case _: HostedArticlePage => HostedContentType.Article
+      case _: HostedGalleryPage => HostedContentType.Gallery
+      case _ => HostedContentType.Gallery
+    }
+  }
+}
+
+object HostedContentType extends Enumeration {
+
+  val Video, Article, Gallery = Value
 }

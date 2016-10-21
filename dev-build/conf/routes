@@ -3,12 +3,10 @@
 # ~~~~
 
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
-GET            /commercial/test-page                                                                                             controllers.commercial.CreativeTestPage.allComponents(k: List[String])
+GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-GET            /survey/customtodayemail                                                                                          controllers.SurveyPageController.renderCustomEmail404Page()
-GET            /survey/mydigest                                                                                                  controllers.SurveyPageController.renderMyDigestExplainerPage()
-GET            /survey/mydigest/404                                                                                              controllers.SurveyPageController.renderMyDigest404Page()
-GET            /survey/weekendreading                                                                                            controllers.SurveyPageController.renderWeekendReading404Page()
+GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
+
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
@@ -44,7 +42,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer|plain>/:listId                                                              controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain|plaindark>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -285,32 +283,39 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/offers.json                                                                                    controllers.commercial.TravelOffersController.renderTravel
-GET            /commercial/jobs.json                                                                                             controllers.commercial.JobsController.renderJobs
-GET            /commercial/masterclasses.json                                                                                    controllers.commercial.MasterclassesController.renderMasterclasses
-GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
-GET            /commercial/soulmates-test/$subgroup<\w+>.json                                                                    controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
-GET            /commercial/books/book.json                                                                                       controllers.commercial.BookOffersController.renderBook
-GET            /commercial/books/books.json                                                                                      controllers.commercial.BookOffersController.renderBooks
-GET            /commercial/liveevents/event.json                                                                                 controllers.commercial.LiveEventsController.renderEvent
-GET            /commercial/capi.json                                                                                             controllers.commercial.ContentApiOffersController.itemsJson
-GET            /commercial/capi                                                                                                  controllers.commercial.ContentApiOffersController.itemsHtml
-GET            /commercial/capi-single.json                                                                                      controllers.commercial.ContentApiOffersController.itemJson
-GET            /commercial/capi-single                                                                                           controllers.commercial.ContentApiOffersController.itemHtml
-GET            /commercial/capi-single-merch.json                                                                                controllers.commercial.ContentApiOffersController.itemJson
-GET            /commercial/capi-single-merch                                                                                     controllers.commercial.ContentApiOffersController.itemHtml
-GET            /commercial/paid.json                                                                                             controllers.commercial.PaidContentCardController.cardJson
-GET            /commercial/paid                                                                                                  controllers.commercial.PaidContentCardController.cardHtml
-GET            /commercial/multi.json                                                                                            controllers.commercial.Multi.renderMulti
-GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            controllers.commercial.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
-GET            /advertiser-content/:campaignName/:pageName                                                                       controllers.commercial.HostedContentController.renderHostedPage(campaignName, pageName)
-GET            /commercial/subscriber-number                                                                                     controllers.commercial.SubscriberNumberPageController.renderSubscriberNumberPage
+GET            /commercial/travel/offers.json                                                                                    commercial.controllers.TravelOffersController.renderTravel
+GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
+GET            /commercial/jobs.json                                                                                             commercial.controllers.JobsController.renderJobs
+GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
+GET            /commercial/masterclasses.json                                                                                    commercial.controllers.MasterclassesController.renderMasterclasses
+GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         commercial.controllers.SoulmatesController.renderSoulmates(subgroup)
+GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
+GET            /commercial/books/book.json                                                                                       commercial.controllers.BookOffersController.renderBook
+GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
+GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
+GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
+GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
+GET            /commercial/capi.json                                                                                             commercial.controllers.ContentApiOffersController.itemsJson
+GET            /commercial/capi                                                                                                  commercial.controllers.ContentApiOffersController.itemsHtml
+GET            /commercial/capi-single.json                                                                                      commercial.controllers.ContentApiOffersController.itemJson
+GET            /commercial/capi-single                                                                                           commercial.controllers.ContentApiOffersController.itemHtml
+GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
+GET            /commercial/api/capi-multiple.json                                                                                commercial.controllers.ContentApiOffersController.nativeJsonMulti
+GET            /commercial/capi-single-merch.json                                                                                commercial.controllers.ContentApiOffersController.itemJson
+GET            /commercial/capi-single-merch                                                                                     commercial.controllers.ContentApiOffersController.itemHtml
+GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson
+GET            /commercial/paid.json                                                                                             commercial.controllers.PaidContentCardController.cardJson
+GET            /commercial/paid                                                                                                  commercial.controllers.PaidContentCardController.cardHtml
+GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
+GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
+GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
+GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
+GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
+GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
 GET            /commercial/specialadunits                                                                                        controllers.admin.CommercialController.renderSpecialAdUnits()
-GET            /commercial/sponsorships                                                                                          controllers.admin.CommercialController.renderPaidForTags()
 GET            /commercial/pageskins                                                                                             controllers.admin.CommercialController.renderPageskins()
 GET            /commercial/surging                                                                                               controllers.admin.CommercialController.renderSurgingContent()
 GET            /commercial/inline-merchandising                                                                                  controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
@@ -322,6 +327,7 @@ GET            /commercial/dfp/flush/view                                       
 GET            /commercial/dfp/flush                                                                                             controllers.admin.commercial.DfpDataController.flushCache()
 GET            /commercial/performance/radiator                                                                                  controllers.admin.CommercialController.renderCommercialRadiator()
 GET            /commercial/performance/browser-dashboard                                                                         controllers.admin.CommercialController.renderBrowserPerformanceDashboard()
+GET            /commercial/performance/programmatic-dashboard                                                                    controllers.admin.CommercialController.renderProgrammaticPerformanceDashboard()
 GET            /commercial/slot/:slotName                                                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()

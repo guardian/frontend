@@ -1,7 +1,7 @@
 package views.support
 
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
-import conf.switches.Switches.{OutbrainSwitch, showPaidSeriesContainer}
+import conf.switches.Switches.OutbrainSwitch
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContent, RelatedContentItem}
 import org.scalatest.{FlatSpec, Matchers}
@@ -10,7 +10,6 @@ import play.twirl.api.Html
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   OutbrainSwitch.switchOn()
-  showPaidSeriesContainer.switchOn()
 
   private def contentItem(showInRelatedContent: Boolean = true,
                           shouldHideAdverts: Boolean = false,
@@ -81,7 +80,6 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   it should "include story package placeholder even when there's no story package to show" in {
     val html = buildHtml(contentItem(showInRelatedContent = false), emptyRelatedContent)
-    println("'" + html + "'")
     html.toString shouldBe
       "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml outbrainHtml mostPopularHtml " +
         "standardCommercialHtml "

@@ -7,10 +7,11 @@ import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
 import play.api.mvc.{Action, Controller, RequestHeader}
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 
-class TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
@@ -31,7 +32,7 @@ class TopStoriesController extends Controller with Logging with Paging with Exec
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    ContentApiClient.getResponse(ContentApiClient.item("/", edition)
+    contentApiClient.getResponse(contentApiClient.item("/", edition)
       .showEditorsPicks(true)
     ).map { response =>
         response.editorsPicks.getOrElse(Seq.empty).toList map { item =>
@@ -54,14 +55,12 @@ class TopStoriesController extends Controller with Logging with Paging with Exec
       "GFE:Top Stories"
     ))
 
-    val htmlResponse = () => views.html.topStories(page, trails)
-    val jsonResponse = () => views.html.fragments.topStoriesBody(trails)
+    val htmlResponse: () => Html = () => views.html.topStories(page, trails)
+    val jsonResponse: () => Html = () => views.html.fragments.topStoriesBody(trails)
 
     Cached(900) {
       if (request.isJson)
-        JsonComponent(
-          "html" -> jsonResponse()
-        )
+        JsonComponent(jsonResponse())
       else
         RevalidatableResult.Ok(htmlResponse())
     }
@@ -77,5 +76,3 @@ class TopStoriesController extends Controller with Logging with Paging with Exec
     renderFormat(response, response, 900)
   }
 }
-
-object TopStoriesController extends TopStoriesController

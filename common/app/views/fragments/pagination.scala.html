@@ -1,12 +1,12 @@
+@import common.{PagePaths, Pagination}
+@import views.support.Format
+
 @(title: String,
   pagination: Pagination,
   pagePaths: PagePaths,
   actionClass: Option[String] = None,
   showFull: Boolean = true,
   ariaContext: Option[String] = None)(implicit request: RequestHeader)
-
-@import common._
-@import views.support.Format
 
 @paginated(pageNum: Int) = {@common.LinkTo(pagePaths.pathFor(pageNum))}
 @paginationPointer(pageNo: Option[Int], dir: String) = {

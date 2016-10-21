@@ -1,0 +1,43 @@
+@import common.commercial.{Branding, Logo, PaidContent}
+@import implicits.Requests.RichRequestHeader
+
+@(branding: common.commercial.Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
+@standardLogo(logo: Logo) = {
+    <img src="@logo.url" alt="@branding.sponsorName" class="badge__logo">
+}
+
+@ampLogo(logo: Logo) = {
+    @logo.dimensions.map { dim =>
+        <amp-img src="@logo.url"
+                 width="@dim.width"
+                 height="@dim.height"
+                 alt="@branding.sponsorName"
+                 class="badge__logo"></amp-img>
+    }.getOrElse {
+        <p>@branding.sponsorName</p>
+    }
+}
+
+@branding.label
+<a class="badge__link" href="@branding.sponsorLink" data-link-name="logo link">
+    @if(request.isAmp) {
+        @if(onDarkBackground && branding.highContrastSponsorLogo.nonEmpty) {
+            @for(highContrastLogo <- branding.highContrastSponsorLogo) {
+                @ampLogo(highContrastLogo)
+            }
+        } else {
+            @ampLogo(branding.sponsorLogo)
+        }
+    } else {
+        @if(onDarkBackground && branding.highContrastSponsorLogo.nonEmpty) {
+            @for(highContrastLogo <- branding.highContrastSponsorLogo) {
+                @standardLogo(highContrastLogo)
+            }
+        } else {
+            @standardLogo(branding.sponsorLogo)
+        }
+    }
+</a>
+@if(branding.sponsorshipType != PaidContent) {
+    <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
+}

@@ -323,7 +323,9 @@
 .email-subscription--subscribed {
     opacity: .8;
 }
-.email-subscription__name {
+
+.email-subscription__name,
+.email-subscription__heading {
     @include fs-headline(3);
     margin-bottom: $gs-baseline;
 

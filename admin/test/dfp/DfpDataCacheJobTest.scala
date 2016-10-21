@@ -4,10 +4,13 @@ import common.dfp.{GuLineItem, GuTargeting}
 import org.joda.time.DateTime
 import org.scalatest._
 
-class DfpDataCacheJobTest extends FlatSpec with Matchers {
+class DfpDataCacheJobTest
+  extends FlatSpec
+    with Matchers {
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
-    GuLineItem(id,
+    GuLineItem(
+      id,
       name,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
@@ -21,8 +24,10 @@ class DfpDataCacheJobTest extends FlatSpec with Matchers {
         adUnitsExcluded = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
-        customTargetSets = Nil),
-      lastModified = DateTime.now.withTimeAtStartOfDay)
+        customTargetSets = Nil
+      ),
+      lastModified = DateTime.now.withTimeAtStartOfDay
+    )
   }
 
   private val cachedLineItems = Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))

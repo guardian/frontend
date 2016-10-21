@@ -1,0 +1,31 @@
+@import model.{ContentPage, EndSlateComponents, VideoPlayer}
+@import views.support.Video640
+
+@(page: ContentPage)(implicit request: RequestHeader)
+<div class="explore-video">
+  <div class="gs-conatainer">
+    @page.item.elements.mainVideo.map { video =>
+        @defining(
+            VideoPlayer(
+                video,
+                Video640,
+                page.item.trail.headline,
+                autoPlay = false,
+                showControlsAtStart = true,
+                endSlatePath = EndSlateComponents.fromContent(page.item.content).toUriPath,
+                overrideIsRatioHd = None,
+                embedPath = page.item.content.mainVideoCanonicalPath,
+                path = page.item.content.mainVideoCanonicalPath
+            )
+        ) { player =>
+            @fragments.media.video(player, enhance = true, false)
+            <meta itemprop="name" content="@player.title">
+            <meta itemprop="image" content="@player.poster">
+            <meta itemprop="thumbnail" content="@player.poster">
+            <meta itemprop="thumbnailUrl" content="@player.poster">
+            <meta itemprop="uploadDate" content="@page.item.trail.webPublicationDate"> @*This should ideally be the video publication date (and not the article one) but at the moment this info is not exposed via the article capi endpoint*@
+
+        }
+    }
+  </div>
+</div>

@@ -1,10 +1,11 @@
 define([
     'Promise',
     'common/utils/report-error',
+    'commercial/modules/messenger/dfp-origin',
     'commercial/modules/messenger/post-message'
-], function (Promise, reportError, postMessage) {
+], function (Promise, reportError, dfpOrigin, postMessage) {
     var allowedHosts = [
-        location.protocol + '//tpc.googlesyndication.com',
+        dfpOrigin,
         location.protocol + '//' + location.host
     ];
     var listeners = {};
@@ -18,32 +19,51 @@ define([
         unregister: unregister
     };
 
-    function register(type, callback, _window) {
+    function register(type, callback, options) {
+        options || (options = {});
+
         if( registeredListeners === 0 ) {
-            on(_window || window);
+            on(options.window || window);
         }
 
-        listeners[type] || (listeners[type] = []);
-        if (listeners[type].indexOf(callback) === -1) {
-            listeners[type].push(callback);
+        /* Persistent listeners are exclusive */
+        if (options.persist) {
+            listeners[type] = callback;
             registeredListeners += 1;
+        } else {
+            listeners[type] || (listeners[type] = []);
+            if (listeners[type].indexOf(callback) === -1) {
+                listeners[type].push(callback);
+                registeredListeners += 1;
+            }
         }
     }
 
-    function unregister(type, callback, _window) {
+    function unregister(type, callback, options) {
+        options || (options = {});
+
+        if (listeners[type] === undefined) {
+            throw new Error(formatError(error405, type));
+        }
+
         if (callback === undefined) {
             registeredListeners -= listeners[type].length;
             listeners[type].length = 0;
         } else {
-            var idx = listeners[type].indexOf(callback);
-            if (idx > -1) {
+            if (listeners[type] === callback) {
+                listeners[type] = null;
                 registeredListeners -= 1;
-                listeners[type].splice(idx, 1);
+            } else {
+                var idx = listeners[type].indexOf(callback);
+                if (idx > -1) {
+                    registeredListeners -= 1;
+                    listeners[type].splice(idx, 1);
+                }
             }
         }
 
         if (registeredListeners === 0) {
-            off(_window || window);
+            off(options.window || window);
         }
     }
 
@@ -74,40 +94,43 @@ define([
             return;
         }
 
-        // If there is no routine attached to this event type, we just answer
-        // with an error code
-        if (!listeners[data.type].length) {
-            respond(formatError(error405, data.type), null);
-            return;
-        }
+        if (Array.isArray(listeners[data.type]) && listeners[data.type].length) {
+            // Because any listener can have side-effects (by unregistering itself),
+            // we run the promise chain on a copy of the `listeners` array.
+            // Hat tip @piuccio
+            var promise = listeners[data.type].slice()
+            // We offer, but don't impose, the possibility that a listener returns
+            // a value that must be sent back to the calling frame. To do this,
+            // we pass the cumulated returned value as a second argument to each
+            // listener. Notice we don't try some clever way to compose the result
+            // value ourselves, this would only make the solution more complex.
+            // That means a listener can ignore the cumulated return value and
+            // return something else entirely—life is unfair.
+            // We don't know what each callack will be made of, we don't want to.
+            // And so we wrap each call in a promise chain, in case one drops the
+            // occasional fastdom bomb in the middle.
+            .reduce(function (promise, listener) {
+                return promise.then(function promiseCallback(ret) {
+                    var thisRet = listener(data.value, ret, getIframe(data));
+                    return thisRet === undefined ? ret : thisRet;
+                });
+            }, Promise.resolve(true));
 
-        // Because any listener can have side-effects (by unregistering itself),
-        // we run the promise chain on a copy of the `listeners` array.
-        // Hat tip @piuccio
-        var promise = listeners[data.type].slice()
-        // We offer, but don't impose, the possibility that a listener returns
-        // a value that must be sent back to the calling frame. To do this,
-        // we pass the cumulated returned value as a second argument to each
-        // listener. Notice we don't try some clever way to compose the result
-        // value ourselves, this would only make the solution more complex.
-        // That means a listener can ignore the cumulated return value and
-        // return something else entirely—life is unfair.
-        // We don't know what each callack will be made of, we don't want to.
-        // And so we wrap each call in a promise chain, in case one drops the
-        // occasional fastdom bomb in the middle.
-        .reduce(function (promise, listener) {
-            return promise.then(function promiseCallback(ret) {
-                var thisRet = listener(data.value, ret);
-                return thisRet === undefined ? ret : thisRet;
+            return promise.then(function (response) {
+                respond(null, response);
+            }).catch(function (ex) {
+                reportError(ex, { feature: 'native-ads' });
+                respond(formatError(error500, ex), null);
             });
-        }, Promise.resolve(true));
-
-        return promise.then(function (response) {
-            respond(null, response);
-        }).catch(function (ex) {
-            reportError(ex, { feature: 'native-ads' });
-            respond(formatError(error500, ex), null);
-        });
+        } else if (typeof listeners[data.type] === 'function') {
+            // We found a persistent listener, to which we just delegate
+            // responsibility to write something. Anything. Really.
+            listeners[data.type](respond, data.value, getIframe(data));
+        } else {
+            // If there is no routine attached to this event type, we just answer
+            // with an error code
+            respond(formatError(error405, data.type), null);
+        }
 
         function respond(error, result) {
             postMessage({ id: data.id, error: error, result: result }, event.source);
@@ -134,6 +157,12 @@ define([
                 'id' in payload.value &&
                 'height' in payload.value;
         }
+    }
+
+    // Incoming messages may contain the ID of the iframe into which the
+    // source window is embedded.
+    function getIframe(data) {
+        return data.iframeId ? document.getElementById(data.iframeId) : null;
     }
 
     // Cheap string formatting function. It accepts as its first argument

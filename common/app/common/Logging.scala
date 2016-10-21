@@ -1,5 +1,6 @@
 package common
 
+import common.LoggingField._
 import play.api.Logger
 import org.apache.commons.lang.exception.ExceptionUtils
 import net.logstash.logback.marker.LogstashMarker
@@ -15,6 +16,18 @@ trait Logging {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 
+  def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.info(customFieldMarkers(customFields), message)
+  }
+  def logWarningWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
+    log.logger.warn(customFieldMarkers(customFields), message, error)
+  }
+  def logErrorWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
+    log.logger.error(customFieldMarkers(customFields), message, error)
+  }
+}
+
+object LoggingField {
   /*
    * Passing custom fields into the logs
    * Fields are passed as a map (fieldName -> fieldValue)
@@ -34,7 +47,7 @@ trait Logging {
   implicit def tupleToLogFieldDouble(t: (String, Double)) = LogFieldDouble(t._1, t._2)
   implicit def tupleToLogFieldLong(t: (String, Long)) = LogFieldLong(t._1, t._2)
 
-  private def customFieldMarkers(fields: List[LogField]) : LogstashMarker = {
+  def customFieldMarkers(fields: List[LogField]) : LogstashMarker = {
     val fieldsMap = fields.map {
       case LogFieldInt(n, v) => (n, v)
       case LogFieldString(n, v) => (n, v)
@@ -45,15 +58,4 @@ trait Logging {
       .asJava
     appendEntries(fieldsMap)
   }
-
-  def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
-    log.logger.info(customFieldMarkers(customFields), message)
-  }
-  def logWarningWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
-    log.logger.warn(customFieldMarkers(customFields), message, error)
-  }
-  def logErrorWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
-    log.logger.error(customFieldMarkers(customFields), message, error)
-  }
 }
-

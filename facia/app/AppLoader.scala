@@ -1,4 +1,4 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
@@ -7,7 +7,6 @@ import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{Assets, FaciaControllers, HealthCheck}
-import crosswords.TodaysCrosswordGridLifecycle
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
@@ -17,7 +16,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -30,16 +29,12 @@ trait FapiServices {
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
 }
 
-trait Controllers extends FaciaControllers {
-  self: BuiltInComponents =>
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val assets = wire[Assets]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
+  lazy val ophanApi = wire[OphanApi]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -48,13 +43,9 @@ trait AppLifecycleComponents {
     wire[FaciaDfpAgentLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[IndexListingsLifecycle],
-    wire[TodaysCrosswordGridLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with FapiServices {
 
   lazy val router: Router = wire[Routes]
 

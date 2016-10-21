@@ -73,7 +73,6 @@ class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
 
         signInService.getCookies(authResponse, persistent) map {
           case Left(errors) =>
-            logger.error(errors.toString())
             logger.info(s"Reauthentication failed for user, ${errors.toString()}")
             val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
               val errorMessage =

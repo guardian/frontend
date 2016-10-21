@@ -4,11 +4,8 @@ import org.scalatest._
 
 class TrainingTestSuite extends Suites (
   new TrainingServerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new controllers.HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19014
 }
 
 @DoNotDiscover class TrainingServerTest extends FlatSpec with Matchers with ConfiguredTestSuite {

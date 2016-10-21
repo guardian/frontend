@@ -1,72 +1,85 @@
 package common.commercial.hosted
 
-import model.GuardianContentTypes._
-import model.{MetaData, SectionSummary}
-import play.api.libs.json.JsString
+import com.gu.contentapi.client.model.v1.ElementType.Image
+import com.gu.contentapi.client.model.v1.{Asset, Content}
+import common.Logging
+import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
+import model.MetaData
 
 case class HostedArticlePage(
-  campaign: HostedCampaign,
-  pageUrl: String,
-  pageName: String,
-  title: String,
-  standfirst: String,
-  standfirstLink: String,
-  facebookImageUrl: String,
-  cta: HostedCallToAction,
-  ctaBanner: String,
+  override val id: String,
+  override val campaign: HostedCampaign,
+  override val pageName: String,
+  override val title: String,
+  override val standfirst: String,
+  body: String,
+  override val cta: HostedCallToAction,
   mainPicture: String,
-  facebookShareText: Option[String] = None,
-  twitterShareText: Option[String] = None,
-  emailSubjectText: Option[String] = None,
-  customData: CustomData,
-  nextPage: Option[HostedPage] = None
-)
-  extends HostedPage {
+  mainPictureCaption: String,
+  override val socialShareText: Option[String],
+  override val shortSocialShareText: Option[String],
+  nextPagesList: List[NextHostedPage] = List(),
+  nextPageNames: List[String] = List(),
+  override val metadata: MetaData
+) extends HostedPage {
 
-  val pageTitle = s"Advertiser content hosted by the Guardian: $title"
-  val imageUrl = mainPicture
+  override val imageUrl = mainPicture
 
-  override val metadata: MetaData = {
-    val keywordId = s"${campaign.id}/${campaign.id}"
-    val keywordName = campaign.id
-    MetaData.make(
-      id = s"commercial/advertiser-content/${campaign.id}/$pageName",
-      webTitle = pageTitle,
-      section = Some(SectionSummary.fromId(campaign.id)),
-      contentType = Article,
-      analyticsName = s"GFE:${campaign.id}:$Article:$pageName",
-      description = Some(standfirst),
-      javascriptConfigOverrides = Map(
-        "keywordIds" -> JsString(keywordId),
-        "keywords" -> JsString(keywordName),
-        "toneIds" -> JsString(toneId),
-        "tones" -> JsString(toneName)
-      ),
-      opengraphPropertiesOverrides = Map(
-        "og:url" -> pageUrl,
-        "og:title" -> pageTitle,
-        "og:description" ->
-        s"ADVERTISER CONTENT FROM ${campaign.owner.toUpperCase} HOSTED BY THE GUARDIAN | $standfirst",
-        "og:image" -> facebookImageUrl,
-        "fb:app_id" -> "180444840287"
-      )
+  def nextPages: List[NextHostedPage] = nextPagesList ++ nextPageNames.flatMap(
+    HostedPages.fromCampaignAndPageName(campaign.id, _)
+  ).map(
+    page => NextHostedPage(
+      id = page.id,
+      imageUrl = page.imageUrl,
+      title = page.title,
+      contentType = HostedPages.contentType(page)
     )
-  }
+  )
 }
 
-case class CustomData(
-   conArtistPic: String,
-   conArtistPoster: String,
-   rookiePic: String,
-   rookiePoster: String,
-   chiefPic: String,
-   chiefPoster: String,
-   slothPic: String,
-   slothPoster: String,
-   deskClerkPic: String,
-   deskClerkPoster: String,
-   gazellePic: String,
-   gazellePoster: String,
-   posterPdf: String,
-   colouringPdf: String
-)
+object HostedArticlePage extends Logging {
+
+  def fromContent(content: Content): Option[HostedArticlePage] = {
+    val page = for {
+      campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
+      campaign <- HostedCampaign.fromContent(content)
+      atoms <- content.atoms
+      ctaAtoms <- atoms.cta
+      ctaAtom <- ctaAtoms.headOption
+    } yield {
+
+      val mainImageAsset: Option[Asset] = {
+        val optElement = content.elements.flatMap(
+          _.find { element =>
+            element.`type` == Image && element.relation == "main"
+          }
+        )
+        optElement.map { element =>
+          element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
+        }
+      }
+
+      HostedArticlePage(
+        id = content.id,
+        campaign,
+        pageName = content.webTitle,
+        title = content.webTitle,
+        // using capi trail text instead of standfirst because we don't want the markup
+        standfirst = content.fields.flatMap(_.trailText).getOrElse(""),
+        body = content.fields.flatMap(_.body).getOrElse(""),
+        cta = HostedCallToAction.fromAtom(ctaAtom),
+        mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
+        mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
+        socialShareText = content.fields.flatMap(_.socialShareText),
+        shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
+        nextPagesList = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)),
+        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList)
+      )
+    }
+
+    if (page.isEmpty) log.error(s"Failed to build HostedArticlePage from ${content.id}")
+
+    page
+  }
+
+}

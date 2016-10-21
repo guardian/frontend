@@ -25,7 +25,7 @@
             </div>
 
             @if(showNav) {
-                <div class="l-footer__navigation-wrapper u-cf">
+                <div class="l-footer__navigation-wrapper u-cf @if(mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating) {hide-on-mobile}">
                     @fragments.nav.navigationFooter(page)
                 </div>
             }
@@ -113,7 +113,7 @@
                         <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
                             jobs</a>
                         </li>
-                        <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs}">
+                        <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs-us}">
                             guardian labs</a>
                         </li>
                         <li class="colophon__item"><a data-link-name="us : footer : subscribe" href="http://subscribe.theguardian.com/us?INTCMP=NGW_FOOTER_US_GU_SUBSCRIBE">

@@ -1,41 +1,54 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Atomise
-@import common.{LinkTo, NewNavigation}
+@import common.{LinkTo, NewNavigation, NavLink, Edition}
 
-@primaryLinks(sectionName: String) = {
-    <li class="new-header__nav__primary-item">
-        <a class="new-header__nav__link js-open-section-in-menu"
-            tabindex="0"
-            aria-controls="primary-list-@sectionName"
-            href="@LinkTo{#main-menu}">
-                @sectionName
-        </a>
-    </li>
+@primaryLinksv1(sectionName: String) = {
+    <label for="main-menu-toggle" tabindex="0"
+        class="new-header__nav__link js-open-section-in-menu"
+        aria-controls="primary-list-@sectionName"
+        data-link-name="nav2 : primary : @sectionName">
+            @sectionName
+    </label>
 }
 
-@fragments.nav.newHeaderMenu()
+@primaryLinksv2(link: NavLink) = {
+    <a class="new-header__nav__link"
+        href="@LinkTo(link.url)"
+        data-link-name="nav2 : primary : @link.name">
+            @link.name
+    </a>
+}
 
-<header class="@Atomise("New-header")" role="banner" data-link-name="global navigation: new header">
+<header class="@Atomise("New-header")" role="banner">
     <div class="new-header__inner gs-container">
-        <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0">
+        <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
         </a>
 
         @fragments.nav.editionPicker()
 
-        <nav class="new-header__nav">
-            <a href="#main-menu" class="new-header__nav__menu-button js-change-link" tabindex="0">
-                <i class="new-header__veggie-burger-icon">
-                </i>
-                <span class="u-h">Menu</span>
-            </a>
-            <ul class="new-header__nav__list">
+        <nav class="new-header__nav" data-component="nav2">
+            @if(mvt.ABNewHeaderVariant.isParticipating) {
                 @NewNavigation.topLevelSections.map { section =>
-                    @primaryLinks(section.name)
+                    @primaryLinksv1(section.name)
                 }
-            </ul>
+            } else {
+                @NewNavigation.PrimaryLinks.getEditionalisedNavLinks(Edition(request)).map { link =>
+                    @primaryLinksv2(link)
+                }
+            }
+            <label for="main-menu-toggle"
+                class="new-header__nav__menu-button js-change-link"
+                tabindex="0"
+                data-link-name="nav2 : veggie-burger : show">
+                    <span class="new-header__veggie-burger-icon"></span>
+                    <span class="u-h">Menu</span>
+            </label>
+            <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
+
+            @fragments.nav.newHeaderMenu()
         </nav>
     </div>
 </header>

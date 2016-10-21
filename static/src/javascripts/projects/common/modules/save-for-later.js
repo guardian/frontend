@@ -16,7 +16,8 @@ define([
     'lodash/objects/assign',
     'lodash/collections/forEach',
     'lodash/collections/filter',
-    'lodash/collections/some'
+    'lodash/collections/some',
+    'bootstraps/enhanced/liveblog'
 ], function (
     qwery,
     bonzo,
@@ -35,7 +36,8 @@ define([
     assign,
     forEach,
     filter,
-    some
+    some,
+    liveBlog
 ) {
 
     function SaveForLater() {
@@ -80,6 +82,12 @@ define([
     var getCustomEventProperties = function (contentId) {
         var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
         return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
+
+    SaveForLater.prototype.conditionalInit = function(){
+        if (!liveBlog.notificationsCondition()) {
+            this.init();
+        }
     };
 
     SaveForLater.prototype.init = function () {
@@ -137,37 +145,35 @@ define([
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
 
         $savers.each(function (saver) {
-            var $saver = bonzo(saver);
-            $saver.css('display', 'block');
-            var templateData = {
-                icon: bookmarkSvg,
-                isSaved: options.isSaved,
-                position: $saver.attr('data-position'),
-                config: config
-            };
-            if (options.url) {
-                $saver.html(template(saveLink,
-                    assign({ url: options.url }, templateData))
-                );
-            } else {
-                $saver.html(template(saveButton, templateData));
+             var $saver = bonzo(saver);
+             var templateData = {
+                 icon: bookmarkSvg,
+                 isSaved: options.isSaved,
+                 position: $saver.attr('data-position'),
+                 config: config
+             };
+            fastdom.write(function(){
+                $saver.css('display', 'block');
+                if (options.url) {
+                    $saver.html(template(saveLink,
+                        assign({ url: options.url }, templateData))
+                    );
+                } else {
+                    $saver.html(template(saveButton, templateData));
 
-                bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
-                    this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
-                        config.page.pageId,
-                        shortUrl
-                    )
-                );
-            }
+                    bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
+                        this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
+                            config.page.pageId,
+                            shortUrl
+                        )
+                    );
+                }
+            }.bind(this));
         }.bind(this));
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
-        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
-
-        return forEach(elements, function (el) {
-            return bonzo(el).attr(this.attributes.containerItemShortUrl);
-        }.bind(this));
+        return qwery('[' + this.attributes.containerItemShortUrl + ']', context);
     };
 
     SaveForLater.prototype.prepareFaciaItemLinks = function (signedIn) {
@@ -206,6 +212,10 @@ define([
                 shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
                 id = item.getAttribute(this.attributes.containerItemDataId),
                 isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
+
+            if ($itemSaveLink.length === 0) {
+                return;
+            }
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);

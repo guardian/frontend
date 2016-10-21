@@ -31,8 +31,10 @@ object Frontend extends Build with Prototypes {
       jodaTime,
       jSoup,
       liftJson,
+      json4s,
       playGoogleAuth,
       quartzScheduler,
+      redisClient,
       rome,
       romeModules,
       scalaCheck,
@@ -47,7 +49,8 @@ object Frontend extends Build with Prototypes {
       cssParser,
       w3cSac,
       logback,
-      kinesisLogbackAppender
+      kinesisLogbackAppender,
+      targetingClient
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -107,8 +110,7 @@ object Frontend extends Build with Prototypes {
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources,
-      redisClient
+      uaDetectorResources
     ),
     RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
@@ -171,7 +173,9 @@ object Frontend extends Build with Prototypes {
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
-    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
+    .settings(
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    )
 
   val dev = application("dev-build")
     .dependsOn(

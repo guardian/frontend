@@ -65,6 +65,11 @@
     }
 }
 
+.paidfor-box-wrapper {
+    min-height: 140px;
+    position: relative;
+}
+
 .paidfor-box {
     color: inherit;
     display: block;
@@ -89,6 +94,9 @@
 
 .paidfor-box--logo {
     padding-bottom: $gs-gutter / 4;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .content--immersive {

@@ -1,7 +1,10 @@
-@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader)
-
+@import common.LinkTo
+@import pa.LineUpPlayer
 @import implicits.Football._
 @import views.FootballHelpers._
+
+
+@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader)
 
 @team(players: Seq[LineUpPlayer]) = {
     <ul class="team-list u-unstyled">

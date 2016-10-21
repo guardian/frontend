@@ -10,20 +10,20 @@ define([
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/init',
     'commercial/modules/dfp/load',
-    'commercial/modules/dfp/sponsorships',
     'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
-    'commercial/modules/hosted/colours',
+    'commercial/modules/hosted/onward-journey-carousel',
+    'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
+    'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/ophan-tracking',
-    'commercial/modules/badges'
+    'commercial/modules/dfp/ophan-tracking'
 ], function (
     Promise,
     config,
@@ -36,35 +36,35 @@ define([
     closeDisabledSlots,
     dfpInit,
     dfpLoad,
-    sponsorships,
     frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
-    hostedColours,
+    hostedOJCarousel,
+    hostedOnward,
     sliceAdverts,
+    liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    ophanTracking,
-    badges
+    ophanTracking
 ) {
     var primaryModules = [
+        ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-init', dfpInit],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
+        ['cm-liveblogAdverts', liveblogAdverts.init],
         ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     var secondaryModules = [
         ['cm-load', dfpLoad],
-        ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-sponsorships', sponsorships.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
@@ -74,21 +74,17 @@ define([
         }]
     ];
 
-    if (config.isHosted) {
+    if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedColours', hostedColours.init]);
-    }
-
-    if (!(config.switches.staticBadges && config.switches.staticContainerBadges)) {
-        primaryModules.push(['cm-badges', badges.init]);
+            ['cm-hostedOnward', hostedOnward.init],
+            ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
     if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner ||
-         config.tests.abNewHeaderVariant
+         config.page.disableStickyTopBanner
     ) {
         config.page.hasStickyAdBanner = false;
     } else {
@@ -98,7 +94,7 @@ define([
 
     function loadModules(modules, baseline) {
 
-        ophanTracking.addBaseline(baseline);
+        ophanTracking.addStartTimeBaseline(baseline);
 
         var modulePromises = [];
 
@@ -115,7 +111,11 @@ define([
             });
         });
 
-       return Promise.all(modulePromises);
+       return Promise.all(modulePromises)
+           .then(function(moduleLoadResult){
+               ophanTracking.addEndTimeBaseline(baseline);
+               return moduleLoadResult;
+           });
     }
 
     return {
@@ -125,6 +125,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+
+            // Stub the command queue
+            window.googletag = { cmd: [] };
 
             loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
                 loadModules(secondaryModules, ophanTracking.secondaryBaseline);

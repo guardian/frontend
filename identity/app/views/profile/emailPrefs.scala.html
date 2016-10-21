@@ -1,7 +1,10 @@
-@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
-
-@import views.html.fragments.form.{checkboxField, radioField}
 @import form.IdFormHelpers._
+@import model.{EmailSubscription, EmailSubscriptions}
+@import views.html.fragments.form.radioField
+@import views.support.RenderClasses
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {
@@ -12,7 +15,13 @@
                 "email-subscription--subscribed" -> subscription.subscribedTo,
                 "email-subscription--first" -> row.isFirst))">
                 @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
-                <div class="email-subscription__name">@subscription.name</div>
+                <div class="email-subscription__name">
+                    <h2 class="email-subscription__heading">@subscription.name</h2>
+
+                    @if(subscription.subheading.isDefined){
+                        <h3 class="email-subscription__subheading">@subscription.subheading</h3>
+                    }
+                </div>
 
                 <div class="email-subscription__description">@subscription.description @if(subscription.exampleUrl.isDefined){<br><a href="@subscription.exampleUrl" target="preview-email-@subscription.listId">See the latest email</a>}</div>
 
@@ -45,7 +54,7 @@
               <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
             }
             <div class="email-subscriptions">
-                @List("news", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
+                @List("news", "feature", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
                   @emailListCategoryList(theme, emailSubscriptions.subscriptions.filter(_.theme == theme), index == 0)
                 }
             </div>

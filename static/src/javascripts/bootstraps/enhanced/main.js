@@ -8,6 +8,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/user-timing',
+    'common/utils/robust',
+    'common/modules/experiments/ab',
     './common',
     './sport',
     'enhanced-common'
@@ -21,6 +23,8 @@ define([
     detect,
     mediator,
     userTiming,
+    robust,
+    ab,
     common,
     sport
 ) {
@@ -36,6 +40,20 @@ define([
 
         userTiming.mark('App Begin');
         bootstrapContext('common', common);
+
+        //
+        // A/B tests
+        //
+
+        robust.catchErrorsAndLog('ab-tests', function () {
+            ab.segmentUser();
+
+            robust.catchErrorsAndLog('ab-tests-run', ab.run);
+            robust.catchErrorsAndLog('ab-tests-registerImpressionEvents', ab.registerImpressionEvents);
+            robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
+
+            ab.trackEvent();
+        });
 
         // Front
         if (config.page.isFront) {
@@ -85,7 +103,7 @@ define([
             });
         }
 
-        if ((config.isMedia || qwery('video, audio').length) && !config.isHosted) {
+        if ((config.isMedia || qwery('video, audio').length) && !config.page.isHosted) {
             require(['bootstraps/enhanced/media/main'], function (media) {
                 bootstrapContext('media', media);
             });

@@ -11,14 +11,14 @@ define(function () {
         fluid:                  AdSize(0, 0),
 
         // guardian proprietary ad sizes
-        badge:                  AdSize(140, 90),
         merchandisingHighAdFeature: AdSize(88, 89),
         merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),
         inlineMerchandising:    AdSize(88, 85),
         fabric:                 AdSize(88, 71),
         fluid250:               AdSize(88, 70),
-        outOfPage:              AdSize(1, 1)
+        outOfPage:              AdSize(2, 2),
+        empty:                  AdSize(1, 1)
     };
     adSizes['970x250'] = adSizes.billboard;
     adSizes['728x90'] = adSizes.leaderboard;

@@ -1,13 +1,10 @@
 package test
 
 import java.io.File
-
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
-import conf.Configuration
-import contentapi.{ContentApiClient, Http}
-import org.apache.commons.codec.digest.DigestUtils
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
@@ -16,29 +13,17 @@ import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
-
 import scala.util.{Failure, Success, Try}
 
+//TODO: to delete once ContentApiClient global object is not used anymore
 trait TestSettings {
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  private def verify(property: String, hash: String, message: String) {
-    if (DigestUtils.sha256Hex(property) != hash) {
+  private def toRecorderHttp(httpClient: HttpClient) = new HttpClient {
 
-      // the println makes it easier to spot what is wrong in tests
-      println()
-      println(s"----------- $message -----------")
-      println()
-
-      throw new RuntimeException(message)
-    }
-  }
-
-  private def toRecorderHttp(http: Http) = new Http {
-
-    val originalHttp = http
+    val originalHttp = httpClient
 
     override def GET(url: String, headers: Iterable[(String, String)]) = {
       recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
@@ -46,9 +31,6 @@ trait TestSettings {
       }
     }
   }
-
-  ContentApiClient.thriftClient._http = toRecorderHttp(ContentApiClient.thriftClient._http)
-  ContentApiClient.jsonClient._http = toRecorderHttp(ContentApiClient.jsonClient._http)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
@@ -111,7 +93,7 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
     ("ws.timeout.request", "10000"))
 
   implicit override lazy val app: Application = {
-    val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val environment = Environment.simple()
     val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
       case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
       case Failure(_) => initialSettings
@@ -131,6 +113,10 @@ object TestRequest {
   }
 }
 
+trait WithTestEnvironment {
+  val testEnvironment: Environment = Environment.simple()
+}
+
 trait WithTestWsClient {
   self: WithTestWsClient with BeforeAndAfterAll =>
 
@@ -138,4 +124,23 @@ trait WithTestWsClient {
   lazy val wsClient: WSClient = lazyWsClient
 
   override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
+}
+
+trait WithTestContentApiClient {
+  def wsClient: WSClient
+
+  val httpRecorder = new ContentApiHttpRecorder {
+    override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
+  }
+
+  class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
+    override def GET(url: String, headers: Iterable[(String, String)]) = {
+      httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
+        originalHttpClient.GET(url, headers)
+      }
+    }
+  }
+
+  lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
+  lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
 }

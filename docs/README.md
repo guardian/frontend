@@ -7,6 +7,7 @@
 - [How to deploy](01-start-here/03-how-to-deploy.md)
 - [Troubleshooting](01-start-here/04-troubleshooting.md)
 - [Development tips](01-start-here/05-development-tips.md)
+- [FAQs](01-start-here/06-faqs.md)
 
 ##[Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
@@ -14,6 +15,7 @@
 - [Libraries we use](02-architecture/03-libraries-we-use.md)
 - [Archiving](02-architecture/04-archiving.md)
 - [Architecture principles for CSS](02-architecture/05-architecture-principles-for-css.md)
+- [Javascript](02-architecture/06-client-side-architecture.md)
 
 ##[Dev howtos](03-dev-howtos/)
 - [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
@@ -28,6 +30,9 @@
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
 - [How to build a docker image for the dev environment](03-dev-howtos/12-Build-dev-docker-image.md)
+- [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
+- [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
+- [Overriding default configuration](03-dev-howtos/15-override-default-configuration.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)

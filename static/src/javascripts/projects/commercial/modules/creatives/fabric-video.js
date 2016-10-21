@@ -26,9 +26,9 @@ define([
         } else {
             if (hasVideo) {
                 params.video = '<video muted class="creative__video creative__video--' + params.Videoalignment + '"><source src="' + params.VideoURL + '" type="video/mp4"></video>';
-            } else {
-                params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
             }
+
+            params.posterTablet = '<div class="creative__poster" style="background-image:url(' + params.BackgroundImagemobile + ')"></div>';
         }
 
         return Object.freeze({
@@ -41,6 +41,10 @@ define([
                     addTrackingPixel(bonzo(adSlot), params.Trackingpixel + params.cacheBuster);
                 }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
+                adSlot.classList.add('ad-slot--fabric');
+                if( adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
+                    adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
+                }
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 

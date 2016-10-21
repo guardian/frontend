@@ -39,7 +39,8 @@ define([
             'content:play',
             'content:end'
         ],
-        ga = window.ga;
+        ga = window.ga,
+        gaTracker = config.googleAnalytics.trackers.editorial;
 
 
     /**
@@ -153,7 +154,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga('guardianTestPropertyTracker.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl));
+                ga(gaTracker + '.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl));
             });
         });
     }

@@ -3,13 +3,13 @@ package controllers
 import common.ExecutionContexts
 import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import dispatch.{FunctionHandler, Http}
-
 import scala.concurrent.Future
-import contentapi.{ContentApiClient, Response}
+import contentapi.{HttpClient, Response}
 import conf.Configuration.contentApi.previewAuth
+import play.api.Environment
 import play.api.libs.ws.WSClient
 
-class TrainingHttp extends contentapi.Http with ExecutionContexts {
+class TrainingHttp extends HttpClient with ExecutionContexts {
 
   // Play 2.4.2 has problems passing the any certificate flag through play.ws.ssl.loose.acceptAnyCertificate
   // This is a workaround. Forum here (called 'Play 2.4 disable certification check'):
@@ -40,8 +40,6 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
   }
 }
 
-class HealthCheck(override val wsClient: WSClient) extends AllGoodCachedHealthCheck(
-  wsClient,
-  9016,
+class HealthCheck(wsClient: WSClient) extends AllGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/info/developer-blog/2016/apr/14/training-preview-healthcheck")
-)
+)(wsClient)

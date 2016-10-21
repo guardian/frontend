@@ -1,3 +1,5 @@
+define('js', [], function () { return function () {}; });
+define('js!googletag.js', [], function () { return function () {}; });
 define([
     'bean',
     'bonzo',
@@ -51,6 +53,10 @@ define([
         }
 
         beforeEach(function (done) {
+
+            injector.mock('common/modules/analytics/google', function noop() {
+                // No implementation
+            });
 
             injector.mock('common/modules/commercial/dfp/PrebidService', function MockPrebidService() {
                 // No implementation
@@ -254,7 +260,7 @@ define([
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
             dfp.init().then(dfp.load).then(function () {
-                expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
+                expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
                 done();
             });
         });
@@ -294,9 +300,10 @@ define([
 
         describe('keyword targeting', function () {
 
-            it('should send page level keywords', function () {
-                dfp.init();
-                expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+            it('should send page level keywords', function (done) {
+                dfp.init().then(function () {
+                    expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+                }).then(done).catch(done.fail);
             });
 
             it('should send container level keywords', function (done) {

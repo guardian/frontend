@@ -2,13 +2,20 @@ package test
 
 import controllers.MediaController
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.jsoup.Jsoup
+import scala.util.matching.Regex
 
-@DoNotDiscover class MediaControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MediaControllerTest
+  extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll with WithTestWsClient
+  with WithTestContentApiClient {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val videoUrlWithDodgyOctpusUrl = "football/video/2015/feb/10/manchester-united-louis-van-gaal-long-ball-video"
-  val mediaController = new MediaController
+  val mediaController = new MediaController(testContentApiClient)
 
   "Media Controller" should "200 when content type is video" in {
     val result = mediaController.render(videoUrl)(TestRequest(videoUrl))
@@ -48,6 +55,26 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
      val result = mediaController.render(videoUrlWithDodgyOctpusUrl)(TestRequest(videoUrlWithDodgyOctpusUrl))
      status(result) should be (200)
      contentAsString(result) should include ("https://multimedia.guardianapis.com/interactivevideos/video.php?octopusid=10040285&amp;format=video/m3u8")
+  }
 
+  it should "add video sources in a specific order" in {
+    val path = "us-news/video/2016/aug/20/trump-calls-for-black-votes-what-do-you-have-to-lose-video"
+    val result = mediaController.render(path)(TestRequest(path))
+    status(result) should be(200)
+
+    val html = Jsoup.parse(contentAsString(result))
+
+    val videoEl = html.getElementsByTag("video")
+    val sources = videoEl.html.split("\n").toList
+
+    sources.length should be (3)
+
+    val m3u8 = new Regex("\"video/m3u8\">$").findFirstIn(sources(0).trim())
+    val mp4 = new Regex("\"video/mp4\">$").findFirstIn(sources(1).trim())
+    val webm = new Regex("\"video/webm\">$").findFirstIn(sources(2).trim())
+
+    m3u8.isDefined should be(true)
+    mp4.isDefined should be(true)
+    webm.isDefined should be(true)
   }
 }

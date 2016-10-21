@@ -25,9 +25,6 @@ trait Store extends Logging with Dates {
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putDfpPaidForTags(content: String) {
-    S3.putPublic(dfpPaidForTagsDataKey, content, defaultJsonEncoding)
-  }
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
@@ -54,11 +51,6 @@ trait Store extends Logging with Dates {
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
-
-  def getDfpPaidForTags(key: String = dfpPaidForTagsDataKey): PaidForTagsReport =
-    S3.get(key).map {
-    Json.parse(_).as[PaidForTagsReport]
-  }.getOrElse(PaidForTagsReport(now, Nil))
 
   def getDfpPageSkinnedAdUnits() =
     S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)

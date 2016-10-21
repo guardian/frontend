@@ -23,7 +23,9 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
                      r2PagePressJob: R2PagePressJob,
                      videoEncodingsJob: VideoEncodingsJob,
-                     matchDayRecorder: MatchDayRecorder)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+                     matchDayRecorder: MatchDayRecorder,
+                     analyticsSanityCheckJob: AnalyticsSanityCheckJob,
+                     rebuildIndexJob: RebuildIndexJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     descheduleJobs()
@@ -60,7 +62,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
     jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
-      AnalyticsSanityCheckJob.run()
+      analyticsSanityCheckJob.run()
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
@@ -79,7 +81,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     }
 
     jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
-      RebuildIndexJob.run()
+      rebuildIndexJob.run()
     }
 
     // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
@@ -92,23 +94,11 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
         AdsStatusEmailJob(emailService).run()
       }
-      jobs.scheduleWeekdayJob("ExpiringAdFeaturesEmailJob", 47, 8, londonTime) {
-        log.info(s"Starting ExpiringAdFeaturesEmailJob")
-        ExpiringAdFeaturesEmailJob(emailService).run()
-      }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
 
-
-      //Running every 30 minutes
-      jobs.scheduleEveryNMinutes("surgingContentEmail", 30){
-        if(surgingContentEmail.isSwitchedOn) {
-          SurgingSportEmailJob(emailService).run()
-        }
-        Future.successful(())
-      }
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
@@ -137,7 +127,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FrontPressJobStandardFrequency")
     jobs.deschedule("FrontPressJobLowFrequency")
     jobs.deschedule("AdsStatusEmailJob")
-    jobs.deschedule("ExpiringAdFeaturesEmailJob")
     jobs.deschedule("VideoEncodingsJob")
     jobs.deschedule("ExpiringSwitchesEmailJob")
     jobs.deschedule("AssetMetricsCache")
@@ -148,9 +137,10 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     scheduleJobs()
 
     akkaAsync.after1s {
-      RebuildIndexJob.run()
+      rebuildIndexJob.run()
       videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
+      LoadBalancer.refresh()
     }
   }
 }

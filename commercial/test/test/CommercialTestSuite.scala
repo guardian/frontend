@@ -1,24 +1,21 @@
-package test
+package commercial.test
 
-import controllers.HealthCheck
-import model.commercial._
-import model.commercial.books._
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import commercial.model.capi.LookupTest
+import commercial.model.merchandise.{books, events, jobs, soulmates}
+import org.scalatest.Suites
+import test.SingleServerSuite
 
 class CommercialTestSuite extends Suites (
-  new controllers.commercial.TravelOffersControllerTest,
-  new MagentoBestsellersFeedTest,
+  new commercial.controllers.TravelOffersControllerTest,
+  new books.MagentoBestsellersFeedTest,
   new books.MagentoExceptionTest,
   new jobs.JobTest,
   new events.EventbriteMasterclassFeedParsingTest,
   new events.SingleEventbriteMasterclassParsingTest,
   new soulmates.SoulmatesFeedTest,
   new LookupTest,
-  new BookFinderTest,
-  new BookTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+  new books.BookFinderTest,
+  new books.BookTest
+) with SingleServerSuite {
+  override lazy val port: Int = 19006
 }

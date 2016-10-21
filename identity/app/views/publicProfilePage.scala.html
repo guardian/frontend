@@ -17,7 +17,7 @@
                 @user.dates.accountCreatedDate.map { accountCreatedDate =>
                     <p class="user-profile__last-seen">
                         @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
-                        Member since @accountCreatedDate.toString("d MMM yyyy")
+                        Registered on @accountCreatedDate.toString("d MMM yyyy")
                     </p>
                 }
             </div>
@@ -63,6 +63,6 @@
         </div>
     </div>
     <div class="js-activity-stream activity-stream-content" data-user-id="@user.id" data-stream-type="@activityType"></div>
-    @registrationFooter(page, idRequest, idUrlBuilder)
+    @registrationFooter(idRequest, idUrlBuilder)
 </div>
 }

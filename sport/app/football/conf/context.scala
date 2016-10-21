@@ -2,19 +2,20 @@ package conf
 
 import app.LifecycleComponent
 import common._
+import contentapi.ContentApiClient
 import feed.CompetitionsService
-import model.{LiveBlogAgent, TeamMap}
+import model.TeamMap
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class FootballLifecycle(
   appLifeCycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
-  competitionsService: CompetitionsService)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  competitionsService: CompetitionsService,
+  contentApiClient: ContentApiClient)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     descheduleJobs()
@@ -40,12 +41,8 @@ class FootballLifecycle(
       competitionsService.refreshCompetitionData()
     }
 
-    jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
-      LiveBlogAgent.refresh()
-    }
-
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
-      TeamMap.refresh()
+      TeamMap.refresh()(contentApiClient)
     }
   }
 
@@ -67,25 +64,27 @@ class FootballLifecycle(
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
-      LiveBlogAgent.refresh()
-      TeamMap.refresh()
+      TeamMap.refresh()(contentApiClient)
     }
   }
 }
 
 class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
 
-    override def GET(urlString: String): Future[pa.Response] = {
+  // Runs the API calls via a CDN
+  override lazy val base: String = "http://football-api.gu-web.net/v1.5"
 
-        val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
+  override def GET(urlString: String): Future[pa.Response] = {
 
-        promiseOfResponse.map{ r =>
+    val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
 
-          //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
-          //I have reported to PA, but just trimming here so we can carry on development
-          pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
-        }
-      }
+    promiseOfResponse.map { r =>
+
+      //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
+      //I have reported to PA, but just trimming here so we can carry on development
+      pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
+    }
+  }
 
   lazy val apiKey = SportConfiguration.pa.footballKey
 

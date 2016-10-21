@@ -1,20 +1,43 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{atom => atomapi, AtomData}
+import com.gu.contentatom.thrift.{AtomData, atom => atomapi, Atom => AtomApiAtom}
 import model.{ImageAsset, ImageMedia}
+import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
+import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
 final case class Atoms(
-  quizzes: Seq[Quiz]
+  quizzes: Seq[Quiz],
+  media: Seq[MediaAtom],
+  interactives: Seq[InteractiveAtom]
 ) {
-  val all: Seq[Atom] = quizzes
+  val all: Seq[Atom] = quizzes ++ media ++ interactives
 }
 
 sealed trait Atom {
   def id: String
 }
+
+final case class MediaAtom(
+  override val id: String,
+  defaultHtml: String,
+  assets: Seq[MediaAsset],
+  title: String,
+  duration: Option[Long],
+  source: Option[String],
+  posterUrl: Option[String]
+) extends Atom
+
+
+final case class MediaAsset(
+  id: String,
+  version: Long,
+  platform: String,
+  mimeType: Option[String]
+)
+
 
 final case class Quiz(
   override val id: String,
@@ -25,21 +48,74 @@ final case class Quiz(
   revealAtEnd: Boolean
 ) extends Atom
 
+final case class InteractiveAtom(
+  override val id: String,
+  `type`: String,
+  title: String,
+  css: String,
+  html: String,
+  mainJS: Option[String],
+  docData: Option[String]
+) extends Atom
+
+
 object Atoms extends common.Logging {
-  def make(content: contentapi.Content): Option[Atoms] = {
-    content.atoms.map { atoms =>
-      val quizzes: Seq[atomapi.quiz.QuizAtom] = try {
-        atoms.quizzes.getOrElse(Nil).map(atom => {
-          atom.data.asInstanceOf[AtomData.Quiz].quiz
-        })
-      } catch {
-        case e: Exception =>
-          logException(e)
-          Nil
-      }
-      Atoms(quizzes = quizzes.map(Quiz.make(content.id, _)))
+  def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
+    try {
+      atoms.getOrElse(Nil).map(extractFn)
+    } catch {
+      case e: Exception =>
+        logException(e)
+        Nil
     }
   }
+
+  def make(content: contentapi.Content): Option[Atoms] = {
+    content.atoms.map { atoms =>
+      val quizzes = extract(atoms.quizzes, atom => {
+        val quizAtom = atom.data.asInstanceOf[AtomData.Quiz].quiz
+        Quiz.make(content.id, quizAtom)
+      })
+
+      val media = extract(atoms.media, atom => {
+        val id = atom.id
+        val defaultHtml = atom.defaultHtml
+        val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
+        MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+      })
+
+      val interactives = extract(atoms.interactives, atom => {
+        val interactiveAtom = atom.data.asInstanceOf[AtomData.Interactive].interactive
+        InteractiveAtom.make(atom.id, interactiveAtom)
+      })
+
+      Atoms(quizzes = quizzes, media = media, interactives = interactives)
+    }
+  }
+}
+
+
+object MediaAtom extends common.Logging {
+
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
+    MediaAtom(
+      id = id,
+      defaultHtml = defaultHtml,
+      assets = mediaAtom.assets.map(mediaAssetMake),
+      title = mediaAtom.title,
+      duration = mediaAtom.duration,
+      source = mediaAtom.source,
+      posterUrl = mediaAtom.posterUrl)
+
+  def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
+  {
+    MediaAsset(
+      id = mediaAsset.id,
+      version = mediaAsset.version,
+      platform = mediaAsset.platform.toString,
+      mimeType = mediaAsset.mimeType)
+  }
+
 }
 
 object Quiz extends common.Logging {
@@ -72,6 +148,8 @@ object Quiz extends common.Logging {
       }
     }
   }
+
+
 
   def make(path: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
     val questions = quiz.content.questions.map { question =>
@@ -123,6 +201,20 @@ object Quiz extends common.Logging {
       quizType = quiz.quizType,
       content = content,
       revealAtEnd = quiz.revealAtEnd
+    )
+  }
+}
+
+object InteractiveAtom {
+  def make(id: String, interactive: atomapi.interactive.InteractiveAtom): InteractiveAtom = {
+    InteractiveAtom(
+      id = id,
+      `type` = interactive.`type`,
+      title = interactive.title,
+      css = interactive.css,
+      html = interactive.html,
+      mainJS = interactive.mainJS,
+      docData = interactive.docData
     )
   }
 }

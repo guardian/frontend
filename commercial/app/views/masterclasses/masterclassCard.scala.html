@@ -1,4 +1,7 @@
-@(event: model.commercial.events.Masterclass,
+@import commercial.model.merchandise.Masterclass
+@import views.support.Item300
+
+@(event: Masterclass,
   clickMacro: Option[String],
   optClassNames: Option[Seq[String]] = None)
 
@@ -12,7 +15,7 @@
         }
     }
     <div class="advert__meta">
-        <strong>@event.readableDate</strong> &#20; <span class="commercial--tone__highlight">@event.displayPrice</span><br/>
+        <strong>@event.readableDate</strong> &#20; <span class="commercial--tone__highlight">@event.displayPriceRange</span><br/>
         @event.venue.description
         @if(event.ratioTicketsLeft <= 0.1){
             <br><span class="lineitem__scarcity">Last few tickets remaining</span>

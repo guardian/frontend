@@ -2,14 +2,14 @@ package test
 
 import java.io.File
 
-import controllers.{FaciaController, HealthCheck, front}
-import controllers.front.{FrontJsonFapi, FrontJsonFapiLive}
+import controllers.front.FrontJsonFapiLive
 import org.fluentlenium.core.domain.FluentWebElement
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 import play.api.libs.ws.WSClient
 import recorder.HttpRecorder
 
 import scala.concurrent.Future
+import scala.io.Codec.UTF8
 
 object `package` {
 
@@ -32,9 +32,14 @@ object `package` {
       override lazy val baseDir = new File(System.getProperty("user.dir"), "data/pressedPage")
 
       //No transformation for now as we only store content that's there.
-      override def toResponse(str: String): Option[String] = Some(str)
+      override def toResponse(b: Array[Byte]): Option[String] = Some(new String(b, UTF8.charSet))
 
-      override def fromResponse(response: Option[String]): String = response.getOrElse(throw new RuntimeException("seeing None.get locally? make sure you have S3 credentials"))
+      override def fromResponse(response: Option[String]): Array[Byte] = {
+        val strResponse = response getOrElse {
+          throw new RuntimeException("seeing None.get locally? make sure you have S3 credentials")
+        }
+        strResponse.getBytes(UTF8.charSet)
+      }
     }
   }
 
@@ -49,8 +54,6 @@ class FaciaTestSuite extends Suites (
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19009
 }

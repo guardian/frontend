@@ -2,6 +2,8 @@ package controllers
 
 import common._
 import containers.Containers
+import contentapi.ContentApiClient
+import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
 import play.api.libs.json._
@@ -11,7 +13,7 @@ import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 
 import scala.concurrent.duration._
 
-class RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
+class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Containers with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "related-content",
@@ -41,7 +43,7 @@ class RelatedController extends Controller with Related with Containers with Log
         onwardContainer(containerTitle, relatedTrails.map(_.faciaContent)),
         FrontProperties.empty
       )(request)
-      JsonComponent("html" -> html)
+      JsonComponent(html)
     } else {
       RevalidatableResult.Ok(views.html.relatedContent(page, relatedTrails.map(_.faciaContent)))
     }
@@ -61,5 +63,3 @@ class RelatedController extends Controller with Related with Containers with Log
     )
   }
 }
-
-object RelatedController extends RelatedController

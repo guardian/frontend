@@ -58,6 +58,7 @@ trait Prototypes {
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
+      "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 
@@ -70,10 +71,6 @@ trait Prototypes {
   val frontendClientSideSettings = Seq(
 
     TwirlKeys.templateImports ++= Seq(
-      "common._",
-      "model._",
-      "views._",
-      "views.support._",
       "conf._",
       "play.api.Play",
       "play.api.Play.current"

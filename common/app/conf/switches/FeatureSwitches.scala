@@ -4,25 +4,15 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val immersiveMainEmbedSwitch = Switch(
-    SwitchGroup.Feature,
-    "immersive-main-media",
-    "If this switch is on, main media embeds won't be iframed",
-    owners = Seq(Owner.withGithub("sammorrisdesign")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 22),
-    exposeClientSide = false
-  )
-
   // see https://github.com/guardian/frontend/pull/13446
-  val HeroicTemplateSwitch = Switch(
+  val ExploreTemplateSwitch = Switch(
     SwitchGroup.Feature,
-    "heroic-main-media",
-    "If this switch is on, Heroic template will be applied to heroic articles. This template is part of a Membership Explore test",
+    "explore-main-media",
+    "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 29),
-    exposeClientSide = false
+    sellByDate = new LocalDate(2016, 11, 15),
+    exposeClientSide = true
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -384,7 +374,7 @@ trait FeatureSwitches {
     "If this switch is on, amp live blog articles have an itemtype of NewsArticle, and thus appear in Google's AMP carousel",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 9),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
@@ -394,7 +384,7 @@ trait FeatureSwitches {
     "If this switch is on, amp-live-list will be included in live blogs",
     owners = Seq(Owner.withGithub("SiAdcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 2),
+    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 
@@ -503,6 +493,28 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Sam Cutler / Editorial Tools
+  val Targeting = Switch(
+    SwitchGroup.Feature,
+    "targeting",
+    "When ON will the targeting system will poll for updates and merge targeted campaigns into content",
+    owners= Seq(Owner.withGithub("currysoup")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Owner: Francis Carr
+  val LiveBlogChromeNotificationsProd = Switch(
+    SwitchGroup.Feature,
+    "live-blog-chrome-notifications-prod",
+    "Live blog chrome notifications - prod",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 30),
     exposeClientSide = true
   )
 

@@ -1,14 +1,12 @@
-import controllers.BreakingNews.{BreakingNewsUpdaterTest, BreakingNewsApiTest}
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
-import test.{SingleServerSuite, WithTestWsClient}
+package test
+
+import controllers.BreakingNews.{BreakingNewsApiTest, BreakingNewsUpdaterTest}
+import org.scalatest.Suites
 
 class AdminJobsTestSuite extends Suites (
   new BreakingNewsApiTest,
   new BreakingNewsUpdaterTest,
   new controllers.NewsAlertControllerTest
-) with SingleServerSuite
-with BeforeAndAfterAll
-with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19002
 }

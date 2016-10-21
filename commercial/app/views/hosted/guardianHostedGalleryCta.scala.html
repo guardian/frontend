@@ -1,9 +1,9 @@
-@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], backgroundColourCssClass: String = "")
+@(ctaText: Option[String], ctaLink: String, buttonText: Option[String])
     <div class="hosted-gallery__cta js-hosted-gallery-cta">
         <div class="hosted-gallery__cta-title">
             @{ctaText}
         </div>
-        <a class="hosted-gallery__cta-link @{backgroundColourCssClass}" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
+        <a class="hosted-gallery__cta-link hosted-tone-btn" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
             @{buttonText} @fragments.inlineSvg("external-link", "icon")
         </a>
     </div>

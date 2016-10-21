@@ -13,13 +13,13 @@ object StaticPages {
       iosType = None,
       shouldGoogleIndex = false))
 
-  def subscriberNumberPage: SimplePage = SimplePage(
+  def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
     MetaData.make(
-      id = "subscriber-number-page",
-      section = Option(SectionSummary(id="global", activeBrandings=None)),
-      webTitle = "Subscriber number form",
-      analyticsName = "subscriber-number-page",
-      contentType = GuardianContentTypes.NetworkFront,
+      id = id,
+      section = Option(SectionSummary(id="email-signup-page", activeBrandings=None)),
+      webTitle = webTitle,
+      analyticsName = "email-signup-page",
+      contentType = "Signup",
       iosType = None,
       shouldGoogleIndex = false))
 }

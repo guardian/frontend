@@ -1,8 +1,8 @@
 package views.support
 
 import java.text.Normalizer
+import java.net.URI
 import java.util.regex.{Matcher, Pattern}
-
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -107,7 +107,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
       val relation = {
         if (article.isLiveBlog) LiveBlogMedia
-        else if (article.isUSMinute) MinuteMedia
+        else if (article.isTheMinute) MinuteMedia
         else if (article.isImmersive) ImmersiveMedia
         else BodyMedia
       }
@@ -125,7 +125,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         case _ => None
       }
 
-      val inlineClass = if (article.isUSMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+      val inlineClass = if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
 
       val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
@@ -153,7 +153,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
-    val srcImagePath = new java.net.URL(src).getPath()
+    val srcImagePath = new URI(src).getPath()
     val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.
@@ -298,8 +298,13 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
           if (el.children.size > 1) {
             val body = el.child(0).attr("class", "tweet-body")
             val date = el.child(1).attr("class", "tweet-date")
-            val user = el.ownText()
-            val userEl = document.createElement("span").attr("class", "tweet-user").text(user)
+            val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
+
+            val userName = user.lift(0).getOrElse("")
+            val userId = user.lift(1).getOrElse("")
+
+            val userNameEl = document.createElement("span").attr("class", "tweet__user-name").text(userName)
+            val userIdEl = document.createElement("span").attr("class", "tweet__user-id").text(userId)
             val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
 
             element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
@@ -313,7 +318,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
               element.appendChild(img)
             }
 
-            element.appendChild(userEl).appendChild(date).appendChild(body).appendChild(link)
+            List(userNameEl, userIdEl, body, link, date).map(element.appendChild)
           }
         }
       }
@@ -341,11 +346,13 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
     if (article.content.showInRelated) {
 
-      // Get all paragraphs which are not contained in a pullquote
+      // Get all paragraphs which are not contained in a pullquote or in an instagram caption
       val paragraphs = doc.getElementsByTag("p").filterNot( p =>
-        p.parents.exists( ancestor =>
-          ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
-        )
+        p.parents.exists { ancestor =>
+          val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+          val inInstagramBlock = ancestor.hasClass("instagram-media")
+          inPullquote || inInstagramBlock
+        }
       )
 
       // order by length of name so we do not make simple match errors
@@ -417,16 +424,16 @@ case class Summary(amount: Int) extends HtmlCleaner {
 
 //
 
-case class HeroicVideos(isHeroic: Boolean) extends HtmlCleaner{
+case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
   override def clean(document: Document): Document = {
-    if(isHeroic){
+    if(isExplore){
       val videoCaptionSvg = views.html.fragments.inlineSvg("videoCaption", "membership", List("video-caption-bubble")).toString()
       //gets the videos and adds a new class
       document.getElementsByTag("figure").filter(_.hasClass("element-video"))foreach{ elementVideo =>
-          elementVideo.addClass("element-video--heroic");
+          elementVideo.addClass("element-video--explore");
           //gets the figcaption of the video and adds a new class
           elementVideo.children().filter(_.hasClass("caption"))foreach{ elementVideoCaption =>
-            elementVideoCaption.addClass("caption-heroic")
+            elementVideoCaption.addClass("caption-explore")
             elementVideoCaption.prepend(videoCaptionSvg)
           }
       }
@@ -443,18 +450,6 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
       }
     }
     document
-  }
-}
-
-case class ImmersiveMainEmbed(isImmersive: Boolean, isSixtyDaysModified: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
-      if(immersiveMainEmbedSwitch.isSwitchedOn && isSixtyDaysModified && isImmersive) {
-        val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
-        if(srcdoc != null) {
-            document.getElementsByTag("body").html(srcdoc)
-        }
-      }
-      document
   }
 }
 
@@ -535,6 +530,25 @@ object GalleryCaptionCleaner {
   }
 }
 
+object InteractiveSrcdocCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if (interactivePressing.isSwitchedOn) {
+      for {
+        iframe <- Option(document.getElementsByTag("iframe").first())
+        srcdoc = iframe.attr("srcdoc")
+        if srcdoc.nonEmpty
+      } yield {
+        // noscript is added for immersive interactives, no idea why
+        // see https://github.com/guardian/flexible-content/pull/1597
+        // hopefully we can remove all of this soon anyway
+        val html = Jsoup.parse(srcdoc).getElementsByTag("noscript").html()
+        iframe.after(html).remove()
+      }
+    }
+    document
+  }
+}
+
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
@@ -604,7 +618,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -617,7 +631,7 @@ case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeade
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

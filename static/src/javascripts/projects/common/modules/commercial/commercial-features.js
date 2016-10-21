@@ -38,7 +38,7 @@ define([
 
         var isLiveBlog = config.page.isLiveBlog;
 
-        var isHosted = config.page.tones === 'Hosted';
+        var isHosted = config.page.isHosted;
 
         var isMatchReport = config.hasTone('Match reports');
 
@@ -103,10 +103,6 @@ define([
             externalAdvertising &&
             !isIdentityPage;
 
-        this.badges =
-            externalAdvertising &&
-            switches.sponsored;
-
         this.outbrain =
             externalAdvertising &&
             !sensitiveContent &&
@@ -123,16 +119,16 @@ define([
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
+            isLiveBlog &&
             this.dfpAdvertising &&
             switches.liveblogAdverts;
 
-        this.syncMembershipMessages =
-            isArticle &&
-            !userFeatures.isPayingMember();
+        this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
+            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);
 
         this.async = {
-            membershipMessages : detect.adblockInUse.then(function (adblockUsed) {
-                return !adblockUsed && self.syncMembershipMessages;
+            canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {
+                return !adblockUsed && self.canReasonablyAskForMoney;
             })
         };
     }

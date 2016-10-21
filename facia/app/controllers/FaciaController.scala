@@ -116,6 +116,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
           else if (request.isJson)
             Cached(CacheTime.Facia)(JsonFront(faciaPage))
+          else if (request.isEmail) {
+            Cached(CacheTime.Facia) {
+              RevalidatableResult.Ok(InlineStyles(views.html.frontEmail(faciaPage)))
+            }
+          }
           else {
             Cached(CacheTime.Facia) {
               RevalidatableResult.Ok(views.html.front(faciaPage))
@@ -196,9 +201,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
 
   private object JsonCollection{
-    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> html
-    )
+    def apply(html: Html)(implicit request: RequestHeader) = JsonComponent(html)
   }
 
   private object JsonFront{

@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201508.StatementBuilder
-import com.google.api.ads.dfp.axis.v201508._
+import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
+import com.google.api.ads.dfp.axis.v201608._
 import common.Logging
 import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
@@ -41,23 +41,6 @@ object DfpApi extends Logging {
                       .withBindVariableValue("threshold", threshold.getMillis)
 
     readLineItems(stmtBuilder)
-  }
-
-  def readAdFeatureLogoLineItems(expiredSince: DateTime, expiringBefore: DateTime): Seq[GuLineItem] = {
-
-    val stmtBuilder = new StatementBuilder()
-                      .where(
-                        "LineItemType = :sponsored AND " +
-                        "Status != :draft AND " +
-                        "EndDateTime > :startTime AND " +
-                        "EndDateTime < :endTime"
-                      )
-                      .withBindVariableValue("sponsored", LineItemType.SPONSORSHIP.toString)
-                      .withBindVariableValue("draft", ComputedStatus.DRAFT.toString)
-                      .withBindVariableValue("startTime", expiredSince.getMillis)
-                      .withBindVariableValue("endTime", expiringBefore.getMillis)
-
-    readLineItems(stmtBuilder) filter (_.isAdFeatureLogo)
   }
 
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {

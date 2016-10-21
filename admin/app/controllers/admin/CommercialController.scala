@@ -37,10 +37,6 @@ class CommercialController extends Controller with Logging with ExecutionContext
     Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
   }
 
-  def renderPaidForTags = Action { implicit request =>
-    NoCache(Ok(views.html.commercial.paidForTags(environment.stage, Store.getDfpPaidForTags())))
-  }
-
   def renderPageskins = Action { implicit request =>
     val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
 
@@ -103,6 +99,10 @@ class CommercialController extends Controller with Logging with ExecutionContext
 
   def renderBrowserPerformanceDashboard() = Action { implicit request =>
     Ok(views.html.commercial.performance.browserDashboard())
+  }
+
+  def renderProgrammaticPerformanceDashboard() = Action { implicit request =>
+    Ok(views.html.commercial.performance.programmaticDashboard())
   }
 
   def renderKeyValues() = Action { implicit request =>

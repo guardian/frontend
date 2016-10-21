@@ -6,7 +6,7 @@ import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
 import play.api.mvc.RequestHeader
 import views.support._
-import views.support.cleaner.{AmpAdCleaner, AmpEmbedCleaner, CmpParamCleaner, VideoEmbedCleaner}
+import views.support.cleaner._
 
 object MainMediaWidths {
 
@@ -28,7 +28,6 @@ object MainCleaner {
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
-        ImmersiveMainEmbed(article.isImmersive, article.isSixtyDaysModified),
         MainFigCaptionCleaner
       )
   }
@@ -51,7 +50,7 @@ object BodyCleaner {
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
-      AtomsCleaner(article.content.atoms),
+      AtomsCleaner(article.content.atoms, shouldFence = true),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
@@ -61,7 +60,7 @@ object BodyCleaner {
       ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      HeroicVideos(article.isHeroic),
+      ExploreVideos(article.isExplore),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)

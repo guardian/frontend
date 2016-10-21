@@ -3,18 +3,16 @@ package contentapi
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
-import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model._
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
 import conf.Configuration.contentApi
-import conf.switches.Switches.{CircuitBreakerSwitch, ContentApiUseThrift}
-import metrics.{CountMetric, TimingMetric}
+import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -113,13 +111,11 @@ trait ApiQueryDefaults extends Logging {
 // the average response time, and the number of timeouts, from Content Api.
 trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
 
-  def httpTimingMetric: TimingMetric
-  def httpTimeoutMetric: CountMetric
-
-  var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
+  val httpClient: HttpClient
+  var _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
 
   override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
-    val futureContent = _http.GET(url, headers) map { response: Response =>
+    val futureContent = _httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
     futureContent.onFailure{ case t =>
@@ -130,11 +126,10 @@ trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQuery
 }
 
 final case class CircuitBreakingContentApiClient(
-  override val httpTimingMetric: TimingMetric,
-  override val httpTimeoutMetric: CountMetric,
+  override val httpClient: HttpClient,
   override val targetUrl: String,
-  override val apiKey: String,
-  override val useThrift: Boolean) extends MonitoredContentApiClientLogic {
+  apiKey: String
+) extends MonitoredContentApiClientLogic {
 
   private val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
 
@@ -167,26 +162,17 @@ final case class CircuitBreakingContentApiClient(
   }
 }
 
-object ContentApiClient extends ApiQueryDefaults {
-
-  // Public val for test.
-  val jsonClient = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
-    targetUrl = contentApi.contentApiHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = false)
+class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
 
   // Public val for test.
   val thriftClient = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    httpClient = httpClient,
     targetUrl = contentApi.contentApiHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = true)
+    apiKey = contentApi.key.getOrElse("")
+  )
 
   private def getClient: CircuitBreakingContentApiClient = {
-    if (ContentApiUseThrift.isSwitchedOn) thriftClient else jsonClient
+    thriftClient
   }
 
   def item(id: String) = getClient.item(id)
@@ -204,32 +190,14 @@ object ContentApiClient extends ApiQueryDefaults {
   def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(sectionsQuery)
 
   def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(editionsQuery)
-
-  // Used for testing, and training preview.
-  def setHttp(http: Http): Unit ={
-    thriftClient._http = http
-    jsonClient._http = http
-  }
-}
-
-object DraftContentApi {
-  val client = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
-    targetUrl = Configuration.contentApi.contentApiDraftHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = false
-  )
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.
 // The Preview server uses the standard ContentApiClient object, configured with preview settings.
-object PreviewContentApi {
+class PreviewContentApi(httpClient: HttpClient) {
   val client = CircuitBreakingContentApiClient(
-    httpTimingMetric = ContentApiMetrics.HttpLatencyTimingMetric,
-    httpTimeoutMetric = ContentApiMetrics.HttpTimeoutCountMetric,
+    httpClient = httpClient,
     targetUrl = Configuration.contentApi.previewHost,
-    apiKey = contentApi.key.getOrElse(""),
-    useThrift = false
+    apiKey = contentApi.key.getOrElse("")
   )
 }

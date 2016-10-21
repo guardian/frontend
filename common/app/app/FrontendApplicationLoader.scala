@@ -1,11 +1,12 @@
 package app
 
+import akka.actor.ActorSystem
 import common._
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpFilters
-import play.api.inject.{NewInstanceInjector, SimpleInjector, Injector}
+import play.api.inject.{Injector, NewInstanceInjector, SimpleInjector}
 import play.api.libs.ws.ning.NingWSComponents
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -44,6 +45,8 @@ trait FrontendComponents
   self: BuiltInComponents =>
 
   lazy val prefix = "/"
+
+  implicit lazy val as = actorSystem
 
   lazy val jobScheduler = new JobScheduler(environment)
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)

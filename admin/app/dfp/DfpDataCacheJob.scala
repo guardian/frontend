@@ -7,7 +7,6 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
-
 import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
@@ -43,11 +42,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       _ <- CustomTargetingValueAgent.refresh()
       _ <- PlacementAgent.refresh()
     } {
-      val data = loadLineItems()
-      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
-      CapiLookupAgent.refresh(paidForTags) map {
-        _ => write(data)
-      }
+      loadLineItems()
     }
   }
 
@@ -156,10 +151,6 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
     if (data.isValid) {
       val now = printLondonTime(DateTime.now())
-
-      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
-      CapiLookupAgent.refresh(paidForTags)
-      Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
       Store.putInlineMerchandisingSponsorships(stringify(toJson(

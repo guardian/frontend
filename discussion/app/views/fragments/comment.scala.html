@@ -1,6 +1,12 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
+@import common.Edition
 @import conf.Configuration
 @import conf.switches.Switches.SharingComments
+@import discussion.model.Comment
+@import views.support.{Format, RenderClasses}
+@import views.support.`package`.withJsoup
+@import views.support.{BulletCleaner, InBodyLinkCleaner}
+
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment

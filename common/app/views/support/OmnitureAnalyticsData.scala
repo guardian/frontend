@@ -3,7 +3,7 @@ package views.support
 import java.net.URLEncoder._
 
 import conf.Configuration
-import model.{ContentPage, MetaData, Page, EmbedPage}
+import model.{ContentPage,Page, EmbedPage}
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html

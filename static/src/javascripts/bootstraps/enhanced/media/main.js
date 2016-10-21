@@ -97,6 +97,7 @@ define([
 
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
+        // Commenting out line below but reluctant to delete it
         var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
@@ -104,7 +105,6 @@ define([
                 player.duration(duration);
                 player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
             }
-
             // we have some special autoplay rules, so do not want to depend on 'default' autoplay
             player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
@@ -148,6 +148,22 @@ define([
                 enhanceVideo(el, false, withPreroll);
             });
         });
+    }
+
+    function initExploreVideo(){
+        var player = $('.vjs-tech'),
+            headline = $('.explore-series-headline')[0],
+            controls = $('.vjs-control-bar');
+        if(player && headline && controls){
+            bean.on(player[0], 'playing', function () {
+                bonzo(headline).addClass('playing');
+                bonzo(controls[0]).addClass('playing');
+            });
+            bean.on(player[0], 'pause', function () {
+              bonzo(headline).removeClass('playing');
+              bonzo(controls[0]).removeClass('playing');
+            });
+        }
     }
 
     function isGeoBlocked(el) {
@@ -351,6 +367,7 @@ define([
                                         });
                                     }, 500);
                                 });
+
                             });
                         });
 
@@ -364,7 +381,9 @@ define([
                 });
             }
         });
-
+        if($('.explore--video').length > 0){
+          initExploreVideo();
+        }
         return player;
     }
 
@@ -443,7 +462,7 @@ define([
                 require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
                     initWithRaven(true);
                 }, function (e) {
-                    raven.captureException(e, { tags: { feature: 'media', action: 'ads' } });
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
                     initWithRaven();
                 });
             } else {

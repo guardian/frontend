@@ -50,29 +50,28 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
         if (! canonicalUrl.isEmpty) {
-          element.attr("data-canonical-url", canonicalUrl)
+          element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
         }
 
         val mediaId = element.attr("data-media-id")
 
         val video = findVideoApiElement(mediaId)
 
+        // remove all sources as we add them later in a specific order
+        // similar to `video.scala.html` template
+        // see `common.app.model.EncodingOrdering` for order
         element.getElementsByTag("source").remove()
-
-        val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-          videoAsset.encoding.map { encoding =>
-            s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
-          }.getOrElse("")
-        }.mkString("")
-
-        element.append(sourceHTML)
 
         // add the poster url
         video.map(_.images).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
           element.attr("poster", url)
         }
 
-        findVideoApiElement(mediaId).foreach { videoElement =>
+        video.foreach { videoElement =>
+          videoElement.videos.encodings.map { encoding => {
+            element.append(s"""<source src="${encoding.url}" type="${encoding.format}"></source>""")
+          }}
+
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
           if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
@@ -110,10 +109,6 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document
   }
-
-  def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
-
-  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType.contains("video/mp4"))
 
   def findVideoApiElement(id:String): Option[VideoElement] = article.elements.bodyVideos.find(_.properties.id == id)
 }

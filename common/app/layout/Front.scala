@@ -1,12 +1,11 @@
 package layout
 
-import common.dfp._
 import common.{Edition, LinkTo}
 import conf.switches.Switches
+import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
 import model.pressed.{CollectionConfig, PressedContent}
-import model.{ContentType, PressedPage}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -98,117 +97,7 @@ case class CollectionEssentials(
   showMoreLimit: Option[Int]
 )
 
-object ContainerCommercialOptions {
-  def fromConfig(config: CollectionConfig) = {
-    DfpAgent.findContainerCapiTagIdAndDfpTag(config) map { tagData =>
-      val capiTagId = tagData.capiTagId
-      val dfpTag = tagData.dfpTag
-
-      val sponsor = {
-        def tagTypeAndIdMatch(): Boolean = {
-          (dfpTag.tagType == Series && capiTagId.contains("/series/")) ||
-          (dfpTag.tagType == Keyword && capiTagId.matches("(\\w+)/\\1"))
-        }
-        if (tagTypeAndIdMatch()) {
-          dfpTag.lineItems.headOption flatMap (_.sponsor)
-        } else {
-          None
-        }
-      }
-
-      ContainerCommercialOptions(
-        isSponsored = dfpTag.paidForType == Sponsored,
-        isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
-        isFoundationSupported = dfpTag.paidForType == FoundationFunded,
-        hasPaidForContent = false,
-        sponsor,
-        sponsorshipTag = Some(SponsorshipTag(dfpTag.tagType, capiTagId)),
-        sponsorshipType = Some(dfpTag.paidForType.name),
-        omitMPU = false
-      )
-    } getOrElse empty
-  }
-
-  def fromCollection(collection: CollectionEssentials): ContainerCommercialOptions = {
-
-    def mkFromFirstItemInCollection(item: PressedContent): Option[ContainerCommercialOptions] = {
-
-      def sponsoredTagPair(content: ContentType): Option[CapiTagAndDfpTag] = {
-        DfpAgent.winningTagPair(
-          capiTags = content.tags.tags,
-          sectionId = Some(content.metadata.sectionId),
-          edition = None
-        )
-      }
-
-      def mkFromSponsoredTagPair(tagProps: CapiTagAndDfpTag): ContainerCommercialOptions = {
-        val capiTag = tagProps.capiTag
-        val dfpTag = tagProps.dfpTag
-
-        val sponsorshipTag = {
-          val maybeTagType = {
-            if (capiTag.isSeries) Some(Series)
-            else if (capiTag.isKeyword) Some(Keyword)
-            else None
-          }
-          maybeTagType map (tagType => SponsorshipTag(tagType, tagId = capiTag.id))
-        }
-
-        ContainerCommercialOptions(
-          isSponsored = dfpTag.paidForType == Sponsored,
-          isPaidContainer = dfpTag.paidForType == AdvertisementFeature,
-          isFoundationSupported = dfpTag.paidForType == FoundationFunded,
-          hasPaidForContent = false,
-          sponsor = dfpTag.lineItems.headOption flatMap (_.sponsor),
-          sponsorshipTag,
-          sponsorshipType = Some(dfpTag.paidForType.name),
-          omitMPU = false
-        )
-      }
-
-      item.properties.maybeContent flatMap (sponsoredTagPair(_) map mkFromSponsoredTagPair)
-    }
-
-    collection.items.headOption flatMap mkFromFirstItemInCollection getOrElse empty
-  }
-
-  val multi = ContainerCommercialOptions(
-    isSponsored = false,
-    isPaidContainer = false,
-    isFoundationSupported = false,
-    hasPaidForContent = true,
-    sponsor = None,
-    sponsorshipTag = None,
-    sponsorshipType = None,
-    omitMPU = false
-  )
-
-  val empty = ContainerCommercialOptions(
-    isSponsored = false,
-    isPaidContainer = false,
-    isFoundationSupported = false,
-    hasPaidForContent = false,
-    sponsor = None,
-    sponsorshipTag = None,
-    sponsorshipType = None,
-    omitMPU = false
-  )
-
-  def mostPopular(omitMPU: Boolean) = empty.copy(omitMPU = omitMPU)
-}
-
-case class ContainerCommercialOptions(
-  isSponsored: Boolean,
-  isPaidContainer: Boolean,
-  isFoundationSupported: Boolean,
-  hasPaidForContent: Boolean,
-  sponsor: Option[String],
-  sponsorshipTag: Option[SponsorshipTag],
-  sponsorshipType: Option[String],
-  omitMPU: Boolean
-) {
-  val isPaidFor = isSponsored || isPaidContainer || isFoundationSupported || hasPaidForContent
-}
+case class ContainerCommercialOptions(omitMPU: Boolean)
 
 object FaciaContainer {
   def apply(
@@ -268,10 +157,8 @@ object FaciaContainer {
     config.config.showLatestUpdate,
     // popular containers should never be sponsored
     container match {
-      case MostPopular => ContainerCommercialOptions.mostPopular(omitMPU)
-      case Commercial(SingleCampaign(_)) => ContainerCommercialOptions.fromCollection(collectionEssentials)
-      case Commercial(MultiCampaign(_)) => ContainerCommercialOptions.multi
-      case _ => ContainerCommercialOptions.fromConfig(config.config)
+      case MostPopular => ContainerCommercialOptions(omitMPU)
+      case _ => ContainerCommercialOptions(omitMPU = false)
     },
     config.config.description.map(DescriptionMetaHeader),
     None,
@@ -279,7 +166,8 @@ object FaciaContainer {
     showTimestamps = false,
     None,
     useShowMore = true,
-    hasShowMoreEnabled = !config.config.hideShowMore
+    hasShowMoreEnabled = !config.config.hideShowMore,
+    showBranding = config.config.showBranding
   )
 
   def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None) = {
@@ -311,7 +199,8 @@ case class FaciaContainer(
   showTimestamps: Boolean,
   dateLinkPath: Option[String],
   useShowMore: Boolean,
-  hasShowMoreEnabled: Boolean
+  hasShowMoreEnabled: Boolean,
+  showBranding: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))

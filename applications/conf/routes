@@ -10,10 +10,8 @@ GET        /_healthcheck                                                        
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
-GET        /survey/customtodayemail                                             controllers.SurveyPageController.renderCustomEmail404Page()
-GET        /survey/mydigest                                                     controllers.SurveyPageController.renderMyDigestExplainerPage()
-GET        /survey/mydigest/404                                                 controllers.SurveyPageController.renderMyDigest404Page()
-GET        /survey/weekendreading                                               controllers.SurveyPageController.renderWeekendReading404Page()
+GET        /signup/weekendreading                                               controllers.SignupPageController.renderWeekendReadingPage()
+
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
@@ -35,7 +33,7 @@ POST           /notification/delete                                             
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
-GET        /email/form/$emailType<article|footer|plain>/:listId                 controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer|plain|plaindark>/:listId       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
@@ -51,13 +49,7 @@ GET        /embed/video/*path                                                   
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
-# opt-in/out routes: this format is deprecated in favour of /opt/<in|out>/<feature>
-# don't add any new ones!
-GET        /https/optin                                                         controllers.OptInController.handle(feature = "https", choice = "in")
-GET        /https/optout                                                        controllers.OptInController.handle(feature = "https", choice = "out")
-GET        /new-header/optin                                                    controllers.OptInController.handle(feature = "header", choice = "in")
-GET        /new-header/optout                                                   controllers.OptInController.handle(feature = "header", choice = "out")
-
+# opt-in/out routes
 GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
 
 # Web App paths
