@@ -18,7 +18,7 @@ function notify(message, options, type) {
         require('megalog')[type](message, options);
     } catch (e) {
         console.log((options.heading ? '\n' + options.heading + ':\n\n' : '') + message + '\n\n(hint: you probably want to run `make install`)\n');
-    };
+    }
 }
 
 switch (process.argv[2]) {
@@ -43,8 +43,6 @@ switch (process.argv[2]) {
                 // format the target name for output to CLI
                 const targetName = line.split(':')[0];
 
-                console.log(targetName)
-
                 if (comments.length) {
                     // add the target name with the first comment following it
                     messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`);
@@ -57,15 +55,15 @@ switch (process.argv[2]) {
             // if we've got a divider, just add space to create a line break
             if (line.match(/^# \*{3,}/)) {
                 if (listAll) {
-                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`)
+                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`);
                 } else {
                     messageLines.push(' ');
                 }
-            };
+            }
         });
 
         if (!listAll) {
-            messageLines.push('\nTo see the full set, run `make list`.')
+            messageLines.push('\nTo see the full set, run `make list`.');
         }
 
         notify(messageLines.join('\n').trim(), {
@@ -105,4 +103,3 @@ switch (process.argv[2]) {
       }, 'info');
       break;
 }
-
