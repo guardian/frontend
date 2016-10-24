@@ -307,6 +307,7 @@ case class GuCreativeTemplate(id: Long,
                               description: String,
                               parameters: Seq[GuCreativeTemplateParameter],
                               snippet: String,
+                              isNative: Boolean,
                               creatives: Seq[GuCreative]) {
 
   lazy val examplePreviewUrl: Option[String] = creatives flatMap {_.previewUrl} headOption
