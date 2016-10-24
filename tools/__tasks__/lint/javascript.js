@@ -2,11 +2,7 @@ module.exports = {
     description: 'Lint JS',
     task: [{
         description: 'Tests',
-        task: [
-            'grunt eslint:static/test/javascripts',
-            'grunt shell:eslintTests'
-        ],
-        concurrent: true
+        task: 'grunt eslint:static/test/javascripts'
     },{
         description: 'App',
         task: 'grunt eslint:static/src'

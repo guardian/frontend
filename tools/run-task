@@ -164,7 +164,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
 const taskModules = TASKS.map(getModuleForTask);
 
 if (taskModules.filter(module => module !== null).length) {
-    listrify(taskModules, {verbose}).run().catch(console.log);
+    listrify(taskModules, {verbose}).run();
 } else {
     console.log(`Cannot find tasks for '${TASKS}'?`);
 }
