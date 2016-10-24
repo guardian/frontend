@@ -28,7 +28,9 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
     val stage = if (isPreview) "preview" else "live"
     val serviceWorkerPath = s"$cdnPath/service-workers/$path/$stage.js"
     wsClient.url(serviceWorkerPath).get().map { response =>
-      Cached(60) { RevalidatableResult.Ok(response.body) }
+      Cached(60) {
+        RevalidatableResult(Ok(response.body).as("text/javascript; charset=utf8"), response.body)
+      }
     }
   }
 
