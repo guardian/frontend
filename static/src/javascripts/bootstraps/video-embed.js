@@ -9,7 +9,6 @@ define([
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/template',
-    'common/modules/analytics/omniture',
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/media/videojs-plugins/fullscreener',
@@ -28,7 +27,6 @@ define([
     config,
     deferToAnalytics,
     template,
-    omniture,
     Component,
     events,
     fullscreener,
@@ -56,14 +54,6 @@ define([
             icon: svgs('marque36icon')
         };
         $('.vjs-control-bar').after(template(titlebarTmpl, data));
-        bean.on($('.vjs-title-bar')[0], 'click', function (e) {
-            omniture.logTag({
-                tag: 'Embed | title bar',
-                sameHost: false,
-                samePage: false,
-                target: e.target
-            });
-        });
     }
 
     function initEndSlate(player) {
@@ -74,14 +64,6 @@ define([
 
         endSlate.fetch(player.el(), 'html').then(function () {
             $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
-            bean.on($('.end-slate-container')[0], 'click', function (e) {
-                omniture.logTag({
-                    tag: 'Embed | endslate',
-                    sameHost: false,
-                    samePage: false,
-                    target: e.target
-                });
-            });
         });
 
         player.on('ended', function () {
@@ -141,13 +123,11 @@ define([
                 if (config.switches.thirdPartyEmbedTracking) {
                     deferToAnalytics(function () {
                         events.initOphanTracking(player, mediaId);
-                        events.initOmnitureTracking(player);
                         events.bindContentEvents(player);
                     });
 
                 }
 
-                events.initOmnitureTracking(player, mediaId);
                 events.bindContentEvents(player);
             });
 

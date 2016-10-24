@@ -1,13 +1,8 @@
 package test
 
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 
 class DiagnosticsTestSuite extends Suites (
-  // Add you test classes here
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19007
 }

@@ -1,8 +1,7 @@
 package test
 
 import java.util.{ List => JList }
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 
 import collection.JavaConversions._
 
@@ -15,9 +14,6 @@ object `package` {
 
 class ArchiveTestSuite extends Suites (
   new ArchiveControllerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19004
 }

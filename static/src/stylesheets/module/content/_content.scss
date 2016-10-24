@@ -713,8 +713,7 @@
     }
     .content__standfirst,
     .content__dateline,
-    .caption--main,
-    .ad-slot--paid-for-badge__header {
+    .caption--main {
         color: $neutral-2-contrasted;
     }
     .content__headline,
@@ -796,10 +795,6 @@
         border-top-color: $paid-article-header;
     }
 
-    .ad-slot--paid-for-badge--article {
-        border-top: 0;
-    }
-
     &.tonal--tone-media {
         .content__headline,
         .from-content-api,
@@ -831,8 +826,6 @@
             }
         }
 
-        .ad-slot--paid-for-badge__header,
-        .ad-slot--paid-for-badge__help,
         .byline,
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,

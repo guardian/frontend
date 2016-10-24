@@ -1,7 +1,6 @@
 package test
 
-import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, Suites}
+import org.scalatest.Suites
 
 class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
@@ -15,9 +14,6 @@ class OnwardTestSuite extends Suites (
   new TopStoriesControllerTest,
   new VideoInSectionTest,
   new RichLinkControllerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19011
 }

@@ -107,7 +107,7 @@
                                     case arts if id.contains("culture") => {
                                         @NewNavigation.Arts.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
                                     }
-                                    case life if id.contains("lifestyle") => {
+                                    case life if id.contains("lifeandstyle") => {
                                         @NewNavigation.Life.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
                                     }
                                     case _ => {
