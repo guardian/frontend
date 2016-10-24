@@ -110,7 +110,7 @@ define([
                 cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
                 customOpts = {
                     addButtonClass: testName + '_' + testVariant,
-                    setButtonText: 'Become a supporter',
+                    setButtonText: 'Become a Supporter',
                     parentColour: thisColour
                 };
                 customJs = getCustomJs;
