@@ -1,7 +1,12 @@
+@import model.Page
+@import model.{EmailSubscription, EmailSubscriptions}
+@import views.support.RenderClasses
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@import common.LinkTo
+
 @(signupPage: Page)(implicit request: RequestHeader)
 
-@import model.Page
-@import model.EmailSubscriptions
 
 @newsletterSignup(route: String, placeholder: String, listId: String, emailName: String) = {
     <iframe src="/email/form/@route/@listId"
