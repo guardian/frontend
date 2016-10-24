@@ -1,29 +1,23 @@
 define([
     'bonzo',
     'helpers/injector',
-    'text!fixtures/commercial/ad-slots/adbadge.html',
-    'text!fixtures/commercial/ad-slots/fobadge.html',
     'text!fixtures/commercial/ad-slots/im.html',
     'text!fixtures/commercial/ad-slots/inline1.html',
     'text!fixtures/commercial/ad-slots/inline2.html',
     'text!fixtures/commercial/ad-slots/inline3.html',
     'text!fixtures/commercial/ad-slots/merchandising-high.html',
     'text!fixtures/commercial/ad-slots/right.html',
-    'text!fixtures/commercial/ad-slots/right-small.html',
-    'text!fixtures/commercial/ad-slots/spbadge.html'
+    'text!fixtures/commercial/ad-slots/right-small.html'
 ], function (
     bonzo,
     Injector,
-    adbadgeHtml,
-    fobadgeHtml,
     imHtml,
     inline1Html,
     inline2Html,
     inline3Html,
     merchandisingHighHtml,
     rightHtml,
-    rightSmallHtml,
-    spbadgeHtml
+    rightSmallHtml
 ) {
     describe('Create Ad Slot', function () {
 
@@ -81,21 +75,6 @@ define([
                 name: 'merchandising-high',
                 type: 'commercial-component',
                 html: merchandisingHighHtml
-            },
-            {
-                name: 'adbadge',
-                type: 'paid-for-badge',
-                html: adbadgeHtml
-            },
-            {
-                name: 'spbadge',
-                type: 'paid-for-badge',
-                html: spbadgeHtml
-            },
-            {
-                name: 'fobadge',
-                type: 'paid-for-badge',
-                html: fobadgeHtml
             }
         ].forEach(function (expectation) {
             it('should create "' + expectation.name + '" ad slot', function () {
@@ -110,15 +89,6 @@ define([
 
                 expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
             });
-
-        it('should accept multiple types', function () {
-            var types  = ['paid-for-badge', 'paid-for-badge--container'],
-                adSlot = createSlot('adbadge', ['paid-for-badge', 'paid-for-badge--container']);
-
-            types.forEach(function (type) {
-                expect(bonzo(adSlot).hasClass('ad-slot--' + type)).toBeTruthy();
-            });
-        });
 
     });
 });

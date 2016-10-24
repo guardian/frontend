@@ -46,7 +46,25 @@
             }
         </div>
         <div class="hosted__ab-test-variant2">
-
+            @for(trail <- trails.slice(0, 2)) {
+                <a href="@{trail.url}" class="hosted__next-page--tile" data-link-name="Next Hosted Page: @{trail.title}">
+                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                    <p class="hosted__next-page-title hosted-article__next-page-title">@{trail.title}</p>
+                </a>
+            }
+            @if(trails.length > 2){
+                <div class="hosted__see-all-onward js-hosted-see-all-onward hosted-tone-btn">See all</div>
+            }
+            <div class="u-h">
+                <div class="js-hosted-more-from-popup-content">
+                    @for(trail <- trails) {
+                        <a href="@{trail.url}" class="hosted__next-page-tile--popup" data-link-name="Next Hosted Page: @{trail.title}">
+                            <img class="hosted__next-page-thumb--popup" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                            <p class="hosted__next-page-title--popup">@{trail.title}</p>
+                        </a>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 }

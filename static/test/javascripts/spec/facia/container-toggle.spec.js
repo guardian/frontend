@@ -42,7 +42,6 @@ define([
                 '<div class="fc-container__header js-container__header">' +
                 '<h2>A container</h2>' +
                 '</div>' +
-                '<div class="ad-slot--paid-for-badge"></div>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
@@ -150,39 +149,6 @@ define([
             fastdom.defer(1, function () {
                 assertState($container, 'closed');
                 done();
-            });
-        });
-
-        describe('Commercial Badge', function () {
-            it('should hide badge on close', function (done) {
-                new ContainerDisplayToggle(container).addToggle();
-
-                fastdom.defer(1, function () {
-                    // click button
-                    simulateClick();
-
-                    fastdom.defer(1, function () {
-                        expect($('.ad-slot--paid-for-badge', container).css('display')).toBe('none');
-
-                        done();
-                    });
-                });
-            });
-
-            it('should show badge on open', function (done) {
-                new ContainerDisplayToggle(container).addToggle();
-                // click button
-
-                fastdom.defer(1, function () {
-                    simulateClick();
-                    fastdom.defer(1, function () {
-                        simulateClick();
-                        fastdom.defer(1, function () {
-                            expect($('.ad-slot--paid-for-badge', container).css('display')).toBe('block');
-                            done();
-                        });
-                    });
-                });
             });
         });
     });

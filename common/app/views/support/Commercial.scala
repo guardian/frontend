@@ -115,6 +115,9 @@ object Commercial {
         }
       }.length
     }.getOrElse(0)
+
+    def isFirstNonThrasherContainer(containerIndex: Int, containers: Seq[FaciaContainer]): Boolean =
+      (containers filterNot (_.isThrasher) map (_.index)).min == containerIndex
   }
 
   object CssClassBuilder {
