@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Commercial',
+    description: 'Test commercial JS',
     task: 'grunt karma:commercial'
 };

@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Membership',
+    description: 'Test membership JS',
     task: 'grunt karma:membership'
 };

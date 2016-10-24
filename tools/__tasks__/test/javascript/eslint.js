@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Eslint',
+    description: 'Test eslint configs',
     task: 'grunt shell:eslintTests'
 };
