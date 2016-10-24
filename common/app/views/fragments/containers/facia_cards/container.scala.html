@@ -12,7 +12,9 @@
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None,
-  pageId: String = "")(implicit request: RequestHeader)
+  pageId: String = "",
+  showFrontBranding: Boolean = false
+  )(implicit request: RequestHeader)
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -53,7 +55,7 @@
 
                     case _: Dynamic | _: Fixed => {
                         <div class="fc-container__inner">
-                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
+                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding)
                         </div>
                     }
 
