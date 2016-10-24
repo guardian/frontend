@@ -107,7 +107,7 @@ Parts of identity, including sign in and registration are now served by a separa
 [All supported routes](https://github.com/guardian/frontend/blob/master/identity/conf/routes)
 
 # Sport
-Sport app serves match results, league tables, upcoming matches, teams and competition for Football, Cricket and Rugby.
+Sport app serves match results, league tables, upcoming matches, teams and competitions for Football, Cricket and Rugby.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/sport/conf/routes)
 
