@@ -106,6 +106,12 @@ Parts of identity, including sign in and registration are now served by a separa
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/identity/conf/routes)
 
+# Sport
+Sport app serves match results, league tables, upcoming matches, teams and competitions for Football, Cricket and Rugby.
+
+[All supported routes](https://github.com/guardian/frontend/blob/master/sport/conf/routes)
+
+
 # Rss
 Rss app is rendering the RSS version for all Guardian content.
 
@@ -136,3 +142,14 @@ If yes the Archive app returns this old static content or redirect, otherwise a 
 Diagnostics app is used internally to gather data and analytics from the Guardian frontend client side.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/diagnostics/conf/routes)
+
+# Preview 
+Preview is a standalone version of the guardian website (ie: an aggregation of all the other apps) used in the editorial tool to preview draft article before they are live.
+It allows us to have a fully functional version of the website without the overhead of maintaining an entire new stack.
+
+[All supported routes](https://github.com/guardian/frontend/blob/master/preview/conf/routes)
+
+# Training-Preview 
+Training-preview is used by when running editorial tool training.
+
+[All supported routes](https://github.com/guardian/frontend/blob/master/training-preview/conf/routes)

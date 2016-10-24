@@ -34,28 +34,28 @@ UNLESS it exports a default, in which case that will be run if no export is spec
 Task definitions can be:
 1. another task in __tasks__:
 {
-    title: "my task",
+    description: "my task",
     task: "another/task" // same as `./run-task another/task`
 }
 2. a standard terminal command
 {
-    title: "my task",
+    description: "my task",
     task: "terminal command"
 }
 3. a javascript function
 {
-    title: "my task",
+    description: "my task",
     task: () => {...}
 }
 4. an array of any of the above, or another task
 {
-    title: "my task",
+    description: "my task",
     task: [
         "another/task",
         "command to run",
         () => {...},
         {
-            title: 'my subtask',
+            description: 'my subtask',
             task: 'task/subTask'
         }
     ]
