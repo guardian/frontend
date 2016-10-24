@@ -193,7 +193,6 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
   private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val capiItem = contentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
