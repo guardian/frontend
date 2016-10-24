@@ -1,7 +1,6 @@
 package test
 
-import org.scalatest.{BeforeAndAfterAll, Suites}
-import pagepresser.InteractiveHtmlCleanerTest
+import org.scalatest.Suites
 
 class AdminTestSuite extends Suites (
   new football.PlayerControllerTest,
@@ -12,10 +11,7 @@ class AdminTestSuite extends Suites (
   new pagepresser.InteractiveHtmlCleanerTest,
   new controllers.admin.DeploysRadiatorControllerTest,
   new controllers.admin.DeploysNotifyControllerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-
-  override lazy val port: Int = new controllers.HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+    override lazy val port: Int = 19001
 }
 

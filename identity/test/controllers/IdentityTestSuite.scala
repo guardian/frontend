@@ -1,14 +1,12 @@
 package controllers
 
-import org.scalatest.{BeforeAndAfterAll, Suites}
-import test.{SingleServerSuite, WithTestWsClient}
+import org.scalatest.Suites
+import test.SingleServerSuite
 
 class IdentityTestSuite extends Suites(
   new EditProfileControllerTest,
   new EmailControllerTest,
   new SignoutControllerTest
-) with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
-  override lazy val port: Int = new HealthCheck(wsClient).testPort
+) with SingleServerSuite {
+  override lazy val port: Int = 19010
 }

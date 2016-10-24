@@ -9,7 +9,9 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo'
+    'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/contributions-usa-1',
+    'common/modules/experiments/tests/membership-engagement-warp-factor-one'
 ], function (
     reportError,
     config,
@@ -21,13 +23,17 @@ define([
     noop,
     DiscussionPromoteBottomBanner,
     WeekendReadingEmail,
-    WeekendReadingPromo
+    WeekendReadingPromo,
+    ContributionsUsa1,
+    MembershipEngagementWarpFactorOne
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo()
+        new WeekendReadingPromo(),
+        new ContributionsUsa1(),
+        new MembershipEngagementWarpFactorOne()
     ];
 
     var participationsKey = 'gu.ab.participations';

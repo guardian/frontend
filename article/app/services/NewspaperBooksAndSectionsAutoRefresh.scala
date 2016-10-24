@@ -12,7 +12,7 @@ import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
 
 class NewspaperBooksAndSectionsAutoRefresh(newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
-                                           newspaperBookTagAgent: NewspaperBookTagAgent)
+                                           newspaperBookTagAgent: NewspaperBookTagAgent)(implicit actorSystem: ActorSystem)
   extends LifecycleComponent {
   override def start(): Unit = {
     newspaperBookTagAgent.start()
@@ -30,7 +30,7 @@ trait NewspaperTags {
   }
 }
 
-class NewspaperBookTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
+class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_books"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {
@@ -39,7 +39,7 @@ class NewspaperBookTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[Tag
   }
 }
 
-class NewspaperBookSectionTagAgent(actorSystem: => ActorSystem) extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes, actorSystem) with NewspaperTags {
+class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_book_sections"
   override protected def refresh(): Future[TagIndexListings] = Future {
     blocking {

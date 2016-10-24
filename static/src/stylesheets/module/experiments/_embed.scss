@@ -27,6 +27,7 @@
     line-height: 20px;
     font-family: $f-serif-headline;
     margin-bottom: $gs-baseline;
+    margin-top: $gs-baseline;
 }
 
 .contributions__paragraph--epic {
@@ -177,6 +178,10 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
+}
+
+.contributions__button-group {
+    margin-right: $gs-gutter / 2;
 }
 
 .contributions__title-container {
