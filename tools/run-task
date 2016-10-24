@@ -23,21 +23,26 @@ module.exports = {
 }
 
 Tasks can be:
-1. string - treated a standard terminal command
+1. a string - treated a standard terminal command
 {
     description: "run a terminal command",
     task: "terminal command"
 }
+commands are run with execa, which checks for locally installed binaries (./node_modules)
+before global ones, the same as with npm scripts
+
 2. a javascript function - executed when the task runs
 {
     description: "run a JS function",
     task: () => {...}
 }
-3. a require statement for another task
+
+3. a `require` statement for another task
 {
     description: "run another task",
     task: require('./another-task')
 }
+
 4. be an array of any of the above, or a new task object
 {
     description: "my task",
