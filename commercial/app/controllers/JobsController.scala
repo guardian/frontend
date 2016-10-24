@@ -1,13 +1,11 @@
 package commercial.controllers
 
 import common.JsonComponent
-import commercial.controllers.util.{specificIds, segment, jsonFormat, componentMaxAge}
-import model.Segment
-import model.commercial.Job
-import model.commercial.jobs.{JobSector, JobsAgent}
-import model.{Cached, NoCache}
+import commercial.model.Segment
+import commercial.model.merchandise.Job
+import commercial.model.merchandise.jobs.{JobSector, JobsAgent}
+import model.Cached
 import play.api.mvc._
-import play.api.libs.json.Json
 import scala.concurrent.duration._
 
 class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Requests {

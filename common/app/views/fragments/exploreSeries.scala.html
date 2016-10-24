@@ -1,10 +1,9 @@
-@(page: ContentPage)(implicit request: RequestHeader)
-
 @import common.LinkTo
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
-@import views.support.TrailCssClasses.toneClass
 @import views.support.RenderClasses
+@import views.support.TrailCssClasses.toneClass
+@(page: ContentPage)(implicit request: RequestHeader)
 
 @defining((
     page.item.elements.hasMainEmbed,

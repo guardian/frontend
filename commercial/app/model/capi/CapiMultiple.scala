@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import model.ContentType
 import play.api.libs.json.{Json, Writes}

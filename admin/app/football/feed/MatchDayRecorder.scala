@@ -1,5 +1,6 @@
 package football.feed
 
+import akka.actor.ActorSystem
 import common.{Edition, ExecutionContexts, Logging}
 import conf.switches.Switches
 import org.joda.time.DateTime
@@ -10,12 +11,12 @@ import conf.AdminConfiguration.pa
 
 import scala.concurrent.ExecutionContext
 
-case class MatchDayRecorder(wsClient: WSClient) extends ExecutionContexts with Logging {
+case class MatchDayRecorder(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionContexts with Logging {
 
   private val feedDateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(Edition.defaultEdition.timezone)
   private val fileDateFormat = DateTimeFormat.forPattern("yyyy/MM/dd/HH-mm-ss").withZone(Edition.defaultEdition.timezone)
 
-  override implicit lazy val executionContext: ExecutionContext = feedsRecorderExecutionContext
+  override implicit lazy val executionContext: ExecutionContext = actorSystem.dispatchers.lookup("akka.actor.feed-recorder")
 
   def record(): Unit = if (Switches.FootballFeedRecorderSwitch.isSwitchedOn) {
 

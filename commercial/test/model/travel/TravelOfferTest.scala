@@ -1,6 +1,6 @@
-package model.commercial.travel
+package commercial.model.merchandise.travel
 
-import model.commercial.TravelOffer
+import commercial.model.merchandise.TravelOffer
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 

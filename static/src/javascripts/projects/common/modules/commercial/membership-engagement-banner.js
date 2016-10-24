@@ -9,7 +9,10 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-features',
     'common/utils/mediator',
-    'Promise'
+    'Promise',
+    'common/modules/experiments/ab',
+    'common/utils/$',
+    'common/views/svgs'
 ], function (
     bean,
     qwery,
@@ -21,7 +24,10 @@ define([
     commercialFeatures,
     userFeatures,
     mediator,
-    Promise
+    Promise,
+    ab,
+    $,
+    svgs
 ) {
 
     var endpoints = {
@@ -58,22 +64,88 @@ define([
         return endpoints[edition] + '?INTCMP=' + message.campaign;
     }
 
-    function show(edition, message) {
-        var colours = ['default','vibrant-blue','yellow','light-blue','deep-purple','teal'];
+    function thisInstanceColour(colours) {
         // Rotate through different colours on successive page views
-        var colourIndex = storage.local.get('gu.alreadyVisited') % colours.length;
-        var cssModifierClass = 'membership-message-' + colours[colourIndex];
-        var linkHref = formatEndpointUrl(edition, message);
-        var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref });
+        return colours[storage.local.get('gu.alreadyVisited') % colours.length];
+    }
+
+    var getCustomJs = function(options) {
+        var opts = options || {},
+            textLink = $('#membership__engagement-message-link'),
+            buttonLink = $('#membership__engagement-message-button-link'),
+            buttonEl = $('#membership__engagement-message-button');
+
+        buttonEl.removeClass('is-hidden');
+        if (opts.addButtonClass) {
+            buttonEl.addClass(opts.addButtonClass);
+        }
+        if (opts.setButtonText) {
+            buttonLink.text(opts.setButtonText);
+        }
+        if (opts.parentColour) {
+            buttonEl.addClass(opts.parentColour);
+        }
+        if (opts.appendLinkClickIdentifier) {
+            if (!textLink.attr('href').endsWith(opts.appendLinkClickIdentifier)) {
+                textLink.attr('href', textLink.attr('href') + opts.appendLinkClickIdentifier);
+            }
+        }
+        if (opts.appendButtonClickIdentifier) {
+            if (!buttonLink.attr('href').endsWith(opts.appendButtonClickIdentifier)) {
+                buttonLink.attr('href', buttonLink.attr('href') + opts.appendButtonClickIdentifier);
+            }
+        }
+    };
+
+    function show(edition, message) {
+        var colours = ['default','vibrant-blue','yellow','light-blue','deep-purple','teal'],
+            thisColour = thisInstanceColour(colours),
+            cssModifierClass = 'membership-message-' + thisColour,
+            campaignCode = message.campaign,
+            customJs = null,
+            customOpts = {},
+            testVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
+            linkHref = formatEndpointUrl(edition, message);
+
+        if (testVariant) {
+            var testName = 'prominent-level-1';
+
+            if (testVariant !== 'notintest') {
+                campaignCode = campaignCode + '_' + testName + '_' + testVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+            }
+
+            if (testVariant === 'become' || testVariant === 'join') {
+                var variantMessages = {
+                    become: 'Become a member',
+                    join: 'Join today'
+                };
+                colours = ['yellow','purple','bright-blue','dark-blue'];
+                thisColour = thisInstanceColour(colours);
+                cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
+                customOpts = {
+                    addButtonClass: testName + '_' + testVariant,
+                    setButtonText: variantMessages[testVariant],
+                    parentColour: thisColour,
+                    appendLinkClickIdentifier: '_link',
+                    appendButtonClickIdentifier: '_button'
+                };
+                customJs = getCustomJs;
+            }
+        }
+
+        var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
         var messageShown = new Message(
             messageCode,
             {
                 pinOnHide: false,
                 siteMessageLinkName: 'membership message',
                 siteMessageCloseBtn: 'hide',
-                siteMessageComponentName: message.campaign,
+                siteMessageComponentName: campaignCode,
                 trackDisplay: true,
-                cssModifierClass: cssModifierClass
+                cssModifierClass: cssModifierClass,
+                customJs: customJs,
+                customOpts: customOpts
             }).show(renderedBanner);
         if (messageShown) {
             mediator.emit('membership-message:display');
@@ -82,30 +154,16 @@ define([
         return messageShown;
     }
 
-    function isInTest(testId, variant) {
-        var participations = storage.local.get('gu.ab.participations');
-        if (participations) {
-            return variant === undefined ? participations[testId] : participations[testId].variant === variant;
-        } else {
-            return false;
-        }
-    }
-
     function init() {
-        // block default behaviour for participants of the MembershipEngagementImmediate AB test
         var edition = config.page.edition;
-        if (!isInTest('MembershipEngagementImmediate','control') &&
-            !isInTest('MembershipEngagementImmediate','immediate-display') ||
-            edition.toLowerCase() !== 'uk') {
-            var message = messages[edition];
-            if (message) {
-                var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
-                    if (canShow && userHasMadeEnoughVisits) {
-                        show(edition, message);
-                    }
-                });
-            }
+        var message = messages[edition];
+        if (message) {
+            var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
+            return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                if (canShow && userHasMadeEnoughVisits) {
+                    show(edition, message);
+                }
+            });
         }
         return Promise.resolve();
     }

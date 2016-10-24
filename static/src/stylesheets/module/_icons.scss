@@ -49,13 +49,9 @@ blockquote .quoted__contents {
     margin-left: 35px;
 }
 
-.item--dark .i-comment-light-grey {
-    @extend %i-comment-light-grey;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-comment-light-grey;
-        }
+@if ($svg-support) {
+    .svg .item--dark .i-comment-light-grey {
+        @extend %svg-i-comment-light-grey;
     }
 }
 

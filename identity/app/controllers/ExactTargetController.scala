@@ -18,7 +18,6 @@ class ExactTargetController(
                            wsClient: WSClient)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  import play.api.Play.current
   import authenticatedActions.authAction
 
   def subscribe(subscriptionDefId: String, returnUrl: String) = authAction.apply {

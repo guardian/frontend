@@ -31,8 +31,6 @@ trait TestSettings {
       }
     }
   }
-
-  ContentApiClient.thriftClient._httpClient = toRecorderHttp(ContentApiClient.thriftClient._httpClient)
 }
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
@@ -95,7 +93,7 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
     ("ws.timeout.request", "10000"))
 
   implicit override lazy val app: Application = {
-    val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
+    val environment = Environment.simple()
     val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
       case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
       case Failure(_) => initialSettings
@@ -113,6 +111,10 @@ object TestRequest {
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
+}
+
+trait WithTestEnvironment {
+  val testEnvironment: Environment = Environment.simple()
 }
 
 trait WithTestWsClient {

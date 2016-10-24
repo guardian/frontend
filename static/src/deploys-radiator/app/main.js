@@ -19,6 +19,7 @@ const run = () => {
     // with goo
     const serverWhitelist = List([
         'admin',
+        'admin-jobs',
         'applications',
         'archive',
         'article',

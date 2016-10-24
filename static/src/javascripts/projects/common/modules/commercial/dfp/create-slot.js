@@ -7,14 +7,6 @@ define([
     assign,
     adSizes
 ) {
-    var badgeDefinition = {
-        label: false,
-        refresh: false,
-        sizeMappings: {
-            mobile: compile(adSizes.empty, adSizes.badge)
-        }
-    };
-
     var inlineDefinition = {
         sizeMappings: {
             mobile: compile(adSizes.empty, adSizes.mpu, adSizes.fluid)
@@ -69,9 +61,6 @@ define([
                 mobile: compile(adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
             }
         },
-        spbadge: badgeDefinition,
-        adbadge: badgeDefinition,
-        fobadge: badgeDefinition,
         comments: inlineDefinition,
         'top-above-nav': {
             sizeMappings: {
@@ -148,7 +137,7 @@ define([
             });
         }
 
-        classes.push('ad-slot--' + name.replace(/((?:ad|fo|sp)badge).*/, '$1'));
+        classes.push('ad-slot--' + name);
 
         return createAdSlotElement(
             name,

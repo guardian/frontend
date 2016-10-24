@@ -2,11 +2,10 @@ package controllers.admin.commercial
 
 import common.dfp.TakeoverWithEmptyMPUs
 import conf.Configuration.environment
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
+import play.api.i18n.Messages
 import play.api.mvc.{Action, Controller}
 
-class TakeoverWithEmptyMPUsController extends Controller {
+class TakeoverWithEmptyMPUsController(implicit val messages: Messages) extends Controller {
 
   def viewList() = Action { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUs(

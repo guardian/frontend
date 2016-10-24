@@ -28,11 +28,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-immediate",
-    "Test effectiveness of not waiting for 10 page reads before showing membership engagement banner to UK users.",
-    owners = Seq(Owner.withGithub("justinpinner")),
+    "ab-contributions-usa-1",
+    "Test which of our 5 initial US targeted messages results in the most contributions",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 18),
+    sellByDate = new LocalDate(2016, 10, 27),
     exposeClientSide = true
   )
 
@@ -56,4 +56,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-membership-engagement-warp-factor-one",
+    "The first level of prominent membership engagement messaging",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 3),
+    exposeClientSide = true
+  )
 }

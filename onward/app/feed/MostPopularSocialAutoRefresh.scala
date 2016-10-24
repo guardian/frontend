@@ -1,5 +1,6 @@
 package feed
 
+import akka.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import play.api.inject.ApplicationLifecycle
@@ -24,7 +25,7 @@ class MostPopularSocialAutoRefresh(ophanApi: OphanApi) extends AutoRefresh[MostR
 
 class MostPopularFacebookAutoRefreshLifecycle(appLifeCycle: ApplicationLifecycle,
                                               mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh)
-                                             (implicit ec: ExecutionContext) extends LifecycleComponent {
+                                             (implicit ec: ExecutionContext, actorSystem: ActorSystem) extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () => Future {
     mostPopularSocialAutoRefresh.stop()
