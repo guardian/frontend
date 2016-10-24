@@ -573,7 +573,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             line-height: 28px;
             height: 28px;
             svg {
-                top: 0px;
+                top: -2px;
                 height: 28px;
                 width: 28px;
             }
@@ -604,9 +604,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #ffffff;
             fill: #ffffff;
         }
-        a {
-            color: #ffffff;
-        }
         color: #ffffff;
         background-color: #dc2a7d;
     }
@@ -615,10 +612,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #000333;
             fill: #000333;
         }
-        a {
-            color: #000333;
-        }
-        color: #ffffff;
+        color: #000333;
         background-color: #4bc6df;
     }
     .message-button-rounded__cta.bright-blue {
@@ -626,13 +620,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #ffffff;
             fill: #ffffff;
         }
-        a {
-            color: #ffffff;
-        }
-        color: #000000;
+        color: #ffffff;
         background-color: #005689;
     }
-
     .inline-arrow-white-right {
         display: block;
         float: right;
