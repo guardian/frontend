@@ -91,7 +91,7 @@ pasteup: check-node # PRIVATE
 
 # Run the JS test suite.
 test: check-node
-	@grunt test --dev
+	@./tools/run-task test
 
 # Lint all assets.
 validate: check-node
