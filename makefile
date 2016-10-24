@@ -91,7 +91,7 @@ pasteup: check-node # PRIVATE
 
 # Run the JS test suite.
 test: check-node
-	@./tools/run-task test
+	@./tools/run-task test/javascript
 
 # Lint all assets.
 validate: check-node
