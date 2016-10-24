@@ -529,6 +529,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     position: absolute;
     height: auto;
     bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
     svg {
         fill: #ffffff;
     }
@@ -536,14 +537,23 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 
 .hosted__more-from-title {
     @include f-headlineSans;
-    margin: 40px 100px 0 180px;
+    margin: 30px 100px $gs-baseline 120px;
 
     .hosted__text {
         color: #ffffff;
     }
 
     h2 {
-        font-size: 30px;
+        font-size: 20px;
+        line-height: 20px;
+        @include mq(desktop) {
+            font-size: 30px;
+            line-height: 30px;
+        }
+    }
+
+    @include mq(desktop) {
+        margin: 40px 100px #{2 * $gs-baseline} 180px;
     }
 }
 
@@ -568,6 +578,26 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 .hosted__more-from-popup {
     position: fixed;
     width: 100%;
+
+}
+
+.hosted__next-page-tile--popup {
+    display: inline-block;
+    width: 300px;
+    height: 260px;
+    margin: $gs-baseline 0 0 $gs-gutter;
+    background: #ffffff;
+}
+
+.hosted__next-page-thumb--popup {
+    width: 300px;
+    height: 180px;
+}
+
+.hosted__next-page-title--popup {
+    @include f-headlineSans;
+    color: $neutral-1;
+    padding: 8px;
 }
 
 .hosted__carousel-marker {
