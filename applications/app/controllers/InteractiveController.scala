@@ -26,7 +26,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
 
   def renderInteractiveServiceworker(path: String): Action[AnyContent] = Action.async { implicit request =>
     val stage = if (isPreview) "preview" else "live"
-    val serviceWorkerPath = s"$cdnPath/service-workers/$path/$stage.js"
+    val serviceWorkerPath = s"$cdnPath/service-workers/$stage/$path/interactive-service-worker.js"
     wsClient.url(serviceWorkerPath).get().map { response =>
       Cached(60) { RevalidatableResult.Ok(response.body) }
     }
