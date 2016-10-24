@@ -442,6 +442,7 @@ class GuardianConfiguration extends Logging {
 
   object interactive {
     lazy val url = "http://interactive.guim.co.uk/next-gen/"
+    lazy val cdnPath = "https://interactive.guim.co.uk"
   }
 
   object javascript {

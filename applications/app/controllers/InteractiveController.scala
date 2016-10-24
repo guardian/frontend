@@ -5,9 +5,13 @@ import common._
 import contentapi.ContentApiClient
 import conf._
 import conf.switches.Switches
+import model.Cached.RevalidatableResult
 import model._
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
+import conf.Configuration.interactive.cdnPath
+import conf.Configuration.environment.isPreview
 
 import scala.concurrent.Future
 
@@ -15,10 +19,18 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-class InteractiveController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
+
+  def renderInteractiveServiceworker(path: String): Action[AnyContent] = Action.async { implicit request =>
+    val stage = if (isPreview) "preview" else "live"
+    val serviceWorkerPath = s"$cdnPath/service-workers/$path/$stage.js"
+    wsClient.url(serviceWorkerPath).get().map { response =>
+      Cached(60) { RevalidatableResult.Ok(response.body) }
+    }
+  }
 
   private def lookup(path: String)
                     (implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
