@@ -17,5 +17,4 @@ exports.commercial = {
 exports.eslint = {
     description: 'Eslint',
     task: 'grunt shell:eslintTests'
-
 };

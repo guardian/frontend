@@ -67,6 +67,7 @@ const path = require('path');
 const yargs = require('yargs');
 const Listr = require('listr');
 const execa = require('execa');
+const capitalise = require('lodash.capitalize');
 
 const tasksIdentifier = '__tasks__';
 
@@ -91,27 +92,35 @@ const {dev: IS_DEV, verbose, _: TASKS} = yargs
 
 const taskSrc = path.resolve(__dirname, tasksIdentifier);
 
-const getModuleForTask = task => {
+const resolveModule = modulePath => {
+    if (IS_DEV) {
+        try {
+            return require(modulePath + '.dev');
+        } catch (e) {
+            // do nothing
+        }
+        try {
+            return require(modulePath + '/index.dev');
+        } catch (e) {
+            // do nothing
+        }
+    }
+    return require(modulePath);
+};
+
+const getTasksFromModule = task => {
     try {
         const [taskName, targetName] = task.split(':');
-        const testPath = path.resolve(taskSrc, taskName);
-        let module = require(testPath);
-        if (IS_DEV) {
-            try {
-                module = require(testPath + '.dev');
-            } catch (e) {
-                // do nothing
-            }
-            try {
-                module = require(testPath + '/index.dev');
-            } catch (e) {
-                // do nothing
-            }
-        }
-        if (module[targetName]) {
-            return module[targetName];
-        }
-        return (module.default || module);
+        let module = resolveModule(path.resolve(taskSrc, taskName));
+
+        if (module[targetName]) return module[targetName];
+        if (module.task) return module;
+        if (module.default) return module.default;
+        return Object.keys(module).reduce((tasks, taskName) => {
+            const {description, task, concurrent} = tasks;
+            task.push(module[taskName]);
+            return {description, task, concurrent};
+        }, {description: `${capitalise(taskName.split('/').join(' '))}`, task: [], concurrent: true});
     } catch (e) {
         return null;
     }
@@ -133,7 +142,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
                 return { title, task: () => listrify(task.map(_task => {
                     if (_task.task) return _task;
 
-                    const module = getModuleForTask(_task);
+                    const module = getTasksFromModule(_task);
                     if (module) return module;
 
                     return { description: _task.toString(), task: _task};
@@ -142,7 +151,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
 
             // treat tasks that are strings as terminal commands
             if (typeof task === 'string') {
-                const subTask = getModuleForTask(task);
+                const subTask = getTasksFromModule(task);
                 if (subTask) {
                     return { title, task: () => listrify([subTask], {concurrent}), skip};
                 } else {
@@ -161,7 +170,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
     });
 }
 
-const taskModules = TASKS.map(getModuleForTask);
+const taskModules = TASKS.map(getTasksFromModule);
 
 if (taskModules.filter(module => module !== null).length) {
     listrify(taskModules, {verbose}).run();
