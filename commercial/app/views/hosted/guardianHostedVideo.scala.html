@@ -28,16 +28,17 @@
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
-    }
-
     .hosted-page .hosted__link {
         color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
     }
     </style>
     <!--<![endif]-->
@@ -137,12 +138,13 @@
             </div>
 
             @page.nextPage.map { nextPage =>
-                @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
+                @hostedArticleOnward(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
             }.getOrElse {
                 <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
         </section>
         @guardianHostedCta(page, page.cta)
+        @guardianHostedOnwardOverlay(page)
     </div>
 
 }
