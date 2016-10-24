@@ -70,7 +70,7 @@ const execa = require('execa');
 
 const tasksIdentifier = '__tasks__';
 
-const {dev: IS_DEV, _: TASKS} = yargs
+const {dev: IS_DEV, verbose, _: TASKS} = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
@@ -164,7 +164,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
 const taskModules = TASKS.map(getModuleForTask);
 
 if (taskModules.filter(module => module !== null).length) {
-    listrify(taskModules).run().catch(console.log);
+    listrify(taskModules, {verbose}).run().catch(console.log);
 } else {
     console.log(`Cannot find tasks for '${TASKS}'?`);
 }
