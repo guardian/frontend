@@ -125,7 +125,21 @@
         width: 48%;
         margin: 0;
         padding: 0;
+
+        &.lozenge--is-updating {
+            display: inherit;
+            font-size: 0;
+            height: 2.43rem;
+            background-color: $neutral-5;
+            border: 1px solid $neutral-3;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40px;
+        }
     }
+
+
+
 
     .newsletter-card__lozenge--submit {
         -webkit-border-radius: 0 62.5rem 62.5rem 0;
@@ -171,6 +185,42 @@
         fill: $neutral-3;
     }
 }
+
+.signup-confirmation {
+  position: relative;
+  padding: $gs-gutter / 4;
+
+  .signup-confirmation__message {
+    position: relative;
+    display: inline-block;
+    vertical-align: text-bottom;
+  }
+
+  .signup-confirmation--success {
+    @include fs-textSans(3);
+    color: $neutral-1;
+    display: inline;
+  }
+
+  .inline-icon {
+    background-color: $neutral-3;
+    -webkit-border-radius: 62.5rem;
+    border-radius: 62.5rem;
+    fill: $neutral-1;
+    height: $gs-baseline * 3;
+    left: 0;
+    width: $gs-baseline * 3;
+    display: inline-block;
+
+    svg {
+      height: 50%;
+      width: 50%;
+      margin-left: 25%;
+      margin-top: 25%;
+    }
+  }
+}
+
 
 .newsletter-card__iframe {
     width: 100%;

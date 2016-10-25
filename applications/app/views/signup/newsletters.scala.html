@@ -29,6 +29,15 @@
     }
 }
 
+@signupConfirmation() = {
+  <div class="signup-confirmation">
+    @fragments.inlineSvg("tick", "icon")
+    <div class="signup-confirmation__message">
+        <h3 class="signup-confirmation--success">You've subscribed!</h3>
+    </div>
+  </div>
+}
+
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
         @theme
