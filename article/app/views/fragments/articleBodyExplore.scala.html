@@ -31,6 +31,9 @@
                     <div class="explore-series-byline-image hide-on-mobile">
                       @fragments.meta.bylineImage(article.content.tags)
                     </div>
+                    <h1 class="explore-series-video-headline">
+                        @Html(article.content.trail.headline)
+                    </h1>
                     @fragments.standfirst(article)
                   </div>
                 </div>

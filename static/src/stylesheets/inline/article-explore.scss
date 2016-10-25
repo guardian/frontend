@@ -136,20 +136,26 @@ $explore-series-header-element-opacity: .85;
 }
 
 .explore-series-headline__content {
-    @include fs-headline(4);
-    line-height: 24px;
-    font-weight: 900;
     color: #ffffff;
     margin: $gs-baseline 0;
     width: 94%;
     padding-left: 0;
 
     @include mq($from: desktop) {
+        width: gs-span(8);
+        padding-left: $gs-gutter;
+    }
+}
+
+.explore-series-headline__content, .explore-series-video-headline{
+    @include fs-headline(4);
+        line-height: 24px;
+        font-weight: 900;
+
+    @include mq($from: desktop) {
         @include fs-headline(7);
         line-height: 36px;
         font-weight: 900;
-        width: gs-span(8);
-        padding-left: $gs-gutter;
     }
 }
 
@@ -223,6 +229,16 @@ $explore-series-header-element-opacity: .85;
             margin-bottom: inherit;
             margin-top: inherit;
             padding-right: 0;
+        }
+
+        .explore-video-standfirst & {
+          @include fs-headline(2);
+          font-weight: 900;
+
+          @include mq($from: desktop) {
+              @include fs-headline(4);
+              font-weight: 900;
+          }
         }
     }
 }
