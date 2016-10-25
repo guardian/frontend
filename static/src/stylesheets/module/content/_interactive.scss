@@ -1,4 +1,4 @@
-.js-on.is-modern .content--interactive {
+.content--interactive {
     padding: 0;
 
     .content__headline {
@@ -153,23 +153,7 @@
     }
 }
 
-.is-not-modern {
-    .content__meta-footer {
-        display: none;
-    }
-
-    .content__head .content__dateline {
-        display: none;
-    }
-
-    .content__main-column--interactive {
-        border-top: 1px dotted $neutral-5;
-        padding-top: $gs-baseline/2;
-        min-height: $gs-baseline*20;
-    }
-}
-
-.js-on.is-modern .is-immersive-interactive {
+.is-immersive-interactive {
     .content--interactive .content__head,
     .content--interactive .content__main,
     .content--interactive ~ *,
@@ -178,8 +162,3 @@
     }
 }
 
-.is-immersive .content--interactive {
-    figure.element {
-        margin: 0;
-    }
-}

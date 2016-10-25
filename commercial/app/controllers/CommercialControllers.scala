@@ -1,12 +1,12 @@
 package commercial.controllers
 
 import com.softwaremill.macwire._
+import commercial.model.capi.CapiAgent
+import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
+import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
+import commercial.model.merchandise.jobs.JobsAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
-import model.commercial.CapiAgent
-import model.commercial.books.{BestsellersAgent, BookFinder}
-import model.commercial.events.{LiveEventAgent, MasterclassAgent}
-import model.commercial.jobs.JobsAgent
-import model.commercial.travel.TravelOffersAgent
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
@@ -28,7 +28,5 @@ trait CommercialControllers {
   lazy val paidContentCardController = wire[PaidContentCardController]
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val travelOffersController = wire[TravelOffersController]
-  lazy val subscriberNumberPageController = wire[SubscriberNumberPageController]
-  lazy val contributorEmailPageController = wire[ContributorEmailPageController]
   lazy val trafficDriverController = wire[TrafficDriverController]
 }

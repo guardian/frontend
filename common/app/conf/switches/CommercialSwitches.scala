@@ -206,6 +206,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val MembershipEngagementBanner = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner",
+    "Master switch for the membership engagement banner.",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdBlockMessage = Switch(
     SwitchGroup.Commercial,
     "adblock",
@@ -232,17 +242,7 @@ trait CommercialSwitches {
     "British Council's beacon",
     owners = Seq(Owner.withGithub("kenlim")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 17),
-    exposeClientSide = false
-  )
-
-  val highMerchandisingComponentSwitch = Switch(
-    SwitchGroup.Commercial,
-    "optimise-high-merchandising",
-    "If on, server will check tags for high-merchandising target before rendering high-merch slot.",
-    owners = Seq(Owner.withGithub("Calum Campbell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016,10,12),
+    sellByDate = new LocalDate(2016, 11, 1),
     exposeClientSide = false
   )
 
@@ -262,7 +262,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 28),
+    sellByDate = new LocalDate(2016, 12, 21),
     exposeClientSide = false
   )
 
@@ -272,7 +272,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 28),
+    sellByDate = new LocalDate(2016, 12, 21),
     exposeClientSide = false
   )
 
@@ -282,7 +282,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article (with video) pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 28),
+    sellByDate = new LocalDate(2016, 12, 21),
     exposeClientSide = false
   )
 
@@ -292,7 +292,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo video pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 28),
+    sellByDate = new LocalDate(2016, 12, 21),
     exposeClientSide = false
   )
 

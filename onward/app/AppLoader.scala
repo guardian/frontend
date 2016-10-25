@@ -44,14 +44,10 @@ trait OnwardServices {
   lazy val mostViewedVideoAgent = wire[MostViewedVideoAgent]
 }
 
-trait Controllers extends OnwardControllers {
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers with OnwardServices =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -63,9 +59,6 @@ trait AppLifecycleComponents {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with OnwardServices {
 
   lazy val router: Router = wire[Routes]
 

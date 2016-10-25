@@ -1,8 +1,10 @@
 define([
     'common/utils/config',
     'common/utils/fetch-json',
-    'common/utils/fastdom-promise'
-], function (config, fetchJson, fastdom) {
+    'common/utils/fastdom-promise',
+    'commercial/modules/hosted/onward-journey-popup',
+    'commercial/modules/hosted/onward-journey-carousel'
+], function (config, fetchJson, fastdom, HostedPopup, HostedCarousel) {
 
     return {
         init: loadOnwardComponent
@@ -23,6 +25,8 @@ define([
                         for (i = 0; i < placeholders.length; i++) {
                             placeholders[i].innerHTML = json.html;
                         }
+                        new HostedCarousel.init();
+                        new HostedPopup.init();
                     });
                 });
         }

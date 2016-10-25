@@ -1,4 +1,4 @@
-package model.commercial
+package commercial.model.capi
 
 import common.{AkkaAgent, Logging}
 import contentapi.ContentApiClient

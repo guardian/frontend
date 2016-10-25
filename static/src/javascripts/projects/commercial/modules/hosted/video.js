@@ -94,9 +94,7 @@ define([
 
                             var mediaId = $videoEl.attr('data-media-id');
                             deferToAnalytics(function () {
-                                events.initOmnitureTracking(player);
                                 events.initOphanTracking(player, mediaId);
-
                                 events.bindGlobalEvents(player);
                                 events.bindContentEvents(player);
                             });

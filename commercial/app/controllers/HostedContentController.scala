@@ -1,10 +1,11 @@
 package commercial.controllers
 
+import com.gu.contentapi.client.model.ItemQuery
+import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
 import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
-import model.commercial.hosted.HostedTrails
 import model.{Cached, NoCache}
 import play.api.mvc._
 import play.twirl.api.Html
@@ -29,6 +30,14 @@ class HostedContentController(contentApiClient: ContentApiClient)
     }
   }
 
+  private def baseQuery(itemId: String)(implicit request: Request[AnyContent]): ItemQuery =
+    contentApiClient.item(itemId, Edition(request))
+    .showSection(true)
+    .showElements("all")
+    .showFields("all")
+    .showTags("all")
+    .showAtoms("all")
+
   def renderLegacyHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
     renderPage(Future.successful(hardcoded.LegacyHostedPages.fromCampaignAndPageName(campaignName, pageName)))
   }
@@ -37,12 +46,7 @@ class HostedContentController(contentApiClient: ContentApiClient)
 
     val capiResponse = {
       val itemId = s"advertiser-content/$campaignName/$pageName"
-      val query = contentApiClient.item(itemId, Edition(request))
-                  .showElements("all")
-                  .showFields("all")
-                  .showTags("all")
-                  .showAtoms("all")
-      val response = contentApiClient.getResponse(query)
+      val response = contentApiClient.getResponse(baseQuery(itemId))
       response.onFailure {
         case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
       }
@@ -65,13 +69,9 @@ class HostedContentController(contentApiClient: ContentApiClient)
 
       val capiResponse = {
         val sectionId = s"advertiser-content/$campaignName"
-        val query = contentApiClient.item(sectionId, Edition(request))
+        val query = baseQuery(sectionId)
                     .pageSize(100)
                     .orderBy("oldest")
-                    .showElements("all")
-                    .showFields("all")
-                    .showTags("all")
-                    .showAtoms("all")
         val response = contentApiClient.getResponse(query)
         response.onFailure {
           case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
@@ -85,10 +85,10 @@ class HostedContentController(contentApiClient: ContentApiClient)
           contentType match {
             case "video" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 1, results)
-              Cached(cacheDuration)(JsonComponent(hostedVideoOnward(trails.headOption)))
+              Cached(cacheDuration)(JsonComponent(hostedOnwardJourney(trails, 1, 1)))
             case "article" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
-              Cached(cacheDuration)(JsonComponent(hostedArticleOnward(trails)))
+              val trails = HostedTrails.fromContent(itemId, trailCount = 1000, results)
+              Cached(cacheDuration)(JsonComponent(hostedOnwardJourney(trails, 2, 4)))
             case "gallery" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
               Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))

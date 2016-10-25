@@ -20,29 +20,19 @@ trait ABTestSwitches {
     ABTests,
     "ab-discussion-promote-comments",
     "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("piuccio")),
+    owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 10, 12),
-    exposeClientSide = true
-  )
-
-  for (edition <- Edition.all) Switch(
-    ABTests,
-    "ab-membership-engagement-banner-extended-"+edition.id.toLowerCase,
-    "Test effectiveness of banner for driving membership.",
-    owners = Seq(Owner.withGithub("rtyley")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 10, 10),
+    sellByDate = new LocalDate(2016, 11, 9),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-ad-blocking-response3",
-    "Prominent adblocker ad-free test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 13),   // Thursday @ 23:59 BST
+    "ab-contributions-usa-1",
+    "Test which of our 5 initial US targeted messages results in the most contributions",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 10, 27),
     exposeClientSide = true
   )
 
@@ -66,4 +56,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-membership-engagement-warp-factor-one",
+    "The first level of prominent membership engagement messaging",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 3),
+    exposeClientSide = true
+  )
 }

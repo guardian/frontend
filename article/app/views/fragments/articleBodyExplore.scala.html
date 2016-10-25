@@ -1,10 +1,10 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
-
 @import common.LinkTo
+@import controllers.ArticlePage
 @import views.BodyCleaner
 @import views.support.Commercial.isPaidContent
-@import views.support.TrailCssClasses.toneClass
-@import views.support.{ImgSrc, Item140}
+@import views.support.RenderClasses
+
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
 
 @defining(model.article) { article =>
     <div class="l-side-margins @if(article.content.elements.hasMainVideo){explore--video}">

@@ -268,7 +268,7 @@ final case class Content(
     } else None
 
     val atomsMeta = atoms.map { atoms =>
-      val atomIdentifiers = atoms.all.collect { case quiz: Quiz => JsString(quiz.id) }
+      val atomIdentifiers = atoms.all.map(atom => JsString(atom.id))
       ("atoms", JsArray(atomIdentifiers))
     }
 
@@ -344,6 +344,7 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
+
 
     Content(
       trail = trail,
@@ -466,7 +467,8 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || content.isImmersive) && content.tags.isArticle
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
 
@@ -574,6 +576,7 @@ final case class Audio (override val content: Content) extends ContentType {
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
+
 }
 
 object Video {
@@ -693,7 +696,8 @@ object Gallery {
       openGraphImages = lightbox.openGraphImages,
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = twitterProperties,
-      opengraphPropertiesOverrides = openGraph
+      opengraphPropertiesOverrides = openGraph,
+      contentWithSlimHeader = true
     )
 
     val contentOverrides = content.copy(
@@ -835,15 +839,6 @@ final case class Interactive(
     }
   }
 
-  lazy val hasSrcdoc = {
-    val iframe = Jsoup.parseBodyFragment(fields.body).getElementsByTag("iframe")
-
-    if (iframe.length > 0) {
-        iframe.first().hasAttr("srcdoc")
-    } else {
-        false
-    }
-  }
   lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
@@ -852,7 +847,6 @@ object Interactive {
     val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
-    val elements = content.elements
     val tags = content.tags
     val section = content.metadata.sectionId
     val id = content.metadata.id
@@ -864,7 +858,8 @@ object Interactive {
       contentType = contentType,
       analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      contentWithSlimHeader = true
     )
     val contentOverrides = content.copy(
       metadata = metadata

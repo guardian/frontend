@@ -1,12 +1,11 @@
-package model.commercial.events
+package commercial.model.merchandise.events
 
 import java.lang.System._
 
-import commercial.feeds._
+import commercial.model.feeds._
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
-import model.commercial.LiveEvent
-import play.api.Play.current
+import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
 

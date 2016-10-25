@@ -10,7 +10,6 @@ import play.api.mvc.{RequestHeader, Action, Controller}
 class ShortUrlsController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
 
   def redirectShortUrl(shortUrl: String) = Action.async { implicit request =>
-    log.info(s"Redirecting short url $shortUrl")
     redirectUrl(shortUrl, request.queryString)
   }
 
@@ -23,7 +22,6 @@ class ShortUrlsController(contentApiClient: ContentApiClient) extends Controller
   }
 
   def fetchCampaignAndRedirectShortCode(shortUrl: String, campaignCode: String) = Action.async { implicit request =>
-    log.info(s"Fetching campaign for $campaignCode and redirect short url")
     val queryString = request.queryString ++ ShortCampaignCodes.makeQueryParameter(campaignCode)
     redirectUrl(shortUrl, queryString)
   }

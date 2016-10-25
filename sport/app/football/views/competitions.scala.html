@@ -1,3 +1,6 @@
+@import football.controllers.CompetitionFilter
+@import model.Page
+
 @(competitions: Map[String, Seq[CompetitionFilter]], page: Page, competitionList: List[String])(implicit request: RequestHeader)
 
 @main(page, "football"){

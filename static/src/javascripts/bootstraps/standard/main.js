@@ -129,7 +129,12 @@ define([
 
         if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
-                require([el.getAttribute('data-interactive')], function (interactive) {
+                var mainJS = el.getAttribute('data-interactive');
+                if (!mainJS) {
+                    return;
+                }
+
+                require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
@@ -145,6 +150,19 @@ define([
                         ophan.trackComponentAttention(href, el);
                     }
                 });
+            });
+
+            qwery('iframe.interactive-atom-fence').forEach(function (el) {
+                var srcdoc;
+                if (!el.srcdoc) {
+                    fastdom.read(function () {
+                       srcdoc = el.getAttribute('srcdoc');
+                    });
+                    fastdom.write(function () {
+                        el.contentWindow.contents = srcdoc;
+                        el.src = 'javascript:window["contents"]';
+                    });
+                }
             });
         }
 

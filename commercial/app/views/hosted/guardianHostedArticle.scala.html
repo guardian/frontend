@@ -21,10 +21,6 @@
         border-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
-    }
-
     .hosted-page .hosted__link {
         color: @{page.campaign.fontColour.brandColour};
     }
@@ -41,9 +37,13 @@
         background-color: @{page.campaign.fontColour.brandColour};
     }
 
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
+    }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page.campaign.logoUrl, page.campaign.owner, page.cta.url)
+    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
@@ -76,9 +76,9 @@
                         </div>
                         <div class="hide-on-desktop">
                             @if(page.nextPages.nonEmpty) {
-                                @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                     makeshiftPage(nextPage, page.campaign)
-                                })
+                                }, 2, 4)
                             } else {
                                 <div class="js-onward-placeholder"></div>
                             }
@@ -93,9 +93,9 @@
                     </div>
                     <div class="content__secondary-column">
                         @if(page.nextPages.nonEmpty) {
-                            @hostedArticleOnward(page.nextPages.map { nextPage =>
+                            @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                 makeshiftPage(nextPage, page.campaign)
-                            })
+                            }, 2, 4)
                         } else {
                             <div class="js-onward-placeholder"></div>
                         }
@@ -105,5 +105,6 @@
         </article>
 
         @guardianHostedCta(page, page.cta)
+        @guardianHostedOnwardOverlay(page)
     </div>
 }

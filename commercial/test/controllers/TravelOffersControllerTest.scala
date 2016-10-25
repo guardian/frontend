@@ -1,6 +1,6 @@
 package commercial.controllers
 
-import model.commercial.travel.TravelOffersAgent
+import commercial.model.merchandise.travel.TravelOffersAgent
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTestWsClient}

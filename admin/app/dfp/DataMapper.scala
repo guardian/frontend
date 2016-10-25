@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201508._
+import com.google.api.ads.dfp.axis.v201608._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 
@@ -136,7 +136,8 @@ object DataMapper {
         (params map toParameter).toSeq
       }.getOrElse(Nil),
       snippet = dfpCreativeTemplate.getSnippet,
-      creatives = Nil
+      creatives = Nil,
+      isNative = dfpCreativeTemplate.getIsNativeEligible
     )
   }
 

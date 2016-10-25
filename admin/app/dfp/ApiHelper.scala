@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201508._
+import com.google.api.ads.dfp.axis.v201608._
 import common.Logging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 

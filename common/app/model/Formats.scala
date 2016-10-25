@@ -88,6 +88,7 @@ object MetaDataFormat {
     customSignPosting: Option[NavItem],
     javascriptConfigOverrides: Map[String, JsValue],
     opengraphPropertiesOverrides: Map[String, String],
+    isHosted: Boolean,
     twitterPropertiesOverrides: Map[String, String])
 
   val readsMetadata: Reads[MetaData] = {
@@ -123,6 +124,7 @@ object MetaDataFormat {
       part2.customSignPosting,
       part2.javascriptConfigOverrides,
       part2.opengraphPropertiesOverrides,
+      part2.isHosted,
       part2.twitterPropertiesOverrides
       )
     }
@@ -161,6 +163,7 @@ object MetaDataFormat {
           meta.customSignPosting,
           meta.javascriptConfigOverrides,
           meta.opengraphPropertiesOverrides,
+          meta.isHosted,
           meta.twitterPropertiesOverrides
         )
       )
@@ -189,6 +192,7 @@ object ContentTypeFormat {
   implicit val quizFormat = Json.format[Quiz]
   implicit val mediaAssetFormat = Json.format[MediaAsset]
   implicit val mediaAtomFormat = Json.format[MediaAtom]
+  implicit val interactiveAtomFormat = Json.format[InteractiveAtom]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]

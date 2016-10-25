@@ -294,6 +294,7 @@ GET            /commercial/books/book.json                                      
 GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
+GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
 GET            /commercial/capi.json                                                                                             commercial.controllers.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  commercial.controllers.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      commercial.controllers.ContentApiOffersController.itemJson
@@ -307,13 +308,10 @@ GET            /commercial/paid.json                                            
 GET            /commercial/paid                                                                                                  commercial.controllers.PaidContentCardController.cardHtml
 GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
-GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
+GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
-GET            /commercial/subscriber-number                                                                                     commercial.controllers.SubscriberNumberPageController.renderSubscriberNumberPage
-GET            /commercial/contributor-email                                                                                     commercial.controllers.ContributorEmailPageController.renderContributorEmailPage
-GET            /commercial/contributor-email/do                                                                                  commercial.controllers.ContributorEmailPageController.renderContributorEmailPageResult
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()

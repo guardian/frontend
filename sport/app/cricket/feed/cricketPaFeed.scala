@@ -1,7 +1,8 @@
 package cricketPa
 
+import akka.actor.ActorSystem
 import common.{ExecutionContexts, Logging}
-import cricket.feed.ThrottledTask
+import cricket.feed.{CricketThrottler, ThrottledTask}
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import play.api.libs.ws.WSClient
@@ -14,11 +15,12 @@ object PaFeed {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 }
 
-class PaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
+class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionContexts with Logging {
 
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
+  private implicit val throttler = new CricketThrottler(actorSystem)
 
   private def getMatchPaResponse(apiMethod: String) : Future[String] = {
     credentials.map ( header => ThrottledTask {

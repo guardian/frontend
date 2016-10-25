@@ -31,11 +31,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit def fapiClient: ApiClient =
-    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
-      FrontsApi.crossAccountClient
-    else
-      FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -61,11 +57,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 
-  implicit def fapiClient: ApiClient =
-    if (Switches.FaciaPressCrossAccountSwitch.isSwitchedOn)
-      FrontsApi.crossAccountClient
-    else
-      FrontsApi.amazonClient
+  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
@@ -271,18 +263,6 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
-  }
-
-  private def mapContent(content: PressedContent)(f: ContentType => ContentType): PressedContent = {
-    val mappedContent: Option[ContentType] = content.properties.maybeContent.map(f)
-    val mappedProperties = content.properties.copy(maybeContent = mappedContent)
-
-    content match {
-      case curatedContent: CuratedContent => curatedContent.copy(properties = mappedProperties)
-      case supporting: SupportingCuratedContent => supporting.copy(properties = mappedProperties)
-      case linkSnap: LinkSnap => linkSnap.copy(properties = mappedProperties)
-      case latestSnap: LatestSnap => latestSnap.copy(properties = mappedProperties)
-    }
   }
 
   def slimContent(pressedContent: PressedContent): PressedContent = {

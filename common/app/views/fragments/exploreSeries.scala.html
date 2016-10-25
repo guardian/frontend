@@ -1,10 +1,9 @@
-@(page: ContentPage)(implicit request: RequestHeader)
-
 @import common.LinkTo
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
-@import views.support.TrailCssClasses.toneClass
 @import views.support.RenderClasses
+@import views.support.TrailCssClasses.toneClass
+@(page: ContentPage)(implicit request: RequestHeader)
 
 @defining((
     page.item.elements.hasMainEmbed,
@@ -45,7 +44,7 @@
                 @if(page.item.elements.hasMainVideo) {
                   @fragments.immersiveVideo(page)
                 }
-                @if(page.item.elements.hasMainEmbed) {
+                @if(hasMainMedia && !hasVideo) {
                     <div class="immersive-main-media__media__loading">
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>

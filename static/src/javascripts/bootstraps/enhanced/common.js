@@ -48,13 +48,11 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/save-for-later',
+    'common/modules/commercial/membership-engagement-banner',
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach',
-    'common/modules/experiments/subscriber-number-form',
-    'common/modules/experiments/contributor-email-form',
-    'common/modules/experiments/contributor-email-submitted'
+    'lodash/collections/forEach'
 ], function (
     fastdom,
     bean,
@@ -103,13 +101,11 @@ define([
     breakingNews,
     pinterest,
     SaveForLater,
+    membershipEngagementBanner,
     email,
     emailArticle,
     identity,
-    forEach,
-    subscriberNumberForm,
-    contributorEmailForm,
-    contributorEmailSubmitted
+    forEach
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -182,11 +178,11 @@ define([
             },
 
             cleanupLocalStorage : function () {
-                /*
-                TODO: reinstate gu.subscriber after completion of ab-adblocking-response test
-                      see https://github.com/guardian/frontend/pull/14072
-                */
-                var deprecatedKeys = [];
+                var deprecatedKeys = [
+                    'gu.subscriber',
+                    'gu.contributor',
+                    'gu.abb3.exempt'
+                ];
                 forEach(deprecatedKeys, storage.remove);
             },
 
@@ -319,6 +315,12 @@ define([
                 }
             },
 
+            membershipEngagementBanner: function() {
+                if (config.switches.membershipEngagementBanner) {
+                    membershipEngagementBanner.init();
+                }
+            },
+
             initEmail: function () {
                 // Initalise email embedded in page
                 email.init();
@@ -372,9 +374,6 @@ define([
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
-                ['c-subscriber-number-form', subscriberNumberForm],
-                ['c-contributor-email-form', contributorEmailForm],
-                ['c-contributor-email-submitted', contributorEmailSubmitted],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
@@ -386,6 +385,7 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater],
+                ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]

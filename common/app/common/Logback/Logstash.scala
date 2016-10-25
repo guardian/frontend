@@ -22,8 +22,6 @@ class LogstashLifecycle(playConfig: PlayConfiguration) extends LifecycleComponen
   }
 }
 
-object LogstashLifecycle extends LogstashLifecycle(Play.current.configuration)
-
 object Logstash {
 
   def customFields(playConfig: PlayConfiguration) = Map(

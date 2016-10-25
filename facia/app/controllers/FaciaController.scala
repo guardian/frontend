@@ -226,7 +226,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = Action.async { implicit request =>
-    log.info(s"Serving collection ID: $id")
     getPressedCollection(id).flatMap {
       case Some(collection) =>
         successful{

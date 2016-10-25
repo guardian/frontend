@@ -57,12 +57,7 @@ final case class Commercial(
   metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
   hasInlineMerchandise: Boolean
-) {
-
-  def needsHighMerchandisingSlot(edition: Edition): Boolean = {
-    DfpAgent.isTargetedByHighMerch(metadata.adUnitSuffix, tags.tags, edition, metadata.url)
-  }
-}
+)
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -131,6 +126,7 @@ object MetaData {
     iosType: Option[String] = Some("Article"),
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
+    isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map()
     ): MetaData = {
 
@@ -155,6 +151,7 @@ object MetaData {
       iosType = iosType,
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
+      isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides)
   }
 
@@ -179,7 +176,8 @@ object MetaData {
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
-      }
+      },
+      isHosted = apiContent.isHosted
     )
   }
 }
@@ -211,7 +209,9 @@ final case class MetaData (
   customSignPosting: Option[NavItem] = None,
   javascriptConfigOverrides: Map[String, JsValue] = Map(),
   opengraphPropertiesOverrides: Map[String, String] = Map(),
-  twitterPropertiesOverrides: Map[String, String] = Map()
+  isHosted: Boolean = false,
+  twitterPropertiesOverrides: Map[String, String] = Map(),
+  contentWithSlimHeader: Boolean = false
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -235,9 +235,8 @@ final case class MetaData (
   }
 
   val hasSlimHeader: Boolean =
-    contentType == "Interactive" ||
+    contentWithSlimHeader ||
       sectionId == "identity" ||
-      contentType.toLowerCase == "gallery" ||
       contentType.toLowerCase == "survey" ||
       contentType.toLowerCase == "signup"
 
@@ -483,6 +482,8 @@ final case class Elements(elements: Seq[Element]) {
 
   def mainEmbed: Option[EmbedElement] = embeds.find(_.properties.isMain)
   lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embeds.embedAssets.headOption).isDefined
+
+  lazy val hasMainMedia: Boolean = hasMainPicture || hasMainVideo || hasMainEmbed || hasMainAudio
 
   lazy val bodyImages: Seq[ImageElement] = images.filter(_.properties.isBody)
   lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.properties.isBody)

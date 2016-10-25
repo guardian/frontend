@@ -29,6 +29,7 @@ GET         /commercial/books/api/books.json                                comm
 
 # Live events merchandising components
 GET         /commercial/liveevents/event.json                               commercial.controllers.LiveEventsController.renderEvent
+GET         /commercial/api/liveevent.json                                  commercial.controllers.LiveEventsController.getLiveEvent
 
 # Multiple offer merchandising components
 GET         /commercial/multi.json                                          commercial.controllers.Multi.renderMulti
@@ -50,10 +51,3 @@ GET         /commercial/paid                                              commer
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
-
-# Subscriber number input page
-GET         /commercial/subscriber-number                                   commercial.controllers.SubscriberNumberPageController.renderSubscriberNumberPage
-
-# Contributor email input page
-GET         /commercial/contributor-email                                   commercial.controllers.ContributorEmailPageController.renderContributorEmailPage
-GET         /commercial/contributor-email/do                                commercial.controllers.ContributorEmailPageController.renderContributorEmailPageResult

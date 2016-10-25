@@ -147,7 +147,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
         log.warn(s"404,${RequestLog(request)}")
         GoogleBotMetric.Googlebot404Count.increment()
       case _ =>
-        log.info(s"404,${RequestLog(request)}")
+        log.warn(s"404,${RequestLog(request)}")
     }
 
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}

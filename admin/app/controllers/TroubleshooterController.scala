@@ -70,8 +70,7 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
       }
     }
 
-    LoadBalancer.all
-      .find(_.project == "frontend-router")
+    LoadBalancer("frontend-router")
       .flatMap(_.url)
       .map(fetchWithRouterUrl(_))
       .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))
@@ -123,7 +122,7 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
   }
 
   private def httpGet(testName: String, url: String) =  {
-    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
+    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5000).get().map {
       response =>
         if (response.status == 200) {
           TestPassed(testName)

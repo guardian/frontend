@@ -175,10 +175,6 @@
         }
     }
 
-    .advert {
-        position: relative;
-    }
-
     /* [1] Forces text wrap in IE11 */
     .advert__title,
     .advert__standfirst,
@@ -192,6 +188,7 @@
 
         > * {
             margin: 0 $gs-gutter / 2;
+            position: relative;
 
             /* In Firefox, flex items have a min-width: auto, which prevents
                them from shrinking when they have an image larger than the
@@ -201,7 +198,7 @@
                otherwise it will overflow.
                See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
             min-width: 0;
-            > .advert__image-container {
+            .advert__image-container {
                 max-width: 100%;
             }
         }
@@ -492,6 +489,7 @@
 .adverts__2cols {
     > * {
         flex-basis: calc(50% - #{$gs-gutter / 2});
+        flex-grow: 0;
     }
 
     > :nth-child(even) {
@@ -521,6 +519,7 @@
 .adverts__3cols {
     > * {
         flex-basis: calc(33.33% - #{$gs-gutter});
+        flex-grow: 0;
     }
 
     > :nth-child(3) ~ * {
@@ -564,7 +563,7 @@
 
 .adverts__column {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 
     &:not(.adverts__2cols) {
         > * + * {
@@ -674,66 +673,6 @@
         }
     }
 }
-
-/* Let's remove this shit when we revamp badges: */
-.adverts {
-    .ad-slot--paid-for-badge--front {
-        border: 0;
-        clear: none;
-        float: none;
-        min-height: 0;
-        overflow: visible;
-        margin: auto 0 0;
-        padding: 0;
-        position: static;
-        width: 100%;
-
-        &::before,
-        &::after {
-            content: none;
-        }
-    }
-
-    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-        margin-top: 0;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__inner {
-        overflow: visible;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: $gs-gutter / 4;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__header {
-        clear: none;
-        display: inline;
-        overflow: visible;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__link {
-        display: inline-block;
-        float: none;
-        clear: none;
-        margin-left: $gs-gutter / 2;
-    }
-
-    .ad-slot--paid-for-badge .ad-slot--paid-for-badge__logo {
-        display: inline-block;
-        vertical-align: middle;
-        max-height: 5 * $gs-baseline;
-    }
-
-    .ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link:after {
-        content: none;
-    }
-
-    .ad-slot--paid-for-badge__help {
-        display: none;
-    }
-}
-/* /remove */
 
 @import '_adverts-books';
 @import '_adverts-masterclasses';

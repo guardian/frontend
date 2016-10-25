@@ -14,6 +14,7 @@ object Commercial {
   def shouldShowAds(page: Page): Boolean = page match {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
+    case s: model.SimplePage if s.metadata.contentType == "Signup" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -114,5 +115,94 @@ object Commercial {
         }
       }.length
     }.getOrElse(0)
+
+    def isFirstNonThrasherContainer(containerIndex: Int, containers: Seq[FaciaContainer]): Boolean =
+      (containers filterNot (_.isThrasher) map (_.index)).min == containerIndex
+  }
+
+  object CssClassBuilder {
+
+    private def cardLink(cardContent: CardContent,
+                         adClasses: Option[Seq[String]],
+                         sizeClass: Option[String],
+                         useCardBranding: Boolean): String = {
+      val classes: Seq[String] = Seq(
+        "advert",
+        sizeClass getOrElse "",
+        "advert--capi",
+        cardContent.icon map (_ => "advert--media") getOrElse "advert--text",
+        adClasses.map(_.map(c => s"advert--$c").mkString(" ")).getOrElse(""),
+        if (useCardBranding) "advert--branded" else ""
+      )
+      classes mkString " "
+    }
+
+    def linkFromStandardCard(cardContent: CardContent,
+                             adClasses: Option[Seq[String]],
+                             useCardBranding: Boolean): String = {
+      cardLink(cardContent, adClasses, sizeClass = None, useCardBranding)
+    }
+
+    def linkFromSmallCard(cardContent: CardContent,
+                          adClasses: Option[Seq[String]],
+                          useCardBranding: Boolean): String = {
+      cardLink(cardContent, adClasses, sizeClass = Some("advert--small"), useCardBranding)
+    }
+
+    def linkFromLargeCard(cardContent: CardContent,
+                          adClasses: Option[Seq[String]],
+                          useCardBranding: Boolean): String = {
+      cardLink(cardContent, adClasses, sizeClass = Some("advert--large"), useCardBranding)
+    }
+
+    def advertContainer(otherClasses: Option[Seq[String]]): String =
+      "advert-container " + otherClasses.map(_.mkString(" ")).getOrElse("")
+  }
+
+  object TrackingCodeBuilder extends implicits.Requests {
+
+    def mkInteractionTrackingCode(frontId: String,
+                                  containerIndex: Int,
+                                  container: ContainerModel,
+                                  card: CardContent)(implicit request: RequestHeader): String = {
+      val sponsor =
+        container.branding.map(_.sponsorName) orElse card.branding.map(_.sponsorName) getOrElse ""
+      val cardIndex =
+        (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
+      Seq(
+        "Labs front container",
+        Edition(request).id,
+        frontId,
+        s"container-${containerIndex + 1}",
+        container.content.title,
+        sponsor,
+        s"card-${cardIndex + 1}",
+        card.headline
+      ) mkString " | "
+    }
+
+    def mkCapiCardTrackingCode(multiplicity: String,
+                               optSection: Option[String],
+                               optContainerTitle: Option[String],
+                               omnitureId: String,
+                               card: CardContent)(implicit request: RequestHeader): String = {
+      Seq(
+        "merchandising",
+        "capi",
+        multiplicity,
+        optSection.getOrElse(""),
+        optContainerTitle.getOrElse(""),
+        omnitureId,
+        card.branding.map(_.sponsorName).getOrElse(""),
+        card.headline
+      ) mkString " | "
+    }
+
+    def paidCard(articleTitle: String)(implicit request: RequestHeader): String = {
+      def param(name: String) = request.getParameter(name) getOrElse "unknown"
+      val section = param("s")
+      val sponsor = param("brand")
+      s"GLabs-native-traffic-card | ${Edition(request).id} | $section | $articleTitle | $sponsor"
+    }
   }
 }

@@ -1,15 +1,23 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Atomise
-@import common.{LinkTo, NewNavigation}
+@import common.{LinkTo, NewNavigation, NavLink, Edition}
 
-@primaryLinks(sectionName: String) = {
+@primaryLinksv1(sectionName: String) = {
     <label for="main-menu-toggle" tabindex="0"
         class="new-header__nav__link js-open-section-in-menu"
         aria-controls="primary-list-@sectionName"
         data-link-name="nav2 : primary : @sectionName">
             @sectionName
     </label>
+}
+
+@primaryLinksv2(link: NavLink) = {
+    <a class="new-header__nav__link"
+        href="@LinkTo(link.url)"
+        data-link-name="nav2 : primary : @link.name">
+            @link.name
+    </a>
 }
 
 <header class="@Atomise("New-header")" role="banner">
@@ -22,8 +30,14 @@
         @fragments.nav.editionPicker()
 
         <nav class="new-header__nav" data-component="nav2">
-            @NewNavigation.topLevelSections.map { section =>
-                @primaryLinks(section.name)
+            @if(mvt.ABNewNavVariant.isParticipating) {
+                @NewNavigation.topLevelSections.map { section =>
+                    @primaryLinksv1(section.name)
+                }
+            } else {
+                @NewNavigation.PrimaryLinks.getEditionalisedNavLinks(Edition(request)).map { link =>
+                    @primaryLinksv2(link)
+                }
             }
             <label for="main-menu-toggle"
                 class="new-header__nav__menu-button js-change-link"

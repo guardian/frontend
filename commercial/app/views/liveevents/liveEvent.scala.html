@@ -1,5 +1,7 @@
-@(event: model.commercial.LiveEvent, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
+@import commercial.model.merchandise.LiveEvent
 @import views.support.{ImgSrc, Item300}
+
+@(event: LiveEvent, omnitureId: Option[String], clickMacro: Option[String])(implicit request: RequestHeader)
 
     <aside class="adverts adverts--manual adverts--legacy-inline adverts--tone-membership adverts--membership" data-link-name="merchandising | event | @omnitureId">
         <header class="adverts__header">
@@ -13,9 +15,11 @@
         <div class="adverts__body">
             <a class="advert advert--inline advert--brand" href="@clickMacro@event.eventUrl" data-link-name="merchandising-liveEvents-superHigh-@{event.eventId}-@{event.name}">
                 <h2 class="advert__title">@event.name</h2>
-                <div class="advert__image-container">
-                    <img class="advert__image" src="@ImgSrc(event.imageUrl, Item300)" alt="">
-                </div>
+               @event.image.backupSrc.map { imageUrl =>
+                    <div class="advert__image-container">
+                        <img class="advert__image" src="@ImgSrc(imageUrl, Item300)" alt="">
+                    </div>
+               }
                 <div class="advert__meta">
                     @event.date.toString("dd MMM yyyy"), @event.venue.description
                 </div>
@@ -23,7 +27,7 @@
                     <div class="advert__meta advert__meta--scarcity">Last few tickets remaining</div>
                 }
                 <div class="advert__standfirst">
-                    <strong>@event.displayPrice</strong>
+                    <strong>@event.displayPriceRange</strong>
                 </div>
                 <span class="advert__more button button--small button--primary">
                     Book now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))

@@ -18,29 +18,21 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api._
-import play.api.libs.ws.WSClient
-import services.NewspaperBooksAndSectionsAutoRefresh
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait ArticleServices {
-  def wsClient: WSClient
+trait AppComponents extends FrontendComponents with ArticleControllers {
+
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
-}
+  lazy val ophanApi = wire[OphanApi]
 
-trait Controllers extends ArticleControllers {
-  self: BuiltInComponents =>
-  def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-}
-
-trait AppLifecycleComponents {
-  self: FrontendComponents with Controllers =>
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -53,9 +45,6 @@ trait AppLifecycleComponents {
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle]
   )
-}
-
-trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers with ArticleServices {
 
   lazy val router: Router = wire[Routes]
 

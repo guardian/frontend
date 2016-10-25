@@ -530,15 +530,22 @@ object GalleryCaptionCleaner {
   }
 }
 
-object InteractiveCleaner {
-  def apply(interactive: String) = {
-    val document = Jsoup.parse(interactive)
-    val srcdoc = document.getElementsByTag("iframe").attr("srcdoc")
-    if (srcdoc != null) {
-        val iframedoc = Jsoup.parse(srcdoc)
-        document.html(iframedoc.getElementsByTag("noscript").html())
+object InteractiveSrcdocCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if (interactivePressing.isSwitchedOn) {
+      for {
+        iframe <- Option(document.getElementsByTag("iframe").first())
+        srcdoc = iframe.attr("srcdoc")
+        if srcdoc.nonEmpty
+      } yield {
+        // noscript is added for immersive interactives, no idea why
+        // see https://github.com/guardian/flexible-content/pull/1597
+        // hopefully we can remove all of this soon anyway
+        val html = Jsoup.parse(srcdoc).getElementsByTag("noscript").html()
+        iframe.after(html).remove()
+      }
     }
-    document.toString
+    document
   }
 }
 
@@ -611,7 +618,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -624,7 +631,7 @@ case class AtomsCleaner(atoms: Option[Atoms])(implicit val request: RequestHeade
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

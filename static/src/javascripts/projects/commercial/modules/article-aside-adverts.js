@@ -42,15 +42,16 @@ define([
         }).then(function (mainColHeight) {
             var $adSlot, adType;
 
-            adType = !config.page.isImmersive && (
-                !$mainCol.length ||
-                (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
-                (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
-            ) ?
-                'right-sticky' :
-            mainColHeight >= minImmersiveArticleHeight ?
-                'right' :
-                'right-small';
+
+            if (config.page.isImmersive) {
+                adType = mainColHeight >= minImmersiveArticleHeight ?
+                        'right' :
+                        'right-small';
+            } else {
+                adType = (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
+                         (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
+                         ? 'right-sticky' : 'right-small';
+            }
 
             $adSlot = createSlot(adType, 'mpu-banner-ad');
 

@@ -1,16 +1,15 @@
-package model.commercial.books
+package commercial.model.merchandise.books
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
+import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.commercial.{Book, FeedParseException, FeedReadException, FeedReader, FeedRequest}
-import play.api.libs.concurrent.Akka
+import commercial.model.merchandise.Book
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
-import play.api.libs.ws.WSSignatureCalculator
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSSignatureCalculator}
 import shade.memcached.{Memcached, MemcachedCodecs, Configuration => MemcachedConfiguration}
 
 import scala.concurrent.duration._
@@ -173,7 +172,7 @@ class MemcachedBookDataCache(actorSystem: ActorSystem) extends BookDataCache wit
     for (host <- maybeHost) yield {
       val config = MemcachedConfiguration(
         addresses = host,
-        keysPrefix = Some("model.commercial.book")
+        keysPrefix = Some("commercial.model.merchandise.book")
       )
       Memcached(config, executionContext)
     }

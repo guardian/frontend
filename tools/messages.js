@@ -18,12 +18,13 @@ function notify(message, options, type) {
         require('megalog')[type](message, options);
     } catch (e) {
         console.log((options.heading ? '\n' + options.heading + ':\n\n' : '') + message + '\n\n(hint: you probably want to run `make install`)\n');
-    };
+    }
 }
 
 switch (process.argv[2]) {
     case 'describeMakefile':
         const messageLines = [];
+        const gutterWidth = 27;
 
         // this flag could be anything, but the `--` makes it look real
         const listAll = process.argv[3] === '--all';
@@ -42,25 +43,27 @@ switch (process.argv[2]) {
                 // format the target name for output to CLI
                 const targetName = line.split(':')[0];
 
-                // add the target name with the first comment following it
-                messageLines.push(`\`${targetName}\`${new Array(20 - targetName.length).join((listAll ? '.' : ' '))}${comments.shift() || '?'}`);
-
-                // then add any other comments on subsequent lines
-                [].push.apply(messageLines, comments.map(comment => new Array(20).join(' ') + comment));
+                if (comments.length) {
+                    // add the target name with the first comment following it
+                    messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`);
+                } else {
+                    // just add the target name
+                    messageLines.push(`\`${targetName}\``);
+                }
             }
 
             // if we've got a divider, just add space to create a line break
             if (line.match(/^# \*{3,}/)) {
                 if (listAll) {
-                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`)
+                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`);
                 } else {
                     messageLines.push(' ');
                 }
-            };
+            }
         });
 
         if (!listAll) {
-            messageLines.push('\nTo see the full set, run `make list`.')
+            messageLines.push('\nTo see the full set, run `make list`.');
         }
 
         notify(messageLines.join('\n').trim(), {
@@ -75,17 +78,10 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'should-shrinkwrap':
-        notify('Run `make shrinkwrap` and include the changes to `/npm-shrinkwrap.json` in your commit.', {
+    case 'should-yarn':
+        notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
             heading: 'Dependencies have changed'
         }, 'error');
-        break;
-
-    case 'did-shrinkwrap':
-        notify(
-            'NPM packages have been shrinkwrapped.', {
-            heading: 'make shrinkwrap'
-        }, 'info');
         break;
 
     case 'dependency-update':
@@ -107,4 +103,3 @@ switch (process.argv[2]) {
       }, 'info');
       break;
 }
-

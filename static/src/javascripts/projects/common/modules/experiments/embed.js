@@ -34,7 +34,7 @@ define([
     }
 
     function setAmount(amount) {
-        var a = document.querySelector('.js-submit-input');
+        var a = document.querySelector('.js-submit-input-contribute');
         a.href = a.href.replace(/amount=.*/, 'amount=' + amount.toString());
     }
 

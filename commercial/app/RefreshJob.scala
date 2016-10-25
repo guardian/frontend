@@ -1,7 +1,7 @@
 package commercial
 
 import common.{JobScheduler, Logging}
-import model.commercial.jobs.Industries
+import commercial.model.merchandise.jobs.Industries
 
 trait RefreshJob extends Logging {
 
