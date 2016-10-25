@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/contributions-usa-1',
-    'common/modules/experiments/tests/membership-engagement-warp-factor-one'
+    'common/modules/experiments/tests/membership-engagement-warp-factor-one',
+    'common/modules/experiments/tests/membership-engagement-message-copy-experiment'
 ], function (
     reportError,
     config,
@@ -25,7 +26,8 @@ define([
     WeekendReadingEmail,
     WeekendReadingPromo,
     ContributionsUsa1,
-    MembershipEngagementWarpFactorOne
+    MembershipEngagementWarpFactorOne,
+    MembershipEngagementMessageCopyExperiment
 ) {
 
     var TESTS = [
@@ -33,7 +35,8 @@ define([
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new ContributionsUsa1(),
-        new MembershipEngagementWarpFactorOne()
+        new MembershipEngagementWarpFactorOne(),
+        new MembershipEngagementMessageCopyExperiment()
     ];
 
     var participationsKey = 'gu.ab.participations';
