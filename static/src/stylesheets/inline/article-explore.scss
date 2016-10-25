@@ -147,10 +147,10 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.explore-series-headline__content, .explore-series-video-headline{
+.explore-series-headline__content, .explore-series-video-headline {
     @include fs-headline(4);
-        line-height: 24px;
-        font-weight: 900;
+    line-height: 24px;
+    font-weight: 900;
 
     @include mq($from: desktop) {
         @include fs-headline(7);
@@ -232,13 +232,13 @@ $explore-series-header-element-opacity: .85;
         }
 
         .explore-video-standfirst & {
-          @include fs-headline(2);
-          font-weight: 900;
+            @include fs-headline(2);
+            font-weight: 900;
 
-          @include mq($from: desktop) {
-              @include fs-headline(4);
-              font-weight: 900;
-          }
+            @include mq($from: desktop) {
+                @include fs-headline(4);
+                font-weight: 900;
+            }
         }
     }
 }
