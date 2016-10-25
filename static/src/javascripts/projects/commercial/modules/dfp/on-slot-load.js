@@ -16,7 +16,7 @@ define([
     function onLoad(event) {
         var advert = getAdvertById(event.slot.getSlotElementId());
         if (advert.size === 'fluid') {
-            var iframe = advert.node.querySelector('iframe');
+            var iframe = advert.node.getElementsByTagName('iframe')[0];
             postMessage({ id: iframe.id, host: host }, iframe.contentWindow);
         }
     }
