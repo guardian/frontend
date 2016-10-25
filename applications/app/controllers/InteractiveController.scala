@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import conf._
 import conf.switches.Switches
-import model.Cached.RevalidatableResult
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.ws.{WSResponse, WSClient}
@@ -29,23 +29,16 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
   def proxyInteractiveServiceworker(path: String): Action[AnyContent] = Action.async { implicit request =>
     val stage = if (isPreview) "preview" else "live"
     val serviceWorkerPath = s"$cdnPath/service-workers/$stage/$path/interactive-service-worker.js"
-    /*
-      This just passes through the http response from the above url so we don't need to
-      match status codes etc and setting the correct cache headers is handled by Cached()
-     */
 
     wsClient.url(serviceWorkerPath).get().map { response =>
-      Cached (7 days) {
-        RevalidatableResult(convertWSResponseToResult(response), response.body)
+      Cached (365.days) {
+        response.status match {
+          case 200 =>
+            RevalidatableResult(Ok(response.body).as("text/javascript; charset=utf8"), response.body)
+          case otherStatus => WithoutRevalidationResult(new Status(otherStatus))
+        }
       }
     }
-  }
-
-  def convertWSResponseToResult(response: WSResponse): Result = {
-    val headers = response.allHeaders.map { case (header, body) =>
-      (header, body.head)
-    }
-    Result(ResponseHeader(response.status, headers), Enumerator(response.body.getBytes))
   }
 
   private def lookup(path: String)
