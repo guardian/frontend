@@ -3,7 +3,7 @@ module.exports = {
     task: [
         require('./clean'),
         require('./mkdir'),
-        require('../images'),
+        'compile/images',
         require('./transpile-sass'),
         require('./update-caniuse'),
         require('./atomise'),
