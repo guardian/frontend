@@ -76,9 +76,9 @@
                         </div>
                         <div class="hide-on-desktop">
                             @if(page.nextPages.nonEmpty) {
-                                @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                     makeshiftPage(nextPage, page.campaign)
-                                })
+                                }, 2, 4)
                             } else {
                                 <div class="js-onward-placeholder"></div>
                             }
@@ -93,9 +93,9 @@
                     </div>
                     <div class="content__secondary-column">
                         @if(page.nextPages.nonEmpty) {
-                            @hostedArticleOnward(page.nextPages.map { nextPage =>
+                            @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                 makeshiftPage(nextPage, page.campaign)
-                            })
+                            }, 2, 4)
                         } else {
                             <div class="js-onward-placeholder"></div>
                         }

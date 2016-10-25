@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedPage
-@(trails: Seq[HostedPage], defaultRows: Int = 2, maxRows: Int = 4)(implicit request: RequestHeader)
+@(trails: Seq[HostedPage], defaultRows: Int, maxRows: Int)(implicit request: RequestHeader)
 
 @if(trails.isEmpty) {
     <div></div>
