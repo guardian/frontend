@@ -2,7 +2,6 @@
 
 @import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
-@import conf.switches.Switches.LiveUpdateAmpSwitch
 @import views.support.OmnitureAnalyticsData
 @import views.support.FBPixel
 
@@ -24,9 +23,7 @@
         <script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
         @if(content.tags.isLiveBlog) {
             <script custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async></script>
-            @if(LiveUpdateAmpSwitch.isSwitchedOn) {
-                <script custom-element="amp-live-list" src="https://cdn.ampproject.org/v0/amp-live-list-0.1.js" async></script>
-            }
+            <script custom-element="amp-live-list" src="https://cdn.ampproject.org/v0/amp-live-list-0.1.js" async></script>
         }
         <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
         @* Required for outbrain served in an amp-iframe *@
