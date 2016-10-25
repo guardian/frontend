@@ -90,7 +90,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 
 # Interactive service worker
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/interactive-service-worker.js           controllers.InteractiveController.renderInteractiveServiceworker(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/interactive-service-worker.js           controllers.InteractiveController.proxyInteractiveServiceworker(path)
 
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
