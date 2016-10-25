@@ -251,7 +251,8 @@ object ChesterZooHostedPages {
     val nextIndex = (index + 1) % length
     val nextNextIndex = (index + 2) % length
 
-    List(nextIndex, nextNextIndex).filter(_ != index).map(orderedPages(_)).map(pageMap)
+    val range = 1 to length
+    range.map((i:Int) => (index + i) % length).filter(_ != index).map(orderedPages(_)).map(pageMap).toList
   }
 
   private def galleryPage: HostedGalleryPage = {
