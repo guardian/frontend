@@ -65,4 +65,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 11, 3),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-hosted-onward-journey",
+    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
 }

@@ -513,14 +513,14 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.ab-test-variant1 {
+.hosted__ab-test-variant-carousel {
     overflow: hidden;
     .prev-oj-item {
         opacity: .5;
     }
 }
 
-.ab-test-variant2 {
+.hosted__ab-test-variant-popup {
     .hosted__see-all-onward {
         cursor: pointer;
         border-radius: 100px;
@@ -637,14 +637,14 @@ $dotSize: 8px;
     }
 }
 
-.hosted__ab-test-control,
-.hosted__ab-test-variant1,
-.hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-control,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-control,
+.hosted__ab-test-variant-carousel,
+.hosted__ab-test-variant-popup {
     display: none;
 }
 
-.hosted__next-page.ab-test-control .hosted__ab-test-control,
-.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
-.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-variant-carousel,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-variant-popup {
     display: block;
 }

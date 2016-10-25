@@ -8,6 +8,7 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
+    'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/contributions-usa-1',
@@ -22,6 +23,7 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
+    HostedOnwardJourney,
     WeekendReadingEmail,
     WeekendReadingPromo,
     ContributionsUsa1,
@@ -30,6 +32,7 @@ define([
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
+        new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
         new ContributionsUsa1(),
