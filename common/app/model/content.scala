@@ -467,7 +467,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && content.elements.hasMainMedia)) && content.tags.isArticle,
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
       contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
