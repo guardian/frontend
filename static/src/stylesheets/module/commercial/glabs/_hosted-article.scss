@@ -593,7 +593,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     background: #ffffff;
     vertical-align: top;
     position: relative;
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 
     @include mq(tablet) {
         max-width: gs-span(3);
