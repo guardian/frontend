@@ -1,8 +1,8 @@
 module.exports = {
     description: 'Compile assets for development',
     task: [
-        require('./css/index.dev'),
-        require('./javascript/index.dev'),
+        require('./css'),
+        require('./javascript'),
         require('./fonts'),
         require('./conf')
     ]

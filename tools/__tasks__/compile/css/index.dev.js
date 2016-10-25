@@ -1,12 +1,12 @@
 module.exports = {
     description: 'Compile CSS',
     task: [
-        require('./clean'),
-        require('./mkdir'),
-        require('../images'),
-        require('./transpile-sass'),
-        require('./atomise'),
-        require('./remify'),
-        require('./postcss')
+        'compile/css/clean',
+        'compile/css/mkdir',
+        'compile/images',
+        'compile/css/transpile-sass',
+        'compile/css/atomise',
+        'compile/css/remify',
+        'compile/css/postcss'
     ]
 };
