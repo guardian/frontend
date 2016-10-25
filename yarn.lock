@@ -1235,7 +1235,7 @@ coffee-script@~1.3.3, coffee-script@1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.3.3.tgz#150d6b4cb522894369efed6a2101c20bc7f4a4f4"
 
-coffee-script@~1.7, coffee-script@~1.7.1:
+coffee-script@~1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.7.1.tgz#62996a861780c75e6d5069d13822723b73404bfc"
   dependencies:
@@ -3059,12 +3059,6 @@ grunt-frequency-graph@^0.1.6:
     aws-sdk "^2.1.8"
     es6-promise "^2.0.1"
 
-grunt-karma@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/grunt-karma/-/grunt-karma-2.0.0.tgz#753583d115dfdc055fe57e58f96d6b3c7e612118"
-  dependencies:
-    lodash "^3.10.1"
-
 grunt-legacy-log-utils@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/grunt-legacy-log-utils/-/grunt-legacy-log-utils-0.1.1.tgz#c0706b9dd9064e116f36f23fe4e6b048672c0f7e"
@@ -4083,18 +4077,36 @@ jws@~3.0.0:
     base64url "~1.0.4"
     jwa "~1.0.0"
 
-karma-chrome-launcher@0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/karma-chrome-launcher/-/karma-chrome-launcher-0.1.10.tgz#0c1635bcdf790fde41ffbd5f17c00fb27e3bb880"
+karma:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-1.3.0.tgz#b2b94e8f499fadd0069d54f9aef4a4d48ec5cc1f"
   dependencies:
-    karma ">=0.9.3"
-    which "^1.0.9"
-
-karma-coffee-preprocessor@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/karma-coffee-preprocessor/-/karma-coffee-preprocessor-0.2.1.tgz#fbfdf7329ff6e0b1cbfd26b078e70f6d5ce48496"
-  dependencies:
-    coffee-script "~1.7"
+    bluebird "^3.3.0"
+    body-parser "^1.12.4"
+    chokidar "^1.4.1"
+    colors "^1.1.0"
+    combine-lists "^1.0.0"
+    connect "^3.3.5"
+    core-js "^2.2.0"
+    di "^0.0.1"
+    dom-serialize "^2.2.0"
+    expand-braces "^0.1.1"
+    glob "^7.0.3"
+    graceful-fs "^4.1.2"
+    http-proxy "^1.13.0"
+    isbinaryfile "^3.0.0"
+    lodash "^3.8.0"
+    log4js "^0.6.31"
+    mime "^1.3.4"
+    minimatch "^3.0.0"
+    optimist "^0.6.1"
+    qjobs "^1.1.4"
+    range-parser "^1.2.0"
+    rimraf "^2.3.3"
+    socket.io "1.4.7"
+    source-map "^0.5.3"
+    tmp "0.0.28"
+    useragent "^2.1.9"
 
 karma-coverage@0.3.1:
   version "0.3.1"
@@ -4103,14 +4115,6 @@ karma-coverage@0.3.1:
     dateformat "~1.0.6"
     istanbul "~0.3.0"
     minimatch "~0.3.0"
-
-karma-firefox-launcher@0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-0.1.6.tgz#e5e8336c35e9f2c87dcadd06c8ec568d06530b55"
-
-karma-html2js-preprocessor@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/karma-html2js-preprocessor/-/karma-html2js-preprocessor-0.1.0.tgz#2f7cf881f54a5d0b72154cc6ee1241c44292c7fe"
 
 karma-jasmine@^1.0.2:
   version "1.0.2"
@@ -4144,37 +4148,6 @@ karma-spec-reporter@0.0.26:
 karma-teamcity-reporter@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/karma-teamcity-reporter/-/karma-teamcity-reporter-1.0.0.tgz#d33c1217753c141897f64560f25f0f37be905233"
-
-karma@^1.1.0, karma@>=0.9.3:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-1.3.0.tgz#b2b94e8f499fadd0069d54f9aef4a4d48ec5cc1f"
-  dependencies:
-    bluebird "^3.3.0"
-    body-parser "^1.12.4"
-    chokidar "^1.4.1"
-    colors "^1.1.0"
-    combine-lists "^1.0.0"
-    connect "^3.3.5"
-    core-js "^2.2.0"
-    di "^0.0.1"
-    dom-serialize "^2.2.0"
-    expand-braces "^0.1.1"
-    glob "^7.0.3"
-    graceful-fs "^4.1.2"
-    http-proxy "^1.13.0"
-    isbinaryfile "^3.0.0"
-    lodash "^3.8.0"
-    log4js "^0.6.31"
-    mime "^1.3.4"
-    minimatch "^3.0.0"
-    optimist "^0.6.1"
-    qjobs "^1.1.4"
-    range-parser "^1.2.0"
-    rimraf "^2.3.3"
-    socket.io "1.4.7"
-    source-map "^0.5.3"
-    tmp "0.0.28"
-    useragent "^2.1.9"
 
 kew@~0.7.0:
   version "0.7.0"
@@ -7182,7 +7155,7 @@ which-module@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-1.0.0.tgz#bba63ca861948994ff307736089e3b96026c2a4f"
 
-which@^1.0.9, which@^1.1.1, which@^1.2.10, which@^1.2.9, which@~1.2.10, which@1:
+which@^1.1.1, which@^1.2.10, which@^1.2.9, which@~1.2.10, which@1:
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/which/-/which-1.2.11.tgz#c8b2eeea6b8c1659fa7c1dd4fdaabe9533dc5e8b"
   dependencies:
