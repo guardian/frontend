@@ -1,8 +1,8 @@
 module.exports = {
     description: 'Prepare JS for development',
     task: [
-        'compile/inline-svgs',
-        'compile/javascript/clean',
-        'compile/javascript/copy'
+        require('../inline-svgs'),
+        require('./clean'),
+        require('./copy')
     ]
 };
