@@ -100,6 +100,18 @@ const taskSrc = path.resolve(__dirname, tasksIdentifier);
 // don't duplicate tasks
 const cache = [];
 
+// run commands with output to stdout if verbose is true
+const cmd = task => {
+    const [binary, ...options] = task.trim().split(' ');
+    if (verbose) {
+        const exec = execa(binary, options);
+        // we want to pipe stdout out, but not return it from here
+        exec.stdout.pipe(process.stdout);
+        return exec;
+    }
+    return execa(binary, options);
+};
+
 // turn a list of our tasks into objects listr can use
 function listrify(steps, {concurrent = false, verbose = false} = {}) {
     const listrTasks = steps
@@ -114,19 +126,13 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
             if (Array.isArray(task)) {
                 return { title, task: () => listrify(task.map(_task => {
                     if (_task.task) return _task;
-                    if (typeof _task === 'string') {
-                        const [binary, ...options] = _task.trim().split(' ');
-                        return { title, task: () => execa(binary, options), skip};
-                    }
+                    if (typeof _task === 'string') return { title, task: () => cmd(_task), skip};
                     return { title, task: _task, skip};
                 }), {concurrent}), skip};
             }
 
             // treat tasks that are strings as terminal commands
-            if (typeof task === 'string') {
-                const [binary, ...options] = task.trim().split(' ');
-                return { title, task: () => execa(binary, options), skip};
-            }
+            if (typeof task === 'string') return { title, task: () => cmd(task), skip};
 
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
