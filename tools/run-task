@@ -104,7 +104,9 @@ const cache = [];
 const cmd = task => {
     const [binary, ...options] = task.trim().split(' ');
     if (verbose) {
-        const exec = execa(binary, options);
+        const exec = execa(binary, options, {
+            encoding: 'buffer'
+        });
         // we want to pipe stdout out, but not return it from here
         exec.stdout.pipe(process.stdout);
         return exec;
