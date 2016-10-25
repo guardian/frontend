@@ -169,7 +169,7 @@ $explore-series-header-element-opacity: .85;
         bottom: $gs-gutter * 3;
 
         @include mq($until: desktop) {
-          bottom: $gs-gutter * 5;
+            bottom: $gs-gutter * 5;
         };
     }
 }
