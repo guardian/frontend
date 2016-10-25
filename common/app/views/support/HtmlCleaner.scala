@@ -3,6 +3,7 @@ package views.support
 import java.text.Normalizer
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
+
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -12,6 +13,8 @@ import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
+import views.html.fragments.atoms.atom
+
 import scala.collection.JavaConversions._
 
 trait HtmlCleaner {
@@ -618,7 +621,7 @@ object ChaptersLinksCleaner extends HtmlCleaner {
   }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean, isAmp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -631,7 +634,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, isAmp).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }
