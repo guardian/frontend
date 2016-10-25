@@ -1,18 +1,8 @@
 @import conf.Configuration.site.host
 @import views.support.RenderClasses
 
-@(media: model.content.MediaAtom, isAmp: Boolean)(implicit request: RequestHeader)
-@if(isAmp){
+@(media: model.content.MediaAtom)(implicit request: RequestHeader)
 
-    <amp-youtube
-    data-videoid="@media.assets.head.id"
-    layout="responsive"
-    width="5" height="3" data-param-modestbranding="1" data-param-rel="0" data-param-showinfo="0">
-    </amp-youtube>
-
-
-
-} else {
     <div class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
         "u-responsive-ratio--hd" -> true
@@ -25,6 +15,5 @@
             </iframe>
 
     </div>
-    }
 }
 
