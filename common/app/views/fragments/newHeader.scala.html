@@ -30,7 +30,7 @@
         @fragments.nav.editionPicker()
 
         <nav class="new-header__nav" data-component="nav2">
-            @if(mvt.ABNewHeaderVariant.isParticipating) {
+            @if(mvt.ABNewNavVariant.isParticipating) {
                 @NewNavigation.topLevelSections.map { section =>
                     @primaryLinksv1(section.name)
                 }

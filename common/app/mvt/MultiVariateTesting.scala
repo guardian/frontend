@@ -16,8 +16,8 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABNewHeaderVariant extends TestDefinition(
-  name = "ab-new-header-variant",
+object ABNewNavVariant extends TestDefinition(
+  name = "ab-new-nav-variant",
   description = "users in this test will see the new header first variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -27,8 +27,8 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
-object ABNewHeaderVariantTwo extends TestDefinition(
-  name = "ab-new-header-variant-two",
+object ABNewNavVariantTwo extends TestDefinition(
+  name = "ab-new-nav-variant-two",
   description = "users in this test will see the new header second variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -38,8 +38,8 @@ object ABNewHeaderVariantTwo extends TestDefinition(
   }
 }
 
-object ABNewHeaderControl extends TestDefinition(
-  name = "ab-new-header-control",
+object ABNewNavControl extends TestDefinition(
+  name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -106,9 +106,9 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewHeaderVariant,
-    ABNewHeaderVariantTwo,
-    ABNewHeaderControl,
+    ABNewNavVariant,
+    ABNewNavVariantTwo,
+    ABNewNavControl,
     CommercialClientLoggingVariant,
     CommercialHeaderBiddingSonobiVariant,
     CommercialHeaderBiddingControl,
