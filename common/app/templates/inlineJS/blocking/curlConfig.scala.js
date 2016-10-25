@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
+@import mvt.CommercialSonobiRubiconAdapter
 
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
@@ -63,7 +64,13 @@ window.curlConfig = {
             reqwest:                        'components/reqwest/reqwest',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
+            'sonobi.js': '@{
+               if (CommercialSonobiRubiconAdapter.isParticipating) {
+                   "//mtrx.go.sonobi.com/morpheus.theguardian.10744.js"
+               } else {
+                   Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
+               }
+             }',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
