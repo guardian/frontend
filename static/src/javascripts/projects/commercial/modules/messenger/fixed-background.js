@@ -11,7 +11,11 @@ define([
     return setBackground;
 
     function setBackground(specs, adSlot) {
-        if (!specs || !('backgroundImage' in specs) || !('backgroundRepeat' in specs)) {
+        if (!specs ||
+            !('backgroundImage' in specs) ||
+            !('backgroundRepeat' in specs) ||
+            !('backgroundPosition' in specs)
+        ) {
             return null;
         }
 

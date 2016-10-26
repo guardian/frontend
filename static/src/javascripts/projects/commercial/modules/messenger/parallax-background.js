@@ -13,7 +13,9 @@ define([
         if (!specs ||
             !('backgroundImage' in specs) ||
             !('backgroundRepeat' in specs) ||
-            !('maxHeight' in specs)) {
+            !('backgroundPosition' in specs) ||
+            !('maxHeight' in specs)
+        ) {
             return null;
         }
 
