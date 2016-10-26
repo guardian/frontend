@@ -84,7 +84,7 @@ class HostedContentController(contentApiClient: ContentApiClient)
           val itemId = s"advertiser-content/$campaignName/$pageName"
           contentType match {
             case "video" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 1, results)
+              val trails = HostedTrails.fromContent(itemId, trailCount = 1000, results)
               Cached(cacheDuration)(JsonComponent(hostedOnwardJourney(trails, 1, 1)))
             case "article" =>
               val trails = HostedTrails.fromContent(itemId, results)
