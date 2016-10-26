@@ -14,6 +14,7 @@ define([
             id: adSlotNode.id,
             node: adSlotNode,
             sizes: null,
+            size: null,
             slot: null,
             isEmpty: null,
             isLoading: false,
