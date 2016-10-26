@@ -70,19 +70,35 @@ define([
     }
 
     var getCustomJs = function(options) {
-        var opts = options || {},
-            buttonCaption = $('#membership__engagement-message-button-caption'),
-            buttonEl = $('#membership__engagement-message-button');
+        if (options === undefined) {
+            return;
+        }
 
-        buttonEl.removeClass('is-hidden');
-        if (opts.addButtonClass) {
-            buttonEl.addClass(opts.addButtonClass);
-        }
-        if (opts.setButtonText) {
-            buttonCaption.text(opts.setButtonText);
-        }
-        if (opts.parentColour) {
-            buttonEl.addClass(opts.parentColour);
+        var opts = options || {};
+
+        if (opts.testName) {
+            if (opts.testName === 'prominent-level-1') {
+                var buttonCaption = $('#membership__engagement-message-button-caption'),
+                    buttonEl = $('#membership__engagement-message-button');
+
+                buttonEl.removeClass('is-hidden');
+                if (opts.addButtonClass) {
+                    buttonEl.addClass(opts.addButtonClass);
+                }
+                if (opts.setButtonText) {
+                    buttonCaption.text(opts.setButtonText);
+                }
+                if (opts.parentColour) {
+                    buttonEl.addClass(opts.parentColour);
+                }
+            }
+
+            if (opts.testName === 'messaging-test-1') {
+                var engagementText = $('.site-message__message.site-message__message--membership');
+                if (engagementText && opts.setEngagementText) {
+                    engagementText[0].textContent = opts.setEngagementText;
+                }
+            }
         }
     };
 
@@ -93,25 +109,45 @@ define([
             campaignCode = message.campaign,
             customJs = null,
             customOpts = {},
-            testVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
+            prominentTestVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
+            messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
             linkHref = formatEndpointUrl(edition, message);
 
-        if (testVariant) {
-            var testName = 'prominent-level-1';
+        if (prominentTestVariant) {
+            var prominentTestName = 'prominent-level-1';
 
-            if (testVariant !== 'notintest') {
-                campaignCode = 'gdnwb_copts_mem_banner_prominent1uk' + '__' + testVariant;
+            if (prominentTestVariant !== 'notintest') {
+                campaignCode = 'gdnwb_copts_mem_banner_prominent1uk' + '__' + prominentTestVariant;
                 linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
             }
 
-            if (testVariant === 'become') {
+            if (prominentTestVariant === 'become') {
                 colours = ['yellow','purple','bright-blue','dark-blue'];
                 thisColour = thisInstanceColour(colours);
-                cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
+                cssModifierClass = 'membership-message' + ' ' + prominentTestName + ' ' + thisColour;
                 customOpts = {
-                    addButtonClass: testName + '_' + testVariant,
+                    testName: prominentTestName,
+                    addButtonClass: prominentTestName + '_' + prominentTestVariant,
                     setButtonText: 'Become a Supporter',
                     parentColour: thisColour
+                };
+                customJs = getCustomJs;
+            }
+        }
+
+        if (messagingTestVariant) {
+            var messagingTestName = 'messaging-test-1';
+            if (messagingTestVariant !== 'notintest') {
+                var variantMessages = {
+                    fairer: 'We all want to make the world a fairer place. We believe journalism can help – but producing it is expensive. That\'s why we need Supporters. Join for £49 per year.',
+                    appreciate: 'Become a Supporter and appreciate every article, knowing you\'ve helped bring it to the page. Be part of the Guardian. Join for £49 per year.',
+                    secure: 'Secure the future of independent journalism. Help us create a fairer world. Support the Guardian for £49 per year.'
+                };
+                campaignCode = 'gdnwb_copts_mem_banner_messaging1uk' + '__' + messagingTestVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+                customOpts = {
+                    testName: messagingTestName,
+                    setEngagementText: messagingTestVariant === 'control' ? undefined : variantMessages[messagingTestVariant]
                 };
                 customJs = getCustomJs;
             }
