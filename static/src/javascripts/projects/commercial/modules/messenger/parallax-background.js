@@ -21,6 +21,17 @@ define([
 
         var updateQueued = false;
 
+        // This is the x-axis offset where we put the top left corner of
+        // the background image in the canvas. It depends on the value of
+        // backgroundPosition and the size of the image.
+        var dx;
+
+        // We keep track of the scroll offset to compute the parallax effect
+        var scrollY;
+        var getDy = adSlot.classList.contains('ad-slot--top-above-nav') ?
+            getDyTopAbove :
+            getDyOthers;
+
         // Create a canvas element which needs to be as high as the largest
         // height the creative will ever be (which is why this value is
         // provided by the creative)
@@ -35,6 +46,7 @@ define([
         image.src = specs.backgroundImage;
         image.onload = function () {
             window.addEventListener('scroll', function () {
+                scrollY = window.pageYOffset;
                 if (!updateQueued) {
                     updateQueued = true;
                     fastdom.read(updateBackgroundPosition);
@@ -64,6 +76,7 @@ define([
         })
         .then(function () {
             return fastdom.read(function () {
+                scrollY = window.pageYOffset;
                 return background.getBoundingClientRect();
             });
         })
@@ -73,15 +86,51 @@ define([
             });
         })
         .then(function () {
-            return fastdom.read(function () {
-                updateBackgroundPosition();
-            });
+            if( !updateQueued ) {
+                updateQueued = true;
+                return fastdom.read(updateBackgroundPosition);
+            }
         });
 
         function updateBackgroundPosition() {
             updateQueued = false;
             var rect = backgroundParent.getBoundingClientRect();
-            ctx.drawImage(image, 0, -0.3 * rect.top);
+            if( dx === undefined ) {
+                dx = getDx(specs, background, image);
+            }
+            var dy = getDy(scrollY, rect);
+            if( image.height < specs.maxHeight ) {
+                ctx.drawImage(image, dx, dy);
+            } else {
+                ctx.drawImage(image, dx, dy);
+            }
         }
     }
 });
+
+function getDx(specs, background, image) {
+    switch( specs.backgroundPosition ) {
+    case 'top left':
+    case 'center left':
+    case 'bottom left':
+        return 0;
+
+    case 'top center':
+    case 'center center':
+    case 'bottom center':
+        return (background.width - image.width) / 2;
+
+    case 'top right':
+    case 'center right':
+    case 'bottom right':
+        return background.width - image.width;
+    }
+}
+
+function getDyTopAbove(scrollY, rect) {
+    return -0.3 * (scrollY - rect.top);
+}
+
+function getDyOthers(scrollY, rect) {
+    return -0.3 * rect.top;
+}
