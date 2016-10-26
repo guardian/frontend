@@ -248,8 +248,10 @@ object ChesterZooHostedPages {
     val orderedPages: List[String] = allLivePagesOrdered.filter(pn => if(contentType.isDefined) pageMap(pn).contentType == contentType.get else true)
     val index: Int = if(orderedPages.contains(pageName)) orderedPages.indexOf(pageName) else if (orderedPages.nonEmpty) orderedPages.length - 1 else 0
     val length: Int = if(orderedPages.nonEmpty) orderedPages.length else 1
+    val nextIndex = (index + 1) % length
+    val nextNextIndex = (index + 2) % length
 
-    (1 to length).map((i:Int) => (index + i) % length).filter(_ != index).map(orderedPages(_)).map(pageMap).toList
+    List(nextIndex, nextNextIndex).filter(_ != index).map(orderedPages(_)).map(pageMap)
   }
 
   private def galleryPage: HostedGalleryPage = {
@@ -263,7 +265,7 @@ object ChesterZooHostedPages {
       pageName = pageName,
       title = title,
       cta = cta,
-      nextPagesList = nextPages(whatWeFightFor).slice(0, 2),
+      nextPagesList = nextPages(whatWeFightFor),
       standfirst = "Right now, Chester Zoo is acting for wildlife in over 30 different countries to help protect some" +
                    " of the world’s most endangered wildlife from extinction",
       shortSocialShareText = Some(
