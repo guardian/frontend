@@ -192,13 +192,16 @@ $mobile-max-container-width: gs-span(8);
     }
 
     // Gallery & Liveblog sections styles
-    &.ad-slot--gallery-inline,
     &.ad-slot--liveblog-inline {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
         padding-top: 0;
         padding-bottom: 0;
+    }
+
+    &.ad-slot--gallery-inline {
+        margin-left: 0;
     }
 }
 
