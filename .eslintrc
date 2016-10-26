@@ -10,7 +10,7 @@
         "commonjs": true
     },
     "rules": {
-        "semi": ["error", "never"],
+        "semi": ["error", "always"],
         "quotes": ["error", "single"],
         "no-undef": "error",
         "no-use-before-define": ["error", "nofunc"],

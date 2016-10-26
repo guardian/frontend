@@ -2,10 +2,10 @@ module.exports = {
     description: 'Lint JS',
     task: [{
         description: 'Lint tests',
-        task: 'grunt eslint:static/test/javascripts'
+        task: 'eslint static/test/javascripts/**/*.js --fix --ignore-path static/test/javascripts/.eslintignore --rulesdir dev/eslint-rules'
     },{
         description: 'Lint app JS',
-        task: 'grunt eslint:static/src'
+        task: 'eslint static/src/**/*.js --fix --ignore-path static/src/.eslintignore --rulesdir dev/eslint-rules'
     }],
     concurrent: true
 };
