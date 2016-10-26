@@ -9,7 +9,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import contentapi.ContentApiClient
-import model.content.{Atom, MediaAtom}
+import model.content.{MediaAtom}
 
 class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
 
@@ -34,7 +34,7 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
-    println(s"Fetching media atom: $path for edition $edition")
+    log.info(s"Fetching media atom: $path for edition $edition")
 
     val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition)
 
@@ -59,7 +59,12 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
     case _ => result
   }
 
-  private def renderMediaAtom(model: Atom)(implicit request: RequestHeader): Result = {
-    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.atom(model, shouldFence = false)))
+  private def renderMediaAtom(model: MediaAtom)(implicit request: RequestHeader): Result = {
+    Cached(600)(RevalidatableResult.Ok(model match {
+      case youtube if model.assets.head.platform == "Youtube" => views.html.fragments.atoms.youtube(model)
+      case _ => views.html.fragments.atoms.media(model)
+        }
+      )
+    )
   }
 }
