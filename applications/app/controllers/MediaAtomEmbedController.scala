@@ -9,7 +9,8 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import contentapi.ContentApiClient
-import model.content.{MediaAtom}
+import model.content.MediaAtom
+import play.twirl.api.Html
 
 class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
 
@@ -60,11 +61,11 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
   }
 
   private def renderMediaAtom(model: MediaAtom)(implicit request: RequestHeader): Result = {
-    val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model)
-
-
-
-
+    val body: Html = model match {
+      case youtube if model.assets.head.platform == "Youtube" => Html(views.html.fragments.atoms.youtube(model).toString)
+      case _ => Html(views.html.fragments.atoms.media(model).toString)
+  }
+    val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model, body)
 
     Cached(600)(RevalidatableResult.Ok(model match {
       case youtube if model.assets.head.platform == "Youtube" => {

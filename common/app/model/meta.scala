@@ -17,6 +17,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 
 object Commercial {
 
@@ -399,7 +400,7 @@ case class GalleryPage(
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
+case class MediaAtomEmbedPage(atom: MediaAtom, body: Html) extends Page {
   override val metadata = MetaData.make(id = atom.id,
     webTitle = atom.title,
     analyticsName = atom.id,
