@@ -71,8 +71,7 @@ define([
 
     var getCustomJs = function(options) {
         var opts = options || {},
-            textLink = $('#membership__engagement-message-link'),
-            buttonLink = $('#membership__engagement-message-button-link'),
+            buttonCaption = $('#membership__engagement-message-button-caption'),
             buttonEl = $('#membership__engagement-message-button');
 
         buttonEl.removeClass('is-hidden');
@@ -80,20 +79,10 @@ define([
             buttonEl.addClass(opts.addButtonClass);
         }
         if (opts.setButtonText) {
-            buttonLink.text(opts.setButtonText);
+            buttonCaption.text(opts.setButtonText);
         }
         if (opts.parentColour) {
             buttonEl.addClass(opts.parentColour);
-        }
-        if (opts.appendLinkClickIdentifier) {
-            if (!textLink.attr('href').endsWith(opts.appendLinkClickIdentifier)) {
-                textLink.attr('href', textLink.attr('href') + opts.appendLinkClickIdentifier);
-            }
-        }
-        if (opts.appendButtonClickIdentifier) {
-            if (!buttonLink.attr('href').endsWith(opts.appendButtonClickIdentifier)) {
-                buttonLink.attr('href', buttonLink.attr('href') + opts.appendButtonClickIdentifier);
-            }
         }
     };
 
@@ -111,24 +100,18 @@ define([
             var testName = 'prominent-level-1';
 
             if (testVariant !== 'notintest') {
-                campaignCode = campaignCode + '_' + testName + '_' + testVariant;
+                campaignCode = 'gdnwb_copts_mem_banner_prominent1uk' + '__' + testVariant;
                 linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
             }
 
-            if (testVariant === 'become' || testVariant === 'join') {
-                var variantMessages = {
-                    become: 'Become a member',
-                    join: 'Join today'
-                };
+            if (testVariant === 'become') {
                 colours = ['yellow','purple','bright-blue','dark-blue'];
                 thisColour = thisInstanceColour(colours);
                 cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
                 customOpts = {
                     addButtonClass: testName + '_' + testVariant,
-                    setButtonText: variantMessages[testVariant],
-                    parentColour: thisColour,
-                    appendLinkClickIdentifier: '_link',
-                    appendButtonClickIdentifier: '_button'
+                    setButtonText: 'Become a Supporter',
+                    parentColour: thisColour
                 };
                 customJs = getCustomJs;
             }
