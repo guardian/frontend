@@ -8,8 +8,11 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
+    'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo'
+    'common/modules/experiments/tests/weekend-reading-promo',
+    'common/modules/experiments/tests/membership-engagement-warp-factor-one',
+    'common/modules/experiments/tests/membership-engagement-message-copy-experiment'
 ], function (
     reportError,
     config,
@@ -20,14 +23,20 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
+    HostedOnwardJourney,
     WeekendReadingEmail,
-    WeekendReadingPromo
+    WeekendReadingPromo,
+    MembershipEngagementWarpFactorOne,
+    MembershipEngagementMessageCopyExperiment
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
+        new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo()
+        new WeekendReadingPromo(),
+        new MembershipEngagementWarpFactorOne(),
+        new MembershipEngagementMessageCopyExperiment()
     ];
 
     var participationsKey = 'gu.ab.participations';

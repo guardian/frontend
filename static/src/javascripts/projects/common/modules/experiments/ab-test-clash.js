@@ -7,6 +7,7 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
+        
         var clashingTests = [];
         return _testABClash(ab.isInVariant, clashingTests);
     }

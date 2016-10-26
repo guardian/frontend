@@ -32,7 +32,7 @@ uninstall: # PRIVATE
 reinstall: uninstall install
 
 # Make sure we running a recent-enough version of Node.
-check-node:
+check-node: # PRIVATE
 	@./dev/check-node-version.js
 
 # Make sure yarn is installed.
@@ -54,29 +54,29 @@ watch: compile-dev
 
 # Compile all assets for production.
 compile: check-node
-	@./tools/assets/compile.js
+	@./tools/run-task compile
 
 # Compile all assets for development.
 compile-dev: check-node
-	@./tools/assets/compile.js --dev
+	@./tools/run-task compile --dev
 
 compile-javascript: check-node # PRIVATE
-	@./tools/assets/compile.js javascript
+	@./tools/run-task compile/javascript
 
 compile-javascript-dev: check-node # PRIVATE
-	@./tools/assets/compile.js javascript --dev
+	@./tools/run-task compile/javascript --dev
 
 compile-css: check-node # PRIVATE
-	@./tools/assets/compile.js css
+	@./tools/run-task compile/css
 
 compile-images: check-node # PRIVATE
-	@./tools/assets/compile.js images
+	@./tools/run-task compile/images
 
 compile-svgs: check-node # PRIVATE
-	@./tools/assets/compile.js inline-svgs
+	@./tools/run-task compile/inline-svgs
 
 compile-fonts: check-node # PRIVATE
-	@./tools/assets/compile.js fonts
+	@./tools/run-task compile/fonts
 
 atomise-css: check-node # PRIVATE
 	@node tools/atomise-css
@@ -91,20 +91,19 @@ pasteup: check-node # PRIVATE
 
 # Run the JS test suite.
 test: check-node
-	@grunt test --dev
+	@./tools/run-task test/javascript
 
 # Lint all assets.
 validate: check-node
-	@grunt validate
+	@./tools/run-task lint
 
 # Lint all SCSS.
 validate-sass: check-node # PRIVATE
-	@grunt validate:sass
-	@grunt validate:css
+	@./tools/run-task lint/sass
 
 # Lint all JS.
 validate-javascript: check-node # PRIVATE
-	@grunt validate:js
+	@./tools/run-task lint/javascript
 
 validate-amp: check-node # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

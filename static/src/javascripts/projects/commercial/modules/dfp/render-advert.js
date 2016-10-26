@@ -125,12 +125,12 @@ define([
                 });
 
             function callSizeCallback() {
-                var size = slotRenderEvent.size.join(',');
-                if (size === '0,0') {
-                    size = 'fluid';
+                advert.size = slotRenderEvent.size.join(',');
+                if (advert.size === '0,0') {
+                    advert.size = 'fluid';
                 }
-                return Promise.resolve(sizeCallbacks[size] ?
-                    sizeCallbacks[size](slotRenderEvent, advert) :
+                return Promise.resolve(sizeCallbacks[advert.size] ?
+                    sizeCallbacks[advert.size](slotRenderEvent, advert) :
                     null
                 );
             }

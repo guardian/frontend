@@ -7,7 +7,6 @@ define([
     'commercial/modules/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!commercial/views/creatives/logo.html',
     'text!commercial/views/creatives/gimbap.html',
     'text!commercial/views/creatives/gimbap-simple.html',
     'text!commercial/views/creatives/gimbap-richmedia.html',
@@ -82,12 +81,6 @@ define([
                 this.params.creative = 'manual-container';
                 this.params.type = 'inline';
                 this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
-            } else if (this.params.creative === 'logo-ad-feature') {
-                this.params.creative = 'logo';
-                this.params.type = 'ad-feature';
-            } else if (this.params.creative === 'logo-sponsored') {
-                this.params.creative = 'logo';
-                this.params.type = 'sponsored';
             }
 
             require(['text!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {

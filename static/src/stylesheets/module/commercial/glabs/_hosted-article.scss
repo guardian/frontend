@@ -169,7 +169,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 
     .hide-on-desktop {
-        .hosted-article__next-page {
+        .hosted__next-page {
             margin-top: 30px;
             position: relative;
         }
@@ -181,7 +181,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
     .content__secondary-column {
-        .hosted-article__next-page {
+        .hosted__next-page {
             width: auto;
             position: absolute;
             margin: 70px 0;
@@ -191,6 +191,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             .hosted__next-page--header,
             .hosted__next-page--tile {
                 margin-right: 0;
+                margin-top: 0;
             }
         }
     }
@@ -205,29 +206,6 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             @include f-headlineSans;
         }
     }
-    .hosted__next-page-header--border {
-        width: 100%;
-        height: 10px;
-        margin-bottom: 4px;
-    }
-    .hosted-article__next-page-title {
-        font-size: 16px;
-        line-height: 18px;
-        padding: 6px;
-        @include mq($until: phablet) {
-            font-size: 14px;
-            line-height: 16px;
-        }
-    }
-    .hosted-article__next-page .hosted__next-page--tile {
-        background: transparent;
-        border-top: 2px solid #e0e0e0;
-        margin-bottom: 10px;
-    }
-    .hosted-article__next-page .hosted__next-page--header {
-        border: 0;
-        padding: 0;
-    }
     .from-content-api > ul li {
         margin-bottom: 0;
     }
@@ -235,6 +213,33 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     .gu-image {
         height: auto;
     }
+}
+
+.hosted__next-page-header--border {
+    width: 100%;
+    height: 10px;
+    margin-bottom: 4px;
+}
+
+.hosted__next-page-title {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 6px;
+    @include mq($until: phablet) {
+        font-size: 14px;
+        line-height: 16px;
+    }
+}
+
+.hosted__next-page .hosted__next-page--tile {
+    background: transparent;
+    border-top: 2px solid #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.hosted__next-page .hosted__next-page--header {
+    border: 0;
+    padding: 0;
 }
 
 .zootropolis {
@@ -469,7 +474,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 }
 
 /* Hosted More From Carousel AB test */
-.hosted__next-video__carousel-arrows {
+.hosted__next-page__carousel-arrows {
     position: absolute;
     right: 0;
     top: 26px;
@@ -492,7 +497,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.hosted__next-video__carousel-wrapper {
+.hosted__next-page__carousel-wrapper {
     position: relative;
     transform: translate(0, 0);
     transition: transform 1s ease;
@@ -508,11 +513,111 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.ab-test-variant1 {
+.hosted__ab-test-variant-carousel {
     overflow: hidden;
     .prev-oj-item {
         opacity: .5;
     }
+}
+
+.hosted__ab-test-variant-popup {
+    .hosted__see-all-onward {
+        cursor: pointer;
+        border-radius: 100px;
+        padding: 0 $gs-gutter;
+        position: absolute;
+        top: 20px;
+        right: 0;
+    }
+}
+
+.hosted__more-from-overlay.survey-overlay-simple {
+    z-index: $zindex-ads;
+    position: absolute;
+    height: auto;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    svg {
+        fill: #ffffff;
+    }
+}
+
+.hosted__more-from-title {
+    @include f-headlineSans;
+    margin: 30px 100px $gs-baseline 120px;
+
+    .hosted__text {
+        color: #ffffff;
+    }
+
+    h2 {
+        font-size: 20px;
+        line-height: 20px;
+        @include mq(desktop) {
+            font-size: 30px;
+            line-height: 30px;
+        }
+    }
+
+    @include mq(desktop) {
+        margin: 40px 100px #{2 * $gs-baseline} 180px;
+    }
+}
+
+.hosted__more-from-overlay button.hosted__more-from-overlay-close {
+    padding-top: 3px;
+    outline: none;
+    border-radius: 100px;
+    border: 1px solid #ffffff;
+    position: absolute;
+    top: $gs-baseline;
+    right: $gs-gutter;
+
+    .button-text {
+        color: #ffffff;
+        position: absolute;
+        right: 50px;
+        opacity: .5;
+        font-size: 16px;
+    }
+}
+
+.hosted__more-from-popup {
+    width: 100%;
+}
+
+.hosted__next-page-tile--popup {
+    display: inline-block;
+    width: calc(100% - #{2 * $gs-gutter});
+    margin: $gs-baseline 0 0 $gs-gutter;
+    background: #ffffff;
+    vertical-align: top;
+    position: relative;
+    &:hover {
+        text-decoration: none;
+    }
+
+    @include mq(tablet) {
+        max-width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(4);
+    }
+}
+
+.hosted__next-page-thumb--popup {
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+}
+
+.hosted__next-page-title--popup {
+    @include f-headlineSans;
+    color: $neutral-1;
+    padding: 8px;
+    z-index: 1;
+    min-height: 48px;
 }
 
 .hosted__carousel-marker {
@@ -534,14 +639,14 @@ $dotSize: 8px;
     }
 }
 
-.hosted__ab-test-control,
-.hosted__ab-test-variant1,
-.hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-control,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-control,
+.hosted__ab-test-variant-carousel,
+.hosted__ab-test-variant-popup {
     display: none;
 }
 
-.hosted__next-page.ab-test-control .hosted__ab-test-control,
-.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
-.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-variant-carousel,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-variant-popup {
     display: block;
 }
