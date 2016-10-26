@@ -60,9 +60,17 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
   }
 
   private def renderMediaAtom(model: MediaAtom)(implicit request: RequestHeader): Result = {
+    val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model)
+
+
+
+
+
     Cached(600)(RevalidatableResult.Ok(model match {
-      case youtube if model.assets.head.platform == "Youtube" => views.html.fragments.atoms.youtube(model)
-      case _ => views.html.fragments.atoms.media(model)
+      case youtube if model.assets.head.platform == "Youtube" => {
+        views.html.fragments.atoms.mediaEmbed(page)
+      }
+      case _ => views.html.fragments.atoms.mediaEmbed(page)
         }
       )
     )
