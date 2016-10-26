@@ -16,6 +16,12 @@
 
 .newsletter-card__example {
     display: inline;
+
+    &.is-not-enhanced {
+        float: right;
+        margin-top: -5.5rem;
+        width: 80%;
+    }
 }
 
 .newsletter-card__wrapper {

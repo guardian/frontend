@@ -11,105 +11,98 @@ define([
     config,
     Id
 ) {
+    var classes = {
+      wrapper: 'js-newsletter-meta',
+      signupForm: 'js-email-sub__form',
+      textInput: 'js-newsletter-card__text-input',
+      signupButton: 'js-newsletter-signup-button',
+      styleSignup: 'newsletter-card__lozenge--submit',
+      signupConfirm: 'js-signup-confirmation',
+      previewButton: 'js-newsletter-preview'
+    };
 
-    function updateFormForLoggedIn(emailAddress, el) {
-        fastdom.write(function () {
-            $('.js-newsletter-card__text-input', el).addClass('is-hidden');
-            $('.js-newsletter-signup-button', el).removeClass('newsletter-card__lozenge--submit');
-            $('.js-newsletter-preview-button', el).removeClass('is-hidden');
-            $('.js-newsletter-card__text-input', el).val(emailAddress);
-        });
-    }
-
-    // show subscribed state for signed in users
-    function updateEmailSubscriptions() {
-      var emailSubscriptions = function () {
-        return Id.getUserEmailSignUps()
-                  .then();
-      }();
-    }
-
-    function validate(emailAddress) {
-        // simplistic email address validation
-        return typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
-    }
-
-    function addUpdatingState(buttonEl) {
-        fastdom.write(function() {
-            buttonEl.disabled = true;
-            $(buttonEl).addClass('is-updating lozenge--is-updating');
-        });
-        updateButton(buttonEl);
-    }
-
-    function updateButton(buttonEl) {
+    function hideInputAndShowPreview(el) {
       fastdom.write(function () {
-          setTimeout(function () {
-              $(buttonEl).removeClass('is-updating lozenge--is-updating');
-              buttonEl.disabled = false;
-          }, 2000);
-          addSubscriptionMessage(buttonEl);
+          $('.' + classes.textInput, el).addClass('is-hidden');
+          $('.' + classes.signupButton, el).removeClass(classes.styleSignup);
+          $('.' + classes.previewButton, el).removeClass('is-hidden');
       });
     }
 
-    function addSubscriptionMessage(buttonEl) {
+    function showSignupForm(buttonEl) {
+      var $form = buttonEl.form;
       var $meta = $.ancestor(buttonEl, 'js-newsletter-meta');
-      $(buttonEl.form).addClass('is-hidden');
-      $('.signup-confirmation', $meta).removeClass('is-hidden');
+      fastdom.write(function () {
+          $('.' + classes.textInput, $form).removeClass('is-hidden').focus();
+          $('.' + classes.signupButton, $form).addClass(classes.styleSignup);
+          $('.' + classes.previewButton, $meta).addClass('is-hidden');
+          buttonEl.setAttribute('type', 'submit');
+          bean.on(buttonEl, 'click', function () {
+              subscribeToEmail(buttonEl);
+          });
+      });
+    }
+
+    function updateFormForLoggedIn(emailAddress, el) {
+        fastdom.write(function () {
+            hideInputAndShowPreview(el);
+            $('.' + classes.textInput, el).val(emailAddress);
+        });
+    }
+
+    function validate(form) {
+        // simplistic email address validation
+        var emailAddress = $('.' + classes.textInput, form).val();
+        return typeof emailAddress === 'string' &&
+          emailAddress.indexOf('@') > -1;
+    }
+
+    function addSubscriptionMessage(buttonEl) {
+      var $meta = $.ancestor(buttonEl, classes.wrapper);
+      fastdom.write(function () {
+        $(buttonEl.form).addClass('is-hidden');
+        $('.' + classes.previewButton, $meta).addClass('is-hidden');
+        $('.' + classes.signupConfirm, $meta).removeClass('is-hidden');
+      });
     }
 
     function subscribeToEmail(buttonEl) {
         bean.on(buttonEl, 'click', function () {
-          addUpdatingState(buttonEl);
-          if (validate()) {
-            addUpdatingState(buttonEl);
+          var $form = buttonEl.form;
+          if (validate($form)) {
+            addSubscriptionMessage(buttonEl);
           }
         });
     }
 
-
-          // var $form = buttonEl.form;
-          // var emailAddress = $(
-          //   '.js-newsletter-card__text-input', $form).val();
-          // var listId = $(
-          //   '.js-email-sub__listid-input', $form).val();
-          // if (Id.isUserLoggedIn()) {
-          //   Id.emailSignup(listId);
-          // }
-          //
-          // if (validate(emailAddress)) {
-          //   submitEmailSignup(emailAddress, listId);
-          //   addUpdatingState(buttonEl);
-          // }
-        // });
-
-    function submitEmailSignup(emailAddress, listId) {
-      return fetch(config.page.ajaxUrl + '/email', {
-          method: 'POST',
-          body: 'email=' + encodeURIComponent(emailAddress) +
-          '&listId=' + encodeURIComponent(listId)
-      })
-      .then(function (response) {
-          if (!response.ok) {
-              throw new Error('Fetch error: ' + response.status + ' ' + response.statusText);
-          }
+    function showSecondStageSignup(buttonEl) {
+      fastdom.write(function () {
+          buttonEl.setAttribute('type', 'button');
+          bean.on(buttonEl, 'click', function () {
+              showSignupForm(buttonEl);
+          });
       });
     }
 
-    function enhanceNewsletters(userFromId) {
-      if (userFromId && userFromId.primaryEmailAddress) {
+    function enhanceNewsletters() {
+      if (Id.getUserFromCookie() !== null) {
+        // email address is not stored in the cookie, gotta go to the Api
         Id.getUserFromApi(function (userFromId) {
+          if (userFromId && userFromId.primaryEmailAddress) {
             updateFormForLoggedIn(userFromId.primaryEmailAddress);
-
+            $.forEachElement('.' + classes.signupButton, subscribeToEmail);
+          }
         });
+      } else {
+        hideInputAndShowPreview();
+        $.forEachElement('.' + classes.signupButton, showSecondStageSignup);
       }
-      $.forEachElement('.js-newsletter-signup-button', subscribeToEmail);
+
     }
 
     return {
         init: function () {
             enhanceNewsletters();
-            updateEmailSubscriptions();
         }
     };
 });

@@ -29,10 +29,6 @@
     }
 }
 
-@signupConfirmation() = {
-
-}
-
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
         @theme
@@ -66,7 +62,7 @@
 
                 <div class="newsletter-card__meta js-newsletter-meta">
 
-                  <div class="signup-confirmation is-hidden">
+                  <div class="signup-confirmation is-hidden js-signup-confirmation">
                     @fragments.inlineSvg("tick", "icon")
                     <div class="signup-confirmation__message">
                         <h3 class="signup-confirmation--success">You've subscribed!</h3>
@@ -87,10 +83,10 @@
                         </button>
                     </form>
 
-                    <div class="newsletter-card__example">
+                    <div class="newsletter-card__example js-newsletter-preview is-hidden">
                         @if(emailListing.exampleUrl.isDefined){
                           <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                              <button class="newsletter-card__lozenge newsletter-card__lozenge--preview is-hidden js-newsletter-preview-button"
+                              <button class="newsletter-card__lozenge newsletter-card__lozenge--preview"
                                   data-link-name="Preview @emailListing.name"
                                   type="button">
                                   <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
