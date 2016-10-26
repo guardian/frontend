@@ -1,21 +1,13 @@
 define([
     'bean',
-    'reqwest',
     'fastdom',
-    'qwery',
     'common/utils/$',
-    'common/utils/config',
-    'common/modules/commercial/commercial-features',
-    'common/utils/mediator'
+    'common/utils/config'
 ], function (
     bean,
-    reqwest,
     fastdom,
-    qwery,
     $,
-    config,
-    commercialFeatures,
-    mediator
+    config
 ) {
     return function () {
         this.id = 'HostedOnwardJourney';
@@ -42,7 +34,7 @@ define([
 
         var success = function (complete) {
             if (this.canRun()) {
-                bean.on(document.body, 'click', '.js-hosted-onward-journey-link', complete)
+                bean.on(document.body, 'click', '.js-hosted-onward-journey-link', complete);
             }
         };
 
@@ -55,14 +47,18 @@ define([
             {
                 id: 'carousel',
                 test: function () {
-                    $('.hosted-page')[0].classList.add('ab-test-variant-carousel');
+                    fastdom.write(function(){
+                        $('.hosted-page')[0].classList.add('ab-test-variant-carousel');
+                    });
                 },
                 success: success.bind(this)
             },
             {
                 id: 'popup',
                 test: function () {
-                    $('.hosted-page')[0].classList.add('ab-test-variant-popup');
+                    fastdom.write(function(){
+                        $('.hosted-page')[0].classList.add('ab-test-variant-popup');
+                    });
                 },
                 success: success.bind(this)
             }
