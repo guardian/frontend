@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 3),
+    sellByDate = new LocalDate(2016, 11, 8),
     exposeClientSide = true
   )
 }
