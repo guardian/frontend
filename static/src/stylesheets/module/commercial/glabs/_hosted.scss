@@ -979,7 +979,6 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
 }
 
 .hosted__next-page-title {
-    z-index: 1;
     margin: 0 0 0 $nextPageThumbWidth;
     @include mq($until: phablet) {
         margin-left: $nextPageThumbWidthMobile;
