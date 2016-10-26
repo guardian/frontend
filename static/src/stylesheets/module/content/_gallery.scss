@@ -170,7 +170,7 @@
     @include mq($until: desktop) {
         text-align: center;
 
-        img {
+        .gallery__img {
             display: inline-block;
         }
     }
