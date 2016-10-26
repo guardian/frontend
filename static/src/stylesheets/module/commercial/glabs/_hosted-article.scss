@@ -169,7 +169,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 
     .hide-on-desktop {
-        .hosted-article__next-page {
+        .hosted__next-page {
             margin-top: 30px;
             position: relative;
         }
@@ -181,7 +181,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
     .content__secondary-column {
-        .hosted-article__next-page {
+        .hosted__next-page {
             width: auto;
             position: absolute;
             margin: 70px 0;
@@ -191,6 +191,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             .hosted__next-page--header,
             .hosted__next-page--tile {
                 margin-right: 0;
+                margin-top: 0;
             }
         }
     }
@@ -512,19 +513,21 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.ab-test-variant1 {
+.hosted__ab-test-variant-carousel {
     overflow: hidden;
     .prev-oj-item {
         opacity: .5;
     }
 }
 
-.ab-test-variant2 {
+.hosted__ab-test-variant-popup {
     .hosted__see-all-onward {
         cursor: pointer;
-        display: inline-block;
         border-radius: 100px;
         padding: 0 $gs-gutter;
+        position: absolute;
+        top: 20px;
+        right: 0;
     }
 }
 
@@ -585,22 +588,36 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 
 .hosted__next-page-tile--popup {
     display: inline-block;
-    width: 300px;
-    height: 260px;
+    width: calc(100% - #{2 * $gs-gutter});
     margin: $gs-baseline 0 0 $gs-gutter;
     background: #ffffff;
     vertical-align: top;
+    position: relative;
+    &:hover {
+        text-decoration: none;
+    }
+
+    @include mq(tablet) {
+        max-width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(4);
+    }
 }
 
 .hosted__next-page-thumb--popup {
-    width: 300px;
-    height: 180px;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
 }
 
 .hosted__next-page-title--popup {
     @include f-headlineSans;
     color: $neutral-1;
     padding: 8px;
+    z-index: 1;
+    min-height: 48px;
 }
 
 .hosted__carousel-marker {
@@ -622,14 +639,14 @@ $dotSize: 8px;
     }
 }
 
-.hosted__ab-test-control,
-.hosted__ab-test-variant1,
-.hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-control,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-control,
+.hosted__ab-test-variant-carousel,
+.hosted__ab-test-variant-popup {
     display: none;
 }
 
-.hosted__next-page.ab-test-control .hosted__ab-test-control,
-.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
-.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
+.hosted-page.ab-test-variant-carousel .hosted__ab-test-variant-carousel,
+.hosted-page.ab-test-variant-popup .hosted__ab-test-variant-popup {
     display: block;
 }
