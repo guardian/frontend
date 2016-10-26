@@ -19,17 +19,17 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementMessageCopyExperiment';
-        this.start = '2016-10-25';
-        this.expiry = '2016-11-3';
+        this.start = '2016-10-26';
+        this.expiry = '2016-11-8';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
-        this.audience = 0.01; // TODO: set real percentage
+        this.audience = 0.6;    // 60% (of UK audience)
         this.audienceOffset = 0.3;  // allow offset to engage different readers from MembershipEngagementWarpFactorOne test
-        this.successMeasure = 'Readers engage with messaging banner more frequently';
-        this.audienceCriteria = 'n percent of (non-member) UK edition readers'; // TODO: n percent?!
+        this.successMeasure = 'More membership sign-ups';
+        this.audienceCriteria = '60 percent of (non-member) UK edition readers';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Better messaging promotes reader engagement with the membership engagement';
-        this.hypothesis = 'Better messaging will connect with readers and they will engage more as a result';
+        this.idealOutcome = 'More readers engage with the banner and then complete membership sign-up';
+        this.hypothesis = 'More persuasive copy will improve membership conversions from impressions';
 
         this.canRun = function () {
             return config.page.edition.toLowerCase() === 'uk' &&
