@@ -87,7 +87,7 @@ class HostedContentController(contentApiClient: ContentApiClient)
               val trails = HostedTrails.fromContent(itemId, trailCount = 1, results)
               Cached(cacheDuration)(JsonComponent(hostedOnwardJourney(trails, 1, 1)))
             case "article" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 1000, results)
+              val trails = HostedTrails.fromContent(itemId, results)
               Cached(cacheDuration)(JsonComponent(hostedOnwardJourney(trails, 2, 4)))
             case "gallery" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)

@@ -6,6 +6,11 @@ import common.commercial.hosted.HostedPage
 
 object HostedTrails extends Logging {
 
+  private def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
+
+  def fromContent(itemId: String, results: Seq[Content]): Seq[HostedPage] =
+    results filterNot (_.id == itemId) sortBy publishedDateTime flatMap HostedPage.fromContent
+
   /*
    * Take first n items published after given item.
    * If there aren't enough, backfill with previous items.
@@ -15,8 +20,6 @@ object HostedTrails extends Logging {
     val (givenItemIfExists, otherItems) = results partition (_.id == itemId)
 
     val trails = givenItemIfExists.headOption map { givenItem =>
-
-      def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
 
       val pubDateTime = publishedDateTime(givenItem)
 

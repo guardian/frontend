@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-usa-1',
     'common/modules/experiments/tests/membership-engagement-warp-factor-one',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment'
 ], function (
@@ -25,7 +24,6 @@ define([
     DiscussionPromoteBottomBanner,
     WeekendReadingEmail,
     WeekendReadingPromo,
-    ContributionsUsa1,
     MembershipEngagementWarpFactorOne,
     MembershipEngagementMessageCopyExperiment
 ) {
@@ -34,7 +32,6 @@ define([
         new DiscussionPromoteBottomBanner(),
         new WeekendReadingEmail(),
         new WeekendReadingPromo(),
-        new ContributionsUsa1(),
         new MembershipEngagementWarpFactorOne(),
         new MembershipEngagementMessageCopyExperiment()
     ];
