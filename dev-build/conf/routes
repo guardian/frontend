@@ -370,6 +370,7 @@ POST           /notification/delete                                             
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
+GET            /embed/atom/media/:id                                                                                             controllers.MediaAtomEmbedController.render(id)
 GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
 GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
 GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()
