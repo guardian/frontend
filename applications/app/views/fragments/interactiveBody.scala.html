@@ -62,4 +62,22 @@
         </div>
         @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
     }
+
+    <script>
+        @HtmlFormat.raw(common.Assets.js.curl)
+
+        [].slice.apply(document.querySelectorAll('figure.interactive')).forEach(function (el) {
+            var mainJS = el.getAttribute('data-interactive');
+            if (!mainJS) {
+                return;
+            }
+
+            require([mainJS], function (interactive) {
+                interactive.boot(el, document, window.guardian.config);
+            }, function (err) {
+                console.log('Interactive failed', mainJS);
+                console.log('Error:', err);
+            });
+        });
+    </script>
 }
