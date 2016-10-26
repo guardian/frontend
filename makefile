@@ -91,20 +91,19 @@ pasteup: check-node # PRIVATE
 
 # Run the JS test suite.
 test: check-node
-	@grunt test --dev
+	@./tools/run-task test/javascript
 
 # Lint all assets.
 validate: check-node
-	@grunt validate
+	@./tools/run-task lint
 
 # Lint all SCSS.
 validate-sass: check-node # PRIVATE
-	@grunt validate:sass
-	@grunt validate:css
+	@./tools/run-task lint/sass
 
 # Lint all JS.
 validate-javascript: check-node # PRIVATE
-	@grunt validate:js
+	@./tools/run-task lint/javascript
 
 validate-amp: check-node # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
