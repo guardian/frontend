@@ -60,7 +60,7 @@ define([
         // image won't be visible (think z-indexed layers)
         var backgroundParent = document.createElement('div');
         backgroundParent.className = 'creative__background-parent';
-        if( 'backgroundColour' in specs) {
+        if ('backgroundColour' in specs) {
             backgroundParent.style.backgroundColor = specs.backgroundColour;
         }
         backgroundParent.appendChild(background);
