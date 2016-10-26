@@ -139,9 +139,9 @@ define([
             var messagingTestName = 'messaging-test-1';
             if (messagingTestVariant !== 'notintest') {
                 var variantMessages = {
-                    text_a: 'TODO: Add text for first variant',
-                    text_b: 'TODO: Add text for second variant',
-                    text_c: 'TODO: Add text for third variant'
+                    fairer: 'We all want to make the world a fairer place. We believe journalism can help – but producing it is expensive. That\'s why we need Supporters. Join today for £49 per year.',
+                    appreciate: 'Become a Supporter and appreciate every article, knowing you\'ve helped bring it to the page. Be part of the Guardian. Join today for £49 per year.',
+                    secure: 'Secure the future of independent journalism. Help us create a fairer world. Support the Guardian today for £49 per year.'
                 };
                 campaignCode = 'gdnwb_copts_mem_banner_messaging1uk' + '__' + messagingTestVariant;
                 linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;

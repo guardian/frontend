@@ -52,17 +52,17 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'text_a',
+                id: 'fairer',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'text_b',
+                id: 'appreciate',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'text_c',
+                id: 'secure',
                 test: function () {},
                 success: success.bind(this)
             }
