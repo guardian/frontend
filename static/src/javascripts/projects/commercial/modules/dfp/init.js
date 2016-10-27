@@ -19,8 +19,7 @@ define([
     'commercial/modules/messenger/scroll',
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
-    'commercial/modules/messenger/parallax-background',
-    'commercial/modules/messenger/fixed-background'
+    'commercial/modules/messenger/parallax-background'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
              ophanTracking) {
