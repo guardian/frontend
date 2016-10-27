@@ -15,45 +15,15 @@ define([
             !('backgroundImage' in specs) ||
             !('backgroundRepeat' in specs) ||
             !('backgroundPosition' in specs) ||
-            !('maxHeight' in specs)
+            !('scrollType' in specs)
         ) {
             return null;
         }
 
-        var updateQueued = false;
-
-        // This is the x-axis offset where we put the top left corner of
-        // the background image in the canvas. It depends on the value of
-        // backgroundPosition and the size of the image.
-        var dx;
-
-        // We keep track of the scroll offset to compute the parallax effect
-        var scrollY;
-        var getDy = adSlot.classList.contains('ad-slot--top-above-nav') ?
-            getDyTopAbove :
-            getDyOthers;
-
-        // Create a canvas element which needs to be as high as the largest
-        // height the creative will ever be (which is why this value is
-        // provided by the creative)
-        var background = document.createElement('canvas');
-        background.className = 'creative__canvas';
-        background.height = specs.maxHeight;
-        var ctx = background.getContext('2d');
-
-        // Load the background image and kick-off the parallax effect
-        // as soon as the image is loaded
-        var image = new Image();
-        image.src = specs.backgroundImage;
-        image.onload = function () {
-            window.addEventListener('scroll', function () {
-                scrollY = window.pageYOffset;
-                if (!updateQueued) {
-                    updateQueued = true;
-                    fastdom.read(updateBackgroundPosition);
-                }
-            });
-        };
+        // Create an element to hold the background image
+        var background = document.createElement('div');
+        background.className = 'creative__background creative__background--' + specs.scrollType;
+        assign(background.style, specs);
 
         // Wrap the background image in a DIV for positioning. Also, we give
         // this DIV a background colour if it is provided. This is because
@@ -66,67 +36,48 @@ define([
         }
         backgroundParent.appendChild(background);
 
-        // We insert the background parent in the DOM and then two things must happen:
-        // 1. we give a width to the CANVAS element, equal to its computed width. This
-        //    is required otherwise some browsers will think width=300
-        // 2. we give the background its correct initial position depending on the
-        //    scroll position. Note: we do this in a DOM read because writing in a
-        //    CANVAS element is not a DOM operation :-)
-        return fastdom.write(function () {
-            adSlot.insertBefore(backgroundParent, adSlot.firstChild);
-        })
-        .then(function () {
-            return fastdom.read(function () {
-                scrollY = window.pageYOffset;
-                return background.getBoundingClientRect();
-            });
-        })
-        .then(function (rect) {
+        if( specs.scrollType === 'fixed' ) {
             return fastdom.write(function () {
-                background.width = rect.width;
+                adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             });
-        })
-        .then(function () {
-            if( !updateQueued ) {
-                updateQueued = true;
-                return fastdom.read(updateBackgroundPosition);
-            }
-        });
+        } else {
+            var updateQueued = false;
 
-        function updateBackgroundPosition() {
-            updateQueued = false;
-            var rect = backgroundParent.getBoundingClientRect();
-            if( dx === undefined ) {
-                dx = getDx(specs, background, image);
-            }
-            var dy = getDy(scrollY, rect);
-            if( image.height < specs.maxHeight ) {
-                ctx.drawImage(image, dx, dy);
-            } else {
-                ctx.drawImage(image, dx, dy);
-            }
+            // We keep track of the scroll offset to compute the parallax effect
+            var scrollY;
+
+            // The top above slot is fixed and thus requires a special transform formula
+            var getDy = adSlot.classList.contains('ad-slot--top-above-nav') ?
+                getDyTopAbove :
+                getDyOthers;
+
+            // Set the vertical background position to a reasonable default value
+            background.style.backgroundPositionY = '0%';
+
+            return fastdom.write(function () {
+                adSlot.insertBefore(backgroundParent, adSlot.firstChild);
+            })
+            .then(function () {
+                window.addEventListener('scroll', function () {
+                    scrollY = window.pageYOffset;
+                    if (!updateQueued) {
+                        updateQueued = true;
+                        fastdom.read(function () {
+                            updateQueued = false;
+                            var rect = backgroundParent.getBoundingClientRect();
+                            return getDy(scrollY, rect);
+                        })
+                        .then(function (dy) {
+                            fastdom.write(function () {
+                                background.style.backgroundPositionY = dy + '%';
+                            });
+                        });
+                    }
+                });
+            });
         }
     }
 });
-
-function getDx(specs, background, image) {
-    switch( specs.backgroundPosition ) {
-    case 'top left':
-    case 'center left':
-    case 'bottom left':
-        return 0;
-
-    case 'top center':
-    case 'center center':
-    case 'bottom center':
-        return (background.width - image.width) / 2;
-
-    case 'top right':
-    case 'center right':
-    case 'bottom right':
-        return background.width - image.width;
-    }
-}
 
 function getDyTopAbove(scrollY, rect) {
     return -0.3 * (scrollY - rect.top);
