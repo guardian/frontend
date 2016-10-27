@@ -76,7 +76,7 @@ class DfpDataCacheJobTest
     lineItems.validLineItems shouldBe Seq(
       lineItem(1, "d"),
       lineItem(2, "e"),
-      lineItem(3, "c"),
+      lineItem(3, "c-cache"),
       lineItem(4, "f")
     )
   }
@@ -97,6 +97,9 @@ class DfpDataCacheJobTest
     )
 
     lineItems.validLineItems.size shouldBe 3
-    lineItems.validLineItems shouldBe Seq(lineItem(2, "e"), lineItem(3, "c"), lineItem(4, "f"))
+    lineItems.validLineItems shouldBe Seq(
+      lineItem(2, "e"),
+      lineItem(3, "c-cache"),
+      lineItem(4, "f"))
   }
 }
