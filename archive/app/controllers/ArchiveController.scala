@@ -6,6 +6,7 @@ import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
 import services.{Archive, Destination, DynamoDB, GoogleBotMetric}
 import java.net.URLDecoder
+import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
@@ -84,7 +85,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
 
     path match {
       case shortUrlWithCampaign(campaign) if !destinationHasCampaign =>
-        val uri = javax.ws.rs.core.UriBuilder.fromPath(redirectLocation)
+        val uri = UriBuilder.fromPath(redirectLocation)
         ShortCampaignCodes.getFullCampaign(campaign).foreach(uri.replaceQueryParam("CMP", _))
         uri.build().toString
       case _ => redirectLocation
@@ -112,13 +113,11 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
     private val CenturyStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
     private val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
 
-    def unapply(path: String): Option[String] = {
-      path match {
-        case CenturyUrlEx(_) => Some(ngCenturyFront)
-        case CenturyDecadeUrlEx(_, _) => Some(ngCenturyFront)
-        case CenturyStoryUrlEx(decade, storyId, ext) => Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
-        case _ =>  None
-      }
+    def unapply(path: String): Option[String] = path match {
+      case CenturyUrlEx(_) => Some(ngCenturyFront)
+      case CenturyDecadeUrlEx(_, _) => Some(ngCenturyFront)
+      case CenturyStoryUrlEx(decade, storyId, ext) => Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
+      case _ =>  None
     }
   }
 
