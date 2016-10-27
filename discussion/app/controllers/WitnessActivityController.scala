@@ -5,6 +5,7 @@ import model.Cached
 import common.{ExecutionContexts, JsonComponent}
 import discussion.model._
 import discussion.api.WitnessApi
+import discussion.api.DiscussionApiException._
 import conf.Configuration
 import play.api.libs.ws.WSClient
 
@@ -13,7 +14,7 @@ trait WitnessActivityController extends WitnessApi with Controller with Executio
   def witnessActivity(userId: String): Action[AnyContent] = Action.async {
     implicit request => {
       def renderWitnessActivityJson = (contributions: List[WitnessActivity]) => Cached(60)(JsonComponent(views.html.profileActivity.witnessActivity(contributions)))
-      getWitnessActivity(userId) map renderWitnessActivityJson
+      getWitnessActivity(userId) map renderWitnessActivityJson recover toResult
     }
   }
 }

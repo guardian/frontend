@@ -1,7 +1,7 @@
 package controllers
 
 import com.softwaremill.macwire._
-import discussion.DiscussionApi
+import discussion.api.DiscussionApi
 import play.api.libs.ws.WSClient
 import play.filters.csrf.CSRFComponents
 
