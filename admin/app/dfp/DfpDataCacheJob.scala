@@ -3,6 +3,7 @@ package dfp
 import common.dfp._
 import common.{ExecutionContexts, Logging}
 import conf.switches.Switches.DfpCachingSwitch
+import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
@@ -13,7 +14,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   case class LineItemLoadSummary(prevCount: Int,
                                  loadThreshold: Option[DateTime],
-                                 current: Seq[GuLineItem],
+                                 validLineItems: Seq[GuLineItem],
+                                 invalidLineItems: Seq[GuLineItem],
                                  recentlyAddedIds: Iterable[Long],
                                  recentlyModifiedIds: Iterable[Long],
                                  recentlyRemovedIds: Iterable[Long])
@@ -48,12 +50,15 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
   private def loadLineItems(): DfpDataExtractor = {
 
-    def fetchCachedLineItems(): Seq[GuLineItem] = {
+    def fetchCachedLineItems(): DfpLineItems = {
       val maybeLineItems = for {
         json <- Store.getDfpLineItemsReport()
         lineItemReport <- Json.parse(json).asOpt[LineItemReport]
-      } yield lineItemReport.lineItems
-      maybeLineItems getOrElse Nil
+      } yield DfpLineItems(Map(
+        true -> lineItemReport.lineItems,
+        false -> lineItemReport.invalidLineItems ))
+
+      maybeLineItems getOrElse DfpLineItems(Map.empty)
     }
 
     val start = System.currentTimeMillis
@@ -67,89 +72,83 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       log.info(s"Added: ${report(loadSummary.recentlyAddedIds)}")
       log.info(s"Modified: ${report(loadSummary.recentlyModifiedIds)}")
       log.info(s"Removed: ${report(loadSummary.recentlyRemovedIds)}")
-      log.info(s"Cached line item count now ${loadSummary.current.size}")
+      log.info(s"Cached line item count now ${loadSummary.validLineItems.size}")
     }
 
-    val lineItems = {
-      val loadSummary = loadLineItems(
-        fetchCachedLineItems(),
-        DfpApi.readLineItemsModifiedSince,
-        DfpApi.readCurrentLineItems()
-      )
-      logReport(loadSummary)
-      loadSummary.current
-    }
+    val loadSummary = loadLineItems(
+      fetchCachedLineItems(),
+      DfpApi.readLineItemsModifiedSince,
+      DfpApi.readCurrentLineItems
+    )
+    logReport(loadSummary)
 
     val loadDuration = System.currentTimeMillis - start
     log.info(s"Loading line items took $loadDuration ms")
 
-    DfpDataExtractor(lineItems)
+    DfpDataExtractor(loadSummary.validLineItems, loadSummary.invalidLineItems)
   }
 
-  def loadLineItems(cachedLineItems: => Seq[GuLineItem],
-                    lineItemsModifiedSince: DateTime => Seq[GuLineItem],
-                    allReadyOrDeliveringLineItems: => Seq[GuLineItem]): LineItemLoadSummary = {
+  def loadLineItems(cachedLineItems: => DfpLineItems,
+                    lineItemsModifiedSince: DateTime => DfpLineItems,
+                    allActiveLineItems: => DfpLineItems): LineItemLoadSummary = {
 
-    def summarizeNewCache: LineItemLoadSummary = LineItemLoadSummary(
-      prevCount = 0,
-      loadThreshold = None,
-      current = allReadyOrDeliveringLineItems,
-      recentlyAddedIds = allReadyOrDeliveringLineItems.map(_.id),
-      recentlyModifiedIds = Nil,
-      recentlyRemovedIds = Nil
-    )
+    // If the cache is empty, run a full query to generate a complete LineItemLoadSummary, using allActiveLineItems.
+    if (cachedLineItems.validItems.isEmpty) {
+      // Create a full summary object from scratch, using a query that collects all line items from dfp.
+      LineItemLoadSummary(
+        prevCount = 0,
+        loadThreshold = None,
+        validLineItems = allActiveLineItems.validItems,
+        invalidLineItems = allActiveLineItems.invalidLineItems,
+        recentlyAddedIds = allActiveLineItems.validItems.map(_.id),
+        recentlyModifiedIds = Nil,
+        recentlyRemovedIds = Nil
+      )
+    } else {
 
-    def summarizeUpdatedCache: LineItemLoadSummary = {
-      val threshold = cachedLineItems.map(_.lastModified).maxBy(_.getMillis)
+      // Calculate the most recent modified timestamp of the existing cache items,
+      // and find line items modified since that timestamp.
+      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(_.getMillis)
       val recentlyModified = lineItemsModifiedSince(threshold)
 
-      def summarizeUnmodifiedCache: LineItemLoadSummary = LineItemLoadSummary(
-          prevCount = cachedLineItems.size,
-          loadThreshold = Some(threshold),
-          current = cachedLineItems,
-          recentlyAddedIds = Nil,
-          recentlyModifiedIds = Nil,
-          recentlyRemovedIds = Nil
-        )
+      // Update existing items with a patch of new items.
+      def updateCachedContent(existingItems: Seq[GuLineItem], newItems: Seq[GuLineItem]): Seq[GuLineItem] = {
 
-      def summarizeModifiedCache: LineItemLoadSummary = {
-        def idToLineItem(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
-        val cachedIdToLineItem = idToLineItem(cachedLineItems)
-        val (readyOrDeliveringModified, otherModified) =
-          recentlyModified partition (Seq("READY", "DELIVERING") contains _.status)
-        val readyOrDeliveringIdToLineItem = idToLineItem(readyOrDeliveringModified)
-        val otherModifiedIds = otherModified.map(_.id)
-        val added = readyOrDeliveringIdToLineItem -- cachedIdToLineItem.keys
-        val modified = readyOrDeliveringIdToLineItem filterKeys cachedIdToLineItem.keySet.contains
-        val removed = cachedIdToLineItem filterKeys otherModifiedIds.contains
-        val lineItems = cachedIdToLineItem ++ added ++ modified -- removed.keys
-        LineItemLoadSummary(
-          prevCount = cachedLineItems.size,
-          loadThreshold = Some(threshold),
-          lineItems.values.toSeq.sortBy(_.id),
-          recentlyAddedIds = added.keys,
-          recentlyModifiedIds = modified.keys,
-          recentlyRemovedIds = removed.keys
-        )
+        // Create a combined map of all the line items, preferring newer items over old ones (equality is based on id).
+        val updatedLineItemMap = GuLineItem.asMap(existingItems) ++ GuLineItem.asMap(newItems)
+
+        // These are the existing, cached keys.
+        val existingKeys = existingItems.map(_.id).toSet
+
+        val (active, inactive) = newItems partition (Seq("READY", "DELIVERING", "DELIVERY_EXTENDED") contains _.status)
+        val activeKeys = active.map(_.id).toSet
+        val inactiveKeys = inactive.map(_.id).toSet
+
+        val added = activeKeys -- existingKeys
+        val modified = activeKeys intersect existingKeys
+        val removed = inactiveKeys intersect existingKeys
+
+        // New cache contents.
+        val updatedKeys = existingKeys ++ added -- removed
+
+        updatedKeys.toSeq.sorted.map(updatedLineItemMap)
       }
 
-      if (recentlyModified.isEmpty) {
-        summarizeUnmodifiedCache
-      } else {
-        summarizeModifiedCache
-      }
-    }
-
-    if (cachedLineItems.isEmpty) {
-      summarizeNewCache
-    } else {
-      summarizeUpdatedCache
+      LineItemLoadSummary(
+        prevCount = cachedLineItems.validItems.size,
+        loadThreshold = Some(threshold),
+        validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
+        invalidLineItems = updateCachedContent(cachedLineItems.problemItems, recentlyModified.problemItems),
+        recentlyAddedIds = Nil,
+        recentlyModifiedIds = Nil,
+        recentlyRemovedIds = Nil
+      )
     }
   }
 
   private def write(data: DfpDataExtractor): Unit = {
 
-    if (data.isValid) {
+    if (data.hasValidLineItems) {
       val now = printLondonTime(DateTime.now())
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
@@ -164,10 +163,10 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
         pageSkinSponsorships))))
 
-      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
 
       Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
-        data.topAboveNavSlotTakeovers))))
+        data.topAboveNavSlotTakeovers, Seq.empty))))
     }
   }
 }
