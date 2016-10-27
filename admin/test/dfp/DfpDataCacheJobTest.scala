@@ -53,9 +53,6 @@ class DfpDataCacheJobTest
     )
 
     lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe empty
-    lineItems.recentlyModifiedIds shouldBe Set(1, 2, 3)
-    lineItems.recentlyRemovedIds shouldBe empty
     lineItems.validLineItems.size shouldBe 3
     lineItems.validLineItems shouldBe Seq(lineItem(1, "a-fresh"), lineItem(2, "b-fresh"), lineItem(3, "c-fresh"))
     lineItems.invalidLineItems shouldBe empty
@@ -77,9 +74,6 @@ class DfpDataCacheJobTest
     )
 
     lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe Set(4)
-    lineItems.recentlyModifiedIds shouldBe Set(1, 2)
-    lineItems.recentlyRemovedIds shouldBe empty
     lineItems.validLineItems.size shouldBe 4
     lineItems.validLineItems shouldBe Seq(
       lineItem(1, "d"),
@@ -105,9 +99,6 @@ class DfpDataCacheJobTest
     )
 
     lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe Set(4)
-    lineItems.recentlyModifiedIds shouldBe Set(2)
-    lineItems.recentlyRemovedIds shouldBe Set(1)
     lineItems.validLineItems.size shouldBe 3
     lineItems.validLineItems shouldBe Seq(lineItem(2, "e"), lineItem(3, "c"), lineItem(4, "f"))
   }
