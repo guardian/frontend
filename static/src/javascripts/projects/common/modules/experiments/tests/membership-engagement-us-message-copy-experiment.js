@@ -23,10 +23,10 @@ define([
         this.expiry = '2016-11-15';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
-        this.audience = 0.25;    // TODO: confirm 25% allocation
-        this.audienceOffset = 0.3;  // TODO: confirm offset to avoid US header experiment users
+        this.audience = 0.5;
+        this.audienceOffset = 0; //TODO: Check for conflicts with other US tests
         this.successMeasure = 'More US membership sign-ups';
-        this.audienceCriteria = '25 percent of (non-member) US edition readers';
+        this.audienceCriteria = '50 percent of (non-member) US edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'More US readers engage with the banner and then complete membership sign-up';
         this.hypothesis = 'More persuasive copy will improve US membership conversions from impressions';
