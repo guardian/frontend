@@ -41,7 +41,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
     }
   }
 
-  def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
+  private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
     val stage = if (isPreview) "preview" else "live"
     val deployPath = timestamp.map(ts => s"$path/$ts").getOrElse(path)
 
