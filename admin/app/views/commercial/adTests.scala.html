@@ -1,7 +1,7 @@
 @import common.dfp.GuLineItem
 @import tools.DfpLink
 
-@(env: String, timestamp: Option[String], groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader)
+@(env: String, timestamp: String, groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader)
 
 @admin_main("Ad Tests", env, isAuthed = true) {
 

@@ -5,7 +5,6 @@ import common.{ExecutionContexts, Logging}
 import conf.switches.Switches.DfpCachingSwitch
 import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
-import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 import scala.concurrent.Future
@@ -51,14 +50,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   private def loadLineItems(): DfpDataExtractor = {
 
     def fetchCachedLineItems(): DfpLineItems = {
-      val maybeLineItems = for {
-        json <- Store.getDfpLineItemsReport()
-        lineItemReport <- Json.parse(json).asOpt[LineItemReport]
-      } yield DfpLineItems(Map(
+      val lineItemReport = Store.getDfpLineItemsReport()
+
+      DfpLineItems(Map(
         true -> lineItemReport.lineItems,
         false -> lineItemReport.invalidLineItems ))
-
-      maybeLineItems getOrElse DfpLineItems(Map.empty)
     }
 
     val start = System.currentTimeMillis
