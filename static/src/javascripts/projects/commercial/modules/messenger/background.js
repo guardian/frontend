@@ -43,9 +43,6 @@ define([
         } else {
             var updateQueued = false;
 
-            // We keep track of the scroll offset to compute the parallax effect
-            var scrollY;
-
             return fastdom.write(function () {
                 adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             })
@@ -54,7 +51,6 @@ define([
                 onScroll();
 
                 function onScroll() {
-                    scrollY = window.pageYOffset;
                     if (!updateQueued) {
                         updateQueued = true;
                         fastdom.read(function () {
