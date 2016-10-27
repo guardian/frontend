@@ -400,7 +400,7 @@ case class GalleryPage(
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-case class MediaAtomEmbedPage(atom: MediaAtom, body: Html) extends Page {
+case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
   override val metadata = MetaData.make(id = atom.id,
     webTitle = atom.title,
     analyticsName = atom.id,

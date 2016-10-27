@@ -1,9 +1,6 @@
-@import conf.{Configuration, Static}
-@import model.{EmbedPage, VideoPlayer}
-@import templates.inlineJS.blocking.js.curlConfig
-@import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
-
+@import conf.Static
 @import model.MediaAtomEmbedPage
+
 @(page: MediaAtomEmbedPage)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
@@ -18,7 +15,7 @@
         <base target="_parent"/>
     </head>
     <body>
-        @page.body
+        @views.html.fragments.atoms.media(page.atom)
 
         @fragments.analytics.base(page)
     </body>
