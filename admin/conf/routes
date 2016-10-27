@@ -94,6 +94,7 @@ GET         /commercial/adops/takeovers-empty-mpus                              
 GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST        /commercial/adops/takeovers-empty-mpus/remove                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
+GET         /commercial/invalid-lineitems                                                           controllers.admin.CommercialController.renderInvalidItems()
 
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()
