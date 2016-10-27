@@ -52,9 +52,9 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     def fetchCachedLineItems(): DfpLineItems = {
       val lineItemReport = Store.getDfpLineItemsReport()
 
-      DfpLineItems(Map(
-        true -> lineItemReport.lineItems,
-        false -> lineItemReport.invalidLineItems ))
+      DfpLineItems(
+        validItems = lineItemReport.lineItems,
+        invalidItems = lineItemReport.invalidLineItems)
     }
 
     val start = System.currentTimeMillis
@@ -95,7 +95,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         prevCount = 0,
         loadThreshold = None,
         validLineItems = allActiveLineItems.validItems,
-        invalidLineItems = allActiveLineItems.invalidLineItems,
+        invalidLineItems = allActiveLineItems.invalidItems,
         recentlyAddedIds = allActiveLineItems.validItems.map(_.id),
         recentlyModifiedIds = Nil,
         recentlyRemovedIds = Nil
@@ -134,7 +134,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         prevCount = cachedLineItems.validItems.size,
         loadThreshold = Some(threshold),
         validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
-        invalidLineItems = updateCachedContent(cachedLineItems.invalidLineItems, recentlyModified.invalidLineItems),
+        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems),
         recentlyAddedIds = Nil,
         recentlyModifiedIds = Nil,
         recentlyRemovedIds = Nil

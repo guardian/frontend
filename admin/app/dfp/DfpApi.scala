@@ -9,10 +9,7 @@ import org.joda.time.DateTime
 
 object DfpApi extends Logging {
 
-  case class DfpLineItems(apiRaw: Map[Boolean, Seq[GuLineItem]]) {
-    val validItems: Seq[GuLineItem] = apiRaw.getOrElse(true, Nil)
-    val invalidLineItems: Seq[GuLineItem] = apiRaw.getOrElse(false, Nil)
-  }
+  case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
   private def readLineItems(stmtBuilder: StatementBuilder): DfpLineItems = {
 
@@ -23,9 +20,13 @@ object DfpApi extends Logging {
         })
     })
 
-    DfpLineItems(lineItems
+    val validatedLineItems = lineItems
       .groupBy(Function.tupled(DataValidation.isGuLineItemValid))
-      .mapValues(_.map(_._1)))
+      .mapValues(_.map(_._1))
+
+    DfpLineItems(
+      validItems = validatedLineItems.getOrElse(true, Nil),
+      invalidItems = validatedLineItems.getOrElse(false, Nil))
   }
 
   def readCurrentLineItems: DfpLineItems = {
