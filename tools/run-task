@@ -67,8 +67,6 @@ if the task is array of other tasks, you can specify that its tasks should run c
 }
 */
 
-require('babel-register');
-
 const path = require('path');
 
 const yargs = require('yargs');
