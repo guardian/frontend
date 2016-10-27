@@ -56,15 +56,11 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String, zeros: String = ""): String = {
-    val normalised = path match {
-      case R1ArtifactUrl(p, artifactOrContextId, extension) =>
-        val normalisedUrl = s"www.theguardian.com/$p/0,,$artifactOrContextId,$zeros.html"
-        Some(normalisedUrl)
-      case ShortUrl(p) => Some(p)
-      case _ => None
-    }
-    s"http://${normalised.getOrElse(path)}"
+  def normalise(path: String, zeros: String = ""): String = path match {
+    case R1ArtifactUrl(p, artifactOrContextId, extension) =>
+      s"www.theguardian.com/$p/0,,$artifactOrContextId,$zeros.html"
+    case ShortUrl(p) => p
+    case _ => path
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
