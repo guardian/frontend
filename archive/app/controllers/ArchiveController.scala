@@ -47,9 +47,6 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
         case SectionSpecialIndex(section, _)  => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", 301)))
         case NewspaperPage(paper, date, book)       =>  cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301)))
 
-          // edge cache test
-        case "automated-test/strict-transport-security" => cachedArchiveRedirect(RevalidatableResult.Ok("<h1>test</h1>")).withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true")
-
         case _ =>
           log404(request)
           // short cache time as we might just be waiting for the content api to index
