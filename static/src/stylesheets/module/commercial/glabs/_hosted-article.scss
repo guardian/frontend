@@ -170,7 +170,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
 
     .hide-on-desktop {
         .hosted__next-page {
-            margin-top: 30px;
+            margin: 30px 0 20px;
             position: relative;
         }
         .hosted__next-page--header {
@@ -225,14 +225,15 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     font-size: 16px;
     line-height: 18px;
     padding: 6px;
+    min-height: 60px;
     @include mq($until: phablet) {
         font-size: 14px;
         line-height: 16px;
+        min-height: 42px;
     }
 }
 
 .hosted__next-page .hosted__next-page--tile {
-    background: transparent;
     border-top: 2px solid #e0e0e0;
     margin-bottom: 10px;
 }
@@ -604,19 +605,25 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     @include mq(leftCol) {
         max-width: gs-span(4);
     }
+
+    .hosted-next-page__wrapper {
+        background: rgba(255, 255, 255, .9);
+    }
+
+    &:hover .hosted-next-page__wrapper  {
+        background: rgba(255, 255, 255, .8);
+    }
 }
 
 .hosted__next-page-thumb--popup {
     width: 100%;
-    z-index: 1;
-    position: absolute;
 }
 
 .hosted__next-page-title--popup {
     @include f-headlineSans;
     color: $neutral-1;
-    padding: 8px;
-    z-index: 1;
+    padding: 8px 8px 16px;
+    margin: 0;
     min-height: 48px;
 }
 

@@ -16,9 +16,11 @@
         </div>
         <div class="hosted__ab-test-control">
             @for(trail <- trails.slice(0, defaultRows)) {
-                <a href="@{trail.url}" class="hosted__next-page--tile js-hosted-onward-journey-link" data-link-name="Next Hosted Page: @{trail.title}">
-                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                    <p class="hosted__next-page-title">@{trail.title}</p>
+                <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
+                    <div class="hosted-next-page__wrapper">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title">@{trail.title}</p>
+                    </div>
                 </a>
             }
         </div>
@@ -33,9 +35,11 @@
                 @for(i <- trails.indices if i % maxRows == 0) {
                     <div class="carousel-page" style="left: @{i*100/maxRows}%;">
                         @for(trail <- trails.slice(i, i + maxRows)) {
-                            <a href="@{trail.url}" class="hosted__next-page--tile js-hosted-onward-journey-link" data-link-name="Next Hosted Page: @{trail.title}">
-                                <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                                <p class="hosted__next-page-title">@{trail.title}</p>
+                            <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
+                                <div class="hosted-next-page__wrapper">
+                                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                                    <p class="hosted__next-page-title">@{trail.title}</p>
+                                </div>
                             </a>
                         }
                     </div>
@@ -51,9 +55,11 @@
         </div>
         <div class="hosted__ab-test-variant-popup">
             @for(trail <- trails.slice(0, defaultRows)) {
-                <a href="@{trail.url}" class="hosted__next-page--tile js-hosted-onward-journey-link" data-link-name="Next Hosted Page: @{trail.title}">
-                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                    <p class="hosted__next-page-title">@{trail.title}</p>
+                <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
+                    <div class="hosted-next-page__wrapper">
+                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                        <p class="hosted__next-page-title">@{trail.title}</p>
+                    </div>
                 </a>
             }
             @if(trails.length > defaultRows){
@@ -62,15 +68,16 @@
             <div class="u-h">
                 <div class="js-hosted-more-from-popup-content">
                     @for(trail <- trails) {
-                        <a href="@{trail.url}" class="hosted__next-page-tile--popup js-hosted-onward-journey-link" data-link-name="Next Hosted Page: @{trail.title}">
-                            <div class="hosted-next-page-bg hosted-tone-bg"></div>
-                            @fragments.image(
-                                ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(trail.imageUrl), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
-                                Seq("hosted__next-page-thumb--popup"),
-                                GalleryMedia.inline,
-                                trail.title
-                            )
-                            <p class="hosted__next-page-title--popup">@{trail.title}</p>
+                        <a href="@{trail.url}" class="hosted__next-page-tile--popup js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
+                            <div class="hosted-next-page__wrapper">
+                                @fragments.image(
+                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(trail.imageUrl), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
+                                    Seq("hosted__next-page-thumb--popup"),
+                                    GalleryMedia.inline,
+                                    trail.title
+                                )
+                                <p class="hosted__next-page-title--popup">@{trail.title}</p>
+                            </div>
                         </a>
                     }
                 </div>
