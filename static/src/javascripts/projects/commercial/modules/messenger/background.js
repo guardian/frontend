@@ -46,14 +46,6 @@ define([
             // We keep track of the scroll offset to compute the parallax effect
             var scrollY;
 
-            // The top above slot is fixed and thus requires a special transform formula
-            var getDy = adSlot.classList.contains('ad-slot--top-above-nav') ?
-                getDyTopAbove :
-                getDyOthers;
-
-            // Set the vertical background position to a reasonable default value
-            background.style.backgroundPositionY = '0%';
-
             return fastdom.write(function () {
                 adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             })
@@ -65,12 +57,13 @@ define([
                         fastdom.read(function () {
                             updateQueued = false;
                             var rect = backgroundParent.getBoundingClientRect();
-                            return getDy(scrollY, rect);
-                        })
-                        .then(function (dy) {
-                            fastdom.write(function () {
-                                background.style.backgroundPositionY = dy + '%';
-                            });
+                            var dy = (0.3 * rect.top | 0) + 20;
+
+                            // We update the style in a read batch because the DIV
+                            // has been promoted to its own layer and is also
+                            // strictly self-contained. Also, without doing that
+                            // the animation is extremely jittery.
+                            background.style.backgroundPositionY = dy + '%';
                         });
                     }
                 });
@@ -78,11 +71,3 @@ define([
         }
     }
 });
-
-function getDyTopAbove(scrollY, rect) {
-    return -0.3 * (scrollY - rect.top);
-}
-
-function getDyOthers(scrollY, rect) {
-    return -0.3 * rect.top;
-}
