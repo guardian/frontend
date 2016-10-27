@@ -638,7 +638,7 @@ $dotSize: 8px;
     height: $dotSize;
     border-radius: $dotSize;
     display: inline-block;
-    pointer-events: none;
+    cursor: pointer;
     border: 1px solid;
     transition: background-color 750ms ease;
     &:not(.highlighted) {

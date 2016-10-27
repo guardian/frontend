@@ -48,7 +48,7 @@
             @if(trails.length > maxRows){
                 <div class="hosted__carousel-marker">
                     @for(i <- trails.indices if i % maxRows == 0) {
-                        <div class="hosted__carousel-dot hosted-tone-btn js-carousel-dot-@{i/maxRows} @{if(i == 0) "highlighted" else ""}"></div>
+                        <div class="hosted__carousel-dot hosted-tone-btn js-carousel-dot @{if(i == 0) "highlighted" else ""}"></div>
                     }
                 </div>
             }
