@@ -859,18 +859,18 @@
     /* This will clip the fixed-positioned child to the boundaries of its parent */
     clip: rect(0, auto, auto, 0);
 
-    .creative__canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
     .creative__background {
-        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+    }
+
+    .creative__background--parallax {
+        position: absolute;
+    }
+
+    .creative__background--fixed {
+        position: fixed;
     }
 }
