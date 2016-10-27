@@ -52,7 +52,6 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
     lineItems.validLineItems.size shouldBe 3
     lineItems.validLineItems shouldBe Seq(lineItem(1, "a-fresh"), lineItem(2, "b-fresh"), lineItem(3, "c-fresh"))
     lineItems.invalidLineItems shouldBe empty
@@ -73,7 +72,6 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
     lineItems.validLineItems.size shouldBe 4
     lineItems.validLineItems shouldBe Seq(
       lineItem(1, "d"),
@@ -98,7 +96,6 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
     lineItems.validLineItems.size shouldBe 3
     lineItems.validLineItems shouldBe Seq(lineItem(2, "e"), lineItem(3, "c"), lineItem(4, "f"))
   }

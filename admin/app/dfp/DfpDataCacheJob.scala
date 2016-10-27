@@ -11,13 +11,9 @@ import scala.concurrent.Future
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
-  case class LineItemLoadSummary(prevCount: Int,
-                                 loadThreshold: Option[DateTime],
-                                 validLineItems: Seq[GuLineItem],
-                                 invalidLineItems: Seq[GuLineItem],
-                                 recentlyAddedIds: Iterable[Long],
-                                 recentlyModifiedIds: Iterable[Long],
-                                 recentlyRemovedIds: Iterable[Long])
+  case class LineItemLoadSummary(
+    validLineItems: Seq[GuLineItem],
+    invalidLineItems: Seq[GuLineItem])
 
   def run(): Future[Unit] = Future {
     if (DfpCachingSwitch.isSwitchedOn) {
@@ -59,30 +55,19 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
     val start = System.currentTimeMillis
 
-    def logReport(loadSummary: LineItemLoadSummary): Unit = {
-      def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
-      log.info(s"Cached line item count was ${loadSummary.prevCount}")
-      for (threshold <- loadSummary.loadThreshold) {
-        log.info(s"Last modified time of cached line items: $threshold")
-      }
-      log.info(s"Added: ${report(loadSummary.recentlyAddedIds)}")
-      log.info(s"Modified: ${report(loadSummary.recentlyModifiedIds)}")
-      log.info(s"Removed: ${report(loadSummary.recentlyRemovedIds)}")
-      log.info(s"Cached line item count now ${loadSummary.validLineItems.size}")
-    }
-
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
       DfpApi.readLineItemsModifiedSince,
       DfpApi.readCurrentLineItems
     )
-    logReport(loadSummary)
 
     val loadDuration = System.currentTimeMillis - start
     log.info(s"Loading line items took $loadDuration ms")
 
     DfpDataExtractor(loadSummary.validLineItems, loadSummary.invalidLineItems)
   }
+
+  def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
 
   def loadLineItems(cachedLineItems: => DfpLineItems,
                     lineItemsModifiedSince: DateTime => DfpLineItems,
@@ -92,13 +77,8 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     if (cachedLineItems.validItems.isEmpty) {
       // Create a full summary object from scratch, using a query that collects all line items from dfp.
       LineItemLoadSummary(
-        prevCount = 0,
-        loadThreshold = None,
         validLineItems = allActiveLineItems.validItems,
-        invalidLineItems = allActiveLineItems.invalidItems,
-        recentlyAddedIds = allActiveLineItems.validItems.map(_.id),
-        recentlyModifiedIds = Nil,
-        recentlyRemovedIds = Nil
+        invalidLineItems = allActiveLineItems.invalidItems
       )
     } else {
 
@@ -108,7 +88,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.
-      def updateCachedContent(existingItems: Seq[GuLineItem], newItems: Seq[GuLineItem]): Seq[GuLineItem] = {
+      def updateCachedContent(existingItems: Seq[GuLineItem], newItems: Seq[GuLineItem], logging: Boolean = true): Seq[GuLineItem] = {
 
         // Create a combined map of all the line items, preferring newer items over old ones (equality is based on id).
         val updatedLineItemMap = GuLineItem.asMap(existingItems) ++ GuLineItem.asMap(newItems)
@@ -127,17 +107,20 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         // New cache contents.
         val updatedKeys = existingKeys ++ added -- removed
 
+        log.info(s"Cached line item count was ${cachedLineItems.validItems.size}")
+        log.info(s"Last modified time of cached line items: $threshold")
+
+        log.info(s"Added: ${report(added)}")
+        log.info(s"Modified: ${report(modified)}")
+        log.info(s"Removed: ${report(inactiveKeys)}")
+        log.info(s"Cached line item count now ${updatedKeys.size}")
+
         updatedKeys.toSeq.sorted.map(updatedLineItemMap)
       }
 
       LineItemLoadSummary(
-        prevCount = cachedLineItems.validItems.size,
-        loadThreshold = Some(threshold),
         validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
-        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems),
-        recentlyAddedIds = Nil,
-        recentlyModifiedIds = Nil,
-        recentlyRemovedIds = Nil
+        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems, logging = false)
       )
     }
   }
