@@ -1,9 +1,10 @@
 define([
+    'common/utils/assign',
     'common/utils/closest',
     'common/utils/fastdom-promise',
     'commercial/modules/messenger'
-], function (closest, fastdom, messenger) {
-    messenger.register('parallax-background', function(specs, ret, iframe) {
+], function (assign, closest, fastdom, messenger) {
+    messenger.register('background', function(specs, ret, iframe) {
         return setBackground(specs, closest(iframe, '.js-ad-slot'));
     });
 
