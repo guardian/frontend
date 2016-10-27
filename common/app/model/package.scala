@@ -12,7 +12,6 @@ object `package` {
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
     lazy val isAudio: Boolean = content.tags exists { _.id == "type/audio" }
-    lazy val isMediaAtom: Boolean = content.atoms.exists { _.media.isDefined} && content.fields.isEmpty
     lazy val isMedia: Boolean = isGallery || isVideo || isAudio
     lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
     lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
