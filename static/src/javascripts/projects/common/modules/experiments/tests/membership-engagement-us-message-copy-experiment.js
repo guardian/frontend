@@ -24,7 +24,7 @@ define([
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
         this.audience = 0.5;
-        this.audienceOffset = 0; //TODO: Check for conflicts with other US tests
+        this.audienceOffset = 0;
         this.successMeasure = 'More US membership sign-ups';
         this.audienceCriteria = '50 percent of (non-member) US edition readers';
         this.dataLinkNames = '';
