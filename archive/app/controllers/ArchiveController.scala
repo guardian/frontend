@@ -2,14 +2,18 @@ package controllers
 
 import campaigns.ShortCampaignCodes
 import common._
-import model.Cached.{CacheableResult, WithoutRevalidationResult, RevalidatableResult}
+import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import play.api.mvc._
-import services.{Archive, DynamoDB, Destination, GoogleBotMetric}
+import services.{Archive, Destination, DynamoDB, GoogleBotMetric}
 import java.net.URLDecoder
-import model.Cached
+
+import model.{CacheTime, Cached}
+
 import scala.concurrent.Future
 
 class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with ExecutionContexts {
+
+  private val cachedArchiveRedirect: (CacheableResult) => Result = Cached(CacheTime.ArchiveRedirect)
 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
@@ -25,7 +29,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   def lookup(path: String) = Action.async{ implicit request =>
 
     // lookup the path to see if we have a location for it in the database
-    lookupPath(path).map(_.map(Cached(300)(_)).getOrElse{
+    lookupPath(path).map(_.map(cachedArchiveRedirect).getOrElse {
 
       // if we do not have a location in the database then follow these rules
       path match {
@@ -39,17 +43,17 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
         case CombinerSectionRss(section)      => redirectTo(s"$section/rss", "combinerrss")
         case CombinerSection(section)         => redirectTo(section, "combinersection")
         case Combiner(combiner)               => redirectTo(combiner, "combiner")
-        case DatedSpecialIndexPage(section, rest, _) => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", 301)))
-        case SectionSpecialIndex(section, _)  => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", 301)))
-        case NewspaperPage(paper, date, book)       =>  Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301)))
+        case DatedSpecialIndexPage(section, rest, _) => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", 301)))
+        case SectionSpecialIndex(section, _)  => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", 301)))
+        case NewspaperPage(paper, date, book)       =>  cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301)))
 
           // edge cache test
-        case "automated-test/strict-transport-security" => Cached(300)(RevalidatableResult.Ok("<h1>test</h1>")).withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true")
+        case "automated-test/strict-transport-security" => cachedArchiveRedirect(RevalidatableResult.Ok("<h1>test</h1>")).withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true")
 
         case _ =>
           log404(request)
           // short cache time as we might just be waiting for the content api to index
-          Cached(10)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
       }
     })
   }
@@ -57,11 +61,10 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): String = {
     val normalised = path match {
-      case R1ArtifactUrl(path, artifactOrContextId, extension) =>
-        val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
+      case R1ArtifactUrl(p, artifactOrContextId, extension) =>
+        val normalisedUrl = s"www.theguardian.com/$p/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
-      case ShortUrl(path) =>
-        Some(path)
+      case ShortUrl(p) => Some(p)
       case _ => None
     }
     s"http://${normalised.getOrElse(path)}"
@@ -84,11 +87,10 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
     }
 
     path match {
-      case shortUrlWithCampaign(campaign) if !destinationHasCampaign => {
+      case shortUrlWithCampaign(campaign) if !destinationHasCampaign =>
         val uri = javax.ws.rs.core.UriBuilder.fromPath(redirectLocation)
         ShortCampaignCodes.getFullCampaign(campaign).foreach(uri.replaceQueryParam("CMP", _))
         uri.build().toString
-      }
       case _ => redirectLocation
     }
   }
@@ -134,7 +136,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
     log.info(s"301, $identifier, ${RequestLog(request)}")
-    Cached(300)(WithoutRevalidationResult(Redirect(s"http://$path", 301)))
+    cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"http://$path", 301)))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
