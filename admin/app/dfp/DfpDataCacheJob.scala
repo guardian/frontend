@@ -138,7 +138,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         prevCount = cachedLineItems.validItems.size,
         loadThreshold = Some(threshold),
         validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
-        invalidLineItems = updateCachedContent(cachedLineItems.problemItems, recentlyModified.problemItems),
+        invalidLineItems = updateCachedContent(cachedLineItems.invalidLineItems, recentlyModified.invalidLineItems),
         recentlyAddedIds = Nil,
         recentlyModifiedIds = Nil,
         recentlyRemovedIds = Nil
