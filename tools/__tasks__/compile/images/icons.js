@@ -2,8 +2,6 @@
 
 /* eslint-disable no-console */
 
-require('babel-register');
-
 const {static: staticDir, root} = require('../../config').paths;
 
 const fs = require('fs');
