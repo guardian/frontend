@@ -50,7 +50,10 @@ define([
                 adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             })
             .then(function () {
-                window.addEventListener('scroll', function () {
+                window.addEventListener('scroll', onScroll);
+                onScroll();
+
+                function onScroll() {
                     scrollY = window.pageYOffset;
                     if (!updateQueued) {
                         updateQueued = true;
@@ -66,7 +69,7 @@ define([
                             background.style.backgroundPositionY = dy + '%';
                         });
                     }
-                });
+                }
             });
         }
     }
