@@ -3,7 +3,7 @@ package test
 import controllers.InteractiveController
 import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
 
 import scala.collection.JavaConversions._
@@ -14,10 +14,12 @@ import scala.collection.JavaConversions._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with PrivateMethodTester {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
   val interactiveController = new InteractiveController(testContentApiClient, wsClient)
+  val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
   "Interactive Controller" should "200 when content type is 'interactive'" in {
     val result = interactiveController.renderInteractive(url)(TestRequest(url))
@@ -28,7 +30,7 @@ import scala.collection.JavaConversions._
     val path = "lifeandstyle/ng-interactive/2016"
     val timestamp = Some("1477559425")
     val file = "interactive-worker.js"
-    val workerPath = interactiveController.getWebWorkerPath(path, file, timestamp)
+    val workerPath = interactiveController invokePrivate getWebWorkerPath(path, file, timestamp)
     workerPath should be (s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/1477559425/interactive-worker.js")
   }
 
@@ -36,7 +38,7 @@ import scala.collection.JavaConversions._
     val path = "lifeandstyle/ng-interactive/2016"
     val timestamp = None
     val file = "interactive-service-worker.js"
-    val workerPath = interactiveController.getWebWorkerPath(path, file, timestamp)
+    val workerPath = interactiveController invokePrivate getWebWorkerPath(path, file, timestamp)
     workerPath should be (s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/interactive-service-worker.js")
   }
 
