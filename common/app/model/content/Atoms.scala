@@ -78,10 +78,7 @@ object Atoms extends common.Logging {
       })
 
       val media = extract(atoms.media, atom => {
-        val id = atom.id
-        val defaultHtml = atom.defaultHtml
-        val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
-        MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+        MediaAtom.make(atom)
       })
 
       val interactives = extract(atoms.interactives, atom => {
@@ -96,6 +93,13 @@ object Atoms extends common.Logging {
 
 
 object MediaAtom extends common.Logging {
+
+  def make(atom: AtomApiAtom): MediaAtom = {
+    val id = atom.id
+    val defaultHtml = atom.defaultHtml
+    val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
+    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+  }
 
   def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
     MediaAtom(

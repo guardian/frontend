@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import com.gu.contentatom.thrift.{AtomData, Atom => AtomApi}
+import com.gu.contentatom.thrift.{Atom => AtomApi}
 import common._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -10,7 +10,6 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 import model.content.MediaAtom
-import play.twirl.api.Html
 
 class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
 
@@ -22,12 +21,9 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
   }
 
   def make(apiAtom: Option[AtomApi]): Option[MediaAtom] = {
-    apiAtom map (a => {
-      val id = a.id
-      val defaultHtml = a.defaultHtml
-      val mediaAtom = a.data.asInstanceOf[AtomData.Media].media
-      MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
-    })
+    apiAtom map {
+      MediaAtom.make
+    }
   }
 
 
