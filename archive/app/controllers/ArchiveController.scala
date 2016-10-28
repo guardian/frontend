@@ -130,7 +130,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   }
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
-    log.info(s"Archive $redirectHttpStatus, \"$identifier\" redirect to $path")
+    log.info(s"""Archive $redirectHttpStatus, "$identifier" redirect to $path""")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(s"http://$path", redirectHttpStatus)))
   }
 
