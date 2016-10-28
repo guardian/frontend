@@ -963,6 +963,14 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
     &:active {
         color: #333333;
     }
+
+    .hosted-next-page__wrapper {
+        background: #ffffff;
+    }
+
+    &:hover .hosted-next-page__wrapper {
+        background: rgba(255, 255, 255, .9);
+    }
 }
 
 .hosted__next-page-thumb {
@@ -993,12 +1001,4 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
         font-size: 18px;
         line-height: 20px;
     }
-}
-
-.hosted-next-page-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: .1;
-    z-index: 0;
 }
