@@ -69,6 +69,9 @@
 }
 
 .sticky-top-banner-ad {
+    transform: translate3d(0,0,0);
+    will-change: transform;
+    contain: layout;
     z-index: $zindex-popover;
     width: 100%;
     position: fixed;
