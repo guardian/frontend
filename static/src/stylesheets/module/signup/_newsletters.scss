@@ -1,0 +1,355 @@
+.newsletters-heading {
+    @include fs-header(5);
+    font-size: 40px;
+    color: $neutral-1;
+    padding-top: $gs-baseline;
+
+    @include mq($from: tablet) {
+        font-size: 60px;
+        padding-top: $gs-baseline * 2;
+  }
+}
+
+.newsletter-card__signup {
+    display: inline;
+}
+
+.newsletter-card__example {
+    display: inline;
+
+    &.is-not-enhanced {
+        float: right;
+        margin-top: -5.5rem;
+        width: 80%;
+    }
+}
+
+.newsletter-card__wrapper {
+    position: relative;
+
+    @include mq(leftCol) {
+        margin-left: gs-span(3) + $gs-gutter;
+    }
+}
+
+.newsletter-card {
+    display: inline-block;
+    float: left;
+    margin-bottom: $gs-baseline;
+    border-top: 2px solid $news-accent;
+    width: 100%;
+
+    @include mq(tablet) {
+        width: gs-span(4);
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        width: 30%;
+    }
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
+.newsletter-card__header {
+
+}
+
+.newsletter-card__imagewrapper {
+    height: 0;
+    padding-bottom: 60%;
+}
+
+.newsletter-image {
+    width: 100%;
+}
+
+.newsletter-card__name {
+    @include fs-header(5);
+    font-weight: 900;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+}
+
+.newsletter-card__content {
+    @include fs-textSans(3);
+    line-height: 18px;
+    background-color: $comment-support-2;
+    height: 9em;
+    padding: 0 $gs-gutter / 2 0 $gs-gutter / 2;
+
+
+    @include mq(tablet) {
+        height: 12em;
+    }
+
+    @include mq(desktop) {
+        height: 12em;
+    }
+}
+
+.newsletter-card__meta {
+    background-color: $comment-support-2;
+    border-bottom: 1px solid $neutral-3;
+    padding: $gs-gutter / 2;
+    padding-bottom: $gs-baseline * 2;
+    height: gs-height(1);
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+    .newsletter-card__text-input {
+        @include fs-textSans(2);
+        -webkit-border-radius: 62.5rem 0 0 62.5rem;
+        border-radius: 62.5rem 0 0 62.5rem;
+        border: 1px solid $neutral-3;
+        border-right: 0;
+        float: left;
+        padding-left: $gs-baseline;
+        width: 60%;
+        height: 3em;
+    }
+
+    .newsletter-card__lozenge {
+        @include fs-textSans(2);
+        color: #ffffff;
+        border: 1px solid $news-main-1;
+        background-color: $news-main-1;
+        -webkit-border-radius: 62.5rem;
+        border-radius: 62.5rem;
+        border-width: 1px;
+        height: 3em;
+        width: 48%;
+        margin: 0;
+        padding: 0;
+
+        &.lozenge--is-updating {
+            display: inherit;
+            font-size: 0;
+            height: 2.43rem;
+            background-color: $neutral-5;
+            border: 1px solid $neutral-3;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40px;
+        }
+    }
+
+
+
+
+    .newsletter-card__lozenge--submit {
+        -webkit-border-radius: 0 62.5rem 62.5rem 0;
+        border-radius: 0 62.5rem 62.5rem 0;
+        border-left: 0;
+        margin-right: 0;
+        width: 40%;
+    }
+
+    .newsletter-card__lozenge--preview {
+        color: $news-main-1;
+        background-color: transparent;
+        float: right;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: darken($comment-support-2, 10%);
+        }
+    }
+
+    .inline-arrow-right {
+        fill: $news-main-1;
+        position: absolute;
+        height: 2rem;
+        line-height: 2rem;
+    }
+}
+
+.newsletter-card__preview {
+    line-height: 2rem;
+    width: 6rem;
+    height: 2.2rem;
+    margin-left: -1rem;
+}
+
+.newsletter-card__frequency {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    padding: $gs-baseline 0 0;
+
+    .inline-icon {
+        fill: $neutral-3;
+    }
+}
+
+.signup-confirmation {
+    position: relative;
+    padding: 0 $gs-gutter / 4;
+
+    .signup-confirmation__message {
+        position: relative;
+        display: inline-block;
+        vertical-align: text-bottom;
+    }
+
+    .signup-confirmation--success {
+        @include fs-textSans(3);
+        color: $neutral-1;
+        display: inline;
+    }
+
+    .inline-icon {
+        background-color: $neutral-3;
+        -webkit-border-radius: 62.5rem;
+        border-radius: 62.5rem;
+        fill: $neutral-1;
+        height: $gs-baseline * 3;
+        left: 0;
+        width: $gs-baseline * 3;
+        display: inline-block;
+
+        svg {
+            height: 50%;
+            width: 50%;
+            margin-left: 25%;
+            margin-top: 25%;
+        }
+    }
+}
+
+
+.newsletter-card__iframe {
+    width: 100%;
+}
+
+.newsletters-category {
+    border-top: 2px solid $news-accent;
+    display: inline-block;
+    clear: both;
+    width: 100%;
+    margin-top: $gs-baseline * 2;
+}
+
+.newsletters-category__heading {
+    @include fs-header(5);
+    color: $neutral-1;
+    position: relative;
+    margin: 0;
+    margin-top: $gs-baseline / 2;
+    margin-bottom: $gs-baseline;
+
+    @include mq(desktop) {
+        width: gs-span(4);
+  }
+
+    @include mq(leftCol) {
+        position: absolute;
+  }
+}
+
+// TONE SPECIFIC MODS - FEATURE
+.newsletter-card--tone-feature {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $features-support-1;
+            background-color: $features-support-1;
+
+            &:hover,
+            &:focus {
+                border-color: darken($features-support-1, 10%);
+                background-color: darken($features-support-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $features-support-1;
+        color: $features-support-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $features-support-1;
+        }
+
+        .inline-arrow-right {
+            fill: $features-support-1;
+        }
+    }
+}
+
+// TONE SPECIFIC MODS - COMMENT
+.newsletter-card--tone-comment {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $comment-support-4;
+            background-color: $comment-support-4;
+
+            &:hover,
+            &:focus {
+                border-color: darken($comment-support-4, 10%);
+                background-color: darken($comment-support-4, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $comment-support-4;
+        color: $comment-support-4;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $comment-support-4;
+        }
+
+        .inline-arrow-right {
+            fill: $comment-support-4;
+        }
+    }
+}
+
+// TONE SPECIFIC MODS - MEDIA
+.newsletter-card--tone-media {
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $neutral-1;
+            background-color: $neutral-1;
+
+            &:hover,
+            &:focus {
+                border-color: darken($neutral-1, 10%);
+                background-color: darken($neutral-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $neutral-1;
+        color: $neutral-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $neutral-1;
+        }
+
+        .inline-arrow-right {
+            fill: $neutral-1;
+        }
+    }
+}

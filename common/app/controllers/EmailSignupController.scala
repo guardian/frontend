@@ -42,6 +42,7 @@ object ListIds {
   val mediaBriefing = 217
   val greenLight = 28
   val povertyMatters = 113
+  val weekendReading = 3744
   val theLongRead = 3322
   val morningMail = 2636
   val australianPolitics = 1866

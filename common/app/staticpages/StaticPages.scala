@@ -22,4 +22,14 @@ object StaticPages {
       contentType = "Signup",
       iosType = None,
       shouldGoogleIndex = false))
+
+  def simpleNewslettersPage(id: String): SimplePage = SimplePage(
+    MetaData.make(
+      id = id,
+      section = Option(SectionSummary(id="newsletter-signup-page", activeBrandings=None)),
+      webTitle = "Sign up for Guardian emails",
+      analyticsName = "newsletter-signup-page",
+      contentType = "Signup",
+      iosType = None,
+      shouldGoogleIndex = false))
 }
