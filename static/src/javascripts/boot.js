@@ -38,7 +38,7 @@ define([
     var bootStandard = function () {
         return promiseRequire(['bootstraps/standard/main'])
             .then(function (boot) { boot(); });
-    };
+    };m;
 
     var bootCommercial = function () {
         if (!config.switches.commercial) {
