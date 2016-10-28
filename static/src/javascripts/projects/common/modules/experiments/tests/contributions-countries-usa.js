@@ -126,7 +126,7 @@ define([
                     var component = $.create(template(contributionsEmbed, {
                         position : 'inline',
                         variant: 'bottom',
-                        titleCopy: 'An independent press and a working democracy. You can\'t have one without the other. Please give to the Guardian today.',
+                        titleCopy: 'An independent press and a working democracy. You can’t have one without the other. Please give to the Guardian today.',
                         linkUrl: makeUrl('democracy'),
                         currency: '$'
 
