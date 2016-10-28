@@ -1,18 +1,17 @@
-package discussion
+package discussion.api
 
 import java.net.URLEncoder
 
+import com.netaporter.uri.dsl._
 import common.{ExecutionContexts, Logging}
+import conf.Configuration
+import discussion.model.{CommentCount, _}
+import discussion.util.Http
+import play.api.libs.json.{JsNull, JsNumber, JsObject}
+import play.api.libs.ws.{WSClient, WSResponse}
+import play.api.mvc.{Cookie, Headers, RequestHeader}
 
 import scala.concurrent.Future
-import discussion.model._
-import play.api.mvc.{Cookie, Headers, RequestHeader}
-import discussion.util.Http
-import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.libs.json.{JsNull, JsNumber, JsObject}
-import discussion.model.CommentCount
-import com.netaporter.uri.dsl._
-import conf.Configuration
 
 trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
 

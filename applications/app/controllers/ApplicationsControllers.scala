@@ -3,12 +3,14 @@ package controllers
 import com.softwaremill.macwire._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import jobs.SiteMapJob
+import play.api.libs.ws.WSClient
 
 trait ApplicationsControllers {
 
   def contentApiClient: ContentApiClient
   def siteMapJob: SiteMapJob
   def sectionsLookUp: SectionsLookUp
+  def wsClient: WSClient
 
   lazy val siteMapController = wire[SiteMapController]
   lazy val crosswordPageController = wire[CrosswordPageController]
