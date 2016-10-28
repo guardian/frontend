@@ -45,6 +45,7 @@ define([
     };
 
     GustyleComcontent.prototype.create = function () {
+        var brandColor = this.params.brandColor;
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
                 articleContentColor: 'gu-display__content-color--' + this.params.articleContentColor,
@@ -53,7 +54,7 @@ define([
                 articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
                 brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
                 externalLinkIcon: externalLinkIcon,
-                contrastFontColour: isDark(this.params.brandColor) ? "gu-display__hosted-bright" : "",
+                contrastFontColour: brandColor && isDark(brandColor) ? 'gu-display__hosted-bright' : '',
                 isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
         var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;
