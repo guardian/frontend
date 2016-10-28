@@ -33,7 +33,7 @@ object EmailSubscriptions {
       listId = "37",
       subscribedTo = subscribedListIds.exists{ x => x == "37" },
       subheading = Some("UK"),
-      signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-uk")
+      signupPage = Some("/info/2015/dec/08/daily-email-uk")
     ),
     EmailSubscription(
       name = "The Guardian Today",
@@ -45,8 +45,8 @@ object EmailSubscriptions {
       listId = "1493",
       subscribedTo = subscribedListIds.exists{ x => x == "1493" },
       subheading = Some("US"),
-      signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-uk"),
-      exampleUrl = Some("https://www.theguardian.com/us-news/series/guardian-us-briefing/latest/email")
+      signupPage = Some("/info/2015/dec/08/daily-email-uk"),
+      exampleUrl = Some("/us-news/series/guardian-us-briefing/latest/email")
     ),
     EmailSubscription(
       name = "The Guardian Today",
@@ -58,7 +58,7 @@ object EmailSubscriptions {
       listId = "1506",
       subscribedTo = subscribedListIds.exists{ x => x == "1506" },
       subheading = Some("AUS"),
-      signupPage = Some("https://www.theguardian.com/info/2015/dec/08/daily-email-au")
+      signupPage = Some("/info/2015/dec/08/daily-email-au")
     ),
     EmailSubscription(
       name = "Morning Mail",
@@ -70,7 +70,7 @@ object EmailSubscriptions {
       listId = "2636",
       subscribedTo = subscribedListIds.exists{ x => x == "2636" },
       subheading = Some("AUS"),
-      signupPage = Some("https://www.theguardian.com/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
+      signupPage = Some("/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
     )
   )
 
@@ -85,8 +85,8 @@ object EmailSubscriptions {
       listId = "217",
       subscribedTo = subscribedListIds.exists{ x => x == "217" },
       tone = Some("media"),
-      signupPage = Some("https://www.theguardian.com/info/2016/feb/15/sign-up-to-the-media-briefing"),
-      exampleUrl = Some("https://www.theguardian.com/media/series/mediaguardian-briefing/latest/email")
+      signupPage = Some("/info/2016/feb/15/sign-up-to-the-media-briefing"),
+      exampleUrl = Some("/media/series/mediaguardian-briefing/latest/email")
     ),
     EmailSubscription(
       name = "Brexit briefing",
@@ -97,8 +97,8 @@ object EmailSubscriptions {
       frequency = "Tuesday mornings",
       listId = "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
-      signupPage = Some("https://www.theguardian.com/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
-      exampleUrl = Some("https://www.theguardian.com/politics/series/eu-referendum-morning-briefing/latest/email")
+      signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
+      exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
       name = "Green light",
@@ -109,8 +109,8 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "38",
       subscribedTo = subscribedListIds.exists{ x => x == "38" },
-      signupPage = Some("https://www.theguardian.com/environment/2015/oct/19/sign-up-to-the-green-light-email"),
-      exampleUrl = Some("https://www.theguardian.com/environment/series/green-light/latest/email")
+      signupPage = Some("/environment/2015/oct/19/sign-up-to-the-green-light-email"),
+      exampleUrl = Some("/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
       name = "Lab notes",
@@ -121,8 +121,8 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "3701",
       subscribedTo = subscribedListIds.exists{ x => x == "3701" },
-      signupPage = Some("https://www.theguardian.com/science/2016/jun/07/sign-up-for-lab-notes-the-guardians-weekly-science-update"),
-      exampleUrl = Some("https://www.theguardian.com/science/series/lab-notes/latest/email")
+      signupPage = Some("/science/2016/jun/07/sign-up-for-lab-notes-the-guardians-weekly-science-update"),
+      exampleUrl = Some("/science/series/lab-notes/latest/email")
     ),
     EmailSubscription(
       name = "Poverty matters",
@@ -133,8 +133,8 @@ object EmailSubscriptions {
       frequency = "Every other Tuesday",
       listId = "113",
       subscribedTo = subscribedListIds.exists{ x => x == "113" },
-      signupPage = Some("https://www.theguardian.com/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
-      exampleUrl = Some("https://www.theguardian.com/global-development/series/poverty-matters/latest/email")
+      signupPage = Some("/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
+      exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
     ),
     EmailSubscription(
       name = "Australian politics",
@@ -145,7 +145,7 @@ object EmailSubscriptions {
       frequency = "Weekdays at 10am",
       listId = "1866",
       subscribedTo = subscribedListIds.exists{ x => x == "1866" },
-      signupPage = Some("https://www.theguardian.com/australia-news/2014/dec/10/australian-politics-subscribe-by-email")
+      signupPage = Some("/australia-news/2014/dec/10/australian-politics-subscribe-by-email")
     )
   )
 
@@ -159,8 +159,8 @@ object EmailSubscriptions {
       frequency = "Weekday afternoons",
       listId = "218",
       subscribedTo = subscribedListIds.exists{ x => x == "218" },
-      signupPage = Some("https://www.theguardian.com/info/2016/jan/05/the-fiver-email-sign-up"),
-      exampleUrl = Some("https://www.theguardian.com/football/series/thefiver/latest/email")
+      signupPage = Some("/info/2016/jan/05/the-fiver-email-sign-up"),
+      exampleUrl = Some("/football/series/thefiver/latest/email")
     ),
     EmailSubscription(
       name = "The Breakdown",
@@ -172,8 +172,8 @@ object EmailSubscriptions {
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
       tone = Some("feature"),
-      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-breakdown"),
-      exampleUrl = Some("https://www.theguardian.com/sport/series/breakdown/latest/email")
+      signupPage = Some("/sport/2016/aug/18/sign-up-to-the-breakdown"),
+      exampleUrl = Some("/sport/series/breakdown/latest/email")
     ),
     EmailSubscription(
       name = "The Spin",
@@ -185,8 +185,8 @@ object EmailSubscriptions {
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
       tone = Some("feature"),
-      signupPage = Some("https://www.theguardian.com/sport/2016/aug/18/sign-up-to-the-spin"),
-      exampleUrl = Some("https://www.theguardian.com/sport/series/thespin/latest/email")
+      signupPage = Some("/sport/2016/aug/18/sign-up-to-the-spin"),
+      exampleUrl = Some("/sport/series/thespin/latest/email")
     ),
     EmailSubscription(
       name = "Guardian Australia sports",
@@ -198,7 +198,7 @@ object EmailSubscriptions {
       listId = "3766",
       subscribedTo = subscribedListIds.exists{ x => x == "3766" },
       tone = Some("feature"),
-      signupPage = Some("https://www.theguardian.com/info/2015/jun/05/guardian-australia-sport-newsletter-subscribe-by-email")
+      signupPage = Some("/info/2015/jun/05/guardian-australia-sport-newsletter-subscribe-by-email")
     )
   )
 
@@ -213,8 +213,8 @@ object EmailSubscriptions {
       listId = "3745",
       subscribedTo = subscribedListIds.exists{ x => x == "3745" },
       tone = Some("media"),
-      signupPage = Some("https://www.theguardian.com/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
-      exampleUrl = Some("https://www.theguardian.com/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
+      signupPage = Some("/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
+      exampleUrl = Some("/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
     ),
     EmailSubscription(
       name = "Weekend Reading",
@@ -225,8 +225,8 @@ object EmailSubscriptions {
       frequency = "Every Saturday",
       listId = "3744",
       subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
-      signupPage = Some("https://www.theguardian.com/signup/weekendreading"),
-      exampleUrl = Some("https://www.theguardian.com/membership/series/weekend-reading/latest/email")
+      signupPage = Some("/signup/weekendreading"),
+      exampleUrl = Some("/membership/series/weekend-reading/latest/email")
     ),
     EmailSubscription(
       name = "The Long Read",
@@ -237,7 +237,7 @@ object EmailSubscriptions {
       frequency = "Every Saturday",
       listId = "3322",
       subscribedTo = subscribedListIds.exists{ x => x == "3322" },
-      signupPage = Some("https://www.theguardian.com/news/2015/jul/20/sign-up-to-the-long-read-email")
+      signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
     )
   )
 
@@ -251,7 +251,7 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "39",
       subscribedTo = subscribedListIds.exists{ x => x == "39" },
-      signupPage = Some("https://www.theguardian.com/music/2016/aug/18/sign-up-to-sleeve-notes")
+      signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
     EmailSubscription(
       name = "Close up",
@@ -272,7 +272,7 @@ object EmailSubscriptions {
       frequency = "Every weekday",
       listId = "1950",
       subscribedTo = subscribedListIds.exists{ x => x == "1950" },
-      signupPage = Some("https://www.theguardian.com/info/2016/feb/12/film-today-email-sign-up")
+      signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
     ),
     EmailSubscription(
       name = "Bookmarks",
@@ -283,7 +283,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "3039",
       subscribedTo = subscribedListIds.exists{ x => x == "3039" },
-      signupPage = Some("https://www.theguardian.com/books/2015/feb/03/sign-up-to-our-bookmarks-email")
+      signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
     ),
     EmailSubscription(
       name = "Art Weekly",
@@ -294,8 +294,8 @@ object EmailSubscriptions {
       frequency = "Every Friday",
       listId = "99",
       subscribedTo = subscribedListIds.exists{ x => x == "99" },
-      signupPage = Some("https://www.theguardian.com/artanddesign/2015/oct/19/sign-up-to-the-art-weekly-email"),
-      exampleUrl = Some("https://www.theguardian.com/artanddesign/series/art-weekly/latest/email")
+      signupPage = Some("/artanddesign/2015/oct/19/sign-up-to-the-art-weekly-email"),
+      exampleUrl = Some("/artanddesign/series/art-weekly/latest/email")
     )
   )
 
@@ -309,7 +309,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "1902",
       subscribedTo = subscribedListIds.exists{ x => x == "1902" },
-      signupPage = Some("https://www.theguardian.com/info/2016/sep/22/sign-up-to-the-zip-file-email")
+      signupPage = Some("/info/2016/sep/22/sign-up-to-the-zip-file-email")
     ),
     EmailSubscription(
       name = "The Flyer",
@@ -320,8 +320,8 @@ object EmailSubscriptions {
       frequency = "Every Wednesday",
       listId = "2211",
       subscribedTo = subscribedListIds.exists{ x => x == "2211" },
-      signupPage = Some("https://www.theguardian.com/travel/2016/aug/18/sign-up-to-the-flyer"),
-      exampleUrl = Some("https://www.theguardian.com/travel/series/the-flyer/latest/email")
+      signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
+      exampleUrl = Some("/travel/series/the-flyer/latest/email")
     ),
     EmailSubscription(
       name = "Money Talks",
@@ -332,8 +332,8 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "1079",
       subscribedTo = subscribedListIds.exists{ x => x == "1079" },
-      signupPage = Some("https://www.theguardian.com/money/2015/nov/10/sign-up-to-the-guardians-money-email"),
-      exampleUrl = Some("https://www.theguardian.com/money/series/money-talks/latest/email")
+      signupPage = Some("/money/2015/nov/10/sign-up-to-the-guardians-money-email"),
+      exampleUrl = Some("/money/series/money-talks/latest/email")
     ),
     EmailSubscription(
       name = "Fashion Statement",
@@ -344,7 +344,7 @@ object EmailSubscriptions {
       frequency = "Every Monday",
       listId = "105",
       subscribedTo = subscribedListIds.exists{ x => x == "105" },
-      signupPage = Some("https://www.theguardian.com/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
+      signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
     ),
     EmailSubscription(
       name = "Crossword editor's update",
@@ -355,8 +355,8 @@ object EmailSubscriptions {
       frequency = "Monthly",
       listId = "101",
       subscribedTo = subscribedListIds.exists{ x => x == "101" },
-      signupPage = Some("https://www.theguardian.com/crosswords/2016/aug/18/sign-up-to-the-crossword-editors-update-email"),
-      exampleUrl = Some("https://www.theguardian.com/crosswords/series/crossword-editor-update/latest/email")
+      signupPage = Some("/crosswords/2016/aug/18/sign-up-to-the-crossword-editors-update-email"),
+      exampleUrl = Some("/crosswords/series/crossword-editor-update/latest/email")
     ),
     EmailSubscription(
       name = "The Observer Food Monthly",
@@ -367,7 +367,7 @@ object EmailSubscriptions {
       frequency = "Monthly",
       listId = "248",
       subscribedTo = subscribedListIds.exists{ x => x == "248" },
-      signupPage = Some("https://www.theguardian.com/lifeandstyle/2015/oct/19/observer-food-monthly-newsletter")
+      signupPage = Some("/lifeandstyle/2015/oct/19/observer-food-monthly-newsletter")
     )
   )
 
@@ -383,7 +383,7 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2313" },
       subheading = Some("UK"),
       tone = Some("comment"),
-      signupPage = Some("https://www.theguardian.com/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
+      signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
     ),
     EmailSubscription(
       name = "Best of Guardian Opinion",
@@ -396,7 +396,7 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "3228" },
       subheading = Some("US"),
       tone = Some("comment"),
-      signupPage = Some("https://www.theguardian.com/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
+      signupPage = Some("/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
     ),
     EmailSubscription(
       name = "Best of Guardian Opinion",
@@ -409,7 +409,7 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2976" },
       subheading = Some("AUS"),
       tone = Some("comment"),
-      signupPage = Some("https://www.theguardian.com/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
+      signupPage = Some("/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
     ),
     EmailSubscription(
       name = "First Dog on the Moon",
@@ -421,7 +421,7 @@ object EmailSubscriptions {
       listId = "2635",
       subscribedTo = subscribedListIds.exists{ x => x == "2635" },
       tone = Some("media"),
-      signupPage = Some("https://www.theguardian.com/commentisfree/2014/jun/16/-sp-first-dog-on-the-moon-subscribe-by-email")
+      signupPage = Some("/commentisfree/2014/jun/16/-sp-first-dog-on-the-moon-subscribe-by-email")
     )
   )
 
