@@ -99,6 +99,13 @@ define([
                     engagementText[0].textContent = opts.setEngagementText;
                 }
             }
+
+            if (opts.testName === 'messaging-test-us-1') {
+                var usEngagementText = $('.site-message__message.site-message__message--membership');
+                if (usEngagementText && opts.setEngagementText) {
+                    usEngagementText[0].textContent = opts.setEngagementText;
+                }
+            }
         }
     };
 
@@ -111,6 +118,7 @@ define([
             customOpts = {},
             prominentTestVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
             messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
+            usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
             linkHref = formatEndpointUrl(edition, message);
 
         if (prominentTestVariant) {
@@ -148,6 +156,23 @@ define([
                 customOpts = {
                     testName: messagingTestName,
                     setEngagementText: messagingTestVariant === 'control' ? undefined : variantMessages[messagingTestVariant]
+                };
+                customJs = getCustomJs;
+            }
+        }
+
+        if (usMessagingTestVariant) {
+            if (usMessagingTestVariant !== 'notintest') {
+                var usVariantMessages = {
+                    coffee: 'For less than the price of a coffee a week you could help secure the Guardian\'s future. Become a Guardian US member for just $49 a year.',
+                    defies: 'When politicians defy belief you need journalism that defies politicians. Become a Guardian US member for just $49 a year.',
+                    value: 'If you value our independent, international journalism, you can support it. Become a Guardian US member for just $49 a year.'
+                };
+                campaignCode = 'gdnwb_copts_mem_banner_messaging1us' + '__' + usMessagingTestVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+                customOpts = {
+                    testName: 'messaging-test-us-1',
+                    setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
                 };
                 customJs = getCustomJs;
             }

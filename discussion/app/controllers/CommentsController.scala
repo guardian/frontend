@@ -1,8 +1,10 @@
 package controllers
 
 import common.{ExecutionContexts, JsonComponent}
+import discussion.api.{DiscussionApiLike, DiscussionParams}
+import discussion.api.DiscussionApiException._
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
-import discussion.{DiscussionApiLike, DiscussionParams, ThreadedCommentPage, UnthreadedCommentPage}
+import discussion.{ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
 import model.{Cached, MetaData, NoCache, SectionSummary, SimplePage, TinyResponse}
 import play.api.data.Forms._
@@ -30,7 +32,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
     val params = DiscussionParams(request)
     discussionApi.commentContext(id, params) flatMap { context =>
       getComments(context._1, Some(params.copy(page = context._2)))
-    }
+    } recover toResult
   }
   def commentContextJsonOptions(id: Int) = Action { implicit request =>
     TinyResponse.noContent(Some("GET, OPTIONS"))
@@ -47,7 +49,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
           else
             RevalidatableResult.Ok(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
         }
-    }
+    } recover toResult
   }
 
   // Get a list of comments for a discussion.
@@ -89,7 +91,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       Cached(60) {
         RevalidatableResult.Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
       }
-    }
+    } recover toResult
   }
 
   object ReportAbuseFormValidation {
@@ -142,12 +144,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
           RevalidatableResult.Ok(views.html.discussionComments.discussionPage(page))
         }
       }
-    } recover {
-      case NonFatal(e) =>
-        val errorMessage = s"Discussion $key cannot be retrieved"
-        log.error(errorMessage, e)
-        NotFound(errorMessage)
-    }
+    } recover toResult
   }
 
   private def getTopComments(key: DiscussionKey)(implicit request: RequestHeader): Future[Result] = {
@@ -162,6 +159,6 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
           RevalidatableResult.Ok(views.html.discussionComments.topCommentsList(page))
         }
       }
-    }
+    } recover toResult
   }
 }

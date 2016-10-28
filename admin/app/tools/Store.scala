@@ -63,7 +63,14 @@ trait Store extends Logging with Dates {
     S3.get(dfpHighMerchandisingTagsDataKey) flatMap (HighMerchandisingTargetedTagsReportParser(_))
   } getOrElse HighMerchandisingTargetedTagsReport(now, HighMerchandisingLineItems(items = List.empty))
 
-  def getDfpLineItemsReport(): Option[String] = S3.get(dfpLineItemsKey)
+  def getDfpLineItemsReport(): LineItemReport = {
+    val maybeLineItems = for {
+      json <- S3.get(dfpLineItemsKey)
+      lineItemReport <- Json.parse(json).asOpt[LineItemReport]
+    } yield lineItemReport
+
+    maybeLineItems getOrElse LineItemReport("Empty Report", Nil, Nil)
+  }
 
   def getSlotTakeoversReport(slotName: String): Option[String] = slotName match {
     case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
