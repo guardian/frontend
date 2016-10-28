@@ -95,15 +95,15 @@ test: check-node
 
 # Lint all assets.
 validate: check-node
-	@./tools/run-task lint --verbose
+	@./tools/run-task lint
 
 # Lint all SCSS.
 validate-sass: check-node # PRIVATE
-	@./tools/run-task lint/sass --verbose
+	@./tools/run-task lint/sass
 
 # Lint all JS.
 validate-javascript: check-node # PRIVATE
-	@./tools/run-task lint/javascript --verbose
+	@./tools/run-task lint/javascript
 
 validate-amp: check-node # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
