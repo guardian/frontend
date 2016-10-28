@@ -15,8 +15,6 @@ import scala.concurrent.Future
 
 class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with ExecutionContexts {
 
-  private val cachedArchiveRedirect: (CacheableResult) => Result = Cached(CacheTime.ArchiveRedirect)
-
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
   private val R1Redirect = """www\.theguardian\.com/[\w\d-]+(.*/[0|1]?,[\d]*,-?\d+,[\d]*.*)""".r
@@ -32,24 +30,26 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
 
   def lookup(path: String) = Action.async{ implicit request =>
 
+    val cachedArchiveRedirect = Cached(CacheTime.ArchiveRedirect) _
+
     // lookup the path to see if we have a location for it in the database
     lookupPath(path).map(_.map(cachedArchiveRedirect).getOrElse {
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Gallery(gallery)                 => redirectTo(gallery, "gallery")
-        case Century(century)                 => redirectTo(century, "century")
-        case Guardian(endOfUrl)               => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
-        case Lowercase(lower)                 => redirectTo(lower, "lowercase")
+        case Gallery(gallery)      => redirectTo(gallery, "gallery")
+        case Century(century)      => redirectTo(century, "century")
+        case Guardian(endOfUrl)    => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
+        case Lowercase(lower)      => redirectTo(lower, "lowercase")
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)      => redirectTo(s"$section/rss", "combinerrss")
-        case CombinerSection(section)         => redirectTo(section, "combinersection")
-        case Combiner(combiner)               => redirectTo(combiner, "combiner")
-        case DatedSpecialIndexPage(section, rest, _) => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", redirectHttpStatus)))
-        case SectionSpecialIndex(section, _)  => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", redirectHttpStatus)))
-        case NewspaperPage(paper, date, book)       =>  cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", redirectHttpStatus)))
+        case CombinerSectionRss(section)                => redirectTo(s"$section/rss", "combinerrss")
+        case CombinerSection(section)                   => redirectTo(section, "combinersection")
+        case Combiner(combiner)                         => redirectTo(combiner, "combiner")
+        case DatedSpecialIndexPage(section, rest, _)    => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", redirectHttpStatus)))
+        case SectionSpecialIndex(section, _)            => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", redirectHttpStatus)))
+        case NewspaperPage(paper, date, book)           => cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", redirectHttpStatus)))
 
         case _ =>
           log404(request)
@@ -131,7 +131,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
     log.info(s"$redirectHttpStatus, $identifier, ${RequestLog(request)}")
-    cachedArchiveRedirect(WithoutRevalidationResult(Redirect(s"http://$path", redirectHttpStatus)))
+    Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(s"http://$path", redirectHttpStatus)))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
