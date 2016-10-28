@@ -71,7 +71,12 @@
 .sticky-top-banner-ad {
     z-index: $zindex-popover;
     width: 100%;
-    position: relative;
+    position: fixed;
+    top: 0;
+}
+
+.sticky-top-banner-ad--animate {
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 
 .ad-slot--top-banner-ad {
