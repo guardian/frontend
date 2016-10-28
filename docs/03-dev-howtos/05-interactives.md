@@ -7,9 +7,19 @@ and [immersive articles](https://www.theguardian.com/environment/ng-interactive/
 
 There are three strategies for creating interactive content:
 
+- interactive content atoms
 - interactive embeds
 - interactive articles
-- interactive content atoms
+
+## Interactive content atoms
+
+Interactive content atoms are the recommended way to create interactive content going forward. They are treated as first
+class citizens within the `frontend`. Their scripts are [inlined](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/atoms/interactive.scala.html) rather than loaded by an external request,
+therefore they contribute less to page yank.
+
+Instructions for creating interactive content atoms can be found in the
+[interactive-atom-maker](https://github.com/guardian/interactive-atom-maker) repo
+
 
 ## Interactive embed
 
@@ -57,15 +67,6 @@ define(['your/dependencies'], function (dependency) {
         }
     });
 ```
-
-## Interactive content atoms
-
-Interactive content atoms are the recommended way to create interactive content going forward. They are treated as first
-class citizens within the `frontend`. Their scripts are [inlined](../../common/app/views/fragments/atoms/interactive.scala.html) rather than loaded by an external request,
-therefore they contribute less to page yank.
-
-Instructions for creating interactive content atoms can be found in the
-[interactive-atom-maker](https://github.com/guardian/interactive-atom-maker) repo
 
 ## Embedding the interactive in an article
 
