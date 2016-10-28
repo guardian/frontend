@@ -57,7 +57,7 @@ class QuizController(contentApiClient: ContentApiClient) extends Controller with
   private def renderQuiz(quizId: String, path: String, answers: form.Inputs)(implicit request: RequestHeader): Future[Result] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
+    log.info(s"Fetching quiz atom: $quizId from content id: $path")
     val capiQuery = contentApiClient.item(path, edition).showAtoms("all")
     val result = contentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>

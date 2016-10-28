@@ -130,33 +130,25 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   }
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
-    log.info(s"$redirectHttpStatus, $identifier, ${RequestLog(request)}")
+    log.info(s"Archive $redirectHttpStatus, \"$identifier\" redirect to $path")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(s"http://$path", redirectHttpStatus)))
   }
 
-  private def logDestination(path: String, msg: String, destination: String) {
-    log.info(s"Destination: $msg : $path -> $destination")
-  }
-
-  private def log404(request: Request[AnyContent]) =
+  private def log404(request: Request[AnyContent]) = {
+    log.warn(s"Archive returned 404 for path: ${request.path}")
     request.headers.get("User-Agent").getOrElse("no user agent") match {
-      case GoogleBot(_) =>
-        log.warn(s"404,${RequestLog(request)}")
-        GoogleBotMetric.Googlebot404Count.increment()
-      case _ =>
-        log.warn(s"404,${RequestLog(request)}")
+      case GoogleBot(_) => GoogleBotMetric.Googlebot404Count.increment()
     }
+  }
 
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
 
   def processLookupDestination(path: String) : PartialFunction[Destination, CacheableResult] = {
       case services.Redirect(location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
-        logDestination(path, "redirect", locationWithCampaign)
         WithoutRevalidationResult(Redirect(locationWithCampaign, redirectHttpStatus))
       case Archive(archivePath) =>
         // http://wiki.nginx.org/X-accel
-        logDestination(path, "archive", archivePath)
         WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }
 
