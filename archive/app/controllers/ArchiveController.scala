@@ -64,7 +64,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
         Some(path)
       case _ => None
     }
-    s"http://${normalised.getOrElse(path)}"
+    s"https://${normalised.getOrElse(path)}"
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
@@ -134,7 +134,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
     log.info(s"301, $identifier, ${RequestLog(request)}")
-    Cached(300)(WithoutRevalidationResult(Redirect(s"http://$path", 301)))
+    Cached(300)(WithoutRevalidationResult(Redirect(s"https://$path", 301)))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
