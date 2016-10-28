@@ -9,12 +9,12 @@ define([
     function userIsInAClashingAbTest() {
 
         var contributionsCountriesUk = {
-            name: 'ContributionsCountriesUK',
+            name: 'ContributionsCountriesUk',
             variants: ['control', 'global', 'democracy']
         };
 
         var contributionsCountriesUSA = {
-            name: 'ContributionsCountriesUSA',
+            name: 'ContributionsCountriesUsa',
             variants: ['control', 'global', 'democracy']
         };
 
