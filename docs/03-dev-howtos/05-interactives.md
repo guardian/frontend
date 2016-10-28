@@ -9,7 +9,7 @@ There are three strategies for creating interactive content:
 
 - interactive content atoms
 - interactive embeds
-- interactive articles
+- custom boot scripts
 
 ## Interactive content atoms
 
@@ -21,7 +21,7 @@ Instructions for creating interactive content atoms can be found in the
 [interactive-atom-maker](https://github.com/guardian/interactive-atom-maker) repo
 
 
-## Interactive embed
+## Interactive embeds
 
 An interactive embed is a HTML page that is injected into an article as an `iframe`, using a [standard boot
 script](https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js). The standard boot script provides event hooks that allow the
@@ -31,15 +31,15 @@ The embed can be uploaded to S3 along with any associated assets such as styles,
 
 Interactive embeds are likely to be replaced by interactive content atoms.
 
-## Interactive article
+## Custom boot scripts
 
-An `iframe` embed does not provide enough flexibility to achieve certain effects. The interactive article
+An `iframe` embed does not provide enough flexibility to achieve certain effects. Custom boot script
 allows the entire article to be styled using a boot script, letting us create striking, immersive experiences.
 
-An interactive script comprises a stand-alone javascript application wrapped in an AMD interface, which can be loaded and executed by
+A custom boot script comprises a stand-alone javascript application wrapped in an AMD interface, which can be loaded and executed by
 `frontend` code.
 
-The interactive AMD module must return an object with a method called `boot`. What the interactive module does after this is largely up
+The AMD module must return an object with a method called `boot`. What the interactive module does after this is largely up
 to whoever is writing it.
 
 This module can be uploaded to S3 along with its associated assets.
@@ -82,6 +82,20 @@ Interactives can be added to an article in Composer using the embed link:
 - for **interactive boot scripts**, enter the URL of the boot script
 - for **interactive embeds**, enter the URL of the embed HTML
 - for **interactive content atoms** enter the CAPI URL for the content atom
+
+## Interactive articles
+
+There is a special interactive article content type, which is similar to a normal article, but has less
+furniture.
+
+## Immersive articles
+
+Articles and Interactive Articles have an Immersive flag that is set in Composer. Immersive articles
+contain a minimal amount of furniture, and thus provide a relatively blank canvas for applying custom
+boot scripts.
+
+It is worth noting that while it is possible to include interactive embeds in an immersive article, it
+is not possible to include embeds in an immersive interactive article.
 
 ## Examples
 
