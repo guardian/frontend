@@ -101,9 +101,9 @@ define([
             }
 
             if (opts.testName === 'messaging-test-us-1') {
-                var engagementText = $('.site-message__message.site-message__message--membership');
-                if (engagementText && opts.setEngagementText) {
-                    engagementText[0].textContent = opts.setEngagementText;
+                var usEngagementText = $('.site-message__message.site-message__message--membership');
+                if (usEngagementText && opts.setEngagementText) {
+                    usEngagementText[0].textContent = opts.setEngagementText;
                 }
             }
         }
