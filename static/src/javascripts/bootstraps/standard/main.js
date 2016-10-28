@@ -25,6 +25,7 @@ define([
     'common/utils/cookies',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/modules/navigation/navigation',
     'common/modules/navigation/newHeaderNavigation',
     'common/utils/detect'
 ], function (
@@ -41,6 +42,7 @@ define([
     cookies,
     robust,
     userTiming,
+    navigation,
     newHeaderNavigation,
     detect
 ) {
@@ -299,6 +301,7 @@ define([
             // do nothing
         }
 
+        navigation.init();
         /**
          *  New Header Navigation
          */
