@@ -1,6 +1,7 @@
 package dfp
 
 import common.dfp.{GuLineItem, GuTargeting}
+import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import org.scalatest._
 
@@ -30,15 +31,20 @@ class DfpDataCacheJobTest
     )
   }
 
-  private val cachedLineItems = Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))
-  private val allReadyOrDeliveringLineItems = Nil
+  private val cachedLineItems = DfpLineItems(
+    validItems = Seq(lineItem(1, "a-cache"), lineItem(2, "b-cache"), lineItem(3, "c-cache")),
+    invalidItems = Seq.empty)
+
+  private val allReadyOrDeliveringLineItems = DfpLineItems(Seq.empty, Seq.empty)
 
   "loadLineItems" should "dedupe line items that have changed in an unknown way" in {
-    def lineItemsModifiedSince(threshold: DateTime) = Seq(
-      lineItem(1, "a"),
-      lineItem(2, "b"),
-      lineItem(3, "c")
-    )
+    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+      validItems = Seq(
+        lineItem(1, "a-fresh"),
+        lineItem(2, "b-fresh"),
+        lineItem(3, "c-fresh")
+      ),
+      invalidItems = Seq.empty)
 
     val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
@@ -46,20 +52,19 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe empty
-    lineItems.recentlyModifiedIds shouldBe Set(1, 2, 3)
-    lineItems.recentlyRemovedIds shouldBe empty
-    lineItems.current.size shouldBe 3
-    lineItems.current shouldBe Seq(lineItem(1, "a"), lineItem(2, "b"), lineItem(3, "c"))
+    lineItems.validLineItems.size shouldBe 3
+    lineItems.validLineItems shouldBe Seq(lineItem(1, "a-fresh"), lineItem(2, "b-fresh"), lineItem(3, "c-fresh"))
+    lineItems.invalidLineItems shouldBe empty
   }
 
   it should "dedupe line items that have changed in a known way" in {
-    def lineItemsModifiedSince(threshold: DateTime) = Seq(
-      lineItem(1, "d"),
-      lineItem(2, "e"),
-      lineItem(4, "f")
-    )
+    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+      validItems = Seq(
+        lineItem(1, "d"),
+        lineItem(2, "e"),
+        lineItem(4, "f")
+      ),
+      invalidItems = Seq.empty)
 
     val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
@@ -67,25 +72,23 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe Set(4)
-    lineItems.recentlyModifiedIds shouldBe Set(1, 2)
-    lineItems.recentlyRemovedIds shouldBe empty
-    lineItems.current.size shouldBe 4
-    lineItems.current shouldBe Seq(
+    lineItems.validLineItems.size shouldBe 4
+    lineItems.validLineItems shouldBe Seq(
       lineItem(1, "d"),
       lineItem(2, "e"),
-      lineItem(3, "c"),
+      lineItem(3, "c-cache"),
       lineItem(4, "f")
     )
   }
 
   it should "omit line items whose state has changed to no longer be ready or delivering" in {
-    def lineItemsModifiedSince(threshold: DateTime) = Seq(
-      lineItem(1, "a", completed = true),
-      lineItem(2, "e"),
-      lineItem(4, "f")
-    )
+    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+      validItems = Seq(
+        lineItem(1, "a", completed = true),
+        lineItem(2, "e"),
+        lineItem(4, "f")
+      ),
+      invalidItems = Seq.empty)
 
     val lineItems = DfpDataCacheJob.loadLineItems(
       cachedLineItems,
@@ -93,11 +96,10 @@ class DfpDataCacheJobTest
       allReadyOrDeliveringLineItems
     )
 
-    lineItems.prevCount shouldBe 3
-    lineItems.recentlyAddedIds shouldBe Set(4)
-    lineItems.recentlyModifiedIds shouldBe Set(2)
-    lineItems.recentlyRemovedIds shouldBe Set(1)
-    lineItems.current.size shouldBe 3
-    lineItems.current shouldBe Seq(lineItem(2, "e"), lineItem(3, "c"), lineItem(4, "f"))
+    lineItems.validLineItems.size shouldBe 3
+    lineItems.validLineItems shouldBe Seq(
+      lineItem(2, "e"),
+      lineItem(3, "c-cache"),
+      lineItem(4, "f"))
   }
 }

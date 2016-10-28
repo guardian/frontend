@@ -235,8 +235,9 @@ object GuLineItem {
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
-}
 
+  def asMap(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
+}
 
 case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting]) {
 
@@ -320,7 +321,10 @@ object GuCreativeTemplate extends implicits.Collections {
   implicit val guCreativeTemplateFormats: Format[GuCreativeTemplate] = Json.format[GuCreativeTemplate]
 }
 
-case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
+case class LineItemReport(
+  timestamp: String,
+  lineItems: Seq[GuLineItem],
+  invalidLineItems: Seq[GuLineItem]) {
 
   lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
     _.targeting.hasAdTestTargetting
