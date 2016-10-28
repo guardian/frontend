@@ -18,6 +18,7 @@ trait ApplicationsControllers {
   lazy val notificationsController = wire[NotificationsController]
   lazy val tagIndexController = wire[TagIndexController]
   lazy val embedController = wire[EmbedController]
+  lazy val mediaAtomEmbedController = wire[MediaAtomEmbedController]
   lazy val preferencesController = wire[PreferencesController]
   lazy val optInController = wire[OptInController]
   lazy val webAppController = wire[WebAppController]
