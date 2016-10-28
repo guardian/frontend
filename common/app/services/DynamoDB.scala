@@ -20,6 +20,8 @@ case class Archive(location: String) extends Destination
 class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
   private val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
   private val dynamoDbGet = "DynamoDB_20120810.GetItem"
+
+  // protocol fixed to http so that lookups to dynamo find existing redirects
   private val expectedSourceProtocol = "http://"
 
   private lazy val credentials  = Configuration.aws.credentials
