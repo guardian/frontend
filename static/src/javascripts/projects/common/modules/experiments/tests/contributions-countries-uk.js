@@ -35,11 +35,11 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsCountriesUK';
+        this.id = 'ContributionsCountriesUk';
         this.start = '2016-10-28';
         this.expiry = '2016-11-04';
         this.author = 'Phil Wills';
-        this.description = 'Test whether different messages perform better/worse in different countries';
+        this.description = 'Test whether different messages perform better/worse in different countries (UK)';
         this.showForSensitive = false;
         this.audience = 0.15;
         this.audienceOffset = 0.56;
