@@ -152,6 +152,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
+                console.log(canonicalUrl, mediaEvent);
                 ga(gaTracker + '.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl));
             });
         });
