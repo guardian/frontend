@@ -40,6 +40,9 @@ define([
             .then(function (boot) { boot(); });
     };
 
+    // this should not be pushable
+    w;
+
     var bootCommercial = function () {
         if (!config.switches.commercial) {
             return;
