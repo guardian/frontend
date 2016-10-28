@@ -173,6 +173,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit
 
+  def deleteAccount(auth: Auth): Future[Response[Unit]] = delete("user/me", Some(auth)) map extractUnit
+
   // THIRD PARTY SIGN-IN
   def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
