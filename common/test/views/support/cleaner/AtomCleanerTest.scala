@@ -22,25 +22,34 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
     interactives = Nil
   )
 )
- private def clean(document: Document, atom:Option[Atoms]): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, shouldFence = false)(TestRequest())
-    cleaner.clean(document)
-    document
-  }
-
-  "AtomsCleaner" should "create YouTube template" in {
-    Switches.UseAtomsSwitch.switchOn()
-    val doc = Jsoup.parse( s"""<figure class="element element-atom">
+  def doc = Jsoup.parse( s"""<figure class="element element-atom">
                                 <gu-atom data-atom-id="887fb7b4-b31d-4a38-9d1f-26df5878cf9c" data-atom-type="media">
                                 <div>
                                  <iframe src="https://www.youtube.com/embed/nQuN9CUsdVg" allowfullscreen="" width="420" height="315" frameborder="0"> </iframe>
                                  </div>
                                 </gu-atom>
                                </figure>""")
-    val result: Document = clean(doc, youTubeAtom)
+
+
+ private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
+    val cleaner = AtomsCleaner(youTubeAtom, shouldFence = false, amp = amp)(TestRequest())
+    cleaner.clean(document)
+    document
+  }
+
+  "AtomsCleaner" should "create YouTube template" in {
+    Switches.UseAtomsSwitch.switchOn()
+    val result: Document = clean(doc, youTubeAtom, amp = false)
     result.select("iframe").attr("id") shouldBe("youtube-nQuN9CUsdVg")
     result.select("iframe").attr("src") should include("enablejsapi=1")
-
   }
+
+  "AtomsCleaner" should "use amp-youtube markup if amp is true" in {
+    Switches.UseAtomsSwitch.switchOn()
+    val result: Document = clean(doc, youTubeAtom, amp = true)
+    result.select("amp-youtube").attr("data-videoid") shouldBe("nQuN9CUsdVg")
+  }
+
+
 
 }
