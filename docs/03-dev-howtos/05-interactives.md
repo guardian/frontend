@@ -93,6 +93,24 @@ how](https://www.theguardian.com/politics/2016/apr/28/british-expats-lose-legal-
 
 Note how, in your web inspector network panel, the `boot.js` file is loaded and subsequently loads the interactive application.
 
+## Service workers
+
+Service worker JavaScript files can be loaded within interactives.
+
+A URL like:
+
+https://www.theguardian.com/society/2016/oct/24/many-treatments-give-no-more-benefit-than-doing-nothing-leading-doctors
+
+can load a service worker from:
+
+https://www.theguardian.com/society/2016/oct/24/many-treatments-give-no-more-benefit-than-doing-nothing-leading-doctors/interactive-service-worker.js?timestamp=1234
+
+This URL then proxies a request to:
+
+https://interactive.guim.co.uk/service-workers/live|preview/society/2016/oct/24/many-treatments-give-no-more-benefit-than-doing-nothing-leading-doctors/1234/interactive-service-worker.js
+
+depending on the environment you are viewing in.
+
 ## Notes
 
 - Frontend currently use [curl.js](https://github.com/cujojs/curl) to load AMD modules.
