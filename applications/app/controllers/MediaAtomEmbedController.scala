@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import com.gu.contentatom.thrift.{Atom => AtomApi}
+import com.gu.contentatom.thrift.{Atom => ApiAtom}
 import common._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -20,33 +20,19 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
     }
   }
 
-  def make(apiAtom: Option[AtomApi]): Option[MediaAtom] = {
-    apiAtom map {
-      MediaAtom.make
-    }
-  }
-
-
+  def make(apiAtom: Option[ApiAtom]): Option[MediaAtom] = apiAtom map MediaAtom.make
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
-    log.info(s"Fetching media atom: $path for edition $edition")
-
-    val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition)
-
-    )
+    val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition))
 
     val result = response map { response =>
-
-      val modelOption = make(response.media)
-
-      modelOption match {
+      make(response.media) match  {
         case Some(x) => Left(x)
         case _ => Right(NotFound)
       }
     }
-
     result recover convertApiExceptions
   }
 
@@ -60,7 +46,6 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
 
     val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model)
 
-    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page))
-    )
+    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page)))
   }
 }
