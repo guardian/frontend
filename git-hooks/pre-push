@@ -33,12 +33,18 @@ conditionallyValidate() {
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
 conditionallyValidate "$CSS_SRC_PATTERN" "make validate-sass"
+cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
 conditionallyValidate "$JS_SRC_PATTERN" "make validate-javascript"
+jsValidateResult=$?
 
 # Test JS
 conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make test"
+jsTestResult=$?
+
+# Exit code 1 means don't commit and 0 means do commit
+[ $cssValidateResult -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
 
 exit 0
