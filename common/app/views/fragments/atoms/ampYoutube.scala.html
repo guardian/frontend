@@ -1,11 +1,16 @@
 @(media: model.content.MediaAtom)(implicit request: RequestHeader)
 
 
-    <amp-youtube
-    data-videoid="@media.assets.head.id"
+    <amp-iframe
+    sandbox="allow-scripts allow-same-origin allow-popups"
     layout="responsive"
-    width="5" height="3" data-param-modestbranding="1" data-param-rel="0" data-param-showinfo="0">
-    </amp-youtube>
+    width="16" height="9" src="https://embed.theguardian.com/embed/atom/media/@media.id.toString">
+        @if(media.posterUrl.isDefined){
+        <amp-img layout="fill" src="@media.posterUrl.get" placeholder="@media.posterUrl.get"></amp-img>
+    }
+    </amp-iframe>
+
+
 
 
 
