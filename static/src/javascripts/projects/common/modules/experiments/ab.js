@@ -13,7 +13,9 @@ define([
     'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/membership-engagement-warp-factor-one',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
-    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment'
+    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
+    'common/modules/experiments/tests/contributions-countries-uk',
+    'common/modules/experiments/tests/contributions-countries-usa'
 ], function (
     reportError,
     config,
@@ -29,7 +31,9 @@ define([
     WeekendReadingPromo,
     MembershipEngagementWarpFactorOne,
     MembershipEngagementMessageCopyExperiment,
-    MembershipEngagementUSMessageCopyExperiment
+    MembershipEngagementUSMessageCopyExperiment,
+    ContributionsCountriesUK,
+    ContributionsCountriesUSA
 ) {
 
     var TESTS = [
@@ -39,7 +43,9 @@ define([
         new WeekendReadingPromo(),
         new MembershipEngagementWarpFactorOne(),
         new MembershipEngagementMessageCopyExperiment(),
-        new MembershipEngagementUSMessageCopyExperiment()
+        new MembershipEngagementUSMessageCopyExperiment(),
+        new ContributionsCountriesUK(),
+        new ContributionsCountriesUSA()
     ];
 
     var participationsKey = 'gu.ab.participations';
