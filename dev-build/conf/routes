@@ -362,6 +362,7 @@ GET            /series/*path.json                                               
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
