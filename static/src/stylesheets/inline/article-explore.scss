@@ -280,6 +280,7 @@ $explore-series-header-element-opacity: .85;
 
     @include mq($from: tablet) {
         top: 0;
+        overflow: visible;
     }
 
     .content__labels {
