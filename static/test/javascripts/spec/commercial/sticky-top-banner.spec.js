@@ -6,31 +6,39 @@ define([
     Injector
 ) {
     describe('Sticky ad banner', function () {
-        var sot, header, stickyBanner, messenger, register, unregister;
+        var sticky, detect, header, stickyBanner, messenger, register;
 
         var fixturesConfig = {
             id: 'sticky-ad-banner-test',
             fixtures: [
                 '<div id="top-banner-parent"><div id="dfp-ad--top-above-nav"></div></div>' +
-                '<div id="header"></div>'
+                '<div id="header" style="height: 500px"></div>'
             ]
         };
 
+        var mockWindow = {
+            addEventListener: jasmine.createSpy('addEventListener'),
+            getComputedStyle: window.getComputedStyle.bind(window),
+            pageYOffset: 0
+        };
+
         var injector = new Injector();
-        injector.mock('common/utils/detect', {
-            isBreakpoint: function () { return true; }
+        injector.mock('common/modules/commercial/dfp/track-ad-render', function () {
+            return Promise.resolve(true);
         });
 
         beforeEach(function (done) {
             injector.require([
+                'common/utils/detect',
                 'commercial/modules/messenger',
                 'commercial/modules/sticky-top-banner'
-            ], function($1, $2) {
-                messenger = $1;
-                sot = $2;
+            ], function($1, $2, $3) {
+                detect = $1;
+                messenger = $2;
+                sticky = $3;
 
+                spyOn(detect, 'isBreakpoint').and.callFake(function () { return true; });
                 register = spyOn(messenger, 'register');
-                unregister = spyOn(messenger, 'unregister');
 
                 fixtures.render(fixturesConfig);
 
@@ -38,22 +46,76 @@ define([
                 stickyBanner = document.getElementById('top-banner-parent');
 
                 done();
-            });
+            },
+            done.fail);
         });
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
         });
 
-        it('should set the slot height and the header top margin', function (done) {
-            var randomHeight = Math.random() * 500 | 0;
-            sut.resizeStickyBanner()
+        it('should add listeners and classes', function (done) {
+            sticky.init(mockWindow)
             .then(function () {
-                expect(header.style.marginTop).toBe(randomHeight + 'px');
-                expect(stickyBanner.style.height).toBe(randomHeight + 'px')
+                expect(register.calls.count()).toBe(2);
+                expect(mockWindow.addEventListener).toHaveBeenCalled();
+                expect(header.classList.contains('l-header--animate')).toBe(true);
+                expect(stickyBanner.classList.contains('sticky-top-banner-ad--animate')).toBe(true);
             })
             .then(done)
             .catch(done.fail);
         });
+
+        it('should set the slot height and the header top margin', function (done) {
+            var randomHeight = Math.random() * 500 | 0;
+            sticky.resize(randomHeight, stickyBanner, header)
+            .then(function () {
+                expect(header.style.marginTop).toBe(randomHeight + 'px');
+                expect(stickyBanner.style.height).toBe(randomHeight + 'px');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should include height and paddings when setting the slot height', function (done) {
+            var pt = Math.random() * 50 | 0;
+            var pb = Math.random() * 50 | 0;
+            var h = Math.random() * 500 | 0;
+            var topSlot = document.getElementById('dfp-ad--top-above-nav');
+            topSlot.style.paddingTop = pt + 'px';
+            topSlot.style.paddingBottom = pb + 'px';
+            sticky.init()
+            .then(function () {
+                return sticky.update(h, topSlot);
+            })
+            .then(function () {
+                expect(stickyBanner.style.height).toBe((h + pt + pb) + 'px');
+            })
+            .then(done)
+            .catch(done.fail);
+        })
+
+        it('should reset the banner position and top styles at the top of the page', function (done) {
+            sticky.onScroll()
+            .then(function () {
+                expect(stickyBanner.style.position).toBe('');
+                expect(stickyBanner.style.top).toBe('');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should position the banner absolutely past the header', function (done) {
+            mockWindow.pageYOffset = 501;
+            sticky.init(mockWindow)
+            .then(sticky.onScroll)
+            .then(function () {
+                expect(stickyBanner.style.position).toBe('absolute');
+                expect(stickyBanner.style.top).toBe('500px');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
     });
 });
