@@ -11,8 +11,8 @@ define([
     loadScript,
     tracking
 ) {
-    var scriptId = 'youtube-player';
-    var scriptSrc = 'https://www.youtube.com/player_api';
+    var scriptId = 'youtube-script';
+    var scriptSrc = 'https://www.youtube.com/iframe_api';
     var promise = new Promise(function(resolve) {
         window.onYouTubeIframeAPIReady = resolve;
     });
@@ -20,7 +20,7 @@ define([
     //TODO: Check if page include you-tube atoms and if it does init this file...
     fastdom.read(function() {
         $('.atom--media--youtube').each(function(el) {
-            init(el.parentElement, null);
+            init(el, tracking);
         });
     });
 
@@ -33,7 +33,7 @@ define([
     function prepareWrapper(el) {
         var wrapper = document.createElement('div');
         wrapper.className += el.className;
-        
+
         fastdom.write(function () {
             el.parentNode.insertBefore(wrapper, el);
             wrapper.appendChild(el);
@@ -67,7 +67,6 @@ define([
     function init(el, handlers) {
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
-
         var wrapper = prepareWrapper(el);
 
         return promise.then(function () {
@@ -80,7 +79,7 @@ define([
             }
 
             //TODO: Pass array of you tube videos to YT Player.
-            return new window.YT.Player(el.id, {
+            return new window.YT.Player(el.firstElementChild.id, {
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange

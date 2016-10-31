@@ -16,12 +16,30 @@ define([
     events
 ) {
 
+    function onPlayerStateChange(event) {
+        track(event);
+    }
+
+    function onPlayerReady(event) {
+        track(event);
+    }
+
     function track(event) {
-        console.log("Tracking: " + event);
+
+        if (event.data === YT.PlayerState.PLAYING) {
+            console.log('Tracking: play');
+        }
+        if (event.data === YT.PlayerState.PAUSED) {
+            console.log('Tracking: paused');
+        }
+        if (event.data === YT.PlayerState.ENDED) {
+            console.log('Tracking: ended');
+        }
     }
 
     return {
-        track: track
+        onPlayerStateChange: onPlayerStateChange,
+        onPlayerReady: onPlayerReady
     };
 
 });
