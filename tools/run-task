@@ -108,7 +108,7 @@ const cmd = task => {
             stdio: [process.stdin, process.stdout, 'pipe']
         });
     }
-    return execa(binary, options.concat([]));
+    return execa(binary, options);
 };
 
 // turn a list of our tasks into objects listr can use
