@@ -92,7 +92,6 @@ define([
                 dfpEnv = arguments[9];
 
                 config.switches = {
-                    commercialComponents: true,
                     commercial:      true
                 };
                 config.page = {

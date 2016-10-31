@@ -97,7 +97,7 @@ define([
             this.dfpAdvertising &&
             !isMinuteArticle &&
             config.page.isFront &&
-            switches.commercialComponents;
+            switches.commercial;
 
         this.thirdPartyTags =
             externalAdvertising &&
