@@ -70,7 +70,7 @@ define([
             var randomHeight = Math.random() * 500 | 0;
             sticky.init()
             .then(function () {
-                return sticky.resize(randomHeight, stickyBanner, header)
+                return sticky.resize(randomHeight);
             })
             .then(function () {
                 expect(header.style.marginTop).toBe(randomHeight + 'px');
