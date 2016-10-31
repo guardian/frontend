@@ -38,16 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-weekend-reading-promo",
-    "Show visitors a snap banner to promote the Weekend Reading email",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-membership-engagement-warp-factor-one",
     "The first level of prominent membership engagement messaging",
     owners = Seq(Owner.withGithub("justinpinner")),
