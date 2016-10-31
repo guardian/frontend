@@ -5,6 +5,8 @@ This contains all the configuration for each application and for each stage.
 
 To add or update a configuration item you need to:
 
+- Get valid [Janus](https://janus.gutools.co.uk) credentials for frontend
+
 - Find the current version of the config file
 ```
 aws s3 ls --profile=frontend s3://aws-frontend-store/config/
