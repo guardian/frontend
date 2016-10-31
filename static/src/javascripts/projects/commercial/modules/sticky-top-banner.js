@@ -5,8 +5,7 @@ define([
     'common/utils/closest',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/track-ad-render',
-    'commercial/modules/messenger',
-    'commercial/modules/dfp/get-advert-by-id'
+    'commercial/modules/messenger'
 ], function (
     Promise,
     config,
@@ -14,8 +13,7 @@ define([
     closest,
     fastdom,
     trackAdRender,
-    messenger,
-    getAdvertById
+    messenger
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
     var updateQueued = false;
