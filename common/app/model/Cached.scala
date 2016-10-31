@@ -22,6 +22,7 @@ object CacheTime {
   object LiveBlogActive extends CacheTime(5)
   object RecentlyUpdated extends CacheTime(60)
   object Facia extends CacheTime(300)
+  object ArchiveRedirect extends CacheTime(300)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
 
   def LastDayUpdated = CacheTime(extended(60))
