@@ -56,7 +56,7 @@ define([
         })
         .then(function (currentHeight) {
             return Promise.all([
-                resizeStickyBanner(currentHeight, stickyBanner, header),
+                resizeStickyBanner(currentHeight),
                 onScroll()
             ]);
         });
@@ -92,9 +92,7 @@ define([
             return fastdom.read(function () {
                 return topSlot.offsetHeight;
             })
-            .then(function (height) {
-                return resizeStickyBanner(height, stickyBanner, header);
-            });
+            .then(resizeStickyBanner);
         }
     }
 
@@ -117,9 +115,7 @@ define([
                 var adStyles = win.getComputedStyle(adSlot);
                 return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
             })
-            .then(function (height) {
-                return resizeStickyBanner(height, stickyBanner, header);
-            }) :
+            .then(resizeStickyBanner) :
             Promise.resolve(-1);
     }
 
@@ -140,7 +136,7 @@ define([
         }
     }
 
-    function resizeStickyBanner(newHeight, stickyBanner, header) {
+    function resizeStickyBanner(newHeight) {
         if (topSlotHeight !== newHeight) {
             topSlotHeight = newHeight;
             return fastdom.write(function () {

@@ -68,7 +68,10 @@ define([
 
         it('should set the slot height and the header top margin', function (done) {
             var randomHeight = Math.random() * 500 | 0;
-            sticky.resize(randomHeight, stickyBanner, header)
+            sticky.init()
+            .then(function () {
+                return sticky.resize(randomHeight, stickyBanner, header)
+            })
             .then(function () {
                 expect(header.style.marginTop).toBe(randomHeight + 'px');
                 expect(stickyBanner.style.height).toBe(randomHeight + 'px');
