@@ -99,7 +99,7 @@ define([
     }
 
     function onRubiconResize(specs, _, iframe) {
-        update(specs.height, closest(iframe, '.js-ad-slot'))
+        update(parseInt(specs.height), closest(iframe, '.js-ad-slot'))
         .then(function (ret) {
             if( ret > -1 ) {
                 messenger.unregister('set-ad-height', onRubiconResize);
@@ -115,7 +115,7 @@ define([
         return adSlot.id === topSlotId ?
             fastdom.read(function () {
                 var adStyles = win.getComputedStyle(adSlot);
-                return parseInt(specs.height) + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
+                return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
             })
             .then(function (height) {
                 return resizeStickyBanner(height, stickyBanner, header);
