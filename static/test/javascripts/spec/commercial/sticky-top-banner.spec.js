@@ -93,7 +93,7 @@ define([
             })
             .then(done)
             .catch(done.fail);
-        })
+        });
 
         it('should reset the banner position and top styles at the top of the page', function (done) {
             sticky.onScroll()

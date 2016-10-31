@@ -36,10 +36,14 @@ define([
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
             return initState()
-            // Second, start listening for height and scroll changes
-            .then(setupListeners)
-            // Finally, start animating changes in height
-            .then(setupAnimation);
+            // Second, start listening for height and scroll changes, opt in
+            // for animated changes in height
+            .then(function () {
+                return Promise.all([
+                    setupListeners(),
+                    setupAnimation()
+                ]);
+            });
         } else {
             return Promise.resolve();
         }
@@ -73,10 +77,6 @@ define([
         if (!config.page.hasSuperStickyBanner) {
             win.addEventListener('scroll', onScroll);
         }
-
-        // we don't want to animate *all* the changes in height, specifically
-        // the ones happening when a custom creative is initially rendered;
-        // that's why this promise must resolve before setupAnimation
         return trackAdRender(topSlotId).then(onTopAdRendered);
     }
 
