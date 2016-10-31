@@ -66,13 +66,8 @@
     <script>
         @HtmlFormat.raw(common.Assets.js.curl)
 
-        [].slice.apply(document.querySelectorAll('figure.interactive')).forEach(function (el) {
-            var mainJS = el.getAttribute('data-interactive');
-            if (!mainJS) {
-                return;
-            }
-
-            require([mainJS], function (interactive) {
+        [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
+            require([el.getAttribute('data-interactive')], function (interactive) {
                 interactive.boot(el, document, window.guardian.config);
             }, function (err) {
                 console.log('Interactive failed', mainJS);
