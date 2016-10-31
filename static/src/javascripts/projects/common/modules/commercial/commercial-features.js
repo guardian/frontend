@@ -91,7 +91,7 @@ define([
         this.videoPreRolls =
             externalAdvertising &&
             !sensitiveContent &&
-            switches.videoAdverts;
+            switches.commercial;
 
         this.frontCommercialComponents =
             this.dfpAdvertising &&

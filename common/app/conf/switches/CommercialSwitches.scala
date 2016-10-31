@@ -26,16 +26,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val VideoAdvertsSwitch = Switch(
-    SwitchGroup.Commercial,
-    "video-adverts",
-    "Show adverts on videos.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val LiveblogAdvertsSwitch = Switch(
     SwitchGroup.Commercial,
     "liveblog-adverts",
