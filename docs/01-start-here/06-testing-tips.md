@@ -5,6 +5,18 @@ Before you do anything else on your local frontend build, navigate to the janus 
 and follow the steps to get your credentials for Frontend and for CMS-Fronts.
 This will save you grief later on.
 
+### Install and compile all third party dependencies
+Compile your assets and third party dependencies using the command:
+```
+  make install
+```
+The make command can also be used for a variety of useful things incliding testing and linting javascript.
+Run the command:
+```
+make list
+```
+to see a full list of the available make commands.
+
 ### Starting sbt
 Its important to remember to use ./sbt to run the local build, not just sbt.
 ./sbt will pick up some presets that are important for running the build successfully.
