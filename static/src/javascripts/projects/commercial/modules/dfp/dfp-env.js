@@ -15,7 +15,7 @@ define([
         adSlotSelector: '.js-ad-slot',
 
         /* prebidEnabled: boolean. Set to true if header bidding is enabled, and the user is not participating in the sonobi test */
-        prebidEnabled: config.switches.headerBiddingUs && config.page.edition == 'US' && !('tests' in config && config.tests.commercialHbSonobi),
+        prebidEnabled: config.page.edition == 'US' && !('tests' in config && config.tests.commercialHbSonobi),
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,

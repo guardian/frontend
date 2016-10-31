@@ -6,16 +6,6 @@ import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
-  val HeaderBiddingUS = Switch(
-    SwitchGroup.Commercial,
-    "header-bidding-us",
-    "Auction adverts on the client before calling DFP (US edition only)",
-    owners = Seq(Owner.withGithub("regiskuckaertz ")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val CommercialSwitch = Switch(
     SwitchGroup.Commercial,
     "commercial",
