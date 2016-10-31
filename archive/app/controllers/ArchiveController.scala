@@ -138,6 +138,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
     log.warn(s"Archive returned 404 for path: ${request.path}")
     request.headers.get("User-Agent").getOrElse("no user agent") match {
       case GoogleBot(_) => GoogleBotMetric.Googlebot404Count.increment()
+      case _ =>
     }
   }
 
