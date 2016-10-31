@@ -34,7 +34,7 @@ define([
         this.canRun = function () {
             return config.page.edition.toLowerCase() === 'uk' &&
                 commercialFeatures.canReasonablyAskForMoney &&
-                config.page.contentType !== 'signup';
+                config.page.contentType.toLowerCase() !== 'signup';
         };
 
         var success = function (complete) {
