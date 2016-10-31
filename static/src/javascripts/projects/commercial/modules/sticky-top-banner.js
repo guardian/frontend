@@ -81,7 +81,7 @@ define([
     }
 
     function setupAnimation() {
-        fastdom.write(function () {
+        return fastdom.write(function () {
             header.classList.add('l-header--animate');
             stickyBanner.classList.add('sticky-top-banner-ad--animate');
         });
