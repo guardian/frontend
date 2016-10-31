@@ -1,7 +1,6 @@
 package test
 
 import conf.Configuration
-import conf.switches.Switches
 import conf.switches.Switches._
 import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
@@ -345,8 +344,6 @@ import collection.JavaConversions._
 
       Given("the user navigates to a page")
 
-      StandardAdvertsSwitch.switchOn()
-
       goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
@@ -366,9 +363,6 @@ import collection.JavaConversions._
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
       }
-
-      // put it back in the state we found it
-      StandardAdvertsSwitch.switchOff()
     }
 
     scenario("Video as main element should act as main media") {
