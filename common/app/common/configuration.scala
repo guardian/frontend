@@ -307,6 +307,7 @@ class GuardianConfiguration extends Logging {
     lazy val path =
       if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
       else configuration.getMandatoryStringProperty("static.path")
+    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }
 
   object images {
