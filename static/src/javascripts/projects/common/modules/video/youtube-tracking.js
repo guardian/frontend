@@ -16,4 +16,12 @@ define([
     events
 ) {
 
+    function track(event) {
+        console.log("Tracking: " + event);
+    }
+
+    return {
+        track: track
+    };
+
 });
