@@ -6,16 +6,6 @@ import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
-  val DfpCachingSwitch = Switch(
-    SwitchGroup.Commercial,
-    "dfp-caching",
-    "Have Admin will poll DFP to precache adserving data.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val HeaderBiddingUS = Switch(
     SwitchGroup.Commercial,
     "header-bidding-us",
