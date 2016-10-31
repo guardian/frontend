@@ -102,8 +102,7 @@ google-search result to the amp page. The following will indicate you are on an 
 - It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
 However for significant frontend changes you should test on devices as much as possible. To do this you need to be able to make your localhost accessible.
 A tool called `ngrok` is a good way to make a local port accessible to external devices or computer (instructions on how to run ngrok [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/09-testing-externally-on-localhost.md))
-- To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a collection of computers and devices,
-and many different versions of browsers. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
+- To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a vaery large collection of various operating systems, browsers and devices. It contains a good record of old versions of these and has a mix of real and emulated devices. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
 
 ### What to test on
 A list of useful information on device testing follows
