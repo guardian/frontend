@@ -176,16 +176,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val SponsoredSwitch = Switch(
-    group = CommercialLabs,
-    "sponsored",
-    "Show sponsored badges, logos, etc.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val showChesterZooGallery = Switch(
     group = CommercialLabs,
     "chester-zoo-gallery",

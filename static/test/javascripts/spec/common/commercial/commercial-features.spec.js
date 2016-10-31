@@ -36,7 +36,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
 
                 config.switches = {
                     outbrain : true,
-                    sponsored : true,
                     commercial : true,
                     discussion : true
                 };
