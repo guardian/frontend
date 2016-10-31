@@ -20,12 +20,12 @@ trait DataAgent[K, V] extends ExecutionContexts with Logging with implicits.Stri
     cache alterOff { oldCache =>
       loadFreshData() match {
         case Success(freshData) if freshData.nonEmpty =>
-            val duration = System.currentTimeMillis - start
-            log.info(s"Loading DFP data took $duration ms")
-            DataCache(freshData)
+          val duration = System.currentTimeMillis - start
+          log.info(s"Loading DFP data took $duration ms")
+          DataCache(freshData)
         case Success(_) =>
-            log.error("No fresh data loaded so keeping old data")
-            oldCache
+          log.error("No fresh data loaded so keeping old data")
+          oldCache
         case Failure(e) =>
           log.error(ExceptionUtils.getStackTrace(e))
           oldCache
