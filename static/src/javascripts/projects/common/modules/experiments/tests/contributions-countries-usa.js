@@ -30,23 +30,23 @@ define([
              embed,
              ajax,
              commercialFeatures
-    ) {
+) {
 
 
     return function () {
 
-        this.id = 'ContributionsUsa1';
-        this.start = '2016-10-20';
-        this.expiry = '2016-10-27';
-        this.author = 'Jonathan Rankin';
-        this.description = 'Test which of our 5 initial US targeted messages results in the most contributions';
+        this.id = 'ContributionsCountriesUsa';
+        this.start = '2016-10-28';
+        this.expiry = '2016-11-04';
+        this.author = 'Phil Wills';
+        this.description = 'Test whether different messages perform better/worse in different countries (USA)';
         this.showForSensitive = false;
-        this.audience = 0.25;
-        this.audienceOffset = 0;
+        this.audience = 0.15;
+        this.audienceOffset = 0.5;
         this.successMeasure = 'Impressions to number of contributions';
-        this.audienceCriteria = 'All users with a US IP address';
+        this.audienceCriteria = 'All users in US';
         this.dataLinkNames = '';
-        this.idealOutcome = 'The best message performs at least 70% better than the worst message';
+        this.idealOutcome = 'The messages performs less than 20% differently in different countries';
         this.canRun = function () {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
@@ -90,7 +90,7 @@ define([
                         position : 'inline',
                         variant: 'bottom',
                         titleCopy: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
-                        linkUrl: makeUrl('control'),
+                        linkUrl: makeUrl('control2'),
                         currency: '$'
 
                     }));
@@ -102,13 +102,13 @@ define([
                 success: completer
             },
             {
-                id: 'vital',
+                id: 'global',
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
                         position : 'inline',
                         variant: 'bottom',
-                        titleCopy: 'We believe our global perspective is vital when reporting on world events. If you agree, why not support us?',
-                        linkUrl: makeUrl('vital'),
+                        titleCopy: 'Reporting from a global perspective is vital. But it’s also expensive. Please give to the Guardian today. ',
+                        linkUrl: makeUrl('global'),
                         currency: '$'
 
                     }));
@@ -121,51 +121,13 @@ define([
             },
 
             {
-                id: 'fresh',
+                id: 'democracy',
                 test: function () {
                     var component = $.create(template(contributionsEmbed, {
                         position : 'inline',
                         variant: 'bottom',
-                        titleCopy: 'We believe our global perspective gives a fresh insight into US events. If you agree, why not support us?',
-                        linkUrl: makeUrl('fresh'),
-                        currency: '$'
-
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-
-            {
-                id: 'chips',
-                test: function () {
-                    var component = $.create(template(contributionsEmbed, {
-                        position : 'inline',
-                        variant: 'bottom',
-                        titleCopy: 'If everyone chipped in, the Guardian’s future would be more secure.',
-                        linkUrl: makeUrl('chips'),
-                        currency: '$'
-
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-
-            {
-                id: 'independent',
-                test: function () {
-                    var component = $.create(template(contributionsEmbed, {
-                        position : 'inline',
-                        variant: 'bottom',
-                        titleCopy: 'No billionaire owner, no shareholders. Just independent, investigative reporting that fights for the truth, whatever the cost. Why not support it?',
-                        linkUrl: makeUrl('independent'),
+                        titleCopy: 'An independent press and a working democracy. You can’t have one without the other. Please give to the Guardian today.',
+                        linkUrl: makeUrl('democracy'),
                         currency: '$'
 
                     }));

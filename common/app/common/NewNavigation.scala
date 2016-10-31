@@ -83,6 +83,7 @@ object NewNavigation {
       NavLink("headlines", "/uk", "home"),
       NavLink("UK news", "/uk-news"),
       NavLink("world news", "/world"),
+      NavLink("politics", "/politics"),
       NavLink("environment", "/uk/environment"),
       NavLink("business", "/uk/business"),
       NavLink("tech", "/uk/technology"),

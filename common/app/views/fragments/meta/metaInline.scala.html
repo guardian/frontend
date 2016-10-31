@@ -25,7 +25,7 @@
     }
 
     @* TODO: if this feature is proven successful, this should be refactored to remove the logic from the template as much as possible *@
-    @if(mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating) {
+    @if(mvt.ABNewNavVariant.isParticipating || mvt.ABNewNavVariantTwo.isParticipating) {
         <div class="mobile-only">
             @defining(Edition(request).navigation) { navigation =>
 
@@ -35,7 +35,7 @@
                         <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
                             <a class="content__section-label__link"
                                 data-link-name="article section"
-                                href="@LinkTo {/@sectionLink.href}">
+                                href="@LinkTo(sectionLink.href)">
                                     @sectionLink.title
                             </a>
                         </div>
@@ -62,7 +62,7 @@
         </div>
     }
 
-    <div class="@if(mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating) {hide-on-mobile}">
+    <div class="@if(mvt.ABNewNavVariant.isParticipating || mvt.ABNewNavVariantTwo.isParticipating) {hide-on-mobile}">
 
         @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
             <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">

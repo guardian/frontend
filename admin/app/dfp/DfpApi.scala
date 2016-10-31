@@ -9,21 +9,27 @@ import org.joda.time.DateTime
 
 object DfpApi extends Logging {
 
-  private def readLineItems(stmtBuilder: StatementBuilder): Seq[GuLineItem] = {
+  case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
-    withDfpSession( session => {
+  private def readLineItems(stmtBuilder: StatementBuilder): DfpLineItems = {
+
+    val lineItems = withDfpSession( session => {
       session.lineItems(stmtBuilder)
         .map( dfpLineItem => {
           toGuLineItem(session)(dfpLineItem) -> dfpLineItem
         })
-        .filter(Function.tupled(DataValidation.isGuLineItemValid))
-        .map({
-          case (guLineItem, _) => guLineItem
-        })
     })
+
+    val validatedLineItems = lineItems
+      .groupBy(Function.tupled(DataValidation.isGuLineItemValid))
+      .mapValues(_.map(_._1))
+
+    DfpLineItems(
+      validItems = validatedLineItems.getOrElse(true, Nil),
+      invalidItems = validatedLineItems.getOrElse(false, Nil))
   }
 
-  def readCurrentLineItems(): Seq[GuLineItem] = {
+  def readCurrentLineItems: DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
                       .where("status = :readyStatus OR status = :deliveringStatus")
@@ -34,7 +40,7 @@ object DfpApi extends Logging {
     readLineItems(stmtBuilder)
   }
 
-  def readLineItemsModifiedSince(threshold: DateTime): Seq[GuLineItem] = {
+  def readLineItemsModifiedSince(threshold: DateTime): DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
                       .where("lastModifiedDateTime > :threshold")

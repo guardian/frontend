@@ -68,6 +68,7 @@
                 </div>
             </div>
           </div>
+        @if(!page.item.elements.hasMainVideo){  
         <div class="explore-series-trail-wrapper">
           <div class="explore-series-headline">
               <div class="gs-container">
@@ -78,17 +79,17 @@
                   </div>
               </div>
           </div>
-
-          <div class="explore-series-standfirst">
-            <div class="gs-container">
-              <div class="content__main-column">
-                <div class="explore-series-byline-image hide-on-mobile">
-                  @fragments.meta.bylineImage(page.item.tags)
+            <div class="explore-series-standfirst">
+              <div class="gs-container">
+                <div class="content__main-column">
+                  <div class="explore-series-byline-image hide-on-mobile">
+                    @fragments.meta.bylineImage(page.item.tags)
+                  </div>
+                  @fragments.standfirst(page.item)
                 </div>
-                @fragments.standfirst(page.item)
               </div>
             </div>
-          </div>
+          }
       </div>
 
     </div>

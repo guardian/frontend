@@ -33,7 +33,6 @@ define([
         bean.on(clickbox, 'click', events.click.bind(player));
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
 
-        //initialise omniture tracking for fullscreen event
         player.on('fullscreenchange', function () {
             if (this.isFullscreen()) {
                 player.trigger('player:fullscreen');

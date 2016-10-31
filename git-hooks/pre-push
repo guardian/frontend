@@ -5,7 +5,7 @@
 branch=$(git symbolic-ref --short HEAD)
 
 
-conditionallyGrunt() {
+conditionallyValidate() {
 
     # check that remote branch exists
     git branch -r | if grep -q "origin/$branch$"
@@ -15,9 +15,7 @@ conditionallyGrunt() {
         # run grunt task if relevant file-types are different
         git diff --cached --name-only "origin/$branch" | if grep $1
         then
-            echo Running grunt $2 before pushing...
-            echo
-            grunt $2
+            $2
         fi
 
     else
@@ -26,37 +24,27 @@ conditionallyGrunt() {
         # run grunt task if symmetric difference from remote master contains relevant file-types
         git diff --name-only "origin/master..." | if grep $1
         then
-            echo Running grunt $2 before pushing to a new branch...
-            echo
-            grunt $2
+            $2
         fi
 
     fi
 }
 
-
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
-conditionallyGrunt "$CSS_SRC_PATTERN" "validate:css"
-cssValidateResult1=$?
-conditionallyGrunt "$CSS_SRC_PATTERN" "validate:sass"
-cssValidateResult2=$?
+conditionallyValidate "$CSS_SRC_PATTERN" "make validate-sass"
+cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-conditionallyGrunt "$JS_SRC_PATTERN" "validate:js"
+conditionallyValidate "$JS_SRC_PATTERN" "make validate-javascript"
 jsValidateResult=$?
 
 # Test JS
-conditionallyGrunt "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "test:unit"
+conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make test"
 jsTestResult=$?
 
-
 # Exit code 1 means don't commit and 0 means do commit
-[ $cssValidateResult1 -ne 0 ] || [ $cssValidateResult2 -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
+[ $cssValidateResult -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
 
-# Modified version of [Sindre Sorhus's gist](https://gist.github.com/sindresorhus/7996717),
-# to run notifiy you if you need to update the pasteup package on npm.
-# changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
-# echo $changed_files | grep 'pasteup' --quiet && node tools/messages.js pasteup
 exit 0

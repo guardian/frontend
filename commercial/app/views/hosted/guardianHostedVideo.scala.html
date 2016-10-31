@@ -1,7 +1,6 @@
+@import commercial.model.hosted.ViewSupport.youtubeEmbedUrl
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
-@import conf.Configuration.environment
-@import conf.Configuration.site.host
 @import views.html.hosted._
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
@@ -28,16 +27,17 @@
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
-    }
-
     .hosted-page .hosted__link {
         color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
     }
     </style>
     <!--<![endif]-->
@@ -50,7 +50,7 @@
                         <iframe id="hosted-video-@youtubeId"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
+                        src="@youtubeEmbedUrl(youtubeId)"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
@@ -137,12 +137,13 @@
             </div>
 
             @page.nextPage.map { nextPage =>
-                @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
+                @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
             }.getOrElse {
                 <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
         </section>
         @guardianHostedCta(page, page.cta)
+        @guardianHostedOnwardOverlay(page)
     </div>
 
 }

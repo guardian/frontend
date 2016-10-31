@@ -1,0 +1,22 @@
+@import conf.Static
+@import model.MediaAtomEmbedPage
+
+@(page: MediaAtomEmbedPage)(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html lang="en-GB" class="gu-video-embed-html">
+    <head>
+        <title>@page.atom.title</title>
+        <style>
+        * { margin: 0; padding: 0; }
+        figure { margin: 0 !important; }
+        </style>
+        <link rel="stylesheet" href="@Static("stylesheets/media-player.css")"/>
+        <base target="_parent"/>
+    </head>
+    <body>
+        @views.html.fragments.atoms.media(page.atom)
+
+        @fragments.analytics.base(page)
+    </body>
+</html>
