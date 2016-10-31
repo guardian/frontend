@@ -14,8 +14,11 @@ There are three strategies for creating interactive content:
 ## Interactive content atoms
 
 Interactive content atoms are the recommended way to create interactive content going forward. They are treated as first
-class citizens within the `frontend`. Their scripts are [inlined](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/atoms/interactive.scala.html) rather than loaded by an external request,
-therefore they contribute less to page yank.
+class citizens within the `frontend`. Their scripts are [inlined](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/atoms/interactive.scala.html)
+rather than loaded by an external request, therefore they contribute less to page yank.
+
+Content atoms provide the same functionality as interactive embeds and custom boot scripts
+so these latter strategies will soon be deprecated.
 
 Instructions for creating interactive content atoms can be found in the
 [interactive-atom-maker](https://github.com/guardian/interactive-atom-maker) repo
@@ -23,15 +26,17 @@ Instructions for creating interactive content atoms can be found in the
 
 ## Interactive embeds
 
+**Deprecation warning:** Interactive embeds are likely to be replaced by interactive content atoms.
+
 An interactive embed is a HTML page that is injected into an article as an `iframe`, using a [standard boot
 script](https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js). The standard boot script provides event hooks that allow the
 embed to communicate with the parent page.
 
 The embed can be uploaded to S3 along with any associated assets such as styles, fonts and scripts.
 
-Interactive embeds are likely to be replaced by interactive content atoms.
-
 ## Custom boot scripts
+
+**Deprecation warning:** Custom boot scripts are likely to be replaced by interactive content atoms.
 
 An `iframe` embed does not provide enough flexibility to achieve certain effects. Custom boot script
 allows the entire article to be styled using a boot script, letting us create striking, immersive experiences.
@@ -79,9 +84,9 @@ Interactives can be added to an article in Composer using the embed link:
 
 ![image](images/composer-embed-dialog.png)
 
-- for **interactive boot scripts**, enter the URL of the boot script
-- for **interactive embeds**, enter the URL of the embed HTML
 - for **interactive content atoms** enter the CAPI URL for the content atom
+- for **interactive embeds**, enter the URL of the embed HTML
+- for **interactive boot scripts**, enter the URL of the boot script
 
 ## Interactive articles
 
@@ -109,7 +114,8 @@ Note how, in your web inspector network panel, the `boot.js` file is loaded and 
 
 ## Service workers
 
-Service worker JavaScript files can be loaded within interactives.
+Service worker JavaScript files [can be loaded within
+interactives](https://github.com/guardian/frontend/blob/c5164ca442444b60ee8881c74376e0cb504c46dd/applications/app/controllers/InteractiveController.scala#L27).
 
 A URL like:
 
