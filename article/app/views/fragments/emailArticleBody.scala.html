@@ -81,9 +81,15 @@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
-                        @EmailImage.bestFor(media).map { url =>
+                        @EmailImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                <img width="580" class="full-width" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                                @block.url.fold {
+                                    <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                } { linkUrl =>
+                                    <a href="@linkUrl">
+                                        <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                    </a>
+                                }
                             }
 
                             @paddedRow {
