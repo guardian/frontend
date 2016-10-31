@@ -133,7 +133,7 @@ define([
         }
 
         function respond(error, result) {
-            postMessage({ id: data.id, error: error, result: result }, event.source);
+            postMessage({ id: data.id, error: error, result: result }, event.source, event.origin);
         }
     }
 
