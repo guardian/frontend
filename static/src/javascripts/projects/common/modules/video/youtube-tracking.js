@@ -4,23 +4,17 @@ define([
     'fastdom',
     'common/utils/fastdom-promise',
     'raven',
-    'Promise',
-    'common/modules/video/events'
+    'Promise'
 ], function (
     bean,
     bonzo,
     fastdom,
     fastdomPromise,
     raven,
-    Promise,
-    events
+    Promise
 ) {
 
     function onPlayerStateChange(event) {
-        track(event);
-    }
-
-    function onPlayerReady(event) {
         track(event);
     }
 
@@ -38,8 +32,7 @@ define([
     }
 
     return {
-        onPlayerStateChange: onPlayerStateChange,
-        onPlayerReady: onPlayerReady
+        onPlayerStateChange: onPlayerStateChange
     };
 
 });
