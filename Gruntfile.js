@@ -51,6 +51,18 @@ module.exports = function (grunt) {
     if (options.isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
+    
+    grunt.registerTask('coverage', function () {
+        var target = this.args.length ? ':' + this.args.join(':') : '';
+        var reporters = grunt.config.get('karma.options.reporters');
+        grunt.config.set('karma.options.reporters',
+            typeof(reporters) == 'undefined' ? ['coverage'] : reporters.concat('coverage')
+        );
+        grunt.config.set('karma.options.preprocessors',
+            grunt.config.get('coverage.preprocessors')
+        );
+        grunt.task.run('test' + target);
+    });
 
     /**
      * Analyse tasks
