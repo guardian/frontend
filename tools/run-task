@@ -104,12 +104,9 @@ const cache = [];
 const cmd = task => {
     const [binary, ...options] = task.trim().split(' ');
     if (verbose) {
-        const exec = execa(binary, options, {
-            encoding: 'buffer'
+        return execa(binary, options, {
+            stdio: [process.stdin, process.stdout, 'pipe']
         });
-        // we want to pipe stdout out, but not return it from here
-        exec.stdout.pipe(process.stdout);
-        return exec;
     }
     return execa(binary, options);
 };
@@ -161,6 +158,7 @@ const getTasksFromModule = taskName => {
         }
         return require(modulePath);
     } catch (e) {
+        console.log(e);
         return null;
     }
 };
@@ -168,7 +166,12 @@ const getTasksFromModule = taskName => {
 const taskModules = TASKS.map(getTasksFromModule);
 
 if (taskModules.filter(module => module !== null).length) {
-    listrify(taskModules, {verbose}).run();
+    listrify(taskModules, {verbose}).run().catch(e => {
+        if (!verbose) {
+            console.log(e.stdout);
+        }
+        process.exit(1);
+    });
 } else {
     console.log(`Cannot find tasks for '${TASKS}'?`);
 }

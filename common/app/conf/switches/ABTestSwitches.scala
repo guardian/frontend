@@ -75,4 +75,34 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 11, 8),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-membership-engagement-us-message-copy-experiment",
+    "Test alternate short messages on US membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-countries-uk",
+    "Test whether different messages perform better/worse in different countries",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-countries-us",
+    "Test whether different messages perform better/worse in different countries",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 4),
+    exposeClientSide = true
+  )
 }

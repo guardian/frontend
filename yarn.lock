@@ -3170,14 +3170,6 @@ grunt-sass-lint@^0.1.0:
   dependencies:
     sass-lint "^1.2.0"
 
-grunt-sass@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/grunt-sass/-/grunt-sass-1.0.0.tgz#84602a9ab0fcb0fe340737612a4ba56cc361bbc4"
-  dependencies:
-    each-async "^1.0.0"
-    node-sass "^3.0.0"
-    object-assign "^2.0.0"
-
 grunt-shell@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/grunt-shell/-/grunt-shell-1.1.1.tgz#dbf13236601ea12c1a8d9160dd5e57775a614f5f"
@@ -4926,7 +4918,7 @@ node-pre-gyp@^0.6.29:
     tar "~2.2.0"
     tar-pack "~3.1.0"
 
-node-sass@^3.0.0, node-sass@^3.4.2, node-sass@^3.8.0:
+node-sass@^3.4.2, node-sass@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-3.10.1.tgz#c535b2e1a5439240591e06d7308cb663820d616c"
   dependencies:
@@ -5032,10 +5024,6 @@ oauth-sign@~0.8.0, oauth-sign@~0.8.1:
 object-assign@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-1.0.0.tgz#e65dc8766d3b47b4b8307465c8311da030b070a6"
-
-object-assign@^2.0.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-2.1.1.tgz#43c36e5d569ff8e4816c4efa8be02d26967c18aa"
 
 object-assign@^3.0.0:
   version "3.0.0"
