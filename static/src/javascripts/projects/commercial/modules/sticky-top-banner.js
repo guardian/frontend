@@ -52,7 +52,7 @@ define([
         })
         .then(function (currentHeight) {
             return Promise.all([
-                resizeStickyBanner(currentHeight),
+                resizeStickyBanner(currentHeight, stickyBanner, header),
                 onScroll()
             ]);
         });
@@ -87,11 +87,15 @@ define([
         });
     }
 
-    function onTopAdRendered() {
-        fastdom.read(function () {
-            return topSlot.offsetHeight;
-        })
-        .then(resizeStickyBanner);
+    function onTopAdRendered(isRendered) {
+        if (isRendered) {
+            return fastdom.read(function () {
+                return topSlot.offsetHeight;
+            })
+            .then(function (height) {
+                return resizeStickyBanner(height, stickyBanner, header);
+            });
+        }
     }
 
     function onRubiconResize(specs, _, iframe) {
@@ -113,7 +117,9 @@ define([
                 var adStyles = win.getComputedStyle(adSlot);
                 return parseInt(specs.height) + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
             })
-            .then(resizeStickyBanner) :
+            .then(function (height) {
+                return resizeStickyBanner(height, stickyBanner, header);
+            }) :
             Promise.resolve(-1);
     }
 
@@ -134,7 +140,7 @@ define([
         }
     }
 
-    function resizeStickyBanner(newHeight) {
+    function resizeStickyBanner(newHeight, stickyBanner, header) {
         if (topSlotHeight !== newHeight) {
             topSlotHeight = newHeight;
             return fastdom.write(function () {
