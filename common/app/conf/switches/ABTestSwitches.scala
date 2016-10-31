@@ -51,8 +51,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-warp-factor-one",
     "The first level of prominent membership engagement messaging",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 3),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 11, 4),  // Friday 4th 23:59:59
     exposeClientSide = true
   )
 
