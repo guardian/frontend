@@ -70,19 +70,19 @@ define([
             isArticle &&
             !isLiveBlog &&
             !isHosted &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.sliceAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.popularContentMPU =
             this.dfpAdvertising &&
@@ -111,7 +111,7 @@ define([
 
         this.commentAdverts =
             this.dfpAdvertising &&
-            switches.standardAdverts &&
+            switches.commercial &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&

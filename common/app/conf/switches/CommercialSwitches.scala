@@ -26,16 +26,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val StandardAdvertsSwitch = Switch(
-    SwitchGroup.Commercial,
-    "standard-adverts",
-    "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val CommercialComponentsSwitch = Switch(
     SwitchGroup.Commercial,
     "commercial-components",

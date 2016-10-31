@@ -38,7 +38,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                     commercialComponents : true,
                     outbrain : true,
                     sponsored : true,
-                    standardAdverts : true,
+                    commercial : true,
                     videoAdverts : true,
                     discussion : true
                 };
