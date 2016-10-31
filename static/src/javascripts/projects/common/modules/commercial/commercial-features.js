@@ -121,7 +121,7 @@ define([
         this.liveblogAdverts =
             isLiveBlog &&
             this.dfpAdvertising &&
-            switches.liveblogAdverts;
+            switches.commercial;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
             !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);

@@ -26,16 +26,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val LiveblogAdvertsSwitch = Switch(
-    SwitchGroup.Commercial,
-    "liveblog-adverts",
-    "Show inline adverts on liveblogs",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",
