@@ -136,16 +136,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val MembersAreaSwitch = Switch(
-    SwitchGroup.Commercial,
-    "gu-members-area",
-    "If this switch is on, content flagged with membershipAccess will be protected",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val MembershipEngagementBanner = Switch(
     SwitchGroup.Commercial,
     "membership-engagement-banner",
