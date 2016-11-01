@@ -20,7 +20,8 @@ import conf.Configuration
 
     // Scenarios
 
-    scenario("Ensure all clicked links are recorded by Analytics") {
+
+    scenario("Ensure all links have data-link-name for tracking") {
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
