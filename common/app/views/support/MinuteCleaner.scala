@@ -101,7 +101,9 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 }
 
 object regexCleaner {
-  def apply(heading: Option[Element], regEx: String, htmlToReplace: String): String = heading.map { heading =>
-    heading.html().replaceFirst(regEx, htmlToReplace)
-  }.getOrElse("")
+  def apply(heading: Option[Element], regEx: String, htmlToReplace: String): String =
+    heading
+      .map(_.html)
+      .getOrElse("")
+      .replaceFirst(regEx, htmlToReplace)
 }
