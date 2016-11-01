@@ -11,14 +11,14 @@ define([
     'common/utils/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
+    'common/modules/analytics/google',
     'text!common/views/ui/notifications-follow-link.html',
     'text!common/views/ui/notifications-explainer.html',
     'text!common/views/ui/notifications-permission-denied-message.html',
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without',
-    'lodash/objects/isEmpty',
-    'common/modules/analytics/omniture'
+    'lodash/objects/isEmpty'
 ], function (
     bonzo,
     qwery,
@@ -32,14 +32,14 @@ define([
     robust,
     svgs,
     userPrefs,
+    googleAnalytics,
     followLink,
     explainer,
     permissionsTemplate,
     some,
     uniq,
     without,
-    isEmpty,
-    omniture
+    isEmpty
 ) {
     var modules = {
 
@@ -106,11 +106,11 @@ define([
                 .then(function() {
                     var isNowGranted = Notification.permission === 'granted';
                     if (wasNotGranted && isNowGranted) {
-                        omniture.trackLinkImmediate('browser-notifications-granted');
+                        googleAnalytics.trackNonClickInteraction('browser-notifications-granted');
                     }
                 }) .catch( function () {
                     if (Notification.permission === 'denied') {
-                        omniture.trackLinkImmediate('browser-notifications-denied');
+                        googleAnalytics.trackNonClickInteraction('browser-notifications-denied');
                     }
                     modules.configureSubscribeButton();
                 });

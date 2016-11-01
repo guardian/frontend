@@ -4,7 +4,6 @@ define([
     'common/utils/fetch-json',
     'common/utils/mediator',
     'common/utils/report-error',
-    'common/modules/analytics/omniture',
     'lodash/collections/forEach',
     'lodash/arrays/initial',
     'common/utils/chain'
@@ -14,7 +13,6 @@ define([
     fetchJson,
     mediator,
     reportError,
-    omniture,
     forEach,
     initial,
     chain
@@ -124,7 +122,6 @@ define([
                 // Send data to whoever is listening
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
-                omniture.trackLinkImmediate('weather location set by user');
                 inputTmp = data.city;
                 $input.blur();
 
