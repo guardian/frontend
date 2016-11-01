@@ -6,7 +6,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 import scala.concurrent.Future
-import services.DynamoDB
+import services.Redirects
 
 @DoNotDiscover class ArchiveControllerTest
   extends FlatSpec
@@ -15,7 +15,7 @@ import services.DynamoDB
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  lazy val archiveController = new ArchiveController(new DynamoDB(wsClient))
+  lazy val archiveController = new ArchiveController(new Redirects(wsClient))
 
   it should "return a normalised r1 path" in {
     val tests = List(
@@ -203,14 +203,14 @@ import services.DynamoDB
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
-    val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val shortRedirectWithCMP = Redirects.External("http://www.theguardian.com/p/new?CMP=existing-cmp")
     val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP.location)
     result should be (shortRedirectWithCMP.location)
   }
 
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
-    val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
+    val databaseSaysArchive = Redirects.Archive("http://www.theguardian.com/redirect/path-to-content")
     val result = archiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
     result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }

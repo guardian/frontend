@@ -6,7 +6,7 @@ import play.api.mvc.{Action, Controller}
 import common.Logging
 import play.api.data._
 import play.api.data.Forms._
-import services.Redirects
+import services.RedirectsTemp
 
 
 case class PageRedirect(from: String, to: String) {
@@ -24,8 +24,8 @@ class RedirectController  extends Controller with Logging {
   def redirectPost() = Action { implicit request =>
 
     redirectForm.bindFromRequest().get.trim match {
-      case PageRedirect(from, "") if from.nonEmpty  => Redirects.remove(from)
-      case PageRedirect(from, to) if from.nonEmpty  => Redirects.set(from, to)
+      case PageRedirect(from, "") if from.nonEmpty  => RedirectsTemp.remove(from)
+      case PageRedirect(from, to) if from.nonEmpty  => RedirectsTemp.set(from, to)
       case _ =>
     }
 
@@ -70,7 +70,7 @@ class RedirectController  extends Controller with Logging {
           val from = fromAndTo(0).trim
           val to = fromAndTo(1).trim
           try {
-            Redirects.set(from, to)
+            RedirectsTemp.set(from, to)
             s"$from -> $to"
           } catch {
             case e: Exception => s"Error processing $line: ${e.getMessage}"

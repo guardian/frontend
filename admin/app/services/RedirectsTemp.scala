@@ -5,7 +5,7 @@ import conf.Configuration
 import scala.collection.JavaConversions._
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
 
-object Redirects {
+object RedirectsTemp {
 
   private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 

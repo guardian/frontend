@@ -11,13 +11,22 @@ import com.amazonaws.util.StringInputStream
 import scala.concurrent.Future
 
 
-sealed trait Destination {
-  def location: String
-}
-case class Redirect(location: String) extends Destination
-case class Archive(location: String) extends Destination
+object Redirects {
+  sealed trait Destination {
+    def location: String
+  }
 
-class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
+  // External refers to any non-internal redirect - that is, it could be guardian/non-guardian
+  // address but will be returned in the response Location header along with 3XX status
+  case class External(location: String) extends Destination
+
+  // Archive refers to an internal redirect to an s3 bucket location - that is, it will
+  // use the X-Accel-Redirect header to instruct nginx to perform the redirect "internally"
+  case class Archive(location: String) extends Destination
+}
+
+
+class Redirects(wsClient: WSClient) extends Logging with ExecutionContexts {
   private val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
   private val dynamoDbGet = "DynamoDB_20120810.GetItem"
 
@@ -26,7 +35,7 @@ class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
 
   private lazy val credentials  = Configuration.aws.credentials
 
-  def destinationFor(source: String): Future[Option[Destination]] = {
+  def destinationFor(source: String): Future[Option[Redirects.Destination]] = {
     credentials.map{ credentialsProvider =>
       val signer = new AWS4Signer()
       def signedHeaders(xAmzTarget: String, bodyContent: String) = {
@@ -56,8 +65,8 @@ class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
         .withHeaders(headers:_*)
 
       asyncRequest.post(bodyContent).map(_.json).map{ json =>
-        (json \\ "destination").headOption.map(d => Redirect((d \ "S").as[String]))
-          .orElse((json \\ "archive").headOption.map(a => Archive((a \ "S").as[String])))
+        (json \\ "destination").headOption.map(d => Redirects.External((d \ "S").as[String]))
+          .orElse((json \\ "archive").headOption.map(a => Redirects.Archive((a \ "S").as[String])))
       }
     }.getOrElse(Future.successful(None))
   }
