@@ -307,7 +307,6 @@ class GuardianConfiguration extends Logging {
     lazy val path =
       if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
       else configuration.getMandatoryStringProperty("static.path")
-    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }
 
   object images {
@@ -619,6 +618,7 @@ class GuardianConfiguration extends Logging {
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 
+
   object emailSignup {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
@@ -650,9 +650,15 @@ class GuardianConfiguration extends Logging {
   object Survey {
     lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
+
+  object Media {
+    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
+  }
+
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
+
