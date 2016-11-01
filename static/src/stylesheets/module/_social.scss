@@ -1,3 +1,5 @@
+@import 'social-icons';
+
 /*doc
 ---
 title: Social
@@ -122,11 +124,11 @@ category: Common
     width: 320px; // (36 + 4) * 8
 
     @include mq(tablet) {
-        width: 240px; // (36 + 4) * 5
+        width: 240px; // (36 + 4) * 6
     }
 
     @include mq(leftCol) {
-        width: 220px; // (32 + 4) * 5
+        width: 220px; // (32 + 4) * 6
     }
 }
 
@@ -204,68 +206,6 @@ category: Common
 .social-icon__label {
     white-space: nowrap;
     font-weight: bold;
-}
-
-.social-icon--facebook {
-    background-color: $social-facebook;
-    &:hover {
-        background-color: darken($social-facebook, 10%);
-    }
-}
-
-.social-icon--gplus {
-    background-color: $social-gplus;
-    &:hover {
-        background-color: darken($social-gplus, 10%);
-    }
-
-    .content--media & {
-        display: block;
-    }
-}
-
-.social-icon--whatsapp {
-    background-color: $social-whatsapp;
-    &:hover {
-        background-color: darken($social-whatsapp, 10%);
-    }
-}
-
-.social-icon--messenger {
-    background-color: $social-messenger;
-    &:hover {
-        background-color: darken($social-messenger, 10%);
-    }
-}
-
-.social-icon--twitter {
-    background-color: $social-twitter;
-    &:hover {
-        background-color: darken($social-twitter, 10%);
-    }
-}
-
-.social-icon--linkedin {
-    background-color: $social-linkedin;
-
-    &:hover {
-        background-color: darken($social-linkedin, 10%);
-    }
-}
-
-.social-icon--pinterest {
-    background-color: $social-pinterest;
-
-    &:hover {
-        background-color: darken($social-pinterest, 10%);
-    }
-}
-
-.social-icon--email {
-    background-color: $social-email;
-    &:hover {
-        background-color: darken($social-email, 10%);
-    }
 }
 
 .selection-sharing {

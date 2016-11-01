@@ -21,6 +21,12 @@ define([
                 $(topSocial).toggleClass('social--expanded-top')
             });
         });
+
+        $('.social-icon').each(function (icon) {
+            fastdom.write(function () {
+                $(icon).toggleClass('social-icon--expanded-top')
+            })
+        })
     }
 
     return function hiddenShareToggle () {
