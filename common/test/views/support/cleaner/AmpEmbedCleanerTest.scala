@@ -17,7 +17,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   /////////////////////////////
-  // Youtube cleaner
+  // External video cleaner
   /////////////////////////////
 
   "AmpEmbedCleaner" should "replace an iframe in a YouTube video-element with an amp-youtube element" in {
@@ -37,10 +37,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
     result.getElementsByTag("amp-youtube").size should be(0)
   }
-
-  /////////////////////////////
-  // Vimeo cleaner
-  /////////////////////////////
 
   "AmpEmbedCleaner" should "replace an iframe in a Vimeo video-element with an amp-vimeo element" in {
     val vimeoUrl = "https://vimeo.com/1234"
