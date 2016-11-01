@@ -16,7 +16,7 @@ define([
     var promise = new Promise(function(resolve) {
         window.onYouTubeIframeAPIReady = resolve;
     });
-
+    
     //TODO: Check if page include you-tube atoms and if it does init this file...
     fastdom.read(function() {
         $('.atom--media--youtube').each(function(el) {
@@ -79,12 +79,16 @@ define([
             }
 
             //TODO: Pass array of you tube videos to YT Player.
-            return new window.YT.Player(el.firstElementChild.id, {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
+            return setupPlayer(el.firstElementChild.id, onPlayerReady, onPlayerStateChange);
+        });
+    }
+
+    function setupPlayer(id, onPlayerReady, onPlayerStateChange) {
+        return new window.YT.Player(id, {
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
         });
     }
 
