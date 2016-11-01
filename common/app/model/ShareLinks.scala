@@ -142,11 +142,8 @@ final case class ShareLinks(
   metadata: MetaData
 ) {
 
-  private val pageShareOrder: (List[SharePlatform], List[SharePlatform]) = if (tags.isGallery || tags.isImageContent) {
-    (List(Facebook, Twitter, Email), List(PinterestPage, GooglePlus, WhatsApp, Messenger))
-  } else {
-    (List(Facebook, Twitter, Email), List(LinkedIn, GooglePlus, WhatsApp, Messenger))
-  }
+  private val pageShareOrder: (List[SharePlatform], List[SharePlatform]) =
+    (List(Facebook, Twitter, Email), List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
 
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
     List(Facebook, Twitter, GooglePlus)

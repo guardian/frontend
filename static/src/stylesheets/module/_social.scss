@@ -110,14 +110,14 @@ category: Common
     background: white;
     box-shadow: 0px 0px 20px $neutral-3;
     z-index: $zindex-popover;
-    width: 280px; // (36 + 4) * 7
+    width: 320px; // (36 + 4) * 8
 
     @include mq(tablet) {
-        width: 200px; // (36 + 4) * 4
+        width: 240px; // (36 + 4) * 5
     }
 
     @include mq(leftCol) {
-        width: 184px; // (32 + 4) * 4
+        width: 220px; // (32 + 4) * 5
     }
 }
 
