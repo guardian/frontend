@@ -14,25 +14,13 @@ define([
     Promise
 ) {
 
-    function onPlayerStateChange(event) {
-        track(event);
-    }
-
-    function track(event) {
-
-        if (event.data === YT.PlayerState.PLAYING) {
-            console.log('Tracking: play');
-        }
-        if (event.data === YT.PlayerState.PAUSED) {
-            console.log('Tracking: paused');
-        }
-        if (event.data === YT.PlayerState.ENDED) {
-            console.log('Tracking: ended');
-        }
+    function track(id, event) {
+        console.log(id + " " + event);
     }
 
     return {
-        onPlayerStateChange: onPlayerStateChange
+        track: track
     };
+
 
 });
