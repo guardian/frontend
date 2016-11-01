@@ -1,7 +1,7 @@
 @(isAdFeature: Boolean)
-@import conf.switches.Switches._
+@import conf.switches.Switches.CommercialSwitch
 
-@if(CommercialComponentsSwitch.isSwitchedOn) {
+@if(CommercialSwitch.isSwitchedOn) {
     @fragments.commercial.adSlot(
         "merchandising-high",
         Seq("commercial-component-high"),

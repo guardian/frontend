@@ -76,24 +76,30 @@ define([
     };
 
     function PrebidAdUnit(advert) {
+        var prebidParams = {
+            accountId : 11702,
+            siteId : 37668,
+            zoneId : 157046,
+            visitor : {geo : 'us'},
+            // Lets us target advert inventory
+            inventory : {
+                section : config.page.section
+            },
+            // Lets us report on targeting
+            keyword : config.page.section,
+            // Let us send the page view ID
+            userId : config.ophan.pageViewId
+        };
+        if (config.page.isSurging) {
+            prebidParams.inventory = {
+                surging: config.page.isSurging
+            };
+        }
         this.code = advert.id;
         this.sizes = getMatchingSizes(advert);
         this.bids = [{
             bidder : 'rubicon',
-            params : {
-                accountId : 11702,
-                siteId : 37668,
-                zoneId : 157046,
-                visitor : {geo : 'us'},
-                // Lets us target advert inventory
-                inventory : {
-                    section : config.page.section
-                },
-                // Lets us report on targeting
-                keyword : config.page.section,
-                // Let us send the page view ID
-                userId : config.ophan.pageViewId
-            }
+            params : prebidParams
         }];
     }
 

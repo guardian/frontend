@@ -53,7 +53,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
@@ -64,7 +64,7 @@ object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
   name = "commercial-hb-sonobi",
   description = "A test variant for the sonobi header-bidding integration",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-comm-hb-test").contains("sonobi")
@@ -75,7 +75,7 @@ object CommercialHeaderBiddingControl extends TestDefinition(
   name = "commercial-hb-control",
   description = "A control group for the header bidding test",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-comm-hb-test").contains("control")
@@ -86,7 +86,7 @@ object CommercialSonobiRubiconAdapter extends TestDefinition(
   name = "commercial-sonobi-rubicon",
   description = "A test url for the new sonobi integration",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.path.endsWith("politics/2016/oct/24/nicola-sturgeon-says-brexit-meeting-was-deeply-frustrating")
