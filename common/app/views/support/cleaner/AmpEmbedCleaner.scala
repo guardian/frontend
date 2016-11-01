@@ -49,7 +49,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
     def getVideoIdFromUrl(videoUrl: String): Option[String] = {
-      val youtubePattern = ".*youtube.com/watch\\?v=([\\w|\\d]+).*".r
+      val youtubePattern = ".*youtube.com/watch\\?v=(.+).*".r
       videoUrl match {
         case youtubePattern(videoId) => Some(videoId)
         case _ => None
@@ -60,7 +60,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       for {
         videoElement <- document.getElementsByClass("element-video")
         iframeElement <- videoElement.getElementsByTag("iframe")
-        videoId <- getVideoIdFromUrl(iframeElement.attr("data-canonical-url"))
+        videoId <- getVideoIdFromUrl(videoElement.attr("data-canonical-url"))
       } yield {
         val ampVideoElement = createElement(document, videoId)
         videoElement.appendChild(ampVideoElement)

@@ -21,8 +21,8 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   /////////////////////////////
 
   "AmpEmbedCleaner" should "replace an iframe in a YouTube video-element with an amp-youtube element" in {
-    val youtubeUrl = "https://www.youtube.com/watch?v=foo123"
-    val doc = s"""<html><body><figure class="element-video"><iframe data-canonical-url="$youtubeUrl"></iframe></figure></body></html>"""
+    val youtubeUrl = "https://www.youtube.com/watch?v=foo_12-34"
+    val doc = s"""<html><body><figure class="element-video" data-canonical-url="$youtubeUrl"><iframe></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
 
@@ -31,7 +31,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   "AmpEmbedCleaner" should "not create an amp-youtube element if videoid missing" in {
     val youtubeUrl = s"http://www.youtube.com/"
-    val doc = s"""<html><body><figure class="element-video"><iframe data-canonical-url="$youtubeUrl"></iframe></figure></body></html>"""
+    val doc = s"""<html><body><figure class="element-video" data-canonical-url="$youtubeUrl"><iframe></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
 
@@ -61,9 +61,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "be able to create an amp-youtube element and an amp-vimeo in the same document" in {
-    val youtubeUrl = "https://www.youtube.com/watch?v=foo123"
+    val youtubeUrl = "https://www.youtube.com/watch?v=foo_12-34"
     val vimeoUrl = "https://vimeo.com/1234"
-    val doc = s"""<html><body><figure class="element-video"><iframe data-canonical-url="$youtubeUrl"></iframe></figure><figure class="element-video" data-canonical-url="$vimeoUrl"><iframe></iframe></figure></body></html>"""
+    val doc = s"""<html><body><figure class="element-video" data-canonical-url="$youtubeUrl"><iframe></iframe></figure><figure class="element-video" data-canonical-url="$vimeoUrl"><iframe></iframe></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
 
