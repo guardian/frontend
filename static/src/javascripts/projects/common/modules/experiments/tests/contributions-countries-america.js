@@ -35,8 +35,8 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsCountriesUsa';
-        this.start = '2016-10-28';
+        this.id = 'ContributionsCountriesAmerica';
+        this.start = '2016-11-01';
         this.expiry = '2016-11-04';
         this.author = 'Phil Wills';
         this.description = 'Test whether different messages perform better/worse in different countries (USA)';
