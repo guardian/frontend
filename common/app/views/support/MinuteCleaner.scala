@@ -56,7 +56,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         if (heading.text() == "Summary" || heading.text() == "Key event") {
           heading.remove()
         } else {
-          heading.html(regexCleaner(heading.first(), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
+          heading.html(regexCleaner(Option(heading.first()), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
         }
 
         // Add relevant classes
@@ -101,5 +101,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 }
 
 object regexCleaner {
-  def apply(heading: Element, regEx: String, htmlToReplace: String): String = heading.html().replaceFirst(regEx, htmlToReplace)
+  def apply(heading: Option[Element], regEx: String, htmlToReplace: String): String = heading.map { heading =>
+    heading.html().replaceFirst(regEx, htmlToReplace)
+  }.getOrElse("")
 }
