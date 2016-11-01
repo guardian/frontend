@@ -39,25 +39,64 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
-  def cleanAmpYouTube(document: Document) = {
+  object AmpYouTube {
+    def createElement(document: Document, videoId: String): Element = {
+      val video = document.createElement("amp-youtube")
+      video.attr("data-videoid", videoId)
+      video.attr("width", "5")
+      video.attr("height", "3")
+      video.attr("layout", "responsive")
+    }
 
-    document.getElementsByClass("element-video").filter { element: Element =>
-      element.getElementsByTag("iframe").length != 0
-    }.foreach { element: Element =>
-      element.getElementsByTag("iframe").map { element: Element =>
-        element.remove()
-      }
-      val youtubeUrl = element.attr("data-canonical-url")
-      youtubeUrl.split("v=").lastOption.map { youtubeId =>
-        val youtube = document.createElement("amp-youtube")
-        youtube.attr("data-videoid", youtubeId)
-        youtube.attr("width", "5")
-        youtube.attr("height", "3")
-        youtube.attr("layout", "responsive")
-        element.appendChild(youtube)
+    def getVideoIdFromUrl(videoUrl: String): Option[String] = {
+      val youtubePattern = ".*youtube.com/watch\\?v=([\\w|\\d]+).*".r
+      videoUrl match {
+        case youtubePattern(videoId) => Some(videoId)
+        case _ => None
       }
     }
 
+    def clean(document: Document) = {
+      for {
+        videoElement <- document.getElementsByClass("element-video")
+        iframeElement <- videoElement.getElementsByTag("iframe")
+        videoId <- getVideoIdFromUrl(iframeElement.attr("data-canonical-url"))
+      } yield {
+        val ampVideoElement = createElement(document, videoId)
+        videoElement.appendChild(ampVideoElement)
+        iframeElement.remove()
+      }
+    }
+  }
+
+  object AmpVimeo {
+    def createElement(document: Document, videoId: String): Element = {
+      val video = document.createElement("amp-vimeo")
+      video.attr("data-videoid", videoId)
+      video.attr("width", "5")
+      video.attr("height", "3")
+      video.attr("layout", "responsive")
+    }
+
+    def getVideoIdFromUrl(videoUrl: String): Option[String] = {
+      val vimeoPattern = ".*vimeo.com/(\\d+).*".r
+      videoUrl match {
+        case vimeoPattern(videoId) => Some(videoId)
+        case _ => None
+      }
+    }
+
+    def clean(document: Document) = {
+      for {
+        videoElement <- document.getElementsByClass("element-video")
+        iframeElement <- videoElement.getElementsByTag("iframe")
+        videoId <- getVideoIdFromUrl(videoElement.attr("data-canonical-url"))
+      } yield {
+        val ampVideoElement = createElement(document, videoId)
+        videoElement.appendChild(ampVideoElement)
+        iframeElement.remove()
+      }
+    }
   }
 
   object AmpSoundcloud {
@@ -183,7 +222,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     cleanAmpVideos(document)
-    cleanAmpYouTube(document)
+    AmpYouTube.clean(document)
+    AmpVimeo.clean(document)
     AmpSoundcloud.clean(document)
     cleanAmpMaps(document)
     cleanAmpInstagram(document)
