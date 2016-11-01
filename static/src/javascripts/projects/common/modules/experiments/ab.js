@@ -8,10 +8,13 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
+    'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo',
-    'common/modules/experiments/tests/contributions-usa-1',
-    'common/modules/experiments/tests/membership-engagement-warp-factor-one'
+    'common/modules/experiments/tests/membership-engagement-warp-factor-one',
+    'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
+    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
+    'common/modules/experiments/tests/contributions-countries-uk',
+    'common/modules/experiments/tests/contributions-countries-usa'
 ], function (
     reportError,
     config,
@@ -22,18 +25,24 @@ define([
     memoize,
     noop,
     DiscussionPromoteBottomBanner,
+    HostedOnwardJourney,
     WeekendReadingEmail,
-    WeekendReadingPromo,
-    ContributionsUsa1,
-    MembershipEngagementWarpFactorOne
+    MembershipEngagementWarpFactorOne,
+    MembershipEngagementMessageCopyExperiment,
+    MembershipEngagementUSMessageCopyExperiment,
+    ContributionsCountriesUK,
+    ContributionsCountriesUSA
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
+        new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo(),
-        new ContributionsUsa1(),
-        new MembershipEngagementWarpFactorOne()
+        new MembershipEngagementWarpFactorOne(),
+        new MembershipEngagementMessageCopyExperiment(),
+        new MembershipEngagementUSMessageCopyExperiment(),
+        new ContributionsCountriesUK(),
+        new ContributionsCountriesUSA()
     ];
 
     var participationsKey = 'gu.ab.participations';

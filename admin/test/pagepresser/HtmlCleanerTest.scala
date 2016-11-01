@@ -2,7 +2,7 @@ package pagepresser
 
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.{SingleServerSuite, ConfiguredTestSuite}
+import test.ConfiguredTestSuite
 import scala.io.Source
 
 @DoNotDiscover class HtmlCleanerTest extends FlatSpec with Matchers with ConfiguredTestSuite {

@@ -1,13 +1,13 @@
 import dev.DevAssetsController
 import http.CorsHttpErrorHandler
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CommonFilters, CachedHealthCheckLifeCycle}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.{DiscussionControllers, HealthCheck}
-import discussion.DiscussionApi
+import discussion.api.DiscussionApi
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler

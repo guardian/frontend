@@ -16,8 +16,8 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABNewHeaderVariant extends TestDefinition(
-  name = "ab-new-header-variant",
+object ABNewNavVariant extends TestDefinition(
+  name = "ab-new-nav-variant",
   description = "users in this test will see the new header first variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -27,8 +27,8 @@ object ABNewHeaderVariant extends TestDefinition(
   }
 }
 
-object ABNewHeaderVariantTwo extends TestDefinition(
-  name = "ab-new-header-variant-two",
+object ABNewNavVariantTwo extends TestDefinition(
+  name = "ab-new-nav-variant-two",
   description = "users in this test will see the new header second variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -38,8 +38,8 @@ object ABNewHeaderVariantTwo extends TestDefinition(
   }
 }
 
-object ABNewHeaderControl extends TestDefinition(
-  name = "ab-new-header-control",
+object ABNewNavControl extends TestDefinition(
+  name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
@@ -53,7 +53,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
@@ -64,7 +64,7 @@ object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
   name = "commercial-hb-sonobi",
   description = "A test variant for the sonobi header-bidding integration",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-comm-hb-test").contains("sonobi")
@@ -75,10 +75,21 @@ object CommercialHeaderBiddingControl extends TestDefinition(
   name = "commercial-hb-control",
   description = "A control group for the header bidding test",
   owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 1)
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-comm-hb-test").contains("control")
+  }
+}
+
+object CommercialSonobiRubiconAdapter extends TestDefinition(
+  name = "commercial-sonobi-rubicon",
+  description = "A test url for the new sonobi integration",
+  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.path.endsWith("politics/2016/oct/24/nicola-sturgeon-says-brexit-meeting-was-deeply-frustrating")
   }
 }
 
@@ -95,12 +106,13 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewHeaderVariant,
-    ABNewHeaderVariantTwo,
-    ABNewHeaderControl,
+    ABNewNavVariant,
+    ABNewNavVariantTwo,
+    ABNewNavControl,
     CommercialClientLoggingVariant,
     CommercialHeaderBiddingSonobiVariant,
-    CommercialHeaderBiddingControl
+    CommercialHeaderBiddingControl,
+    CommercialSonobiRubiconAdapter
   )
 }
 

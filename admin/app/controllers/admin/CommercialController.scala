@@ -1,13 +1,13 @@
 package controllers.admin
 
-import common.dfp.{GuCreativeTemplate, LineItemReport}
+import common.dfp.{GuLineItem, GuCreativeTemplate}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.environment
-import dfp.{CreativeTemplateAgent, DfpApi}
+import dfp.{DfpDataExtractor, CreativeTemplateAgent, DfpApi}
 import model._
 import ophan.SurgingContentAgent
-import play.api.libs.json.{JsString, Json}
+import play.api.libs.json.JsString
 import play.api.mvc.{Action, Controller}
 import tools._
 
@@ -68,12 +68,11 @@ class CommercialController extends Controller with Logging with ExecutionContext
   }
 
   def renderAdTests = Action { implicit request =>
-    val report = Store.getDfpLineItemsReport() flatMap (Json.parse(_).asOpt[LineItemReport])
+    val report = Store.getDfpLineItemsReport()
 
-    val lineItemsByAdTest =
-      report.map(_.lineItems).getOrElse(Nil)
-        .filter(_.targeting.hasAdTestTargetting)
-        .groupBy(_.targeting.adTestValue.get)
+    val lineItemsByAdTest = report.lineItems
+      .filter(_.targeting.hasAdTestTargetting)
+      .groupBy(_.targeting.adTestValue.get)
 
     val (hasNumericTestValue, hasStringTestValue) =
       lineItemsByAdTest partition { case (testValue, _) =>
@@ -86,9 +85,7 @@ class CommercialController extends Controller with Logging with ExecutionContext
         hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue}
     }
 
-    NoCache(Ok(views.html.commercial.adTests(
-      environment.stage, report.map(_.timestamp), sortedGroups
-    )))
+    NoCache(Ok(views.html.commercial.adTests(environment.stage, report.timestamp, sortedGroups)))
   }
 
   def renderCommercialRadiator() = Action.async { implicit request =>
@@ -118,5 +115,27 @@ class CommercialController extends Controller with Logging with ExecutionContext
     }
 
     Ok(csv.getOrElse(s"No targeting found for key: $key"))
+  }
+
+  def renderInvalidItems() = Action { implicit request =>
+    // If the invalid line items are run through the normal extractor, we can see if any of these
+    // line items appear to be targeting Frontend.
+    val invalidLineItems = Store.getDfpLineItemsReport().invalidLineItems
+    val invalidItemsExtractor = DfpDataExtractor(invalidLineItems, Nil)
+
+    // Sort line items into groups where possible, and bucket everything else.
+    val pageskins = invalidItemsExtractor.pageSkinSponsorships
+    val topAboveNav = invalidItemsExtractor.topAboveNavSlotTakeovers
+    val highMerch = invalidItemsExtractor.targetedHighMerchandisingLineItems.items
+    val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
+
+    val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id)
+
+    Ok(views.html.commercial.invalidLineItems(
+      "PROD",
+      pageskins,
+      topAboveNav,
+      highMerch,
+      unidentifiedLineItems.toSeq.map(invalidItemsMap)))
   }
 }

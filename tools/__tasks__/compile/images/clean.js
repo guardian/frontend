@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Clear CSS build artefacts',
+    description: 'Clear images build artefacts',
     task: 'grunt clean:images'
 };

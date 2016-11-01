@@ -6,7 +6,7 @@ import recorder.DefaultHttpRecorder
 import play.api.libs.ws.WSClient
 import java.io.File
 
-import discussion.DiscussionApiLike
+import discussion.api.DiscussionApiLike
 
 
 object DiscussionApiHttpRecorder extends DefaultHttpRecorder {

@@ -12,7 +12,7 @@ import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import common.Logging
 import conf.Configuration
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 import play.Play
 import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
@@ -195,7 +195,7 @@ class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
         case _ => Nil
       }
 
-      val date = DateTime.now.toHttpDateTimeString
+      val date = DateTime.now(DateTimeZone.UTC).toString("yyyyMMdd'T'HHmmss'Z'")
       val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
 
       Seq(

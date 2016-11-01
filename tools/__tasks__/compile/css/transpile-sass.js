@@ -1,17 +1,57 @@
+const fs = require('fs');
+const path = require('path');
+const sass = require('node-sass');
+const mkdirp = require('mkdirp');
+const glob = require('glob');
+
+const {static: staticDir, target} = require('../../config').paths;
+const sassDir = path.resolve(staticDir, 'src', 'stylesheets');
+
+const options = {
+    outputStyle: 'compressed',
+    sourceMap: true,
+    precision: 5
+};
+
+const renderSass = (filePath, dest) => new Promise((resolve, reject) => {
+    sass.render(Object.assign({
+        file: filePath,
+        outFile: dest
+    }, options), (err, result) => {
+        if (err) reject(err);
+        resolve(result.css.toString());
+    });
+});
+
+const saveSass = (sass, dest) => new Promise((resolve, reject) => {
+    mkdirp.sync(path.parse(dest).dir);
+    fs.writeFile(dest, sass, err => {
+        if (err) reject(err);
+        resolve();
+    });
+});
+
+
+function transpile (filePath) {
+    const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
+    return renderSass(filePath, dest)
+        .then(sass => saveSass(sass, dest));
+}
+
 module.exports = {
     description: 'Transpile Sass',
     task: [{
         description: 'Old IE',
-        task: 'grunt sass:old-ie'
+        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'old-ie.*.scss')).map(transpile))
     }, {
         description: 'IE9',
-        task: 'grunt sass:ie9'
+        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'ie9.*.scss')).map(transpile))
     }, {
         description: 'Modern',
-        task: 'grunt sass:modern'
+        task: () => Promise.all(glob.sync(path.resolve(sassDir, '!(_|ie9|old-ie)*.scss')).map(transpile))
     }, {
         description: 'Inline',
-        task: 'grunt sass:inline'
+        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'inline', '*.scss')).map(transpile))
     }],
     concurrent: true
 };

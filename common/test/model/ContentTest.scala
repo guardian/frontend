@@ -119,14 +119,11 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
 
   it should "detect if article requires membershipAccess" in {
 
-    conf.switches.Switches.MembersAreaSwitch.switchOn()
-
     val noAccess = article.copy(fields = None)
     Content(noAccess).metadata.requiresMembershipAccess should be(false)
 
     val membershipArticle = article.copy(fields = Some(ContentFields(membershipAccess = Some(MembershipTier.MembersOnly))))
     Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
-
   }
 
   it should "returns the correct shortUrlId" in {

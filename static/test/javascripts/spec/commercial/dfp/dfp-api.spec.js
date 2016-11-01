@@ -92,8 +92,7 @@ define([
                 dfpEnv = arguments[9];
 
                 config.switches = {
-                    commercialComponents: true,
-                    standardAdverts:      true
+                    commercial:      true
                 };
                 config.page = {
                     adUnit:      '/123456/theguardian.com/front',

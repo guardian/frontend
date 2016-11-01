@@ -19,8 +19,8 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementWarpFactorOne';
-        this.start = '2016-10-20';
-        this.expiry = '2016-11-3';
+        this.start = '2016-10-24';
+        this.expiry = '2016-11-4';  // Friday 4th 00:00:00
         this.author = 'Justin Pinner';
         this.description = 'The first level of prominent engagement messaging';
         this.audience = 0.3;
@@ -53,11 +53,6 @@ define([
             },
             {
                 id: 'become',
-                test: function () {},
-                success: success.bind(this)
-            },
-            {
-                id: 'join',
                 test: function () {},
                 success: success.bind(this)
             }
