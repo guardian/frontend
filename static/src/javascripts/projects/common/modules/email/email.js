@@ -97,6 +97,8 @@ define([
 
             $(iframe).remove();
 
+            googleAnalytics.trackNonClickInteraction('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
+
         },
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
