@@ -68,10 +68,14 @@ category: Common
 .social-icon--more {
     background: $neutral-6;
     border-radius: 50%;
-    color: $neutral-2;
+    color: $neutral-3;
     display: inline-block;
     line-height: 32px;
     text-align: center;
+
+    &:hover {
+      color: $neutral-2;
+    }
 }
 
 .social--hidden {
@@ -85,12 +89,17 @@ category: Common
 .social__saveforlater-lozenge {
      @include fs-textSans(2);
      font-weight: bold;
+     color: $neutral-1;
      position: absolute;
      bottom: 8px;
      left: 10px;
      padding: 5px 10px;
-     border: 1px solid $neutral-4;
+     border: 1px solid $neutral-1;
      border-radius: 15%/50%;
+
+    &:hover {
+        text-decoration: none;
+    }
  }
 
 .social__tray-close {
