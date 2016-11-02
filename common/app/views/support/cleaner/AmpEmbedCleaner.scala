@@ -39,14 +39,16 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
+  class AmpExternalVideo(val videoId: String, val elementType: String) {}
+
   object AmpExternalVideo {
-    def getElementTypeByUrl(videoUrl: String) : String = {
-      val youtubePattern = ".*youtube.com.*".r
-      val vimeoPattern = ".*vimeo.com.*".r
+    def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
+      val youtubePattern = ".*https?://www.youtube.com/watch\\?v=(.+).*".r
+      val vimeoPattern = ".*https?://vimeo.com/(\\d+).*".r
       videoUrl match {
-        case youtubePattern() => "amp-youtube"
-        case vimeoPattern() => "amp-vimeo"
-        case _ => ""
+        case youtubePattern(videoId) => Some(new AmpExternalVideo(videoId, "amp-youtube"))
+        case vimeoPattern(videoId) => Some(new AmpExternalVideo(videoId, "amp-vimeo"))
+        case _ => None
       }
     }
 
@@ -58,24 +60,13 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       video.attr("layout", "responsive")
     }
 
-    def getVideoIdFromUrl(videoUrl: String): Option[String] = {
-      val youtubePattern = ".*youtube.com/watch\\?v=(.+).*".r
-      val vimeoPattern = ".*vimeo.com/(\\d+).*".r
-      videoUrl match {
-        case youtubePattern(videoId) => Some(videoId)
-        case vimeoPattern(videoId) => Some(videoId)
-        case _ => None
-      }
-    }
-
     def clean(document: Document) = {
       for {
         videoElement <- document.getElementsByClass("element-video")
         iframeElement <- videoElement.getElementsByTag("iframe")
-        videoId <- getVideoIdFromUrl(videoElement.attr("data-canonical-url"))
+        ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
-        val elementType = getElementTypeByUrl(videoElement.attr("data-canonical-url"))
-        val ampVideoElement = createElement(document, videoId, elementType)
+        val ampVideoElement = createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
         videoElement.appendChild(ampVideoElement)
         iframeElement.remove()
       }
