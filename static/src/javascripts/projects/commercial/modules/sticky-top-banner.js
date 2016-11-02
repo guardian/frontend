@@ -146,11 +146,16 @@ define([
     // user has scrolled past the header.
     function resizeStickyBanner(newHeight) {
         if (topSlotHeight !== newHeight) {
-            topSlotHeight = newHeight;
             return fastdom.write(function () {
                 stickyBanner.classList.add('sticky-top-banner-ad');
                 stickyBanner.style.height =
                 header.style.marginTop = newHeight + 'px';
+
+                if (topSlotHeight !== undefined && headerHeight <= scrollY) {
+                    window.scrollBy(0, newHeight - topSlotHeight);
+                }
+
+                topSlotHeight = newHeight;
                 return newHeight;
             });
         } else {
