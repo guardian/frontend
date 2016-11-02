@@ -19,6 +19,7 @@ define([
         var mockWindow = {
             addEventListener: jasmine.createSpy('addEventListener'),
             getComputedStyle: window.getComputedStyle.bind(window),
+            scrollBy: jasmine.createSpy('scrollBy'),
             pageYOffset: 0
         };
 
@@ -66,6 +67,18 @@ define([
             .catch(done.fail);
         });
 
+        it('should not add classes when scrolled past the header', function (done) {
+            mockWindow.pageYOffset = 501;
+            sticky.init(mockWindow)
+            .then(function () {
+                mockWindow.pageYOffset = 0;
+                expect(header.classList.contains('l-header--animate')).toBe(false);
+                expect(stickyBanner.classList.contains('sticky-top-banner-ad--animate')).toBe(false);
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
         it('should set the slot height and the header top margin', function (done) {
             var randomHeight = Math.random() * 500 | 0;
             sticky.init()
@@ -75,6 +88,21 @@ define([
             .then(function () {
                 expect(header.style.marginTop).toBe(randomHeight + 'px');
                 expect(stickyBanner.style.height).toBe(randomHeight + 'px');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should adjust the scroll position', function (done) {
+            var randomHeight = Math.random() * 500 | 0;
+            mockWindow.pageYOffset = 501;
+            sticky.init(mockWindow)
+            .then(function () {
+                return sticky.resize(randomHeight);
+            })
+            .then(function () {
+                mockWindow.pageYOffset = 0;
+                expect(mockWindow.scrollBy).toHaveBeenCalled();
             })
             .then(done)
             .catch(done.fail);
