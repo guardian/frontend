@@ -70,7 +70,6 @@
 
 .sticky-top-banner-ad {
     transform: translate3d(0, 0, 0);
-    will-change: transform;
     contain: layout;
     z-index: $zindex-popover;
     width: 100%;
@@ -79,6 +78,7 @@
 }
 
 .sticky-top-banner-ad--animate {
+    will-change: transform;
     transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 
