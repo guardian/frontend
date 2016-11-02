@@ -18,7 +18,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   private def documentWithVideos(videoUrls: String*): Document = {
     val doc = "<html><body>" +
-      videoUrls.map{ (url: String) => s"""<figure class="element-video" data-canonical-url="$url"><iframe></iframe></figure>""" }.mkString +
+      videoUrls.map{ url: String => s"""<figure class="element-video" data-canonical-url="$url"><iframe></iframe></figure>""" }.mkString +
       "</body></html>"
     val document: Document = Jsoup.parse(doc)
     clean(document)
