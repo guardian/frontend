@@ -1,26 +1,44 @@
 define([
-    'bean',
-    'bonzo',
-    'fastdom',
-    'common/utils/fastdom-promise',
-    'raven',
-    'Promise'
+    'common/utils/mediator',
+    'lodash/collections/forEach'
 ], function (
-    bean,
-    bonzo,
-    fastdom,
-    fastdomPromise,
-    raven,
-    Promise
+    mediator,
+    forEach
 ) {
 
-    function track(id, event) {
-        console.log(id + " " + event);
+    function track(property) {
+        mediator.emit(property);
+    }
+
+    function initYoutubeEvents(videoId) {
+        var eventList = ['play', '25', '50', '75', 'end'];
+
+        forEach(eventList, function(event) {
+            mediator.once(event, function() {
+                ophanRecord(event);
+            });
+        });
+
+        function ophanRecord(event) {
+            require(['ophan/ng'], function (ophan) {
+                var eventObject = {
+                    video: {
+                        id: 'gu-video-youtube-' + videoId,
+                        eventType: 'video:content:' + event
+                    }
+                };
+                ophan.record(eventObject);
+            });
+        }
+    }
+
+    function init(videoId) {
+        initYoutubeEvents(videoId);
     }
 
     return {
-        track: track
+        track: track,
+        init: init
     };
-
 
 });

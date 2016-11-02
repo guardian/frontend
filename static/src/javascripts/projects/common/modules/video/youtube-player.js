@@ -86,26 +86,20 @@ define([
         if (handlers && typeof handlers.onPlayerReady === 'function') {
             handlers.onPlayerReady(event, player);
         }
-
-        tracking.track(videoId, "video:content:ready");
     }
 
     function _onPlayerPlaying(id) {
         setProgressTracker(id);
-        var currentTime = Math.round(players[id].player.getCurrentTime());
-        if (currentTime === 0) {
-            tracking.track(id, "video:content:start");
-        }
+        tracking.track("play");
     }
 
     function _onPlayerPaused(id) {
         killProgressTracker(false, id);
-        tracking.track(id, "video:content:pause");
     }
 
     function _onPlayerEnded(id) {
         killProgressTracker(false, id);
-        tracking.track(id, "video:content:end");
+        tracking.track("end");
     }
 
     function setProgressTracker(id) {
@@ -126,7 +120,7 @@ define([
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
         var wrapper = prepareWrapper(el);
-        var videoId = el.firstElementChild.id; // Of type iframe. Select iframe.
+        var videoId = el.firstElementChild.id; //TODO: Of type iframe. Select iframe.
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
@@ -140,6 +134,9 @@ define([
             players[videoId] = {
                 player: setupPlayer(videoId, onPlayerReady, onPlayerStateChange)
             };
+            
+            var atomId = el.getAttribute("data-media-atom-id");
+            tracking.init(atomId);
 
             return players[videoId].player;
         });
@@ -161,7 +158,7 @@ define([
 
         if (percentPlayed > 0 &&
             percentPlayed % 25 === 0) {
-            tracking.track(id, 'video:content:' + percentPlayed);
+            tracking.track(percentPlayed);
         }
     }
 
