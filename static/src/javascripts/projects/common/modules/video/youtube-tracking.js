@@ -56,7 +56,7 @@ define([
         function buildGoogleAnalyticsEvent(event, metrics, canonicalUrl, videoId) {
             var category = 'Media';
             var playerName = 'gu-video-youtube';
-            var action = 'video content'
+            var action = 'video content';
             var fieldsObject = {
                 eventCategory: category,
                 eventAction: action,
@@ -70,23 +70,6 @@ define([
                 fieldsObject[metricId] = 1;
             }
             return fieldsObject;
-        }
-
-        /**
-         *
-         * @param mediaId {string}
-         * @param mediaType {string} audio|video
-         * @param eventType {string} e.g. firstplay, firstend
-         * @param isPreroll {boolean}
-         * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
-         */
-        function MediaEvent(mediaId, mediaType, eventType, isPreroll) {
-            return {
-                mediaId: mediaId,
-                mediaType: mediaType,
-                eventType: eventType,
-                isPreroll: isPreroll
-            };
         }
 
     }
