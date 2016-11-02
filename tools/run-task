@@ -72,11 +72,10 @@ const path = require('path');
 const yargs = require('yargs');
 const Listr = require('listr');
 const execa = require('execa');
-const capitalise = require('lodash.capitalize');
 
 const tasksIdentifier = '__tasks__';
 
-const {dev: IS_DEV, verbose, _: TASKS} = yargs
+const {dev: IS_DEV, verbose, stdout, _: TASKS} = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
@@ -100,6 +99,9 @@ const taskSrc = path.resolve(__dirname, tasksIdentifier);
 // don't duplicate tasks
 const cache = [];
 
+// collect these for use later on, if we want them
+const stdouts = [];
+
 // run commands with output to stdout if verbose is true
 const cmd = task => {
     const [binary, ...options] = task.trim().split(' ');
@@ -108,7 +110,9 @@ const cmd = task => {
             stdio: [process.stdin, process.stdout, 'pipe']
         });
     }
-    return execa(binary, options);
+    const exec = execa(binary, options);
+    exec.then(({stdout}) => stdouts.push(stdout));
+    return exec;
 };
 
 // turn a list of our tasks into objects listr can use
@@ -166,12 +170,18 @@ const getTasksFromModule = taskName => {
 const taskModules = TASKS.map(getTasksFromModule);
 
 if (taskModules.filter(module => module !== null).length) {
-    listrify(taskModules, {verbose}).run().catch(e => {
-        if (!verbose) {
-            console.log(e.stdout);
-        }
-        process.exit(1);
-    });
+    listrify(taskModules, {verbose}).run()
+        .then(() => {
+            if (stdout) {
+                stdouts.forEach(stdout => console.log(stdout));
+            }
+        })
+        .catch(e => {
+            if (!verbose) {
+                console.log(e.stdout);
+            }
+            process.exit(1);
+        });
 } else {
     console.log(`Cannot find tasks for '${TASKS}'?`);
 }

@@ -93,6 +93,10 @@ pasteup: check-node # PRIVATE
 test: check-node
 	@./tools/run-task test/javascript
 
+# Check the JS test suite coverage.
+coverage: check-node
+	@./tools/run-task test/javascript/coverage --stdout
+
 # Lint all assets.
 validate: check-node
 	@./tools/run-task lint
