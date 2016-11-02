@@ -1,4 +1,4 @@
-@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest)(implicit request: RequestHeader)
+@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest,user: com.gu.identity.model.User)(implicit request: RequestHeader)
 
 @import views.html.fragments.registrationFooter
 
@@ -9,7 +9,7 @@
     <div id="qa-success-message" class="form__success is-hidden js-mem-card-change-success-msg">Your card details have been updated</div>
     @fragments.profile.membershipForm.cancelled()
     @fragments.profile.membershipForm.changed()
-    @fragments.profile.membershipForm.details()
+    @fragments.profile.membershipForm.details(user)
     @fragments.profile.membershipForm.upsell()
 </div>
 
