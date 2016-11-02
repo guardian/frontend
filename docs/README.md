@@ -7,7 +7,8 @@
 - [How to deploy](01-start-here/03-how-to-deploy.md)
 - [Troubleshooting](01-start-here/04-troubleshooting.md)
 - [Development tips](01-start-here/05-development-tips.md)
-- [FAQs](01-start-here/06-faqs.md)
+- [Testing tips](01-start-here/06-testing-tips.md)
+- [FAQs](01-start-here/07-faqs.md)
 
 ##[Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
