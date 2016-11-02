@@ -84,13 +84,13 @@ define([
             wrapper.classList.add('youtube__video-ready');
         });
         if (handlers && typeof handlers.onPlayerReady === 'function') {
-            handlers.onPlayerReady(event, player);
+            handlers.onPlayerReady(event);
         }
     }
 
     function _onPlayerPlaying(id) {
         setProgressTracker(id);
-        tracking.track("play");
+        tracking.track('play');
     }
 
     function _onPlayerPaused(id) {
@@ -99,7 +99,7 @@ define([
 
     function _onPlayerEnded(id) {
         killProgressTracker(false, id);
-        tracking.track("end");
+        tracking.track('end');
     }
 
     function setProgressTracker(id) {
@@ -134,8 +134,8 @@ define([
             players[videoId] = {
                 player: setupPlayer(videoId, onPlayerReady, onPlayerStateChange)
             };
-            
-            var atomId = el.getAttribute("data-media-atom-id");
+
+            var atomId = el.getAttribute('data-media-atom-id');
             tracking.init(atomId);
 
             return players[videoId].player;
