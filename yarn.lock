@@ -3043,12 +3043,6 @@ grunt-bytesize@0.1.1:
   dependencies:
     bytesize "~0.2.0"
 
-grunt-contrib-clean@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/grunt-contrib-clean/-/grunt-contrib-clean-0.6.0.tgz#f532dba4b8212674c7c013e146bda6638b9048f6"
-  dependencies:
-    rimraf "~2.2.1"
-
 grunt-contrib-concat@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/grunt-contrib-concat/-/grunt-contrib-concat-0.5.1.tgz#953c6efdfdfd2c107ab9c85077f2d4b24d31cd49"
@@ -6133,7 +6127,7 @@ rimraf@^2.2.8, rimraf@^2.3.3, rimraf@~2.5.0, rimraf@~2.5.1, rimraf@2:
   dependencies:
     glob "^7.0.5"
 
-rimraf@~2.2.1, rimraf@~2.2.8:
+rimraf@~2.2.8:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 

@@ -29,7 +29,6 @@
     "grunt-asset-hash": "0.1.6",
     "grunt-asset-monitor": "0.2.0",
     "grunt-bytesize": "0.1.1",
-    "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "0.6.0",
     "grunt-contrib-uglify": "0.9.1",
