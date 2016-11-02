@@ -137,13 +137,14 @@ $explore-series-header-element-opacity: .85;
 
 .explore-series-headline__content {
     color: #ffffff;
-    margin: $gs-baseline 0;
+    margin: $gs-baseline;
     width: 94%;
     padding-left: 0;
 
     @include mq($from: desktop) {
         width: gs-span(8);
         padding-left: $gs-gutter;
+        margin: $gs-baseline 0;
     }
 }
 
@@ -280,6 +281,7 @@ $explore-series-header-element-opacity: .85;
 
     @include mq($from: tablet) {
         top: 0;
+        overflow: visible;
     }
 
     .content__labels {

@@ -32,17 +32,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-weekend-reading-promo",
-    "Show visitors a snap banner to promote the Weekend Reading email",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 31),
+    sellByDate = new LocalDate(2016, 11, 21),
     exposeClientSide = true
   )
 
@@ -51,8 +41,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-warp-factor-one",
     "The first level of prominent membership engagement messaging",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 3),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 11, 4),  // Friday 4th 23:59:59
     exposeClientSide = true
   )
 
@@ -98,7 +88,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-countries-us",
+    "ab-contributions-countries-america",
     "Test whether different messages perform better/worse in different countries",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = On,

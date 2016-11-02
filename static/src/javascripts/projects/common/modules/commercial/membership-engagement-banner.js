@@ -203,11 +203,13 @@ define([
         var message = messages[edition];
         if (message) {
             var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-            return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
-                if (canShow && userHasMadeEnoughVisits) {
-                    show(edition, message);
-                }
-            });
+            if(userHasMadeEnoughVisits) {
+                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    if (canShow) {
+                        show(edition, message);
+                    }
+                });
+            }
         }
         return Promise.resolve();
     }

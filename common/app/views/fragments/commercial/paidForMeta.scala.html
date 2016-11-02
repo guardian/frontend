@@ -1,3 +1,4 @@
+@import common.RichRequestHeader
 @import common.LinkTo
 @import views.html.fragments.inlineSvg
 
@@ -5,11 +6,22 @@
 
 <div class="paidfor-meta">
     <span class="paidfor-meta__label">Paid content</span>
-    <div class="paidfor-label paidfor-meta__more has-popup">
-        <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="js-paidfor-popup@dataId">About @inlineSvg("arrow-down", "icon")</button>
-        <div class="popup popup--paidfor is-off js-paidfor-popup@dataId">
-            <h3 class="popup--paidfor__title">Paid content is paid for and controlled by an advertiser and produced by the Guardian Labs team</h3>
-            <a class="popup--paidfor__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+    @if(request.isAmp) {
+        <div class="paidfor-label paidfor-meta__more has-popup">
+            <input type="checkbox" value="selected" id="paidforAbout" class="paidfor-input">
+            <label for="paidforAbout" class="tooltip-label">About @inlineSvg("arrow-down", "icon")</label>
+            <div class="popup popup--paidfor">
+                <span class="popup--paidfor__title">Paid content is paid for and controlled by an advertiser and produced by the Guardian Labs team</span>
+                <a class="popup--paidfor__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+            </div>
         </div>
-    </div>
+    } else {
+        <div class="paidfor-label paidfor-meta__more has-popup">
+            <button class="u-button-reset paidfor-label__btn popup__toggle" data-toggle="js-paidfor-popup@dataId">About @inlineSvg("arrow-down", "icon")</button>
+            <div class="popup popup--paidfor is-off js-paidfor-popup@dataId">
+                <span class="popup--paidfor__title">Paid content is paid for and controlled by an advertiser and produced by the Guardian Labs team</span>
+                <a class="popup--paidfor__link" href="@LinkTo("/content-funding")">Learn more about Guardian Labs content @inlineSvg("arrow-right", "icon")</a>
+            </div>
+        </div>
+    }
 </div>
