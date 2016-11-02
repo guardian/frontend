@@ -122,7 +122,7 @@ object MediaAtom extends common.Logging {
   }
 
   def isoDuration(seconds: Long): String = {
-    new Duration(seconds*1000.toLong).toString()
+    new Duration(seconds*1000.toLong).toString
   }
 
 }
