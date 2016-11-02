@@ -28,7 +28,7 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = 'tests' in config && config.tests.commercialHbSonobi ? setupSonobi() : Promise.resolve();
+            var initialTag = dfpEnv.sonobiEnabled ? setupSonobi() : Promise.resolve();
             return initialTag.then(setupAdvertising);
         }
 
@@ -45,7 +45,7 @@ define([
 
         return new Promise(function(resolve) {
 
-            if ('tests' in config && config.tests.commercialHbSonobi && dfpEnv.shouldLazyLoad()) {
+            if (dfpEnv.sonobiEnabled) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
                 ophanTracking.addTag('sonobi');
