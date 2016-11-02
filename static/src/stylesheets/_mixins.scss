@@ -37,7 +37,7 @@
 
 @mixin faux-bullet-point($color: $neutral-3, $right-space: 2px) {
     &:before {
-        display: inline-block;
+            display: inline-block;
         content: '';
         border-radius: 6px;
         height: 12px;

@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Lint Sass',
-    task: 'grunt sasslint'
+    task: 'sass-lint -v'
 };
