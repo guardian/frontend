@@ -1,6 +1,7 @@
-@import commercial.model.hosted.ViewSupport.youtubeEmbedUrl
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
+@import conf.Configuration.environment
+@import conf.Configuration.site.host
 @import views.html.hosted._
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
@@ -54,7 +55,7 @@
                         <iframe id="hosted-video-@youtubeId"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="@youtubeEmbedUrl(youtubeId)"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
