@@ -11,7 +11,7 @@ Frontend is [a set of Play Framework 2 Scala applications](https://github.com/gu
 
 Frontend is built in two parts, using Grunt for the client side asset build and SBT for the Play Framework backend.
 
-# Documentations
+# Documentation
 
 **[All documentation notes and useful items can be found in the `docs` folder](docs).**
 

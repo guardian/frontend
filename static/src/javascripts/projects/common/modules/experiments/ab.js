@@ -10,10 +10,11 @@ define([
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/weekend-reading-promo',
     'common/modules/experiments/tests/membership-engagement-warp-factor-one',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
-    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment'
+    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
+    'common/modules/experiments/tests/contributions-countries-uk',
+    'common/modules/experiments/tests/contributions-countries-america'
 ], function (
     reportError,
     config,
@@ -26,20 +27,22 @@ define([
     DiscussionPromoteBottomBanner,
     HostedOnwardJourney,
     WeekendReadingEmail,
-    WeekendReadingPromo,
     MembershipEngagementWarpFactorOne,
     MembershipEngagementMessageCopyExperiment,
-    MembershipEngagementUSMessageCopyExperiment
+    MembershipEngagementUSMessageCopyExperiment,
+    ContributionsCountriesUk,
+    ContributionsCountriesAmerica
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new WeekendReadingPromo(),
         new MembershipEngagementWarpFactorOne(),
         new MembershipEngagementMessageCopyExperiment(),
-        new MembershipEngagementUSMessageCopyExperiment()
+        new MembershipEngagementUSMessageCopyExperiment(),
+        new ContributionsCountriesUk(),
+        new ContributionsCountriesAmerica()
     ];
 
     var participationsKey = 'gu.ab.participations';

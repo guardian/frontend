@@ -871,6 +871,12 @@
             }
         }
 
+        .content__main-column--audio {
+            .caption--img {
+                color: $neutral-4;
+            }
+        }
+
         .gu-media-wrapper--audio,
         .vjs-control-bar,
         .vjs-embed-button:hover .vjs-control-text,

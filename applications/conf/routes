@@ -91,7 +91,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 
 # Interactive service worker
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/$file<interactive(-service)?-worker.js>           controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
+GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>           controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)

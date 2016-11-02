@@ -207,4 +207,14 @@ trait PerformanceSwitches {
     sellByDate = new LocalDate(2016, 12, 1),
     exposeClientSide = false
   )
+
+  val InlineInteractiveRequire = Switch(
+    SwitchGroup.Performance,
+    "inline-interactive-require",
+    "If this switch is on, require is inlined on interactives",
+    owners = Seq(Owner.withGithub("wpf500")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 11),
+    exposeClientSide = true
+  )
 }
