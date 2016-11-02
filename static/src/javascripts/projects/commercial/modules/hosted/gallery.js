@@ -13,7 +13,7 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
-    'common/modules/analytics/omniture',
+    'common/modules/analytics/interaction-tracking',
     'common/utils/chain',
     'common/utils/load-css-promise'
 ], function (bean,
@@ -30,7 +30,7 @@ define([
              map,
              throttle,
              forEach,
-             omniture,
+             interactionTracking,
              chain,
              loadCssPromise) {
 
@@ -367,7 +367,7 @@ define([
 
     HostedGallery.prototype.trackNavBetweenImages = function (data) {
         if (data && data.nav) {
-            omniture.trackLinkImmediate(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
+            interactionTracking.trackNonClickInteraction(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
         }
     };
 

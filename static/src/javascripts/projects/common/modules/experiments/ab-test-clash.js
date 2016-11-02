@@ -13,13 +13,13 @@ define([
             variants: ['control', 'global', 'democracy']
         };
 
-        var contributionsCountriesUSA = {
-            name: 'ContributionsCountriesUsa',
+        var contributionsCountriesAmerica = {
+            name: 'ContributionsCountriesAmerica',
             variants: ['control', 'global', 'democracy']
         };
 
 
-        var clashingTests = [contributionsCountriesUk, contributionsCountriesUSA];
+        var clashingTests = [contributionsCountriesUk, contributionsCountriesAmerica];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

@@ -166,16 +166,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val BritishCouncilBeacon = Switch(
-    SwitchGroup.Commercial,
-    "british-council-beacon",
-    "British Council's beacon",
-    owners = Seq(Owner.withGithub("kenlim")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 1),
-    exposeClientSide = false
-  )
-
   val showChesterZooGallery = Switch(
     group = CommercialLabs,
     "chester-zoo-gallery",
