@@ -36,14 +36,8 @@ define([
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
             return initState()
-            // Second, start listening for height and scroll changes, opt in
-            // for animated changes in height
-            .then(function () {
-                return Promise.all([
-                    setupListeners(),
-                    setupAnimation()
-                ]);
-            });
+            // Second, start listening for height and scroll changes
+            .then(setupListeners);
         } else {
             return Promise.resolve();
         }
@@ -78,13 +72,6 @@ define([
             win.addEventListener('scroll', onScroll);
         }
         return trackAdRender(topSlotId).then(onTopAdRendered);
-    }
-
-    function setupAnimation() {
-        return fastdom.write(function () {
-            header.classList.add('l-header--animate');
-            stickyBanner.classList.add('sticky-top-banner-ad--animate');
-        });
     }
 
     function onTopAdRendered(isRendered) {
@@ -132,10 +119,31 @@ define([
                     stickyBanner.style.position =
                     stickyBanner.style.top = null;
                 }
-            });
+            })
+            .then(setupAnimation);
         }
     }
 
+    // Sudden changes in the layout can be jarring to the user, so we animate
+    // them for a better experience. We only do this if the slot is in view
+    // though.
+    function setupAnimation() {
+        return fastdom.write(function () {
+            if (scrollY <= headerHeight) {
+                header.classList.add('l-header--animate');
+                stickyBanner.classList.add('sticky-top-banner-ad--animate');
+            } else {
+                header.classList.remove('l-header--animate');
+                stickyBanner.classList.remove('sticky-top-banner-ad--animate');
+            }
+        });
+    }
+
+    // Because the top banner is not in the document flow, resizing it requires
+    // that we also make space for it. This is done by adjusting the top margin
+    // of the header.
+    // This is also the best place to adjust the scrolling position in case the
+    // user has scrolled past the header.
     function resizeStickyBanner(newHeight) {
         if (topSlotHeight !== newHeight) {
             topSlotHeight = newHeight;
