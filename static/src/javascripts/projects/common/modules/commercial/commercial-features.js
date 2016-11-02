@@ -124,7 +124,7 @@ define([
             switches.commercial;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
-            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);
+            !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);
 
         this.async = {
             canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {
