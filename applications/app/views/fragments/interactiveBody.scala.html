@@ -59,8 +59,9 @@
                     </div>
                 </div>
             </article>
+
+            @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
         </div>
-        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
     }
 
     @if(conf.switches.Switches.InlineInteractiveRequire.isSwitchedOn) {
