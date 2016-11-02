@@ -332,7 +332,6 @@ object Content {
   }
 
   def make(apiContent: contentapi.Content): Content = {
-
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
@@ -620,13 +619,13 @@ object Video {
       metadata = metadata
     )
 
-    Video(contentOverrides, source)
+    Video(contentOverrides, source, content.media.headOption)
   }
 }
 
 final case class Video (
   override val content: Content,
-  source: Option[String] ) extends ContentType {
+  source: Option[String], mediaAtom: Option[MediaAtom] ) extends ContentType {
 
   lazy val bylineWithSource: Option[String] = Some(Seq(
     trail.byline,

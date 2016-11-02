@@ -1,10 +1,11 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{AtomData, atom => atomapi, Atom => AtomApiAtom}
+import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
 import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
+import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
@@ -118,6 +119,10 @@ object MediaAtom extends common.Logging {
       version = mediaAsset.version,
       platform = mediaAsset.platform.toString,
       mimeType = mediaAsset.mimeType)
+  }
+
+  def isoDuration(seconds: Long): String = {
+    new Duration(seconds*1000.toLong).toString()
   }
 
 }
