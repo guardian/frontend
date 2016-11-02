@@ -39,15 +39,17 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
-  class AmpExternalVideo(val videoId: String, val elementType: String) {}
+  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String)
+  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
+  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
 
   object AmpExternalVideo {
     def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
-      val youtubePattern = ".*https?://www.youtube.com/watch\\?v=(.+).*".r
-      val vimeoPattern = ".*https?://vimeo.com/(\\d+).*".r
+      val youtubePattern = "^https?:\\/\\/www\\.youtube\\.com\\/watch\\?v=(.+).*".r
+      val vimeoPattern = "^https?:\\/\\/vimeo\\.com\\/(\\d+).*".r
       videoUrl match {
-        case youtubePattern(videoId) => Some(new AmpExternalVideo(videoId, "amp-youtube"))
-        case vimeoPattern(videoId) => Some(new AmpExternalVideo(videoId, "amp-vimeo"))
+        case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
+        case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
         case _ => None
       }
     }
