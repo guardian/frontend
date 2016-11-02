@@ -112,7 +112,7 @@ define([
             updateQueued = true;
             return fastdom.write(function () {
                 updateQueued = false;
-                if (scrollY > headerHeight ) {
+                if (headerHeight < scrollY) {
                     stickyBanner.style.position = 'absolute';
                     stickyBanner.style.top = headerHeight + 'px';
                 } else {
@@ -152,7 +152,7 @@ define([
                 header.style.marginTop = newHeight + 'px';
 
                 if (topSlotHeight !== undefined && headerHeight <= scrollY) {
-                    window.scrollBy(0, newHeight - topSlotHeight);
+                    win.scrollBy(0, newHeight - topSlotHeight);
                 }
 
                 topSlotHeight = newHeight;
