@@ -38,16 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-warp-factor-one",
-    "The first level of prominent membership engagement messaging",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 4),  // Friday 4th 23:59:59
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-hosted-onward-journey",
     "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
     owners = Seq(Owner.withGithub("lps88")),
