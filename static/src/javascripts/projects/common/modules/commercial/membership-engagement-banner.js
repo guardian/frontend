@@ -10,6 +10,7 @@ define([
     'common/modules/commercial/user-features',
     'common/utils/mediator',
     'Promise',
+    'common/utils/fastdom-promise',
     'common/modules/experiments/ab',
     'common/utils/$',
     'common/views/svgs'
@@ -25,6 +26,7 @@ define([
     userFeatures,
     mediator,
     Promise,
+    fastdom,
     ab,
     $,
     svgs
@@ -107,6 +109,10 @@ define([
                 }
             }
         }
+
+        if (opts.execute) {
+            opts.execute();
+        }
     };
 
     function show(edition, message) {
@@ -176,6 +182,32 @@ define([
                 };
                 customJs = getCustomJs;
             }
+        }
+
+        var notInAnyConflictingTests = function() {
+            return (!messagingTestVariant || messagingTestVariant === 'notintest') &&
+                (!usMessagingTestVariant || usMessagingTestVariant === 'notintest');
+        };
+
+        if (config.switches['prominentMembershipEngagementBanner'] && notInAnyConflictingTests()) {
+            var prominentMarker = 'prominent';
+            colours = ['yellow','purple','bright-blue','dark-blue'];
+            thisColour = thisInstanceColour(colours);
+            cssModifierClass = 'membership-' + prominentMarker + ' ' + thisColour;
+            var execute = function () {
+                var buttonCaption = $('#membership__engagement-message-button-caption'),
+                    buttonEl = $('#membership__engagement-message-button');
+                fastdom.write(function () {
+                    buttonEl.removeClass('is-hidden');
+                    buttonEl.addClass(prominentMarker);
+                    buttonEl.addClass(thisColour);
+                    buttonCaption.text('Become a Supporter');
+                });
+            };
+            if (!customOpts.execute) {
+                customOpts.execute = execute;
+            }
+            customJs = getCustomJs;
         }
 
         var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
