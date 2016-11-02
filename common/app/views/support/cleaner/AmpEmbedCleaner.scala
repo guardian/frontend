@@ -45,8 +45,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   object AmpExternalVideo {
     def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
-      val youtubePattern = "^https?:\\/\\/www\\.youtube\\.com\\/watch\\?v=(.+).*".r
-      val vimeoPattern = "^https?:\\/\\/vimeo\\.com\\/(\\d+).*".r
+      val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#\^&\^?]+).*""".r
+      val vimeoPattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
       videoUrl match {
         case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
         case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
