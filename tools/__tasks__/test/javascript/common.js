@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Test common JS',
-    task: 'grunt karma:common'
+    task: 'karma start ./static/test/javascripts/conf/common.js --single-run'
 };
