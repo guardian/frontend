@@ -15,7 +15,7 @@ import services.Redirects
   with BeforeAndAfterAll
   with WithTestWsClient {
 
-  lazy val archiveController = new ArchiveController(new Redirects(wsClient))
+  lazy val archiveController = new ArchiveController(new Redirects)
 
   it should "return a normalised r1 path" in {
     val tests = List(

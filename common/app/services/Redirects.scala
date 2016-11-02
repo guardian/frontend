@@ -1,13 +1,10 @@
 package services
 
-import conf.Configuration
+import com.gu.scanamo.ScanamoAsync
+import com.gu.scanamo.syntax._
 import common.{ExecutionContexts, Logging}
-import scala.collection.JavaConversions._
-import com.amazonaws.auth.AWS4Signer
-import com.amazonaws.{AmazonWebServiceRequest, DefaultRequest}
-import java.net.URI
-import play.api.libs.ws.WSClient
-import com.amazonaws.util.StringInputStream
+import conf.Configuration
+
 import scala.concurrent.Future
 
 
@@ -26,48 +23,21 @@ object Redirects {
 }
 
 
-class Redirects(wsClient: WSClient) extends Logging with ExecutionContexts {
+class Redirects extends Logging with ExecutionContexts {
   private val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
-  private val dynamoDbGet = "DynamoDB_20120810.GetItem"
 
   // protocol fixed to http so that lookups to dynamo find existing redirects
   private val expectedSourceProtocol = "http://"
 
-  private lazy val credentials  = Configuration.aws.credentials
-
   def destinationFor(source: String): Future[Option[Redirects.Destination]] = {
-    credentials.map{ credentialsProvider =>
-      val signer = new AWS4Signer()
-      def signedHeaders(xAmzTarget: String, bodyContent: String) = {
-        val request = new DefaultRequest[Nothing](new AmazonWebServiceRequest {}, "DynamoDB")
-        request.setEndpoint(new URI(s"http://${AwsEndpoints.dynamoDb}"))
-        request.addHeader("Content-Type", "application/x-amz-json-1.0")
-        request.addHeader("x-amz-target", xAmzTarget)
-        request.setContent(new StringInputStream(bodyContent))
-        signer.setServiceName("dynamodb")
-        signer.sign(request, credentialsProvider.getCredentials)
-        request.getHeaders.toSeq
+    case class Redirect(destination: Option[String], archive: Option[String])
+
+    ScanamoAsync
+      .get[Redirect](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceProtocol + source))
+      .map {
+        case Some(Right(Redirect(Some(d), _))) => Some(Redirects.External(d))
+        case Some(Right(Redirect(_, Some(a)))) => Some(Redirects.Archive(a))
+        case _ => None
       }
-
-      val bodyContent = s"""
-      |{
-      |   "TableName": "$tableName",
-      |   "Key": {
-      |     "source": {"S": "$expectedSourceProtocol$source"}
-      |   }
-      |}
-      """.stripMargin
-
-      val headers = signedHeaders(dynamoDbGet, bodyContent)
-
-      val asyncRequest = wsClient.url(s"http://${AwsEndpoints.dynamoDb}")
-        .withRequestTimeout(1000)
-        .withHeaders(headers:_*)
-
-      asyncRequest.post(bodyContent).map(_.json).map{ json =>
-        (json \\ "destination").headOption.map(d => Redirects.External((d \ "S").as[String]))
-          .orElse((json \\ "archive").headOption.map(a => Redirects.Archive((a \ "S").as[String])))
-      }
-    }.getOrElse(Future.successful(None))
   }
 }
