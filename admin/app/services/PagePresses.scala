@@ -1,19 +1,15 @@
 package services
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
+import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import common.Logging
 import conf.Configuration
+
 import scala.collection.JavaConversions._
-import com.amazonaws.services.dynamodbv2.model.AttributeValue
 
 object PagePresses extends Logging {
   private lazy val table = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
 
-  private lazy val client = {
-    val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)
-    client.setEndpoint(AwsEndpoints.dynamoDb)
-    client
-  }
+  private lazy val client = services.DynamoDB.syncClient
 
   def set(source: String, archive: String) = {
     log.info(s"set: $table: $source -> $archive")

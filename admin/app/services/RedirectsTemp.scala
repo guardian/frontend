@@ -1,19 +1,15 @@
 package services
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
-import conf.Configuration
-import scala.collection.JavaConversions._
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
+import conf.Configuration
+
+import scala.collection.JavaConversions._
 
 object RedirectsTemp {
 
   private lazy val table = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
-  private lazy val client = {
-    val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)
-    client.setEndpoint(AwsEndpoints.dynamoDb)
-    client
-  }
+  private lazy val client = services.DynamoDB.syncClient
 
   def set(from: String, to: String) = client.putItem(table,
     Map(
