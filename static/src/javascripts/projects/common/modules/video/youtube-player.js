@@ -60,6 +60,7 @@ define([
 
     function _onPlayerStateChange(event, handlers, wrapper, videoId) {
         //change class according to the current state
+        //TODO: Fix this so we can add poster image.
         fastdom.write(function () {
             ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
                 wrapper.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
@@ -77,7 +78,7 @@ define([
     function _onPlayerReady(event, handlers, wrapper, videoId) {
 
         // Record the duration for percentage calculation.
-        players[videoId].player.duration = players[videoId].player.getDuration();
+        players[videoId].duration = players[videoId].player.getDuration();
 
         fastdom.write(function () {
             wrapper.classList.add('youtube__video-ready');
@@ -125,7 +126,7 @@ define([
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
         var wrapper = prepareWrapper(el);
-        var videoId = el.firstElementChild.id;
+        var videoId = el.firstElementChild.id; // Of type iframe. Select iframe.
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
@@ -156,7 +157,7 @@ define([
     function recordPlayerProgress(id) {
 
         var currentTime = players[id].player.getCurrentTime(),
-            percentPlayed = Math.round(((currentTime / players[id].player.duration) * 100));
+            percentPlayed = Math.round(((currentTime / players[id].duration) * 100));
 
         if (percentPlayed > 0 &&
             percentPlayed % 25 === 0) {
