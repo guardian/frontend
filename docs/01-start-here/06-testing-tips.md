@@ -5,6 +5,18 @@ Before you do anything else on your local frontend build, navigate to the janus 
 and follow the steps to get your credentials for Frontend and for CMS-Fronts.
 This will save you grief later on.
 
+### Install and compile all third party dependencies
+Compile your assets and third party dependencies using the command:
+```
+  make install
+```
+The make command can also be used for a variety of useful things incliding testing and linting javascript.
+Run the command:
+```
+make list
+```
+to see a full list of the available make commands.
+
 ### Starting sbt
 Its important to remember to use ./sbt to run the local build, not just sbt.
 ./sbt will pick up some presets that are important for running the build successfully.
@@ -30,49 +42,9 @@ To run only the tests for a particular test suite, use the command:
   test-only *<name-of-your-test-suite>
 ```
 
-### How to test your devices on local
-- It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
-However for significant frontend changes you should test on devices as much as possible. To do this you need to be able to make your localhost accessible.
-A tool called `ngrok` is a good way to make a local port accessible to external devices or computer (instructions on how to run ngrok [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/09-testing-externally-on-localhost.md))
-- To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a collection of computers and devices,
-and many different versions of browsers. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
-
-### What to test on
-A list of useful information on device testing follows
-[Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md);
-[A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md);
-[Ranking of the current top browsers](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
-[Breakdown of last seven days web traffic by type of device](https://dashboard.ophan.co.uk/graph/breakdown?days=7&device=Personal+computer&device=Smartphone&device=Tablet&by=device)
-
-### Good places/tricks to find bugs
-- iPhone - Safari is the most popular browser on iOS (which makes it one of the most popular ways to view our site) and even Chrome on iOS has to use the iOS Webkit framework.
- It is interesting from a testing perspective because it is a different operating system, different browser setup and different screen-size from the machine you are developing on.
- This combination often throws up interesting layout problems. In addition Safari often has less support for new features compared with Chome, which can also lead to rendering errors.
-
-- IE9 - This is the second most popular IE version. IE is notorious for having less support for features and also being much less tolerant of small errors than Chrome, or Firefox. Often when a page renders on those browsers it will still have problems on IE
- Add to this the fact that it is much older than IE11 so supports even less features. IE9 is the oldest browser version that we expect to be fully supported. If it works on IE9 it is a good indication it will work on most other browsers.
-
-- Chrome and Firefox on windows 10 - IE10 is slowly overtaking Windows7 as our users most popular desktop OS. When Windows 10 originally came out, firefox had some rendering issues and Chrome and firefox periodically show redering issues there - especially with things like fonts.
-
-- Older devices - A common source of problems comes from older devices. Where the device is running the latest operating system, it will attempt to run all the latest features and give the fullest experience. This can be catastropihc if the device just doesnt have the memory or processing power to cope.
-  This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way safari manages memory, iOS devices have proved more susceptable
-   Good examples of old devices to test on are iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
-    [Interesting page talking about iOS crashes](http://stackoverflow.com/questions/22039534/ios-browser-crashes-due-to-low-memory)
-
-- Devices with strange screen sizes. If you re interested in layout and rendering for your change, the iphone 5S is a popular device with an abnormally narrow screen,
-    the Galaxy S4 mini is a miniaturised version of the GalaxyS4 with a very small screen. iPad Mini and Galaxy Note also have interesting dimensions and have shown layout issues from time to time
-     -especially on fronts
-
-- Rotate your device - another layout trick that is always worth doing. Load the page and rotate from portrait to landscape.
-   Refresh and rotate from landscape to portrait. This is a common cause of redrawing in the real world that can often show up issues.
-    A good device to test this on is the Nexus7 - this is because the portrait and landscape views on this device correspond to different screen-width breakpoints.
-
-- Test on AMP! [Google are making amp the default in mobile search results](http://searchengineland.com/amp-live-in-google-259109).
-Currently there are lots of dependencies and many changes that don't seem to be directly related to AMP will have an impact on the display of amp pages.
-
 ### Testing AMP Pages on local build
-Whenever you are making a significant frontend change - especially one that has any impact on any templates
-you should be sure to check the display of an amp page to make sure it looks alright.
+Amp pages are available for articles and liveblogs.
+Whenever you are making a significant frontend change - especially one that has any on any templates, or changes files within the article application, you should be sure to check the display of an amp page to make sure it looks alright.
 
 When running frontend locally, the AMP version of pages can be viewed by adding the `?amp` querystring to the end of the URL. For example:
 
@@ -125,6 +97,46 @@ google-search result to the amp page. The following will indicate you are on an 
 2) That ads display ok.
 3) That styling, especially that of badges and graphical punctuation, such as quotes  look ok
 4) That images and other embeds display correctly - especially on narrow screens such as the iPhone5S
+
+### How to test your devices on local
+- It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
+However for significant frontend changes you should test on devices as much as possible. To do this you need to be able to make your localhost accessible.
+A tool called `ngrok` is a good way to make a local port accessible to external devices or computer (instructions on how to run ngrok [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/09-testing-externally-on-localhost.md))
+- To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a vaery large collection of various operating systems, browsers and devices. It contains a good record of old versions of these and has a mix of real and emulated devices. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
+
+### What to test on
+A list of useful information on device testing follows
+[Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md);
+[A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md);
+[Ranking of the current top browsers](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
+[Breakdown of last seven days web traffic by type of device](https://dashboard.ophan.co.uk/graph/breakdown?days=7&device=Personal+computer&device=Smartphone&device=Tablet&by=device)
+
+### Good places/tricks to find bugs
+- iPhone - Safari is the most popular browser on iOS (which makes it one of the most popular ways to view our site) and even Chrome on iOS has to use the iOS Webkit framework.
+ It is interesting from a testing perspective because it is a different operating system, different browser setup and different screen-size from the machine you are developing on.
+ This combination often throws up interesting layout problems. In addition Safari often has less support for new features compared with Chrome, which can also lead to rendering errors.
+
+- Edge - a new browser from microsoft - meant to be a successor to IE. [As of Sept 2016](https://docs.google.com/a/guardian.co.uk/spreadsheets/d/1bheEcdkOAj6jA92U37_DsTpQDwk7awIAFkYKUE1fbsw/edit?usp=sharing) it has overtaken IE11 in popularity. However it gets much less exposure to our developers than Chrome Firefox and Safari. 
+
+- IE11 - This is the most popular IE version. IE is notorious for having less support for features and also being much less tolerant of small errors than Chrome, or Firefox. Often when a page renders on those browsers it will still have problems on IE.
+
+- IE9 Our expectations for IE9 are lower than for more recent browsers, however it should be possible to access our content and the page should at least look readable.
+
+- Chrome and Firefox on windows 10 - Windows10 is slowly overtaking Windows7 as our users most popular desktop OS. When Windows 10 originally came out, firefox had some rendering issues and Chrome and firefox periodically show rendering issues there - especially with things like fonts.
+
+- Older devices - A common source of problems comes from older devices. Where the device is running the latest operating system, it will attempt to run all the latest features and give the fullest experience. This can be catastrophic if the device just doesnt have the memory or processing power to cope.
+  This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way safari manages memory, iOS devices have proved more susceptable. Good examples of old devices to test on are: iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
+    [Interesting page talking about iOS crashes](http://stackoverflow.com/questions/22039534/ios-browser-crashes-due-to-low-memory). As a result of a large number of crashes on iPads, it has been necessary to limit all iPads to only showing the non-enhanced version of network and section fronts.
+  
+- non-enhanced pages - features should either be hidden or have a way of displaying on non-enhanced versions of pages. To see the non-enhanced version of a page use the links [here](https://www.theguardian.com/info/2015/sep/22/making-theguardiancom-work-best-for-you).
+
+- Devices with strange screen sizes. If you're interested in layout and rendering for your change, the iphone 5S is a popular device with an abnormally narrow screen, the Galaxy S4 mini is a miniaturised version of the GalaxyS4 with a very small screen. The iPad Mini and Galaxy Note also have interesting dimensions and have shown layout issues from time to time - especially on fronts.
+
+- Rotate your device - another layout trick that is always worth doing. Load the page and rotate from portrait to landscape.
+   Refresh and rotate from landscape to portrait. This is a common cause of redrawing in the real world that can often show up issues. A good device to test this on is the Nexus7 - this is because the portrait and landscape views on this device correspond to different screen-width breakpoints.
+
+- Test on AMP! [Google are making amp the default in mobile search results](http://searchengineland.com/amp-live-in-google-259109).
+Currently there are lots of dependencies and many changes that don't seem to be directly related to AMP will have an impact on the display of amp pages.
 
 ### How to find examples of pages you want to test
 By default your local build will be pulling in data from the live CAPI. So the stories you see will match those on the live site.
