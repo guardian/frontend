@@ -30,9 +30,14 @@ define([
 
     fastdom.read(function() {
         $('.atom--media--youtube').each(function(el) {
-            init(el, tracking);
+            init(el, tracking, el.firstElementChild.id, initTracking);
         });
     });
+
+    function initTracking(el) {
+        var atomId = el.getAttribute('data-media-atom-id');
+        tracking.init(atomId);
+    }
 
     function loadYoutubeJs() {
         fastdom.write(function () {
@@ -116,11 +121,14 @@ define([
         }
     }
 
-    function init(el, handlers) {
+    function init(el, handlers, videoId, tracking) {
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
         var wrapper = prepareWrapper(el);
-        var videoId = el.firstElementChild.id; //TODO: Of type iframe. Select iframe.
+
+        if (tracking && typeof tracking === 'function') {
+            tracking(el);
+        }
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
@@ -134,9 +142,6 @@ define([
             players[videoId] = {
                 player: setupPlayer(videoId, onPlayerReady, onPlayerStateChange)
             };
-
-            var atomId = el.getAttribute('data-media-atom-id');
-            tracking.init(atomId);
 
             return players[videoId].player;
         });
