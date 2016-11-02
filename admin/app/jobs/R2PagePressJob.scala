@@ -7,17 +7,17 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
 import org.jsoup.Jsoup
-import pagepresser.{NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner, InteractiveHtmlCleaner, PollsHtmlCleaner}
+import pagepresser.{InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, PollsHtmlCleaner, SimpleHtmlCleaner}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
-import services.{S3Archive, S3ArchiveOriginals, PagePresses}
+import services.{Redirects, S3Archive, S3ArchiveOriginals}
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
 
 import scala.concurrent.Future
 
-class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging {
+class R2PagePressJob(wsClient: WSClient, redirects: Redirects) extends ExecutionContexts with Logging {
   private val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private val credentials = Configuration.aws.mandatoryCredentials
@@ -114,14 +114,11 @@ class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging 
 
       cleanedHtmlString.map { cleanedHtmlString =>
         S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
-          case true => {
-            PagePresses.set(urlIn, pressUrl)
+          case true =>
+            redirects.set(Redirects.Redirect(urlIn, archive = Some(pressUrl)))
             log.info(s"Pressed $urlIn as $pressUrl")
             queue.delete(notification.handle)
-          }
-          case _ => {
-            log.error(s"Press failed for $pressUrl")
-          }
+          case _ => log.error(s"Press failed for $pressUrl")
         }
       }.map(_ => ())
     }.getOrElse(Future.successful(()))
@@ -140,7 +137,7 @@ class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging 
 
       wsRequest.get().flatMap { response =>
         response.status match {
-          case 200 => {
+          case 200 =>
             try {
               val originalSource = response.body
               val pressUrl = pressAsUrl(urlIn)
@@ -154,26 +151,20 @@ class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging 
 
               cleanedHtmlString.map { cleanedHtmlString =>
                 S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
-                  case true => {
-                    PagePresses.set(urlIn, pressUrl)
+                  case true =>
+                    redirects.set(Redirects.Redirect(urlIn, archive = Some(pressUrl)))
                     log.info(s"Pressed $urlIn as $pressUrl")
                     queue.delete(notification.handle)
-                  }
-                  case _ => {
-                    log.error(s"Press failed for $pressUrl")
-                  }
+                  case _ => log.error(s"Press failed for $pressUrl")
                 }
               }
-
             } catch {
               case e: Exception => log.error(s"Unable to press $urlIn (${e.getMessage})", e)
                 Future.failed(new RuntimeException(s"Unable to press $urlIn (${e.getMessage})", e))
             }
-          }
-          case non200 => {
+          case non200 =>
             log.error(s"Unexpected response from ${wsRequest.uri}, status code: $non200")
             Future.failed(new RuntimeException(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))
-          }
         }
       }
     } else {
@@ -186,7 +177,7 @@ class R2PagePressJob(wsClient: WSClient) extends ExecutionContexts with Logging 
     val urlIn = (Json.parse(message.get) \ "Message").as[String]
     try {
       if (urlIn.nonEmpty) {
-        PagePresses.remove(urlIn)
+        redirects.remove(urlIn)
         takedownQueue.delete(message.handle)
       } else {
         log.error(s"Invalid url: $urlIn")

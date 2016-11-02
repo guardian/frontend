@@ -1,6 +1,6 @@
 package services
 
-import com.gu.scanamo.ScanamoAsync
+import com.gu.scanamo.{Scanamo, ScanamoAsync}
 import com.gu.scanamo.syntax._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
@@ -9,6 +9,8 @@ import scala.concurrent.Future
 
 
 object Redirects {
+  case class Redirect(source: String, destination: Option[String] = None, archive: Option[String] = None)
+
   sealed trait Destination {
     def location: String
   }
@@ -24,20 +26,29 @@ object Redirects {
 
 
 class Redirects extends Logging with ExecutionContexts {
-  private val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
+  import Redirects._
 
   // protocol fixed to http so that lookups to dynamo find existing redirects
   private val expectedSourceProtocol = "http://"
+  private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
-  def destinationFor(source: String): Future[Option[Redirects.Destination]] = {
-    case class Redirect(destination: Option[String], archive: Option[String])
 
+  def destinationFor(source: String): Future[Option[Destination]] =
     ScanamoAsync
       .get[Redirect](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceProtocol + source))
       .map {
-        case Some(Right(Redirect(Some(d), _))) => Some(Redirects.External(d))
-        case Some(Right(Redirect(_, Some(a)))) => Some(Redirects.Archive(a))
+        case Some(Right(Redirect(_, Some(d), _))) => Some(External(d))
+        case Some(Right(Redirect(_, _, Some(a)))) => Some(Archive(a))
         case _ => None
       }
+
+  def set(redirect: Redirect) = {
+    log.info(s"Setting redirect in: $tableName to: ${redirect.source} -> ${redirect.destination.getOrElse(redirect.archive)}")
+    Scanamo.put(DynamoDB.syncClient)(tableName)(redirect)
+  }
+
+  def remove(source: String) = {
+    log.info(s"Removing redirect in: $tableName to: $source")
+    Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> source)
   }
 }
