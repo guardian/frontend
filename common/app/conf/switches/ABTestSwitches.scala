@@ -88,7 +88,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-countries-us",
+    "ab-contributions-countries-america",
     "Test whether different messages perform better/worse in different countries",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = On,
