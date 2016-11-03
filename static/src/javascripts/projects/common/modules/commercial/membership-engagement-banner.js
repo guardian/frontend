@@ -48,7 +48,7 @@ define([
         },
         US: {
             campaign: 'mem_us_banner',
-            messageText: 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $49 a year.'
+            messageText: 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $69 a year.'
         },
         AU: {
             campaign: 'mem_au_banner',
@@ -56,7 +56,7 @@ define([
         },
         INT: {
             campaign: 'mem_int_banner',
-            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $49/€49 per year.'
+            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.'
         }
     };
 

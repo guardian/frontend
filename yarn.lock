@@ -3043,13 +3043,6 @@ grunt-bytesize@0.1.1:
   dependencies:
     bytesize "~0.2.0"
 
-grunt-contrib-concat@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/grunt-contrib-concat/-/grunt-contrib-concat-0.5.1.tgz#953c6efdfdfd2c107ab9c85077f2d4b24d31cd49"
-  dependencies:
-    chalk "^0.5.1"
-    source-map "^0.3.0"
-
 grunt-contrib-copy@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-copy/-/grunt-contrib-copy-0.6.0.tgz#e18768e8c82e77a23b2eba603754a0146ece074e"
@@ -6422,12 +6415,6 @@ source-map-url@~0.3.0:
 source-map@^0.1.38:
   version "0.1.43"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
-  dependencies:
-    amdefine ">=0.0.4"
-
-source-map@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.3.0.tgz#8586fb9a5a005e5b501e21cd18b6f21b457ad1f9"
   dependencies:
     amdefine ">=0.0.4"
 
