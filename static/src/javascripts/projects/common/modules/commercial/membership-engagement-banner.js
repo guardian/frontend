@@ -184,17 +184,13 @@ define([
             }
         }
 
-        var notInAnyConflictingTests = function() {
-            return (!messagingTestVariant || messagingTestVariant === 'notintest') &&
-                (!usMessagingTestVariant || usMessagingTestVariant === 'notintest');
-        };
-
-        if (config.switches['prominentMembershipEngagementBanner'] && notInAnyConflictingTests()) {
+        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk'] && (!messagingTestVariant || messagingTestVariant === 'notintest')) {
             var prominentMarker = 'prominent';
+            linkHref = endpoints[edition] + '?INTCMP=' + message.campaign + '_' + prominentMarker;
             colours = ['yellow','purple','bright-blue','dark-blue'];
             thisColour = thisInstanceColour(colours);
             cssModifierClass = 'membership-' + prominentMarker + ' ' + thisColour;
-            var execute = function () {
+            customOpts.execute = function () {
                 var buttonCaption = $('#membership__engagement-message-button-caption'),
                     buttonEl = $('#membership__engagement-message-button');
                 fastdom.write(function () {
@@ -204,9 +200,6 @@ define([
                     buttonCaption.text('Become a Supporter');
                 });
             };
-            if (!customOpts.execute) {
-                customOpts.execute = execute;
-            }
             customJs = getCustomJs;
         }
 
