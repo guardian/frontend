@@ -9,6 +9,7 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
+    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-warp-factor-one',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
@@ -16,7 +17,7 @@ define([
     'common/modules/experiments/tests/contributions-countries-uk',
     'common/modules/experiments/tests/contributions-countries-america',
     'common/modules/experiments/tests/contributions-membership-epic'
-    
+
 ], function (
     reportError,
     config,
@@ -28,6 +29,7 @@ define([
     noop,
     DiscussionPromoteBottomBanner,
     HostedOnwardJourney,
+    RecommendedForYou,
     WeekendReadingEmail,
     MembershipEngagementWarpFactorOne,
     MembershipEngagementMessageCopyExperiment,
@@ -40,6 +42,7 @@ define([
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
+        new RecommendedForYou(),
         new WeekendReadingEmail(),
         new MembershipEngagementWarpFactorOne(),
         new MembershipEngagementMessageCopyExperiment(),

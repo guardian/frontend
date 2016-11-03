@@ -88,6 +88,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-recommended-for-you",
+    "Test demand for a personalised container on fronts",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 9, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-countries-america",
     "Test whether different messages perform better/worse in different countries",
     owners = Seq(Owner.withGithub("philwills")),
