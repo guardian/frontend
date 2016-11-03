@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 4),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic",
+    "Find the optimal way of offering Contributions along side Membership in the Epic component",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 7),
+    exposeClientSide = true
+  )
 }
