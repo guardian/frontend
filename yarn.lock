@@ -3137,12 +3137,6 @@ grunt-px-to-rem@0.4.0:
     chalk "~1.0.0"
     postcss "~4.0.6"
 
-grunt-sass-lint@^0.1.0:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/grunt-sass-lint/-/grunt-sass-lint-0.1.2.tgz#d39eac9386b77d47bc67e38ed6e3c0f56aa76db3"
-  dependencies:
-    sass-lint "^1.2.0"
-
 grunt-shell@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/grunt-shell/-/grunt-shell-1.1.1.tgz#dbf13236601ea12c1a8d9160dd5e57775a614f5f"
@@ -6163,7 +6157,7 @@ sass-graph@^2.1.1:
     lodash "^4.0.0"
     yargs "^4.7.1"
 
-sass-lint@^1.2.0, sass-lint@^1.8.2:
+sass-lint:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/sass-lint/-/sass-lint-1.9.1.tgz#acc654b7ed0f412977ad14828055a74e559b27bb"
   dependencies:
