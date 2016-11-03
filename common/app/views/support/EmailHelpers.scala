@@ -53,6 +53,16 @@ object EmailHelpers {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="float-left icon icon-$name">"""
   }
 
+  def imageMaybeWithLink(imageUrl: String, alt: Option[String], linkUrl: Option[String], linkTitle: Option[String] = None) = Html {
+    linkUrl.fold {
+      s"""<img width="580" class="full-width" src="${imageUrl}" ${alt.map(a => s"""alt="${a}"""").getOrElse("")}>"""
+    } { linkUrl =>
+      s"""<a href="${linkUrl}" ${linkTitle.map(t => s"""title="${t}""").getOrElse("")}>
+        <img width="580" class="full-width" src="${imageUrl}" ${alt.map(a => s"""alt="${a}"""").getOrElse("")}>
+      </a>"""
+    }
+  }
+
   object Images {
     val footerG = Static("images/email/grey-g.png")
     val quote = Static("images/email/quote.png")
