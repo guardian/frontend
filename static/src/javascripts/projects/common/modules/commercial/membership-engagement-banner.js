@@ -56,7 +56,7 @@ define([
         },
         INT: {
             campaign: 'mem_int_banner',
-            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $49/€49 per year.'
+            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.'
         }
     };
 
