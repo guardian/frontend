@@ -24,11 +24,11 @@ define([
                         try {
                             return JSON.parse(responseText);
                         } catch (ex) {
-                            throw new Error('Fetch error: Invalid JSON response');
+                            throw new Error('Fetch error while requesting ' + input + ': Invalid JSON response');
                         }
                     });
                 } else {
-                    throw new Error('Fetch error: ' + resp.statusText);
+                    throw new Error('Fetch error while requesting ' + input + ': ' + resp.statusText);
                 }
             }
         });
