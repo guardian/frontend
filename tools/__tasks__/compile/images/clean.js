@@ -1,7 +1,7 @@
 const path = require('path');
-const {target, hash, static: staticDir} = require('../../config').paths;
+const {target, hash, src} = require('../../config').paths;
 
 module.exports = {
     description: 'Clear image build artefacts',
-    task: `rm -rf ${path.resolve(staticDir, 'stylesheets', 'icons')} ${path.resolve(target, 'images')} ${path.resolve(hash, 'images')}`
+    task: `rm -rf ${path.resolve(src, 'stylesheets', 'icons')} ${path.resolve(target, 'images')} ${path.resolve(hash, 'images')}`
 };
