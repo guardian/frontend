@@ -18,8 +18,13 @@ define([
             variants: ['control', 'global', 'democracy']
         };
 
+        var contributionsMembershipEpic = {
+            name: 'ContributionsMembershipEpic',
+            variants: ['control', 'contribute-member', 'member-contribute']
+        };
 
-        var clashingTests = [contributionsCountriesUk, contributionsCountriesAmerica];
+
+        var clashingTests = [contributionsCountriesUk, contributionsCountriesAmerica, contributionsMembershipEpic];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

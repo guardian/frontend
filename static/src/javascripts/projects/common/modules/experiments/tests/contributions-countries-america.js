@@ -43,7 +43,7 @@ define([
         this.showForSensitive = false;
         this.audience = 0.15;
         this.audienceOffset = 0.5;
-        this.successMeasure = 'Impressions to number of contributions';
+        this.successMeasure = 'Impressions to number of contributions/supporter sign ups';
         this.audienceCriteria = 'All users in US';
         this.dataLinkNames = '';
         this.idealOutcome = 'The messages performs less than 20% differently in different countries';

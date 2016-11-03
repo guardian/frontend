@@ -19,7 +19,7 @@
 }
 
 .contributions__title--epic {
-    margin-bottom: $gs-baseline;
+    margin-bottom: 0;
 }
 
 .contributions__paragraph  {
@@ -30,8 +30,20 @@
     margin-top: $gs-baseline;
 }
 
+.contributions__paragraph--extra-copy {
+    margin-bottom: 0;
+}
+
+.contributions__hidden {
+    display: none;
+}
+
 .contributions__paragraph--epic {
     @include fs-bodyCopy(2);
+}
+
+.contributions__epic-link {
+    text-decoration: underline;
 }
 
 .contributions__option-button {
@@ -129,7 +141,7 @@
 }
 
 .contributions__contribute--epic-member {
-    width: 150px;
+    width: 160px;
 }
 
 
