@@ -12,10 +12,12 @@ import services.Redirects
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+  with BeforeAndAfterAll {
 
-  lazy val archiveController = new ArchiveController(new Redirects)
+  lazy val archiveController = new ArchiveController(mockRedirects)
+  lazy val mockRedirects = new Redirects {
+    override def destinationFor(source: String) = Future.successful(None)
+  }
 
   it should "return a normalised r1 path" in {
     val tests = List(
