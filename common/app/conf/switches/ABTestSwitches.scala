@@ -61,8 +61,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-message-copy-experiment",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 8),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
     exposeClientSide = true
   )
 
