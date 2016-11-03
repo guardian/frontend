@@ -68,8 +68,8 @@
                                             <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
 
                                             @video.mediaAtom.map { ma =>
-                                                @ma.duration.map { duration =>
-                                                    <meta itemprop="duration" content="@MediaAtom.isoDuration(duration)" />
+                                                @ma.isoDuration.map { isoDuration =>
+                                                    <meta itemprop="duration" content="@isoDuration" />
                                                 }
                                             }
                                             @* TODO: Set meta thumbnail once we have better image data in model *@

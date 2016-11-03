@@ -27,6 +27,7 @@ final case class MediaAtom(
   assets: Seq[MediaAsset],
   title: String,
   duration: Option[Long],
+  isoDuration: Option[String],
   source: Option[String],
   posterUrl: Option[String]
 ) extends Atom
@@ -109,6 +110,7 @@ object MediaAtom extends common.Logging {
       assets = mediaAtom.assets.map(mediaAssetMake),
       title = mediaAtom.title,
       duration = mediaAtom.duration,
+      isoDuration = mediaAtom.duration.map(isoDuration),
       source = mediaAtom.source,
       posterUrl = mediaAtom.posterUrl)
 
