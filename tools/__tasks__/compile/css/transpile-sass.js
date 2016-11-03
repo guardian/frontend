@@ -4,8 +4,8 @@ const sass = require('node-sass');
 const mkdirp = require('mkdirp');
 const glob = require('glob');
 
-const {static: staticDir, target} = require('../../config').paths;
-const sassDir = path.resolve(staticDir, 'src', 'stylesheets');
+const {src, target} = require('../../config').paths;
+const sassDir = path.resolve(src, 'stylesheets');
 
 const options = {
     outputStyle: 'compressed',
