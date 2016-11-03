@@ -29,7 +29,12 @@ final case class MediaAtom(
   duration: Option[Long],
   source: Option[String],
   posterUrl: Option[String]
-) extends Atom
+) extends Atom {
+
+  def isoDuration: Option[String] = {
+    duration.map(d => new Duration(d * 1000.toLong).toString)
+  }
+}
 
 
 final case class MediaAsset(
@@ -119,10 +124,6 @@ object MediaAtom extends common.Logging {
       version = mediaAsset.version,
       platform = mediaAsset.platform.toString,
       mimeType = mediaAsset.mimeType)
-  }
-
-  def isoDuration(seconds: Long): String = {
-    new Duration(seconds*1000.toLong).toString
   }
 
 }

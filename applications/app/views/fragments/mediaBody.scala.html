@@ -69,7 +69,7 @@
 
                                             @video.mediaAtom.map { ma =>
                                                 @ma.duration.map { duration =>
-                                                    <meta itemprop="duration" content="@MediaAtom.isoDuration(duration)" />
+                                                    <meta itemprop="duration" content="@ma.isoDuration" />
                                                 }
                                             }
                                             @* TODO: Set meta thumbnail once we have better image data in model *@
