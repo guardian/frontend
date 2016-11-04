@@ -2,11 +2,17 @@ define([
     'common/utils/mediator',
     'lodash/collections/forEach',
     'common/utils/config',
+    'common/modules/video/ga-helper'
 ], function (
     mediator,
     forEach,
-    config
+    config,
+    gaHelper
 ) {
+
+    function eventAction() {
+        return 'video content';
+    }
 
     function initYoutubeEvents(videoId) {
 
@@ -36,7 +42,9 @@ define([
         forEach(eventList, function(event) {
             mediator.once(event, function() {
                 ophanRecord(event);
-                ga(gaTracker + '.send', 'event', buildGoogleAnalyticsEvent(event, events, window.location.pathname, videoId));
+                ga(gaTracker + '.send', 'event',
+                    gaHelper.buildGoogleAnalyticsEvent(event, events, window.location.pathname,
+                        'gu-video-youtube', eventAction, videoId));
             });
         });
 
@@ -51,27 +59,6 @@ define([
                 ophan.record(eventObject);
             });
         }
-
-
-        function buildGoogleAnalyticsEvent(event, metrics, canonicalUrl, videoId) {
-            var category = 'Media';
-            var playerName = 'gu-video-youtube';
-            var action = 'video content';
-            var fieldsObject = {
-                eventCategory: category,
-                eventAction: action,
-                eventLabel: canonicalUrl,
-                dimension19: videoId,
-                dimension20: playerName
-            };
-            // Increment the appropriate metric based on the event type
-            var metricId = metrics[event];
-            if (metricId) {
-                fieldsObject[metricId] = 1;
-            }
-            return fieldsObject;
-        }
-
     }
 
     function init(videoId) {

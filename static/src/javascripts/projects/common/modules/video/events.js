@@ -10,7 +10,8 @@ define([
     'common/modules/onward/history',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle',
-    'lodash/objects/forOwn'
+    'lodash/objects/forOwn',
+    'common/modules/video/ga-helper'
 ], function (
     bean,
     qwery,
@@ -22,7 +23,8 @@ define([
     history,
     indexOf,
     throttle,
-    forOwn
+    forOwn,
+    gaHelper
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!guardian.isEmbed,
@@ -119,25 +121,6 @@ define([
         return action;
     }
 
-    function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl) {
-        var category = 'Media';
-        var playerName = 'guardian-videojs';
-        var action = getGoogleAnalyticsEventAction(mediaEvent);
-        var fieldsObject = {
-            eventCategory: category,
-            eventAction: action,
-            eventLabel: canonicalUrl,
-            dimension19: mediaEvent.mediaId,
-            dimension20: playerName
-        };
-        // Increment the appropriate metric based on the event type
-        var metricId = metrics[mediaEvent.eventType];
-        if (metricId) {
-            fieldsObject[metricId] = 1;
-        }
-        return fieldsObject;
-    }
-
     function bindGoogleAnalyticsEvents(player, canonicalUrl) {
         var events = {
             'play': 'metric1',
@@ -152,7 +135,8 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga(gaTracker + '.send', 'event', buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl));
+                ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
+                    'guardian-videojs', getGoogleAnalyticsEventAction, mediaEvent.mediaId));
             });
         });
     }
