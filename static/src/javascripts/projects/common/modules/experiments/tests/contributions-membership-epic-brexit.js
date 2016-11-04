@@ -35,22 +35,25 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsMembershipEpic';
-        this.start = '2016-11-03';
+        this.id = 'ContributionsMembershipEpicBrexit';
+        this.start = '2016-11-04';
         this.expiry = '2016-11-07';
         this.author = 'Jonathan Rankin';
-        this.description = 'Find the optimal way of offering Contributions along side Membership in the Epic component';
+        this.description = 'Find the optimal way of offering Contributions along side Membership in the Epic component on stories about Brexit';
         this.showForSensitive = true;
-        this.audience = 0.15;
-        this.audienceOffset = 0.71;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions/supporter signups';
         this.audienceCriteria = 'All users in US and UK';
         this.dataLinkNames = '';
-        this.idealOutcome = 'One of the 3 variants proves to be a clear winner';
+        this.idealOutcome = 'One of the 2 variants proves to be a clear winner';
         this.canRun = function () {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
+            var keywords = config.page.keywordIds.split(',');
+            var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
+            var isAboutBrexit = (keywords.indexOf('politics/eu-referendum') !== -1) && (nonKeywordTagIds.indexOf('tone/news') !== -1);
+            return isAboutBrexit && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
         };
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
@@ -63,7 +66,7 @@ define([
                 contentType: 'application/json',
                 crossOrigin: true
             }).then(function (resp) {
-                if(resp.country === 'GB' || resp.country === 'US') {
+                if(resp.country === 'GB') {
                     fastdom.write(function () {
                         var submetaElement = $('.submeta');
                         component.insertBefore(submetaElement);
@@ -102,34 +105,12 @@ define([
         };
 
         this.variants = [
-
             {
                 id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(contributeUrl, 'co_ukus_epic_footer_control'),
-                        linkUrl2: '',
-                        p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be more secure. You can give money to the Guardian in less than a minute.',
-                        p3: '',
-                        cta1: 'Make a contribution',
-                        cta2: '',
-                        cta1Class: 'js-submit-input-contribute',
-                        cta2Class: '',
-                        hidden: 'hidden'
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'contribute-member',
-                test: function () {
-                    var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-main'),
-                        linkUrl2: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership_alt'),
+                        linkUrl1: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-main_brexit'),
+                        linkUrl2: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership_alt_brexit'),
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be more secure. You can give money to the Guardian in less than a minute.',
                         p3: 'Alternatively, you can join the Guardian and get even closer to our journalism by ',
                         cta1: 'Make a contribution',
@@ -149,8 +130,8 @@ define([
                 id: 'member-contribute',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership_main'),
-                        linkUrl2: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-alt'),
+                        linkUrl1: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership-main_brexit'),
+                        linkUrl2: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-alt_brexit'),
                         p2: 'If everyone who reads our reporting – who believes in it – helps to support it, our future would be more secure. Get closer to our journalism, be part of our story and join the Guardian.',
                         p3: 'Alternatively, you can ',
                         cta1: 'Become a Supporter',
