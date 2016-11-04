@@ -75,4 +75,14 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 7),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic-side-by-side",
+    "Find out if offering membership and contributions side by side with equal weighting is as effective as just offering membership by itself",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 7),
+    exposeClientSide = true
+  )
 }

@@ -13,8 +13,13 @@ define([
             variants: ['control', 'member-contribute']
         };
 
+        var contributionsMembershipEpicSideBySide = {
+            name: 'ContributionsMembershipEpicSideBySide',
+            variants: ['control', 'member-contribute']
+        };
 
-        var clashingTests = [contributionsMembershipEpic];
+
+        var clashingTests = [contributionsMembershipEpic, contributionsMembershipEpicSideBySide];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

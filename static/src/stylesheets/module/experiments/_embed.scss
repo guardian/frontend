@@ -42,6 +42,9 @@
     @include fs-bodyCopy(2);
 }
 
+
+
+
 .contributions__epic-link {
     text-decoration: underline;
 }
@@ -144,6 +147,10 @@
     width: 160px;
 }
 
+.contributions__contribute--epic-member-top {
+    margin-bottom: $gs-baseline/2;
+    margin-right: $gs-gutter/2;
+}
 
 
 
@@ -167,6 +174,11 @@
     margin-bottom: $gs-baseline;
 }
 
+.contributions__side-by-side-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
 @include mq($from: phablet) {
     .contributions__option-button--bottom {
         width: 70px;
@@ -183,6 +195,15 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
+
+    .contributions__side-by-side-buttons {
+        flex-direction: row;
+    }
+
+    .contributions__contribute--epic-member-top {
+        margin-bottom: 0;
+    }
+
 }
 
 .contributions__button-group {
