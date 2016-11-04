@@ -38,7 +38,9 @@ define([
     }
 
     function setupSonobi() {
-        return Promise.resolve(require(['js!sonobi.js']));
+        return new Promise(function(resolve, reject) {
+            require(['js!sonobi.js'], resolve, reject);
+        });
     }
 
     function setupAdvertising() {
