@@ -1,4 +1,4 @@
-package model
+fpackage model
 
 import conf.Static
 
@@ -18,7 +18,7 @@ sealed trait FrontEmailMetadata extends EmailMetadata[PressedPage] {
   def test(p: PressedPage) = p.metadata.webTitle == this.name
 }
 
-case object ArtWeekly extends ArticleEmailMetadata {
+case object ArtWeekly extends ArticleEmailMetad ata {
   val name = "Art Weekly"
   override val banner = Some("art-weekly.png")
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
@@ -121,6 +121,12 @@ case object VaginaDispatches extends ArticleEmailMetadata {
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "lifeandstyle/series/vagina-dispatches-newsletter")
 }
 
+case object KeepItInTheGround extends ArticleEmailMetadata {
+  val name = "Keep It In The Ground"
+  override val banner = Some("keep-it-in-the-ground.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "environment/series/keep-it-in-the-ground-updates")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
 }
@@ -145,7 +151,8 @@ object EmailAddons {
     LabNotes,
     OlympicsDailyBriefing,
     MediaBriefing,
-    VaginaDispatches)
+    VaginaDispatches,
+    KeepItInTheGround)
   private val frontEmails = Seq(
     TheFlyer
   )
