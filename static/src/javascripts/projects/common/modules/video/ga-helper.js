@@ -2,10 +2,10 @@ define([
 ], function (
 ) {
 
-    function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl, playerName, eventAction, videoId) {
+    function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl, player, eventAction, videoId) {
 
         var category = 'Media';
-        var playerName = playerName;
+        var playerName = player;
         var action = eventAction(mediaEvent);
         var fieldsObject = {
             eventCategory: category,

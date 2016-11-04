@@ -32,7 +32,7 @@ define([
                 eventCategory: 'Media',
                 eventAction: 'video content',
                 eventLabel: window.location.pathname,
-                dimension19: self.trackingId,
+                dimension19: videoId,
                 dimension20: 'guardian-youtube'
             }
         };
