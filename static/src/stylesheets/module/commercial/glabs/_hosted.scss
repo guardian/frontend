@@ -132,6 +132,9 @@ $hosted-video-height: 540px;
 .hosted-tone-btn:focus,
 .hosted-tone-btn:hover {
     color:  #333333;
+    svg {
+        fill: #333333;
+    }
 }
 
 .hosted-page--bright {
