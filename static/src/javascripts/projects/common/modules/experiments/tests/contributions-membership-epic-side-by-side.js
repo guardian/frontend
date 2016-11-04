@@ -52,7 +52,7 @@ define([
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
             var keywords = config.page.keywordIds.split(',');
             var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
-            var isNotAboutBrexit = (keywords.indexOf('politics/eu-referendum') == -1) && (nonKeywordTagIds.indexOf('tone/news') == -1);
+            var isNotAboutBrexit = (keywords.indexOf('politics/eu-referendum') === -1) || (nonKeywordTagIds.indexOf('tone/news') === -1);
             return isNotAboutBrexit && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
         };
 
@@ -97,7 +97,7 @@ define([
                         p2: 'If everyone who reads our reporting – who believes in it – helps to support it, our future would be more secure. Get closer to our journalism, be part of our story and join the Guardian.',
                         cta1: 'Become a Supporter',
                         cta2: '',
-                        cta1Class: 'js-submit-input-contribute',
+                        cta1Class: 'js-submit-input-membership',
                         cta2Class: '',
                         hidden: 'hidden'
                     }));
@@ -113,10 +113,10 @@ define([
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
                         linkUrl1: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_cont_mem_equal'),
-                        linkUrl2: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-alt_brexit'),
+                        linkUrl2: makeUrl(contributeUrl, 'co_ukus_epic_footer_cont_mem_equal'),
                         p2: 'If everyone who reads our reporting – who believes in it – helps to support it, our future would be more secure. Give to the Guardian by becoming a Supporter or by making a one-off contribution.',
                         cta1: 'Become a Supporter',
-                        cta2: 'make a one-off contribution.',
+                        cta2: 'Make a contribution',
                         cta1Class: 'js-submit-input-membership',
                         cta2Class: 'js-submit-input-contribute',
                         hidden: ''

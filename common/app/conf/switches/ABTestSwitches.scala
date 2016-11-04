@@ -78,7 +78,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-brexit",
+    "ab-contributions-membership-epic-side-by-side",
     "Find out if offering membership and contributions side by side with equal weighting is as effective as just offering membership by itself",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
