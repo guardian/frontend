@@ -75,6 +75,8 @@
         ga('@{trackerName}.set', 'dimension22', getQueryParam('CMP_BUNIT')); @* campaign business unit*@
         ga('@{trackerName}.set', 'dimension23', getQueryParam('CMP_TU')); @* campaign team*@
         ga('@{trackerName}.set', 'dimension26', (!!guardian.config.page.isHosted).toString());
+        ga('@{trackerName}.set', 'dimension27', navigator.userAgent);
+        ga('@{trackerName}.set', 'dimension29', window.location + window.location.search);
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
