@@ -19,8 +19,8 @@ define([
         };
 
         var contributionsMembershipEpic = {
-            name: 'ContributionsMembershipEpic',
-            variants: ['control', 'contribute-member', 'member-contribute']
+            name: 'ContributionsMembershipEpicBrexit',
+            variants: ['control', 'member-contribute']
         };
 
 

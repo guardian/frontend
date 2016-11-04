@@ -88,8 +88,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component",
+    "ab-contributions-membership-epic-brexit",
+    "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate =  new LocalDate(2016, 11, 7),
