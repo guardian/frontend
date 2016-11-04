@@ -83,12 +83,12 @@
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                @block.url.filter(_ => article.isLiveBlog).fold {
-                                    @img(src = imageUrl, alt = data.get("alt"))
-                                } { linkUrl =>
-                                    <a href="@linkUrl">
+                                @if(article.isLiveBlog && block.url.isDefined) {
+                                    <a href="@block.url.getOrElse("#")">
                                         @img(src = imageUrl, alt = data.get("alt"))
                                     </a>
+                                } else {
+                                    @img(src = imageUrl, alt = data.get("alt"))
                                 }
                             }
 
