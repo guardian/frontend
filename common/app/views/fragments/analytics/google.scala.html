@@ -76,7 +76,7 @@
         ga('@{trackerName}.set', 'dimension23', getQueryParam('CMP_TU')); @* campaign team*@
         ga('@{trackerName}.set', 'dimension26', (!!guardian.config.page.isHosted).toString());
         ga('@{trackerName}.set', 'dimension27', navigator.userAgent);
-        ga('@{trackerName}.set', 'dimension29', window.location + window.location.search);
+        ga('@{trackerName}.set', 'dimension29', window.location.href);
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
