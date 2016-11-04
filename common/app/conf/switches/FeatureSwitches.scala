@@ -41,7 +41,7 @@ trait FeatureSwitches {
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
     owners = Seq(Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -51,7 +51,7 @@ trait FeatureSwitches {
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on twitter",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 

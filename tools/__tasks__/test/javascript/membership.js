@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Test membership JS',
-    task: 'grunt karma:membership'
+    task: 'karma start ./static/test/javascripts/conf/membership.js --single-run'
 };

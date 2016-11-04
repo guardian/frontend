@@ -35,15 +35,15 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsCountriesUsa';
-        this.start = '2016-10-28';
+        this.id = 'ContributionsCountriesAmerica';
+        this.start = '2016-11-01';
         this.expiry = '2016-11-04';
         this.author = 'Phil Wills';
         this.description = 'Test whether different messages perform better/worse in different countries (USA)';
         this.showForSensitive = false;
         this.audience = 0.15;
         this.audienceOffset = 0.5;
-        this.successMeasure = 'Impressions to number of contributions';
+        this.successMeasure = 'Impressions to number of contributions/supporter sign ups';
         this.audienceCriteria = 'All users in US';
         this.dataLinkNames = '';
         this.idealOutcome = 'The messages performs less than 20% differently in different countries';

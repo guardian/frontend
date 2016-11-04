@@ -17,6 +17,9 @@ define([
         /* prebidEnabled: boolean. Set to true if header bidding is enabled, and the user is not participating in the sonobi test */
         prebidEnabled: config.page.edition == 'US' && !('tests' in config && config.tests.commercialHbSonobi),
 
+        /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
+        sonobiEnabled: 'tests' in config && config.tests.commercialHbSonobi && !config.page.hasPageSkin,
+
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,
 

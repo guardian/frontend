@@ -1,4 +1,4 @@
-@(content: model.Content)
+@(content: model.Content)(implicit request: RequestHeader)
 
 @import views.support.GoogleAnalyticsAccount
 
@@ -7,7 +7,7 @@
     <script type="application/json">
             {
               "requests": {
-                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}"
+                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}"
               },
               "vars": {
                 "account": "@{GoogleAnalyticsAccount.editorialTracker.trackingId}"
@@ -27,7 +27,8 @@
                     "keywordIds": "@{content.tags.keywords.map(_.id).mkString(",")}",
                     "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
                     "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}",
-                    "isHostedFlag": "@{content.metadata.isHosted.toString}"
+                    "isHostedFlag": "@{content.metadata.isHosted.toString}",
+                    "fullRequestUrl": "@{request.domain}@{request.uri}"
                   }
                 }
               }
