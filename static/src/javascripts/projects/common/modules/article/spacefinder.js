@@ -226,7 +226,7 @@ define([
 
     function SpaceError(rules) {
         this.name = 'SpaceError';
-        this.message = 'There is no space left matching rules ' + JSON.stringify(rules);
+        this.message = 'There is no space left matching rules from ' + rules.bodySelector;
         this.stack = (new Error()).stack;
     }
 
