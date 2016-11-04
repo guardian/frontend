@@ -31,7 +31,7 @@ window.curlConfig = {
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js': '@{
                 if (CommercialSonobiRubiconAdapter.isParticipating) {
-                    "//mtrx.go.sonobi.com/morpheus.theguardian.10744.js"
+                    "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js"
                 } else {
                     Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                 }
@@ -72,7 +72,7 @@ window.curlConfig = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js': '@{
                if (CommercialSonobiRubiconAdapter.isParticipating) {
-                   "//mtrx.go.sonobi.com/morpheus.theguardian.10744.js"
+                   "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js"
                } else {
                    Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                }
