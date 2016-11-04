@@ -1,4 +1,4 @@
-fpackage model
+package model
 
 import conf.Static
 
@@ -18,7 +18,7 @@ sealed trait FrontEmailMetadata extends EmailMetadata[PressedPage] {
   def test(p: PressedPage) = p.metadata.webTitle == this.name
 }
 
-case object ArtWeekly extends ArticleEmailMetad ata {
+case object ArtWeekly extends ArticleEmailMetadata {
   val name = "Art Weekly"
   override val banner = Some("art-weekly.png")
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
