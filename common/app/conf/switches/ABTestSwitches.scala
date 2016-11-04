@@ -68,26 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-countries-uk",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-countries-america",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-membership-epic-brexit",
     "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
     owners = Seq(Owner.withGithub("jranks123")),

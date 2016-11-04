@@ -8,23 +8,13 @@ define([
 
     function userIsInAClashingAbTest() {
 
-        var contributionsCountriesUk = {
-            name: 'ContributionsCountriesUk',
-            variants: ['control', 'global', 'democracy']
-        };
-
-        var contributionsCountriesAmerica = {
-            name: 'ContributionsCountriesAmerica',
-            variants: ['control', 'global', 'democracy']
-        };
-
         var contributionsMembershipEpic = {
             name: 'ContributionsMembershipEpicBrexit',
             variants: ['control', 'member-contribute']
         };
 
 
-        var clashingTests = [contributionsCountriesUk, contributionsCountriesAmerica, contributionsMembershipEpic];
+        var clashingTests = [contributionsMembershipEpic];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
