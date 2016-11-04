@@ -133,7 +133,7 @@ define([
         }
 
         function respond(error, result) {
-            postMessage({ id: data.id, error: error, result: result }, event.source);
+            postMessage({ id: data.id, error: error, result: result }, event.source, event.origin);
         }
     }
 
@@ -162,7 +162,9 @@ define([
     // Incoming messages may contain the ID of the iframe into which the
     // source window is embedded.
     function getIframe(data) {
-        return data.iframeId ? document.getElementById(data.iframeId) : null;
+        return data.type === 'set-ad-height' ?
+            document.getElementById(data.value.id) :
+            document.getElementById(data.iframeId);
     }
 
     // Cheap string formatting function. It accepts as its first argument

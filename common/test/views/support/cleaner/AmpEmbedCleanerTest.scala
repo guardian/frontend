@@ -16,6 +16,79 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     document
   }
 
+  private def documentWithVideos(videoUrls: String*): Document = {
+    val doc = "<html><body>" +
+      videoUrls.map{ url: String => s"""<figure class="element-video" data-canonical-url="$url"><iframe></iframe></figure>""" }.mkString +
+      "</body></html>"
+    val document: Document = Jsoup.parse(doc)
+    clean(document)
+  }
+
+  /////////////////////////////
+  // External video cleaner
+  /////////////////////////////
+
+  "AmpEmbedCleaner" should "replace an iframe in a http YouTube video-element with an amp-youtube element" in {
+    val result = documentWithVideos("http://www.youtube.com/watch?v=foo_12-34")
+    result.getElementsByTag("amp-youtube").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "replace an iframe in a https YouTube video-element with an amp-youtube element" in {
+    val result = documentWithVideos("https://www.youtube.com/watch?v=foo_12-34")
+    result.getElementsByTag("amp-youtube").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "not replace an iframe in a fake YouTube video-element with an amp-vimeo element" in {
+    val result = documentWithVideos(
+      "http://www.youtube.com.de/watch?v=foo_12-34",
+      "http://myyoutube.com/watch?v=foo_12-34",
+      "https://www.youtuber.com/watch?v=foo_12-34"
+    )
+    result.getElementsByTag("amp-youtube").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "not create an amp-youtube element if videoid missing" in {
+    val result = documentWithVideos("https://www.youtube.com/")
+    result.getElementsByTag("amp-youtube").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "replace an iframe in a http Vimeo video-element with an amp-vimeo element" in {
+    val result = documentWithVideos("http://vimeo.com/1234")
+    result.getElementsByTag("amp-vimeo").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "replace an iframe in a https Vimeo video-element with an amp-vimeo element" in {
+    val result = documentWithVideos("https://vimeo.com/1234")
+    result.getElementsByTag("amp-vimeo").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "not replace an iframe in a fake Vimeo video-element with an amp-vimeo element" in {
+    val result = documentWithVideos(
+      "https://vimeo.com.zz/1234",
+      "https://vimeofake.com/1234",
+      "https://myvimeo.com/1234"
+    )
+    result.getElementsByTag("amp-vimeo").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "not create an amp-vimeo element if videoid missing" in {
+    val result = documentWithVideos("https://vimeo.com/")
+    result.getElementsByTag("amp-vimeo").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "be able to create an amp-youtube element and an amp-vimeo in the same document" in {
+    val result = documentWithVideos(
+      "https://www.youtube.com/watch?v=foo_12-34",
+      "https://vimeo.com/1234"
+    )
+    result.getElementsByTag("amp-youtube").size should be(1)
+    result.getElementsByTag("amp-vimeo").size should be(1)
+  }
+
+  /////////////////////////////
+  // Soundcloud cleaner
+  /////////////////////////////
+
  "AmpEmbedCleaner" should "replace an iframe in an audio-element with an amp-soundcloud element" in {
    val soundcloudUrl = "http://www.soundcloud.com%2Ftracks%2F1234"
    val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
@@ -50,6 +123,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
+
+  /////////////////////////////
+  // Maps cleaner
+  /////////////////////////////
 
   "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
     val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""

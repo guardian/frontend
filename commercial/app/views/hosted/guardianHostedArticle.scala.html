@@ -45,6 +45,17 @@
         fill: @{page.campaign.fontColour.brandColour};
         border-color: @{page.campaign.fontColour.brandColour};
     }
+
+    /* To prevent video element from jumping */
+    video {
+        width: 370px;
+    }
+
+    @@media (min-width: 740px) { /* Tablet bp and above */
+        video {
+            width : 600px;
+        }
+    }
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)

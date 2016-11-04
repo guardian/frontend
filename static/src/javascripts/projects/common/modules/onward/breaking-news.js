@@ -221,7 +221,7 @@ define([
                     reportError(ex, { feature: 'breaking-news' });
                 });
         } else {
-            return Promise.reject('cannot dismiss');
+            return Promise.reject(new Error('cannot dismiss'));
         }
     }
 

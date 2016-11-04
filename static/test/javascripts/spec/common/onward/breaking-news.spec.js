@@ -93,7 +93,7 @@ define([
                     done.fail('user cannot use local storage, but we seem to think things are okish');
                 }, function (res) {
                     expect(fetchJson).not.toHaveBeenCalled();
-                    expect(res).toEqual('cannot dismiss');
+                    expect(res.message).toEqual('cannot dismiss');
                     expect($('.js-breaking-news-placeholder:not(:empty)').length).toBe(0);
                 }).then(done).catch(done.fail);
             });
