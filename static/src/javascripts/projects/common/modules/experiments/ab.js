@@ -117,7 +117,7 @@ define([
             isSensitive = config.page.shouldHideAdverts;
 
         return ((isSensitive ? test.showForSensitive : true)
-        && test.canRun() && !expired && isTestSwitchedOn(test));
+            && isTestSwitchedOn(test)) && !expired && test.canRun() ;
     }
 
     function getId(test) {
