@@ -36,7 +36,8 @@ object RedirectService {
 class RedirectService extends Logging with ExecutionContexts {
   import RedirectService._
 
-  // protocol fixed to http so that lookups to dynamo find existing redirects
+  // protocol fixed to http so that lookups to dynamo find existing
+  // redirects which were originally all stored as http://...
   private val expectedSourceProtocol = "http://"
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
