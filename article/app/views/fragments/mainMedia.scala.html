@@ -42,7 +42,9 @@
 
 
                     @mainVideo.videos.caption.map { caption =>
-                        <figcaption data-link-name="Video caption link" class="caption caption--main" itemprop="description">@Html(caption)</figcaption>
+                        <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                            @Html(caption)
+                        </figcaption>
                     }
 
                 </figure>

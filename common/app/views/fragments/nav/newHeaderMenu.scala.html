@@ -13,22 +13,21 @@
                 @topLevelSection.name
             </summary>
 
-            @Edition.all.map { edition =>
+            @defining(Edition(request)) { edition =>
                 <ul class="main-navigation__secondary
                     navigation-group
                     navigation-group--@{edition.id.toLowerCase}
                     js-editionalise-secondary-nav"
-                    data-edition="@{edition.id.toLowerCase}"
-                    @if(edition.id.toLowerCase != "uk") { hidden }> @* Our default edition is UK *@
+                    data-edition="@{edition.id.toLowerCase}" >
 
                     @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
                             <a href="@LinkTo { @sectionItem.url }"
-                                data-link-name="nav2 : secondary : @sectionItem.name">
+                                data-link-name="nav2 : secondary : @sectionItem.title">
                                     @if(sectionItem.iconName.nonEmpty) {
                                         @fragments.inlineSvg(sectionItem.iconName, "icon", List("main-menu__icon"))
                                     }
-                                    @sectionItem.name
+                                    @sectionItem.title
                             </a>
                         </li>
                     }
@@ -79,16 +78,15 @@
 
         <ul class="navigation-group navigation-group--grey secondary-navigation">
 
-            @Edition.all.map { edition =>
+            @defining(Edition(request)) { edition =>
 
                 @NewNavigation.MembershipLinks.getEditionalisedNavLinks(edition).map { item =>
                     <li class="navigation-group__item js-editionalise-secondary-nav"
-                        data-edition=@{edition.id.toLowerCase}
-                        @if(edition.id.toLowerCase != "uk") { hidden }>
+                        data-edition=@{edition.id.toLowerCase}>
 
-                            <a href="@item.url" data-link-name="nav2 : @item.name">
+                            <a href="@item.url" data-link-name="nav2 : @item.title">
                                 @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
-                                @item.name
+                                @item.title
                             </a>
                     </li>
                 }
@@ -98,17 +96,16 @@
 
         </ul>
 
-        @Edition.all.map { edition =>
+        @defining(Edition(request)) { edition =>
             <ul class="navigation-group
                 js-editionalise-secondary-nav
                 secondary-navigation"
-                data-edition=@{edition.id.toLowerCase}
-                @if(edition.id.toLowerCase != "uk") { hidden }>
+                data-edition=@{edition.id.toLowerCase}>
 
                 @NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map { item =>
                     <li class="navigation-group__item">
-                        <a href="@LinkTo { @item.url }" data-link-name="nav2 : @item.name">
-                            @item.name
+                        <a href="@LinkTo { @item.url }" data-link-name="nav2 : @item.title">
+                            @item.title
                         </a>
                     </li>
                 }
