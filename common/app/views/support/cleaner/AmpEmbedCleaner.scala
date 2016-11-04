@@ -39,25 +39,40 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
-  def cleanAmpYouTube(document: Document) = {
+  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String)
+  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
+  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
 
-    document.getElementsByClass("element-video").filter { element: Element =>
-      element.getElementsByTag("iframe").length != 0
-    }.foreach { element: Element =>
-      element.getElementsByTag("iframe").map { element: Element =>
-        element.remove()
-      }
-      val youtubeUrl = element.attr("data-canonical-url")
-      youtubeUrl.split("v=").lastOption.map { youtubeId =>
-        val youtube = document.createElement("amp-youtube")
-        youtube.attr("data-videoid", youtubeId)
-        youtube.attr("width", "5")
-        youtube.attr("height", "3")
-        youtube.attr("layout", "responsive")
-        element.appendChild(youtube)
+  object AmpExternalVideo {
+    def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
+      val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
+      val vimeoPattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
+      videoUrl match {
+        case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
+        case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
+        case _ => None
       }
     }
 
+    def createElement(document: Document, videoId: String, elementType: String): Element = {
+      val video = document.createElement(elementType)
+      video.attr("data-videoid", videoId)
+      video.attr("width", "5")
+      video.attr("height", "3")
+      video.attr("layout", "responsive")
+    }
+
+    def clean(document: Document) = {
+      for {
+        videoElement <- document.getElementsByClass("element-video")
+        iframeElement <- videoElement.getElementsByTag("iframe")
+        ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
+      } yield {
+        val ampVideoElement = createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
+        videoElement.appendChild(ampVideoElement)
+        iframeElement.remove()
+      }
+    }
   }
 
   object AmpSoundcloud {
@@ -183,7 +198,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     cleanAmpVideos(document)
-    cleanAmpYouTube(document)
+    AmpExternalVideo.clean(document)
     AmpSoundcloud.clean(document)
     cleanAmpMaps(document)
     cleanAmpInstagram(document)

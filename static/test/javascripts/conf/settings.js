@@ -25,7 +25,6 @@ module.exports = function (config) {
 
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         port: 9876,
-        reporters: karmaReporters,
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_ERROR,
         autoWatch: true,
@@ -41,6 +40,8 @@ module.exports = function (config) {
         browsers: ['PhantomJS'],
         captureTimeout: 60000,
         singleRun: false,
+
+        reporters: karmaReporters,
         coverageReporter: {
             reporters: [
                 {
@@ -49,6 +50,10 @@ module.exports = function (config) {
                 },
                 {type: 'text-summary'}
             ]
+        },
+        preprocessors: {
+            'static/src/javascripts/!(*components|vendor)/**/*.js': ['coverage'],
+            'static/src/javascripts/*.js': ['coverage']
         },
 
         browserDisconnectTimeout: 10000,
