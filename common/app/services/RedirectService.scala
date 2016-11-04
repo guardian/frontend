@@ -16,20 +16,20 @@ object RedirectService {
   }
 
   implicit val destinationFormat = DynamoFormat.xmap[Destination, Map[String, String]] {
-    case m if m.contains("destination") => Right(External(m("source"), m("destination")))
-    case m if m.contains("archive") => Right(Archive(m("source"), m("archive")))
+    case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
+    case m if m.contains("archive") => Right(ArchiveRedirect(m("source"), m("archive")))
     case _ => Left(MissingProperty)
   } {
-    case External(source, destination) => Map("source" -> source, "destination" -> destination)
-    case Archive(source, archive) => Map("source" -> source, "archive" -> archive)
+    case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
+    case ArchiveRedirect(source, archive) => Map("source" -> source, "archive" -> archive)
   }
 
-  // External is a permanent 3XX redirect - it could be guardian/non-guardian address
-  case class External(source: String, location: String) extends Destination
+  // This is a permanent 3XX redirect - it could be guardian/non-guardian address
+  case class PermanentRedirect(source: String, location: String) extends Destination
 
   // Archive refers to an internal redirect to an s3 bucket location - that is, it will
   // use the X-Accel-Redirect header to instruct nginx to perform the redirect "internally"
-  case class Archive(source: String, location: String) extends Destination
+  case class ArchiveRedirect(source: String, location: String) extends Destination
 }
 
 
