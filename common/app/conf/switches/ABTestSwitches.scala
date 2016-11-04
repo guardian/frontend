@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
+    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = true
   )
 
