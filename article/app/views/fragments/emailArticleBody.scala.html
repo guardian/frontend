@@ -7,14 +7,9 @@
 
 @defining(page.article) { article =>
     @fullRow {
-        @defining(page.email.map(_.name)) { emailName =>
-            @imageMaybeWithLink(
-                imageUrl = page.banner,
-                alt = emailName,
-                linkUrl = Some(article.metadata.webUrl),
-                linkTitle = emailName
-            )
-        }
+        <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
+            <img width="580" class="full-width" src="@page.banner" @page.email.map { email => alt="View @email.name online"}>
+        </a>
     }
 
     @page.fallbackSeriesText.map { seriesName =>
@@ -88,11 +83,13 @@
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                @imageMaybeWithLink(
-                                    imageUrl = imageUrl,
-                                    alt = data.get("alt"),
-                                    linkUrl = block.url.filter(_ => article.isLiveBlog)
-                                )
+                                @block.url.filter(_ => article.isLiveBlog).fold {
+                                    <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                } { linkUrl =>
+                                    <a href="@linkUrl">
+                                        <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                    </a>
+                                }
                             }
 
                             @paddedRow {
@@ -116,11 +113,13 @@
                     case GuVideoBlockElement(video, media, data) => {
                         @EmailVideoImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                @imageMaybeWithLink(
-                                    imageUrl = imageUrl,
-                                    alt = data.get("alt"),
-                                    linkUrl = data.get("url")
-                                )
+                                @data.get("url").fold {
+                                    <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                }{ linkUrl =>
+                                    <a href="@linkUrl">
+                                        <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                    </a>
+                                }
                             }
                         }
                     }
