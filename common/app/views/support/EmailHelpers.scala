@@ -53,6 +53,10 @@ object EmailHelpers {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="float-left icon icon-$name">"""
   }
 
+  def img(src: String, alt: Option[String] = None) = Html {
+    s"""<img width="580" class="full-width" src="${src}" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
+  }
+
   object Images {
     val footerG = Static("images/email/grey-g.png")
     val quote = Static("images/email/quote.png")
