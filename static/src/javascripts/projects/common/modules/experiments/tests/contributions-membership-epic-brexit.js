@@ -130,7 +130,7 @@ define([
                 id: 'member-contribute',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership-main_brexit'),
+                        linkUrl1: makeUrl(membershipUrl, 'gdnwb_copts_mem_epic_membership_main_brexit'),
                         linkUrl2: makeUrl(contributeUrl, 'co_ukus_epic_footer_contribute-alt_brexit'),
                         p2: 'If everyone who reads our reporting – who believes in it – helps to support it, our future would be more secure. Get closer to our journalism, be part of our story and join the Guardian.',
                         p3: 'Alternatively, you can ',
