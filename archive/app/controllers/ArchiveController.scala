@@ -10,7 +10,7 @@ import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
-import services.RedirectService.{Archive, Destination, External}
+import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
 import scala.concurrent.Future
 
@@ -146,10 +146,10 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
 
   def processLookupDestination(path: String) : PartialFunction[Destination, CacheableResult] = {
-      case External(_, location) if !linksToItself(path, location) =>
+      case PermanentRedirect(_, location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
         WithoutRevalidationResult(Redirect(locationWithCampaign, redirectHttpStatus))
-      case Archive(_, archivePath) =>
+      case ArchiveRedirect(_, archivePath) =>
         // http://wiki.nginx.org/X-accel
         WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }

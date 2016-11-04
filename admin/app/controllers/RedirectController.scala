@@ -6,7 +6,7 @@ import play.api.mvc.{Action, Controller}
 import common.Logging
 import play.api.data._
 import play.api.data.Forms._
-import services.RedirectService.External
+import services.RedirectService.PermanentRedirect
 import services.RedirectService
 
 
@@ -26,7 +26,7 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
 
     redirectForm.bindFromRequest().get.trim match {
       case PageRedirect(from, "") if from.nonEmpty  => redirects.remove(from)
-      case PageRedirect(from, to) if from.nonEmpty  => redirects.set(External(from, to))
+      case PageRedirect(from, to) if from.nonEmpty  => redirects.set(PermanentRedirect(from, to))
       case _ =>
     }
 
@@ -71,7 +71,7 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
           val from = fromAndTo(0).trim
           val to = fromAndTo(1).trim
           try {
-            redirects.set(External(from, to))
+            redirects.set(PermanentRedirect(from, to))
             s"$from -> $to"
           } catch {
             case e: Exception => s"Error processing $line: ${e.getMessage}"
