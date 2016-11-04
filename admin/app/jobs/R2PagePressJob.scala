@@ -14,6 +14,7 @@ import services.{Redirects, S3Archive, S3ArchiveOriginals}
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
+import services.Redirects.Archive
 
 import scala.concurrent.Future
 
@@ -115,7 +116,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: Redirects) extends Execution
       cleanedHtmlString.map { cleanedHtmlString =>
         S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
           case true =>
-            redirects.set(Redirects.Redirect(urlIn, archive = Some(pressUrl)))
+            redirects.set(Archive(urlIn, pressUrl))
             log.info(s"Pressed $urlIn as $pressUrl")
             queue.delete(notification.handle)
           case _ => log.error(s"Press failed for $pressUrl")
@@ -152,7 +153,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: Redirects) extends Execution
               cleanedHtmlString.map { cleanedHtmlString =>
                 S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
                   case true =>
-                    redirects.set(Redirects.Redirect(urlIn, archive = Some(pressUrl)))
+                    redirects.set(Archive(urlIn, pressUrl))
                     log.info(s"Pressed $urlIn as $pressUrl")
                     queue.delete(notification.handle)
                   case _ => log.error(s"Press failed for $pressUrl")

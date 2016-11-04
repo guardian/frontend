@@ -145,10 +145,10 @@ class ArchiveController(redirects: Redirects) extends Controller with Logging wi
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
 
   def processLookupDestination(path: String) : PartialFunction[Redirects.Destination, CacheableResult] = {
-      case Redirects.External(location) if !linksToItself(path, location) =>
+      case Redirects.External(_, location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
         WithoutRevalidationResult(Redirect(locationWithCampaign, redirectHttpStatus))
-      case Redirects.Archive(archivePath) =>
+      case Redirects.Archive(_, archivePath) =>
         // http://wiki.nginx.org/X-accel
         WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }

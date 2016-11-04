@@ -205,16 +205,18 @@ import services.Redirects
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
-    val shortRedirectWithCMP = Redirects.External("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP.location)
+    val path = "http://www.theguardian.com/p/old/stw"
+    val shortRedirectWithCMP = Redirects.External(path, "http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = archiveController.retainShortUrlCampaign(path, shortRedirectWithCMP.location)
     result should be (shortRedirectWithCMP.location)
   }
 
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
-    val databaseSaysArchive = Redirects.Archive("http://www.theguardian.com/redirect/path-to-content")
-    val result = archiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
-    result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
+    val path = "http://www.theguardian.com/redirect/path-to-content"
+    val databaseSaysArchive = Redirects.Archive("any", path)
+    val result = archiveController.processLookupDestination(path).lift(databaseSaysArchive)
+    result.map(_.toString).getOrElse("") should include (s"""X-Accel-Redirect -> /s3-archive/$path""")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head
