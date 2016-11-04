@@ -38,7 +38,7 @@ define([
                         section:    'books'
                     };
                     config.switches = {
-                        standardAdverts: true
+                        commercial: true
                     };
 
                     // set up fake server

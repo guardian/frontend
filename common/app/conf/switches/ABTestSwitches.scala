@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Standalone frontend discussion",
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
+    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = true
   )
 
@@ -32,27 +32,7 @@ trait ABTestSwitches {
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-weekend-reading-promo",
-    "Show visitors a snap banner to promote the Weekend Reading email",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-warp-factor-one",
-    "The first level of prominent membership engagement messaging",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 3),
+    sellByDate = new LocalDate(2016, 11, 21),
     exposeClientSide = true
   )
 
@@ -63,6 +43,56 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 18),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-membership-engagement-message-copy-experiment",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 8),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-membership-engagement-us-message-copy-experiment",
+    "Test alternate short messages on US membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-countries-uk",
+    "Test whether different messages perform better/worse in different countries",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-countries-america",
+    "Test whether different messages perform better/worse in different countries",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic",
+    "Find the optimal way of offering Contributions along side Membership in the Epic component",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate =  new LocalDate(2016, 11, 7),
     exposeClientSide = true
   )
 }

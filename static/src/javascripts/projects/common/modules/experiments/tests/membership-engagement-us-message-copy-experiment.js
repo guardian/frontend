@@ -18,21 +18,21 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MembershipEngagementWarpFactorOne';
-        this.start = '2016-10-24';
-        this.expiry = '2016-11-3';
+        this.id = 'MembershipEngagementUsMessageCopyExperiment';
+        this.start = '2016-10-27';
+        this.expiry = '2016-11-15';
         this.author = 'Justin Pinner';
-        this.description = 'The first level of prominent engagement messaging';
-        this.audience = 0.3;
+        this.description = 'Test alternate short messages on engagement banner';
+        this.audience = 0.5;
         this.audienceOffset = 0;
-        this.successMeasure = 'More readers become members';
-        this.audienceCriteria = '30 percent of (non-member) UK edition readers';
+        this.successMeasure = 'More US membership sign-ups';
+        this.audienceCriteria = '50 percent of (non-member) US edition readers';
         this.dataLinkNames = '';
-        this.idealOutcome = 'Messaging promotes additional membership sign-up';
-        this.hypothesis = 'Showing larger, bolder messages will encourage more readers to take up membership';
+        this.idealOutcome = 'More US readers engage with the banner and then complete membership sign-up';
+        this.hypothesis = 'More persuasive copy will improve US membership conversions from impressions';
 
         this.canRun = function () {
-            return config.page.edition.toLowerCase() === 'uk' &&
+            return config.page.edition.toLowerCase() === 'us' &&
                 commercialFeatures.canReasonablyAskForMoney &&
                 config.page.contentType !== 'signup';
         };
@@ -52,7 +52,17 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'become',
+                id: 'coffee',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'defies',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'value',
                 test: function () {},
                 success: success.bind(this)
             }

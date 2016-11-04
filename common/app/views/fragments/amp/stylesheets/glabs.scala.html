@@ -1,0 +1,137 @@
+.paid-content--advertisement-feature {
+    background-color: #d9d9d9;
+}
+
+.paid-content--advertisement-feature .content__meta-container:not(.content__meta-container--no-byline) {
+    margin: 0;
+}
+
+.badge--alt {
+    font-size: 14px;
+}
+
+.badge__link {
+    display: block;
+}
+
+.paidfor-band {
+    background: #69d1ca;
+    width: 100%;
+}
+
+.paidfor-meta,
+.paidfor-meta__label,
+.paidfor-label {
+    display: flex;
+}
+
+.paidfor-input {
+    display: none;
+}
+
+.paidfor-input:not(:checked) ~ .popup--paidfor {
+    display: none;
+}
+
+.paidfor-input:checked ~ .popup--paidfor {
+    display: block;
+}
+
+.paidfor-input:not(:checked) ~ .tooltip-label svg {
+    transform: rotate(180deg);
+}
+
+.paidfor-input:checked ~ .tooltip-label svg {
+    transform: rotate(0deg);
+}
+
+.paidfor-meta__label {
+    align-items: center;
+}
+
+.paidfor-meta__label,
+.paidfor-meta__more > .popup__toggle {
+    padding: 0.25rem 0.625rem;
+}
+
+.paidfor-meta__label {
+    padding-left: 0;
+}
+
+.paidfor-band__inner {
+    padding: 0 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.paidfor-label {
+    position: relative;
+    cursor: pointer;
+    align-items: center;
+}
+
+.paidfor-label .tooltip-label {
+    border-left: 1px solid rgba(0, 0, 0, .2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
+    display: inline-block;
+    padding: 7px 10px;
+}
+
+.paidfor-label .tooltip-label svg {
+    width: 12px;
+    height: 9px;
+    fill: #333;
+}
+
+.popup--paidfor {
+    position: absolute;
+    background: #333;
+    box-shadow: none;
+    left: 100px;
+    top: 35px;
+    padding: 16px;
+    color: #ffffff;
+    transform: translate(-50%, 0);
+    width: 234px;
+    border-radius: 4px;
+    font-weight: 700;
+    z-index: 32000;
+}
+
+.popup--paidfor::before {
+    content: '';
+    border: solid transparent;
+    border-bottom-color: #333;
+    border-width: 6px;
+    height: 0;
+    width: 0;
+    position: absolute;
+    bottom: 100%;
+    left: 35%;
+    transform: translate(-50%, 0);
+}
+
+.popup--paidfor__title {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1rem;
+    margin: 0 0 1em;
+}
+
+.popup--paidfor__link {
+    color: #69d1ca;
+    font-size: 0.8125rem;
+    line-height: .8;
+    display: block;
+}
+
+.popup--paidfor__link svg {
+    display: inline-block;
+    vertical-align: middle;
+    fill: #69d1ca;
+    height: 20px;
+    width: 20px;
+}
+

@@ -2,7 +2,6 @@ package services
 
 import conf.Configuration
 import common.{ExecutionContexts, Logging}
-import play.api.Play
 import scala.collection.JavaConversions._
 import com.amazonaws.auth.AWS4Signer
 import com.amazonaws.{AmazonWebServiceRequest, DefaultRequest}
@@ -19,8 +18,11 @@ case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
 class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
-  private val tableName = if (Configuration.environment.isNonProd) "redirects-CODE" else "redirects"
-  private val DynamoDbGet = "DynamoDB_20120810.GetItem"
+  private val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
+  private val dynamoDbGet = "DynamoDB_20120810.GetItem"
+
+  // protocol fixed to http so that lookups to dynamo find existing redirects
+  private val expectedSourceProtocol = "http://"
 
   private lazy val credentials  = Configuration.aws.credentials
 
@@ -42,12 +44,12 @@ class DynamoDB(wsClient: WSClient) extends Logging with ExecutionContexts {
       |{
       |   "TableName": "$tableName",
       |   "Key": {
-      |     "source": {"S": "$source"}
+      |     "source": {"S": "$expectedSourceProtocol$source"}
       |   }
       |}
       """.stripMargin
 
-      val headers = signedHeaders(DynamoDbGet, bodyContent)
+      val headers = signedHeaders(dynamoDbGet, bodyContent)
 
       val asyncRequest = wsClient.url(s"http://${AwsEndpoints.dynamoDb}")
         .withRequestTimeout(1000)

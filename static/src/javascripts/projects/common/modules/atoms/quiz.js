@@ -2,14 +2,12 @@ define([
     'bean',
     'common/utils/$',
     'common/utils/fastdom-promise',
-    'lodash/collections/toArray',
-    'common/modules/analytics/omniture'
+    'lodash/collections/toArray'
 ], function (
     bean,
     $,
     fastdom,
-    toArray,
-    omniture
+    toArray
 ) {
     return {
         // find a bucket message to show once you finish a quiz
@@ -26,7 +24,6 @@ define([
                         var quiz = e.currentTarget,
                             total =  $(':checked + .atom-quiz__answer__item', quiz).length;
 
-                        omniture.trackLinkImmediate('quiz-question-answered-'+total);
                         if (quiz.checkValidity()) { // the form (quiz) is complete
                             var $bucket__message = null;
                             do {

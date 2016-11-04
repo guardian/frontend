@@ -27,7 +27,7 @@ module.exports = (() => {
         '/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper', // Instagram + Twitter
         '/sport/live/2016/aug/25/county-cricket-surrey-lancashire-live-blog', // Twitter
         //'/sport/blog/2016/aug/25/baseball-olympic-games-2020-tokyo-mlb-team-selection', // Vine
-        //'/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
+        '/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
         '/commentisfree/2016/aug/25/burkini-french-muslim-isis', // Videop
         //'/music/musicblog/2010/sep/02/wiley-ustream', // uStream
         //'/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
@@ -56,6 +56,11 @@ module.exports = (() => {
             Live blogs
          */
         '/us-news/live/2016/aug/12/donald-trump-republicans-hillary-clinton-us-election-live', // Live blog
-        '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live' // Sport live blog
+        '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live', // Sport live blog
+
+        /*
+            Paid for by hosted pages
+         */
+        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career'
     ];
 })();

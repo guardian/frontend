@@ -127,7 +127,8 @@ define([
          *  Interactives are content, we want them booting as soon (and as stable) as possible.
          */
 
-        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+        var interactiveTest = config.switches.inlineInteractiveRequire ? /Article|LiveBlog/ : /Article|Interactive|LiveBlog/;
+        if (interactiveTest.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
                 var mainJS = el.getAttribute('data-interactive');
                 if (!mainJS) {

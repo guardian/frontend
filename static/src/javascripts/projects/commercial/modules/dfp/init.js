@@ -19,8 +19,7 @@ define([
     'commercial/modules/messenger/scroll',
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
-    'commercial/modules/messenger/parallax-background',
-    'commercial/modules/messenger/fixed-background'
+    'commercial/modules/messenger/background'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
              ophanTracking) {
@@ -29,7 +28,7 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = 'tests' in config && config.tests.commercialHbSonobi ? setupSonobi() : Promise.resolve();
+            var initialTag = dfpEnv.sonobiEnabled ? setupSonobi() : Promise.resolve();
             return initialTag.then(setupAdvertising);
         }
 
@@ -46,7 +45,7 @@ define([
 
         return new Promise(function(resolve) {
 
-            if ('tests' in config && config.tests.commercialHbSonobi) {
+            if (dfpEnv.sonobiEnabled) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
                 ophanTracking.addTag('sonobi');

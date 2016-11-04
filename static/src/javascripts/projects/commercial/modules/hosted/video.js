@@ -73,9 +73,13 @@ define([
                     }
 
                     $videoEl.each(function(el){
+                        var mediaId = $videoEl.attr('data-media-id');
                         player = videojs(el, videojsOptions());
                         player.guMediaType = 'video';
                         videojs.plugin('fullscreener', fullscreener);
+
+                        events.addContentEvents(player, mediaId, player.guMediaType);
+                        events.bindGoogleAnalyticsEvents(player, window.location.pathname);
 
                         player.ready(function () {
                             var vol;
@@ -92,7 +96,6 @@ define([
 
                             player.fullscreener();
 
-                            var mediaId = $videoEl.attr('data-media-id');
                             deferToAnalytics(function () {
                                 events.initOphanTracking(player, mediaId);
                                 events.bindGlobalEvents(player);

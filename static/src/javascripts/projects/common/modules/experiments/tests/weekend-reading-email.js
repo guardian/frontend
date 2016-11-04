@@ -16,7 +16,7 @@ define([
     return function () {
         this.id = 'WeekendReadingEmail';
         this.start = '2016-08-23';
-        this.expiry = '2016-10-31';
+        this.expiry = '2016-11-21';
         this.author = 'Kate Whalen';
         this.description = '';
         this.audience = 1;
