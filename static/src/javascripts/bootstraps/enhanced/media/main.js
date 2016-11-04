@@ -150,7 +150,6 @@ define([
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
-            showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
@@ -162,6 +161,11 @@ define([
             playerSetupComplete,
             withPreroll,
             blockVideoAds;
+
+        //end-slate url follows the patten /video/end-slate/section/<section>.json?shortUrl=
+        //only show end-slate if page has a section i.e. not on the `/global` path
+        //e.g https://www.theguardian.com/global/video/2016/nov/01/what-happened-at-the-battle-of-orgreave-video-explainer
+        var showEndSlate = $el.attr('data-show-end-slate') === 'true' && !!config.page.section;
 
         player = createVideoPlayer(el, videojsOptions({
             plugins: {
@@ -399,7 +403,11 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
 
         initFacia();
-        initMoreInSection();
+
+        if (config.page.section) {
+            initMoreInSection();
+        }
+
         initOnwardContainer();
     }
 
