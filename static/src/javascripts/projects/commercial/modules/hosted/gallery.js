@@ -45,6 +45,7 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
+        this.$galleryFrame = $('.js-hosted-gallery-frame');
         this.$header = $('.js-hosted-headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
@@ -188,14 +189,13 @@ define([
 
     HostedGallery.prototype.resizeImage = function (imgIndex) {
         var $imageDiv = this.$images[imgIndex],
-            $imagesContainer = this.$imagesContainer[0],
-            $gallery = this.$galleryEl[0],
+            $galleryFrame = this.$galleryFrame[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
             $meta = this.$meta,
             $images = this.$images,
-            width = $gallery.clientWidth,
-            height = $imagesContainer.clientHeight,
+            width = $galleryFrame.clientWidth,
+            height = $galleryFrame.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
             ctaSize = getFrame(0),
@@ -390,9 +390,7 @@ define([
             height = $imagesContainer.clientHeight,
             $header = this.$header,
             $footer = this.$captionContainer,
-            $progress = this.$progress,
-            $ctaFloat = this.$ctaFloat,
-            $ojFloat = this.$ojFloat,
+            $galleryFrame = this.$galleryFrame,
             imgRatio = 5 / 3,
             imageWidth = width,
             leftRight = 0;
@@ -404,11 +402,8 @@ define([
             $header.css('width', imageWidth);
             $footer.css('margin', '0 ' + leftRight);
             $footer.css('width', 'auto');
-            $progress.css('right', leftRight);
-            bonzo($ctaFloat).css('left', leftRight);
-            bonzo($ojFloat).css('left', leftRight);
-            bonzo($ctaFloat).css('right', leftRight);
-            bonzo($ojFloat).css('right', leftRight);
+            $galleryFrame.css('left', leftRight);
+            $galleryFrame.css('right', leftRight);
         });
     };
 

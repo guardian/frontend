@@ -302,6 +302,15 @@
     }
 }
 
+.hosted-gallery__gallery-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
 .hosted-gallery-page--container {
     position: absolute;
     top: 0;
@@ -481,7 +490,7 @@ $progressColor: #ffffff;
     position: absolute;
     top: 50%;
     margin-top: $progressHeight / -2;
-    right: -10px;
+    right: 0;
     height: $progressHeight;
     width: $progressHeight;
 
