@@ -33,7 +33,7 @@
     }
     </style>
         <!--<![endif]-->
-    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page small-captions @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
         @guardianHostedHeader("hosted-gallery-page", page)
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
@@ -41,7 +41,7 @@
                 <div class="js-hosted-gallery-frame hosted-gallery__gallery-frame">
                     <div class="js-hosted-gallery-images hosted-gallery__images-container">
                         @guardianHostedGalleryImage(page.images.head, {
-                            <div class="hosted-gallery__meta js-hosted-gallery-meta">
+                            <div class="hosted-gallery__meta js-hosted-gallery-meta hosted-gallery__small-captions-only">
                                 <div class="content__main-column">
                                     <h1 class="hosted-gallery__heading">{page.title}</h1>
                                     <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
@@ -55,6 +55,13 @@
                     <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
                         @for(i <- page.images.indices) {
                             <div class="hosted-gallery__image--placeholder"></div>
+                        }
+                    </div>
+                    <div class="hosted-gallery__large-captions-container hosted-gallery__large-captions-only">
+                        @for(i <- page.images.indices) {
+                            <div class="js-hosted-gallery-caption hosted-gallery__enlarged-caption">
+                                <div class="content__main-column">@{page.images(i).caption}</div>
+                            </div>
                         }
                     </div>
                     @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText)
@@ -89,14 +96,14 @@
                                         @page.images(i).title
                                     </span>
                                 </div>
-                                <div class="hosted-gallery__caption-text">
+                                <div class="hosted-gallery__caption-text hosted-gallery__small-captions-only">
                                     @page.images(i).caption
                                     @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
                                     @page.images(i).credit
                                 </div>
                             </div>
                         }
-                        <div class="hosted-gallery__info-button js-gallery-caption-button">
+                        <div class="hosted-gallery__info-button js-gallery-caption-button hosted-gallery__small-captions-only">
                             <span class="icon-i">i</span>
                             @fragments.inlineSvg("cross", "icon", List("inline-cross inline-icon "))
                         </div>
