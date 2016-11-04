@@ -6,14 +6,14 @@ import play.api.mvc.{Action, Controller}
 import common.Logging
 import play.api.data._
 import play.api.data.Forms._
-import services.Redirects
-import services.Redirects.External
+import services.RedirectService.External
+import services.RedirectService
 
 
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
-class RedirectController(redirects: Redirects) extends Controller with Logging {
+class RedirectController(redirects: RedirectService) extends Controller with Logging {
 
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))

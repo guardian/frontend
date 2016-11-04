@@ -9,7 +9,7 @@ import conf.Configuration
 import scala.concurrent.Future
 
 
-object Redirects {
+object RedirectService {
   sealed trait Destination {
     def source: String
     def location: String
@@ -33,8 +33,8 @@ object Redirects {
 }
 
 
-class Redirects extends Logging with ExecutionContexts {
-  import Redirects._
+class RedirectService extends Logging with ExecutionContexts {
+  import RedirectService._
 
   // protocol fixed to http so that lookups to dynamo find existing redirects
   private val expectedSourceProtocol = "http://"

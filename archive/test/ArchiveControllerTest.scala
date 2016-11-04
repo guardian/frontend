@@ -6,7 +6,8 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 import scala.concurrent.Future
-import services.Redirects
+import services.RedirectService
+import services.RedirectService.{Archive, External}
 
 @DoNotDiscover class ArchiveControllerTest
   extends FlatSpec
@@ -15,7 +16,7 @@ import services.Redirects
   with BeforeAndAfterAll {
 
   lazy val archiveController = new ArchiveController(mockRedirects)
-  lazy val mockRedirects = new Redirects {
+  lazy val mockRedirects = new RedirectService {
     override def destinationFor(source: String) = Future.successful(None)
   }
 
@@ -206,7 +207,7 @@ import services.Redirects
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val path = "http://www.theguardian.com/p/old/stw"
-    val shortRedirectWithCMP = Redirects.External(path, "http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val shortRedirectWithCMP = External(path, "http://www.theguardian.com/p/new?CMP=existing-cmp")
     val result = archiveController.retainShortUrlCampaign(path, shortRedirectWithCMP.location)
     result should be (shortRedirectWithCMP.location)
   }
@@ -214,7 +215,7 @@ import services.Redirects
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
     val path = "http://www.theguardian.com/redirect/path-to-content"
-    val databaseSaysArchive = Redirects.Archive("any", path)
+    val databaseSaysArchive = Archive("any", path)
     val result = archiveController.processLookupDestination(path).lift(databaseSaysArchive)
     result.map(_.toString).getOrElse("") should include (s"""X-Accel-Redirect -> /s3-archive/$path""")
   }

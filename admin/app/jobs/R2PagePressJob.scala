@@ -10,15 +10,15 @@ import org.jsoup.Jsoup
 import pagepresser.{InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, PollsHtmlCleaner, SimpleHtmlCleaner}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
-import services.{Redirects, S3Archive, S3ArchiveOriginals}
+import services.{RedirectService, S3Archive, S3ArchiveOriginals}
 import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
-import services.Redirects.Archive
+import services.RedirectService.Archive
 
 import scala.concurrent.Future
 
-class R2PagePressJob(wsClient: WSClient, redirects: Redirects) extends ExecutionContexts with Logging {
+class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends ExecutionContexts with Logging {
   private val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private val credentials = Configuration.aws.mandatoryCredentials

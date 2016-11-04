@@ -4,16 +4,17 @@ import campaigns.ShortCampaignCodes
 import common._
 import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
-import services.{Redirects, GoogleBotMetric}
+import services.{GoogleBotMetric, RedirectService}
 import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import services.RedirectService.{Archive, Destination, External}
 
 import scala.concurrent.Future
 
-class ArchiveController(redirects: Redirects) extends Controller with Logging with ExecutionContexts {
+class ArchiveController(redirects: RedirectService) extends Controller with Logging with ExecutionContexts {
 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
@@ -92,7 +93,7 @@ class ArchiveController(redirects: Redirects) extends Controller with Logging wi
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Redirects.Destination]] = redirects.destinationFor(normalise(path))
+  private def destinationFor(path: String): Future[Option[Destination]] = redirects.destinationFor(normalise(path))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {
@@ -144,11 +145,11 @@ class ArchiveController(redirects: Redirects) extends Controller with Logging wi
 
   private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
 
-  def processLookupDestination(path: String) : PartialFunction[Redirects.Destination, CacheableResult] = {
-      case Redirects.External(_, location) if !linksToItself(path, location) =>
+  def processLookupDestination(path: String) : PartialFunction[Destination, CacheableResult] = {
+      case External(_, location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
         WithoutRevalidationResult(Redirect(locationWithCampaign, redirectHttpStatus))
-      case Redirects.Archive(_, archivePath) =>
+      case Archive(_, archivePath) =>
         // http://wiki.nginx.org/X-accel
         WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }
