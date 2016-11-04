@@ -50,10 +50,15 @@ define([
         this.canRun = function () {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-            var keywords = config.page.keywordIds.split(',');
-            var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
-            var isNotAboutBrexit = (keywords.indexOf('politics/eu-referendum') === -1) || (nonKeywordTagIds.indexOf('tone/news') === -1);
-            return isNotAboutBrexit && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
+            if('keywordIds' in config.page &&  'nonKeywordTagIds' in config.page) {
+                var keywords = config.page.keywordIds.split(',');
+                var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
+                var isNotAboutBrexit = (keywords.indexOf('politics/eu-referendum') === -1) || (nonKeywordTagIds.indexOf('tone/news') === -1);
+                return isNotAboutBrexit && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
+            } else {
+                return false;
+            }
+                
         };
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
