@@ -41,8 +41,8 @@ define([
         this.author = 'Jonathan Rankin';
         this.description = 'Find out if offering membership and contributions side by side with equal weighting is as effective as just offering membership by itself';
         this.showForSensitive = true;
-        this.audience = 0;
-        this.audienceOffset = 0.1;
+        this.audience = 0.1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions/supporter signups';
         this.audienceCriteria = 'All users in US and UK who are not reading articles about Brexit';
         this.dataLinkNames = '';
