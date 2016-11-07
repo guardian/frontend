@@ -18,20 +18,22 @@ define([
 
         $('.social--top').each(function (topSocial) {
             fastdom.write(function () {
-                $(topSocial).toggleClass('social--expanded-top')
+                $(topSocial).toggleClass('social--expanded-top');
             });
         });
 
         $('.social-icon').each(function (icon) {
             fastdom.write(function () {
-                $(icon).toggleClass('social-icon--expanded-top')
-            })
-        })
+                $(icon).toggleClass('social-icon--expanded-top');
+            });
+        });
     }
 
     return function hiddenShareToggle () {
         $('.social-icon--more, .social__tray-close').each(function (toggle) {
             bean.on(toggle, 'click', toggleDisplay);
         });
+
+        $('.social__item--more').toggleClass('social--hidden');
     }
 });
