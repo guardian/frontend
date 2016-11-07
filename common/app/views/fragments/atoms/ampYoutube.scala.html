@@ -1,0 +1,16 @@
+@(media: model.content.MediaAtom)(implicit request: RequestHeader)
+@import conf.Configuration
+
+<amp-iframe
+sandbox="allow-scripts allow-same-origin allow-popups"
+layout="responsive"
+width="16" height="9" src="@Configuration.Media.externalEmbedHost/embed/atom/media/@media.id">
+@if(media.posterUrl.isDefined) {
+    <amp-img layout="fill" src="@media.posterUrl.get" placeholder></amp-img>
+}
+</amp-iframe>
+
+
+
+
+

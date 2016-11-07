@@ -24,7 +24,8 @@ $explore-series-header-element-opacity: .85;
         min-height: 548px;
 
         @include mq($until: desktop) {
-            min-height: 398px;
+            height: auto;
+            min-height: auto;
         }
     }
 
@@ -60,18 +61,16 @@ $explore-series-header-element-opacity: .85;
 
     &.explore--video {
         background-color: $neutral-1;
-        min-height: 0;
+        min-height: auto;
+        height: auto;
 
         @include mq($from: mobileLandscape) {
-            min-height: 470px;
+            min-height: auto;
+            height: auto;
         }
 
         @include mq($from: tablet) {
-            min-height: 720px;
-        }
-
-        @include mq($from: desktop) {
-            height: 730px;
+            min-height: 400px;
         }
     }
 }
@@ -79,6 +78,8 @@ $explore-series-header-element-opacity: .85;
 .explore--video {
     .explore-series-headline {
         top: 220px;
+        margin: auto;
+        width: 94%;
 
         @include mq($from: mobileLandscape) {
             top: 340px;
@@ -86,12 +87,21 @@ $explore-series-header-element-opacity: .85;
 
         @include mq($from: tablet) {
             top: 300px;
+            width: auto;
+            margin: 0;
         }
 
         @include mq($from: desktop) {
             top: 450px;
         }
-  }
+    }
+
+    .immersive-main-media__media {
+        @include mq($until: tablet) {
+            position: relative;
+            transform: translateY(-36px)
+        }
+    }
 
     .vjs-control-bar {
         visibility: hidden;
@@ -126,18 +136,27 @@ $explore-series-header-element-opacity: .85;
 }
 
 .explore-series-headline__content {
-    @include fs-headline(4);
-    font-weight: 900;
     color: #ffffff;
-    margin: $gs-baseline 0;
+    margin: $gs-baseline;
     width: 94%;
-    padding-left: 3%;
+    padding-left: 0;
 
-    @include mq($from: tablet) {
-        @include fs-headline(6);
-        font-weight: 900;
+    @include mq($from: desktop) {
         width: gs-span(8);
         padding-left: $gs-gutter;
+        margin: $gs-baseline 0;
+    }
+}
+
+.explore-series-headline__content, .explore-series-video-headline {
+    @include fs-headline(4);
+    line-height: 24px;
+    font-weight: 900;
+
+    @include mq($from: desktop) {
+        @include fs-headline(7);
+        line-height: 36px;
+        font-weight: 900;
     }
 }
 
@@ -152,6 +171,14 @@ $explore-series-header-element-opacity: .85;
     position: absolute;
     width: 100%;
     bottom: 0;
+
+    .explore--video & {
+        bottom: $gs-gutter * 3;
+
+        @include mq($until: desktop) {
+            bottom: $gs-gutter * 5;
+        };
+    }
 }
 
 .explore-series-standfirst {
@@ -165,6 +192,14 @@ $explore-series-header-element-opacity: .85;
     @supports (clip-path: polygon(0 0, 100% 25%, 100% 100%, 0% 100%)) {
         padding-top: $gs-gutter * 1.5;
     }
+
+    &.explore-video-standfirst {
+        margin-top: -$gs-gutter * 5;
+
+        @include mq($from: desktop) {
+            margin-top: -$gs-gutter * 4;
+        }
+    }
 }
 
 .content__standfirst--explore {
@@ -176,20 +211,35 @@ $explore-series-header-element-opacity: .85;
         color: $neutral-1;
         font-weight: 900;
 
-        @include mq($from: tablet) {
-            @include fs-headline(7);
+        @include mq($from: desktop) {
+            @include fs-headline(6);
             font-weight: 900;
             line-height: 38px;
         }
 
         @include mq($until: leftCol) {
-            margin-left: gs-span(2);
             margin-bottom: -$gs-baseline / 3;
         }
+
+        @include mq($until: desktop) {
+            padding-right: gs-span(2);
+        }
+
         @include mq($until: tablet) {
             margin-left: inherit;
             margin-bottom: inherit;
             margin-top: inherit;
+            padding-right: 0;
+        }
+
+        .explore-video-standfirst & {
+            @include fs-headline(2);
+            font-weight: 900;
+
+            @include mq($from: desktop) {
+                @include fs-headline(4);
+                font-weight: 900;
+            }
         }
     }
 }
@@ -214,7 +264,11 @@ $explore-series-header-element-opacity: .85;
         }
     }
     @include mq($until: leftCol) {
-        margin-left: -26px;
+        margin-left: 636px;
+    }
+
+    @include mq($until: desktop) {
+        margin-left: 528px;
     }
 }
 
@@ -222,9 +276,12 @@ $explore-series-header-element-opacity: .85;
     position: absolute;
     top: 0;
     width: 100%;
+    height: gs-span(1);
+    overflow: hidden;
 
     @include mq($from: tablet) {
         top: 0;
+        overflow: visible;
     }
 
     .content__labels {
@@ -455,11 +512,9 @@ $explore-series-header-element-opacity: .85;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 60px;
 
     @include mq($from: tablet) {
         width: 740px;
-        margin-top: 0;
     }
 
     @include mq($from: desktop) {

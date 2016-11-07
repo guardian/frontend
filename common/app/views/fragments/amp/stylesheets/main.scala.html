@@ -50,7 +50,7 @@
         display: none;
     }
 
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta {
+    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
         margin: 0 0.625rem;
     }
 
@@ -91,12 +91,12 @@
     }
 
     @@media (min-width: 30rem) {
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta {
-        margin: 0 20px;
+        .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
+            margin: 0 20px;
         }
-    .content__headline {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
+        .content__headline {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
         }
     }
 
@@ -157,6 +157,7 @@
 
     .caption {
         padding-top: 0.5rem;
+        padding-bottom: 16px;
     }
 
     .content__dateline {
@@ -173,7 +174,6 @@
     .content__meta-container {
         border-top: 0.0625rem dotted #dfdfdf;
         border-bottom: 0.0625rem dotted #dfdfdf;
-        margin-top: 16px;
         margin-bottom: 0.75rem;
     }
 
@@ -247,7 +247,7 @@
     }
 
     @* temporarily hiding these until after launch *@
-    .inline-expand-image, .content__dateline-lm, .witness-cta-wrapper {
+    .inline-expand-image, .content__dateline-lm {
         display: none;
     }
 
@@ -256,6 +256,7 @@
     @fragments.amp.stylesheets.quotes()
     @fragments.amp.stylesheets.richLinks()
     @fragments.amp.stylesheets.ads()
+    @fragments.amp.stylesheets.glabs()
     @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.inlineSvgs()
     @fragments.amp.stylesheets.social()

@@ -14,15 +14,15 @@
         background-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-tone-btn,
+    .hosted-tone-btn {
+        color: @{page.campaign.fontColour.brandColour};
+        border: 1px solid @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
         background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
-    }
-
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__link {
@@ -41,9 +41,20 @@
         background-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted__next-video__carousel-arrows .inline-icon {
+    .hosted__next-page__carousel-arrows .inline-icon {
         fill: @{page.campaign.fontColour.brandColour};
         border-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    /* To prevent video element from jumping */
+    video {
+        width: 370px;
+    }
+
+    @@media (min-width: 740px) { /* Tablet bp and above */
+        video {
+            width : 600px;
+        }
     }
     </style>
     <!--<![endif]-->
@@ -80,9 +91,9 @@
                         </div>
                         <div class="hide-on-desktop">
                             @if(page.nextPages.nonEmpty) {
-                                @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                     makeshiftPage(nextPage, page.campaign)
-                                })
+                                }, 2, 4)
                             } else {
                                 <div class="js-onward-placeholder"></div>
                             }
@@ -97,9 +108,9 @@
                     </div>
                     <div class="content__secondary-column">
                         @if(page.nextPages.nonEmpty) {
-                            @hostedArticleOnward(page.nextPages.map { nextPage =>
+                            @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                 makeshiftPage(nextPage, page.campaign)
-                            })
+                            }, 2, 4)
                         } else {
                             <div class="js-onward-placeholder"></div>
                         }
@@ -109,5 +120,6 @@
         </article>
 
         @guardianHostedCta(page, page.cta)
+        @guardianHostedOnwardOverlay(page)
     </div>
 }

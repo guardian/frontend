@@ -10,6 +10,7 @@ define([
     'common/modules/commercial/user-features',
     'common/utils/mediator',
     'Promise',
+    'common/utils/fastdom-promise',
     'common/modules/experiments/ab',
     'common/utils/$',
     'common/views/svgs'
@@ -25,6 +26,7 @@ define([
     userFeatures,
     mediator,
     Promise,
+    fastdom,
     ab,
     $,
     svgs
@@ -48,7 +50,7 @@ define([
         },
         US: {
             campaign: 'mem_us_banner',
-            messageText: 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $49 a year.'
+            messageText: 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $69 a year.'
         },
         AU: {
             campaign: 'mem_au_banner',
@@ -56,7 +58,7 @@ define([
         },
         INT: {
             campaign: 'mem_int_banner',
-            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $49/€49 per year.'
+            messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.'
         }
     };
 
@@ -70,30 +72,30 @@ define([
     }
 
     var getCustomJs = function(options) {
-        var opts = options || {},
-            textLink = $('#membership__engagement-message-link'),
-            buttonLink = $('#membership__engagement-message-button-link'),
-            buttonEl = $('#membership__engagement-message-button');
+        if (options === undefined) {
+            return;
+        }
 
-        buttonEl.removeClass('is-hidden');
-        if (opts.addButtonClass) {
-            buttonEl.addClass(opts.addButtonClass);
-        }
-        if (opts.setButtonText) {
-            buttonLink.text(opts.setButtonText);
-        }
-        if (opts.parentColour) {
-            buttonEl.addClass(opts.parentColour);
-        }
-        if (opts.appendLinkClickIdentifier) {
-            if (!textLink.attr('href').endsWith(opts.appendLinkClickIdentifier)) {
-                textLink.attr('href', textLink.attr('href') + opts.appendLinkClickIdentifier);
+        var opts = options || {};
+
+        if (opts.testName) {
+            if (opts.testName === 'messaging-test-1') {
+                var engagementText = $('.site-message__message.site-message__message--membership');
+                if (engagementText && opts.setEngagementText) {
+                    engagementText[0].textContent = opts.setEngagementText;
+                }
+            }
+
+            if (opts.testName === 'messaging-test-us-1') {
+                var usEngagementText = $('.site-message__message.site-message__message--membership');
+                if (usEngagementText && opts.setEngagementText) {
+                    usEngagementText[0].textContent = opts.setEngagementText;
+                }
             }
         }
-        if (opts.appendButtonClickIdentifier) {
-            if (!buttonLink.attr('href').endsWith(opts.appendButtonClickIdentifier)) {
-                buttonLink.attr('href', buttonLink.attr('href') + opts.appendButtonClickIdentifier);
-            }
+
+        if (opts.execute) {
+            opts.execute();
         }
     };
 
@@ -104,34 +106,62 @@ define([
             campaignCode = message.campaign,
             customJs = null,
             customOpts = {},
-            testVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
+            messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
+            usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
             linkHref = formatEndpointUrl(edition, message);
 
-        if (testVariant) {
-            var testName = 'prominent-level-1';
-
-            if (testVariant !== 'notintest') {
-                campaignCode = campaignCode + '_' + testName + '_' + testVariant;
-                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
-            }
-
-            if (testVariant === 'become' || testVariant === 'join') {
+        if (messagingTestVariant) {
+            var messagingTestName = 'messaging-test-1';
+            if (messagingTestVariant !== 'notintest') {
                 var variantMessages = {
-                    become: 'Become a member',
-                    join: 'Join today'
+                    fairer: 'We all want to make the world a fairer place. We believe journalism can help – but producing it is expensive. That\'s why we need Supporters. Join for £49 per year.',
+                    appreciate: 'Become a Supporter and appreciate every article, knowing you\'ve helped bring it to the page. Be part of the Guardian. Join for £49 per year.',
+                    secure: 'Secure the future of independent journalism. Help us create a fairer world. Support the Guardian for £49 per year.'
                 };
-                colours = ['yellow','purple','bright-blue','dark-blue'];
-                thisColour = thisInstanceColour(colours);
-                cssModifierClass = 'membership-message' + ' ' + testName + ' ' + thisColour;
+                campaignCode = 'gdnwb_copts_mem_banner_messaging1uk' + '__' + messagingTestVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
                 customOpts = {
-                    addButtonClass: testName + '_' + testVariant,
-                    setButtonText: variantMessages[testVariant],
-                    parentColour: thisColour,
-                    appendLinkClickIdentifier: '_link',
-                    appendButtonClickIdentifier: '_button'
+                    testName: messagingTestName,
+                    setEngagementText: messagingTestVariant === 'control' ? undefined : variantMessages[messagingTestVariant]
                 };
                 customJs = getCustomJs;
             }
+        }
+
+        if (usMessagingTestVariant) {
+            if (usMessagingTestVariant !== 'notintest') {
+                var usVariantMessages = {
+                    coffee: 'For less than the price of a coffee a week you could help secure the Guardian\'s future. Become a Guardian US member for just $49 a year.',
+                    defies: 'When politicians defy belief you need journalism that defies politicians. Become a Guardian US member for just $49 a year.',
+                    value: 'If you value our independent, international journalism, you can support it. Become a Guardian US member for just $49 a year.'
+                };
+                campaignCode = 'gdnwb_copts_mem_banner_messaging1us' + '__' + usMessagingTestVariant;
+                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+                customOpts = {
+                    testName: 'messaging-test-us-1',
+                    setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
+                };
+                customJs = getCustomJs;
+            }
+        }
+
+        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk'] && (!messagingTestVariant || messagingTestVariant === 'notintest')) {
+            var prominentMarker = 'prominent';
+            linkHref = endpoints[edition] + '?INTCMP=' + message.campaign + '_' + prominentMarker;
+            colours = ['yellow','purple','bright-blue','dark-blue'];
+            thisColour = thisInstanceColour(colours);
+            cssModifierClass = 'membership-' + prominentMarker + ' ' + thisColour;
+            customOpts.execute = function () {
+                var buttonCaption = $('#membership__engagement-message-button-caption'),
+                    buttonEl = $('#membership__engagement-message-button');
+                fastdom.write(function () {
+                    buttonEl.removeClass('is-hidden');
+                    buttonEl.addClass(prominentMarker);
+                    buttonEl.addClass(thisColour);
+                    buttonCaption.text('Become a Supporter');
+                });
+            };
+            customJs = getCustomJs;
         }
 
         var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
@@ -159,11 +189,13 @@ define([
         var message = messages[edition];
         if (message) {
             var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-            return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
-                if (canShow && userHasMadeEnoughVisits) {
-                    show(edition, message);
-                }
-            });
+            if(userHasMadeEnoughVisits) {
+                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    if (canShow) {
+                        show(edition, message);
+                    }
+                });
+            }
         }
         return Promise.resolve();
     }

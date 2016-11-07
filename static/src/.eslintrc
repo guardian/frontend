@@ -5,11 +5,11 @@
         "amd": true
     },
     "rules": {
-        "camelcase": 0,
+        "camelcase": "off",
         // We should reset these to errors, but will require lots of changes
-        "no-shadow": 0,
-        "strict": 0,
-        "no-alert": 0,
-        "no-all-lodash-import": 2
+        "no-shadow": "off",
+        "strict": "off",
+        "no-alert": "off",
+        "no-all-lodash-import": "error"
     }
 }

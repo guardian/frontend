@@ -27,8 +27,11 @@ const run = () => {
         'diagnostics',
         'discussion',
         'facia',
+        'facia-press',
         'identity',
         'onward',
+        'preview',
+        'rss',
         'sport'
     ]);
     const filterWhitelisted = (deploys) => deploys

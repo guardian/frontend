@@ -41,7 +41,7 @@ trait FeatureSwitches {
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
     owners = Seq(Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -51,7 +51,7 @@ trait FeatureSwitches {
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on twitter",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -354,37 +354,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("NataliaLKB")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val LiveBlogAmpSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-blog-amp",
-    "If this switch is on, link to amp pages will be in the metadata for live blogs",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
-    exposeClientSide = false
-  )
-
-  // see https://github.com/guardian/frontend/pull/13916
-  val AmpLiveBlogNewsArticleSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-blog-amp-news-article",
-    "If this switch is on, amp live blog articles have an itemtype of NewsArticle, and thus appear in Google's AMP carousel",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
-    exposeClientSide = false
-  )
-
-  val LiveUpdateAmpSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-update-amp",
-    "If this switch is on, amp-live-list will be included in live blogs",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
     exposeClientSide = false
   )
 

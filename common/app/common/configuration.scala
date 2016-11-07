@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 9
+    val s3ConfigVersion = 10
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -399,13 +399,13 @@ class GuardianConfiguration extends Logging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v5.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
@@ -441,7 +441,8 @@ class GuardianConfiguration extends Logging {
   }
 
   object interactive {
-    lazy val url = "http://interactive.guim.co.uk/next-gen/"
+    lazy val cdnPath = "https://interactive.guim.co.uk"
+    lazy val url = s"$cdnPath/next-gen/"
   }
 
   object javascript {
@@ -617,6 +618,7 @@ class GuardianConfiguration extends Logging {
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 
+
   object emailSignup {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
@@ -648,9 +650,15 @@ class GuardianConfiguration extends Logging {
   object Survey {
     lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
+
+  object Media {
+    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
+  }
+
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
+

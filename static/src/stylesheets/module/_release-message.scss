@@ -495,9 +495,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 /*
- * Prominent membership messaging AB tests
+ * Prominent membership message as a feature
  */
-.site-message--membership-message.prominent-level-1 {
+.site-message--membership-prominent {
     .site-message__message {
         @include mq($until: tablet) {
             padding-left: 5px;
@@ -528,10 +528,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
     .site-message__inner {
-        padding-top: 10px;
+        padding-top: 5px;
         padding-left: 5px;
         padding-right: 5px;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
     }
     .site-message__message--membership {
         margin-right: 5px;
@@ -542,6 +542,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             margin-right: 10px;
         }
         @include mq($from: tablet) {
+            font-size: 24px;
+            line-height: 28px;
+            margin-right: 20px;
+        }
+        @include mq($from: desktop) {
             font-size: 28px;
             line-height: 32px;
             margin-right: 20px;
@@ -555,37 +560,45 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         display: inline-block;
         width: auto;
         @include mq($from: mobile) {
-            margin-left: 5px;
             font-size: 12px;
-            line-height: 24px;
-            height: 24px;
+            line-height: 20px;
+            height: 20px;
+            margin-top: 3px;
             svg {
                 position: relative;
                 top: -4px;
-                height: 24px;
-                width: 24px;
+                height: 20px;
+                width: 20px;
             }
-            margin-bottom: $gs-row-height / 4;
         }
         @include mq($from: tablet) {
-            margin-left: 10px;
+            font-size: 14px;
+            line-height: 24px;
+            height: 24px;
+            margin-top: 5px;
+            top: -5px;
+            svg {
+                top: -3px;
+                height: 24px;
+                width: 28px;
+            }
+        }
+        @include mq($from: desktop) {
             font-size: 14px;
             line-height: 28px;
             height: 28px;
+            margin-top: 10px;
+            top: -5px;
             svg {
-                top: 0px;
+                top: -2px;
                 height: 28px;
                 width: 28px;
             }
-            margin-bottom: $gs-row-height / 2;
         }
         padding: 1px 24px;
         position: relative;
         cursor: pointer;
-        margin-top: 10px;
         background-color: transparent;
-        top: 25%;
-        height: 50%;
         font-weight: bold;
         a {
             text-decoration: none;
@@ -604,9 +617,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #ffffff;
             fill: #ffffff;
         }
-        a {
-            color: #ffffff;
-        }
         color: #ffffff;
         background-color: #dc2a7d;
     }
@@ -615,10 +625,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #000333;
             fill: #000333;
         }
-        a {
-            color: #000333;
-        }
-        color: #ffffff;
+        color: #000333;
         background-color: #4bc6df;
     }
     .message-button-rounded__cta.bright-blue {
@@ -626,13 +633,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             stroke: #ffffff;
             fill: #ffffff;
         }
-        a {
-            color: #ffffff;
-        }
-        color: #000000;
+        color: #ffffff;
         background-color: #005689;
     }
-
     .inline-arrow-white-right {
         display: block;
         float: right;
@@ -640,7 +643,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message--membership-message.prominent-level-1.yellow {
+.site-message--membership-prominent.yellow {
     @include site-message-dark-text;
     background-color: #ffce4b;
     svg {
@@ -648,10 +651,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.purple {
+.site-message--membership-prominent.purple {
     background-color: #7d0068;
 }
-.site-message--membership-message.prominent-level-1.bright-blue {
+.site-message--membership-prominent.bright-blue {
     @include site-message-dark-text;
     background-color: #4bc6df;
     svg {
@@ -659,9 +662,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.dark-blue {
+.site-message--membership-prominent.dark-blue {
     background-color: #005689;
 }
+
 
 /*
  * Coin based adblock message

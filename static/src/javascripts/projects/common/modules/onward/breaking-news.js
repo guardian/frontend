@@ -11,7 +11,6 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/modules/ui/relativedates',
-    'common/modules/analytics/omniture',
     'common/views/svgs',
     'text!common/views/breaking-news.html',
     'lodash/objects/isArray',
@@ -31,7 +30,6 @@ define([
     storage,
     template,
     relativeDates,
-    omniture,
     svgs,
     alertHtml,
     isArray,
@@ -157,7 +155,6 @@ define([
         if (alert) {
             var $body = bonzo(document.body);
             var $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
-            var trackingMessage = 'breaking news alert shown' + (has(knownAlertIDs, alert.id) ? '' : ' 2 or more times');
 
             // if its the first time we've seen this alert, we wait 3 secs to show it
             // otherwise we show it immediately
@@ -181,7 +178,6 @@ define([
                     $breakingNews.removeClass('breaking-news--hidden');
                     markAlertAsSeen(alert.id);
                 });
-                omniture.trackLink(this, trackingMessage);
             }, alertDelay);
         }
         return alert;
@@ -225,7 +221,7 @@ define([
                     reportError(ex, { feature: 'breaking-news' });
                 });
         } else {
-            return Promise.reject('cannot dismiss');
+            return Promise.reject(new Error('cannot dismiss'));
         }
     }
 

@@ -173,6 +173,14 @@
         }
     }
 
+    .has-page-skin &:not(.advert--landscape) {
+        .advert__image {
+            @include mq(desktop) {
+                min-height: 0;
+            }
+        }
+    }
+
     .advert__image-container {
         height: auto;
     }

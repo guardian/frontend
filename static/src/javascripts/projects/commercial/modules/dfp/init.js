@@ -19,8 +19,7 @@ define([
     'commercial/modules/messenger/scroll',
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
-    'commercial/modules/messenger/parallax-background',
-    'commercial/modules/messenger/fixed-background'
+    'commercial/modules/messenger/background'
 ], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
              buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
              ophanTracking) {
@@ -28,25 +27,33 @@ define([
     return init;
 
     function init() {
+
+        var removeAdSlots = function () {
+            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
+        };
+
         if (commercialFeatures.dfpAdvertising) {
-            var initialTag = 'tests' in config && config.tests.commercialHbSonobi ? setupSonobi() : Promise.resolve();
-            return initialTag.then(setupAdvertising);
+            var initialTag = dfpEnv.sonobiEnabled ? setupSonobi() : Promise.resolve();
+            return initialTag.then(setupAdvertising).catch(function(){
+                // A promise error here, from a failed module load,
+                // could be a network problem or an intercepted request.
+                // Abandon the init sequence.
+                return fastdom.write(removeAdSlots);
+            });
         }
 
-        return fastdom.write(function () {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        });
+        return fastdom.write(removeAdSlots);
     }
 
     function setupSonobi() {
-        return Promise.resolve(require(['js!sonobi.js']));
+        return new Promise.resolve(require(['js!sonobi.js']));
     }
 
     function setupAdvertising() {
 
         return new Promise(function(resolve) {
 
-            if ('tests' in config && config.tests.commercialHbSonobi) {
+            if (dfpEnv.sonobiEnabled) {
                 // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                 require(['js!googletag.js']);
                 ophanTracking.addTag('sonobi');

@@ -332,7 +332,6 @@ object Content {
   }
 
   def make(apiContent: contentapi.Content): Content = {
-
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
@@ -467,7 +466,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       twitterPropertiesOverrides = twitterProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && content.elements.hasMainMedia)) && content.tags.isArticle,
+      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
       contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
@@ -620,13 +619,14 @@ object Video {
       metadata = metadata
     )
 
-    Video(contentOverrides, source)
+    Video(contentOverrides, source, content.media.headOption)
   }
 }
 
 final case class Video (
   override val content: Content,
-  source: Option[String] ) extends ContentType {
+  source: Option[String],
+  mediaAtom: Option[MediaAtom] ) extends ContentType {
 
   lazy val bylineWithSource: Option[String] = Some(Seq(
     trail.byline,

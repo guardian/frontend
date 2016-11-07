@@ -6,8 +6,8 @@
     refresh: Boolean = true,
     outOfPage: Boolean = false
 )
-@import conf.switches.Switches._
+@import conf.switches.Switches.CommercialSwitch
 
-@if(StandardAdvertsSwitch.isSwitchedOn) {
+@if(CommercialSwitch.isSwitchedOn) {
     @fragments.commercial.adSlot(name, adTypes, sizeMapping, showLabel, refresh, outOfPage){ }
 }

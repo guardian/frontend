@@ -53,47 +53,6 @@ module.exports = function (grunt) {
     }
 
     /**
-     * Validate tasks
-     */
-    grunt.registerTask('validate:css', ['shell:validateCCS']);
-    grunt.registerTask('validate:sass', ['sasslint']);
-    grunt.registerTask('validate:js', function (app) {
-        var target = (app) ? ':' + app : '';
-        grunt.task.run(['eslint' + target]);
-    });
-    grunt.registerTask('validate', function (app) {
-        grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
-    });
-
-    /**
-     * Test tasks
-     */
-    grunt.registerTask('eslintTests', ['shell:eslintTests']);
-    grunt.registerTask('test:unit', function (app) {
-        var target = app ? ':' + app : '';
-        if (options.singleRun === false) {
-            grunt.config.set('karma.options.singleRun', false);
-            grunt.config.set('karma.options.autoWatch', true);
-        }
-
-        grunt.task.run(['copy:inlineSVGs']);
-        grunt.task.run('karma' + target);
-        grunt.task.run('eslintTests');
-    });
-    grunt.registerTask('test', ['test:unit']);
-    grunt.registerTask('coverage', function () {
-        var target = this.args.length ? ':' + this.args.join(':') : '';
-        var reporters = grunt.config.get('karma.options.reporters');
-        grunt.config.set('karma.options.reporters',
-            typeof(reporters) == 'undefined' ? ['coverage'] : reporters.concat('coverage')
-        );
-        grunt.config.set('karma.options.preprocessors',
-            grunt.config.get('coverage.preprocessors')
-        );
-        grunt.task.run('test' + target);
-    });
-
-    /**
      * Analyse tasks
      */
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);

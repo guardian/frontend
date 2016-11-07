@@ -1,0 +1,14 @@
+@import views.support.RenderClasses
+
+@(media: model.content.MediaAtom)(implicit request: RequestHeader)
+
+<div class="@RenderClasses(Map(
+    "u-responsive-ratio" -> true,
+    "u-responsive-ratio--hd" -> true
+))">
+
+@Html(media.defaultHtml)
+
+</div>
+
+

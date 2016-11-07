@@ -73,9 +73,13 @@ define([
                     }
 
                     $videoEl.each(function(el){
+                        var mediaId = $videoEl.attr('data-media-id');
                         player = videojs(el, videojsOptions());
                         player.guMediaType = 'video';
                         videojs.plugin('fullscreener', fullscreener);
+
+                        events.addContentEvents(player, mediaId, player.guMediaType);
+                        events.bindGoogleAnalyticsEvents(player, window.location.pathname);
 
                         player.ready(function () {
                             var vol;
@@ -92,11 +96,8 @@ define([
 
                             player.fullscreener();
 
-                            var mediaId = $videoEl.attr('data-media-id');
                             deferToAnalytics(function () {
-                                events.initOmnitureTracking(player);
                                 events.initOphanTracking(player, mediaId);
-
                                 events.bindGlobalEvents(player);
                                 events.bindContentEvents(player);
                             });
@@ -116,7 +117,7 @@ define([
                             //on desktop show the next video link 10 second before the end of the currently watching video
                             if (isDesktop()) {
                                 nextVideoAutoplay.addCancelListener();
-                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt(player.duration(), 10)));
+                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
                             } else {
                                 player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
                             }

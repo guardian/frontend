@@ -36,21 +36,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
 object CustomTarget {
 
-  implicit val customTargetWrites = new Writes[CustomTarget] {
-    def writes(target: CustomTarget): JsValue = {
-      Json.obj(
-        "name" -> target.name,
-        "op" -> target.op,
-        "values" -> target.values
-      )
-    }
-  }
-
-  implicit val customTargetReads: Reads[CustomTarget] = (
-    (JsPath \ "name").read[String] and
-      (JsPath \ "op").read[String] and
-      (JsPath \ "values").read[Seq[String]]
-    )(CustomTarget.apply _)
+  implicit val customTargetFormats: Format[CustomTarget] = Json.format[CustomTarget]
 
 }
 
@@ -73,19 +59,7 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
 object CustomTargetSet {
 
-  implicit val customTargetSetWrites = new Writes[CustomTargetSet] {
-    def writes(targetSet: CustomTargetSet): JsValue = {
-      Json.obj(
-        "op" -> targetSet.op,
-        "targets" -> targetSet.targets
-      )
-    }
-  }
-
-  implicit val customTargetSetReads: Reads[CustomTargetSet] = (
-    (JsPath \ "op").read[String] and
-      (JsPath \ "targets").read[Seq[CustomTarget]]
-    )(CustomTargetSet.apply _)
+  implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
 
 }
 
@@ -103,23 +77,7 @@ case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name
 
 object GeoTarget {
 
-  implicit val geoTargetWrites = new Writes[GeoTarget] {
-    def writes(geoTarget: GeoTarget): JsValue = {
-      Json.obj(
-        "id" -> geoTarget.id,
-        "parentId" -> geoTarget.parentId,
-        "locationType" -> geoTarget.locationType,
-        "name" -> geoTarget.name
-      )
-    }
-  }
-
-  implicit val geoTargetReads: Reads[GeoTarget] = (
-    (JsPath \ "id").read[Long] and
-      (JsPath \ "parentId").readNullable[Int] and
-      (JsPath \ "locationType").read[String] and
-      (JsPath \ "name").read[String]
-    )(GeoTarget.apply _)
+  implicit val geoTargetFormats: Format[GeoTarget] = Json.format[GeoTarget]
 
 }
 
@@ -134,7 +92,8 @@ case class GuAdUnit(id: String, path: Seq[String], status: String) {
 }
 
 object GuAdUnit {
-  implicit val adUnitFormat = Json.format[GuAdUnit]
+
+  implicit val adUnitFormats = Json.format[GuAdUnit]
 
   val ACTIVE = "ACTIVE"
   val INACTIVE = "INACTIVE"
@@ -178,7 +137,7 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
 }
 
 object GuTargeting {
-  implicit val targetingFormat = Json.format[GuTargeting]
+  implicit val guTargetingFormats: Format[GuTargeting] = Json.format[GuTargeting]
 }
 
 case class GuLineItem(id: Long,
@@ -276,8 +235,9 @@ object GuLineItem {
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
-}
 
+  def asMap(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
+}
 
 case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting]) {
 
@@ -288,19 +248,7 @@ case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting]) {
 
 object GuCreativePlaceholder {
 
-  implicit val writes: Writes[GuCreativePlaceholder] = new Writes[GuCreativePlaceholder] {
-    def writes(placeholder: GuCreativePlaceholder): JsValue = {
-      Json.obj(
-        "size" -> placeholder.size,
-        "targeting" -> placeholder.targeting
-      )
-    }
-  }
-
-  implicit val reads: Reads[GuCreativePlaceholder] = (
-    (JsPath \ "size").read[AdSize] and
-      (JsPath \ "targeting").readNullable[GuTargeting]
-    )(GuCreativePlaceholder.apply _)
+  implicit val guCreativePlaceholderFormats: Format[GuCreativePlaceholder] = Json.format[GuCreativePlaceholder]
 }
 
 
@@ -311,7 +259,7 @@ case class GuCreativeTemplateParameter(parameterType: String,
 
 object GuCreativeTemplateParameter {
 
-  implicit val writes = new Writes[GuCreativeTemplateParameter] {
+  implicit val GuCreativeTemplateParameterWrites = new Writes[GuCreativeTemplateParameter] {
     def writes(param: GuCreativeTemplateParameter): JsValue = {
       Json.obj(
         "type" -> param.parameterType,
@@ -322,7 +270,7 @@ object GuCreativeTemplateParameter {
     }
   }
 
-  implicit val reads: Reads[GuCreativeTemplateParameter] = (
+  implicit val GuCreativeTemplateParameterReads: Reads[GuCreativeTemplateParameter] = (
     (JsPath \ "type").read[String] and
       (JsPath \ "label").read[String] and
       (JsPath \ "isRequired").read[Boolean] and
@@ -352,29 +300,7 @@ object GuCreative {
     (mapById(old) ++ mapById(recent)).values.toSeq
   }
 
-  implicit val writes = new Writes[GuCreative] {
-    def writes(creative: GuCreative): JsValue = {
-      Json.obj(
-        "id" -> creative.id,
-        "name" -> creative.name,
-        "lastModified" -> creative.lastModified,
-        "args" -> creative.args,
-        "templateId" -> creative.templateId,
-        "snippet" -> creative.snippet,
-        "previewUrl" -> creative.previewUrl
-      )
-    }
-  }
-
-  implicit val reads: Reads[GuCreative] = (
-    (JsPath \ "id").read[Long] and
-      (JsPath \ "name").read[String] and
-      (JsPath \ "lastModified").read[DateTime] and
-      (JsPath \ "args").read[Map[String, String]] and
-      (JsPath \ "templateId").readNullable[Long] and
-      (JsPath \ "snippet").readNullable[String] and
-      (JsPath \ "previewUrl").readNullable[String]
-    ) (GuCreative.apply _)
+  implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
 }
 
 case class GuCreativeTemplate(id: Long,
@@ -382,6 +308,7 @@ case class GuCreativeTemplate(id: Long,
                               description: String,
                               parameters: Seq[GuCreativeTemplateParameter],
                               snippet: String,
+                              isNative: Boolean,
                               creatives: Seq[GuCreative]) {
 
   lazy val examplePreviewUrl: Option[String] = creatives flatMap {_.previewUrl} headOption
@@ -391,30 +318,13 @@ case class GuCreativeTemplate(id: Long,
 
 object GuCreativeTemplate extends implicits.Collections {
 
-  implicit val writes = new Writes[GuCreativeTemplate] {
-    def writes(template: GuCreativeTemplate): JsValue = {
-      Json.obj(
-        "id" -> template.id,
-        "name" -> template.name,
-        "description" -> template.description,
-        "parameters" -> template.parameters,
-        "snippet" -> template.snippet,
-        "creatives" -> template.creatives
-      )
-    }
-  }
-
-  implicit val reads: Reads[GuCreativeTemplate] = (
-    (JsPath \ "id").read[Long] and
-      (JsPath \ "name").read[String] and
-      (JsPath \ "description").read[String] and
-      (JsPath \ "parameters").read[Seq[GuCreativeTemplateParameter]] and
-      (JsPath \ "snippet").read[String] and
-      (JsPath \ "creatives").read[Seq[GuCreative]]
-    )(GuCreativeTemplate.apply _)
+  implicit val guCreativeTemplateFormats: Format[GuCreativeTemplate] = Json.format[GuCreativeTemplate]
 }
 
-case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
+case class LineItemReport(
+  timestamp: String,
+  lineItems: Seq[GuLineItem],
+  invalidLineItems: Seq[GuLineItem]) {
 
   lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
     _.targeting.hasAdTestTargetting
@@ -423,18 +333,6 @@ case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem]) {
 
 object LineItemReport {
 
-  implicit val reportWrites = new Writes[LineItemReport] {
-    def writes(report: LineItemReport): JsValue = {
-      Json.obj(
-        "timestamp" -> report.timestamp,
-        "lineItems" -> report.lineItems
-      )
-    }
-  }
-
-  implicit val reportReads: Reads[LineItemReport] = (
-    (JsPath \ "timestamp").read[String] and
-      (JsPath \ "lineItems").read[Seq[GuLineItem]]
-    )(LineItemReport.apply _)
+  implicit val lineItemReportFormats: Format[LineItemReport] = Json.format[LineItemReport]
 
 }

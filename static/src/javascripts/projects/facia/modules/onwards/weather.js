@@ -22,7 +22,6 @@ define([
     'common/utils/fetch-json',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/analytics/omniture',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool',
     'lodash/collections/contains'
@@ -36,7 +35,6 @@ define([
     fetchJson,
     mediator,
     template,
-    omniture,
     userPrefs,
     SearchTool,
     contains

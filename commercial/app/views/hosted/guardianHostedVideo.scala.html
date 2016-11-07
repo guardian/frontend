@@ -16,11 +16,15 @@
         background-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-tone-btn,
+    .hosted-tone-btn {
+        color: @{page.campaign.fontColour.brandColour};
+        border: 1px solid @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
         background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted-next-autoplay__video,
@@ -28,8 +32,8 @@
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
+    .hosted-next-autoplay__tile svg {
+        fill: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__link {
@@ -38,6 +42,11 @@
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.brandColour};
     }
     </style>
     <!--<![endif]-->
@@ -50,7 +59,7 @@
                         <iframe id="hosted-video-@youtubeId"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
@@ -137,12 +146,13 @@
             </div>
 
             @page.nextPage.map { nextPage =>
-                @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
+                @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
             }.getOrElse {
                 <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
         </section>
         @guardianHostedCta(page, page.cta)
+        @guardianHostedOnwardOverlay(page)
     </div>
 
 }

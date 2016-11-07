@@ -4,6 +4,8 @@
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
 
+@import common.LinkTo
+
 @(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
@@ -23,7 +25,11 @@
                     }
                 </div>
 
-                <div class="email-subscription__description">@subscription.description @if(subscription.exampleUrl.isDefined){<br><a href="@subscription.exampleUrl" target="preview-email-@subscription.listId">See the latest email</a>}</div>
+                <div class="email-subscription__description">
+                  @subscription.description
+                  @if(subscription.exampleUrl.isDefined){<br>
+                  <a href="@LinkTo({ subscription.exampleUrl.getOrElse("") })" target="preview-email-@subscription.listId">See the latest email</a>}
+                </div>
 
                 <div class="email-subscription__meta u-cf">
                     <button class="email-subscription__button js-subscription-button"

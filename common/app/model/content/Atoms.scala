@@ -1,10 +1,11 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{AtomData, atom => atomapi, Atom => AtomApiAtom}
+import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
 import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
+import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 
@@ -28,7 +29,12 @@ final case class MediaAtom(
   duration: Option[Long],
   source: Option[String],
   posterUrl: Option[String]
-) extends Atom
+) extends Atom {
+
+  def isoDuration: Option[String] = {
+    duration.map(d => new Duration(d * 1000.toLong).toString)
+  }
+}
 
 
 final case class MediaAsset(
@@ -78,10 +84,7 @@ object Atoms extends common.Logging {
       })
 
       val media = extract(atoms.media, atom => {
-        val id = atom.id
-        val defaultHtml = atom.defaultHtml
-        val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
-        MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+        MediaAtom.make(atom)
       })
 
       val interactives = extract(atoms.interactives, atom => {
@@ -96,6 +99,13 @@ object Atoms extends common.Logging {
 
 
 object MediaAtom extends common.Logging {
+
+  def make(atom: AtomApiAtom): MediaAtom = {
+    val id = atom.id
+    val defaultHtml = atom.defaultHtml
+    val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
+    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+  }
 
   def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
     MediaAtom(

@@ -10,14 +10,13 @@ define([
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/url',
-    'common/utils/ajax',
     'common/modules/analytics/beacon',
-    'commercial/modules/build-page-targeting',
+    'common/modules/commercial/video-ad-url',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
+    'common/modules/video/metadata',
     'common/modules/media/videojs-plugins/fullscreener',
     'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
@@ -40,14 +39,13 @@ define([
     deferToAnalytics,
     detect,
     mediator,
-    urlUtils,
-    ajax,
     beacon,
-    buildPageTargeting,
+    videoAdUrl,
     commercialFeatures,
     Component,
     ab,
     events,
+    videoMetadata,
     fullscreener,
     skipAd,
     videoContainer,
@@ -57,24 +55,6 @@ define([
     videojs,
     loadingTmpl
 ) {
-    function getAdUrl() {
-        var queryParams = {
-            ad_rule:                 1,
-            correlator:              new Date().getTime(),
-            cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
-            env:                     'vp',
-            gdfp_req:                1,
-            impl:                    's',
-            iu:                      config.page.adUnit,
-            output:                  'xml_vast2',
-            scp:                     encodeURIComponent('slot=video'),
-            sz:                      '400x300',
-            unviewed_position_start: 1
-        };
-
-        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
-    }
-
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
@@ -97,7 +77,7 @@ define([
 
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
-        // Commenting out line below but reluctant to delete it
+
         var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
@@ -166,31 +146,6 @@ define([
         }
     }
 
-    function isGeoBlocked(el) {
-        var source = el.currentSrc;
-
-        // we currently only block to the uk
-        // these files are placed in a special location
-        if (source.indexOf('/ukonly/') !== -1) {
-            return new Promise(function(resolve) {
-                ajax({
-                    url: source,
-                    crossOrigin: true,
-                    method: 'head'
-                }).then(function() {
-                    resolve(false);
-                }, function (response) {
-                    // videos are blocked at the CDN level
-                    resolve(response.status === 403);
-                });
-            });
-        } else {
-            return new Promise(function (resolve) {
-                resolve(false);
-            });
-        }
-    }
-
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
@@ -202,38 +157,11 @@ define([
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null),
             // the fallback to window.location.pathname should only happen for main media on fronts
             gaEventLabel = canonicalUrl || window.location.pathname,
-            shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false',
             player,
             mouseMoveIdle,
             playerSetupComplete,
             withPreroll,
             blockVideoAds;
-
-        var videoInfo = new Promise(function(resolve) {
-            // We only have the canonical URL in videos embedded in articles / main media.
-            // These are set to the safest defaults that will always play video.
-            var defaultVideoInfo = {
-                expired: false,
-                shouldHideAdverts: shouldHideAdverts
-            };
-
-            if (!canonicalUrl) {
-                resolve(defaultVideoInfo);
-            } else {
-                var ajaxInfoUrl = config.page.ajaxUrl + '/' + canonicalUrl;
-
-                ajax({
-                    url: ajaxInfoUrl + '/info.json',
-                    type: 'json',
-                    crossOrigin: true
-                }).then(function(videoInfo) {
-                    resolve(videoInfo);
-                }, function() {
-                    // if this fails, don't stop, keep going.
-                    resolve(defaultVideoInfo);
-                });
-            }
-        });
 
         player = createVideoPlayer(el, videojsOptions({
             plugins: {
@@ -247,7 +175,7 @@ define([
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
-        videoInfo.then(function(videoInfo) {
+        videoMetadata.getVideoInfo(el).then(function(videoInfo) {
             if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
@@ -261,7 +189,7 @@ define([
                     player.controlBar.dispose();
                 });
             } else {
-                isGeoBlocked($el[0]).then(function (isVideoGeoBlocked) {
+                videoMetadata.isGeoBlocked(el).then(function (isVideoGeoBlocked) {
                     if (isVideoGeoBlocked) {
                         player.ready(function() {
                             player.error({
@@ -286,9 +214,7 @@ define([
                                 var vol;
 
                                 deferToAnalytics(function () {
-                                    events.initOmnitureTracking(player, mediaId);
                                     events.initOphanTracking(player, mediaId);
-
                                     events.bindGlobalEvents(player);
                                     events.bindContentEvents(player);
                                     if (withPreroll) {
@@ -321,28 +247,25 @@ define([
                                     }
 
                                     if (withPreroll) {
-                                        raven.wrap(
-                                            { tags: { feature: 'media' } },
-                                            function () {
-                                                player.ima({
-                                                    id: mediaId,
-                                                    adTagUrl: getAdUrl(),
-                                                    prerollTimeout: 1000,
-                                                    // We set this sightly higher so contrib-ads never timeouts before ima.
-                                                    contribAdsSettings: {
-                                                        timeout: 2000
-                                                    }
-                                                });
-                                                player.on('adstart', function() {
-                                                    player.skipAd(mediaType, 15);
-                                                });
-                                                player.ima.requestAds();
+                                        raven.wrap({ tags: { feature: 'media' } }, function () {
+                                            player.ima({
+                                                id: mediaId,
+                                                adTagUrl: videoAdUrl.get(),
+                                                prerollTimeout: 1000,
+                                                // We set this sightly higher so contrib-ads never timeouts before ima.
+                                                contribAdsSettings: {
+                                                    timeout: 2000
+                                                }
+                                            });
+                                            player.on('adstart', function() {
+                                                player.skipAd(mediaType, 15);
+                                            });
+                                            player.ima.requestAds();
 
-                                                // Video analytics event.
-                                                player.trigger(events.constructEventName('preroll:request', player));
-                                                resolve();
-                                            }
-                                        )();
+                                            // Video analytics event.
+                                            player.trigger(events.constructEventName('preroll:request', player));
+                                            resolve();
+                                        })();
                                     } else {
                                         resolve();
                                     }
