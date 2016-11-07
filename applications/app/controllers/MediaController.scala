@@ -36,7 +36,7 @@ class MediaController(contentApiClient: ContentApiClient) extends Controller wit
     log.info(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient.item(path, edition)
-        .showFields("all")
+        .showFields("all").showAtoms("media")
     )
 
     val result = response map { response =>

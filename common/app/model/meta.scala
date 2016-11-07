@@ -232,9 +232,7 @@ final case class MetaData (
 
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
-  val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
-  }
+  val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||

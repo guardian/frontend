@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 9
+    val s3ConfigVersion = 10
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -618,6 +618,7 @@ class GuardianConfiguration extends Logging {
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 
+
   object emailSignup {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
@@ -649,9 +650,15 @@ class GuardianConfiguration extends Logging {
   object Survey {
     lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
+
+  object Media {
+    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
+  }
+
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
+

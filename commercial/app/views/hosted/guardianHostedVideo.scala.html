@@ -1,6 +1,7 @@
-@import commercial.model.hosted.ViewSupport.youtubeEmbedUrl
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
+@import conf.Configuration.environment
+@import conf.Configuration.site.host
 @import views.html.hosted._
 @(page: HostedVideoPage)(implicit request: RequestHeader)
 
@@ -15,16 +16,24 @@
         background-color: @{page.campaign.fontColour.brandColour};
     }
 
-    .hosted-tone-btn,
+    .hosted-tone-btn {
+        color: @{page.campaign.fontColour.brandColour};
+        border: 1px solid @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
         background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted-next-autoplay__video,
     .hosted-page .hosted-next-autoplay__next-in-series {
         border-top: 1px solid @{page.campaign.fontColour.brandColour};
+    }
+
+    .hosted-next-autoplay__tile svg {
+        fill: @{page.campaign.fontColour.brandColour};
     }
 
     .hosted-page .hosted__link {
@@ -50,7 +59,7 @@
                         <iframe id="hosted-video-@youtubeId"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="@youtubeEmbedUrl(youtubeId)"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)

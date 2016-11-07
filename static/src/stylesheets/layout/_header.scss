@@ -43,6 +43,10 @@ $c-guardian-services-action: #ffffff;
     }
 }
 
+.l-header--animate {
+    transition: margin-top 1s cubic-bezier(0, 0, 0, .985);
+}
+
 .logo-wrapper {
     position: relative;
     float: right;

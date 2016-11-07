@@ -284,7 +284,9 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews && config.page.section !== 'identity' && !config.page.isHosted) {
-                    breakingNews();
+                    breakingNews().catch(function() {
+                        // breaking news may not load if local storage is unavailable - this is fine
+                    });
                 }
             },
 

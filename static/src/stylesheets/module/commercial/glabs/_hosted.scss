@@ -128,15 +128,22 @@ $hosted-video-height: 540px;
     display: none;
 }
 
+.hosted__banner .hosted-tone-btn,
+.hosted-tone-btn:focus,
+.hosted-tone-btn:hover {
+    color:  #333333;
+    svg {
+        fill: #333333;
+    }
+}
+
 .hosted-page--bright {
-    .hosted-tone-btn {
-        &,
-        &:focus,
-        &:hover {
-            color: #ffffff;
-            svg {
-                fill: #ffffff;
-            }
+    .hosted__banner .hosted-tone-btn,
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        color: #ffffff;
+        svg {
+            fill: #ffffff;
         }
     }
 
@@ -726,6 +733,7 @@ $hosted-video-height: 540px;
     .hosted-page:not(.hosted-page--bright) & {
         background-color: #ffffff;
         border-color: #ffffff;
+        color: #333333;
     }
 }
 

@@ -2,7 +2,6 @@ package dfp
 
 import common.dfp._
 import common.{ExecutionContexts, Logging}
-import conf.switches.Switches.DfpCachingSwitch
 import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
@@ -16,15 +15,12 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
     invalidLineItems: Seq[GuLineItem])
 
   def run(): Future[Unit] = Future {
-    if (DfpCachingSwitch.isSwitchedOn) {
-      log.info("Refreshing data cache")
-      val start = System.currentTimeMillis
-      val data = loadLineItems()
-      val duration = System.currentTimeMillis - start
-      log.info(s"Loading DFP data took $duration ms")
-      write(data)
-    }
-    else log.info("DFP caching switched off")
+    log.info("Refreshing data cache")
+    val start = System.currentTimeMillis
+    val data = loadLineItems()
+    val duration = System.currentTimeMillis - start
+    log.info(s"Loading DFP data took $duration ms")
+    write(data)
   }
 
   /*

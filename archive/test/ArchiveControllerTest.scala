@@ -19,30 +19,30 @@ import services.DynamoDB
 
   it should "return a normalised r1 path" in {
     val tests = List(
-      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> "http://www.theguardian.com/books/reviews/travel/0,,343395,.html",
-      "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> "http://www.theguardian.com/books/reviews/travel/0,,343395,.html",
-      "www.theguardian.com/books/review/story/0,034,908973,00.html" -> "http://www.theguardian.com/books/review/story/0,,908973,.html",
-      "www.theguardian.com/books/reviews/travel/foo" -> "http://www.theguardian.com/books/reviews/travel/foo"
+      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> "www.theguardian.com/books/reviews/travel/0,,343395,.html",
+      "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> "www.theguardian.com/books/reviews/travel/0,,343395,.html",
+      "www.theguardian.com/books/review/story/0,034,908973,00.html" -> "www.theguardian.com/books/review/story/0,,908973,.html",
+      "www.theguardian.com/books/reviews/travel/foo" -> "www.theguardian.com/books/reviews/travel/foo"
     )
     tests foreach {
-      case (key, value) => archiveController.normalise(key) should be (value)
+      case (k, v) => archiveController.normalise(k) should be (v)
     }
   }
 
   // r1 curio (all the redirects have their 00's removed, all the s3 archived files don't)
   it should "return a normalised r1 path with suffixed zeros" in {
     val path = "www.theguardian.com/books/reviews/travel/0,,343395,.html"
-    val expectedPath = "http://www.theguardian.com/books/reviews/travel/0,,343395,00.html"
+    val expectedPath = "www.theguardian.com/books/reviews/travel/0,,343395,00.html"
     archiveController.normalise(path , zeros = "00") should be (expectedPath)
   }
 
   it should "return a normalised short url path" in {
     val tests = List(
-      "www.theguardian.com/p/dfas/stw" -> "http://www.theguardian.com/p/dfas",
-      "www.theguardian.com/p/dfas" -> "http://www.theguardian.com/p/dfas"
+      "www.theguardian.com/p/dfas/stw" -> "www.theguardian.com/p/dfas",
+      "www.theguardian.com/p/dfas" -> "www.theguardian.com/p/dfas"
     )
     tests foreach {
-      case (key, value) => archiveController.normalise(key) should be (value)
+      case (k, v) => archiveController.normalise(k) should be (v)
     }
   }
 
@@ -204,8 +204,8 @@ import services.DynamoDB
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
     val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", "http://www.theguardian.com/p/new?CMP=existing-cmp")
-    result should be ("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP.location)
+    result should be (shortRedirectWithCMP.location)
   }
 
   it should "not perform a redirect loop check on Archive objects" in {

@@ -19,7 +19,7 @@
 }
 
 .contributions__title--epic {
-    margin-bottom: $gs-baseline;
+    margin-bottom: 0;
 }
 
 .contributions__paragraph  {
@@ -30,8 +30,23 @@
     margin-top: $gs-baseline;
 }
 
+.contributions__paragraph--extra-copy {
+    margin-bottom: 0;
+}
+
+.contributions__hidden {
+    display: none;
+}
+
 .contributions__paragraph--epic {
     @include fs-bodyCopy(2);
+}
+
+
+
+
+.contributions__epic-link {
+    text-decoration: underline;
 }
 
 .contributions__option-button {
@@ -128,6 +143,16 @@
     }
 }
 
+.contributions__contribute--epic-member {
+    width: 160px;
+}
+
+.contributions__contribute--epic-member-top {
+    margin-bottom: $gs-baseline/2;
+    margin-right: $gs-gutter/2;
+}
+
+
 
 .contributions__option-button--epic {
     &:hover {
@@ -149,17 +174,9 @@
     margin-bottom: $gs-baseline;
 }
 
-.contributions__contribute--no-buttons--today {
-    width: 150px;
-}
-
-.contributions__contribute--no-buttons--make {
-    width: 170px;
-}
-
-.contributions__contribute--no-buttons--control,
-.contributions__contribute--no-buttons--give {
-    width: 130px;
+.contributions__side-by-side-buttons {
+    display: flex;
+    flex-direction: column;
 }
 
 @include mq($from: phablet) {
@@ -178,6 +195,15 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
+
+    .contributions__side-by-side-buttons {
+        flex-direction: row;
+    }
+
+    .contributions__contribute--epic-member-top {
+        margin-bottom: 0;
+    }
+
 }
 
 .contributions__button-group {
