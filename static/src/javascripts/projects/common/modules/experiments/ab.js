@@ -10,12 +10,11 @@ define([
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/membership-engagement-warp-factor-one',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
-    'common/modules/experiments/tests/contributions-countries-uk',
-    'common/modules/experiments/tests/contributions-countries-america',
-    'common/modules/experiments/tests/contributions-membership-epic'
+    'common/modules/experiments/tests/contributions-membership-epic-brexit',
+    'common/modules/experiments/tests/contributions-membership-epic-side-by-side'
+    
     
 ], function (
     reportError,
@@ -29,24 +28,21 @@ define([
     DiscussionPromoteBottomBanner,
     HostedOnwardJourney,
     WeekendReadingEmail,
-    MembershipEngagementWarpFactorOne,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
-    ContributionsCountriesUk,
-    ContributionsCountriesAmerica,
-    ContributionsMembershipEpic
+    ContributionsMembershipEpicBrexit,
+    ContributionsMembershipEpicSideBySide
+    
 ) {
 
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new MembershipEngagementWarpFactorOne(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
-        new ContributionsCountriesUk(),
-        new ContributionsCountriesAmerica(),
-        new ContributionsMembershipEpic()
+        new ContributionsMembershipEpicBrexit(),
+        new ContributionsMembershipEpicSideBySide()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -121,7 +117,7 @@ define([
             isSensitive = config.page.shouldHideAdverts;
 
         return ((isSensitive ? test.showForSensitive : true)
-        && test.canRun() && !expired && isTestSwitchedOn(test));
+            && isTestSwitchedOn(test)) && !expired && test.canRun() ;
     }
 
     function getId(test) {

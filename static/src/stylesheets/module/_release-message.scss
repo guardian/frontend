@@ -495,9 +495,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 /*
- * Prominent membership messaging AB tests
+ * Prominent membership message as a feature
  */
-.site-message--membership-message.prominent-level-1 {
+.site-message--membership-prominent {
     .site-message__message {
         @include mq($until: tablet) {
             padding-left: 5px;
@@ -643,7 +643,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message--membership-message.prominent-level-1.yellow {
+.site-message--membership-prominent.yellow {
     @include site-message-dark-text;
     background-color: #ffce4b;
     svg {
@@ -651,10 +651,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.purple {
+.site-message--membership-prominent.purple {
     background-color: #7d0068;
 }
-.site-message--membership-message.prominent-level-1.bright-blue {
+.site-message--membership-prominent.bright-blue {
     @include site-message-dark-text;
     background-color: #4bc6df;
     svg {
@@ -662,9 +662,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.dark-blue {
+.site-message--membership-prominent.dark-blue {
     background-color: #005689;
 }
+
 
 /*
  * Coin based adblock message

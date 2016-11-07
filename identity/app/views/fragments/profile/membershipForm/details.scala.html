@@ -1,5 +1,5 @@
 @import views.html.fragments.selectDates
-
+@(user: com.gu.identity.model.User)
 <div class="is-hidden js-mem-info">
     <ul class="details-list u-unstyled js-mem-details">
         <li class="details-list__item is-hidden js-mem-number-container">
@@ -95,7 +95,7 @@
             </div>
         </li>
     </ul>
-    <div class="js-mem-card-details is-hidden"  data-sprite-url="@Static("stylesheets/membership-icons.css")">
-        @views.html.fragments.profile.stripe()
+    <div class="js-mem-card-details is-hidden" data-product="membership">
+        @views.html.fragments.profile.stripe(user)
     </div>
 </div>

@@ -31,12 +31,11 @@ window.curlConfig = {
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js': '@{
                 if (CommercialSonobiRubiconAdapter.isParticipating) {
-                    "//mtrx.go.sonobi.com/morpheus.theguardian.10744.js"
+                    "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js"
                 } else {
                     Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                 }
             }',
-            stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/components/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
@@ -52,7 +51,6 @@ window.curlConfig = {
             facia:                          'projects/facia',
             membership:                     'projects/membership',
             commercial:                     'projects/commercial',
-            stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
             react:                          'components/react/react',
@@ -72,7 +70,7 @@ window.curlConfig = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js': '@{
                if (CommercialSonobiRubiconAdapter.isParticipating) {
-                   "//mtrx.go.sonobi.com/morpheus.theguardian.10744.js"
+                   "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js"
                } else {
                    Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                }
