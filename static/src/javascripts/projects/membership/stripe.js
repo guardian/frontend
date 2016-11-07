@@ -30,34 +30,37 @@ define([
         var $updating = $('.js-updating', $parent);
 
         /*  show/hide
-        *   once we've sent the token, we don't want to change the state of the dots until we redisplay
-        * */
+         *   once we've sent the token, we don't want to change the state of the dots until we redisplay
+         * */
         var loading = function () {
             var HIDDEN = 'is-hidden';
             var $elems = [$button, $number, $type, $last4];
             var sent = false;
-            var showDots = function(isLoading){
-                if(sent){
+            var showDots = function () {
+                if (sent) {
                     return;
                 }
-                if(isLoading){
-                    $elems.forEach(function ($e) {
-                        $e.addClass(HIDDEN);
-                    });
-                    $updating.removeClass(HIDDEN);
-                } else {
-                    $elems.forEach(function ($e) {
-                        $e.removeClass(HIDDEN);
-                    });
-                    $updating.addClass(HIDDEN);
-                }
+                $elems.forEach(function ($e) {
+                    $e.addClass(HIDDEN);
+                });
+                $updating.removeClass(HIDDEN);
             };
-            var send = function(){
+            var hideDots = function () {
+                if (sent) {
+                    return;
+                }
+                $elems.forEach(function ($e) {
+                    $e.removeClass(HIDDEN);
+                });
+                $updating.addClass(HIDDEN);
+            };
+            var send = function () {
                 sent = true;
             };
             return {
-                send:send,
-                showDots:showDots
+                send: send,
+                showDots: showDots,
+                hideDots: hideDots
             };
         }();
 
@@ -77,7 +80,7 @@ define([
             $type.addClass(newCardType);
             $type.data('type', newCardType);
             $parent.removeClass('is-hidden');
-            loading.showDots(false);
+            loading.hideDots();
         });
 
 
@@ -91,9 +94,7 @@ define([
             var email = $button.data('email');
             return function (e) {
                 e.preventDefault();
-                fastdom.write(function () {
-                   loading.showDots(true);
-                });
+                fastdom.write(loading.showDots);
 
                 checkoutHandler.open({
                     email: email,
@@ -101,11 +102,8 @@ define([
                     panelLabel: 'Update',
                     token: update(endpoint),
                     closed: function () {
-                        fastdom.write(function(){
-                            loading.showDots(false);
-                        })
+                        fastdom.write(loading.hideDots)
                     }
-
                 });
                 /*
                  Nonstandard javascript alert:
@@ -143,7 +141,6 @@ define([
                     }
                 }).then(function success(card) {
                     display($parent, card);
-
                 }, function fail() {
                     $parent.text('We have not been able to update your card details at this time.');
                 });
