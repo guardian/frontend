@@ -6,16 +6,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-discussion-promote-comments",
