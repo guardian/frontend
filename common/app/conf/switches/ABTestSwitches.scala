@@ -6,16 +6,6 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-discussion-promote-comments",
@@ -78,11 +68,22 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-side-by-side",
-    "Find out if offering membership and contributions side by side with equal weighting is as effective as just offering membership by itself",
+    "ab-contributions-membership-epic-cta-united-states",
+    "1) Find optimal way to present contributions and membershuip asks in Epic component. 2) Test 3 different messages for the Epic in the United States ",
     owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 11),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic-cta-rest-of-world",
+    "1) Find optimal way to present contributions and membershuip asks in Epic component. 2) Test 3 different messages for the Epic not in the United States ",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 11),
+    exposeClientSide = true
+  )
+
 }

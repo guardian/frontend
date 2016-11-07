@@ -57,7 +57,6 @@ object BodyCleaner {
       RichLinkCleaner(amp),
       MembershipEventCleaner,
       BlockquoteCleaner,
-      ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
       ExploreVideos(article.isExplore),

@@ -36,7 +36,6 @@ window.curlConfig = {
                     Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                 }
             }',
-            stripe:                              '@Static("javascripts/vendor/stripe/stripe.min.js")',
             react:                               '@Static("javascripts/vendor/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
@@ -52,7 +51,6 @@ window.curlConfig = {
             facia:                          'projects/facia',
             membership:                     'projects/membership',
             commercial:                     'projects/commercial',
-            stripe:                         'vendor/stripe/stripe.min',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
             react:                          'vendor/react/react',

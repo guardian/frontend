@@ -13,13 +13,18 @@ define([
             variants: ['control', 'member-contribute']
         };
 
-        var contributionsMembershipEpicSideBySide = {
-            name: 'ContributionsMembershipEpicSideBySide',
-            variants: ['control', 'member-contribute']
+        var contributionsMembershipEpicCtaUnitedStates = {
+            name: 'ContributionsMembershipEpicCtaUnitedStates',
+            variants: ['control', 'contributions2', 'contributions3', 'membership1', 'membership2', 'membership3', 'equal1', 'equal2', 'equal3']
+        };
+
+        var contributionsMembershipEpicCtaRestOfWorld = {
+            name: 'ContributionsMembershipEpicCtaRestOfWorld',
+            variants: ['control', 'contributions2', 'contributions3', 'membership1', 'membership2', 'membership3', 'equal1', 'equal2', 'equal3']
         };
 
 
-        var clashingTests = [contributionsMembershipEpic, contributionsMembershipEpicSideBySide];
+        var clashingTests = [contributionsMembershipEpic, contributionsMembershipEpicCtaUnitedStates, contributionsMembershipEpicCtaRestOfWorld];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
