@@ -31,7 +31,6 @@ requirejs.config({
         analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
         omniture:     'vendor/omniture',
-        stripe:       'vendor/stripe/stripe.min',
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',

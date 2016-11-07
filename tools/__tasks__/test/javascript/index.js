@@ -8,7 +8,6 @@ module.exports = {
                 require('./commercial'),
                 require('./common'),
                 require('./facia'),
-                require('./membership'),
                 require('./eslint')
             ],
             concurrent: true

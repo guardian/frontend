@@ -172,7 +172,6 @@ const bundles = [{
         'bootstraps/standard/main',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
-        'vendor/stripe/stripe.min',
         'text',
         'inlineSvg'
     ]
