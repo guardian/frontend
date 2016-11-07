@@ -28,9 +28,9 @@ module.exports = function (grunt, options) {
         conf: {
             files: [{
                 expand: true,
-                cwd: 'static/public/javascripts',
+                cwd: 'static/src/javascripts',
                 src: [
-                    'vendor/omniture.js'
+                    'vendor/omniture/omniture.js'
                 ],
                 dest: 'common/conf/assets'
             },
