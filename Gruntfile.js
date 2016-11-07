@@ -66,7 +66,6 @@ module.exports = function (grunt) {
     /**
      * Miscellaneous tasks
      */
-    grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
 
 };
