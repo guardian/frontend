@@ -22,7 +22,8 @@ case class SelectorReport(selector: String, used: Int, unused: Int)
 object CssReport extends ExecutionContexts {
   private val DateFormat = "yyyy-MM-dd"
   private val TableName = "cssUsage"
-  private val dynamoDbClient = services.DynamoDB.asyncClient
+  private val dynamoDbClient = new AmazonDynamoDBAsyncClient()
+  dynamoDbClient.setRegion(Region.getRegion(Regions.EU_WEST_1))
 
   def index(): Future[Seq[LocalDate]] = {
     dynamoDbClient.queryFuture(new QueryRequest()

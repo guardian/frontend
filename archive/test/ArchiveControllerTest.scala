@@ -6,19 +6,16 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 import scala.concurrent.Future
-import services.RedirectService
-import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
+import services.DynamoDB
 
 @DoNotDiscover class ArchiveControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with BeforeAndAfterAll {
+  with BeforeAndAfterAll
+  with WithTestWsClient {
 
-  lazy val archiveController = new ArchiveController(mockRedirects)
-  lazy val mockRedirects = new RedirectService {
-    override def destinationFor(source: String) = Future.successful(None)
-  }
+  lazy val archiveController = new ArchiveController(new DynamoDB(wsClient))
 
   it should "return a normalised r1 path" in {
     val tests = List(
@@ -206,18 +203,16 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   }
 
   it should "redirect short urls with campaign codes and allow for overrides" in {
-    val path = "http://www.theguardian.com/p/old/stw"
-    val shortRedirectWithCMP = PermanentRedirect(path, "http://www.theguardian.com/p/new?CMP=existing-cmp")
-    val result = archiveController.retainShortUrlCampaign(path, shortRedirectWithCMP.location)
+    val shortRedirectWithCMP = services.Redirect("http://www.theguardian.com/p/new?CMP=existing-cmp")
+    val result = archiveController.retainShortUrlCampaign("http://www.theguardian.com/p/old/stw", shortRedirectWithCMP.location)
     result should be (shortRedirectWithCMP.location)
   }
 
   it should "not perform a redirect loop check on Archive objects" in {
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
-    val path = "http://www.theguardian.com/redirect/path-to-content"
-    val databaseSaysArchive = ArchiveRedirect("any", path)
-    val result = archiveController.processLookupDestination(path).lift(databaseSaysArchive)
-    result.map(_.toString).getOrElse("") should include (s"""X-Accel-Redirect -> /s3-archive/$path""")
+    val databaseSaysArchive = services.Archive("http://www.theguardian.com/redirect/path-to-content")
+    val result = archiveController.processLookupDestination("http://www.theguardian.com/redirect/path-to-content").lift(databaseSaysArchive)
+    result.map(_.toString).getOrElse("") should include ("""X-Accel-Redirect -> /s3-archive/http://www.theguardian.com/redirect/path-to-content""")
   }
 
   private def location(result: Future[Result]): String = header("Location", result).head
