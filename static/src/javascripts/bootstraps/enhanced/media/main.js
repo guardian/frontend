@@ -336,7 +336,7 @@ define([
     }
 
     function initMoreInSection() {
-        if (!config.isMedia || !config.page.showRelatedContent) {
+        if (!config.isMedia || !config.page.showRelatedContent || !config.page.section) {
             return;
         }
 
@@ -404,10 +404,8 @@ define([
 
         initFacia();
 
-        if (config.page.section) {
-            initMoreInSection();
-        }
-
+        initMoreInSection();
+        
         initOnwardContainer();
     }
 
