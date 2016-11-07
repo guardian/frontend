@@ -37,9 +37,9 @@ define([
             }
         };
 
-        var events = ['play', '25', '50', '75', 'end'];
+        var eventsList = ['play', '25', '50', '75', 'end'];
 
-        forEach(events, function(event) {
+        forEach(eventsList, function(event) {
             mediator.once(event, function(id) {
                 ophanRecord(event, id);
                 ga(gaTracker + '.send', 'event',

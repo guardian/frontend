@@ -97,7 +97,7 @@ define([
         tracking.track('play', atomId);
     }
 
-    function _onPlayerPaused(id, atomId) {
+    function _onPlayerPaused(id) {
         killProgressTracker(false, id);
     }
 
