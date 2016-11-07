@@ -1,5 +1,6 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch, ElectionAppDelay}
+@import model.Page.getContent
 @import templates.inlineJS.blocking.js.{applyRenderConditions, cloudwatchBeacons, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 
@@ -81,17 +82,17 @@
         }
     }
 
-    @if(ElectionAppDelay.isSwitchedOn) {
-        window.guardian.triggerLoadApp = function () {
+    @defining(
+        getContent(page).flatMap(_.content.atoms).flatMap(_.interactives.find(_.id == "2016/general-election")).isDefined
+    ) { hasElectionAtom =>
+
+        @if(ElectionAppDelay.isSwitchedOn && hasElectionAtom) {
+            window.guardian.triggerLoadApp = function () {
+                @loadApp
+            };
+        } else {
             @loadApp
-        };
-        var page = window.guardian.config.page;
-        if (page.contentType !== 'Interactive' ||
-              !page.atoms || page.atoms[0] !== '2016/general-election') {
-            window.guardian.triggerLoadApp();
         }
-    } else {
-        @loadApp
     }
 
 
