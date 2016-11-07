@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    sellByDate =  new LocalDate(2016, 11, 11),
     exposeClientSide = true
   )
 
