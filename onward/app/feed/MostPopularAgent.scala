@@ -38,7 +38,11 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "NZ", "row")
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
+  // Default country if the country does is not currently populated
+  private val defaultCountry: String = "row"
+
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil))
 
   def refresh() {
     log.info("Refreshing most popular for countries.")
