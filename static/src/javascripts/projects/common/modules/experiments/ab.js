@@ -13,9 +13,9 @@ define([
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
     'common/modules/experiments/tests/contributions-membership-epic-brexit',
-    'common/modules/experiments/tests/contributions-membership-epic-side-by-side'
-    
-    
+    'common/modules/experiments/tests/contributions-membership-epic-cta-united-states'
+
+
 ], function (
     reportError,
     config,
@@ -31,8 +31,8 @@ define([
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
     ContributionsMembershipEpicBrexit,
-    ContributionsMembershipEpicSideBySide
-    
+    ContributionsMembershipEpicCtaUnitedStates
+
 ) {
 
     var TESTS = [
@@ -42,7 +42,7 @@ define([
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
         new ContributionsMembershipEpicBrexit(),
-        new ContributionsMembershipEpicSideBySide()
+        new ContributionsMembershipEpicCtaUnitedStates()
     ];
 
     var participationsKey = 'gu.ab.participations';
