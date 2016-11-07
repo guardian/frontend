@@ -32,6 +32,7 @@ define([
 
     var guardian = window.guardian;
     var config = guardian.config;
+    var page = config.page;
 
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
@@ -40,12 +41,14 @@ define([
             .then(function (boot) { boot(); });
     };
 
+    var suppressCommercial = !config.switches.commercial || (page.contentType === 'Interactive' && page.isImmersive && page.shouldHideAdverts);
+
     var bootCommercial = function () {
-        if (!config.switches.commercial) {
+        if (suppressCommercial) {
             return;
         }
 
-        if (config.page.isDev) {
+        if (page.isDev) {
             guardian.adBlockers.onDetect.push(function (isInUse) {
                 var needsMessage = isInUse && window.console && window.console.warn;
                 var message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
@@ -68,7 +71,7 @@ define([
     };
 
     var bootEnhanced = function () {
-        if (guardian.isEnhanced) {
+        if (!suppressCommercial && guardian.isEnhanced) {
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     boot();

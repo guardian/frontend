@@ -27,7 +27,6 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
-    'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/membership',
@@ -80,7 +79,6 @@ define([
     CommentCount,
     AutoSignin,
     CookieRefresh,
-    navigation,
     Profile,
     Search,
     membership,
@@ -123,10 +121,6 @@ define([
                 }
 
                 search.init(header);
-            },
-
-            initialiseNavigation: function () {
-                navigation.init();
             },
 
             showTabs: function () {
@@ -363,7 +357,6 @@ define([
                 ['c-iframe', modules.checkIframe],
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
-                ['c-init-nav', modules.initialiseNavigation],
                 ['c-toggles', modules.showToggles],
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
