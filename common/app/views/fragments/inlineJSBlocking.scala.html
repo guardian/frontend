@@ -85,7 +85,9 @@
         window.guardian.triggerLoadApp = function () {
             @loadApp
         };
-        if (!window.guardian.config.page.atoms || window.guardian.config.page.atoms[0] !== "2016/general-election") {
+        var page = window.guardian.config.page;
+        if (page.contentType !== 'Interactive' ||
+              !page.atoms || page.atoms[0] !== '2016/general-election') {
             window.guardian.triggerLoadApp();
         }
     } else {
